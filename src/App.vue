@@ -2,13 +2,13 @@
     <v-app>
         <MainNav />
         <v-main>
-            <v-container class="fill-height" fluid>
+            <!-- <v-container class="fill-height" fluid>
                 <v-row justify="center" algin="start">
-                    <v-col xl="8">
+                    <v-col xl="8"> -->
                         <router-view />
-                    </v-col>
+                    <!-- </v-col>
                 </v-row>
-            </v-container>
+            </v-container> -->
         </v-main>
     </v-app>
 </template>

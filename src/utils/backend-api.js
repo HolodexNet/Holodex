@@ -17,6 +17,12 @@ export default {
     live(channel_id = null) {
         return axios_instance.get(`/live` + (channel_id ? `?channel_id=${channel_id}` : ''));
     },
+    channel(channel_id) {
+        return axios_instance.get(`/channels/${channel_id}`);
+    },
+    video(id) {
+        return axios_instance.get(`/videos/${id}`);
+    },
 };
 
 export const axios_instance = axios.create({

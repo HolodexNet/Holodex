@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar color="white" elevate-on-scroll>
+    <v-app-bar color="white" app elevate-on-scroll>
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
         <v-toolbar-title class="pr-5">HoloClips</v-toolbar-title>

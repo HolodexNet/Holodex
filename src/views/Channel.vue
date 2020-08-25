@@ -1,23 +1,13 @@
 <template>
     <v-container class="channel">
+        <v-img :src="channel.banner_image" />
         <div class="text-h6">Videos</div>
-        <v-row v-if="videos.length != 0" dense>
-            <v-col
-                v-for="video in videos"
-                :key="video.id"
-                class="video-col lg5-custom"
-                cols="12"
-                sm="4"
-                md="3"
-            >
-                <VideoCard :video="video" fluid />
-            </v-col>
-        </v-row>
+        <VideoCardList :videos="videos" dense />
     </v-container>
 </template>
 
 <script>
-import VideoCard from "@/components/VideoCard";
+import VideoCardList from "@/components/VideoCardList";
 import api from "@/utils/backend-api";
 
 export default {
@@ -26,6 +16,7 @@ export default {
         return {
             channel_id: null,
             videos: [],
+            channel: {},
         };
     },
     created() {
@@ -33,25 +24,17 @@ export default {
         api.videos(this.channel_id).then(
             res => (this.videos = res.data.videos)
         );
+        api.channel(this.channel_id).then(
+            res => (this.channel = res.data)
+        );
     },
     props: {},
     components: {
-        VideoCard,
+        VideoCardList,
     },
 };
 </script>
 
 <style lang="scss">
-.video-col {
-    display: flex;
-    justify-content: center;
-}
 
-@media (min-width: 1264px) and (max-width: 1903px) {
-    .lg5-custom {
-        width: 20%;
-        max-width: 20%;
-        flex-basis: 20%;
-    }
-}
 </style>

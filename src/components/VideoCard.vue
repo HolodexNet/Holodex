@@ -1,27 +1,44 @@
 <template>
-    <v-card outlined :class="[{ 'video-card-fluid': fluid }, 'video-card']">
+    <v-card
+        outlined
+        :class="[{ 'video-card-fluid': fluid }, 'video-card']"
+        :to="`/watch/${video.id}`"
+    >
         <v-img
             class="white--text align-end"
-            :src="
-                'https://i.ytimg.com/vi/' +
-                    video.yt_video_key +
-                    '/hq720_live.jpg'
-            "
+            :src="`https://i.ytimg.com/vi/${video.yt_video_key}/hqdefault.jpg`"
             :aspect-ratio="16 / 9"
         >
+            <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                    <v-progress-circular indeterminate color="black">
+                    </v-progress-circular>
+                </v-row>
+            </template>
+            <div class="d-flex justify-end" v-if="video.duration_secs > 0">
+                <span class="video-duration px-2"> {{ formattedDuration }}</span>
+            </div>
         </v-img>
         <v-list-item three-line class="pa-0">
+            <v-list-item-avatar size="50" v-if="includeChannel">
+                <v-img :src="video.channel.photo"></v-img>
+            </v-list-item-avatar>
             <v-list-item-content class="pa-0">
                 <div class="video-title">{{ video.title }}</div>
+                <v-list-item-subtitle
+                    v-if="includeChannel"
+                    class="channel-name"
+                >
+                    {{ video.channel.name }}
+                </v-list-item-subtitle>
                 <v-list-item-subtitle>
-                    {{ formattedTime }}
+                    <span :class="'text-' + this.video.status">{{ formattedTime }}</span>
                     <span v-if="video.video_mentions && video.video_mentions.length > 0">
                         • {{ video.video_mentions.length }} Clips
                     </span>
-                </v-list-item-subtitle>
-                <v-list-item-subtitle v-if="video.status === 'live'">
-                    <!-- {{ video.video_tag.map(tag => tag.tag.name).join(", ") }} -->
-                    {{ formatViewers(video.live_viewers) }} Watching
+                    <span v-else-if="video.status === 'live'">
+                        • {{ formatViewers(video.live_viewers) }} Watching
+                    </span>
                 </v-list-item-subtitle>
             </v-list-item-content>
         </v-list-item>
@@ -30,6 +47,8 @@
 
 <script>
 import moment from "moment";
+// eslint-disable-next-line no-unused-vars
+import { img_placeholder } from "@/utils/consts";
 
 export default {
     name: "VideoCard",
@@ -67,12 +86,16 @@ export default {
                     return this.formatFromNow(this.video.published_at);
             }
         },
-        // height() {
-        //     return this.includeChannel ? 200 : 118;
-        // },
-        // width() {
-        //     return this.includeChannel ? 360 : 
-        // }
+        formattedDuration() {
+            return this.video.duration_secs > 84600
+                ? "VERY LONG"
+                : moment
+                      .utc(this.video.duration_secs * 1000)
+                      .format("HH:mm:ss");
+        },
+        img_placeholder() {
+            return img_placeholder;
+        },
     },
     methods: {
         formatFromNow(time) {
@@ -93,6 +116,11 @@ export default {
 .video-card-fluid {
     width: 100%;
 }
+
+.text-live {
+    color: red;
+}
+
 .video-title {
     white-space: normal;
     overflow: hidden;
@@ -100,5 +128,15 @@ export default {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+
+.channel-name {
+    text-overflow: ellipsis;
+}
+
+.video-duration {
+    background-color: rgba(0, 0, 0, 0.8);
+    text-align: center;
+    font-size: 0.8125rem;
 }
 </style>
