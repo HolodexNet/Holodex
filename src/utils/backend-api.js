@@ -26,6 +26,9 @@ export default {
 };
 
 export const axios_instance = axios.create({
-    baseURL: `http://mythra.local:2434/v1`,
+    baseURL:
+        process.env.NODE_ENV === "development"
+            ? `http://mythra.local:2434/v1`
+            : `/api/v1`,
     timeout: 50000,
 });

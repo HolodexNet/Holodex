@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row class="align-start">
-            <v-col cols="9">
+            <v-col cols="12" sm="12" lg="9" md="12">
                 <div class="embedded-video">
                     <iframe
                         :src="`https://www.youtube.com/embed/${video.yt_video_key}?autoplay=1`"
@@ -9,10 +9,12 @@
                 </div>
                 <v-spacer />
             </v-col>
-            <v-col cols="3">
+            <v-col cols="12" sm="12" lg="3" md="12">
                 <div class="text-h6">Clips</div>
                 <v-divider />
-                <div v-if="video_clips.length == 0" class="pa-3">No clips yet, check back later!</div>
+                <div v-if="video_clips.length == 0" class="pa-3">
+                    No clips yet, check back later!
+                </div>
                 <VideoCardList
                     :videos="video_clips"
                     includeChannel
