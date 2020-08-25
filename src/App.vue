@@ -3,7 +3,7 @@
         <MainNav />
         <v-main>
             <v-container class="fill-height" fluid>
-                <v-row justify="center">
+                <v-row justify="center" algin="start">
                     <v-col xl="8">
                         <router-view />
                     </v-col>

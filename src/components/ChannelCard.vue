@@ -1,7 +1,7 @@
 <template>
-    <v-card class="rounded-sm" tile>
+    <v-card class="rounded-sm" tile :to="'channel/' + channel.id">
         <v-list-item three-line>
-            <v-list-item-avatar tile size="120" color="grey">
+            <v-list-item-avatar tile size="100" color="grey">
                 <img :src="channel.photo" />
             </v-list-item-avatar>
             <v-list-item-content>
@@ -28,6 +28,10 @@ export default {
         channel: {
             required: true,
             type: Object,
+        },
+        withLink: {
+            required: false,
+            type: Boolean,
         },
     },
 };

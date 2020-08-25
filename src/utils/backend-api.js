@@ -14,8 +14,8 @@ export default {
     videos(channel_id) {
         return axios_instance.get(`/videos?channel_id=${channel_id}`);
     },
-    videosTranslated(yt_id) {
-        return axios_instance.get(`/videos/translated?description=${yt_id}`);
+    live(channel_id = null) {
+        return axios_instance.get(`/live` + (channel_id ? `?channel_id=${channel_id}` : ''));
     },
 };
 

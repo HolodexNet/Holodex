@@ -2,8 +2,10 @@
     <v-app-bar color="white" elevate-on-scroll>
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-        <v-toolbar-title>HoloClips</v-toolbar-title>
-
+        <v-toolbar-title class="pr-5">HoloClips</v-toolbar-title>
+        <v-btn to="/" text>
+            Home
+        </v-btn>
         <v-spacer></v-spacer>
 
         <v-btn icon>
