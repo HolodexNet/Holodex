@@ -14,14 +14,20 @@ export default {
     videos(channel_id) {
         return axios_instance.get(`/videos?channel_id=${channel_id}`);
     },
-    live(channel_id = null) {
-        return axios_instance.get(`/live` + (channel_id ? `?channel_id=${channel_id}` : ''));
+    live() {
+        return axios_instance.get(`/live`);
     },
     channel(channel_id) {
         return axios_instance.get(`/channels/${channel_id}`);
     },
     video(id) {
         return axios_instance.get(`/videos/${id}`);
+    },
+    clips(channel_id) {
+        return axios_instance.get(`/clips?channel_id=${channel_id}&include_channel=1`);
+    },
+    mentions(channel_id) {
+        return axios_instance.get(`/mentions/channel/${channel_id}?include_channel=1`);
     },
 };
 

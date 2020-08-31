@@ -10,6 +10,7 @@
                 sm: 6,
                 md: 4,
                 lg: 3,
+                xl: 3,
             }"
         >
         </VideoCardList>
@@ -23,6 +24,7 @@
                 sm="6"
                 md="6"
                 lg="4"
+                xl="3"
             >
                 <ChannelCard :channel="channel"></ChannelCard>
             </v-col>
@@ -54,12 +56,13 @@ export default {
             this.channels = res.data.channels;
         });
         api.live().then(res => {
-            // get currently live and upcoming lives within then next hour
+            // get currently live and upcoming lives within then 12 hour
             this.live = res.data.live
                 .concat(res.data.upcoming)
                 .filter(live =>
-                    moment(live.live_schedule).isBefore(moment().add(1, "h"))
-                );
+                    moment(live.live_schedule).isBefore(moment().add(12, "h"))
+                )
+                .splice(0, 8);
         });
     },
 };

@@ -51,7 +51,7 @@ export default {
         loadData(id) {
             api.video(id).then((res) => {
                 this.video = res.data;
-                this.video_clips = res.data.video_mentions.map(video_mention => video_mention.video);
+                this.video_clips = res.data.video_mentions;
                 console.log(this.video_clips.length);
             });
         },

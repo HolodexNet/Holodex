@@ -16,11 +16,13 @@
                 </v-row>
             </template>
             <div class="d-flex justify-end" v-if="video.duration_secs > 0">
-                <span class="video-duration px-2"> {{ formattedDuration }}</span>
+                <span class="video-duration px-2">
+                    {{ formattedDuration }}
+                </span>
             </div>
         </v-img>
         <v-list-item three-line class="pa-0">
-            <v-list-item-avatar size="50" v-if="includeChannel">
+            <v-list-item-avatar v-if="includeChannel">
                 <v-img :src="video.channel.photo"></v-img>
             </v-list-item-avatar>
             <v-list-item-content class="pa-0">
@@ -32,7 +34,9 @@
                     {{ video.channel.name }}
                 </v-list-item-subtitle>
                 <v-list-item-subtitle>
-                    <span :class="'text-' + this.video.status">{{ formattedTime }}</span>
+                    <span :class="'text-' + this.video.status">
+                        {{ formattedTime }}
+                    </span>
                     <span v-if="video.video_mentions && video.video_mentions.length > 0">
                         • {{ video.video_mentions.length }} Clips
                     </span>
@@ -72,6 +76,9 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    created() {
+        //check if video has channel info, else set includechannel to false
     },
     computed: {
         formattedTime() {

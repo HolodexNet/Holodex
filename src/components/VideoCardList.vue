@@ -8,6 +8,7 @@
             :sm="cols.sm"
             :md="cols.md"
             :lg="cols.lg"
+            :xl="cols.xl"
         >
             <VideoCard :video="video" fluid :includeChannel="includeChannel" />
         </v-col>
@@ -41,6 +42,7 @@ export default {
                     sm: 4,
                     md: 3,
                     lg: 2.4,
+                    xl: 2,
                 };
             },
         },
