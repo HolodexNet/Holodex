@@ -1,5 +1,5 @@
 <template>
-    <v-container class="channel-container" fluid>
+    <v-container class="channel-container">
         <v-card>
             <v-img :src="channel.banner_image" class="channel-banner" />
             <v-container>

@@ -1,13 +1,17 @@
 <template>
     <v-card
         outlined
-        :class="[{ 'video-card-fluid': fluid }, 'video-card']"
+        :class="[
+            { 'video-card-fluid': fluid, 'video-card-horizontal': horizontal },
+            'video-card',
+        ]"
         :to="`/watch/${video.id}`"
     >
         <v-img
             class="white--text align-end"
             :src="`https://i.ytimg.com/vi/${video.yt_video_key}/hqdefault.jpg`"
             :aspect-ratio="16 / 9"
+            :width="horizontal ? '150px' : '100%'"
         >
             <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -22,7 +26,7 @@
             </div>
         </v-img>
         <v-list-item three-line class="pa-0">
-            <v-list-item-avatar v-if="includeChannel">
+            <v-list-item-avatar v-if="includeChannel && !horizontal">
                 <v-img :src="video.channel.photo"></v-img>
             </v-list-item-avatar>
             <v-list-item-content class="pa-0">
@@ -53,7 +57,6 @@
 import moment from "moment";
 // eslint-disable-next-line no-unused-vars
 import { img_placeholder } from "@/utils/consts";
-
 export default {
     name: "VideoCard",
     data() {
@@ -72,6 +75,11 @@ export default {
             default: false,
         },
         includeChannel: {
+            required: false,
+            type: Boolean,
+            default: false,
+        },
+        horizontal: {
             required: false,
             type: Boolean,
             default: false,
@@ -145,5 +153,13 @@ export default {
     background-color: rgba(0, 0, 0, 0.8);
     text-align: center;
     font-size: 0.8125rem;
+}
+
+.video-card-horizontal {
+    display: flex;
+}
+
+.video-card-horizontal > .v-image {
+    margin-right: 5px;
 }
 </style>

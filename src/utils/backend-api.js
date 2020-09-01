@@ -11,8 +11,8 @@ export default {
             `/channels?type=subber&limit=${limit}&offset=${offset}&sort=subscriber_count&order=desc`
         );
     },
-    videos(channel_id) {
-        return axios_instance.get(`/videos?channel_id=${channel_id}`);
+    videos(channel_id, limit = 30, offset = 0) {
+        return axios_instance.get(`/videos?channel_id=${channel_id}&limit=${limit}&offset=${offset}`);
     },
     live() {
         return axios_instance.get(`/live`);
@@ -23,11 +23,11 @@ export default {
     video(id) {
         return axios_instance.get(`/videos/${id}`);
     },
-    clips(channel_id) {
-        return axios_instance.get(`/clips?channel_id=${channel_id}&include_channel=1`);
+    clips(channel_id, limit = 30, offset = 0) {
+        return axios_instance.get(`/clips?channel_id=${channel_id}&include_channel=1&limit=${limit}&offset=${offset}`);
     },
-    mentions(channel_id) {
-        return axios_instance.get(`/mentions/channel/${channel_id}?include_channel=1`);
+    mentions(channel_id, limit = 30, offset = 0) {
+        return axios_instance.get(`/mentions/channel/${channel_id}?include_channel=1&limit=${limit}&offset=${offset}`);
     },
 };
 

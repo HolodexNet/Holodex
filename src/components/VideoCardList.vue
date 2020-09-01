@@ -10,7 +10,12 @@
             :lg="cols.lg"
             :xl="cols.xl"
         >
-            <VideoCard :video="video" fluid :includeChannel="includeChannel" />
+            <VideoCard
+                :video="video"
+                fluid
+                :includeChannel="includeChannel"
+                :horizontal="horizontal"
+            />
         </v-col>
     </v-row>
 </template>
@@ -31,6 +36,10 @@ export default {
             type: Array,
         },
         includeChannel: {
+            required: false,
+            type: Boolean,
+        },
+        horizontal: {
             required: false,
             type: Boolean,
         },
