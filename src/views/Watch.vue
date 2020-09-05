@@ -1,8 +1,8 @@
 <template>
     <v-container fluid>
         <v-row class="align-start">
-            <v-col>
-                <v-card>
+            <v-col class="pa-0">
+                <v-card class="watch-card">
                     <div class="embedded-video">
                         <iframe
                             :src="`https://www.youtube.com/embed/${video.yt_video_key}?autoplay=1`"
@@ -31,7 +31,7 @@
                             </v-list-item-content>
                         </v-list-item>
                     </v-list>
-                    <v-expansion-panels>
+                    <v-expansion-panels outlined>
                         <v-expansion-panel>
                             <v-expansion-panel-header
                                 expand-icon="mdi-menu-down"
@@ -50,7 +50,7 @@
                     </v-expansion-panels>
                 </v-card>
             </v-col>
-            <v-col cols="12" sm="12" lg="3" xl="3" md="12">
+            <v-col cols="12" sm="12" lg="3" xl="3" md="12" class="related-videos">
                 <!-- <div class="text-h6">Related</div>
                 <v-divider /> -->
                 <div class="text-subtitle-2 ma-2" v-if="video_clips.length > 0">
@@ -141,5 +141,16 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
+}
+
+.watch-card {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+@media screen and (min-width: 600px) {
+    .related-videos {
+        min-width: 350px;
+    }
 }
 </style>

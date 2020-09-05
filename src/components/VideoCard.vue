@@ -26,16 +26,26 @@
             </div>
         </v-img>
         <v-list-item three-line class="pa-0">
-            <v-list-item-avatar v-if="includeChannel && !horizontal">
-                <v-img :src="video.channel.photo"></v-img>
-            </v-list-item-avatar>
+            <router-link
+                :to="`/channel/${video.channel.id}`"
+                v-if="includeChannel && withAvatar && !horizontal && video.channel"
+            >
+                <v-list-item-avatar>
+                    <v-img :src="video.channel.photo"></v-img>
+                </v-list-item-avatar>
+            </router-link>
             <v-list-item-content class="pa-0">
                 <div class="video-title">{{ video.title }}</div>
                 <v-list-item-subtitle
                     v-if="includeChannel"
                     class="channel-name"
                 >
-                    {{ video.channel.name }}
+                    <router-link
+                        :to="`/channel/${video.channel.id}`"
+                        class="no-decoration"
+                    >
+                        <span :class="'name-' + video.channel.channel_type">{{ video.channel.name }}</span>
+                    </router-link>
                 </v-list-item-subtitle>
                 <v-list-item-subtitle>
                     <span :class="'text-' + this.video.status">
@@ -75,6 +85,11 @@ export default {
             default: false,
         },
         includeChannel: {
+            required: false,
+            type: Boolean,
+            default: false,
+        },
+        withAvatar: {
             required: false,
             type: Boolean,
             default: false,
@@ -156,10 +171,19 @@ export default {
 }
 
 .video-card-horizontal {
-    display: flex;
+    display: flex !important;
 }
 
 .video-card-horizontal > .v-image {
     margin-right: 5px;
+}
+
+.no-decoration {
+    text-decoration: none;
+    color: inherit !important;
+}
+
+.name-vtuber {
+    color: #42A5F5;
 }
 </style>

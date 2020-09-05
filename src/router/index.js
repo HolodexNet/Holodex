@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Channel from "../views/Channel.vue";
+import ChannelList from "../views/ChannelList.vue";
 import Watch from "../views/Watch.vue";
 
 Vue.use(VueRouter);
@@ -15,6 +16,10 @@ const routes = [
     {
         path: "/channel/:id",
         component: Channel,
+    },
+    {
+        path: "/channel/",
+        component: ChannelList,
     },
     {
         path: "/watch/:id",

@@ -1,4 +1,5 @@
 import axios from "axios";
+const querystring = require('querystring');
 
 export default {
     vtuberChannels(limit = 100, offset = 0) {
@@ -11,8 +12,16 @@ export default {
             `/channels?type=subber&limit=${limit}&offset=${offset}&sort=subscriber_count&order=desc`
         );
     },
-    videos(channel_id, limit = 30, offset = 0) {
-        return axios_instance.get(`/videos?channel_id=${channel_id}&limit=${limit}&offset=${offset}`);
+    videos(channel_id, includeChannel = false, limit = 30, offset = 0) {
+        const query = querystring.stringify({
+            ...(channel_id && { channel_id }),
+            limit,
+            offset,
+            status: "tagged",
+            include_channel: includeChannel ? 1 : 0,
+        });
+        console.log(`/videos?${query}`);
+        return axios_instance.get(`/videos?${query}`);
     },
     live() {
         return axios_instance.get(`/live`);

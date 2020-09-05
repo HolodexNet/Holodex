@@ -1,5 +1,5 @@
 <template>
-    <v-container class="channel-container">
+    <v-container class="channel-container" fluid>
         <v-card>
             <v-img :src="channel.banner_image" class="channel-banner" />
             <v-container>
@@ -66,6 +66,7 @@ export default {
             videos: [],
             channel: {},
             tab: 0,
+            offset: 0,
         };
     },
     created() {
@@ -75,6 +76,7 @@ export default {
     },
     methods: {
         loadTabContent() {
+            this.videos = [];
             switch (this.tab) {
                 case 1:
                     api.clips(this.channel_id).then(
