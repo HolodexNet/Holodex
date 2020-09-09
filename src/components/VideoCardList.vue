@@ -1,5 +1,5 @@
 <template>
-    <v-row dense style="min-height: 200px;">
+    <v-row dense>
         <v-col
             v-for="video in spliced"
             :key="video.id"
@@ -18,21 +18,23 @@
                 :withAvatar="withAvatar"
             />
         </v-col>
-        <div
-            class="text-center"
-            style="width: 100%"
-            v-if="limit > 0 && videos.length > limit"
-        >
-            <v-btn icon @click="expanded = !expanded">
-                <v-icon>{{
-                    this.expanded ? "mdi-chevron-up" : "mdi-chevron-down"
-                }}</v-icon>
+        <div class="text-center" style="width: 100%">
+            <v-btn
+                icon
+                @click="expanded = !expanded"
+                v-if="limit > 0 && videos.length > limit"
+            >
+                <v-icon>
+                    {{ this.expanded ? "mdi-chevron-up" : "mdi-chevron-down" }}
+                </v-icon>
             </v-btn>
+            <infinite-loading
+                v-if="infiniteLoad"
+                @infinite="emitInfinite"
+                :distance="10"
+                style="min-height: 10px;"
+            ></infinite-loading>
         </div>
-        <infinite-loading
-            v-if="infiniteLoad"
-            @infinite="emitInfinite"
-        ></infinite-loading>
     </v-row>
 </template>
 

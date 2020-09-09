@@ -44,6 +44,8 @@ export default {
             live: [],
             videos: [],
             currentOffset: 0,
+            // TODO: smaller pagelength with mobile/diff breakpoints
+            pageLength: 24,
         };
     },
     created() {
@@ -52,23 +54,24 @@ export default {
             this.live = res.data.live
                 .concat(res.data.upcoming)
                 .filter(live =>
-                    moment(live.live_schedule).isBefore(moment().add(48, "h"))
-                );
+                    moment(live.live_schedule).isBefore(moment().add(2, "w"))
+                )
+                .splice(0, 16);
         });
     },
     methods: {
         loadNext($state) {
-            api.videos(null, true, 30, this.currentOffset)
+            api.videos(null, true, this.pageLength, this.currentOffset)
                 .then(res => {
                     if (res.data.videos) {
                         this.videos = this.videos.concat(res.data.videos);
-                        this.currentOffset += 30;
+                        this.currentOffset += this.pageLength;
                         $state.loaded();
                     } else {
                         $state.complete();
                     }
                 })
-                .error(() => {
+                .catch(() => {
                     $state.error();
                 });
         },

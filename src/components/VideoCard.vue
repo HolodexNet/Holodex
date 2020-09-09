@@ -36,15 +36,13 @@
             </router-link>
             <v-list-item-content class="pa-0">
                 <div class="video-title">{{ video.title }}</div>
-                <v-list-item-subtitle
-                    v-if="includeChannel"
-                    class="channel-name"
-                >
+                <v-list-item-subtitle v-if="includeChannel">
                     <router-link
                         :to="`/channel/${video.channel.id}`"
-                        class="no-decoration"
+                        class="no-decoration channel-name"
+                        :class="'name-' + video.channel.channel_type"
                     >
-                        <span :class="'name-' + video.channel.channel_type">{{ video.channel.name }}</span>
+                        {{ video.channel.name }}
                     </router-link>
                 </v-list-item-subtitle>
                 <v-list-item-subtitle>
@@ -57,6 +55,10 @@
                     <span v-else-if="video.status === 'live'">
                         • {{ formatViewers(video.live_viewers) }} Watching
                     </span>
+                    <!-- <br/>
+                    <span v-if="video.channel_mentions">
+                        {{ video.channel_mentions.map(c => c.name_en.split(" ")[1]).join(", ") }}
+                    </span> -->
                 </v-list-item-subtitle>
             </v-list-item-content>
         </v-list-item>
@@ -162,6 +164,8 @@ export default {
 
 .channel-name {
     text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .video-duration {
@@ -184,6 +188,6 @@ export default {
 }
 
 .name-vtuber {
-    color: #42A5F5;
+    color: #42A5F5 !important;
 }
 </style>

@@ -31,31 +31,22 @@
                 </v-list>
             </v-container>
             <v-container class="pa-0">
-                <v-tabs v-model="tab" v-on:change="loadTabContent">
-                    <v-tab>Videos</v-tab>
-                    <v-tab>Clips</v-tab>
-                    <v-tab>Mentions</v-tab>
-                    <v-tab>About</v-tab>
+                <v-tabs v-model="tab">
+                    <v-tab :to="`/channel/${channel_id}`">Videos</v-tab>
+                    <v-tab :to="`/channel/${channel_id}/clips`">Clips</v-tab>
+                    <v-tab :to="`/channel/${channel_id}/mentions`">Mentions</v-tab>
+                    <v-tab :to="`/channel/${channel_id}/about`">About</v-tab>
                 </v-tabs>
             </v-container>
         </v-card>
         <v-container class="channel pa-0" style="min-height: 85vh">
-            <VideoCardList :videos="videos" dense v-if="tab === 0" />
-            <VideoCardList
-                :videos="videos"
-                dense
-                v-if="tab === 1 || tab === 2"
-                includeChannel
-            />
-            <div v-if="tab == 3" style="white-space: pre;">
-                {{ channel.description }}
-            </div>
+            <router-view :channel="channel"></router-view>
         </v-container>
     </v-container>
 </template>
 
 <script>
-import VideoCardList from "@/components/VideoCardList";
+// import VideoCardList from "@/components/VideoCardList";
 import api from "@/utils/backend-api";
 
 export default {
@@ -71,36 +62,12 @@ export default {
     },
     created() {
         this.channel_id = this.$route.params.id;
-        this.loadTabContent(this.tab);
         api.channel(this.channel_id).then(res => (this.channel = res.data));
     },
-    methods: {
-        loadTabContent() {
-            this.videos = [];
-            switch (this.tab) {
-                case 1:
-                    api.clips(this.channel_id).then(
-                        res => (this.videos = res.data.videos)
-                    );
-                    break;
-                case 2:
-                    api.mentions(this.channel_id).then(
-                        res => (this.videos = res.data.videos)
-                    );
-                    break;
-                case 3:
-                    break;
-                default:
-                    api.videos(this.channel_id).then(
-                        res => (this.videos = res.data.videos)
-                    );
-                    break;
-            }
-        },
-    },
+    methods: {},
     props: {},
     components: {
-        VideoCardList,
+        // VideoCardList,
     },
 };
 </script>
