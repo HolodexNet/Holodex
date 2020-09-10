@@ -31,7 +31,7 @@
                 </v-list>
             </v-container>
             <v-container class="pa-0">
-                <v-tabs v-model="tab">
+                <v-tabs>
                     <v-tab :to="`/channel/${channel_id}`">Videos</v-tab>
                     <v-tab :to="`/channel/${channel_id}/clips`">Clips</v-tab>
                     <v-tab :to="`/channel/${channel_id}/mentions`">Mentions</v-tab>

@@ -1,29 +1,33 @@
 <template>
-    <v-container class="home">
-        <div class="text-h6">Live</div>
-        <v-divider />
-        <VideoCardList
-            :videos="live"
-            includeChannel
-            withAvatar
-            :cols="{
-                cols: 12,
-                sm: 6,
-                md: 4,
-                lg: 3,
-                xl: 3,
-            }"
-            :limit="8"
-        >
-        </VideoCardList>
-        <div class="text-h6">Recent Videos</div>
-        <v-divider />
-        <VideoCardList
-            :videos="videos"
-            includeChannel
-            infiniteLoad
-            @infinite="loadNext"
-        ></VideoCardList>
+    <v-container class="home" fluid>
+        <v-row>
+            <v-col class="mx-8">
+                <div class="text-h6">Live</div>
+                <v-divider />
+                <VideoCardList
+                    :videos="live"
+                    includeChannel
+                    withAvatar
+                    :cols="{
+                        cols: 12,
+                        sm: 6,
+                        md: 4,
+                        lg: 3,
+                        xl: 3,
+                    }"
+                    :limit="8"
+                >
+                </VideoCardList>
+                <div class="text-h6">Recent Videos</div>
+                <v-divider />
+                <VideoCardList
+                    :videos="videos"
+                    includeChannel
+                    infiniteLoad
+                    @infinite="loadNext"
+                ></VideoCardList>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
@@ -61,7 +65,12 @@ export default {
     },
     methods: {
         loadNext($state) {
-            api.videos(null, true, this.pageLength, this.currentOffset)
+            api.videos({
+                limit: 30,
+                offset: this.currentOffset,
+                include_channel: 1,
+                status: "tagged",
+            })
                 .then(res => {
                     if (res.data.videos) {
                         this.videos = this.videos.concat(res.data.videos);

@@ -6,9 +6,10 @@
             :includeChannel="hasChannelInfo"
         />
         <v-pagination
+            v-if="videos.length > 0"
             v-model="currentPage"
             class="my-4"
-            :length="15"
+            :length="Math.ceil(totalVideos / videoPerPage)"
         ></v-pagination>
     </div>
 </template>
@@ -26,11 +27,15 @@ export default {
         return {
             channel_id: null,
             videos: [],
-            currentPage: 1,
+            // currentPage: 1,
+            totalVideos: 1,
+            videoPerPage: 30,
         };
     },
     created() {
         // console.log(this.$route);
+        // this.currentPage = Number(this.$route.query.page) || 1;
+        console.log("created " + this.currentPage);
         this.channel_id = this.$route.params.id;
         this.loadTabContent();
     },
@@ -40,34 +45,54 @@ export default {
                 this.$route.name === "clips" || this.$route.name === "mentions"
             );
         },
+        currentPage: {
+            get() {
+                return Number(this.$route.query.page) || 1;
+            },
+            set(val) {
+                console.log("set " + val);
+                this.$router
+                .push({
+                    query: { ...this.$route.query, page: val },
+                }).catch(() => {});
+            },
+        },
     },
     watch: {
         $route() {
+            // this.currentPage = 1;
+            this.totalVideos = 1;
             this.loadTabContent();
+        },
+        currentPage() {
+            console.log(this.currentPage);
         },
     },
     methods: {
         loadTabContent() {
             this.videos = [];
+            let api_req = null;
+            const query = {
+                channel_id: Number(this.channel_id),
+                limit: this.videoPerPage,
+                offset: (this.currentPage - 1) * this.videoPerPage,
+                ...(this.hasChannelInfo && { include_channel: 1 }),
+            };
             switch (this.$route.name) {
                 case "clips":
-                    api.clips(this.channel_id).then(
-                        res => (this.videos = res.data.videos)
-                    );
+                    api_req = api.clips(query);
                     break;
                 case "mentions":
-                    api.mentions(this.channel_id).then(
-                        res => (this.videos = res.data.videos)
-                    );
-                    break;
-                case 3:
+                    api_req = api.mentions(query);
                     break;
                 default:
-                    api.videos(this.channel_id).then(
-                        res => (this.videos = res.data.videos)
-                    );
+                    api_req = api.videos(query);
                     break;
             }
+            api_req.then(res => {
+                this.videos = res.data.videos;
+                this.totalVideos = res.data.total;
+            });
         },
     },
 };

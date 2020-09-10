@@ -12,16 +12,10 @@ export default {
             `/channels?type=subber&limit=${limit}&offset=${offset}&sort=subscriber_count&order=desc`
         );
     },
-    videos(channel_id, includeChannel = false, limit = 30, offset = 0) {
-        const query = querystring.stringify({
-            ...(channel_id && { channel_id }),
-            limit,
-            offset,
-            status: "tagged",
-            include_channel: includeChannel ? 1 : 0,
-        });
-        console.log(`/videos?${query}`);
-        return axios_instance.get(`/videos?${query}`);
+    videos(query) {
+        const q = querystring.stringify(query);
+        console.log(`/videos?${q}`);
+        return axios_instance.get(`/videos?${q}`);
     },
     live() {
         return axios_instance.get(`/live`);
@@ -32,11 +26,15 @@ export default {
     video(id) {
         return axios_instance.get(`/videos/${id}`);
     },
-    clips(channel_id, limit = 30, offset = 0) {
-        return axios_instance.get(`/clips?channel_id=${channel_id}&include_channel=1&limit=${limit}&offset=${offset}`);
+    clips(query) {
+        const q = querystring.stringify(query);
+        return axios_instance.get(`/clips?${q}`);
     },
-    mentions(channel_id, limit = 30, offset = 0) {
-        return axios_instance.get(`/mentions/channel/${channel_id}?include_channel=1&limit=${limit}&offset=${offset}`);
+    mentions(query) {
+        const channel_id = query.channel_id;
+        delete query["channel_id"];
+        const q = querystring.stringify(query);
+        return axios_instance.get(`/mentions/channel/${channel_id}?${q}`);
     },
 };
 
