@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 // TODO: change to load on request
 import Home from "../views/Home.vue";
 import Channel from "../views/Channel.vue";
-import ChannelList from "../views/ChannelList.vue";
+import Channels from "../views/Channels.vue";
 import ChannelVideos from "../views/channel_views/ChannelVideos";
 import ChannelAbout from "../views/channel_views/ChannelAbout";
 import Watch from "../views/Watch.vue";
@@ -44,8 +44,8 @@ const routes = [
     },
     {
         path: "/channel/",
-        name: "Channel List",
-        component: ChannelList,
+        name: "Channels",
+        component: Channels,
     },
     {
         path: "/watch/:id",

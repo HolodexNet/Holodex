@@ -4,6 +4,7 @@
         :class="[
             { 'video-card-fluid': fluid, 'video-card-horizontal': horizontal },
             'video-card',
+            'transparent',
         ]"
         :to="`/watch/${video.id}`"
     >
@@ -55,10 +56,6 @@
                     <span v-else-if="video.status === 'live'">
                         • {{ formatViewers(video.live_viewers) }} Watching
                     </span>
-                    <!-- <br/>
-                    <span v-if="video.channel_mentions">
-                        {{ video.channel_mentions.map(c => c.name_en.split(" ")[1]).join(", ") }}
-                    </span> -->
                 </v-list-item-subtitle>
             </v-list-item-content>
         </v-list-item>

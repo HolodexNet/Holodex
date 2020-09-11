@@ -1,7 +1,7 @@
 <template>
     <v-container class="home" fluid>
         <v-row>
-            <v-col class="mx-8">
+            <v-col class="px-lg-10">
                 <div class="text-h6">Live</div>
                 <v-divider />
                 <VideoCardList
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import VideoCardList from "@/components/VideoCardList.vue";
 import api from "@/utils/backend-api";
 import moment from "moment";
@@ -66,7 +65,7 @@ export default {
     methods: {
         loadNext($state) {
             api.videos({
-                limit: 30,
+                limit: this.pageLength,
                 offset: this.currentOffset,
                 include_channel: 1,
                 status: "tagged",

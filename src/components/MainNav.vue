@@ -12,7 +12,7 @@
                 </v-list-item>
                 <v-list-item link :to="'/channel'">
                     <v-list-item-action>
-                        <!-- <v-icon>mdi-home</v-icon> -->
+                        <v-icon>mdi-animation-play</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>Channels</v-list-item-title>
@@ -20,7 +20,7 @@
                 </v-list-item>
                 <v-list-item link>
                     <v-list-item-action>
-                        <!-- <v-icon>mdi-home</v-icon> -->
+                        <v-icon>mdi-help-circle</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>FAQ</v-list-item-title>
@@ -37,7 +37,7 @@
                     :to="'/'"
                     style="text-decoration: none; color: white"
                 >
-                    Holoclips
+                    HoloSubs
                 </router-link>
             </v-toolbar-title>
             <v-spacer></v-spacer>

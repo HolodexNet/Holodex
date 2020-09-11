@@ -4,9 +4,9 @@ import Vuetify from "vuetify/lib";
 Vue.use(Vuetify);
 
 export default new Vuetify({
-    // theme: {
-    //     dark: true,
-    // },
+    theme: {
+        dark: true,
+    },
     breakpoint: {
         thresholds: {
             xs: 0,

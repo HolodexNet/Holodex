@@ -1,5 +1,5 @@
 <template>
-    <v-container class="home">
+    <v-container>
         <v-row>
             <v-col
                 v-for="channel in channels"
