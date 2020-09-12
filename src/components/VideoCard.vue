@@ -32,7 +32,7 @@
                 v-if="includeChannel && withAvatar && !horizontal && video.channel"
             >
                 <v-list-item-avatar>
-                    <v-img :src="video.channel.photo"></v-img>
+                    <ChannelImg :src="video.channel.photo" />
                 </v-list-item-avatar>
             </router-link>
             <v-list-item-content class="pa-0">
@@ -64,10 +64,13 @@
 
 <script>
 import moment from "moment";
-// eslint-disable-next-line no-unused-vars
-import { img_placeholder } from "@/utils/consts";
+import ChannelImg from "@/components/ChannelImg";
+import { video_thumbnail_array } from "@/utils/image-utils";
 export default {
     name: "VideoCard",
+    components: {
+        ChannelImg,
+    },
     data() {
         return {
             // height: 118,
@@ -101,6 +104,7 @@ export default {
     },
     created() {
         //check if video has channel info, else set includechannel to false
+        console.log(video_thumbnail_array(this.video.yt_video_key));
     },
     computed: {
         formattedTime() {
@@ -121,9 +125,6 @@ export default {
                 : moment
                       .utc(this.video.duration_secs * 1000)
                       .format("HH:mm:ss");
-        },
-        img_placeholder() {
-            return img_placeholder;
         },
     },
     methods: {

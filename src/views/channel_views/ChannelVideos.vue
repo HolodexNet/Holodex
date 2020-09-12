@@ -27,15 +27,11 @@ export default {
         return {
             channel_id: null,
             videos: [],
-            // currentPage: 1,
             totalVideos: 1,
             videoPerPage: 30,
         };
     },
     created() {
-        // console.log(this.$route);
-        // this.currentPage = Number(this.$route.query.page) || 1;
-        console.log("created " + this.currentPage);
         this.channel_id = this.$route.params.id;
         this.loadTabContent();
     },
@@ -50,11 +46,9 @@ export default {
                 return Number(this.$route.query.page) || 1;
             },
             set(val) {
-                console.log("set " + val);
-                this.$router
-                .push({
+                this.$router.push({
                     query: { ...this.$route.query, page: val },
-                }).catch(() => {});
+                });
             },
         },
     },

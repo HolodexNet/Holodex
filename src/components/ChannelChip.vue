@@ -1,25 +1,23 @@
 <template>
     <v-chip pill :to="`/channel/${channel.id}`">
         <v-avatar left>
-            <v-img :src="photo"></v-img>
+            <ChannelImg :src="channel.photo" :size="32" />
         </v-avatar>
         {{ channel.name }}
     </v-chip>
 </template>
 
 <script>
-import { channel_photo_resize } from "@/utils/image-utils";
+import ChannelImg from "@/components/ChannelImg";
 export default {
     name: "ChannelChip",
+    components: {
+        ChannelImg,
+    },
     props: {
         channel: {
             type: Object,
             required: true,
-        },
-    },
-    computed: {
-        photo() {
-            return channel_photo_resize(this.channel.photo, 32);
         },
     },
 };

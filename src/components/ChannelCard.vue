@@ -2,7 +2,7 @@
     <v-card class="rounded-sm" tile :to="`channel/${channel.id}`">
         <v-list-item three-line>
             <v-list-item-avatar tile size="100">
-                <v-img :src="photo" />
+                <ChannelImg :src="channel.photo" :size="100" />
             </v-list-item-avatar>
             <v-list-item-content>
                 <v-list-item-title>
@@ -47,9 +47,13 @@
 </template>
 
 <script>
-import { channel_photo_resize } from "@/utils/image-utils";
+import ChannelImg from "@/components/ChannelImg";
+
 export default {
     name: "ChannelCard",
+    components: {
+        ChannelImg,
+    },
     props: {
         channel: {
             required: true,
@@ -60,11 +64,6 @@ export default {
             type: Boolean,
         },
     },
-    computed: {
-        photo() {
-            return channel_photo_resize(this.channel.photo, 100);
-        }
-    }
 };
 </script>
 

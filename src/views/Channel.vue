@@ -46,7 +46,6 @@
 </template>
 
 <script>
-// import VideoCardList from "@/components/VideoCardList";
 import api from "@/utils/backend-api";
 
 export default {
@@ -89,5 +88,9 @@ export default {
 
 .channel-banner {
     height: calc(100vw / 6.2 - 1px);
+}
+
+.v-slide-group__prev--disabled {
+    display: none !important;
 }
 </style>
