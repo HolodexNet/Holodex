@@ -1,12 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 // TODO: change to load on request
-import Home from "../views/Home.vue";
-import Channel from "../views/Channel.vue";
-import Channels from "../views/Channels.vue";
-import ChannelVideos from "../views/channel_views/ChannelVideos";
-import ChannelAbout from "../views/channel_views/ChannelAbout";
-import Watch from "../views/Watch.vue";
+const Home = () => import("../views/Home.vue");
+const Channel = () => import("../views/Channel.vue");
+const Channels = () => import("../views/Channels.vue");
+const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
+const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
+const Watch = () => import("../views/Watch.vue");
 
 Vue.use(VueRouter);
 
