@@ -18,7 +18,7 @@
             <v-btn
                 icon
                 @click="expanded = !expanded"
-                v-if="limit > 0 && videos.length > limit"
+                v-if="limitRows > 0 && videos.length > limitRows"
             >
                 <v-icon>
                     {{ this.expanded ? "mdi-chevron-up" : "mdi-chevron-down" }}
@@ -78,7 +78,7 @@ export default {
                 };
             },
         },
-        limit: {
+        limitRows: {
             requird: false,
             type: Number,
             default: 0,
@@ -97,10 +97,10 @@ export default {
     mounted() {},
     computed: {
         spliced() {
-            if (this.limit <= 0 || this.expanded) return this.videos;
-            const adjusted_limit =
-                this.colSize * 2 > this.limit ? this.colSize * 2 : this.limit;
-            return this.videos.slice(0).splice(0, adjusted_limit);
+            if (this.limitRows <= 0 || this.expanded) return this.videos;
+            return this.videos
+                .slice(0)
+                .splice(0, this.limitRows * this.colSize);
         },
         colSize() {
             if (this.horizontal) return 1;

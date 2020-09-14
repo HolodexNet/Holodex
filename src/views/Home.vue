@@ -11,11 +11,11 @@
                     :cols="{
                         xs: 1,
                         sm: 2,
-                        md: 4,
+                        md: 3,
                         lg: 4,
-                        xl: 6,
+                        xl: 5,
                     }"
-                    :limit="8"
+                    :limitRows="2"
                 >
                 </VideoCardList>
                 <div class="text-h6">Recent Videos</div>
