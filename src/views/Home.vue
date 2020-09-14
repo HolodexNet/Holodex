@@ -41,7 +41,7 @@
 <script>
 import VideoCardList from "@/components/VideoCardList.vue";
 import api from "@/utils/backend-api";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default {
     name: "Home",
@@ -64,7 +64,7 @@ export default {
             this.live = res.data.live
                 .concat(res.data.upcoming)
                 .filter(live =>
-                    moment(live.live_schedule).isBefore(moment().add(2, "w"))
+                    dayjs(live.live_schedule).isBefore(dayjs().add(2, "w"))
                 )
                 .splice(0, 16);
         });

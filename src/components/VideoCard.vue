@@ -70,7 +70,11 @@
 </template>
 
 <script>
-import moment from "moment";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(relativeTime);
+dayjs.extend(utc);
 import ChannelImg from "@/components/ChannelImg";
 import { video_thumbnails } from "@/utils/image-utils";
 export default {
@@ -131,9 +135,7 @@ export default {
         formattedDuration() {
             return this.video.duration_secs > 84600
                 ? "VERY LONG"
-                : moment
-                      .utc(this.video.duration_secs * 1000)
-                      .format("HH:mm:ss");
+                : dayjs.utc(this.video.duration_secs * 1000).format("HH:mm:ss");
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
@@ -150,7 +152,7 @@ export default {
     },
     methods: {
         formatFromNow(time) {
-            return moment(time).fromNow();
+            return dayjs(time).fromNow();
         },
         formatViewers(viewers) {
             return viewers > 1000 ? viewers / 1000 + "K" : viewers;

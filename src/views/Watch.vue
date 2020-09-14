@@ -110,7 +110,7 @@
 import api from "@/utils/backend-api";
 import VideoCardList from "@/components/VideoCardList";
 import ChannelChip from "@/components/ChannelChip";
-import moment from "moment";
+import dayjs from "dayjs";
 import ChannelInfo from "@/components/ChannelInfo";
 export default {
     name: "Watch",
@@ -143,7 +143,7 @@ export default {
             });
         },
         formatTime(t) {
-            return moment(t).format("MMM DD, YYYY");
+            return dayjs(t).format("MMM DD, YYYY");
         },
     },
     computed: {
