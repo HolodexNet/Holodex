@@ -24,7 +24,7 @@
                 </v-tabs>
             </v-container>
         </v-card>
-        <v-container class="channel pa-0" style="min-height: 85vh">
+        <v-container class="channel" style="min-height: 85vh">
             <router-view :channel="channel"></router-view>
         </v-container>
     </v-container>

@@ -7,48 +7,66 @@
         <v-divider />
         <v-container fluid class="pa-0">
             <ChannelList :channels="channels" />
+            <infinite-loading
+                @infinite="loadData"
+                style="min-height: 10px;"
+                :identifier="infiniteId"
+            ></infinite-loading>
         </v-container>
     </v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-// import ChannelCard from "@/components/ChannelCard.vue";
 import ChannelList from "@/components/ChannelList";
 import api from "@/utils/backend-api";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
     name: "Home",
     components: {
-        // ChannelCard,
         ChannelList,
+        InfiniteLoading,
     },
     data() {
         return {
             channels: [],
             category: 0,
+            currentPage: 0,
+            perPage: 25,
+            infiniteId: +new Date(),
         };
     },
     created() {
-        this.loadData();
+        // this.loadData();
     },
     watch: {
         category() {
-            this.loadData();
+            this.channels = [];
+            this.currentPage = 0;
+            this.infiniteId += 1;
         },
     },
     methods: {
-        loadData() {
-            this.channels = [];
-            if (this.category == 1) {
-                api.subberChannels().then(res => {
-                    this.channels = res.data.channels;
+        loadData($state) {
+            api.channels(
+                this.perPage,
+                this.currentPage * this.perPage,
+                this.category == 1 ? "subber" : "vtuber"
+            )
+                .then(res => {
+                    console.log(res.data.channels);
+                    if (res.data.channels.length) {
+                        this.channels = this.channels.concat(res.data.channels);
+                        this.currentPage++;
+                        $state.loaded();
+                    } else {
+                        $state.complete();
+                    }
+                })
+                .catch(e => {
+                    console.log(e);
+                    $state.error();
                 });
-            } else {
-                api.vtuberChannels().then(res => {
-                    this.channels = res.data.channels;
-                });
-            }
         },
     },
 };

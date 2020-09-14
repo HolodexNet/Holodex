@@ -94,10 +94,7 @@ export default {
             this.$emit("infinite", $state);
         },
     },
-    mounted () {
-        // assign vuetify breakpoints after mount, because there is no screensize available in ssr
-        console.log(this.$vuetify.breakpoint.name);
-    },
+    mounted() {},
     computed: {
         spliced() {
             return this.limit > 0 && !this.expanded
