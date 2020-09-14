@@ -17,7 +17,7 @@ export function video_thumbnails(yt_video_key, useWebP) {
         standard: `${base}/${yt_video_key}/sddefault.${ext}`,
         // 1280w
         maxres: `${base}/${yt_video_key}/maxresdefault.${ext}`,
-        hq720: `${base}/${yt_video_key}/hq720.jpg`,
+        hq720: `${base}/${yt_video_key}/hq720.${ext}`,
     };
 }
 
