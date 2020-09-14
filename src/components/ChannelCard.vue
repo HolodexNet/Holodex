@@ -1,5 +1,9 @@
 <template>
-    <v-card class="rounded-sm" tile :to="`channel/${channel.id}`">
+    <v-card
+        class="rounded-sm"
+        tile
+        @click="$router.push(`/channel/${channel.id}`)"
+    >
         <v-list-item three-line>
             <v-list-item-avatar tile size="100">
                 <ChannelImg :src="channel.photo" :size="100" />

@@ -1,19 +1,13 @@
 <template>
     <v-container>
-        <!-- <v-row>
-            <v-col
-                v-for="channel in channels"
-                :key="channel.id"
-                cols="12"
-                sm="6"
-                md="6"
-                lg="4"
-                xl="3"
-            >
-                <ChannelCard :channel="channel"></ChannelCard>
-            </v-col>
-        </v-row> -->
-        <ChannelList :channels="channels" />
+        <v-tabs v-model="category">
+            <v-tab>Vtuber</v-tab>
+            <v-tab>Subber</v-tab>
+        </v-tabs>
+        <v-divider />
+        <v-container fluid class="pa-0">
+            <ChannelList :channels="channels" />
+        </v-container>
     </v-container>
 </template>
 
@@ -32,12 +26,30 @@ export default {
     data() {
         return {
             channels: [],
+            category: 0,
         };
     },
     created() {
-        api.vtuberChannels().then(res => {
-            this.channels = res.data.channels;
-        });
+        this.loadData();
+    },
+    watch: {
+        category() {
+            this.loadData();
+        },
+    },
+    methods: {
+        loadData() {
+            this.channels = [];
+            if (this.category == 1) {
+                api.subberChannels().then(res => {
+                    this.channels = res.data.channels;
+                });
+            } else {
+                api.vtuberChannels().then(res => {
+                    this.channels = res.data.channels;
+                });
+            }
+        },
     },
 };
 </script>

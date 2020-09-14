@@ -2,12 +2,12 @@ import axios from "axios";
 const querystring = require('querystring');
 
 export default {
-    vtuberChannels(limit = 100, offset = 0) {
+    vtuberChannels(limit = 25, offset = 0) {
         return axios_instance.get(
             `/channels?type=vtuber&limit=${limit}&offset=${offset}&sort=subscriber_count&order=desc`
         );
     },
-    subberChannels(limit = 100, offset = 0) {
+    subberChannels(limit = 25, offset = 0) {
         return axios_instance.get(
             `/channels?type=subber&limit=${limit}&offset=${offset}&sort=subscriber_count&order=desc`
         );

@@ -88,7 +88,7 @@
                     class="text-subtitle-2 ma-2"
                     v-if="video_mentions.length > 0"
                 >
-                    Source
+                    Related
                 </div>
                 <VideoCardList
                     :videos="video_mentions"

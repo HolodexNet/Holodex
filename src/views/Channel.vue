@@ -8,18 +8,6 @@
                         <v-list-item-avatar size="80">
                             <v-img :src="channel.photo"></v-img>
                         </v-list-item-avatar>
-                        <!-- <v-list-item-content>
-                            <v-list-item-title class="text-h5">
-                                {{ channel.name }}
-                                <div class="text-subtitle-1">
-                                    {{ channel.name_en }}
-                                </div>
-                            </v-list-item-title>
-                            <v-list-item-subtitle>
-                                {{ channel.subscriber_count / 1000 }}K Subscribers
-                            </v-list-item-subtitle>
-                        </v-list-item-content> -->
-                        <!-- TODO: fix size!!! -->
                         <ChannelInfo :channel="channel" />
                         <v-list-item-action class="v-list-item-horizontal">
                             <ChannelSocials :channel="channel" />

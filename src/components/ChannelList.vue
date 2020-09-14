@@ -1,40 +1,57 @@
 <template>
-    <v-container>
-        <v-list three-line class="pa-0">
-            <template v-for="(channel, index) in channels">
-                <v-list-item
-                    :key="channel.id"
-                    @click="$router.push(`/channel/${channel.id}`)"
-                >
-                    <v-list-item-avatar size="50">
-                        <ChannelImg :src="channel.photo" size="50" />
-                    </v-list-item-avatar>
-                    <ChannelInfo :channel="channel" />
-                    <v-list-item-action class="v-list-item-horizontal">
-                        <ChannelSocials :channel="channel" />
-                    </v-list-item-action>
-                </v-list-item>
-                <v-divider :key="'divider-' + index"></v-divider>
-            </template>
-        </v-list>
-    </v-container>
+    <v-row v-if="asCards">
+        <v-col
+            v-for="channel in channels"
+            :key="channel.id"
+            cols="12"
+            sm="6"
+            md="6"
+            lg="4"
+            xl="3"
+        >
+            <ChannelCard :channel="channel"></ChannelCard>
+        </v-col>
+    </v-row>
+    <v-list three-line class="pa-0" v-else>
+        <template v-for="(channel, index) in channels">
+            <v-list-item
+                :key="channel.id"
+                @click="$router.push(`/channel/${channel.id}`)"
+            >
+                <v-list-item-avatar size="55">
+                    <ChannelImg :src="channel.photo" size="55" />
+                </v-list-item-avatar>
+                <ChannelInfo :channel="channel" />
+                <v-list-item-action class="v-list-item-horizontal">
+                    <ChannelSocials :channel="channel" />
+                </v-list-item-action>
+            </v-list-item>
+            <v-divider :key="'divider-' + index"></v-divider>
+        </template>
+    </v-list>
 </template>
 
 <script>
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelSocials from "@/components/ChannelSocials";
+import ChannelCard from "@/components/ChannelCard";
 export default {
     name: "ChannelList",
     components: {
         ChannelImg,
         ChannelInfo,
         ChannelSocials,
+        ChannelCard,
     },
     props: {
         channels: {
             type: Array,
             required: true,
+        },
+        asCards: {
+            type: Boolean,
+            default: false,
         },
     },
 };
