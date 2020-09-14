@@ -11,10 +11,10 @@
 //   $grid-breakpoints
 // );
 
-$grid-breakpoints: map-merge($grid-breakpoints, (
-  xs: 0,
-  sm: 600px,
-  md: 960px,
-  lg: 1300px - 16px,
-  xl: 1950px - 16px
-))
+// $grid-breakpoints: map-merge($grid-breakpoints, (
+//   xs: 0,
+//   sm: 600px,
+//   md: 960px,
+//   lg: 1300px - 16px,
+//   xl: 1950px - 16px
+// ))

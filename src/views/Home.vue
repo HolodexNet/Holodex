@@ -9,11 +9,11 @@
                     includeChannel
                     withAvatar
                     :cols="{
-                        cols: 12,
-                        sm: 6,
+                        xs: 1,
+                        sm: 2,
                         md: 4,
-                        lg: 3,
-                        xl: 3,
+                        lg: 4,
+                        xl: 4,
                     }"
                     :limit="8"
                 >
@@ -25,6 +25,13 @@
                     includeChannel
                     infiniteLoad
                     @infinite="loadNext"
+                    :cols="{
+                        xs: 1,
+                        sm: 3,
+                        md: 4,
+                        lg: 6,
+                        xl: 8,
+                    }"
                 ></VideoCardList>
             </v-col>
         </v-row>

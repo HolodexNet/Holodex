@@ -2,8 +2,14 @@
     <div>
         <VideoCardList
             :videos="videos"
-            dense
             :includeChannel="hasChannelInfo"
+            :cols="{
+                xs: 1,
+                sm: 3,
+                md: 4,
+                lg: 5,
+                xl: 6,
+            }"
         />
         <v-pagination
             v-if="videos.length > 0"

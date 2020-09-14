@@ -3,12 +3,7 @@
         <v-col
             v-for="video in spliced"
             :key="video.id"
-            :class="['video-col']"
-            :cols="cols.cols"
-            :sm="cols.sm"
-            :md="cols.md"
-            :lg="cols.lg"
-            :xl="cols.xl"
+            :class="['video-col', `video-${colSize}`]"
         >
             <VideoCard
                 :video="video"
@@ -16,6 +11,7 @@
                 :includeChannel="includeChannel"
                 :horizontal="horizontal"
                 :withAvatar="withAvatar"
+                :colSize="colSize"
             />
         </v-col>
         <div class="text-center" style="width: 100%">
@@ -74,11 +70,11 @@ export default {
             type: Object,
             default: () => {
                 return {
-                    cols: 12,
-                    sm: 4,
-                    md: 3,
-                    lg: 2,
-                    xl: 2,
+                    xs: 1,
+                    sm: 3,
+                    md: 4,
+                    lg: 6,
+                    xl: 8,
                 };
             },
         },
@@ -98,11 +94,19 @@ export default {
             this.$emit("infinite", $state);
         },
     },
+    mounted () {
+        // assign vuetify breakpoints after mount, because there is no screensize available in ssr
+        console.log(this.$vuetify.breakpoint.name);
+    },
     computed: {
         spliced() {
             return this.limit > 0 && !this.expanded
                 ? this.videos.slice(0).splice(0, this.limit)
                 : this.videos;
+        },
+        colSize() {
+            if (this.horizontal) return 1;
+            return this.cols[this.$vuetify.breakpoint.name];
         },
     },
 };
@@ -112,5 +116,50 @@ export default {
 .video-col {
     display: flex;
     justify-content: center;
+}
+
+.video-1 {
+    width: 100;
+    max-width: 100%;
+    flex-basis: 100%;
+}
+
+.video-2 {
+    width: 50%;
+    max-width: 50%;
+    flex-basis: 50%;
+}
+.video-3 {
+    width: 33.3%;
+    max-width: 33.3%;
+    flex-basis: 33.3%;
+}
+.video-4 {
+    width: 25%;
+    max-width: 25%;
+    flex-basis: 25%;
+}
+.video-5 {
+    width: 20%;
+    max-width: 20%;
+    flex-basis: 20%;
+}
+
+.video-6 {
+    width: 16.666%;
+    max-width: 16.666%;
+    flex-basis: 16.666%;
+}
+
+.video-7 {
+    width: 14.285%;
+    max-width: 14.285%;
+    flex-basis: 14.285%;
+}
+
+.video-8 {
+    width: 12.5%;
+    max-width: 12.5%;
+    flex-basis: 12.5%;
 }
 </style>

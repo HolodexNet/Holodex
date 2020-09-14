@@ -10,7 +10,7 @@
     >
         <v-img
             class="white--text align-end"
-            :src="`https://i.ytimg.com/vi/${video.yt_video_key}/hqdefault.jpg`"
+            :src="imageSrc"
             :aspect-ratio="16 / 9"
             :width="horizontal ? '150px' : '100%'"
         >
@@ -29,7 +29,9 @@
         <v-list-item three-line class="pa-0">
             <router-link
                 :to="`/channel/${video.channel.id}`"
-                v-if="includeChannel && withAvatar && !horizontal && video.channel"
+                v-if="
+                    includeChannel && withAvatar && !horizontal && video.channel
+                "
             >
                 <v-list-item-avatar>
                     <ChannelImg :src="video.channel.photo" />
@@ -50,7 +52,12 @@
                     <span :class="'text-' + this.video.status">
                         {{ formattedTime }}
                     </span>
-                    <span v-if="video.video_mentions && video.video_mentions.length > 0">
+                    <span
+                        v-if="
+                            video.video_mentions &&
+                                video.video_mentions.length > 0
+                        "
+                    >
                         • {{ video.video_mentions.length }} Clips
                     </span>
                     <span v-else-if="video.status === 'live'">
@@ -101,11 +108,13 @@ export default {
             type: Boolean,
             default: false,
         },
+        colSize: {
+            required: false,
+            type: Number,
+            default: 1,
+        },
     },
-    created() {
-        //check if video has channel info, else set includechannel to false
-        console.log(video_thumbnail_array(this.video.yt_video_key));
-    },
+    created() {},
     computed: {
         formattedTime() {
             switch (this.video.status) {
@@ -125,6 +134,18 @@ export default {
                 : moment
                       .utc(this.video.duration_secs * 1000)
                       .format("HH:mm:ss");
+        },
+        imageSrc() {
+            // load different images based on current column size, which correspond to breakpoints
+            const srcs = video_thumbnail_array(this.video.yt_video_key);
+            if (this.horizontal) return srcs["medium"];
+            if (this.colSize < 4) {
+                return srcs["hq720"];
+            } else if (this.colSize <= 8) {
+                return srcs["medium"];
+            } else {
+                return srcs["hq720"];
+            }
         },
     },
     methods: {
@@ -186,6 +207,6 @@ export default {
 }
 
 .name-vtuber {
-    color: #42A5F5 !important;
+    color: #42a5f5 !important;
 }
 </style>
