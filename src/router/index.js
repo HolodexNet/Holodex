@@ -48,13 +48,12 @@ const routes = [
         component: Channels,
     },
     {
-        path: "/channel/subbers",
-        name: "Subbers",
-        component: Channels,
-    },
-    {
         path: "/watch/:id",
         component: Watch,
+    },
+    {
+        path: "*",
+        component: Home,
     },
 ];
 

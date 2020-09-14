@@ -13,7 +13,7 @@
                         sm: 2,
                         md: 4,
                         lg: 4,
-                        xl: 4,
+                        xl: 6,
                     }"
                     :limit="8"
                 >
@@ -29,8 +29,8 @@
                         xs: 1,
                         sm: 3,
                         md: 4,
-                        lg: 6,
-                        xl: 8,
+                        lg: 5,
+                        xl: 6,
                     }"
                 ></VideoCardList>
             </v-col>
@@ -60,7 +60,7 @@ export default {
     },
     created() {
         api.live().then(res => {
-            // get currently live and upcoming lives within then 12 hour
+            // get currently live and upcoming lives within the next 2 week
             this.live = res.data.live
                 .concat(res.data.upcoming)
                 .filter(live =>
@@ -78,9 +78,10 @@ export default {
                 status: "tagged",
             })
                 .then(res => {
-                    if (res.data.videos) {
+                    if (res.data.videos.length) {
                         this.videos = this.videos.concat(res.data.videos);
                         this.currentOffset += this.pageLength;
+                        console.log(this.videos);
                         $state.loaded();
                     } else {
                         $state.complete();

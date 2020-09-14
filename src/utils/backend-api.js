@@ -1,8 +1,10 @@
 import axios from "axios";
-const querystring = require('querystring');
+import axiosRetry from "axios-retry";
+
+const querystring = require("querystring");
 
 export default {
-    channels(limit = 25, offset = 0, type="vtuber") {
+    channels(limit = 25, offset = 0, type = "vtuber") {
         return axios_instance.get(
             `/channels?type=${type}&limit=${limit}&offset=${offset}&sort=subscriber_count&order=desc`
         );
@@ -38,5 +40,13 @@ export const axios_instance = axios.create({
         process.env.NODE_ENV === "development"
             ? `http://mythra.local:2434/v1`
             : `/api/v1`,
-    timeout: 50000,
+    retries: 3,
+    retryDelay: axiosRetry.exponentialDelay,
+    retryCondition: error => {
+        return (
+            axiosRetry.isNetworkOrIdempotentRequestError(error) ||
+            error.code === "ECONNABORTED"
+        );
+    },
+    shouldResetTimeout: true,
 });

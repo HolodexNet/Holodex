@@ -27,7 +27,7 @@
             <infinite-loading
                 v-if="infiniteLoad"
                 @infinite="emitInfinite"
-                :distance="10"
+                :distance="50"
                 style="min-height: 10px;"
             ></infinite-loading>
         </div>
@@ -97,9 +97,10 @@ export default {
     mounted() {},
     computed: {
         spliced() {
-            return this.limit > 0 && !this.expanded
-                ? this.videos.slice(0).splice(0, this.limit)
-                : this.videos;
+            if (this.limit <= 0 || this.expanded) return this.videos;
+            const adjusted_limit =
+                this.colSize * 2 > this.limit ? this.colSize * 2 : this.limit;
+            return this.videos.slice(0).splice(0, adjusted_limit);
         },
         colSize() {
             if (this.horizontal) return 1;
