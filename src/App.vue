@@ -2,7 +2,7 @@
     <v-app>
         <MainNav />
         <v-main>
-        <!-- <v-main class="grey lighten-5"> -->
+            <!-- <v-main class="grey lighten-5"> -->
             <router-view />
         </v-main>
     </v-app>
@@ -18,5 +18,26 @@ export default {
     data: () => ({
         //
     }),
+    created() {
+        if (!this.$store.testWebP) {
+            this.supportsWebp().then(res => {
+                console.log("webp: " + res);
+                if (!res) this.$store.commit("noWebPSupport");
+            });
+        }
+    },
+    methods: {
+        supportsWebp: async function() {
+            if (!self.createImageBitmap) return false;
+
+            const webpData =
+                "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
+            const blob = await fetch(webpData).then(r => r.blob());
+            return createImageBitmap(blob).then(
+                () => true,
+                () => false
+            );
+        },
+    },
 };
 </script>

@@ -3,20 +3,20 @@ export function channel_photo_resize(photo_url, size) {
     return `${split[0]}=s${size}-c-k-c0x00ffffff-no-rj-mo`;
 }
 
-export function video_thumbnails(yt_video_key, type = "jpg") {
-    const base =
-        type === "webp"
-            ? "https://i.ytimg.com/vi_webp"
-            : "https://i.ytimg.com/vi";
+export function video_thumbnails(yt_video_key, useWebP) {
+    const base = useWebP
+        ? "https://i.ytimg.com/vi_webp"
+        : "https://i.ytimg.com/vi";
+    const ext = useWebP ? "webp" : "jpg";
     return {
         //120w
-        default: `${base}/${yt_video_key}/default.jpg`,
+        default: `${base}/${yt_video_key}/default.${ext}`,
         //320w
-        medium: `${base}/${yt_video_key}/mqdefault.jpg`,
+        medium: `${base}/${yt_video_key}/mqdefault.${ext}`,
         // 640w
-        standard: `${base}/${yt_video_key}/sddefault.jpg`,
+        standard: `${base}/${yt_video_key}/sddefault.${ext}`,
         // 1280w
-        maxres: `${base}/${yt_video_key}/maxresdefault.jpg`,
+        maxres: `${base}/${yt_video_key}/maxresdefault.${ext}`,
         hq720: `${base}/${yt_video_key}/hq720.jpg`,
     };
 }
@@ -26,8 +26,7 @@ export function banner_images(url) {
     return {
         banner:
             base + "w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
-        mobile:
-            base + "w640-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj",
+        mobile: base + "w640-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj",
         // bannerTabletLowImageUrl:
         //     "w1138-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
         tablet:
@@ -44,8 +43,7 @@ export function banner_images(url) {
         //     "w1280-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj",
         // bannerMobileExtraHdImageUrl:
         //     "w1440-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj",
-        tv:
-            base + "w2120-fcrop64=1,00000000ffffffff-k-c0xffffffff-no-nd-rj",
+        tv: base + "w2120-fcrop64=1,00000000ffffffff-k-c0xffffffff-no-nd-rj",
         // bannerTvLowImageUrl:
         //     "w854-fcrop64=1,00000000ffffffff-k-c0xffffffff-no-nd-rj",
         // bannerTvMediumImageUrl:

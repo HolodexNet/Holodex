@@ -139,7 +139,10 @@ export default {
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
-            const srcs = video_thumbnails(this.video.yt_video_key);
+            const srcs = video_thumbnails(
+                this.video.yt_video_key,
+                this.$store.state.canUseWebP
+            );
             if (this.horizontal) return srcs["medium"];
             if (this.colSize < 2) {
                 return srcs["hq720"];

@@ -7,6 +7,8 @@ export default new Vuex.Store({
     state: {
         darkMode: true,
         redirectMode: false,
+        canUseWebP: true,
+        testWebP: false,
     },
     mutations: {
         toggleDarkMode(state) {
@@ -14,6 +16,9 @@ export default new Vuex.Store({
         },
         toggleRedirectMode(state) {
             state.redirectMode = !state.redirectMode;
+        },
+        noWebPSupport(state) {
+            state.canUseWebP = false;
         },
     },
     actions: {},

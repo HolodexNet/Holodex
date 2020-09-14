@@ -101,6 +101,12 @@
                         sm: 6,
                     }"
                 />
+                <div
+                    v-if="video_mentions.length + video_clips.length == 0"
+                    style="text-align: center;"
+                >
+                    No clips or related video yet
+                </div>
             </v-col>
         </v-row>
     </v-container>
