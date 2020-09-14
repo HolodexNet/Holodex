@@ -8,7 +8,7 @@
                         <v-list-item-avatar size="80">
                             <v-img :src="channel.photo"></v-img>
                         </v-list-item-avatar>
-                        <v-list-item-content>
+                        <!-- <v-list-item-content>
                             <v-list-item-title class="text-h5">
                                 {{ channel.name }}
                                 <div class="text-subtitle-1">
@@ -18,21 +18,18 @@
                             <v-list-item-subtitle>
                                 {{ channel.subscriber_count / 1000 }}K Subscribers
                             </v-list-item-subtitle>
-                        </v-list-item-content>
+                        </v-list-item-content> -->
+                        <!-- TODO: fix size!!! -->
+                        <ChannelInfo :channel="channel" />
                         <v-list-item-action class="v-list-item-horizontal">
-                            <v-btn icon large>
-                                <v-icon color="#C4302B">mdi-youtube</v-icon>
-                            </v-btn>
-                            <v-btn icon large>
-                                <v-icon color="#00ACEE">mdi-twitter</v-icon>
-                            </v-btn>
+                            <ChannelSocials :channel="channel" />
                         </v-list-item-action>
                     </v-list-item>
                 </v-list>
             </v-container>
             <v-container class="pa-0">
                 <v-tabs>
-                    <v-tab :to="`/channel/${channel_id}`">Videos</v-tab>
+                    <v-tab :to="`/channel/${channel_id}/`" exact>Videos</v-tab>
                     <v-tab :to="`/channel/${channel_id}/clips`">Clips</v-tab>
                     <v-tab :to="`/channel/${channel_id}/mentions`">Mentions</v-tab>
                     <v-tab :to="`/channel/${channel_id}/about`">About</v-tab>
@@ -47,9 +44,14 @@
 
 <script>
 import api from "@/utils/backend-api";
-
+import ChannelSocials from "@/components/ChannelSocials";
+import ChannelInfo from "@/components/ChannelInfo";
 export default {
     name: "Channel",
+    components: {
+        ChannelSocials,
+        ChannelInfo,
+    },
     data() {
         return {
             channel_id: null,
@@ -65,9 +67,6 @@ export default {
     },
     methods: {},
     props: {},
-    components: {
-        // VideoCardList,
-    },
 };
 </script>
 

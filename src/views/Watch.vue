@@ -38,18 +38,7 @@
                             <v-list-item-avatar size="50">
                                 <v-img :src="video.channel.photo"></v-img>
                             </v-list-item-avatar>
-                            <v-list-item-content>
-                                <v-list-item-title>
-                                    {{ video.channel.name }}
-                                </v-list-item-title>
-                                <v-list-item-subtitle>
-                                    {{ video.channel.name_en }}
-                                </v-list-item-subtitle>
-                                <v-list-item-subtitle>
-                                    {{ video.channel.subscriber_count / 1000 }}K
-                                    subscribers
-                                </v-list-item-subtitle>
-                            </v-list-item-content>
+                            <ChannelInfo :channel="video.channel" />
                         </v-list-item>
                     </v-list>
                     <v-expansion-panels flat>
@@ -122,12 +111,13 @@ import api from "@/utils/backend-api";
 import VideoCardList from "@/components/VideoCardList";
 import ChannelChip from "@/components/ChannelChip";
 import moment from "moment";
-
+import ChannelInfo from "@/components/ChannelInfo";
 export default {
     name: "Watch",
     components: {
         VideoCardList,
         ChannelChip,
+        ChannelInfo,
     },
     data() {
         return {

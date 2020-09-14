@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-row>
+        <!-- <v-row>
             <v-col
                 v-for="channel in channels"
                 :key="channel.id"
@@ -12,19 +12,22 @@
             >
                 <ChannelCard :channel="channel"></ChannelCard>
             </v-col>
-        </v-row>
+        </v-row> -->
+        <ChannelList :channels="channels" />
     </v-container>
 </template>
 
 <script>
 // @ is an alias to /src
-import ChannelCard from "@/components/ChannelCard.vue";
+// import ChannelCard from "@/components/ChannelCard.vue";
+import ChannelList from "@/components/ChannelList";
 import api from "@/utils/backend-api";
 
 export default {
     name: "Home",
     components: {
-        ChannelCard,
+        // ChannelCard,
+        ChannelList,
     },
     data() {
         return {
