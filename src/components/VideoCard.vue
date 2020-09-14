@@ -72,7 +72,7 @@
 <script>
 import moment from "moment";
 import ChannelImg from "@/components/ChannelImg";
-import { video_thumbnail_array } from "@/utils/image-utils";
+import { video_thumbnails } from "@/utils/image-utils";
 export default {
     name: "VideoCard",
     components: {
@@ -137,7 +137,7 @@ export default {
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
-            const srcs = video_thumbnail_array(this.video.yt_video_key);
+            const srcs = video_thumbnails(this.video.yt_video_key);
             if (this.horizontal) return srcs["medium"];
             if (this.colSize < 4) {
                 return srcs["hq720"];

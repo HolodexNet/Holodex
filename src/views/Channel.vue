@@ -1,12 +1,15 @@
 <template>
-    <v-container class="channel-container" fluid>
+    <v-container class="channel-container" fluid v-if="this.channel">
         <v-card>
-            <v-img :src="channel.banner_image" class="channel-banner" />
+            <v-img :src="bannerImage" class="channel-banner" />
             <v-container>
                 <v-list>
                     <v-list-item>
-                        <v-list-item-avatar size="80">
-                            <v-img :src="channel.photo"></v-img>
+                        <v-list-item-avatar :size="avatarSize">
+                            <v-img
+                                :src="channel.photo"
+                                :size="avatarSize"
+                            ></v-img>
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" />
                         <v-list-item-action class="v-list-item-horizontal">
@@ -34,6 +37,8 @@
 import api from "@/utils/backend-api";
 import ChannelSocials from "@/components/ChannelSocials";
 import ChannelInfo from "@/components/ChannelInfo";
+import { banner_images } from "@/utils/image-utils";
+
 export default {
     name: "Channel",
     components: {
@@ -44,7 +49,7 @@ export default {
         return {
             channel_id: null,
             videos: [],
-            channel: {},
+            channel: null,
             tab: 0,
             offset: 0,
         };
@@ -52,6 +57,29 @@ export default {
     created() {
         this.channel_id = this.$route.params.id;
         api.channel(this.channel_id).then(res => (this.channel = res.data));
+    },
+    computed: {
+        bannerImage() {
+            const b_images = banner_images(this.channel.banner_image);
+            switch (this.$vuetify.breakpoint.name) {
+                case "xs":
+                    return b_images["mobile"];
+                case "sm":
+                    return b_images["mobile"];
+                default:
+                    return b_images["tablet"];
+            }
+        },
+        avatarSize() {
+            switch (this.$vuetify.breakpoint.name) {
+                case "xs":
+                    return 60;
+                case "sm":
+                    return 60;
+                default:
+                    return 80;
+            }
+        },
     },
     methods: {},
     props: {},
