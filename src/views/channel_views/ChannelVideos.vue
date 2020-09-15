@@ -37,7 +37,7 @@ export default {
             videoPerPage: 30,
         };
     },
-    created() {
+    mounted() {
         this.channel_id = this.$route.params.id;
         this.loadTabContent();
     },

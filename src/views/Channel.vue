@@ -54,7 +54,7 @@ export default {
             offset: 0,
         };
     },
-    created() {
+    mounted() {
         this.channel_id = this.$route.params.id;
         api.channel(this.channel_id).then(res => (this.channel = res.data));
     },

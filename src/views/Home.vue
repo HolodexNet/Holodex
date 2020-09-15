@@ -17,8 +17,12 @@
                     }"
                     :limitRows="2"
                 >
+                <!-- :style="!live.length ? { 'min-height': '530px' } : ''" -->
                 </VideoCardList>
-                <v-row class="d-flex justify-space-between pa-1">
+                <v-row
+                    class="d-flex justify-space-between pa-1"
+                    v-show="live.length"
+                >
                     <div class="text-h6">Recent Videos</div>
                     <v-btn-toggle v-model="filter" mandatory dense>
                         <v-btn value="both">
@@ -34,6 +38,7 @@
                 </v-row>
                 <v-divider />
                 <VideoCardList
+                    v-if="live.length"
                     :videos="videos"
                     includeChannel
                     infiniteLoad
@@ -74,7 +79,7 @@ export default {
             infiniteId: +new Date(),
         };
     },
-    created() {
+    mounted() {
         api.live().then(res => {
             // get currently live and upcoming lives within the next 2 week
             this.live = res.data.live
