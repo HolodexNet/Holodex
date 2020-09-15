@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-list-item-action :class="{ 'v-list-item-horizontal': !vertical }">
         <v-btn
             v-if="channel.yt_channel_id"
             icon
@@ -28,7 +28,7 @@
             </template>
             <span>Coming soon!</span>
         </v-tooltip>
-    </div>
+    </v-list-item-action>
 </template>
 
 <script>
@@ -38,8 +38,17 @@ export default {
             type: Object,
             required: true,
         },
+        vertical: {
+            type: Boolean,
+            required: false,
+        },
     },
 };
 </script>
 
-<style></style>
+<style>
+.v-list-item-horizontal {
+    flex-direction: row;
+    align-self: center !important;
+}
+</style>

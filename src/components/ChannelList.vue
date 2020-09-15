@@ -15,8 +15,8 @@
     <v-list three-line class="pa-0" v-else>
         <template v-for="(channel, index) in channels">
             <v-list-item
-                :key="channel.id"
                 @click="$router.push(`/channel/${channel.id}`)"
+                :key="channel.id"
             >
                 <v-list-item-avatar size="55">
                     <ChannelImg :src="channel.photo" size="55" />
@@ -25,9 +25,10 @@
                     :channel="channel"
                     :includeVideoCount="includeVideoCount"
                 />
-                <v-list-item-action class="v-list-item-horizontal">
-                    <ChannelSocials :channel="channel" />
-                </v-list-item-action>
+                <ChannelSocials
+                    :channel="channel"
+                    :vertical="$vuetify.breakpoint.name == 'xs'"
+                />
             </v-list-item>
             <v-divider :key="'divider-' + index"></v-divider>
         </template>
@@ -64,9 +65,4 @@ export default {
 };
 </script>
 
-<style>
-.v-list-item-horizontal {
-    flex-direction: row;
-    align-self: center !important;
-}
-</style>
+<style></style>
