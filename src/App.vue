@@ -19,11 +19,11 @@ export default {
         //
     }),
     created() {
-        if (!this.$store.testWebP) {
+        if (!this.$store.testedWebP) {
             this.supportsWebp().then(res => {
-                console.log("webp: " + res);
                 if (!res) this.$store.commit("noWebPSupport");
             });
+            this.$store.commit("testedWebP");
         }
     },
     methods: {

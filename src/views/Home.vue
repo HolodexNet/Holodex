@@ -17,7 +17,7 @@
                     }"
                     :limitRows="2"
                 >
-                <!-- :style="!live.length ? { 'min-height': '530px' } : ''" -->
+                    <!-- :style="!live.length ? { 'min-height': '530px' } : ''" -->
                 </VideoCardList>
                 <v-row
                     class="d-flex justify-space-between pa-1"
@@ -75,7 +75,7 @@ export default {
             currentOffset: 0,
             // TODO: smaller pagelength with mobile/diff breakpoints
             pageLength: 24,
-            filter: "both",
+            // filter: "both",
             infiniteId: +new Date(),
         };
     },
@@ -95,6 +95,16 @@ export default {
             this.videos = [];
             this.currentOffset = 0;
             this.infiniteId++;
+        },
+    },
+    computed: {
+        filter: {
+            get() {
+                return this.$store.state.recentVideoFilter;
+            },
+            set(value) {
+                this.$store.commit("updateRecentVideoFilter", value);
+            },
         },
     },
     methods: {
