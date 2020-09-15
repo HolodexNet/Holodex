@@ -18,13 +18,27 @@
                     :limitRows="2"
                 >
                 </VideoCardList>
-                <div class="text-h6">Recent Videos</div>
+                <v-row class="d-flex justify-space-between pa-1">
+                    <div class="text-h6">Recent Videos</div>
+                    <v-btn-toggle v-model="filter" mandatory dense>
+                        <v-btn value="both">
+                            Both
+                        </v-btn>
+                        <v-btn value="vtuber">
+                            Official
+                        </v-btn>
+                        <v-btn value="subber">
+                            Clips
+                        </v-btn>
+                    </v-btn-toggle>
+                </v-row>
                 <v-divider />
                 <VideoCardList
                     :videos="videos"
                     includeChannel
                     infiniteLoad
                     @infinite="loadNext"
+                    :infiniteId="infiniteId"
                     :cols="{
                         xs: 1,
                         sm: 3,
@@ -56,6 +70,8 @@ export default {
             currentOffset: 0,
             // TODO: smaller pagelength with mobile/diff breakpoints
             pageLength: 24,
+            filter: "both",
+            infiniteId: +new Date(),
         };
     },
     created() {
@@ -69,13 +85,22 @@ export default {
                 .splice(0, 16);
         });
     },
+    watch: {
+        filter() {
+            this.videos = [];
+            this.currentOffset = 0;
+            this.infiniteId++;
+        },
+    },
     methods: {
         loadNext($state) {
+            console.log(this.filter);
             api.videos({
                 limit: this.pageLength,
                 offset: this.currentOffset,
                 include_channel: 1,
                 status: "tagged",
+                ...(this.filter !== "both" && { type: this.filter }),
             })
                 .then(res => {
                     if (res.data.videos.length) {

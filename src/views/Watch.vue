@@ -27,14 +27,19 @@
                             ></ChannelChip>
                         </div>
                         <!-- <div>
-                            <span v-for="tag in tags" :key="tag.id">
+                            <v-chip
+                                v-for="tag in tags"
+                                :key="tag.id"
+                                label
+                                class="ma-2"
+                            >
                                 #{{ tag.name }}
-                            </span>
+                            </v-chip>
                         </div> -->
                     </v-card-text>
                     <v-divider />
                     <v-list two-line>
-                        <v-list-item>
+                        <v-list-item :to="`/channel/${video.channel.id}`">
                             <v-list-item-avatar size="50">
                                 <v-img :src="video.channel.photo"></v-img>
                             </v-list-item-avatar>

@@ -6,7 +6,11 @@
         </v-tabs>
         <v-divider />
         <v-container fluid class="pa-0">
-            <ChannelList :channels="channels" />
+            <ChannelList
+                :channels="channels"
+                :includeSocials="category == 0"
+                includeVideoCount
+            />
             <infinite-loading
                 @infinite="loadData"
                 style="min-height: 10px;"

@@ -27,8 +27,9 @@
             <infinite-loading
                 v-if="infiniteLoad"
                 @infinite="emitInfinite"
-                :distance="50"
+                :distance="100"
                 style="min-height: 10px;"
+                :identifier="infiniteId"
             ></infinite-loading>
         </div>
     </v-row>
@@ -87,6 +88,10 @@ export default {
             required: false,
             type: Boolean,
             default: false,
+        },
+        infiniteId: {
+            required: false,
+            default: 0,
         },
     },
     methods: {

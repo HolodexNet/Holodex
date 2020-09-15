@@ -65,7 +65,7 @@ export default {
             this.loadTabContent();
         },
         currentPage() {
-            console.log(this.currentPage);
+            // console.log(this.currentPage);
         },
     },
     methods: {

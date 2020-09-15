@@ -21,7 +21,10 @@
                 <v-list-item-avatar size="55">
                     <ChannelImg :src="channel.photo" size="55" />
                 </v-list-item-avatar>
-                <ChannelInfo :channel="channel" />
+                <ChannelInfo
+                    :channel="channel"
+                    :includeVideoCount="includeVideoCount"
+                />
                 <v-list-item-action class="v-list-item-horizontal">
                     <ChannelSocials :channel="channel" />
                 </v-list-item-action>
@@ -50,6 +53,10 @@ export default {
             required: true,
         },
         asCards: {
+            type: Boolean,
+            default: false,
+        },
+        includeVideoCount: {
             type: Boolean,
             default: false,
         },

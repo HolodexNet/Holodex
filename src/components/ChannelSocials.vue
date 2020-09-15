@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-btn
+            v-if="channel.yt_channel_id"
             icon
             sm
             :href="`https://www.youtube.com/channel/${channel.yt_channel_id}`"
@@ -9,6 +10,7 @@
             <v-icon color="#C4302B">mdi-youtube</v-icon>
         </v-btn>
         <v-btn
+            v-if="channel.twitter_link"
             icon
             sm
             :href="`https://twitter.com/${channel.twitter_link}`"
