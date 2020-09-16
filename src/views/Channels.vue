@@ -3,6 +3,7 @@
         <v-tabs v-model="category">
             <v-tab>Vtuber</v-tab>
             <v-tab>Subber</v-tab>
+            <v-tab v-if="this.favorites">Favorites</v-tab>
         </v-tabs>
         <v-divider />
         <v-container fluid class="pa-0">
@@ -34,7 +35,7 @@ export default {
     data() {
         return {
             channels: [],
-            category: 0,
+            category: this.defaultCategory,
             currentPage: 0,
             perPage: 25,
             infiniteId: +new Date(),
@@ -48,6 +49,14 @@ export default {
             this.channels = [];
             this.currentPage = 0;
             this.infiniteId += 1;
+        },
+        defaultCategory() {
+            return this.favorites.length ? 3 : 0;
+        },
+    },
+    computed: {
+        favorites() {
+            return this.$store.state.favorites;
         },
     },
     methods: {

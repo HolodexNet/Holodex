@@ -16,6 +16,7 @@ export default new Vuex.Store({
         canUseWebP: true,
         testedWebP: false,
         recentVideoFilter: "both",
+        favorites: [],
     },
     mutations: {
         toggleDarkMode(state) {
@@ -32,6 +33,15 @@ export default new Vuex.Store({
         },
         updateRecentVideoFilter(state, payload) {
             state.recentVideoFilter = payload;
+        },
+        addFavorite(state, channel_id) {
+            state.favorites.push(channel_id);
+        },
+        removeFavorite(state, channel_id) {
+            const index = state.favorites.indexOf(channel_id);
+            if (index > -1) {
+                state.favorites.splice(index, 1);
+            }
         },
     },
     actions: {},
