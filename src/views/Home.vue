@@ -1,6 +1,6 @@
 <template>
     <v-container class="home" fluid style="height: 100%">
-        <v-row v-if="loading">
+        <v-row v-if="loading" style="height: 100%">
             <v-progress-circular
                 indeterminate
                 size="32"

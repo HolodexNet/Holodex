@@ -1,5 +1,12 @@
 <template>
-    <div>
+    <div style="height: 100%">
+        <v-row v-if="loading">
+            <v-progress-circular
+                indeterminate
+                size="32"
+                class="ma-auto"
+            ></v-progress-circular>
+        </v-row>
         <VideoCardList
             :videos="videos"
             :includeChannel="hasChannelInfo"
@@ -35,6 +42,7 @@ export default {
             videos: [],
             totalVideos: 1,
             videoPerPage: 30,
+            loading: true,
         };
     },
     mounted() {
@@ -72,6 +80,7 @@ export default {
         loadTabContent() {
             this.videos = [];
             let api_req = null;
+            this.loading = true;
             const query = {
                 channel_id: Number(this.channel_id),
                 limit: this.videoPerPage,
@@ -92,6 +101,7 @@ export default {
             api_req.then(res => {
                 this.videos = res.data.videos;
                 this.totalVideos = res.data.total;
+                this.loading = false;
             });
         },
     },

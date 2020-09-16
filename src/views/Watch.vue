@@ -17,15 +17,13 @@
                     <v-card-subtitle>
                         {{ formatTime(video.published_at) }}
                     </v-card-subtitle>
-                    <v-card-text>
-                        <div>
-                            <ChannelChip
-                                v-for="channel in channel_chips"
-                                :channel="channel"
-                                :key="channel.id"
-                                class="ma-1"
-                            ></ChannelChip>
-                        </div>
+                    <v-card-text v-if="channel_chips.length">
+                        <ChannelChip
+                            v-for="channel in channel_chips"
+                            :channel="channel"
+                            :key="channel.id"
+                            class="ma-1"
+                        ></ChannelChip>
                         <!-- <div>
                             <v-chip
                                 v-for="tag in tags"
@@ -44,6 +42,7 @@
                                 <v-img :src="video.channel.photo"></v-img>
                             </v-list-item-avatar>
                             <ChannelInfo :channel="video.channel" />
+                            <ChannelSocials :channel="video.channel" />
                         </v-list-item>
                     </v-list>
                     <v-expansion-panels flat>
@@ -109,6 +108,7 @@
                 <div
                     v-if="video_mentions.length + video_clips.length == 0"
                     style="text-align: center;"
+                    class="pa-2"
                 >
                     No clips or related video yet
                 </div>
@@ -123,12 +123,14 @@ import VideoCardList from "@/components/VideoCardList";
 import ChannelChip from "@/components/ChannelChip";
 import dayjs from "dayjs";
 import ChannelInfo from "@/components/ChannelInfo";
+import ChannelSocials from "@/components/ChannelSocials";
 export default {
     name: "Watch",
     components: {
         VideoCardList,
         ChannelChip,
         ChannelInfo,
+        ChannelSocials,
     },
     data() {
         return {
