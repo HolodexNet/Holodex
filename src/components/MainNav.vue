@@ -4,7 +4,7 @@
             <v-list dense>
                 <v-list-item link :to="'/'">
                     <v-list-item-action>
-                        <v-icon>mdi-home</v-icon>
+                        <v-icon>{{ mdiHome }}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>Home</v-list-item-title>
@@ -12,7 +12,7 @@
                 </v-list-item>
                 <v-list-item link :to="'/channel'">
                     <v-list-item-action>
-                        <v-icon>mdi-animation-play</v-icon>
+                        <v-icon>{{ mdiAnimationPlay }}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>Channels</v-list-item-title>
@@ -20,7 +20,7 @@
                 </v-list-item>
                 <v-list-item link>
                     <v-list-item-action>
-                        <v-icon>mdi-help-circle</v-icon>
+                        <v-icon>{{ mdiHelpCircle }}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>About</v-list-item-title>
@@ -28,7 +28,7 @@
                 </v-list-item>
                 <v-list-item link>
                     <v-list-item-action>
-                        <v-icon>mdi-cog</v-icon>
+                        <v-icon>{{ mdiCog }}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>Settings</v-list-item-title>
@@ -37,9 +37,9 @@
             </v-list>
         </v-navigation-drawer>
         <v-app-bar color="blue lighten-2" app clipped-left flat>
-            <v-app-bar-nav-icon
-                @click.stop="drawer = !drawer"
-            ></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer">
+                <v-icon>{{ mdiMenu }}</v-icon>
+            </v-app-bar-nav-icon>
             <v-toolbar-title class="pr-5">
                 <router-link
                     :to="'/'"
@@ -49,36 +49,39 @@
                 </router-link>
             </v-toolbar-title>
 
-            <!-- <v-spacer></v-spacer> -->
-
-            <!-- <v-btn icon color="white">
-                <v-icon>mdi-magnify</v-icon>
-            </v-btn> -->
-
             <v-text-field
                 flat
                 hide-details
                 label="Search"
-                prepend-inner-icon="mdi-magnify"
+                :prepend-inner-icon="mdiMagnify"
                 solo-inverted
                 style="max-width: 500px"
                 class="ma-auto"
             ></v-text-field>
-            <!-- <v-btn icon color="white">
-                <v-icon>mdi-heart</v-icon>
-            </v-btn> -->
-
-            <!-- <v-btn icon color="white">
-                <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn> -->
         </v-app-bar>
     </div>
 </template>
 
 <script>
+import {
+    mdiHome,
+    mdiAnimationPlay,
+    mdiHelpCircle,
+    mdiCog,
+    mdiMagnify,
+    mdiMenu,
+} from "@mdi/js";
 export default {
     data: () => ({
         drawer: null,
+        ...{
+            mdiHome,
+            mdiAnimationPlay,
+            mdiHelpCircle,
+            mdiCog,
+            mdiMagnify,
+            mdiMenu,
+        },
     }),
 };
 </script>

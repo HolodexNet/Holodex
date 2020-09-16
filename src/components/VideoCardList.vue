@@ -21,7 +21,7 @@
                 v-if="limitRows > 0 && videos.length > limitRows"
             >
                 <v-icon>
-                    {{ this.expanded ? "mdi-chevron-up" : "mdi-chevron-down" }}
+                    {{ this.expanded ? mdiChevronUp : mdiChevronDown }}
                 </v-icon>
             </v-btn>
             <infinite-loading
@@ -38,7 +38,7 @@
 <script>
 import VideoCard from "@/components/VideoCard.vue";
 import InfiniteLoading from "vue-infinite-loading";
-
+import { mdiChevronUp, mdiChevronDown } from "@mdi/js";
 export default {
     name: "VideoCardList",
     components: {
@@ -48,6 +48,7 @@ export default {
     data() {
         return {
             expanded: false,
+            ...{ mdiChevronUp, mdiChevronDown },
         };
     },
     props: {

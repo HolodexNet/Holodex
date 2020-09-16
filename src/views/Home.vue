@@ -24,7 +24,6 @@
                     }"
                     :limitRows="2"
                 >
-                    <!-- :style="!live.length ? { 'min-height': '530px' } : ''" -->
                 </VideoCardList>
                 <v-row
                     class="d-flex justify-space-between pa-1"

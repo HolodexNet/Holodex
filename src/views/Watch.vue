@@ -124,6 +124,8 @@ import ChannelChip from "@/components/ChannelChip";
 import dayjs from "dayjs";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelSocials from "@/components/ChannelSocials";
+import { mdiMenuDown } from "@mdi/js";
+
 export default {
     name: "Watch",
     components: {
@@ -139,6 +141,7 @@ export default {
             video_mentions: [],
             channel_mentions: [],
             tags: [],
+            mdiMenuDown,
             // channel_chips: [],
         };
     },
