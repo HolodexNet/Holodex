@@ -137,7 +137,8 @@ export default {
         },
         formattedDuration() {
             if (!this.video.duration_secs && this.video.live_start) {
-                return dayjs.utc(dayjs().diff(dayjs(this.video.live_start)))
+                return dayjs
+                    .utc(dayjs().diff(dayjs(this.video.live_start)))
                     .format("HH:mm:ss");
             }
 

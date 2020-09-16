@@ -3,19 +3,20 @@
         <v-tabs v-model="category">
             <v-tab>Vtuber</v-tab>
             <v-tab>Subber</v-tab>
-            <v-tab v-if="this.favorites">Favorites</v-tab>
+            <v-tab>Favorites</v-tab>
         </v-tabs>
         <v-divider />
         <v-container fluid class="pa-0">
             <ChannelList
                 :channels="channels"
-                :includeSocials="category == 0"
+                :includeSocials="category == 0 || category == 2"
                 includeVideoCount
             />
             <infinite-loading
                 @infinite="loadData"
                 style="min-height: 10px;"
                 :identifier="infiniteId"
+                v-if="category !== 2"
             ></infinite-loading>
         </v-container>
     </v-container>
@@ -35,23 +36,23 @@ export default {
     data() {
         return {
             channels: [],
-            category: this.defaultCategory,
-            currentPage: 0,
+            category: 0,
+            currentPage: 1,
             perPage: 25,
             infiniteId: +new Date(),
         };
     },
     created() {
-        // this.loadData();
+        this.category = this.$store.state.favorites.length > 0 ? 2 : 0;
     },
     watch: {
         category() {
             this.channels = [];
             this.currentPage = 0;
             this.infiniteId += 1;
-        },
-        defaultCategory() {
-            return this.favorites.length ? 3 : 0;
+            if (this.category == 2) {
+                this.loadFavorites();
+            }
         },
     },
     computed: {
@@ -67,7 +68,6 @@ export default {
                 this.category == 1 ? "subber" : "vtuber"
             )
                 .then(res => {
-                    console.log(res.data.channels);
                     if (res.data.channels.length) {
                         this.channels = this.channels.concat(res.data.channels);
                         this.currentPage++;
@@ -80,6 +80,15 @@ export default {
                     console.log(e);
                     $state.error();
                 });
+        },
+        loadFavorites() {
+            api.channels(100, 0, "vtuber").then(res => {
+                if (res.data.channels.length) {
+                    this.channels = res.data.channels.filter(channel => {
+                        return this.favorites.includes(channel.id);
+                    });
+                }
+            });
         },
     },
 };
