@@ -1,6 +1,13 @@
 <template>
-    <v-container class="home" fluid>
-        <v-row>
+    <v-container class="home" fluid style="height: 100%">
+        <v-row v-if="loading">
+            <v-progress-circular
+                indeterminate
+                size="32"
+                class="ma-auto"
+            ></v-progress-circular>
+        </v-row>
+        <v-row v-show="!loading && live.length > 0">
             <v-col class="px-lg-10">
                 <div class="text-h6">Live</div>
                 <v-divider />
@@ -75,8 +82,8 @@ export default {
             currentOffset: 0,
             // TODO: smaller pagelength with mobile/diff breakpoints
             pageLength: 24,
-            // filter: "both",
             infiniteId: +new Date(),
+            loading: true,
         };
     },
     mounted() {
@@ -88,6 +95,7 @@ export default {
                     dayjs(live.live_schedule).isBefore(dayjs().add(2, "w"))
                 )
                 .splice(0, 16);
+            this.loading = false;
         });
     },
     watch: {

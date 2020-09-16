@@ -27,7 +27,7 @@
                 />
                 <ChannelSocials
                     :channel="channel"
-                    :vertical="$vuetify.breakpoint.name == 'xs'"
+                    :vertical="$vuetify.breakpoint.width < 400"
                 />
             </v-list-item>
             <v-divider :key="'divider-' + index"></v-divider>

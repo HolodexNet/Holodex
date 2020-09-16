@@ -20,7 +20,10 @@
                     </v-progress-circular>
                 </v-row>
             </template>
-            <div class="d-flex justify-end" v-if="video.duration_secs > 0">
+            <div
+                class="d-flex justify-end"
+                v-if="video.duration_secs > 0 || video.live_start"
+            >
                 <span class="video-duration px-2">
                     {{ formattedDuration }}
                 </span>
@@ -133,6 +136,11 @@ export default {
             }
         },
         formattedDuration() {
+            if (!this.video.duration_secs && this.video.live_start) {
+                return dayjs.utc(dayjs().diff(dayjs(this.video.live_start)))
+                    .format("HH:mm:ss");
+            }
+
             return this.video.duration_secs > 84600
                 ? "VERY LONG"
                 : dayjs.utc(this.video.duration_secs * 1000).format("HH:mm:ss");
