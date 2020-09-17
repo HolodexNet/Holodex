@@ -18,7 +18,7 @@
             <v-btn
                 icon
                 @click="expanded = !expanded"
-                v-if="limitRows > 0 && videos.length > limitRows"
+                v-if="limitRows > 0 && videos.length > this.limitRows * this.colSize"
             >
                 <v-icon>
                     {{ this.expanded ? mdiChevronUp : mdiChevronDown }}

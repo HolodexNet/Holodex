@@ -16,7 +16,7 @@ export default new Vuex.Store({
         redirectMode: false,
         canUseWebP: true,
         testedWebP: false,
-        recentVideoFilter: "both",
+        recentVideoFilter: "all",
         liveFilter: "all",
         favorites: [],
         cachedChannels: {},
@@ -34,7 +34,7 @@ export default new Vuex.Store({
         testedWebP(state) {
             state.testedWebP = true;
         },
-        updateRecentVideoFilter(state, payload) {
+        setRecentVideoFilter(state, payload) {
             state.recentVideoFilter = payload;
         },
         setLiveFilter(state, payload) {

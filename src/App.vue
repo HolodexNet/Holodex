@@ -2,7 +2,6 @@
     <v-app>
         <MainNav />
         <v-main>
-            <!-- <v-main class="grey lighten-5"> -->
             <router-view />
         </v-main>
     </v-app>
@@ -15,9 +14,7 @@ export default {
     components: {
         MainNav,
     },
-    data: () => ({
-        //
-    }),
+    // data() {},
     created() {
         if (!this.$store.testedWebP) {
             this.supportsWebp().then(res => {
@@ -25,6 +22,12 @@ export default {
             });
             this.$store.commit("testedWebP");
         }
+        this.$vuetify.theme.dark = this.darkMode;
+    },
+    computed: {
+        darkMode() {
+            return this.$store.state.darkMode;
+        },
     },
     methods: {
         supportsWebp: async function() {

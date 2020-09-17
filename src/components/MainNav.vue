@@ -52,8 +52,23 @@
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" noSubscriberCount />
                     </v-list-item>
+                    <v-list-item
+                        link
+                        @click="favoritesExpanded = !favoritesExpanded"
+                    >
+                        <v-list-item-action>
+                            <v-icon>{{ favoritesExpanded ? mdiChevronUp : mdiChevronDown }}</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Show All</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
                     <v-list-item>
-                        <router-link to="/channel" style="font-size: .825rem">
+                        <router-link
+                            to="/channel"
+                            style="font-size: .825rem"
+                            class="ma-auto"
+                        >
                             Manage Favorites
                         </router-link>
                     </v-list-item>
@@ -95,6 +110,8 @@ import {
     mdiMagnify,
     mdiMenu,
     mdiHeart,
+    mdiChevronUp,
+    mdiChevronDown,
 } from "@mdi/js";
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
@@ -113,7 +130,10 @@ export default {
             mdiMagnify,
             mdiMenu,
             mdiHeart,
+            mdiChevronUp,
+            mdiChevronDown,
         },
+        favoritesExpanded: false,
     }),
     computed: {
         favoritedChannels() {
@@ -128,11 +148,8 @@ export default {
             // check cache for missing favorites
             this.$store.dispatch("checkFavorites");
             // return favorited channel list from cache
-            return Object.values(this.$store.state.cachedChannels)
-                .filter(channel => {
-                    return favs.includes(channel.id);
-                })
-                .splice(0, 10);
+            const arr = Object.values(this.$store.state.cachedChannels).filter(channel => favs.includes(channel.id));
+            return this.favoritesExpanded ? arr : arr.splice(0, 10);
         },
     },
 };
