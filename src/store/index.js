@@ -70,8 +70,8 @@ export default new Vuex.Store({
                     await api.channels(100, 0, "vtuber").then(res => {
                         if (res.data.channels.length) {
                             res.data.channels.forEach(channel => {
-                                if (state.favorites.includes(channel.id))
-                                    commit("addCachedChannel", channel);
+                                // if (state.favorites.includes(channel.id))
+                                commit("addCachedChannel", channel);
                             });
                         }
                     });
