@@ -86,14 +86,12 @@ export default {
                 });
         },
         async loadFavorites() {
-            // for (let id of this.favorites) {
-            //     if (!Object.prototype.hasOwnProperty.call(this.cachedChannels,id)) {
-            //         console.log(`Missing channel_id: ${id}, refreshing cache`);
             await this.$store.dispatch("checkFavorites");
-            //         break;
-            //     }
-            // }
-            this.channels = Object.values(this.cachedChannels);
+            this.channels = Object.values(this.cachedChannels).filter(
+                channel => {
+                    return this.favorites.includes(channel.id);
+                }
+            );
         },
     },
 };
