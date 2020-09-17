@@ -112,6 +112,12 @@ export default {
     }),
     computed: {
         favoritedChannels() {
+            if (
+                !this.$store.state.cachedChannels ||
+                !this.$store.state.favorites
+            )
+                return [];
+
             // get favorites
             const favs = this.$store.state.favorites;
             // check cache for missing favorites

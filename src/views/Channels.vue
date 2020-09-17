@@ -37,7 +37,7 @@ export default {
         return {
             channels: [],
             category: 0,
-            currentPage: 1,
+            currentPage: 0,
             perPage: 25,
             infiniteId: +new Date(),
         };
