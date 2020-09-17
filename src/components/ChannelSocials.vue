@@ -78,7 +78,7 @@ export default {
 
 <style>
 .v-list-item-horizontal {
-    flex-direction: row;
+    flex-direction: row !important;
     align-self: center !important;
 }
 </style>

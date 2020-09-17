@@ -38,6 +38,9 @@
                     <template v-slot:activator>
                         <v-list-item-title>Favorites</v-list-item-title>
                     </template>
+                    <v-list-item v-if="!favoritedChannels.length">
+                        <router-link to="/channel" style="font-size: .825rem">Add Channels</router-link>
+                    </v-list-item>
                     <v-list-item
                         v-for="channel in favoritedChannels"
                         :key="channel.id"
