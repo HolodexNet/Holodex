@@ -17,6 +17,7 @@ export default new Vuex.Store({
         canUseWebP: true,
         testedWebP: false,
         recentVideoFilter: "both",
+        liveFilter: "all",
         favorites: [],
         cachedChannels: {},
     },
@@ -36,6 +37,9 @@ export default new Vuex.Store({
         updateRecentVideoFilter(state, payload) {
             state.recentVideoFilter = payload;
         },
+        setLiveFilter(state, payload) {
+            state.liveFilter = !state.favorites ? "all" : payload;
+        },
         addFavorite(state, channel_id) {
             state.favorites.push(channel_id);
         },
@@ -53,16 +57,16 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        async updateCachedChannels({ commit, state }) {
-            await api.channels(100, 0, "vtuber").then(res => {
-                if (res.data.channels.length) {
-                    res.data.channels.forEach(channel => {
-                        if (state.favorites.includes(channel.id))
-                            commit("addCachedChannel", channel);
-                    });
-                }
-            });
-        },
+        // async updateCachedChannels({ commit, state }) {
+        //     await api.channels(100, 0, "vtuber").then(res => {
+        //         if (res.data.channels.length) {
+        //             res.data.channels.forEach(channel => {
+        //                 if (state.favorites.includes(channel.id))
+        //                     commit("addCachedChannel", channel);
+        //             });
+        //         }
+        //     });
+        // },
         async checkFavorites({ commit, state }) {
             for (let id of state.favorites) {
                 if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id)) {

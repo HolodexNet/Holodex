@@ -38,9 +38,6 @@
                     <template v-slot:activator>
                         <v-list-item-title>Favorites</v-list-item-title>
                     </template>
-                    <v-list-item v-if="!favoritedChannels.length">
-                        <router-link to="/channel" style="font-size: .825rem">Add Channels</router-link>
-                    </v-list-item>
                     <v-list-item
                         v-for="channel in favoritedChannels"
                         :key="channel.id"
@@ -54,6 +51,11 @@
                             <ChannelImg :src="channel.photo" />
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" noSubscriberCount />
+                    </v-list-item>
+                    <v-list-item>
+                        <router-link to="/channel" style="font-size: .825rem">
+                            Manage Favorites
+                        </router-link>
                     </v-list-item>
                 </v-list-group>
             </v-list>

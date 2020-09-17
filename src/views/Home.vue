@@ -9,10 +9,19 @@
         </v-row>
         <v-row v-show="!loading && live.length > 0">
             <v-col class="px-lg-10">
-                <div class="text-h6">Live</div>
-                <v-divider />
+                <v-row class="d-flex justify-space-between pa-1">
+                    <div class="text-h6">Live/Upcoming</div>
+                    <v-btn-toggle v-model="liveFilter" mandatory dense>
+                        <v-btn value="favorites" :disabled="!favorites.length">
+                            Favorites
+                        </v-btn>
+                        <v-btn value="all">
+                            All
+                        </v-btn>
+                    </v-btn-toggle>
+                </v-row>
                 <VideoCardList
-                    :videos="live"
+                    :videos="filteredLiveVideos"
                     includeChannel
                     withAvatar
                     :cols="{
@@ -25,12 +34,16 @@
                     :limitRows="2"
                 >
                 </VideoCardList>
-                <v-row
-                    class="d-flex justify-space-between pa-1"
-                    v-show="live.length"
-                >
+                <v-row v-if="!filteredLiveVideos.length">
+                    <v-col class="ma-auto text-center pa-8">
+                        No one is streaming soon on your favorites. Please check
+                        out the other vtubers!
+                    </v-col>
+                </v-row>
+                <v-divider class="py-2" />
+                <v-row class="d-flex justify-space-between pa-1">
                     <div class="text-h6">Recent Videos</div>
-                    <v-btn-toggle v-model="filter" mandatory dense>
+                    <v-btn-toggle v-model="recentVideoFilter" mandatory dense>
                         <v-btn value="both">
                             Both
                         </v-btn>
@@ -42,9 +55,8 @@
                         </v-btn>
                     </v-btn-toggle>
                 </v-row>
-                <v-divider />
                 <VideoCardList
-                    v-if="live.length"
+                    v-if="!loading"
                     :videos="videos"
                     includeChannel
                     infiniteLoad
@@ -87,13 +99,13 @@ export default {
     },
     mounted() {
         api.live().then(res => {
-            // get currently live and upcoming lives within the next 2 week
-            this.live = res.data.live
-                .concat(res.data.upcoming)
-                .filter(live =>
-                    dayjs(live.live_schedule).isBefore(dayjs().add(2, "w"))
-                )
-                .splice(0, 16);
+            // get currently live and upcoming lives within the next 2 weeks
+            this.live = res.data.live.concat(res.data.upcoming).filter(live => {
+                return (
+                    // this.favorites.includes(live.channel.id) &&
+                    dayjs(live.live_schedule).isBefore(dayjs().add(3, "w"))
+                );
+            });
             this.loading = false;
         });
     },
@@ -105,13 +117,33 @@ export default {
         },
     },
     computed: {
-        filter: {
+        recentVideoFilter: {
             get() {
                 return this.$store.state.recentVideoFilter;
             },
             set(value) {
-                this.$store.commit("updateRecentVideoFilter", value);
+                this.$store.commit("setRecentVideoFilter", value);
             },
+        },
+        liveFilter: {
+            get() {
+                return this.favorites.length
+                    ? this.$store.state.liveFilter
+                    : "all";
+            },
+            set(value) {
+                this.$store.commit("setLiveFilter", value);
+            },
+        },
+        favorites() {
+            return this.$store.state.favorites;
+        },
+        filteredLiveVideos() {
+            return this.liveFilter === "favorites"
+                ? this.live.filter(live =>
+                      this.favorites.includes(live.channel.id)
+                  )
+                : this.live;
         },
     },
     methods: {
@@ -128,7 +160,7 @@ export default {
                     if (res.data.videos.length) {
                         this.videos = this.videos.concat(res.data.videos);
                         this.currentOffset += this.pageLength;
-                        console.log(this.videos);
+                        // console.log(this.videos);
                         $state.loaded();
                     } else {
                         $state.complete();
