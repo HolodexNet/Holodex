@@ -1,12 +1,17 @@
 <template>
-    <v-container fluid>
-        <v-row v-for="videoList in videoLists" :key="videoList.title">
-            <div
+    <v-container fluid class="pa-0">
+        <v-container
+            v-for="videoList in videoLists"
+            :key="videoList.title"
+            fluid
+            class="pa-0"
+        >
+            <v-row
                 style="font-size: 1rem !important; font-weight: 500"
-                class="my-2"
+                class="my-2 ml-0"
             >
                 {{ videoList.title }}
-            </div>
+            </v-row>
             <VideoCardList
                 :videos="videoList.videos"
                 includeChannel
@@ -19,7 +24,7 @@
                 }"
             ></VideoCardList>
             <v-divider class="my-5" />
-        </v-row>
+        </v-container>
     </v-container>
 </template>
 
