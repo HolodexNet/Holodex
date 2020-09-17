@@ -1,12 +1,12 @@
 <template>
     <v-container fluid>
         <v-row v-for="videoList in videoLists" :key="videoList.title">
-            <span
+            <div
                 style="font-size: 1rem !important; font-weight: 500"
                 class="my-2"
             >
                 {{ videoList.title }}
-            </span>
+            </div>
             <VideoCardList
                 :videos="videoList.videos"
                 includeChannel

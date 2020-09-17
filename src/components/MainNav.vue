@@ -55,9 +55,14 @@
                     <v-list-item
                         link
                         @click="favoritesExpanded = !favoritesExpanded"
+                        v-if="favoritedChannels.length > 10"
                     >
                         <v-list-item-action>
-                            <v-icon>{{ favoritesExpanded ? mdiChevronUp : mdiChevronDown }}</v-icon>
+                            <v-icon>{{
+                                favoritesExpanded
+                                    ? mdiChevronUp
+                                    : mdiChevronDown
+                            }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
                             <v-list-item-title>Show All</v-list-item-title>
