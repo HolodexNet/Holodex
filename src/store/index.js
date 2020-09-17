@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
+import api from "@/utils/backend-api";
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
         testedWebP: false,
         recentVideoFilter: "both",
         favorites: [],
+        cachedChannels: {},
     },
     mutations: {
         toggleDarkMode(state) {
@@ -43,7 +45,41 @@ export default new Vuex.Store({
                 state.favorites.splice(index, 1);
             }
         },
+        addCachedChannel(state, channel_obj) {
+            state.cachedChannels[channel_obj.id] = channel_obj;
+        },
+        removeCachedChannel(state, channel_id) {
+            delete state.cachedChannels[channel_id];
+        },
     },
-    actions: {},
+    actions: {
+        async updateCachedChannels({ commit, state }) {
+            await api.channels(100, 0, "vtuber").then(res => {
+                if (res.data.channels.length) {
+                    res.data.channels.forEach(channel => {
+                        if (state.favorites.includes(channel.id))
+                            commit("addCachedChannel", channel);
+                    });
+                }
+            });
+        },
+        async checkFavorites({ commit, state }) {
+            for (let id of state.favorites) {
+                if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id)) {
+                    console.log(`Missing channel_id: ${id}, refreshing cache`);
+                    await api.channels(100, 0, "vtuber").then(res => {
+                        if (res.data.channels.length) {
+                            res.data.channels.forEach(channel => {
+                                if (state.favorites.includes(channel.id))
+                                    commit("addCachedChannel", channel);
+                            });
+                        }
+                    });
+                    break;
+                }
+            }
+            // this.channels = Object.values(this.cachedChannels);
+        },
+    },
     modules: {},
 });

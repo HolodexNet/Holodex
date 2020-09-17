@@ -34,6 +34,25 @@
                         <v-list-item-title>Settings</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+                <v-list-group :prepend-icon="mdiHeart" value="true">
+                    <template v-slot:activator>
+                        <v-list-item-title>Favorites</v-list-item-title>
+                    </template>
+                    <v-list-item
+                        v-for="channel in favoritedChannels"
+                        :key="channel.id"
+                        @click="
+                            $router
+                                .push(`/channel/${channel.id}`)
+                                .catch(() => {})
+                        "
+                    >
+                        <v-list-item-avatar>
+                            <ChannelImg :src="channel.photo" />
+                        </v-list-item-avatar>
+                        <ChannelInfo :channel="channel" noSubscriberCount />
+                    </v-list-item>
+                </v-list-group>
             </v-list>
         </v-navigation-drawer>
         <v-app-bar color="blue lighten-2" app clipped-left flat>
@@ -70,8 +89,15 @@ import {
     mdiCog,
     mdiMagnify,
     mdiMenu,
+    mdiHeart,
 } from "@mdi/js";
+import ChannelImg from "@/components/ChannelImg";
+import ChannelInfo from "@/components/ChannelInfo";
 export default {
+    components: {
+        ChannelImg,
+        ChannelInfo,
+    },
     data: () => ({
         drawer: null,
         ...{
@@ -81,8 +107,23 @@ export default {
             mdiCog,
             mdiMagnify,
             mdiMenu,
+            mdiHeart,
         },
     }),
+    computed: {
+        favoritedChannels() {
+            // get favorites
+            const favs = this.$store.state.favorites;
+            // check cache for missing favorites
+            this.$store.dispatch("checkFavorites");
+            // return favorited channel list from cache
+            return Object.values(this.$store.state.cachedChannels)
+                .filter(channel => {
+                    return favs.includes(channel.id);
+                })
+                .splice(0, 10);
+        },
+    },
 };
 </script>
 

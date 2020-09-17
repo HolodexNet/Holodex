@@ -6,10 +6,10 @@
                 <v-list>
                     <v-list-item>
                         <v-list-item-avatar :size="avatarSize">
-                            <v-img
-                                :src="channel.photo"
+                            <ChannelImg
                                 :size="avatarSize"
-                            ></v-img>
+                                :src="channel.photo"
+                            />
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" />
                         <v-list-item-action class="v-list-item-horizontal">
@@ -28,7 +28,10 @@
             </v-container>
         </v-card>
         <v-container class="channel" style="min-height: 85vh">
-            <router-view :channel="channel"></router-view>
+            <router-view
+                :channel="channel"
+                :key="this.channel_id"
+            ></router-view>
         </v-container>
     </v-container>
 </template>
@@ -37,6 +40,7 @@
 import api from "@/utils/backend-api";
 import ChannelSocials from "@/components/ChannelSocials";
 import ChannelInfo from "@/components/ChannelInfo";
+import ChannelImg from "@/components/ChannelImg";
 import { banner_images } from "@/utils/image-utils";
 
 export default {
@@ -44,6 +48,7 @@ export default {
     components: {
         ChannelSocials,
         ChannelInfo,
+        ChannelImg,
     },
     data() {
         return {
@@ -55,8 +60,7 @@ export default {
         };
     },
     mounted() {
-        this.channel_id = this.$route.params.id;
-        api.channel(this.channel_id).then(res => (this.channel = res.data));
+        this.init();
     },
     computed: {
         bannerImage() {
@@ -81,7 +85,19 @@ export default {
             }
         },
     },
-    methods: {},
+    watch: {
+        "$route.params.id"() {
+            console.log(this.$route.params.id);
+            this.init();
+        },
+    },
+    methods: {
+        init() {
+            this.channel_id = this.$route.params.id;
+            (this.videos = []), (this.tab = 0), (this.offset = 0), (this.channel = null);
+            api.channel(this.channel_id).then(res => (this.channel = res.data));
+        },
+    },
     props: {},
 };
 </script>

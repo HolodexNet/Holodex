@@ -43,6 +43,7 @@ export default {
         };
     },
     created() {
+        // might be bad to access directly, but needed in order to avoid double api calls
         this.category = this.$store.state.favorites.length > 0 ? 2 : 0;
     },
     watch: {
@@ -58,6 +59,9 @@ export default {
     computed: {
         favorites() {
             return this.$store.state.favorites;
+        },
+        cachedChannels() {
+            return this.$store.state.cachedChannels;
         },
     },
     methods: {
@@ -81,14 +85,15 @@ export default {
                     $state.error();
                 });
         },
-        loadFavorites() {
-            api.channels(100, 0, "vtuber").then(res => {
-                if (res.data.channels.length) {
-                    this.channels = res.data.channels.filter(channel => {
-                        return this.favorites.includes(channel.id);
-                    });
-                }
-            });
+        async loadFavorites() {
+            // for (let id of this.favorites) {
+            //     if (!Object.prototype.hasOwnProperty.call(this.cachedChannels,id)) {
+            //         console.log(`Missing channel_id: ${id}, refreshing cache`);
+            await this.$store.dispatch("checkFavorites");
+            //         break;
+            //     }
+            // }
+            this.channels = Object.values(this.cachedChannels);
         },
     },
 };

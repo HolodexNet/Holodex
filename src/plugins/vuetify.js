@@ -7,6 +7,9 @@ export default new Vuetify({
     theme: {
         dark: true,
     },
+    icons: {
+        iconfont: "mdiSvg",
+    },
     // breakpoint: {
     //     thresholds: {
     //         xs: 0,
