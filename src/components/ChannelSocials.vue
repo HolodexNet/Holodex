@@ -21,18 +21,25 @@
         <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
                 <v-btn icon sm>
-                    <v-icon color="grey" v-bind="attrs" v-on="on">
+                    <v-icon
+                        :color="isFavorited ? 'red' : 'grey'"
+                        v-bind="attrs"
+                        v-on="on"
+                        @click.stop="toggleFavorite"
+                    >
                         {{ mdiHeart }}
                     </v-icon>
                 </v-btn>
             </template>
-            <span>Coming soon!</span>
+            <span>Add to Favorites</span>
         </v-tooltip>
     </v-list-item-action>
 </template>
 
 <script>
 import { mdiYoutube, mdiTwitter, mdiHeart } from "@mdi/js";
+import { mapMutations } from "vuex";
+
 export default {
     data() {
         return {
@@ -51,12 +58,27 @@ export default {
             required: false,
         },
     },
+    computed: {
+        isFavorited() {
+            // if(this.$store.state.favorites.length) return false;
+            return this.$store.state.favorites.includes(this.channel.id);
+        },
+    },
+    methods: {
+        ...mapMutations(["addFavorite", "removeFavorite"]),
+        toggleFavorite(event) {
+            console.log(event);
+            this.isFavorited
+                ? this.removeFavorite(this.channel.id)
+                : this.addFavorite(this.channel.id);
+        },
+    },
 };
 </script>
 
 <style>
 .v-list-item-horizontal {
-    flex-direction: row;
+    flex-direction: row !important;
     align-self: center !important;
 }
 </style>

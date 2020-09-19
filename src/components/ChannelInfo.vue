@@ -5,7 +5,9 @@
             <div class="body-2">{{ channel.name_en }}</div>
         </v-list-item-title>
         <v-list-item-subtitle>
-            {{ channel.subscriber_count / 1000 }}K Subscribers
+            <span v-if="!noSubscriberCount"
+                >{{ channel.subscriber_count / 1000 }}K Subscribers
+            </span>
             <span v-if="includeVideoCount">
                 <br />
                 {{ channel.video_count }} Videos •
@@ -43,6 +45,10 @@ export default {
             default: false,
         },
         includeVideoCount: {
+            type: Boolean,
+            default: false,
+        },
+        noSubscriberCount: {
             type: Boolean,
             default: false,
         },

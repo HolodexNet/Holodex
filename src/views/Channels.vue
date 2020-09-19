@@ -3,19 +3,23 @@
         <v-tabs v-model="category">
             <v-tab>Vtuber</v-tab>
             <v-tab>Subber</v-tab>
+            <v-tab>Favorites</v-tab>
         </v-tabs>
         <v-divider />
         <v-container fluid class="pa-0">
             <ChannelList
                 :channels="channels"
-                :includeSocials="category == 0"
+                :includeSocials="category == 0 || category == 2"
                 includeVideoCount
             />
             <infinite-loading
                 @infinite="loadData"
                 style="min-height: 10px;"
                 :identifier="infiniteId"
-            ></infinite-loading>
+                v-if="category !== 2"
+            >
+                <template v-slot:no-more><span></span></template>
+            </infinite-loading>
         </v-container>
     </v-container>
 </template>
@@ -35,33 +39,47 @@ export default {
         return {
             channels: [],
             category: 0,
-            currentPage: 0,
+            currentOffset: 0,
             perPage: 25,
             infiniteId: +new Date(),
         };
     },
     created() {
-        // this.loadData();
+        // might be bad to access directly, but needed in order to avoid double api calls
+        this.category = this.$store.state.favorites.length > 0 ? 2 : 0;
     },
     watch: {
         category() {
-            this.channels = [];
-            this.currentPage = 0;
-            this.infiniteId += 1;
+            this.init();
+        },
+    },
+    computed: {
+        favorites() {
+            return this.$store.state.favorites;
+        },
+        cachedChannels() {
+            return this.$store.state.cachedChannels;
         },
     },
     methods: {
+        init() {
+            this.channels = [];
+            this.currentOffset = 0;
+            this.infiniteId += 1;
+            if (this.category == 2) {
+                this.loadFavorites();
+            }
+        },
         loadData($state) {
             api.channels(
                 this.perPage,
-                this.currentPage * this.perPage,
+                this.currentOffset * this.perPage,
                 this.category == 1 ? "subber" : "vtuber"
             )
                 .then(res => {
-                    console.log(res.data.channels);
                     if (res.data.channels.length) {
                         this.channels = this.channels.concat(res.data.channels);
-                        this.currentPage++;
+                        this.currentOffset++;
                         $state.loaded();
                     } else {
                         $state.complete();
@@ -71,6 +89,13 @@ export default {
                     console.log(e);
                     $state.error();
                 });
+        },
+        async loadFavorites() {
+            // check if any channels missing from favorites and update the cache
+            await this.$store.dispatch("checkFavorites");
+            this.channels = this.favorites.map(
+                channel_id => this.cachedChannels[channel_id]
+            );
         },
     },
 };

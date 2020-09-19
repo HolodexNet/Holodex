@@ -34,6 +34,52 @@
                         <v-list-item-title>Settings</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+                <v-list-group :prepend-icon="mdiHeart" value="true">
+                    <template v-slot:activator>
+                        <v-list-item-title>Favorites</v-list-item-title>
+                    </template>
+                    <v-list-item
+                        v-for="channel in favoritedChannels"
+                        :key="channel.id"
+                        @click="
+                            $router
+                                .push(`/channel/${channel.id}`)
+                                .catch(() => {})
+                        "
+                    >
+                        <v-list-item-avatar>
+                            <ChannelImg :src="channel.photo" />
+                        </v-list-item-avatar>
+                        <ChannelInfo :channel="channel" noSubscriberCount />
+                    </v-list-item>
+                    <v-list-item
+                        link
+                        @click="favoritesExpanded = !favoritesExpanded"
+                        v-if="favorites.length > 10"
+                    >
+                        <v-list-item-action>
+                            <v-icon>{{
+                                favoritesExpanded
+                                    ? mdiChevronUp
+                                    : mdiChevronDown
+                            }}</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                {{ favoritesExpanded ? "Close" : "Show All" }}
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item>
+                        <router-link
+                            to="/channel"
+                            style="font-size: .825rem"
+                            class="ma-auto"
+                        >
+                            Manage Favorites
+                        </router-link>
+                    </v-list-item>
+                </v-list-group>
             </v-list>
         </v-navigation-drawer>
         <v-app-bar color="blue lighten-2" app clipped-left flat>
@@ -70,8 +116,17 @@ import {
     mdiCog,
     mdiMagnify,
     mdiMenu,
+    mdiHeart,
+    mdiChevronUp,
+    mdiChevronDown,
 } from "@mdi/js";
+import ChannelImg from "@/components/ChannelImg";
+import ChannelInfo from "@/components/ChannelInfo";
 export default {
+    components: {
+        ChannelImg,
+        ChannelInfo,
+    },
     data: () => ({
         drawer: null,
         ...{
@@ -81,8 +136,36 @@ export default {
             mdiCog,
             mdiMagnify,
             mdiMenu,
+            mdiHeart,
+            mdiChevronUp,
+            mdiChevronDown,
         },
+        favoritesExpanded: false,
     }),
+    computed: {
+        favorites() {
+            return this.$store.state.favorites;
+        },
+        cachedChannels() {
+            return this.$store.state.cachedChannels;
+        },
+        favoritedChannels() {
+            if (
+                !this.$store.state.cachedChannels ||
+                !this.$store.state.favorites
+            )
+                return [];
+            // check cache for missing favorites
+            this.$store.dispatch("checkFavorites");
+            // return favorited channel list from cache
+            const arr = this.favorites.map(
+                channel_id => this.cachedChannels[channel_id]
+            );
+            return !this.favoritesExpanded && this.favorites.length > 10
+                ? arr.splice(0, 10)
+                : arr;
+        },
+    },
 };
 </script>
 

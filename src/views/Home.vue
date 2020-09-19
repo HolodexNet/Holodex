@@ -9,10 +9,19 @@
         </v-row>
         <v-row v-show="!loading && live.length > 0">
             <v-col class="px-lg-10">
-                <div class="text-h6">Live</div>
-                <v-divider />
+                <v-row class="d-flex justify-space-between pa-1">
+                    <div class="text-h6">Live/Upcoming</div>
+                    <v-btn-toggle v-model="liveFilter" mandatory dense>
+                        <v-btn value="all">
+                            All
+                        </v-btn>
+                        <v-btn value="favorites" :disabled="!favorites.length">
+                            Favorites
+                        </v-btn>
+                    </v-btn-toggle>
+                </v-row>
                 <VideoCardList
-                    :videos="live"
+                    :videos="filteredLiveVideos"
                     includeChannel
                     withAvatar
                     :cols="{
@@ -25,14 +34,18 @@
                     :limitRows="2"
                 >
                 </VideoCardList>
-                <v-row
-                    class="d-flex justify-space-between pa-1"
-                    v-show="live.length"
-                >
+                <v-row v-if="!filteredLiveVideos.length">
+                    <v-col class="ma-auto text-center pa-8">
+                        No one is streaming soon on your favorites. Please check
+                        out the other vtubers!
+                    </v-col>
+                </v-row>
+                <v-divider class="my-5" />
+                <v-row class="d-flex justify-space-between pa-1">
                     <div class="text-h6">Recent Videos</div>
-                    <v-btn-toggle v-model="filter" mandatory dense>
-                        <v-btn value="both">
-                            Both
+                    <v-btn-toggle v-model="recentVideoFilter" mandatory dense>
+                        <v-btn value="all">
+                            All
                         </v-btn>
                         <v-btn value="vtuber">
                             Official
@@ -40,24 +53,31 @@
                         <v-btn value="subber">
                             Clips
                         </v-btn>
+                        <v-btn value="favorites" :disabled="!favorites.length">
+                            Fav
+                        </v-btn>
                     </v-btn-toggle>
                 </v-row>
-                <v-divider />
-                <VideoCardList
-                    v-if="live.length"
-                    :videos="videos"
-                    includeChannel
-                    infiniteLoad
-                    @infinite="loadNext"
-                    :infiniteId="infiniteId"
-                    :cols="{
-                        xs: 1,
-                        sm: 3,
-                        md: 4,
-                        lg: 5,
-                        xl: 6,
-                    }"
-                ></VideoCardList>
+                <span v-if="recentVideoFilter !== 'favorites'">
+                    <VideoCardList
+                        v-if="!loading"
+                        :videos="videos"
+                        includeChannel
+                        infiniteLoad
+                        @infinite="loadNext"
+                        :infiniteId="infiniteId"
+                        :cols="{
+                            xs: 1,
+                            sm: 3,
+                            md: 4,
+                            lg: 5,
+                            xl: 6,
+                        }"
+                    ></VideoCardList>
+                </span>
+                <span v-else>
+                    <FavoritesVideoList :videoLists="filteredVideoLists" />
+                </span>
             </v-col>
         </v-row>
     </v-container>
@@ -65,13 +85,18 @@
 
 <script>
 import VideoCardList from "@/components/VideoCardList.vue";
+import FavoritesVideoList from "@/components/FavoritesVideoList.vue";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
+import { mdiHeart } from "@mdi/js";
+var utc = require("dayjs/plugin/utc");
+dayjs.extend(utc);
 
 export default {
     name: "Home",
     components: {
         VideoCardList,
+        FavoritesVideoList,
     },
     data() {
         return {
@@ -83,52 +108,85 @@ export default {
             pageLength: 24,
             infiniteId: +new Date(),
             loading: true,
+            filteredVideoLists: [],
+            daysBefore: 0,
+            mdiHeart,
         };
     },
     mounted() {
-        api.live().then(res => {
-            // get currently live and upcoming lives within the next 2 week
-            this.live = res.data.live
-                .concat(res.data.upcoming)
-                .filter(live =>
-                    dayjs(live.live_schedule).isBefore(dayjs().add(2, "w"))
-                )
-                .splice(0, 16);
-            this.loading = false;
-        });
+        api.live()
+            .then(res => {
+                // get currently live and upcoming lives within the next 2 weeks
+                this.live = res.data.live
+                    .concat(res.data.upcoming)
+                    .filter(live => {
+                        return dayjs(live.live_schedule).isBefore(
+                            dayjs().add(3, "w")
+                        );
+                    });
+                this.loading = false;
+            })
+            .catch(() => (this.loading = false));
+        if (this.recentVideoFilter === "favorites") this.loadFavoritesVideos();
     },
     watch: {
-        filter() {
+        recentVideoFilter() {
             this.videos = [];
             this.currentOffset = 0;
             this.infiniteId++;
+            this.daysBefore = 0;
+            this.filteredVideoLists = [];
+            if (this.recentVideoFilter === "favorites") {
+                this.loadFavoritesVideos();
+            }
         },
     },
     computed: {
-        filter: {
+        recentVideoFilter: {
             get() {
                 return this.$store.state.recentVideoFilter;
             },
             set(value) {
-                this.$store.commit("updateRecentVideoFilter", value);
+                this.$store.commit("setRecentVideoFilter", value);
             },
+        },
+        liveFilter: {
+            get() {
+                return this.favorites.length
+                    ? this.$store.state.liveFilter
+                    : "all";
+            },
+            set(value) {
+                this.$store.commit("setLiveFilter", value);
+            },
+        },
+        favorites() {
+            return this.$store.state.favorites;
+        },
+        filteredLiveVideos() {
+            return this.liveFilter === "favorites"
+                ? this.live.filter(live =>
+                      this.favorites.includes(live.channel.id)
+                  )
+                : this.live;
         },
     },
     methods: {
         loadNext($state) {
-            console.log(this.filter);
             api.videos({
                 limit: this.pageLength,
                 offset: this.currentOffset,
                 include_channel: 1,
                 status: "tagged",
-                ...(this.filter !== "both" && { type: this.filter }),
+                // only include type param if there is a filter
+                ...(this.recentVideoFilter !== "all" && {
+                    type: this.recentVideoFilter,
+                }),
             })
                 .then(res => {
                     if (res.data.videos.length) {
                         this.videos = this.videos.concat(res.data.videos);
                         this.currentOffset += this.pageLength;
-                        console.log(this.videos);
                         $state.loaded();
                     } else {
                         $state.complete();
@@ -137,6 +195,55 @@ export default {
                 .catch(() => {
                     $state.error();
                 });
+        },
+        loadFavoritesVideos() {
+            const targetDate = dayjs.utc().subtract(this.daysBefore, "d");
+            api.videos({
+                limit: 100,
+                include_channel: 1,
+                status: "tagged",
+                start_date: targetDate.startOf("day").toISOString(),
+                end_date: targetDate.endOf("day").toISOString(),
+                sort: "published_at",
+                order: "desc",
+                // dirty fix, backeend needs work
+                vtuber_override_status: 1,
+            }).then(res => {
+                if (res.data.videos.length) {
+                    this.filteredVideoLists.push({
+                        title: this.formatDayTitle(this.daysBefore),
+                        videos: this.filterFavorites(res.data.videos),
+                    });
+
+                    // TODO: If there is more than 100 videos in a day, then we need to query the api again.
+                    if (res.data.videos.total > 100)
+                        console.log("too many videos");
+                }
+                this.daysBefore++;
+                // Only load up to yesterday's video, artifical limit to reduce server and client load
+                if (this.daysBefore <= 1) this.loadFavoritesVideos();
+            });
+        },
+        filterFavorites(videos) {
+            // const map = {};
+            return videos.filter(video => {
+                return (
+                    // keep non live videos
+                    (video.status === "tagged" ||
+                        video.status === "untagged") &&
+                    // check if video is posted by favorited channel or mentioned in the video
+                    (this.favorites.includes(video.channel.id) ||
+                        video.channel_mentions.filter(channel =>
+                            this.favorites.includes(channel.id)
+                        ).length > 0)
+                );
+            });
+        },
+        formatDayTitle(daysAgo) {
+            if (daysAgo < 2) {
+                return daysAgo == 0 ? "Today" : "Yesterday";
+            }
+            return `${daysAgo} days ago`;
         },
     },
 };
