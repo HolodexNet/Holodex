@@ -32,7 +32,9 @@ export default {
         delete query["channel_id"];
         const q = querystring.stringify(query);
         // return axios_instance.get(`/mentions/channel/${channel_id}?${q}`);
-        return axios_instance.get(`/videos?mentioned_channel_id=${channel_id}&${q}`);
+        return axios_instance.get(
+            `/videos?mentioned_channel_id=${channel_id}&${q}`
+        );
     },
 };
 

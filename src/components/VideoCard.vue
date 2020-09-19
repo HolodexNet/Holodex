@@ -87,7 +87,7 @@ export default {
     },
     data() {
         return {
-            // height: 118,
+            forceJPG: true,
         };
     },
     props: {
@@ -148,10 +148,9 @@ export default {
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
-            const srcs = video_thumbnails(
-                this.video.yt_video_key,
-                this.$store.state.canUseWebP
-            );
+            const useWebP = this.$store.state.canUseWebP && !this.forceJPG;
+            // if (!useWebP) console.log("falling back");
+            const srcs = video_thumbnails(this.video.yt_video_key, useWebP);
             if (this.horizontal) return srcs["medium"];
             if (this.colSize < 2) {
                 return srcs["hq720"];

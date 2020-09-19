@@ -114,13 +114,19 @@ export default {
         };
     },
     mounted() {
-        api.live().then(res => {
-            // get currently live and upcoming lives within the next 2 weeks
-            this.live = res.data.live.concat(res.data.upcoming).filter(live => {
-                return dayjs(live.live_schedule).isBefore(dayjs().add(3, "w"));
-            });
-            this.loading = false;
-        });
+        api.live()
+            .then(res => {
+                // get currently live and upcoming lives within the next 2 weeks
+                this.live = res.data.live
+                    .concat(res.data.upcoming)
+                    .filter(live => {
+                        return dayjs(live.live_schedule).isBefore(
+                            dayjs().add(3, "w")
+                        );
+                    });
+                this.loading = false;
+            })
+            .catch(() => (this.loading = false));
         if (this.recentVideoFilter === "favorites") this.loadFavoritesVideos();
     },
     watch: {
@@ -172,6 +178,7 @@ export default {
                 offset: this.currentOffset,
                 include_channel: 1,
                 status: "tagged",
+                // only include type param if there is a filter
                 ...(this.recentVideoFilter !== "all" && {
                     type: this.recentVideoFilter,
                 }),
@@ -199,6 +206,7 @@ export default {
                 end_date: targetDate.endOf("day").toISOString(),
                 sort: "published_at",
                 order: "desc",
+                // dirty fix, backeend needs work
                 vtuber_override_status: 1,
             }).then(res => {
                 if (res.data.videos.length) {
@@ -206,20 +214,28 @@ export default {
                         title: this.formatDayTitle(this.daysBefore),
                         videos: this.filterFavorites(res.data.videos),
                     });
+
+                    // TODO: If there is more than 100 videos in a day, then we need to query the api again.
                     if (res.data.videos.total > 100)
                         console.log("too many videos");
                 }
                 this.daysBefore++;
+                // Only load up to yesterday's video, artifical limit to reduce server and client load
                 if (this.daysBefore <= 1) this.loadFavoritesVideos();
             });
         },
         filterFavorites(videos) {
+            // const map = {};
             return videos.filter(video => {
                 return (
-                    this.favorites.includes(video.channel.id) ||
-                    video.channel_mentions
-                        .map(channel => channel.id)
-                        .filter(id => this.favorites.includes(id)).length > 0
+                    // keep non live videos
+                    (video.status === "tagged" ||
+                        video.status === "untagged") &&
+                    // check if video is posted by favorited channel or mentioned in the video
+                    (this.favorites.includes(video.channel.id) ||
+                        video.channel_mentions.filter(channel =>
+                            this.favorites.includes(channel.id)
+                        ).length > 0)
                 );
             });
         },

@@ -19,7 +19,9 @@ export default new Vuex.Store({
         recentVideoFilter: "all",
         liveFilter: "all",
         favorites: [],
-        cachedChannels: {},
+        cachedChannels: {
+            lastUpdated: null,
+        },
     },
     mutations: {
         toggleDarkMode(state) {
@@ -69,6 +71,7 @@ export default new Vuex.Store({
         // },
         async checkFavorites({ commit, state }) {
             for (let id of state.favorites) {
+                // eslint-disable-next-line prettier/prettier
                 if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id)) {
                     console.log(`Missing channel_id: ${id}, refreshing cache`);
                     await api.channels(100, 0, "vtuber").then(res => {

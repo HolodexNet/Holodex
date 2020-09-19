@@ -51,6 +51,7 @@ export default {
     },
     computed: {
         hasChannelInfo() {
+            // load uploader name for videos not uploaded by current channel
             return (
                 this.$route.name === "clips" || this.$route.name === "mentions"
             );
@@ -68,12 +69,8 @@ export default {
     },
     watch: {
         $route() {
-            // this.currentPage = 1;
             this.totalVideos = 1;
             this.loadTabContent();
-        },
-        currentPage() {
-            // console.log(this.currentPage);
         },
     },
     methods: {

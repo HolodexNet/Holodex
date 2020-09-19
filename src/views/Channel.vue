@@ -56,7 +56,6 @@ export default {
             videos: [],
             channel: null,
             tab: 0,
-            offset: 0,
         };
     },
     mounted() {
@@ -87,14 +86,14 @@ export default {
     },
     watch: {
         "$route.params.id"() {
-            console.log(this.$route.params.id);
             this.init();
         },
     },
     methods: {
         init() {
+            // reset component to default without recreating
             this.channel_id = this.$route.params.id;
-            (this.videos = []), (this.tab = 0), (this.offset = 0), (this.channel = null);
+            (this.videos = []), (this.tab = 0), (this.channel = null);
             api.channel(this.channel_id).then(res => (this.channel = res.data));
         },
     },

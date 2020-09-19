@@ -55,7 +55,7 @@
                     <v-list-item
                         link
                         @click="favoritesExpanded = !favoritesExpanded"
-                        v-if="favoritedChannels.length > 10"
+                        v-if="favorites.length > 10"
                     >
                         <v-list-item-action>
                             <v-icon>{{
@@ -65,7 +65,9 @@
                             }}</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
-                            <v-list-item-title>Show All</v-list-item-title>
+                            <v-list-item-title>
+                                {{ favoritesExpanded ? "Close" : "Show All" }}
+                            </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                     <v-list-item>
@@ -141,20 +143,27 @@ export default {
         favoritesExpanded: false,
     }),
     computed: {
+        favorites() {
+            return this.$store.state.favorites;
+        },
+        cachedChannels() {
+            return this.$store.state.cachedChannels;
+        },
         favoritedChannels() {
             if (
                 !this.$store.state.cachedChannels ||
                 !this.$store.state.favorites
             )
                 return [];
-
-            // get favorites
-            const favs = this.$store.state.favorites;
             // check cache for missing favorites
             this.$store.dispatch("checkFavorites");
             // return favorited channel list from cache
-            const arr = Object.values(this.$store.state.cachedChannels).filter(channel => favs.includes(channel.id));
-            return this.favoritesExpanded ? arr : arr.splice(0, 10);
+            const arr = this.favorites.map(
+                channel_id => this.cachedChannels[channel_id]
+            );
+            return !this.favoritesExpanded && this.favorites.length > 10
+                ? arr.splice(0, 10)
+                : arr;
         },
     },
 };

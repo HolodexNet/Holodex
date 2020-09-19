@@ -9,6 +9,7 @@
             <v-row
                 style="font-size: 1rem !important; font-weight: 500"
                 class="my-2 ml-0"
+                v-if="videoList.videos.length"
             >
                 {{ videoList.title }}
             </v-row>
@@ -23,7 +24,7 @@
                     xl: 6,
                 }"
             ></VideoCardList>
-            <v-divider class="my-5" />
+            <v-divider class="my-5" v-if="videoList.videos.length" />
         </v-container>
     </v-container>
 </template>
