@@ -1,6 +1,6 @@
 module.exports = {
     pwa: {
-        name: "Holosubs",
+        name: "Holodex",
         themeColor: "#4DBA87",
         msTileColor: "#000000",
         appleMobileWebAppCapable: "yes",
@@ -10,7 +10,7 @@ module.exports = {
         workboxPluginMode: "InjectManifest",
         workboxOptions: {
             // swSrc is required in InjectManifest mode.
-            swSrc: "./src/",
+            swSrc: "./src/registerServiceWorker.js",
             // ...other Workbox options...
         },
     },
