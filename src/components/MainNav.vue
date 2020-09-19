@@ -18,7 +18,7 @@
                         <v-list-item-title>Channels</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item link>
+                <v-list-item link :to="'/about'">
                     <v-list-item-action>
                         <v-icon>{{ mdiHelpCircle }}</v-icon>
                     </v-list-item-action>
@@ -38,20 +38,22 @@
                     <template v-slot:activator>
                         <v-list-item-title>Favorites</v-list-item-title>
                     </template>
-                    <v-list-item
-                        v-for="channel in favoritedChannels"
-                        :key="channel.id"
-                        @click="
-                            $router
-                                .push(`/channel/${channel.id}`)
-                                .catch(() => {})
-                        "
-                    >
-                        <v-list-item-avatar>
-                            <ChannelImg :src="channel.photo" />
-                        </v-list-item-avatar>
-                        <ChannelInfo :channel="channel" noSubscriberCount />
-                    </v-list-item>
+                    <template v-for="channel in favoritedChannels">
+                        <v-list-item
+                            v-if="channel"
+                            :key="channel.id"
+                            @click="
+                                $router
+                                    .push(`/channel/${channel.id}`)
+                                    .catch(() => {})
+                            "
+                        >
+                            <v-list-item-avatar>
+                                <ChannelImg :src="channel.photo" />
+                            </v-list-item-avatar>
+                            <ChannelInfo :channel="channel" noSubscriberCount />
+                        </v-list-item>
+                    </template>
                     <v-list-item
                         link
                         @click="favoritesExpanded = !favoritesExpanded"
@@ -91,7 +93,7 @@
                     :to="'/'"
                     style="text-decoration: none; color: white"
                 >
-                    HoloSubs
+                    HoloDex
                 </router-link>
             </v-toolbar-title>
 
@@ -158,8 +160,10 @@ export default {
             // check cache for missing favorites
             this.$store.dispatch("checkFavorites");
             // return favorited channel list from cache
-            const arr = this.favorites.map(
-                channel_id => this.cachedChannels[channel_id]
+            const arr = this.favorites.map(channel_id =>
+                Object.hasOwnProperty.call(this.cachedChannels, channel_id)
+                    ? this.cachedChannels[channel_id]
+                    : null
             );
             return !this.favoritesExpanded && this.favorites.length > 10
                 ? arr.splice(0, 10)

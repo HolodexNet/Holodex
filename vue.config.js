@@ -8,10 +8,24 @@ module.exports = {
 
         // // configure the workbox plugin
         // workboxPluginMode: "InjectManifest",
-        // workboxOptions: {
-        //     // swSrc is required in InjectManifest mode.
-        //     swSrc: "./src/registerServiceWorker.js",
-        //     // ...other Workbox options...
-        // },
+        workboxOptions: {
+            runtimeCaching: [
+                {
+                    urlPattern: new RegExp(
+                        "https://fonts.(?:googleapis|gstatic).com/(.*)"
+                    ),
+                    handler: "cacheFirst",
+                    options: {
+                        cacheName: "google-fonts",
+                        expiration: {
+                            maxEntries: 30,
+                        },
+                        cacheableResponse: {
+                            statuses: [0, 200],
+                        },
+                    },
+                },
+            ],
+        },
     },
 };

@@ -7,11 +7,7 @@
         </v-tabs>
         <v-divider />
         <v-container fluid class="pa-0">
-            <ChannelList
-                :channels="channels"
-                :includeSocials="category == 0 || category == 2"
-                includeVideoCount
-            />
+            <ChannelList :channels="channels" includeVideoCount />
             <infinite-loading
                 @infinite="loadData"
                 style="min-height: 10px;"
@@ -19,6 +15,7 @@
                 v-if="category !== 2"
             >
                 <template v-slot:no-more><span></span></template>
+                <!-- <template v-slot:error><span></span></template> -->
             </infinite-loading>
         </v-container>
     </v-container>

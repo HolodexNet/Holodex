@@ -7,7 +7,7 @@
                 class="ma-auto"
             ></v-progress-circular>
         </v-row>
-        <v-row v-show="!loading && live.length > 0">
+        <v-row v-show="!loading">
             <v-col class="px-lg-10">
                 <v-row class="d-flex justify-space-between pa-1">
                     <div class="text-h6">Live/Upcoming</div>
@@ -34,8 +34,11 @@
                     :limitRows="2"
                 >
                 </VideoCardList>
-                <v-row v-if="!filteredLiveVideos.length">
-                    <v-col class="ma-auto text-center pa-8">
+                <v-row v-if="!filteredLiveVideos.length || liveError">
+                    <v-col class="ma-auto text-center pa-8" v-if="liveError">
+                        Error while retrieving lives...
+                    </v-col>
+                    <v-col class="ma-auto text-center pa-8" v-else>
                         No one is streaming soon on your favorites. Please check
                         out the other vtubers!
                     </v-col>
@@ -111,6 +114,7 @@ export default {
             filteredVideoLists: [],
             daysBefore: 0,
             mdiHeart,
+            liveError: false,
         };
     },
     mounted() {
@@ -126,7 +130,10 @@ export default {
                     });
                 this.loading = false;
             })
-            .catch(() => (this.loading = false));
+            .catch(() => {
+                this.loading = false;
+                this.liveError = true;
+            });
         if (this.recentVideoFilter === "favorites") this.loadFavoritesVideos();
     },
     watch: {

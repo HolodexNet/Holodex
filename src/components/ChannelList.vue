@@ -15,6 +15,7 @@
     <v-list three-line class="pa-0" v-else>
         <template v-for="(channel, index) in channels">
             <v-list-item
+                v-if="channel"
                 @click="$router.push(`/channel/${channel.id}`)"
                 :key="channel.id"
             >
@@ -28,6 +29,7 @@
                 <ChannelSocials
                     :channel="channel"
                     :vertical="$vuetify.breakpoint.width < 400"
+                    :hideFavorite="channel.id > 1000"
                 />
             </v-list-item>
             <v-divider :key="'divider-' + index"></v-divider>

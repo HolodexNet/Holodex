@@ -18,7 +18,7 @@
         >
             <v-icon color="#00ACEE"> {{ mdiTwitter }} </v-icon>
         </v-btn>
-        <v-tooltip bottom>
+        <v-tooltip bottom v-if="!hideFavorite">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn icon sm>
                     <v-icon
@@ -31,7 +31,9 @@
                     </v-icon>
                 </v-btn>
             </template>
-            <span>Add to Favorites</span>
+            <span>
+                {{ isFavorited ? "Add to Favorites" : "Remove from Favorites" }}
+            </span>
         </v-tooltip>
     </v-list-item-action>
 </template>
@@ -56,6 +58,10 @@ export default {
         vertical: {
             type: Boolean,
             required: false,
+        },
+        hideFavorite: {
+            type: Boolean,
+            default: false,
         },
     },
     computed: {

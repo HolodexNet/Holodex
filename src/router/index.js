@@ -7,6 +7,7 @@ const Channels = () => import("../views/Channels.vue");
 const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
 const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
 const Watch = () => import("../views/Watch.vue");
+const About = () => import("../views/About.vue");
 
 Vue.use(VueRouter);
 
@@ -17,27 +18,28 @@ const routes = [
         component: Home,
     },
     {
+        name: "Channel",
         path: "/channel/:id",
         component: Channel,
         children: [
             {
                 path: "clips",
-                name: "clips",
+                name: "Channel Clips",
                 component: ChannelVideos,
             },
             {
                 path: "mentions",
-                name: "mentions",
+                name: "Channel Mentions",
                 component: ChannelVideos,
             },
             {
                 path: "about",
-                name: "about",
+                name: "Channel About",
                 component: ChannelAbout,
             },
             {
                 path: "",
-                name: "videos",
+                name: "Channel Videos",
                 component: ChannelVideos,
             },
         ],
@@ -48,8 +50,14 @@ const routes = [
         component: Channels,
     },
     {
+        name: "Watch",
         path: "/watch/:id",
         component: Watch,
+    },
+    {
+        name: "About",
+        path: "/about",
+        component: About,
     },
     {
         path: "*",

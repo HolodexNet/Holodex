@@ -43,6 +43,7 @@ export default new Vuex.Store({
             state.liveFilter = !state.favorites ? "all" : payload;
         },
         addFavorite(state, channel_id) {
+            if (channel_id > 1000) return;
             state.favorites.push(channel_id);
         },
         removeFavorite(state, channel_id) {
@@ -70,9 +71,10 @@ export default new Vuex.Store({
         //     });
         // },
         async checkFavorites({ commit, state }) {
+            console.log("cehcked");
             for (let id of state.favorites) {
                 // eslint-disable-next-line prettier/prettier
-                if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id)) {
+                if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id) && id < 1000) {
                     console.log(`Missing channel_id: ${id}, refreshing cache`);
                     await api.channels(100, 0, "vtuber").then(res => {
                         if (res.data.channels.length) {
