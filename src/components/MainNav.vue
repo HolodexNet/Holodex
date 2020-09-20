@@ -97,15 +97,7 @@
                 </router-link>
             </v-toolbar-title>
 
-            <v-text-field
-                flat
-                hide-details
-                label="Search"
-                :prepend-inner-icon="mdiMagnify"
-                solo-inverted
-                style="max-width: 500px"
-                class="ma-auto"
-            ></v-text-field>
+            <SearchBar />
         </v-app-bar>
     </div>
 </template>
@@ -116,7 +108,6 @@ import {
     mdiAnimationPlay,
     mdiHelpCircle,
     mdiCog,
-    mdiMagnify,
     mdiMenu,
     mdiHeart,
     mdiChevronUp,
@@ -124,10 +115,12 @@ import {
 } from "@mdi/js";
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
+import SearchBar from "@/components/SearchBar";
 export default {
     components: {
         ChannelImg,
         ChannelInfo,
+        SearchBar,
     },
     data: () => ({
         drawer: null,
@@ -136,7 +129,6 @@ export default {
             mdiAnimationPlay,
             mdiHelpCircle,
             mdiCog,
-            mdiMagnify,
             mdiMenu,
             mdiHeart,
             mdiChevronUp,

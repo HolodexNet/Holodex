@@ -19,9 +19,8 @@ export default new Vuex.Store({
         recentVideoFilter: "all",
         liveFilter: "all",
         favorites: [],
-        cachedChannels: {
-            lastUpdated: null,
-        },
+        cachedChannelLastUpdated: null,
+        cachedChannels: {},
     },
     mutations: {
         toggleDarkMode(state) {

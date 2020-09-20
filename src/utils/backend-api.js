@@ -36,6 +36,11 @@ export default {
             `/videos?mentioned_channel_id=${channel_id}&${q}`
         );
     },
+    searchTags(query, limit = 10, offset = 0) {
+        return axios_instance.get(
+            `/tags/search?q=${query}&limit=${limit}&offset=${offset}`
+        );
+    },
 };
 
 export const axios_instance = axios.create({
