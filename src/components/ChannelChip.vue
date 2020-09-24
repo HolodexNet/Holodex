@@ -1,7 +1,7 @@
 <template>
-    <v-chip pill :to="`/channel/${channel.id}`">
+    <v-chip pill :to="`/channel/${channel.id}`" :close="close">
         <v-avatar left>
-            <ChannelImg :src="channel.photo" :size="32" />
+            <ChannelImg :src="channel.photo" :size="32" close />
         </v-avatar>
         {{ channel.name }}
     </v-chip>
@@ -18,6 +18,10 @@ export default {
         channel: {
             type: Object,
             required: true,
+        },
+        close: {
+            type: Boolean,
+            required: false,
         },
     },
 };

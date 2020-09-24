@@ -14,7 +14,7 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: "/",
-        name: "Home",
+        name: "home",
         component: Home,
     },
     {
@@ -23,38 +23,38 @@ const routes = [
         children: [
             {
                 path: "clips",
-                name: "Channel Clips",
+                name: "channel_clips",
                 component: ChannelVideos,
             },
             {
                 path: "mentions",
-                name: "Channel Mentions",
+                name: "channel_mentions",
                 component: ChannelVideos,
             },
             {
                 path: "about",
-                name: "Channel About",
+                name: "channel_about",
                 component: ChannelAbout,
             },
             {
                 path: "",
-                name: "Channel Videos",
+                name: "channel",
                 component: ChannelVideos,
             },
         ],
     },
     {
         path: "/channel/",
-        name: "Channels",
+        name: "channels",
         component: Channels,
     },
     {
-        name: "Watch",
+        name: "watch",
         path: "/watch/:id",
         component: Watch,
     },
     {
-        name: "About",
+        name: "about",
         path: "/about",
         component: About,
     },

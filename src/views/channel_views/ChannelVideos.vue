@@ -47,13 +47,15 @@ export default {
     },
     mounted() {
         this.channel_id = this.$route.params.id;
+        console.log(this.$route.path);
         this.loadTabContent();
     },
     computed: {
         hasChannelInfo() {
             // load uploader name for videos not uploaded by current channel
             return (
-                this.$route.name === "clips" || this.$route.name === "mentions"
+                this.$route.name === "channel_clips" ||
+                this.$route.name === "channel_mentions"
             );
         },
         currentPage: {
@@ -85,10 +87,10 @@ export default {
                 ...(this.hasChannelInfo && { include_channel: 1 }),
             };
             switch (this.$route.name) {
-                case "clips":
+                case "channel_clips":
                     api_req = api.clips(query);
                     break;
-                case "mentions":
+                case "channel_mentions":
                     api_req = api.mentions(query);
                     break;
                 default:

@@ -90,12 +90,12 @@
                 <v-divider />
                 <div
                     class="text-subtitle-2 ma-2"
-                    v-if="video_mentions.length > 0"
+                    v-if="video_sources.length > 0"
                 >
                     Related
                 </div>
                 <VideoCardList
-                    :videos="video_mentions"
+                    :videos="video_sources"
                     horizontal
                     includeChannel
                     :cols="{
@@ -106,7 +106,7 @@
                     }"
                 />
                 <div
-                    v-if="video_mentions.length + video_clips.length == 0"
+                    v-if="video_sources.length + video_clips.length == 0"
                     style="text-align: center;"
                     class="pa-2"
                 >
@@ -138,7 +138,7 @@ export default {
         return {
             video: {},
             video_clips: [],
-            video_mentions: [],
+            video_sources: [],
             channel_mentions: [],
             tags: [],
             mdiMenuDown,
@@ -151,8 +151,8 @@ export default {
     methods: {
         loadData(id) {
             api.video(id).then(res => {
-                this.video_clips = res.data.video_mentions;
-                this.video_mentions = res.data.video_with_mentions;
+                this.video_clips = res.data.clips;
+                this.video_sources = res.data.sources;
                 this.channel_mentions = res.data.channel_mentions;
                 this.tags = res.data.tags;
                 this.video = res.data;
@@ -172,7 +172,7 @@ export default {
                     photo: channel.photo,
                 })
             );
-            this.video_mentions.forEach(video =>
+            this.video_sources.forEach(video =>
                 allMentions.set(video.channel_id, {
                     id: video.channel.id,
                     name: video.channel.name,

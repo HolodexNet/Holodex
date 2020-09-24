@@ -55,13 +55,8 @@
                     <span :class="'text-' + this.video.status">
                         {{ formattedTime }}
                     </span>
-                    <span
-                        v-if="
-                            video.video_mentions &&
-                                video.video_mentions.length > 0
-                        "
-                    >
-                        • {{ video.video_mentions.length }} Clips
+                    <span v-if="video.clips && video.clips.length > 0">
+                        • {{ video.clips.length }} Clips
                     </span>
                     <span v-else-if="video.status === 'live'">
                         • {{ formatViewers(video.live_viewers) }} Watching

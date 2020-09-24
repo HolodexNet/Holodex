@@ -26,6 +26,7 @@ module.exports = {
                     },
                 },
             ],
+            // TODO cache avatars
         },
     },
 };

@@ -184,10 +184,11 @@ export default {
                 limit: this.pageLength,
                 offset: this.currentOffset,
                 include_channel: 1,
-                status: "tagged",
+                status: "past",
+                tag_status: "tagged",
                 // only include type param if there is a filter
                 ...(this.recentVideoFilter !== "all" && {
-                    type: this.recentVideoFilter,
+                    channel_type: this.recentVideoFilter,
                 }),
             })
                 .then(res => {
@@ -208,14 +209,14 @@ export default {
             api.videos({
                 limit: 100,
                 include_channel: 1,
-                status: "tagged",
+                status: "past",
+                tag_status: "tagged",
                 start_date: targetDate.startOf("day").toISOString(),
                 end_date: targetDate.endOf("day").toISOString(),
                 sort: "published_at",
                 order: "desc",
-                // dirty fix, backeend needs work
-                vtuber_override_status: 1,
             }).then(res => {
+                console.log(res);
                 if (res.data.videos.length) {
                     this.filteredVideoLists.push({
                         title: this.formatDayTitle(this.daysBefore),
@@ -232,17 +233,14 @@ export default {
             });
         },
         filterFavorites(videos) {
-            // const map = {};
+            console.log(videos.length);
             return videos.filter(video => {
                 return (
-                    // keep non live videos
-                    (video.status === "tagged" ||
-                        video.status === "untagged") &&
                     // check if video is posted by favorited channel or mentioned in the video
-                    (this.favorites.includes(video.channel.id) ||
-                        video.channel_mentions.filter(channel =>
-                            this.favorites.includes(channel.id)
-                        ).length > 0)
+                    this.favorites.includes(video.channel.id) ||
+                    video.channel_mentions.filter(channel =>
+                        this.favorites.includes(channel.id)
+                    ).length > 0
                 );
             });
         },
