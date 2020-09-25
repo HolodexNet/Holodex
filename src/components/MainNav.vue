@@ -26,7 +26,7 @@
                         <v-list-item-title>About</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item link>
+                <v-list-item link to="/settings">
                     <v-list-item-action>
                         <v-icon>{{ mdiCog }}</v-icon>
                     </v-list-item-action>
@@ -84,7 +84,13 @@
                 </v-list-group>
             </v-list>
         </v-navigation-drawer>
-        <v-app-bar color="blue lighten-2" app clipped-left flat :class="{ 'dense-searchbar': isXs }">
+        <v-app-bar
+            color="blue lighten-2"
+            app
+            clipped-left
+            flat
+            :class="{ 'dense-searchbar': isXs }"
+        >
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer">
                     <v-icon>{{ mdiMenu }}</v-icon>

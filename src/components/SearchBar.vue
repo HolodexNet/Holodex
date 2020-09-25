@@ -194,10 +194,6 @@ export default {
 </script>
 
 <style>
-.search-bar.v-input {
-    /* margin-top: 4px !important; */
-}
-
 .search-bar > .v-input__append-outer {
     background-color: #424242;
     min-width: 48px;
@@ -225,5 +221,9 @@ export default {
 
 .search-bar > .v-input__append-outer > .v-input__icon > .v-icon.primary--text {
     color: white !important;
+}
+
+.search-bar.theme--light > .v-input__append-outer {
+    background-color: #eee;
 }
 </style>

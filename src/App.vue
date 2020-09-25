@@ -29,6 +29,11 @@ export default {
             return this.$store.state.darkMode;
         },
     },
+    watch: {
+        darkMode() {
+            this.$vuetify.theme.dark = this.darkMode;
+        }
+    },
     methods: {
         supportsWebp: async function() {
             if (!self.createImageBitmap) return false;

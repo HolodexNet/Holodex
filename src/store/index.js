@@ -23,11 +23,11 @@ export default new Vuex.Store({
         cachedChannels: {},
     },
     mutations: {
-        toggleDarkMode(state) {
-            state.darkMode = !state.darkMode;
+        setDarkMode(state, val) {
+            state.darkMode = val;
         },
-        toggleRedirectMode(state) {
-            state.redirectMode = !state.redirectMode;
+        setRedirectMode(state, val) {
+            state.redirectMode = val;
         },
         noWebPSupport(state) {
             state.canUseWebP = false;

@@ -3,15 +3,24 @@
         <v-row class="align-start">
             <v-col class="pa-0 pa-lg-3">
                 <v-card class="watch-card">
-                    <div class="embedded-video">
+                    <div class="embedded-video" v-if="!redirectMode">
                         <iframe
                             :src="
-                                `https://www.youtube.com/embed/${video.yt_video_key}`
+                                `https://www.youtube.com/embed/${video.yt_video_key}?autoplay=1`
                             "
                             allowfullscreen
-                            autoplay
                             frameborder="0"
                         ></iframe>
+                    </div>
+                    <div class="thumbnail" v-else>
+                        <v-img :aspect-ratio="16 / 9" :src="thumbnail_src"/>
+                        <div class="thumbnail-overlay d-flex">
+                            <div class="text-h4 ma-auto">
+                                <a :href="`https://youtu.be/${video.yt_video_key}`">
+                                    Open on Youtube
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <v-card-title>{{ video.title }}</v-card-title>
                     <v-card-subtitle>
@@ -24,16 +33,6 @@
                             :key="channel.id"
                             class="ma-1"
                         ></ChannelChip>
-                        <!-- <div>
-                            <v-chip
-                                v-for="tag in tags"
-                                :key="tag.id"
-                                label
-                                class="ma-2"
-                            >
-                                #{{ tag.name }}
-                            </v-chip>
-                        </div> -->
                     </v-card-text>
                     <v-divider />
                     <v-list two-line>
@@ -125,7 +124,7 @@ import dayjs from "dayjs";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelSocials from "@/components/ChannelSocials";
 import { mdiMenuDown } from "@mdi/js";
-
+import { video_thumbnails } from "@/utils/image-utils";
 export default {
     name: "Watch",
     components: {
@@ -142,7 +141,6 @@ export default {
             channel_mentions: [],
             tags: [],
             mdiMenuDown,
-            // channel_chips: [],
         };
     },
     created() {
@@ -184,6 +182,12 @@ export default {
                 channel => channel.id != this.video.channel_id
             );
         },
+        redirectMode() {
+            return this.$store.state.redirectMode;
+        },
+        thumbnail_src() {
+            return video_thumbnails(this.video.yt_video_key)["medium"]
+        }
     },
     watch: {
         "$route.params.id"(val) {
@@ -208,6 +212,16 @@ export default {
 .watch-card {
     border: none !important;
     box-shadow: none !important;
+}
+.thumbnail-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+.thumbnail {
+    position: relative;
 }
 
 @media screen and (min-width: 600px) {

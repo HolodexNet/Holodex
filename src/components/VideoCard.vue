@@ -6,7 +6,10 @@
             'video-card',
             'transparent',
         ]"
-        :to="`/watch/${video.id}`"
+        :to="!redirectMode ? `/watch/${video.id}` : ''"
+        :href="`https://youtu.be/${video.yt_video_key}`"
+        :target="redirectMode ? '_blank' : ''"
+        link
     >
         <v-img
             class="white--text align-end"
@@ -154,6 +157,9 @@ export default {
             } else {
                 return srcs["hq720"];
             }
+        },
+        redirectMode() {
+            return this.$store.state.redirectMode;
         },
     },
     methods: {
