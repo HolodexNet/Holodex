@@ -17,13 +17,11 @@
                 lg: 5,
                 xl: 6,
             }"
+            :currentPage="currentPage"
+            :total="totalVideos"
+            @changePage="loadPaginate"
+            paginated
         />
-        <v-pagination
-            v-if="videos.length > 0"
-            v-model="currentPage"
-            class="my-4"
-            :length="Math.ceil(totalVideos / videoPerPage)"
-        ></v-pagination>
     </div>
 </template>
 
@@ -58,15 +56,8 @@ export default {
                 this.$route.name === "channel_mentions"
             );
         },
-        currentPage: {
-            get() {
-                return Number(this.$route.query.page) || 1;
-            },
-            set(val) {
-                this.$router.push({
-                    query: { ...this.$route.query, page: val },
-                });
-            },
+        currentPage() {
+            return Number(this.$route.query.page) || 1;
         },
     },
     watch: {
@@ -101,6 +92,11 @@ export default {
                 this.videos = res.data.videos;
                 this.totalVideos = res.data.total;
                 this.loading = false;
+            });
+        },
+        loadPaginate(page) {
+            this.$router.push({
+                query: { ...this.$route.query, page: page },
             });
         },
     },

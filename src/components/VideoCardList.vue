@@ -34,6 +34,12 @@
                 style="min-height: 10px;"
                 :identifier="infiniteId"
             ></infinite-loading>
+            <v-pagination
+                v-if="paginated && videos.length > 0"
+                v-model="page"
+                class="my-4"
+                :length="Math.ceil(total / pageSize)"
+            ></v-pagination>
         </div>
     </v-row>
 </template>
@@ -52,6 +58,7 @@ export default {
         return {
             expanded: false,
             ...{ mdiChevronUp, mdiChevronDown },
+            requestedPage: null,
         };
     },
     props: {
@@ -97,7 +104,11 @@ export default {
             required: false,
             default: 0,
         },
-        page: {
+        paginated: {
+            type: Boolean,
+            default: false,
+        },
+        currentPage: {
             default: 1,
         },
         pageSize: {
@@ -111,9 +122,6 @@ export default {
         emitInfinite($state) {
             this.$emit("infinite", $state);
         },
-        emitPaginate() {
-            this.$emit("paginate", this.page, this.pageSize);
-        },
     },
     mounted() {},
     computed: {
@@ -126,6 +134,14 @@ export default {
         colSize() {
             if (this.horizontal) return 1;
             return this.cols[this.$vuetify.breakpoint.name];
+        },
+        page: {
+            get() {
+                return this.currentPage;
+            },
+            set(val) {
+                this.$emit("changePage", val, this.pageSize);
+            },
         },
     },
 };
