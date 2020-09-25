@@ -84,20 +84,38 @@
                 </v-list-group>
             </v-list>
         </v-navigation-drawer>
-        <v-app-bar color="blue lighten-2" app clipped-left flat>
-            <v-app-bar-nav-icon @click.stop="drawer = !drawer">
-                <v-icon>{{ mdiMenu }}</v-icon>
-            </v-app-bar-nav-icon>
-            <v-toolbar-title class="pr-5">
-                <router-link
-                    :to="'/'"
-                    style="text-decoration: none; color: white"
+        <v-app-bar color="blue lighten-2" app clipped-left flat :class="{ 'dense-searchbar': isXs }">
+            <template v-if="!isXs || (isXs && !searchBarExpanded)">
+                <v-app-bar-nav-icon @click.stop="drawer = !drawer">
+                    <v-icon>{{ mdiMenu }}</v-icon>
+                </v-app-bar-nav-icon>
+                <v-toolbar-title class="pr-5">
+                    <router-link
+                        :to="'/'"
+                        style="text-decoration: none; color: white"
+                    >
+                        HoloDex
+                    </router-link>
+                </v-toolbar-title>
+                <SearchBar v-if="!isXs" style="margin-top: 4px !important;" />
+                <v-btn
+                    icon
+                    class="ml-auto"
+                    v-if="isXs"
+                    @click="searchBarExpanded = true"
                 >
-                    HoloDex
-                </router-link>
-            </v-toolbar-title>
-
-            <SearchBar />
+                    <v-icon>{{ mdiMagnify }}</v-icon>
+                </v-btn>
+            </template>
+            <template v-else>
+                <v-app-bar-nav-icon
+                    @click="searchBarExpanded = false"
+                    class="backButton"
+                >
+                    <v-icon>{{ mdiArrowLeft }}</v-icon>
+                </v-app-bar-nav-icon>
+                <SearchBar dense style="margin-top: 5px !important;" />
+            </template>
         </v-app-bar>
     </div>
 </template>
@@ -112,6 +130,8 @@ import {
     mdiHeart,
     mdiChevronUp,
     mdiChevronDown,
+    mdiArrowLeft,
+    mdiMagnify,
 } from "@mdi/js";
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
@@ -133,8 +153,12 @@ export default {
             mdiHeart,
             mdiChevronUp,
             mdiChevronDown,
+            mdiArrowLeft,
+            mdiMagnify,
         },
         favoritesExpanded: false,
+        searchBarExpanded: false,
+        mobile: true,
     }),
     computed: {
         favorites() {
@@ -161,8 +185,19 @@ export default {
                 ? arr.splice(0, 10)
                 : arr;
         },
+        isXs() {
+            return this.$vuetify.breakpoint.name === "xs";
+        },
     },
 };
 </script>
 
-<style></style>
+<style>
+.backButton {
+    height: 32px !important;
+    width: 32px !important;
+}
+.dense-searchbar > .v-toolbar__content {
+    padding: 4px 10px;
+}
+</style>

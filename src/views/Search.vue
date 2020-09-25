@@ -4,7 +4,7 @@
             class="justify-end"
             style="margin-bottom: -15px; margin-top: 15px;"
         >
-            <v-col cols="2" class="py-1">
+            <v-col sm="4" md="2" class="py-1">
                 <v-select
                     v-model="filter.sort"
                     :items="options.sort"
@@ -12,7 +12,7 @@
                     label="Sort By"
                 ></v-select>
             </v-col>
-            <v-col cols="2" class="py-1">
+            <v-col sm="4" md="2" class="py-1">
                 <v-select
                     v-model="filter.type"
                     :items="options.type"

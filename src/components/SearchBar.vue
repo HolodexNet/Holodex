@@ -12,6 +12,8 @@
         hide-no-data
         hide-selected
         auto-select-first
+        :dense="dense"
+        :small-chips="dense"
         v-model="query"
         :loading="isLoading"
         :items="results"
@@ -29,9 +31,10 @@
                 close
                 :label="selection.item.value.type !== 'channel'"
                 @click:close="deleteChip(selection.item)"
+                :small="dense"
             >
                 <template v-if="selection.item.value.type === 'channel'">
-                    <v-avatar left>
+                    <v-avatar left v-if="!dense">
                         <ChannelImg
                             :src="selection.item.value.channel_obj.photo"
                             :size="32"
@@ -84,6 +87,12 @@ export default {
             fromChannelCache: [],
             useEnName: true,
         };
+    },
+    props: {
+        dense: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         cachedChannels() {
@@ -186,7 +195,7 @@ export default {
 
 <style>
 .search-bar.v-input {
-    margin-top: 4px !important;
+    /* margin-top: 4px !important; */
 }
 
 .search-bar > .v-input__append-outer {
@@ -198,6 +207,11 @@ export default {
     border-radius: inherit;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+.search-bar.v-input--dense > .v-input__append-outer {
+    min-width: 32px;
+    min-height: 38px;
+    margin: 0 !important;
 }
 
 .v-input.search-bar > .v-input__control {
