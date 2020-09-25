@@ -1,23 +1,27 @@
 <template>
     <v-autocomplete
-        v-model="query"
-        :loading="isLoading"
-        :items="results"
-        :search-input.sync="search"
-        @input="onInput"
-        style="max-width: 500px"
-        class="ma-auto"
-        solo-inverted
+        style="max-width: 600px"
+        class="ma-auto search-bar"
+        solo
+        flat
         chips
         multiple
         deletable-chips
         disable-lookup
         clearable
+        hide-no-data
+        hide-selected
+        auto-select-first
+        v-model="query"
+        :loading="isLoading"
+        :items="results"
+        :search-input.sync="search"
+        @input="onInput"
         :append-icon="''"
         :append-outer-icon="mdiMagnify"
         @click:append-outer="commitSearch"
-        hide-no-data
-        hide-selected
+        @keydown="onKeyDown"
+        label="Search"
     >
         <template v-slot:selection="selection">
             <v-chip
@@ -60,6 +64,8 @@ import { mdiMagnify, mdiLabel } from "@mdi/js";
 import ChannelChip from "@/components/ChannelChip";
 import api from "@/utils/backend-api";
 import ChannelImg from "@/components/ChannelImg";
+import { debounce } from "lodash";
+
 export default {
     name: "SearchBar",
     components: {
@@ -103,11 +109,7 @@ export default {
         },
     },
     watch: {
-        query() {
-            // console.log("watch - " + this.query.map(q => q.name).join(","));
-            // // this.search = null;
-        },
-        search(val) {
+        search: debounce(function(val) {
             if (!val) return;
             const formatted = val.replaceAll("#", "").toLowerCase();
 
@@ -123,7 +125,8 @@ export default {
                         const ref = this.cachedChannels[tag.channel_ref];
                         ref.search_type = "channel";
                         return {
-                            text: ref[this.nameProperty] + ` (${tag.tag_count})`,
+                            text:
+                                ref[this.nameProperty] + ` (${tag.tag_count})`,
                             value: {
                                 tag_id: tag.id,
                                 tag_obj: tag,
@@ -144,16 +147,14 @@ export default {
                     }
                 });
             });
-        },
+        }, 200),
     },
     methods: {
-        // onChange(event) {
-        //     console.log(this.query);
-        //     console.log(event);
-        // },
-        // onKeyDown(event) {
-        //     console.log(event);
-        // },
+        onKeyDown(event) {
+            if (event.code === "Enter" && this.fromApi.length == 0) {
+                this.commitSearch();
+            }
+        },
         async fetchTags(query) {
             this.loading = true;
             const res = await api.searchTags(query, 10);
@@ -162,11 +163,18 @@ export default {
             return res;
         },
         deleteChip(item) {
-            this.query.splice(this.query.map(q => q.name).indexOf(item.value.name), 1);
+            this.query.splice(this.query.map(q => q.tag_id).indexOf(item.value.tag_id), 1);
         },
         commitSearch() {
             console.log("search commited");
             console.log(this.query);
+            this.$router.push({
+                path: "/search",
+                query: {
+                    tags: this.query.map(tag => tag.tag_obj.name).join(","),
+                    ...(this.search && { title: this.search }),
+                },
+            });
         },
         onInput() {
             this.search = null;
@@ -176,4 +184,32 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.search-bar.v-input {
+    margin-top: 4px !important;
+}
+
+.search-bar > .v-input__append-outer {
+    background-color: #424242;
+    min-width: 48px;
+    min-height: 48px;
+    margin: 0 !important;
+    align-items: center;
+    border-radius: inherit;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.v-input.search-bar > .v-input__control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.search-bar > .v-input__append-outer > .v-input__icon > .v-icon {
+    color: gray !important;
+}
+
+.search-bar > .v-input__append-outer > .v-input__icon > .v-icon.primary--text {
+    color: white !important;
+}
+</style>

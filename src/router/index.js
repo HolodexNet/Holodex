@@ -8,6 +8,7 @@ const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
 const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
 const Watch = () => import("../views/Watch.vue");
 const About = () => import("../views/About.vue");
+const Search = () => import("../views/Search.vue");
 
 Vue.use(VueRouter);
 
@@ -57,6 +58,11 @@ const routes = [
         name: "about",
         path: "/about",
         component: About,
+    },
+    {
+        name: "search",
+        path: "/search",
+        component: Search,
     },
     {
         path: "*",

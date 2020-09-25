@@ -97,10 +97,22 @@ export default {
             required: false,
             default: 0,
         },
+        page: {
+            default: 1,
+        },
+        pageSize: {
+            default: 30,
+        },
+        total: {
+            default: 1,
+        },
     },
     methods: {
         emitInfinite($state) {
             this.$emit("infinite", $state);
+        },
+        emitPaginate() {
+            this.$emit("paginate", this.page, this.pageSize);
         },
     },
     mounted() {},
