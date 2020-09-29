@@ -48,7 +48,7 @@
                                     .catch(() => {})
                             "
                         >
-                            <v-list-item-avatar>
+                            <v-list-item-avatar :size="35">
                                 <ChannelImg :src="channel.photo" />
                             </v-list-item-avatar>
                             <ChannelInfo :channel="channel" noSubscriberCount />
@@ -84,13 +84,7 @@
                 </v-list-group>
             </v-list>
         </v-navigation-drawer>
-        <v-app-bar
-            color="blue lighten-2"
-            app
-            clipped-left
-            flat
-            :class="{ 'dense-searchbar': isXs }"
-        >
+        <v-app-bar color="blue lighten-2" app clipped-left flat>
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer">
                     <v-icon>{{ mdiMenu }}</v-icon>
@@ -103,7 +97,7 @@
                         HoloDex
                     </router-link>
                 </v-toolbar-title>
-                <SearchBar v-if="!isXs" style="margin-top: 4px !important;" />
+                <SearchBar v-if="!isXs" />
                 <v-btn
                     icon
                     class="ml-auto"
@@ -120,7 +114,7 @@
                 >
                     <v-icon>{{ mdiArrowLeft }}</v-icon>
                 </v-app-bar-nav-icon>
-                <SearchBar dense style="margin-top: 5px !important;" />
+                <SearchBar dense />
             </template>
         </v-app-bar>
     </div>
@@ -202,8 +196,5 @@ export default {
 .backButton {
     height: 32px !important;
     width: 32px !important;
-}
-.dense-searchbar > .v-toolbar__content {
-    padding: 4px 10px;
 }
 </style>

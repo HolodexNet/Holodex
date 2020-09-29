@@ -1,27 +1,27 @@
 <template>
     <v-container class="pa-0">
-        <v-card class="pa-0">
-            <div class="graph-container">
-                <canvas
-                    id="subscriber-chart"
-                    style="background: white"
-                    class="graph"
-                ></canvas>
-            </div>
-            <div class="graph-container">
-                <canvas
-                    id="view-chart"
-                    style="background: white"
-                    class="graph"
-                ></canvas>
-            </div>
-        </v-card>
+        <v-row>
+            <v-col xs="12" md="6">
+                <v-card class="pa-0">
+                    <v-card-title>Subscribers</v-card-title>
+                    <div class="graph-container">
+                        <canvas id="subscriber-chart" class="graph"></canvas>
+                    </div>
+                </v-card>
+            </v-col>
+            <v-col xs="12" md="6">
+                <v-card class="pa-0">
+                    <v-card-title>Total Video Views</v-card-title>
+                    <div class="graph-container">
+                        <canvas id="view-chart" class="graph"></canvas>
+                    </div>
+                </v-card>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
 <script>
-// eslint-disable-next-line prettier/prettier
-// eslint-disable-next-line no-unused-vars
 import api from "@/utils/backend-api.js";
 import dayjs from "dayjs";
 import { formatCount } from "@/utils/image-utils";
@@ -31,21 +31,9 @@ import {
     Line,
     Point,
     LinearScale,
-    CategoryScale,
-    Title,
-    ScatterController,
     Tooltip,
 } from "chart.js";
-Chart.register(
-    LineController,
-    Line,
-    Point,
-    LinearScale,
-    CategoryScale,
-    Title,
-    ScatterController,
-    Tooltip
-);
+Chart.register(LineController, Line, Point, LinearScale, Tooltip);
 export default {
     name: "ChannelStats",
     data() {
@@ -53,21 +41,12 @@ export default {
             timeLabels: [],
             subscriberData: [],
             viewData: [],
-            stepSizes: [100, 5000, 10000, 25000, 50000, 100000, 500000],
         };
     },
     mounted() {
         api.channel_history(this.channel_id).then(res => {
             const allData = res.data;
-            // .map(row => {
-            //     row.label = dayjs(row.day).add(row.hour_6 * 6, "hour").format("M/D H:mm");
-            // });
-            console.log(res.data);
-            this.timeLabels = allData.map(row =>
-                dayjs(row.day)
-                    // .add(row.hour_6 * 6, "hour")
-                    .format("M/D")
-            );
+            this.timeLabels = allData.map(row => dayjs(row.day).format("M/D"));
             this.subscriberData = allData.map(row => row.subscriber_count);
             this.viewData = allData.map(row => row.view_count);
             this.loadChart("subscriber");
@@ -78,26 +57,27 @@ export default {
         channel_id() {
             return this.$route.params.id;
         },
+        darkMode() {
+            return this.$store.state.darkMode;
+        },
     },
     methods: {
         loadChart(type) {
-            // const diff =
-            //     (Math.max(...this.subscriberData) -
-            //         Math.min(...this.subscriberData)) /
-            //     this.subscriberData.length;
-            // const stepSize = this.stepSizes[this.stepSizes.findIndex(value => value > diff)];
             var ctx = document.getElementById(`${type}-chart`);
-            // eslint-disable-next-line no-unused-vars
-            var myChart = new Chart(ctx, {
+            const gridLineColor = this.darkMode
+                ? "rgba(255,255,255,0.2)"
+                : "rgba(0, 0, 0, 0.1)";
+            const fontColor = this.darkMode ? "white" : "black";
+            new Chart(ctx, {
                 type: "line",
                 data: {
                     labels: this.timeLabels,
                     datasets: [
                         {
                             label: type,
-                            borderColor: "#F08080",
+                            borderColor: "#2196F3",
                             borderWidth: 4,
-                            backgroundColor: "#F08080",
+                            backgroundColor: "#2196F3",
                             data: this[`${type}Data`],
                             pointRadius: 4,
                         },
@@ -113,27 +93,36 @@ export default {
                                 },
                                 font: {
                                     size: 12,
+                                    color: fontColor,
                                 },
                                 maxTicksLimit: 6,
+                            },
+                            gridLines: {
+                                color: gridLineColor,
                             },
                         },
                         x: {
                             gridLines: {
                                 display: false,
+                                color: gridLineColor,
                             },
                             ticks: {
                                 font: {
                                     size: 12,
+                                    color: fontColor,
                                 },
                             },
                         },
                     },
-                    layout: {},
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10,
+                            left: 5,
+                            right: 5,
+                        },
+                    },
                     responsive: true,
-                    // title: {
-                    //     display: true,
-                    //     text: ""
-                    // },
                     tooltips: {
                         mode: "index",
                         intersect: false,
@@ -156,6 +145,7 @@ export default {
 
 <style>
 .graph-container {
-    min-height: 320px;
+    /* min-height: 320px; */
+    /* padding: 10px 0; */
 }
 </style>

@@ -11,8 +11,9 @@
         clearable
         hide-no-data
         hide-selected
+        hide-details
         auto-select-first
-        :dense="dense"
+        dense
         :small-chips="dense"
         v-model="query"
         :loading="isLoading"
@@ -208,8 +209,8 @@ export default {
     border-bottom-left-radius: 0;
 }
 .search-bar.v-input--dense > .v-input__append-outer {
-    min-width: 32px;
-    min-height: 38px;
+    min-width: 38px;
+    min-height: 40px;
     margin: 0 !important;
 }
 
@@ -229,4 +230,8 @@ export default {
 .search-bar.theme--light > .v-input__append-outer {
     background-color: #eee;
 }
+
+/* .search-bar.theme--light > .v-input__append-outer > .v-input__icon > .v-icon {
+    color: black !important;
+} */
 </style>
