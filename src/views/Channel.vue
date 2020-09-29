@@ -77,7 +77,7 @@ export default {
         avatarSize() {
             switch (this.$vuetify.breakpoint.name) {
                 case "xs":
-                    return 30;
+                    return 40;
                 case "sm":
                     return 40;
                 default:

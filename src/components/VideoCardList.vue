@@ -10,7 +10,7 @@
                 fluid
                 :includeChannel="includeChannel"
                 :horizontal="horizontal"
-                :withAvatar="withAvatar"
+                :includeAvatar="includeAvatar"
                 :colSize="colSize"
             />
         </v-col>
@@ -70,7 +70,7 @@ export default {
             required: false,
             type: Boolean,
         },
-        withAvatar: {
+        includeAvatar: {
             required: false,
             type: Boolean,
         },

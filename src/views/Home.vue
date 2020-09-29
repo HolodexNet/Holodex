@@ -23,7 +23,7 @@
                 <VideoCardList
                     :videos="filteredLiveVideos"
                     includeChannel
-                    withAvatar
+                    includeAvatar
                     :cols="{
                         xs: 1,
                         sm: 2,

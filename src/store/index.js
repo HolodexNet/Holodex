@@ -22,6 +22,7 @@ export default new Vuex.Store({
         cachedChannelLastUpdated: null,
         cachedChannels: {},
         nameProperty: "name_en",
+        hideThumbnail: false,
     },
     getters: {
         usingEnName(state) {
@@ -40,6 +41,9 @@ export default new Vuex.Store({
         },
         testedWebP(state) {
             state.testedWebP = true;
+        },
+        setHideThumbnail(state, val) {
+            state.hideThumbnail = val;
         },
         setRecentVideoFilter(state, payload) {
             state.recentVideoFilter = payload;

@@ -16,6 +16,7 @@
             :src="imageSrc"
             :aspect-ratio="16 / 9"
             :width="horizontal ? '150px' : '100%'"
+            v-if="!hideThumbnail"
         >
             <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -36,7 +37,7 @@
             <router-link
                 :to="`/channel/${video.channel.id}`"
                 v-if="
-                    includeChannel && withAvatar && !horizontal && video.channel
+                    includeChannel && includeAvatar && !horizontal && video.channel
                 "
             >
                 <v-list-item-avatar>
@@ -103,7 +104,7 @@ export default {
             type: Boolean,
             default: false,
         },
-        withAvatar: {
+        includeAvatar: {
             required: false,
             type: Boolean,
             default: false,
@@ -160,6 +161,9 @@ export default {
         },
         redirectMode() {
             return this.$store.state.redirectMode;
+        },
+        hideThumbnail() {
+            return this.$store.state.hideThumbnail;
         },
     },
     methods: {

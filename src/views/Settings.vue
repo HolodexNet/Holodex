@@ -18,6 +18,11 @@
                     label="Using English Name"
                     messages="Replaces Vtuber name to their English name throughout the site"
                 ></v-switch>
+                <v-switch
+                    v-model="hideThumbnail"
+                    label="Hide Video Thumbnails"
+                    messages="Hide video thumbnails, helps speed up loading time and less scrolling on mobile"
+                ></v-switch>
             </v-col>
         </v-row>
     </v-container>
@@ -49,6 +54,14 @@ export default {
             },
             set(val) {
                 this.$store.commit("setEnName", val);
+            },
+        },
+        hideThumbnail: {
+            get() {
+                return this.$store.state.hideThumbnail;
+            },
+            set(val) {
+                this.$store.commit("setHideThumbnail", val);
             },
         },
     },
