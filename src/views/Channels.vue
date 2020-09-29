@@ -76,6 +76,7 @@ export default {
                 .then(res => {
                     if (res.data.channels.length) {
                         this.channels = this.channels.concat(res.data.channels);
+                        console.log(this.channels);
                         this.currentOffset++;
                         $state.loaded();
                     } else {

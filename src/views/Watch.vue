@@ -187,7 +187,7 @@ export default {
         },
         thumbnail_src() {
             return video_thumbnails(this.video.yt_video_key)["medium"]
-        }
+        },
     },
     watch: {
         "$route.params.id"(val) {

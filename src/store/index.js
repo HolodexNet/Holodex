@@ -21,6 +21,12 @@ export default new Vuex.Store({
         favorites: [],
         cachedChannelLastUpdated: null,
         cachedChannels: {},
+        nameProperty: "name_en",
+    },
+    getters: {
+        usingEnName(state) {
+            return state.nameProperty === "name_en";
+        },
     },
     mutations: {
         setDarkMode(state, val) {
@@ -40,6 +46,9 @@ export default new Vuex.Store({
         },
         setLiveFilter(state, payload) {
             state.liveFilter = !state.favorites ? "all" : payload;
+        },
+        setEnName(state, payload) {
+            state.nameProperty = payload ? "name_en" : "name";
         },
         addFavorite(state, channel_id) {
             if (channel_id > 1000) return;

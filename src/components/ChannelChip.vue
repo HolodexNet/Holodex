@@ -3,7 +3,7 @@
         <v-avatar left>
             <ChannelImg :src="channel.photo" :size="32" close />
         </v-avatar>
-        {{ channel.name }}
+        {{ channelName }}
     </v-chip>
 </template>
 
@@ -24,6 +24,13 @@ export default {
             required: false,
         },
     },
+    computed: {
+        channelName() {
+            const prop = this.$store.state.nameProperty;
+            if (this.channel[prop]) return this.channel[prop];
+            return this.channel.name;
+        },
+    }
 };
 </script>
 

@@ -1,21 +1,25 @@
 <template>
     <v-list-item-content>
         <v-list-item-title>
-            <div class="text-truncate">{{ channel.name }}</div>
-            <div class="body-2">{{ channel.name_en }}</div>
+            <div class="text-truncate">{{ channelName }}</div>
+            <!-- <div class="body-2">{{ channel.name_en }}</div> -->
         </v-list-item-title>
         <v-list-item-subtitle>
-            <span v-if="!noSubscriberCount"
-                >{{ channel.subscriber_count / 1000 }}K Subscribers
+            <span v-if="!noSubscriberCount">
+                {{ subscriberCount }}
+                <span class="green--text" v-if="subsciberGains">
+                    {{ subsciberGains }}
+                </span>
             </span>
             <span v-if="includeVideoCount">
                 <br />
-                {{ channel.video_count }} Videos •
+                {{ channel.video_count }} Videos
                 <router-link
                     :to="`channel/${channel.id}/clips`"
                     style="text-decoration: none; color:inherit;"
+                    v-if="channel.clip_count > 0"
                 >
-                    {{ channel.clip_count }} Clips
+                    • {{ channel.clip_count }} Clips
                 </router-link>
             </span>
         </v-list-item-subtitle>
@@ -30,7 +34,7 @@
 
 <script>
 import ChannelSocials from "@/components/ChannelSocials";
-
+import { formatCount } from "@/utils/image-utils";
 export default {
     components: {
         ChannelSocials,
@@ -51,6 +55,24 @@ export default {
         noSubscriberCount: {
             type: Boolean,
             default: false,
+        },
+    },
+    methods: {
+        formatCount,
+    },
+    computed: {
+        subscriberCount() {
+            return `${formatCount(this.channel.subscriber_count)} Subscribers `;
+        },
+        subsciberGains() {
+            return this.channel.subscriber_gains
+                ? `(+${formatCount(this.channel.subscriber_gains)})`
+                : null;
+        },
+        channelName() {
+            const prop = this.$store.state.nameProperty;
+            if (this.channel[prop]) return this.channel[prop];
+            return this.channel.name;
         },
     },
 };

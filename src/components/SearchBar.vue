@@ -130,7 +130,10 @@ export default {
                     tag => !currentTagIds.includes(tag.id)
                 );
                 this.fromApi = filtered.map(tag => {
-                    if (tag.channel_ref) {
+                    if (
+                        tag.channel_ref &&
+                        this.cachedChannels[tag.channel_ref]
+                    ) {
                         const ref = this.cachedChannels[tag.channel_ref];
                         ref.search_type = "channel";
                         return {
