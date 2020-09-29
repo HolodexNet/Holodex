@@ -31,9 +31,17 @@ import {
     Line,
     Point,
     LinearScale,
+    CategoryScale,
     Tooltip,
 } from "chart.js";
-Chart.register(LineController, Line, Point, LinearScale, Tooltip);
+Chart.register(
+    LineController,
+    Line,
+    Point,
+    LinearScale,
+    CategoryScale,
+    Tooltip
+);
 export default {
     name: "ChannelStats",
     data() {
