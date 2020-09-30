@@ -1,89 +1,7 @@
 <template>
     <div>
-        <v-navigation-drawer v-model="drawer" app width="256" clipped>
-            <v-list dense>
-                <v-list-item link :to="'/'">
-                    <v-list-item-action>
-                        <v-icon>{{ mdiHome }}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Home</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item link :to="'/channel'">
-                    <v-list-item-action>
-                        <v-icon>{{ mdiAnimationPlay }}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Channels</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item link :to="'/about'">
-                    <v-list-item-action>
-                        <v-icon>{{ mdiHelpCircle }}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>About</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item link to="/settings">
-                    <v-list-item-action>
-                        <v-icon>{{ mdiCog }}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Settings</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-group :prepend-icon="mdiHeart" value="true">
-                    <template v-slot:activator>
-                        <v-list-item-title>Favorites</v-list-item-title>
-                    </template>
-                    <template v-for="channel in favoritedChannels">
-                        <v-list-item
-                            v-if="channel"
-                            :key="channel.id"
-                            @click="
-                                $router
-                                    .push(`/channel/${channel.id}`)
-                                    .catch(() => {})
-                            "
-                        >
-                            <v-list-item-avatar :size="35">
-                                <ChannelImg :src="channel.photo" />
-                            </v-list-item-avatar>
-                            <ChannelInfo :channel="channel" noSubscriberCount />
-                        </v-list-item>
-                    </template>
-                    <v-list-item
-                        link
-                        @click="favoritesExpanded = !favoritesExpanded"
-                        v-if="favorites.length > 10"
-                    >
-                        <v-list-item-action>
-                            <v-icon>{{
-                                favoritesExpanded
-                                    ? mdiChevronUp
-                                    : mdiChevronDown
-                            }}</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>
-                                {{ favoritesExpanded ? "Close" : "Show All" }}
-                            </v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                        <router-link
-                            to="/channel"
-                            style="font-size: .825rem"
-                            class="ma-auto"
-                        >
-                            Manage Favorites
-                        </router-link>
-                    </v-list-item>
-                </v-list-group>
-            </v-list>
-        </v-navigation-drawer>
+        <NavDrawer :pages="pages" v-model="drawer" v-if="!isXs" />
+        <BottomNav :pages="pages" v-else />
         <v-app-bar color="blue lighten-2" app clipped-left flat>
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer">
@@ -133,14 +51,18 @@ import {
     mdiArrowLeft,
     mdiMagnify,
 } from "@mdi/js";
-import ChannelImg from "@/components/ChannelImg";
-import ChannelInfo from "@/components/ChannelInfo";
+// import ChannelImg from "@/components/ChannelImg";
+// import ChannelInfo from "@/components/ChannelInfo";
+import NavDrawer from "@/components/navs/NavDrawer";
+import BottomNav from "@/components/navs/BottomNav";
 import SearchBar from "@/components/SearchBar";
 export default {
     components: {
-        ChannelImg,
-        ChannelInfo,
+        // ChannelImg,
+        // ChannelInfo,
         SearchBar,
+        NavDrawer,
+        BottomNav,
     },
     data: () => ({
         drawer: null,
@@ -159,6 +81,28 @@ export default {
         favoritesExpanded: false,
         searchBarExpanded: false,
         mobile: true,
+        pages: [
+            {
+                name: "Home",
+                path: "/",
+                icon: mdiHome,
+            },
+            {
+                name: "Channels",
+                path: "/channel",
+                icon: mdiAnimationPlay,
+            },
+            {
+                name: "About",
+                path: "/about",
+                icon: mdiHelpCircle,
+            },
+            {
+                name: "Settings",
+                path: "/settings",
+                icon: mdiCog,
+            },
+        ],
     }),
     computed: {
         favorites() {
