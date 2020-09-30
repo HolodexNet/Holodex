@@ -68,7 +68,7 @@ import { mdiMagnify, mdiLabel } from "@mdi/js";
 import ChannelChip from "@/components/ChannelChip";
 import api from "@/utils/backend-api";
 import ChannelImg from "@/components/ChannelImg";
-// import { debounce } from "lodash";
+import { debounce } from "@/utils/functions";
 
 export default {
     name: "SearchBar",
@@ -119,9 +119,7 @@ export default {
         },
     },
     watch: {
-        search: 
-        // debounce(
-            function(val) {
+        search: debounce(function(val) {
             if (!val) return;
             const formatted = val.replaceAll("#", "").toLowerCase();
 
@@ -162,8 +160,7 @@ export default {
                     }
                 });
             });
-        }, 
-        // 200),
+        }, 200),
     },
     methods: {
         onKeyDown(event) {

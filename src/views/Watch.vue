@@ -124,7 +124,7 @@ import dayjs from "dayjs";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelSocials from "@/components/ChannelSocials";
 import { mdiMenuDown } from "@mdi/js";
-import { video_thumbnails } from "@/utils/image-utils";
+import { video_thumbnails } from "@/utils/functions";
 export default {
     name: "Watch",
     components: {

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { channel_photo_resize } from "@/utils/image-utils";
+import { channel_photo_resize } from "@/utils/functions";
 export default {
     name: "ChannelImg",
     props: {

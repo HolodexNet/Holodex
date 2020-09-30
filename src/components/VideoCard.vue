@@ -63,7 +63,7 @@
                         • {{ video.clips.length }} Clips
                     </span>
                     <span v-else-if="video.status === 'live'">
-                        • {{ formatViewers(video.live_viewers) }} Watching
+                        • {{ formatCount(video.live_viewers) }} Watching
                     </span>
                 </v-list-item-subtitle>
             </v-list-item-content>
@@ -75,10 +75,12 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
+import advancedFormat from "dayjs/plugin/advancedFormat";
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
+dayjs.extend(advancedFormat);
 import ChannelImg from "@/components/ChannelImg";
-import { video_thumbnails } from "@/utils/image-utils";
+import { video_thumbnails, formatCount } from "@/utils/functions";
 export default {
     name: "VideoCard",
     components: {
@@ -125,9 +127,14 @@ export default {
         formattedTime() {
             switch (this.video.status) {
                 case "upcoming":
-                    return `Stream starts ${this.formatFromNow(
-                        this.video.live_schedule
-                    )}`;
+                    return (
+                        "Stream starts " +
+                        // print relative time in hours if less than 24 hours,
+                        // print full date if greater than 24 hours
+                        (dayjs(this.video.live_schedule).diff(dayjs()) < 86400000
+                            ? this.formatFromNow(this.video.live_schedule)
+                            : dayjs(this.video.live_schedule).format("ddd MMM Do, h:mm a"))
+                    );
                 case "live":
                     return "Live Now";
                 default:
@@ -148,7 +155,6 @@ export default {
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
             const useWebP = this.$store.state.canUseWebP && !this.forceJPG;
-            // if (!useWebP) console.log("falling back");
             const srcs = video_thumbnails(this.video.yt_video_key, useWebP);
             if (this.horizontal) return srcs["medium"];
             if (this.colSize < 2) {
@@ -170,9 +176,7 @@ export default {
         formatFromNow(time) {
             return dayjs(time).fromNow();
         },
-        formatViewers(viewers) {
-            return viewers > 1000 ? viewers / 1000 + "K" : viewers;
-        },
+        formatCount,
     },
 };
 </script>

@@ -24,7 +24,7 @@
 <script>
 import api from "@/utils/backend-api.js";
 import dayjs from "dayjs";
-import { formatCount } from "@/utils/image-utils";
+import { formatCount } from "@/utils/functions";
 import {
     Chart,
     LineController,

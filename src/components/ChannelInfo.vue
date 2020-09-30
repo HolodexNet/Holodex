@@ -34,7 +34,7 @@
 
 <script>
 import ChannelSocials from "@/components/ChannelSocials";
-import { formatCount } from "@/utils/image-utils";
+import { formatCount } from "@/utils/functions";
 export default {
     components: {
         ChannelSocials,

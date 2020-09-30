@@ -42,7 +42,7 @@ import api from "@/utils/backend-api";
 import ChannelSocials from "@/components/ChannelSocials";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelImg from "@/components/ChannelImg";
-import { banner_images } from "@/utils/image-utils";
+import { banner_images } from "@/utils/functions";
 
 export default {
     name: "Channel",
