@@ -11,7 +11,7 @@ Vue.use(
     VueGTag,
     {
         config: {
-            id: "G-0SFRKG0C9M",
+            id: "UA-178428556-1",
         },
     },
     router
