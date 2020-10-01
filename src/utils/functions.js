@@ -1,6 +1,8 @@
 export function channel_photo_resize(photo_url, size) {
     const split = photo_url.split("=s");
-    return `${split[0]}=s${size}-c-k-c0x00ffffff-no-rj-mo`;
+    // try to hit cache by using a common size
+    const adj_size = size < 40 ? 40 : size;
+    return `${split[0]}=s${adj_size}-c-k-c0x00ffffff-no-rj-mo`;
 }
 
 export function video_thumbnails(yt_video_key, useWebP) {

@@ -23,12 +23,15 @@ module.exports = {
                     },
                 },
                 {
-                    urlPattern: new RegExp("https://yt3.ggpht.com/(.*)"),
+                    urlPattern: new RegExp(
+                        "https://yt3.ggpht.com/a/(.*)=s40-c-k-c0x00ffffff-no-rj-mo(.*)"
+                    ),
                     handler: "cacheFirst",
                     options: {
                         cacheName: "channel-photo",
                         expiration: {
                             maxAgeSeconds: 86400,
+                            purgeOnQuotaError: true,
                         },
                         cacheableResponse: {
                             statuses: [0, 200],

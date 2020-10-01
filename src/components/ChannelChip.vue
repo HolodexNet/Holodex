@@ -1,7 +1,7 @@
 <template>
     <v-chip pill :to="`/channel/${channel.id}`" :close="close">
         <v-avatar left>
-            <ChannelImg :src="channel.photo" :size="32" close />
+            <ChannelImg :src="channel.photo" close />
         </v-avatar>
         {{ channelName }}
     </v-chip>
