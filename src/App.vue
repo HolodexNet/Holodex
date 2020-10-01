@@ -33,7 +33,7 @@ export default {
     },
     data() {
         return {
-            updateExists: true,
+            updateExists: false,
             registration: null,
         };
     },
