@@ -8,7 +8,6 @@ if (process.env.NODE_ENV === "production") {
             document.dispatchEvent(
                 new CustomEvent("swUpdated", {
                     detail: registration,
-                    message: "test",
                 })
             );
             console.log(
