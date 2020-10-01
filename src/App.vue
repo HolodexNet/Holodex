@@ -14,7 +14,10 @@
             An update is available
             <template v-slot:action>
                 <v-btn text @click="refreshApp" class="ml-auto">
-                    Refresh
+                    Update
+                </v-btn>
+                <v-btn text @click="updateExists = false" class="ml-auto">
+                    Close
                 </v-btn>
             </template>
         </v-snackbar>
@@ -30,7 +33,7 @@ export default {
     },
     data() {
         return {
-            updateExists: false,
+            updateExists: true,
             registration: null,
         };
     },
