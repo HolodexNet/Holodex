@@ -1,4 +1,10 @@
 module.exports = {
+    pages: {
+        index: {
+            entry: "src/main.js",
+            title: "Holodex",
+        },
+    },
     pwa: {
         name: "Holodex",
         themeColor: "#64B5F6",
