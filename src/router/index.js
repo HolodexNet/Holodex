@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+
 const Channel = () => import("../views/Channel.vue");
 const Channels = () => import("../views/Channels.vue");
 const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
