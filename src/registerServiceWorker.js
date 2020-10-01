@@ -5,8 +5,12 @@ import { register } from "register-service-worker";
 if (process.env.NODE_ENV === "production") {
     register(`${process.env.BASE_URL}service-worker.js`, {
         ready(registration) {
-            const worker = registration.waiting;
-            worker.postMessage({ action: "READY" });
+            document.dispatchEvent(
+                new CustomEvent("swUpdated", {
+                    detail: registration,
+                    message: "test",
+                })
+            );
             console.log(
                 "App is being served from cache by a service worker.\n" +
                     "For more details, visit https://goo.gl/AFskqB"
@@ -22,8 +26,9 @@ if (process.env.NODE_ENV === "production") {
             console.log("New content is downloading.");
         },
         updated(registration) {
-            const worker = registration.waiting;
-            worker.postMessage({ action: "NEW_CONTENT" });
+            document.dispatchEvent(
+                new CustomEvent("swUpdated", { detail: registration })
+            );
             console.log("New content is available; please refresh.");
         },
         offline() {

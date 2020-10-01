@@ -24,7 +24,7 @@ export default {
         }
         this.$vuetify.theme.dark = this.darkMode;
         this.$store.dispatch("checkChannelCache");
-        document.addEventListener("message", event => {
+        document.addEventListener("swUpdated", event => {
             console.log(event);
         });
     },
