@@ -1,7 +1,12 @@
 <template>
     <v-bottom-navigation :value="value" grow app>
         <template v-for="page in pages">
-            <v-btn :value="page.path" :key="page.name" :to="page.path" class="nav-btn">
+            <v-btn
+                :value="page.path"
+                :key="page.name"
+                :to="page.path"
+                class="nav-btn"
+            >
                 <span>{{ page.name }}</span>
                 <v-icon>{{ page.icon }}</v-icon>
             </v-btn>

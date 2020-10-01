@@ -1,6 +1,5 @@
 <template>
     <v-autocomplete
-        style="max-width: 600px"
         class="ma-auto search-bar"
         solo
         flat
@@ -198,7 +197,10 @@ export default {
 </script>
 
 <style>
-.search-bar > .v-input__append-outer {
+.search-bar {
+    max-width: 550px !important;
+}
+.search-bar.v-input--dense > .v-input__append-outer {
     background-color: #424242;
     min-width: 48px;
     min-height: 48px;
@@ -210,13 +212,14 @@ export default {
 }
 .search-bar.v-input--dense > .v-input__append-outer {
     min-width: 38px;
-    min-height: 40px;
+    min-height: 38px;
     margin: 0 !important;
 }
 
-.v-input.search-bar > .v-input__control {
+.search-bar.v-input > .v-input__control {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    height: 38px !important;
 }
 
 .search-bar > .v-input__append-outer > .v-input__icon > .v-icon {

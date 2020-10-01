@@ -23,6 +23,7 @@ export default {
             this.$store.commit("testedWebP");
         }
         this.$vuetify.theme.dark = this.darkMode;
+        this.$store.dispatch("checkChannelCache");
     },
     computed: {
         darkMode() {

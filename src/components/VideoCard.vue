@@ -50,9 +50,9 @@
                     <router-link
                         :to="`/channel/${video.channel.id}`"
                         class="no-decoration channel-name"
-                        :class="'name-' + video.channel.channel_type"
+                        :class="{ 'name-vtuber': video.channel.id < 1000 }"
                     >
-                        {{ video.channel.name }}
+                        {{ channelName }}
                     </router-link>
                 </v-list-item-subtitle>
                 <v-list-item-subtitle>
@@ -170,6 +170,11 @@ export default {
         },
         hideThumbnail() {
             return this.$store.state.hideThumbnail;
+        },
+        channelName() {
+            const prop = this.$store.state.nameProperty;
+            if (this.video.channel[prop]) return this.video.channel[prop];
+            return this.video.channel.name;
         },
     },
     methods: {

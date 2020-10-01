@@ -90,7 +90,7 @@ export default {
         },
         async loadFavorites() {
             // check if any channels missing from favorites and update the cache
-            await this.$store.dispatch("checkFavorites");
+            await this.$store.dispatch("checkChannelCache");
             this.channels = this.favorites.map(
                 channel_id => this.cachedChannels[channel_id]
             );

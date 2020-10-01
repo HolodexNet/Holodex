@@ -14,8 +14,8 @@
                     messages="Clicking on a video takes you straight to the youtube video"
                 ></v-switch>
                 <v-switch
-                    v-model="usingEnName"
-                    label="Using English Name"
+                    v-model="useEnName"
+                    label="Use English Name"
                     messages="Replaces Vtuber name to their English name throughout the site"
                 ></v-switch>
                 <v-switch
@@ -48,12 +48,12 @@ export default {
                 this.$store.commit("setRedirectMode", val);
             },
         },
-        usingEnName: {
+        useEnName: {
             get() {
-                return this.$store.getters.usingEnName;
+                return this.$store.getters.useEnName;
             },
             set(val) {
-                this.$store.commit("setEnName", val);
+                this.$store.commit("setUseEnName", val);
             },
         },
         hideThumbnail: {

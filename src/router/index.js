@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// TODO: change to load on request
 import Home from "../views/Home.vue";
 const Channel = () => import("../views/Channel.vue");
 const Channels = () => import("../views/Channels.vue");

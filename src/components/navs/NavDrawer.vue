@@ -108,7 +108,7 @@ export default {
             )
                 return [];
             // check cache for missing favorites
-            this.$store.dispatch("checkFavorites");
+            this.$store.dispatch("checkChannelCache");
             // return favorited channel list from cache
             const arr = this.favorites.map(channel_id =>
                 Object.hasOwnProperty.call(this.cachedChannels, channel_id)

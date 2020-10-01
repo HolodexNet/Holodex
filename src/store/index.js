@@ -25,7 +25,7 @@ export default new Vuex.Store({
         hideThumbnail: false,
     },
     getters: {
-        usingEnName(state) {
+        useEnName(state) {
             return state.nameProperty === "name_en";
         },
     },
@@ -51,7 +51,7 @@ export default new Vuex.Store({
         setLiveFilter(state, payload) {
             state.liveFilter = !state.favorites ? "all" : payload;
         },
-        setEnName(state, payload) {
+        setUseEnName(state, payload) {
             state.nameProperty = payload ? "name_en" : "name";
         },
         addFavorite(state, channel_id) {
@@ -72,34 +72,38 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        // async updateCachedChannels({ commit, state }) {
-        //     await api.channels(100, 0, "vtuber").then(res => {
-        //         if (res.data.channels.length) {
-        //             res.data.channels.forEach(channel => {
-        //                 if (state.favorites.includes(channel.id))
-        //                     commit("addCachedChannel", channel);
-        //             });
-        //         }
-        //     });
-        // },
-        async checkFavorites({ commit, state }) {
-            console.log("cehcked");
+        async updateChannelCache({ commit, state }) {
+            console.log("Channel Cache updated");
+            state.cachedChannelLastUpdated = new Date().getTime();
+            await api.channels(100, 0, "vtuber").then(res => {
+                if (res.data.channels.length) {
+                    res.data.channels.forEach(channel => {
+                        commit("addCachedChannel", channel);
+                    });
+                }
+            });
+        },
+        async checkChannelCache({ state, dispatch }) {
+            const currentTime = new Date().getTime();
+            // update favorites if last updated is null or greater than 24 hours
+            if (
+                !state.cachedChannelLastUpdated ||
+                currentTime - state.cachedChannelLastUpdated >
+                    1000 * 60 * 60 * 24
+            ) {
+                await dispatch("updateChannelCache");
+                return;
+            }
+
+            // update favorites if missing channels
             for (let id of state.favorites) {
                 // eslint-disable-next-line prettier/prettier
                 if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id) && id < 1000) {
                     console.log(`Missing channel_id: ${id}, refreshing cache`);
-                    await api.channels(100, 0, "vtuber").then(res => {
-                        if (res.data.channels.length) {
-                            res.data.channels.forEach(channel => {
-                                // if (state.favorites.includes(channel.id))
-                                commit("addCachedChannel", channel);
-                            });
-                        }
-                    });
+                    await dispatch("updateChannelCache");
                     break;
                 }
             }
-            // this.channels = Object.values(this.cachedChannels);
         },
     },
     modules: {},
