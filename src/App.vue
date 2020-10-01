@@ -54,6 +54,12 @@ export default {
                 once: true,
             }
         );
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+            if (this.refreshing) return;
+            this.refreshing = true;
+            // Here the actual reload of the page occurs
+            window.location.reload();
+        });
     },
     computed: {
         darkMode() {
