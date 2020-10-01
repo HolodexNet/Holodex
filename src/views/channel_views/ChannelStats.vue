@@ -52,7 +52,7 @@ export default {
         };
     },
     mounted() {
-        api.channel_history(this.channel_id).then(res => {
+        api.channel_stats(this.channel_id).then(res => {
             const allData = res.data;
             this.timeLabels = allData.map(row => dayjs(row.day).format("M/D"));
             this.subscriberData = allData.map(row => row.subscriber_count);

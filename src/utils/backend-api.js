@@ -41,8 +41,8 @@ export default {
             `/tags/search?q=${query}&limit=${limit}&offset=${offset}`
         );
     },
-    channel_history(channel_id) {
-        return axios_instance.get(`/channels/${channel_id}/history`);
+    channel_stats(channel_id) {
+        return axios_instance.get(`/channels/${channel_id}/stats`);
     },
 };
 

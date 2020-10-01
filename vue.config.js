@@ -1,13 +1,10 @@
 module.exports = {
     pwa: {
         name: "Holodex",
-        themeColor: "#4DBA87",
-        msTileColor: "#000000",
+        themeColor: "#64B5F6",
+        msTileColor: "#64B5F6",
         appleMobileWebAppCapable: "yes",
-        appleMobileWebAppStatusBarStyle: "black",
-
-        // // configure the workbox plugin
-        // workboxPluginMode: "InjectManifest",
+        appleMobileWebAppStatusBarStyle: "#64B5F6",
         workboxOptions: {
             runtimeCaching: [
                 {
@@ -25,8 +22,20 @@ module.exports = {
                         },
                     },
                 },
+                {
+                    urlPattern: new RegExp("https://yt3.ggpht.com/(.*)"),
+                    handler: "cacheFirst",
+                    options: {
+                        cacheName: "channel-photo",
+                        expiration: {
+                            maxAgeSeconds: 86400,
+                        },
+                        cacheableResponse: {
+                            statuses: [0, 200],
+                        },
+                    },
+                },
             ],
-            // TODO cache avatars
         },
     },
 };
