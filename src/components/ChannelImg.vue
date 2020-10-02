@@ -1,5 +1,6 @@
 <template>
-    <v-img :src="photo"></v-img>
+    <!-- <v-img :src="photo"></v-img> -->
+    <img :src="photo" crossorigin="anonymous">
 </template>
 
 <script>
