@@ -48,7 +48,7 @@
         </template>
         <template v-slot:item="dropdownItem">
             <v-list-item-avatar v-if="dropdownItem.item.value.type === 'channel'">
-                <ChannelImg :src="dropdownItem.item.value.channel_obj.photo" />
+                <ChannelImg :channel="dropdownItem.item.value.channel_obj" />
             </v-list-item-avatar>
             <v-list-item-avatar v-else>
                 <v-icon>{{ mdiLabel }}</v-icon>

@@ -41,7 +41,7 @@
                 "
             >
                 <v-list-item-avatar>
-                    <ChannelImg :src="video.channel.photo" />
+                    <ChannelImg :channel="video.channel" />
                 </v-list-item-avatar>
             </router-link>
             <v-list-item-content class="pa-0">

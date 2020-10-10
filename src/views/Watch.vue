@@ -163,30 +163,24 @@ export default {
     computed: {
         channel_chips() {
             let allMentions = new Map();
-            this.channel_mentions.forEach(channel =>
-                allMentions.set(channel.id, {
-                    id: channel.id,
-                    name: channel.name,
-                    photo: channel.photo,
-                })
-            );
-            this.video_sources.forEach(video =>
-                allMentions.set(video.channel_id, {
-                    id: video.channel.id,
-                    name: video.channel.name,
-                    photo: video.channel.photo,
-                })
-            );
-            return Array.from(allMentions.values()).filter(
-                // remove self mentions
-                channel => channel.id != this.video.channel_id
-            );
+            this.channel_mentions
+                .concat(this.video_sources.map(video => video.channel))
+                .filter(channel => channel.id != this.video.channel_id)
+                .forEach(channel =>
+                    allMentions.set(channel.id, {
+                        id: channel.id,
+                        name: channel.name,
+                        name_en: channel.name_en,
+                        photo: channel.photo,
+                    })
+                );
+            return Array.from(allMentions.values());
         },
         redirectMode() {
             return this.$store.state.redirectMode;
         },
         thumbnail_src() {
-            return video_thumbnails(this.video.yt_video_key)["medium"]
+            return video_thumbnails(this.video.yt_video_key)["medium"];
         },
     },
     watch: {

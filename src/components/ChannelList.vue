@@ -20,7 +20,7 @@
                 :key="channel.id"
             >
                 <v-list-item-avatar size="55">
-                    <ChannelImg :src="channel.photo" size="55" />
+                    <ChannelImg :channel="channel" size="55" />
                 </v-list-item-avatar>
                 <ChannelInfo
                     :channel="channel"

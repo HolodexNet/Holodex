@@ -1,7 +1,7 @@
 <template>
     <v-chip pill :to="`/channel/${channel.id}`" :close="close">
         <v-avatar left>
-            <ChannelImg :src="channel.photo" close />
+            <ChannelImg :channel="channel" />
         </v-avatar>
         {{ channelName }}
     </v-chip>
@@ -27,10 +27,11 @@ export default {
     computed: {
         channelName() {
             const prop = this.$store.state.nameProperty;
+            console.log(this.channel);
             if (this.channel[prop]) return this.channel[prop];
             return this.channel.name;
         },
-    }
+    },
 };
 </script>
 

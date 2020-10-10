@@ -5,6 +5,7 @@ const querystring = require("querystring");
 
 export default {
     channels(limit = 25, offset = 0, type = "vtuber") {
+        console.log(`/channels?type=${type}&limit=${limit}&offset=${offset}&sort=subscriber_count&order=desc`);
         return axios_instance.get(
             `/channels?type=${type}&limit=${limit}&offset=${offset}&sort=subscriber_count&order=desc`
         );
@@ -49,7 +50,7 @@ export default {
 export const axios_instance = axios.create({
     baseURL:
         process.env.NODE_ENV === "development"
-            ? `http://mythra.local:2434/v1`
+            ? `https://holodex.net/api/v1`
             : `/api/v1`,
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,

@@ -18,7 +18,7 @@
         >
             <v-icon color="#00ACEE"> {{ mdiTwitter }} </v-icon>
         </v-btn>
-        <v-tooltip bottom v-if="!hideFavorite">
+        <v-tooltip bottom v-if="channel.id < 1000">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn icon sm>
                     <v-icon

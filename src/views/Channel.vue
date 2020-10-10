@@ -6,10 +6,7 @@
                 <v-list>
                     <v-list-item>
                         <v-list-item-avatar :size="avatarSize">
-                            <ChannelImg
-                                :size="avatarSize"
-                                :src="channel.photo"
-                            />
+                            <ChannelImg :size="avatarSize" :channel="channel" />
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" />
                         <v-list-item-action class="v-list-item-horizontal">

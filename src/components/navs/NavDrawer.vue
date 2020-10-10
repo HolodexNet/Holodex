@@ -34,7 +34,7 @@
                         "
                     >
                         <v-list-item-avatar :size="35">
-                            <ChannelImg :src="channel.photo" />
+                            <ChannelImg :channel="channel" />
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" noSubscriberCount />
                     </v-list-item>

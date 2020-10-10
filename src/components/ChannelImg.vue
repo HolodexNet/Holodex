@@ -1,6 +1,13 @@
 <template>
     <!-- <v-img :src="photo"></v-img> -->
-    <img :src="photo" crossorigin="anonymous">
+    <img
+        :src="channel.photo"
+        crossorigin="anonymous"
+        loading="lazy"
+        :alt="`${channel.name}'s profile picture`"
+        :width="size"
+        :height="size"
+    />
 </template>
 
 <script>
@@ -8,25 +15,17 @@ import { channel_photo_resize } from "@/utils/functions";
 export default {
     name: "ChannelImg",
     props: {
-        src: {
-            type: String,
+        channel: {
+            type: Object,
             required: true,
-            default: "",
         },
+        // src: {
+        //     type: String,
+        //     required: true,
+        //     default: "",
+        // },
         size: {
             type: [String, Number],
-            default: 40,
-        },
-        sizeSm: {
-            type: Number,
-            default: 40,
-        },
-        sizeLg: {
-            type: Number,
-            default: 40,
-        },
-        sizeMd: {
-            type: Number,
             default: 40,
         },
     },
