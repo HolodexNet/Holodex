@@ -15,7 +15,6 @@
                 v-if="category !== 2"
             >
                 <template v-slot:no-more><span></span></template>
-                <!-- <template v-slot:error><span></span></template> -->
             </infinite-loading>
         </v-container>
     </v-container>
@@ -68,11 +67,13 @@ export default {
             }
         },
         loadData($state) {
-            api.channels(
-                this.perPage,
-                this.currentOffset * this.perPage,
-                this.category == 1 ? "subber" : "vtuber"
-            )
+            api.channels({
+                limit: this.perPage,
+                offset: this.currentOffset * this.perPage,
+                type: this.category == 1 ? "subber" : "vtuber",
+                sort: "subscriber_count",
+                order: "desc",
+            })
                 .then(res => {
                     if (res.data.channels.length) {
                         this.channels = this.channels.concat(res.data.channels);

@@ -71,7 +71,7 @@ export default {
             this.videos = [];
             let api_req = null;
             this.loading = true;
-            const query = {
+            let query = {
                 channel_id: Number(this.channel_id),
                 limit: this.videoPerPage,
                 offset: (this.currentPage - 1) * this.videoPerPage,
@@ -82,7 +82,9 @@ export default {
                     api_req = api.clips(query);
                     break;
                 case "channel_mentions":
-                    api_req = api.mentions(query);
+                    query.mentioned_channel_id = query.channel_id;
+                    delete query.channel_id;
+                    api_req = api.videos(query);
                     break;
                 default:
                     api_req = api.videos(query);

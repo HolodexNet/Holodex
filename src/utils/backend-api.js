@@ -4,11 +4,9 @@ import axiosRetry from "axios-retry";
 const querystring = require("querystring");
 
 export default {
-    channels(limit = 25, offset = 0, type = "vtuber") {
-        console.log(`/channels?type=${type}&limit=${limit}&offset=${offset}&sort=subscriber_count&order=desc`);
-        return axios_instance.get(
-            `/channels?type=${type}&limit=${limit}&offset=${offset}&sort=subscriber_count&order=desc`
-        );
+    channels(query) {
+        const q = querystring.stringify(query);
+        return axios_instance.get(`/channels?${q}`);
     },
     videos(query) {
         const q = querystring.stringify(query);
@@ -27,15 +25,6 @@ export default {
     clips(query) {
         const q = querystring.stringify(query);
         return axios_instance.get(`/clips?${q}`);
-    },
-    mentions(query) {
-        const channel_id = query.channel_id;
-        delete query["channel_id"];
-        const q = querystring.stringify(query);
-        // return axios_instance.get(`/mentions/channel/${channel_id}?${q}`);
-        return axios_instance.get(
-            `/videos?mentioned_channel_id=${channel_id}&${q}`
-        );
     },
     searchTags(query, limit = 10, offset = 0) {
         return axios_instance.get(

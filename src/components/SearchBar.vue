@@ -36,7 +36,7 @@
                 <template v-if="selection.item.value.type === 'channel'">
                     <v-avatar left v-if="!dense">
                         <ChannelImg
-                            :src="selection.item.value.channel_obj.photo"
+                            :channel="selection.item.value.channel_obj"
                             :size="32"
                             close
                         />

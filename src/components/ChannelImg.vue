@@ -1,5 +1,4 @@
 <template>
-    <!-- <v-img :src="photo"></v-img> -->
     <img
         :src="channel.photo"
         crossorigin="anonymous"
@@ -19,11 +18,6 @@ export default {
             type: Object,
             required: true,
         },
-        // src: {
-        //     type: String,
-        //     required: true,
-        //     default: "",
-        // },
         size: {
             type: [String, Number],
             default: 40,
