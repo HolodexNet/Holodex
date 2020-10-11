@@ -2,7 +2,7 @@
     <div>
         <NavDrawer :pages="pages" v-model="drawer" v-if="!isXs" />
         <BottomNav :pages="pages" v-else />
-        <v-app-bar color="blue lighten-2" app clipped-left flat>
+        <v-app-bar color="blue lighten-1" app clipped-left flat>
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isXs">
                     <v-icon>{{ mdiMenu }}</v-icon>
@@ -10,9 +10,13 @@
                 <v-toolbar-title class="pr-5">
                     <router-link
                         :to="'/'"
-                        style="text-decoration: none; color: white"
+                        style="text-decoration: none; color: white; font-size: 24px; line-height: 1.2px"
                     >
-                        HoloDex
+                        <Logo
+                            width="24"
+                            height="24"
+                            style="margin-bottom: -4px"
+                        />Holodex
                     </router-link>
                 </v-toolbar-title>
                 <SearchBar v-if="!isXs" />
@@ -51,11 +55,13 @@ import {
 import NavDrawer from "@/components/navs/NavDrawer";
 import BottomNav from "@/components/navs/BottomNav";
 import SearchBar from "@/components/SearchBar";
+import Logo from "@/components/Logo";
 export default {
     components: {
         SearchBar,
         NavDrawer,
         BottomNav,
+        Logo,
     },
     data: () => ({
         drawer: null,
