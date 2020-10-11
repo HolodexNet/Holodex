@@ -22,7 +22,7 @@
         :append-icon="''"
         :append-outer-icon="mdiMagnify"
         @click:append-outer="commitSearch"
-        @keyup.enter="onKeyUp"
+        @keydown.enter="onKeyDown()"
         label="Search"
     >
         <template v-slot:selection="selection">
@@ -163,13 +163,8 @@ export default {
         }, 200),
     },
     methods: {
-        onKeyUp(event) {
-            alert(event.code);
-            if (this.fromApi.length == 0) {
-                this.commitSearch();
-            } else {
-                this.fromApi = [];
-            }
+        onKeyDown() {
+            if (this.fromApi.length == 0) this.commitSearch();
         },
         async fetchTags(query) {
             this.loading = true;
@@ -194,6 +189,7 @@ export default {
         },
         onInput() {
             this.search = null;
+            this.fromApi = [];
         },
     },
 };
