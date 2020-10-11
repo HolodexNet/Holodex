@@ -1,6 +1,6 @@
 <template>
     <img
-        :src="channel.photo"
+        :src="photo"
         crossorigin="anonymous"
         loading="lazy"
         :alt="`${channel.name}'s profile picture`"
@@ -25,7 +25,7 @@ export default {
     },
     computed: {
         photo() {
-            return channel_photo_resize(this.src, this.size);
+            return channel_photo_resize(this.channel.photo, this.size);
         },
     },
 };
