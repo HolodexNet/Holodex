@@ -164,6 +164,7 @@ export default {
     },
     methods: {
         onKeyUp(event) {
+            alert(event.code);
             if (event.code === "Enter" && this.fromApi.length == 0) {
                 this.commitSearch();
             } else if (event.code === "Enter") {
