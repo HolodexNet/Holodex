@@ -22,7 +22,7 @@
         :append-icon="''"
         :append-outer-icon="mdiMagnify"
         @click:append-outer="commitSearch"
-        @keydown="onKeyDown"
+        @keyup.enter="onKeyUp"
         label="Search"
     >
         <template v-slot:selection="selection">
@@ -47,7 +47,9 @@
             </v-chip>
         </template>
         <template v-slot:item="dropdownItem">
-            <v-list-item-avatar v-if="dropdownItem.item.value.type === 'channel'">
+            <v-list-item-avatar
+                v-if="dropdownItem.item.value.type === 'channel'"
+            >
                 <ChannelImg :channel="dropdownItem.item.value.channel_obj" />
             </v-list-item-avatar>
             <v-list-item-avatar v-else>
@@ -55,7 +57,9 @@
             </v-list-item-avatar>
             <v-list-item-content>
                 {{
-                    (dropdownItem.item.value.type !== "channel"? "#": "") + dropdownItem.item.text
+                    (dropdownItem.item.value.type !== "channel" ? "#" : "") +
+                        dropdownItem.item.text +
+                        ` (${dropdownItem.item.value.tag_obj.tag_count})`
                 }}
             </v-list-item-content>
         </template>
@@ -135,10 +139,8 @@ export default {
                         this.cachedChannels[tag.channel_ref]
                     ) {
                         const ref = this.cachedChannels[tag.channel_ref];
-                        ref.search_type = "channel";
                         return {
-                            text:
-                                ref[this.nameProperty] + ` (${tag.tag_count})`,
+                            text: ref[this.nameProperty],
                             value: {
                                 tag_id: tag.id,
                                 tag_obj: tag,
@@ -147,9 +149,8 @@ export default {
                             },
                         };
                     } else {
-                        tag.search_type = "Tag";
                         return {
-                            text: tag.name + ` (${tag.tag_count})`,
+                            text: tag.name,
                             value: {
                                 tag_id: tag.id,
                                 tag_obj: tag,
@@ -162,24 +163,26 @@ export default {
         }, 200),
     },
     methods: {
-        onKeyDown(event) {
+        onKeyUp(event) {
             if (event.code === "Enter" && this.fromApi.length == 0) {
                 this.commitSearch();
+            } else if (event.code === "Enter") {
+                this.fromApi = [];
             }
         },
         async fetchTags(query) {
             this.loading = true;
             const res = await api.searchTags(query, 10);
-            // this.fromApi = res.data.tags;
             this.loading = false;
             return res;
         },
         deleteChip(item) {
-            this.query.splice(this.query.map(q => q.tag_id).indexOf(item.value.tag_id), 1);
+            this.query.splice(
+                this.query.map(q => q.tag_id).indexOf(item.value.tag_id),
+                1
+            );
         },
         commitSearch() {
-            console.log("search commited");
-            console.log(this.query);
             this.$router.push({
                 path: "/search",
                 query: {
@@ -190,7 +193,6 @@ export default {
         },
         onInput() {
             this.search = null;
-            this.fromApi = [];
         },
     },
 };
