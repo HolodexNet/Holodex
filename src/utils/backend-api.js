@@ -39,7 +39,7 @@ export default {
 export const axios_instance = axios.create({
     baseURL:
         process.env.NODE_ENV === "development"
-            ? `https://holodex.net/api/v1`
+            ? `http://mythra.local:2434/v1`
             : `/api/v1`,
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,

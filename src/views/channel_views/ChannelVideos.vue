@@ -53,7 +53,7 @@ export default {
             // load uploader name for videos not uploaded by current channel
             return (
                 this.$route.name === "channel_clips" ||
-                this.$route.name === "channel_mentions"
+                this.$route.name === "channel_colabs"
             );
         },
         currentPage() {
@@ -72,21 +72,23 @@ export default {
             let api_req = null;
             this.loading = true;
             let query = {
-                channel_id: Number(this.channel_id),
                 limit: this.videoPerPage,
                 offset: (this.currentPage - 1) * this.videoPerPage,
                 ...(this.hasChannelInfo && { include_channel: 1 }),
             };
             switch (this.$route.name) {
                 case "channel_clips":
-                    api_req = api.clips(query);
-                    break;
-                case "channel_mentions":
                     query.mentioned_channel_id = query.channel_id;
-                    delete query.channel_id;
+                    query.channel_type = "subber";
+                    api_req = api.videos(query);
+                    break;
+                case "channel_colabs":
+                    query.mentioned_channel_id = query.channel_id;
+                    query.channel_type = "vtuber";
                     api_req = api.videos(query);
                     break;
                 default:
+                    query.channel_id = Number(this.channel_id);
                     api_req = api.videos(query);
                     break;
             }

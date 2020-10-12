@@ -19,7 +19,7 @@
                 <v-tabs>
                     <v-tab :to="`/channel/${channel_id}/`" exact>Videos</v-tab>
                     <v-tab :to="`/channel/${channel_id}/clips`">Clips</v-tab>
-                    <v-tab :to="`/channel/${channel_id}/mentions`">Mentions</v-tab>
+                    <v-tab :to="`/channel/${channel_id}/colabs`">Colabs</v-tab>
                     <v-tab :to="`/channel/${channel_id}/about`">About</v-tab>
                     <v-tab :to="`/channel/${channel_id}/stats`">Stats</v-tab>
                 </v-tabs>

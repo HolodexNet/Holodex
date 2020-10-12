@@ -20,6 +20,7 @@ export default new Vuex.Store({
         liveFilter: "all",
         favorites: [],
         cachedChannelLastUpdated: null,
+        cachedChannelsError: false,
         cachedChannels: {},
         nameProperty: "name_en",
         hideThumbnail: false,
@@ -54,6 +55,9 @@ export default new Vuex.Store({
         setUseEnName(state, payload) {
             state.nameProperty = payload ? "name_en" : "name";
         },
+        setCachedChannelsError(state, payload) {
+            state.cachedChannelsError = payload;
+        },
         addFavorite(state, channel_id) {
             if (channel_id > 1000) return;
             state.favorites.push(channel_id);
@@ -75,13 +79,18 @@ export default new Vuex.Store({
         async updateChannelCache({ commit, state }) {
             console.log("Channel Cache updated");
             state.cachedChannelLastUpdated = new Date().getTime();
-            await api.channels(100, 0, "vtuber").then(res => {
-                if (res.data.channels.length) {
-                    res.data.channels.forEach(channel => {
-                        commit("addCachedChannel", channel);
-                    });
-                }
-            });
+            await api
+                .channels({
+                    limit: 100,
+                    type: "vtuber",
+                })
+                .then(res => {
+                    if (res.data.channels.length) {
+                        res.data.channels.forEach(channel => {
+                            commit("addCachedChannel", channel);
+                        });
+                    }
+                });
         },
         async checkChannelCache({ state, dispatch }) {
             const currentTime = new Date().getTime();
@@ -89,8 +98,12 @@ export default new Vuex.Store({
             if (
                 !state.cachedChannelLastUpdated ||
                 currentTime - state.cachedChannelLastUpdated >
-                    1000 * 60 * 60 * 24
+                    1000 * 60 * 60 * 24 ||
+                (state.cachedChannelsError &&
+                    currentTime - state.cachedChannelLastUpdated >
+                        1000 * 60 * 15)
             ) {
+                this.commit("setCachedChannelsError", false);
                 await dispatch("updateChannelCache");
                 return;
             }

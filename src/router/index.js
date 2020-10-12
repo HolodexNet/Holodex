@@ -29,8 +29,8 @@ const routes = [
                 component: ChannelVideos,
             },
             {
-                path: "mentions",
-                name: "channel_mentions",
+                path: "colabs",
+                name: "channel_colabs",
                 component: ChannelVideos,
             },
             {
