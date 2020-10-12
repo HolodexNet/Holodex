@@ -9,6 +9,7 @@
         :to="!redirectMode ? `/watch/${video.id}` : ''"
         :href="`https://youtu.be/${video.yt_video_key}`"
         :target="redirectMode ? '_blank' : ''"
+        rel="noreferrer"
         link
     >
         <v-img

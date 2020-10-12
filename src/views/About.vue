@@ -19,18 +19,6 @@
                 <v-expansion-panels>
                     <v-expansion-panel>
                         <v-expansion-panel-header>
-                            What are clips/mentions?
-                        </v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            Clips are youtube videos by subber channels that has
-                            a valid vtuber source video linked in the
-                            description. Mentions are videos that mentions the
-                            vtuber in the description by linking their official
-                            youtube channel.
-                        </v-expansion-panel-content>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                        <v-expansion-panel-header>
                             What are favorites?
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
@@ -38,9 +26,10 @@
                             vtubers, you can add your favorite channels by
                             clicking the heart icon on the
                             <router-link to="/channels">Channels</router-link>
-                            page. Please note that favoriting subbers is not
-                            allowed, but you should still consider subscribing
-                            to them!
+                            page. Please note that favoriting subbers is
+                            currently not supported , but you should still
+                            consider subscribing and supporting them in other
+                            ways to them!
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -48,10 +37,10 @@
                             My favorites list disappeared!
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            Favorites are currently stored locally so try not to
-                            clear the site's local storage. There is currently
-                            no permanent way to save your favorites list, but I
-                            am open to implementing accounts or exporting a txt.
+                            Favorites are currently stored locally, so try not
+                            to to clear the site's local storage. There is no
+                            permanent way to save your favorites list, but I am
+                            open to implementing accounts or exporting a txt.
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
