@@ -1,11 +1,13 @@
 <template>
-    <img
+    <router-link
+        tag="img"
         :src="photo"
         crossorigin="anonymous"
         loading="lazy"
         :alt="`${channel.name}'s profile picture`"
         :width="size"
         :height="size"
+        :to="`/channel/${channel.id}`"
     />
 </template>
 
@@ -31,4 +33,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+img:hover {
+    cursor: pointer;
+}
+</style>

@@ -36,9 +36,9 @@
                     </v-card-text>
                     <v-divider />
                     <v-list two-line>
-                        <v-list-item :to="`/channel/${video.channel.id}`">
+                        <v-list-item>
                             <v-list-item-avatar size="50">
-                                <v-img :src="video.channel.photo"></v-img>
+                                <ChannelImg :channel="video.channel" />
                             </v-list-item-avatar>
                             <ChannelInfo :channel="video.channel" />
                             <ChannelSocials :channel="video.channel" />
@@ -47,7 +47,7 @@
                     <v-expansion-panels flat>
                         <v-expansion-panel>
                             <v-expansion-panel-header
-                                expand-icon="mdi-menu-down"
+                                :expand-icon="mdiMenuDown"
                             >
                                 Description
                             </v-expansion-panel-header>
@@ -123,6 +123,7 @@ import ChannelChip from "@/components/ChannelChip";
 import dayjs from "dayjs";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelSocials from "@/components/ChannelSocials";
+import ChannelImg from "@/components/ChannelImg";
 import { mdiMenuDown } from "@mdi/js";
 import { video_thumbnails } from "@/utils/functions";
 export default {
@@ -132,6 +133,7 @@ export default {
         ChannelChip,
         ChannelInfo,
         ChannelSocials,
+        ChannelImg,
     },
     data() {
         return {

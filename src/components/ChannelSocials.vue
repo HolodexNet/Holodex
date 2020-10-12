@@ -5,6 +5,7 @@
             icon
             sm
             :href="`https://www.youtube.com/channel/${channel.yt_channel_id}`"
+            rel="noreferrer"
             target="_blank"
         >
             <v-icon color="#C4302B">{{ mdiYoutube }}</v-icon>
@@ -14,6 +15,7 @@
             icon
             sm
             :href="`https://twitter.com/${channel.twitter_link}`"
+            rel="noreferrer"
             target="_blank"
         >
             <v-icon color="#00ACEE"> {{ mdiTwitter }} </v-icon>
@@ -32,7 +34,9 @@
                 </v-btn>
             </template>
             <span>
-                {{ isFavorited ? "Add to Favorites" : "Remove from Favorites" }}
+                {{
+                    !isFavorited ? "Add to Favorites" : "Remove from Favorites"
+                }}
             </span>
         </v-tooltip>
     </v-list-item-action>

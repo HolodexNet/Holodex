@@ -1,8 +1,12 @@
 <template>
     <v-list-item-content>
         <v-list-item-title>
-            <div class="text-truncate">{{ channelName }}</div>
-            <!-- <div class="body-2">{{ channel.name_en }}</div> -->
+            <router-link
+                :to="`/channel/${channel.id}`"
+                class="no-decoration text-truncate"
+            >
+                {{ channelName }}
+            </router-link>
         </v-list-item-title>
         <v-list-item-subtitle>
             <span v-if="!noSubscriberCount">
@@ -15,8 +19,8 @@
                 <br />
                 {{ channel.video_count }} Videos
                 <router-link
-                    :to="`channel/${channel.id}/clips`"
-                    style="text-decoration: none; color:inherit;"
+                    :to="`/channel/${channel.id}/clips`"
+                    class="no-decoration"
                     v-if="channel.clip_count > 0"
                 >
                     • {{ channel.clip_count }} Clips
@@ -56,6 +60,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        // noLink: {
+        //     type: Boolean,
+        //     default: false,
+        // },
     },
     methods: {
         formatCount,
@@ -78,4 +86,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.no-decoration {
+    text-decoration: none;
+    color: inherit;
+}
+</style>

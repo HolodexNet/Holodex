@@ -25,7 +25,7 @@
                             Favorites are a way to stay on top of your favorite
                             vtubers, you can add your favorite channels by
                             clicking the heart icon on the
-                            <router-link to="/channels">Channels</router-link>
+                            <router-link to="/channel">Channels</router-link>
                             page. Please note that favoriting subbers is
                             currently not supported , but you should still
                             consider subscribing and supporting them in other

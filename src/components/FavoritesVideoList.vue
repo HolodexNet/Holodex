@@ -36,11 +36,6 @@ export default {
     components: {
         VideoCardList,
     },
-    // data() {
-    //     return {
-    //         videoLists: {},
-    //     };
-    // },
     props: {
         videoLists: {
             type: Array,

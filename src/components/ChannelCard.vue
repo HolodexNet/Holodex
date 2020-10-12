@@ -6,7 +6,7 @@
     >
         <v-list-item three-line>
             <v-list-item-avatar tile size="100">
-                <ChannelImg :src="channel.photo" :size="100" />
+                <ChannelImg :channel="channel" :size="100" />
             </v-list-item-avatar>
             <ChannelInfo :channel="channel" includeVideoCount includeSocials />
         </v-list-item>
