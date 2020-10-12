@@ -7,6 +7,35 @@
                     <div class="graph-container">
                         <canvas id="subscriber-chart" class="graph"></canvas>
                     </div>
+                    <v-simple-table>
+                        <template v-slot:default>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        Date
+                                    </th>
+                                    <th class="text-left">
+                                        Subscribers
+                                    </th>
+                                    <th class="text-left">
+                                        Gains
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(row, index) in allData"
+                                    :key="index"
+                                >
+                                    <td>{{ formatDate(row.day) }}</td>
+                                    <td>{{ formatCount(row.subscriber_count) }}</td>
+                                    <td class="green--text">
+                                        +{{ row.subscriber_diff }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </template>
+                    </v-simple-table>
                 </v-card>
             </v-col>
             <v-col xs="12" md="6">
@@ -15,6 +44,33 @@
                     <div class="graph-container">
                         <canvas id="view-chart" class="graph"></canvas>
                     </div>
+                    <v-simple-table>
+                        <template v-slot:default>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        Date
+                                    </th>
+                                    <th class="text-left">
+                                        Video Views
+                                    </th>
+                                    <th class="text-left">
+                                        Gains
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(row, index) in allData"
+                                    :key="`view-${index}`"
+                                >
+                                    <td>{{ formatDate(row.day) }}</td>
+                                    <td>{{ formatCount(row.view_count) }}</td>
+                                    <td class="green--text">+{{ row.view_diff }}</td>
+                                </tr>
+                            </tbody>
+                        </template>
+                    </v-simple-table>
                 </v-card>
             </v-col>
         </v-row>
@@ -49,14 +105,17 @@ export default {
             timeLabels: [],
             subscriberData: [],
             viewData: [],
+            allData: [],
         };
     },
     mounted() {
         api.channel_stats(this.channel_id).then(res => {
-            const allData = res.data;
-            this.timeLabels = allData.map(row => dayjs(row.day).format("M/D"));
-            this.subscriberData = allData.map(row => row.subscriber_count);
-            this.viewData = allData.map(row => row.view_count);
+            this.allData = res.data.reverse();
+            this.timeLabels = this.allData.map(row =>
+                dayjs(row.day).format("M/D")
+            );
+            this.subscriberData = this.allData.map(row => row.subscriber_count);
+            this.viewData = this.allData.map(row => row.view_count);
             this.loadChart("subscriber");
             this.loadChart("view");
         });
@@ -70,6 +129,10 @@ export default {
         },
     },
     methods: {
+        formatDate(date) {
+            return dayjs(date).format("M/D");
+        },
+        formatCount,
         loadChart(type) {
             var ctx = document.getElementById(`${type}-chart`);
             const gridLineColor = this.darkMode
