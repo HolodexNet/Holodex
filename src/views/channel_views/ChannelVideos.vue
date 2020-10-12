@@ -78,12 +78,12 @@ export default {
             };
             switch (this.$route.name) {
                 case "channel_clips":
-                    query.mentioned_channel_id = query.channel_id;
+                    query.mentioned_channel_id = Number(this.channel_id);
                     query.channel_type = "subber";
                     api_req = api.videos(query);
                     break;
                 case "channel_colabs":
-                    query.mentioned_channel_id = query.channel_id;
+                    query.mentioned_channel_id = Number(this.channel_id);
                     query.channel_type = "vtuber";
                     api_req = api.videos(query);
                     break;
