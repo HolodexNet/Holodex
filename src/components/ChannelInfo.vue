@@ -30,9 +30,7 @@
         <v-list-item-subtitle v-if="includeSocials">
             <ChannelSocials :channel="channel" />
         </v-list-item-subtitle>
-        <!-- <v-list-item-subtitle v-if="!!this.$slots.subtitle"> -->
         <slot></slot>
-        <!-- </v-list-item-subtitle> -->
     </v-list-item-content>
 </template>
 

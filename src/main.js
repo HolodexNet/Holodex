@@ -7,6 +7,7 @@ import VueGTag from "vue-gtag";
 import "./registerServiceWorker";
 
 Vue.config.productionTip = false;
+Vue.config.performance = true;
 Vue.use(
     VueGTag,
     {

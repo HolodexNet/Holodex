@@ -70,7 +70,6 @@ export default {
     },
     computed: {
         isFavorited() {
-            // if(this.$store.state.favorites.length) return false;
             return this.$store.state.favorites.includes(this.channel.id);
         },
     },

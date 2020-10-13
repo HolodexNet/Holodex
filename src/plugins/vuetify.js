@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
-import colors from 'vuetify/lib/util/colors'
+import { primary_color, secondary_color } from "@/utils/consts";
 
 Vue.use(Vuetify);
 
@@ -11,12 +11,12 @@ export default new Vuetify({
     theme: {
         themes: {
             dark: {
-                primary: colors.pink.lighten2,
-                secondary: colors.blue.lighten2,
+                primary: primary_color,
+                secondary: secondary_color,
             },
             light: {
-                primary: colors.pink.lighten2,
-                secondary: colors.blue.lighten2,
+                primary: primary_color,
+                secondary: secondary_color,
             },
         },
     },

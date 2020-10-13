@@ -214,9 +214,4 @@ export default {
 };
 </script>
 
-<style>
-.graph-container {
-    /* min-height: 320px; */
-    /* padding: 10px 0; */
-}
-</style>
+<style></style>

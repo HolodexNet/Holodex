@@ -49,6 +49,18 @@
                             <ChannelSocials :channel="video.channel" />
                         </v-list-item>
                     </v-list>
+                    <v-card-text>
+                        <v-chip
+                            v-for="tag in tags.filter(t => !t.channel_ref)"
+                            label
+                            link
+                            :key="tag.id"
+                            style="margin-right: 5px"
+                            :to="`/search?tags=${tag.name}`"
+                        >
+                            #{{ tag.name }}
+                        </v-chip>
+                    </v-card-text>
                     <v-expansion-panels flat>
                         <v-expansion-panel>
                             <v-expansion-panel-header

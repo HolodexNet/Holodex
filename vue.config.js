@@ -7,10 +7,10 @@ module.exports = {
     },
     pwa: {
         name: "Holodex",
-        themeColor: "#64B5F6",
-        msTileColor: "#64B5F6",
+        themeColor: "#42a5f5",
+        msTileColor: "##42a5f5",
         appleMobileWebAppCapable: "yes",
-        appleMobileWebAppStatusBarStyle: "#64B5F6",
+        appleMobileWebAppStatusBarStyle: "#42a5f5",
         workboxOptions: {
             runtimeCaching: [
                 {
