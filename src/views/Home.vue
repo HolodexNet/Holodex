@@ -205,14 +205,14 @@ export default {
                 });
         },
         loadFavoritesVideos() {
-            const targetDate = dayjs.utc().subtract(this.daysBefore, "d");
+            const targetDate = dayjs().subtract(this.daysBefore, "d");
             api.videos({
                 limit: 100,
                 include_channel: 1,
                 status: "past",
                 tag_status: "tagged",
-                start_date: targetDate.startOf("day").toISOString(),
-                end_date: targetDate.endOf("day").toISOString(),
+                start_date: targetDate.startOf("day").utc().toISOString(),
+                end_date: targetDate.endOf("day").utc().toISOString(),
                 sort: "published_at",
                 order: "desc",
             }).then(res => {
