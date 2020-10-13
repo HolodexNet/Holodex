@@ -45,7 +45,6 @@ export default {
     },
     mounted() {
         this.channel_id = this.$route.params.id;
-        console.log(this.$route.path);
         this.loadTabContent();
     },
     computed: {

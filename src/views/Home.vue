@@ -233,7 +233,6 @@ export default {
             });
         },
         filterFavorites(videos) {
-            console.log(videos.length);
             return videos.filter(video => {
                 return (
                     // check if video is posted by favorited channel or mentioned in the video

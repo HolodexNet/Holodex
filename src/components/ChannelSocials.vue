@@ -76,8 +76,7 @@ export default {
     },
     methods: {
         ...mapMutations(["addFavorite", "removeFavorite"]),
-        toggleFavorite(event) {
-            console.log(event);
+        toggleFavorite() {
             this.isFavorited
                 ? this.removeFavorite(this.channel.id)
                 : this.addFavorite(this.channel.id);

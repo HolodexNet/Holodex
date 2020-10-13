@@ -27,7 +27,6 @@ export default {
     computed: {
         channelName() {
             const prop = this.$store.state.nameProperty;
-            console.log(this.channel);
             if (this.channel[prop]) return this.channel[prop];
             return this.channel.name;
         },

@@ -49,7 +49,6 @@ export default {
         document.addEventListener(
             "swUpdated",
             event => {
-                console.log(event);
                 this.registration = event.detail;
                 this.updateExists = true;
             },

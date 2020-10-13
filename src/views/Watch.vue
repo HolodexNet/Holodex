@@ -3,20 +3,25 @@
         <v-row class="align-start">
             <v-col class="pa-0 pa-lg-3">
                 <v-card class="watch-card">
-                    <div class="embedded-video" v-if="!redirectMode">
+                    <div
+                        class="embedded-video"
+                        v-if="!redirectMode && video_src"
+                    >
                         <iframe
-                            :src="
-                                `https://www.youtube.com/embed/${video.yt_video_key}?autoplay=1`
-                            "
+                            :src="video_src"
                             allowfullscreen
                             frameborder="0"
                         ></iframe>
                     </div>
                     <div class="thumbnail" v-else>
-                        <v-img :aspect-ratio="16 / 9" :src="thumbnail_src"/>
+                        <v-img :aspect-ratio="16 / 9" :src="thumbnail_src" />
                         <div class="thumbnail-overlay d-flex">
                             <div class="text-h4 ma-auto">
-                                <a :href="`https://youtu.be/${video.yt_video_key}`">
+                                <a
+                                    :href="
+                                        `https://youtu.be/${video.yt_video_key}`
+                                    "
+                                >
                                     Open on Youtube
                                 </a>
                             </div>
@@ -142,20 +147,25 @@ export default {
             video_sources: [],
             channel_mentions: [],
             tags: [],
+            video_src: "",
             mdiMenuDown,
         };
     },
     created() {
+        console.log("Created " + this.$route.params.id);
         this.loadData(this.$route.params.id);
     },
     methods: {
         loadData(id) {
+            // destroy iframe and recreate it so it doesn't break history mode
+            this.video_src = "";
             api.video(id).then(res => {
                 this.video_clips = res.data.clips;
                 this.video_sources = res.data.sources;
                 this.channel_mentions = res.data.channel_mentions;
                 this.tags = res.data.tags;
                 this.video = res.data;
+                this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1`;
             });
         },
         formatTime(t) {
@@ -187,6 +197,7 @@ export default {
     },
     watch: {
         "$route.params.id"(val) {
+            console.log(val);
             this.loadData(val);
         },
     },

@@ -79,18 +79,15 @@ export default new Vuex.Store({
         async updateChannelCache({ commit, state }) {
             console.log("Channel Cache updated");
             state.cachedChannelLastUpdated = new Date().getTime();
-            await api
-                .channels({
-                    limit: 100,
-                    type: "vtuber",
-                })
-                .then(res => {
-                    if (res.data.channels.length) {
-                        res.data.channels.forEach(channel => {
-                            commit("addCachedChannel", channel);
-                        });
-                    }
+            const res = await api.channels({
+                limit: 100,
+                type: "vtuber",
+            });
+            if (res.data.channels.length) {
+                res.data.channels.forEach(channel => {
+                    commit("addCachedChannel", channel);
                 });
+            }
         },
         async checkChannelCache({ state, dispatch }) {
             const currentTime = new Date().getTime();
@@ -113,8 +110,13 @@ export default new Vuex.Store({
                 // eslint-disable-next-line prettier/prettier
                 if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id) && id < 1000) {
                     console.log(`Missing channel_id: ${id}, refreshing cache`);
-                    await dispatch("updateChannelCache");
-                    break;
+                    try {
+                        await dispatch("updateChannelCache");
+                        break;
+                    } catch (e) {
+                        console.log(e);
+                        this.commit("setCachedChannelsError", true);
+                    }
                 }
             }
         },
