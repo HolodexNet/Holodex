@@ -31,14 +31,6 @@
                     <v-card-subtitle>
                         {{ formatTime(video.published_at) }}
                     </v-card-subtitle>
-                    <v-card-text v-if="channel_chips.length">
-                        <ChannelChip
-                            v-for="channel in channel_chips"
-                            :channel="channel"
-                            :key="channel.id"
-                            class="ma-1"
-                        ></ChannelChip>
-                    </v-card-text>
                     <v-divider />
                     <v-list two-line>
                         <v-list-item>
@@ -49,7 +41,13 @@
                             <ChannelSocials :channel="video.channel" />
                         </v-list-item>
                     </v-list>
-                    <v-card-text>
+                    <v-card-text class="py-2">
+                        <ChannelChip
+                            v-for="channel in channel_chips"
+                            :channel="channel"
+                            :key="channel.id"
+                            class="ma-1"
+                        ></ChannelChip>
                         <v-chip
                             v-for="tag in tags.filter(t => !t.channel_ref)"
                             label
