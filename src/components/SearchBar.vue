@@ -59,7 +59,7 @@
                 {{
                     (dropdownItem.item.value.type !== "channel" ? "#" : "") +
                         dropdownItem.item.text +
-                        ` (${dropdownItem.item.value.tag_obj.tag_count})`
+                        ` (${dropdownItem.item.value.tag_obj.count})`
                 }}
             </v-list-item-content>
         </template>

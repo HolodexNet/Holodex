@@ -58,7 +58,7 @@
                             style="margin-right: 5px"
                             :to="`/search?tags=${tag.name}`"
                         >
-                            #{{ tag.name }}
+                            {{ `#${tag.name} (${tag.count})` }}
                         </v-chip>
                     </v-card-text>
                     <v-expansion-panels flat>
