@@ -80,12 +80,12 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(advancedFormat);
-import ChannelImg from "@/components/ChannelImg";
+// import ChannelImg from "@/components/ChannelImg";
 import { video_thumbnails, formatCount } from "@/utils/functions";
 export default {
     name: "VideoCard",
     components: {
-        ChannelImg,
+        ChannelImg: () => import("@/components/ChannelImg"),
     },
     data() {
         return {

@@ -88,7 +88,7 @@
 
 <script>
 import VideoCardList from "@/components/VideoCardList.vue";
-import FavoritesVideoList from "@/components/FavoritesVideoList.vue";
+// import FavoritesVideoList from "@/components/FavoritesVideoList.vue";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import { mdiHeart } from "@mdi/js";
@@ -99,7 +99,7 @@ export default {
     name: "Home",
     components: {
         VideoCardList,
-        FavoritesVideoList,
+        FavoritesVideoList: () => import("@/components/FavoritesVideoList.vue"),
     },
     data() {
         return {

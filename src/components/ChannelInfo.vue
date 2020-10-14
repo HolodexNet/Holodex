@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import ChannelSocials from "@/components/ChannelSocials";
+// import ChannelSocials from "@/components/ChannelSocials";
 import { formatCount } from "@/utils/functions";
 export default {
     components: {
-        ChannelSocials,
+        ChannelSocials: () => import("@/components/ChannelSocials"),
     },
     props: {
         channel: {

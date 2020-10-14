@@ -52,15 +52,15 @@ import {
     mdiArrowLeft,
     mdiMagnify,
 } from "@mdi/js";
-import NavDrawer from "@/components/navs/NavDrawer";
-import BottomNav from "@/components/navs/BottomNav";
+// import NavDrawer from "@/components/navs/NavDrawer";
+// import BottomNav from "@/components/navs/BottomNav";
 import SearchBar from "@/components/SearchBar";
 import Logo from "@/components/Logo";
 export default {
     components: {
         SearchBar,
-        NavDrawer,
-        BottomNav,
+        NavDrawer: () => import("@/components/navs/NavDrawer"),
+        BottomNav: () => import("@/components/navs/BottomNav"),
         Logo,
     },
     data: () => ({

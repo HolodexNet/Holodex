@@ -46,13 +46,12 @@
 
 <script>
 import VideoCard from "@/components/VideoCard.vue";
-import InfiniteLoading from "vue-infinite-loading";
 import { mdiChevronUp, mdiChevronDown } from "@mdi/js";
 export default {
     name: "VideoCardList",
     components: {
         VideoCard,
-        InfiniteLoading,
+        InfiniteLoading: () => import("vue-infinite-loading"),
     },
     data() {
         return {

@@ -41,14 +41,13 @@
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelSocials from "@/components/ChannelSocials";
-import ChannelCard from "@/components/ChannelCard";
 export default {
     name: "ChannelList",
     components: {
         ChannelImg,
         ChannelInfo,
         ChannelSocials,
-        ChannelCard,
+        ChannelCard: () => import("@/components/ChannelCard"),
     },
     props: {
         channels: {
