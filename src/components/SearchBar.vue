@@ -88,8 +88,6 @@ export default {
             isLoading: false,
             search: null,
             fromApi: [],
-            fromChannelCache: [],
-            useEnName: true,
         };
     },
     props: {
@@ -118,11 +116,12 @@ export default {
             );
         },
         nameProperty() {
-            return this.useEnName ? "name_en" : "name";
+            return this.$store.state.nameProperty;
         },
     },
     watch: {
         search: debounce(function(val) {
+            this.debug();
             if (!val) return;
             const formatted = val.replaceAll("#", "").toLowerCase();
 
@@ -164,12 +163,13 @@ export default {
     },
     methods: {
         onKeyDown() {
+            this.debug();
             if (this.fromApi.length == 0) this.commitSearch();
         },
         async fetchTags(query) {
-            this.loading = true;
+            this.isLoading = true;
             const res = await api.searchTags(query, 10);
-            this.loading = false;
+            this.isLoading = false;
             return res;
         },
         deleteChip(item) {
@@ -179,6 +179,7 @@ export default {
             );
         },
         commitSearch() {
+            this.debug();
             this.$router.push({
                 path: "/search",
                 query: {
@@ -186,11 +187,19 @@ export default {
                     ...(this.search && { title: this.search }),
                 },
             });
+            
         },
         onInput() {
             this.search = null;
             this.fromApi = [];
         },
+        debug() {
+            alert(
+                `${JSON.stringify(this.query) }
+                ${this.isLoading},
+                ${this.search}`
+            );
+        }
     },
 };
 </script>
