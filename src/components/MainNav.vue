@@ -36,7 +36,7 @@
                 >
                     <v-icon>{{ mdiArrowLeft }}</v-icon>
                 </v-app-bar-nav-icon>
-                <SearchBar dense />
+                <SearchBar :autofocus="isXs" />
             </template>
         </v-app-bar>
     </div>

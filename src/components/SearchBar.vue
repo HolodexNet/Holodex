@@ -13,6 +13,7 @@
         hide-details
         auto-select-first
         dense
+        :autofocus="autofocus"
         :small-chips="dense"
         v-model="query"
         :loading="isLoading"
@@ -46,7 +47,7 @@
                 <template v-else> #{{ selection.item.text }} </template>
             </v-chip>
         </template>
-        <template v-slot:item="dropdownItem">
+        <!-- <template v-slot:item="dropdownItem">
             <v-list-item-avatar
                 v-if="dropdownItem.item.value.type === 'channel'"
             >
@@ -62,7 +63,7 @@
                         ` (${dropdownItem.item.value.tag_obj.count})`
                 }}
             </v-list-item-content>
-        </template>
+        </template> -->
     </v-autocomplete>
 </template>
 
@@ -92,6 +93,10 @@ export default {
     },
     props: {
         dense: {
+            type: Boolean,
+            default: false,
+        },
+        autofocus: {
             type: Boolean,
             default: false,
         },
@@ -179,22 +184,24 @@ export default {
             );
         },
         commitSearch() {
+            console.log("commited");
             this.debug();
             this.$router.push({
                 path: "/search",
                 query: {
-                    tags: this.query.map(tag => tag.tag_obj.name).join(","),
+                    ...(this.query && {
+                        tags: this.query.map(tag => tag.tag_obj.name).join(","),
+                    }),
                     ...(this.search && { title: this.search }),
                 },
             });
-            
         },
         onInput() {
             this.search = null;
             this.fromApi = [];
         },
         debug() {
-            alert(
+            console.log(
                 `${JSON.stringify(this.query) }
                 ${this.isLoading},
                 ${this.search}`
