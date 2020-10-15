@@ -25,6 +25,7 @@
         @click:append-outer="commitSearch"
         @keydown.enter="onKeyDown()"
         label="Search"
+        return-object
     > -->
     <v-autocomplete
         class="ma-auto search-bar"
@@ -34,6 +35,7 @@
         :append-icon="''"
         :append-outer-icon="mdiMagnify"
         @click:append-outer="commitSearch"
+        autocomplete="off"
     >
         <template v-slot:selection="selection">
             <v-chip
@@ -81,7 +83,7 @@ import { mdiMagnify, mdiLabel } from "@mdi/js";
 import ChannelChip from "@/components/ChannelChip";
 import api from "@/utils/backend-api";
 import ChannelImg from "@/components/ChannelImg";
-import { debounce } from "@/utils/functions";
+// import { debounce } from "@/utils/functions";
 
 export default {
     name: "SearchBar",
@@ -134,7 +136,8 @@ export default {
         },
     },
     watch: {
-        search: debounce(function(val) {
+        search: 
+        /*debounce(*/function(val) {
             this.debug();
             if (!val) return;
             const formatted = val.replaceAll("#", "").toLowerCase();
@@ -173,7 +176,8 @@ export default {
                     }
                 });
             });
-        }, 200),
+         }, 
+         //200),
     },
     methods: {
         onKeyDown() {
@@ -193,7 +197,7 @@ export default {
             );
         },
         commitSearch() {
-            console.log("commited");
+            if (!this.query && !this.search) return;
             this.debug();
             this.$router.push({
                 path: "/search",
@@ -209,8 +213,8 @@ export default {
             });
         },
         onInput() {
-            this.search = null;
-            this.fromApi = [];
+            // this.search = null;
+            // this.fromApi = [];
         },
         debug() {
             console.log(
