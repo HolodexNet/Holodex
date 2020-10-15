@@ -35,5 +35,6 @@ export default {
 .nav-btn {
     font-size: 0.875rem;
     font-weight: 400;
+    height: inherit !important;
 }
 </style>

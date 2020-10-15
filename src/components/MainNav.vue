@@ -51,6 +51,7 @@ import {
     mdiMenu,
     mdiArrowLeft,
     mdiMagnify,
+    mdiHeart,
 } from "@mdi/js";
 import NavDrawer from "@/components/navs/NavDrawer";
 import BottomNav from "@/components/navs/BottomNav";
@@ -78,6 +79,11 @@ export default {
                 name: "Home",
                 path: "/",
                 icon: mdiHome,
+            },
+            {
+                name: "Favorites",
+                path: "/favorites",
+                icon: mdiHeart,
             },
             {
                 name: "Channels",

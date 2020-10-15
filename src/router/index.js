@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 
 const Channel = () => import("../views/Channel.vue");
 const Channels = () => import("../views/Channels.vue");
+const Favorites = () => import("../views/Favorites.vue");
 const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
 const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
 const Watch = () => import("../views/Watch.vue");
@@ -54,6 +55,11 @@ const routes = [
         path: "/channel/",
         name: "channels",
         component: Channels,
+    },
+    {
+        path: "/favorites/",
+        name: "favorites",
+        component: Favorites,
     },
     {
         name: "watch",

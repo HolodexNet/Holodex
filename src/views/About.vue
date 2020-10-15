@@ -123,8 +123,12 @@
                 </div>
                 <br />
                 <p class="text-body-2">
-                    This is a fan made website and has no relationship to
-                    Hololive or Cover Corp
+                    This is a fan made website and the content found on this
+                    website is owned by Cover corp and its partners. The site
+                    follows the guidelines set forth by Cover corp in their
+                    <a href="https://en.hololive.tv/terms">
+                        Derivative Work License Agreement
+                    </a>
                 </p>
             </v-col>
         </v-row>
