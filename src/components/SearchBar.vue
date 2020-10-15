@@ -140,7 +140,7 @@ export default {
         /*debounce(*/function(val) {
             this.debug();
             if (!val) return;
-            const formatted = val.replaceAll("#", "").toLowerCase();
+            const formatted = val.replace("#", "").toLowerCase();
             alert(formatted);
             this.fetchTags(formatted).then(res => {
                 const currentTagIds = this.query
