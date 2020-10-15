@@ -129,7 +129,6 @@ export default {
                             this.cachedChannels[tag.channel_ref]
                         ) {
                             const ref = this.cachedChannels[tag.channel_ref];
-                            alert(ref.name + " " + ref.name_en);
                             const ref_name = ref[this.nameProperty];
                             return {
                                 text: ref_name ? ref_name : tag.name,
