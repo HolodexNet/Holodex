@@ -3,8 +3,9 @@
         v-bind:value="value"
         v-on:input="$emit('input', $event)"
         app
-        width="256"
+        width="240"
         clipped
+        class="nav-scroll"
     >
         <v-list dense>
             <template v-for="page in pages">
@@ -19,10 +20,9 @@
                     </v-list-item-content>
                 </v-list-item>
             </template>
-            <v-list-group :prepend-icon="mdiHeart" value="true">
-                <template v-slot:activator>
-                    <v-list-item-title>Favorites</v-list-item-title>
-                </template>
+            <v-divider />
+            <v-list>
+                <v-subheader>Favorites</v-subheader>
                 <template v-for="channel in favoritedChannels">
                     <v-list-item
                         v-if="channel"
@@ -42,7 +42,7 @@
                 <v-list-item
                     link
                     @click="favoritesExpanded = !favoritesExpanded"
-                    v-if="favorites.length > 10"
+                    v-if="favorites.length > 5"
                 >
                     <v-list-item-action>
                         <v-icon>{{
@@ -64,7 +64,7 @@
                         Manage Favorites
                     </router-link>
                 </v-list-item>
-            </v-list-group>
+            </v-list>
         </v-list>
     </v-navigation-drawer>
 </template>
@@ -72,7 +72,7 @@
 <script>
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
-import { mdiHeart } from "@mdi/js";
+import { mdiHeart, mdiChevronDown, mdiChevronUp } from "@mdi/js";
 export default {
     name: "NavDrawer",
     components: {
@@ -92,6 +92,9 @@ export default {
     data() {
         return {
             mdiHeart,
+            favoritesExpanded: true,
+            mdiChevronDown,
+            mdiChevronUp,
         };
     },
     computed: {
@@ -115,12 +118,33 @@ export default {
                     ? this.cachedChannels[channel_id]
                     : null
             );
-            return !this.favoritesExpanded && this.favorites.length > 10
-                ? arr.splice(0, 10)
+            return !this.favoritesExpanded && this.favorites.length > 5
+                ? arr.splice(0, 5)
                 : arr;
         },
     },
 };
 </script>
 
-<style></style>
+<style>
+.nav-scroll > .v-navigation-drawer__content::-webkit-scrollbar {
+    width: 8px; /* for vertical scrollbars */
+    height: 8px; /* for horizontal scrollbars */
+}
+
+.nav-scroll > .v-navigation-drawer__content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.nav-scroll > .v-navigation-drawer__content::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.nav-scroll > .v-navigation-drawer__content:hover {
+    overflow-y: auto !important;
+}
+
+.nav-scroll > .v-navigation-drawer__content {
+    overflow-y: hidden !important;
+}
+</style>

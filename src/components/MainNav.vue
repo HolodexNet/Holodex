@@ -29,7 +29,7 @@
                     <v-icon>{{ mdiMagnify }}</v-icon>
                 </v-btn>
 
-                <v-menu left bottom>
+                <v-menu left bottom v-if="isXs">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
                             <v-icon>{{ mdiDotsVertical }}</v-icon>
