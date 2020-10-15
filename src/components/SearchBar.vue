@@ -1,5 +1,5 @@
 <template>
-    <!-- <v-autocomplete
+    <v-autocomplete
         class="ma-auto search-bar"
         solo
         flat
@@ -26,26 +26,16 @@
         @keydown.enter="onKeyDown()"
         label="Search"
         return-object
-    > -->
-    <v-autocomplete
-        class="ma-auto search-bar"
-        v-model="query"
-        :items="results"
-        :search-input.sync="search"
-        :append-icon="''"
-        :append-outer-icon="mdiMagnify"
-        @click:append-outer="commitSearch"
-        autocomplete="off"
     >
         <template v-slot:selection="selection">
             <v-chip
                 pill
                 close
-                :label="selection.item.value.type !== 'channel'"
+                :label="selection.item.type !== 'channel'"
                 @click:close="deleteChip(selection.item)"
                 :small="dense"
             >
-                <template v-if="selection.item.value.type === 'channel'">
+                <template v-if="selection.item.type === 'channel'">
                     <v-avatar left v-if="!dense">
                         <ChannelImg
                             :channel="selection.item.value.channel_obj"
@@ -58,10 +48,8 @@
                 <template v-else> #{{ selection.item.text }} </template>
             </v-chip>
         </template>
-        <!-- <template v-slot:item="dropdownItem">
-            <v-list-item-avatar
-                v-if="dropdownItem.item.value.type === 'channel'"
-            >
+        <template v-slot:item="dropdownItem">
+            <v-list-item-avatar v-if="dropdownItem.item.type === 'channel'">
                 <ChannelImg :channel="dropdownItem.item.value.channel_obj" />
             </v-list-item-avatar>
             <v-list-item-avatar v-else>
@@ -69,12 +57,12 @@
             </v-list-item-avatar>
             <v-list-item-content>
                 {{
-                    (dropdownItem.item.value.type !== "channel" ? "#" : "") +
+                    (dropdownItem.item.type !== "channel" ? "#" : "") +
                         dropdownItem.item.text +
                         ` (${dropdownItem.item.value.tag_obj.count})`
                 }}
             </v-list-item-content>
-        </template> -->
+        </template>
     </v-autocomplete>
 </template>
 
@@ -83,7 +71,7 @@ import { mdiMagnify, mdiLabel } from "@mdi/js";
 import ChannelChip from "@/components/ChannelChip";
 import api from "@/utils/backend-api";
 import ChannelImg from "@/components/ChannelImg";
-// import { debounce } from "@/utils/functions";
+import { debounce } from "@/utils/functions";
 
 export default {
     name: "SearchBar",
@@ -117,72 +105,56 @@ export default {
             return this.$store.state.cachedChannels;
         },
         results() {
-            return this.fromApi.concat(
-                this.query
-                    ? this.query.map(item => {
-                          return {
-                              text:
-                                  item.type === "channel"
-                                      ? item.channel_obj[this.nameProperty]
-                                      : item.tag_obj.name,
-                              value: item,
-                          };
-                      })
-                    : []
-            );
+            return this.fromApi.concat(this.query ? this.query : []);
         },
         nameProperty() {
             return this.$store.state.nameProperty;
         },
     },
     watch: {
-        search: 
-        /*debounce(*/function(val) {
-            this.debug();
+        search: debounce(function(val) {
             if (!val) return;
             const formatted = val.replace("#", "").toLowerCase();
-            alert(formatted);
-            this.fetchTags(formatted).then(res => {
-                const currentTagIds = this.query
-                    ? this.query.map(item => item.tag_id)
-                    : [];
-                const filtered = res.data.tags.filter(
-                    tag => !currentTagIds.includes(tag.id)
-                );
-                this.fromApi = filtered.map(tag => {
-                    if (
-                        tag.channel_ref &&
-                        this.cachedChannels[tag.channel_ref]
-                    ) {
-                        const ref = this.cachedChannels[tag.channel_ref];
-                        return {
-                            text: ref[this.nameProperty],
-                            value: {
-                                tag_id: tag.id,
-                                tag_obj: tag,
+            this.fetchTags(formatted)
+                .then(res => {
+                    const currentTagIds = this.query
+                        ? this.query.map(item => item.tag_id)
+                        : [];
+                    const filtered = res.data.tags.filter(
+                        tag => !currentTagIds.includes(tag.id)
+                    );
+                    this.fromApi = filtered.map(tag => {
+                        if (
+                            tag.channel_ref &&
+                            this.cachedChannels[tag.channel_ref]
+                        ) {
+                            const ref = this.cachedChannels[tag.channel_ref];
+                            return {
+                                text: ref[this.nameProperty],
                                 type: "channel",
-                                channel_obj: ref,
-                            },
-                        };
-                    } else {
-                        return {
-                            text: tag.name,
-                            value: {
-                                tag_id: tag.id,
-                                tag_obj: tag,
+                                value: {
+                                    tag_id: tag.id,
+                                    tag_obj: tag,
+                                    channel_obj: ref,
+                                },
+                            };
+                        } else {
+                            return {
+                                text: tag.name,
                                 type: "tag",
-                            },
-                        };
-                    }
-                });
-            }).catch(e => alert(e))
-            .finally(() => alert(this.fromApi));
-         }, 
-         //200),
+                                value: {
+                                    tag_id: tag.id,
+                                    tag_obj: tag,
+                                },
+                            };
+                        }
+                    });
+                })
+                .catch(e => console.log(e));
+        }, 200),
     },
     methods: {
         onKeyDown() {
-            this.debug();
             if (this.fromApi.length == 0) this.commitSearch();
         },
         async fetchTags(query) {
@@ -192,20 +164,17 @@ export default {
             return res;
         },
         deleteChip(item) {
-            this.query.splice(
-                this.query.map(q => q.tag_id).indexOf(item.value.tag_id),
-                1
-            );
+            // eslint-disable-next-line prettier/prettier
+            this.query.splice(this.query.map(q => q.tag_id).indexOf(item.value.tag_id), 1);
         },
         commitSearch() {
             if (!this.query && !this.search) return;
-            this.debug();
             this.$router.push({
                 path: "/search",
                 query: {
                     ...(this.query && {
                         tags: this.query
-                            .map(tag => tag.tag_obj.name)
+                            .map(item => item.value.tag_obj.name)
                             .sort()
                             .join(","),
                     }),
@@ -214,15 +183,8 @@ export default {
             });
         },
         onInput() {
-            // this.search = null;
-            // this.fromApi = [];
-        },
-        debug() {
-            console.log(
-                `${JSON.stringify(this.query)}
-                ${this.isLoading},
-                ${this.search}`
-            );
+            this.search = null;
+            this.fromApi = [];
         },
     },
 };
