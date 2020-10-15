@@ -99,9 +99,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .channel-card-grid::after {
     content: "";
     flex: auto;
+}
+.v-slide-group__prev--disabled {
+    display: none !important;
 }
 </style>

@@ -7,6 +7,7 @@
             :href="`https://www.youtube.com/channel/${channel.yt_channel_id}`"
             rel="noreferrer"
             target="_blank"
+            @click.stop=""
         >
             <v-icon color="#C4302B">{{ mdiYoutube }}</v-icon>
         </v-btn>
@@ -17,6 +18,7 @@
             :href="`https://twitter.com/${channel.twitter_link}`"
             rel="noreferrer"
             target="_blank"
+            @click.stop=""
         >
             <v-icon color="#00ACEE"> {{ mdiTwitter }} </v-icon>
         </v-btn>
@@ -62,10 +64,6 @@ export default {
         vertical: {
             type: Boolean,
             required: false,
-        },
-        hideFavorite: {
-            type: Boolean,
-            default: false,
         },
     },
     computed: {

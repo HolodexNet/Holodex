@@ -24,7 +24,6 @@
                     messages="Hide video thumbnails, helps speed up loading time and less scrolling on mobile"
                 ></v-switch>
                 <v-switch
-                    v-model="hideThumbnail"
                     label="Push Notifications (Coming soon)"
                     messages="Enable push notifications for favorited channels"
                     disabled

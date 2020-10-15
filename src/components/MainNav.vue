@@ -1,7 +1,7 @@
 <template>
     <div>
         <NavDrawer :pages="pages" v-model="drawer" v-if="!isXs" />
-        <BottomNav :pages="pages" v-else />
+        <BottomNav :pages="pages.filter(page => !page.collapsible)" v-else />
         <v-app-bar color="blue lighten-1" app clipped-left flat>
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isXs">
@@ -28,6 +28,28 @@
                 >
                     <v-icon>{{ mdiMagnify }}</v-icon>
                 </v-btn>
+
+                <v-menu left bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon v-bind="attrs" v-on="on">
+                            <v-icon>{{ mdiDotsVertical }}</v-icon>
+                        </v-btn>
+                    </template>
+
+                    <v-list v-if="isXs">
+                        <v-list-item
+                            v-for="page in pages.filter(
+                                item => item.collapsible
+                            )"
+                            :key="page.name"
+                            :to="page.path"
+                        >
+                            <v-list-item-title>
+                                {{ page.name }}
+                            </v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
             </template>
             <template v-else>
                 <v-app-bar-nav-icon
@@ -52,6 +74,7 @@ import {
     mdiArrowLeft,
     mdiMagnify,
     mdiHeart,
+    mdiDotsVertical,
 } from "@mdi/js";
 import NavDrawer from "@/components/navs/NavDrawer";
 import BottomNav from "@/components/navs/BottomNav";
@@ -70,6 +93,7 @@ export default {
             mdiArrowLeft,
             mdiMagnify,
             mdiMenu,
+            mdiDotsVertical,
         },
         favoritesExpanded: false,
         searchBarExpanded: false,
@@ -94,11 +118,13 @@ export default {
                 name: "About",
                 path: "/about",
                 icon: mdiHelpCircle,
+                collapsible: true,
             },
             {
                 name: "Settings",
                 path: "/settings",
                 icon: mdiCog,
+                collapsible: true,
             },
         ],
     }),
