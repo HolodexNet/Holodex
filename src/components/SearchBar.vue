@@ -138,6 +138,7 @@ export default {
     watch: {
         search: 
         /*debounce(*/function(val) {
+            alert("fetch api");
             this.debug();
             if (!val) return;
             const formatted = val.replaceAll("#", "").toLowerCase();
