@@ -29,7 +29,6 @@
                 <ChannelSocials
                     :channel="channel"
                     :vertical="$vuetify.breakpoint.width < 400"
-                    :hideFavorite="channel.id > 1000"
                 />
             </v-list-item>
             <v-divider :key="'divider-' + index"></v-divider>
@@ -40,13 +39,13 @@
 <script>
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
-import ChannelSocials from "@/components/ChannelSocials";
+// import ChannelSocials from "@/components/ChannelSocials";
 export default {
     name: "ChannelList",
     components: {
         ChannelImg,
         ChannelInfo,
-        ChannelSocials,
+        // ChannelSocials,
         ChannelCard: () => import("@/components/ChannelCard"),
     },
     props: {

@@ -63,7 +63,7 @@
                     <span v-if="video.clips && video.clips.length > 0">
                         • {{ video.clips.length }} Clips
                     </span>
-                    <span v-else-if="video.status === 'live'">
+                    <span v-else-if="video.status === 'live' && video.live_viewers > 0">
                         • {{ formatCount(video.live_viewers) }} Watching
                     </span>
                 </v-list-item-subtitle>

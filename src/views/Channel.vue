@@ -112,6 +112,7 @@ export default {
 .v-list-item-horizontal {
     flex-direction: row;
     align-items: center;
+    margin-right: 0px !important;
 }
 
 .channel-banner {
