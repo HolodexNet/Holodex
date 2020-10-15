@@ -5,13 +5,8 @@ import api from "@/utils/backend-api";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-    plugins: [
-        createPersistedState({
-            key: "holosubs",
-        }),
-    ],
-    state: {
+function defaultState() {
+    return {
         darkMode: true,
         redirectMode: false,
         canUseWebP: true,
@@ -24,7 +19,16 @@ export default new Vuex.Store({
         cachedChannels: {},
         nameProperty: "name_en",
         hideThumbnail: false,
-    },
+    };
+}
+
+export default new Vuex.Store({
+    plugins: [
+        createPersistedState({
+            key: "holodex",
+        }),
+    ],
+    state: defaultState(),
     getters: {
         useEnName(state) {
             return state.nameProperty === "name_en";
@@ -73,6 +77,9 @@ export default new Vuex.Store({
         },
         removeCachedChannel(state, channel_id) {
             delete state.cachedChannels[channel_id];
+        },
+        resetState(state) {
+            Object.assign(state, defaultState());
         },
     },
     actions: {

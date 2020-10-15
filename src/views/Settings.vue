@@ -23,6 +23,10 @@
                     label="Hide Video Thumbnails"
                     messages="Hide video thumbnails, helps speed up loading time and less scrolling on mobile"
                 ></v-switch>
+                <br />
+                <v-btn @click="resetSettings">
+                    Reset All Settings/Data
+                </v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -63,6 +67,11 @@ export default {
             set(val) {
                 this.$store.commit("setHideThumbnail", val);
             },
+        },
+    },
+    methods: {
+        resetSettings() {
+            this.$store.commit("resetState");
         },
     },
 };

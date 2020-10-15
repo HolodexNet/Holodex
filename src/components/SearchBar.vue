@@ -129,7 +129,6 @@ export default {
                             this.cachedChannels[tag.channel_ref]
                         ) {
                             const ref = this.cachedChannels[tag.channel_ref];
-                            alert(this.nameProperty);
                             const ref_name = ref[this.nameProperty];
                             return {
                                 text: ref_name ? ref_name : tag.name,
@@ -152,8 +151,8 @@ export default {
                         }
                     });
                 })
-                .catch(e => console.log(e))
-                .finally(() => alert(this.fromApi.map(item => item.text)));
+                .catch(e => console.log(e));
+            // .finally(() => alert(this.fromApi.map(item => item.text)));
         }, 200),
     },
     methods: {
