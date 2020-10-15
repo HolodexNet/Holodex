@@ -150,7 +150,8 @@ export default {
                         }
                     });
                 })
-                .catch(e => console.log(e));
+                .catch(e => console.log(e))
+                .finally(() => alert(this.fromApi.map(item => item.text)));
         }, 200),
     },
     methods: {
