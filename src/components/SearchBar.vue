@@ -1,5 +1,5 @@
 <template>
-    <v-autocomplete
+    <!-- <v-autocomplete
         class="ma-auto search-bar"
         solo
         flat
@@ -25,6 +25,15 @@
         @click:append-outer="commitSearch"
         @keydown.enter="onKeyDown()"
         label="Search"
+    > -->
+    <v-autocomplete
+        class="ma-auto search-bar"
+        v-model="query"
+        :items="results"
+        :search-input.sync="search"
+        :append-icon="''"
+        :append-outer-icon="mdiMagnify"
+        @click:append-outer="commitSearch"
     >
         <template v-slot:selection="selection">
             <v-chip
@@ -190,7 +199,10 @@ export default {
                 path: "/search",
                 query: {
                     ...(this.query && {
-                        tags: this.query.map(tag => tag.tag_obj.name).join(","),
+                        tags: this.query
+                            .map(tag => tag.tag_obj.name)
+                            .sort()
+                            .join(","),
                     }),
                     ...(this.search && { title: this.search }),
                 },
@@ -202,11 +214,11 @@ export default {
         },
         debug() {
             console.log(
-                `${JSON.stringify(this.query) }
+                `${JSON.stringify(this.query)}
                 ${this.isLoading},
                 ${this.search}`
             );
-        }
+        },
     },
 };
 </script>

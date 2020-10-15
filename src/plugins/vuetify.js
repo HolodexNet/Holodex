@@ -5,6 +5,7 @@ import { primary_color, secondary_color } from "@/utils/consts";
 Vue.use(Vuetify);
 
 export default new Vuetify({
+    treeShake: true,
     icons: {
         iconfont: "mdiSvg",
     },
