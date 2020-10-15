@@ -129,8 +129,9 @@ export default {
                             this.cachedChannels[tag.channel_ref]
                         ) {
                             const ref = this.cachedChannels[tag.channel_ref];
+                            const ref_name = ref[this.nameProperty];
                             return {
-                                text: ref[this.nameProperty],
+                                text: ref_name ? ref_name : tag.name,
                                 type: "channel",
                                 value: {
                                     tag_id: tag.id,
