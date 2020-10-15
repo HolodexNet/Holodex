@@ -138,11 +138,10 @@ export default {
     watch: {
         search: 
         /*debounce(*/function(val) {
-            alert("fetch api");
             this.debug();
             if (!val) return;
             const formatted = val.replaceAll("#", "").toLowerCase();
-
+            alert(formatted);
             this.fetchTags(formatted).then(res => {
                 const currentTagIds = this.query
                     ? this.query.map(item => item.tag_id)
@@ -176,7 +175,8 @@ export default {
                         };
                     }
                 });
-            });
+            }).catch(e => alert(e))
+            .finally(() => alert(this.fromApi));
          }, 
          //200),
     },
