@@ -1,5 +1,5 @@
 <template>
-    <v-container class="home" fluid style="height: 100%">
+    <v-container class="home" fluid>
         <v-row v-if="loading" style="height: 100%">
             <v-progress-circular
                 indeterminate
@@ -70,7 +70,6 @@
 import VideoCardList from "@/components/VideoCardList.vue";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
-
 export default {
     name: "Home",
     components: {
@@ -82,37 +81,20 @@ export default {
             videos: [],
             currentOffset: 0,
             // TODO: smaller pagelength with mobile/diff breakpoints
-            pageLength: 24,
+            // pageLength: 10,
             infiniteId: +new Date(),
             loading: true,
             liveError: false,
         };
     },
     mounted() {
-        api.live()
-            .then(res => {
-                // get currently live and upcoming lives within the next 2 weeks
-                this.live = res.data.live
-                    .concat(res.data.upcoming)
-                    .filter(live => {
-                        return dayjs(live.live_schedule).isBefore(
-                            dayjs().add(3, "w")
-                        );
-                    });
-            })
-            .catch(() => {
-                this.liveError = true;
-            })
-            .finally(() => {
-                this.loading = false;
-            });
+        this.loadLive().finally(() => {
+            this.loading = false;
+        });
     },
     watch: {
         recentVideoFilter() {
-            this.videos = [];
-            this.currentOffset = 0;
-            this.infiniteId++;
-            this.daysBefore = 0;
+            this.resetVideos();
         },
     },
     computed: {
@@ -124,8 +106,29 @@ export default {
                 this.$store.commit("setRecentVideoFilter", value);
             },
         },
+        pageLength() {
+            return this.$vuetify.breakpoint === "md" ? 12 : 24;
+        },
     },
     methods: {
+        resetVideos() {
+            this.videos = [];
+            this.currentOffset = 0;
+            this.infiniteId++;
+            this.daysBefore = 0;
+        },
+        loadLive() {
+            return api.live().then(res => {
+                // get currently live and upcoming lives within the next 2 weeks
+                this.live = res.data.live
+                    .concat(res.data.upcoming)
+                    .filter(live => {
+                        return dayjs(live.live_schedule).isBefore(
+                            dayjs().add(3, "w")
+                        );
+                    });
+            });
+        },
         loadNext($state) {
             api.videos({
                 limit: this.pageLength,
@@ -154,3 +157,8 @@ export default {
     },
 };
 </script>
+<style>
+.home {
+    overscroll-behavior: contain;
+}
+</style>

@@ -14,8 +14,7 @@
     </v-row>
     <v-list three-line class="pa-0" v-else>
         <template v-for="(channel, index) in channels">
-            <v-list-item v-if="channel" :key="channel.id"
-            >
+            <v-list-item v-if="channel" :key="channel.id">
                 <v-list-item-avatar size="55">
                     <ChannelImg :channel="channel" size="55" />
                 </v-list-item-avatar>

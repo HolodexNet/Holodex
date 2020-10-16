@@ -142,6 +142,7 @@ export default {
 
 .nav-scroll > .v-navigation-drawer__content:hover {
     overflow-y: auto !important;
+    overscroll-behavior: contain;
 }
 
 .nav-scroll > .v-navigation-drawer__content {

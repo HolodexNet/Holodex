@@ -6,6 +6,7 @@
                 :key="page.name"
                 :to="page.path"
                 class="nav-btn"
+                @click.native="scrollToTop"
             >
                 <span>{{ page.name }}</span>
                 <v-icon>{{ page.icon }}</v-icon>
@@ -27,6 +28,15 @@ export default {
         return {
             value: "/",
         };
+    },
+    methods: {
+        scrollToTop() {
+            window.scroll({
+                top: 0,
+                left: 0,
+                behavior: "smooth",
+            });
+        },
     },
 };
 </script>

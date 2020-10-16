@@ -98,11 +98,12 @@ export default new Vuex.Store({
         },
         async checkChannelCache({ state, dispatch }) {
             const currentTime = new Date().getTime();
-            // update favorites if last updated is null or greater than 24 hours
             if (
                 !state.cachedChannelLastUpdated ||
+                // update every hour
                 currentTime - state.cachedChannelLastUpdated >
-                    1000 * 60 * 60 * 24 ||
+                    1000 * 60 * 60 * 1 ||
+                // retry every 15 minutes if error
                 (state.cachedChannelsError &&
                     currentTime - state.cachedChannelLastUpdated >
                         1000 * 60 * 15)

@@ -17,6 +17,12 @@
                 <template v-slot:no-more><span></span></template>
             </infinite-loading>
         </v-container>
+        <div
+            v-if="favorites.length > 0 && category == 2"
+            class="text--secondary"
+        >
+            Last updated {{ lastUpdated }}
+        </div>
     </v-container>
 </template>
 
@@ -24,7 +30,9 @@
 import ChannelList from "@/components/ChannelList";
 import api from "@/utils/backend-api";
 import InfiniteLoading from "vue-infinite-loading";
-
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 export default {
     name: "Home",
     components: {
@@ -55,6 +63,9 @@ export default {
         },
         cachedChannels() {
             return this.$store.state.cachedChannels;
+        },
+        lastUpdated() {
+            return dayjs(this.$store.state.cachedChannelsLastUpdated).fromNow();
         },
     },
     methods: {

@@ -1,5 +1,6 @@
 <template>
     <v-container class="home" fluid style="height: 100%">
+        <PullDownRefresh @refresh="onRefresh" />
         <template v-if="favorites.length > 0">
             <v-row v-if="loading" style="height: 100%">
                 <v-progress-circular
@@ -28,11 +29,14 @@
                     >
                     </VideoCardList>
                     <v-row v-if="!filteredLiveVideos.length || liveError">
-                        <v-col class="ma-auto text-center pa-8" v-if="liveError">
+                        <v-col
+                            class="ma-auto text-center pa-8"
+                            v-if="liveError"
+                        >
                             Error while retrieving lives...
                         </v-col>
                         <v-col class="ma-auto text-center pa-8" v-else>
-                            No one is streaming soon on your favorites. Please
+                            No one is streaming soon in your favorites. Please
                             check out the other vtubers!
                         </v-col>
                     </v-row>
@@ -61,6 +65,7 @@
 <script>
 import VideoCardList from "@/components/VideoCardList.vue";
 import FavoritesVideoList from "@/components/FavoritesVideoList.vue";
+import PullDownRefresh from "@/components/PullDownRefresh";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import { mdiHeart } from "@mdi/js";
@@ -72,6 +77,7 @@ export default {
     components: {
         VideoCardList,
         FavoritesVideoList,
+        PullDownRefresh,
     },
     data() {
         return {
@@ -116,6 +122,21 @@ export default {
         },
     },
     methods: {
+        onRefresh(done) {
+            setTimeout(function(){ done(); }, 3000);
+            // api.live()
+            //     .then(res => {
+            //         console.log(res);
+            //         this.live = res.data.live
+            //             .concat(res.data.upcoming)
+            //             .filter(live => {
+            //                 return dayjs(live.live_schedule).isBefore(
+            //                     dayjs().add(3, "w")
+            //                 );
+            //             });
+            //     })
+            //     .finally(() => done());
+        },
         loadFavoritesVideos() {
             const targetDate = dayjs().subtract(this.daysBefore, "d");
             api.videos({
@@ -123,8 +144,14 @@ export default {
                 include_channel: 1,
                 status: "past",
                 tag_status: "tagged",
-                start_date: targetDate.startOf("day").utc().toISOString(),
-                end_date: targetDate.endOf("day").utc().toISOString(),
+                start_date: targetDate
+                    .startOf("day")
+                    .utc()
+                    .toISOString(),
+                end_date: targetDate
+                    .endOf("day")
+                    .utc()
+                    .toISOString(),
                 sort: "published_at",
                 order: "desc",
             }).then(res => {

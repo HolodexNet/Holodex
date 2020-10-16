@@ -95,3 +95,9 @@ export default {
     },
 };
 </script>
+<style>
+html {
+    /* Disables pull-to-refresh but allows overscroll glow effects. */
+    overscroll-behavior-y: none !important;
+}
+</style>
