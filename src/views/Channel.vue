@@ -1,6 +1,5 @@
 <template>
     <v-container class="channel-container" fluid v-if="this.channel">
-        <PullDownRefresh @refresh="onRefresh" />
         <v-card>
             <v-img :src="bannerImage" class="channel-banner" />
             <v-container>
@@ -38,7 +37,6 @@ import api from "@/utils/backend-api";
 import ChannelSocials from "@/components/ChannelSocials";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelImg from "@/components/ChannelImg";
-import PullDownRefresh from "@/components/PullDownRefresh";
 import { banner_images } from "@/utils/functions";
 
 export default {
@@ -47,7 +45,6 @@ export default {
         ChannelSocials,
         ChannelInfo,
         ChannelImg,
-        PullDownRefresh,
     },
     data() {
         return {
@@ -96,9 +93,6 @@ export default {
             return api
                 .channel(this.channel_id)
                 .then(res => (this.channel = res.data));
-        },
-        onRefresh(done) {
-            this.init().finally(done());
         },
     },
     props: {},

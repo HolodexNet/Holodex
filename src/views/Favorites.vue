@@ -1,6 +1,5 @@
 <template>
     <v-container class="home" fluid style="height: 100%">
-        <!-- <PullDownRefresh @refresh="onRefresh" /> -->
         <template v-if="favorites.length > 0">
             <v-row v-if="loading" style="height: 100%">
                 <v-progress-circular
@@ -65,23 +64,18 @@
 <script>
 import VideoCardList from "@/components/VideoCardList.vue";
 import FavoritesVideoList from "@/components/FavoritesVideoList.vue";
-// import PullDownRefresh from "@/components/PullDownRefresh";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import { mdiHeart } from "@mdi/js";
-import reloadable from "@/mixins/reloadable";
 var utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 
 export default {
     name: "Favorites",
-    mixins: [reloadable],
     components: {
         VideoCardList,
         FavoritesVideoList,
-        // PullDownRefresh,
     },
-    props: {...reloadable.props},
     data() {
         return {
             live: [],
@@ -96,8 +90,6 @@ export default {
         };
     },
     mounted() {
-        console.log("moutned favs");
-        // this.loadFavorites();
         Promise.all([this.loadLive(), this.loadFavorites()]).finally(() => {
             this.loading = false;
         });
@@ -113,12 +105,6 @@ export default {
         },
     },
     methods: {
-        onRefresh() {
-            Promise.all([
-                this.loadLive(),
-                this.loadFavorites(true),
-            ]).finally(() => this.finishReload());
-        },
         loadLive() {
             return api.live().then(res => {
                 // get currently live and upcoming lives within the next 2 weeks
