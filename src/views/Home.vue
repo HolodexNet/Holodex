@@ -1,5 +1,6 @@
 <template>
     <v-container class="home" fluid>
+        <!-- <PullDownRefresh @refresh="onRefresh" /> -->
         <v-row v-if="loading" style="height: 100%">
             <v-progress-circular
                 indeterminate
@@ -70,10 +71,17 @@
 import VideoCardList from "@/components/VideoCardList.vue";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
+import reloadable from "@/mixins/reloadable";
+// import PullDownRefresh from "@/components/PullDownRefresh";
 export default {
     name: "Home",
+    mixins: [reloadable],
     components: {
         VideoCardList,
+        // PullDownRefresh,
+    },
+    props: {
+        ...reloadable.props,
     },
     data() {
         return {
@@ -87,7 +95,7 @@ export default {
             liveError: false,
         };
     },
-    mounted() {
+    created() {
         this.loadLive().finally(() => {
             this.loading = false;
         });
@@ -111,6 +119,13 @@ export default {
         },
     },
     methods: {
+        onRefresh() {
+            this.loadLive().finally(() => {
+                console.log("refreshed");
+                this.finishReload();
+                this.resetVideos();
+            });
+        },
         resetVideos() {
             this.videos = [];
             this.currentOffset = 0;

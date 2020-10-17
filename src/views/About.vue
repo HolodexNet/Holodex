@@ -27,9 +27,9 @@
                             clicking the heart icon on the
                             <router-link to="/channel">Channels</router-link>
                             page. Please note that favoriting subbers is
-                            currently not supported , but you should still
+                            currently not supported, but you should still
                             consider subscribing and supporting them in other
-                            ways to them!
+                            ways!
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -78,8 +78,8 @@
                             make sure to link the official channels of relevant
                             vtubers. Add relevant hashtags (eg. #apexlegends)
                             and try to minimize variations. You can check the
-                            tags page to see what already exists and try to use
-                            the same tag.
+                            tags page to see what already exists and try to
+                            reuse existing tags
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>

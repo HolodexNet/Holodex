@@ -28,7 +28,9 @@
                                     :key="index"
                                 >
                                     <td>{{ formatDate(row.day) }}</td>
-                                    <td>{{ formatCount(row.subscriber_count) }}</td>
+                                    <td>
+                                        {{ formatCount(row.subscriber_count) }}
+                                    </td>
                                     <td class="green--text">
                                         +{{ row.subscriber_diff }}
                                     </td>
@@ -66,7 +68,9 @@
                                 >
                                     <td>{{ formatDate(row.day) }}</td>
                                     <td>{{ formatCount(row.view_count) }}</td>
-                                    <td class="green--text">+{{ row.view_diff }}</td>
+                                    <td class="green--text">
+                                        +{{ row.view_diff }}
+                                    </td>
                                 </tr>
                             </tbody>
                         </template>
@@ -106,6 +110,7 @@ export default {
             subscriberData: [],
             viewData: [],
             allData: [],
+            charts: [],
         };
     },
     mounted() {
@@ -119,6 +124,9 @@ export default {
             this.loadChart("subscriber");
             this.loadChart("view");
         });
+    },
+    destroyed() {
+        this.charts.map(chart => chart.destroy());
     },
     computed: {
         channel_id() {
@@ -139,76 +147,78 @@ export default {
                 ? "rgba(255,255,255,0.2)"
                 : "rgba(0, 0, 0, 0.1)";
             const fontColor = this.darkMode ? "white" : "black";
-            new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: this.timeLabels,
-                    datasets: [
-                        {
-                            label: type,
-                            borderColor: "#2196F3",
-                            borderWidth: 4,
-                            backgroundColor: "#2196F3",
-                            data: this[`${type}Data`],
-                            pointRadius: 4,
-                        },
-                    ],
-                },
-                options: {
-                    scales: {
-                        y: {
-                            ticks: {
-                                // eslint-disable-next-line no-unused-vars
-                                callback: function(value, index, values) {
-                                    return formatCount(value);
+            this.charts.push(
+                new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        labels: this.timeLabels,
+                        datasets: [
+                            {
+                                label: type,
+                                borderColor: "#2196F3",
+                                borderWidth: 4,
+                                backgroundColor: "#2196F3",
+                                data: this[`${type}Data`],
+                                pointRadius: 4,
+                            },
+                        ],
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                ticks: {
+                                    // eslint-disable-next-line no-unused-vars
+                                    callback: function(value, index, values) {
+                                        return formatCount(value);
+                                    },
+                                    font: {
+                                        size: 12,
+                                        color: fontColor,
+                                    },
+                                    maxTicksLimit: 6,
                                 },
-                                font: {
-                                    size: 12,
-                                    color: fontColor,
+                                gridLines: {
+                                    color: gridLineColor,
                                 },
-                                maxTicksLimit: 6,
                             },
-                            gridLines: {
-                                color: gridLineColor,
+                            x: {
+                                gridLines: {
+                                    display: false,
+                                    color: gridLineColor,
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 12,
+                                        color: fontColor,
+                                    },
+                                },
                             },
                         },
-                        x: {
-                            gridLines: {
-                                display: false,
-                                color: gridLineColor,
+                        layout: {
+                            padding: {
+                                top: 10,
+                                bottom: 10,
+                                left: 5,
+                                right: 5,
                             },
-                            ticks: {
-                                font: {
-                                    size: 12,
-                                    color: fontColor,
+                        },
+                        responsive: true,
+                        tooltips: {
+                            mode: "index",
+                            intersect: false,
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return (
+                                        formatCount(tooltipItem.dataPoint.y) +
+                                        " " +
+                                        tooltipItem.dataset.label
+                                    );
                                 },
                             },
                         },
                     },
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 10,
-                            left: 5,
-                            right: 5,
-                        },
-                    },
-                    responsive: true,
-                    tooltips: {
-                        mode: "index",
-                        intersect: false,
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                return (
-                                    formatCount(tooltipItem.dataPoint.y) +
-                                    " " +
-                                    tooltipItem.dataset.label
-                                );
-                            },
-                        },
-                    },
-                },
-            });
+                })
+            );
         },
     },
 };

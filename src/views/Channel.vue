@@ -1,5 +1,6 @@
 <template>
     <v-container class="channel-container" fluid v-if="this.channel">
+        <PullDownRefresh @refresh="onRefresh" />
         <v-card>
             <v-img :src="bannerImage" class="channel-banner" />
             <v-container>
@@ -9,9 +10,7 @@
                             <ChannelImg :size="avatarSize" :channel="channel" />
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" />
-                        <v-list-item-action class="v-list-item-horizontal">
-                            <ChannelSocials :channel="channel" />
-                        </v-list-item-action>
+                        <ChannelSocials :channel="channel" />
                     </v-list-item>
                 </v-list>
             </v-container>
@@ -39,6 +38,7 @@ import api from "@/utils/backend-api";
 import ChannelSocials from "@/components/ChannelSocials";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelImg from "@/components/ChannelImg";
+import PullDownRefresh from "@/components/PullDownRefresh";
 import { banner_images } from "@/utils/functions";
 
 export default {
@@ -47,6 +47,7 @@ export default {
         ChannelSocials,
         ChannelInfo,
         ChannelImg,
+        PullDownRefresh,
     },
     data() {
         return {
@@ -92,14 +93,19 @@ export default {
             // reset component to default without recreating
             this.channel_id = this.$route.params.id;
             (this.videos = []), (this.tab = 0), (this.channel = null);
-            api.channel(this.channel_id).then(res => (this.channel = res.data));
+            return api
+                .channel(this.channel_id)
+                .then(res => (this.channel = res.data));
+        },
+        onRefresh(done) {
+            this.init().finally(done());
         },
     },
     props: {},
 };
 </script>
 
-<style lang="scss">
+<style>
 .channel-container {
     padding: 0px;
 }

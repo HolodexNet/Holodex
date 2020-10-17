@@ -2,7 +2,15 @@
     <v-app>
         <MainNav />
         <v-main>
-            <router-view />
+            <PullDownRefresh @refresh="onRefresh" v-if="isXs" />
+            <keep-alive include="Home,Favorites,Channels" v-if="isXs">
+                <router-view
+                    v-bind:refreshId="keyId"
+                    @refreshed="handleRefresh"
+                />
+                <!-- <router-view :key="keyId" /> -->
+            </keep-alive>
+            <router-view v-else />
         </v-main>
         <v-snackbar
             bottom
@@ -26,15 +34,20 @@
 
 <script>
 import MainNav from "@/components/MainNav.vue";
+import PullDownRefresh from "@/components/PullDownRefresh";
 export default {
     name: "App",
     components: {
         MainNav,
+        PullDownRefresh,
     },
     data() {
         return {
             updateExists: false,
             registration: null,
+            keyId: 0,
+            reloading: false,
+            doneHandler: null,
         };
     },
     created() {
@@ -67,6 +80,9 @@ export default {
         darkMode() {
             return this.$store.state.darkMode;
         },
+        isXs() {
+            return this.$vuetify.breakpoint.name === "xs";
+        },
     },
     watch: {
         darkMode() {
@@ -74,6 +90,17 @@ export default {
         },
     },
     methods: {
+        handleRefresh(path) {
+            console.log(path);
+            this.doneHandler();
+            this.reloading = false;
+        },
+        onRefresh(done) {
+            if (this.reloading) return;
+            this.keyId++;
+            this.reloading = true;
+            this.doneHandler = done;
+        },
         supportsWebp: async function() {
             if (!self.createImageBitmap) return false;
 

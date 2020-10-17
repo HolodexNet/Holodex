@@ -34,7 +34,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 export default {
-    name: "Home",
+    name: "Channels",
     components: {
         ChannelList,
         InfiniteLoading,

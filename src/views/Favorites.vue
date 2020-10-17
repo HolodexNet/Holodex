@@ -1,6 +1,6 @@
 <template>
     <v-container class="home" fluid style="height: 100%">
-        <PullDownRefresh @refresh="onRefresh" />
+        <!-- <PullDownRefresh @refresh="onRefresh" /> -->
         <template v-if="favorites.length > 0">
             <v-row v-if="loading" style="height: 100%">
                 <v-progress-circular
@@ -65,20 +65,23 @@
 <script>
 import VideoCardList from "@/components/VideoCardList.vue";
 import FavoritesVideoList from "@/components/FavoritesVideoList.vue";
-import PullDownRefresh from "@/components/PullDownRefresh";
+// import PullDownRefresh from "@/components/PullDownRefresh";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import { mdiHeart } from "@mdi/js";
+import reloadable from "@/mixins/reloadable";
 var utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 
 export default {
     name: "Favorites",
+    mixins: [reloadable],
     components: {
         VideoCardList,
         FavoritesVideoList,
-        PullDownRefresh,
+        // PullDownRefresh,
     },
+    props: {...reloadable.props},
     data() {
         return {
             live: [],
@@ -93,23 +96,11 @@ export default {
         };
     },
     mounted() {
-        api.live()
-            .then(res => {
-                // get currently live and upcoming lives within the next 2 weeks
-                this.live = res.data.live
-                    .concat(res.data.upcoming)
-                    .filter(live => {
-                        return dayjs(live.live_schedule).isBefore(
-                            dayjs().add(3, "w")
-                        );
-                    });
-                this.loading = false;
-            })
-            .catch(() => {
-                this.loading = false;
-                this.liveError = true;
-            });
-        this.loadFavoritesVideos();
+        console.log("moutned favs");
+        // this.loadFavorites();
+        Promise.all([this.loadLive(), this.loadFavorites()]).finally(() => {
+            this.loading = false;
+        });
     },
     computed: {
         favorites() {
@@ -122,54 +113,60 @@ export default {
         },
     },
     methods: {
-        onRefresh(done) {
-            setTimeout(function(){ done(); }, 3000);
-            // api.live()
-            //     .then(res => {
-            //         console.log(res);
-            //         this.live = res.data.live
-            //             .concat(res.data.upcoming)
-            //             .filter(live => {
-            //                 return dayjs(live.live_schedule).isBefore(
-            //                     dayjs().add(3, "w")
-            //                 );
-            //             });
-            //     })
-            //     .finally(() => done());
+        onRefresh() {
+            Promise.all([
+                this.loadLive(),
+                this.loadFavorites(true),
+            ]).finally(() => this.finishReload());
         },
-        loadFavoritesVideos() {
-            const targetDate = dayjs().subtract(this.daysBefore, "d");
-            api.videos({
-                limit: 100,
-                include_channel: 1,
-                status: "past",
-                tag_status: "tagged",
-                start_date: targetDate
-                    .startOf("day")
-                    .utc()
-                    .toISOString(),
-                end_date: targetDate
-                    .endOf("day")
-                    .utc()
-                    .toISOString(),
-                sort: "published_at",
-                order: "desc",
-            }).then(res => {
-                console.log(res);
-                if (res.data.videos.length) {
-                    this.filteredVideoLists.push({
-                        title: this.formatDayTitle(this.daysBefore),
-                        videos: this.filterFavorites(res.data.videos),
+        loadLive() {
+            return api.live().then(res => {
+                // get currently live and upcoming lives within the next 2 weeks
+                this.live = res.data.live
+                    .concat(res.data.upcoming)
+                    .filter(live => {
+                        return dayjs(live.live_schedule).isBefore(
+                            dayjs().add(3, "w")
+                        );
                     });
-
-                    // TODO: If there is more than 100 videos in a day, then we need to query the api again.
-                    if (res.data.videos.total > 100)
-                        console.log("too many videos");
-                }
-                this.daysBefore++;
-                // Only load up to yesterday's video, artifical limit to reduce server and client load
-                if (this.daysBefore <= 1) this.loadFavoritesVideos();
             });
+        },
+        loadFavorites(clear = false) {
+            const targetDate = dayjs().subtract(this.daysBefore, "d");
+            if (clear) this.filteredVideoLists = [];
+            return api
+                .videos({
+                    limit: 100,
+                    include_channel: 1,
+                    status: "past",
+                    tag_status: "tagged",
+                    start_date: targetDate
+                        .startOf("day")
+                        .utc()
+                        .toISOString(),
+                    end_date: targetDate
+                        .endOf("day")
+                        .utc()
+                        .toISOString(),
+                    sort: "published_at",
+                    order: "desc",
+                })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.videos.length) {
+                        this.filteredVideoLists.push({
+                            title: this.formatDayTitle(this.daysBefore),
+                            videos: this.filterFavorites(res.data.videos),
+                        });
+
+                        // TODO: If there is more than 100 videos in a day, then we need to query the api again.
+                        if (res.data.videos.length > 100)
+                            console.log("too many videos");
+                    }
+                    // this.daysBefore++;
+                    // Only load up to yesterday's video, artifical limit to reduce server and client load
+                    // if (this.daysBefore <= 1) this.loadFavoritesVideos();
+                });
         },
         filterFavorites(videos) {
             return videos.filter(video => {
