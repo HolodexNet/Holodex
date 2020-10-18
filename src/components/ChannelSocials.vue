@@ -1,5 +1,8 @@
 <template>
-    <v-list-item-action :class="{ 'v-list-item-horizontal': !vertical }">
+    <v-list-item-action
+        :class="{ 'v-list-item-horizontal': !vertical }"
+        @click.stop=""
+    >
         <v-btn
             v-if="channel.yt_channel_id"
             icon
@@ -86,5 +89,7 @@ export default {
 .v-list-item-horizontal {
     flex-direction: row !important;
     align-self: center !important;
+    padding: 16px 0px 16px 16px !important;
+    margin: 0px !important;
 }
 </style>
