@@ -5,13 +5,13 @@ import { register } from "register-service-worker";
 if (process.env.NODE_ENV === "production") {
     register(`${process.env.BASE_URL}service-worker.js`, {
         ready() {
-            console.log("App is being served from cache by a service worker.");
+            // console.log("App is being served from cache by a service worker.");
         },
         registered() {
-            console.log("Service worker has been registered.");
+            // console.log("Service worker has been registered.");
         },
         cached() {
-            console.log("Content has been cached for offline use.");
+            // console.log("Content has been cached for offline use.");
         },
         updatefound() {
             console.log("New content is downloading.");
