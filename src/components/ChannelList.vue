@@ -28,9 +28,8 @@
                 >
                     <ChannelSocials
                         :channel="channel"
-                        class="ma-0 justify-start"
+                        class="pa-0 justify-start"
                         v-if="isXs"
-                        @click="test"
                     />
                 </ChannelInfo>
                 <ChannelSocials :channel="channel" v-if="!isXs" />

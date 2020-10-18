@@ -91,5 +91,6 @@ export default {
     align-self: center !important;
     padding: 16px 0px 16px 16px !important;
     margin: 0px !important;
+    flex: 0 1 auto !important;
 }
 </style>
