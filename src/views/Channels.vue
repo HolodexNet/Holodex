@@ -21,7 +21,7 @@
             v-if="favorites.length > 0 && category == 2"
             class="text--secondary"
         >
-            Last updated {{ lastUpdated }}
+            Last updated {{ lastUpdated }} ago
         </div>
     </v-container>
 </template>
@@ -65,7 +65,8 @@ export default {
             return this.$store.state.cachedChannels;
         },
         lastUpdated() {
-            return dayjs(this.$store.state.cachedChannelsLastUpdated).fromNow();
+            console.log(this.$store.state.cachedChannelLastUpdated);
+            return dayjs(this.$store.state.cachedChannelsLastUpdated).toNow(true);
         },
     },
     methods: {

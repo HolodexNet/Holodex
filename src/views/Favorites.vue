@@ -41,6 +41,15 @@
                     </v-row>
                     <v-divider class="my-5" />
                     <FavoritesVideoList :videoLists="filteredVideoLists" />
+                    <div
+                        class="text-center"
+                        v-if="daysBefore < 2"
+                        @click="loadNext"
+                    >
+                        <v-btn class="ma-auto" outlined color="primary">
+                            Load Next
+                        </v-btn>
+                    </div>
                 </v-col>
             </v-row>
         </template>
@@ -79,14 +88,13 @@ export default {
     data() {
         return {
             live: [],
-            currentOffset: 0,
             // TODO: smaller pagelength with mobile/diff breakpoints
-            pageLength: 24,
             loading: true,
             filteredVideoLists: [],
             daysBefore: 0,
             liveError: false,
             mdiHeart,
+            shouldRenderNext: false,
         };
     },
     mounted() {
@@ -105,6 +113,10 @@ export default {
         },
     },
     methods: {
+        loadNext() {
+            this.daysBefore++;
+            this.loadFavorites();
+        },
         loadLive() {
             return api.live().then(res => {
                 // get currently live and upcoming lives within the next 2 weeks
@@ -144,14 +156,13 @@ export default {
                             title: this.formatDayTitle(this.daysBefore),
                             videos: this.filterFavorites(res.data.videos),
                         });
-
                         // TODO: If there is more than 100 videos in a day, then we need to query the api again.
                         if (res.data.videos.length > 100)
                             console.log("too many videos");
                     }
-                    // this.daysBefore++;
-                    // Only load up to yesterday's video, artifical limit to reduce server and client load
-                    // if (this.daysBefore <= 1) this.loadFavoritesVideos();
+                    //if less than 50 videos uploaded today, then grab yesterday's
+                    if (res.data.videos.length < 50 && this.daysBefore < 3)
+                        this.loadNext();
                 });
         },
         filterFavorites(videos) {

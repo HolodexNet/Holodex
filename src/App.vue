@@ -10,6 +10,7 @@
             :value="updateExists"
             :timeout="-1"
             color="primary"
+            v-if="updateExists"
         >
             An update is available
             <template v-slot:action>

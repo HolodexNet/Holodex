@@ -14,7 +14,7 @@ function defaultState() {
         recentVideoFilter: "all",
         liveFilter: "all",
         favorites: [],
-        cachedChannelLastUpdated: null,
+        cachedChannelsLastUpdated: null,
         cachedChannelsError: false,
         cachedChannels: {},
         nameProperty: "name_en",
@@ -62,6 +62,9 @@ export default new Vuex.Store({
         setCachedChannelsError(state, payload) {
             state.cachedChannelsError = payload;
         },
+        setCachedChannelsLastUpdated(state, payload) {
+            state.cachedChannelsLastUpdated = payload;
+        },
         addFavorite(state, channel_id) {
             if (channel_id > 1000) return;
             state.favorites.push(channel_id);
@@ -83,9 +86,9 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        async updateChannelCache({ commit, state }) {
+        async updateChannelCache({ commit }) {
             console.log("Channel Cache updated");
-            state.cachedChannelLastUpdated = new Date().getTime();
+            commit("setCachedChannelsLastUpdated", new Date().getTime());
             const res = await api.channels({
                 limit: 100,
                 type: "vtuber",
@@ -99,13 +102,13 @@ export default new Vuex.Store({
         async checkChannelCache({ state, dispatch }) {
             const currentTime = new Date().getTime();
             if (
-                !state.cachedChannelLastUpdated ||
+                !state.cachedChannelsLastUpdated ||
                 // update every hour
-                currentTime - state.cachedChannelLastUpdated >
+                currentTime - state.cachedChannelsLastUpdated >
                     1000 * 60 * 60 * 1 ||
                 // retry every 15 minutes if error
                 (state.cachedChannelsError &&
-                    currentTime - state.cachedChannelLastUpdated >
+                    currentTime - state.cachedChannelsLastUpdated >
                         1000 * 60 * 15)
             ) {
                 this.commit("setCachedChannelsError", false);

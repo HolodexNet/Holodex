@@ -9,6 +9,7 @@
         :to="!redirectMode ? `/watch/${video.id}` : ''"
         :href="`https://youtu.be/${video.yt_video_key}`"
         :target="redirectMode ? '_blank' : ''"
+        style="min-height: calc(-100% + 88px)"
         rel="noreferrer"
         link
     >
@@ -20,9 +21,7 @@
             v-if="!hideThumbnail"
         >
             <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                    <v-progress-circular indeterminate color="black">
-                    </v-progress-circular>
+                <v-row class="fill-height ma-0" align="center" justify="center">>
                 </v-row>
             </template>
             <div

@@ -1,4 +1,7 @@
 module.exports = {
+    css: {
+        extract: { ignoreOrder: true },
+    },
     pages: {
         index: {
             entry: "src/main.js",
