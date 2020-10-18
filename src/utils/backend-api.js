@@ -10,7 +10,7 @@ export default {
     },
     videos(query) {
         const q = querystring.stringify(query);
-        console.log(`/videos?${q}`);
+        // console.log(`/videos?${q}`);
         return axios_instance.get(`/videos?${q}`);
     },
     live() {

@@ -33,6 +33,7 @@
                 :distance="100"
                 style="min-height: 10px;"
                 :identifier="infiniteId"
+                spinner="spiral"
             ></infinite-loading>
             <v-pagination
                 v-if="paginated && videos.length > 0"

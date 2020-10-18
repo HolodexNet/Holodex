@@ -13,6 +13,7 @@
                 style="min-height: 10px;"
                 :identifier="infiniteId"
                 v-if="category !== 2"
+                spinner="spiral"
             >
                 <template v-slot:no-more><span></span></template>
             </infinite-loading>
@@ -65,7 +66,6 @@ export default {
             return this.$store.state.cachedChannels;
         },
         lastUpdated() {
-            console.log(this.$store.state.cachedChannelLastUpdated);
             return dayjs(this.$store.state.cachedChannelsLastUpdated).toNow(true);
         },
     },

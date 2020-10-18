@@ -150,15 +150,14 @@ export default {
                     order: "desc",
                 })
                 .then(res => {
-                    console.log(res);
                     if (res.data.videos.length) {
                         this.filteredVideoLists.push({
                             title: this.formatDayTitle(this.daysBefore),
                             videos: this.filterFavorites(res.data.videos),
                         });
                         // TODO: If there is more than 100 videos in a day, then we need to query the api again.
-                        if (res.data.videos.length > 100)
-                            console.log("too many videos");
+                        // if (res.data.videos.length > 100)
+                        //     console.log("too many videos");
                     }
                     //if less than 50 videos uploaded today, then grab yesterday's
                     if (res.data.videos.length < 50 && this.daysBefore < 3)

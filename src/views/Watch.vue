@@ -162,7 +162,6 @@ export default {
         };
     },
     created() {
-        console.log("Created " + this.$route.params.id);
         this.loadData(this.$route.params.id);
     },
     methods: {
@@ -207,7 +206,6 @@ export default {
     },
     watch: {
         "$route.params.id"(val) {
-            console.log(val);
             this.loadData(val);
         },
     },
