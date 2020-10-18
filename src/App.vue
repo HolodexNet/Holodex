@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <MainNav @refresh="onRefresh" />
+        <MainNav />
         <v-main>
             <router-view />
         </v-main>
@@ -36,6 +36,7 @@ export default {
         return {
             updateExists: false,
             registration: null,
+            doneHandler: null,
         };
     },
     created() {
@@ -77,10 +78,6 @@ export default {
         },
     },
     methods: {
-        onRefresh() {
-            console.log("refresh");
-            this.$router.go(0);
-        },
         supportsWebp: async function() {
             if (!self.createImageBitmap) return false;
 

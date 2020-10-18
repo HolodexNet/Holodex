@@ -23,8 +23,9 @@
                 <v-btn
                     icon
                     class="ml-auto"
+                    :class="{ 'refresh-rotate': refreshing }"
                     v-if="isXs"
-                    @click="$emit('refresh')"
+                    @click="onRefresh"
                 >
                     <v-icon>{{ mdiRefresh }}</v-icon>
                 </v-btn>
@@ -101,7 +102,7 @@ export default {
         },
         favoritesExpanded: false,
         searchBarExpanded: false,
-        mobile: true,
+        refreshing: false,
         pages: [
             {
                 name: "Home",
@@ -137,6 +138,18 @@ export default {
             return this.$vuetify.breakpoint.name === "xs";
         },
     },
+    created() {
+        // eslint-disable-next-line no-unused-vars
+        this.$router.afterEach((to, from) => {
+            this.refreshing = false;
+        });
+    },
+    methods: {
+        onRefresh() {
+            this.refreshing = true;
+            this.$router.go(0);
+        },
+    },
 };
 </script>
 
@@ -144,5 +157,16 @@ export default {
 .backButton {
     height: 32px !important;
     width: 32px !important;
+}
+.refresh-rotate {
+    animation: rotation 2s infinite linear;
+}
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
 }
 </style>
