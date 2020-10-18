@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <MainNav />
+        <MainNav @refresh="onRefresh" />
         <v-main>
             <router-view />
         </v-main>
@@ -60,7 +60,6 @@ export default {
         navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (this.refreshing) return;
             this.refreshing = true;
-            // Here the actual reload of the page occurs
             window.location.reload();
         });
     },
@@ -78,6 +77,10 @@ export default {
         },
     },
     methods: {
+        onRefresh() {
+            console.log("refresh");
+            this.$router.go(0);
+        },
         supportsWebp: async function() {
             if (!self.createImageBitmap) return false;
 

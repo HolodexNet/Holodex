@@ -21,7 +21,7 @@
             v-if="!hideThumbnail"
         >
             <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">>
+                <v-row class="fill-height ma-0" align="center" justify="center">
                 </v-row>
             </template>
             <div

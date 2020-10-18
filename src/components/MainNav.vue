@@ -24,11 +24,13 @@
                     icon
                     class="ml-auto"
                     v-if="isXs"
-                    @click="searchBarExpanded = true"
+                    @click="$emit('refresh')"
                 >
+                    <v-icon>{{ mdiRefresh }}</v-icon>
+                </v-btn>
+                <v-btn icon v-if="isXs" @click="searchBarExpanded = true">
                     <v-icon>{{ mdiMagnify }}</v-icon>
                 </v-btn>
-
                 <v-menu left bottom v-if="isXs">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
@@ -75,6 +77,7 @@ import {
     mdiMagnify,
     mdiHeart,
     mdiDotsVertical,
+    mdiRefresh,
 } from "@mdi/js";
 import NavDrawer from "@/components/navs/NavDrawer";
 import BottomNav from "@/components/navs/BottomNav";
@@ -94,6 +97,7 @@ export default {
             mdiMagnify,
             mdiMenu,
             mdiDotsVertical,
+            mdiRefresh,
         },
         favoritesExpanded: false,
         searchBarExpanded: false,
