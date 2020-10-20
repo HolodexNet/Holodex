@@ -45,7 +45,9 @@
                 </v-list-item-avatar>
             </router-link>
             <v-list-item-content class="pa-0">
-                <div class="video-title">{{ video.title }}</div>
+                <div class="video-title" :title="video.title">
+                    {{ video.title }}
+                </div>
                 <v-list-item-subtitle v-if="includeChannel">
                     <router-link
                         :to="`/channel/${video.channel.id}`"

@@ -49,10 +49,10 @@ export default {
     },
     computed: {
         hasChannelInfo() {
-            // load uploader name for videos not uploaded by current channel
+            // get uploader name for videos not uploaded by current channel
             return (
                 this.$route.name === "channel_clips" ||
-                this.$route.name === "channel_colabs"
+                this.$route.name === "channel_collabs"
             );
         },
         currentPage() {
@@ -81,7 +81,7 @@ export default {
                     query.channel_type = "subber";
                     api_req = api.videos(query);
                     break;
-                case "channel_colabs":
+                case "channel_collabs":
                     query.mentioned_channel_id = Number(this.channel_id);
                     query.channel_type = "vtuber";
                     api_req = api.videos(query);

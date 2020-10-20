@@ -22,6 +22,20 @@
                 </v-btn>
             </template>
         </v-snackbar>
+        <v-snackbar
+            bottom
+            center
+            :value="showUpdateDetails"
+            color="primary"
+            :timeout="-1"
+        >
+            Visit the About page to see new changes
+            <template v-slot:action>
+                <v-btn text @click="showUpdateDetails = false" class="ml-auto">
+                    Close
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-app>
 </template>
 
@@ -61,6 +75,7 @@ export default {
         navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (this.refreshing) return;
             this.refreshing = true;
+            this.showUpdateDetails = true;
             window.location.reload();
         });
     },
@@ -70,6 +85,14 @@ export default {
         },
         isXs() {
             return this.$vuetify.breakpoint.name === "xs";
+        },
+        showUpdateDetails: {
+            set(val) {
+                this.$store.commit("setShowUpdatesDetail", val);
+            },
+            get() {
+                return this.$store.state.showUpdateDetails;
+            },
         },
     },
     watch: {

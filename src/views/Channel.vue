@@ -15,11 +15,14 @@
             </v-container>
             <v-container class="pa-0">
                 <v-tabs>
-                    <v-tab :to="`/channel/${channel_id}/`" exact>Videos</v-tab>
-                    <v-tab :to="`/channel/${channel_id}/clips`">Clips</v-tab>
-                    <v-tab :to="`/channel/${channel_id}/colabs`">Colabs</v-tab>
-                    <v-tab :to="`/channel/${channel_id}/about`">About</v-tab>
-                    <v-tab :to="`/channel/${channel_id}/stats`">Stats</v-tab>
+                    <v-tab
+                        v-for="tab in tabs.filter(t => !t.hide)"
+                        :key="tab.path"
+                        :to="tab.path"
+                        :exact="tab.exact"
+                    >
+                        {{ tab.name }}
+                    </v-tab>
                 </v-tabs>
             </v-container>
         </v-card>
@@ -79,6 +82,27 @@ export default {
                     return 80;
             }
         },
+        tabs() {
+            return [
+                {
+                    path: `/channel/${this.channel_id}/`,
+                    name: "Videos",
+                    exact: true,
+                },
+                {
+                    path: `/channel/${this.channel_id}/clips`,
+                    name: "Clips",
+                    hide: this.channel_id > 1000,
+                },
+                {
+                    path: `/channel/${this.channel_id}/collabs`,
+                    name: "Collabs",
+                    hide: this.channel_id > 1000,
+                },
+                { path: `/channel/${this.channel_id}/about`, name: "About" },
+                { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
+            ];
+        },
     },
     watch: {
         "$route.params.id"() {
@@ -95,7 +119,6 @@ export default {
                 .then(res => (this.channel = res.data));
         },
     },
-    props: {},
 };
 </script>
 

@@ -85,8 +85,11 @@
                 lg="3"
                 xl="3"
                 md="12"
-                class="related-videos"
+                class="related-videos pa-1"
             >
+                <div class="embedded-chat" v-if="hasLiveChat">
+                    <iframe :src="live_chat_src" frameborder="0" />
+                </div>
                 <div class="text-subtitle-2 ma-2" v-if="video_clips.length > 0">
                     Clips
                 </div>
@@ -158,6 +161,7 @@ export default {
             channel_mentions: [],
             tags: [],
             video_src: "",
+            live_chat_src: "",
             mdiMenuDown,
         };
     },
@@ -175,6 +179,7 @@ export default {
                 this.tags = res.data.tags;
                 this.video = res.data;
                 this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1`;
+                this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
             });
         },
         formatTime(t) {
@@ -203,6 +208,18 @@ export default {
         thumbnail_src() {
             return video_thumbnails(this.video.yt_video_key)["medium"];
         },
+        isXs() {
+            return this.$vuetify.breakpoint.name === "xs";
+        },
+        hasLiveChat() {
+            return (
+                (this.video.status == "live" ||
+                    this.video.status == "upcoming") &&
+                !this.redirectMode &&
+                this.video_src &&
+                !this.isXs
+            );
+        },
     },
     watch: {
         "$route.params.id"(val) {
@@ -222,6 +239,22 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
+}
+
+.embedded-video > iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.embedded-chat {
+    position: relative;
+    min-height: 600px;
+}
+.embedded-chat > iframe {
+    position: absolute;
+    width: 100%;
+    min-height: 600px;
 }
 
 .watch-card {

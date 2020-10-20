@@ -4,16 +4,14 @@
             <v-col>
                 <div class="text-h4">About</div>
                 <br />
-                <div class="text-h5">Credits</div>
-                <p class="text-body-2">
-                    I would like to give big thanks to the
-                    <a href="https://hololive.jetri.co/">HoloTools</a> team for
-                    their work on
-                    <a href="https://github.com/holofans/holoapi">holoapi</a>.
-                    <br />
-                    Also to all the subbers for helping the overseas bros!
-                    Please check them out!
-                </p>
+                <div class="text-h5">Changelog</div>
+                <span class="text--secondary">Oct 19, 2020</span>
+                <ul>
+                    <li>Hovering over video title shows full title</li>
+                    <li>Fixed collab typo</li>
+                    <li>Hide clips and collabs tab for clippers</li>
+                    <li>Added live chat window for upcoming/live streams. (Mobile not supported, due to Youtube-kun's rules)</li>
+                </ul>
                 <br />
                 <div class="text-h5">FAQ</div>
                 <v-expansion-panels>
@@ -121,6 +119,17 @@
                         >u/Rice_cakess</a
                     >
                 </div>
+                <br />
+                <div class="text-h5">Credits</div>
+                <p class="text-body-2">
+                    I would like to give big thanks to the
+                    <a href="https://hololive.jetri.co/">HoloTools</a> team for
+                    their work on
+                    <a href="https://github.com/holofans/holoapi">holoapi</a>.
+                    <br />
+                    Also to all the subbers for helping the overseas bros!
+                    Please check them out!
+                </p>
                 <br />
                 <p class="text-body-2">
                     This is a fan made website and the content found on this

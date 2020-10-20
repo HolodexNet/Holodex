@@ -19,6 +19,7 @@ function defaultState() {
         cachedChannels: {},
         nameProperty: "name_en",
         hideThumbnail: false,
+        showUpdateDetails: false,
     };
 }
 
@@ -64,6 +65,9 @@ export default new Vuex.Store({
         },
         setCachedChannelsLastUpdated(state, payload) {
             state.cachedChannelsLastUpdated = payload;
+        },
+        setShowUpdatesDetail(state, payload) {
+            state.showUpdateDetails = payload;
         },
         addFavorite(state, channel_id) {
             if (channel_id > 1000) return;

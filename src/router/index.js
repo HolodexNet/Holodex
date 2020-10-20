@@ -30,8 +30,8 @@ const routes = [
                 component: ChannelVideos,
             },
             {
-                path: "colabs",
-                name: "channel_colabs",
+                path: "collabs",
+                name: "channel_collabs",
                 component: ChannelVideos,
             },
             {
