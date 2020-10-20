@@ -11,8 +11,8 @@
         <v-list-item-subtitle>
             <span v-if="!noSubscriberCount">
                 {{ subscriberCount }}
-                <span class="green--text" v-if="subsciberGains">
-                    {{ subsciberGains }}
+                <span class="green--text" v-if="subscriberGains">
+                    {{ subscriberGains }}
                 </span>
             </span>
             <span v-if="includeVideoCount">
