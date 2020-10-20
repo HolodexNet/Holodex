@@ -70,7 +70,7 @@ export default {
         subscriberCount() {
             return `${formatCount(this.channel.subscriber_count)} Subscribers `;
         },
-        subsciberGains() {
+        subscriberGains() {
             return this.channel.subscriber_gains
                 ? `(+${formatCount(this.channel.subscriber_gains)})`
                 : null;

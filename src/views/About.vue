@@ -5,16 +5,66 @@
                 <div class="text-h4">About</div>
                 <br />
                 <div class="text-h5">Changelog</div>
+                <span class="text--secondary">Oct 20, 2020</span>
+                <ul>
+                    <li>
+                        Added instructions on how to use Holodex like an app
+                    </li>
+                    <li>
+                        Added a
+                        <a href="https://github.com/RiceCakess/Holodex/issues">
+                            Github Issue Tracker
+                        </a>
+                    </li>
+                </ul>
+                <br />
                 <span class="text--secondary">Oct 19, 2020</span>
                 <ul>
+                    <li>
+                        Added live chat window for upcoming/live streams.
+                        (Mobile not supported, due to Youtube-kun's rules)
+                    </li>
                     <li>Hovering over video title shows full title</li>
                     <li>Fixed collab typo</li>
                     <li>Hide clips and collabs tab for clippers</li>
-                    <li>Added live chat window for upcoming/live streams. (Mobile not supported, due to Youtube-kun's rules)</li>
                 </ul>
+                <br />
                 <br />
                 <div class="text-h5">FAQ</div>
                 <v-expansion-panels>
+                    <v-expansion-panel>
+                        <v-expansion-panel-header>
+                            Is there an Android/iOS app for Holodex?
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                            No, you can add the website to your Home screen, and
+                            it will behave like a native app (with a few
+                            quirks). It is still a work-in-progress, so please
+                            leave any feedback and bug report!
+                            <ul>
+                                <li>
+                                    Android Chrome: Navigate to the site, click
+                                    the three dots
+                                    <v-icon color="primary">
+                                        {{ mdiDotsVertical }}
+                                    </v-icon>
+                                    on the top right and find "Add to Home
+                                    Screen".
+                                </li>
+
+                                <li>
+                                    iOS Safari: Navigate to the site on your
+                                    phone, click the square with arrow pointing
+                                    up
+                                    <v-icon color="primary">
+                                        {{ mdiExportVariant }}
+                                    </v-icon>
+                                    at the bottom of safari, and click "Add to
+                                    Home Screen"
+                                </li>
+                            </ul>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
                     <v-expansion-panel>
                         <v-expansion-panel-header>
                             What are favorites?
@@ -106,7 +156,14 @@
                     </v-expansion-panel>
                 </v-expansion-panels>
                 <br />
-                <div class="text-h5">Contact</div>
+                <div class="text-h5">Feedback/Bug Reports</div>
+                <p>
+                    You can create an issue in the
+                    <a href="https://github.com/RiceCakess/Holodex/issues">
+                        Github Issue Tracker
+                    </a>
+                    or directly contact me.
+                </p>
                 <div>
                     Discord: ricecakes#8102 on the
                     <a href="https://discord.gg/xJd9Der">
@@ -115,9 +172,9 @@
                 </div>
                 <div>
                     Reddit:
-                    <a href="https://www.reddit.com/user/Rice_Cakess/"
-                        >u/Rice_cakess</a
-                    >
+                    <a href="https://www.reddit.com/user/Rice_Cakess/">
+                        u/Rice_cakess
+                    </a>
                 </div>
                 <br />
                 <div class="text-h5">Credits</div>
@@ -145,8 +202,15 @@
 </template>
 
 <script>
+import { mdiExportVariant, mdiDotsVertical } from "@mdi/js";
 export default {
     name: "About",
+    data() {
+        return {
+            mdiExportVariant,
+            mdiDotsVertical,
+        };
+    },
 };
 </script>
 
