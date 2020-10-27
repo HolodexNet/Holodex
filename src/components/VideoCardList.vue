@@ -34,7 +34,11 @@
                 style="min-height: 10px;"
                 :identifier="infiniteId"
                 spinner="spiral"
-            ></infinite-loading>
+            >
+                <template v-slot:error>
+                    <ApiErrorMessage />
+                </template>
+            </infinite-loading>
             <v-pagination
                 v-if="paginated && videos.length > 0"
                 v-model="page"
@@ -47,11 +51,13 @@
 
 <script>
 import VideoCard from "@/components/VideoCard.vue";
+import ApiErrorMessage from "@/components/ApiErrorMessage";
 import { mdiChevronUp, mdiChevronDown } from "@mdi/js";
 export default {
     name: "VideoCardList",
     components: {
         VideoCard,
+        ApiErrorMessage,
         InfiniteLoading: () => import("vue-infinite-loading"),
     },
     data() {

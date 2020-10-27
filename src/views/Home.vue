@@ -26,11 +26,7 @@
                     :limitRows="2"
                 >
                 </VideoCardList>
-                <v-row v-if="liveError">
-                    <v-col class="ma-auto text-center pa-8">
-                        Error while retrieving lives...
-                    </v-col>
-                </v-row>
+                <ApiErrorMessage v-if="liveError" />
                 <v-divider class="my-5" />
                 <v-row class="d-flex justify-space-between pa-1">
                     <div class="text-h6">Recent Videos</div>
@@ -68,12 +64,14 @@
 
 <script>
 import VideoCardList from "@/components/VideoCardList.vue";
+import ApiErrorMessage from "@/components/ApiErrorMessage.vue";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 export default {
     name: "Home",
     components: {
         VideoCardList,
+        ApiErrorMessage,
     },
     data() {
         return {

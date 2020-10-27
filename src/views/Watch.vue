@@ -178,7 +178,7 @@ export default {
                 this.channel_mentions = res.data.channel_mentions;
                 this.tags = res.data.tags;
                 this.video = res.data;
-                this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1`;
+                this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?rel=0&version=3`;
                 this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
             });
         },

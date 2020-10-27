@@ -3,6 +3,8 @@
         <v-row>
             <v-col>
                 <div class="text-h4">About</div>
+                <div class="text-h5">News</div>
+                <TwitterFeed />
                 <br />
                 <div class="text-h5">Changelog</div>
                 <span class="text--secondary">Oct 20, 2020</span>
@@ -203,8 +205,12 @@
 
 <script>
 import { mdiExportVariant, mdiDotsVertical } from "@mdi/js";
+import TwitterFeed from "@/components/TwitterFeed";
 export default {
     name: "About",
+    components: {
+        TwitterFeed,
+    },
     data() {
         return {
             mdiExportVariant,

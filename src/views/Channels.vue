@@ -16,6 +16,9 @@
                 spinner="spiral"
             >
                 <template v-slot:no-more><span></span></template>
+                <template v-slot:error>
+                    <ApiErrorMessage />
+                </template>
             </infinite-loading>
         </v-container>
         <div
@@ -33,12 +36,14 @@ import api from "@/utils/backend-api";
 import InfiniteLoading from "vue-infinite-loading";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import ApiErrorMessage from "@/components/ApiErrorMessage";
 dayjs.extend(relativeTime);
 export default {
     name: "Channels",
     components: {
         ChannelList,
         InfiniteLoading,
+        ApiErrorMessage,
     },
     data() {
         return {

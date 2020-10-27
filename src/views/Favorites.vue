@@ -28,12 +28,7 @@
                     >
                     </VideoCardList>
                     <v-row v-if="!filteredLiveVideos.length || liveError">
-                        <v-col
-                            class="ma-auto text-center pa-8"
-                            v-if="liveError"
-                        >
-                            Error while retrieving lives...
-                        </v-col>
+                        <ApiErrorMessage v-if="liveError" />
                         <v-col class="ma-auto text-center pa-8" v-else>
                             No one is streaming soon in your favorites. Please
                             check out the other vtubers!
