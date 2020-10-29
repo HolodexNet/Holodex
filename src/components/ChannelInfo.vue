@@ -6,7 +6,10 @@
                 class="no-decoration text-truncate"
             >
                 {{ channelName }}
-                <div class="text-body-2 " v-if="channel.group">
+                <div
+                    class="text-body-2 text--secondary"
+                    v-if="!noGroup && channel.group"
+                >
                     {{ channel.group }}
                 </div>
             </router-link>
@@ -58,6 +61,10 @@ export default {
             default: false,
         },
         noSubscriberCount: {
+            type: Boolean,
+            default: false,
+        },
+        noGroup: {
             type: Boolean,
             default: false,
         },

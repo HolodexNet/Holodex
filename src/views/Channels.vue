@@ -19,25 +19,26 @@
                             v-on="on"
                             text
                             style="border: none; textTransform: initial; font-weight: 400"
-                            class="text--secondary"
+                            class="text--secondary pa-1"
                         >
-                            {{ sort.find(s => s.value == sort_value).text }}
+                            {{ sortOptions.find(s => s.value == sort).text }}
                             <v-icon size="20">{{ mdiArrowDown }}</v-icon>
                         </v-btn>
                     </template>
                     <v-list>
                         <v-list-item
-                            v-for="(item, index) in sort"
+                            v-for="(item, index) in sortOptions"
                             :key="index"
                             link
+                            @click="sort = item.value"
                         >
-                            <v-list-item-title @click="sort_value = item.value">
+                            <v-list-item-title>
                                 {{ item.text }}
                             </v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
-                <v-btn icon @click="cardView = !cardView" class="mr-2">
+                <v-btn icon @click="cardView = !cardView">
                     <v-icon>
                         {{ cardView ? mdiViewModule : mdiViewList }}
                     </v-icon>
@@ -46,7 +47,7 @@
             <ChannelList
                 :channels="channels"
                 includeVideoCount
-                :includeGroupHeader="sort_value === 'group'"
+                :includeGroupHeader="sort === 'group'"
                 :cardView="cardView"
             />
             <infinite-loading
@@ -95,7 +96,7 @@ export default {
             currentOffset: 0,
             perPage: 25,
             infiniteId: +new Date(),
-            sort: [
+            sortOptions: [
                 {
                     text: "Subscribers",
                     value: "subscribers",
@@ -124,14 +125,15 @@ export default {
         };
     },
     created() {
-        // might be bad to access directly, but needed in order to avoid double api calls
-        // this.category = this.$store.state.favorites.length > 0 ? 2 : 0;
+        if (this.category == 2) {
+            this.loadFavorites();
+        }
     },
     watch: {
         category() {
             this.init();
         },
-        sort_value() {
+        sort() {
             if (this.category == 2) this.localSortChannel();
             else this.init();
         },
@@ -154,18 +156,14 @@ export default {
             },
             set(val) {
                 return this.$store.commit("setChannelsCategory", val);
-            }
+            },
         },
-        sort_value: {
+        sort: {
             get() {
                 console.log(this.$store.state.channelsSort[this.category]);
                 return this.$store.state.channelsSort[this.category];
             },
             set(val) {
-                console.log({
-                    category: this.category,
-                    value: val,
-                });
                 return this.$store.commit("setChannelsSort", {
                     category: this.category,
                     value: val,
@@ -177,10 +175,6 @@ export default {
                 return this.$store.state.channelsCardView[this.category];
             },
             set(val) {
-                console.log({
-                    category: this.category,
-                    value: val,
-                });
                 return this.$store.commit("setChannelsCardView", {
                     category: this.category,
                     value: val,
@@ -202,12 +196,20 @@ export default {
                 limit: this.perPage,
                 offset: this.currentOffset * this.perPage,
                 type: this.category == 1 ? "subber" : "vtuber",
-                ...this.sort.find(opt => opt.value == this.sort_value)
+                ...this.sortOptions.find(opt => opt.value == this.sort)
                     .query_value,
             })
                 .then(res => {
                     if (res.data.channels.length) {
                         this.channels = this.channels.concat(res.data.channels);
+                        if (this.category == 0)
+                            // update channel cache when fresh data is pulled
+                            res.data.channels.map(channel_obj =>
+                                this.$store.commit(
+                                    "addCachedChannel",
+                                    channel_obj
+                                )
+                            );
                         this.currentOffset++;
                         $state.loaded();
                     } else {
@@ -228,8 +230,8 @@ export default {
             this.localSortChannel();
         },
         localSortChannel() {
-            const sort_prop = this.sort.find(
-                opt => opt.value == this.sort_value
+            const sort_prop = this.sortOptions.find(
+                opt => opt.value == this.sort
             ).query_value;
             this.channels.sort((a, b) => {
                 if (sort_prop.sort == "latest_published_at") {

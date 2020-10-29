@@ -116,7 +116,11 @@ export default {
             (this.videos = []), (this.tab = 0), (this.channel = null);
             return api
                 .channel(this.channel_id)
-                .then(res => (this.channel = res.data));
+                .then(res => (this.channel = res.data))
+                .then(() =>
+                    // update cache with fresh data
+                    this.$store.commit("addCachedChannel", this.channel)
+                );
         },
     },
 };

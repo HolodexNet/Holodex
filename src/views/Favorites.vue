@@ -35,7 +35,25 @@
                         </v-col>
                     </v-row>
                     <v-divider class="my-5" />
-                    <FavoritesVideoList :videoLists="filteredVideoLists" />
+                    <v-row class="d-flex justify-space-between pa-1">
+                        <div class="text-h6">Recent Videos</div>
+                        <v-btn-toggle
+                            v-model="favoritesVideoFilter"
+                            mandatory
+                            dense
+                        >
+                            <v-btn value="all">
+                                All
+                            </v-btn>
+                            <v-btn value="vtuber">
+                                Official
+                            </v-btn>
+                            <v-btn value="subber">
+                                Clips
+                            </v-btn>
+                        </v-btn-toggle>
+                    </v-row>
+                    <FavoritesVideoList :videoLists="filteredByChannelType" />
                     <div
                         class="text-center"
                         v-if="daysBefore < 2"
@@ -86,7 +104,7 @@ export default {
             // TODO: smaller pagelength with mobile/diff breakpoints
             loading: true,
             filteredVideoLists: [],
-            daysBefore: 0,
+            daysBefore: 24,
             liveError: false,
             mdiHeart,
             shouldRenderNext: false,
@@ -105,6 +123,28 @@ export default {
             return this.live.filter(live =>
                 this.favorites.includes(live.channel.id)
             );
+        },
+        filteredByChannelType() {
+            if (this.favoritesVideoFilter == "all")
+                return this.filteredVideoLists;
+            return this.filteredVideoLists.map(videoList => {
+                return {
+                    title: videoList.title,
+                    videos: videoList.videos.filter(video =>
+                        this.favoritesVideoFilter === "vtuber"
+                            ? video.channel.id < 1000
+                            : video.channel.id > 1000
+                    ),
+                };
+            });
+        },
+        favoritesVideoFilter: {
+            get() {
+                return this.$store.state.favoritesVideoFilter;
+            },
+            set(val) {
+                return this.$store.commit("setFavoritesVideoFilter", val);
+            },
         },
     },
     methods: {
@@ -148,7 +188,7 @@ export default {
                     if (res.data.videos.length) {
                         this.filteredVideoLists.push({
                             title: this.formatDayTitle(this.daysBefore),
-                            videos: this.filterFavorites(res.data.videos),
+                            videos: this.filterByFavorites(res.data.videos),
                         });
                         // TODO: If there is more than 100 videos in a day, then we need to query the api again.
                         // if (res.data.videos.length > 100)
@@ -159,7 +199,7 @@ export default {
                         this.loadNext();
                 });
         },
-        filterFavorites(videos) {
+        filterByFavorites(videos) {
             return videos.filter(video => {
                 return (
                     // check if video is posted by favorited channel or mentioned in the video

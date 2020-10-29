@@ -31,6 +31,7 @@ function defaultState() {
             1: false,
             2: false,
         },
+        favoritesVideoFilter: "all",
     };
 }
 
@@ -88,6 +89,9 @@ export default new Vuex.Store({
         },
         setChannelsCategory(state, payload) {
             state.channelsCategory = payload;
+        },
+        setFavoritesVideoFilter(state, payload) {
+            state.favoritesVideoFilter = payload;
         },
         addFavorite(state, channel_id) {
             if (channel_id > 1000) return;

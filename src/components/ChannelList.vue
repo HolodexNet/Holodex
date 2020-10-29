@@ -15,7 +15,15 @@
                     {{ channel.group ? channel.group : "Other" }}
                 </v-subheader>
             </v-col>
-            <v-col :key="index" cols="12" sm="6" md="6" lg="4" xl="3">
+            <v-col
+                :key="index"
+                cols="12"
+                sm="6"
+                md="6"
+                lg="4"
+                xl="3"
+                class="pa-2"
+            >
                 <ChannelCard :channel="channel"></ChannelCard>
             </v-col>
         </template>

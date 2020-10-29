@@ -156,8 +156,12 @@ export default {
             const query = {
                 tags: this.$route.query.tags,
                 title: this.$route.query.title,
-                ...this.options.sort.find(opt => opt.value == this.filter.sort.toLowerCase()).query_value,
-                ...this.options.type.find(opt => opt.value == this.filter.type.toLowerCase()).query_value,
+                ...this.options.sort.find(
+                    opt => opt.value == this.filter.sort.toLowerCase()
+                ).query_value,
+                ...this.options.type.find(
+                    opt => opt.value == this.filter.type.toLowerCase()
+                ).query_value,
                 include_channel: 1,
                 limit: this.pageSize,
                 offset: (this.currentPage - 1) * this.pageSize,
