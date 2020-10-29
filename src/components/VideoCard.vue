@@ -137,9 +137,11 @@ export default {
                         "Stream starts " +
                         // print relative time in hours if less than 24 hours,
                         // print full date if greater than 24 hours
-                        (dayjs(this.video.live_schedule).diff(dayjs()) < 86400000
+                        (dayjs(this.video.live_schedule).diff(dayjs()) <= 86400000
                             ? this.formatFromNow(this.video.live_schedule)
-                            : dayjs(this.video.live_schedule).format("ddd MMM Do, h:mm a"))
+                            : dayjs(this.video.live_schedule).format(
+                                  "ddd MMM Do, h:mm a"
+                              ))
                     );
                 case "live":
                     return "Live Now";
@@ -148,24 +150,17 @@ export default {
             }
         },
         formattedDuration() {
-            if (!this.video.duration_secs && this.video.live_start) {
-                return dayjs
-                    .utc(dayjs().diff(dayjs(this.video.live_start)))
-                    .format("HH:mm:ss");
-            }
-
-            return this.video.duration_secs > 84600
-                ? "VERY LONG"
-                : dayjs.utc(this.video.duration_secs * 1000).format("HH:mm:ss");
+            const duration = this.video.live_start
+                ? dayjs().diff(dayjs(this.video.live_start))
+                : this.video.duration_secs * 1000;
+            return duration ? this.formatDuration(duration) : "";
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
             const useWebP = this.$store.state.canUseWebP && !this.forceJPG;
             const srcs = video_thumbnails(this.video.yt_video_key, useWebP);
             if (this.horizontal) return srcs["medium"];
-            if (this.colSize < 2) {
-                return srcs["hq720"];
-            } else if (this.colSize <= 8) {
+            if (this.colSize > 2 && this.colSize <= 8) {
                 return srcs["medium"];
             } else {
                 return srcs["hq720"];
@@ -186,6 +181,11 @@ export default {
     methods: {
         formatFromNow(time) {
             return dayjs(time).fromNow();
+        },
+        formatDuration(secs) {
+            return secs > 1000 * 60 * 60
+                ? dayjs.utc(secs).format("H:m:ss")
+                : dayjs.utc(secs).format("m:ss");
         },
         formatCount,
     },
@@ -224,6 +224,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.8);
     text-align: center;
     font-size: 0.8125rem;
+    letter-spacing: 0.025em;
 }
 
 .video-card-horizontal {

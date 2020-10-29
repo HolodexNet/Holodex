@@ -6,6 +6,9 @@
                 class="no-decoration text-truncate"
             >
                 {{ channelName }}
+                <div class="text-body-2 " v-if="channel.group">
+                    {{ channel.group }}
+                </div>
             </router-link>
         </v-list-item-title>
         <v-list-item-subtitle>

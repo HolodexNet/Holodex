@@ -1,19 +1,37 @@
 <template>
-    <v-row v-if="asCards">
-        <v-col
-            v-for="channel in channels"
-            :key="channel.id"
-            cols="12"
-            sm="6"
-            md="6"
-            lg="4"
-            xl="3"
-        >
-            <ChannelCard :channel="channel"></ChannelCard>
-        </v-col>
+    <v-row v-if="cardView" class="pa-0">
+        <template v-for="(channel, index) in channels">
+            <v-col
+                cols="12"
+                :key="'header-' + index"
+                class="pa-0"
+                v-if="
+                    includeGroupHeader &&
+                        (index == 0 ||
+                            channels[index - 1].group !== channel.group)
+                "
+            >
+                <v-subheader>
+                    {{ channel.group ? channel.group : "Other" }}
+                </v-subheader>
+            </v-col>
+            <v-col :key="index" cols="12" sm="6" md="6" lg="4" xl="3">
+                <ChannelCard :channel="channel"></ChannelCard>
+            </v-col>
+        </template>
     </v-row>
     <v-list three-line class="pa-0" v-else>
         <template v-for="(channel, index) in channels">
+            <v-subheader
+                :key="'header-' + index"
+                v-if="
+                    includeGroupHeader &&
+                        (index == 0 ||
+                            channels[index - 1].group !== channel.group)
+                "
+            >
+                {{ channel.group ? channel.group : "Other" }}
+            </v-subheader>
             <v-list-item
                 v-if="channel"
                 :key="channel.id"
@@ -49,18 +67,22 @@ export default {
         ChannelImg,
         ChannelInfo,
         ChannelSocials,
-        ChannelCard: () => import("@/components/ChannelCard"),
+        ChannelCard: () => import("@/components/ChannelCard.vue"),
     },
     props: {
         channels: {
             type: Array,
             required: true,
         },
-        asCards: {
+        cardView: {
             type: Boolean,
             default: false,
         },
         includeVideoCount: {
+            type: Boolean,
+            default: false,
+        },
+        includeGroupHeader: {
             type: Boolean,
             default: false,
         },

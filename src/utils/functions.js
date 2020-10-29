@@ -56,7 +56,7 @@ export function banner_images(url) {
 }
 
 export function formatCount(subs) {
-    if (subs >= 1000000) return (subs / 1000000).toFixed(1) + "M";
+    if (subs >= 1000000) return (subs / 1000000).toFixed(2) + "M";
     if (subs >= 1000) return Math.round(subs / 1000) + "K";
     else return subs;
 }

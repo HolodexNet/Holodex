@@ -1,6 +1,6 @@
 <template>
     <v-list-item-action
-        :class="{ 'v-list-item-horizontal': !vertical }"
+        :class="{ 'channel-social-horizontal': !vertical }"
         @click.stop=""
     >
         <v-btn
@@ -86,10 +86,10 @@ export default {
 </script>
 
 <style>
-.v-list-item-horizontal {
+.channel-social-horizontal {
     flex-direction: row !important;
     align-self: center !important;
-    padding: 16px 0px 16px 16px !important;
+    padding: 16px 0px 16px 16px;
     margin: 0px !important;
     flex: 0 1 auto !important;
 }

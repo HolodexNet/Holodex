@@ -20,6 +20,17 @@ function defaultState() {
         nameProperty: "name_en",
         hideThumbnail: false,
         showUpdateDetails: false,
+        channelsCategory: 0,
+        channelsSort: {
+            0: "group",
+            1: "recent_upload",
+            2: "subscribers",
+        },
+        channelsCardView: {
+            0: false,
+            1: false,
+            2: false,
+        },
     };
 }
 
@@ -68,6 +79,15 @@ export default new Vuex.Store({
         },
         setShowUpdatesDetail(state, payload) {
             state.showUpdateDetails = payload;
+        },
+        setChannelsSort(state, payload) {
+            Vue.set(state.channelsSort, payload.category, payload.value);
+        },
+        setChannelsCardView(state, payload) {
+            Vue.set(state.channelsCardView, payload.category, payload.value);
+        },
+        setChannelsCategory(state, payload) {
+            state.channelsCategory = payload;
         },
         addFavorite(state, channel_id) {
             if (channel_id > 1000) return;
