@@ -121,6 +121,30 @@ export default {
                         order: "desc",
                     },
                 },
+                {
+                    text: "Number of Videos",
+                    value: "video_count",
+                    query_value: {
+                        sort: "video_count",
+                        order: "desc",
+                    },
+                },
+                {
+                    text: "Number of Clips",
+                    value: "clip_count",
+                    query_value: {
+                        sort: "clip_count",
+                        order: "desc",
+                    },
+                },
+                {
+                    text: "Debut Day",
+                    value: "published_at",
+                    query_value: {
+                        sort: "published_at",
+                        order: "desc",
+                    },
+                },
             ],
         };
     },

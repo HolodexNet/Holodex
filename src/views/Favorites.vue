@@ -199,10 +199,10 @@ export default {
                         this.loadNext();
                 });
         },
+        // check if video is posted by favorited channel or mentioned in the video
         filterByFavorites(videos) {
             return videos.filter(video => {
                 return (
-                    // check if video is posted by favorited channel or mentioned in the video
                     this.favorites.includes(video.channel.id) ||
                     video.channel_mentions.filter(channel =>
                         this.favorites.includes(channel.id)

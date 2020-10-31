@@ -9,7 +9,6 @@
         :to="!redirectMode ? `/watch/${video.id}` : ''"
         :href="`https://youtu.be/${video.yt_video_key}`"
         :target="redirectMode ? '_blank' : ''"
-        style="min-height: calc(-100% + 88px)"
         rel="noreferrer"
         link
     >
@@ -85,7 +84,6 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(advancedFormat);
-// import ChannelImg from "@/components/ChannelImg";
 import { video_thumbnails, formatCount } from "@/utils/functions";
 export default {
     name: "VideoCard",

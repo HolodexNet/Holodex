@@ -78,8 +78,6 @@ export default {
             live: [],
             videos: [],
             currentOffset: 0,
-            // TODO: smaller pagelength with mobile/diff breakpoints
-            // pageLength: 10,
             infiniteId: +new Date(),
             loading: true,
             liveError: false,

@@ -1,9 +1,21 @@
 <template>
+    <!-- Render with opaque response for cache if size is lte 40 -->
     <router-link
+        v-if="size <= 40"
         tag="img"
         :src="photo"
         crossorigin="anonymous"
         loading="lazy"
+        :alt="`${channel.name}'s profile picture`"
+        :width="size"
+        :height="size"
+        :to="`/channel/${channel.id}`"
+    />
+    <!-- otherwise render using vuetify lazy  -->
+    <v-img
+        v-else
+        :src="photo"
+        crossorigin="anonymous"
         :alt="`${channel.name}'s profile picture`"
         :width="size"
         :height="size"
@@ -27,6 +39,7 @@ export default {
     },
     computed: {
         photo() {
+            if (!this.channel.photo) return "";
             return channel_photo_resize(this.channel.photo, this.size);
         },
     },
