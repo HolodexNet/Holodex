@@ -137,14 +137,6 @@ export default {
                         order: "desc",
                     },
                 },
-                {
-                    text: "Debut Day",
-                    value: "published_at",
-                    query_value: {
-                        sort: "published_at",
-                        order: "desc",
-                    },
-                },
             ],
         };
     },
@@ -184,8 +176,10 @@ export default {
         },
         sort: {
             get() {
-                console.log(this.$store.state.channelsSort[this.category]);
-                return this.$store.state.channelsSort[this.category];
+                // validate sort option or set to default
+                const fromStore = this.$store.state.channelsSort[this.category];
+                if (!this.findSortValue(fromStore)) return "subscribers";
+                return fromStore;
             },
             set(val) {
                 return this.$store.commit("setChannelsSort", {
@@ -220,8 +214,7 @@ export default {
                 limit: this.perPage,
                 offset: this.currentOffset * this.perPage,
                 type: this.category == 1 ? "subber" : "vtuber",
-                ...this.sortOptions.find(opt => opt.value == this.sort)
-                    .query_value,
+                ...this.findSortValue(this.sort).query_value,
             })
                 .then(res => {
                     if (res.data.channels.length) {
@@ -254,9 +247,8 @@ export default {
             this.localSortChannel();
         },
         localSortChannel() {
-            const sort_prop = this.sortOptions.find(
-                opt => opt.value == this.sort
-            ).query_value;
+            const sort_prop = this.findSortValue(this.sort);
+            if (!sort_prop) return;
             this.channels.sort((a, b) => {
                 if (sort_prop.sort == "latest_published_at") {
                     var dateA = new Date(a[sort_prop.sort]).getTime();
@@ -267,6 +259,9 @@ export default {
                 return a[sort_prop.sort] > b[sort_prop.sort] ? 1 : -1;
             });
             if (sort_prop.order == "desc") this.channels.reverse();
+        },
+        findSortValue(sort) {
+            return this.sortOptions.find(opt => opt.value === sort);
         },
     },
 };
