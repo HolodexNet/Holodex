@@ -146,6 +146,29 @@ import { mdiMenuDown } from "@mdi/js";
 import { video_thumbnails } from "@/utils/functions";
 export default {
     name: "Watch",
+    metaInfo() {
+        return {
+            title: this.video.title,
+            meta: [
+                {
+                    vmid: "description",
+                    name: "description",
+                    property: "og:description",
+                    content: this.video.description.substr(0, 100),
+                },
+                {
+                    vmid: "image",
+                    name: "image",
+                    content: `https://i.ytimg.com/vi/${this.video.yt_video_key}/maxresdefault.jpg`,
+                },
+                {
+                    vmid: "url",
+                    property: "og:url",
+                    content: "https://holodex.net/channel/" + this.channel_id,
+                },
+            ],
+        };
+    },
     components: {
         VideoCardList,
         ChannelChip,
@@ -155,7 +178,9 @@ export default {
     },
     data() {
         return {
-            video: {},
+            video: {
+                description: "",
+            },
             video_clips: [],
             video_sources: [],
             channel_mentions: [],

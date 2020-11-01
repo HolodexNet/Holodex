@@ -43,6 +43,34 @@
 import MainNav from "@/components/MainNav.vue";
 export default {
     name: "App",
+    // default meta info
+    metaInfo: {
+        title: "Holodex",
+        titleTemplate: "%s - Holodex",
+        meta: [
+            {
+                vmid: "description",
+                name: "description",
+                property: "og:description",
+                content:
+                    "Holodex is a collection of official and translated Hololive vtuber videos and clips made by the community",
+            },
+            {
+                property: "og:type",
+                content: "website",
+            },
+            {
+                vmid: "url",
+                property: "og:url",
+                content: "https://holodex.net",
+            },
+            {
+                vmid: "image",
+                property: "og:image",
+                content: "https://holodex.net/img/icons/logo.png",
+            },
+        ],
+    },
     components: {
         MainNav,
     },

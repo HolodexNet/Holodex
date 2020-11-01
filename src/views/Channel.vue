@@ -44,6 +44,29 @@ import { banner_images } from "@/utils/functions";
 
 export default {
     name: "Channel",
+    metaInfo() {
+        return {
+            title: this.metaTitle,
+            meta: [
+                {
+                    vmid: "description",
+                    name: "description",
+                    property: "og:description",
+                    content: this.metaDescription,
+                },
+                {
+                    vmid: "image",
+                    name: "image",
+                    content: this.metaImage,
+                },
+                {
+                    vmid: "url",
+                    property: "og:url",
+                    content: "https://holodex.net/channel/" + this.channel_id,
+                },
+            ],
+        };
+    },
     components: {
         ChannelSocials,
         ChannelInfo,
@@ -53,7 +76,7 @@ export default {
         return {
             channel_id: null,
             videos: [],
-            channel: null,
+            channel: {},
             tab: 0,
         };
     },
@@ -62,6 +85,7 @@ export default {
     },
     computed: {
         bannerImage() {
+            if (!this.channel.banner_image) return;
             const b_images = banner_images(this.channel.banner_image);
             switch (this.$vuetify.breakpoint.name) {
                 case "xs":
@@ -103,6 +127,23 @@ export default {
                 { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
             ];
         },
+        channelName() {
+            const prop = this.$store.state.nameProperty;
+            if (this.channel[prop]) return this.channel[prop];
+            return this.channel.name;
+        },
+        metaDescription() {
+            if (!this.channel.description) return undefined;
+            return this.channel.description.substr(0, 100);
+        },
+        metaTitle() {
+            if (!this.channel) return undefined;
+            return this.channelName;
+        },
+        metaImage() {
+            if (!this.channel.photo) return undefined;
+            return this.channel.photo;
+        },
     },
     watch: {
         "$route.params.id"() {
@@ -112,15 +153,17 @@ export default {
     methods: {
         init() {
             // reset component to default without recreating
+            this.isLoading = true;
             this.channel_id = this.$route.params.id;
-            (this.videos = []), (this.tab = 0), (this.channel = null);
+            (this.videos = []), (this.tab = 0), (this.channel = {});
             return api
                 .channel(this.channel_id)
                 .then(res => (this.channel = res.data))
-                .then(() =>
+                .then(() => {
                     // update cache with fresh data
-                    this.$store.commit("addCachedChannel", this.channel)
-                );
+                    this.$store.commit("addCachedChannel", this.channel);
+                    this.isLoading = false;
+                });
         },
     },
 };

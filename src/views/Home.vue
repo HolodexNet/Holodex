@@ -69,6 +69,9 @@ import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 export default {
     name: "Home",
+    metaInfo: {
+        title: "Home",
+    },
     components: {
         VideoCardList,
         ApiErrorMessage,

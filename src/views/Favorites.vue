@@ -94,6 +94,9 @@ dayjs.extend(utc);
 
 export default {
     name: "Favorites",
+    metaInfo: {
+        title: "My Favorites",
+    },
     components: {
         VideoCardList,
         FavoritesVideoList,

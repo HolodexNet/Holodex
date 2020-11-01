@@ -4,6 +4,8 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueGTag from "vue-gtag";
+import VueMeta from "vue-meta";
+
 import "./registerServiceWorker";
 
 Vue.config.productionTip = false;
@@ -17,6 +19,9 @@ Vue.use(
     },
     router
 );
+Vue.use(VueMeta, {
+    refreshOnceOnNavigation: true,
+});
 new Vue({
     router,
     store,

@@ -23,7 +23,7 @@ function defaultState() {
         channelsCategory: 0,
         channelsSort: {
             0: "group",
-            1: "recent_upload",
+            1: "clip_count",
             2: "subscribers",
         },
         channelsCardView: {
@@ -104,7 +104,7 @@ export default new Vuex.Store({
             }
         },
         addCachedChannel(state, channel_obj) {
-            state.cachedChannels[channel_obj.id] = channel_obj;
+            Vue.set(state.cachedChannels, channel_obj.id, channel_obj);
         },
         removeCachedChannel(state, channel_id) {
             delete state.cachedChannels[channel_id];

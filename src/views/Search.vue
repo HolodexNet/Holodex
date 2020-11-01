@@ -56,6 +56,9 @@ import VideoCardList from "@/components/VideoCardList";
 import api from "@/utils/backend-api";
 export default {
     name: "Search",
+    metaInfo: {
+        title: "Search",
+    },
     components: {
         VideoCardList,
     },

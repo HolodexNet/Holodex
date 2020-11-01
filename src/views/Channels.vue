@@ -14,15 +14,22 @@
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
-                            dark
                             v-bind="attrs"
                             v-on="on"
                             text
                             style="border: none; textTransform: initial; font-weight: 400"
                             class="text--secondary pa-1"
                         >
-                            {{ sortOptions.find(s => s.value == sort).text }}
-                            <v-icon size="20">{{ mdiArrowDown }}</v-icon>
+                            {{ currentSortValue.text }}
+                            <span
+                                :class="{
+                                    'rotate-asc':
+                                        currentSortValue.query_value.order ==
+                                        'asc',
+                                }"
+                            >
+                                <v-icon size="20">{{ mdiArrowDown }}</v-icon>
+                            </span>
                         </v-btn>
                     </template>
                     <v-list>
@@ -83,6 +90,9 @@ import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
 dayjs.extend(relativeTime);
 export default {
     name: "Channels",
+    metaInfo: {
+        title: "Channels",
+    },
     components: {
         ChannelList,
         InfiniteLoading,
@@ -199,6 +209,9 @@ export default {
                 });
             },
         },
+        currentSortValue() {
+            return this.findSortValue(this.sort);
+        },
     },
     methods: {
         init() {
@@ -214,7 +227,7 @@ export default {
                 limit: this.perPage,
                 offset: this.currentOffset * this.perPage,
                 type: this.category == 1 ? "subber" : "vtuber",
-                ...this.findSortValue(this.sort).query_value,
+                ...this.currentSortValue.query_value,
             })
                 .then(res => {
                     if (res.data.channels.length) {
@@ -247,7 +260,7 @@ export default {
             this.localSortChannel();
         },
         localSortChannel() {
-            const sort_prop = this.findSortValue(this.sort);
+            const sort_prop = this.currentSortValue;
             if (!sort_prop) return;
             this.channels.sort((a, b) => {
                 if (sort_prop.sort == "latest_published_at") {
@@ -274,5 +287,8 @@ export default {
 }
 .v-slide-group__prev--disabled {
     display: none !important;
+}
+.rotate-asc {
+    transform: rotate(180deg);
 }
 </style>

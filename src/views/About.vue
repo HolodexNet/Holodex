@@ -208,6 +208,9 @@ import { mdiExportVariant, mdiDotsVertical } from "@mdi/js";
 import TwitterFeed from "@/components/TwitterFeed";
 export default {
     name: "About",
+    metaInfo: {
+        title: "About",
+    },
     components: {
         TwitterFeed,
     },
