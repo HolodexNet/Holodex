@@ -1,14 +1,8 @@
 <template>
-    <v-container class="home" fluid style="height: 100%">
+    <v-container fluid style="height: 100%">
+        <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
         <template v-if="favorites.length > 0">
-            <v-row v-if="loading" style="height: 100%">
-                <v-progress-circular
-                    indeterminate
-                    size="32"
-                    class="ma-auto"
-                ></v-progress-circular>
-            </v-row>
-            <v-row v-show="!loading">
+            <v-row v-show="!isLoading && !hasError">
                 <v-col class="px-lg-10">
                     <v-row class="d-flex justify-space-between pa-1">
                         <div class="text-h6">Live/Upcoming</div>
@@ -27,9 +21,8 @@
                         :limitRows="2"
                     >
                     </VideoCardList>
-                    <v-row v-if="!filteredLiveVideos.length || liveError">
-                        <ApiErrorMessage v-if="liveError" />
-                        <v-col class="ma-auto text-center pa-8" v-else>
+                    <v-row v-if="!filteredLiveVideos.length && !hasError">
+                        <v-col class="ma-auto text-center pa-8">
                             No one is streaming soon in your favorites. Please
                             check out the other vtubers!
                         </v-col>
@@ -86,6 +79,7 @@
 <script>
 import VideoCardList from "@/components/VideoCardList.vue";
 import FavoritesVideoList from "@/components/FavoritesVideoList.vue";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import { mdiHeart } from "@mdi/js";
@@ -95,27 +89,28 @@ dayjs.extend(utc);
 export default {
     name: "Favorites",
     metaInfo: {
-        title: "My Favorites",
+        title: "Favorites",
     },
     components: {
         VideoCardList,
         FavoritesVideoList,
+        LoadingOverlay,
     },
     data() {
         return {
             live: [],
             // TODO: smaller pagelength with mobile/diff breakpoints
-            loading: true,
             filteredVideoLists: [],
-            daysBefore: 24,
-            liveError: false,
+            daysBefore: 0,
+            hasError: false,
+            isLoading: true,
             mdiHeart,
             shouldRenderNext: false,
         };
     },
     mounted() {
         Promise.all([this.loadLive(), this.loadFavorites()]).finally(() => {
-            this.loading = false;
+            this.isLoading = false;
         });
     },
     computed: {
@@ -156,16 +151,15 @@ export default {
             this.loadFavorites();
         },
         loadLive() {
-            return api.live().then(res => {
-                // get currently live and upcoming lives within the next 2 weeks
-                this.live = res.data.live
-                    .concat(res.data.upcoming)
-                    .filter(live => {
-                        return dayjs(live.live_schedule).isBefore(
-                            dayjs().add(3, "w")
-                        );
-                    });
-            });
+            return api
+                .live()
+                .then(live => {
+                    this.live = live;
+                })
+                .catch(e => {
+                    console.log(e);
+                    this.hasError = true;
+                });
         },
         loadFavorites(clear = false) {
             const targetDate = dayjs().subtract(this.daysBefore, "d");

@@ -12,6 +12,7 @@ const About = () => import("../views/About.vue");
 const Search = () => import("../views/Search.vue");
 const ChannelStats = () => import("../views/channel_views/ChannelStats.vue");
 const Settings = () => import("../views/Settings.vue");
+const NotFound = () => import("../views/NotFound.vue");
 Vue.use(VueRouter);
 
 const routes = [
@@ -83,7 +84,7 @@ const routes = [
     },
     {
         path: "*",
-        component: Home,
+        component: NotFound,
     },
 ];
 

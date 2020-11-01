@@ -223,8 +223,12 @@ export default {
             }
         },
         loadData($state) {
+            if (this.category == 0 && this.channels.length > 0) {
+                $state.complete();
+                return;
+            }
             api.channels({
-                limit: this.perPage,
+                limit: this.category == 1 ? this.perPage : 100,
                 offset: this.currentOffset * this.perPage,
                 type: this.category == 1 ? "subber" : "vtuber",
                 ...this.currentSortValue.query_value,

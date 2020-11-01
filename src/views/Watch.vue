@@ -154,12 +154,12 @@ export default {
                     vmid: "description",
                     name: "description",
                     property: "og:description",
-                    content: this.video.description.substr(0, 100),
+                    content: this.metaDescription,
                 },
                 {
                     vmid: "image",
                     name: "image",
-                    content: `https://i.ytimg.com/vi/${this.video.yt_video_key}/maxresdefault.jpg`,
+                    content: this.metaImage,
                 },
                 {
                     vmid: "url",
@@ -178,9 +178,7 @@ export default {
     },
     data() {
         return {
-            video: {
-                description: "",
-            },
+            video: {},
             video_clips: [],
             video_sources: [],
             channel_mentions: [],
@@ -244,6 +242,18 @@ export default {
                 this.video_src &&
                 !this.isXs
             );
+        },
+        metaDescription() {
+            if (!this.video.description) return undefined;
+            return this.video.description.substr(0, 100);
+        },
+        metaTitle() {
+            if (!this.video.title) return undefined;
+            return this.video.title;
+        },
+        metaImage() {
+            if (!this.video.yt_video_key) return undefined;
+            return video_thumbnails(this.video.yt_video_key)["maxres"];
         },
     },
     watch: {

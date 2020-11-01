@@ -1,13 +1,7 @@
 <template>
     <v-container class="home" fluid>
-        <v-row v-if="loading" style="height: 100%">
-            <v-progress-circular
-                indeterminate
-                size="32"
-                class="ma-auto"
-            ></v-progress-circular>
-        </v-row>
-        <v-row v-show="!loading">
+        <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
+        <v-row v-show="!isLoading && !hasError">
             <v-col class="px-lg-10">
                 <v-row class="d-flex justify-space-between pa-1">
                     <div class="text-h6">Live/Upcoming</div>
@@ -26,7 +20,6 @@
                     :limitRows="2"
                 >
                 </VideoCardList>
-                <ApiErrorMessage v-if="liveError" />
                 <v-divider class="my-5" />
                 <v-row class="d-flex justify-space-between pa-1">
                     <div class="text-h6">Recent Videos</div>
@@ -43,7 +36,7 @@
                     </v-btn-toggle>
                 </v-row>
                 <VideoCardList
-                    v-if="!loading"
+                    v-if="!isLoading"
                     :videos="videos"
                     includeChannel
                     infiniteLoad
@@ -64,9 +57,9 @@
 
 <script>
 import VideoCardList from "@/components/VideoCardList.vue";
-import ApiErrorMessage from "@/components/ApiErrorMessage.vue";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
 import api from "@/utils/backend-api";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 export default {
     name: "Home",
     metaInfo: {
@@ -74,7 +67,7 @@ export default {
     },
     components: {
         VideoCardList,
-        ApiErrorMessage,
+        LoadingOverlay,
     },
     data() {
         return {
@@ -82,13 +75,13 @@ export default {
             videos: [],
             currentOffset: 0,
             infiniteId: +new Date(),
-            loading: true,
-            liveError: false,
+            isLoading: true,
+            hasError: false,
         };
     },
     created() {
         this.loadLive().finally(() => {
-            this.loading = false;
+            this.isLoading = false;
         });
     },
     watch: {
@@ -117,16 +110,15 @@ export default {
             this.daysBefore = 0;
         },
         loadLive() {
-            return api.live().then(res => {
-                // get currently live and upcoming lives within the next 2 weeks
-                this.live = res.data.live
-                    .concat(res.data.upcoming)
-                    .filter(live => {
-                        return dayjs(live.live_schedule).isBefore(
-                            dayjs().add(3, "w")
-                        );
-                    });
-            });
+            return api
+                .live()
+                .then(res => {
+                    this.live = res;
+                })
+                .catch(e => {
+                    console.log(e);
+                    this.hasError = true;
+                });
         },
         loadNext($state) {
             api.videos({
