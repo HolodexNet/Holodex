@@ -10,6 +10,9 @@
                 <span class="text--secondary">November 2, 2020</span>
                 <ul>
                     <li>
+                        Hotfix video duration
+                    </li>
+                    <li>
                         Added more sorting options and card view to Channels
                         page
                     </li>
