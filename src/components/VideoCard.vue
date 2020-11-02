@@ -36,7 +36,10 @@
             <router-link
                 :to="`/channel/${video.channel.id}`"
                 v-if="
-                    includeChannel && includeAvatar && !horizontal && video.channel
+                    includeChannel &&
+                        includeAvatar &&
+                        !horizontal &&
+                        video.channel
                 "
             >
                 <v-list-item-avatar>
@@ -135,7 +138,8 @@ export default {
                         "Stream starts " +
                         // print relative time in hours if less than 24 hours,
                         // print full date if greater than 24 hours
-                        (dayjs(this.video.live_schedule).diff(dayjs()) <= 86400000
+                        (dayjs(this.video.live_schedule).diff(dayjs()) <=
+                        86400000
                             ? this.formatFromNow(this.video.live_schedule)
                             : dayjs(this.video.live_schedule).format(
                                   "ddd MMM Do, h:mm a"
@@ -148,9 +152,10 @@ export default {
             }
         },
         formattedDuration() {
-            const duration = this.video.live_start
-                ? dayjs().diff(dayjs(this.video.live_start))
-                : this.video.duration_secs * 1000;
+            const duration =
+                this.video.live_start && this.video.status === "live"
+                    ? dayjs().diff(dayjs(this.video.live_start))
+                    : this.video.duration_secs * 1000;
             return duration ? this.formatDuration(duration) : "";
         },
         imageSrc() {
@@ -181,8 +186,8 @@ export default {
             return dayjs(time).fromNow();
         },
         formatDuration(secs) {
-            return secs > 1000 * 60 * 60
-                ? dayjs.utc(secs).format("H:m:ss")
+            return secs > 60 * 60 * 1000
+                ? dayjs.utc(secs).format("H:mm:ss")
                 : dayjs.utc(secs).format("m:ss");
         },
         formatCount,
