@@ -11,9 +11,9 @@
             <template v-for="page in pages">
                 <v-list-item
                     link
-                    :to="page.path"
                     :key="page.name"
                     @click="handlePageClick(page)"
+                    :class="{ 'v-list-item--active': $route.path == page.path }"
                 >
                     <v-list-item-action>
                         <v-icon>{{ page.icon }}</v-icon>
@@ -97,6 +97,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        currentPage: {
+            type: String,
+            color: "primary",
+        }
     },
     data() {
         return {
@@ -135,9 +139,9 @@ export default {
     methods: {
         handlePageClick(page) {
             // reload the page if user clicks on the same tab
-            if (page.path === this.$route.path) {
-                this.$router.go(0);
-            }
+            page.path === this.$route.path
+                ? this.$router.go(0)
+                : this.$router.push({ path: page.path });
         },
     },
 };
