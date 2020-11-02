@@ -47,11 +47,7 @@
                         </v-btn-toggle>
                     </v-row>
                     <FavoritesVideoList :videoLists="filteredByChannelType" />
-                    <div
-                        class="text-center"
-                        v-if="daysBefore < 2"
-                        @click="loadNext"
-                    >
+                    <div class="text-center" @click="loadNext">
                         <v-btn class="ma-auto" outlined color="primary">
                             Load Next
                         </v-btn>

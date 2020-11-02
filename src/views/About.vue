@@ -31,9 +31,13 @@
                         still view them through the search bar
                     </li>
                     <li>
+                        Add hide live chat button
+                    </li>
+                    <li>
                         General under the hood improvments
                     </li>
                 </ul>
+                <br />
                 <span class="text--secondary">Oct 20, 2020</span>
                 <ul>
                     <li>
