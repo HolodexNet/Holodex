@@ -83,6 +83,10 @@ const routes = [
         component: Settings,
     },
     {
+        path: "/404",
+        component: NotFound,
+    },
+    {
         path: "*",
         component: NotFound,
     },

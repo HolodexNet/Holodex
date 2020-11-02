@@ -9,7 +9,12 @@
     >
         <v-list dense>
             <template v-for="page in pages">
-                <v-list-item link :to="page.path" :key="page.name">
+                <v-list-item
+                    link
+                    :to="page.path"
+                    :key="page.name"
+                    @click="handlePageClick(page)"
+                >
                     <v-list-item-action>
                         <v-icon>{{ page.icon }}</v-icon>
                     </v-list-item-action>
@@ -125,6 +130,14 @@ export default {
             return !this.favoritesExpanded && this.favorites.length > 5
                 ? arr.splice(0, 5)
                 : arr;
+        },
+    },
+    methods: {
+        handlePageClick(page) {
+            // reload the page if user clicks on the same tab
+            if (page.path === this.$route.path) {
+                this.$router.go(0);
+            }
         },
     },
 };
