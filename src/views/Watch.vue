@@ -87,8 +87,13 @@
                 md="12"
                 class="related-videos pa-1"
             >
-                <div class="embedded-chat" v-if="hasLiveChat">
+                <div class="embedded-chat" v-if="hasLiveChat & !hideLiveChat">
                     <iframe :src="live_chat_src" frameborder="0" />
+                </div>
+                <div class="text-end pa-1 text-caption" v-if="hasLiveChat">
+                    <a @click="hideLiveChat = !hideLiveChat">
+                        {{ hideLiveChat ? "Show" : "Hide" }} Live Chat
+                    </a>
                 </div>
                 <div class="text-subtitle-2 ma-2" v-if="video_clips.length > 0">
                     Clips
@@ -192,6 +197,7 @@ export default {
             video_src: "",
             live_chat_src: "",
             mdiMenuDown,
+            hideLiveChat: false,
         };
     },
     created() {

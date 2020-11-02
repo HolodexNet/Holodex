@@ -15,13 +15,13 @@
             </router-link>
         </v-list-item-title>
         <v-list-item-subtitle>
-            <span v-if="!noSubscriberCount">
+            <template v-if="!noSubscriberCount">
                 {{ subscriberCount }}
                 <span class="green--text" v-if="subscriberGains">
                     {{ subscriberGains }}
                 </span>
-            </span>
-            <span v-if="includeVideoCount">
+            </template>
+            <template v-if="includeVideoCount">
                 <br />
                 {{ channel.video_count }} Videos
                 <router-link
@@ -31,7 +31,7 @@
                 >
                     • {{ channel.clip_count }} Clips
                 </router-link>
-            </span>
+            </template>
         </v-list-item-subtitle>
         <v-list-item-subtitle v-if="includeSocials">
             <ChannelSocials :channel="channel" />
@@ -98,5 +98,7 @@ export default {
 .no-decoration {
     text-decoration: none;
     color: inherit;
+    font-weight: 400 !important;
+    font-size: inherit;
 }
 </style>

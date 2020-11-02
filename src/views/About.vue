@@ -7,6 +7,33 @@
                 <TwitterFeed />
                 <br />
                 <div class="text-h5">Changelog</div>
+                <span class="text--secondary">November 2, 2020</span>
+                <ul>
+                    <li>
+                        Added more sorting options and card view to Channels
+                        page
+                    </li>
+                    <li>
+                        Added Hololive generation/group name to each Vtuber
+                    </li>
+                    <li>
+                        Added filtering by official/clips for favorites page
+                    </li>
+                    <li>
+                        Added loading screen and errors to all the pages
+                    </li>
+                    <li>
+                        Clicking on the same page on desktop now refreshes the
+                        page
+                    </li>
+                    <li>
+                        Inactive vtuber channels are now hidden, but you can
+                        still view them through the search bar
+                    </li>
+                    <li>
+                        General under the hood improvments
+                    </li>
+                </ul>
                 <span class="text--secondary">Oct 20, 2020</span>
                 <ul>
                     <li>
