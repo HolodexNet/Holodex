@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid v-if="video.channel">
+    <v-container fluid v-if="!isLoading && !showError">
         <v-row class="align-start">
             <v-col class="pa-0 pa-lg-3">
                 <v-card class="watch-card">
@@ -132,6 +132,7 @@
             </v-col>
         </v-row>
     </v-container>
+    <LoadingOverlay :isLoading="isLoading" :showError="showError" v-else />
 </template>
 
 <script>
@@ -142,6 +143,7 @@ import dayjs from "dayjs";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelSocials from "@/components/ChannelSocials";
 import ChannelImg from "@/components/ChannelImg";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { mdiMenuDown } from "@mdi/js";
 import { video_thumbnails } from "@/utils/functions";
 export default {
@@ -175,9 +177,13 @@ export default {
         ChannelInfo,
         ChannelSocials,
         ChannelImg,
+        // NotFound: () => import("@/views/NotFound"),
+        LoadingOverlay,
     },
     data() {
         return {
+            isLoading: true,
+            showError: false,
             video: {},
             video_clips: [],
             video_sources: [],
@@ -195,15 +201,23 @@ export default {
         loadData(id) {
             // destroy iframe and recreate it so it doesn't break history mode
             this.video_src = "";
-            api.video(id).then(res => {
-                this.video_clips = res.data.clips;
-                this.video_sources = res.data.sources;
-                this.channel_mentions = res.data.channel_mentions;
-                this.tags = res.data.tags;
-                this.video = res.data;
-                this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
-                this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
-            });
+            this.isLoading = true;
+            api.video(id)
+                .then(res => {
+                    this.video_clips = res.data.clips;
+                    this.video_sources = res.data.sources;
+                    this.channel_mentions = res.data.channel_mentions;
+                    this.tags = res.data.tags;
+                    this.video = res.data;
+                    this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
+                    this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
+                })
+                .catch(() => {
+                    this.showError = true;
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                });
         },
         formatTime(t) {
             return dayjs(t).format("MMM DD, YYYY");

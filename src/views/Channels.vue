@@ -132,7 +132,7 @@ export default {
                     },
                 },
                 {
-                    text: "Number of Videos",
+                    text: "Video Count",
                     value: "video_count",
                     query_value: {
                         sort: "video_count",
@@ -140,7 +140,7 @@ export default {
                     },
                 },
                 {
-                    text: "Number of Clips",
+                    text: "Clip Count",
                     value: "clip_count",
                     query_value: {
                         sort: "clip_count",
@@ -160,8 +160,8 @@ export default {
             this.init();
         },
         sort() {
-            if (this.category == 2) this.localSortChannel();
-            else this.init();
+            if (this.category == 1) this.init();
+            else this.localSortChannel();
         },
     },
     computed: {
@@ -231,12 +231,14 @@ export default {
                 limit: this.category == 1 ? this.perPage : 100,
                 offset: this.currentOffset * this.perPage,
                 type: this.category == 1 ? "subber" : "vtuber",
-                ...this.currentSortValue.query_value,
+                ...(this.category == 1 && {
+                    ...this.currentSortValue.query_value,
+                }),
             })
                 .then(res => {
                     if (res.data.channels.length) {
                         this.channels = this.channels.concat(res.data.channels);
-                        if (this.category == 0)
+                        if (this.category == 0) {
                             // update channel cache when fresh data is pulled
                             res.data.channels.map(channel_obj =>
                                 this.$store.commit(
@@ -244,6 +246,8 @@ export default {
                                     channel_obj
                                 )
                             );
+                            this.localSortChannel();
+                        }
                         this.currentOffset++;
                         $state.loaded();
                     } else {
@@ -264,14 +268,18 @@ export default {
             this.localSortChannel();
         },
         localSortChannel() {
-            const sort_prop = this.currentSortValue;
+            const sort_prop = this.currentSortValue.query_value;
             if (!sort_prop) return;
             this.channels.sort((a, b) => {
-                if (sort_prop.sort == "latest_published_at") {
+                if (sort_prop.sort === "latest_published_at") {
                     var dateA = new Date(a[sort_prop.sort]).getTime();
                     var dateB = new Date(b[sort_prop.sort]).getTime();
-                    console.log(dateA);
                     return dateA > dateB ? 1 : -1;
+                } else if (sort_prop.sort === "video_count") {
+                    return parseInt(a[sort_prop.sort]) >
+                        parseInt(b[sort_prop.sort])
+                        ? 1
+                        : -1;
                 }
                 return a[sort_prop.sort] > b[sort_prop.sort] ? 1 : -1;
             });

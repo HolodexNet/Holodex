@@ -1,5 +1,9 @@
 <template>
-    <v-container class="channel-container" fluid v-if="this.channel">
+    <v-container
+        class="channel-container"
+        fluid
+        v-if="!isLoading && !showError"
+    >
         <v-card>
             <v-img :src="bannerImage" class="channel-banner" />
             <v-container>
@@ -33,6 +37,7 @@
             ></router-view>
         </v-container>
     </v-container>
+    <LoadingOverlay :isLoading="isLoading" :showError="showError" v-else />
 </template>
 
 <script>
@@ -40,6 +45,7 @@ import api from "@/utils/backend-api";
 import ChannelSocials from "@/components/ChannelSocials";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelImg from "@/components/ChannelImg";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { banner_images } from "@/utils/functions";
 
 export default {
@@ -71,9 +77,12 @@ export default {
         ChannelSocials,
         ChannelInfo,
         ChannelImg,
+        LoadingOverlay,
     },
     data() {
         return {
+            isLoading: true,
+            showError: false,
             channel_id: null,
             videos: [],
             channel: {},
@@ -162,6 +171,12 @@ export default {
                 .then(() => {
                     // update cache with fresh data
                     this.$store.commit("addCachedChannel", this.channel);
+                })
+                .catch(e => {
+                    console.log(e);
+                    this.showError = true;
+                })
+                .finally(() => {
                     this.isLoading = false;
                 });
         },

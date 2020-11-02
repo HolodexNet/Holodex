@@ -7,6 +7,7 @@
                 v-if="isLoading"
             ></v-progress-circular>
             <ApiErrorMessage v-if="showError" />
+            <NotFound v-if="showNotFound" />
         </v-col>
     </v-row>
 </template>
@@ -17,6 +18,7 @@ export default {
     name: "LoadingOverlay",
     components: {
         ApiErrorMessage,
+        NotFound: () => import("@/views/NotFound"),
     },
     props: {
         isLoading: {
@@ -24,6 +26,10 @@ export default {
             default: true,
         },
         showError: {
+            type: Boolean,
+            default: false,
+        },
+        showNotFound: {
             type: Boolean,
             default: false,
         },
