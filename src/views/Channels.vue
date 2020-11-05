@@ -11,6 +11,7 @@
                 class="d-flex justify-space-between"
                 style="background: none"
             >
+                <!-- Dropdown to pick sort-by into 'sort' data attr -->
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -45,6 +46,8 @@
                         </v-list-item>
                     </v-list>
                 </v-menu>
+
+                <!-- Toggle of Card or Row view -->
                 <v-btn icon @click="cardView = !cardView">
                     <v-icon>
                         {{ cardView ? mdiViewModule : mdiViewList }}
@@ -61,7 +64,7 @@
                 @infinite="loadData"
                 style="min-height: 10px;"
                 :identifier="infiniteId"
-                v-if="category !== 2"
+                v-if="category !== Tabs.FAVORITES"
                 spinner="spiral"
             >
                 <template v-slot:no-more><span></span></template>
@@ -70,12 +73,18 @@
                 </template>
             </infinite-loading>
         </v-container>
-        <div
-            v-if="favorites.length > 0 && category == 2"
-            class="text--secondary"
-        >
-            Last updated {{ lastUpdated }} ago
-        </div>
+        <!-- Favorites specific view items: -->
+        <template v-if="category == Tabs.FAVORITES">
+            <div
+                v-if="favorites.length > 0"
+                class="text--secondary text-caption"
+            >
+                Last updated {{ lastUpdated }} ago
+            </div>
+            <div v-if="!favorites || favorites.length == 0">
+                You have no favorites!
+            </div>
+        </template>
     </v-container>
 </template>
 
@@ -88,6 +97,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import ApiErrorMessage from "@/components/ApiErrorMessage";
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
 dayjs.extend(relativeTime);
+
 export default {
     name: "Channels",
     metaInfo: {
@@ -106,52 +116,59 @@ export default {
             currentOffset: 0,
             perPage: 25,
             infiniteId: +new Date(),
-            sortOptions: [
-                {
-                    text: "Subscribers",
-                    value: "subscribers",
-                    query_value: {
-                        sort: "subscriber_count",
-                        order: "desc",
-                    },
-                },
-                {
-                    text: "Group",
-                    value: "group",
-                    query_value: {
-                        sort: "group",
-                        order: "asc",
-                    },
-                },
-                {
-                    text: "Recent Upload",
-                    value: "recent_upload",
-                    query_value: {
-                        sort: "latest_published_at",
-                        order: "desc",
-                    },
-                },
-                {
-                    text: "Video Count",
-                    value: "video_count",
-                    query_value: {
-                        sort: "video_count",
-                        order: "desc",
-                    },
-                },
-                {
-                    text: "Clip Count",
-                    value: "clip_count",
-                    query_value: {
-                        sort: "clip_count",
-                        order: "desc",
-                    },
-                },
-            ],
         };
     },
     created() {
-        if (this.category == 2) {
+        this.Tabs = {
+            SUBBER: 1,
+            VTUBER: 0,
+            FAVORITES: 2,
+        };
+
+        this.sortOptions = [
+            {
+                text: "Subscribers",
+                value: "subscribers",
+                query_value: {
+                    sort: "subscriber_count",
+                    order: "desc",
+                },
+            },
+            {
+                text: "Group",
+                value: "group",
+                query_value: {
+                    sort: "group",
+                    order: "asc",
+                },
+            },
+            {
+                text: "Recent Upload",
+                value: "recent_upload",
+                query_value: {
+                    sort: "latest_published_at",
+                    order: "desc",
+                },
+            },
+            {
+                text: "Video Count",
+                value: "video_count",
+                query_value: {
+                    sort: "video_count",
+                    order: "desc",
+                },
+            },
+            {
+                text: "Clip Count",
+                value: "clip_count",
+                query_value: {
+                    sort: "clip_count",
+                    order: "desc",
+                },
+            },
+        ];
+
+        if (this.category == this.Tabs.FAVORITES) {
             this.loadFavorites();
         }
     },
@@ -160,8 +177,12 @@ export default {
             this.init();
         },
         sort() {
-            if (this.category == 1) this.init();
+            if (this.category == this.Tabs.SUBBER) this.init();
             else this.localSortChannel();
+        },
+        favorites() {
+            // update our `channel` whenever the favorites changes.
+            if (this.category == this.Tabs.FAVORITES) this.loadFavorites();
         },
     },
     computed: {
@@ -218,7 +239,7 @@ export default {
             this.channels = [];
             this.currentOffset = 0;
             this.infiniteId += 1;
-            if (this.category == 2) {
+            if (this.category == this.Tabs.FAVORITES) {
                 this.loadFavorites();
             }
         },
@@ -228,17 +249,17 @@ export default {
                 return;
             }
             api.channels({
-                limit: this.category == 1 ? this.perPage : 100,
+                limit: this.category == this.Tabs.SUBBER ? this.perPage : 100,
                 offset: this.currentOffset * this.perPage,
-                type: this.category == 1 ? "subber" : "vtuber",
-                ...(this.category == 1 && {
+                type: this.category == this.Tabs.SUBBER ? "subber" : "vtuber",
+                ...(this.category == this.Tabs.SUBBER && {
                     ...this.currentSortValue.query_value,
                 }),
             })
                 .then(res => {
                     if (res.data.channels.length) {
                         this.channels = this.channels.concat(res.data.channels);
-                        if (this.category == 0) {
+                        if (this.category == this.Tabs.VTUBER) {
                             // update channel cache when fresh data is pulled
                             res.data.channels.map(channel_obj =>
                                 this.$store.commit(

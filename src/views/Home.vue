@@ -1,10 +1,10 @@
 <template>
-    <v-container class="home" fluid>
+    <v-container class="home pt-0" fluid>
         <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
         <v-row v-show="!isLoading && !hasError">
             <v-col class="px-lg-10">
-                <v-row class="d-flex justify-space-between pa-1">
-                    <div class="text-h6">Live/Upcoming</div>
+                <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
+                    <div class="text-h6">Live / Upcoming</div>
                 </v-row>
                 <VideoCardList
                     :videos="live"
@@ -20,8 +20,8 @@
                     :limitRows="2"
                 >
                 </VideoCardList>
-                <v-divider class="my-5" />
-                <v-row class="d-flex justify-space-between pa-1">
+                <v-divider class="my-3" />
+                <v-row class="d-flex justify-space-between px-3 pt-1 pb-3">
                     <div class="text-h6">Recent Videos</div>
                     <v-btn-toggle v-model="recentVideoFilter" mandatory dense>
                         <v-btn value="all">

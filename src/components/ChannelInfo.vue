@@ -78,7 +78,11 @@ export default {
     },
     computed: {
         subscriberCount() {
-            return `${formatCount(this.channel.subscriber_count)} Subscribers `;
+            if (this.channel.subscriber_count)
+                return `${formatCount(
+                    this.channel.subscriber_count
+                )} Subscribers `;
+            else return "Subscriber count unavailable";
         },
         subscriberGains() {
             return this.channel.subscriber_gains
