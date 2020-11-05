@@ -100,7 +100,7 @@ export default {
         currentPage: {
             type: String,
             color: "primary",
-        }
+        },
     },
     data() {
         return {

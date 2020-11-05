@@ -12,6 +12,7 @@
         rel="noreferrer"
         link
     >
+        <!-- Video Image with Duration -->
         <v-img
             class="white--text align-end"
             :src="imageSrc"
@@ -32,7 +33,9 @@
                 </span>
             </div>
         </v-img>
+
         <v-list-item three-line class="pa-0">
+            <!-- Render Channel Avatar if necessary -->
             <router-link
                 :to="`/channel/${video.channel.id}`"
                 v-if="
@@ -46,10 +49,11 @@
                     <ChannelImg :channel="video.channel" />
                 </v-list-item-avatar>
             </router-link>
+            <!--  -->
             <v-list-item-content class="pa-0">
-                <div class="video-title" :title="video.title">
+                <v-list-item-title class="video-title" :title="video.title">
                     {{ video.title }}
-                </div>
+                </v-list-item-title>
                 <v-list-item-subtitle v-if="includeChannel">
                     <router-link
                         :to="`/channel/${video.channel.id}`"
