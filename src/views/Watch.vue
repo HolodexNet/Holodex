@@ -210,13 +210,16 @@ export default {
             this.isLoading = true;
             api.video(id)
                 .then(res => {
-                    this.video_clips = res.data.clips;
-                    this.video_sources = res.data.sources;
-                    this.channel_mentions = res.data.channel_mentions;
-                    this.tags = res.data.tags;
-                    this.video = res.data;
-                    this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
-                    this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
+                    if (res.data) {
+                        this.video_clips = res.data.clips;
+                        this.video_sources = res.data.sources;
+                        this.channel_mentions = res.data.channel_mentions;
+                        this.tags = res.data.tags;
+                        this.video = res.data;
+                        this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
+                        this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
+                        if (!this.hasWatched) this.setWatched();
+                    }
                 })
                 .catch(() => {
                     this.showError = true;
@@ -227,6 +230,9 @@ export default {
         },
         formatTime(t) {
             return dayjs(t).format("MMM DD, YYYY");
+        },
+        setWatched() {
+            this.$store.commit("addWatchedVideo", this.video);
         },
     },
     computed: {
@@ -274,6 +280,10 @@ export default {
         metaImage() {
             if (!this.video.yt_video_key) return undefined;
             return video_thumbnails(this.video.yt_video_key)["maxres"];
+        },
+        hasWatched() {
+            if (!this.video) return false;
+            return this.$store.getters.hasWatched(this.video.id);
         },
     },
     watch: {

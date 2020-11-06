@@ -51,7 +51,10 @@
             </router-link>
             <!--  -->
             <v-list-item-content class="pa-0">
-                <v-list-item-title class="video-title" :title="video.title">
+                <v-list-item-title
+                    :class="['video-title', { 'video-watched': hasWatched }]"
+                    :title="video.title"
+                >
                     {{ video.title }}
                 </v-list-item-title>
                 <v-list-item-subtitle v-if="includeChannel">
@@ -184,6 +187,10 @@ export default {
             if (this.video.channel[prop]) return this.video.channel[prop];
             return this.video.channel.name;
         },
+        hasWatched() {
+            if (!this.video) return false;
+            return this.$store.getters.hasWatched(this.video.id);
+        },
     },
     methods: {
         formatFromNow(time) {
@@ -219,6 +226,10 @@ export default {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+
+.video-watched {
+    color: #CE93D8 !important;
 }
 
 .channel-name {

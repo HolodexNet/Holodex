@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import dayjs from "dayjs";
 import createPersistedState from "vuex-persistedstate";
 import api from "@/utils/backend-api";
 
@@ -32,6 +33,7 @@ function defaultState() {
             2: false,
         },
         favoritesVideoFilter: "all",
+        watchedVideos: {},
     };
 }
 
@@ -45,6 +47,12 @@ export default new Vuex.Store({
     getters: {
         useEnName(state) {
             return state.nameProperty === "name_en";
+        },
+        hasWatched: state => video_id => {
+            return Object.prototype.hasOwnProperty.call(
+                state.watchedVideos,
+                video_id
+            );
         },
     },
     mutations: {
@@ -105,6 +113,26 @@ export default new Vuex.Store({
         },
         addCachedChannel(state, channel_obj) {
             Vue.set(state.cachedChannels, channel_obj.id, channel_obj);
+        },
+        addWatchedVideo(state, video) {
+            const {
+                id,
+                yt_video_key,
+                title,
+                channel,
+                published_at,
+                duration_secs,
+            } = video;
+            const video_min_obj = {
+                id,
+                yt_video_key,
+                title,
+                channel,
+                published_at,
+                duration_secs,
+                watched_at: dayjs().format(),
+            };
+            Vue.set(state.watchedVideos, video.id, video_min_obj);
         },
         removeCachedChannel(state, channel_id) {
             delete state.cachedChannels[channel_id];
