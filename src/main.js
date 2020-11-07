@@ -5,6 +5,7 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueGTag from "vue-gtag";
 import VueMeta from "vue-meta";
+import linkify from "vue-linkify";
 
 import "./registerServiceWorker";
 
@@ -22,6 +23,8 @@ Vue.use(
 Vue.use(VueMeta, {
     refreshOnceOnNavigation: true,
 });
+Vue.directive("linkified", linkify);
+
 new Vue({
     router,
     store,
