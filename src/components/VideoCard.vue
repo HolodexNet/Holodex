@@ -14,7 +14,7 @@
     >
         <!-- Video Image with Duration -->
         <v-img
-            class="white--text align-end"
+            class="white--text"
             :src="imageSrc"
             :aspect-ratio="16 / 9"
             :width="horizontal ? '150px' : '100%'"
@@ -25,12 +25,18 @@
                 </v-row>
             </template>
             <div
-                class="d-flex justify-end"
-                v-if="video.duration_secs > 0 || video.live_start"
+                class="video-overlay d-flex flex-column align-end justify-space-between"
+                style="height: 100%"
             >
-                <span class="video-duration px-2">
+                <v-icon color="white" class="video-action hover-show">
+                    {{ mdiPlusBox }}
+                </v-icon>
+                <div
+                    v-if="video.duration_secs > 0 || video.live_start"
+                    class="video-duration"
+                >
                     {{ formattedDuration }}
-                </span>
+                </div>
             </div>
         </v-img>
 
@@ -95,6 +101,7 @@ dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(advancedFormat);
 import { video_thumbnails, formatCount } from "@/utils/functions";
+import { mdiPlusBox } from "@mdi/js";
 export default {
     name: "VideoCard",
     components: {
@@ -103,6 +110,7 @@ export default {
     data() {
         return {
             forceJPG: true,
+            mdiPlusBox,
         };
     },
     props: {
@@ -229,7 +237,7 @@ export default {
 }
 
 .video-watched {
-    color: #CE93D8 !important;
+    color: #ce93d8 !important;
 }
 
 .channel-name {
@@ -237,12 +245,25 @@ export default {
     white-space: nowrap;
     overflow: hidden;
 }
-
+.video-overlay .hover-show {
+    visibility: hidden;
+}
+.video-overlay:hover .hover-show {
+    visibility: visible;
+}
 .video-duration {
     background-color: rgba(0, 0, 0, 0.8);
+    margin: 2px;
+    padding: 1px 5px;
     text-align: center;
     font-size: 0.8125rem;
     letter-spacing: 0.025em;
+}
+
+.video-action {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 2px;
+    margin: 2px;
 }
 
 .video-card-horizontal {

@@ -269,6 +269,10 @@ export default {
                 !this.isXs
             );
         },
+        hasWatched() {
+            if (!this.video) return false;
+            return this.$store.getters.hasWatched(this.video.id);
+        },
         metaDescription() {
             if (!this.video.description) return undefined;
             return this.video.description.substr(0, 100);
@@ -280,10 +284,6 @@ export default {
         metaImage() {
             if (!this.video.yt_video_key) return undefined;
             return video_thumbnails(this.video.yt_video_key)["maxres"];
-        },
-        hasWatched() {
-            if (!this.video) return false;
-            return this.$store.getters.hasWatched(this.video.id);
         },
     },
     watch: {
