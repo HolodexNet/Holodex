@@ -207,8 +207,7 @@ export default {
         },
         sort: {
             get() {
-                const fromStore = this.$store.state.channelsSort[this.category];
-                return fromStore;
+                return this.$store.state.channelsSort[this.category];
             },
             set(val) {
                 return this.$store.commit("setChannelsSort", {
