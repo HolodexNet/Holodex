@@ -61,7 +61,6 @@
                     </v-card-text>
                     <VideoDescription
                         :description="video.description"
-                        :isXs="isXs"
                     ></VideoDescription>
                     <v-divider />
                 </v-card>

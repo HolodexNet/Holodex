@@ -1,5 +1,5 @@
 <template>
-    <v-expansion-panels flat :value="isXs ? null : 0">
+    <v-expansion-panels flat>
         <v-expansion-panel :value="0">
             <v-expansion-panel-header :expand-icon="mdiMenuDown">
                 Description
@@ -27,11 +27,6 @@ export default {
         description: {
             required: true,
             type: String,
-        },
-        isXs: {
-            required: false,
-            type: Boolean,
-            default: false,
         },
     },
     data() {
