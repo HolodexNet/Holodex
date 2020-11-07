@@ -59,23 +59,9 @@
                             {{ `#${tag.name} (${tag.count})` }}
                         </v-chip>
                     </v-card-text>
-                    <v-expansion-panels flat>
-                        <v-expansion-panel>
-                            <v-expansion-panel-header
-                                :expand-icon="mdiMenuDown"
-                            >
-                                Description
-                            </v-expansion-panel-header>
-                            <v-expansion-panel-content>
-                                <v-card-text
-                                    style="white-space: pre-wrap;"
-                                    class="text-body-2"
-                                >
-                                    {{ video.description }}
-                                </v-card-text>
-                            </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
+                    <VideoDescription
+                        :description="video.description"
+                    ></VideoDescription>
                     <v-divider />
                 </v-card>
             </v-col>
@@ -149,7 +135,8 @@ import ChannelInfo from "@/components/ChannelInfo";
 import ChannelSocials from "@/components/ChannelSocials";
 import ChannelImg from "@/components/ChannelImg";
 import LoadingOverlay from "@/components/LoadingOverlay";
-import { mdiMenuDown } from "@mdi/js";
+import VideoDescription from "@/components/VideoDescription";
+
 import { video_thumbnails } from "@/utils/functions";
 export default {
     name: "Watch",
@@ -180,6 +167,7 @@ export default {
         VideoCardList,
         ChannelChip,
         ChannelInfo,
+        VideoDescription,
         ChannelSocials,
         ChannelImg,
         // NotFound: () => import("@/views/NotFound"),
@@ -196,7 +184,6 @@ export default {
             tags: [],
             video_src: "",
             live_chat_src: "",
-            mdiMenuDown,
             hideLiveChat: false,
         };
     },
