@@ -12,7 +12,12 @@
                 :horizontal="horizontal"
                 :includeAvatar="includeAvatar"
                 :colSize="colSize"
-            />
+            >
+                <!-- pass slot to each individual video card -->
+                <template v-slot:action>
+                    <slot name="action" :video="video"> </slot>
+                </template>
+            </VideoCard>
         </v-col>
         <div class="text-center" style="width: 100%">
             <v-btn

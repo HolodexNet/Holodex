@@ -139,8 +139,8 @@ export default new Vuex.Store({
         addSavedVideo(state, video) {
             Vue.set(state.savedVideos, video.id, getMinVideoObj(video));
         },
-        removeSavedVideo(state, video) {
-            Vue.delete(state.savedVideos, video.id);
+        removeSavedVideo(state, video_id) {
+            Vue.delete(state.savedVideos, video_id);
         },
         // channel cache
         setCachedChannelsError(state, payload) {

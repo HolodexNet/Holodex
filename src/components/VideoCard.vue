@@ -89,6 +89,9 @@
                     </span>
                 </v-list-item-subtitle>
             </v-list-item-content>
+            <v-list-item-action @click.stop="">
+                <slot name="action"></slot>
+            </v-list-item-action>
         </v-list-item>
     </v-card>
 </template>

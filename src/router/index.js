@@ -10,6 +10,7 @@ const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
 const Watch = () => import("../views/Watch.vue");
 const About = () => import("../views/About.vue");
 const Search = () => import("../views/Search.vue");
+const Library = () => import("../views/Library.vue");
 const ChannelStats = () => import("../views/channel_views/ChannelStats.vue");
 const Settings = () => import("../views/Settings.vue");
 const NotFound = () => import("../views/NotFound.vue");
@@ -66,6 +67,11 @@ const routes = [
         name: "watch",
         path: "/watch/:id",
         component: Watch,
+    },
+    {
+        name: "library",
+        path: "/library",
+        component: Library,
     },
     {
         name: "about",
