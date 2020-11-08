@@ -6,10 +6,7 @@
             'video-card',
             'transparent',
         ]"
-        :to="!redirectMode ? `/watch/${video.id}` : ''"
-        :href="`https://youtu.be/${video.yt_video_key}`"
-        :target="redirectMode ? '_blank' : ''"
-        rel="noreferrer"
+        @click="onClick"
         link
     >
         <!-- Video Image with Duration -->
@@ -28,8 +25,12 @@
                 class="video-overlay d-flex flex-column align-end justify-space-between"
                 style="height: 100%"
             >
-                <v-icon color="white" class="video-action hover-show">
-                    {{ mdiPlusBox }}
+                <v-icon
+                    :color="hasSaved ? 'primary' : 'white'"
+                    class="video-action hover-show"
+                    @click.stop="toggleSaved"
+                >
+                    {{ hasSaved ? mdiCheck : mdiPlusBox }}
                 </v-icon>
                 <div
                     v-if="video.duration_secs > 0 || video.live_start"
@@ -101,7 +102,7 @@ dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(advancedFormat);
 import { video_thumbnails, formatCount } from "@/utils/functions";
-import { mdiPlusBox } from "@mdi/js";
+import { mdiPlusBox, mdiCheck } from "@mdi/js";
 export default {
     name: "VideoCard",
     components: {
@@ -111,6 +112,7 @@ export default {
         return {
             forceJPG: true,
             mdiPlusBox,
+            mdiCheck,
         };
     },
     props: {
@@ -199,6 +201,10 @@ export default {
             if (!this.video) return false;
             return this.$store.getters.hasWatched(this.video.id);
         },
+        hasSaved() {
+            if (!this.video) return false;
+            return this.$store.getters.hasSaved(this.video.id);
+        },
     },
     methods: {
         formatFromNow(time) {
@@ -210,6 +216,23 @@ export default {
                 : dayjs.utc(secs).format("m:ss");
         },
         formatCount,
+        saveVideo() {
+            this.$store.commit("addSavedVideo", this.video);
+        },
+        toggleSaved() {
+            this.hasSaved
+                ? this.$store.commit("removeSavedVideo", this.video)
+                : this.$store.commit("addSavedVideo", this.video);
+        },
+        onClick() {
+            if (this.redirectMode)
+                window.open(
+                    `https://youtu.be/${this.video.yt_video_key}`,
+                    "_blank",
+                    "noopener"
+                );
+            this.$router.push({ path: `/watch/${this.video.id}` });
+        },
     },
 };
 </script>

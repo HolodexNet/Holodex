@@ -221,7 +221,8 @@ export default {
                         if (!this.hasWatched) this.setWatched();
                     }
                 })
-                .catch(() => {
+                .catch(e => {
+                    console.log(e);
                     this.showError = true;
                 })
                 .finally(() => {
