@@ -4,22 +4,60 @@
             <v-col>
                 <div class="text-h6">Saved Videos</div>
                 <div>
-                    <v-btn class="mr-1" color="green" @click="exportSelected">
-                        Export ({{ selected.length }})
+                    <v-btn class="mr-1 mb-1" color="green" @click="exportSelected">
+                        Make Playlist ({{ selected.length }})
                     </v-btn>
-                    <v-btn class="mr-1" color="red" @click="deleteSelected">
-                        Delete ({{ selected.length }})
-                    </v-btn>
+                    <v-dialog v-model="deleteDialog" max-width="290">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                                color="red"
+                                class="mr-1 mb-1"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                Delete ({{ selected.length }})
+                            </v-btn>
+                        </template>
+                        <!-- Deletion confirm dialog -->
+                        <v-card>
+                            <v-card-title>
+                                Are you sure you want to delete
+                                {{ selected.length }} videos?
+                            </v-card-title>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn text @click="deleteDialog = false">
+                                    Cancel
+                                </v-btn>
+                                <v-btn
+                                    color="red darken-1"
+                                    text
+                                    @click="
+                                        deleteDialog = false;
+                                        deleteSelected;
+                                    "
+                                >
+                                    Delete
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
                     <v-btn
-                        class="mr-1"
+                        class="mr-1 mb-1"
                         @click="showReset ? reset() : selectAll()"
+                        color="blue-grey"
                     >
                         {{ showReset ? "Reset" : "Select All" }}
                     </v-btn>
                 </div>
             </v-col>
         </v-row>
-        <VideoCardList :videos="savedVideosList" horizontal includeChannel>
+        <VideoCardList
+            :videos="savedVideosList"
+            horizontal
+            includeChannel
+            v-if="savedVideosList.length > 0"
+        >
             <template v-slot:action="prop">
                 <v-checkbox
                     v-model="selected"
@@ -28,6 +66,9 @@
                 ></v-checkbox>
             </template>
         </VideoCardList>
+        <div v-else class="text-center">
+            You have no saved videos!
+        </div>
     </v-container>
 </template>
 
@@ -41,6 +82,7 @@ export default {
     data() {
         return {
             selected: [],
+            deleteDialog: false,
         };
     },
     computed: {
@@ -74,6 +116,7 @@ export default {
             this.reset();
         },
         exportSelected() {
+            if (this.selected.length == 0) return;
             const yt_video_keys = this.selected.map(video_id => {
                 return this.savedVideos[video_id].yt_video_key;
             });
