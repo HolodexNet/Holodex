@@ -27,7 +27,8 @@
             >
                 <v-icon
                     :color="hasSaved ? 'primary' : 'white'"
-                    class="video-action hover-show"
+                    class="video-action"
+                    :class="{ 'hover-show': !hasSaved && !isXs }"
                     @click.stop="toggleSaved"
                 >
                     {{ hasSaved ? mdiCheck : mdiPlusBox }}
@@ -148,6 +149,11 @@ export default {
             type: Number,
             default: 1,
         },
+        isXs: {
+            required: false,
+            type: Boolean,
+            default: false,
+        },
     },
     created() {},
     computed: {
@@ -224,7 +230,7 @@ export default {
         },
         toggleSaved() {
             this.hasSaved
-                ? this.$store.commit("removeSavedVideo", this.video)
+                ? this.$store.commit("removeSavedVideo", this.video.id)
                 : this.$store.commit("addSavedVideo", this.video);
         },
         onClick() {

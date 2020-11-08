@@ -12,6 +12,7 @@
                 :horizontal="horizontal"
                 :includeAvatar="includeAvatar"
                 :colSize="colSize"
+                :isXs="isXs"
             >
                 <!-- pass slot to each individual video card -->
                 <template v-slot:action>
@@ -153,6 +154,9 @@ export default {
             set(val) {
                 this.$emit("changePage", val, this.pageSize);
             },
+        },
+        isXs() {
+            return this.$vuetify.breakpoint.name === "xs";
         },
     },
 };
