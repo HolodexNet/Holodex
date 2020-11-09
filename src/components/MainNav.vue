@@ -78,6 +78,7 @@ import {
     mdiMagnify,
     mdiHeart,
     mdiDotsVertical,
+    mdiAccountBoxMultiple,
     mdiRefresh,
 } from "@mdi/js";
 import NavDrawer from "@/components/navs/NavDrawer";
@@ -117,6 +118,11 @@ export default {
             {
                 name: "Channels",
                 path: "/channel",
+                icon: mdiAccountBoxMultiple,
+            },
+            {
+                name: "Library",
+                path: "/library",
                 icon: mdiAnimationPlay,
             },
             {

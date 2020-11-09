@@ -6,15 +6,12 @@
             'video-card',
             'transparent',
         ]"
-        :to="!redirectMode ? `/watch/${video.id}` : ''"
-        :href="`https://youtu.be/${video.yt_video_key}`"
-        :target="redirectMode ? '_blank' : ''"
-        rel="noreferrer"
+        @click="onClick"
         link
     >
         <!-- Video Image with Duration -->
         <v-img
-            class="white--text align-end"
+            class="white--text"
             :src="imageSrc"
             :aspect-ratio="16 / 9"
             :width="horizontal ? '150px' : '100%'"
@@ -25,12 +22,23 @@
                 </v-row>
             </template>
             <div
-                class="d-flex justify-end"
-                v-if="video.duration_secs > 0 || video.live_start"
+                class="video-overlay d-flex flex-column align-end justify-space-between"
+                style="height: 100%"
             >
-                <span class="video-duration px-2">
+                <v-icon
+                    :color="hasSaved ? 'primary' : 'white'"
+                    class="video-action"
+                    :class="{ 'hover-show': !hasSaved && !isXs }"
+                    @click.stop="toggleSaved"
+                >
+                    {{ hasSaved ? mdiCheck : mdiPlusBox }}
+                </v-icon>
+                <div
+                    v-if="video.duration_secs > 0 || video.live_start"
+                    class="video-duration"
+                >
                     {{ formattedDuration }}
-                </span>
+                </div>
             </div>
         </v-img>
 
@@ -51,7 +59,10 @@
             </router-link>
             <!--  -->
             <v-list-item-content class="pa-0">
-                <v-list-item-title class="video-title" :title="video.title">
+                <v-list-item-title
+                    :class="['video-title', { 'video-watched': hasWatched }]"
+                    :title="video.title"
+                >
                     {{ video.title }}
                 </v-list-item-title>
                 <v-list-item-subtitle v-if="includeChannel">
@@ -79,6 +90,9 @@
                     </span>
                 </v-list-item-subtitle>
             </v-list-item-content>
+            <v-list-item-action @click.stop="">
+                <slot name="action"></slot>
+            </v-list-item-action>
         </v-list-item>
     </v-card>
 </template>
@@ -92,6 +106,7 @@ dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(advancedFormat);
 import { video_thumbnails, formatCount } from "@/utils/functions";
+import { mdiPlusBox, mdiCheck } from "@mdi/js";
 export default {
     name: "VideoCard",
     components: {
@@ -100,6 +115,8 @@ export default {
     data() {
         return {
             forceJPG: true,
+            mdiPlusBox,
+            mdiCheck,
         };
     },
     props: {
@@ -131,6 +148,11 @@ export default {
             required: false,
             type: Number,
             default: 1,
+        },
+        isXs: {
+            required: false,
+            type: Boolean,
+            default: false,
         },
     },
     created() {},
@@ -184,6 +206,14 @@ export default {
             if (this.video.channel[prop]) return this.video.channel[prop];
             return this.video.channel.name;
         },
+        hasWatched() {
+            if (!this.video) return false;
+            return this.$store.getters.hasWatched(this.video.id);
+        },
+        hasSaved() {
+            if (!this.video) return false;
+            return this.$store.getters.hasSaved(this.video.id);
+        },
     },
     methods: {
         formatFromNow(time) {
@@ -195,6 +225,23 @@ export default {
                 : dayjs.utc(secs).format("m:ss");
         },
         formatCount,
+        saveVideo() {
+            this.$store.commit("addSavedVideo", this.video);
+        },
+        toggleSaved() {
+            this.hasSaved
+                ? this.$store.commit("removeSavedVideo", this.video.id)
+                : this.$store.commit("addSavedVideo", this.video);
+        },
+        onClick() {
+            if (this.redirectMode)
+                window.open(
+                    `https://youtu.be/${this.video.yt_video_key}`,
+                    "_blank",
+                    "noopener"
+                );
+            this.$router.push({ path: `/watch/${this.video.id}` });
+        },
     },
 };
 </script>
@@ -221,17 +268,34 @@ export default {
     -webkit-box-orient: vertical;
 }
 
+.video-watched {
+    color: #ce93d8 !important;
+}
+
 .channel-name {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 }
-
+.video-overlay .hover-show {
+    visibility: hidden;
+}
+.video-overlay:hover .hover-show {
+    visibility: visible;
+}
 .video-duration {
     background-color: rgba(0, 0, 0, 0.8);
+    margin: 2px;
+    padding: 1px 5px;
     text-align: center;
     font-size: 0.8125rem;
     letter-spacing: 0.025em;
+}
+
+.video-action {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 2px;
+    margin: 2px;
 }
 
 .video-card-horizontal {
