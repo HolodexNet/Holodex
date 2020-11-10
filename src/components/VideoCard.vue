@@ -234,15 +234,6 @@ export default {
                 ? this.$store.commit("removeSavedVideo", this.video.id)
                 : this.$store.commit("addSavedVideo", this.video);
         },
-        onClick() {
-            if (this.redirectMode)
-                window.open(
-                    `https://youtu.be/${this.video.yt_video_key}`,
-                    "_blank",
-                    "noopener"
-                );
-            this.$router.push({ path: `/watch/${this.video.id}` });
-        },
     },
 };
 </script>
