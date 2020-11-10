@@ -6,7 +6,10 @@
             'video-card',
             'transparent',
         ]"
-        @click="onClick"
+        :to="!redirectMode ? `/watch/${video.id}` : ''"
+        :href="`https://youtu.be/${video.yt_video_key}`"
+        :target="redirectMode ? '_blank' : ''"
+        rel="noopener"
         link
     >
         <!-- Video Image with Duration -->
@@ -29,7 +32,7 @@
                     :color="hasSaved ? 'primary' : 'white'"
                     class="video-action"
                     :class="{ 'hover-show': !hasSaved && !isXs }"
-                    @click.stop="toggleSaved"
+                    @click="toggleSaved($event)"
                 >
                     {{ hasSaved ? mdiCheck : mdiPlusBox }}
                 </v-icon>
@@ -90,7 +93,7 @@
                     </span>
                 </v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-action @click.stop="">
+            <v-list-item-action>
                 <slot name="action"></slot>
             </v-list-item-action>
         </v-list-item>
@@ -225,10 +228,8 @@ export default {
                 : dayjs.utc(secs).format("m:ss");
         },
         formatCount,
-        saveVideo() {
-            this.$store.commit("addSavedVideo", this.video);
-        },
-        toggleSaved() {
+        toggleSaved(event) {
+            event.preventDefault();
             this.hasSaved
                 ? this.$store.commit("removeSavedVideo", this.video.id)
                 : this.$store.commit("addSavedVideo", this.video);
