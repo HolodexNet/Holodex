@@ -63,6 +63,7 @@
                     v-model="selected"
                     :value="prop.video.id"
                     hide-details
+                    @click="e => e.preventDefault()"
                 ></v-checkbox>
             </template>
         </VideoCardList>
