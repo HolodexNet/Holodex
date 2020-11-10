@@ -12,7 +12,13 @@
                 :horizontal="horizontal"
                 :includeAvatar="includeAvatar"
                 :colSize="colSize"
-            />
+                :isXs="isXs"
+            >
+                <!-- pass slot to each individual video card -->
+                <template v-slot:action>
+                    <slot name="action" :video="video"> </slot>
+                </template>
+            </VideoCard>
         </v-col>
         <div class="text-center" style="width: 100%">
             <v-btn
@@ -148,6 +154,9 @@ export default {
             set(val) {
                 this.$emit("changePage", val, this.pageSize);
             },
+        },
+        isXs() {
+            return this.$vuetify.breakpoint.name === "xs";
         },
     },
 };

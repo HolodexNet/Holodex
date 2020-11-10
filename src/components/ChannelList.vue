@@ -43,7 +43,7 @@
             <v-list-item
                 v-if="channel"
                 :key="channel.id"
-                @click="$router.push(`/channel/${channel.id}`)"
+                :to="`/channel/${channel.id}`"
             >
                 <v-list-item-avatar size="55">
                     <ChannelImg :channel="channel" size="55" />
