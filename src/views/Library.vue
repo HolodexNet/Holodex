@@ -4,8 +4,12 @@
             <v-col>
                 <div class="text-h6">Saved Videos</div>
                 <div>
-                    <v-btn class="mr-1 mb-1" color="green" @click="exportSelected">
-                        Make Playlist ({{ selected.length }})
+                    <v-btn
+                        class="mr-1 mb-1"
+                        color="green"
+                        @click="exportSelected"
+                    >
+                        Create YT Playlist ({{ selected.length }})
                     </v-btn>
                     <v-dialog v-model="deleteDialog" max-width="290">
                         <template v-slot:activator="{ on, attrs }">
