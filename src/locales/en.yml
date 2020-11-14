@@ -85,8 +85,7 @@ views:
     useEnglishNameLabel: Use English Name
     useEnglishNameMsg: Uses English localized names for VTuber channels
     hideVideoThumbnailsLabel: Hide Video Thumbnails
-    hideVideoThumbnailsMsg: Hide video thumbnails, helps speed up loading time and
-      less scrolling on mobile
+    hideVideoThumbnailsMsg: Hide video thumbnails, helps speed up loading time and less scrolling on mobile
     pushNotificationLabel: Push Notifications (Coming Soon)
     pushNotificationMsg: Enable push notification for favorited channels
     resetAllSettings: Reset All Settings/Data
