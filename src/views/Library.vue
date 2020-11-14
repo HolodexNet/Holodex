@@ -96,7 +96,7 @@
             </template>
         </VideoCardList>
         <div v-else class="text-center">
-            {{ $t('views.library.emptyLibrary') }}
+            {{ $t("views.library.emptyLibrary") }}
         </div>
     </v-container>
 </template>

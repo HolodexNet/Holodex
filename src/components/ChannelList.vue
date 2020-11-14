@@ -42,7 +42,11 @@
                             channels[index - 1].group !== channel.group)
                 "
             >
-                {{ channel.group ? channel.group : $t("component.channelList.otherText") }}
+                {{
+                    channel.group
+                        ? channel.group
+                        : $t("component.channelList.otherText")
+                }}
             </v-subheader>
             <v-list-item
                 v-if="channel"

@@ -38,9 +38,11 @@
                 </v-btn>
             </template>
             <span>
-                {{ !isFavorited ? 
-                    $t("component.channelSocials.addToFavorites") : 
-                    $t("component.channelSocials.removeFromFavorites") }}
+                {{
+                    !isFavorited
+                        ? $t("component.channelSocials.addToFavorites")
+                        : $t("component.channelSocials.removeFromFavorites")
+                }}
             </span>
         </v-tooltip>
     </v-list-item-action>
