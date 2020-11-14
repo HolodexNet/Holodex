@@ -74,4 +74,6 @@ views:
     hideVideoThumbnailsLabel: Hide Video Thumbnails
     hideVideoThumbnailsMsg: Hide video thumbnails, helps speed up loading time and
       less scrolling on mobile
+    pushNotificationLabel: Push Notifications (Coming Soon)
+    pushNotificationMsg: Enable push notification for favorited channels
     resetAllSettings: Reset All Settings/Data
