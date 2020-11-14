@@ -206,10 +206,7 @@ export default {
         },
         sort: {
             get() {
-                // validate sort option or set to default
-                const fromStore = this.$store.state.channelsSort[this.category];
-                if (!this.findSortValue(fromStore)) return "subscribers";
-                return fromStore;
+                return this.$store.state.channelsSort[this.category];
             },
             set(val) {
                 return this.$store.commit("setChannelsSort", {
