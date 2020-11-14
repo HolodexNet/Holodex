@@ -4,7 +4,9 @@
         <v-row v-show="!isLoading && !hasError">
             <v-col>
                 <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
-                    <div class="text-h6">Live / Upcoming</div>
+                    <div class="text-h6">
+                        {{ $t("views.home.liveOrUpcomingHeading") }}
+                    </div>
                 </v-row>
                 <VideoCardList
                     :videos="live"
@@ -22,16 +24,18 @@
                 </VideoCardList>
                 <v-divider class="my-3" />
                 <v-row class="d-flex justify-space-between px-3 pt-1 pb-3">
-                    <div class="text-h6">Recent Videos</div>
+                    <div class="text-h6">
+                        {{ $t("views.home.recentVideosHeading") }}
+                    </div>
                     <v-btn-toggle v-model="recentVideoFilter" mandatory dense>
                         <v-btn value="all">
-                            All
+                            {{ $t("views.home.recentVideoToggles.all") }}
                         </v-btn>
                         <v-btn value="vtuber">
-                            Official
+                            {{ $t("views.home.recentVideoToggles.official") }}
                         </v-btn>
                         <v-btn value="subber">
-                            Clips
+                            {{ $t("views.home.recentVideoToggles.subber") }}
                         </v-btn>
                     </v-btn-toggle>
                 </v-row>

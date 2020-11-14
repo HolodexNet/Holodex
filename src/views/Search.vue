@@ -63,6 +63,8 @@ export default {
         VideoCardList,
     },
     data() {
+        const $t = this.$t;
+
         return {
             videos: [],
             totalVideos: 1,
@@ -79,7 +81,7 @@ export default {
                 },
                 sort: [
                     {
-                        text: "Newest",
+                        text: $t("views.search.sort.newest"),
                         value: "newest",
                         query_value: {
                             sort: "published_at",
@@ -87,7 +89,7 @@ export default {
                         },
                     },
                     {
-                        text: "Oldest",
+                        text: $t("views.search.sort.oldest"),
                         value: "oldest",
                         query_value: {
                             sort: "published_at",
@@ -97,19 +99,19 @@ export default {
                 ],
                 type: [
                     {
-                        text: "All",
+                        text: $t("views.search.type.all"),
                         value: "all",
                         query_value: {},
                     },
                     {
-                        text: "Official",
+                        text: $t("views.search.type.official"),
                         value: "official",
                         query_value: {
                             channel_type: "vtuber",
                         },
                     },
                     {
-                        text: "Clip",
+                        text: $t("views.search.type.clip"),
                         value: "clip",
                         query_value: {
                             channel_type: "subber",

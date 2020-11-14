@@ -40,7 +40,9 @@
             </template>
             <span>
                 {{
-                    !isFavorited ? "Add to Favorites" : "Remove from Favorites"
+                    !isFavorited
+                        ? $t("component.channelSocials.addToFavorites")
+                        : $t("component.channelSocials.removeFromFavorites")
                 }}
             </span>
         </v-tooltip>

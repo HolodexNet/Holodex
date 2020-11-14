@@ -20,6 +20,7 @@ component:
     favorites: Favorites
     channels: channels
     about: About
+    library: Library
     settings: Settings
   videoCard:
     clips: "{0} Clips"
@@ -42,6 +43,8 @@ views:
       Vtuber: Vtuber
       Subber: Subber
       Favorites: Favorites
+    favoriteLastUpdated: "Last Updated {0} ago"
+    favoritesAreEmpty: You have no favorites!
   home:
     liveOrUpcomingHeading: Live / Upcoming
     recentVideosHeading: Recent Videos

@@ -2,7 +2,7 @@
     <v-expansion-panels flat>
         <v-expansion-panel :value="0">
             <v-expansion-panel-header :expand-icon="mdiMenuDown">
-                Description
+                {{ $t("component.videoDescription.description") }}
             </v-expansion-panel-header>
             <v-expansion-panel-content style="white-space: pre-warp">
                 <v-card flat>

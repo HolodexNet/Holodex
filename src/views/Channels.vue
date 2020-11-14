@@ -1,9 +1,9 @@
 <template>
     <v-container>
         <v-tabs v-model="category">
-            <v-tab>Vtuber</v-tab>
-            <v-tab>Subber</v-tab>
-            <v-tab>Favorites</v-tab>
+            <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
+            <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
+            <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
         </v-tabs>
         <v-divider />
         <v-container fluid class="pa-0">
@@ -79,10 +79,10 @@
                 v-if="favorites.length > 0"
                 class="text--secondary text-caption"
             >
-                Last updated {{ lastUpdated }} ago
+                {{ $t("views.channels.favoriteLastUpdated", [lastUpdated]) }}
             </div>
             <div v-if="!favorites || favorites.length == 0">
-                You have no favorites!
+                {{ $t("views.channels.favoritesAreEmpty") }}
             </div>
         </template>
     </v-container>
@@ -119,6 +119,9 @@ export default {
         };
     },
     beforeCreate() {
+        //shorthand the translation
+        const $t = this.$t;
+
         this.Tabs = {
             SUBBER: 1,
             VTUBER: 0,
@@ -127,7 +130,7 @@ export default {
 
         this.sortOptions = [
             {
-                text: "Subscribers",
+                text: $t("views.channels.sortOptions.subscribers"),
                 value: "subscribers",
                 query_value: {
                     sort: "subscriber_count",
@@ -135,7 +138,7 @@ export default {
                 },
             },
             {
-                text: "Group",
+                text: $t("views.channels.sortOptions.group"),
                 value: "group",
                 query_value: {
                     sort: "group",
@@ -143,7 +146,7 @@ export default {
                 },
             },
             {
-                text: "Recent Upload",
+                text: $t("views.channels.sortOptions.recentUpload"),
                 value: "recent_upload",
                 query_value: {
                     sort: "latest_published_at",
@@ -151,7 +154,7 @@ export default {
                 },
             },
             {
-                text: "Video Count",
+                text: $t("views.channels.sortOptions.videoCount"),
                 value: "video_count",
                 query_value: {
                     sort: "video_count",
@@ -159,7 +162,7 @@ export default {
                 },
             },
             {
-                text: "Clip Count",
+                text: $t("views.channels.sortOptions.clipCount"),
                 value: "clip_count",
                 query_value: {
                     sort: "clip_count",
@@ -167,10 +170,6 @@ export default {
                 },
             },
         ];
-
-        // if (this.category == this.Tabs.FAVORITES) {
-        //     this.loadFavorites();
-        // }
     },
     watch: {
         category() {
@@ -251,7 +250,10 @@ export default {
             api.channels({
                 limit: this.category == this.Tabs.SUBBER ? this.perPage : 100,
                 offset: this.currentOffset * this.perPage,
-                type: this.category == this.Tabs.SUBBER ? "subber" : "vtuber",
+                type:
+                    this.category == this.Tabs.SUBBER
+                        ? this.$t("views.channels.channelType.subber")
+                        : this.$t("views.channels.channelType.vtuber"),
                 ...(this.category == this.Tabs.SUBBER && {
                     ...this.currentSortValue.query_value,
                 }),

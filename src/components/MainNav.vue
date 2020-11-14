@@ -106,33 +106,33 @@ export default {
         refreshing: false,
         pages: [
             {
-                name: "Home",
+                name: this.$t("component.mainNav.home"),
                 path: "/",
                 icon: mdiHome,
             },
             {
-                name: "Favorites",
+                name: this.$t("component.mainNav.favorites"),
                 path: "/favorites",
                 icon: mdiHeart,
             },
             {
-                name: "Channels",
+                name: this.$t("component.mainNav.channels"),
                 path: "/channel",
                 icon: mdiAccountBoxMultiple,
             },
             {
-                name: "Library",
+                name: this.$t("component.mainNav.library"),
                 path: "/library",
                 icon: mdiAnimationPlay,
             },
             {
-                name: "About",
+                name: this.$t("component.mainNav.about"),
                 path: "/about",
                 icon: mdiHelpCircle,
                 collapsible: true,
             },
             {
-                name: "Settings",
+                name: this.$t("component.mainNav.settings"),
                 path: "/settings",
                 icon: mdiCog,
                 collapsible: true,
