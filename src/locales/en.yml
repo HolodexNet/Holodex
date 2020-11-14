@@ -21,7 +21,7 @@ component:
   mainNav:
     home: Home
     favorites: Favorites
-    channels: channels
+    channels: Channels
     about: About
     library: Library
     settings: Settings

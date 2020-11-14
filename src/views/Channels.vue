@@ -120,8 +120,6 @@ export default {
     },
     beforeCreate() {
         //shorthand the translation
-        const $t = this.$t;
-
         this.Tabs = {
             SUBBER: 1,
             VTUBER: 0,
@@ -130,7 +128,7 @@ export default {
 
         this.sortOptions = [
             {
-                text: $t("views.channels.sortOptions.subscribers"),
+                text: this.$t("views.channels.sortOptions.subscribers"),
                 value: "subscribers",
                 query_value: {
                     sort: "subscriber_count",
@@ -138,7 +136,7 @@ export default {
                 },
             },
             {
-                text: $t("views.channels.sortOptions.group"),
+                text: this.$t("views.channels.sortOptions.group"),
                 value: "group",
                 query_value: {
                     sort: "group",
@@ -146,7 +144,7 @@ export default {
                 },
             },
             {
-                text: $t("views.channels.sortOptions.recentUpload"),
+                text: this.$t("views.channels.sortOptions.recentUpload"),
                 value: "recent_upload",
                 query_value: {
                     sort: "latest_published_at",
@@ -154,7 +152,7 @@ export default {
                 },
             },
             {
-                text: $t("views.channels.sortOptions.videoCount"),
+                text: this.$t("views.channels.sortOptions.videoCount"),
                 value: "video_count",
                 query_value: {
                     sort: "video_count",
@@ -162,7 +160,7 @@ export default {
                 },
             },
             {
-                text: $t("views.channels.sortOptions.clipCount"),
+                text: this.$t("views.channels.sortOptions.clipCount"),
                 value: "clip_count",
                 query_value: {
                     sort: "clip_count",

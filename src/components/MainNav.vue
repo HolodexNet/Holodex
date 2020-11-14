@@ -92,53 +92,55 @@ export default {
         BottomNav,
         Logo,
     },
-    data: () => ({
-        drawer: null,
-        ...{
-            mdiArrowLeft,
-            mdiMagnify,
-            mdiMenu,
-            mdiDotsVertical,
-            mdiRefresh,
-        },
-        favoritesExpanded: false,
-        searchBarExpanded: false,
-        refreshing: false,
-        pages: [
-            {
-                name: this.$t("component.mainNav.home"),
-                path: "/",
-                icon: mdiHome,
+    data: function() {
+        return {
+            drawer: null,
+            ...{
+                mdiArrowLeft,
+                mdiMagnify,
+                mdiMenu,
+                mdiDotsVertical,
+                mdiRefresh,
             },
-            {
-                name: this.$t("component.mainNav.favorites"),
-                path: "/favorites",
-                icon: mdiHeart,
-            },
-            {
-                name: this.$t("component.mainNav.channels"),
-                path: "/channel",
-                icon: mdiAccountBoxMultiple,
-            },
-            {
-                name: this.$t("component.mainNav.library"),
-                path: "/library",
-                icon: mdiAnimationPlay,
-            },
-            {
-                name: this.$t("component.mainNav.about"),
-                path: "/about",
-                icon: mdiHelpCircle,
-                collapsible: true,
-            },
-            {
-                name: this.$t("component.mainNav.settings"),
-                path: "/settings",
-                icon: mdiCog,
-                collapsible: true,
-            },
-        ],
-    }),
+            favoritesExpanded: false,
+            searchBarExpanded: false,
+            refreshing: false,
+            pages: [
+                {
+                    name: this.$t("component.mainNav.home"),
+                    path: "/",
+                    icon: mdiHome,
+                },
+                {
+                    name: this.$t("component.mainNav.favorites"),
+                    path: "/favorites",
+                    icon: mdiHeart,
+                },
+                {
+                    name: this.$t("component.mainNav.channels"),
+                    path: "/channel",
+                    icon: mdiAccountBoxMultiple,
+                },
+                {
+                    name: this.$t("component.mainNav.library"),
+                    path: "/library",
+                    icon: mdiAnimationPlay,
+                },
+                {
+                    name: this.$t("component.mainNav.about"),
+                    path: "/about",
+                    icon: mdiHelpCircle,
+                    collapsible: true,
+                },
+                {
+                    name: this.$t("component.mainNav.settings"),
+                    path: "/settings",
+                    icon: mdiCog,
+                    collapsible: true,
+                },
+            ],
+        };
+    },
     computed: {
         isXs() {
             return this.$vuetify.breakpoint.name === "xs";
