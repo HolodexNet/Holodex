@@ -125,49 +125,6 @@ export default {
             VTUBER: 0,
             FAVORITES: 2,
         };
-
-        this.sortOptions = [
-            {
-                text: this.$t("views.channels.sortOptions.subscribers"),
-                value: "subscribers",
-                query_value: {
-                    sort: "subscriber_count",
-                    order: "desc",
-                },
-            },
-            {
-                text: this.$t("views.channels.sortOptions.group"),
-                value: "group",
-                query_value: {
-                    sort: "group",
-                    order: "asc",
-                },
-            },
-            {
-                text: this.$t("views.channels.sortOptions.recentUpload"),
-                value: "recent_upload",
-                query_value: {
-                    sort: "latest_published_at",
-                    order: "desc",
-                },
-            },
-            {
-                text: this.$t("views.channels.sortOptions.videoCount"),
-                value: "video_count",
-                query_value: {
-                    sort: "video_count",
-                    order: "desc",
-                },
-            },
-            {
-                text: this.$t("views.channels.sortOptions.clipCount"),
-                value: "clip_count",
-                query_value: {
-                    sort: "clip_count",
-                    order: "desc",
-                },
-            },
-        ];
     },
     watch: {
         category() {
@@ -183,6 +140,54 @@ export default {
         },
     },
     computed: {
+        sortOptions: {
+            get() {
+                return [
+                    {
+                        text: this.$t("views.channels.sortOptions.subscribers"),
+                        value: "subscribers",
+                        query_value: {
+                            sort: "subscriber_count",
+                            order: "desc",
+                        },
+                    },
+                    {
+                        text: this.$t("views.channels.sortOptions.group"),
+                        value: "group",
+                        query_value: {
+                            sort: "group",
+                            order: "asc",
+                        },
+                    },
+                    {
+                        text: this.$t(
+                            "views.channels.sortOptions.recentUpload"
+                        ),
+                        value: "recent_upload",
+                        query_value: {
+                            sort: "latest_published_at",
+                            order: "desc",
+                        },
+                    },
+                    {
+                        text: this.$t("views.channels.sortOptions.videoCount"),
+                        value: "video_count",
+                        query_value: {
+                            sort: "video_count",
+                            order: "desc",
+                        },
+                    },
+                    {
+                        text: this.$t("views.channels.sortOptions.clipCount"),
+                        value: "clip_count",
+                        query_value: {
+                            sort: "clip_count",
+                            order: "desc",
+                        },
+                    },
+                ];
+            },
+        },
         favorites() {
             return this.$store.state.favorites;
         },

@@ -3,6 +3,17 @@
         <v-row>
             <v-col>
                 <div class="text-h4">{{ $t("views.settings.title") }}</div>
+                <v-radio-group v-model="language" row dense>
+                    <template v-slot:label>
+                        <div>Language:</div>
+                    </template>
+                    <v-radio
+                        v-for="l in langs"
+                        :key="l.val"
+                        :label="l.display"
+                        :value="l.val"
+                    ></v-radio>
+                </v-radio-group>
                 <v-switch
                     v-model="darkMode"
                     :label="$t('views.settings.darkModeLabel')"
@@ -41,6 +52,15 @@
 export default {
     name: "Settings",
     computed: {
+        language: {
+            get() {
+                return this.$store.state.lang;
+            },
+            set(val) {
+                this.$store.commit("setLanguage", val);
+                this.$i18n.locale = this.$store.state.lang;
+            },
+        },
         darkMode: {
             get() {
                 return this.$store.state.darkMode;
@@ -73,6 +93,14 @@ export default {
                 this.$store.commit("setHideThumbnail", val);
             },
         },
+    },
+    data() {
+        return {
+            langs: [
+                { val: "en", display: "English" },
+                { val: "ja", display: "日本語" },
+            ],
+        };
     },
     methods: {
         resetSettings() {
