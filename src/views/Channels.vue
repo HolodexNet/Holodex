@@ -248,9 +248,7 @@ export default {
                 limit: this.category == this.Tabs.SUBBER ? this.perPage : 100,
                 offset: this.currentOffset * this.perPage,
                 type:
-                    this.category == this.Tabs.SUBBER
-                        ? this.$t("views.channels.channelType.subber")
-                        : this.$t("views.channels.channelType.vtuber"),
+                    this.category == this.Tabs.SUBBER ? this.$t("views.channels.channelType.subber") : this.$t("views.channels.channelType.vtuber"),
                 ...(this.category == this.Tabs.SUBBER && {
                     ...this.currentSortValue.query_value,
                 }),
