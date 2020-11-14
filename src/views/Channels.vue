@@ -118,7 +118,7 @@ export default {
             infiniteId: +new Date(),
         };
     },
-    created() {
+    beforeCreate() {
         this.Tabs = {
             SUBBER: 1,
             VTUBER: 0,
@@ -168,9 +168,9 @@ export default {
             },
         ];
 
-        if (this.category == this.Tabs.FAVORITES) {
-            this.loadFavorites();
-        }
+        // if (this.category == this.Tabs.FAVORITES) {
+        //     this.loadFavorites();
+        // }
     },
     watch: {
         category() {

@@ -8,23 +8,23 @@ Vue.use(Vuetify);
 // ====== i18n setup ======
 Vue.use(VueI18n);
 
-import en from "vuetify/es5/locale/en";
-import ja from "vuetify/es5/locale/ja";
-import enTL from "@/localization/en.yaml";
-import jaTL from "@/localization/ja.yaml";
+import vuetifyEn from "vuetify/es5/locale/en";
+import vuetifyJa from "vuetify/es5/locale/ja";
+import enTL from "@/locales/en.yml";
+import jaTL from "@/locales/ja.yml";
 
-const localization = {
-    en: { $vuetify: en, ...enTL },
-    ja: { $vuetify: ja, ...jaTL },
+const messages = {
+    en: { $vuetify: vuetifyEn, ...enTL },
+    ja: { $vuetify: vuetifyJa, ...jaTL },
 };
 
-const i18n = new VueI18n({
+export const i18n = new VueI18n({
     locale: "en", // set locale
-    localization, // set locale messages
+    messages, // set locale messages
 });
 // ====== end i18n setup ======
 
-export default new Vuetify({
+export const vuetify = new Vuetify({
     treeShake: true,
     icons: {
         iconfont: "mdiSvg",

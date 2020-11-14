@@ -23,13 +23,22 @@
             </template>
             <template v-if="includeVideoCount">
                 <br />
-                {{ channel.video_count }} Videos
+                {{
+                    $t("component.channelInfo.videoCount", [
+                        channel.video_count,
+                    ])
+                }}
                 <router-link
                     :to="`/channel/${channel.id}/clips`"
                     class="no-decoration"
                     v-if="channel.clip_count > 0"
                 >
-                    • {{ channel.clip_count }} Clips
+                    •
+                    {{
+                        $t("component.channelInfo.clipCount", [
+                            channel.clip_count,
+                        ])
+                    }}
                 </router-link>
             </template>
         </v-list-item-subtitle>
@@ -79,10 +88,10 @@ export default {
     computed: {
         subscriberCount() {
             if (this.channel.subscriber_count)
-                return `${formatCount(
-                    this.channel.subscriber_count
-                )} Subscribers `;
-            else return "Subscriber count unavailable";
+                return this.$t("component.channelInfo.subscriberCount", [
+                    formatCount(this.channel.subscriber_count),
+                ]);
+            else return this.$t("component.channelInfo.subscriberNA");
         },
         subscriberGains() {
             return this.channel.subscriber_gains

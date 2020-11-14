@@ -2,7 +2,7 @@
     <v-container class="home pt-0" fluid>
         <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
         <v-row v-show="!isLoading && !hasError">
-            <v-col class="px-lg-10">
+            <v-col>
                 <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
                     <div class="text-h6">Live / Upcoming</div>
                 </v-row>

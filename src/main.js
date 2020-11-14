@@ -2,10 +2,11 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import vuetify from "./plugins/vuetify";
+import { i18n, vuetify } from "./plugins/vuetify";
 import VueGTag from "vue-gtag";
 import VueMeta from "vue-meta";
 import linkify from "vue-linkify";
+import VueI18n from "vue-i18n";
 
 import "./registerServiceWorker";
 
@@ -23,9 +24,11 @@ Vue.use(
 Vue.use(VueMeta, {
     refreshOnceOnNavigation: true,
 });
+Vue.use(VueI18n);
 Vue.directive("linkified", linkify);
 
 new Vue({
+    i18n,
     router,
     store,
     vuetify,
