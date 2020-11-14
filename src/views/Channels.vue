@@ -1,9 +1,9 @@
 <template>
     <v-container>
         <v-tabs v-model="category">
-            <v-tab>Vtuber</v-tab>
-            <v-tab>Subber</v-tab>
-            <v-tab>Favorites</v-tab>
+            <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
+            <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
+            <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
         </v-tabs>
         <v-divider />
         <v-container fluid class="pa-0">
@@ -79,10 +79,10 @@
                 v-if="favorites.length > 0"
                 class="text--secondary text-caption"
             >
-                Last updated {{ lastUpdated }} ago
+                {{ $t("views.channels.favoriteLastUpdated", [lastUpdated]) }}
             </div>
             <div v-if="!favorites || favorites.length == 0">
-                You have no favorites!
+                {{ $t("views.channels.favoritesAreEmpty") }}
             </div>
         </template>
     </v-container>
@@ -118,59 +118,13 @@ export default {
             infiniteId: +new Date(),
         };
     },
-    created() {
+    beforeCreate() {
+        //shorthand the translation
         this.Tabs = {
             SUBBER: 1,
             VTUBER: 0,
             FAVORITES: 2,
         };
-
-        this.sortOptions = [
-            {
-                text: "Subscribers",
-                value: "subscribers",
-                query_value: {
-                    sort: "subscriber_count",
-                    order: "desc",
-                },
-            },
-            {
-                text: "Group",
-                value: "group",
-                query_value: {
-                    sort: "group",
-                    order: "asc",
-                },
-            },
-            {
-                text: "Recent Upload",
-                value: "recent_upload",
-                query_value: {
-                    sort: "latest_published_at",
-                    order: "desc",
-                },
-            },
-            {
-                text: "Video Count",
-                value: "video_count",
-                query_value: {
-                    sort: "video_count",
-                    order: "desc",
-                },
-            },
-            {
-                text: "Clip Count",
-                value: "clip_count",
-                query_value: {
-                    sort: "clip_count",
-                    order: "desc",
-                },
-            },
-        ];
-
-        if (this.category == this.Tabs.FAVORITES) {
-            this.loadFavorites();
-        }
     },
     watch: {
         category() {
@@ -186,6 +140,54 @@ export default {
         },
     },
     computed: {
+        sortOptions: {
+            get() {
+                return [
+                    {
+                        text: this.$t("views.channels.sortOptions.subscribers"),
+                        value: "subscribers",
+                        query_value: {
+                            sort: "subscriber_count",
+                            order: "desc",
+                        },
+                    },
+                    {
+                        text: this.$t("views.channels.sortOptions.group"),
+                        value: "group",
+                        query_value: {
+                            sort: "group",
+                            order: "asc",
+                        },
+                    },
+                    {
+                        text: this.$t(
+                            "views.channels.sortOptions.recentUpload"
+                        ),
+                        value: "recent_upload",
+                        query_value: {
+                            sort: "latest_published_at",
+                            order: "desc",
+                        },
+                    },
+                    {
+                        text: this.$t("views.channels.sortOptions.videoCount"),
+                        value: "video_count",
+                        query_value: {
+                            sort: "video_count",
+                            order: "desc",
+                        },
+                    },
+                    {
+                        text: this.$t("views.channels.sortOptions.clipCount"),
+                        value: "clip_count",
+                        query_value: {
+                            sort: "clip_count",
+                            order: "desc",
+                        },
+                    },
+                ];
+            },
+        },
         favorites() {
             return this.$store.state.favorites;
         },
@@ -248,7 +250,10 @@ export default {
             api.channels({
                 limit: this.category == this.Tabs.SUBBER ? this.perPage : 100,
                 offset: this.currentOffset * this.perPage,
-                type: this.category == this.Tabs.SUBBER ? "subber" : "vtuber",
+                type:
+                    this.category == this.Tabs.SUBBER
+                        ? this.$t("views.channels.channelType.subber")
+                        : this.$t("views.channels.channelType.vtuber"),
                 ...(this.category == this.Tabs.SUBBER && {
                     ...this.currentSortValue.query_value,
                 }),

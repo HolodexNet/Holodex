@@ -79,7 +79,7 @@ export default {
                 },
                 sort: [
                     {
-                        text: "Newest",
+                        text: this.$t("views.search.sort.newest"),
                         value: "newest",
                         query_value: {
                             sort: "published_at",
@@ -87,7 +87,7 @@ export default {
                         },
                     },
                     {
-                        text: "Oldest",
+                        text: this.$t("views.search.sort.oldest"),
                         value: "oldest",
                         query_value: {
                             sort: "published_at",
@@ -97,19 +97,19 @@ export default {
                 ],
                 type: [
                     {
-                        text: "All",
+                        text: this.$t("views.search.type.all"),
                         value: "all",
                         query_value: {},
                     },
                     {
-                        text: "Official",
+                        text: this.$t("views.search.type.official"),
                         value: "official",
                         query_value: {
                             channel_type: "vtuber",
                         },
                     },
                     {
-                        text: "Clip",
+                        text: this.$t("views.search.type.clip"),
                         value: "clip",
                         query_value: {
                             channel_type: "subber",

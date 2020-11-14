@@ -89,6 +89,7 @@ export default {
             this.$store.commit("testedWebP");
         }
         this.$vuetify.theme.dark = this.darkMode;
+        this.$i18n.locale = this.$store.state.lang;
         this.$store.dispatch("checkChannelCache");
         document.addEventListener(
             "swUpdated",

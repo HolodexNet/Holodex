@@ -1,0 +1,90 @@
+hello: world
+component:
+  apiError:
+    aboutPage: ページについて
+    textAfterTwitter: または、を通じてエラーを報告します
+    textBeforeTwitter: コンテンツの取得中にエラーが発生しました。Twitterを確認してください
+    title: ゴメナソーリー！
+  channelInfo:
+    clipCount: '{0}クリップ'
+    subscriberCount: '{0}サブスクライバー'
+    subscriberNA: 加入者数は利用できません
+    videoCount: '{0}動画'
+  channelList:
+    otherText: その他
+  channelSocials:
+    addToFavorites: お気に入りに追加
+    removeFromFavorites: お気に入りから削除
+  mainNav:
+    about: 約
+    channels: チャンネル
+    favorites: お気に入り
+    home: ホーム
+    library: 図書館
+    settings: 設定
+  videoCard:
+    clips: '{0}クリップ'
+    liveNow: 今を生きる
+    watching: '{0}ウォッチング'
+  videoDescription:
+    description: 説明
+example: '{0}または{1}パラメータを入力してください'
+example2: 'パラメータで始まる{0}テキストは引用符で囲む必要があります'
+views:
+  channels:
+    channelType:
+      subber: 地下
+      vtuber: vtuber
+    favoriteLastUpdated: '最終更新{0}前'
+    favoritesAreEmpty: お気に入りはありません！
+    sortOptions:
+      clipCount: クリップ数
+      group: グループ
+      recentUpload: 最近のアップロード
+      subscribers: サブスクライバー
+      videoCount: ビデオカウント
+    tabs:
+      Favorites: お気に入り
+      Subber: サブバー
+      Vtuber: Vtuber
+  home:
+    liveOrUpcomingHeading: ライブ/今後
+    recentVideoToggles:
+      all: すべて
+      official: 公式
+      subber: クリップ
+    recentVideosHeading: 最近のビデオ
+  library:
+    createYtPlaylistButton: 'YTプレイリストを作成する（{0}）'
+    deleteConfirmation: '{0}動画を削除してもよろしいですか？'
+    deleteConfirmationCancel: キャンセル
+    deleteConfirmationOK: 削除
+    deleteFromLibraryButton: '削除（{0}）'
+    emptyLibrary: 保存したビデオはありません！
+    savedVideosTitle: 保存したビデオ
+    selectionReset: リセット
+    selectionSelectAll: すべて選択
+  notFound:
+    back: 帰宅
+    title: コンテンツが見つかりません
+  search:
+    sort:
+      newest: 最新
+      oldest: 最古
+    type:
+      all: すべて
+      clip: クリップ
+      official: 公式
+  settings:
+    darkModeLabel: ダークモード
+    darkModeMsg: テーマをライトモードとダークモードの間で変更します
+    hideVideoThumbnailsLabel: ビデオサムネイルを非表示にする
+    hideVideoThumbnailsMsg: 動画のサムネイルを非表示にし、モバイルでの読み込み時間を短縮し、スクロールを減らします
+    pushNotificationLabel: プッシュ通知（近日公開）
+    pushNotificationMsg: お気に入りのチャンネルのプッシュ通知を有効にする
+    redirectModeLabel: Youtubeで開く
+    redirectModeMsg: ビデオをクリックすると、Youtubeで開きます
+    resetAllSettings: すべての設定/データをリセット
+    title: 設定
+    useEnglishNameLabel: 英語名を使用する
+    useEnglishNameMsg: VTuberチャンネルに英語のローカライズされた名前を使用

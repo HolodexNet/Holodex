@@ -2,14 +2,20 @@
     <v-container>
         <v-row class="d-flex justify-space-between">
             <v-col>
-                <div class="text-h6">Saved Videos</div>
+                <div class="text-h6">
+                    {{ $t("views.library.savedVideosTitle") }}
+                </div>
                 <div>
                     <v-btn
                         class="mr-1 mb-1"
                         color="green"
                         @click="exportSelected"
                     >
-                        Create YT Playlist ({{ selected.length }})
+                        {{
+                            $t("views.library.createYtPlaylistButton", [
+                                selected.length,
+                            ])
+                        }}
                     </v-btn>
                     <v-dialog v-model="deleteDialog" max-width="290">
                         <template v-slot:activator="{ on, attrs }">
@@ -19,19 +25,31 @@
                                 v-bind="attrs"
                                 v-on="on"
                             >
-                                Delete ({{ selected.length }})
+                                {{
+                                    $t(
+                                        "views.library.deleteFromLibraryButton",
+                                        [selected.length]
+                                    )
+                                }}
                             </v-btn>
                         </template>
                         <!-- Deletion confirm dialog -->
                         <v-card>
                             <v-card-title>
-                                Are you sure you want to delete
-                                {{ selected.length }} videos?
+                                {{
+                                    $t("views.library.deleteConfirmation", [
+                                        selected.length,
+                                    ])
+                                }}
                             </v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn text @click="deleteDialog = false">
-                                    Cancel
+                                    {{
+                                        $t(
+                                            "views.library.deleteConfirmationCancel"
+                                        )
+                                    }}
                                 </v-btn>
                                 <v-btn
                                     color="red darken-1"
@@ -41,7 +59,9 @@
                                         deleteSelected;
                                     "
                                 >
-                                    Delete
+                                    {{
+                                        $t("views.library.deleteConfirmationOK")
+                                    }}
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -51,7 +71,11 @@
                         @click="showReset ? reset() : selectAll()"
                         color="blue-grey"
                     >
-                        {{ showReset ? "Reset" : "Select All" }}
+                        {{
+                            showReset
+                                ? $t("views.library.selectionReset")
+                                : $t("views.library.selectionSelectAll")
+                        }}
                     </v-btn>
                 </div>
             </v-col>
@@ -72,7 +96,7 @@
             </template>
         </VideoCardList>
         <div v-else class="text-center">
-            You have no saved videos!
+            {{ $t("views.library.emptyLibrary") }}
         </div>
     </v-container>
 </template>

@@ -9,6 +9,7 @@ Vue.use(Vuex);
 function defaultState() {
     return {
         // settings
+        lang: "en",
         darkMode: true,
         redirectMode: false,
         canUseWebP: true,
@@ -105,6 +106,9 @@ export default new Vuex.Store({
         },
         setHideThumbnail(state, val) {
             state.hideThumbnail = val;
+        },
+        setLanguage(state, val) {
+            state.lang = val;
         },
         // persistedFilters
         setRecentVideoFilter(state, payload) {

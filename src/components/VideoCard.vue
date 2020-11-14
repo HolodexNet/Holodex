@@ -82,14 +82,24 @@
                         {{ formattedTime }}
                     </span>
                     <span v-if="video.clips && video.clips.length > 0">
-                        • {{ video.clips.length }} Clips
+                        •
+                        {{
+                            $t("component.videoCard.clips", [
+                                formatCount(video.clips.length),
+                            ])
+                        }}
                     </span>
                     <span
                         v-else-if="
                             video.status === 'live' && video.live_viewers > 0
                         "
                     >
-                        • {{ formatCount(video.live_viewers) }} Watching
+                        •
+                        {{
+                            $t("component.videoCard.watching", [
+                                formatCount(video.live_viewers),
+                            ])
+                        }}
                     </span>
                 </v-list-item-subtitle>
             </v-list-item-content>
@@ -175,7 +185,7 @@ export default {
                               ))
                     );
                 case "live":
-                    return "Live Now";
+                    return this.$t("component.videoCard.liveNow");
                 default:
                     return this.formatFromNow(this.video.published_at);
             }

@@ -1,10 +1,30 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
 import { primary_color, secondary_color } from "@/utils/consts";
+import VueI18n from "vue-i18n";
 
 Vue.use(Vuetify);
 
-export default new Vuetify({
+// ====== i18n setup ======
+Vue.use(VueI18n);
+
+import vuetifyEn from "vuetify/es5/locale/en";
+import vuetifyJa from "vuetify/es5/locale/ja";
+import enTL from "@/locales/en.yml";
+import jaTL from "@/locales/ja.yml";
+
+const messages = {
+    en: { $vuetify: vuetifyEn, ...enTL },
+    ja: { $vuetify: vuetifyJa, ...jaTL },
+};
+
+export const i18n = new VueI18n({
+    locale: "en", // set locale
+    messages, // set locale messages
+});
+// ====== end i18n setup ======
+
+export const vuetify = new Vuetify({
     treeShake: true,
     icons: {
         iconfont: "mdiSvg",
@@ -20,6 +40,9 @@ export default new Vuetify({
                 secondary: secondary_color,
             },
         },
+    },
+    lang: {
+        t: (key, ...params) => i18n.t(key, params),
     },
     // breakpoint: {
     //     thresholds: {

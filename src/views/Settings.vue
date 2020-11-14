@@ -2,35 +2,46 @@
     <v-container>
         <v-row>
             <v-col>
-                <div class="text-h4">Settings</div>
+                <div class="text-h4">{{ $t("views.settings.title") }}</div>
+                <v-radio-group v-model="language" row dense>
+                    <template v-slot:label>
+                        <div>Language:</div>
+                    </template>
+                    <v-radio
+                        v-for="l in langs"
+                        :key="l.val"
+                        :label="l.display"
+                        :value="l.val"
+                    ></v-radio>
+                </v-radio-group>
                 <v-switch
                     v-model="darkMode"
-                    label="Dark Mode"
-                    messages="Changes the theme between light mode and dark mode"
+                    :label="$t('views.settings.darkModeLabel')"
+                    :messages="$t('views.settings.darkModeMsg')"
                 ></v-switch>
                 <v-switch
                     v-model="redirectMode"
-                    label="Redirect Mode"
-                    messages="Clicking on a video takes you straight to the youtube video"
+                    :label="$t('views.settings.redirectModeLabel')"
+                    :messages="$t('views.settings.redirectModeMsg')"
                 ></v-switch>
                 <v-switch
                     v-model="useEnName"
-                    label="Use English Name"
-                    messages="Replaces Vtuber name to their English name throughout the site"
+                    :label="$t('views.settings.useEnglishNameLabel')"
+                    :messages="$t('views.settings.useEnglishNameMsg')"
                 ></v-switch>
                 <v-switch
                     v-model="hideThumbnail"
-                    label="Hide Video Thumbnails"
-                    messages="Hide video thumbnails, helps speed up loading time and less scrolling on mobile"
+                    :label="$t('views.settings.hideVideoThumbnailsLabel')"
+                    :messages="$t('views.settings.hideVideoThumbnailsMsg')"
                 ></v-switch>
                 <v-switch
-                    label="Push Notifications (Coming soon)"
-                    messages="Enable push notifications for favorited channels"
+                    :label="$t('views.settings.pushNotificationLabel')"
+                    :messages="$t('views.settings.pushNotificationMsg')"
                     disabled
                 ></v-switch>
                 <br />
                 <v-btn @click="resetSettings">
-                    Reset All Settings/Data
+                    {{ $t("views.settings.resetAllSettings") }}
                 </v-btn>
             </v-col>
         </v-row>
@@ -41,6 +52,15 @@
 export default {
     name: "Settings",
     computed: {
+        language: {
+            get() {
+                return this.$store.state.lang;
+            },
+            set(val) {
+                this.$store.commit("setLanguage", val);
+                this.$i18n.locale = this.$store.state.lang;
+            },
+        },
         darkMode: {
             get() {
                 return this.$store.state.darkMode;
@@ -73,6 +93,14 @@ export default {
                 this.$store.commit("setHideThumbnail", val);
             },
         },
+    },
+    data() {
+        return {
+            langs: [
+                { val: "en", display: "English" },
+                { val: "ja", display: "日本語" },
+            ],
+        };
     },
     methods: {
         resetSettings() {

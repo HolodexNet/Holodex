@@ -1,0 +1,91 @@
+hello: world
+example: fill me in with {0} or {1} parameters
+example2: "{0} text starting with a param needs to be quoted in quotes"
+component:
+  apiError:
+    title: Gomenasorry!
+    textBeforeTwitter: "There was an error retrieving content, please check twitter "
+    textAfterTwitter: " or report an error through the"
+    aboutPage: About page
+  channelList:
+    otherText: Other 
+    #Other here is for the "other" group vs Hololive or Nijisanji etc. 
+  channelInfo:
+    videoCount: "{0} Videos"
+    clipCount: "{0} Clips"
+    subscriberCount: "{0} Subscribers"
+    subscriberNA: Subscriber count unavailable
+  channelSocials:
+    addToFavorites: Add to Favorites
+    removeFromFavorites: Remove from Favorites
+  mainNav:
+    home: Home
+    favorites: Favorites
+    channels: Channels
+    about: About
+    library: Library
+    settings: Settings
+  videoCard:
+    clips: "{0} Clips"
+    watching: "{0} Watching"
+    liveNow: Live Now
+  videoDescription:
+    description: Description
+views:
+  channels:
+    channelType:
+      subber: subber
+      vtuber: vtuber
+    sortOptions:
+      subscribers: Subscribers
+      group: Group
+      recentUpload: Recent Upload
+      videoCount: Video Count
+      clipCount: Clip Count
+    tabs:
+      Vtuber: Vtuber
+      Subber: Subber
+      Favorites: Favorites
+    favoriteLastUpdated: "Last Updated {0} ago"
+    favoritesAreEmpty: You have no favorites!
+  home:
+    liveOrUpcomingHeading: Live / Upcoming
+    recentVideosHeading: Recent Videos
+    recentVideoToggles:
+      all: All
+      official: Official
+      subber: Clips
+  library:
+    savedVideosTitle: Saved Videos
+    createYtPlaylistButton: "Create YT Playlist ({0})"
+    deleteFromLibraryButton: "Delete ({0})"
+    deleteConfirmation: "Are you sure you want to delete {0} videos?"
+    deleteConfirmationOK: "Delete"
+    deleteConfirmationCancel: "Cancel"
+    selectionReset: "Reset"
+    selectionSelectAll: "Select All"
+    emptyLibrary: You have no saved videos!
+  notFound:
+    title: Content not found
+    back: Return Home
+  search:
+    sort:
+      newest: Newest
+      oldest: Oldest
+    type:
+      all: All
+      official: Official
+      clip: Clip
+  settings:
+    title: Settings
+    darkModeLabel: Dark Mode
+    darkModeMsg: Changes the theme between light mode and dark mode
+    redirectModeLabel: Open on Youtube
+    redirectModeMsg: Clicking on any video will open it in Youtube
+    useEnglishNameLabel: Use English Name
+    useEnglishNameMsg: Uses English localized names for VTuber channels
+    hideVideoThumbnailsLabel: Hide Video Thumbnails
+    hideVideoThumbnailsMsg: Hide video thumbnails, helps speed up loading time and less scrolling on mobile
+    pushNotificationLabel: Push Notifications (Coming Soon)
+    pushNotificationMsg: Enable push notification for favorited channels
+    resetAllSettings: Reset All Settings/Data

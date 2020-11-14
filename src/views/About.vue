@@ -1,71 +1,15 @@
 <template>
-    <v-container>
+    <v-container class="pt-0">
         <v-row>
-            <v-col>
+            <v-col cols="12">
                 <div class="text-h4">About</div>
+            </v-col>
+            <v-col cols="12" md="4" sm="12" lg="3" xl="2" float-right>
                 <div class="text-h5">News</div>
                 <TwitterFeed />
-                <br />
-                <div class="text-h5">Changelog</div>
-                <span class="text--secondary">November 2, 2020</span>
-                <ul>
-                    <li>
-                        Hotfix video duration
-                    </li>
-                    <li>
-                        Added more sorting options and card view to Channels
-                        page
-                    </li>
-                    <li>
-                        Added Hololive generation/group name to each Vtuber
-                    </li>
-                    <li>
-                        Added filtering by official/clips for favorites page
-                    </li>
-                    <li>
-                        Added loading screen and errors to all the pages
-                    </li>
-                    <li>
-                        Clicking on the same page on desktop now refreshes the
-                        page
-                    </li>
-                    <li>
-                        Inactive vtuber channels are now hidden, but you can
-                        still view them through the search bar
-                    </li>
-                    <li>
-                        Add hide live chat button
-                    </li>
-                    <li>
-                        General under the hood improvments
-                    </li>
-                </ul>
-                <br />
-                <span class="text--secondary">Oct 20, 2020</span>
-                <ul>
-                    <li>
-                        Added instructions on how to use Holodex like an app
-                    </li>
-                    <li>
-                        Added a
-                        <a href="https://github.com/RiceCakess/Holodex/issues">
-                            Github Issue Tracker
-                        </a>
-                    </li>
-                </ul>
-                <br />
-                <span class="text--secondary">Oct 19, 2020</span>
-                <ul>
-                    <li>
-                        Added live chat window for upcoming/live streams.
-                        (Mobile not supported, due to Youtube-kun's rules)
-                    </li>
-                    <li>Hovering over video title shows full title</li>
-                    <li>Fixed collab typo</li>
-                    <li>Hide clips and collabs tab for clippers</li>
-                </ul>
-                <br />
-                <br />
+            </v-col>
+
+            <v-col cols="12" md="8" sm="12">
                 <div class="text-h5">FAQ</div>
                 <v-expansion-panels>
                     <v-expansion-panel>
@@ -192,6 +136,7 @@
                     </v-expansion-panel>
                 </v-expansion-panels>
                 <br />
+
                 <div class="text-h5">Feedback/Bug Reports</div>
                 <p>
                     You can create an issue in the
@@ -213,6 +158,7 @@
                     </a>
                 </div>
                 <br />
+
                 <div class="text-h5">Credits</div>
                 <p class="text-body-2">
                     I would like to give big thanks to the
@@ -232,6 +178,70 @@
                         Derivative Work License Agreement
                     </a>
                 </p>
+                <br />
+
+                <div class="text-h5">Changelog</div>
+                <div class="text-body-2">
+                    <span class="text--secondary">November 2, 2020</span>
+                    <ul>
+                        <li>
+                            Hotfix video duration
+                        </li>
+                        <li>
+                            Added more sorting options and card view to Channels
+                            page
+                        </li>
+                        <li>
+                            Added Hololive generation/group name to each Vtuber
+                        </li>
+                        <li>
+                            Added filtering by official/clips for favorites page
+                        </li>
+                        <li>
+                            Added loading screen and errors to all the pages
+                        </li>
+                        <li>
+                            Clicking on the same page on desktop now refreshes
+                            the page
+                        </li>
+                        <li>
+                            Inactive vtuber channels are now hidden, but you can
+                            still view them through the search bar
+                        </li>
+                        <li>
+                            Add hide live chat button
+                        </li>
+                        <li>
+                            General under the hood improvments
+                        </li>
+                    </ul>
+                    <br />
+                    <span class="text--secondary">Oct 20, 2020</span>
+                    <ul>
+                        <li>
+                            Added instructions on how to use Holodex like an app
+                        </li>
+                        <li>
+                            Added a
+                            <a
+                                href="https://github.com/RiceCakess/Holodex/issues"
+                            >
+                                Github Issue Tracker
+                            </a>
+                        </li>
+                    </ul>
+                    <br />
+                    <span class="text--secondary">Oct 19, 2020</span>
+                    <ul>
+                        <li>
+                            Added live chat window for upcoming/live streams.
+                            (Mobile not supported, due to Youtube-kun's rules)
+                        </li>
+                        <li>Hovering over video title shows full title</li>
+                        <li>Fixed collab typo</li>
+                        <li>Hide clips and collabs tab for clippers</li>
+                    </ul>
+                </div>
             </v-col>
         </v-row>
     </v-container>
