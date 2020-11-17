@@ -2,68 +2,8 @@
     <v-container fluid v-if="!isLoading && !showError">
         <v-row class="align-start">
             <v-col class="pa-0 pa-lg-3">
-                <v-card class="watch-card">
-                    <div
-                        class="embedded-video"
-                        v-if="!redirectMode && video_src"
-                    >
-                        <iframe
-                            :src="video_src"
-                            frameborder="0"
-                            allowfullscreen
-                        ></iframe>
-                    </div>
-                    <div class="thumbnail" v-else>
-                        <v-img :aspect-ratio="16 / 9" :src="thumbnail_src" />
-                        <div class="thumbnail-overlay d-flex">
-                            <div class="text-h4 ma-auto">
-                                <a
-                                    :href="
-                                        `https://youtu.be/${video.yt_video_key}`
-                                    "
-                                >
-                                    Open on Youtube
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <v-card-title>{{ video.title }}</v-card-title>
-                    <v-card-subtitle>
-                        {{ formatTime(video.published_at) }}
-                    </v-card-subtitle>
-                    <v-divider />
-                    <v-list two-line>
-                        <v-list-item>
-                            <v-list-item-avatar size="50">
-                                <ChannelImg :channel="video.channel" />
-                            </v-list-item-avatar>
-                            <ChannelInfo :channel="video.channel" />
-                            <ChannelSocials :channel="video.channel" />
-                        </v-list-item>
-                    </v-list>
-                    <v-card-text class="py-2">
-                        <ChannelChip
-                            v-for="channel in channel_chips"
-                            :channel="channel"
-                            :key="channel.id"
-                            class="ma-1"
-                        ></ChannelChip>
-                        <v-chip
-                            v-for="tag in tags.filter(t => !t.channel_ref)"
-                            label
-                            link
-                            :key="tag.id"
-                            style="margin-right: 5px"
-                            :to="`/search?tags=${tag.name}`"
-                        >
-                            {{ `#${tag.name} (${tag.count})` }}
-                        </v-chip>
-                    </v-card-text>
-                    <VideoDescription
-                        :description="video.description"
-                    ></VideoDescription>
-                    <v-divider />
-                </v-card>
+                <WatchFrame :video="video" />
+                <WatchInfo :video="video" />
             </v-col>
             <v-col
                 cols="12"
@@ -129,15 +69,11 @@
 <script>
 import api from "@/utils/backend-api";
 import VideoCardList from "@/components/VideoCardList";
-import ChannelChip from "@/components/ChannelChip";
-import dayjs from "dayjs";
-import ChannelInfo from "@/components/ChannelInfo";
-import ChannelSocials from "@/components/ChannelSocials";
-import ChannelImg from "@/components/ChannelImg";
 import LoadingOverlay from "@/components/LoadingOverlay";
-import VideoDescription from "@/components/VideoDescription";
-
+import WatchInfo from "@/components/WatchInfo.vue";
+import WatchFrame from "@/components/WatchFrame.vue";
 import { video_thumbnails } from "@/utils/functions";
+
 export default {
     name: "Watch",
     metaInfo() {
@@ -165,13 +101,9 @@ export default {
     },
     components: {
         VideoCardList,
-        ChannelChip,
-        ChannelInfo,
-        VideoDescription,
-        ChannelSocials,
-        ChannelImg,
-        // NotFound: () => import("@/views/NotFound"),
         LoadingOverlay,
+        WatchInfo,
+        WatchFrame,
     },
     data() {
         return {
@@ -180,8 +112,6 @@ export default {
             video: {},
             video_clips: [],
             video_sources: [],
-            channel_mentions: [],
-            tags: [],
             video_src: "",
             live_chat_src: "",
             hideLiveChat: false,
@@ -200,8 +130,6 @@ export default {
                     if (res.data) {
                         this.video_clips = res.data.clips;
                         this.video_sources = res.data.sources;
-                        this.channel_mentions = res.data.channel_mentions;
-                        this.tags = res.data.tags;
                         this.video = res.data;
                         this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
                         this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
@@ -216,38 +144,11 @@ export default {
                     this.isLoading = false;
                 });
         },
-        formatTime(t) {
-            return dayjs(t).format("MMM DD, YYYY");
-        },
         setWatched() {
             this.$store.commit("addWatchedVideo", this.video);
         },
     },
     computed: {
-        channel_chips() {
-            let allMentions = new Map();
-            this.channel_mentions
-                .concat(this.video_sources.map(video => video.channel))
-                .filter(channel => channel.id != this.video.channel_id)
-                .forEach(channel =>
-                    allMentions.set(channel.id, {
-                        id: channel.id,
-                        name: channel.name,
-                        name_en: channel.name_en,
-                        photo: channel.photo,
-                    })
-                );
-            return Array.from(allMentions.values());
-        },
-        redirectMode() {
-            return this.$store.state.redirectMode;
-        },
-        thumbnail_src() {
-            return video_thumbnails(this.video.yt_video_key)["medium"];
-        },
-        isXs() {
-            return this.$vuetify.breakpoint.name === "xs";
-        },
         hasLiveChat() {
             return (
                 (this.video.status == "live" ||
@@ -292,22 +193,6 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-}
-
-.embedded-video > iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.embedded-chat {
-    position: relative;
-    min-height: 600px;
-}
-.embedded-chat > iframe {
-    position: absolute;
-    width: 100%;
-    min-height: 600px;
 }
 
 .watch-card {
