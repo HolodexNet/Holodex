@@ -2,15 +2,16 @@
     <div>
         <NavDrawer :pages="pages" v-model="drawer" v-if="!isXs" />
         <BottomNav :pages="pages.filter(page => !page.collapsible)" v-else />
-        <v-app-bar id="top-bar" app clipped-left flat>
+        <v-app-bar id="top-bar" class="blue lighten-1" app clipped-left flat>
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isXs">
                     <v-icon>{{ mdiMenu }}</v-icon>
                 </v-app-bar-nav-icon>
                 <v-toolbar-title class="pr-5">
                     <router-link
+                        class="white--text"
                         :to="'/'"
-                        style="text-decoration: none; color: white; font-size: 24px; line-height: 1.2px"
+                        style="text-decoration: none; font-size: 24px; line-height: 1.2px"
                     >
                         <Logo
                             width="24"
