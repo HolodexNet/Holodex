@@ -192,6 +192,6 @@ export default {
     background-color: #2b79ad !important;
     /* background-position-x: 20px start; */
     transform: rotate(180deg);
-    opacity: 80%;
+    opacity: 0.8;
 }
 </style>
