@@ -64,7 +64,6 @@
                 @infinite="loadData"
                 style="min-height: 10px;"
                 :identifier="infiniteId"
-                v-if="category !== Tabs.FAVORITES"
                 spinner="spiral"
             >
                 <template v-slot:no-more><span></span></template>
@@ -238,15 +237,20 @@ export default {
             this.channels = [];
             this.currentOffset = 0;
             this.infiniteId += 1;
-            if (this.category == this.Tabs.FAVORITES) {
-                this.loadFavorites();
-            }
+            // if (this.category == this.Tabs.FAVORITES) {
+            //     this.loadFavorites();
+            // }
         },
         loadData($state) {
-            if (this.category == 0 && this.channels.length > 0) {
+            // load favorites directly from storage
+            if (this.category == this.Tabs.FAVORITES) {
+                console.log("Test");
+                this.loadFavorites();
+                $state.loaded();
                 $state.complete();
                 return;
             }
+            
             api.channels({
                 limit: this.category == this.Tabs.SUBBER ? this.perPage : 100,
                 offset: this.currentOffset * this.perPage,
@@ -257,7 +261,7 @@ export default {
             })
                 .then(res => {
                     if (res.data.channels.length) {
-                        this.channels = this.channels.concat(res.data.channels);
+                        this.channels.push(...res.data.channels);
                         if (this.category == this.Tabs.VTUBER) {
                             // update channel cache when fresh data is pulled
                             res.data.channels.map(channel_obj =>
@@ -267,6 +271,9 @@ export default {
                                 )
                             );
                             this.localSortChannel();
+
+                            // vtubers are loaded all at once, so inifinite scrolling should do nothing
+                            $state.complete();
                         }
                         this.currentOffset++;
                         $state.loaded();
