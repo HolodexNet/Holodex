@@ -3,16 +3,23 @@
         <v-row>
             <v-col>
                 <div class="text-h4">{{ $t("views.settings.title") }}</div>
-                <v-radio-group v-model="language" row dense>
-                    <template v-slot:label>
-                        <div>Language:</div>
-                    </template>
-                    <v-radio
-                        v-for="l in langs"
-                        :key="l.val"
-                        :label="l.display"
-                        :value="l.val"
-                    ></v-radio>
+                <div class="pt-4">
+                    <v-icon>{{ mdiTranslate }}</v-icon> Language:
+                </div>
+                <v-radio-group v-model="language" dense fluid>
+                    <!-- <template v-slot:label> </template> -->
+                    <v-radio v-for="l in langs" :key="l.val" :value="l.val">
+                        <template v-slot:label>
+                            <div>
+                                <strong class="primary--text">
+                                    {{ l.display }}
+                                </strong>
+                                <span class="px-2 text--secondary text-caption">
+                                    ♡ {{ l.credit }}</span
+                                >
+                            </div>
+                        </template>
+                    </v-radio>
                 </v-radio-group>
                 <v-switch
                     v-model="darkMode"
@@ -49,6 +56,8 @@
 </template>
 
 <script>
+import { langs } from "@/plugins/vuetify";
+import { mdiTranslate } from "@mdi/js";
 export default {
     name: "Settings",
     computed: {
@@ -59,6 +68,7 @@ export default {
             set(val) {
                 this.$store.commit("setLanguage", val);
                 this.$i18n.locale = this.$store.state.lang;
+                this.$vuetify.lang.current = this.$store.state.lang;
             },
         },
         darkMode: {
@@ -96,10 +106,8 @@ export default {
     },
     data() {
         return {
-            langs: [
-                { val: "en", display: "English" },
-                { val: "ja", display: "日本語" },
-            ],
+            langs,
+            mdiTranslate,
         };
     },
     methods: {

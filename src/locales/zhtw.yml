@@ -1,0 +1,88 @@
+hello: world
+component:
+  apiError:
+    title: 非常抱歉！
+    textBeforeTwitter: 取得內容時發生錯誤，請於推特確認目前狀況。
+    textAfterTwitter: 或是於推特回報錯誤給我們。
+    aboutPage: 關於本站
+  channelList:
+    otherText: 其他Vtuber
+  channelInfo:
+    videoCount: '{0}部影片'
+    clipCount: '{n}部剪輯'
+    subscriberCount: '{n}位訂閱者'
+    subscriberNA: 無法取得訂閱者數據
+  channelSocials:
+    addToFavorites: 加入收藏
+    removeFromFavorites: 移除收藏
+  mainNav:
+    home: 首頁
+    favorites: 我的收藏
+    channels: 頻道列表
+    about: 關於本站
+    library: 媒體庫
+    settings: 網站設定
+  videoCard:
+    clips: '{n}部剪輯'
+    watching: '{0}人正在觀看'
+    liveNow: 實況中
+  videoDescription:
+    description: 影片描述
+views:
+  channels:
+    channelType:
+      subber: 翻譯剪輯
+      vtuber: Vtuber
+    sortOptions:
+      subscribers: 訂閱者
+      group: 所屬團體
+      recentUpload: 最近更新
+      videoCount: 影片數量
+      clipCount: 剪輯數量
+    tabs:
+      Vtuber: Vtuber
+      Subber: 翻譯剪輯
+      Favorites: 我的收藏
+    favoriteLastUpdated: '最後更新於{0}前'
+    favoritesAreEmpty: 您目前沒有任何收藏！
+  home:
+    liveOrUpcomingHeading: 現正/即將開始實況
+    recentVideosHeading: 最近新增影片
+    recentVideoToggles:
+      all: 全部
+      official: 官方
+      subber: 剪輯
+  library:
+    savedVideosTitle: 儲存的影片
+    createYtPlaylistButton: '建立YouTube撥放清單({0})'
+    deleteFromLibraryButton: '刪除({0})'
+    deleteConfirmation: '您真的確定要刪除{0}部影片嗎？'
+    deleteConfirmationOK: 刪除
+    deleteConfirmationCancel: 取消
+    selectionReset: 重設
+    selectionSelectAll: 選取全部
+    emptyLibrary: 您沒有任何儲存的影片！
+  notFound:
+    title: 無法取得內容
+    back: 回到首頁
+  search:
+    sort:
+      newest: 新增日期（最新）
+      oldest: 新增日期（最舊）
+    type:
+      all: 全部
+      official: 官方
+      clip: 剪輯
+  settings:
+    title: 設定
+    darkModeLabel: 深色模式
+    darkModeMsg: 設定本站要以淺色模式或是深色模式呈現。
+    redirectModeLabel: 於YouTube開啟
+    redirectModeMsg: 點擊影片時自動開啟其YouTube頁面。
+    useEnglishNameLabel: 使用英文名稱
+    useEnglishNameMsg: 使用英文名字呈現Vtuber頻道名稱。
+    hideVideoThumbnailsLabel: 隱藏影片縮圖
+    hideVideoThumbnailsMsg: 隱藏影片縮圖可以加快讀取時間並減少網頁卷軸需求。
+    pushNotificationLabel: 推送通知（尚未實裝）
+    pushNotificationMsg: 啟用已收藏頻道的即時新增內容通知。
+    resetAllSettings: 重設所有設定/資料
