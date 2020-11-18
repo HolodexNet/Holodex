@@ -2,7 +2,7 @@
     <v-container fluid v-if="!isLoading && !showError">
         <v-row class="align-start">
             <v-col class="pa-0 pa-lg-3">
-                <WatchFrame :video="video" />
+                <WatchFrame :video="video" v-if="video" />
                 <WatchInfo :video="video" />
             </v-col>
             <v-col

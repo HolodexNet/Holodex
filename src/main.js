@@ -7,6 +7,7 @@ import VueGTag from "vue-gtag";
 import VueMeta from "vue-meta";
 import linkify from "vue-linkify";
 import VueI18n from "vue-i18n";
+import VueYouTubeEmbed from "vue-youtube-embed";
 
 import "./registerServiceWorker";
 
@@ -25,6 +26,7 @@ Vue.use(VueMeta, {
     refreshOnceOnNavigation: true,
 });
 Vue.use(VueI18n);
+Vue.use(VueYouTubeEmbed);
 Vue.directive("linkified", linkify);
 
 new Vue({

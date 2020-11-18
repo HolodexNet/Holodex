@@ -43,6 +43,10 @@ export default {
     video(id) {
         return axios_instance.get(`/videos/${id}`);
     },
+    video_live_chat(id, type, time_start) {
+        const q = querystring.stringify({ type, time_start });
+        return axios_instance.get(`/videos/${id}/live_chat?${q}`);
+    },
     clips(query) {
         const q = querystring.stringify(query);
         return axios_instance.get(`/clips?${q}`);
@@ -60,8 +64,8 @@ export default {
 export const axios_instance = axios.create({
     baseURL:
         process.env.NODE_ENV === "development"
-            // ? `http://mythra.local:2434/v1`
-            ?  `https://holodex.net/api/v1`
+            ? `http://holodextest.local:2434/v1`
+            // ?  `https://holodex.net/api/v1`
             : `https://holodex.net/api/v1`,
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,

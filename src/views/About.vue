@@ -9,7 +9,7 @@
                 <TwitterFeed />
             </v-col>
 
-            <v-col cols="12" md="8" sm="12">
+            <v-col cols="12" md="8" sm="12" lg="9" xl="10">
                 <div class="text-h5">FAQ</div>
                 <v-expansion-panels>
                     <v-expansion-panel>
