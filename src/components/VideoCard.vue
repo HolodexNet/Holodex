@@ -179,10 +179,14 @@ export default {
                         // print full date if greater than 24 hours
                         (dayjs(this.video.live_schedule).diff(dayjs()) <=
                         86400000
-                            ? this.formatFromNow(this.video.live_schedule)
+                            ? this.formatFromNowHM(
+                                  // time in minutes
+                                  Math.floor(dayjs(this.video.live_schedule).diff(dayjs())/60000)
+                              )
                             : dayjs(this.video.live_schedule).format(
                                   "ddd MMM Do, h:mm a"
-                              ))
+                              )
+                         )
                     );
                 case "live":
                     return this.$t("component.videoCard.liveNow");
@@ -229,6 +233,13 @@ export default {
         },
     },
     methods: {
+        formatFromNowHM(time) {
+            if(time <= 0) return "soon!"
+            if(time < 60) return "in " + time + " minutes";
+            if(time == 60) return "in 1 hour";
+            if(time % 60 == 0) return "in " + Math.floor(time/60) + " hours";
+            return "in " + Math.floor(time/60) + " hours and " + time % 60 + " minutes";
+        },
         formatFromNow(time) {
             return dayjs(time).fromNow();
         },
