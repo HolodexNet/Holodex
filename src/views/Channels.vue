@@ -244,13 +244,12 @@ export default {
         loadData($state) {
             // load favorites directly from storage
             if (this.category == this.Tabs.FAVORITES) {
-                console.log("Test");
                 this.loadFavorites();
                 $state.loaded();
                 $state.complete();
                 return;
             }
-            
+
             api.channels({
                 limit: this.category == this.Tabs.SUBBER ? this.perPage : 100,
                 offset: this.currentOffset * this.perPage,
