@@ -41,7 +41,7 @@
 
                     <v-list v-if="isXs">
                         <v-list-item
-                            v-for="page in pages().filter(
+                            v-for="page in pages.filter(
                                 item => item.collapsible
                             )"
                             :key="page.name"

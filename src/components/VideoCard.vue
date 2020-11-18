@@ -84,9 +84,8 @@
                     <span v-if="video.clips && video.clips.length > 0">
                         •
                         {{
-                            $t("component.videoCard.clips", [
-                                formatCount(video.clips.length),
-                            ])
+                            $tc("component.videoCard.clips", 
+                                formatCount(video.clips.length))
                         }}
                     </span>
                     <span

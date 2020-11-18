@@ -3,7 +3,7 @@
         <v-row>
             <v-col>
                 <div class="text-h4">{{ $t("views.settings.title") }}</div>
-                <v-radio-group v-model="language" row dense>
+                <v-radio-group v-model="language" dense fluid>
                     <template v-slot:label>
                         <div>Language:</div>
                     </template>
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { langs } from "@/plugins/vuetify";
 export default {
     name: "Settings",
     computed: {
@@ -59,6 +60,7 @@ export default {
             set(val) {
                 this.$store.commit("setLanguage", val);
                 this.$i18n.locale = this.$store.state.lang;
+                this.$vuetify.lang.current = this.$store.state.lang;
             },
         },
         darkMode: {
@@ -96,10 +98,7 @@ export default {
     },
     data() {
         return {
-            langs: [
-                { val: "en", display: "English" },
-                { val: "ja", display: "日本語" },
-            ],
+            langs,
         };
     },
     methods: {

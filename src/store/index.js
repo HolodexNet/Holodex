@@ -3,13 +3,20 @@ import Vuex from "vuex";
 import dayjs from "dayjs";
 import createPersistedState from "vuex-persistedstate";
 import api from "@/utils/backend-api";
+import { langs } from "@/plugins/vuetify";
 
 Vue.use(Vuex);
 
 function defaultState() {
+    const userLanguage = (navigator.language || navigator.userLanguage || "en")
+        .split("-")[0]
+        .toLowerCase();
+
+    const validLangs = new Set(langs.map(x => x.val));
+
     return {
         // settings
-        lang: "en",
+        lang: validLangs.has(userLanguage) ? userLanguage : "en",
         darkMode: true,
         redirectMode: false,
         canUseWebP: true,
