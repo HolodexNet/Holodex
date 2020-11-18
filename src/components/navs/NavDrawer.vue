@@ -27,7 +27,9 @@
             </template>
             <v-divider />
             <v-list>
-                <v-subheader>Favorites</v-subheader>
+                <v-subheader>
+                    {{ this.$t("component.mainNav.favorites") }}
+                </v-subheader>
                 <template v-for="channel in favoritedChannels">
                     <v-list-item
                         v-if="channel"

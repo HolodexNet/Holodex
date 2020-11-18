@@ -56,7 +56,7 @@
                                     text
                                     @click="
                                         deleteDialog = false;
-                                        deleteSelected;
+                                        deleteSelected();
                                     "
                                 >
                                     {{
