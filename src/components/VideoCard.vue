@@ -83,11 +83,16 @@
                     </span>
                     <span v-if="video.clips && video.clips.length > 0">
                         •
+                        <router-link
+                            :to="`/watch/${video.id}`"
+                            class="no-decoration clip-redirect"
+                        >
                         {{
                             $t("component.videoCard.clips", [
                                 formatCount(video.clips.length),
                             ])
                         }}
+                        </router-link>
                     </span>
                     <span
                         v-else-if="
@@ -95,7 +100,7 @@
                         "
                     >
                         •
-                        {{
+                       {{
                             $t("component.videoCard.watching", [
                                 formatCount(video.live_viewers),
                             ])
@@ -327,5 +332,9 @@ export default {
 
 .name-vtuber {
     color: #42a5f5 !important;
+}
+
+.clip-redirect {
+    color: #ffffff !important;
 }
 </style>
