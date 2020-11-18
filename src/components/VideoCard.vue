@@ -85,12 +85,14 @@
                         •
                         <router-link
                             :to="`/watch/${video.id}`"
-                            class="no-decoration clip-redirect"
+                            class="no-decoration"
                         >
-                        {{
-                            $tc("component.videoCard.clips", 
-                                formatCount(video.clips.length))
-                        }}
+                            {{
+                                $tc(
+                                    "component.videoCard.clips",
+                                    formatCount(video.clips.length)
+                                )
+                            }}
                         </router-link>
                     </span>
                     <span
@@ -186,8 +188,7 @@ export default {
                             ? this.formatFromNowHM(this.video.live_schedule)
                             : dayjs(this.video.live_schedule).format(
                                   "ddd MMM Do, h:mm a"
-                              )
-                         )
+                              ))
                     );
                 case "live":
                     return this.$t("component.videoCard.liveNow");
@@ -235,14 +236,14 @@ export default {
     },
     methods: {
         formatFromNowHM(time) {
-            const timeInMin = Math.floor(dayjs(time).diff(dayjs())/60000);
-            const hours = Math.floor(timeInMin/60);
+            const timeInMin = Math.floor(dayjs(time).diff(dayjs()) / 60000);
+            const hours = Math.floor(timeInMin / 60);
             const mins = timeInMin % 60;
 
-            if(timeInMin <= 1) return "soon!";
-            if(timeInMin < 60) return `in ${mins} minutes`;
-            if(timeInMin == 60) return "in 1 hour";
-            if(timeInMin % 60 == 0) return `in ${hours} hours`;
+            if (timeInMin <= 1) return "soon!";
+            if (timeInMin < 60) return `in ${mins} minutes`;
+            if (timeInMin == 60) return "in 1 hour";
+            if (timeInMin % 60 == 0) return `in ${hours} hours`;
             return `in ${hours} hours and ${mins} minutes`;
         },
         formatFromNow(time) {
@@ -331,9 +332,5 @@ export default {
 
 .name-vtuber {
     color: #42a5f5 !important;
-}
-
-.clip-redirect {
-    color: #ffffff !important;
 }
 </style>

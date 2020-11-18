@@ -91,7 +91,13 @@
 <script>
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
-import { mdiHeart, mdiChevronDown, mdiChevronUp, mdiEarth, mdiMessageCogOutline } from "@mdi/js";
+import {
+    mdiHeart,
+    mdiChevronDown,
+    mdiChevronUp,
+    mdiEarth,
+    mdiMessageCogOutline,
+} from "@mdi/js";
 import { langs } from "@/plugins/vuetify";
 
 export default {

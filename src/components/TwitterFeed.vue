@@ -1,9 +1,8 @@
 <template>
-    <div style="max-width: 600px" class="ma-auto">
+    <div class="ma-auto">
         <a
             class="twitter-timeline"
             data-dnt="true"
-            data-height="1200"
             :data-theme="this.$vuetify.theme.dark ? 'dark' : 'light'"
             href="https://twitter.com/holodex?ref_src=twsrc%5Etfw"
         >
