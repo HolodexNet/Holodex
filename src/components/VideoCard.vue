@@ -234,7 +234,7 @@ export default {
     },
     methods: {
         formatFromNowHM(time) {
-            if(time <= 0) return "soon!"
+            if(time <= 1) return "soon!";
             if(time < 60) return "in " + time + " minutes";
             if(time == 60) return "in 1 hour";
             if(time % 60 == 0) return "in " + Math.floor(time/60) + " hours";
