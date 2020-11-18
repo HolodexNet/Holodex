@@ -34,7 +34,11 @@
                         <div class="text-h6">
                             {{ $t("views.home.recentVideosHeading") }}
                         </div>
-                        <v-btn-toggle v-model="recentVideoFilter" mandatory dense>
+                        <v-btn-toggle
+                            v-model="favoritesVideoFilter"
+                            mandatory
+                            dense
+                        >
                             <v-btn value="all">
                                 {{ $t("views.home.recentVideoToggles.all") }}
                             </v-btn>
