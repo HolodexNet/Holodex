@@ -34,11 +34,11 @@ const messages = {
 export const langs = [
     { val: "en", display: "English", credit: "@Holodex" },
     { val: "ja", display: "日本語", credit: "Yourein#3960" },
-    { val: "zh", display: "漢語", credit: "angel84326#7887" },
+    { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
     { val: "es", display: "Español", credit: "Aldo#3682" },
     { val: "ms", display: "Bahasa Melayu", credit: "Admiy#8261" },
     { val: "id", display: "Bahasa Indonesia", credit: "alcyneous#2803" },
-    { val: "ru", display: "русский язык", credit: "kirillbarnaul#8499" },
+    { val: "ru", display: "Русский язык", credit: "kirillbarnaul#8499" },
 ];
 
 export const i18n = new VueI18n({
@@ -102,13 +102,4 @@ export const vuetify = new Vuetify({
     lang: {
         t: (key, ...params) => i18n.t(key, params),
     },
-    // breakpoint: {
-    //     thresholds: {
-    //         xs: 0,
-    //         sm: 476,
-    //         md: 668,
-    //         lg: 1000,
-    //         xl: 1300,
-    //     },
-    // },
 });
