@@ -32,13 +32,13 @@ const messages = {
 };
 
 export const langs = [
-    { val: "en", display: "English" },
-    { val: "ja", display: "日本語" },
-    { val: "zh", display: "漢語" },
-    { val: "es", display: "Español" },
-    { val: "ms", display: "Bahasa Melayu" },
-    { val: "id", display: "Bahasa Indonesia" },
-    { val: "ru", display: "русский язык" },
+    { val: "en", display: "English", credit: "@Holodex" },
+    { val: "ja", display: "日本語", credit: "Yourein#3960" },
+    { val: "zh", display: "漢語", credit: "angel84326#7887" },
+    { val: "es", display: "Español", credit: "Aldo#3682" },
+    { val: "ms", display: "Bahasa Melayu", credit: "Admiy#8261" },
+    { val: "id", display: "Bahasa Indonesia", credit: "alcyneous#2803" },
+    { val: "ru", display: "русский язык", credit: "kirillbarnaul#8499" },
 ];
 
 export const i18n = new VueI18n({
