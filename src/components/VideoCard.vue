@@ -100,7 +100,7 @@
                         "
                     >
                         •
-                       {{
+                        {{
                             $t("component.videoCard.watching", [
                                 formatCount(video.live_viewers),
                             ])
