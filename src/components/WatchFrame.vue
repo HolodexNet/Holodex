@@ -1,33 +1,35 @@
 <template>
     <!-- <div class="embedded-video" v-if="!redirectMode && video_src"> -->
     <!-- <iframe :src="video_src" frameborder="0" allowfullscreen></iframe> -->
-    <div v-if="!redirectMode && video" class="video">
-        <youtube
-            class="embedded-video"
-            :video-id="video.yt_video_key"
-            @ready="ready"
-            @playing="playing"
-            @paused="paused"
-            :playerVars="{ autoplay: 1 }"
-        >
-        </youtube>
-        <div class="watch-overlay text-center">
-            <template v-for="message in showMessages">
-                <div class="watch-translation" :key="message.message">
-                    <div class="watch-translation-author">
-                        <span
-                            style="background-color: rgba(0, 0, 0, 0.5);"
-                            class="pa-1 text-caption"
-                        >
-                            {{ message.author }}
-                        </span>
+    <div v-if="!redirectMode && video">
+        <div class="video">
+            <youtube
+                class="embedded-video"
+                :video-id="video.yt_video_key"
+                @ready="ready"
+                @playing="playing"
+                @paused="paused"
+                :playerVars="{ autoplay: 1 }"
+            >
+            </youtube>
+            <div class="watch-overlay text-center">
+                <template v-for="message in showMessages">
+                    <div class="watch-translation" :key="message.message">
+                        <div class="watch-translation-author">
+                            <span
+                                style="background-color: rgba(0, 0, 0, 0.5);"
+                                class="pa-1 text-caption"
+                            >
+                                {{ message.author }}
+                            </span>
+                        </div>
+                        <div class="watch-translation-message pa-2">
+                            {{ message.message }}
+                        </div>
                     </div>
-                    <div class="watch-translation-message pa-2">
-                        {{ message.message }}
-                    </div>
-                </div>
-                <br :key="message.message + 'br'" />
-            </template>
+                    <br :key="message.message + 'br'" />
+                </template>
+            </div>
         </div>
         <v-card class="summary">
             <v-card-subtitle
@@ -188,10 +190,8 @@ export default {
             get() {
                 return (this.currentTime / this.video.duration_secs) * 100;
             },
-            set() {
-                
-            }
-        }
+            set() {},
+        },
     },
 };
 </script>
@@ -203,7 +203,7 @@ export default {
 .watch-overlay {
     position: absolute;
     width: 100%;
-    bottom: 10%;
+    bottom: 5%;
     margin: 10px;
 }
 .watch-translation {
