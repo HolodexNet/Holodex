@@ -114,11 +114,12 @@ export default {
             return this.$store.state.favorites;
         },
         filteredLiveVideos() {
-            return this.live.filter(live =>
-                this.favorites.includes(live.channel.id) || 
-                live.channel_mentions.filter(channel =>
-                    this.favorites.includes(channel.id)
-                ).length > 0
+            return this.live.filter(
+                live =>
+                    this.favorites.includes(live.channel.id) ||
+                    live.channel_mentions.filter(channel =>
+                        this.favorites.includes(channel.id)
+                    ).length > 0
             );
         },
         filteredByChannelType() {
