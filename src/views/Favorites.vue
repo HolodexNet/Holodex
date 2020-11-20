@@ -43,7 +43,9 @@
                                 {{ $t("views.home.recentVideoToggles.all") }}
                             </v-btn>
                             <v-btn value="vtuber">
-                                {{ $t("views.home.recentVideoToggles.official") }}
+                                {{
+                                    $t("views.home.recentVideoToggles.official")
+                                }}
                             </v-btn>
                             <v-btn value="subber">
                                 {{ $t("views.home.recentVideoToggles.subber") }}
@@ -67,9 +69,7 @@
                         Create a list of favorite vtubers to their latest clips
                         and lives on this page.
                     </div>
-                    <v-btn to="/channel">
-                        Manage Favorites
-                    </v-btn>
+                    <v-btn to="/channel"> Manage Favorites </v-btn>
                 </v-col>
             </v-row>
         </template>
@@ -83,7 +83,9 @@ import LoadingOverlay from "@/components/LoadingOverlay.vue";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import { mdiHeart } from "@mdi/js";
-var utc = require("dayjs/plugin/utc");
+
+const utc = require("dayjs/plugin/utc");
+
 dayjs.extend(utc);
 
 export default {
@@ -118,20 +120,22 @@ export default {
             return this.$store.state.favorites;
         },
         filteredLiveVideos() {
-            return this.live.filter(live =>
-                this.favorites.includes(live.channel.id) || 
-                live.channel_mentions.filter(channel =>
-                    this.favorites.includes(channel.id)
-                ).length > 0
+            return this.live.filter(
+                (live) =>
+                    this.favorites.includes(live.channel.id) ||
+                    live.channel_mentions.filter((channel) =>
+                        this.favorites.includes(channel.id)
+                    ).length > 0
             );
         },
         filteredByChannelType() {
-            if (this.favoritesVideoFilter == "all")
+            if (this.favoritesVideoFilter === "all") {
                 return this.filteredVideoLists;
-            return this.filteredVideoLists.map(videoList => {
+            }
+            return this.filteredVideoLists.map((videoList) => {
                 return {
                     title: videoList.title,
-                    videos: videoList.videos.filter(video =>
+                    videos: videoList.videos.filter((video) =>
                         this.favoritesVideoFilter === "vtuber"
                             ? video.channel.id < 1000
                             : video.channel.id > 1000
@@ -150,16 +154,16 @@ export default {
     },
     methods: {
         loadNext() {
-            this.daysBefore++;
+            this.daysBefore += 1;
             this.loadFavorites();
         },
         loadLive() {
             return api
                 .live()
-                .then(live => {
+                .then((live) => {
                     this.live = live;
                 })
-                .catch(e => {
+                .catch((e) => {
                     console.log(e);
                     this.hasError = true;
                 });
@@ -173,18 +177,12 @@ export default {
                     include_channel: 1,
                     status: "past",
                     tag_status: "tagged",
-                    start_date: targetDate
-                        .startOf("day")
-                        .utc()
-                        .toISOString(),
-                    end_date: targetDate
-                        .endOf("day")
-                        .utc()
-                        .toISOString(),
+                    start_date: targetDate.startOf("day").utc().toISOString(),
+                    end_date: targetDate.endOf("day").utc().toISOString(),
                     sort: "published_at",
                     order: "desc",
                 })
-                .then(res => {
+                .then((res) => {
                     if (res.data.videos.length) {
                         this.filteredVideoLists.push({
                             title: this.formatDayTitle(this.daysBefore),
@@ -194,17 +192,18 @@ export default {
                         // if (res.data.videos.length > 100)
                         //     console.log("too many videos");
                     }
-                    //if less than 50 videos uploaded today, then grab yesterday's
-                    if (res.data.videos.length < 50 && this.daysBefore < 3)
+                    // if less than 50 videos uploaded today, then grab yesterday's
+                    if (res.data.videos.length < 50 && this.daysBefore < 3) {
                         this.loadNext();
+                    }
                 });
         },
         // check if video is posted by favorited channel or mentioned in the video
         filterByFavorites(videos) {
-            return videos.filter(video => {
+            return videos.filter((video) => {
                 return (
                     this.favorites.includes(video.channel.id) ||
-                    video.channel_mentions.filter(channel =>
+                    video.channel_mentions.filter((channel) =>
                         this.favorites.includes(channel.id)
                     ).length > 0
                 );
@@ -212,7 +211,7 @@ export default {
         },
         formatDayTitle(daysAgo) {
             if (daysAgo < 2) {
-                return daysAgo == 0 ? "Today" : "Yesterday";
+                return daysAgo === 0 ? "Today" : "Yesterday";
             }
             return `${daysAgo} days ago`;
         },

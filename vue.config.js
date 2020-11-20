@@ -17,9 +17,7 @@ module.exports = {
         workboxOptions: {
             runtimeCaching: [
                 {
-                    urlPattern: new RegExp(
-                        "https://fonts.(?:googleapis|gstatic).com/(.*)"
-                    ),
+                    urlPattern: new RegExp("https://fonts.(?:googleapis|gstatic).com/(.*)"),
                     handler: "cacheFirst",
                     options: {
                         cacheName: "google-fonts",
@@ -32,9 +30,7 @@ module.exports = {
                     },
                 },
                 {
-                    urlPattern: new RegExp(
-                        "https://yt3.ggpht.com/a/(.*)=s40-c-k-c0x00ffffff-no-rj-mo(.*)"
-                    ),
+                    urlPattern: new RegExp("https://yt3.ggpht.com/a/(.*)=s40-c-k-c0x00ffffff-no-rj-mo(.*)"),
                     handler: "cacheFirst",
                     options: {
                         cacheName: "channel-photo",

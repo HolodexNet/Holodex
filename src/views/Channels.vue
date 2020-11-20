@@ -18,15 +18,18 @@
                             v-bind="attrs"
                             v-on="on"
                             text
-                            style="border: none; textTransform: initial; font-weight: 400"
+                            style="
+                                border: none;
+                                text-transform: initial;
+                                font-weight: 400;
+                            "
                             class="text--secondary pa-1"
                         >
                             {{ currentSortValue.text }}
                             <span
                                 :class="{
                                     'rotate-asc':
-                                        currentSortValue.query_value.order ==
-                                        'asc',
+                                        currentSortValue.query_value.order === 'asc',
                                 }"
                             >
                                 <v-icon size="20">{{ mdiArrowDown }}</v-icon>
@@ -62,7 +65,7 @@
             />
             <infinite-loading
                 @infinite="loadData"
-                style="min-height: 10px;"
+                style="min-height: 10px"
                 :identifier="infiniteId"
                 spinner="spiral"
             >
@@ -73,14 +76,14 @@
             </infinite-loading>
         </v-container>
         <!-- Favorites specific view items: -->
-        <template v-if="category == Tabs.FAVORITES">
+        <template v-if="category === Tabs.FAVORITES">
             <div
                 v-if="favorites.length > 0"
                 class="text--secondary text-caption"
             >
                 {{ $t("views.channels.favoriteLastUpdated", [lastUpdated]) }}
             </div>
-            <div v-if="!favorites || favorites.length == 0">
+            <div v-if="!favorites || favorites.length === 0">
                 {{ $t("views.channels.favoritesAreEmpty") }}
             </div>
         </template>
@@ -95,6 +98,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ApiErrorMessage from "@/components/ApiErrorMessage";
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
+
 dayjs.extend(relativeTime);
 
 export default {
@@ -118,7 +122,7 @@ export default {
         };
     },
     beforeCreate() {
-        //shorthand the translation
+        // shorthand the translation
         this.Tabs = {
             SUBBER: 1,
             VTUBER: 0,
@@ -130,12 +134,12 @@ export default {
             this.init();
         },
         sort() {
-            if (this.category == this.Tabs.SUBBER) this.init();
+            if (this.category === this.Tabs.SUBBER) this.init();
             else this.localSortChannel();
         },
         favorites() {
             // update our `channel` whenever the favorites changes.
-            if (this.category == this.Tabs.FAVORITES) this.loadFavorites();
+            if (this.category === this.Tabs.FAVORITES) this.loadFavorites();
         },
     },
     computed: {
@@ -160,7 +164,7 @@ export default {
                     },
                     {
                         text: this.$t(
-                            "views.channels.sortOptions.recentUpload"
+                            "views.channels.sortOptions.recentUpload",
                         ),
                         value: "recent_upload",
                         query_value: {
@@ -195,7 +199,7 @@ export default {
         },
         lastUpdated() {
             return dayjs(this.$store.state.cachedChannelsLastUpdated).toNow(
-                true
+                true,
             );
         },
         category: {
@@ -243,7 +247,7 @@ export default {
         },
         loadData($state) {
             // load favorites directly from storage
-            if (this.category == this.Tabs.FAVORITES) {
+            if (this.category === this.Tabs.FAVORITES) {
                 this.loadFavorites();
                 $state.loaded();
                 $state.complete();
@@ -251,36 +255,36 @@ export default {
             }
 
             api.channels({
-                limit: this.category == this.Tabs.SUBBER ? this.perPage : 100,
+                limit: this.category === this.Tabs.SUBBER ? this.perPage : 100,
                 offset: this.currentOffset * this.perPage,
-                type: this.category == this.Tabs.SUBBER ? "subber" : "vtuber",
-                ...(this.category == this.Tabs.SUBBER && {
+                type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
+                ...(this.category === this.Tabs.SUBBER && {
                     ...this.currentSortValue.query_value,
                 }),
             })
-                .then(res => {
+                .then((res) => {
                     if (res.data.channels.length) {
                         this.channels.push(...res.data.channels);
-                        if (this.category == this.Tabs.VTUBER) {
+                        if (this.category === this.Tabs.VTUBER) {
                             // update channel cache when fresh data is pulled
-                            res.data.channels.map(channel_obj =>
+                            res.data.channels.map((channelObj) =>
                                 this.$store.commit(
                                     "addCachedChannel",
-                                    channel_obj
-                                )
+                                    channelObj,
+                                ),
                             );
                             this.localSortChannel();
 
                             // vtubers are loaded all at once, so inifinite scrolling should do nothing
                             $state.complete();
                         }
-                        this.currentOffset++;
+                        this.currentOffset += 1;
                         $state.loaded();
                     } else {
                         $state.complete();
                     }
                 })
-                .catch(e => {
+                .catch((e) => {
                     console.log(e);
                     $state.error();
                 });
@@ -289,30 +293,28 @@ export default {
             // check if any channels missing from favorites and update the cache
             await this.$store.dispatch("checkChannelCache");
             this.channels = this.favorites.map(
-                channel_id => this.cachedChannels[channel_id]
+                (channelId) => this.cachedChannels[channelId],
             );
             this.localSortChannel();
         },
         localSortChannel() {
-            const sort_prop = this.currentSortValue.query_value;
-            if (!sort_prop) return;
+            const sortProp = this.currentSortValue.query_value;
+            if (!sortProp) return;
             this.channels.sort((a, b) => {
-                if (sort_prop.sort === "latest_published_at") {
-                    var dateA = new Date(a[sort_prop.sort]).getTime();
-                    var dateB = new Date(b[sort_prop.sort]).getTime();
+                if (sortProp.sort === "latest_published_at") {
+                    const dateA = new Date(a[sortProp.sort]).getTime();
+                    const dateB = new Date(b[sortProp.sort]).getTime();
                     return dateA > dateB ? 1 : -1;
-                } else if (sort_prop.sort === "video_count") {
-                    return parseInt(a[sort_prop.sort]) >
-                        parseInt(b[sort_prop.sort])
-                        ? 1
-                        : -1;
                 }
-                return a[sort_prop.sort] > b[sort_prop.sort] ? 1 : -1;
+                if (sortProp.sort === "video_count") {
+                    return parseInt(a[sortProp.sort], 10) > parseInt(b[sortProp.sort], 10) ? 1 : -1;
+                }
+                return a[sortProp.sort] > b[sortProp.sort] ? 1 : -1;
             });
-            if (sort_prop.order == "desc") this.channels.reverse();
+            if (sortProp.order === "desc") this.channels.reverse();
         },
         findSortValue(sort) {
-            return this.sortOptions.find(opt => opt.value === sort);
+            return this.sortOptions.find((opt) => opt.value === sort);
         },
     },
 };
@@ -323,9 +325,11 @@ export default {
     content: "";
     flex: auto;
 }
+
 .v-slide-group__prev--disabled {
     display: none !important;
 }
+
 .rotate-asc {
     transform: rotate(180deg);
 }

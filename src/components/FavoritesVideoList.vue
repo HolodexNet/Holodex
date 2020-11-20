@@ -31,6 +31,7 @@
 
 <script>
 import VideoCardList from "@/components/VideoCardList";
+
 export default {
     name: "FavoritesVideoList",
     components: {

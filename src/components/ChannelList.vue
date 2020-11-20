@@ -77,6 +77,7 @@
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
 import ChannelSocials from "@/components/ChannelSocials";
+
 export default {
     name: "ChannelList",
     components: {

@@ -17,6 +17,7 @@
 <script>
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
+
 export default {
     name: "ChannelCard",
     components: {

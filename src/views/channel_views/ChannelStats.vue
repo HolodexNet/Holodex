@@ -11,15 +11,9 @@
                         <template v-slot:default>
                             <thead>
                                 <tr>
-                                    <th class="text-left">
-                                        Date
-                                    </th>
-                                    <th class="text-left">
-                                        Subscribers
-                                    </th>
-                                    <th class="text-left">
-                                        Gains
-                                    </th>
+                                    <th class="text-left">Date</th>
+                                    <th class="text-left">Subscribers</th>
+                                    <th class="text-left">Gains</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,15 +44,9 @@
                         <template v-slot:default>
                             <thead>
                                 <tr>
-                                    <th class="text-left">
-                                        Date
-                                    </th>
-                                    <th class="text-left">
-                                        Video Views
-                                    </th>
-                                    <th class="text-left">
-                                        Gains
-                                    </th>
+                                    <th class="text-left">Date</th>
+                                    <th class="text-left">Video Views</th>
+                                    <th class="text-left">Gains</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,18 +70,19 @@
 </template>
 
 <script>
-import api from "@/utils/backend-api.js";
+import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import { formatCount } from "@/utils/functions";
 import {
-    Chart,
-    LineController,
-    Line,
-    Point,
-    LinearScale,
     CategoryScale,
+    Chart,
+    Line,
+    LinearScale,
+    LineController,
+    Point,
     Tooltip,
 } from "chart.js";
+
 Chart.register(
     LineController,
     Line,
@@ -114,19 +103,21 @@ export default {
         };
     },
     mounted() {
-        api.channel_stats(this.channel_id).then(res => {
+        api.channel_stats(this.channel_id).then((res) => {
             this.allData = res.data.reverse();
-            this.timeLabels = this.allData.map(row =>
+            this.timeLabels = this.allData.map((row) =>
                 dayjs(row.day).format("M/D")
             );
-            this.subscriberData = this.allData.map(row => row.subscriber_count);
-            this.viewData = this.allData.map(row => row.view_count);
+            this.subscriberData = this.allData.map(
+                (row) => row.subscriber_count
+            );
+            this.viewData = this.allData.map((row) => row.view_count);
             this.loadChart("subscriber");
             this.loadChart("view");
         });
     },
     destroyed() {
-        this.charts.map(chart => chart.destroy());
+        this.charts.map((chart) => chart.destroy());
     },
     computed: {
         channel_id() {
@@ -142,7 +133,7 @@ export default {
         },
         formatCount,
         loadChart(type) {
-            var ctx = document.getElementById(`${type}-chart`);
+            const ctx = document.getElementById(`${type}-chart`);
             const gridLineColor = this.darkMode
                 ? "rgba(255,255,255,0.2)"
                 : "rgba(0, 0, 0, 0.1)";
@@ -168,7 +159,7 @@ export default {
                             y: {
                                 ticks: {
                                     // eslint-disable-next-line no-unused-vars
-                                    callback: function(value, index, values) {
+                                    callback (value, index, values) {
                                         return formatCount(value);
                                     },
                                     font: {
@@ -207,11 +198,11 @@ export default {
                             mode: "index",
                             intersect: false,
                             callbacks: {
-                                label: function(tooltipItem) {
+                                label (tooltipItem) {
                                     return (
-                                        formatCount(tooltipItem.dataPoint.y) +
-                                        " " +
-                                        tooltipItem.dataset.label
+                                        `${formatCount(tooltipItem.dataPoint.y)
+                                        } ${
+                                            tooltipItem.dataset.label}`
                                     );
                                 },
                             },

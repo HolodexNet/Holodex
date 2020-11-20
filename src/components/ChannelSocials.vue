@@ -22,7 +22,7 @@
             rel="noreferrer"
             target="_blank"
         >
-            <v-icon color="#00ACEE"> {{ mdiTwitter }} </v-icon>
+            <v-icon color="#00ACEE"> {{ mdiTwitter }}</v-icon>
         </v-btn>
         <v-tooltip bottom v-if="channel.id < 1000">
             <template v-slot:activator="{ on, attrs }">
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { mdiYoutube, mdiTwitter, mdiHeart } from "@mdi/js";
+import { mdiHeart, mdiTwitter, mdiYoutube } from "@mdi/js";
 import { mapMutations } from "vuex";
 
 export default {
@@ -91,8 +91,8 @@ export default {
 .channel-social-horizontal {
     flex-direction: row !important;
     align-self: center !important;
-    padding: 16px 0px 16px 16px;
-    margin: 0px !important;
+    padding: 16px 0 16px 16px;
+    margin: 0 !important;
     flex: 0 1 auto !important;
 }
 </style>

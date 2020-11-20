@@ -9,6 +9,7 @@
 
 <script>
 import ChannelImg from "@/components/ChannelImg";
+
 export default {
     name: "ChannelChip",
     components: {

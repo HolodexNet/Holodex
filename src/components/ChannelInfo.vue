@@ -37,7 +37,7 @@
                     {{
                         $tc(
                             "component.channelInfo.clipCount",
-                            channel.clip_count
+                            channel.clip_count,
                         )
                     }}
                 </router-link>
@@ -53,6 +53,7 @@
 <script>
 // import ChannelSocials from "@/components/ChannelSocials";
 import { formatCount } from "@/utils/functions";
+
 export default {
     components: {
         ChannelSocials: () => import("@/components/ChannelSocials"),
@@ -88,12 +89,13 @@ export default {
     },
     computed: {
         subscriberCount() {
-            if (this.channel.subscriber_count)
+            if (this.channel.subscriber_count) {
                 return this.$tc(
                     "component.channelInfo.subscriberCount",
-                    formatCount(this.channel.subscriber_count)
+                    formatCount(this.channel.subscriber_count),
                 );
-            else return this.$t("component.channelInfo.subscriberNA");
+            }
+            return this.$t("component.channelInfo.subscriberNA");
         },
         subscriberGains() {
             return this.channel.subscriber_gains

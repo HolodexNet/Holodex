@@ -103,23 +103,23 @@ export default {
             },
         },
         pageLength() {
-            return this.$vuetify.breakpoint === "md" ? 12 : 24;
+            return this.$vuetify.breakpoint.toString() === "md" ? 12 : 24;
         },
     },
     methods: {
         resetVideos() {
             this.videos = [];
             this.currentOffset = 0;
-            this.infiniteId++;
+            this.infiniteId += 1;
             this.daysBefore = 0;
         },
         loadLive() {
             return api
                 .live()
-                .then(res => {
+                .then((res) => {
                     this.live = res;
                 })
-                .catch(e => {
+                .catch((e) => {
                     console.log(e);
                     this.hasError = true;
                 });
@@ -136,7 +136,7 @@ export default {
                     channel_type: this.recentVideoFilter,
                 }),
             })
-                .then(res => {
+                .then((res) => {
                     if (res.data.videos.length) {
                         this.videos = this.videos.concat(res.data.videos);
                         this.currentOffset += this.pageLength;

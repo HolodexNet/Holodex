@@ -41,6 +41,7 @@
 
 <script>
 import MainNav from "@/components/MainNav.vue";
+
 export default {
     name: "App",
     // default meta info
@@ -100,7 +101,7 @@ export default {
             },
             {
                 once: true,
-            }
+            },
         );
         navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (this.refreshing) return;
@@ -131,7 +132,8 @@ export default {
         },
     },
     methods: {
-        supportsWebp: async function() {
+        async supportsWebp() {
+            // eslint-disable-next-line no-restricted-globals
             if (!self.createImageBitmap) return false;
 
             const webpData =
@@ -139,7 +141,7 @@ export default {
             const blob = await fetch(webpData).then(r => r.blob());
             return createImageBitmap(blob).then(
                 () => true,
-                () => false
+                () => false,
             );
         },
         refreshApp() {

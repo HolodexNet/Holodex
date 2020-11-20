@@ -4,10 +4,10 @@
             <div class="text-h4">{{ $t("component.apiError.title") }}</div>
             <div class="text-body-1">
                 {{ $t("component.apiError.textBeforeTwitter") }} (<a
-                    href="https://twitter.com/holodex"
-                    norel
-                    >@holodex</a
-                >) {{ $t("component.apiError.textAfterTwitter") }}
+                href="https://twitter.com/holodex"
+                rel="noopener noreferrer"
+            >@holodex</a
+            >) {{ $t("component.apiError.textAfterTwitter") }}
                 <router-link to="/about">
                     {{ $t("component.apiError.aboutPage") }}
                 </router-link>

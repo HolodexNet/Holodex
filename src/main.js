@@ -1,12 +1,12 @@
 import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-import { i18n, vuetify } from "./plugins/vuetify";
 import VueGTag from "vue-gtag";
 import VueMeta from "vue-meta";
 import linkify from "vue-linkify";
 import VueI18n from "vue-i18n";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import { i18n, vuetify } from "./plugins/vuetify";
 
 import "./registerServiceWorker";
 
@@ -19,7 +19,7 @@ Vue.use(
             id: "UA-178428556-1",
         },
     },
-    router
+    router,
 );
 Vue.use(VueMeta, {
     refreshOnceOnNavigation: true,
@@ -32,5 +32,5 @@ new Vue({
     router,
     store,
     vuetify,
-    render: h => h(App),
+    render: (h) => h(App),
 }).$mount("#app");

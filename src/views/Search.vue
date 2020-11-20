@@ -2,7 +2,7 @@
     <v-container style="height: 100%">
         <v-row
             class="justify-end"
-            style="margin-bottom: -15px; margin-top: 15px;"
+            style="margin-bottom: -15px; margin-top: 15px"
         >
             <v-col sm="4" md="2" class="py-1">
                 <v-select
@@ -54,6 +54,7 @@
 <script>
 import VideoCardList from "@/components/VideoCardList";
 import api from "@/utils/backend-api";
+
 export default {
     name: "Search",
     metaInfo: {
@@ -128,7 +129,8 @@ export default {
         },
     },
     watch: {
-        "$route.query"() {
+        // eslint-disable-next-line func-names
+        "$route.query": function() {
             this.syncFilters();
             this.searchVideo();
         },
@@ -160,31 +162,33 @@ export default {
                 tags: this.$route.query.tags,
                 title: this.$route.query.title,
                 ...this.options.sort.find(
-                    opt => opt.value == this.filter.sort.toLowerCase()
+                    (opt) => opt.value === this.filter.sort.toLowerCase(),
                 ).query_value,
                 ...this.options.type.find(
-                    opt => opt.value == this.filter.type.toLowerCase()
+                    (opt) => opt.value === this.filter.type.toLowerCase(),
                 ).query_value,
                 include_channel: 1,
                 limit: this.pageSize,
                 offset: (this.currentPage - 1) * this.pageSize,
             };
             api.videos(query)
-                .then(res => {
+                .then((res) => {
                     this.videos = res.data.videos;
                     this.totalVideos = res.data.total;
                     return this;
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(error);
                 })
-                .finally(() => (this.loading = false));
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         loadPage(page) {
             this.$router.push({
                 query: {
                     ...this.$route.query,
-                    page: page,
+                    page,
                 },
             });
         },

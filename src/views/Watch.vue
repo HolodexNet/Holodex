@@ -18,9 +18,7 @@
                         <div class="thumbnail-overlay d-flex">
                             <div class="text-h4 ma-auto">
                                 <a
-                                    :href="
-                                        `https://youtu.be/${video.yt_video_key}`
-                                    "
+                                    :href="`https://youtu.be/${video.yt_video_key}`"
                                 >
                                     Open on Youtube
                                 </a>
@@ -49,7 +47,7 @@
                             class="ma-1"
                         ></ChannelChip>
                         <v-chip
-                            v-for="tag in tags.filter(t => !t.channel_ref)"
+                            v-for="tag in tags.filter((t) => !t.channel_ref)"
                             label
                             link
                             :key="tag.id"
@@ -114,8 +112,8 @@
                     }"
                 />
                 <div
-                    v-if="video_sources.length + video_clips.length == 0"
-                    style="text-align: center;"
+                    v-if="video_sources.length + video_clips.length === 0"
+                    style="text-align: center"
                     class="pa-2"
                 >
                     No clips or related video yet
@@ -137,7 +135,8 @@ import ChannelImg from "@/components/ChannelImg";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import VideoDescription from "@/components/VideoDescription";
 
-import { video_thumbnails } from "@/utils/functions";
+import { getVideoThumbnails } from "@/utils/functions";
+
 export default {
     name: "Watch",
     metaInfo() {
@@ -158,7 +157,7 @@ export default {
                 {
                     vmid: "url",
                     property: "og:url",
-                    content: "https://holodex.net/channel/" + this.channel_id,
+                    content: `https://holodex.net/channel/${this.channel_id}`,
                 },
             ],
         };
@@ -196,7 +195,7 @@ export default {
             this.video_src = "";
             this.isLoading = true;
             api.video(id)
-                .then(res => {
+                .then((res) => {
                     if (res.data) {
                         this.video_clips = res.data.clips;
                         this.video_sources = res.data.sources;
@@ -208,7 +207,7 @@ export default {
                         if (!this.hasWatched) this.setWatched();
                     }
                 })
-                .catch(e => {
+                .catch((e) => {
                     console.log(e);
                     this.showError = true;
                 })
@@ -225,36 +224,34 @@ export default {
     },
     computed: {
         channel_chips() {
-            let allMentions = new Map();
+            const allMentions = new Map();
             this.channel_mentions
-                .concat(this.video_sources.map(video => video.channel))
-                .filter(channel => channel.id != this.video.channel_id)
-                .forEach(channel =>
-                    allMentions.set(channel.id, {
-                        id: channel.id,
-                        name: channel.name,
-                        name_en: channel.name_en,
-                        photo: channel.photo,
-                    })
-                );
+                .concat(this.video_sources.map((video) => video.channel))
+                .filter((channel) => channel.id !== this.video.channel_id)
+                .forEach((channel) => allMentions.set(channel.id, {
+                    id: channel.id,
+                    name: channel.name,
+                    name_en: channel.name_en,
+                    photo: channel.photo,
+                }));
             return Array.from(allMentions.values());
         },
         redirectMode() {
             return this.$store.state.redirectMode;
         },
         thumbnail_src() {
-            return video_thumbnails(this.video.yt_video_key)["medium"];
+            return getVideoThumbnails(this.video.yt_video_key).medium;
         },
         isXs() {
             return this.$vuetify.breakpoint.name === "xs";
         },
         hasLiveChat() {
             return (
-                (this.video.status == "live" ||
-                    this.video.status == "upcoming") &&
-                !this.redirectMode &&
-                this.video_src &&
-                !this.isXs
+                (this.video.status === "live"
+                    || this.video.status === "upcoming")
+                && !this.redirectMode
+                && this.video_src
+                && !this.isXs
             );
         },
         hasWatched() {
@@ -271,11 +268,12 @@ export default {
         },
         metaImage() {
             if (!this.video.yt_video_key) return undefined;
-            return video_thumbnails(this.video.yt_video_key)["maxres"];
+            return getVideoThumbnails(this.video.yt_video_key).maxres;
         },
     },
     watch: {
-        "$route.params.id"(val) {
+        // eslint-disable-next-line func-names
+        "$route.params.id": function (val) {
             this.loadData(val);
         },
     },
@@ -288,6 +286,7 @@ export default {
     position: relative;
     padding-bottom: 56.25%;
 }
+
 .embedded-video > iframe {
     position: absolute;
     width: 100%;
@@ -304,6 +303,7 @@ export default {
     position: relative;
     min-height: 600px;
 }
+
 .embedded-chat > iframe {
     position: absolute;
     width: 100%;
@@ -314,6 +314,7 @@ export default {
     border: none !important;
     box-shadow: none !important;
 }
+
 .thumbnail-overlay {
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
@@ -321,6 +322,7 @@ export default {
     position: absolute;
     top: 0;
 }
+
 .thumbnail {
     position: relative;
 }

@@ -28,7 +28,7 @@
                                 {{
                                     $t(
                                         "views.library.deleteFromLibraryButton",
-                                        [selected.length]
+                                        [selected.length],
                                     )
                                 }}
                             </v-btn>
@@ -47,7 +47,7 @@
                                 <v-btn text @click="deleteDialog = false">
                                     {{
                                         $t(
-                                            "views.library.deleteConfirmationCancel"
+                                            "views.library.deleteConfirmationCancel",
                                         )
                                     }}
                                 </v-btn>
@@ -91,7 +91,7 @@
                     v-model="selected"
                     :value="prop.video.id"
                     hide-details
-                    @click="e => e.preventDefault()"
+                    @click="(e) => e.preventDefault()"
                 ></v-checkbox>
             </template>
         </VideoCardList>
@@ -103,6 +103,7 @@
 
 <script>
 import VideoCardList from "@/components/VideoCardList";
+
 export default {
     name: "Library",
     components: {
@@ -121,37 +122,35 @@ export default {
         savedVideosList() {
             return Object.values(this.savedVideos)
                 .sort((a, b) => {
-                    var dateA = new Date(a.added_at).getTime();
-                    var dateB = new Date(b.added_at).getTime();
+                    const dateA = new Date(a.added_at).getTime();
+                    const dateB = new Date(b.added_at).getTime();
                     return dateA > dateB ? 1 : -1;
                 })
                 .reverse();
         },
         showReset() {
-            return this.selected.length != 0;
+            return this.selected.length !== 0;
         },
     },
     methods: {
         selectAll() {
-            this.selected = this.savedVideosList.map(v => v.id);
+            this.selected = this.savedVideosList.map((v) => v.id);
         },
         reset() {
             this.selected = [];
         },
         deleteSelected() {
-            this.selected.forEach(id => {
+            this.selected.forEach((id) => {
                 this.$store.commit("removeSavedVideo", id);
             });
             this.reset();
         },
         exportSelected() {
-            if (this.selected.length == 0) return;
-            const yt_video_keys = this.selected.map(video_id => {
-                return this.savedVideos[video_id].yt_video_key;
+            if (this.selected.length === 0) return;
+            const ytVideoKeys = this.selected.map((videoId) => {
+                return this.savedVideos[videoId].yt_video_key;
             });
-            const url =
-                "https://www.youtube.com/watch_videos?video_ids=" +
-                yt_video_keys.join(",");
+            const url = `https://www.youtube.com/watch_videos?video_ids=${ytVideoKeys.join(",")}`;
 
             window.open(url, "_blank", "noopener");
             this.reset();

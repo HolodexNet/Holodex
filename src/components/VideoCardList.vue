@@ -16,7 +16,7 @@
             >
                 <!-- pass slot to each individual video card -->
                 <template v-slot:action>
-                    <slot name="action" :video="video"> </slot>
+                    <slot name="action" :video="video"></slot>
                 </template>
             </VideoCard>
         </v-col>
@@ -26,7 +26,7 @@
                 @click="expanded = !expanded"
                 v-if="
                     limitRows > 0 &&
-                        videos.length > this.limitRows * this.colSize
+                    videos.length > this.limitRows * this.colSize
                 "
             >
                 <v-icon>
@@ -37,7 +37,7 @@
                 v-if="infiniteLoad"
                 @infinite="emitInfinite"
                 :distance="100"
-                style="min-height: 10px;"
+                style="min-height: 10px"
                 :identifier="infiniteId"
                 spinner="spiral"
             >
@@ -58,7 +58,8 @@
 <script>
 import VideoCard from "@/components/VideoCard.vue";
 import ApiErrorMessage from "@/components/ApiErrorMessage";
-import { mdiChevronUp, mdiChevronDown } from "@mdi/js";
+import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
+
 export default {
     name: "VideoCardList",
     components: {
@@ -92,15 +93,13 @@ export default {
         },
         cols: {
             type: Object,
-            default: () => {
-                return {
-                    xs: 1,
-                    sm: 3,
-                    md: 4,
-                    lg: 6,
-                    xl: 8,
-                };
-            },
+            default: () => ({
+                xs: 1,
+                sm: 3,
+                md: 4,
+                lg: 6,
+                xl: 8,
+            }),
         },
         limitRows: {
             requird: false,
@@ -135,7 +134,8 @@ export default {
             this.$emit("infinite", $state);
         },
     },
-    mounted() {},
+    mounted() {
+    },
     computed: {
         spliced() {
             if (this.limitRows <= 0 || this.expanded) return this.videos;
@@ -169,7 +169,7 @@ export default {
 }
 
 .video-1 {
-    width: 100;
+    width: 100%;
     max-width: 100%;
     flex-basis: 100%;
 }
@@ -179,16 +179,19 @@ export default {
     max-width: 50%;
     flex-basis: 50%;
 }
+
 .video-3 {
     width: 33.3%;
     max-width: 33.3%;
     flex-basis: 33.3%;
 }
+
 .video-4 {
     width: 25%;
     max-width: 25%;
     flex-basis: 25%;
 }
+
 .video-5 {
     width: 20%;
     max-width: 20%;

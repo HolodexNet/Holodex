@@ -190,9 +190,7 @@
                             ZH-TW, ES, ID, MS, RU. Translations are provided by
                             the community, thank you!
                         </li>
-                        <li>
-                            Watched videos are now highlighted in purple
-                        </li>
+                        <li>Watched videos are now highlighted in purple</li>
                         <li>
                             Save videos to your library by clicking on the +
                             icon.
@@ -213,9 +211,7 @@
                     <br />
                     <span class="text--secondary">November 2, 2020</span>
                     <ul>
-                        <li>
-                            Hotfix video duration
-                        </li>
+                        <li>Hotfix video duration</li>
                         <li>
                             Added more sorting options and card view to Channels
                             page
@@ -237,12 +233,8 @@
                             Inactive vtuber channels are now hidden, but you can
                             still view them through the search bar
                         </li>
-                        <li>
-                            Add hide live chat button
-                        </li>
-                        <li>
-                            General under the hood improvments
-                        </li>
+                        <li>Add hide live chat button</li>
+                        <li>General under the hood improvments</li>
                     </ul>
                     <br />
                     <!-- <span class="text--secondary">Oct 20, 2020</span>
@@ -277,8 +269,9 @@
 </template>
 
 <script>
-import { mdiExportVariant, mdiDotsVertical } from "@mdi/js";
+import { mdiDotsVertical, mdiExportVariant } from "@mdi/js";
 import TwitterFeed from "@/components/TwitterFeed";
+
 export default {
     name: "About",
     metaInfo: {

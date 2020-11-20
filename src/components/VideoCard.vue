@@ -90,7 +90,7 @@
                             {{
                                 $tc(
                                     "component.videoCard.clips",
-                                    formatCount(video.clips.length)
+                                    formatCount(video.clips.length),
                                 )
                             }}
                         </router-link>
@@ -121,11 +121,12 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import advancedFormat from "dayjs/plugin/advancedFormat";
+import { formatCount, getVideoThumbnails } from "@/utils/functions";
+import { mdiCheck, mdiPlusBox } from "@mdi/js";
+
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(advancedFormat);
-import { video_thumbnails, formatCount } from "@/utils/functions";
-import { mdiPlusBox, mdiCheck } from "@mdi/js";
 export default {
     name: "VideoCard",
     components: {
@@ -174,45 +175,44 @@ export default {
             default: false,
         },
     },
-    created() {},
+    created() {
+    },
     computed: {
         formattedTime() {
             switch (this.video.status) {
-                case "upcoming":
-                    return (
-                        "Stream starts " +
+            case "upcoming":
+                return (
+                    `Stream starts ${
                         // print relative time in hours if less than 24 hours,
                         // print full date if greater than 24 hours
-                        (dayjs(this.video.live_schedule).diff(dayjs()) <=
-                        86400000
+                        dayjs(this.video.live_schedule).diff(dayjs())
+                            <= 86400000
                             ? this.formatFromNowHM(this.video.live_schedule)
                             : dayjs(this.video.live_schedule).format(
-                                  "ddd MMM Do, h:mm a"
-                              ))
-                    );
-                case "live":
-                    return this.$t("component.videoCard.liveNow");
-                default:
-                    return this.formatFromNow(this.video.published_at);
+                                "ddd MMM Do, h:mm a",
+                            )}`
+                );
+            case "live":
+                return this.$t("component.videoCard.liveNow");
+            default:
+                return this.formatFromNow(this.video.published_at);
             }
         },
         formattedDuration() {
-            const duration =
-                this.video.live_start && this.video.status === "live"
-                    ? dayjs().diff(dayjs(this.video.live_start))
-                    : this.video.duration_secs * 1000;
+            const duration = this.video.live_start && this.video.status === "live"
+                ? dayjs().diff(dayjs(this.video.live_start))
+                : this.video.duration_secs * 1000;
             return duration ? this.formatDuration(duration) : "";
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
             const useWebP = this.$store.state.canUseWebP && !this.forceJPG;
-            const srcs = video_thumbnails(this.video.yt_video_key, useWebP);
-            if (this.horizontal) return srcs["medium"];
+            const srcs = getVideoThumbnails(this.video.yt_video_key, useWebP);
+            if (this.horizontal) return srcs.medium;
             if (this.colSize > 2 && this.colSize <= 8) {
-                return srcs["medium"];
-            } else {
-                return srcs["hq720"];
+                return srcs.medium;
             }
+            return srcs.hq720;
         },
         redirectMode() {
             return this.$store.state.redirectMode;
@@ -242,8 +242,8 @@ export default {
 
             if (timeInMin <= 1) return "soon!";
             if (timeInMin < 60) return `in ${mins} minutes`;
-            if (timeInMin == 60) return "in 1 hour";
-            if (timeInMin % 60 == 0) return `in ${hours} hours`;
+            if (timeInMin === 60) return "in 1 hour";
+            if (timeInMin % 60 === 0) return `in ${hours} hours`;
             return `in ${hours} hours and ${mins} minutes`;
         },
         formatFromNow(time) {
@@ -267,9 +267,10 @@ export default {
 
 <style>
 .video-card {
-    border-radius: 0px !important;
+    border-radius: 0 !important;
     border: none !important;
 }
+
 .video-card-fluid {
     width: 100%;
 }
@@ -296,12 +297,15 @@ export default {
     white-space: nowrap;
     overflow: hidden;
 }
+
 .video-overlay .hover-show {
     visibility: hidden;
 }
+
 .video-overlay:hover .hover-show {
     visibility: visible;
 }
+
 .video-duration {
     background-color: rgba(0, 0, 0, 0.8);
     margin: 2px;
