@@ -29,6 +29,22 @@
                 <br :key="message.message + 'br'" />
             </template>
         </div>
+        <v-card class="summary">
+            <v-card-subtitle
+                >Translations in the next 4 minutes
+            </v-card-subtitle>
+            <v-slider
+                v-model="sliderValue"
+                :step="100 / video.duration_secs"
+                thumb-label="always"
+                readonly
+                bottom
+            >
+                <template v-slot:thumb-label="{ value }">
+                    {{ getLabel(value) }}
+                </template>
+            </v-slider>
+        </v-card>
     </div>
     <!-- </div> -->
     <!-- <div
@@ -61,13 +77,20 @@ export default {
     data() {
         return {
             messages: [],
+            summary: [],
             sub_offset: 8, //offset by 4 seconds
             currentTime: 0,
+            sliderTime: 0,
             timer: null,
         };
     },
     destroyed() {
         if (this.timer) this.stopSync();
+    },
+    created() {
+        api.videoLiveChatSummary(this.video.id).then(res => {
+            if (res) this.summary = res.data.summary;
+        });
     },
     methods: {
         ready(event) {
@@ -110,17 +133,29 @@ export default {
                     }
                 });
         },
+        getLabel(value) {
+            return this.summary.find(
+                s =>
+                    s.bin >= (value / 100) * this.video.duration_secs &&
+                    s.bin < (value / 100) * this.video.duration_secs + 240 &&
+                    s.type == "translation"
+            ).count;
+        },
     },
     watch: {
         currentTime() {
             // console.log(this.currentTime);
-            if (!this.messages.length) {
-                this.getMessages(this.currentTime);
-                return;
-            }
+            if (!this.messages.length)
+                return this.getMessages(this.currentTime);
+
             const lastMessage = this.messages[this.messages.length - 1];
+            // check if player skipped ahead
+            if (this.currentTime - lastMessage.time_secs > 0)
+                return this.getMessages(this.currentTime);
+
+            // load new messages if last message is about to be shown
             if (this.currentTime > lastMessage.time_secs - 30)
-                this.getMessages(lastMessage.time_secs + 1);
+                return this.getMessages(lastMessage.time_secs + 1);
         },
     },
     computed: {
@@ -149,6 +184,14 @@ export default {
         lastMessage() {
             return this.messages[this.messages.length - 1];
         },
+        sliderValue: {
+            get() {
+                return (this.currentTime / this.video.duration_secs) * 100;
+            },
+            set() {
+                
+            }
+        }
     },
 };
 </script>
@@ -160,7 +203,7 @@ export default {
 .watch-overlay {
     position: absolute;
     width: 100%;
-    bottom: 5%;
+    bottom: 10%;
     margin: 10px;
 }
 .watch-translation {

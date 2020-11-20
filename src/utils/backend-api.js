@@ -47,6 +47,9 @@ export default {
         const q = querystring.stringify({ type, time_start });
         return axios_instance.get(`/videos/${id}/live_chat?${q}`);
     },
+    videoLiveChatSummary(id) {
+        return axios_instance.get(`/videos/${id}/live_chat/summary`);
+    },
     clips(query) {
         const q = querystring.stringify(query);
         return axios_instance.get(`/clips?${q}`);
@@ -63,10 +66,7 @@ export default {
 
 export const axios_instance = axios.create({
     baseURL: `https://staging.holodex.net/api/v1`,
-        // process.env.NODE_ENV === "development"
-        //     ? `https://staging.holodextest.local`
-        //     // ?  `https://holodex.net/api/v1`
-        //     : `https://holodex.net/api/v1`,
+    //     `https://holodex.net/api/v1`,
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: error => {
