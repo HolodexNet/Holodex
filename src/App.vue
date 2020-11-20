@@ -4,36 +4,17 @@
         <v-main>
             <router-view />
         </v-main>
-        <v-snackbar
-            bottom
-            right
-            :value="updateExists"
-            :timeout="-1"
-            color="primary"
-            v-if="updateExists"
-        >
+        <v-snackbar bottom right :value="updateExists" :timeout="-1" color="primary" v-if="updateExists">
             An update is available
             <template v-slot:action>
-                <v-btn text @click="refreshApp" class="ml-auto">
-                    Update
-                </v-btn>
-                <v-btn text @click="updateExists = false" class="ml-auto">
-                    Close
-                </v-btn>
+                <v-btn text @click="refreshApp" class="ml-auto"> Update </v-btn>
+                <v-btn text @click="updateExists = false" class="ml-auto"> Close </v-btn>
             </template>
         </v-snackbar>
-        <v-snackbar
-            bottom
-            center
-            :value="showUpdateDetails"
-            color="primary"
-            :timeout="-1"
-        >
+        <v-snackbar bottom center :value="showUpdateDetails" color="primary" :timeout="-1">
             Visit the About page to see new changes
             <template v-slot:action>
-                <v-btn text @click="showUpdateDetails = false" class="ml-auto">
-                    Close
-                </v-btn>
+                <v-btn text @click="showUpdateDetails = false" class="ml-auto"> Close </v-btn>
             </template>
         </v-snackbar>
     </v-app>
@@ -84,7 +65,7 @@ export default {
     },
     created() {
         if (!this.$store.testedWebP) {
-            this.supportsWebp().then(res => {
+            this.supportsWebp().then((res) => {
                 if (!res) this.$store.commit("noWebPSupport");
             });
             this.$store.commit("testedWebP");
@@ -95,7 +76,7 @@ export default {
         this.$store.dispatch("checkChannelCache");
         document.addEventListener(
             "swUpdated",
-            event => {
+            (event) => {
                 this.registration = event.detail;
                 this.updateExists = true;
             },
@@ -136,9 +117,8 @@ export default {
             // eslint-disable-next-line no-restricted-globals
             if (!self.createImageBitmap) return false;
 
-            const webpData =
-                "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
-            const blob = await fetch(webpData).then(r => r.blob());
+            const webpData = "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
+            const blob = await fetch(webpData).then((r) => r.blob());
             return createImageBitmap(blob).then(
                 () => true,
                 () => false,

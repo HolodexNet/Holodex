@@ -13,9 +13,7 @@
                     link
                     :key="page.name"
                     @click="handlePageClick(page)"
-                    :class="{
-                        'v-list-item--active': $route.path === page.path,
-                    }"
+                    :class="{ 'v-list-item--active': $route.path === page.path }"
                 >
                     <v-list-item-action>
                         <v-icon>{{ page.icon }}</v-icon>
@@ -74,9 +72,7 @@
 <script>
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
-import {
-    mdiChevronDown, mdiChevronUp, mdiEarth, mdiHeart, mdiMessageCogOutline,
-} from "@mdi/js";
+import { mdiChevronDown, mdiChevronUp, mdiEarth, mdiHeart, mdiMessageCogOutline } from "@mdi/js";
 import { langs } from "@/plugins/vuetify";
 
 export default {
@@ -124,9 +120,10 @@ export default {
             // check cache for missing favorites
             this.$store.dispatch("checkChannelCache");
             // return favorited channel list from cache
-            const arr = this.favorites.map((channelId) => (Object.hasOwnProperty.call(this.cachedChannels, channelId)
-                ? this.cachedChannels[channelId]
-                : null));
+            const arr = this.favorites.map((channelId) =>
+                Object.hasOwnProperty.call(this.cachedChannels, channelId) ? this.cachedChannels[channelId] : null,
+            );
+
             return !this.favoritesExpanded && this.favorites.length > 5 ? arr.splice(0, 5) : arr;
         },
     },

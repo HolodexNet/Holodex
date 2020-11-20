@@ -1,32 +1,15 @@
 <template>
     <v-container style="height: 100%">
-        <v-row
-            class="justify-end"
-            style="margin-bottom: -15px; margin-top: 15px"
-        >
+        <v-row class="justify-end" style="margin-bottom: -15px; margin-top: 15px">
             <v-col sm="4" md="2" class="py-1">
-                <v-select
-                    v-model="filter.sort"
-                    :items="options.sort"
-                    dense
-                    label="Sort By"
-                ></v-select>
+                <v-select v-model="filter.sort" :items="options.sort" dense label="Sort By"></v-select>
             </v-col>
             <v-col sm="4" md="2" class="py-1">
-                <v-select
-                    v-model="filter.type"
-                    :items="options.type"
-                    dense
-                    label="Type"
-                ></v-select>
+                <v-select v-model="filter.type" :items="options.type" dense label="Type"></v-select>
             </v-col>
         </v-row>
         <v-row v-if="loading">
-            <v-progress-circular
-                indeterminate
-                size="32"
-                class="ma-auto"
-            ></v-progress-circular>
+            <v-progress-circular indeterminate size="32" class="ma-auto"></v-progress-circular>
         </v-row>
         <v-row>
             <v-col class="offset-xl-1 col-xl-10">
@@ -130,7 +113,7 @@ export default {
     },
     watch: {
         // eslint-disable-next-line func-names
-        "$route.query": function() {
+        "$route.query": function () {
             this.syncFilters();
             this.searchVideo();
         },
@@ -161,12 +144,8 @@ export default {
             const query = {
                 tags: this.$route.query.tags,
                 title: this.$route.query.title,
-                ...this.options.sort.find(
-                    (opt) => opt.value === this.filter.sort.toLowerCase(),
-                ).query_value,
-                ...this.options.type.find(
-                    (opt) => opt.value === this.filter.type.toLowerCase(),
-                ).query_value,
+                ...this.options.sort.find((opt) => opt.value === this.filter.sort.toLowerCase()).query_value,
+                ...this.options.type.find((opt) => opt.value === this.filter.type.toLowerCase()).query_value,
                 include_channel: 1,
                 limit: this.pageSize,
                 offset: (this.currentPage - 1) * this.pageSize,
@@ -193,12 +172,8 @@ export default {
             });
         },
         syncFilters() {
-            this.filter.sort = this.query.sort
-                ? this.query.sort.toLowerCase()
-                : this.options.defaults.sort;
-            this.filter.type = this.query.type
-                ? this.query.type.toLowerCase()
-                : this.options.defaults.type;
+            this.filter.sort = this.query.sort ? this.query.sort.toLowerCase() : this.options.defaults.sort;
+            this.filter.type = this.query.type ? this.query.type.toLowerCase() : this.options.defaults.type;
         },
     },
 };

@@ -25,8 +25,7 @@
                     </VideoCardList>
                     <v-row v-if="!filteredLiveVideos.length && !hasError">
                         <v-col class="ma-auto text-center pa-8">
-                            No one is streaming soon in your favorites. Please
-                            check out the other vtubers!
+                            No one is streaming soon in your favorites. Please check out the other vtubers!
                         </v-col>
                     </v-row>
                     <v-divider class="my-5" />
@@ -34,18 +33,12 @@
                         <div class="text-h6">
                             {{ $t("views.home.recentVideosHeading") }}
                         </div>
-                        <v-btn-toggle
-                            v-model="favoritesVideoFilter"
-                            mandatory
-                            dense
-                        >
+                        <v-btn-toggle v-model="favoritesVideoFilter" mandatory dense>
                             <v-btn value="all">
                                 {{ $t("views.home.recentVideoToggles.all") }}
                             </v-btn>
                             <v-btn value="vtuber">
-                                {{
-                                    $t("views.home.recentVideoToggles.official")
-                                }}
+                                {{ $t("views.home.recentVideoToggles.official") }}
                             </v-btn>
                             <v-btn value="subber">
                                 {{ $t("views.home.recentVideoToggles.subber") }}
@@ -54,9 +47,7 @@
                     </v-row>
                     <FavoritesVideoList :videoLists="filteredByChannelType" />
                     <div class="text-center" @click="loadNext">
-                        <v-btn class="ma-auto" outlined color="primary">
-                            Load Next
-                        </v-btn>
+                        <v-btn class="ma-auto" outlined color="primary"> Load Next </v-btn>
                     </div>
                 </v-col>
             </v-row>
@@ -66,10 +57,9 @@
                 <v-col class="d-flex align-center justify-center flex-column">
                     <v-icon color="primary" large>{{ mdiHeart }}</v-icon>
                     <div class="text-body-1 text-center">
-                        Create a list of favorite vtubers to their latest clips
-                        and lives on this page.
+                        Create a list of favorite vtubers to their latest clips and lives on this page.
                     </div>
-                    <v-btn to="/channel"> Manage Favorites </v-btn>
+                    <v-btn to="/channel"> Manage Favorites</v-btn>
                 </v-col>
             </v-row>
         </template>
@@ -83,8 +73,7 @@ import LoadingOverlay from "@/components/LoadingOverlay.vue";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import { mdiHeart } from "@mdi/js";
-
-const utc = require("dayjs/plugin/utc");
+import utc from "dayjs/plugin/utc";
 
 dayjs.extend(utc);
 
@@ -123,9 +112,7 @@ export default {
             return this.live.filter(
                 (live) =>
                     this.favorites.includes(live.channel.id) ||
-                    live.channel_mentions.filter((channel) =>
-                        this.favorites.includes(channel.id)
-                    ).length > 0
+                    live.channel_mentions.filter((channel) => this.favorites.includes(channel.id)).length > 0,
             );
         },
         filteredByChannelType() {
@@ -136,9 +123,7 @@ export default {
                 return {
                     title: videoList.title,
                     videos: videoList.videos.filter((video) =>
-                        this.favoritesVideoFilter === "vtuber"
-                            ? video.channel.id < 1000
-                            : video.channel.id > 1000
+                        this.favoritesVideoFilter === "vtuber" ? video.channel.id < 1000 : video.channel.id > 1000,
                     ),
                 };
             });
@@ -203,9 +188,7 @@ export default {
             return videos.filter((video) => {
                 return (
                     this.favorites.includes(video.channel.id) ||
-                    video.channel_mentions.filter((channel) =>
-                        this.favorites.includes(channel.id)
-                    ).length > 0
+                    video.channel_mentions.filter((channel) => this.favorites.includes(channel.id)).length > 0
                 );
             });
         },

@@ -37,11 +37,7 @@
             >
                 <template v-if="selection.item.type === 'channel'">
                     <v-avatar left v-if="!dense">
-                        <ChannelImg
-                            :channel="selection.item.value.channel_obj"
-                            :size="32"
-                            close
-                        />
+                        <ChannelImg :channel="selection.item.value.channel_obj" :size="32" close />
                     </v-avatar>
                     {{ selection.item.text }}
                 </template>
@@ -117,17 +113,10 @@ export default {
             const formatted = val.replace("#", "").toLowerCase();
             this.fetchTags(formatted)
                 .then((res) => {
-                    const currentTagIds = this.query
-                        ? this.query.map((item) => item.tag_id)
-                        : [];
-                    const filtered = res.data.tags.filter(
-                        (tag) => !currentTagIds.includes(tag.id),
-                    );
+                    const currentTagIds = this.query ? this.query.map((item) => item.tag_id) : [];
+                    const filtered = res.data.tags.filter((tag) => !currentTagIds.includes(tag.id));
                     this.fromApi = filtered.map((tag) => {
-                        if (
-                            tag.channel_ref
-                            && this.cachedChannels[tag.channel_ref]
-                        ) {
+                        if (tag.channel_ref && this.cachedChannels[tag.channel_ref]) {
                             const ref = this.cachedChannels[tag.channel_ref];
                             const refName = ref[this.nameProperty];
                             return {

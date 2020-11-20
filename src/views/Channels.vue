@@ -7,10 +7,7 @@
         </v-tabs>
         <v-divider />
         <v-container fluid class="pa-0">
-            <v-list
-                class="d-flex justify-space-between"
-                style="background: none"
-            >
+            <v-list class="d-flex justify-space-between" style="background: none">
                 <!-- Dropdown to pick sort-by into 'sort' data attr -->
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
@@ -18,18 +15,13 @@
                             v-bind="attrs"
                             v-on="on"
                             text
-                            style="
-                                border: none;
-                                text-transform: initial;
-                                font-weight: 400;
-                            "
+                            style="border: none; text-transform: initial; font-weight: 400"
                             class="text--secondary pa-1"
                         >
                             {{ currentSortValue.text }}
                             <span
                                 :class="{
-                                    'rotate-asc':
-                                        currentSortValue.query_value.order === 'asc',
+                                    'rotate-asc': currentSortValue.query_value.order === 'asc',
                                 }"
                             >
                                 <v-icon size="20">{{ mdiArrowDown }}</v-icon>
@@ -37,12 +29,7 @@
                         </v-btn>
                     </template>
                     <v-list>
-                        <v-list-item
-                            v-for="(item, index) in sortOptions"
-                            :key="index"
-                            link
-                            @click="sort = item.value"
-                        >
+                        <v-list-item v-for="(item, index) in sortOptions" :key="index" link @click="sort = item.value">
                             <v-list-item-title>
                                 {{ item.text }}
                             </v-list-item-title>
@@ -63,12 +50,7 @@
                 :includeGroupHeader="sort === 'group'"
                 :cardView="cardView"
             />
-            <infinite-loading
-                @infinite="loadData"
-                style="min-height: 10px"
-                :identifier="infiniteId"
-                spinner="spiral"
-            >
+            <infinite-loading @infinite="loadData" style="min-height: 10px" :identifier="infiniteId" spinner="spiral">
                 <template v-slot:no-more><span></span></template>
                 <template v-slot:error>
                     <ApiErrorMessage />
@@ -77,10 +59,7 @@
         </v-container>
         <!-- Favorites specific view items: -->
         <template v-if="category === Tabs.FAVORITES">
-            <div
-                v-if="favorites.length > 0"
-                class="text--secondary text-caption"
-            >
+            <div v-if="favorites.length > 0" class="text--secondary text-caption">
                 {{ $t("views.channels.favoriteLastUpdated", [lastUpdated]) }}
             </div>
             <div v-if="!favorites || favorites.length === 0">
@@ -163,9 +142,7 @@ export default {
                         },
                     },
                     {
-                        text: this.$t(
-                            "views.channels.sortOptions.recentUpload",
-                        ),
+                        text: this.$t("views.channels.sortOptions.recentUpload"),
                         value: "recent_upload",
                         query_value: {
                             sort: "latest_published_at",
@@ -198,9 +175,7 @@ export default {
             return this.$store.state.cachedChannels;
         },
         lastUpdated() {
-            return dayjs(this.$store.state.cachedChannelsLastUpdated).toNow(
-                true,
-            );
+            return dayjs(this.$store.state.cachedChannelsLastUpdated).toNow(true);
         },
         category: {
             get() {
@@ -267,12 +242,7 @@ export default {
                         this.channels.push(...res.data.channels);
                         if (this.category === this.Tabs.VTUBER) {
                             // update channel cache when fresh data is pulled
-                            res.data.channels.map((channelObj) =>
-                                this.$store.commit(
-                                    "addCachedChannel",
-                                    channelObj,
-                                ),
-                            );
+                            res.data.channels.map((channelObj) => this.$store.commit("addCachedChannel", channelObj));
                             this.localSortChannel();
 
                             // vtubers are loaded all at once, so inifinite scrolling should do nothing
@@ -292,9 +262,7 @@ export default {
         async loadFavorites() {
             // check if any channels missing from favorites and update the cache
             await this.$store.dispatch("checkChannelCache");
-            this.channels = this.favorites.map(
-                (channelId) => this.cachedChannels[channelId],
-            );
+            this.channels = this.favorites.map((channelId) => this.cachedChannels[channelId]);
             this.localSortChannel();
         },
         localSortChannel() {

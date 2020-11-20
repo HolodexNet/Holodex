@@ -1,9 +1,6 @@
 <template>
     <!-- prevent default on entire div to make dead click zone -->
-    <v-list-item-action
-        :class="{ 'channel-social-horizontal': !vertical }"
-        @click="e => e.preventDefault()"
-    >
+    <v-list-item-action :class="{ 'channel-social-horizontal': !vertical }" @click="(e) => e.preventDefault()">
         <v-btn
             v-if="channel.yt_channel_id"
             icon
@@ -22,7 +19,7 @@
             rel="noreferrer"
             target="_blank"
         >
-            <v-icon color="#00ACEE"> {{ mdiTwitter }}</v-icon>
+            <v-icon color="#00ACEE">{{ mdiTwitter }}</v-icon>
         </v-btn>
         <v-tooltip bottom v-if="channel.id < 1000">
             <template v-slot:activator="{ on, attrs }">
@@ -79,9 +76,7 @@ export default {
         ...mapMutations(["addFavorite", "removeFavorite"]),
         toggleFavorite(event) {
             event.preventDefault();
-            this.isFavorited
-                ? this.removeFavorite(this.channel.id)
-                : this.addFavorite(this.channel.id);
+            this.isFavorited ? this.removeFavorite(this.channel.id) : this.addFavorite(this.channel.id);
         },
     },
 };

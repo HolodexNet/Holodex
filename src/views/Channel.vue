@@ -1,9 +1,5 @@
 <template>
-    <v-container
-        class="channel-container"
-        fluid
-        v-if="!isLoading && !showError"
-    >
+    <v-container class="channel-container" fluid v-if="!isLoading && !showError">
         <v-card>
             <v-img :src="bannerImage" class="channel-banner" />
             <v-container>
@@ -19,22 +15,14 @@
             </v-container>
             <v-container class="pa-0">
                 <v-tabs>
-                    <v-tab
-                        v-for="tab in tabs.filter((t) => !t.hide)"
-                        :key="tab.path"
-                        :to="tab.path"
-                        :exact="tab.exact"
-                    >
+                    <v-tab v-for="tab in tabs.filter((t) => !t.hide)" :key="tab.path" :to="tab.path" :exact="tab.exact">
                         {{ tab.name }}
                     </v-tab>
                 </v-tabs>
             </v-container>
         </v-card>
         <v-container class="channel" style="min-height: 85vh">
-            <router-view
-                :channel="channel"
-                :key="this.channel_id"
-            ></router-view>
+            <router-view :channel="channel" :key="this.channel_id"></router-view>
         </v-container>
     </v-container>
     <LoadingOverlay :isLoading="isLoading" :showError="showError" v-else />
@@ -100,18 +88,18 @@ export default {
             const { mobile, tablet } = getBannerImages(this.channel.banner_image);
             const banners = {
                 xs: mobile,
-                sm: tablet
-            }
+                sm: tablet,
+            };
             return banners[this.$vuetify.breakpoint.name] || tablet;
         },
         avatarSize() {
             switch (this.$vuetify.breakpoint.name) {
-            case "xs":
-                return 40;
-            case "sm":
-                return 40;
-            default:
-                return 80;
+                case "xs":
+                    return 40;
+                case "sm":
+                    return 40;
+                default:
+                    return 80;
             }
         },
         tabs() {
@@ -170,7 +158,7 @@ export default {
             return api
                 .channel(this.channel_id)
                 .then((res) => {
-                    this.channel = res.data
+                    this.channel = res.data;
                 })
                 .then(() => {
                     // update cache with fresh data

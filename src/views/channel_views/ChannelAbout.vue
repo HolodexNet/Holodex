@@ -11,11 +11,7 @@
                 {{ channel.view_count }} Total Views
                 <v-divider class="my-3" />
             </v-col>
-            <v-col
-                style="white-space: pre-wrap"
-                class="col-12 col-md-9"
-                order="md-first"
-            >
+            <v-col style="white-space: pre-wrap" class="col-12 col-md-9" order="md-first">
                 <strong>Description</strong>
                 <br />
                 {{ channel.description }}

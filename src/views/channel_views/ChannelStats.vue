@@ -17,17 +17,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr
-                                    v-for="(row, index) in allData"
-                                    :key="index"
-                                >
+                                <tr v-for="(row, index) in allData" :key="index">
                                     <td>{{ formatDate(row.day) }}</td>
                                     <td>
                                         {{ formatCount(row.subscriber_count) }}
                                     </td>
-                                    <td class="green--text">
-                                        +{{ row.subscriber_diff }}
-                                    </td>
+                                    <td class="green--text">+{{ row.subscriber_diff }}</td>
                                 </tr>
                             </tbody>
                         </template>
@@ -50,15 +45,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr
-                                    v-for="(row, index) in allData"
-                                    :key="`view-${index}`"
-                                >
+                                <tr v-for="(row, index) in allData" :key="`view-${index}`">
                                     <td>{{ formatDate(row.day) }}</td>
                                     <td>{{ formatCount(row.view_count) }}</td>
-                                    <td class="green--text">
-                                        +{{ row.view_diff }}
-                                    </td>
+                                    <td class="green--text">+{{ row.view_diff }}</td>
                                 </tr>
                             </tbody>
                         </template>
@@ -73,24 +63,9 @@
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import { formatCount } from "@/utils/functions";
-import {
-    CategoryScale,
-    Chart,
-    Line,
-    LinearScale,
-    LineController,
-    Point,
-    Tooltip,
-} from "chart.js";
+import { CategoryScale, Chart, Line, LinearScale, LineController, Point, Tooltip } from "chart.js";
 
-Chart.register(
-    LineController,
-    Line,
-    Point,
-    LinearScale,
-    CategoryScale,
-    Tooltip
-);
+Chart.register(LineController, Line, Point, LinearScale, CategoryScale, Tooltip);
 export default {
     name: "ChannelStats",
     data() {
@@ -103,14 +78,10 @@ export default {
         };
     },
     mounted() {
-        api.channel_stats(this.channel_id).then((res) => {
+        api.channelStats(this.channel_id).then((res) => {
             this.allData = res.data.reverse();
-            this.timeLabels = this.allData.map((row) =>
-                dayjs(row.day).format("M/D")
-            );
-            this.subscriberData = this.allData.map(
-                (row) => row.subscriber_count
-            );
+            this.timeLabels = this.allData.map((row) => dayjs(row.day).format("M/D"));
+            this.subscriberData = this.allData.map((row) => row.subscriber_count);
             this.viewData = this.allData.map((row) => row.view_count);
             this.loadChart("subscriber");
             this.loadChart("view");
@@ -134,9 +105,7 @@ export default {
         formatCount,
         loadChart(type) {
             const ctx = document.getElementById(`${type}-chart`);
-            const gridLineColor = this.darkMode
-                ? "rgba(255,255,255,0.2)"
-                : "rgba(0, 0, 0, 0.1)";
+            const gridLineColor = this.darkMode ? "rgba(255,255,255,0.2)" : "rgba(0, 0, 0, 0.1)";
             const fontColor = this.darkMode ? "white" : "black";
             this.charts.push(
                 new Chart(ctx, {
@@ -159,7 +128,7 @@ export default {
                             y: {
                                 ticks: {
                                     // eslint-disable-next-line no-unused-vars
-                                    callback (value, index, values) {
+                                    callback(value, index, values) {
                                         return formatCount(value);
                                     },
                                     font: {
@@ -198,17 +167,13 @@ export default {
                             mode: "index",
                             intersect: false,
                             callbacks: {
-                                label (tooltipItem) {
-                                    return (
-                                        `${formatCount(tooltipItem.dataPoint.y)
-                                        } ${
-                                            tooltipItem.dataset.label}`
-                                    );
+                                label(tooltipItem) {
+                                    return `${formatCount(tooltipItem.dataPoint.y)} ${tooltipItem.dataset.label}`;
                                 },
                             },
                         },
                     },
-                })
+                }),
             );
         },
     },

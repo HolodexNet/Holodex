@@ -6,50 +6,24 @@
                     {{ $t("views.library.savedVideosTitle") }}
                 </div>
                 <div>
-                    <v-btn
-                        class="mr-1 mb-1"
-                        color="green"
-                        @click="exportSelected"
-                    >
-                        {{
-                            $t("views.library.createYtPlaylistButton", [
-                                selected.length,
-                            ])
-                        }}
+                    <v-btn class="mr-1 mb-1" color="green" @click="exportSelected">
+                        {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
                     </v-btn>
                     <v-dialog v-model="deleteDialog" max-width="290">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn
-                                color="red"
-                                class="mr-1 mb-1"
-                                v-bind="attrs"
-                                v-on="on"
-                            >
-                                {{
-                                    $t(
-                                        "views.library.deleteFromLibraryButton",
-                                        [selected.length],
-                                    )
-                                }}
+                            <v-btn color="red" class="mr-1 mb-1" v-bind="attrs" v-on="on">
+                                {{ $t("views.library.deleteFromLibraryButton", [selected.length]) }}
                             </v-btn>
                         </template>
                         <!-- Deletion confirm dialog -->
                         <v-card>
                             <v-card-title>
-                                {{
-                                    $t("views.library.deleteConfirmation", [
-                                        selected.length,
-                                    ])
-                                }}
+                                {{ $t("views.library.deleteConfirmation", [selected.length]) }}
                             </v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn text @click="deleteDialog = false">
-                                    {{
-                                        $t(
-                                            "views.library.deleteConfirmationCancel",
-                                        )
-                                    }}
+                                    {{ $t("views.library.deleteConfirmationCancel") }}
                                 </v-btn>
                                 <v-btn
                                     color="red darken-1"
@@ -59,33 +33,18 @@
                                         deleteSelected();
                                     "
                                 >
-                                    {{
-                                        $t("views.library.deleteConfirmationOK")
-                                    }}
+                                    {{ $t("views.library.deleteConfirmationOK") }}
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
-                    <v-btn
-                        class="mr-1 mb-1"
-                        @click="showReset ? reset() : selectAll()"
-                        color="blue-grey"
-                    >
-                        {{
-                            showReset
-                                ? $t("views.library.selectionReset")
-                                : $t("views.library.selectionSelectAll")
-                        }}
+                    <v-btn class="mr-1 mb-1" @click="showReset ? reset() : selectAll()" color="blue-grey">
+                        {{ showReset ? $t("views.library.selectionReset") : $t("views.library.selectionSelectAll") }}
                     </v-btn>
                 </div>
             </v-col>
         </v-row>
-        <VideoCardList
-            :videos="savedVideosList"
-            horizontal
-            includeChannel
-            v-if="savedVideosList.length > 0"
-        >
+        <VideoCardList :videos="savedVideosList" horizontal includeChannel v-if="savedVideosList.length > 0">
             <template v-slot:action="prop">
                 <v-checkbox
                     v-model="selected"

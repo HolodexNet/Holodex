@@ -1,11 +1,7 @@
 <template>
     <v-card
         outlined
-        :class="[
-            { 'video-card-fluid': fluid, 'video-card-horizontal': horizontal },
-            'video-card',
-            'transparent',
-        ]"
+        :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
         :to="!redirectMode ? `/watch/${video.id}` : ''"
         :href="`https://youtu.be/${video.yt_video_key}`"
         :target="redirectMode ? '_blank' : ''"
@@ -21,13 +17,9 @@
             v-if="!hideThumbnail"
         >
             <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                </v-row>
+                <v-row class="fill-height ma-0" align="center" justify="center"></v-row>
             </template>
-            <div
-                class="video-overlay d-flex flex-column align-end justify-space-between"
-                style="height: 100%"
-            >
+            <div class="video-overlay d-flex flex-column align-end justify-space-between" style="height: 100%">
                 <v-icon
                     :color="hasSaved ? 'primary' : 'white'"
                     class="video-action"
@@ -36,10 +28,7 @@
                 >
                     {{ hasSaved ? mdiCheck : mdiPlusBox }}
                 </v-icon>
-                <div
-                    v-if="video.duration_secs > 0 || video.live_start"
-                    class="video-duration"
-                >
+                <div v-if="video.duration_secs > 0 || video.live_start" class="video-duration">
                     {{ formattedDuration }}
                 </div>
             </div>
@@ -49,12 +38,7 @@
             <!-- Render Channel Avatar if necessary -->
             <router-link
                 :to="`/channel/${video.channel.id}`"
-                v-if="
-                    includeChannel &&
-                        includeAvatar &&
-                        !horizontal &&
-                        video.channel
-                "
+                v-if="includeChannel && includeAvatar && !horizontal && video.channel"
             >
                 <v-list-item-avatar>
                     <ChannelImg :channel="video.channel" />
@@ -62,10 +46,7 @@
             </router-link>
             <!--  -->
             <v-list-item-content class="pa-0">
-                <v-list-item-title
-                    :class="['video-title', { 'video-watched': hasWatched }]"
-                    :title="video.title"
-                >
+                <v-list-item-title :class="['video-title', { 'video-watched': hasWatched }]" :title="video.title">
                     {{ video.title }}
                 </v-list-item-title>
                 <v-list-item-subtitle v-if="includeChannel">
@@ -83,29 +64,13 @@
                     </span>
                     <span v-if="video.clips && video.clips.length > 0">
                         •
-                        <router-link
-                            :to="`/watch/${video.id}`"
-                            class="no-decoration"
-                        >
-                            {{
-                                $tc(
-                                    "component.videoCard.clips",
-                                    formatCount(video.clips.length),
-                                )
-                            }}
+                        <router-link :to="`/watch/${video.id}`" class="no-decoration">
+                            {{ $tc("component.videoCard.clips", formatCount(video.clips.length)) }}
                         </router-link>
                     </span>
-                    <span
-                        v-else-if="
-                            video.status === 'live' && video.live_viewers > 0
-                        "
-                    >
+                    <span v-else-if="video.status === 'live' && video.live_viewers > 0">
                         •
-                        {{
-                            $t("component.videoCard.watching", [
-                                formatCount(video.live_viewers),
-                            ])
-                        }}
+                        {{ $t("component.videoCard.watching", [formatCount(video.live_viewers)]) }}
                     </span>
                 </v-list-item-subtitle>
             </v-list-item-content>
@@ -175,33 +140,29 @@ export default {
             default: false,
         },
     },
-    created() {
-    },
+    created() {},
     computed: {
         formattedTime() {
             switch (this.video.status) {
-            case "upcoming":
-                return (
-                    `Stream starts ${
+                case "upcoming":
+                    return `Stream starts ${
                         // print relative time in hours if less than 24 hours,
                         // print full date if greater than 24 hours
-                        dayjs(this.video.live_schedule).diff(dayjs())
-                            <= 86400000
+                        dayjs(this.video.live_schedule).diff(dayjs()) <= 86400000
                             ? this.formatFromNowHM(this.video.live_schedule)
-                            : dayjs(this.video.live_schedule).format(
-                                "ddd MMM Do, h:mm a",
-                            )}`
-                );
-            case "live":
-                return this.$t("component.videoCard.liveNow");
-            default:
-                return this.formatFromNow(this.video.published_at);
+                            : dayjs(this.video.live_schedule).format("ddd MMM Do, h:mm a")
+                    }`;
+                case "live":
+                    return this.$t("component.videoCard.liveNow");
+                default:
+                    return this.formatFromNow(this.video.published_at);
             }
         },
         formattedDuration() {
-            const duration = this.video.live_start && this.video.status === "live"
-                ? dayjs().diff(dayjs(this.video.live_start))
-                : this.video.duration_secs * 1000;
+            const duration =
+                this.video.live_start && this.video.status === "live"
+                    ? dayjs().diff(dayjs(this.video.live_start))
+                    : this.video.duration_secs * 1000;
             return duration ? this.formatDuration(duration) : "";
         },
         imageSrc() {
@@ -250,9 +211,7 @@ export default {
             return dayjs(time).fromNow();
         },
         formatDuration(secs) {
-            return secs > 60 * 60 * 1000
-                ? dayjs.utc(secs).format("H:mm:ss")
-                : dayjs.utc(secs).format("m:ss");
+            return secs > 60 * 60 * 1000 ? dayjs.utc(secs).format("H:mm:ss") : dayjs.utc(secs).format("m:ss");
         },
         formatCount,
         toggleSaved(event) {

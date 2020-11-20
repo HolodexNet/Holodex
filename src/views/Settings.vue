@@ -15,9 +15,7 @@
                                 <strong class="primary--text">
                                     {{ l.display }}
                                 </strong>
-                                <span class="px-2 text--secondary text-caption">
-                                    ♡ {{ l.credit }}</span
-                                >
+                                <span class="px-2 text--secondary text-caption"> ♡ {{ l.credit }}</span>
                             </div>
                         </template>
                     </v-radio>

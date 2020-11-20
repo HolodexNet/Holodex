@@ -3,25 +3,14 @@
         <v-row class="align-start">
             <v-col class="pa-0 pa-lg-3">
                 <v-card class="watch-card">
-                    <div
-                        class="embedded-video"
-                        v-if="!redirectMode && video_src"
-                    >
-                        <iframe
-                            :src="video_src"
-                            frameborder="0"
-                            allowfullscreen
-                        ></iframe>
+                    <div class="embedded-video" v-if="!redirectMode && video_src">
+                        <iframe :src="video_src" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="thumbnail" v-else>
                         <v-img :aspect-ratio="16 / 9" :src="thumbnail_src" />
                         <div class="thumbnail-overlay d-flex">
                             <div class="text-h4 ma-auto">
-                                <a
-                                    :href="`https://youtu.be/${video.yt_video_key}`"
-                                >
-                                    Open on Youtube
-                                </a>
+                                <a :href="`https://youtu.be/${video.yt_video_key}`"> Open on Youtube </a>
                             </div>
                         </div>
                     </div>
@@ -57,31 +46,18 @@
                             {{ `#${tag.name} (${tag.count})` }}
                         </v-chip>
                     </v-card-text>
-                    <VideoDescription
-                        :description="video.description"
-                    ></VideoDescription>
+                    <VideoDescription :description="video.description"></VideoDescription>
                     <v-divider />
                 </v-card>
             </v-col>
-            <v-col
-                cols="12"
-                sm="12"
-                lg="3"
-                xl="3"
-                md="12"
-                class="related-videos pa-1"
-            >
+            <v-col cols="12" sm="12" lg="3" xl="3" md="12" class="related-videos pa-1">
                 <div class="embedded-chat" v-if="hasLiveChat & !hideLiveChat">
                     <iframe :src="live_chat_src" frameborder="0" />
                 </div>
                 <div class="text-end pa-1 text-caption" v-if="hasLiveChat">
-                    <a @click="hideLiveChat = !hideLiveChat">
-                        {{ hideLiveChat ? "Show" : "Hide" }} Live Chat
-                    </a>
+                    <a @click="hideLiveChat = !hideLiveChat"> {{ hideLiveChat ? "Show" : "Hide" }} Live Chat </a>
                 </div>
-                <div class="text-subtitle-2 ma-2" v-if="video_clips.length > 0">
-                    Clips
-                </div>
+                <div class="text-subtitle-2 ma-2" v-if="video_clips.length > 0">Clips</div>
                 <VideoCardList
                     :videos="video_clips"
                     horizontal
@@ -94,12 +70,7 @@
                     }"
                 />
                 <v-divider />
-                <div
-                    class="text-subtitle-2 ma-2"
-                    v-if="video_sources.length > 0"
-                >
-                    Related
-                </div>
+                <div class="text-subtitle-2 ma-2" v-if="video_sources.length > 0">Related</div>
                 <VideoCardList
                     :videos="video_sources"
                     horizontal
@@ -111,11 +82,7 @@
                         sm: 6,
                     }"
                 />
-                <div
-                    v-if="video_sources.length + video_clips.length === 0"
-                    style="text-align: center"
-                    class="pa-2"
-                >
+                <div v-if="video_sources.length + video_clips.length === 0" style="text-align: center" class="pa-2">
                     No clips or related video yet
                 </div>
             </v-col>
@@ -228,12 +195,14 @@ export default {
             this.channel_mentions
                 .concat(this.video_sources.map((video) => video.channel))
                 .filter((channel) => channel.id !== this.video.channel_id)
-                .forEach((channel) => allMentions.set(channel.id, {
-                    id: channel.id,
-                    name: channel.name,
-                    name_en: channel.name_en,
-                    photo: channel.photo,
-                }));
+                .forEach((channel) =>
+                    allMentions.set(channel.id, {
+                        id: channel.id,
+                        name: channel.name,
+                        name_en: channel.name_en,
+                        photo: channel.photo,
+                    }),
+                );
             return Array.from(allMentions.values());
         },
         redirectMode() {
@@ -247,11 +216,10 @@ export default {
         },
         hasLiveChat() {
             return (
-                (this.video.status === "live"
-                    || this.video.status === "upcoming")
-                && !this.redirectMode
-                && this.video_src
-                && !this.isXs
+                (this.video.status === "live" || this.video.status === "upcoming") &&
+                !this.redirectMode &&
+                this.video_src &&
+                !this.isXs
             );
         },
         hasWatched() {

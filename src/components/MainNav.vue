@@ -1,7 +1,7 @@
 <template>
     <div>
         <NavDrawer :pages="pages" v-model="drawer" v-if="!isXs" />
-        <BottomNav :pages="pages.filter(page => !page.collapsible)" v-else />
+        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-else />
         <v-app-bar id="top-bar" class="blue lighten-1" app clipped-left flat>
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isXs">
@@ -13,22 +13,12 @@
                         :to="'/'"
                         style="text-decoration: none; font-size: 24px; line-height: 1.2px"
                     >
-                        <Logo
-                            width="24"
-                            height="24"
-                            style="margin-bottom: -4px"
-                        />
+                        <Logo width="24" height="24" style="margin-bottom: -4px" />
                         Holodex
                     </router-link>
                 </v-toolbar-title>
                 <SearchBar v-if="!isXs" />
-                <v-btn
-                    icon
-                    class="ml-auto"
-                    :class="{ 'refresh-rotate': refreshing }"
-                    v-if="isXs"
-                    @click="onRefresh"
-                >
+                <v-btn icon class="ml-auto" :class="{ 'refresh-rotate': refreshing }" v-if="isXs" @click="onRefresh">
                     <v-icon>{{ mdiRefresh }}</v-icon>
                 </v-btn>
                 <v-btn icon v-if="isXs" @click="searchBarExpanded = true">
@@ -43,9 +33,7 @@
 
                     <v-list v-if="isXs">
                         <v-list-item
-                            v-for="page in pages.filter(
-                                item => item.collapsible
-                            )"
+                            v-for="page in pages.filter((item) => item.collapsible)"
                             :key="page.name"
                             :to="page.path"
                         >
@@ -57,10 +45,7 @@
                 </v-menu>
             </template>
             <template v-else>
-                <v-app-bar-nav-icon
-                    @click="searchBarExpanded = false"
-                    class="backButton"
-                >
+                <v-app-bar-nav-icon @click="searchBarExpanded = false" class="backButton">
                     <v-icon>{{ mdiArrowLeft }}</v-icon>
                 </v-app-bar-nav-icon>
                 <SearchBar :autofocus="isXs" />

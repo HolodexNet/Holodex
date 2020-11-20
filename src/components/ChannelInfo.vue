@@ -1,15 +1,9 @@
 <template>
     <v-list-item-content>
         <v-list-item-title>
-            <router-link
-                :to="`/channel/${channel.id}`"
-                class="no-decoration text-truncate"
-            >
+            <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
                 {{ channelName }}
-                <div
-                    class="text-body-2 text--secondary"
-                    v-if="!noGroup && channel.group"
-                >
+                <div class="text-body-2 text--secondary" v-if="!noGroup && channel.group">
                     {{ channel.group }}
                 </div>
             </router-link>
@@ -23,23 +17,9 @@
             </template>
             <template v-if="includeVideoCount">
                 <br />
-                {{
-                    $t("component.channelInfo.videoCount", [
-                        channel.video_count,
-                    ])
-                }}
-                <router-link
-                    :to="`/channel/${channel.id}/clips`"
-                    class="no-decoration"
-                    v-if="channel.clip_count > 0"
-                >
-                    •
-                    {{
-                        $tc(
-                            "component.channelInfo.clipCount",
-                            channel.clip_count,
-                        )
-                    }}
+                {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
+                <router-link :to="`/channel/${channel.id}/clips`" class="no-decoration" v-if="channel.clip_count > 0"
+                    >• {{ $tc("component.channelInfo.clipCount", channel.clip_count) }}
                 </router-link>
             </template>
         </v-list-item-subtitle>
@@ -51,7 +31,6 @@
 </template>
 
 <script>
-// import ChannelSocials from "@/components/ChannelSocials";
 import { formatCount } from "@/utils/functions";
 
 export default {
@@ -90,17 +69,12 @@ export default {
     computed: {
         subscriberCount() {
             if (this.channel.subscriber_count) {
-                return this.$tc(
-                    "component.channelInfo.subscriberCount",
-                    formatCount(this.channel.subscriber_count),
-                );
+                return this.$tc("component.channelInfo.subscriberCount", formatCount(this.channel.subscriber_count));
             }
             return this.$t("component.channelInfo.subscriberNA");
         },
         subscriberGains() {
-            return this.channel.subscriber_gains
-                ? `(+${formatCount(this.channel.subscriber_gains)})`
-                : null;
+            return this.channel.subscriber_gains ? `(+${formatCount(this.channel.subscriber_gains)})` : null;
         },
         channelName() {
             const prop = this.$store.state.nameProperty;

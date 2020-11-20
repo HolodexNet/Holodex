@@ -1,11 +1,6 @@
 <template>
     <v-container fluid class="pa-0">
-        <v-container
-            v-for="videoList in videoLists"
-            :key="videoList.title"
-            fluid
-            class="pa-0"
-        >
+        <v-container v-for="videoList in videoLists" :key="videoList.title" fluid class="pa-0">
             <v-row
                 style="font-size: 1rem !important; font-weight: 500"
                 class="my-2 ml-0"

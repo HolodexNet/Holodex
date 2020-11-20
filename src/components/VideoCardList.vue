@@ -1,10 +1,6 @@
 <template>
     <v-row dense>
-        <v-col
-            v-for="video in spliced"
-            :key="video.id"
-            :class="['video-col', `video-${colSize}`]"
-        >
+        <v-col v-for="video in spliced" :key="video.id" :class="['video-col', `video-${colSize}`]">
             <VideoCard
                 :video="video"
                 fluid
@@ -24,10 +20,7 @@
             <v-btn
                 icon
                 @click="expanded = !expanded"
-                v-if="
-                    limitRows > 0 &&
-                    videos.length > this.limitRows * this.colSize
-                "
+                v-if="limitRows > 0 && videos.length > this.limitRows * this.colSize"
             >
                 <v-icon>
                     {{ this.expanded ? mdiChevronUp : mdiChevronDown }}
@@ -134,14 +127,11 @@ export default {
             this.$emit("infinite", $state);
         },
     },
-    mounted() {
-    },
+    mounted() {},
     computed: {
         spliced() {
             if (this.limitRows <= 0 || this.expanded) return this.videos;
-            return this.videos
-                .slice(0)
-                .splice(0, this.limitRows * this.colSize);
+            return this.videos.slice(0).splice(0, this.limitRows * this.colSize);
         },
         colSize() {
             if (this.horizontal) return 1;
