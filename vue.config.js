@@ -18,7 +18,7 @@ module.exports = {
             runtimeCaching: [
                 {
                     urlPattern: new RegExp("https://fonts.(?:googleapis|gstatic).com/(.*)"),
-                    handler: "cacheFirst",
+                    handler: "CacheFirst",
                     options: {
                         cacheName: "google-fonts",
                         expiration: {
@@ -31,7 +31,7 @@ module.exports = {
                 },
                 {
                     urlPattern: new RegExp("https://yt3.ggpht.com/a/(.*)=s40-c-k-c0x00ffffff-no-rj-mo(.*)"),
-                    handler: "cacheFirst",
+                    handler: "CacheFirst",
                     options: {
                         cacheName: "channel-photo",
                         expiration: {
