@@ -4,12 +4,12 @@
             <v-col cols="12">
                 <div class="text-h4">About</div>
             </v-col>
-            <v-col cols="12" md="4" sm="12" lg="3" xl="2" float-right>
+            <v-col cols="12" md="4" sm="4" lg="3" xl="2" float-right>
                 <div class="text-h5">News</div>
                 <TwitterFeed />
             </v-col>
 
-            <v-col cols="12" md="8" sm="12" lg="9" xl="10">
+            <v-col cols="12" md="8" sm="8" lg="9" xl="10">
                 <div class="text-h5">FAQ</div>
                 <v-expansion-panels>
                     <v-expansion-panel>
@@ -17,10 +17,10 @@
                             Is there an Android/iOS app for Holodex?
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            No, you can add the website to your Home screen, and
-                            it will behave like a native app (with a few
+                            No, but you can add the website to your Home screen,
+                            and it will behave like a native app (with a few
                             quirks). It is still a work-in-progress, so please
-                            leave any feedback and bug report!
+                            leave any feedback or bug report!
                             <ul>
                                 <li>
                                     Android Chrome: Navigate to the site, click
@@ -31,7 +31,6 @@
                                     on the top right and find "Add to Home
                                     Screen".
                                 </li>
-
                                 <li>
                                     iOS Safari: Navigate to the site on your
                                     phone, click the square with arrow pointing
@@ -66,9 +65,8 @@
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
                             Favorites are currently stored locally, so try not
-                            to to clear the site's local storage. There is no
-                            permanent way to save your favorites list, but I am
-                            open to implementing accounts or exporting a txt.
+                            to to clear the site's local storage. Deleting
+                            Cache/Cookies is ok!
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -84,14 +82,18 @@
                     <v-expansion-panel>
                         <v-expansion-panel-header>
                             I'm a subber and can't find my channel or clips on
-                            HoloDex
+                            Holodex
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
                             Please check on the Channels page to see if you are
-                            listed as a subber, if not please contact me on
-                            Discord or Reddit, and I will add you manually. If
-                            you are already on the list, please make sure your
-                            video has the correct youtube source/channel links.
+                            listed as a subber, if not please fill out
+                            <a href="https://forms.gle/xkN4w8fyPr6YTGfx6">
+                                this form
+                            </a>
+                            , and we will add you manually. If you are already
+                            on the list, please make sure your video
+                            descriptions have the correct youtube source/channel
+                            links.
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -113,7 +115,7 @@
                     <v-expansion-panel>
                         <v-expansion-panel-header>
                             I'm a subber and I would like to have my channel
-                            removed from HoloDex
+                            removed from Holodex
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
                             Sad to see you go :(, please let me know if there's
@@ -138,25 +140,24 @@
                 <br />
 
                 <div class="text-h5">Feedback/Bug Reports</div>
-                <p>
+                <p class="text-body-2">
                     You can create an issue in the
                     <a href="https://github.com/RiceCakess/Holodex/issues">
                         Github Issue Tracker
                     </a>
-                    or directly contact me.
-                </p>
-                <div>
-                    Discord: ricecakes#8102 on the
+                    or find the Holodex team on Discord
+                    <br />
+                    <br />
+                    Discord: #holodex channel on
                     <a href="https://discord.gg/xJd9Der">
                         Hololive Creators Club Discord
                     </a>
-                </div>
-                <div>
+                    <br />
                     Reddit:
                     <a href="https://www.reddit.com/user/Rice_Cakess/">
                         u/Rice_cakess
                     </a>
-                </div>
+                </p>
                 <br />
 
                 <div class="text-h5">Credits</div>
@@ -182,6 +183,34 @@
 
                 <div class="text-h5">Changelog</div>
                 <div class="text-body-2">
+                    <span class="text--secondary">November 17, 2020</span>
+                    <ul>
+                        <li>
+                            Holodex is now offered in different languages: JP,
+                            ZH-TW, ES, ID, MS, RU. Translations are provided by
+                            the community, thank you!
+                        </li>
+                        <li>
+                            Watched videos are now highlighted in purple
+                        </li>
+                        <li>
+                            Save videos to your library by clicking on the +
+                            icon.
+                        </li>
+                        <li>
+                            Use the library to manage your saved videos or
+                            export it to a standard youtube playlist
+                        </li>
+                        <li>
+                            Clicking on "x clips", while in redirect mode takes
+                            you to the Holodex page
+                        </li>
+                        <li>
+                            Live videos now show time in hours and minutes from
+                            now
+                        </li>
+                    </ul>
+                    <br />
                     <span class="text--secondary">November 2, 2020</span>
                     <ul>
                         <li>
@@ -216,7 +245,7 @@
                         </li>
                     </ul>
                     <br />
-                    <span class="text--secondary">Oct 20, 2020</span>
+                    <!-- <span class="text--secondary">Oct 20, 2020</span>
                     <ul>
                         <li>
                             Added instructions on how to use Holodex like an app
@@ -240,7 +269,7 @@
                         <li>Hovering over video title shows full title</li>
                         <li>Fixed collab typo</li>
                         <li>Hide clips and collabs tab for clippers</li>
-                    </ul>
+                    </ul> -->
                 </div>
             </v-col>
         </v-row>

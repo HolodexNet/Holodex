@@ -1,5 +1,5 @@
 <template>
-    <div style="max-width: 600px" class="ma-auto">
+    <div class="ma-auto">
         <a
             class="twitter-timeline"
             data-dnt="true"

@@ -35,9 +35,10 @@
                 >
                     •
                     {{
-                        $t("component.channelInfo.clipCount", [
-                            channel.clip_count,
-                        ])
+                        $tc(
+                            "component.channelInfo.clipCount",
+                            channel.clip_count
+                        )
                     }}
                 </router-link>
             </template>
@@ -88,9 +89,10 @@ export default {
     computed: {
         subscriberCount() {
             if (this.channel.subscriber_count)
-                return this.$t("component.channelInfo.subscriberCount", [
-                    formatCount(this.channel.subscriber_count),
-                ]);
+                return this.$tc(
+                    "component.channelInfo.subscriberCount",
+                    formatCount(this.channel.subscriber_count)
+                );
             else return this.$t("component.channelInfo.subscriberNA");
         },
         subscriberGains() {

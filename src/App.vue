@@ -90,6 +90,7 @@ export default {
         }
         this.$vuetify.theme.dark = this.darkMode;
         this.$i18n.locale = this.$store.state.lang;
+        this.$vuetify.lang.current = this.$store.state.lang;
         this.$store.dispatch("checkChannelCache");
         document.addEventListener(
             "swUpdated",

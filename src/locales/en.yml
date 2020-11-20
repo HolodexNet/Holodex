@@ -12,8 +12,8 @@ component:
     #Other here is for the "other" group vs Hololive or Nijisanji etc. 
   channelInfo:
     videoCount: "{0} Videos"
-    clipCount: "{0} Clips"
-    subscriberCount: "{0} Subscribers"
+    clipCount: "{n} Clips"
+    subscriberCount: "{n} Subscribers"
     subscriberNA: Subscriber count unavailable
   channelSocials:
     addToFavorites: Add to Favorites
@@ -26,7 +26,7 @@ component:
     library: Library
     settings: Settings
   videoCard:
-    clips: "{0} Clips"
+    clips: "{n} Clips"
     watching: "{0} Watching"
     liveNow: Live Now
   videoDescription:
@@ -81,7 +81,7 @@ views:
     darkModeLabel: Dark Mode
     darkModeMsg: Changes the theme between light mode and dark mode
     redirectModeLabel: Open on Youtube
-    redirectModeMsg: Clicking on any video will open it in Youtube
+    redirectModeMsg: Clicking on any video will open it in Youtube, clicking on clips under official videos will still show related clips on Holodex
     useEnglishNameLabel: Use English Name
     useEnglishNameMsg: Uses English localized names for VTuber channels
     hideVideoThumbnailsLabel: Hide Video Thumbnails

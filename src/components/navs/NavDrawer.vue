@@ -27,7 +27,9 @@
             </template>
             <v-divider />
             <v-list>
-                <v-subheader>Favorites</v-subheader>
+                <v-subheader>
+                    {{ this.$t("component.mainNav.favorites") }}
+                </v-subheader>
                 <template v-for="channel in favoritedChannels">
                     <v-list-item
                         v-if="channel"
@@ -73,6 +75,16 @@
                         Manage Favorites
                     </router-link>
                 </v-list-item>
+                <v-list-item>
+                    <router-link
+                        to="/settings"
+                        style="font-size: .825rem;"
+                        class="ma-auto"
+                    >
+                        <v-icon small>{{ mdiEarth }}</v-icon><span class="px-1">{{ language }}</span>
+                        <v-icon small>{{ mdiMessageCogOutline }}</v-icon>
+                    </router-link>
+                </v-list-item>
             </v-list>
         </v-list>
     </v-navigation-drawer>
@@ -81,7 +93,15 @@
 <script>
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
-import { mdiHeart, mdiChevronDown, mdiChevronUp } from "@mdi/js";
+import {
+    mdiHeart,
+    mdiChevronDown,
+    mdiChevronUp,
+    mdiEarth,
+    mdiMessageCogOutline,
+} from "@mdi/js";
+import { langs } from "@/plugins/vuetify";
+
 export default {
     name: "NavDrawer",
     components: {
@@ -108,9 +128,14 @@ export default {
             favoritesExpanded: true,
             mdiChevronDown,
             mdiChevronUp,
+            mdiEarth,
+            mdiMessageCogOutline,
         };
     },
     computed: {
+        language() {
+            return langs.find(x => x.val == this.$store.state.lang).display;
+        },
         favorites() {
             return this.$store.state.favorites;
         },

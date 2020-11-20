@@ -83,11 +83,17 @@
                     </span>
                     <span v-if="video.clips && video.clips.length > 0">
                         •
-                        {{
-                            $t("component.videoCard.clips", [
-                                formatCount(video.clips.length),
-                            ])
-                        }}
+                        <router-link
+                            :to="`/watch/${video.id}`"
+                            class="no-decoration"
+                        >
+                            {{
+                                $tc(
+                                    "component.videoCard.clips",
+                                    formatCount(video.clips.length)
+                                )
+                            }}
+                        </router-link>
                     </span>
                     <span
                         v-else-if="
@@ -179,7 +185,7 @@ export default {
                         // print full date if greater than 24 hours
                         (dayjs(this.video.live_schedule).diff(dayjs()) <=
                         86400000
-                            ? this.formatFromNow(this.video.live_schedule)
+                            ? this.formatFromNowHM(this.video.live_schedule)
                             : dayjs(this.video.live_schedule).format(
                                   "ddd MMM Do, h:mm a"
                               ))
@@ -229,6 +235,17 @@ export default {
         },
     },
     methods: {
+        formatFromNowHM(time) {
+            const timeInMin = Math.floor(dayjs(time).diff(dayjs()) / 60000);
+            const hours = Math.floor(timeInMin / 60);
+            const mins = timeInMin % 60;
+
+            if (timeInMin <= 1) return "soon!";
+            if (timeInMin < 60) return `in ${mins} minutes`;
+            if (timeInMin == 60) return "in 1 hour";
+            if (timeInMin % 60 == 0) return `in ${hours} hours`;
+            return `in ${hours} hours and ${mins} minutes`;
+        },
         formatFromNow(time) {
             return dayjs(time).fromNow();
         },
