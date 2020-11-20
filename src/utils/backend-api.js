@@ -62,11 +62,11 @@ export default {
 };
 
 export const axios_instance = axios.create({
-    baseURL:
-        process.env.NODE_ENV === "development"
-            ? `http://holodextest.local:2434/v1`
-            // ?  `https://holodex.net/api/v1`
-            : `https://holodex.net/api/v1`,
+    baseURL: `https://staging.holodex.net/api/v1`,
+        // process.env.NODE_ENV === "development"
+        //     ? `https://staging.holodextest.local`
+        //     // ?  `https://holodex.net/api/v1`
+        //     : `https://holodex.net/api/v1`,
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: error => {
