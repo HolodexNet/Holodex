@@ -95,7 +95,7 @@ export default {
             }),
         },
         limitRows: {
-            requird: false,
+            required: false,
             type: Number,
             default: 0,
         },

@@ -18,8 +18,8 @@
             <template v-if="includeVideoCount">
                 <br />
                 {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
-                <router-link :to="`/channel/${channel.id}/clips`" class="no-decoration" v-if="channel.clip_count > 0"
-                    >• {{ $tc("component.channelInfo.clipCount", channel.clip_count) }}
+                <router-link :to="`/channel/${channel.id}/clips`" class="no-decoration" v-if="channel.clip_count > 0">
+                    • {{ $tc("component.channelInfo.clipCount", channel.clip_count) }}
                 </router-link>
             </template>
         </v-list-item-subtitle>

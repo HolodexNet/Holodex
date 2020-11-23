@@ -145,9 +145,9 @@ export default {
         formattedTime() {
             switch (this.video.status) {
                 case "upcoming":
+                    // print relative time in hours if less than 24 hours,
+                    // print full date if greater than 24 hours
                     return `Stream starts ${
-                        // print relative time in hours if less than 24 hours,
-                        // print full date if greater than 24 hours
                         dayjs(this.video.live_schedule).diff(dayjs()) <= 86400000
                             ? this.formatFromNowHM(this.video.live_schedule)
                             : dayjs(this.video.live_schedule).format("ddd MMM Do, h:mm a")
