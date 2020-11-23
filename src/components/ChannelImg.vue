@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import { channel_photo_resize } from "@/utils/functions";
+import { resizeChannelPhoto } from "@/utils/functions";
+
 export default {
     name: "ChannelImg",
     props: {
@@ -40,7 +41,7 @@ export default {
     computed: {
         photo() {
             if (!this.channel.photo) return "";
-            return channel_photo_resize(this.channel.photo, this.size);
+            return resizeChannelPhoto(this.channel.photo, this.size);
         },
     },
 };

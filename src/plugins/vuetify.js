@@ -1,12 +1,7 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
-import { primary_color, secondary_color } from "@/utils/consts";
+import { primaryColor, secondaryColor } from "@/utils/consts";
 import VueI18n from "vue-i18n";
-
-Vue.use(Vuetify);
-
-// ====== i18n setup ======
-Vue.use(VueI18n);
 
 import vuetifyEn from "vuetify/es5/locale/en";
 import vuetifyJa from "vuetify/es5/locale/ja";
@@ -20,6 +15,11 @@ import msTL from "@/locales/ms.yml";
 import zhTL from "@/locales/zhtw.yml";
 import idTL from "@/locales/id.yml";
 import ruTL from "@/locales/ru.yml";
+
+Vue.use(Vuetify);
+
+// ====== i18n setup ======
+Vue.use(VueI18n);
 
 const messages = {
     en: { $vuetify: vuetifyEn, ...enTL },
@@ -42,26 +42,21 @@ export const langs = [
 ];
 
 export const i18n = new VueI18n({
-    locale: "en", // set locale
-    messages, // set locale messages,
+    locale: "en", // Set locale
+    messages, // Set locale messages,
     pluralizationRules: {
         /**
          * @param choice {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
          * @param choicesLength {number} an overall amount of available choices
          * @returns a final choice index to select plural word by
          */
-        ru: function(choice, choicesLength) {
+        ru(choice, choicesLength) {
             // this === VueI18n instance, so the locale property also exists here
             if (choice === 0) {
                 return 0;
             }
-
-            choice = choice
-                .toString()
-                .toLowerCase()
-                .endsWith("k")
-                ? parseInt(choice)
-                : choice;
+            // If 'choice' is number, how tf it can end with 'k'?
+            // choice = choice.toString().toLowerCase().endsWith("k") ? parseInt(choice, 10) : choice;
 
             const teen = choice > 10 && choice < 20;
             const endsWithOne = choice % 10 === 1;
@@ -90,12 +85,12 @@ export const vuetify = new Vuetify({
     theme: {
         themes: {
             dark: {
-                primary: primary_color,
-                secondary: secondary_color,
+                primary: primaryColor,
+                secondary: secondaryColor,
             },
             light: {
-                primary: primary_color,
-                secondary: secondary_color,
+                primary: primaryColor,
+                secondary: secondaryColor,
             },
         },
     },

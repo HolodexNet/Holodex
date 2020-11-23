@@ -8,11 +8,9 @@ import { langs } from "@/plugins/vuetify";
 Vue.use(Vuex);
 
 function defaultState() {
-    const userLanguage = (navigator.language || navigator.userLanguage || "en")
-        .split("-")[0]
-        .toLowerCase();
+    const userLanguage = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
 
-    const validLangs = new Set(langs.map(x => x.val));
+    const validLangs = new Set(langs.map((x) => x.val));
 
     return {
         // settings
@@ -54,6 +52,7 @@ function defaultState() {
 }
 
 function getMinVideoObj(video) {
+    // eslint-disable-next-line camelcase
     const { id, yt_video_key, title, published_at, duration_secs } = video;
     return {
         id,
@@ -81,18 +80,8 @@ export default new Vuex.Store({
         useEnName(state) {
             return state.nameProperty === "name_en";
         },
-        hasWatched: state => video_id => {
-            return Object.prototype.hasOwnProperty.call(
-                state.watchedVideos,
-                video_id
-            );
-        },
-        hasSaved: state => video_id => {
-            return Object.prototype.hasOwnProperty.call(
-                state.savedVideos,
-                video_id
-            );
-        },
+        hasWatched: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.watchedVideos, videoId),
+        hasSaved: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.savedVideos, videoId),
     },
     mutations: {
         // settings
@@ -134,12 +123,12 @@ export default new Vuex.Store({
             Vue.set(state.channelsCardView, payload.category, payload.value);
         },
         // saves
-        addFavorite(state, channel_id) {
-            if (channel_id > 1000) return;
-            state.favorites.push(channel_id);
+        addFavorite(state, channelId) {
+            if (channelId > 1000) return;
+            state.favorites.push(channelId);
         },
-        removeFavorite(state, channel_id) {
-            const index = state.favorites.indexOf(channel_id);
+        removeFavorite(state, channelId) {
+            const index = state.favorites.indexOf(channelId);
             if (index > -1) {
                 state.favorites.splice(index, 1);
             }
@@ -150,8 +139,8 @@ export default new Vuex.Store({
         addSavedVideo(state, video) {
             Vue.set(state.savedVideos, video.id, getMinVideoObj(video));
         },
-        removeSavedVideo(state, video_id) {
-            Vue.delete(state.savedVideos, video_id);
+        removeSavedVideo(state, videoId) {
+            Vue.delete(state.savedVideos, videoId);
         },
         // channel cache
         setCachedChannelsError(state, payload) {
@@ -160,11 +149,11 @@ export default new Vuex.Store({
         setCachedChannelsLastUpdated(state, payload) {
             state.cachedChannelsLastUpdated = payload;
         },
-        addCachedChannel(state, channel_obj) {
-            Vue.set(state.cachedChannels, channel_obj.id, channel_obj);
+        addCachedChannel(state, channelObj) {
+            Vue.set(state.cachedChannels, channelObj.id, channelObj);
         },
-        removeCachedChannel(state, channel_id) {
-            delete state.cachedChannels[channel_id];
+        removeCachedChannel(state, channelId) {
+            delete state.cachedChannels[channelId];
         },
         // other
         setShowUpdatesDetail(state, payload) {
@@ -183,7 +172,7 @@ export default new Vuex.Store({
                 type: "vtuber",
             });
             if (res.data.channels.length) {
-                res.data.channels.forEach(channel => {
+                res.data.channels.forEach((channel) => {
                     commit("addCachedChannel", channel);
                 });
             }
@@ -193,12 +182,9 @@ export default new Vuex.Store({
             if (
                 !state.cachedChannelsLastUpdated ||
                 // update every hour
-                currentTime - state.cachedChannelsLastUpdated >
-                    1000 * 60 * 60 * 1 ||
+                currentTime - state.cachedChannelsLastUpdated > 1000 * 60 * 60 ||
                 // retry every 15 minutes if error
-                (state.cachedChannelsError &&
-                    currentTime - state.cachedChannelsLastUpdated >
-                        1000 * 60 * 15)
+                (state.cachedChannelsError && currentTime - state.cachedChannelsLastUpdated > 1000 * 60 * 15)
             ) {
                 this.commit("setCachedChannelsError", false);
                 await dispatch("updateChannelCache");
@@ -206,8 +192,7 @@ export default new Vuex.Store({
             }
 
             // update favorites if missing channels
-            for (let id of state.favorites) {
-                // eslint-disable-next-line prettier/prettier
+            for (const id of state.favorites) {
                 if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id) && id < 1000) {
                     console.log(`Missing channel_id: ${id}, refreshing cache`);
                     try {
