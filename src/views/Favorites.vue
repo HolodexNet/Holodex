@@ -89,7 +89,6 @@ export default {
     },
     data() {
         return {
-            live: [],
             // TODO: smaller pagelength with mobile/diff breakpoints
             filteredVideoLists: [],
             daysBefore: 0,
@@ -100,7 +99,7 @@ export default {
         };
     },
     mounted() {
-        Promise.all([this.loadLive(), this.loadFavorites()]).finally(() => {
+        Promise.all([this.$store.dispatch("loadLive"), this.loadFavorites()]).finally(() => {
             this.isLoading = false;
         });
     },
@@ -109,7 +108,7 @@ export default {
             return this.$store.state.favorites;
         },
         filteredLiveVideos() {
-            return this.live.filter(
+            return this.$store.state.live.filter(
                 (live) =>
                     this.favorites.includes(live.channel.id) ||
                     live.channel_mentions.filter((channel) => this.favorites.includes(channel.id)).length > 0,
@@ -141,17 +140,6 @@ export default {
         loadNext() {
             this.daysBefore += 1;
             this.loadFavorites();
-        },
-        loadLive() {
-            return api
-                .live()
-                .then((live) => {
-                    this.live = live;
-                })
-                .catch((e) => {
-                    console.log(e);
-                    this.hasError = true;
-                });
         },
         loadFavorites(clear = false) {
             const targetDate = dayjs().subtract(this.daysBefore, "d");

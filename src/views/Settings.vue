@@ -67,8 +67,6 @@ export default {
             },
             set(val) {
                 this.$store.commit("setLanguage", val);
-                this.$i18n.locale = this.$store.state.lang;
-                this.$vuetify.lang.current = this.$store.state.lang;
             },
         },
         darkMode: {

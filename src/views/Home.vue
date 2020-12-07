@@ -1,7 +1,7 @@
 <template>
     <v-container class="home pt-0" fluid>
-        <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
-        <v-row v-show="!isLoading && !hasError">
+        <LoadingOverlay :isLoading="isLoading" :showError="liveHasError" />
+        <v-row v-show="!isLoading && !liveHasError">
             <v-col>
                 <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
                     <div class="text-h6">
@@ -63,7 +63,8 @@
 import VideoCardList from "@/components/VideoCardList.vue";
 import LoadingOverlay from "@/components/LoadingOverlay.vue";
 import api from "@/utils/backend-api";
-// import dayjs from "dayjs";
+import { mapState } from "vuex";
+
 export default {
     name: "Home",
     metaInfo: {
@@ -75,16 +76,14 @@ export default {
     },
     data() {
         return {
-            live: [],
             videos: [],
             currentOffset: 0,
             infiniteId: +new Date(),
             isLoading: true,
-            hasError: false,
         };
     },
     created() {
-        this.loadLive().finally(() => {
+        this.$store.dispatch("loadLive").finally(() => {
             this.isLoading = false;
         });
     },
@@ -105,6 +104,7 @@ export default {
         pageLength() {
             return this.$vuetify.breakpoint.toString() === "md" ? 12 : 24;
         },
+        ...mapState(["live", "liveHasError"]),
     },
     methods: {
         resetVideos() {
@@ -112,17 +112,6 @@ export default {
             this.currentOffset = 0;
             this.infiniteId += 1;
             this.daysBefore = 0;
-        },
-        loadLive() {
-            return api
-                .live()
-                .then((res) => {
-                    this.live = res;
-                })
-                .catch((e) => {
-                    console.log(e);
-                    this.hasError = true;
-                });
         },
         loadNext($state) {
             api.videos({
