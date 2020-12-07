@@ -1,4 +1,4 @@
-# holoclips
+# Holodex
 
 ## Project setup
 
@@ -23,7 +23,21 @@ npm run build
 ```
 npm run lint
 ```
+-----
 
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Roadmap
+* Watch Page refresh 
+  - overlay live translations/data from live chat from archived streams
+  - refresh currently live in the background/service worker
+* Make repo public
+* Add user logins
+  - save favorites to database
+  - Add video commenting??
+  - Add push notifications
+* Add multi language support
+  - Use tagging system?? or maybe just have a row indicating language
+* Expand vtuber list
+* Updated tagging system
+  - User contributed tagging 
+  - Tag aliasing
+  - Tag categories
