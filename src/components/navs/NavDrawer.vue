@@ -13,7 +13,7 @@
                     link
                     :key="page.name"
                     @click="handlePageClick(page)"
-                    :class="{ 'v-list-item--active': $route.path == page.path }"
+                    :class="{ 'v-list-item--active': $route.path === page.path }"
                 >
                     <v-list-item-action>
                         <v-icon>{{ page.icon }}</v-icon>
@@ -34,31 +34,17 @@
                     <v-list-item
                         v-if="channel"
                         :key="channel.id"
-                        @click="
-                            $router
-                                .push(`/channel/${channel.id}`)
-                                .catch(() => {})
-                        "
+                        @click="$router.push(`/channel/${channel.id}`).catch(() => {})"
                     >
                         <v-list-item-avatar :size="35">
                             <ChannelImg :channel="channel" />
                         </v-list-item-avatar>
-                        <ChannelInfo
-                            :channel="channel"
-                            noSubscriberCount
-                            noGroup
-                        />
+                        <ChannelInfo :channel="channel" noSubscriberCount noGroup />
                     </v-list-item>
                 </template>
-                <v-list-item
-                    link
-                    @click="favoritesExpanded = !favoritesExpanded"
-                    v-if="favorites.length > 5"
-                >
+                <v-list-item link @click="favoritesExpanded = !favoritesExpanded" v-if="favorites.length > 5">
                     <v-list-item-action>
-                        <v-icon>{{
-                            favoritesExpanded ? mdiChevronUp : mdiChevronDown
-                        }}</v-icon>
+                        <v-icon>{{ favoritesExpanded ? mdiChevronUp : mdiChevronDown }}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>
@@ -67,21 +53,14 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
-                    <router-link
-                        to="/channel"
-                        style="font-size: .825rem"
-                        class="ma-auto"
-                    >
+                    <router-link to="/channel" style="font-size: 0.825rem" class="ma-auto">
                         Manage Favorites
                     </router-link>
                 </v-list-item>
                 <v-list-item>
-                    <router-link
-                        to="/settings"
-                        style="font-size: .825rem;"
-                        class="ma-auto"
-                    >
-                        <v-icon small>{{ mdiEarth }}</v-icon><span class="px-1">{{ language }}</span>
+                    <router-link to="/settings" style="font-size: 0.825rem" class="ma-auto">
+                        <v-icon small>{{ mdiEarth }}</v-icon>
+                        <span class="px-1">{{ language }}</span>
                         <v-icon small>{{ mdiMessageCogOutline }}</v-icon>
                     </router-link>
                 </v-list-item>
@@ -93,13 +72,7 @@
 <script>
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
-import {
-    mdiHeart,
-    mdiChevronDown,
-    mdiChevronUp,
-    mdiEarth,
-    mdiMessageCogOutline,
-} from "@mdi/js";
+import { mdiChevronDown, mdiChevronUp, mdiEarth, mdiHeart, mdiMessageCogOutline } from "@mdi/js";
 import { langs } from "@/plugins/vuetify";
 
 export default {
@@ -134,7 +107,7 @@ export default {
     },
     computed: {
         language() {
-            return langs.find(x => x.val == this.$store.state.lang).display;
+            return langs.find((x) => x.val === this.$store.state.lang).display;
         },
         favorites() {
             return this.$store.state.favorites;
@@ -143,30 +116,21 @@ export default {
             return this.$store.state.cachedChannels;
         },
         favoritedChannels() {
-            if (
-                !this.$store.state.cachedChannels ||
-                !this.$store.state.favorites
-            )
-                return [];
+            if (!this.$store.state.cachedChannels || !this.$store.state.favorites) return [];
             // check cache for missing favorites
             this.$store.dispatch("checkChannelCache");
             // return favorited channel list from cache
-            const arr = this.favorites.map(channel_id =>
-                Object.hasOwnProperty.call(this.cachedChannels, channel_id)
-                    ? this.cachedChannels[channel_id]
-                    : null
+            const arr = this.favorites.map((channelId) =>
+                Object.hasOwnProperty.call(this.cachedChannels, channelId) ? this.cachedChannels[channelId] : null,
             );
-            return !this.favoritesExpanded && this.favorites.length > 5
-                ? arr.splice(0, 5)
-                : arr;
+
+            return !this.favoritesExpanded && this.favorites.length > 5 ? arr.splice(0, 5) : arr;
         },
     },
     methods: {
         handlePageClick(page) {
             // reload the page if user clicks on the same tab
-            page.path === this.$route.path
-                ? this.$router.go(0)
-                : this.$router.push({ path: page.path });
+            page.path === this.$route.path ? this.$router.go(0) : this.$router.push({ path: page.path });
         },
     },
 };

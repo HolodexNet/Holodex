@@ -37,15 +37,11 @@
             >
                 <template v-if="selection.item.type === 'channel'">
                     <v-avatar left v-if="!dense">
-                        <ChannelImg
-                            :channel="selection.item.value.channel_obj"
-                            :size="32"
-                            close
-                        />
+                        <ChannelImg :channel="selection.item.value.channel_obj" :size="32" close />
                     </v-avatar>
                     {{ selection.item.text }}
                 </template>
-                <template v-else> #{{ selection.item.text }} </template>
+                <template v-else> #{{ selection.item.text }}</template>
             </v-chip>
         </template>
         <template v-slot:item="dropdownItem">
@@ -58,8 +54,8 @@
             <v-list-item-content>
                 {{
                     (dropdownItem.item.type !== "channel" ? "#" : "") +
-                        dropdownItem.item.text +
-                        ` (${dropdownItem.item.value.tag_obj.count})`
+                    dropdownItem.item.text +
+                    ` (${dropdownItem.item.value.tag_obj.count})`
                 }}
             </v-list-item-content>
         </template>
@@ -67,7 +63,7 @@
 </template>
 
 <script>
-import { mdiMagnify, mdiLabel } from "@mdi/js";
+import { mdiLabel, mdiMagnify } from "@mdi/js";
 import ChannelChip from "@/components/ChannelChip";
 import api from "@/utils/backend-api";
 import ChannelImg from "@/components/ChannelImg";
@@ -76,7 +72,6 @@ import { debounce } from "@/utils/functions";
 export default {
     name: "SearchBar",
     components: {
-        // eslint-disable-next-line vue/no-unused-components
         ChannelChip,
         ChannelImg,
     },
@@ -112,26 +107,20 @@ export default {
         },
     },
     watch: {
-        search: debounce(function(val) {
+        // eslint-disable-next-line func-names
+        search: debounce(function (val) {
             if (!val) return;
             const formatted = val.replace("#", "").toLowerCase();
             this.fetchTags(formatted)
-                .then(res => {
-                    const currentTagIds = this.query
-                        ? this.query.map(item => item.tag_id)
-                        : [];
-                    const filtered = res.data.tags.filter(
-                        tag => !currentTagIds.includes(tag.id)
-                    );
-                    this.fromApi = filtered.map(tag => {
-                        if (
-                            tag.channel_ref &&
-                            this.cachedChannels[tag.channel_ref]
-                        ) {
+                .then((res) => {
+                    const currentTagIds = this.query ? this.query.map((item) => item.tag_id) : [];
+                    const filtered = res.data.tags.filter((tag) => !currentTagIds.includes(tag.id));
+                    this.fromApi = filtered.map((tag) => {
+                        if (tag.channel_ref && this.cachedChannels[tag.channel_ref]) {
                             const ref = this.cachedChannels[tag.channel_ref];
-                            const ref_name = ref[this.nameProperty];
+                            const refName = ref[this.nameProperty];
                             return {
-                                text: ref_name ? ref_name : tag.name,
+                                text: refName || tag.name,
                                 type: "channel",
                                 value: {
                                     tag_id: tag.id,
@@ -139,25 +128,24 @@ export default {
                                     channel_obj: ref,
                                 },
                             };
-                        } else {
-                            return {
-                                text: tag.name,
-                                type: "tag",
-                                value: {
-                                    tag_id: tag.id,
-                                    tag_obj: tag,
-                                },
-                            };
                         }
+                        return {
+                            text: tag.name,
+                            type: "tag",
+                            value: {
+                                tag_id: tag.id,
+                                tag_obj: tag,
+                            },
+                        };
                     });
                 })
-                .catch(e => console.log(e));
+                .catch((e) => console.log(e));
             // .finally(() => alert(this.fromApi.map(item => item.text)));
         }, 200),
     },
     methods: {
         onKeyDown() {
-            if (this.fromApi.length == 0) this.commitSearch();
+            if (this.fromApi.length === 0) this.commitSearch();
         },
         async fetchTags(query) {
             this.isLoading = true;
@@ -166,8 +154,7 @@ export default {
             return res;
         },
         deleteChip(item) {
-            // eslint-disable-next-line prettier/prettier
-            this.query.splice(this.query.map(q => q.tag_id).indexOf(item.value.tag_id), 1);
+            this.query.splice(this.query.map((q) => q.tag_id).indexOf(item.value.tag_id), 1);
         },
         commitSearch() {
             if (!this.query && !this.search) return;
@@ -176,7 +163,7 @@ export default {
                 query: {
                     ...(this.query && {
                         tags: this.query
-                            .map(item => item.value.tag_obj.name)
+                            .map((item) => item.value.tag_obj.name)
                             .sort()
                             .join(","),
                     }),
@@ -196,6 +183,7 @@ export default {
 .search-bar {
     max-width: 550px !important;
 }
+
 .search-bar.v-input--dense > .v-input__append-outer {
     background-color: #424242;
     min-width: 48px;
@@ -206,6 +194,7 @@ export default {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
 .search-bar.v-input--dense > .v-input__append-outer {
     min-width: 38px;
     min-height: 38px;

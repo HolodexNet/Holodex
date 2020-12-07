@@ -25,8 +25,7 @@
                     </VideoCardList>
                     <v-row v-if="!filteredLiveVideos.length && !hasError">
                         <v-col class="ma-auto text-center pa-8">
-                            No one is streaming soon in your favorites. Please
-                            check out the other vtubers!
+                            No one is streaming soon in your favorites. Please check out the other vtubers!
                         </v-col>
                     </v-row>
                     <v-divider class="my-5" />
@@ -34,11 +33,7 @@
                         <div class="text-h6">
                             {{ $t("views.home.recentVideosHeading") }}
                         </div>
-                        <v-btn-toggle
-                            v-model="favoritesVideoFilter"
-                            mandatory
-                            dense
-                        >
+                        <v-btn-toggle v-model="favoritesVideoFilter" mandatory dense>
                             <v-btn value="all">
                                 {{ $t("views.home.recentVideoToggles.all") }}
                             </v-btn>
@@ -52,9 +47,7 @@
                     </v-row>
                     <FavoritesVideoList :videoLists="filteredByChannelType" />
                     <div class="text-center" @click="loadNext">
-                        <v-btn class="ma-auto" outlined color="primary">
-                            Load Next
-                        </v-btn>
+                        <v-btn class="ma-auto" outlined color="primary"> Load Next </v-btn>
                     </div>
                 </v-col>
             </v-row>
@@ -64,12 +57,9 @@
                 <v-col class="d-flex align-center justify-center flex-column">
                     <v-icon color="primary" large>{{ mdiHeart }}</v-icon>
                     <div class="text-body-1 text-center">
-                        Create a list of favorite vtubers to their latest clips
-                        and lives on this page.
+                        Create a list of favorite vtubers to their latest clips and lives on this page.
                     </div>
-                    <v-btn to="/channel">
-                        Manage Favorites
-                    </v-btn>
+                    <v-btn to="/channel"> Manage Favorites</v-btn>
                 </v-col>
             </v-row>
         </template>
@@ -83,7 +73,8 @@ import LoadingOverlay from "@/components/LoadingOverlay.vue";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import { mdiHeart } from "@mdi/js";
-var utc = require("dayjs/plugin/utc");
+import utc from "dayjs/plugin/utc";
+
 dayjs.extend(utc);
 
 export default {
@@ -119,23 +110,20 @@ export default {
         },
         filteredLiveVideos() {
             return this.live.filter(
-                live =>
+                (live) =>
                     this.favorites.includes(live.channel.id) ||
-                    live.channel_mentions.filter(channel =>
-                        this.favorites.includes(channel.id)
-                    ).length > 0
+                    live.channel_mentions.filter((channel) => this.favorites.includes(channel.id)).length > 0,
             );
         },
         filteredByChannelType() {
-            if (this.favoritesVideoFilter == "all")
+            if (this.favoritesVideoFilter === "all") {
                 return this.filteredVideoLists;
-            return this.filteredVideoLists.map(videoList => {
+            }
+            return this.filteredVideoLists.map((videoList) => {
                 return {
                     title: videoList.title,
-                    videos: videoList.videos.filter(video =>
-                        this.favoritesVideoFilter === "vtuber"
-                            ? video.channel.id < 1000
-                            : video.channel.id > 1000
+                    videos: videoList.videos.filter((video) =>
+                        this.favoritesVideoFilter === "vtuber" ? video.channel.id < 1000 : video.channel.id > 1000,
                     ),
                 };
             });
@@ -151,16 +139,16 @@ export default {
     },
     methods: {
         loadNext() {
-            this.daysBefore++;
+            this.daysBefore += 1;
             this.loadFavorites();
         },
         loadLive() {
             return api
                 .live()
-                .then(live => {
+                .then((live) => {
                     this.live = live;
                 })
-                .catch(e => {
+                .catch((e) => {
                     console.log(e);
                     this.hasError = true;
                 });
@@ -174,18 +162,12 @@ export default {
                     include_channel: 1,
                     status: "past",
                     tag_status: "tagged",
-                    start_date: targetDate
-                        .startOf("day")
-                        .utc()
-                        .toISOString(),
-                    end_date: targetDate
-                        .endOf("day")
-                        .utc()
-                        .toISOString(),
+                    start_date: targetDate.startOf("day").utc().toISOString(),
+                    end_date: targetDate.endOf("day").utc().toISOString(),
                     sort: "published_at",
                     order: "desc",
                 })
-                .then(res => {
+                .then((res) => {
                     if (res.data.videos.length) {
                         this.filteredVideoLists.push({
                             title: this.formatDayTitle(this.daysBefore),
@@ -195,25 +177,24 @@ export default {
                         // if (res.data.videos.length > 100)
                         //     console.log("too many videos");
                     }
-                    //if less than 50 videos uploaded today, then grab yesterday's
-                    if (res.data.videos.length < 50 && this.daysBefore < 3)
+                    // if less than 50 videos uploaded today, then grab yesterday's
+                    if (res.data.videos.length < 50 && this.daysBefore < 3) {
                         this.loadNext();
+                    }
                 });
         },
         // check if video is posted by favorited channel or mentioned in the video
         filterByFavorites(videos) {
-            return videos.filter(video => {
+            return videos.filter((video) => {
                 return (
                     this.favorites.includes(video.channel.id) ||
-                    video.channel_mentions.filter(channel =>
-                        this.favorites.includes(channel.id)
-                    ).length > 0
+                    video.channel_mentions.filter((channel) => this.favorites.includes(channel.id)).length > 0
                 );
             });
         },
         formatDayTitle(daysAgo) {
             if (daysAgo < 2) {
-                return daysAgo == 0 ? "Today" : "Yesterday";
+                return daysAgo === 0 ? "Today" : "Yesterday";
             }
             return `${daysAgo} days ago`;
         },

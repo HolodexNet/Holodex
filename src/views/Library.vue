@@ -6,50 +6,24 @@
                     {{ $t("views.library.savedVideosTitle") }}
                 </div>
                 <div>
-                    <v-btn
-                        class="mr-1 mb-1"
-                        color="green"
-                        @click="exportSelected"
-                    >
-                        {{
-                            $t("views.library.createYtPlaylistButton", [
-                                selected.length,
-                            ])
-                        }}
+                    <v-btn class="mr-1 mb-1" color="green" @click="exportSelected">
+                        {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
                     </v-btn>
                     <v-dialog v-model="deleteDialog" max-width="290">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn
-                                color="red"
-                                class="mr-1 mb-1"
-                                v-bind="attrs"
-                                v-on="on"
-                            >
-                                {{
-                                    $t(
-                                        "views.library.deleteFromLibraryButton",
-                                        [selected.length]
-                                    )
-                                }}
+                            <v-btn color="red" class="mr-1 mb-1" v-bind="attrs" v-on="on">
+                                {{ $t("views.library.deleteFromLibraryButton", [selected.length]) }}
                             </v-btn>
                         </template>
                         <!-- Deletion confirm dialog -->
                         <v-card>
                             <v-card-title>
-                                {{
-                                    $t("views.library.deleteConfirmation", [
-                                        selected.length,
-                                    ])
-                                }}
+                                {{ $t("views.library.deleteConfirmation", [selected.length]) }}
                             </v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn text @click="deleteDialog = false">
-                                    {{
-                                        $t(
-                                            "views.library.deleteConfirmationCancel"
-                                        )
-                                    }}
+                                    {{ $t("views.library.deleteConfirmationCancel") }}
                                 </v-btn>
                                 <v-btn
                                     color="red darken-1"
@@ -59,39 +33,24 @@
                                         deleteSelected();
                                     "
                                 >
-                                    {{
-                                        $t("views.library.deleteConfirmationOK")
-                                    }}
+                                    {{ $t("views.library.deleteConfirmationOK") }}
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
-                    <v-btn
-                        class="mr-1 mb-1"
-                        @click="showReset ? reset() : selectAll()"
-                        color="blue-grey"
-                    >
-                        {{
-                            showReset
-                                ? $t("views.library.selectionReset")
-                                : $t("views.library.selectionSelectAll")
-                        }}
+                    <v-btn class="mr-1 mb-1" @click="showReset ? reset() : selectAll()" color="blue-grey">
+                        {{ showReset ? $t("views.library.selectionReset") : $t("views.library.selectionSelectAll") }}
                     </v-btn>
                 </div>
             </v-col>
         </v-row>
-        <VideoCardList
-            :videos="savedVideosList"
-            horizontal
-            includeChannel
-            v-if="savedVideosList.length > 0"
-        >
+        <VideoCardList :videos="savedVideosList" horizontal includeChannel v-if="savedVideosList.length > 0">
             <template v-slot:action="prop">
                 <v-checkbox
                     v-model="selected"
                     :value="prop.video.id"
                     hide-details
-                    @click="e => e.preventDefault()"
+                    @click="(e) => e.preventDefault()"
                 ></v-checkbox>
             </template>
         </VideoCardList>
@@ -103,6 +62,7 @@
 
 <script>
 import VideoCardList from "@/components/VideoCardList";
+
 export default {
     name: "Library",
     components: {
@@ -121,37 +81,35 @@ export default {
         savedVideosList() {
             return Object.values(this.savedVideos)
                 .sort((a, b) => {
-                    var dateA = new Date(a.added_at).getTime();
-                    var dateB = new Date(b.added_at).getTime();
+                    const dateA = new Date(a.added_at).getTime();
+                    const dateB = new Date(b.added_at).getTime();
                     return dateA > dateB ? 1 : -1;
                 })
                 .reverse();
         },
         showReset() {
-            return this.selected.length != 0;
+            return this.selected.length !== 0;
         },
     },
     methods: {
         selectAll() {
-            this.selected = this.savedVideosList.map(v => v.id);
+            this.selected = this.savedVideosList.map((v) => v.id);
         },
         reset() {
             this.selected = [];
         },
         deleteSelected() {
-            this.selected.forEach(id => {
+            this.selected.forEach((id) => {
                 this.$store.commit("removeSavedVideo", id);
             });
             this.reset();
         },
         exportSelected() {
-            if (this.selected.length == 0) return;
-            const yt_video_keys = this.selected.map(video_id => {
-                return this.savedVideos[video_id].yt_video_key;
+            if (this.selected.length === 0) return;
+            const ytVideoKeys = this.selected.map((videoId) => {
+                return this.savedVideos[videoId].yt_video_key;
             });
-            const url =
-                "https://www.youtube.com/watch_videos?video_ids=" +
-                yt_video_keys.join(",");
+            const url = `https://www.youtube.com/watch_videos?video_ids=${ytVideoKeys.join(",")}`;
 
             window.open(url, "_blank", "noopener");
             this.reset();

@@ -5,25 +5,14 @@
                 <WatchFrame :video="video" v-if="video" />
                 <WatchInfo :video="video" />
             </v-col>
-            <v-col
-                cols="12"
-                sm="12"
-                lg="3"
-                xl="3"
-                md="12"
-                class="related-videos pa-1"
-            >
+            <v-col cols="12" sm="12" lg="3" xl="3" md="12" class="related-videos pa-1">
                 <div class="embedded-chat" v-if="hasLiveChat & !hideLiveChat">
                     <iframe :src="live_chat_src" frameborder="0" />
                 </div>
                 <div class="text-end pa-1 text-caption" v-if="hasLiveChat">
-                    <a @click="hideLiveChat = !hideLiveChat">
-                        {{ hideLiveChat ? "Show" : "Hide" }} Live Chat
-                    </a>
+                    <a @click="hideLiveChat = !hideLiveChat"> {{ hideLiveChat ? "Show" : "Hide" }} Live Chat </a>
                 </div>
-                <div class="text-subtitle-2 ma-2" v-if="video_clips.length > 0">
-                    Clips
-                </div>
+                <div class="text-subtitle-2 ma-2" v-if="video_clips.length > 0">Clips</div>
                 <VideoCardList
                     :videos="video_clips"
                     horizontal
@@ -36,12 +25,7 @@
                     }"
                 />
                 <v-divider />
-                <div
-                    class="text-subtitle-2 ma-2"
-                    v-if="video_sources.length > 0"
-                >
-                    Related
-                </div>
+                <div class="text-subtitle-2 ma-2" v-if="video_sources.length > 0">Related</div>
                 <VideoCardList
                     :videos="video_sources"
                     horizontal
@@ -53,11 +37,7 @@
                         sm: 6,
                     }"
                 />
-                <div
-                    v-if="video_sources.length + video_clips.length == 0"
-                    style="text-align: center;"
-                    class="pa-2"
-                >
+                <div v-if="video_sources.length + video_clips.length === 0" style="text-align: center" class="pa-2">
                     No clips or related video yet
                 </div>
             </v-col>
@@ -72,7 +52,8 @@ import VideoCardList from "@/components/VideoCardList";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import WatchInfo from "@/components/WatchInfo.vue";
 import WatchFrame from "@/components/WatchFrame.vue";
-import { video_thumbnails } from "@/utils/functions";
+import VideoDescription from "@/components/VideoDescription";
+import { getVideoThumbnails } from "@/utils/functions";
 
 export default {
     name: "Watch",
@@ -94,7 +75,7 @@ export default {
                 {
                     vmid: "url",
                     property: "og:url",
-                    content: "https://holodex.net/channel/" + this.channel_id,
+                    content: `https://holodex.net/channel/${this.channel_id}`,
                 },
             ],
         };
@@ -126,7 +107,7 @@ export default {
             this.video_src = "";
             this.isLoading = true;
             api.video(id)
-                .then(res => {
+                .then((res) => {
                     if (res.data) {
                         this.video_clips = res.data.clips;
                         this.video_sources = res.data.sources;
@@ -136,7 +117,7 @@ export default {
                         if (!this.hasWatched) this.setWatched();
                     }
                 })
-                .catch(e => {
+                .catch((e) => {
                     console.log(e);
                     this.showError = true;
                 })
@@ -151,8 +132,7 @@ export default {
     computed: {
         hasLiveChat() {
             return (
-                (this.video.status == "live" ||
-                    this.video.status == "upcoming") &&
+                (this.video.status === "live" || this.video.status === "upcoming") &&
                 !this.redirectMode &&
                 this.video_src &&
                 !this.isXs
@@ -172,11 +152,12 @@ export default {
         },
         metaImage() {
             if (!this.video.yt_video_key) return undefined;
-            return video_thumbnails(this.video.yt_video_key)["maxres"];
+            return getVideoThumbnails(this.video.yt_video_key).maxres;
         },
     },
     watch: {
-        "$route.params.id"(val) {
+        // eslint-disable-next-line func-names
+        "$route.params.id": function (val) {
             this.loadData(val);
         },
     },
@@ -189,6 +170,7 @@ export default {
     position: relative;
     padding-bottom: 56.25%;
 }
+
 .embedded-video > iframe {
     position: absolute;
     width: 100%;
@@ -199,6 +181,7 @@ export default {
     border: none !important;
     box-shadow: none !important;
 }
+
 .thumbnail-overlay {
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
@@ -206,6 +189,7 @@ export default {
     position: absolute;
     top: 0;
 }
+
 .thumbnail {
     position: relative;
 }

@@ -13,12 +13,9 @@
 <script>
 export default {
     mounted() {
-        let externalScript = document.createElement("script");
-        externalScript.setAttribute(
-            "src",
-            "https://platform.twitter.com/widgets.js"
-        );
-        externalScript.setAttribute("async", true);
+        const externalScript = document.createElement("script");
+        externalScript.setAttribute("src", "https://platform.twitter.com/widgets.js");
+        externalScript.setAttribute("async", "true");
         document.head.appendChild(externalScript);
     },
 };

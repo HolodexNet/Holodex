@@ -4,7 +4,8 @@
             <v-col>
                 <div class="text-h4">{{ $t("views.settings.title") }}</div>
                 <div class="pt-4">
-                    <v-icon>{{ mdiTranslate }}</v-icon> Language:
+                    <v-icon>{{ mdiTranslate }}</v-icon>
+                    Language:
                 </div>
                 <v-radio-group v-model="language" dense fluid>
                     <!-- <template v-slot:label> </template> -->
@@ -14,9 +15,7 @@
                                 <strong class="primary--text">
                                     {{ l.display }}
                                 </strong>
-                                <span class="px-2 text--secondary text-caption">
-                                    ♡ {{ l.credit }}</span
-                                >
+                                <span class="px-2 text--secondary text-caption"> ♡ {{ l.credit }}</span>
                             </div>
                         </template>
                     </v-radio>
@@ -58,6 +57,7 @@
 <script>
 import { langs } from "@/plugins/vuetify";
 import { mdiTranslate } from "@mdi/js";
+
 export default {
     name: "Settings",
     computed: {

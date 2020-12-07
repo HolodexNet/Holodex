@@ -1,2 +1,2 @@
-exports.primary_color = "#F06292";
-exports.secondary_color = "#64B5F6";
+exports.primaryColor = "#F06292";
+exports.secondaryColor = "#64B5F6";

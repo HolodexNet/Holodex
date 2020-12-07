@@ -6,10 +6,7 @@
             </v-expansion-panel-header>
             <v-expansion-panel-content style="white-space: pre-warp">
                 <v-card flat>
-                    <v-card-text
-                        style="white-space: pre-wrap;"
-                        class="text-body-2 pa-0"
-                    >
+                    <v-card-text style="white-space: pre-wrap" class="text-body-2 pa-0">
                         <div v-html="description" v-linkified />
                     </v-card-text>
                 </v-card>

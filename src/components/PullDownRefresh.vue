@@ -2,10 +2,10 @@
     <div
         :style="`top: ${touchDistance}px;`"
         class="d-flex justify-center align-center pull-down"
-        :class="{ 'show-pull-down': status != STATUSES.READY }"
+        :class="{ 'show-pull-down': status !== STATUSES.READY }"
     >
         <v-progress-circular
-            :indeterminate="status == STATUSES.REFRESHING"
+            :indeterminate="status === STATUSES.REFRESHING"
             :value="touchDistance * 2"
             size="32"
             class="ma-auto"
@@ -38,24 +38,20 @@ export default {
         this.$on("$PullDownRefresh:done", () => {
             this.reset();
         });
-        var html = document.querySelector("html");
+        const html = document.querySelector("html");
         const done = () => {
             this.$emit("$PullDownRefresh:done", { target: this });
         };
-        this.touchStartHandler = e => {
-            if (window.scrollY === 0) {
-                this.canPull = true;
-            } else {
-                this.canPull = false;
-            }
+        this.touchStartHandler = (e) => {
+            this.canPull = window.scrollY === 0;
             this.touchStart = e.touches.item(0).pageY;
         };
-        this.touchMoveHandler = e => {
+        this.touchMoveHandler = (e) => {
             if (!this.canPull || this.isLoading) {
                 return;
             }
             this.status = this.STATUSES.DRAGGING;
-            var distance = e.touches.item(0).pageY - this.touchStart;
+            let distance = e.touches.item(0).pageY - this.touchStart;
             // limit the height of pull down to 180
             distance = distance > 90 ? 90 : distance;
             // prevent native scroll
@@ -67,7 +63,7 @@ export default {
         };
         this.touchEndHandler = () => {
             html.style.overflowY = "auto";
-            if (this.status == this.STATUSES.REFRESHING) return;
+            if (this.status === this.STATUSES.REFRESHING) return;
             if (this.touchDistance >= 80) {
                 this.status = this.STATUSES.REFRESHING;
                 this.$emit("refresh", done);

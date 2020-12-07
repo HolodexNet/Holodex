@@ -1,11 +1,7 @@
 <template>
     <div style="height: 100%">
         <v-row v-if="loading">
-            <v-progress-circular
-                indeterminate
-                size="32"
-                class="ma-auto"
-            ></v-progress-circular>
+            <v-progress-circular indeterminate size="32" class="ma-auto"></v-progress-circular>
         </v-row>
         <VideoCardList
             :videos="videos"
@@ -27,7 +23,7 @@
 
 <script>
 import VideoCardList from "@/components/VideoCardList.vue";
-import api from "@/utils/backend-api.js";
+import api from "@/utils/backend-api";
 
 export default {
     name: "ChannelVideos",
@@ -50,10 +46,7 @@ export default {
     computed: {
         hasChannelInfo() {
             // get uploader name for videos not uploaded by current channel
-            return (
-                this.$route.name === "channel_clips" ||
-                this.$route.name === "channel_collabs"
-            );
+            return this.$route.name === "channel_clips" || this.$route.name === "channel_collabs";
         },
         currentPage() {
             return Number(this.$route.query.page) || 1;
@@ -68,9 +61,9 @@ export default {
     methods: {
         loadTabContent() {
             this.videos = [];
-            let api_req = null;
+            let apiReq = null;
             this.loading = true;
-            let query = {
+            const query = {
                 limit: this.videoPerPage,
                 offset: (this.currentPage - 1) * this.videoPerPage,
                 ...(this.hasChannelInfo && { include_channel: 1 }),
@@ -79,19 +72,19 @@ export default {
                 case "channel_clips":
                     query.mentioned_channel_id = Number(this.channel_id);
                     query.channel_type = "subber";
-                    api_req = api.videos(query);
+                    apiReq = api.videos(query);
                     break;
                 case "channel_collabs":
                     query.mentioned_channel_id = Number(this.channel_id);
                     query.channel_type = "vtuber";
-                    api_req = api.videos(query);
+                    apiReq = api.videos(query);
                     break;
                 default:
                     query.channel_id = Number(this.channel_id);
-                    api_req = api.videos(query);
+                    apiReq = api.videos(query);
                     break;
             }
-            api_req.then(res => {
+            apiReq.then((res) => {
                 this.videos = res.data.videos;
                 this.totalVideos = res.data.total;
                 this.loading = false;
@@ -99,7 +92,7 @@ export default {
         },
         loadPaginate(page) {
             this.$router.push({
-                query: { ...this.$route.query, page: page },
+                query: { ...this.$route.query, page },
             });
         },
     },

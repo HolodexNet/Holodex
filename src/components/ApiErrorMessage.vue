@@ -5,7 +5,7 @@
             <div class="text-body-1">
                 {{ $t("component.apiError.textBeforeTwitter") }} (<a
                     href="https://twitter.com/holodex"
-                    norel
+                    rel="noopener noreferrer"
                     >@holodex</a
                 >) {{ $t("component.apiError.textAfterTwitter") }}
                 <router-link to="/about">

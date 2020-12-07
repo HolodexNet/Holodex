@@ -4,12 +4,7 @@
             <v-list-item-avatar tile size="100">
                 <ChannelImg :channel="channel" :size="100" />
             </v-list-item-avatar>
-            <ChannelInfo
-                :channel="channel"
-                includeVideoCount
-                includeSocials
-                class="channel-info-card"
-            />
+            <ChannelInfo :channel="channel" includeVideoCount includeSocials class="channel-info-card" />
         </v-list-item>
     </v-card>
 </template>
@@ -17,6 +12,7 @@
 <script>
 import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
+
 export default {
     name: "ChannelCard",
     components: {
