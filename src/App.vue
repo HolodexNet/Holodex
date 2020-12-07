@@ -106,10 +106,19 @@ export default {
                 return this.$store.state.showUpdateDetails;
             },
         },
+        lang() {
+            // connected to the watch.lang hook below.
+            return this.$store.state.lang;
+        },
     },
     watch: {
         darkMode() {
             this.$vuetify.theme.dark = this.darkMode;
+        },
+        lang() {
+            // watches the computed.lang variable and updates vue I18N
+            this.$i18n.locale = this.$store.state.lang;
+            this.$vuetify.lang.current = this.$store.state.lang;
         },
     },
     methods: {
