@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import dayjs from "dayjs";
 import createPersistedState from "vuex-persistedstate";
+import createMultiTabState from "vuex-multi-tab-state";
 import api from "@/utils/backend-api";
 import { langs } from "@/plugins/vuetify";
 
@@ -48,6 +49,10 @@ function defaultState() {
         cachedChannels: {},
         // other
         showUpdateDetails: false,
+        // live & live-update-lock
+        live: [],
+        liveLastUpdated: new Date(1000),
+        liveHasError: false,
     };
 }
 
@@ -74,6 +79,7 @@ export default new Vuex.Store({
         createPersistedState({
             key: "holodex",
         }),
+        createMultiTabState(),
     ],
     state: defaultState(),
     getters: {
@@ -162,6 +168,17 @@ export default new Vuex.Store({
         resetState(state) {
             Object.assign(state, defaultState());
         },
+        // live & live update lock
+        private_startUpdateLive(state) {
+            state.liveLastUpdated = new Date().getTime();
+        },
+        private_setLive(state, live) {
+            state.liveHasError = false;
+            state.live = live;
+        },
+        private_liveUpdateError(state) {
+            state.liveHasError = true;
+        },
     },
     actions: {
         async updateChannelCache({ commit }) {
@@ -202,6 +219,30 @@ export default new Vuex.Store({
                         console.log(e);
                         this.commit("setCachedChannelsError", true);
                     }
+                }
+            }
+        },
+        async loadLive({ state, commit, dispatch }, payload) {
+            // will only trigger after user visits the first page that triggers a loadLive dispatch.
+            // currently only the Home component does this.
+
+            const currentTime = new Date().getTime();
+            if (!window.liveDispatchSetup) {
+                // use a global variable to ensure we generate a single dispatch loop every tab
+                window.liveDispatchSetup = true;
+                setTimeout(() => {
+                    dispatch("loadLive");
+                }, 1000 * 30);
+            }
+
+            if ((payload && payload.forced) || currentTime - state.liveLastUpdated >= 1000 * 60 * 5) {
+                // only update every 5 minutes
+                commit("private_startUpdateLive");
+                try {
+                    commit("private_setLive", await api.live());
+                } catch (err) {
+                    console.error(err);
+                    commit("private_liveUpdateError", err);
                 }
             }
         },
