@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import dayjs from "dayjs";
 import createPersistedState from "vuex-persistedstate";
-import createMultiTabState from "vuex-multi-tab-state";
+import createMutationsSharer from "vuex-shared-mutations";
 import api from "@/utils/backend-api";
 import { langs } from "@/plugins/vuetify";
 
@@ -79,7 +79,7 @@ export default new Vuex.Store({
         createPersistedState({
             key: "holodex",
         }),
-        createMultiTabState(),
+        createMutationsSharer({ predicate: () => true }), // Share all mutations across tabs.
     ],
     state: defaultState(),
     getters: {
