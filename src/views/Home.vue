@@ -83,7 +83,7 @@ export default {
         };
     },
     created() {
-        this.$store.dispatch("loadLive").finally(() => {
+        this.$store.dispatch("tryUpdatingLive", { forced: true }).finally(() => {
             this.isLoading = false;
         });
     },

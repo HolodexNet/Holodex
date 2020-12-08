@@ -222,8 +222,8 @@ export default new Vuex.Store({
                 }
             }
         },
-        async loadLive({ state, commit, dispatch }) {
-            // will only trigger after user visits the first page that triggers a loadLive dispatch.
+        async tryUpdatingLive({ state, commit, dispatch }, payload) {
+            // will only trigger after user visits the first page that triggers a tryUpdatingLive dispatch.
             // currently only the Home component does this.
 
             const currentTime = new Date().getTime();
@@ -232,11 +232,15 @@ export default new Vuex.Store({
                 // use a global variable to ensure we generate a single dispatch loop every tab
                 window.liveDispatchSetup = true;
                 setInterval(() => {
-                    dispatch("loadLive");
+                    dispatch("tryUpdatingLive");
                 }, 1000 * 30);
             }
 
-            if (firstTimeInvoked || currentTime - state.liveLastUpdated >= 1000 * 60 * 5) {
+            if (
+                firstTimeInvoked ||
+                (payload && payload.forced) ||
+                currentTime - state.liveLastUpdated >= 1000 * 60 * 5
+            ) {
                 // only update every 5 minutes
                 commit("private_startUpdateLive");
                 try {
