@@ -99,7 +99,7 @@ export default {
         };
     },
     mounted() {
-        Promise.all([this.$store.dispatch("loadLive"), this.loadFavorites()]).finally(() => {
+        Promise.all([this.$store.dispatch("tryUpdatingLive", { forced: true }), this.loadFavorites()]).finally(() => {
             this.isLoading = false;
         });
     },
