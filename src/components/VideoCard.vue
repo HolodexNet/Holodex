@@ -64,7 +64,7 @@
                     </span>
                     <span v-if="video.clips && video.clips.length > 0">
                         •
-                        <router-link :to="`/watch/${video.id}`" class="no-decoration">
+                        <router-link :to="`/watch/${video.id}`" class="no-decoration primary--text">
                             {{ $tc("component.videoCard.clips", formatCount(video.clips.length)) }}
                         </router-link>
                     </span>
