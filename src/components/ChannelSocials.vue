@@ -1,6 +1,6 @@
 <template>
     <!-- prevent default on entire div to make dead click zone -->
-    <v-list-item-action :class="{ 'channel-social-horizontal': !vertical }" @click="(e) => e.preventDefault()">
+    <v-list-item-action :class="{ 'channel-social-horizontal': !vertical }" @click.stop="">
         <v-btn
             v-if="channel.yt_channel_id"
             icon
