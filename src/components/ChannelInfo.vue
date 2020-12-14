@@ -19,7 +19,8 @@
                 <br />
                 {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
                 <router-link :to="`/channel/${channel.id}/clips`" class="no-decoration" v-if="channel.clip_count > 0">
-                    • {{ $tc("component.channelInfo.clipCount", channel.clip_count) }}
+                    •
+                    <span class="primary--text">{{ $tc("component.channelInfo.clipCount", channel.clip_count) }}</span>
                 </router-link>
             </template>
         </v-list-item-subtitle>
@@ -87,8 +88,8 @@ export default {
 
 <style>
 .no-decoration {
-    text-decoration: none;
-    color: inherit;
+    text-decoration: initial;
+    color: initial;
     font-weight: 400 !important;
     font-size: inherit;
 }
