@@ -14,7 +14,7 @@
                             </div>
                         </div>
                     </div>
-                    <v-card-title>{{ video.title }}</v-card-title>
+                    <v-card-title>{{ title }}</v-card-title>
                     <v-card-subtitle>
                         {{ formatTime(video.published_at) }}
                     </v-card-subtitle>
@@ -102,7 +102,7 @@ import ChannelImg from "@/components/ChannelImg";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import VideoDescription from "@/components/VideoDescription";
 
-import { getVideoThumbnails } from "@/utils/functions";
+import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 
 export default {
     name: "Watch",
@@ -190,6 +190,9 @@ export default {
         },
     },
     computed: {
+        title() {
+            return decodeHTMLEntities(this.video.title);
+        },
         channel_chips() {
             const allMentions = new Map();
             this.channel_mentions

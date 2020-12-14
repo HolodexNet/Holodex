@@ -46,8 +46,8 @@
             </router-link>
             <!--  -->
             <v-list-item-content class="pa-0">
-                <v-list-item-title :class="['video-title', { 'video-watched': hasWatched }]" :title="video.title">
-                    {{ video.title }}
+                <v-list-item-title :class="['video-title', { 'video-watched': hasWatched }]" :title="title">
+                    {{ title }}
                 </v-list-item-title>
                 <v-list-item-subtitle v-if="includeChannel">
                     <router-link
@@ -86,7 +86,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import advancedFormat from "dayjs/plugin/advancedFormat";
-import { formatCount, getVideoThumbnails } from "@/utils/functions";
+import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { mdiCheck, mdiPlusBox } from "@mdi/js";
 
 dayjs.extend(relativeTime);
@@ -142,6 +142,9 @@ export default {
     },
     created() {},
     computed: {
+        title() {
+            return decodeHTMLEntities(this.video.title);
+        },
         formattedTime() {
             switch (this.video.status) {
                 case "upcoming":
