@@ -73,3 +73,7 @@ export function debounce(func, wait, immediate) {
         if (callNow) func.apply(context, args);
     };
 }
+
+export function decodeHTMLEntities(str) {
+    return str.split("&amp;").join("&").split("&quot;").join('"');
+}
