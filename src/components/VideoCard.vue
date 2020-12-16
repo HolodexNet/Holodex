@@ -87,6 +87,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
+import { formatFromNowHM } from "@/utils/time";
 import { mdiCheck, mdiPlusBox } from "@mdi/js";
 
 dayjs.extend(relativeTime);
@@ -199,17 +200,6 @@ export default {
         },
     },
     methods: {
-        formatFromNowHM(time) {
-            const timeInMin = Math.floor(dayjs(time).diff(dayjs()) / 60000);
-            const hours = Math.floor(timeInMin / 60);
-            const mins = timeInMin % 60;
-
-            if (timeInMin <= 1) return "soon!";
-            if (timeInMin < 60) return `in ${mins} minutes`;
-            if (timeInMin === 60) return "in 1 hour";
-            if (timeInMin % 60 === 0) return `in ${hours} hours`;
-            return `in ${hours} hours and ${mins} minutes`;
-        },
         formatFromNow(time) {
             return dayjs(time).fromNow();
         },
@@ -217,6 +207,7 @@ export default {
             return secs > 60 * 60 * 1000 ? dayjs.utc(secs).format("H:mm:ss") : dayjs.utc(secs).format("m:ss");
         },
         formatCount,
+        formatFromNowHM,
         toggleSaved(event) {
             event.preventDefault();
             this.hasSaved
