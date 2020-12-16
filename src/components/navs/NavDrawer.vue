@@ -173,6 +173,7 @@ export default {
         },
     },
     methods: {
+        formatFromNowHM,
         handlePageClick(page) {
             // reload the page if user clicks on the same tab
             page.path === this.$route.path ? this.$router.go(0) : this.$router.push({ path: page.path });
@@ -185,7 +186,6 @@ export default {
             const minutes = dayjs(time).diff(dayjs(), "minutes");
             return `${minutes}m`;
         },
-        formatFromNowHM,
     },
 };
 </script>
@@ -211,12 +211,6 @@ export default {
 
 .nav-scroll > .v-navigation-drawer__content {
     overflow-y: hidden !important;
-}
-
-.live-icon {
-    width: 12px;
-    height: 12px;
-    border-radius: 6px;
 }
 
 .live-badge {
