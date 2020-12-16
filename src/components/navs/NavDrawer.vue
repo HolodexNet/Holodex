@@ -63,11 +63,13 @@
                                         </span>
                                     </v-chip>
                                 </template>
-                                <span>{{
-                                    channel.live.status == "live"
-                                        ? "Watch now"
-                                        : formatFromNowHM(channel.live.live_schedule)
-                                }}</span>
+                                <span>
+                                    {{
+                                        channel.live.status == "live"
+                                            ? "Watch now"
+                                            : formatFromNowHM(channel.live.live_schedule)
+                                    }}
+                                </span>
                             </v-tooltip>
                         </v-list-item-action>
                     </v-list-item>
@@ -119,19 +121,11 @@ export default {
             required: true,
             type: Array,
         },
-        value: {
-            type: Boolean,
-            default: false,
-        },
-        currentPage: {
-            type: String,
-            color: "primary",
-        },
     },
     data() {
         return {
-            mdiHeart,
             favoritesExpanded: true,
+            mdiHeart,
             mdiChevronDown,
             mdiChevronUp,
             mdiEarth,
@@ -149,7 +143,10 @@ export default {
             this.$store.dispatch("checkChannelCache");
             // return favorited channel list from cache
             const arr = this.favorites.map((channelId) =>
-                Object.hasOwnProperty.call(this.cachedChannels, channelId) ? this.cachedChannels[channelId] : null,
+                Object.hasOwnProperty.call(this.cachedChannels, channelId)
+                    ? // make shallow copy of object to not modify state
+                      { ...this.cachedChannels[channelId] }
+                    : null,
             );
 
             // add live video obj to channel
