@@ -143,9 +143,9 @@ export default {
             this.$store.dispatch("checkChannelCache");
             // return favorited channel list from cache
             const arr = this.favorites.map((channelId) =>
+                // make shallow copy of object to not modify state
                 Object.hasOwnProperty.call(this.cachedChannels, channelId)
-                    ? // make shallow copy of object to not modify state
-                      { ...this.cachedChannels[channelId] }
+                    ? { ...this.cachedChannels[channelId] }
                     : null,
             );
 
