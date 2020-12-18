@@ -121,6 +121,10 @@ export default {
             required: true,
             type: Array,
         },
+        value: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
