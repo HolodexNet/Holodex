@@ -142,12 +142,16 @@ export default {
             // check cache for missing favorites
             this.$store.dispatch("checkChannelCache");
             // return favorited channel list from cache
-            const arr = this.favorites.map((channelId) =>
+            const arr = this.favorites.map((channelId) => {
                 // make shallow copy of object to not modify state
-                Object.hasOwnProperty.call(this.cachedChannels, channelId)
-                    ? { ...this.cachedChannels[channelId] }
-                    : null,
-            );
+                if (Object.hasOwnProperty.call(this.cachedChannels, channelId)) {
+                    const channel = this.cachedChannels[channelId];
+                    // clear any lives
+                    channel.live = null;
+                    return channel;
+                }
+                return null;
+            });
 
             // add live video obj to channel
             this.live.forEach((l) => {
