@@ -160,7 +160,7 @@ export default {
             // add live video obj to channel
             this.live.forEach((l) => {
                 const index = this.favorites.indexOf(l.channel.id);
-                if (index > 0) arr[index].live = l;
+                if (index > 0 && !arr[index].live) arr[index].live = l;
             });
 
             // sort favorite channels by most upcoming live if any
