@@ -107,9 +107,7 @@ export default {
         if (this.timer) this.stopSync();
     },
     created() {
-        // api.videoLiveChatSummary(this.video.id).then(res => {
-        //     if (res) this.summary = res.data.summary;
-        // });
+        this.updateMessages();
     },
     methods: {
         ready(event) {
@@ -137,14 +135,8 @@ export default {
             console.log(event);
             this.stopSync();
         },
-        cleanMessages() {
-            const curTime = this.player.getCurrentTime();
-            this.translations = this.translations.filter((m) => m.time_secs - this.sub_offset > curTime);
-        },
-        updateMessages(time) {
-            this.cleanMessages();
+        updateMessages() {
             console.log("Grabbing new messages");
-            Math.floor(time);
             return api.videoLiveChat(this.video.id, "translation", 0).then((res) => {
                 // const curTime = this.player.getCurrentTime();
                 if (res) {
@@ -239,31 +231,6 @@ export default {
                 },
             });
         },
-        // getLabel(value) {
-        //     return this.summary.find(
-        //         s =>
-        //             s.bin >= (value / 100) * this.video.duration_secs &&
-        //             s.bin < (value / 100) * this.video.duration_secs + 240 &&
-        //             s.type === "translation"
-        //     ).count;
-        // },
-    },
-    watch: {
-        currentTime() {
-            // console.log(this.currentTime);
-            const lastMessage = this.translations[this.translations.length - 1];
-
-            // check if player skipped ahead
-            if (!lastMessage || this.currentTime > lastMessage.time_secs) {
-                this.updateMessages(this.currentTime);
-                return;
-            }
-
-            // load new messages if last message is about to be shown
-            if (this.currentTime > lastMessage.time_secs - 30) {
-                this.updateMessages(lastMessage.time_secs + 1);
-            }
-        },
     },
     computed: {
         video_src() {
@@ -313,8 +280,6 @@ export default {
                     index += 1;
                     buckets[index] = 0;
                 }
-                // if(!buckets[index])
-                //     buckets[index] = 0;
 
                 buckets[index] += 1;
             });
