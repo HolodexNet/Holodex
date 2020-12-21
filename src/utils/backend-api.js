@@ -4,7 +4,8 @@ import dayjs from "dayjs";
 import querystring from "querystring";
 
 export const axiosInstance = axios.create({
-    baseURL: process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api/v1" : "https://holodex.net/api/v1",
+    baseURL:
+        process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api/v1" : "https://holodex.net/api/v1",
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
@@ -37,8 +38,9 @@ export default {
     video(id) {
         return axiosInstance.get(`/videos/${id}`);
     },
-    video_live_chat(id, type, timeStart) {
-        const q = querystring.stringify({ type, timeStart });
+    // eslint-disable-next-line camelcase
+    videoLiveChat(id, type, time_start) {
+        const q = querystring.stringify({ type, time_start });
         return axiosInstance.get(`/videos/${id}/live_chat?${q}`);
     },
     videoLiveChatSummary(id) {

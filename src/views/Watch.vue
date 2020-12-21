@@ -85,6 +85,7 @@ export default {
         LoadingOverlay,
         WatchInfo,
         WatchFrame,
+        VideoDescription,
     },
     data() {
         return {

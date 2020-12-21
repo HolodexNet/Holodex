@@ -22,7 +22,7 @@
                 class="ma-1"
             ></ChannelChip>
             <v-chip
-                v-for="tag in video.tags.filter(t => !t.channel_ref)"
+                v-for="tag in video.tags.filter((t) => !t.channel_ref)"
                 label
                 link
                 :key="tag.id"
@@ -43,7 +43,7 @@ import ChannelInfo from "@/components/ChannelInfo";
 import ChannelSocials from "@/components/ChannelSocials";
 import ChannelImg from "@/components/ChannelImg";
 import VideoDescription from "@/components/VideoDescription";
-import { video_thumbnails } from "@/utils/functions";
+import { getVideoThumbnails } from "@/utils/functions";
 import dayjs from "dayjs";
 
 export default {
@@ -67,24 +67,24 @@ export default {
     },
     computed: {
         channel_chips() {
-            let allMentions = new Map();
+            const allMentions = new Map();
             // Get channel mentions for this video, and add any channel mentions from the source
             // (in case the uploader forgot to link everyone)
             this.video.channel_mentions
-                .concat(this.video.sources.map(video => video.channel))
-                .filter(channel => channel.id != this.video.channel_id)
-                .forEach(channel =>
+                .concat(this.video.sources.map((video) => video.channel))
+                .filter((channel) => channel.id !== this.video.channel_id)
+                .forEach((channel) =>
                     allMentions.set(channel.id, {
                         id: channel.id,
                         name: channel.name,
                         name_en: channel.name_en,
                         photo: channel.photo,
-                    })
+                    }),
                 );
             return Array.from(allMentions.values());
         },
         thumbnail_src() {
-            return video_thumbnails(this.video.yt_video_key)["medium"];
+            return getVideoThumbnails(this.video.yt_video_key).medium;
         },
         isXs() {
             return this.$vuetify.breakpoint.name === "xs";
