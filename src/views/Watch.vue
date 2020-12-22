@@ -2,7 +2,34 @@
     <v-container fluid v-if="!isLoading && !showError">
         <v-row class="align-start">
             <v-col class="pa-0 pa-lg-3">
-                <WatchFrame :video="video" v-if="video" />
+                <WatchFrame
+                    v-if="video"
+                    :video="video"
+                    :translations="translations"
+                    :otherMessages="otherMessages"
+                    :currentTime="currentTime"
+                >
+                    <template v-slot:youtube>
+                        <youtube
+                            class="embedded-video"
+                            :video-id="video.yt_video_key"
+                            @ready="ready"
+                            @playing="playing"
+                            @paused="paused"
+                            :playerVars="{ autoplay: 1 }"
+                        >
+                        </youtube>
+                    </template>
+                </WatchFrame>
+                <WatchTimeline
+                    :v-if="translations.length"
+                    :translations="translations"
+                    :otherMessages="otherMessages"
+                    :currentTime="currentTime"
+                    :video="video"
+                    class="pa-3"
+                >
+                </WatchTimeline>
                 <WatchInfo :video="video" />
             </v-col>
             <v-col cols="12" sm="12" lg="3" xl="3" md="12" class="related-videos pa-1">
@@ -12,34 +39,7 @@
                 <div class="text-end pa-1 text-caption" v-if="hasLiveChat">
                     <a @click="hideLiveChat = !hideLiveChat"> {{ hideLiveChat ? "Show" : "Hide" }} Live Chat </a>
                 </div>
-                <div class="text-subtitle-2 ma-2" v-if="video_clips.length > 0">Clips</div>
-                <VideoCardList
-                    :videos="video_clips"
-                    horizontal
-                    includeChannel
-                    :cols="{
-                        lg: 12,
-                        md: 12,
-                        cols: 12,
-                        sm: 12,
-                    }"
-                />
-                <v-divider />
-                <div class="text-subtitle-2 ma-2" v-if="video_sources.length > 0">Related</div>
-                <VideoCardList
-                    :videos="video_sources"
-                    horizontal
-                    includeChannel
-                    :cols="{
-                        lg: 12,
-                        md: 4,
-                        cols: 12,
-                        sm: 6,
-                    }"
-                />
-                <div v-if="video_sources.length + video_clips.length === 0" style="text-align: center" class="pa-2">
-                    No clips or related video yet
-                </div>
+                <WatchRelatedVideos :videoSources="videoSources" :videoClips="videoClips" />
             </v-col>
         </v-row>
     </v-container>
@@ -48,10 +48,11 @@
 
 <script>
 import api from "@/utils/backend-api";
-import VideoCardList from "@/components/VideoCardList";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import WatchInfo from "@/components/WatchInfo.vue";
 import WatchFrame from "@/components/WatchFrame.vue";
+import WatchRelatedVideos from "@/components/WatchRelatedVideos";
+import WatchTimeline from "@/components/WatchTimeline";
 import VideoDescription from "@/components/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
 
@@ -81,37 +82,79 @@ export default {
         };
     },
     components: {
-        VideoCardList,
         LoadingOverlay,
         WatchInfo,
         WatchFrame,
+        WatchTimeline,
         VideoDescription,
+        WatchRelatedVideos,
     },
     data() {
         return {
             isLoading: true,
             showError: false,
             video: {},
-            video_clips: [],
-            video_sources: [],
+            videoClips: [],
+            videoSources: [],
+            translations: [],
+            otherMessages: [],
             video_src: "",
             live_chat_src: "",
             hideLiveChat: false,
+
+            currentTime: 0,
+            timer: null,
         };
     },
     created() {
         this.loadData(this.$route.params.id);
     },
     methods: {
+        ready(event) {
+            this.player = event.target;
+        },
+        startSync() {
+            const vm = this;
+            this.timer = setInterval(() => {
+                vm.currentTime = vm.player.getCurrentTime();
+            }, 1000);
+        },
+        stopSync() {
+            clearInterval(this.timer);
+            this.timer = null;
+        },
+        setTime(time) {
+            this.player.seekTo(time);
+        },
+        playing(event) {
+            console.log(event.target.getCurrentTime());
+            this.startSync();
+            // this.updateMessages(this.player.getCurrentTime());
+        },
+        paused(event) {
+            console.log(event);
+            this.stopSync();
+        },
         loadData(id) {
             // destroy iframe and recreate it so it doesn't break history mode
             this.video_src = "";
             this.isLoading = true;
+            api.videoLiveChat(id, "translation", 0).then((res) => {
+                // const curTime = this.player.getCurrentTime();
+                if (res) {
+                    // this.messages.push(...res.data.messages);
+                    res.data.messages.forEach((msg) => {
+                        msg.type === "translation" ? this.translations.push(msg) : this.otherMessages.push(msg);
+                    });
+                    // this.loadChart();
+                }
+            });
+
             api.video(id)
                 .then((res) => {
                     if (res.data) {
-                        this.video_clips = res.data.clips;
-                        this.video_sources = res.data.sources;
+                        this.videoClips = res.data.clips;
+                        this.videoSources = res.data.sources;
                         this.video = res.data;
                         this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
                         this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
