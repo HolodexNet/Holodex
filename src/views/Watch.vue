@@ -16,17 +16,17 @@
                             @ready="ready"
                             @playing="playing"
                             @paused="paused"
-                            :playerVars="{ autoplay: 1 }"
+                            :playerVars="{ autoplay: 1, playsinline: 1 }"
                         >
                         </youtube>
                     </template>
                 </WatchFrame>
                 <WatchTimeline
                     :v-if="translations.length"
+                    :video="video"
                     :translations="translations"
                     :otherMessages="otherMessages"
                     :currentTime="currentTime"
-                    :video="video"
                     class="pa-3"
                 >
                 </WatchTimeline>
