@@ -12,7 +12,7 @@
                                 {{ message.author }}
                             </span>
                         </div>
-                        <div class="watch-translation-message pa-2">
+                        <div class="watch-translation-message">
                             {{ message.message }}
                         </div>
                     </div>
@@ -107,8 +107,7 @@ export default {
 .watch-overlay {
     position: absolute;
     width: 100%;
-    bottom: 5%;
-    /* margin: 10px; */
+    bottom: 7%;
     z-index: 10;
 }
 .watch-translation {
@@ -119,6 +118,7 @@ export default {
 .watch-translation-message {
     white-space: pre-wrap;
     background: rgba(8, 8, 8, 0.75);
+    padding: 0.25em !important;
 }
 .watch-translation-author {
     text-align: start;

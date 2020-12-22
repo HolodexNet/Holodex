@@ -19,10 +19,10 @@
             <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center"></v-row>
             </template>
-            <div class="video-overlay d-flex flex-column align-end justify-space-between" style="height: 100%">
+            <div class="video-card-overlay d-flex flex-column align-end justify-space-between" style="height: 100%">
                 <v-icon
                     :color="hasSaved ? 'primary' : 'white'"
-                    class="video-action"
+                    class="video-card-action"
                     :class="{ 'hover-show': !hasSaved && !isXs }"
                     @click="toggleSaved($event)"
                 >
@@ -46,7 +46,7 @@
             </router-link>
             <!--  -->
             <v-list-item-content class="pa-0">
-                <v-list-item-title :class="['video-title', { 'video-watched': hasWatched }]" :title="video.title">
+                <v-list-item-title :class="['video-card-title', { 'video-watched': hasWatched }]" :title="video.title">
                     {{ video.title }}
                 </v-list-item-title>
                 <v-list-item-subtitle v-if="includeChannel">
@@ -74,7 +74,7 @@
                     </span>
                 </v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-action>
+            <v-list-item-action v-if="!!this.$slots.action">
                 <slot name="action"></slot>
             </v-list-item-action>
         </v-list-item>
@@ -238,7 +238,7 @@ export default {
     color: red;
 }
 
-.video-title {
+.video-card-title {
     white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -257,11 +257,11 @@ export default {
     overflow: hidden;
 }
 
-.video-overlay .hover-show {
+.video-card-overlay .hover-show {
     visibility: hidden;
 }
 
-.video-overlay:hover .hover-show {
+.video-card-overlay:hover .hover-show {
     visibility: visible;
 }
 
@@ -274,7 +274,7 @@ export default {
     letter-spacing: 0.025em;
 }
 
-.video-action {
+.video-card-action {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 2px;
     margin: 2px;

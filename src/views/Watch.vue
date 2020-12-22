@@ -1,7 +1,7 @@
 <template>
     <v-container fluid v-if="!isLoading && !showError">
         <v-row class="align-start">
-            <v-col class="pa-0 pa-lg-3">
+            <v-col class="pa-0 pa-lg-3" cols="12" lg="9">
                 <WatchFrame
                     v-if="video"
                     :video="video"
