@@ -10,7 +10,7 @@
                     :currentTime="currentTime"
                 >
                     <template v-slot:youtube>
-                        <youtube
+                        <!-- <youtube
                             class="embedded-video"
                             :video-id="video.yt_video_key"
                             @ready="ready"
@@ -18,7 +18,7 @@
                             @paused="paused"
                             :playerVars="{ autoplay: 1, playsinline: 1 }"
                         >
-                        </youtube>
+                        </youtube> -->
                     </template>
                 </WatchFrame>
                 <WatchTimeline
@@ -33,6 +33,11 @@
                 <WatchInfo :video="video" />
             </v-col>
             <v-col cols="12" sm="12" lg="3" xl="3" md="12" class="related-videos pa-1">
+                <WatchTranscript
+                    :translations="translations"
+                    :otherMessages="otherMessages"
+                    :currentTime="currentTime"
+                />
                 <div class="embedded-chat" v-if="hasLiveChat & !hideLiveChat">
                     <iframe :src="live_chat_src" frameborder="0" />
                 </div>
@@ -53,6 +58,7 @@ import WatchInfo from "@/components/WatchInfo.vue";
 import WatchFrame from "@/components/WatchFrame.vue";
 import WatchRelatedVideos from "@/components/WatchRelatedVideos";
 import WatchTimeline from "@/components/WatchTimeline";
+import WatchTranscript from "@/components/WatchTranscript";
 import VideoDescription from "@/components/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
 
@@ -86,6 +92,7 @@ export default {
         WatchInfo,
         WatchFrame,
         WatchTimeline,
+        WatchTranscript,
         VideoDescription,
         WatchRelatedVideos,
     },

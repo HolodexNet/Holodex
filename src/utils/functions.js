@@ -57,6 +57,17 @@ export function formatCount(subs) {
     return subs;
 }
 
+// TEMPORARY
+// eslint-disable-next-line import/first
+import dayjs from "dayjs";
+// eslint-disable-next-line import/first
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+export function formatDuration(secs) {
+    return secs > 60 * 60 * 1000 ? dayjs.utc(secs).format("H:mm:ss") : dayjs.utc(secs).format("m:ss");
+}
+
 export function debounce(func, wait, immediate) {
     let timeout;
     // eslint-disable-next-line func-names
