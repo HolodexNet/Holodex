@@ -66,6 +66,7 @@ import {
     mdiHome,
     mdiMagnify,
     mdiMenu,
+    mdiLoginVariant,
     mdiRefresh,
 } from "@mdi/js";
 import NavDrawer from "@/components/navs/NavDrawer";
@@ -133,6 +134,12 @@ export default {
                     icon: mdiCog,
                     collapsible: true,
                 },
+                {
+                    name: "Login",
+                    path: "/login",
+                    icon: mdiLoginVariant,
+                    collapsible: true,
+                }
             ];
         },
     },

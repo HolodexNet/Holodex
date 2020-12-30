@@ -14,6 +14,7 @@ const Library = () => import("../views/Library.vue");
 const ChannelStats = () => import("../views/channel_views/ChannelStats.vue");
 const Settings = () => import("../views/Settings.vue");
 const NotFound = () => import("../views/NotFound.vue");
+const Login = () => import("../views/Login.vue");
 Vue.use(VueRouter);
 
 const routes = [
@@ -87,6 +88,11 @@ const routes = [
         name: "settings",
         path: "/settings",
         component: Settings,
+    },
+    {
+        name: "login",
+        path: "/login",
+        component: Login,
     },
     {
         path: "/404",
