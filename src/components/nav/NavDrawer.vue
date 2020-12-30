@@ -67,7 +67,7 @@
                                     {{
                                         channel.live.status == "live"
                                             ? "Watch now"
-                                            : formatFromNowHM(channel.live.live_schedule)
+                                            : formatStreamStart(channel.live.live_schedule)
                                     }}
                                 </span>
                             </v-tooltip>
@@ -107,8 +107,7 @@ import ChannelInfo from "@/components/channel/ChannelInfo";
 import { mdiChevronDown, mdiChevronUp, mdiEarth, mdiHeart, mdiMessageCogOutline } from "@mdi/js";
 import { langs } from "@/plugins/vuetify";
 import { mapState } from "vuex";
-import dayjs from "dayjs";
-import { formatFromNowHM } from "@/utils/time";
+import { formatStreamStart, dayjs } from "@/utils/time";
 
 export default {
     name: "NavDrawer",
@@ -178,7 +177,7 @@ export default {
         },
     },
     methods: {
-        formatFromNowHM,
+        formatStreamStart,
         handlePageClick(page) {
             // reload the page if user clicks on the same tab
             page.path === this.$route.path ? this.$router.go(0) : this.$router.push({ path: page.path });

@@ -1,6 +1,6 @@
 import axios from "axios";
 import axiosRetry from "axios-retry";
-import dayjs from "dayjs";
+import { dayjs } from "@/utils/time";
 import querystring from "querystring";
 
 export const axiosInstance = axios.create({

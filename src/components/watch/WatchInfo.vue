@@ -44,7 +44,7 @@ import ChannelSocials from "@/components/channel/ChannelSocials";
 import ChannelImg from "@/components/channel/ChannelImg";
 import VideoDescription from "@/components/video/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
-import dayjs from "dayjs";
+import { dayjs } from "@/utils/time";
 
 export default {
     name: "WatchInfo",

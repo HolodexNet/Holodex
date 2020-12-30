@@ -61,7 +61,7 @@
 
 <script>
 import api from "@/utils/backend-api";
-import dayjs from "dayjs";
+import { dayjs } from "@/utils/time";
 import { formatCount } from "@/utils/functions";
 import { CategoryScale, Chart, Line, LinearScale, LineController, Point, Tooltip } from "chart.js";
 

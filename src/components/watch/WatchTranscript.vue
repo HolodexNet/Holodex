@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { formatDuration } from "@/utils/functions";
+import { formatDuration } from "@/utils/time";
 
 export default {
     name: "WatchTranscript",

@@ -82,17 +82,11 @@
 </template>
 
 <script>
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import utc from "dayjs/plugin/utc";
-import advancedFormat from "dayjs/plugin/advancedFormat";
+
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
-import { formatFromNowHM } from "@/utils/time";
+import { formatDuration, formatStreamStart, dayjs } from "@/utils/time";
 import { mdiCheck, mdiPlusBox } from "@mdi/js";
 
-dayjs.extend(relativeTime);
-dayjs.extend(utc);
-dayjs.extend(advancedFormat);
 export default {
     name: "VideoCard",
     components: {
@@ -151,11 +145,7 @@ export default {
                 case "upcoming":
                     // print relative time in hours if less than 24 hours,
                     // print full date if greater than 24 hours
-                    return `Stream starts ${
-                        dayjs(this.video.live_schedule).diff(dayjs()) <= 86400000
-                            ? this.formatFromNowHM(this.video.live_schedule)
-                            : dayjs(this.video.live_schedule).format("ddd MMM Do, h:mm a")
-                    }`;
+                    return `Stream starts ${ this.formatStreamStart(this.video.live_schedule)}`;
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:
@@ -203,11 +193,9 @@ export default {
         formatFromNow(time) {
             return dayjs(time).fromNow();
         },
-        formatDuration(secs) {
-            return secs > 60 * 60 * 1000 ? dayjs.utc(secs).format("H:mm:ss") : dayjs.utc(secs).format("m:ss");
-        },
+        formatDuration,
         formatCount,
-        formatFromNowHM,
+        formatStreamStart,
         toggleSaved(event) {
             event.preventDefault();
             this.hasSaved

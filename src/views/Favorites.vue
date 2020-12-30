@@ -71,11 +71,8 @@ import VideoCardList from "@/components/video/VideoCardList";
 import VideoFavoritesList from "@/components/video/VideoFavoritesList";
 import LoadingOverlay from "@/components/common/LoadingOverlay";
 import api from "@/utils/backend-api";
-import dayjs from "dayjs";
+import { dayjs } from "@/utils/time";
 import { mdiHeart } from "@mdi/js";
-import utc from "dayjs/plugin/utc";
-
-dayjs.extend(utc);
 
 export default {
     name: "Favorites",
