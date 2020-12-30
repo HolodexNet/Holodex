@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import ChannelImg from "@/components/ChannelImg";
-import ChannelInfo from "@/components/ChannelInfo";
-import ChannelSocials from "@/components/ChannelSocials";
+import ChannelImg from "./ChannelImg";
+import ChannelInfo from "./ChannelInfo";
+import ChannelSocials from "./ChannelSocials";
 
 export default {
     name: "ChannelList",
@@ -49,7 +49,7 @@ export default {
         ChannelImg,
         ChannelInfo,
         ChannelSocials,
-        ChannelCard: () => import("@/components/ChannelCard.vue"),
+        ChannelCard: () => import("./ChannelChip"),
     },
     props: {
         channels: {

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import MainNav from "@/components/MainNav.vue";
+import MainNav from "@/components/nav/MainNav";
 
 export default {
     name: "App",

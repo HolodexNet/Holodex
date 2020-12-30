@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ChannelImg from "@/components/ChannelImg";
+import ChannelImg from "./ChannelImg";
 
 export default {
     name: "ChannelChip",

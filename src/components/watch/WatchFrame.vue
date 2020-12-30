@@ -34,12 +34,12 @@
 <script>
 import { getVideoThumbnails } from "@/utils/functions";
 // import api from "@/utils/backend-api";
-import WatchTimeline from "@/components/WatchTimeline.vue";
+// import WatchTimeline from "@/components/WatchTimeline.vue";
 
 export default {
     name: "WatchFrame",
     components: {
-        WatchTimeline,
+        // WatchTimeline,
     },
     props: {
         video: {

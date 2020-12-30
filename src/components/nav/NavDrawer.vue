@@ -102,8 +102,8 @@
 </template>
 
 <script>
-import ChannelImg from "@/components/ChannelImg";
-import ChannelInfo from "@/components/ChannelInfo";
+import ChannelImg from "@/components/channel/ChannelImg";
+import ChannelInfo from "@/components/channel/ChannelInfo";
 import { mdiChevronDown, mdiChevronUp, mdiEarth, mdiHeart, mdiMessageCogOutline } from "@mdi/js";
 import { langs } from "@/plugins/vuetify";
 import { mapState } from "vuex";

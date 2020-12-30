@@ -36,7 +36,7 @@ import { formatCount } from "@/utils/functions";
 
 export default {
     components: {
-        ChannelSocials: () => import("@/components/ChannelSocials"),
+        ChannelSocials: () => import("./ChannelSocials"),
     },
     props: {
         channel: {

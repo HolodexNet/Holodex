@@ -64,9 +64,9 @@
 
 <script>
 import { mdiLabel, mdiMagnify } from "@mdi/js";
-import ChannelChip from "@/components/ChannelChip";
+import ChannelChip from "@/components/channel/ChannelChip";
 import api from "@/utils/backend-api";
-import ChannelImg from "@/components/ChannelImg";
+import ChannelImg from "@/components/channel/ChannelImg";
 import { debounce } from "@/utils/functions";
 
 export default {

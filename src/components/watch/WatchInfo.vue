@@ -38,11 +38,11 @@
 </template>
 
 <script>
-import ChannelChip from "@/components/ChannelChip";
-import ChannelInfo from "@/components/ChannelInfo";
-import ChannelSocials from "@/components/ChannelSocials";
-import ChannelImg from "@/components/ChannelImg";
-import VideoDescription from "@/components/VideoDescription";
+import ChannelChip from "@/components/channel/ChannelChip";
+import ChannelInfo from "@/components/channel/ChannelInfo";
+import ChannelSocials from "@/components/channel/ChannelSocials";
+import ChannelImg from "@/components/channel/ChannelImg";
+import VideoDescription from "@/components/video/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
 import dayjs from "dayjs";
 

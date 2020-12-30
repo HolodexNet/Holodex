@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList";
 import api from "@/utils/backend-api";
 
 export default {

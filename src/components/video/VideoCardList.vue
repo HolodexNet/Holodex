@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import VideoCard from "@/components/VideoCard.vue";
-import ApiErrorMessage from "@/components/ApiErrorMessage";
+import VideoCard from "@/components/video/VideoCard";
+import ApiErrorMessage from "@/components/common/ApiErrorMessage";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
 export default {

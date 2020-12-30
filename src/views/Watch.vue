@@ -53,13 +53,13 @@
 
 <script>
 import api from "@/utils/backend-api";
-import LoadingOverlay from "@/components/LoadingOverlay";
-import WatchInfo from "@/components/WatchInfo.vue";
-import WatchFrame from "@/components/WatchFrame.vue";
-import WatchRelatedVideos from "@/components/WatchRelatedVideos";
-import WatchTimeline from "@/components/WatchTimeline";
-import WatchTranscript from "@/components/WatchTranscript";
-import VideoDescription from "@/components/VideoDescription";
+import LoadingOverlay from "@/components/common/LoadingOverlay";
+import WatchInfo from "@/components/watch/WatchInfo";
+import WatchFrame from "@/components/watch/WatchFrame";
+import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
+import WatchTimeline from "@/components/watch/WatchTimeline";
+import WatchTranscript from "@/components/watch/WatchTranscript";
+import VideoDescription from "@/components/video/VideoDescription";
 // import { getVideoThumbnails } from "@/utils/functions";
 import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 

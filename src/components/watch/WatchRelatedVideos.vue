@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList";
 
 export default {
     name: "WatchRelatedVideos",

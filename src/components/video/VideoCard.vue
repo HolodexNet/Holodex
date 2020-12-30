@@ -96,7 +96,7 @@ dayjs.extend(advancedFormat);
 export default {
     name: "VideoCard",
     components: {
-        ChannelImg: () => import("@/components/ChannelImg"),
+        ChannelImg: () => import("@/components/channel/ChannelImg"),
     },
     data() {
         return {
