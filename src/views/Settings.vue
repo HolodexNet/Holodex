@@ -60,6 +60,9 @@ import { mdiTranslate } from "@mdi/js";
 
 export default {
     name: "Settings",
+    metaInfo: {
+        title: "Settings",
+    },
     computed: {
         language: {
             get() {
