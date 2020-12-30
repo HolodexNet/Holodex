@@ -23,7 +23,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npx lint-staged"
     }
   },
   "dependencies": {
@@ -44,7 +44,8 @@
     "vue-youtube-embed": "^2.2.2",
     "vuetify": "^2.3.18",
     "vuex": "^3.4.0",
-    "vuex-persistedstate": "^3.1.0"
+    "vuex-persistedstate": "^3.1.0",
+    "vuex-shared-mutations": "^1.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.7",

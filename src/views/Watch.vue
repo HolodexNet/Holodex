@@ -60,7 +60,8 @@ import WatchRelatedVideos from "@/components/WatchRelatedVideos";
 import WatchTimeline from "@/components/WatchTimeline";
 import WatchTranscript from "@/components/WatchTranscript";
 import VideoDescription from "@/components/VideoDescription";
-import { getVideoThumbnails } from "@/utils/functions";
+// import { getVideoThumbnails } from "@/utils/functions";
+import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 
 export default {
     name: "Watch",
@@ -181,6 +182,9 @@ export default {
         },
     },
     computed: {
+        title() {
+            return decodeHTMLEntities(this.video.title);
+        },
         hasLiveChat() {
             return (
                 (this.video.status === "live" || this.video.status === "upcoming") &&

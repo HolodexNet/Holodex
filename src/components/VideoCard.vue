@@ -46,8 +46,8 @@
             </router-link>
             <!--  -->
             <v-list-item-content class="pa-0">
-                <v-list-item-title :class="['video-card-title', { 'video-watched': hasWatched }]" :title="video.title">
-                    {{ video.title }}
+                <v-list-item-title :class="['video-title', { 'video-watched': hasWatched }]" :title="title">
+                    {{ title }}
                 </v-list-item-title>
                 <v-list-item-subtitle v-if="includeChannel">
                     <router-link
@@ -64,7 +64,7 @@
                     </span>
                     <span v-if="video.clips && video.clips.length > 0">
                         •
-                        <router-link :to="`/watch/${video.id}`" class="no-decoration">
+                        <router-link :to="`/watch/${video.id}`" class="no-decoration primary--text">
                             {{ $tc("component.videoCard.clips", formatCount(video.clips.length)) }}
                         </router-link>
                     </span>
@@ -86,7 +86,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import advancedFormat from "dayjs/plugin/advancedFormat";
-import { formatCount, getVideoThumbnails } from "@/utils/functions";
+import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
+import { formatFromNowHM } from "@/utils/time";
 import { mdiCheck, mdiPlusBox } from "@mdi/js";
 
 dayjs.extend(relativeTime);
@@ -142,6 +143,9 @@ export default {
     },
     created() {},
     computed: {
+        title() {
+            return decodeHTMLEntities(this.video.title);
+        },
         formattedTime() {
             switch (this.video.status) {
                 case "upcoming":
@@ -196,17 +200,6 @@ export default {
         },
     },
     methods: {
-        formatFromNowHM(time) {
-            const timeInMin = Math.floor(dayjs(time).diff(dayjs()) / 60000);
-            const hours = Math.floor(timeInMin / 60);
-            const mins = timeInMin % 60;
-
-            if (timeInMin <= 1) return "soon!";
-            if (timeInMin < 60) return `in ${mins} minutes`;
-            if (timeInMin === 60) return "in 1 hour";
-            if (timeInMin % 60 === 0) return `in ${hours} hours`;
-            return `in ${hours} hours and ${mins} minutes`;
-        },
         formatFromNow(time) {
             return dayjs(time).fromNow();
         },
@@ -214,6 +207,7 @@ export default {
             return secs > 60 * 60 * 1000 ? dayjs.utc(secs).format("H:mm:ss") : dayjs.utc(secs).format("m:ss");
         },
         formatCount,
+        formatFromNowHM,
         toggleSaved(event) {
             event.preventDefault();
             this.hasSaved

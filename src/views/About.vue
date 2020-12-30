@@ -140,6 +140,16 @@
 
                 <div class="text-h5">Changelog</div>
                 <div class="text-body-2">
+                    <span class="text--secondary">December 15, 2020</span>
+                    <ul>
+                        <li>Live videos are now updated automatically at 5 minute intervals.</li>
+                        <li>
+                            Favorites sidebar is now sorted by live/upcoming streams. Use this to quickly jump between
+                            streams, by clicking on the label!
+                        </li>
+                        <li>General bug fixes</li>
+                    </ul>
+                    <br />
                     <span class="text--secondary">November 17, 2020</span>
                     <ul>
                         <li>
@@ -153,7 +163,7 @@
                         <li>Live videos now show time in hours and minutes from now</li>
                     </ul>
                     <br />
-                    <span class="text--secondary">November 2, 2020</span>
+                    <!-- <span class="text--secondary">November 2, 2020</span>
                     <ul>
                         <li>Hotfix video duration</li>
                         <li>Added more sorting options and card view to Channels page</li>
@@ -167,7 +177,7 @@
                         <li>Add hide live chat button</li>
                         <li>General under the hood improvments</li>
                     </ul>
-                    <br />
+                    <br /> -->
                     <!-- <span class="text--secondary">Oct 20, 2020</span>
                     <ul>
                         <li>

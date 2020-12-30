@@ -40,6 +40,38 @@
                             <ChannelImg :channel="channel" />
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" noSubscriberCount noGroup />
+                        <v-list-item-action v-if="channel.live" @click.stop="">
+                            <v-tooltip right>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-chip
+                                        label
+                                        small
+                                        :outlined="channel.live.status !== 'live'"
+                                        :color="channel.live.status == 'live' ? 'red' : 'blue'"
+                                        :class="{ 'elevation-2': channel.live.status == 'live' }"
+                                        class="live-badge"
+                                        :to="`/watch/${channel.live.id}`"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        <span style="min-width: 24px; text-align: center">
+                                            {{
+                                                channel.live.status == "live"
+                                                    ? "LIVE"
+                                                    : formatTimeLabel(channel.live.live_schedule)
+                                            }}
+                                        </span>
+                                    </v-chip>
+                                </template>
+                                <span>
+                                    {{
+                                        channel.live.status == "live"
+                                            ? "Watch now"
+                                            : formatFromNowHM(channel.live.live_schedule)
+                                    }}
+                                </span>
+                            </v-tooltip>
+                        </v-list-item-action>
                     </v-list-item>
                 </template>
                 <v-list-item link @click="favoritesExpanded = !favoritesExpanded" v-if="favorites.length > 5">
@@ -74,6 +106,9 @@ import ChannelImg from "@/components/ChannelImg";
 import ChannelInfo from "@/components/ChannelInfo";
 import { mdiChevronDown, mdiChevronUp, mdiEarth, mdiHeart, mdiMessageCogOutline } from "@mdi/js";
 import { langs } from "@/plugins/vuetify";
+import { mapState } from "vuex";
+import dayjs from "dayjs";
+import { formatFromNowHM } from "@/utils/time";
 
 export default {
     name: "NavDrawer",
@@ -90,15 +125,11 @@ export default {
             type: Boolean,
             default: false,
         },
-        currentPage: {
-            type: String,
-            color: "primary",
-        },
     },
     data() {
         return {
-            mdiHeart,
             favoritesExpanded: true,
+            mdiHeart,
             mdiChevronDown,
             mdiChevronUp,
             mdiEarth,
@@ -106,31 +137,59 @@ export default {
         };
     },
     computed: {
+        ...mapState(["favorites", "cachedChannels", "live"]),
         language() {
             return langs.find((x) => x.val === this.$store.state.lang).display;
-        },
-        favorites() {
-            return this.$store.state.favorites;
-        },
-        cachedChannels() {
-            return this.$store.state.cachedChannels;
         },
         favoritedChannels() {
             if (!this.$store.state.cachedChannels || !this.$store.state.favorites) return [];
             // check cache for missing favorites
             this.$store.dispatch("checkChannelCache");
             // return favorited channel list from cache
-            const arr = this.favorites.map((channelId) =>
-                Object.hasOwnProperty.call(this.cachedChannels, channelId) ? this.cachedChannels[channelId] : null,
-            );
+            const arr = this.favorites.map((channelId) => {
+                // make shallow copy of object to not modify state
+                if (Object.hasOwnProperty.call(this.cachedChannels, channelId)) {
+                    const channel = this.cachedChannels[channelId];
+                    // clear any lives
+                    channel.live = null;
+                    return channel;
+                }
+                return null;
+            });
 
+            // add live video obj to channel
+            this.live.forEach((l) => {
+                const index = this.favorites.indexOf(l.channel.id);
+                if (index > 0 && !arr[index].live) arr[index].live = l;
+            });
+
+            // sort favorite channels by most upcoming live if any
+            arr.sort((a, b) => {
+                if (a.live && b.live) {
+                    const dateA = new Date(a.live.live_schedule);
+                    const dateB = new Date(b.live.live_schedule);
+                    return dateA - dateB;
+                }
+                if (a.live) return -1;
+                if (b.live) return 1;
+                return 0;
+            });
             return !this.favoritesExpanded && this.favorites.length > 5 ? arr.splice(0, 5) : arr;
         },
     },
     methods: {
+        formatFromNowHM,
         handlePageClick(page) {
             // reload the page if user clicks on the same tab
             page.path === this.$route.path ? this.$router.go(0) : this.$router.push({ path: page.path });
+        },
+        formatTimeLabel(time) {
+            const hours = dayjs(time).diff(dayjs(), "hour");
+            if (hours) {
+                return `${hours}h`;
+            }
+            const minutes = dayjs(time).diff(dayjs(), "minutes");
+            return `${minutes}m`;
         },
     },
 };
@@ -151,11 +210,17 @@ export default {
 }
 
 .nav-scroll > .v-navigation-drawer__content:hover {
-    overflow-y: auto !important;
+    overflow-y: overlay !important;
     overscroll-behavior: contain;
 }
 
 .nav-scroll > .v-navigation-drawer__content {
     overflow-y: hidden !important;
+}
+
+.live-badge {
+    padding: 3px 4px !important;
+    border-radius: 2px;
+    min-width: 32px !important;
 }
 </style>
