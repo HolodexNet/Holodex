@@ -4,11 +4,10 @@ import VueMeta from "vue-meta";
 import linkify from "vue-linkify";
 import VueI18n from "vue-i18n";
 import VueYouTubeEmbed from "vue-youtube-embed";
-import App from "./App.vue";
+import App from "./App";
 import router from "./router";
 import store from "./store";
 import { i18n, vuetify } from "./plugins/vuetify";
-
 
 import "./registerServiceWorker";
 
