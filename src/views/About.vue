@@ -211,7 +211,7 @@
 
 <script>
 import { mdiDotsVertical, mdiExportVariant } from "@mdi/js";
-import TwitterFeed from "@/components/TwitterFeed";
+import TwitterFeed from "@/components/common/TwitterFeed";
 
 export default {
     name: "About",

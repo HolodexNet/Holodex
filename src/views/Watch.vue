@@ -1,90 +1,50 @@
 <template>
     <v-container fluid v-if="!isLoading && !showError">
         <v-row class="align-start">
-            <v-col class="pa-0 pa-lg-3">
-                <v-card class="watch-card">
-                    <div class="embedded-video" v-if="!redirectMode && video_src">
-                        <iframe :src="video_src" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="thumbnail" v-else>
-                        <v-img :aspect-ratio="16 / 9" :src="thumbnail_src" />
-                        <div class="thumbnail-overlay d-flex">
-                            <div class="text-h4 ma-auto">
-                                <a :href="`https://youtu.be/${video.yt_video_key}`"> Open on Youtube </a>
-                            </div>
-                        </div>
-                    </div>
-                    <v-card-title>{{ title }}</v-card-title>
-                    <v-card-subtitle>
-                        {{ formatTime(video.published_at) }}
-                    </v-card-subtitle>
-                    <v-divider />
-                    <v-list two-line>
-                        <v-list-item>
-                            <v-list-item-avatar size="50">
-                                <ChannelImg :channel="video.channel" />
-                            </v-list-item-avatar>
-                            <ChannelInfo :channel="video.channel" />
-                            <ChannelSocials :channel="video.channel" />
-                        </v-list-item>
-                    </v-list>
-                    <v-card-text class="py-2">
-                        <ChannelChip
-                            v-for="channel in channel_chips"
-                            :channel="channel"
-                            :key="channel.id"
-                            class="ma-1"
-                        ></ChannelChip>
-                        <v-chip
-                            v-for="tag in tags.filter((t) => !t.channel_ref)"
-                            label
-                            link
-                            :key="tag.id"
-                            style="margin-right: 5px"
-                            :to="`/search?tags=${tag.name}`"
+            <v-col class="pa-0 pa-lg-3" cols="12" lg="9">
+                <WatchFrame
+                    v-if="video"
+                    :video="video"
+                    :translations="translations"
+                    :otherMessages="otherMessages"
+                    :currentTime="currentTime"
+                >
+                    <template v-slot:youtube>
+                        <youtube
+                            class="embedded-video"
+                            :video-id="video.yt_video_key"
+                            @ready="ready"
+                            @playing="playing"
+                            @paused="paused"
+                            :playerVars="{ autoplay: 1, playsinline: 1 }"
                         >
-                            {{ `#${tag.name} (${tag.count})` }}
-                        </v-chip>
-                    </v-card-text>
-                    <VideoDescription :description="video.description"></VideoDescription>
-                    <v-divider />
-                </v-card>
+                        </youtube>
+                    </template>
+                </WatchFrame>
+                <!-- <WatchTimeline
+                    :v-if="translations.length"
+                    :video="video"
+                    :translations="translations"
+                    :otherMessages="otherMessages"
+                    :currentTime="currentTime"
+                    class="pa-3"
+                >
+                </WatchTimeline> -->
+                <WatchInfo :video="video" />
             </v-col>
             <v-col cols="12" sm="12" lg="3" xl="3" md="12" class="related-videos pa-1">
+                <!-- <WatchTranscript
+                    :translations="translations"
+                    :otherMessages="otherMessages"
+                    :currentTime="currentTime"
+                /> -->
                 <div class="embedded-chat" v-if="hasLiveChat & !hideLiveChat">
                     <iframe :src="live_chat_src" frameborder="0" />
                 </div>
                 <div class="text-end pa-1 text-caption" v-if="hasLiveChat">
                     <a @click="hideLiveChat = !hideLiveChat"> {{ hideLiveChat ? "Show" : "Hide" }} Live Chat </a>
                 </div>
-                <div class="text-subtitle-2 ma-2" v-if="video_clips.length > 0">Clips</div>
-                <VideoCardList
-                    :videos="video_clips"
-                    horizontal
-                    includeChannel
-                    :cols="{
-                        lg: 12,
-                        md: 12,
-                        cols: 12,
-                        sm: 12,
-                    }"
-                />
-                <v-divider />
-                <div class="text-subtitle-2 ma-2" v-if="video_sources.length > 0">Related</div>
-                <VideoCardList
-                    :videos="video_sources"
-                    horizontal
-                    includeChannel
-                    :cols="{
-                        lg: 12,
-                        md: 4,
-                        cols: 12,
-                        sm: 6,
-                    }"
-                />
-                <div v-if="video_sources.length + video_clips.length === 0" style="text-align: center" class="pa-2">
-                    No clips or related video yet
-                </div>
+                <WatchRelatedVideos :videoSources="videoSources" :videoClips="videoClips" />
             </v-col>
         </v-row>
     </v-container>
@@ -93,15 +53,14 @@
 
 <script>
 import api from "@/utils/backend-api";
-import VideoCardList from "@/components/VideoCardList";
-import ChannelChip from "@/components/ChannelChip";
-import dayjs from "dayjs";
-import ChannelInfo from "@/components/ChannelInfo";
-import ChannelSocials from "@/components/ChannelSocials";
-import ChannelImg from "@/components/ChannelImg";
-import LoadingOverlay from "@/components/LoadingOverlay";
-import VideoDescription from "@/components/VideoDescription";
-
+import LoadingOverlay from "@/components/common/LoadingOverlay";
+import WatchInfo from "@/components/watch/WatchInfo";
+import WatchFrame from "@/components/watch/WatchFrame";
+import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
+import WatchTimeline from "@/components/watch/WatchTimeline";
+import WatchTranscript from "@/components/watch/WatchTranscript";
+import VideoDescription from "@/components/video/VideoDescription";
+// import { getVideoThumbnails } from "@/utils/functions";
 import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 
 export default {
@@ -130,44 +89,80 @@ export default {
         };
     },
     components: {
-        VideoCardList,
-        ChannelChip,
-        ChannelInfo,
-        VideoDescription,
-        ChannelSocials,
-        ChannelImg,
-        // NotFound: () => import("@/views/NotFound"),
         LoadingOverlay,
+        WatchInfo,
+        WatchFrame,
+        WatchTimeline,
+        WatchTranscript,
+        VideoDescription,
+        WatchRelatedVideos,
     },
     data() {
         return {
             isLoading: true,
             showError: false,
             video: {},
-            video_clips: [],
-            video_sources: [],
-            channel_mentions: [],
-            tags: [],
+            videoClips: [],
+            videoSources: [],
+            translations: [],
+            otherMessages: [],
             video_src: "",
             live_chat_src: "",
             hideLiveChat: false,
+
+            currentTime: 0,
+            timer: null,
         };
     },
     created() {
         this.loadData(this.$route.params.id);
     },
     methods: {
+        ready(event) {
+            this.player = event.target;
+        },
+        startSync() {
+            const vm = this;
+            this.timer = setInterval(() => {
+                vm.currentTime = vm.player.getCurrentTime();
+            }, 1000);
+        },
+        stopSync() {
+            clearInterval(this.timer);
+            this.timer = null;
+        },
+        setTime(time) {
+            this.player.seekTo(time);
+        },
+        playing(event) {
+            console.log(event.target.getCurrentTime());
+            this.startSync();
+            // this.updateMessages(this.player.getCurrentTime());
+        },
+        paused(event) {
+            console.log(event);
+            this.stopSync();
+        },
         loadData(id) {
             // destroy iframe and recreate it so it doesn't break history mode
             this.video_src = "";
             this.isLoading = true;
+            api.videoLiveChat(id, "translation", 0).then((res) => {
+                // const curTime = this.player.getCurrentTime();
+                if (res) {
+                    // this.messages.push(...res.data.messages);
+                    res.data.messages.forEach((msg) => {
+                        msg.type === "translation" ? this.translations.push(msg) : this.otherMessages.push(msg);
+                    });
+                    // this.loadChart();
+                }
+            });
+
             api.video(id)
                 .then((res) => {
                     if (res.data) {
-                        this.video_clips = res.data.clips;
-                        this.video_sources = res.data.sources;
-                        this.channel_mentions = res.data.channel_mentions;
-                        this.tags = res.data.tags;
+                        this.videoClips = res.data.clips;
+                        this.videoSources = res.data.sources;
                         this.video = res.data;
                         this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
                         this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
@@ -182,9 +177,6 @@ export default {
                     this.isLoading = false;
                 });
         },
-        formatTime(t) {
-            return dayjs(t).format("MMM DD, YYYY");
-        },
         setWatched() {
             this.$store.commit("addWatchedVideo", this.video);
         },
@@ -192,30 +184,6 @@ export default {
     computed: {
         title() {
             return decodeHTMLEntities(this.video.title);
-        },
-        channel_chips() {
-            const allMentions = new Map();
-            this.channel_mentions
-                .concat(this.video_sources.map((video) => video.channel))
-                .filter((channel) => channel.id !== this.video.channel_id)
-                .forEach((channel) =>
-                    allMentions.set(channel.id, {
-                        id: channel.id,
-                        name: channel.name,
-                        name_en: channel.name_en,
-                        photo: channel.photo,
-                    }),
-                );
-            return Array.from(allMentions.values());
-        },
-        redirectMode() {
-            return this.$store.state.redirectMode;
-        },
-        thumbnail_src() {
-            return getVideoThumbnails(this.video.yt_video_key).medium;
-        },
-        isXs() {
-            return this.$vuetify.breakpoint.name === "xs";
         },
         hasLiveChat() {
             return (
@@ -256,12 +224,6 @@ export default {
 .embedded-video {
     position: relative;
     padding-bottom: 56.25%;
-}
-
-.embedded-video > iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
 }
 
 .embedded-video > iframe {

@@ -70,15 +70,12 @@
 </template>
 
 <script>
-import ChannelList from "@/components/ChannelList";
+import ChannelList from "@/components/channel/ChannelList";
 import api from "@/utils/backend-api";
 import InfiniteLoading from "vue-infinite-loading";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import ApiErrorMessage from "@/components/ApiErrorMessage";
+import { dayjs } from "@/utils/time";
+import ApiErrorMessage from "@/components/common/ApiErrorMessage";
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
-
-dayjs.extend(relativeTime);
 
 export default {
     name: "Channels",

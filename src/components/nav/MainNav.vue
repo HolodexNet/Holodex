@@ -68,10 +68,10 @@ import {
     mdiMenu,
     mdiRefresh,
 } from "@mdi/js";
-import NavDrawer from "@/components/navs/NavDrawer";
-import BottomNav from "@/components/navs/BottomNav";
-import SearchBar from "@/components/SearchBar";
-import Logo from "@/components/Logo";
+import SearchBar from "@/components/common/SearchBar";
+import Logo from "@/components/common/Logo";
+import NavDrawer from "./NavDrawer";
+import BottomNav from "./BottomNav";
 
 export default {
     components: {

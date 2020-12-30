@@ -43,6 +43,20 @@ module.exports = {
                         },
                     },
                 },
+                {
+                    urlPattern: new RegExp("https://www.youtube.com/player_api"),
+                    handler: "cacheFirst",
+                    options: {
+                        cacheName: "youtube-player",
+                        expiration: {
+                            maxAgeSeconds: 10800,
+                            maxEntries: 1,
+                        },
+                        cacheableResponse: {
+                            statuses: [0, 200],
+                        },
+                    },
+                },
             ],
         },
     },

@@ -1,19 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "../views/Home";
 
-const Channel = () => import("../views/Channel.vue");
-const Channels = () => import("../views/Channels.vue");
-const Favorites = () => import("../views/Favorites.vue");
+const Channel = () => import("../views/Channel");
+const Channels = () => import("../views/Channels");
+const Favorites = () => import("../views/Favorites");
 const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
 const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
-const Watch = () => import("../views/Watch.vue");
-const About = () => import("../views/About.vue");
-const Search = () => import("../views/Search.vue");
-const Library = () => import("../views/Library.vue");
-const ChannelStats = () => import("../views/channel_views/ChannelStats.vue");
-const Settings = () => import("../views/Settings.vue");
-const NotFound = () => import("../views/NotFound.vue");
+const Watch = () => import("../views/Watch");
+const About = () => import("../views/About");
+const Search = () => import("../views/Search");
+const Library = () => import("../views/Library");
+const ChannelStats = () => import("../views/channel_views/ChannelStats");
+const Settings = () => import("../views/Settings");
+const NotFound = () => import("../views/NotFound");
 Vue.use(VueRouter);
 
 const routes = [
