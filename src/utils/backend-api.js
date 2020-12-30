@@ -5,7 +5,7 @@ import querystring from "querystring";
 
 export const axiosInstance = axios.create({
     baseURL:
-        process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api/v1" : "https://holodex.net/api/v1",
+        process.env.NODE_ENV === "development" ? "https://holodex.net/api/v1" : "https://staging.holodex.net/api/v1",
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",

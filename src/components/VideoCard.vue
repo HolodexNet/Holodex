@@ -46,7 +46,7 @@
             </router-link>
             <!--  -->
             <v-list-item-content class="pa-0">
-                <v-list-item-title :class="['video-title', { 'video-watched': hasWatched }]" :title="title">
+                <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
                     {{ title }}
                 </v-list-item-title>
                 <v-list-item-subtitle v-if="includeChannel">
