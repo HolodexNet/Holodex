@@ -43,6 +43,7 @@
     "vue-linkify": "^1.0.1",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.4.9",
+    "vue-youtube-embed": "^2.2.2",
     "vuetify": "^2.3.18",
     "vuex": "^3.4.0",
     "vuex-persistedstate": "^3.1.0",

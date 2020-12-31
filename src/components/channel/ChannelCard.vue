@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import ChannelImg from "@/components/ChannelImg";
-import ChannelInfo from "@/components/ChannelInfo";
+import ChannelImg from "./ChannelImg";
+import ChannelInfo from "./ChannelInfo";
 
 export default {
     name: "ChannelCard",

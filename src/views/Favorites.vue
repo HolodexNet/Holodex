@@ -45,7 +45,7 @@
                             </v-btn>
                         </v-btn-toggle>
                     </v-row>
-                    <FavoritesVideoList :videoLists="filteredByChannelType" />
+                    <VideoFavoritesList :videoLists="filteredByChannelType" />
                     <div class="text-center" @click="loadNext">
                         <v-btn class="ma-auto" outlined color="primary"> Load Next </v-btn>
                     </div>
@@ -67,15 +67,12 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/VideoCardList.vue";
-import FavoritesVideoList from "@/components/FavoritesVideoList.vue";
-import LoadingOverlay from "@/components/LoadingOverlay.vue";
+import VideoCardList from "@/components/video/VideoCardList";
+import VideoFavoritesList from "@/components/video/VideoFavoritesList";
+import LoadingOverlay from "@/components/common/LoadingOverlay";
 import api from "@/utils/backend-api";
-import dayjs from "dayjs";
+import { dayjs } from "@/utils/time";
 import { mdiHeart } from "@mdi/js";
-import utc from "dayjs/plugin/utc";
-
-dayjs.extend(utc);
 
 export default {
     name: "Favorites",
@@ -84,7 +81,7 @@ export default {
     },
     components: {
         VideoCardList,
-        FavoritesVideoList,
+        VideoFavoritesList,
         LoadingOverlay,
     },
     data() {

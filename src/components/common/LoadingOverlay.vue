@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ApiErrorMessage from "@/components/ApiErrorMessage";
+import ApiErrorMessage from "./ApiErrorMessage";
 
 export default {
     name: "LoadingOverlay",

@@ -29,6 +29,14 @@ module.exports = {
         "no-restricted-syntax": "off",
         "no-await-in-loop": "off",
         "no-unused-expressions": ["error", { allowShortCircuit: true, allowTernary: true }],
+        "import/extensions": [
+            "error",
+            "always",
+            {
+                js: "never",
+                vue: "never",
+            },
+        ],
     },
     settings: {
         "import/resolver": {

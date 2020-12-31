@@ -60,8 +60,8 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/VideoCardList.vue";
-import LoadingOverlay from "@/components/LoadingOverlay.vue";
+import VideoCardList from "@/components/video/VideoCardList";
+import LoadingOverlay from "@/components/common/LoadingOverlay";
 import api from "@/utils/backend-api";
 import { mapState } from "vuex";
 

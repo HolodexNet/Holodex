@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import dayjs from "dayjs";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import api from "@/utils/backend-api";
+import { dayjs } from "@/utils/time";
 import { langs } from "@/plugins/vuetify";
 
 Vue.use(Vuex);

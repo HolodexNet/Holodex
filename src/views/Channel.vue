@@ -30,10 +30,10 @@
 
 <script>
 import api from "@/utils/backend-api";
-import ChannelSocials from "@/components/ChannelSocials";
-import ChannelInfo from "@/components/ChannelInfo";
-import ChannelImg from "@/components/ChannelImg";
-import LoadingOverlay from "@/components/LoadingOverlay";
+import ChannelSocials from "@/components/channel/ChannelSocials";
+import ChannelInfo from "@/components/channel/ChannelInfo";
+import ChannelImg from "@/components/channel/ChannelImg";
+import LoadingOverlay from "@/components/common/LoadingOverlay";
 import { getBannerImages } from "@/utils/functions";
 
 export default {
