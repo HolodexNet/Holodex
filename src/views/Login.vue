@@ -28,7 +28,7 @@ Vue.use(GAuth, gauthOption);
 
 const redirectUri =
     process.env.NODE_ENV === "development" ? "http://localhost:8080/discord" : "https://holodex.net/discord";
-// the fact this URI is invalid doesn't matter, 
+// the fact this URI is invalid doesn't matter,
 // all it matters is we own the domain so oauth-open can grab the URI from the window
 
 export default {
@@ -49,12 +49,12 @@ export default {
             console.log(resp);
         },
         async loginDiscord() {
-            // out: 
+            // out:
             // {token_type: "Bearer", access_token: "<SOMEACCESSTOKEN>", expires_in: "604800", scope: "identify"}
             open(
-                `https://discord.com/api/oauth2/authorize?client_id=793619250115379262&redirect_uri=${
-                    encodeURIComponent(redirectUri)
-                }&response_type=token&scope=identify`,
+                `https://discord.com/api/oauth2/authorize?client_id=793619250115379262&redirect_uri=${encodeURIComponent(
+                    redirectUri,
+                )}&response_type=token&scope=identify`,
                 async (err, out) => {
                     const resp = await api.login(out.access_token, "discord");
                     console.log(resp);
@@ -63,7 +63,9 @@ export default {
         },
         async loginTwitter() {
             open("http://localhost:2434/v2/user/login/twitter", async (err, out) => {
-                console.log(out);
+                const twitterTempJWT = out.jwt;
+                const resp = await api.login(twitterTempJWT, "twitter");
+                console.log(resp);
             });
         },
     },
