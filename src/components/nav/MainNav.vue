@@ -66,6 +66,7 @@ import {
     mdiHome,
     mdiMagnify,
     mdiMenu,
+    mdiLoginVariant,
     mdiRefresh,
 } from "@mdi/js";
 import SearchBar from "@/components/common/SearchBar";
@@ -131,6 +132,12 @@ export default {
                     name: this.$t("component.mainNav.settings"),
                     path: "/settings",
                     icon: mdiCog,
+                    collapsible: true,
+                },
+                {
+                    name: "Login",
+                    path: "/login",
+                    icon: mdiLoginVariant,
                     collapsible: true,
                 },
             ];

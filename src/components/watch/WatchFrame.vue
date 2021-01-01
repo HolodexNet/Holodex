@@ -25,7 +25,7 @@
         <v-img :aspect-ratio="16 / 9" :src="thumbnail_src" />
         <div class="thumbnail-overlay d-flex">
             <div class="text-h4 ma-auto">
-                <a :href="`https://youtu.be/${video.yt_video_key}`"> Open on Youtube </a>
+                <a :href="`https://youtu.be/${video.id}`"> Open on Youtube </a>
             </div>
         </div>
     </div>
@@ -67,10 +67,10 @@ export default {
     methods: {},
     computed: {
         video_src() {
-            return `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
+            return `https://www.youtube.com/embed/${this.video.id}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
         },
         thumbnail_src() {
-            return getVideoThumbnails(this.video.yt_video_key).medium;
+            return getVideoThumbnails(this.video.id).medium;
         },
         redirectMode() {
             return this.$store.state.redirectMode;

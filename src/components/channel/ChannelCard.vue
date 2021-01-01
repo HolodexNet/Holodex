@@ -11,7 +11,7 @@
 
 <script>
 import ChannelImg from "./ChannelImg";
-import ChannelInfo from ".ChannelImg/ChannelInfo";
+import ChannelInfo from "./ChannelInfo";
 
 export default {
     name: "ChannelCard",

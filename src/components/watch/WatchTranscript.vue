@@ -42,14 +42,6 @@ export default {
     name: "WatchTranscript",
     methods: {
         formatDuration,
-        // formatDurationSecs(timeSecs) {
-        //     const hours = Math.floor(timeSecs / (60*60)) || 0;
-        //     const mins = Math.floor(timeSecs / 60) % 60;
-        //     const secs = timeSecs % 60;
-
-        //     /* eslint-disable */
-        //     return (hours ? hours + ":" : "") + String(mins).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
-        // },
     },
     props: {
         translations: {},

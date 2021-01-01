@@ -58,7 +58,7 @@
                                             {{
                                                 channel.live.status == "live"
                                                     ? "LIVE"
-                                                    : formatTimeLabel(channel.live.live_schedule)
+                                                    : formatTimeLabel(channel.live.start_scheduled)
                                             }}
                                         </span>
                                     </v-chip>
@@ -67,7 +67,7 @@
                                     {{
                                         channel.live.status == "live"
                                             ? "Watch now"
-                                            : formatStreamStart(channel.live.live_schedule)
+                                            : formatStreamStart(channel.live.start_scheduled)
                                     }}
                                 </span>
                             </v-tooltip>
@@ -165,8 +165,8 @@ export default {
             // sort favorite channels by most upcoming live if any
             arr.sort((a, b) => {
                 if (a.live && b.live) {
-                    const dateA = new Date(a.live.live_schedule);
-                    const dateB = new Date(b.live.live_schedule);
+                    const dateA = new Date(a.live.start_scheduled);
+                    const dateB = new Date(b.live.start_scheduled);
                     return dateA - dateB;
                 }
                 if (a.live) return -1;
