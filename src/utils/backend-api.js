@@ -69,9 +69,7 @@ export default {
             { token: authToken, service },
             {
                 headers: jwt
-                    ? {
-                          Authorization: `BEARER ${jwt}`,
-                      }
+                    ? { Authorization: `BEARER ${jwt}` }
                     : {},
             },
         );
