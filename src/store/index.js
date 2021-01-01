@@ -6,6 +6,8 @@ import api from "@/utils/backend-api";
 import { dayjs } from "@/utils/time";
 import { langs } from "@/plugins/vuetify";
 
+import home from "./home.module";
+
 Vue.use(Vuex);
 
 function defaultState() {
@@ -24,7 +26,7 @@ function defaultState() {
         hideThumbnail: false,
         // persisted filters
         // Home
-        recentVideoFilter: "all",
+        // recentVideoFilter: "all",
         // Favorites
         favoritesVideoFilter: "all",
         // Channels
@@ -50,14 +52,14 @@ function defaultState() {
         // other
         showUpdateDetails: false,
         // live & live-update-lock
-        live: [],
-        liveLastUpdated: new Date(1000),
-        liveHasError: false,
+        // live: [],
+        // liveLastUpdated: new Date(1000),
+        // liveHasError: false,
         // authorization
         userdata: {
             user: null,
             jwt: null,
-        }
+        },
     };
 }
 
@@ -89,7 +91,7 @@ export default new Vuex.Store({
     state: defaultState(),
     getters: {
         useEnName(state) {
-            return state.nameProperty === "name_en";
+            return state.nameProperty === "english_name";
         },
         hasWatched: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.watchedVideos, videoId),
         hasSaved: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.savedVideos, videoId),
@@ -174,21 +176,21 @@ export default new Vuex.Store({
             Object.assign(state, defaultState());
         },
         // live & live update lock
-        private_startUpdateLive(state) {
-            state.liveLastUpdated = new Date().getTime();
-        },
-        private_setLive(state, live) {
-            state.liveHasError = false;
-            state.live = live;
-        },
-        private_liveUpdateError(state) {
-            state.liveHasError = true;
-        },
+        // private_startUpdateLive(state) {
+        //     state.liveLastUpdated = new Date().getTime();
+        // },
+        // private_setLive(state, live) {
+        //     state.liveHasError = false;
+        //     state.live = live;
+        // },
+        // private_liveUpdateError(state) {
+        //     state.liveHasError = true;
+        // },
         // login
-        setUser(state, {user, jwt}) {
+        setUser(state, { user, jwt }) {
             Vue.set(state.userdata, "user", user);
             state.userdata.jwt = jwt;
-        }
+        },
     },
     actions: {
         async updateChannelCache({ commit }) {
@@ -262,8 +264,10 @@ export default new Vuex.Store({
             }
         },
         async logout({ commit }) {
-            commit("setUser", {user: null, jwt: null});
-        }
+            commit("setUser", { user: null, jwt: null });
+        },
     },
-    modules: {},
+    modules: {
+        home,
+    },
 });

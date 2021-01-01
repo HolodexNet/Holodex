@@ -3,7 +3,7 @@
         outlined
         :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
         :to="!redirectMode ? `/watch/${video.id}` : ''"
-        :href="`https://youtu.be/${video.yt_video_key}`"
+        :href="`https://youtu.be/${video.id}`"
         :target="redirectMode ? '_blank' : ''"
         rel="noopener"
         link
@@ -53,7 +53,7 @@
                     <router-link
                         :to="`/channel/${video.channel.id}`"
                         class="no-decoration channel-name"
-                        :class="{ 'name-vtuber': video.channel.id < 1000 }"
+                        :class="`name-${video.channel.type}`"
                     >
                         {{ channelName }}
                     </router-link>
@@ -85,6 +85,7 @@
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { formatDuration, formatStreamStart, dayjs } from "@/utils/time";
 import { mdiCheck, mdiPlusBox } from "@mdi/js";
+/* eslint-disable no-unused-vars */
 
 export default {
     name: "VideoCard",
@@ -134,7 +135,6 @@ export default {
             default: false,
         },
     },
-    created() {},
     computed: {
         title() {
             return decodeHTMLEntities(this.video.title);
@@ -144,7 +144,7 @@ export default {
                 case "upcoming":
                     // print relative time in hours if less than 24 hours,
                     // print full date if greater than 24 hours
-                    return `Stream starts ${this.formatStreamStart(this.video.live_schedule)}`;
+                    return `Stream starts ${this.formatStreamStart(this.video.start_scheduled)}`;
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:
@@ -161,7 +161,7 @@ export default {
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
             const useWebP = this.$store.state.canUseWebP && !this.forceJPG;
-            const srcs = getVideoThumbnails(this.video.yt_video_key, useWebP);
+            const srcs = getVideoThumbnails(this.video.id, useWebP);
             if (this.horizontal) return srcs.medium;
             if (this.colSize > 2 && this.colSize <= 8) {
                 return srcs.medium;
@@ -205,7 +205,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .video-card {
     border-radius: 0 !important;
     border: none !important;

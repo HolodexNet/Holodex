@@ -12,7 +12,7 @@
                     <template v-slot:youtube>
                         <youtube
                             class="embedded-video"
-                            :video-id="video.yt_video_key"
+                            :video-id="video.id"
                             @ready="ready"
                             @playing="playing"
                             @paused="paused"
@@ -164,8 +164,8 @@ export default {
                         this.videoClips = res.data.clips;
                         this.videoSources = res.data.sources;
                         this.video = res.data;
-                        this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
-                        this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
+                        this.video_src = `https://www.youtube.com/embed/${this.video.id}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
+                        this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.id}&embed_domain=${window.location.hostname}&dark_theme=1`;
                         if (!this.hasWatched) this.setWatched();
                     }
                 })
@@ -206,8 +206,8 @@ export default {
             return this.video.title;
         },
         metaImage() {
-            if (!this.video.yt_video_key) return undefined;
-            return getVideoThumbnails(this.video.yt_video_key).maxres;
+            if (!this.video.id) return undefined;
+            return getVideoThumbnails(this.video.id).maxres;
         },
     },
     watch: {

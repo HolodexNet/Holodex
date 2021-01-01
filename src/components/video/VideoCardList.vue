@@ -64,7 +64,6 @@ export default {
         return {
             expanded: false,
             ...{ mdiChevronUp, mdiChevronDown },
-            requestedPage: null,
         };
     },
     props: {
@@ -111,9 +110,6 @@ export default {
         paginated: {
             type: Boolean,
             default: false,
-        },
-        currentPage: {
-            default: 1,
         },
         pageSize: {
             default: 30,
@@ -204,5 +200,11 @@ export default {
     width: 12.5%;
     max-width: 12.5%;
     flex-basis: 12.5%;
+}
+
+.video-12 {
+    width: 8.33%;
+    max-width: 8.33%;
+    flex-basis: 8.33%;
 }
 </style>
