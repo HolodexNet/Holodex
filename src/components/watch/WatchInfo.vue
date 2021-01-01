@@ -84,7 +84,7 @@ export default {
             return Array.from(allMentions.values());
         },
         thumbnail_src() {
-            return getVideoThumbnails(this.video.yt_video_key).medium;
+            return getVideoThumbnails(this.video.id).medium;
         },
         isXs() {
             return this.$vuetify.breakpoint.name === "xs";

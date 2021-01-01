@@ -107,7 +107,7 @@ export default {
         exportSelected() {
             if (this.selected.length === 0) return;
             const ytVideoKeys = this.selected.map((videoId) => {
-                return this.savedVideos[videoId].yt_video_key;
+                return this.savedVideos[videoId].id;
             });
             const url = `https://www.youtube.com/watch_videos?video_ids=${ytVideoKeys.join(",")}`;
 

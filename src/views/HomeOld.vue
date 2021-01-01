@@ -1,8 +1,7 @@
 <template>
     <v-container class="home pt-0" fluid>
-        <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
-        <v-row v-show="!isLoading && !hasError">
-            <!-- <v-row> -->
+        <LoadingOverlay :isLoading="isLoading" :showError="liveHasError" />
+        <v-row v-show="!isLoading && !liveHasError">
             <v-col>
                 <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
                     <div class="text-h6">
@@ -63,8 +62,8 @@
 <script>
 import VideoCardList from "@/components/video/VideoCardList";
 import LoadingOverlay from "@/components/common/LoadingOverlay";
-// import api from "@/utils/backend-api";
-import { mapGetters } from "vuex";
+import api from "@/utils/backend-api";
+import { mapState } from "vuex";
 
 export default {
     name: "Home",
@@ -77,27 +76,23 @@ export default {
     },
     data() {
         return {
-            // videos: [],
-            // currentOffset: 0,
-            // infiniteId: +new Date(),
-            // isLoading: true,
+            videos: [],
+            currentOffset: 0,
+            infiniteId: +new Date(),
+            isLoading: true,
         };
     },
     created() {
-        // this.$store.dispatch("tryUpdatingLive", { forced: true }).finally(() => {
-        //     this.isLoading = false;
-        // });
-        this.$store.dispatch("fetchLive", {}).then(() => {
-            console.log(this.live);
+        this.$store.dispatch("tryUpdatingLive", { forced: true }).finally(() => {
+            this.isLoading = false;
         });
     },
     watch: {
-        // recentVideoFilter() {
-        //     this.resetVideos();
-        // },
+        recentVideoFilter() {
+            this.resetVideos();
+        },
     },
     computed: {
-        ...mapGetters(["live", "videos", "isLoading", "hasError", "currentOffset"]),
         recentVideoFilter: {
             get() {
                 return this.$store.state.recentVideoFilter;
@@ -109,40 +104,40 @@ export default {
         pageLength() {
             return this.$vuetify.breakpoint.toString() === "md" ? 12 : 24;
         },
-        // ...mapState(["live", "liveHasError"]),
+        ...mapState(["live", "liveHasError"]),
     },
     methods: {
-        // resetVideos() {
-        //     this.videos = [];
-        //     this.currentOffset = 0;
-        //     this.infiniteId += 1;
-        //     this.daysBefore = 0;
-        // },
-        // loadNext($state) {
-        //     api.videos({
-        //         limit: this.pageLength,
-        //         offset: this.currentOffset,
-        //         include_channel: 1,
-        //         status: "past",
-        //         tag_status: "tagged",
-        //         // only include type param if there is a filter
-        //         ...(this.recentVideoFilter !== "all" && {
-        //             channel_type: this.recentVideoFilter,
-        //         }),
-        //     })
-        //         .then((res) => {
-        //             if (res.data.videos.length) {
-        //                 this.videos = this.videos.concat(res.data.videos);
-        //                 this.currentOffset += this.pageLength;
-        //                 $state.loaded();
-        //             } else {
-        //                 $state.complete();
-        //             }
-        //         })
-        //         .catch(() => {
-        //             $state.error();
-        //         });
-        // },
+        resetVideos() {
+            this.videos = [];
+            this.currentOffset = 0;
+            this.infiniteId += 1;
+            this.daysBefore = 0;
+        },
+        loadNext($state) {
+            api.videos({
+                limit: this.pageLength,
+                offset: this.currentOffset,
+                include_channel: 1,
+                status: "past",
+                tag_status: "tagged",
+                // only include type param if there is a filter
+                ...(this.recentVideoFilter !== "all" && {
+                    channel_type: this.recentVideoFilter,
+                }),
+            })
+                .then((res) => {
+                    if (res.data.videos.length) {
+                        this.videos = this.videos.concat(res.data.videos);
+                        this.currentOffset += this.pageLength;
+                        $state.loaded();
+                    } else {
+                        $state.complete();
+                    }
+                })
+                .catch(() => {
+                    $state.error();
+                });
+        },
     },
 };
 </script>
