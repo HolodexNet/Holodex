@@ -64,7 +64,9 @@ export default {
     channelStats(channelId) {
         return axiosInstance.get(`/channels/${channelId}/stats`);
     },
-    login(authToken, service) {
-        return axiosV2.post("/user/login", { token: authToken, service });
+    login(jwt, authToken, service) {
+        return axiosV2.post("/user/login", { token: authToken, service }, {headers: jwt ? {
+            Authorization: `BEARER ${jwt}`
+        } : {}});
     },
 };

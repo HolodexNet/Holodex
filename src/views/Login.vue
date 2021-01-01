@@ -1,5 +1,6 @@
 <template>
     <v-container fluid style="height: 100%">
+        {{ userdata }}
         <button @click.prevent="loginGoogle">Login with Google</button><br />
         <button @click.prevent="loginDiscord">Login with Discord</button><br />
         <button @click.prevent="loginTwitter">Login with Twitter</button>
@@ -41,12 +42,15 @@ export default {
         return {};
     },
     mounted() {},
-    computed: {},
+    computed: {
+        userdata () { return this.$store.state.userdata }
+    },
     methods: {
         async loginGoogle() {
             const authCode = await this.$gAuth.getAuthCode();
-            const resp = await api.login(authCode, "google");
+            const resp = await api.login(this.$store.state.userdata.jwt, authCode, "google");
             console.log(resp);
+            this.$store.commit("setUser", resp.data)
         },
         async loginDiscord() {
             // out:
@@ -56,16 +60,18 @@ export default {
                     redirectUri,
                 )}&response_type=token&scope=identify`,
                 async (err, out) => {
-                    const resp = await api.login(out.access_token, "discord");
+                    const resp = await api.login(this.$store.state.userdata.jwt, out.access_token, "discord");
                     console.log(resp);
+                    this.$store.commit("setUser", resp.data)
                 },
             );
         },
         async loginTwitter() {
             open("http://localhost:2434/v2/user/login/twitter", async (err, out) => {
                 const twitterTempJWT = out.jwt;
-                const resp = await api.login(twitterTempJWT, "twitter");
+                const resp = await api.login(this.$store.state.userdata.jwt, twitterTempJWT, "twitter");
                 console.log(resp);
+                this.$store.commit("setUser", resp.data)
             });
         },
     },
