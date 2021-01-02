@@ -148,7 +148,7 @@ export default {
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:
-                    return this.formatFromNow(this.video.published_at);
+                    return this.formatFromNow(this.video.available_at);
             }
         },
         formattedDuration() {
@@ -267,11 +267,6 @@ export default {
 
 .video-card-horizontal > .v-image {
     margin-right: 5px;
-}
-
-.no-decoration {
-    text-decoration: none;
-    color: inherit !important;
 }
 
 .name-vtuber {

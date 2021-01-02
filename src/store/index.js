@@ -269,13 +269,7 @@ export default new Vuex.Store({
         },
     },
     modules: {
-        home: {
-            namespaced: true,
-            ...home,
-        },
-        channels: {
-            namespaced: true,
-            ...channels,
-        },
+        home,
+        channels,
     },
 });

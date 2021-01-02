@@ -86,11 +86,11 @@ export default {
 };
 </script>
 
-<style>
-.no-decoration {
+<style scoped>
+/* .no-decoration {
     text-decoration: initial;
     color: initial;
     font-weight: 400 !important;
     font-size: inherit;
-}
+} */
 </style>

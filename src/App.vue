@@ -143,3 +143,9 @@ export default {
     },
 };
 </script>
+<style>
+.no-decoration {
+    text-decoration: none;
+    color: inherit !important;
+}
+</style>
