@@ -1,9 +1,15 @@
 <template>
     <div>
-        <NavDrawer :pages="pages" v-model="drawer" v-if="!isXs" />
-        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-else />
+        <NavDrawer :pages="pages" v-model="drawer" v-if="!isXs" /> <!--* nav drawer is for the left --->
+        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-else /> <!--* bottom bar --->
+        
         <v-app-bar id="top-bar" class="blue lighten-1" app clipped-left flat>
+
+            <!--=============================== Top Bar (Regular View) =============================-->
+
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
+                <!--================= Logo & Search Bar (Space permitting) ================-->
+
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isXs">
                     <v-icon>{{ mdiMenu }}</v-icon>
                 </v-app-bar-nav-icon>
@@ -18,12 +24,21 @@
                     </router-link>
                 </v-toolbar-title>
                 <SearchBar v-if="!isXs" />
+
+                <!--================= Refresh [⟳] Button ================-->
+
                 <v-btn icon class="ml-auto" :class="{ 'refresh-rotate': refreshing }" v-if="isXs" @click="onRefresh">
                     <v-icon>{{ mdiRefresh }}</v-icon>
                 </v-btn>
+
+                <!--================= Search [🔍] Button (Mobile Only) ================-->
+
                 <v-btn icon v-if="isXs" @click="searchBarExpanded = true">
                     <v-icon>{{ mdiMagnify }}</v-icon>
                 </v-btn>
+
+                <!--================= Condensed [⋮] Menu (Mobile Only) ================-->
+            
                 <v-menu left bottom v-if="isXs">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
@@ -44,12 +59,20 @@
                     </v-list>
                 </v-menu>
             </template>
+
+            <!--=========================== END OF Regular View ===========================-->
+
+            <!--===================== Expanded Search Bar (Mobile Only) =======================-->            
+            
             <template v-else>
                 <v-app-bar-nav-icon @click="searchBarExpanded = false" class="backButton">
                     <v-icon>{{ mdiArrowLeft }}</v-icon>
                 </v-app-bar-nav-icon>
                 <SearchBar :autofocus="isXs" />
             </template>
+
+            <!--=================== END OF Expanded Search (Mobile Only) =======================-->
+            
         </v-app-bar>
     </div>
 </template>
