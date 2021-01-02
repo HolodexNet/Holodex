@@ -30,17 +30,17 @@ function defaultState() {
         // Favorites
         favoritesVideoFilter: "all",
         // Channels
-        channelsCategory: 0,
-        channelsSort: {
-            0: "suborg",
-            1: "clip_count",
-            2: "subscribers",
-        },
-        channelsCardView: {
-            0: false,
-            1: false,
-            2: false,
-        },
+        // channelsCategory: 0,
+        // channelsSort: {
+        //     0: "suborg",
+        //     1: "clip_count",
+        //     2: "subscribers",
+        // },
+        // channelsCardView: {
+        //     0: false,
+        //     1: false,
+        //     2: false,
+        // },
         // saves
         favorites: [],
         watchedVideos: {},
@@ -268,6 +268,9 @@ export default new Vuex.Store({
         },
     },
     modules: {
-        home,
+        home: {
+            namespaced: true,
+            ...home,
+        },
     },
 });

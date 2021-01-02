@@ -90,9 +90,9 @@ export default {
     data() {
         return {
             ...{ mdiArrowDown, mdiViewList, mdiViewModule },
-            // channels: [],
+            channels: [],
             // category: 0,
-            // currentOffset: 0,
+            currentOffset: 0,
             perPage: 25,
             infiniteId: +new Date(),
         };
@@ -139,6 +139,14 @@ export default {
                             order: "asc",
                         },
                     },
+                    // {
+                    //     text: this.$t("views.channels.sortOptions.recentUpload"),
+                    //     value: "recent_upload",
+                    //     query_value: {
+                    //         sort: "latest_published_at",
+                    //         order: "desc",
+                    //     },
+                    // },
                     {
                         text: this.$t("views.channels.sortOptions.videoCount"),
                         value: "video_count",

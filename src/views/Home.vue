@@ -80,8 +80,8 @@ export default {
         };
     },
     created() {
-        this.$store.commit("resetState");
-        this.$store.dispatch("fetchLive");
+        this.$store.commit("home/resetState");
+        this.$store.dispatch("home/fetchLive");
         this.loadNext();
     },
     watch: {
@@ -90,13 +90,13 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(["live", "videos", "isLoading", "hasError", "currentOffset"]),
+        ...mapGetters("home", ["live", "videos", "isLoading", "hasError", "currentOffset"]),
         recentVideoFilter: {
             get() {
-                return this.$store.state.recentVideoFilter;
+                return this.$store.state.home.recentVideoFilter;
             },
             set(value) {
-                this.$store.commit("setRecentVideoFilter", value);
+                this.$store.commit("home/setRecentVideoFilter", value);
             },
         },
         pageLength() {
@@ -105,13 +105,13 @@ export default {
     },
     methods: {
         resetVideos() {
-            this.$store.commit("resetVideos");
+            this.$store.commit("home/resetVideos");
             this.infiniteId = +new Date();
         },
         loadNext($state) {
             const lastLength = this.videos.length;
             this.$store
-                .dispatch("fetchNextVideos", {
+                .dispatch("home/fetchNextVideos", {
                     limit: this.pageLength,
                 })
                 .then(() => {
