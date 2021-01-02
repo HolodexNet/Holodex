@@ -32,7 +32,7 @@ function defaultState() {
         // Channels
         channelsCategory: 0,
         channelsSort: {
-            0: "group",
+            0: "suborg",
             1: "clip_count",
             2: "subscribers",
         },
@@ -196,15 +196,15 @@ export default new Vuex.Store({
         async updateChannelCache({ commit }) {
             console.log("Channel Cache updated");
             commit("setCachedChannelsLastUpdated", new Date().getTime());
-            const res = await api.channels({
-                limit: 100,
-                type: "vtuber",
-            });
-            if (res.data.channels.length) {
-                res.data.channels.forEach((channel) => {
-                    commit("addCachedChannel", channel);
-                });
-            }
+            // const res = await api.channels({
+            //     limit: 100,
+            //     type: "vtuber",
+            // });
+            // if (res.data.channels.length) {
+            //     res.data.channels.forEach((channel) => {
+            //         commit("addCachedChannel", channel);
+            //     });
+            // }
         },
         async checkChannelCache({ state, dispatch }) {
             const currentTime = new Date().getTime();

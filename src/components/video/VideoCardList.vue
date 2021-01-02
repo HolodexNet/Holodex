@@ -30,7 +30,7 @@
                 v-if="infiniteLoad"
                 @infinite="emitInfinite"
                 :distance="100"
-                style="min-height: 10px"
+                style="min-height: 100px"
                 :identifier="infiniteId"
                 spinner="spiral"
             >
