@@ -110,8 +110,9 @@ export default {
             this.init();
         },
         sort() {
-            if (this.category === this.Tabs.SUBBER) this.init();
-            else this.localSortChannel();
+            // if (this.category === this.Tabs.SUBBER) this.init();
+            // else this.localSortChannel();
+            this.init();
         },
         favorites() {
             // update our `channel` whenever the favorites changes.
@@ -134,18 +135,18 @@ export default {
                         text: this.$t("views.channels.sortOptions.group"),
                         value: "group",
                         query_value: {
-                            sort: "group",
+                            sort: "org",
                             order: "asc",
                         },
                     },
-                    {
-                        text: this.$t("views.channels.sortOptions.recentUpload"),
-                        value: "recent_upload",
-                        query_value: {
-                            sort: "latest_published_at",
-                            order: "desc",
-                        },
-                    },
+                    // {
+                    //     text: this.$t("views.channels.sortOptions.recentUpload"),
+                    //     value: "recent_upload",
+                    //     query_value: {
+                    //         sort: "latest_published_at",
+                    //         order: "desc",
+                    //     },
+                    // },
                     {
                         text: this.$t("views.channels.sortOptions.videoCount"),
                         value: "video_count",
@@ -205,7 +206,7 @@ export default {
             },
         },
         currentSortValue() {
-            return this.findSortValue(this.sort);
+            return this.findSortValue(this.sort) || this.findSortValue("subscriber_count");
         },
     },
     methods: {
@@ -227,24 +228,25 @@ export default {
             }
 
             api.channels({
-                limit: this.category === this.Tabs.SUBBER ? this.perPage : 100,
+                limit: this.perPage,
                 offset: this.currentOffset * this.perPage,
                 type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
-                ...(this.category === this.Tabs.SUBBER && {
-                    ...this.currentSortValue.query_value,
-                }),
+                // ...(this.category === this.Tabs.SUBBER && {
+                ...this.currentSortValue.query_value,
+                // }),
             })
                 .then((res) => {
-                    if (res.data.channels.length) {
-                        this.channels.push(...res.data.channels);
-                        if (this.category === this.Tabs.VTUBER) {
-                            // update channel cache when fresh data is pulled
-                            res.data.channels.map((channelObj) => this.$store.commit("addCachedChannel", channelObj));
-                            this.localSortChannel();
+                    console.log(res);
+                    if (res.data) {
+                        this.channels.push(...res.data);
+                        // if (this.category === this.Tabs.VTUBER) {
+                        //     // update channel cache when fresh data is pulled
+                        //     // res.data.channels.map((channelObj) => this.$store.commit("addCachedChannel", channelObj));
+                        //     this.localSortChannel();
 
-                            // vtubers are loaded all at once, so inifinite scrolling should do nothing
-                            $state.complete();
-                        }
+                        //     // vtubers are loaded all at once, so inifinite scrolling should do nothing
+                        //     $state.complete();
+                        // }
                         this.currentOffset += 1;
                         $state.loaded();
                     } else {
@@ -258,7 +260,7 @@ export default {
         },
         async loadFavorites() {
             // check if any channels missing from favorites and update the cache
-            await this.$store.dispatch("checkChannelCache");
+            // await this.$store.dispatch("checkChannelCache");
             this.channels = this.favorites.map((channelId) => this.cachedChannels[channelId]);
             this.localSortChannel();
         },

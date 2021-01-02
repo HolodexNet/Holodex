@@ -34,20 +34,30 @@ const getters = {
 };
 
 const actions = {
-    async fetchLive(context, params) {
+    fetchLive(context, params) {
         context.commit("fetchStart");
-        try {
-            const res = await api.live(params);
-            context.commit("setLive", res);
-        } catch (e) {
-            console.error(e);
-            context.commit("fetchError");
-        }
-        context.commit("fetchEnd");
+        return api
+            .live(params)
+            .then((res) => {
+                context.commit("setLive", res);
+                context.commit("fetchEnd");
+            })
+            .catch((e) => {
+                console.error(e);
+                context.commit("fetchError");
+            });
     },
-    async fetchNextVideos(context, params) {
-        const { videos } = await api.videos(params);
-        context.commit("updateVideos", videos);
+    fetchNextVideos({ state, commit }, params) {
+        return api
+            .videos({
+                ...params,
+                offset: state.currentOffset,
+                status: "past",
+                ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
+            })
+            .then((res) => {
+                commit("updateVideos", res.data.videos);
+            });
     },
 };
 
@@ -70,7 +80,16 @@ const mutations = {
         state.recentVideoFilter = filter;
     },
     updateVideos(state, videos) {
+        // increment offset
+        state.currentOffset += videos.length;
         state.videos = state.videos.concat(videos);
+    },
+    resetVideos(state) {
+        state.currentOffset = 0;
+        state.videos = [];
+    },
+    resetState(state) {
+        Object.assign(state, initialState);
     },
 };
 

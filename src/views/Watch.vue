@@ -147,16 +147,16 @@ export default {
             // destroy iframe and recreate it so it doesn't break history mode
             this.video_src = "";
             this.isLoading = true;
-            api.videoLiveChat(id, "translation", 0).then((res) => {
-                // const curTime = this.player.getCurrentTime();
-                if (res) {
-                    // this.messages.push(...res.data.messages);
-                    res.data.messages.forEach((msg) => {
-                        msg.type === "translation" ? this.translations.push(msg) : this.otherMessages.push(msg);
-                    });
-                    // this.loadChart();
-                }
-            });
+            // api.videoLiveChat(id, "translation", 0).then((res) => {
+            //     // const curTime = this.player.getCurrentTime();
+            //     if (res) {
+            //         // this.messages.push(...res.data.messages);
+            //         res.data.messages.forEach((msg) => {
+            //             msg.type === "translation" ? this.translations.push(msg) : this.otherMessages.push(msg);
+            //         });
+            //         // this.loadChart();
+            //     }
+            // });
 
             api.video(id)
                 .then((res) => {

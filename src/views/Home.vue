@@ -2,7 +2,6 @@
     <v-container class="home pt-0" fluid>
         <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
         <v-row v-show="!isLoading && !hasError">
-            <!-- <v-row> -->
             <v-col>
                 <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
                     <div class="text-h6">
@@ -16,9 +15,9 @@
                     :cols="{
                         xs: 1,
                         sm: 2,
-                        md: 4,
-                        lg: 5,
-                        xl: 7,
+                        md: 3,
+                        lg: 4,
+                        xl: 5,
                     }"
                     :limitRows="2"
                 >
@@ -32,29 +31,29 @@
                         <v-btn value="all">
                             {{ $t("views.home.recentVideoToggles.all") }}
                         </v-btn>
-                        <v-btn value="vtuber">
+                        <v-btn value="stream">
                             {{ $t("views.home.recentVideoToggles.official") }}
                         </v-btn>
-                        <v-btn value="subber">
+                        <v-btn value="clip">
                             {{ $t("views.home.recentVideoToggles.subber") }}
                         </v-btn>
                     </v-btn-toggle>
                 </v-row>
-                <!-- <VideoCardList
-                    v-if="!isLoading"
+                <VideoCardList
                     :videos="videos"
                     includeChannel
                     infiniteLoad
                     @infinite="loadNext"
                     :infiniteId="infiniteId"
+                    style="min-height: 100vh"
                     :cols="{
                         xs: 1,
                         sm: 3,
                         md: 4,
-                        lg: 5,
-                        xl: 6,
+                        lg: 6,
+                        xl: 7,
                     }"
-                ></VideoCardList> -->
+                ></VideoCardList>
             </v-col>
         </v-row>
     </v-container>
@@ -77,24 +76,18 @@ export default {
     },
     data() {
         return {
-            // videos: [],
-            // currentOffset: 0,
-            // infiniteId: +new Date(),
-            // isLoading: true,
+            infiniteId: +new Date(),
         };
     },
     created() {
-        // this.$store.dispatch("tryUpdatingLive", { forced: true }).finally(() => {
-        //     this.isLoading = false;
-        // });
-        this.$store.dispatch("fetchLive", {}).then(() => {
-            console.log(this.live);
-        });
+        this.$store.commit("resetState");
+        this.$store.dispatch("fetchLive");
+        this.loadNext();
     },
     watch: {
-        // recentVideoFilter() {
-        //     this.resetVideos();
-        // },
+        recentVideoFilter() {
+            this.resetVideos();
+        },
     },
     computed: {
         ...mapGetters(["live", "videos", "isLoading", "hasError", "currentOffset"]),
@@ -109,40 +102,30 @@ export default {
         pageLength() {
             return this.$vuetify.breakpoint.toString() === "md" ? 12 : 24;
         },
-        // ...mapState(["live", "liveHasError"]),
     },
     methods: {
-        // resetVideos() {
-        //     this.videos = [];
-        //     this.currentOffset = 0;
-        //     this.infiniteId += 1;
-        //     this.daysBefore = 0;
-        // },
-        // loadNext($state) {
-        //     api.videos({
-        //         limit: this.pageLength,
-        //         offset: this.currentOffset,
-        //         include_channel: 1,
-        //         status: "past",
-        //         tag_status: "tagged",
-        //         // only include type param if there is a filter
-        //         ...(this.recentVideoFilter !== "all" && {
-        //             channel_type: this.recentVideoFilter,
-        //         }),
-        //     })
-        //         .then((res) => {
-        //             if (res.data.videos.length) {
-        //                 this.videos = this.videos.concat(res.data.videos);
-        //                 this.currentOffset += this.pageLength;
-        //                 $state.loaded();
-        //             } else {
-        //                 $state.complete();
-        //             }
-        //         })
-        //         .catch(() => {
-        //             $state.error();
-        //         });
-        // },
+        resetVideos() {
+            this.$store.commit("resetVideos");
+            this.infiniteId = +new Date();
+        },
+        loadNext($state) {
+            const lastLength = this.videos.length;
+            this.$store
+                .dispatch("fetchNextVideos", {
+                    limit: this.pageLength,
+                })
+                .then(() => {
+                    if (this.videos.length !== lastLength) {
+                        $state?.loaded();
+                    } else {
+                        $state?.complete();
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                    $state?.error();
+                });
+        },
     },
 };
 </script>
