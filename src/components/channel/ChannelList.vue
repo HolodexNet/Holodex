@@ -49,7 +49,7 @@ export default {
         ChannelImg,
         ChannelInfo,
         ChannelSocials,
-        ChannelCard: () => import("./ChannelChip"),
+        ChannelCard: () => import("./ChannelCard"),
     },
     props: {
         channels: {

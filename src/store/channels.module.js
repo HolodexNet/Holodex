@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import api from "@/utils/backend-api";
+import Vue from "vue";
 
 const initialState = {
     channels: [],
@@ -8,13 +9,12 @@ const initialState = {
     currentOffset: 0,
 
     category: 0,
-    channelsCategory: 0,
-    channelsSort: {
-        0: "suborg",
+    sort: {
+        0: "group",
         1: "clip_count",
         2: "subscribers",
     },
-    channelsCardView: {
+    cardView: {
         0: false,
         1: false,
         2: false,
@@ -42,17 +42,18 @@ const getters = {
 };
 
 const actions = {
-    fetchChannels(context, params) {
-        context.commit("fetchStart");
+    fetchNextChannels({ state, commit }, params) {
+        // context.commit("fetchStart");
         return api
-            .live(params)
-            .then((res) => {
-                context.commit("updateChannels", res);
-                context.commit("fetchEnd");
+            .channels({
+                limit: 25,
+                offset: state.currentOffset,
+                ...params,
             })
-            .catch((e) => {
-                console.error(e);
-                context.commit("fetchError");
+            .then(({ data }) => {
+                console.log(data);
+                commit("updateChannels", data);
+                // context.commit("fetchEnd");
             });
     },
 };
@@ -68,7 +69,17 @@ const mutations = {
         state.hasError = true;
     },
     updateChannels(state, channels) {
+        state.currentOffset += channels.length;
         state.channels = state.channels.concat(channels);
+    },
+    setCategory(state, category) {
+        state.category = category;
+    },
+    setSort(state, val) {
+        Vue.set(state.sort, state.category, val);
+    },
+    setCardView(state, val) {
+        Vue.set(state.cardView, state.category, val);
     },
     // setRecentVideoFilter(state, filter) {
     //     state.recentVideoFilter = filter;
@@ -78,13 +89,13 @@ const mutations = {
     //     state.currentOffset += videos.length;
     //     state.videos = state.videos.concat(videos);
     // },
-    // resetVideos(state) {
-    //     state.currentOffset = 0;
-    //     state.videos = [];
-    // },
-    // resetState(state) {
-    //     Object.assign(state, initialState);
-    // },
+    resetChannels(state) {
+        state.currentOffset = 0;
+        state.channels = [];
+    },
+    resetState(state) {
+        Object.assign(state, initialState);
+    },
 };
 
 export default {

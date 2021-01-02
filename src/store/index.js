@@ -7,6 +7,7 @@ import { dayjs } from "@/utils/time";
 import { langs } from "@/plugins/vuetify";
 
 import home from "./home.module";
+import channels from "./channels.module";
 
 Vue.use(Vuex);
 
@@ -271,6 +272,10 @@ export default new Vuex.Store({
         home: {
             namespaced: true,
             ...home,
+        },
+        channels: {
+            namespaced: true,
+            ...channels,
         },
     },
 });

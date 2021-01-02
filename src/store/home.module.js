@@ -50,10 +50,10 @@ const actions = {
     fetchNextVideos({ state, commit }, params) {
         return api
             .videos({
-                ...params,
                 offset: state.currentOffset,
                 status: "past",
                 ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
+                ...params,
             })
             .then((res) => {
                 commit("updateVideos", res.data.videos);
