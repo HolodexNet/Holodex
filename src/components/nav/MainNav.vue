@@ -1,17 +1,18 @@
 <template>
     <div>
-        <NavDrawer :pages="pages" v-model="drawer" v-if="!isXs" /> <!--* nav drawer is for the left --->
-        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-else /> <!--* bottom bar --->
-        
-        <v-app-bar id="top-bar" class="blue lighten-1" app clipped-left flat>
+        <NavDrawer :pages="pages" v-model="drawer" v-if="!isXs" />
+        <!--* nav drawer is for the left --->
+        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-else />
+        <!--* bottom bar --->
 
+        <v-app-bar id="top-bar" class="blue lighten-1" app clipped-left flat>
             <!--=============================== Top Bar (Regular View) =============================-->
 
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
                 <!--================= Logo & Search Bar (Space permitting) ================-->
 
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isXs">
-                    <v-icon>{{ mdiMenu }}</v-icon>
+                    <v-icon>{{ icons.mdiMenu }}</v-icon>
                 </v-app-bar-nav-icon>
                 <v-toolbar-title class="pr-5">
                     <router-link
@@ -25,29 +26,41 @@
                 </v-toolbar-title>
                 <SearchBar v-if="!isXs" />
 
-                <!--================= Refresh [⟳] Button ================-->
+                <!--================= Account [🔍] Button (Desktop Only) ================-->
+
+                <v-menu left offset-y transition="slide-y-transition" v-if="!isXs">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon v-bind="attrs" v-on="on">
+                            <v-icon>{{ icons.mdiAccountCircleOutline }}</v-icon>
+                        </v-btn>
+                    </template>
+
+                    <user-card></user-card>
+                    <!--todo user card here. -->
+                </v-menu>
+
+                <!--================= Refresh [⟳] Button (Mobile Only) ================-->
 
                 <v-btn icon class="ml-auto" :class="{ 'refresh-rotate': refreshing }" v-if="isXs" @click="onRefresh">
-                    <v-icon>{{ mdiRefresh }}</v-icon>
+                    <v-icon>{{ icons.mdiRefresh }}</v-icon>
                 </v-btn>
 
                 <!--================= Search [🔍] Button (Mobile Only) ================-->
 
                 <v-btn icon v-if="isXs" @click="searchBarExpanded = true">
-                    <v-icon>{{ mdiMagnify }}</v-icon>
+                    <v-icon>{{ icons.mdiMagnify }}</v-icon>
                 </v-btn>
-
                 <!--================= Condensed [⋮] Menu (Mobile Only) ================-->
-            
-                <v-menu left bottom v-if="isXs">
+
+                <v-menu left offset-y  v-if="isXs">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
-                            <v-icon>{{ mdiDotsVertical }}</v-icon>
+                            <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                         </v-btn>
                     </template>
 
                     <v-list v-if="isXs">
-                        <v-list-item
+                        <!-- <v-list-item
                             v-for="page in pages.filter((item) => item.collapsible)"
                             :key="page.name"
                             :to="page.path"
@@ -55,45 +68,42 @@
                             <v-list-item-title>
                                 {{ page.name }}
                             </v-list-item-title>
+                        </v-list-item> -->
+                        <user-card></user-card>
+                        <v-list-item to="/about" key="about">
+                            <v-list-item-icon>
+                                <v-icon>{{icons.mdiHelpCircle}}</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title>
+                                About
+                            </v-list-item-title>
                         </v-list-item>
+
                     </v-list>
                 </v-menu>
             </template>
 
             <!--=========================== END OF Regular View ===========================-->
 
-            <!--===================== Expanded Search Bar (Mobile Only) =======================-->            
-            
+            <!--===================== Expanded Search Bar (Mobile Only) =======================-->
+
             <template v-else>
                 <v-app-bar-nav-icon @click="searchBarExpanded = false" class="backButton">
-                    <v-icon>{{ mdiArrowLeft }}</v-icon>
+                    <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
                 </v-app-bar-nav-icon>
                 <SearchBar :autofocus="isXs" />
             </template>
 
             <!--=================== END OF Expanded Search (Mobile Only) =======================-->
-            
         </v-app-bar>
     </div>
 </template>
 
 <script>
-import {
-    mdiAccountBoxMultiple,
-    mdiAnimationPlay,
-    mdiArrowLeft,
-    mdiCog,
-    mdiDotsVertical,
-    mdiHeart,
-    mdiHelpCircle,
-    mdiHome,
-    mdiMagnify,
-    mdiMenu,
-    mdiLoginVariant,
-    mdiRefresh,
-} from "@mdi/js";
+import * as icons from "@/utils/icons";
 import SearchBar from "@/components/common/SearchBar";
 import Logo from "@/components/common/Logo";
+import UserCard from "@/components/user/UserCard";
 import NavDrawer from "./NavDrawer";
 import BottomNav from "./BottomNav";
 
@@ -102,18 +112,13 @@ export default {
         SearchBar,
         NavDrawer,
         BottomNav,
+        UserCard,
         Logo,
     },
     data() {
         return {
             drawer: null,
-            ...{
-                mdiArrowLeft,
-                mdiMagnify,
-                mdiMenu,
-                mdiDotsVertical,
-                mdiRefresh,
-            },
+            icons,
             favoritesExpanded: false,
             searchBarExpanded: false,
             refreshing: false,
@@ -128,41 +133,41 @@ export default {
                 {
                     name: this.$t("component.mainNav.home"),
                     path: "/",
-                    icon: mdiHome,
+                    icon: icons.mdiHome,
                 },
                 {
                     name: this.$t("component.mainNav.favorites"),
                     path: "/favorites",
-                    icon: mdiHeart,
+                    icon: icons.mdiHeart,
                 },
                 {
                     name: this.$t("component.mainNav.channels"),
                     path: "/channel",
-                    icon: mdiAccountBoxMultiple,
+                    icon: icons.mdiAccountBoxMultiple,
                 },
                 {
                     name: this.$t("component.mainNav.library"),
                     path: "/library",
-                    icon: mdiAnimationPlay,
+                    icon: icons.mdiAnimationPlay,
                 },
                 {
                     name: this.$t("component.mainNav.about"),
                     path: "/about",
-                    icon: mdiHelpCircle,
+                    icon: icons.mdiHelpCircle,
                     collapsible: true,
                 },
                 {
                     name: this.$t("component.mainNav.settings"),
                     path: "/settings",
-                    icon: mdiCog,
-                    collapsible: true,
+                    icon: icons.mdiCog,
+                    collapsible: false,
                 },
-                {
-                    name: "Login",
-                    path: "/login",
-                    icon: mdiLoginVariant,
-                    collapsible: true,
-                },
+                // {
+                //     name: "Login",
+                //     path: "/login",
+                //     icon: icons.mdiLoginVariant,
+                //     collapsible: true,
+                // },
             ];
         },
     },

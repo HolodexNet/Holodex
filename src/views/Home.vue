@@ -80,7 +80,8 @@ export default {
         };
     },
     created() {
-        this.$store.commit("resetState");
+        // this.$store.commit("resetState");
+        // ^- why did we do this again?
         this.$store.dispatch("fetchLive");
         this.loadNext();
     },

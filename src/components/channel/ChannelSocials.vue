@@ -9,7 +9,7 @@
             rel="noreferrer"
             target="_blank"
         >
-            <v-icon color="#C4302B">{{ mdiYoutube }}</v-icon>
+            <v-icon color="#C4302B">{{ icons.mdiYoutube }}</v-icon>
         </v-btn>
         <v-btn
             v-if="channel.twitter_link"
@@ -19,7 +19,7 @@
             rel="noreferrer"
             target="_blank"
         >
-            <v-icon color="#00ACEE">{{ mdiTwitter }}</v-icon>
+            <v-icon color="#00ACEE">{{ icons.mdiTwitter }}</v-icon>
         </v-btn>
         <v-tooltip bottom v-if="channel.id < 1000">
             <template v-slot:activator="{ on, attrs }">
@@ -30,7 +30,7 @@
                         v-on="on"
                         @click.stop="toggleFavorite($event)"
                     >
-                        {{ mdiHeart }}
+                        {{ icons.mdiHeart }}
                     </v-icon>
                 </v-btn>
             </template>
@@ -46,15 +46,13 @@
 </template>
 
 <script>
-import { mdiHeart, mdiTwitter, mdiYoutube } from "@mdi/js";
+import * as icons from "@/utils/icons"
 import { mapMutations } from "vuex";
 
 export default {
     data() {
         return {
-            mdiYoutube,
-            mdiTwitter,
-            mdiHeart,
+            icons,
         };
     },
     props: {
