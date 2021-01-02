@@ -55,6 +55,11 @@ function defaultState() {
         // live: [],
         // liveLastUpdated: new Date(1000),
         // liveHasError: false,
+        // authorization
+        userdata: {
+            user: null,
+            jwt: null,
+        },
     };
 }
 
@@ -181,6 +186,11 @@ export default new Vuex.Store({
         // private_liveUpdateError(state) {
         //     state.liveHasError = true;
         // },
+        // login
+        setUser(state, { user, jwt }) {
+            Vue.set(state.userdata, "user", user);
+            state.userdata.jwt = jwt;
+        },
     },
     actions: {
         async updateChannelCache({ commit }) {
@@ -252,6 +262,9 @@ export default new Vuex.Store({
                     commit("private_liveUpdateError", err);
                 }
             }
+        },
+        async logout({ commit }) {
+            commit("setUser", { user: null, jwt: null });
         },
     },
     modules: {

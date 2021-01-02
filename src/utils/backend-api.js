@@ -11,6 +11,14 @@ export const axiosInstance = axios.create({
     shouldResetTimeout: true,
 });
 
+export const axiosV2 = axios.create({
+    baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2/" : "http://holodex.net/api/v2/",
+    retries: 3,
+    retryDelay: axiosRetry.exponentialDelay,
+    retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
+    shouldResetTimeout: true,
+});
+
 export default {
     channels(query) {
         const q = querystring.stringify(query);
@@ -54,5 +62,16 @@ export default {
     },
     channelStats(channelId) {
         return axiosInstance.get(`/channels/${channelId}/stats`);
+    },
+    login(jwt, authToken, service) {
+        return axiosV2.post(
+            "/user/login",
+            { token: authToken, service },
+            {
+                headers: jwt
+                    ? { Authorization: `BEARER ${jwt}` }
+                    : {},
+            },
+        );
     },
 };
