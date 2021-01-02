@@ -55,8 +55,8 @@ const actions = {
                 ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
                 ...params,
             })
-            .then((res) => {
-                commit("updateVideos", res.data.videos);
+            .then(({ data }) => {
+                commit("updateVideos", data);
             });
     },
 };
