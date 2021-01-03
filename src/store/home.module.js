@@ -34,29 +34,29 @@ const getters = {
 };
 
 const actions = {
-    fetchLive(context, params) {
-        context.commit("fetchStart");
+    fetchLive({ commit }, params) {
+        commit("fetchStart");
         return api
             .live(params)
             .then((res) => {
-                context.commit("setLive", res);
-                context.commit("fetchEnd");
+                commit("setLive", res);
+                commit("fetchEnd");
             })
             .catch((e) => {
                 console.error(e);
-                context.commit("fetchError");
+                commit("fetchError");
             });
     },
     fetchNextVideos({ state, commit }, params) {
         return api
             .videos({
-                ...params,
                 offset: state.currentOffset,
                 status: "past",
                 ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
+                ...params,
             })
-            .then((res) => {
-                commit("updateVideos", res.data.videos);
+            .then(({ data }) => {
+                commit("updateVideos", data);
             });
     },
 };

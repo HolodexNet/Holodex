@@ -71,10 +71,11 @@
 
 <script>
 import ChannelList from "@/components/channel/ChannelList";
+import api from "@/utils/backend-api";
 import InfiniteLoading from "vue-infinite-loading";
+import { dayjs } from "@/utils/time";
 import ApiErrorMessage from "@/components/common/ApiErrorMessage";
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
-import { mapGetters } from "vuex";
 
 export default {
     name: "Channels",
@@ -89,12 +90,12 @@ export default {
     data() {
         return {
             ...{ mdiArrowDown, mdiViewList, mdiViewModule },
-            // perPage: 25,
+            channels: [],
+            // category: 0,
+            currentOffset: 0,
+            perPage: 25,
             infiniteId: +new Date(),
         };
-    },
-    mounted() {
-        this.$store.commit("channels/resetState");
     },
     beforeCreate() {
         // shorthand the translation
@@ -106,10 +107,16 @@ export default {
     },
     watch: {
         category() {
-            this.resetChannels();
+            this.init();
         },
         sort() {
-            this.resetChannels();
+            // if (this.category === this.Tabs.SUBBER) this.init();
+            // else this.localSortChannel();
+            this.init();
+        },
+        favorites() {
+            // update our `channel` whenever the favorites changes.
+            if (this.category === this.Tabs.FAVORITES) this.loadFavorites();
         },
     },
     computed: {
@@ -132,6 +139,14 @@ export default {
                             order: "asc",
                         },
                     },
+                    // {
+                    //     text: this.$t("views.channels.sortOptions.recentUpload"),
+                    //     value: "recent_upload",
+                    //     query_value: {
+                    //         sort: "latest_published_at",
+                    //         order: "desc",
+                    //     },
+                    // },
                     {
                         text: this.$t("views.channels.sortOptions.videoCount"),
                         value: "video_count",
@@ -151,32 +166,43 @@ export default {
                 ];
             },
         },
-        ...mapGetters("channels", ["channels", "isLoading", "hasError", "currentOffset"]),
+        favorites() {
+            return this.$store.state.favorites;
+        },
+        cachedChannels() {
+            return this.$store.state.cachedChannels;
+        },
+        lastUpdated() {
+            return dayjs(this.$store.state.cachedChannelsLastUpdated).toNow(true);
+        },
         category: {
             get() {
-                return this.$store.state.channels.category;
+                return this.$store.state.channelsCategory;
             },
             set(val) {
-                return this.$store.commit("channels/setCategory", val);
+                return this.$store.commit("setChannelsCategory", val);
             },
         },
         sort: {
             get() {
-                return this.$store.state.channels.sort[this.category];
+                return this.$store.state.channelsSort[this.category];
             },
             set(val) {
-                if (this.findSortValue(val)) {
-                    return this.$store.commit("channels/setSort", val);
-                }
-                return this.$store.commit("channels/setSort", "subscribers");
+                return this.$store.commit("setChannelsSort", {
+                    category: this.category,
+                    value: val,
+                });
             },
         },
         cardView: {
             get() {
-                return this.$store.state.channels.cardView[this.category];
+                return this.$store.state.channelsCardView[this.category];
             },
             set(val) {
-                return this.$store.commit("channels/setCardView", val);
+                return this.$store.commit("setChannelsCardView", {
+                    category: this.category,
+                    value: val,
+                });
             },
         },
         currentSortValue() {
@@ -184,28 +210,75 @@ export default {
         },
     },
     methods: {
-        resetChannels() {
-            this.infiniteId = +new Date();
-            this.$store.commit("channels/resetChannels");
+        init() {
+            this.channels = [];
+            this.currentOffset = 0;
+            this.infiniteId += 1;
+            // if (this.category == this.Tabs.FAVORITES) {
+            //     this.loadFavorites();
+            // }
         },
         loadData($state) {
-            const lastLength = this.channels.length;
-            this.$store
-                .dispatch("channels/fetchNextChannels", {
-                    type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
-                    ...this.currentSortValue.query_value,
-                })
-                .then(() => {
-                    if (this.channels.length !== lastLength) {
+            // load favorites directly from storage
+            if (this.category === this.Tabs.FAVORITES) {
+                this.loadFavorites();
+                $state.loaded();
+                $state.complete();
+                return;
+            }
+
+            api.channels({
+                limit: this.perPage,
+                offset: this.currentOffset * this.perPage,
+                type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
+                // ...(this.category === this.Tabs.SUBBER && {
+                ...this.currentSortValue.query_value,
+                // }),
+            })
+                .then((res) => {
+                    console.log(res);
+                    if (res.data) {
+                        this.channels.push(...res.data);
+                        // if (this.category === this.Tabs.VTUBER) {
+                        //     // update channel cache when fresh data is pulled
+                        //     // res.data.channels.map((channelObj) => this.$store.commit("addCachedChannel", channelObj));
+                        //     this.localSortChannel();
+
+                        //     // vtubers are loaded all at once, so inifinite scrolling should do nothing
+                        //     $state.complete();
+                        // }
+                        this.currentOffset += 1;
                         $state.loaded();
                     } else {
                         $state.complete();
                     }
                 })
                 .catch((e) => {
-                    console.error(e);
+                    console.log(e);
                     $state.error();
                 });
+        },
+        async loadFavorites() {
+            // check if any channels missing from favorites and update the cache
+            // await this.$store.dispatch("checkChannelCache");
+            this.channels = this.favorites.map((channelId) => this.cachedChannels[channelId]);
+            this.localSortChannel();
+        },
+        localSortChannel() {
+            const sortProp = this.currentSortValue.query_value;
+            if (!sortProp) return;
+            this.channels.sort((a, b) => {
+                if (sortProp.sort === "latest_published_at") {
+                    const dateA = new Date(a[sortProp.sort]).getTime();
+                    const dateB = new Date(b[sortProp.sort]).getTime();
+                    return dateA > dateB ? 1 : -1;
+                }
+                if (sortProp.sort === "video_count") {
+                    return parseInt(a[sortProp.sort], 10) > parseInt(b[sortProp.sort], 10) ? 1 : -1;
+                }
+                return a[sortProp.sort] > b[sortProp.sort] ? 1 : -1;
+            });
+            if (sortProp.order === "desc") this.channels.reverse();
         },
         findSortValue(sort) {
             return this.sortOptions.find((opt) => opt.value === sort);
