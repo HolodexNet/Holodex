@@ -50,6 +50,8 @@ function defaultState() {
             user: null,
             jwt: null,
         },
+        // navigation history tracking
+        routerHistory: []
     };
 }
 
@@ -78,8 +80,8 @@ export default new Vuex.Store({
         }),
         createMutationsSharer({ predicate: (mutation, /* state */) => {
             console.info(mutation);
-            return true;
-        } }), // Share all mutations across tabs.
+            return !mutation.type.match("^history");
+        } }), // Share all mutations except historyPop/Push across tabs.
     ],
     state: defaultState(),
     getters: {
@@ -159,8 +161,18 @@ export default new Vuex.Store({
             Vue.set(state.userdata, "user", user);
             state.userdata.jwt = jwt;
         },
+        historyPop(state) {
+            state.routerHistory.splice(-1,1);
+        },
+        historyPush(state, {from}) {
+            state.routerHistory.push(from);
+        },
     },
     actions: {
+        async navigate({ commit }, { from }) {
+            if(from) commit("historyPush", { from })
+            else commit("historyPop")
+        },
         async updateChannelCache({ commit }) {
             console.log("Channel Cache updated");
             commit("setCachedChannelsLastUpdated", new Date().getTime());

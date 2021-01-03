@@ -78,7 +78,8 @@ export default {
         };
     },
     mounted() {
-        this.init();
+        if(this.$route.params.id !== this.channel_id)
+            this.init();
     },
     computed: {
         bannerImage() {
