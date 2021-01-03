@@ -2,8 +2,8 @@
     <v-app>
         <MainNav />
         <v-main>
-            <keep-alive max='4' exclude="Watch">
-                <router-view :key="$router.path"/>
+            <keep-alive max="4" exclude="Watch">
+                <router-view :key="$router.path" />
             </keep-alive>
         </v-main>
         <v-snackbar bottom right :value="updateExists" :timeout="-1" color="primary" v-if="updateExists">
@@ -145,3 +145,9 @@ export default {
     },
 };
 </script>
+<style>
+.no-decoration {
+    text-decoration: none;
+    color: inherit !important;
+}
+</style>

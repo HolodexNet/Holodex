@@ -148,7 +148,7 @@ export default {
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:
-                    return this.formatFromNow(this.video.published_at);
+                    return this.formatFromNow(this.video.available_at);
             }
         },
         formattedDuration() {
@@ -181,11 +181,11 @@ export default {
         },
         hasWatched() {
             if (!this.video) return false;
-            return this.$store.getters.hasWatched(this.video.id);
+            return this.$store.getters["library/hasWatched"](this.video.id);
         },
         hasSaved() {
             if (!this.video) return false;
-            return this.$store.getters.hasSaved(this.video.id);
+            return this.$store.getters["library/hasSaved"](this.video.id);
         },
     },
     methods: {
@@ -198,8 +198,8 @@ export default {
         toggleSaved(event) {
             event.preventDefault();
             this.hasSaved
-                ? this.$store.commit("removeSavedVideo", this.video.id)
-                : this.$store.commit("addSavedVideo", this.video);
+                ? this.$store.commit("library/removeSavedVideo", this.video.id)
+                : this.$store.commit("library/addSavedVideo", this.video);
         },
     },
 };
@@ -267,11 +267,6 @@ export default {
 
 .video-card-horizontal > .v-image {
     margin-right: 5px;
-}
-
-.no-decoration {
-    text-decoration: none;
-    color: inherit !important;
 }
 
 .name-vtuber {

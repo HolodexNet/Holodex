@@ -74,7 +74,7 @@ import ChannelList from "@/components/channel/ChannelList";
 import InfiniteLoading from "vue-infinite-loading";
 import ApiErrorMessage from "@/components/common/ApiErrorMessage";
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export default {
     name: "Channels",
@@ -91,18 +91,17 @@ export default {
             ...{ mdiArrowDown, mdiViewList, mdiViewModule },
             // perPage: 25,
             infiniteId: +new Date(),
+            // freeze object to stop Vue from creating watchers (small optimization)
+            Tabs: Object.freeze({
+                SUBBER: 1,
+                VTUBER: 0,
+                FAVORITES: 2,
+            }),
+            defaultSort: "subscribers",
         };
     },
     mounted() {
         this.$store.commit("channels/resetState");
-    },
-    beforeCreate() {
-        // shorthand the translation
-        this.Tabs = {
-            SUBBER: 1,
-            VTUBER: 0,
-            FAVORITES: 2,
-        };
     },
     watch: {
         category() {
@@ -151,7 +150,7 @@ export default {
                 ];
             },
         },
-        ...mapGetters("channels", ["channels", "isLoading", "hasError", "currentOffset"]),
+        ...mapState("channels", ["channels", "isLoading", "hasError", "currentOffset"]),
         category: {
             get() {
                 return this.$store.state.channels.category;
@@ -168,7 +167,7 @@ export default {
                 if (this.findSortValue(val)) {
                     return this.$store.commit("channels/setSort", val);
                 }
-                return this.$store.commit("channels/setSort", "subscribers");
+                return this.$store.commit("channels/setSort", this.defaultSort);
             },
         },
         cardView: {
@@ -180,7 +179,7 @@ export default {
             },
         },
         currentSortValue() {
-            return this.findSortValue(this.sort) || this.findSortValue("subscriber_count");
+            return this.findSortValue(this.sort) || this.findSortValue(this.defaultSort);
         },
     },
     methods: {

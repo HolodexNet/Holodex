@@ -178,7 +178,7 @@ export default {
                 });
         },
         setWatched() {
-            this.$store.commit("addWatchedVideo", this.video);
+            this.$store.commit("library/addWatchedVideo", this.video);
         },
     },
     computed: {
@@ -195,7 +195,7 @@ export default {
         },
         hasWatched() {
             if (!this.video) return false;
-            return this.$store.getters.hasWatched(this.video.id);
+            return this.$store.getters["library/hasWatched"](this.video.id);
         },
         metaDescription() {
             if (!this.video.description) return undefined;

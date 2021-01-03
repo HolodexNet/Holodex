@@ -2,44 +2,44 @@
 import api from "@/utils/backend-api";
 
 const initialState = {
-    live: [],
+    id: null,
+    channel: {},
     videos: [],
+    currentOffset: 0,
     isLoading: true,
     hasError: false,
-    currentOffset: 0,
-    recentVideoFilter: "all",
 };
 
 export const state = { ...initialState };
 
 const getters = {
-    live(state) {
-        return state.live;
-    },
-    videos(state) {
-        return state.videos;
-    },
-    isLoading(state) {
-        return state.isLoading;
-    },
-    hasError(state) {
-        return state.hasError;
-    },
-    currentOffset(state) {
-        return state.currentOffset;
-    },
-    recentVideoFilter(state) {
-        return state.recentVideoFilter;
-    },
+    // channels(state) {
+    //     return state.channels;
+    // },
+    // isLoading(state) {
+    //     return state.isLoading;
+    // },
+    // hasError(state) {
+    //     return state.hasError;
+    // },
+    // currentOffset(state) {
+    //     return state.currentOffset;
+    // },
+    // recentVideoFilter(state) {
+    //     return state.recentVideoFilter;
+    // },
 };
 
 const actions = {
-    fetchLive({ commit }, params) {
+    fetchChannel({ state, commit }) {
+        if (!state.id) return commit("fetchError");
+
         commit("fetchStart");
         return api
-            .live(params)
-            .then((res) => {
-                commit("setLive", res);
+            .channel(state.id)
+            .then(({ data }) => {
+                console.log("test");
+                commit("setChannel", data);
                 commit("fetchEnd");
             })
             .catch((e) => {
@@ -47,13 +47,14 @@ const actions = {
                 commit("fetchError");
             });
     },
-    fetchNextVideos({ state, commit }, params) {
+    fetchNextVideos({ state, commit }, { type, params }) {
         return api
-            .videos({
-                offset: state.currentOffset,
-                status: "past",
-                ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
-                ...params,
+            .channelVideos(state.id, {
+                type,
+                query: {
+                    ...params,
+                    offset: state.currentOffset,
+                },
             })
             .then(({ data }) => {
                 commit("updateVideos", data);
@@ -70,14 +71,13 @@ const mutations = {
     },
     fetchError(state) {
         state.hasError = true;
+        state.isLoading = false;
     },
-    setLive(state, live) {
-        // console.log("set");
-        state.live = live;
-        // console.log(live);
+    setId(state, id) {
+        state.id = id;
     },
-    setRecentVideoFilter(state, filter) {
-        state.recentVideoFilter = filter;
+    setChannel(state, channel) {
+        state.channel = channel;
     },
     updateVideos(state, videos) {
         // increment offset
@@ -85,6 +85,7 @@ const mutations = {
         state.videos = state.videos.concat(videos);
     },
     resetVideos(state) {
+        console.log("rest");
         state.currentOffset = 0;
         state.videos = [];
     },
