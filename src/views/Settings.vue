@@ -66,42 +66,42 @@ export default {
     computed: {
         language: {
             get() {
-                return this.$store.state.lang;
+                return this.$store.state.settings.lang;
             },
             set(val) {
-                this.$store.commit("setLanguage", val);
+                this.$store.commit("settings/setLanguage", val);
             },
         },
         darkMode: {
             get() {
-                return this.$store.state.darkMode;
+                return this.$store.state.settings.darkMode;
             },
             set(val) {
-                this.$store.commit("setDarkMode", val);
+                this.$store.commit("settings/setDarkMode", val);
             },
         },
         redirectMode: {
             get() {
-                return this.$store.state.redirectMode;
+                return this.$store.state.settings.redirectMode;
             },
             set(val) {
-                this.$store.commit("setRedirectMode", val);
+                this.$store.commit("settings/setRedirectMode", val);
             },
         },
         useEnName: {
             get() {
-                return this.$store.getters.useEnName;
+                return this.$store.getters.settings.useEnName;
             },
             set(val) {
-                this.$store.commit("setUseEnName", val);
+                this.$store.commit("settings/setUseEnName", val);
             },
         },
         hideThumbnail: {
             get() {
-                return this.$store.state.hideThumbnail;
+                return this.$store.state.settings.hideThumbnail;
             },
             set(val) {
-                this.$store.commit("setHideThumbnail", val);
+                this.$store.commit("settings/setHideThumbnail", val);
             },
         },
     },
@@ -113,7 +113,7 @@ export default {
     },
     methods: {
         resetSettings() {
-            this.$store.commit("resetState");
+            this.$store.commit("settings/resetState");
         },
     },
 };

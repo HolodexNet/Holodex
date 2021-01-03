@@ -66,9 +66,9 @@ export default {
     created() {
         if (!this.$store.testedWebP) {
             this.supportsWebp().then((res) => {
-                if (!res) this.$store.commit("noWebPSupport");
+                if (!res) this.$store.commit("settings/noWebPSupport");
             });
-            this.$store.commit("testedWebP");
+            this.$store.commit("settings/testedWebP");
         }
         this.$vuetify.theme.dark = this.darkMode;
         this.$i18n.locale = this.$store.state.lang;
@@ -93,7 +93,7 @@ export default {
     },
     computed: {
         darkMode() {
-            return this.$store.state.darkMode;
+            return this.$store.state.settings.darkMode;
         },
         isXs() {
             return this.$vuetify.breakpoint.name === "xs";

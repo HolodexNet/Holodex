@@ -4,27 +4,16 @@ import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import api from "@/utils/backend-api";
 import { dayjs } from "@/utils/time";
-import { langs } from "@/plugins/vuetify";
 
 import home from "./home.module";
 import channels from "./channels.module";
+import settings from "./settings.module";
 
 Vue.use(Vuex);
 
 function defaultState() {
-    const userLanguage = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
-
-    const validLangs = new Set(langs.map((x) => x.val));
 
     return {
-        // settings
-        lang: validLangs.has(userLanguage) ? userLanguage : "en",
-        darkMode: true,
-        redirectMode: false,
-        canUseWebP: true,
-        testedWebP: false,
-        nameProperty: "name_en",
-        hideThumbnail: false,
         // persisted filters
         // Home
         // recentVideoFilter: "all",
@@ -87,39 +76,17 @@ export default new Vuex.Store({
         createPersistedState({
             key: "holodex",
         }),
-        createMutationsSharer({ predicate: () => true }), // Share all mutations across tabs.
+        createMutationsSharer({ predicate: (mutation, /* state */) => {
+            console.info(mutation);
+            return true;
+        } }), // Share all mutations across tabs.
     ],
     state: defaultState(),
     getters: {
-        useEnName(state) {
-            return state.nameProperty === "english_name";
-        },
         hasWatched: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.watchedVideos, videoId),
         hasSaved: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.savedVideos, videoId),
     },
     mutations: {
-        // settings
-        setDarkMode(state, val) {
-            state.darkMode = val;
-        },
-        setRedirectMode(state, val) {
-            state.redirectMode = val;
-        },
-        noWebPSupport(state) {
-            state.canUseWebP = false;
-        },
-        testedWebP(state) {
-            state.testedWebP = true;
-        },
-        setUseEnName(state, payload) {
-            state.nameProperty = payload ? "name_en" : "name";
-        },
-        setHideThumbnail(state, val) {
-            state.hideThumbnail = val;
-        },
-        setLanguage(state, val) {
-            state.lang = val;
-        },
         // persistedFilters
         setRecentVideoFilter(state, payload) {
             state.recentVideoFilter = payload;
@@ -277,5 +244,9 @@ export default new Vuex.Store({
             namespaced: true,
             ...channels,
         },
+        settings: {
+            namespaced: true,
+            ...settings,
+        }
     },
 });

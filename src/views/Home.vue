@@ -80,8 +80,7 @@ export default {
         };
     },
     created() {
-        // this.$store.commit("home/resetState");
-        // ^ why is this necessary?
+        this.$store.commit("home/resetState");
         this.$store.dispatch("home/fetchLive");
         this.loadNext();
     },
