@@ -14,7 +14,7 @@
             <v-col style="white-space: pre-wrap" class="col-12 col-md-9" order="md-first">
                 <strong>Description</strong>
                 <br />
-                {{ channel.description }}
+                <div v-html="channel.description" v-linkified />
             </v-col>
         </v-row>
     </v-container>
@@ -23,10 +23,9 @@
 <script>
 export default {
     name: "ChannelAbout",
-    props: {
-        channel: {
-            required: true,
-            type: Object,
+    computed: {
+        channel() {
+            return this.$store.state.channel.channel;
         },
     },
 };

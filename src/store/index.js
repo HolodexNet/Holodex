@@ -7,6 +7,7 @@ import { dayjs } from "@/utils/time";
 import { langs } from "@/plugins/vuetify";
 
 import home from "./home.module";
+import channel from "./channel.module";
 import channels from "./channels.module";
 
 Vue.use(Vuex);
@@ -112,7 +113,7 @@ export default new Vuex.Store({
             state.testedWebP = true;
         },
         setUseEnName(state, payload) {
-            state.nameProperty = payload ? "name_en" : "name";
+            state.nameProperty = payload ? "english_name" : "name";
         },
         setHideThumbnail(state, val) {
             state.hideThumbnail = val;
@@ -270,6 +271,7 @@ export default new Vuex.Store({
     },
     modules: {
         home,
+        channel,
         channels,
     },
 });
