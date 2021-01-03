@@ -31,7 +31,7 @@ export default {
     },
     live() {
         return axiosInstance.get("/live").then((res) =>
-            res.data
+            res.data.videos
                 // .concat(res.data.upcoming)
                 // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
                 .filter((live) => !(!live.live_start && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))))

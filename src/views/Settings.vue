@@ -90,7 +90,7 @@ export default {
         },
         useEnName: {
             get() {
-                return this.$store.getters.settings.useEnName;
+                return this.$store.getters["settings/useEnName"];
             },
             set(val) {
                 this.$store.commit("settings/setUseEnName", val);

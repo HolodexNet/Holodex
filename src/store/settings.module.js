@@ -11,7 +11,7 @@ const initialState = {
     redirectMode: false,
     canUseWebP: true,
     testedWebP: false,
-    nameProperty: "name_en",
+    nameProperty: "english_name",
     hideThumbnail: false,
 };
 
@@ -41,7 +41,7 @@ const mutations = {
         state.testedWebP = true;
     },
     setUseEnName(state, payload) {
-        state.nameProperty = payload ? "name_en" : "name";
+        state.nameProperty = payload ? "english_name" : "name";
     },
     setHideThumbnail(state, val) {
         state.hideThumbnail = val;
