@@ -3,12 +3,13 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import api from "@/utils/backend-api";
-import { dayjs } from "@/utils/time";
+// import { dayjs } from "@/utils/time";
 import { langs } from "@/plugins/vuetify";
 
 import home from "./home.module";
 import channel from "./channel.module";
 import channels from "./channels.module";
+import library from "./library.module";
 
 Vue.use(Vuex);
 
@@ -45,8 +46,8 @@ function defaultState() {
         // },
         // saves
         favorites: [],
-        watchedVideos: {},
-        savedVideos: {},
+        // watchedVideos: {},
+        // savedVideos: {},
         // channel cache
         cachedChannelsLastUpdated: null,
         cachedChannelsError: false,
@@ -65,23 +66,23 @@ function defaultState() {
     };
 }
 
-function getMinVideoObj(video) {
-    // eslint-disable-next-line camelcase
-    const { id, yt_video_key, title, published_at, duration_secs } = video;
-    return {
-        id,
-        yt_video_key,
-        title,
-        channel: {
-            id: video.channel.id,
-            name: video.channel.name,
-            name_en: video.channel.name_en,
-        },
-        published_at,
-        duration_secs,
-        added_at: dayjs().format(),
-    };
-}
+// function getMinVideoObj(video) {
+//     // eslint-disable-next-line camelcase
+//     const { id, yt_video_key, title, published_at, duration_secs } = video;
+//     return {
+//         id,
+//         yt_video_key,
+//         title,
+//         channel: {
+//             id: video.channel.id,
+//             name: video.channel.name,
+//             name_en: video.channel.name_en,
+//         },
+//         published_at,
+//         duration_secs,
+//         added_at: dayjs().format(),
+//     };
+// }
 
 export default new Vuex.Store({
     plugins: [
@@ -95,8 +96,8 @@ export default new Vuex.Store({
         useEnName(state) {
             return state.nameProperty === "english_name";
         },
-        hasWatched: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.watchedVideos, videoId),
-        hasSaved: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.savedVideos, videoId),
+        // hasWatched: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.watchedVideos, videoId),
+        // hasSaved: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.savedVideos, videoId),
     },
     mutations: {
         // settings
@@ -148,15 +149,15 @@ export default new Vuex.Store({
                 state.favorites.splice(index, 1);
             }
         },
-        addWatchedVideo(state, video) {
-            Vue.set(state.watchedVideos, video.id, getMinVideoObj(video));
-        },
-        addSavedVideo(state, video) {
-            Vue.set(state.savedVideos, video.id, getMinVideoObj(video));
-        },
-        removeSavedVideo(state, videoId) {
-            Vue.delete(state.savedVideos, videoId);
-        },
+        // addWatchedVideo(state, video) {
+        //     Vue.set(state.watchedVideos, video.id, getMinVideoObj(video));
+        // },
+        // addSavedVideo(state, video) {
+        //     Vue.set(state.savedVideos, video.id, getMinVideoObj(video));
+        // },
+        // removeSavedVideo(state, videoId) {
+        //     Vue.delete(state.savedVideos, videoId);
+        // },
         // channel cache
         setCachedChannelsError(state, payload) {
             state.cachedChannelsError = payload;
@@ -273,5 +274,6 @@ export default new Vuex.Store({
         home,
         channel,
         channels,
+        library,
     },
 });
