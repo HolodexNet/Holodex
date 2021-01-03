@@ -71,8 +71,8 @@ export default {
             this.$store.commit("settings/testedWebP");
         }
         this.$vuetify.theme.dark = this.darkMode;
-        this.$i18n.locale = this.$store.state.lang;
-        this.$vuetify.lang.current = this.$store.state.lang;
+        this.$i18n.locale = this.$store.state.settings.lang;
+        this.$vuetify.lang.current = this.$store.state.settings.lang;
         this.$store.dispatch("checkChannelCache");
         document.addEventListener(
             "swUpdated",
@@ -108,7 +108,7 @@ export default {
         },
         lang() {
             // connected to the watch.lang hook below.
-            return this.$store.state.lang;
+            return this.$store.state.settings.lang;
         },
     },
     watch: {
@@ -117,8 +117,8 @@ export default {
         },
         lang() {
             // watches the computed.lang variable and updates vue I18N
-            this.$i18n.locale = this.$store.state.lang;
-            this.$vuetify.lang.current = this.$store.state.lang;
+            this.$i18n.locale = this.$store.state.settings.lang;
+            this.$vuetify.lang.current = this.$store.state.settings.lang;
         },
     },
     methods: {

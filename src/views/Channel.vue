@@ -124,7 +124,7 @@ export default {
             ];
         },
         channelName() {
-            const prop = this.$store.state.nameProperty;
+            const prop = this.$store.state.settings.nameProperty;
             if (this.channel[prop]) return this.channel[prop];
             return this.channel.name;
         },
