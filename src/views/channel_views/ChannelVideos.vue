@@ -73,6 +73,7 @@ export default {
                     type: this.type,
                     params: {
                         limit: this.pageLength,
+                        include: "clips",
                     },
                 })
                 .then(() => {

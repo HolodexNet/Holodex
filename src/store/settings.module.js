@@ -23,9 +23,7 @@ const getters = {
     },
 };
 
-const actions = {
-
-};
+const actions = {};
 
 const mutations = {
     setDarkMode(state, val) {

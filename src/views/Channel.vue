@@ -79,10 +79,10 @@ export default {
     computed: {
         ...mapState("channel", ["id", "channel", "isLoading", "hasError"]),
         bannerImage() {
-            if (!this.channel.banner_image) {
+            if (!this.channel.banner) {
                 return "";
             }
-            const { mobile, tablet } = getBannerImages(this.channel.banner_image);
+            const { mobile, tablet } = getBannerImages(this.channel.banner);
             const banners = {
                 xs: mobile,
                 sm: tablet,
@@ -144,7 +144,6 @@ export default {
         init() {
             this.$store.commit("channel/resetState");
             this.$store.commit("channel/setId", this.$route.params.id);
-            console.log("teste");
             this.$store.dispatch("channel/fetchChannel");
         },
     },

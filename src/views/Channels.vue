@@ -50,7 +50,7 @@
                 :includeGroupHeader="sort === 'group'"
                 :cardView="cardView"
             />
-            <infinite-loading @infinite="loadData" style="min-height: 10px" :identifier="infiniteId" spinner="spiral">
+            <infinite-loading @infinite="loadNext" style="min-height: 10px" :identifier="infiniteId" spinner="spiral">
                 <template v-slot:no-more><span></span></template>
                 <template v-slot:error>
                     <ApiErrorMessage />
@@ -187,7 +187,7 @@ export default {
             this.infiniteId = +new Date();
             this.$store.commit("channels/resetChannels");
         },
-        loadData($state) {
+        loadNext($state) {
             const lastLength = this.channels.length;
             this.$store
                 .dispatch("channels/fetchNextChannels", {
