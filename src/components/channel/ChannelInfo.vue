@@ -78,7 +78,7 @@ export default {
             return this.channel.subscriber_gains ? `(+${formatCount(this.channel.subscriber_gains)})` : null;
         },
         channelName() {
-            const prop = this.$store.state.nameProperty;
+            const prop = this.$store.state.settings.nameProperty;
             if (this.channel[prop]) return this.channel[prop];
             return this.channel.name;
         },

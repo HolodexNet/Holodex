@@ -95,7 +95,7 @@ export default {
             return this.$route.params.id;
         },
         darkMode() {
-            return this.$store.state.darkMode;
+            return this.$store.state.settings.darkMode;
         },
     },
     methods: {

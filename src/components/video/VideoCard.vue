@@ -162,7 +162,7 @@ export default {
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
-            const useWebP = this.$store.state.canUseWebP && !this.forceJPG;
+            const useWebP = this.$store.state.settings.canUseWebP && !this.forceJPG;
             const srcs = getVideoThumbnails(this.video.id, useWebP);
             if (this.horizontal) return srcs.medium;
             if (this.colSize > 2 && this.colSize <= 8) {
@@ -171,13 +171,13 @@ export default {
             return srcs.hq720;
         },
         redirectMode() {
-            return this.$store.state.redirectMode;
+            return this.$store.state.settings.redirectMode;
         },
         hideThumbnail() {
-            return this.$store.state.hideThumbnail;
+            return this.$store.state.settings.hideThumbnail;
         },
         channelName() {
-            const prop = this.$store.state.nameProperty;
+            const prop = this.$store.state.settings.nameProperty;
             if (this.video.channel[prop]) return this.video.channel[prop];
             return this.video.channel.name;
         },

@@ -103,7 +103,7 @@ export default {
             return this.fromApi.concat(this.query ? this.query : []);
         },
         nameProperty() {
-            return this.$store.state.nameProperty;
+            return this.$store.state.settings.nameProperty;
         },
     },
     watch: {

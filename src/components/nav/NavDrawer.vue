@@ -138,7 +138,7 @@ export default {
     computed: {
         ...mapState(["favorites", "cachedChannels", "live"]),
         language() {
-            return langs.find((x) => x.val === this.$store.state.lang).display;
+            return langs.find((x) => x.val === this.$store.state.settings.lang).display;
         },
         favoritedChannels() {
             if (!this.$store.state.cachedChannels || !this.$store.state.favorites) return [];
