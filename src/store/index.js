@@ -3,8 +3,8 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import api from "@/utils/backend-api";
-import { langs } from "@/plugins/vuetify";
-import { dayjs } from "@/utils/time";
+// import { langs } from "@/plugins/vuetify";
+// import { dayjs } from "@/utils/time";
 
 import home from "./home.module";
 import channel from "./channel.module";
@@ -16,39 +16,14 @@ import settings from "./settings.module";
 Vue.use(Vuex);
 
 function defaultState() {
-
     return {
-        // persisted filters
-        // Home
-        // recentVideoFilter: "all",
-        // Favorites
         favoritesVideoFilter: "all",
-        // Channels
-        // channelsCategory: 0,
-        // channelsSort: {
-        //     0: "suborg",
-        //     1: "clip_count",
-        //     2: "subscribers",
-        // },
-        // channelsCardView: {
-        //     0: false,
-        //     1: false,
-        //     2: false,
-        // },
-        // saves
         favorites: [],
-        // watchedVideos: {},
-        // savedVideos: {},
-        // channel cache
         cachedChannelsLastUpdated: null,
         cachedChannelsError: false,
         cachedChannels: {},
         // other
         showUpdateDetails: false,
-        // live & live-update-lock
-        // live: [],
-        // liveLastUpdated: new Date(1000),
-        // liveHasError: false,
         // authorization
         userdata: {
             user: null,
@@ -57,56 +32,20 @@ function defaultState() {
     };
 }
 
-// function getMinVideoObj(video) {
-//     // eslint-disable-next-line camelcase
-//     const { id, yt_video_key, title, published_at, duration_secs } = video;
-//     return {
-//         id,
-//         yt_video_key,
-//         title,
-//         channel: {
-//             id: video.channel.id,
-//             name: video.channel.name,
-//             name_en: video.channel.name_en,
-//         },
-//         published_at,
-//         duration_secs,
-//         added_at: dayjs().format(),
-//     };
-// }
-
 export default new Vuex.Store({
     plugins: [
         createPersistedState({
             key: "holodex",
         }),
-        createMutationsSharer({ predicate: (mutation, /* state */) => {
-            console.info(mutation);
-            return true;
-        } }), // Share all mutations across tabs.
+        createMutationsSharer({
+            predicate: (mutation /* state */) => {
+                console.info(mutation);
+                return true;
+            },
+        }), // Share all mutations across tabs.
     ],
     state: defaultState(),
-    getters: {
-        hasWatched: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.watchedVideos, videoId),
-        hasSaved: (state) => (videoId) => Object.prototype.hasOwnProperty.call(state.savedVideos, videoId),
-    },
     mutations: {
-        // persistedFilters
-        setRecentVideoFilter(state, payload) {
-            state.recentVideoFilter = payload;
-        },
-        setFavoritesVideoFilter(state, payload) {
-            state.favoritesVideoFilter = payload;
-        },
-        setChannelsCategory(state, payload) {
-            state.channelsCategory = payload;
-        },
-        setChannelsSort(state, payload) {
-            Vue.set(state.channelsSort, payload.category, payload.value);
-        },
-        setChannelsCardView(state, payload) {
-            Vue.set(state.channelsCardView, payload.category, payload.value);
-        },
         // saves
         addFavorite(state, channelId) {
             if (channelId > 1000) return;
@@ -118,15 +57,6 @@ export default new Vuex.Store({
                 state.favorites.splice(index, 1);
             }
         },
-        // addWatchedVideo(state, video) {
-        //     Vue.set(state.watchedVideos, video.id, getMinVideoObj(video));
-        // },
-        // addSavedVideo(state, video) {
-        //     Vue.set(state.savedVideos, video.id, getMinVideoObj(video));
-        // },
-        // removeSavedVideo(state, videoId) {
-        //     Vue.delete(state.savedVideos, videoId);
-        // },
         // channel cache
         setCachedChannelsError(state, payload) {
             state.cachedChannelsError = payload;
@@ -147,17 +77,6 @@ export default new Vuex.Store({
         resetState(state) {
             Object.assign(state, defaultState());
         },
-        // live & live update lock
-        // private_startUpdateLive(state) {
-        //     state.liveLastUpdated = new Date().getTime();
-        // },
-        // private_setLive(state, live) {
-        //     state.liveHasError = false;
-        //     state.live = live;
-        // },
-        // private_liveUpdateError(state) {
-        //     state.liveHasError = true;
-        // },
         // login
         setUser(state, { user, jwt }) {
             Vue.set(state.userdata, "user", user);
@@ -245,5 +164,6 @@ export default new Vuex.Store({
         channels,
         library,
         watch,
+        settings,
     },
 });

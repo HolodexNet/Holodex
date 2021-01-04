@@ -178,8 +178,7 @@ export default {
         },
         channelName() {
             const prop = this.$store.state.settings.nameProperty;
-            if (this.video.channel[prop]) return this.video.channel[prop];
-            return this.video.channel.name;
+            return this.video.channel[prop] || this.video.channel.name;
         },
         hasWatched() {
             return this.$store.getters["library/hasWatched"](this.video.id);
