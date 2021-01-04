@@ -107,14 +107,10 @@ export default {
         };
     },
     created() {
-        this.$store.commit("watch/resetState");
-        this.$store.commit("watch/setId", this.videoId);
-        this.$store.dispatch("watch/fetchVideo").then(() => {
-            if (!this.hasWatched) this.$store.commit("library/addWatchedVideo", this.video);
-        });
+        this.init();
     },
     methods: {
-        loadData() {
+        init() {
             this.$store.commit("watch/resetState");
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
@@ -192,12 +188,12 @@ export default {
     },
     watch: {
         // eslint-disable-next-line func-names
-        "$route.params.id": function (val) {
-            this.loadData(val);
+        "$route.params.id": function () {
+            this.init();
         },
         // eslint-disable-next-line func-names
-        "$route.query.v": function (val) {
-            this.loadData(val);
+        "$route.query.v": function () {
+            this.init();
         },
     },
 };
