@@ -113,7 +113,7 @@ const router = new VueRouter({
         const fromHistory = Boolean(savedPosition);
 
         if (fromHistory && this.app.$store.state.routerHistory.length > 0) {
-            this.app.$store.dispatch("navigate");
+            this.app.$store.dispatch("navigate", {});
         } else {
             this.app.$store.dispatch("navigate", { from: from.fullPath });
         }

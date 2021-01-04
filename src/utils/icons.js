@@ -8,6 +8,7 @@ export {
     mdiAccountCircleOutline,
     mdiAnimationPlay,
     mdiArrowLeft,
+    mdiClose,
     mdiCog,
     mdiDiscord,
     mdiDotsVertical,

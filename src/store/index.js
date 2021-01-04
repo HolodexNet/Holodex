@@ -56,28 +56,17 @@ function defaultState() {
     };
 }
 
-// function getMinVideoObj(video) {
-//     // eslint-disable-next-line camelcase
-//     const { id, yt_video_key, title, published_at, duration_secs } = video;
-//     return {
-//         id,
-//         yt_video_key,
-//         title,
-//         channel: {
-//             id: video.channel.id,
-//             name: video.channel.name,
-//             name_en: video.channel.name_en,
-//         },
-//         published_at,
-//         duration_secs,
-//         added_at: dayjs().format(),
-//     };
-// }
-
 export default new Vuex.Store({
     plugins: [
         createPersistedState({
             key: "holodex",
+            // eslint-disable-next-line no-unused-vars
+            reducer: (state, paths) => {
+                const o = {...state};
+                // don't want to persist router history across tabs/sessions.
+                o.routerHistory = [];
+                return o;
+            },
         }),
         createMutationsSharer({
             predicate: (mutation /* state */) => {
@@ -175,7 +164,7 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        async navigate({ commit }, { from }) {
+        async navigate({ commit }, { from = undefined }) {
             if (from) commit("historyPush", { from });
             else commit("historyPop");
         },
