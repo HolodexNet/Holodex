@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid v-if="!isLoading && !showError">
+    <v-container fluid v-if="!isLoading && !hasError">
         <v-row class="align-start">
             <v-col class="pa-0 pa-lg-3" cols="12" lg="9">
                 <WatchFrame
@@ -39,7 +39,7 @@
                     :currentTime="currentTime"
                 /> -->
                 <div class="embedded-chat" v-if="hasLiveChat & !hideLiveChat">
-                    <iframe :src="live_chat_src" frameborder="0" />
+                    <iframe :src="liveChatUrl" frameborder="0" />
                 </div>
                 <div class="text-end pa-1 text-caption" v-if="hasLiveChat">
                     <a @click="hideLiveChat = !hideLiveChat"> {{ hideLiveChat ? "Show" : "Hide" }} Live Chat </a>
@@ -48,20 +48,20 @@
             </v-col>
         </v-row>
     </v-container>
-    <LoadingOverlay :isLoading="isLoading" :showError="showError" v-else />
+    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
 </template>
 
 <script>
-import api from "@/utils/backend-api";
+// import api from "@/utils/backend-api";
 import LoadingOverlay from "@/components/common/LoadingOverlay";
 import WatchInfo from "@/components/watch/WatchInfo";
 import WatchFrame from "@/components/watch/WatchFrame";
 import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
-import WatchTimeline from "@/components/watch/WatchTimeline";
-import WatchTranscript from "@/components/watch/WatchTranscript";
+// import WatchTimeline from "@/components/watch/WatchTimeline";
+// import WatchTranscript from "@/components/watch/WatchTranscript";
 import VideoDescription from "@/components/video/VideoDescription";
-// import { getVideoThumbnails } from "@/utils/functions";
 import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
+import { mapState } from "vuex";
 
 export default {
     name: "Watch",
@@ -83,7 +83,7 @@ export default {
                 {
                     vmid: "url",
                     property: "og:url",
-                    content: `https://holodex.net/channel/${this.channel_id}`,
+                    content: `https://holodex.net/watch/${this.$route.params.id}`,
                 },
             ],
         };
@@ -92,47 +92,51 @@ export default {
         LoadingOverlay,
         WatchInfo,
         WatchFrame,
-        WatchTimeline,
-        WatchTranscript,
+        // WatchTimeline,
+        // WatchTranscript,
         VideoDescription,
         WatchRelatedVideos,
     },
     data() {
         return {
-            isLoading: true,
-            showError: false,
-            video: {},
-            videoClips: [],
-            videoSources: [],
             translations: [],
             otherMessages: [],
-            video_src: "",
-            live_chat_src: "",
             hideLiveChat: false,
-
             currentTime: 0,
             timer: null,
         };
     },
     created() {
-        this.loadData(this.$route.params.id);
+        this.$store.commit("watch/resetState");
+        this.$store.commit("watch/setId", this.videoId);
+        this.$store.dispatch("watch/fetchVideo").then(() => {
+            if (!this.hasWatched) this.$store.commit("library/addWatchedVideo", this.video);
+        });
     },
     methods: {
+        loadData() {
+            this.$store.commit("watch/resetState");
+            this.$store.commit("watch/setId", this.videoId);
+            this.$store.dispatch("watch/fetchVideo").then(() => {
+                if (!this.hasWatched) this.$store.commit("library/addWatchedVideo", this.video);
+            });
+        },
         ready(event) {
             this.player = event.target;
         },
         startSync() {
+            // to be replaced by has transcript check
+            if (!this.hasLiveChat) return;
             const vm = this;
             this.timer = setInterval(() => {
                 vm.currentTime = vm.player.getCurrentTime();
             }, 1000);
         },
         stopSync() {
+            // to be replaced by has transcript check
+            if (!this.hasLiveChat) return;
             clearInterval(this.timer);
             this.timer = null;
-        },
-        setTime(time) {
-            this.player.seekTo(time);
         },
         playing(event) {
             console.log(event.target.getCurrentTime());
@@ -143,67 +147,43 @@ export default {
             console.log(event);
             this.stopSync();
         },
-        loadData(id) {
-            // destroy iframe and recreate it so it doesn't break history mode
-            this.video_src = "";
-            this.isLoading = true;
-            // api.videoLiveChat(id, "translation", 0).then((res) => {
-            //     // const curTime = this.player.getCurrentTime();
-            //     if (res) {
-            //         // this.messages.push(...res.data.messages);
-            //         res.data.messages.forEach((msg) => {
-            //             msg.type === "translation" ? this.translations.push(msg) : this.otherMessages.push(msg);
-            //         });
-            //         // this.loadChart();
-            //     }
-            // });
-
-            api.video(id)
-                .then((res) => {
-                    if (res.data) {
-                        this.videoClips = res.data.clips;
-                        this.videoSources = res.data.sources;
-                        this.video = res.data;
-                        this.video_src = `https://www.youtube.com/embed/${this.video.id}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
-                        this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.id}&embed_domain=${window.location.hostname}&dark_theme=1`;
-                        if (!this.hasWatched) this.setWatched();
-                    }
-                })
-                .catch((e) => {
-                    console.log(e);
-                    this.showError = true;
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                });
-        },
-        setWatched() {
-            this.$store.commit("library/addWatchedVideo", this.video);
-        },
     },
     computed: {
+        ...mapState("watch", ["video", "isLoading", "hasError"]),
+        videoClips() {
+            return this.video?.clips || [];
+        },
+        videoSources() {
+            return this.video?.sources || [];
+        },
+        videoId() {
+            return this.$route?.params?.id || this.$route?.query?.v;
+        },
+        liveChatUrl() {
+            if (!this.video) return null;
+            return `https://www.youtube.com/live_chat?v=${this.video.id}&embed_domain=${
+                window.location.hostname
+            }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
+        },
         title() {
-            return decodeHTMLEntities(this.video.title);
+            return decodeHTMLEntities(this.video.title) || "";
         },
         hasLiveChat() {
             return (
                 (this.video.status === "live" || this.video.status === "upcoming") &&
                 !this.redirectMode &&
-                this.video_src &&
+                this.liveChatUrl &&
                 !this.isXs
             );
         },
         hasWatched() {
-            if (!this.video) return false;
             return this.$store.getters["library/hasWatched"](this.video.id);
         },
         metaDescription() {
-            if (!this.video.description) return undefined;
-            return this.video.description.substr(0, 100);
+            return this.video?.description?.substr(0, 100);
         },
         metaTitle() {
-            if (!this.video.title) return undefined;
-            return this.video.title;
+            return this.video?.title;
         },
         metaImage() {
             if (!this.video.id) return undefined;
@@ -213,6 +193,10 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         "$route.params.id": function (val) {
+            this.loadData(val);
+        },
+        // eslint-disable-next-line func-names
+        "$route.query.v": function (val) {
             this.loadData(val);
         },
     },

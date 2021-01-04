@@ -10,6 +10,7 @@ import home from "./home.module";
 import channel from "./channel.module";
 import channels from "./channels.module";
 import library from "./library.module";
+import watch from "./watch.module";
 
 Vue.use(Vuex);
 
@@ -275,5 +276,6 @@ export default new Vuex.Store({
         channel,
         channels,
         library,
+        watch,
     },
 });

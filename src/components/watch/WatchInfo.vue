@@ -21,7 +21,7 @@
                 :key="channel.id"
                 class="ma-1"
             ></ChannelChip>
-            <v-chip
+            <!-- <v-chip
                 v-for="tag in video.tags.filter((t) => !t.channel_ref)"
                 label
                 link
@@ -30,7 +30,7 @@
                 :to="`/search?tags=${tag.name}`"
             >
                 {{ `#${tag.name} (${tag.count})` }}
-            </v-chip>
+            </v-chip> -->
         </v-card-text>
         <VideoDescription :description="video.description"></VideoDescription>
         <v-divider />
@@ -67,21 +67,21 @@ export default {
     },
     computed: {
         channel_chips() {
-            const allMentions = new Map();
-            // Get channel mentions for this video, and add any channel mentions from the source
-            // (in case the uploader forgot to link everyone)
-            this.video.channel_mentions
-                .concat(this.video.sources.map((video) => video.channel))
-                .filter((channel) => channel.id !== this.video.channel_id)
-                .forEach((channel) =>
-                    allMentions.set(channel.id, {
-                        id: channel.id,
-                        name: channel.name,
-                        name_en: channel.name_en,
-                        photo: channel.photo,
-                    }),
-                );
-            return Array.from(allMentions.values());
+            // const allMentions = new Map();
+            // // Get channel mentions for this video, and add any channel mentions from the source
+            // // (in case the uploader forgot to link everyone)
+            // this.video.channel_mentions
+            //     .filter((channel) => channel.id !== this.video.channel_id)
+            //     .forEach((channel) =>
+            //         allMentions.set(channel.id, {
+            //             id: channel.id,
+            //             name: channel.name,
+            //             name_en: channel.english_name,
+            //             photo: channel.photo,
+            //         }),
+            //     );
+            // return Array.from(allMentions.values());
+            return [];
         },
         thumbnail_src() {
             return getVideoThumbnails(this.video.id).medium;
