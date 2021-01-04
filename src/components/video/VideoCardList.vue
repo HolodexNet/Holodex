@@ -38,12 +38,6 @@
                     <ApiErrorMessage />
                 </template>
             </infinite-loading>
-            <v-pagination
-                v-if="paginated && videos.length > 0"
-                v-model="page"
-                class="my-4"
-                :length="Math.ceil(total / pageSize)"
-            ></v-pagination>
         </div>
     </v-row>
 </template>
@@ -106,16 +100,6 @@ export default {
         infiniteId: {
             required: false,
             default: 0,
-        },
-        paginated: {
-            type: Boolean,
-            default: false,
-        },
-        pageSize: {
-            default: 30,
-        },
-        total: {
-            default: 1,
         },
     },
     methods: {

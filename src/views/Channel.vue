@@ -1,5 +1,5 @@
 <template>
-    <v-container class="channel-container" fluid v-if="!isLoading && !showError">
+    <v-container class="channel-container" fluid v-if="!isLoading && !hasError">
         <v-card>
             <v-img :src="bannerImage" class="channel-banner" />
             <v-container>
@@ -22,19 +22,20 @@
             </v-container>
         </v-card>
         <v-container class="channel" style="min-height: 85vh">
-            <router-view :channel="channel" :key="this.channel_id"></router-view>
+            <router-view></router-view>
         </v-container>
     </v-container>
-    <LoadingOverlay :isLoading="isLoading" :showError="showError" v-else />
+    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
 </template>
 
 <script>
-import api from "@/utils/backend-api";
+// import api from "@/utils/backend-api";
 import ChannelSocials from "@/components/channel/ChannelSocials";
 import ChannelInfo from "@/components/channel/ChannelInfo";
 import ChannelImg from "@/components/channel/ChannelImg";
 import LoadingOverlay from "@/components/common/LoadingOverlay";
 import { getBannerImages } from "@/utils/functions";
+import { mapState } from "vuex";
 
 export default {
     name: "Channel",
@@ -69,11 +70,6 @@ export default {
     },
     data() {
         return {
-            isLoading: true,
-            showError: false,
-            channel_id: null,
-            videos: [],
-            channel: {},
             tab: 0,
         };
     },
@@ -81,6 +77,7 @@ export default {
         this.init();
     },
     computed: {
+        ...mapState("channel", ["id", "channel", "isLoading", "hasError"]),
         bannerImage() {
             if (!this.channel.banner_image) {
                 return "";
@@ -105,39 +102,35 @@ export default {
         tabs() {
             return [
                 {
-                    path: `/channel/${this.channel_id}/`,
+                    path: `/channel/${this.id}/`,
                     name: "Videos",
                     exact: true,
                 },
                 {
-                    path: `/channel/${this.channel_id}/clips`,
+                    path: `/channel/${this.id}/clips`,
                     name: "Clips",
                     hide: this.channel_id > 1000,
                 },
                 {
-                    path: `/channel/${this.channel_id}/collabs`,
+                    path: `/channel/${this.id}/collabs`,
                     name: "Collabs",
                     hide: this.channel_id > 1000,
                 },
-                { path: `/channel/${this.channel_id}/about`, name: "About" },
-                { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
+                { path: `/channel/${this.id}/about`, name: "About" },
+                // { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
             ];
         },
         channelName() {
-            const prop = this.$store.state.settings.nameProperty;
-            if (this.channel[prop]) return this.channel[prop];
-            return this.channel.name;
+            const prop = this.$store.state.nameProperty;
+            return this.channel[prop] || this.channel.name;
         },
         metaDescription() {
-            if (!this.channel.description) return undefined;
-            return this.channel.description.substr(0, 100);
+            return this.channel?.description?.substr(0, 100);
         },
         metaTitle() {
-            if (!this.channel) return undefined;
             return this.channelName;
         },
         metaImage() {
-            if (!this.channel.photo) return undefined;
             return this.channel.photo;
         },
     },
@@ -149,28 +142,10 @@ export default {
     },
     methods: {
         init() {
-            // reset component to default without recreating
-            this.isLoading = true;
-            this.channel_id = this.$route.params.id;
-            this.videos = [];
-            this.tab = 0;
-            this.channel = {};
-            return api
-                .channel(this.channel_id)
-                .then((res) => {
-                    this.channel = res.data;
-                })
-                .then(() => {
-                    // update cache with fresh data
-                    this.$store.commit("addCachedChannel", this.channel);
-                })
-                .catch((e) => {
-                    console.log(e);
-                    this.showError = true;
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                });
+            this.$store.commit("channel/resetState");
+            this.$store.commit("channel/setId", this.$route.params.id);
+            console.log("teste");
+            this.$store.dispatch("channel/fetchChannel");
         },
     },
 };

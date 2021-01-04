@@ -76,7 +76,7 @@ export default {
     },
     computed: {
         savedVideos() {
-            return this.$store.state.savedVideos;
+            return this.$store.state.library.savedVideos;
         },
         savedVideosList() {
             return Object.values(this.savedVideos)
@@ -100,16 +100,13 @@ export default {
         },
         deleteSelected() {
             this.selected.forEach((id) => {
-                this.$store.commit("removeSavedVideo", id);
+                this.$store.commit("library/removeSavedVideo", id);
             });
             this.reset();
         },
         exportSelected() {
             if (this.selected.length === 0) return;
-            const ytVideoKeys = this.selected.map((videoId) => {
-                return this.savedVideos[videoId].id;
-            });
-            const url = `https://www.youtube.com/watch_videos?video_ids=${ytVideoKeys.join(",")}`;
+            const url = `https://www.youtube.com/watch_videos?video_ids=${this.selected.join(",")}`;
 
             window.open(url, "_blank", "noopener");
             this.reset();

@@ -39,8 +39,8 @@ export default {
                 .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))),
         );
     },
-    channel(channelId) {
-        return axiosInstance.get(`/channels/${channelId}`);
+    channel(id) {
+        return axiosInstance.get(`/channels/${id}`);
     },
     video(id) {
         return axiosInstance.get(`/videos/${id}`);
@@ -60,8 +60,9 @@ export default {
     searchTags(query, limit = 10, offset = 0) {
         return axiosInstance.get(`/tags/search?q=${query}&limit=${limit}&offset=${offset}`);
     },
-    channelStats(channelId) {
-        return axiosInstance.get(`/channels/${channelId}/stats`);
+    channelVideos(channelId, { type = "videos", query }) {
+        const q = querystring.stringify(query);
+        return axiosInstance.get(`/channels/${channelId}/${type}?${q}`);
     },
     login(jwt, authToken, service) {
         return axiosV2.post(

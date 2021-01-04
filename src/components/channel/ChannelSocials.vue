@@ -2,20 +2,20 @@
     <!-- prevent default on entire div to make dead click zone -->
     <v-list-item-action :class="{ 'channel-social-horizontal': !vertical }" @click.stop="">
         <v-btn
-            v-if="channel.yt_channel_id"
+            v-if="channel.id"
             icon
             sm
-            :href="`https://www.youtube.com/channel/${channel.yt_channel_id}`"
+            :href="`https://www.youtube.com/channel/${channel.id}`"
             rel="noreferrer"
             target="_blank"
         >
             <v-icon color="#C4302B">{{ icons.mdiYoutube }}</v-icon>
         </v-btn>
         <v-btn
-            v-if="channel.twitter_link"
+            v-if="channel.twitter"
             icon
             sm
-            :href="`https://twitter.com/${channel.twitter_link}`"
+            :href="`https://twitter.com/${channel.twitter}`"
             rel="noreferrer"
             target="_blank"
         >

@@ -8,10 +8,11 @@ const initialState = {
     hasError: false,
     currentOffset: 0,
 
+    // persisted
     category: 0,
     sort: {
         0: "group",
-        1: "clip_count",
+        1: "video_count",
         2: "subscribers",
     },
     cardView: {
@@ -99,6 +100,7 @@ const mutations = {
 };
 
 export default {
+    namespaced: true,
     state,
     getters,
     actions,
