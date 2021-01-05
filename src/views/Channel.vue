@@ -74,7 +74,7 @@ export default {
         };
     },
     mounted() {
-        this.init();
+        if (this.$route.params.id !== this.channel_id) this.init();
     },
     computed: {
         ...mapState("channel", ["id", "channel", "isLoading", "hasError"]),
@@ -121,7 +121,7 @@ export default {
             ];
         },
         channelName() {
-            const prop = this.$store.state.nameProperty;
+            const prop = this.$store.state.settings.nameProperty;
             return this.channel[prop] || this.channel.name;
         },
         metaDescription() {

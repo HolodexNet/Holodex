@@ -2,7 +2,9 @@
     <v-app>
         <MainNav />
         <v-main>
-            <router-view />
+            <keep-alive max="4" exclude="Watch">
+                <router-view :key="$router.path" />
+            </keep-alive>
         </v-main>
         <v-snackbar bottom right :value="updateExists" :timeout="-1" color="primary" v-if="updateExists">
             An update is available

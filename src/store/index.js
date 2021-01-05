@@ -3,8 +3,6 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import api from "@/utils/backend-api";
-import { ORGS } from "@/utils/consts";
-// import { langs } from "@/plugins/vuetify";
 // import { dayjs } from "@/utils/time";
 
 import home from "./home.module";
@@ -31,6 +29,8 @@ function defaultState() {
             jwt: null,
         },
         currentOrg: "hololive",
+        // navigation history tracking
+        routerHistory: [],
     };
 }
 
@@ -38,13 +38,20 @@ export default new Vuex.Store({
     plugins: [
         createPersistedState({
             key: "holodex",
+            // eslint-disable-next-line no-unused-vars
+            reducer: (state, paths) => {
+                const o = { ...state };
+                // don't want to persist router history across tabs/sessions.
+                o.routerHistory = [];
+                return o;
+            },
         }),
         createMutationsSharer({
             predicate: (mutation /* state */) => {
                 console.info(mutation);
-                return true;
+                return !mutation.type.match("^history");
             },
-        }), // Share all mutations across tabs.
+        }), // Share all mutations except historyPop/Push across tabs.
     ],
     state: defaultState(),
     mutations: {
@@ -88,8 +95,18 @@ export default new Vuex.Store({
             Vue.set(state.userdata, "user", user);
             state.userdata.jwt = jwt;
         },
+        historyPop(state) {
+            state.routerHistory.splice(-1, 1);
+        },
+        historyPush(state, { from }) {
+            state.routerHistory.push(from);
+        },
     },
     actions: {
+        async navigate({ commit }, { from = undefined }) {
+            if (from) commit("historyPush", { from });
+            else commit("historyPop");
+        },
         async updateChannelCache({ commit }) {
             console.log("Channel Cache updated");
             commit("setCachedChannelsLastUpdated", new Date().getTime());

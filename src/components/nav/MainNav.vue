@@ -9,6 +9,13 @@
             <!--=============================== Top Bar (Regular View) =============================-->
 
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
+
+                <!--================= Back button ⬅️ (Mobile only) ================-->
+
+                <v-app-bar-nav-icon @click.stop="goBack()" v-if="isXs && isFirstPage">
+                    <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
+                </v-app-bar-nav-icon>
+
                 <!--================= Logo & Search Bar (Space permitting) ================-->
 
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isXs">
@@ -109,7 +116,7 @@
 
             <template v-else>
                 <v-app-bar-nav-icon @click="searchBarExpanded = false" class="backButton">
-                    <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
+                    <v-icon>{{ icons.mdiClose }}</v-icon>
                 </v-app-bar-nav-icon>
                 <SearchBar :autofocus="isXs" />
             </template>
@@ -158,6 +165,8 @@ export default {
             set(val) {
                 return this.$store.commit("setCurrentOrg", val);
             },
+        isFirstPage() {
+            return this.$store.state.routerHistory.length > 1;
         },
         pages() {
             return [
@@ -212,6 +221,10 @@ export default {
         onRefresh() {
             this.refreshing = true;
             this.$router.go(0);
+        },
+        goBack() {
+            // this.$router.go(-1);
+            window.history.back();
         },
     },
 };

@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import * as icons from "@/utils/icons"
+import * as icons from "@/utils/icons";
 import { mapMutations } from "vuex";
 
 export default {
