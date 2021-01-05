@@ -9,7 +9,6 @@
             <!--=============================== Top Bar (Regular View) =============================-->
 
             <template v-if="!isXs || (isXs && !searchBarExpanded)">
-
                 <!--================= Back button ⬅️ (Mobile only) ================-->
 
                 <v-app-bar-nav-icon @click.stop="goBack()" v-if="isXs && isFirstPage">
@@ -165,6 +164,7 @@ export default {
             set(val) {
                 return this.$store.commit("setCurrentOrg", val);
             },
+        },
         isFirstPage() {
             return this.$store.state.routerHistory.length > 1;
         },
