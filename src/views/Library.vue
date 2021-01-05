@@ -65,6 +65,9 @@ import VideoCardList from "@/components/video/VideoCardList";
 
 export default {
     name: "Library",
+    metaInfo: {
+        title: "Library",
+    },
     components: {
         VideoCardList,
     },

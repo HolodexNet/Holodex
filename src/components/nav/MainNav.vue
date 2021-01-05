@@ -24,7 +24,7 @@
                     <router-link to="/">
                         <Logo width="24" height="24" style="margin-bottom: -4px" />
                     </router-link>
-                    <v-menu bottom left offset-y>
+                    <v-menu bottom offset-y>
                         <template v-slot:activator="{ on, attrs }">
                             <div v-bind="attrs" v-on="on" class="d-inline nav-title" style="position: relative">
                                 <transition name="fade" mode="out-in">
@@ -33,14 +33,18 @@
                                     }}</span>
                                 </transition>
                                 <span class="primary--text text--lighten-2">dex</span>
-                                <v-icon size="30" class="change-org-icon">
+                                <v-icon
+                                    size="30"
+                                    class="change-org-icon"
+                                    :class="{ 'rotate-180': attrs['aria-expanded'] === 'true' }"
+                                >
                                     {{ icons.mdiMenuDown }}
                                 </v-icon>
                                 <!-- <div style="position: absolute; bottom: -6px; left: 0px; font-size: 12px;" class="text--secondary">Select Org</div> -->
                             </div>
                         </template>
 
-                        <v-list style="max-height: 300px" class="overflow-y-auto">
+                        <v-list style="max-height: 300px; overscroll-behavior: contain" class="overflow-y-auto">
                             <v-list-item
                                 v-for="org in ORGS"
                                 :key="org"
@@ -270,5 +274,9 @@ export default {
     text-decoration: none;
     font-size: 24px;
     line-height: 1.2px;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
 }
 </style>

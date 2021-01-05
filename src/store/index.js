@@ -30,7 +30,7 @@ function defaultState() {
             user: null,
             jwt: null,
         },
-        currentOrg: "hololive",
+        currentOrg: "Hololive",
         // navigation history tracking
         routerHistory: [],
     };
