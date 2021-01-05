@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 import api from "@/utils/backend-api";
 import Vue from "vue";
+import { CHANNEL_TYPES } from "@/utils/consts";
 
 const initialState = {
     channels: [],
@@ -37,9 +38,6 @@ const getters = {
     currentOffset(state) {
         return state.currentOffset;
     },
-    recentVideoFilter(state) {
-        return state.recentVideoFilter;
-    },
 };
 
 const actions = {
@@ -49,7 +47,7 @@ const actions = {
             .channels({
                 limit: 25,
                 offset: state.currentOffset,
-                org: rootState.currentOrg,
+                ...(params?.type === CHANNEL_TYPES.VTUBER && { org: rootState.currentOrg }),
                 ...params,
             })
             .then(({ data }) => {
@@ -61,15 +59,15 @@ const actions = {
 };
 
 const mutations = {
-    fetchStart(state) {
-        state.isLoading = true;
-    },
-    fetchEnd(state) {
-        state.isLoading = false;
-    },
-    fetchError(state) {
-        state.hasError = true;
-    },
+    // fetchStart(state) {
+    //     state.isLoading = true;
+    // },
+    // fetchEnd(state) {
+    //     state.isLoading = false;
+    // },
+    // fetchError(state) {
+    //     state.hasError = true;
+    // },
     updateChannels(state, channels) {
         state.currentOffset += channels.length;
         state.channels = state.channels.concat(channels);
