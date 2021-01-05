@@ -80,13 +80,14 @@ export default {
         };
     },
     created() {
-        this.$store.commit("home/resetState");
-        this.$store.dispatch("home/fetchLive");
-        this.loadNext();
+        this.init();
     },
     watch: {
         recentVideoFilter() {
             this.resetVideos();
+        },
+        "$store.state.currentOrg": function () {
+            this.init();
         },
     },
     computed: {
@@ -104,6 +105,12 @@ export default {
         },
     },
     methods: {
+        init() {
+            this.$store.commit("home/resetState");
+            this.$store.dispatch("home/fetchLive");
+            this.infiniteId = +new Date();
+            this.loadNext();
+        },
         resetVideos() {
             this.$store.commit("home/resetVideos");
             this.infiniteId = +new Date();

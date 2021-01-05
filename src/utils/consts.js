@@ -1,23 +1,24 @@
 export const primaryColor = "#F06292";
 export const secondaryColor = "#64B5F6";
 
-export const CHANNEL_TYPES = {
+export const CHANNEL_TYPES = Object.freeze({
     VTUBER: "vtuber",
     SUBBER: "subber",
-};
+});
 
-export const VIDEO_TYPES = {
+export const VIDEO_TYPES = Object.freeze({
     CLIP: "clip",
     STREAM: "stream",
-};
+});
 
-export const ORGS = [
+export const ORGS = Object.freeze([
+    "All Vtubers",
     "AniMare",
     "Atelier Live",
     "Chukorara",
     "Eilene Family",
     "Hanayori Joshiryo",
-    "hololive",
+    "Hololive",
     "HoneyStrap",
     "Idol-bu",
     "Independents",
@@ -36,7 +37,35 @@ export const ORGS = [
     "VShojo",
     "X enc'ount",
     "Yuni Create",
-];
+]);
+
+export const ORGS_PREFIX = Object.freeze({
+    // "AniMare",
+    "Atelier Live": "Atelier",
+    // "Chukorara",
+    "Eilene Family": "Eilene",
+    "Hanayori Joshiryo": "Hanayori",
+    Hololive: "Holo",
+    // "HoneyStrap",
+    // "Idol-bu",
+    // "Independents", ????
+    // "Iridori",
+    "Kizuna Ai Inc.": "Kizuna",
+    // "Marbl_s",
+    Nijisanji: "Niji",
+    "Nori Pro": "Nori",
+    // "ReACT",
+    // "SugarLyric",
+    // "upd8",
+    // "VApArt",
+    "V Dimension.Creators": "V Dimension",
+    // "ViViD",
+    // "VOMS",
+    // "VShojo",
+    // "X enc'ount",
+    "Yuni Create": "Yuni",
+    "All Vtubers": "Vtuber",
+});
 
 // exports.CHANNEL_TYPE_TO_VIDEO_TYPE = {
 //     [this.CHANNEL_TYPES.VTUBER]: this.VIDEO_TYPES.STREAM,

@@ -54,6 +54,7 @@ const actions = {
                 query: {
                     ...params,
                     offset: state.currentOffset,
+                    include: "clips",
                 },
             })
             .then(({ data }) => {

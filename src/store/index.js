@@ -3,6 +3,8 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import api from "@/utils/backend-api";
+import { ORGS } from "@/utils/consts";
+
 // import { dayjs } from "@/utils/time";
 
 import home from "./home.module";
@@ -28,6 +30,7 @@ function defaultState() {
             user: null,
             jwt: null,
         },
+        currentOrg: "hololive",
         // navigation history tracking
         routerHistory: [],
     };
@@ -84,6 +87,10 @@ export default new Vuex.Store({
         },
         resetState(state) {
             Object.assign(state, defaultState());
+        },
+        setCurrentOrg(state, val) {
+            if (!ORGS.find((org) => org === val)) return;
+            state.currentOrg = val;
         },
         // login
         setUser(state, { user, jwt }) {

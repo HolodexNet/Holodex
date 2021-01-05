@@ -34,10 +34,13 @@ const getters = {
 };
 
 const actions = {
-    fetchLive({ commit }, params) {
+    fetchLive({ commit, rootState }, params) {
         commit("fetchStart");
         return api
-            .live(params)
+            .live({
+                org: rootState.currentOrg,
+                ...params,
+            })
             .then((res) => {
                 commit("setLive", res);
                 commit("fetchEnd");
@@ -47,12 +50,14 @@ const actions = {
                 commit("fetchError");
             });
     },
-    fetchNextVideos({ state, commit }, params) {
+    fetchNextVideos({ state, commit, rootState }, params) {
         return api
             .videos({
                 offset: state.currentOffset,
                 status: "past",
                 ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
+                include: "clips",
+                org: rootState.currentOrg,
                 ...params,
             })
             .then(({ data }) => {

@@ -43,12 +43,13 @@ const getters = {
 };
 
 const actions = {
-    fetchNextChannels({ state, commit }, params) {
+    fetchNextChannels({ state, commit, rootState }, params) {
         // context.commit("fetchStart");
         return api
             .channels({
                 limit: 25,
                 offset: state.currentOffset,
+                org: rootState.currentOrg,
                 ...params,
             })
             .then(({ data }) => {

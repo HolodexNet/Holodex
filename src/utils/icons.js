@@ -1,6 +1,6 @@
 /**------------------------------------------------------------------------------------------------
  * *                                    Icons container
- *   
+ *
  *   Importing the most commonly used mdi/js icons.
  *------------------------------------------------------------------------------------------------* */
 export {
@@ -26,4 +26,5 @@ export {
     mdiStarFourPointsOutline,
     mdiTwitter,
     mdiYoutube,
-} from "@mdi/js"
+    mdiMenuDown,
+} from "@mdi/js";

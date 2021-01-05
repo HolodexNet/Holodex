@@ -1,6 +1,10 @@
 <template>
     <v-row dense>
-        <v-col v-for="video in spliced" :key="video.id" :class="['video-col', `video-${colSize}`]">
+        <v-col
+            v-for="(video, index) in spliced"
+            :key="`${index}-${video.id}`"
+            :class="['video-col', `video-${colSize}`]"
+        >
             <VideoCard
                 :video="video"
                 fluid

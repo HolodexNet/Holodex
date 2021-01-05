@@ -110,6 +110,9 @@ export default {
         sort() {
             this.resetChannels();
         },
+        "$store.state.currentOrg": function () {
+            this.resetChannels();
+        },
     },
     computed: {
         sortOptions: {

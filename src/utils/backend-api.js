@@ -29,8 +29,9 @@ export default {
         // console.log(`/videos?${q}`);
         return axiosInstance.get(`/videos?${q}`);
     },
-    live() {
-        return axiosInstance.get("/live").then((res) =>
+    live(query) {
+        const q = querystring.stringify(query);
+        return axiosInstance.get(`/live?${q}`).then((res) =>
             res.data
                 // .concat(res.data.upcoming)
                 // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
