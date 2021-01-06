@@ -106,10 +106,12 @@ export default {
     watch: {
         category() {
             this.resetChannels();
+            if (this.category === this.Tabs.FAVORITES) this.$store.dispatch("favorites/fetchFavorites");
         },
         sort() {
             this.resetChannels();
         },
+        // eslint-disable-next-line func-names
         "$store.state.currentOrg": function () {
             this.resetChannels();
         },
@@ -130,7 +132,7 @@ export default {
                         text: this.$t("views.channels.sortOptions.group"),
                         value: "group",
                         query_value: {
-                            sort: "org",
+                            sort: "suborg",
                             order: "asc",
                         },
                     },
@@ -154,6 +156,7 @@ export default {
             },
         },
         ...mapState("channels", ["channels", "isLoading", "hasError", "currentOffset"]),
+        ...mapState("favorites", ["favorites", "live"]),
         category: {
             get() {
                 return this.$store.state.channels.category;
