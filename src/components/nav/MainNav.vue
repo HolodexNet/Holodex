@@ -40,7 +40,10 @@
                                 >
                                     {{ icons.mdiMenuDown }}
                                 </v-icon>
-                                <!-- <div style="position: absolute; bottom: -6px; left: 0px; font-size: 12px;" class="text--secondary">Select Org</div> -->
+                                <!-- 
+                                    <div style="position: absolute; bottom: -6px; left: 0px; font-size: 12px;" 
+                                        class="text--secondary">
+                                    Select Org</div> -->
                             </div>
                         </template>
 
@@ -58,7 +61,7 @@
                 </v-toolbar-title>
                 <SearchBar v-if="!isXs" />
 
-                <!--================= Account [🔍] Button (Desktop Only) ================-->
+                <!--================= Account [👤] Button (Desktop Only) ================-->
 
                 <v-menu left offset-y transition="slide-y-transition" v-if="!isXs">
                     <template v-slot:activator="{ on, attrs }">
@@ -132,11 +135,30 @@
 <script>
 import * as icons from "@/utils/icons";
 import SearchBar from "@/components/common/SearchBar";
+// import SearchBar from "@/components/nav/SearchBarSimple";
 import Logo from "@/components/common/Logo";
 import UserCard from "@/components/user/UserCard";
 import { ORGS, ORGS_PREFIX } from "@/utils/consts";
 import NavDrawer from "./NavDrawer";
 import BottomNav from "./BottomNav";
+
+/**
+ * Returns the index of the last element in the array where predicate is true, and -1
+ * otherwise.
+ * @param array The source array to search in
+ * @param {(value: T, index: number, obj: T[]) => boolean} predicate
+ *  find calls predicate once for each element of the array, in descending
+ * order, until it finds one where predicate returns true. If such an element is found,
+ * findLastIndex immediately returns that element index. Otherwise, findLastIndex returns -1.
+ */
+// function findLastIndex(array, predicate) {
+//     let l = array.length;
+//     // eslint-disable-next-line no-plusplus
+//     while (l--) {
+//         if (predicate(array[l], l, array)) return l;
+//     }
+//     return -1;
+// }
 
 export default {
     components: {
@@ -228,7 +250,13 @@ export default {
         },
         goBack() {
             // this.$router.go(-1);
-            window.history.back();
+            // const historyPaths = this.$store.state.routerHistory;
+            // const idx = findLastIndex(historyPaths, (v) => v.match("^/watch"));
+            // const returnAmount = idx >= 0? idx - historyPaths.length - 1 : 0;
+            // debugger;
+            // TODO there's some weirdness here, regarding going back > 1 pages
+            // coz the router doesn't understand it that well and our history desync's.
+            window.history.go(Math.min(-1, 0));
         },
     },
 };

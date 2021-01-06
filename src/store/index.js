@@ -36,6 +36,10 @@ function defaultState() {
     };
 }
 
+/**--------------------------------------------
+ *               Put Migrations Here
+ *---------------------------------------------* */
+
 export default new Vuex.Store({
     plugins: [
         createPersistedState({
