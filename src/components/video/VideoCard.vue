@@ -146,7 +146,7 @@ export default {
                 case "upcoming":
                     // print relative time in hours if less than 24 hours,
                     // print full date if greater than 24 hours
-                    return `Stream starts ${this.formatStreamStart(this.video.start_scheduled)}`;
+                    return `Starts ${this.formatStreamStart(this.video.start_scheduled)}`;
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:

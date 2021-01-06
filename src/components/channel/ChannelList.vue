@@ -20,9 +20,9 @@
         <template v-for="(channel, index) in channels">
             <v-subheader
                 :key="'header-' + index"
-                v-if="includeGroupHeader && (index === 0 || channels[index - 1].group !== channel.group)"
+                v-if="includeGroupHeader && (index === 0 || channels[index - 1].suborg !== channel.suborg)"
             >
-                {{ channel.group ? channel.group : $t("component.channelList.otherText") }}
+                {{ channel.suborg ? channel.suborg : $t("component.channelList.otherText") }}
             </v-subheader>
             <v-list-item v-if="channel" :key="channel.id" :to="`/channel/${channel.id}`">
                 <v-list-item-avatar size="55">
