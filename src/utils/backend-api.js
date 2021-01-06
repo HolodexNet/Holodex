@@ -74,4 +74,14 @@ export default {
             },
         );
     },
+    favorites(jwt) {
+        return axiosV2.get("/users/favorites", {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    patchFavorites(jwt, operations) {
+        return axiosV2.patch("/users/favorites", operations, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
 };

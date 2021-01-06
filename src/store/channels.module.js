@@ -51,7 +51,6 @@ const actions = {
                 ...params,
             })
             .then(({ data }) => {
-                console.log(data);
                 commit("updateChannels", data);
                 // context.commit("fetchEnd");
             });

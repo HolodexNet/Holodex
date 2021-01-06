@@ -13,13 +13,12 @@ import channels from "./channels.module";
 import library from "./library.module";
 import watch from "./watch.module";
 import settings from "./settings.module";
+import favorites from "./favorites.module";
 
 Vue.use(Vuex);
 
 function defaultState() {
     return {
-        favoritesVideoFilter: "all",
-        favorites: [],
         cachedChannelsLastUpdated: null,
         cachedChannelsError: false,
         cachedChannels: {},
@@ -56,18 +55,12 @@ export default new Vuex.Store({
         }), // Share all mutations except historyPop/Push across tabs.
     ],
     state: defaultState(),
+    getters: {
+        isLoggedIn(state) {
+            return state.userdata?.jwt;
+        },
+    },
     mutations: {
-        // saves
-        addFavorite(state, channelId) {
-            if (channelId > 1000) return;
-            state.favorites.push(channelId);
-        },
-        removeFavorite(state, channelId) {
-            const index = state.favorites.indexOf(channelId);
-            if (index > -1) {
-                state.favorites.splice(index, 1);
-            }
-        },
         // channel cache
         setCachedChannelsError(state, payload) {
             state.cachedChannelsError = payload;
@@ -122,34 +115,34 @@ export default new Vuex.Store({
             //     });
             // }
         },
-        async checkChannelCache({ state, dispatch }) {
-            const currentTime = new Date().getTime();
-            if (
-                !state.cachedChannelsLastUpdated ||
-                // update every hour
-                currentTime - state.cachedChannelsLastUpdated > 1000 * 60 * 60 ||
-                // retry every 15 minutes if error
-                (state.cachedChannelsError && currentTime - state.cachedChannelsLastUpdated > 1000 * 60 * 15)
-            ) {
-                this.commit("setCachedChannelsError", false);
-                await dispatch("updateChannelCache");
-                return;
-            }
+        // async checkChannelCache({ state, dispatch }) {
+        //     const currentTime = new Date().getTime();
+        //     if (
+        //         !state.cachedChannelsLastUpdated ||
+        //         // update every hour
+        //         currentTime - state.cachedChannelsLastUpdated > 1000 * 60 * 60 ||
+        //         // retry every 15 minutes if error
+        //         (state.cachedChannelsError && currentTime - state.cachedChannelsLastUpdated > 1000 * 60 * 15)
+        //     ) {
+        //         this.commit("setCachedChannelsError", false);
+        //         await dispatch("updateChannelCache");
+        //         return;
+        //     }
 
-            // update favorites if missing channels
-            for (const id of state.favorites) {
-                if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id) && id < 1000) {
-                    console.log(`Missing channel_id: ${id}, refreshing cache`);
-                    try {
-                        await dispatch("updateChannelCache");
-                        break;
-                    } catch (e) {
-                        console.log(e);
-                        this.commit("setCachedChannelsError", true);
-                    }
-                }
-            }
-        },
+        //     // update favorites if missing channels
+        //     for (const id of state.favorites) {
+        //         if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id) && id < 1000) {
+        //             console.log(`Missing channel_id: ${id}, refreshing cache`);
+        //             try {
+        //                 await dispatch("updateChannelCache");
+        //                 break;
+        //             } catch (e) {
+        //                 console.log(e);
+        //                 this.commit("setCachedChannelsError", true);
+        //             }
+        //         }
+        //     }
+        // },
         async tryUpdatingLive({ state, commit, dispatch }, payload) {
             // will only trigger after user visits the first page that triggers a tryUpdatingLive dispatch.
             // currently only the Home component does this.
@@ -190,5 +183,6 @@ export default new Vuex.Store({
         library,
         watch,
         settings,
+        favorites,
     },
 });

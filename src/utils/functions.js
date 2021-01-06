@@ -77,3 +77,20 @@ export function debounce(func, wait, immediate) {
 export function decodeHTMLEntities(str) {
     return str.split("&amp;").join("&").split("&quot;").join('"');
 }
+
+export function localSortChannels(channels, { sort, order = "asc" }) {
+    if (!sort) return channels;
+    channels.sort((a, b) => {
+        // if (sort === "latest_published_at") {
+        //     const dateA = new Date(a[sort]).getTime();
+        //     const dateB = new Date(b[sort]).getTime();
+        //     return dateA > dateB ? 1 : -1;
+        // }
+        if (sort === "video_count" || sort === "subscriber_count") {
+            return parseInt(a[sort], 10) > parseInt(b[sort], 10) ? 1 : -1;
+        }
+        return a[sort] > b[sort] ? 1 : -1;
+    });
+    if (order === "desc") channels.reverse();
+    return channels;
+}
