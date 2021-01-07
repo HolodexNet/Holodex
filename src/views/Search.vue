@@ -136,6 +136,7 @@ export default {
     },
     methods: {
         async searchVideo() {
+            if (this.loading) return;
             this.loading = true;
             this.videos = [];
             const { q } = this.$route.query;
