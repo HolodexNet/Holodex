@@ -174,11 +174,11 @@ export default {
                     this.fromApi = [
                         ...(encodeURIComponent(val).length > 2
                             ? [
-                                  { type: "title & desc", value: `${val}title & desc`, text: val },
-                                  { type: "none", disabled: true, divider: true, value: "div", text: "div" },
-                                  { type: "comments", value: `${val}comments`, text: val },
-                                  { type: "none", disabled: true, divider: true, value: "div", text: "div" },
-                              ]
+                                { type: "title & desc", value: `${val}title & desc`, text: val },
+                                { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                                { type: "comments", value: `${val}comments`, text: val },
+                                { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                            ]
                             : []),
                         ...res.data.map((x) => {
                             if (!x.text) x.text = x.value;
