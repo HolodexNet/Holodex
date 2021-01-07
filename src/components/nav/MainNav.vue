@@ -26,7 +26,13 @@
                     </router-link>
                     <v-menu bottom offset-y>
                         <template v-slot:activator="{ on, attrs }">
-                            <div v-bind="attrs" v-on="on" class="d-inline nav-title" style="position: relative">
+                            <div
+                                v-bind="attrs"
+                                v-on="on"
+                                class="d-inline nav-title"
+                                :class="isXs ? 'nav-title-slim' : ''"
+                                style="position: relative"
+                            >
                                 <transition name="fade" mode="out-in">
                                     <span :key="currentOrg" style="text-decoration: underline">{{
                                         ORGS_PREFIX[currentOrg] || currentOrg
@@ -263,6 +269,8 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans+Narrow&display=swap");
+
 .backButton {
     height: 32px !important;
     width: 32px !important;
@@ -302,6 +310,9 @@ export default {
     text-decoration: none;
     font-size: 24px;
     line-height: 1.2px;
+}
+.nav-title.nav-title-slim {
+    font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
 }
 
 .rotate-180 {

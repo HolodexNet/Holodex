@@ -12,9 +12,9 @@
         clearable
         hide-no-data
         hide-selected
-        hide-details
         auto-select-first
         dense
+        :rules="[validate]"
         :autofocus="autofocus"
         :small-chips="dense"
         v-model="query"
@@ -29,6 +29,8 @@
         :filter="(a, b) => true"
         return-object
     >
+        <!--         hide-details
+ -->
         <template v-slot:selection="selection">
             <v-card
                 :color="$vuetify.theme.dark ? 'grey darken-3' : 'teal accent-2'"
@@ -157,21 +159,27 @@ export default {
         async $route(to) {
             console.log("UPDATED");
             if (to.query?.q && this.query.length === 0) {
-                this.query = await csv2jsonAsync(this.$route.query?.q);
+                this.query = await csv2jsonAsync(to.query?.q);
             }
         },
         // eslint-disable-next-line func-names
         search: debounce(function (val) {
             if (!val) return;
+            this.fromApi = [];
+            const entropy = encodeURIComponent(val).length;
+            if (entropy <= 2) return;
             const formatted = val.replace("#", "").toLowerCase();
             this.getAutocomplete(formatted)
                 .then((res) => {
-                    // todo maybe remove seen ones
                     this.fromApi = [
-                        { type: "title & desc", value: `${val}title & desc`, text: val },
-                        { type: "none", disabled: true, divider: true, value: "div", text: "div" },
-                        { type: "comments", value: `${val}comments`, text: val },
-                        { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                        ...(encodeURIComponent(val).length > 2
+                            ? [
+                                  { type: "title & desc", value: `${val}title & desc`, text: val },
+                                  { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                                  { type: "comments", value: `${val}comments`, text: val },
+                                  { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                              ]
+                            : []),
                         ...res.data.map((x) => {
                             if (!x.text) x.text = x.value;
                             // x.value = x.text + x.type;
@@ -181,7 +189,7 @@ export default {
                 })
                 .catch((e) => console.log(e));
             // .finally(() => alert(this.fromApi.map(item => item.text)));
-        }, 200),
+        }, 500),
     },
     methods: {
         async getAutocomplete(query) {
@@ -208,6 +216,16 @@ export default {
         onInput() {
             this.search = null;
             this.fromApi = [];
+        },
+        validate(currentQuery) {
+            // current limitations:
+            // if more than 1 comment search, fail
+            // if text search AND comment search, fail
+            const countcomments = currentQuery.filter((x) => x.type === "comments").length;
+            if (countcomments > 1) return "Cannot search using multiple comment conditions.";
+            if (countcomments === 1 && currentQuery.filter((x) => x.type === "title & desc").length > 0)
+                return "Cannot search using comment + title & desc filters at the same time.";
+            return true;
         },
     },
 };
@@ -245,6 +263,13 @@ export default {
     border-radius: inherit;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+.search-bar .v-messages.theme--dark.error--text {
+    background-color: rgb(30, 30, 30);
+    font-weight: 600;
+    padding: 2px;
+    border-radius: 2px;
 }
 
 .search-bar.v-input--dense > .v-input__append-outer {

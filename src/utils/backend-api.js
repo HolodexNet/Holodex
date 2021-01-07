@@ -64,6 +64,10 @@ export default {
     searchVideo(queryObject) {
         return axiosInstance.post("/search/videoSearch", queryObject);
     },
+    searchComments(queryObject) {
+        return axiosInstance.post("/search/commentSearch", queryObject);
+    },
+
     channelVideos(channelId, { type = "videos", query }) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/channels/${channelId}/${type}?${q}`);

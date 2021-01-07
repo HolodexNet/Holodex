@@ -15,6 +15,7 @@
             <v-col class="offset-xl-1 col-xl-10">
                 <VideoCardList
                     :videos="videos"
+                    :horizontal="horizontal"
                     includeChannel
                     :cols="{
                         xs: 1,
@@ -47,6 +48,7 @@ export default {
         return {
             videos: [],
             loading: false,
+            horizontal: false,
             filter: {
                 sort: "newest",
                 type: "all",
@@ -151,18 +153,35 @@ export default {
                 comment: [],
             });
             console.log("SEARCHING", searchQuery);
-            api.searchVideo(searchQuery)
-                .then((res) => {
-                    console.log(res.data);
-                    this.videos = res.data;
-                    return this;
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+            if (searchQuery.comment.length === 0)
+                api.searchVideo(searchQuery)
+                    .then((res) => {
+                        console.log(res.data);
+                        this.horizontal = false;
+                        this.videos = res.data;
+                        return this;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+            else {
+                api.searchComments(searchQuery)
+                    .then((res) => {
+                        console.log(res.data);
+                        this.horizontal = true;
+                        this.videos = res.data;
+                        return this;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+            }
         },
         loadPage(page) {
             this.$router.push({
