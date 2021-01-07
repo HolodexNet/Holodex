@@ -81,7 +81,7 @@ export function decodeHTMLEntities(str) {
 export function forwardTransformSearchToAPIQuery(obj, initialObject) {
     return obj.reduceRight((req, item) => {
         switch (item.type) {
-            case "title & disc":
+            case "title & desc":
                 req.conditions.push({
                     text: item.text,
                 });
