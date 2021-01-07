@@ -58,8 +58,11 @@ export default {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/clips?${q}`);
     },
-    searchTags(query, limit = 10, offset = 0) {
-        return axiosInstance.get(`/tags/search?q=${query}&limit=${limit}&offset=${offset}`);
+    searchAutocomplete(query) {
+        return axiosInstance.get(`/search/autocomplete?q=${query}`);
+    },
+    searchVideo(queryObject) {
+        return axiosInstance.post("/search/videoSearch", queryObject);
     },
     channelVideos(channelId, { type = "videos", query }) {
         const q = querystring.stringify(query);

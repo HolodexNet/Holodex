@@ -33,6 +33,7 @@
     "chart.js": "3.0.0-beta.3",
     "core-js": "^3.7.0",
     "dayjs": "^1.9.6",
+    "json-2-csv": "^3.10.2",
     "oauth-open": "^1.0.4",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",

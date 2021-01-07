@@ -77,3 +77,30 @@ export function debounce(func, wait, immediate) {
 export function decodeHTMLEntities(str) {
     return str.split("&amp;").join("&").split("&quot;").join('"');
 }
+
+export function forwardTransformSearchToAPIQuery(obj, initialObject) {
+    return obj.reduceRight((req, item) => {
+        switch (item.type) {
+            case "title & disc":
+                req.conditions.push({
+                    text: item.text,
+                });
+                break;
+            case "comments":
+                req.comment = [item.text];
+                break;
+            case "channel":
+                req.vch.push(item.value);
+                break;
+            case "topic":
+                req.topic.push(item.value);
+                break;
+            case "org":
+                req.org.push(item.value);
+                break;
+            default:
+                break;
+        }
+        return req;
+    }, initialObject);
+}

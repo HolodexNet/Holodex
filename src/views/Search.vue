@@ -23,11 +23,6 @@
                         lg: 5,
                         xl: 6,
                     }"
-                    paginated
-                    @changePage="loadPage"
-                    :currentPage="currentPage"
-                    :pageSize="pageSize"
-                    :total="totalVideos"
                 ></VideoCardList>
             </v-col>
         </v-row>
@@ -37,6 +32,8 @@
 <script>
 import VideoCardList from "@/components/video/VideoCardList";
 import api from "@/utils/backend-api";
+import { forwardTransformSearchToAPIQuery } from "@/utils/functions";
+import { csv2jsonAsync } from "json-2-csv";
 
 export default {
     name: "Search",
@@ -49,8 +46,6 @@ export default {
     data() {
         return {
             videos: [],
-            totalVideos: 1,
-            pageSize: 30,
             loading: false,
             filter: {
                 sort: "newest",
@@ -138,22 +133,28 @@ export default {
         this.searchVideo();
     },
     methods: {
-        searchVideo() {
+        async searchVideo() {
             this.loading = true;
             this.videos = [];
-            const query = {
-                tags: this.$route.query.tags,
-                title: this.$route.query.title,
-                ...this.options.sort.find((opt) => opt.value === this.filter.sort.toLowerCase()).query_value,
-                ...this.options.type.find((opt) => opt.value === this.filter.type.toLowerCase()).query_value,
-                include_channel: 1,
-                limit: this.pageSize,
-                offset: (this.currentPage - 1) * this.pageSize,
-            };
-            api.videos(query)
+            const { q } = this.$route.query;
+            const parsedQuery = await csv2jsonAsync(q);
+            console.log("PARSED", parsedQuery);
+            const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
+                lang: ["en"],
+                target: ["stream", "clip"],
+                conditions: [
+                    /* { text: "Hello world" } */
+                ],
+                topic: [],
+                vch: [],
+                org: [],
+                comment: [],
+            });
+            console.log("SEARCHING", searchQuery);
+            api.searchVideo(searchQuery)
                 .then((res) => {
-                    this.videos = res.data.videos;
-                    this.totalVideos = res.data.total;
+                    console.log(res.data);
+                    this.videos = res.data;
                     return this;
                 })
                 .catch((error) => {

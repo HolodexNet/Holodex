@@ -2,10 +2,12 @@
     <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
     <v-autocomplete
         class="ma-auto search-bar"
+        :class="{ 'search-bar-small': isXs }"
         solo
         flat
         multiple
         deletable-chips
+        chips
         disable-lookup
         clearable
         hide-no-data
@@ -17,75 +19,64 @@
         :small-chips="dense"
         v-model="query"
         :loading="isLoading"
+        :items="results"
+        :search-input.sync="search"
         @input="onInput"
-        @click:append-outer="commitSearch"
-        label="Search"
-        :items="items"
         :append-icon="''"
-        :append-outer-icon="mdiMagnify"
+        :append-outer-icon="icons.mdiMagnify"
+        @click:append-outer="commitSearch"
+        label="> Search"
+        :filter="(a, b) => true"
         return-object
     >
-        <!-- :items="results" chips -->
-
-        <!-- :search-input.sync="search" -->
-
-        <!-- @keydown.enter="onKeyDown()" -->
-
         <template v-slot:selection="selection">
             <v-card
-                close
-                color="indigo darken-4"
+                :color="$vuetify.theme.dark ? 'grey darken-3' : 'teal accent-2'"
                 :label="selection.item.type !== 'channel'"
-                @click:close="deleteChip(selection.item)"
-                :small="dense"
-                class="pa-0"
-                style="margin: 3px; max-width: 100%"
+                class="pa-0 selected-card"
+                :dark="$vuetify.theme.dark"
             >
-                <!-- {{ selection.item }} -->
-
                 <v-list-item class="ma-n1 py-0 pl-3 pr-1">
-                    <div class="filter-type px-1 py-0 ma-0 rounded grey--text caption">
-                        <v-icon x-small color="grey"> {{ mdiMagnifyPlusOutline }} </v-icon>{{ selection.item.type }}
+                    <div class="selected-card-type px-1 py-0 ma-0 rounded text--disabled caption">
+                        <v-icon x-small v-if="selection.item.type === 'channel'">{{ icons.mdiYoutube }}</v-icon>
+                        <v-icon x-small v-if="selection.item.type === 'topic'">{{ icons.mdiAnimationPlay }}</v-icon>
+                        <v-icon x-small v-if="selection.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
+                        <v-icon x-small v-if="selection.item.type === 'title & desc'">{{ mdiTextSearch }}</v-icon>
+                        <v-icon x-small v-if="selection.item.type === 'comments'">{{ mdiCommentSearch }}</v-icon>
+                        {{ selection.item.type }}
                     </div>
 
                     <v-list-item-content class="py-1 pt-4">
-                        <!-- <v-icon left> {{ mdiMagnifyPlusOutline }} </v-icon>{{ selection.item.text }} -->
-
-                        <!-- <v-chip>{{ selection.item.text }}</v-chip> -->
-
-                        <v-list-item-subtitle class="text--primary" v-text="selection.item.text"></v-list-item-subtitle>
+                        <v-list-item-subtitle
+                            class="text--primary search-item"
+                            v-text="selection.item.text"
+                        ></v-list-item-subtitle>
                     </v-list-item-content>
 
                     <v-list-item-action>
                         <v-icon small color="yellow darken-3" @click="deleteChip(selection.item)">{{
-                            mdiClose
+                            icons.mdiClose
                         }}</v-icon>
                     </v-list-item-action>
                 </v-list-item>
-
-                <!-- <template v-if="selection.item.type === 'channel'">
-                    <v-avatar left v-if="!dense">
-                        <ChannelImg :channel="selection.item.value.channel_obj" :size="32" close />
-                    </v-avatar>
-                    {{ selection.item.text }}
-                </template>
-                <template v-else> #{{ selection.item.text }}</template> -->
             </v-card>
         </template>
         <template v-slot:item="dropdownItem">
-            <v-list-item-avatar v-if="dropdownItem.item.type === 'channel'">
-                <ChannelImg :channel="dropdownItem.item.value.channel_obj" />
-            </v-list-item-avatar>
-            <v-list-item-avatar v-else>
-                <v-icon>{{ mdiLabel }}</v-icon>
-            </v-list-item-avatar>
-            <v-list-item-content>
-                {{
-                    (dropdownItem.item.type !== "channel" ? "#" : "") +
-                    dropdownItem.item.text +
-                    ` (${dropdownItem.item.value.tag_obj.count})`
-                }}
-            </v-list-item-content>
+            <div class="ma-n1 py-0 pl-3 pr-1">
+                <!-- @click="addItem(dropdownItem.item) -->
+                <v-list-item-content class="py-1 pt-1">
+                    <v-list-item-subtitle class="text--primary">
+                        {{ dropdownItem.item.type }}
+                        <v-icon small v-if="dropdownItem.item.type === 'channel'">{{ icons.mdiYoutube }}</v-icon>
+                        <v-icon small v-if="dropdownItem.item.type === 'topic'">{{ icons.mdiAnimationPlay }}</v-icon>
+                        <v-icon small v-if="dropdownItem.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
+                        <v-icon small v-if="dropdownItem.item.type === 'title & desc'">{{ mdiTextSearch }}</v-icon>
+                        <v-icon small v-if="dropdownItem.item.type === 'comments'">{{ mdiCommentSearch }}</v-icon>
+
+                        {{ dropdownItem.item.text }}
+                    </v-list-item-subtitle>
+                </v-list-item-content>
+            </div>
         </template>
         <!-- <template v-slot:append-outer>
             <v-slide-x-reverse-transition mode="out-in">
@@ -101,11 +92,20 @@
 </template>
 
 <script>
-import { mdiLabel, mdiMagnify, mdiClose, mdiMagnifyPlusOutline } from "@mdi/js";
+import {
+    mdiLabel,
+    mdiMagnifyPlusOutline,
+    mdiAccountMultiple,
+    mdiTextSearch,
+    mdiFilter,
+    mdiCommentSearch,
+} from "@mdi/js";
+import * as icons from "@/utils/icons";
 import ChannelChip from "@/components/channel/ChannelChip";
 import api from "@/utils/backend-api";
 import ChannelImg from "@/components/channel/ChannelImg";
 import { debounce } from "@/utils/functions";
+import { json2csvAsync, csv2jsonAsync } from "json-2-csv";
 
 export default {
     name: "SearchBar",
@@ -115,75 +115,14 @@ export default {
     },
     data() {
         return {
-            query: [
-                {
-                    type: "channel",
-                    value: "somestuff",
-                    text: "Miko Ch. SOME TEXT",
-                },
-                {
-                    type: "topic",
-                    value: "somestuff2",
-                    text: "minecraft",
-                },
-                {
-                    type: "tag",
-                    value: "somestuff3",
-                    text: "NoelFure",
-                },
-                {
-                    type: "text",
-                    value: "somestuff4",
-                    text: "some text",
-                },
-            ],
-            items: [
-                {
-                    type: "channel",
-                    value: "somestuff",
-                    text: "Miko Ch. SOME TEXT",
-                },
-                {
-                    type: "topic",
-                    value: "somestuff2",
-                    text: "minecraft",
-                },
-                {
-                    type: "tag",
-                    value: "somestuff3",
-                    text: "some text 1",
-                },
-
-                {
-                    type: "text",
-                    value: "somestuff4",
-                    text: "NoelFure",
-                },
-                {
-                    type: "tag",
-                    value: "somestuff4",
-                    text: "some text",
-                },
-                {
-                    type: "tag",
-                    value: "somestuff5",
-                    text: "some text 2",
-                },
-                {
-                    type: "tag",
-                    value: "somestuff6",
-                    text: "some text",
-                },
-                {
-                    type: "tag",
-                    value: "somestuff",
-                    text: "some text",
-                },
-            ],
-            mdiMagnify,
+            query: [],
+            icons,
             mdiLabel,
-            mdiClose,
+            mdiAccountMultiple,
             mdiMagnifyPlusOutline,
+            mdiTextSearch,
+            mdiCommentSearch,
+            mdiFilter,
             isLoading: false,
             search: null,
             fromApi: [],
@@ -199,7 +138,11 @@ export default {
             default: false,
         },
     },
+
     computed: {
+        isXs() {
+            return this.$vuetify.breakpoint.name === "xs";
+        },
         cachedChannels() {
             return this.$store.state.cachedChannels;
         },
@@ -211,69 +154,56 @@ export default {
         },
     },
     watch: {
+        async $route(to) {
+            console.log("UPDATED");
+            if (to.query?.q && this.query.length === 0) {
+                this.query = await csv2jsonAsync(this.$route.query?.q);
+            }
+        },
         // eslint-disable-next-line func-names
         search: debounce(function (val) {
             if (!val) return;
             const formatted = val.replace("#", "").toLowerCase();
-            this.fetchTags(formatted)
+            this.getAutocomplete(formatted)
                 .then((res) => {
-                    const currentTagIds = this.query ? this.query.map((item) => item.tag_id) : [];
-                    const filtered = res.data.tags.filter((tag) => !currentTagIds.includes(tag.id));
-                    this.fromApi = filtered.map((tag) => {
-                        if (tag.channel_ref && this.cachedChannels[tag.channel_ref]) {
-                            const ref = this.cachedChannels[tag.channel_ref];
-                            const refName = ref[this.nameProperty];
-                            return {
-                                text: refName || tag.name,
-                                type: "channel",
-                                value: {
-                                    tag_id: tag.id,
-                                    tag_obj: tag,
-                                    channel_obj: ref,
-                                },
-                            };
-                        }
-                        return {
-                            text: tag.name,
-                            type: "tag",
-                            value: {
-                                tag_id: tag.id,
-                                tag_obj: tag,
-                            },
-                        };
-                    });
+                    // todo maybe remove seen ones
+                    this.fromApi = [
+                        { type: "title & desc", value: `${val}title & desc`, text: val },
+                        { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                        { type: "comments", value: `${val}comments`, text: val },
+                        { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                        ...res.data.map((x) => {
+                            if (!x.text) x.text = x.value;
+                            // x.value = x.text + x.type;
+                            return x;
+                        }),
+                    ];
                 })
                 .catch((e) => console.log(e));
             // .finally(() => alert(this.fromApi.map(item => item.text)));
         }, 200),
     },
     methods: {
-        onKeyDown() {
-            // if (this.fromApi.length === 0) this.commitSearch();
-        },
-        async fetchTags(query) {
+        async getAutocomplete(query) {
             this.isLoading = true;
-            const res = await api.searchTags(query, 10);
+            const res = await api.searchAutocomplete(query);
             this.isLoading = false;
             return res;
         },
         deleteChip(item) {
-            this.query.splice(this.query.map((q) => q.tag_id).indexOf(item.value.tag_id), 1);
+            this.query.splice(this.query.map((q) => q.value).indexOf(item.value), 1);
         },
-        commitSearch() {
-            // if (!this.query && !this.search) return;
-            // this.$router.push({
-            //     path: "/search",
-            //     query: {
-            //         ...(this.query && {
-            //             tags: this.query
-            //                 .map((item) => item.value.tag_obj.name)
-            //                 .sort()
-            //                 .join(","),
-            //         }),
-            //         ...(this.search && { title: this.search }),
-            //     },
-            // });
+        async commitSearch() {
+            if (!this.query) return;
+
+            this.$router.push({
+                path: "/search",
+                query: { q: await json2csvAsync(this.query) },
+            });
+        },
+        addItem(item) {
+            console.log(item);
+            this.query.push({ ...item });
         },
         onInput() {
             this.search = null;
@@ -285,7 +215,15 @@ export default {
 
 <style>
 .search-bar {
-    max-width: 670px !important;
+    max-width: 670px;
+}
+.search-bar-small {
+    max-width: 90vw !important;
+}
+.search-bar .selected-card {
+    margin: 3px;
+    max-width: 100%;
+    min-width: 80px;
 }
 
 .search-bar.v-input > .v-input__control {
@@ -315,11 +253,11 @@ export default {
     margin: 0 !important;
 }
 
-.search-bar .filter-type {
+.search-bar .selected-card-type {
     position: absolute;
     top: 0px;
     left: 0px;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(100, 100, 100, 0.3);
 }
 
 .search-bar.v-input > .v-input__control {
@@ -344,6 +282,9 @@ export default {
     background-color: #eee;
 }
 
+.search-bar .search-item {
+    /* max-width: 30vw; */
+}
 /* .search-bar.theme--light > .v-input__append-outer > .v-input__icon > .v-icon {
     color: black !important;
 } */

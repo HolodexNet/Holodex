@@ -59,7 +59,7 @@
                         </v-list>
                     </v-menu>
                 </v-toolbar-title>
-                <SearchBar v-if="!isXs" />
+                <SearchBar v-if="!isXs" key="main-search-bar" />
 
                 <!--================= Account [👤] Button (Desktop Only) ================-->
 
@@ -124,7 +124,7 @@
                 <v-app-bar-nav-icon @click="searchBarExpanded = false" class="backButton">
                     <v-icon>{{ icons.mdiClose }}</v-icon>
                 </v-app-bar-nav-icon>
-                <SearchBar :autofocus="isXs" />
+                <SearchBar :autofocus="isXs" key="main-search-bar" />
             </template>
 
             <!--=================== END OF Expanded Search (Mobile Only) =======================-->
