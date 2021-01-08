@@ -46,7 +46,7 @@
                         infiniteLoad
                         @infinite="loadNext"
                         :infiniteId="infiniteId"
-                        style="min-height: 100vh"
+                        style="min-height: 100px"
                         :cols="{
                             xs: 1,
                             sm: 3,
@@ -124,8 +124,8 @@ export default {
     methods: {
         init() {
             if (this.favorites.length > 0 && this.isLoggedIn) {
+                this.$store.dispatch("favorites/resetState");
                 this.resetVideos();
-                this.$store.commit("favorites/resetLive");
                 this.$store.dispatch("favorites/fetchLive");
                 this.infiniteId = +new Date();
             }

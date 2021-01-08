@@ -21,7 +21,10 @@ export const state = { ...initialState };
 
 const getters = {
     isFavorited: (state) => (channelId) => {
-        return state.favorites.find((f) => f.id === channelId) || state.stagedFavorites[channelId] === "add";
+        return (
+            state.stagedFavorites[channelId] === "add" ||
+            (state.favorites.find((f) => f.id === channelId) && state.stagedFavorites[channelId] !== "remove")
+        );
     },
 };
 
@@ -66,6 +69,7 @@ const actions = {
                 commit("updateVideos", data);
             });
     },
+    // eslint-disable-next-line no-unused-vars
     updateFavorites: debounce(({ state, commit, rootState }) => {
         const operations = Object.keys(state.stagedFavorites).map((key) => {
             return {
@@ -73,11 +77,9 @@ const actions = {
                 channel_id: key,
             };
         });
-
         return api
             .patchFavorites(rootState.userdata.jwt, operations)
             .then((res) => {
-                console.log(res);
                 if (res.status === 200) {
                     console.log("success");
                     commit("setFavorites", res.data);
@@ -113,18 +115,15 @@ const mutations = {
         state.currentOffset += videos.length;
         state.videos = state.videos.concat(videos);
     },
-    resetLive(state) {
-        // state.currentOffset = 0;
-        state.hasError = false;
-        state.live = [];
-    },
     resetVideos(state) {
         state.currentOffset = 0;
         state.videos = [];
     },
-    // resetState(state) {
-    //     Object.assign(state, initialState);
-    // },
+    resetState(state) {
+        state.hasError = false;
+        state.isLoading = true;
+        // Object.assign(state, initialState);
+    },
     clearStagedFavorites(state) {
         state.stagedFavorites = {};
     },
@@ -133,12 +132,13 @@ const mutations = {
             Vue.delete(state.stagedFavorites, channelId);
             return;
         }
-
-        if (!state.favorites.includes[channelId]) {
-            Vue.set(state.stagedFavorites, channelId, "add");
-        } else {
+        console.log(state.favorites.find((f) => f.id === channelId));
+        if (state.favorites.find((f) => f.id === channelId)) {
             Vue.set(state.stagedFavorites, channelId, "remove");
+        } else {
+            Vue.set(state.stagedFavorites, channelId, "add");
         }
+        console.log(state.stagedFavorites);
     },
 };
 
