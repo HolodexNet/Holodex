@@ -1,86 +1,95 @@
 <template>
-    <v-card
-        outlined
-        :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
-        :to="!redirectMode ? `/watch/${video.id}` : ''"
-        :href="`https://youtu.be/${video.id}`"
-        :target="redirectMode ? '_blank' : ''"
-        rel="noopener"
-        link
-    >
-        <!-- Video Image with Duration -->
-        <v-img
-            class="white--text"
-            :src="imageSrc"
-            :aspect-ratio="16 / 9"
-            :width="horizontal ? '150px' : '100%'"
-            v-if="!hideThumbnail"
+    <div :class="{ 'video-card-fluid': fluid }">
+        <v-card
+            outlined
+            :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
+            :to="!redirectMode ? `/watch/${video.id}` : ''"
+            :href="`https://youtu.be/${video.id}`"
+            :target="redirectMode ? '_blank' : ''"
+            rel="noopener"
+            link
         >
-            <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center"></v-row>
-            </template>
-            <!-- Image Overlay -->
-            <div class="video-card-overlay d-flex flex-column align-end justify-space-between" style="height: 100%">
-                <!-- Check box for saved video -->
-                <v-icon
-                    :color="hasSaved ? 'primary' : 'white'"
-                    class="video-card-action"
-                    :class="{ 'hover-show': !hasSaved && !isXs }"
-                    @click="toggleSaved($event)"
-                >
-                    {{ hasSaved ? mdiCheck : mdiPlusBox }}
-                </v-icon>
-                <div v-if="video.duration_secs > 0 || video.live_start" class="video-duration">
-                    {{ formattedDuration }}
-                </div>
-            </div>
-        </v-img>
-
-        <v-list-item three-line class="pa-0">
-            <!-- Render Channel Avatar if necessary -->
-            <router-link
-                :to="`/channel/${video.channel.id}`"
-                v-if="includeChannel && includeAvatar && !horizontal && video.channel"
+            <!-- Video Image with Duration -->
+            <v-img
+                class="white--text"
+                :src="imageSrc"
+                :aspect-ratio="16 / 9"
+                :width="horizontal ? '150px' : '100%'"
+                v-if="!hideThumbnail"
             >
-                <v-list-item-avatar>
-                    <ChannelImg :channel="video.channel" />
-                </v-list-item-avatar>
-            </router-link>
-
-            <v-list-item-content class="pa-0">
-                <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
-                    {{ title }}
-                </v-list-item-title>
-                <v-list-item-subtitle v-if="includeChannel">
-                    <router-link
-                        :to="`/channel/${video.channel.id}`"
-                        class="no-decoration channel-name"
-                        :class="`name-${video.channel.type}`"
+                <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center"></v-row>
+                </template>
+                <!-- Image Overlay -->
+                <div class="video-card-overlay d-flex flex-column align-end justify-space-between" style="height: 100%">
+                    <!-- Check box for saved video -->
+                    <v-icon
+                        :color="hasSaved ? 'primary' : 'white'"
+                        class="video-card-action"
+                        :class="{ 'hover-show': !hasSaved && !isXs }"
+                        @click="toggleSaved($event)"
                     >
-                        {{ channelName }}
-                    </router-link>
-                </v-list-item-subtitle>
-                <v-list-item-subtitle>
-                    <span :class="'text-' + this.video.status">
-                        {{ formattedTime }}
-                    </span>
-                    <span v-if="video.clips && video.clips.length > 0">
-                        •
-                        <router-link :to="`/watch/${video.id}`" class="no-decoration primary--text">
-                            {{ $tc("component.videoCard.clips", formatCount(video.clips.length)) }}
+                        {{ hasSaved ? mdiCheck : mdiPlusBox }}
+                    </v-icon>
+                    <div v-if="video.duration_secs > 0 || video.live_start" class="video-duration">
+                        {{ formattedDuration }}
+                    </div>
+                </div>
+            </v-img>
+
+            <v-list-item three-line class="pa-0">
+                <!-- Render Channel Avatar if necessary -->
+                <router-link
+                    :to="`/channel/${video.channel.id}`"
+                    v-if="includeChannel && includeAvatar && !horizontal && video.channel"
+                >
+                    <v-list-item-avatar>
+                        <ChannelImg :channel="video.channel" />
+                    </v-list-item-avatar>
+                </router-link>
+
+                <v-list-item-content class="pa-0">
+                    <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
+                        {{ title }}
+                    </v-list-item-title>
+                    <v-list-item-subtitle v-if="includeChannel">
+                        <router-link
+                            :to="`/channel/${video.channel.id}`"
+                            class="no-decoration channel-name"
+                            :class="`name-${video.channel.type}`"
+                        >
+                            {{ channelName }}
                         </router-link>
-                    </span>
-                    <span v-else-if="video.status === 'live' && video.live_viewers > 0">
-                        •
-                        {{ $t("component.videoCard.watching", [formatCount(video.live_viewers)]) }}
-                    </span>
-                </v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-action v-if="!!this.$slots.action">
-                <slot name="action"></slot>
-            </v-list-item-action>
-        </v-list-item>
-    </v-card>
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle>
+                        <span :class="'text-' + this.video.status">
+                            {{ formattedTime }}
+                        </span>
+                        <span v-if="video.clips && video.clips.length > 0">
+                            •
+                            <router-link :to="`/watch/${video.id}`" class="no-decoration primary--text">
+                                {{ $tc("component.videoCard.clips", formatCount(video.clips.length)) }}
+                            </router-link>
+                        </span>
+                        <span v-else-if="video.status === 'live' && video.live_viewers > 0">
+                            •
+                            {{ $t("component.videoCard.watching", [formatCount(video.live_viewers)]) }}
+                        </span>
+                    </v-list-item-subtitle>
+                </v-list-item-content>
+                <v-list-item-action v-if="!!this.$slots.action">
+                    <slot name="action"></slot>
+                </v-list-item-action>
+            </v-list-item>
+        </v-card>
+        <v-list style="max-height: 400px" dense class="pa-0 transparent overflow-y-auto caption" v-if="video.comments">
+            <v-divider class="mx-4" style="flex-basis: 100%; height: 0"></v-divider>
+            <!-- Render Channel Avatar if necessary -->
+            <v-list-item class="pa-0" v-for="comment in video.comments" :key="comment.comment_key">
+                <comment :comment="comment" :videoId="video.id"></comment>
+            </v-list-item>
+        </v-list>
+    </div>
 </template>
 
 <script>
@@ -93,6 +102,7 @@ export default {
     name: "VideoCard",
     components: {
         ChannelImg: () => import("@/components/channel/ChannelImg"),
+        Comment: () => import("./Comment"),
     },
     data() {
         return {

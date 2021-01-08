@@ -49,6 +49,7 @@ export default {
             videos: [],
             loading: false,
             horizontal: false,
+            executedQuery: null,
             filter: {
                 sort: "newest",
                 type: "all",
@@ -110,29 +111,16 @@ export default {
     },
     watch: {
         // eslint-disable-next-line func-names
-        "$route.query": function () {
+        "$route.query": function (x) {
             this.syncFilters();
-            this.searchVideo();
-        },
-        filter: {
-            handler() {
-                this.$router.push({
-                    path: "/search",
-                    query: {
-                        tags: this.$route.query.tags,
-                        title: this.$route.query.title,
-                        type: this.filter.type,
-                        sort: this.filter.sort,
-                    },
-                });
-            },
-            deep: true,
+            console.log(x.q, this.executedQuery);
+            if (x.q !== this.executedQuery && x.q) this.searchVideo();
         },
     },
     mounted() {
         // console.log(this.$route);
         this.syncFilters();
-        this.searchVideo();
+        if (this.$route.query?.q !== this.executedQuery) this.searchVideo();
     },
     methods: {
         async searchVideo() {
@@ -140,6 +128,7 @@ export default {
             this.loading = true;
             this.videos = [];
             const { q } = this.$route.query;
+            this.executedQuery = q; // save to executed query;
             const parsedQuery = await csv2jsonAsync(q);
             console.log("PARSED", parsedQuery);
             const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
