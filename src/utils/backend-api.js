@@ -4,7 +4,7 @@ import { dayjs } from "@/utils/time";
 import querystring from "querystring";
 
 export const axiosInstance = axios.create({
-    baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2" : "https://holodex.net/api/v1",
+    baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2" : "/api/v2",
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
@@ -12,7 +12,7 @@ export const axiosInstance = axios.create({
 });
 
 export const axiosV2 = axios.create({
-    baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2/" : "http://holodex.net/api/v2/",
+    baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2" : "/api/v2",
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
