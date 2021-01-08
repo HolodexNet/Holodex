@@ -81,7 +81,7 @@ import InfiniteLoading from "vue-infinite-loading";
 import ApiErrorMessage from "@/components/common/ApiErrorMessage";
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
 import { mapState } from "vuex";
-import { debounce, localSortChannels } from "@/utils/functions";
+import { localSortChannels } from "@/utils/functions";
 
 export default {
     name: "Channels",
@@ -201,10 +201,10 @@ export default {
     methods: {
         // changing category also changes sort, which will cause this to trigger twice
         // eslint-disable-next-line func-names
-        resetChannels: debounce(function () {
+        resetChannels() {
             this.infiniteId = +new Date();
             this.$store.commit("channels/resetChannels");
-        }, 100),
+        },
         loadNext($state) {
             const lastLength = this.channels.length;
             this.$store
