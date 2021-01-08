@@ -74,6 +74,18 @@
                         </v-list-item-action>
                     </v-list-item>
                 </template> -->
+                <template v-for="channel in collapsedFavorites">
+                    <v-list-item
+                        v-if="channel"
+                        :key="channel.id"
+                        @click="$router.push(`/channel/${channel.id}`).catch(() => {})"
+                    >
+                        <v-list-item-avatar :size="35">
+                            <ChannelImg :channel="channel" />
+                        </v-list-item-avatar>
+                        <ChannelInfo :channel="channel" noSubscriberCount noGroup />
+                    </v-list-item>
+                </template>
                 <v-list-item link @click="favoritesExpanded = !favoritesExpanded" v-if="favorites.length > 5">
                     <v-list-item-action>
                         <v-icon>{{ favoritesExpanded ? mdiChevronUp : mdiChevronDown }}</v-icon>
@@ -139,6 +151,12 @@ export default {
         ...mapState(["favorites", "cachedChannels", "live"]),
         language() {
             return langs.find((x) => x.val === this.$store.state.settings.lang).display;
+        },
+        favorites() {
+            return this.$store.state.favorites.favorites;
+        },
+        collapsedFavorites() {
+            return !this.favoritesExpanded && this.favorites.length > 5 ? this.favorites.slice(0, 5) : this.favorites;
         },
         // favoritedChannels() {
         //     if (!this.$store.state.cachedChannels || !this.$store.state.favorites) return [];

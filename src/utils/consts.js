@@ -12,6 +12,7 @@ export const VIDEO_TYPES = Object.freeze({
 });
 
 export const ORGS = Object.freeze([
+    "All Vtubers",
     "Hololive",
     "Nijisanji",
     "Kizuna Ai Inc.",

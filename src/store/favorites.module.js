@@ -14,6 +14,7 @@ const initialState = {
     recentVideoFilter: "all",
 
     stagedFavorites: {},
+    // lastLiveUpdate: "2021-01-07T18:31:22-08:00",
 };
 
 export const state = { ...initialState };
@@ -35,14 +36,15 @@ const actions = {
                 console.error(e);
             });
     },
-    fetchLive({ commit, rootState }, params) {
+    fetchLive({ state, commit }) {
         commit("fetchStart");
         return api
-            .live({
-                org: rootState.currentOrg,
-                ...params,
+            .favoritesLive({
+                // last_update: "2021-01-07T18:31:22-08:00",
+                channels: state.favorites.map((f) => f.id).join(","),
             })
             .then((res) => {
+                console.log(res);
                 commit("setLive", res);
                 commit("fetchEnd");
             })
@@ -53,19 +55,17 @@ const actions = {
     },
     fetchNextVideos({ state, commit, rootState }, params) {
         return api
-            .videos({
+            .favoritesVideos(rootState.userdata.jwt, {
                 offset: state.currentOffset,
                 status: "past",
                 ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
                 include: "clips",
-                org: rootState.currentOrg,
                 ...params,
             })
             .then(({ data }) => {
                 commit("updateVideos", data);
             });
     },
-    // eslint-disable-next-line no-unused-vars
     updateFavorites: debounce(({ state, commit, rootState }) => {
         const operations = Object.keys(state.stagedFavorites).map((key) => {
             return {
@@ -113,14 +113,18 @@ const mutations = {
         state.currentOffset += videos.length;
         state.videos = state.videos.concat(videos);
     },
+    resetLive(state) {
+        // state.currentOffset = 0;
+        state.hasError = false;
+        state.live = [];
+    },
     resetVideos(state) {
         state.currentOffset = 0;
         state.videos = [];
     },
-    resetState(state) {
-        Object.assign(state, initialState);
-    },
-
+    // resetState(state) {
+    //     Object.assign(state, initialState);
+    // },
     clearStagedFavorites(state) {
         state.stagedFavorites = {};
     },

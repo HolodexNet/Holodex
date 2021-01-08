@@ -38,7 +38,6 @@ const actions = {
         return api
             .channel(state.id)
             .then(({ data }) => {
-                console.log("test");
                 commit("setChannel", data);
                 commit("fetchEnd");
             })
@@ -86,7 +85,6 @@ const mutations = {
         state.videos = state.videos.concat(videos);
     },
     resetVideos(state) {
-        console.log("rest");
         state.currentOffset = 0;
         state.videos = [];
     },
