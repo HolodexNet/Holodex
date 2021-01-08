@@ -19,9 +19,6 @@ Vue.use(Vuex);
 
 function defaultState() {
     return {
-        cachedChannelsLastUpdated: null,
-        cachedChannelsError: false,
-        cachedChannels: {},
         // other
         showUpdateDetails: false,
         // authorization
@@ -65,19 +62,6 @@ export default new Vuex.Store({
         },
     },
     mutations: {
-        // channel cache
-        setCachedChannelsError(state, payload) {
-            state.cachedChannelsError = payload;
-        },
-        setCachedChannelsLastUpdated(state, payload) {
-            state.cachedChannelsLastUpdated = payload;
-        },
-        addCachedChannel(state, channelObj) {
-            Vue.set(state.cachedChannels, channelObj.id, channelObj);
-        },
-        removeCachedChannel(state, channelId) {
-            delete state.cachedChannels[channelId];
-        },
         // other
         setShowUpdatesDetail(state, payload) {
             state.showUpdateDetails = payload;
@@ -106,47 +90,6 @@ export default new Vuex.Store({
             if (from) commit("historyPush", { from });
             else commit("historyPop");
         },
-        async updateChannelCache({ commit }) {
-            console.log("Channel Cache updated");
-            commit("setCachedChannelsLastUpdated", new Date().getTime());
-            // const res = await api.channels({
-            //     limit: 100,
-            //     type: "vtuber",
-            // });
-            // if (res.data.channels.length) {
-            //     res.data.channels.forEach((channel) => {
-            //         commit("addCachedChannel", channel);
-            //     });
-            // }
-        },
-        // async checkChannelCache({ state, dispatch }) {
-        //     const currentTime = new Date().getTime();
-        //     if (
-        //         !state.cachedChannelsLastUpdated ||
-        //         // update every hour
-        //         currentTime - state.cachedChannelsLastUpdated > 1000 * 60 * 60 ||
-        //         // retry every 15 minutes if error
-        //         (state.cachedChannelsError && currentTime - state.cachedChannelsLastUpdated > 1000 * 60 * 15)
-        //     ) {
-        //         this.commit("setCachedChannelsError", false);
-        //         await dispatch("updateChannelCache");
-        //         return;
-        //     }
-
-        //     // update favorites if missing channels
-        //     for (const id of state.favorites) {
-        //         if (!Object.prototype.hasOwnProperty.call(state.cachedChannels, id) && id < 1000) {
-        //             console.log(`Missing channel_id: ${id}, refreshing cache`);
-        //             try {
-        //                 await dispatch("updateChannelCache");
-        //                 break;
-        //             } catch (e) {
-        //                 console.log(e);
-        //                 this.commit("setCachedChannelsError", true);
-        //             }
-        //         }
-        //     }
-        // },
         async tryUpdatingLive({ state, commit, dispatch }, payload) {
             // will only trigger after user visits the first page that triggers a tryUpdatingLive dispatch.
             // currently only the Home component does this.
