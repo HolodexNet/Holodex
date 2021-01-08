@@ -1,11 +1,18 @@
 <template>
     <v-list class="pa-0" v-if="grouped">
-        <v-list-group v-for="(group, index) in channelsByGroup" :key="group.title" no-action sub-group value="0">
+        <v-list-group
+            v-for="(group, index) in channelsByGroup"
+            :key="`${index}-${group.title}`"
+            no-action
+            sub-group
+            value="0"
+        >
             <template v-slot:activator>
                 <div class="d-flex justify-space-between flex-grow-1">
                     <v-list-item-title>
                         {{ group.title }}
                     </v-list-item-title>
+                    <!-- TODO ADD CONFIRMATION DIALOG -->
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn sm outlined>
