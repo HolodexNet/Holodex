@@ -47,7 +47,7 @@
             <ChannelList
                 :channels="category === Tabs.FAVORITES ? sortedFavorites : channels"
                 includeVideoCount
-                :includeGroupHeader="sort === 'group'"
+                :grouped="sort === 'group'"
                 :cardView="cardView"
             />
             <infinite-loading
