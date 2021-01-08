@@ -34,6 +34,18 @@
         </v-card-text>
         <VideoDescription :description="video.description"></VideoDescription>
         <v-divider />
+        <v-list
+            style="max-height: 400px"
+            dense
+            class="pa-0 transparent overflow-y-auto caption"
+            v-if="fetchComments && comments"
+        >
+            <v-divider class="mx-4" style="flex-basis: 100%; height: 0"></v-divider>
+            <!-- Render Channel Avatar if necessary -->
+            <v-list-item class="pa-0" v-for="comment in comments" :key="comment.comment_key">
+                <comment :comment="comment" :videoId="video.id"></comment>
+            </v-list-item>
+        </v-list>
     </v-card>
 </template>
 
@@ -45,6 +57,7 @@ import ChannelImg from "@/components/channel/ChannelImg";
 import VideoDescription from "@/components/video/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
 import { dayjs } from "@/utils/time";
+import api from "@/utils/backend-api";
 
 export default {
     name: "WatchInfo",
@@ -54,16 +67,31 @@ export default {
         ChannelSocials,
         ChannelImg,
         VideoDescription,
+        Comment: () => import("@/components/video/Comment"),
     },
     props: {
         video: {
             required: true,
         },
+        fetchComments: {
+            type: Boolean,
+            required: false,
+        },
+    },
+    data() {
+        return { comments: [] };
     },
     methods: {
         formatTime(t) {
             return dayjs(t).format("MMM DD, YYYY");
         },
+    },
+    mounted() {
+        if (this.fetchComments) {
+            api.comments(this.video.id).then((res) => {
+                this.comments = res.data;
+            });
+        }
     },
     computed: {
         channel_chips() {

@@ -46,6 +46,9 @@ export default {
     video(id) {
         return axiosInstance.get(`/videos/${id}`);
     },
+    comments(videoId) {
+        return axiosInstance.get(`/videos/${videoId}/comments`);
+    },
     // eslint-disable-next-line camelcase
     videoLiveChat(id, type, time_start) {
         const q = querystring.stringify({ type, time_start });

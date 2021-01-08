@@ -16,7 +16,7 @@
                             @ready="ready"
                             @playing="playing"
                             @paused="paused"
-                            :playerVars="{ autoplay: 1, playsinline: 1 }"
+                            :playerVars="{ start: timeOffset, autoplay: 1, playsinline: 1 }"
                         >
                         </youtube>
                     </template>
@@ -30,7 +30,7 @@
                     class="pa-3"
                 >
                 </WatchTimeline> -->
-                <WatchInfo :video="video" />
+                <WatchInfo :video="video" :fetchComments="true" />
             </v-col>
             <v-col cols="12" sm="12" lg="3" xl="3" md="12" class="related-videos pa-1">
                 <!-- <WatchTranscript
@@ -154,6 +154,9 @@ export default {
         },
         videoId() {
             return this.$route?.params?.id || this.$route?.query?.v;
+        },
+        timeOffset() {
+            return Number(this.$route?.query?.t ?? 0);
         },
         liveChatUrl() {
             if (!this.video) return null;
