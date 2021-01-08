@@ -30,7 +30,7 @@
                 <v-subheader>
                     {{ this.$t("component.mainNav.favorites") }}
                 </v-subheader>
-                <template v-for="channel in favoritedChannels">
+                <!-- <template v-for="channel in favoritedChannels">
                     <v-list-item
                         v-if="channel"
                         :key="channel.id"
@@ -72,6 +72,18 @@
                                 </span>
                             </v-tooltip>
                         </v-list-item-action>
+                    </v-list-item>
+                </template> -->
+                <template v-for="channel in collapsedFavorites">
+                    <v-list-item
+                        v-if="channel"
+                        :key="channel.id"
+                        @click="$router.push(`/channel/${channel.id}`).catch(() => {})"
+                    >
+                        <v-list-item-avatar :size="35">
+                            <ChannelImg :channel="channel" />
+                        </v-list-item-avatar>
+                        <ChannelInfo :channel="channel" noSubscriberCount noGroup />
                     </v-list-item>
                 </template>
                 <v-list-item link @click="favoritesExpanded = !favoritesExpanded" v-if="favorites.length > 5">
@@ -140,41 +152,47 @@ export default {
         language() {
             return langs.find((x) => x.val === this.$store.state.settings.lang).display;
         },
-        favoritedChannels() {
-            if (!this.$store.state.cachedChannels || !this.$store.state.favorites) return [];
-            // check cache for missing favorites
-            this.$store.dispatch("checkChannelCache");
-            // return favorited channel list from cache
-            const arr = this.favorites.map((channelId) => {
-                // make shallow copy of object to not modify state
-                if (Object.hasOwnProperty.call(this.cachedChannels, channelId)) {
-                    const channel = this.cachedChannels[channelId];
-                    // clear any lives
-                    channel.live = null;
-                    return channel;
-                }
-                return null;
-            });
-
-            // add live video obj to channel
-            this.live?.forEach((l) => {
-                const index = this.favorites.indexOf(l.channel.id);
-                if (index > 0 && !arr[index].live) arr[index].live = l;
-            });
-
-            // sort favorite channels by most upcoming live if any
-            arr.sort((a, b) => {
-                if (a.live && b.live) {
-                    const dateA = new Date(a.live.start_scheduled);
-                    const dateB = new Date(b.live.start_scheduled);
-                    return dateA - dateB;
-                }
-                if (a.live) return -1;
-                if (b.live) return 1;
-                return 0;
-            });
-            return !this.favoritesExpanded && this.favorites.length > 5 ? arr.splice(0, 5) : arr;
+        favorites() {
+            return this.$store.state.favorites.favorites;
         },
+        collapsedFavorites() {
+            return !this.favoritesExpanded && this.favorites.length > 5 ? this.favorites.slice(0, 5) : this.favorites;
+        },
+        // favoritedChannels() {
+        //     if (!this.$store.state.cachedChannels || !this.$store.state.favorites) return [];
+        //     // check cache for missing favorites
+        //     this.$store.dispatch("checkChannelCache");
+        //     // return favorited channel list from cache
+        //     const arr = this.favorites.map((channelId) => {
+        //         // make shallow copy of object to not modify state
+        //         if (Object.hasOwnProperty.call(this.cachedChannels, channelId)) {
+        //             const channel = this.cachedChannels[channelId];
+        //             // clear any lives
+        //             channel.live = null;
+        //             return channel;
+        //         }
+        //         return null;
+        //     });
+
+        //     // add live video obj to channel
+        //     this.live?.forEach((l) => {
+        //         const index = this.favorites.indexOf(l.channel.id);
+        //         if (index > 0 && !arr[index].live) arr[index].live = l;
+        //     });
+
+        //     // sort favorite channels by most upcoming live if any
+        //     arr.sort((a, b) => {
+        //         if (a.live && b.live) {
+        //             const dateA = new Date(a.live.start_scheduled);
+        //             const dateB = new Date(b.live.start_scheduled);
+        //             return dateA - dateB;
+        //         }
+        //         if (a.live) return -1;
+        //         if (b.live) return 1;
+        //         return 0;
+        //     });
+        //     return !this.favoritesExpanded && this.favorites.length > 5 ? arr.splice(0, 5) : arr;
+        // },
     },
     methods: {
         formatStreamStart,

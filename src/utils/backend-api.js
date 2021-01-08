@@ -81,4 +81,31 @@ export default {
             },
         );
     },
+    favorites(jwt) {
+        return axiosV2.get("/users/favorites", {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    favoritesVideos(jwt, query) {
+        const q = querystring.stringify(query);
+        return axiosV2.get(`/users/videos?${q}`, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    favoritesLive(query) {
+        const q = querystring.stringify(query);
+        return axiosInstance.get(`/users/live?${q}`).then((res) =>
+            res.data
+                // .concat(res.data.upcoming)
+                // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
+                .filter((live) => !(!live.live_start && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))))
+                // get currently live and upcoming lives within the next 3 weeks
+                .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))),
+        );
+    },
+    patchFavorites(jwt, operations) {
+        return axiosV2.patch("/users/favorites", operations, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
 };

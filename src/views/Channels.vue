@@ -45,12 +45,18 @@
                 </v-btn>
             </v-list>
             <ChannelList
-                :channels="channels"
+                :channels="category === Tabs.FAVORITES ? sortedFavorites : channels"
                 includeVideoCount
                 :includeGroupHeader="sort === 'group'"
                 :cardView="cardView"
             />
-            <infinite-loading @infinite="loadNext" style="min-height: 10px" :identifier="infiniteId" spinner="spiral">
+            <infinite-loading
+                @infinite="loadNext"
+                style="min-height: 10px"
+                :identifier="infiniteId"
+                spinner="spiral"
+                v-if="category !== Tabs.FAVORITES"
+            >
                 <template v-slot:no-more><span></span></template>
                 <template v-slot:error>
                     <ApiErrorMessage />
@@ -60,7 +66,7 @@
         <!-- Favorites specific view items: -->
         <template v-if="category === Tabs.FAVORITES">
             <div v-if="favorites.length > 0" class="text--secondary text-caption">
-                {{ $t("views.channels.favoriteLastUpdated", [lastUpdated]) }}
+                <!-- {{ $t("views.channels.favoriteLastUpdated", [lastUpdated]) }} -->
             </div>
             <div v-if="!favorites || favorites.length === 0">
                 {{ $t("views.channels.favoritesAreEmpty") }}
@@ -75,6 +81,7 @@ import InfiniteLoading from "vue-infinite-loading";
 import ApiErrorMessage from "@/components/common/ApiErrorMessage";
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
 import { mapState } from "vuex";
+import { debounce, localSortChannels } from "@/utils/functions";
 
 export default {
     name: "Channels",
@@ -109,7 +116,7 @@ export default {
             if (this.category === this.Tabs.FAVORITES) this.$store.dispatch("favorites/fetchFavorites");
         },
         sort() {
-            this.resetChannels();
+            if (this.category !== this.Tabs.FAVORITES) this.resetChannels();
         },
         // eslint-disable-next-line func-names
         "$store.state.currentOrg": function () {
@@ -187,12 +194,17 @@ export default {
         currentSortValue() {
             return this.findSortValue(this.sort) || this.findSortValue(this.defaultSort);
         },
+        sortedFavorites() {
+            return localSortChannels(this.$store.state.favorites.favorites, this.currentSortValue.query_value);
+        },
     },
     methods: {
-        resetChannels() {
+        // changing category also changes sort, which will cause this to trigger twice
+        // eslint-disable-next-line func-names
+        resetChannels: debounce(function () {
             this.infiniteId = +new Date();
             this.$store.commit("channels/resetChannels");
-        },
+        }, 100),
         loadNext($state) {
             const lastLength = this.channels.length;
             this.$store

@@ -77,9 +77,7 @@ const mutations = {
         state.hasError = true;
     },
     setLive(state, live) {
-        // console.log("set");
         state.live = live;
-        // console.log(live);
     },
     setRecentVideoFilter(state, filter) {
         state.recentVideoFilter = filter;

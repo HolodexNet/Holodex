@@ -21,11 +21,11 @@
         >
             <v-icon color="#00ACEE">{{ icons.mdiTwitter }}</v-icon>
         </v-btn>
-        <v-tooltip bottom v-if="channel.id < 1000">
+        <v-tooltip bottom v-if="channel.type === 'vtuber'">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn icon sm>
                     <v-icon
-                        :color="isFavorited ? 'red' : 'grey'"
+                        :color="isFavorited && isLoggedIn ? 'red' : 'grey'"
                         v-bind="attrs"
                         v-on="on"
                         @click.stop="toggleFavorite($event)"
@@ -35,11 +35,7 @@
                 </v-btn>
             </template>
             <span>
-                {{
-                    !isFavorited
-                        ? $t("component.channelSocials.addToFavorites")
-                        : $t("component.channelSocials.removeFromFavorites")
-                }}
+                {{ tooltip }}
             </span>
         </v-tooltip>
     </v-list-item-action>
@@ -47,7 +43,7 @@
 
 <script>
 import * as icons from "@/utils/icons";
-import { mapMutations } from "vuex";
+// import { mapMutations } from "vuex";
 
 export default {
     data() {
@@ -66,15 +62,28 @@ export default {
         },
     },
     computed: {
+        tooltip() {
+            if (!this.isLoggedIn) return "Sign in to favorite";
+
+            return !this.isFavorited
+                ? this.$t("component.channelSocials.addToFavorites")
+                : this.$t("component.channelSocials.removeFromFavorites");
+        },
         isFavorited() {
-            return this.$store.state.favorites.includes(this.channel.id);
+            return this.$store.getters["favorites/isFavorited"](this.channel.id);
+        },
+        isLoggedIn() {
+            return this.$store.getters.isLoggedIn;
         },
     },
     methods: {
-        ...mapMutations(["addFavorite", "removeFavorite"]),
+        // ...mapMutations(["addFavorite", "removeFavorite"]),
         toggleFavorite(event) {
             event.preventDefault();
-            this.isFavorited ? this.removeFavorite(this.channel.id) : this.addFavorite(this.channel.id);
+            if (!this.isLoggedIn) return;
+            this.$store.commit("favorites/toggleFavorite", this.channel.id);
+            this.$store.dispatch("favorites/updateFavorites");
+            // this.isFavorited ? this.removeFavorite(this.channel.id) : this.addFavorite(this.channel.id);
         },
     },
 };
