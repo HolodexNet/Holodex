@@ -1,19 +1,26 @@
 <template>
     <div>
         <!-- punchout to comment directly -->
+        <v-chip x-small label :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`">
+            open comment on&emsp;&emsp;<v-icon x-small>{{ mdiYoutube }}</v-icon></v-chip
+        ><br />
         <span style="white-space: pre-wrap" v-html="processedMessage"></span>
         <!-- comment body -->
     </div>
 </template>
 
 <script>
+import { mdiYoutube } from "@/utils/icons";
+
 const COMMENT_TIMESTAMP_REGEX = /(?:(\d+):)?(\d+):(\d+)/gm;
 
 export default {
     name: "Comment",
     components: {},
     data() {
-        return {};
+        return {
+            mdiYoutube,
+        };
     },
     props: {
         comment: {

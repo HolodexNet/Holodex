@@ -14,10 +14,10 @@
                     includeAvatar
                     :cols="{
                         xs: 1,
-                        sm: 2,
-                        md: 3,
-                        lg: 4,
-                        xl: 5,
+                        sm: 3,
+                        md: 4,
+                        lg: 5,
+                        xl: 6,
                     }"
                     :limitRows="2"
                 >
@@ -86,6 +86,7 @@ export default {
         recentVideoFilter() {
             this.resetVideos();
         },
+        // eslint-disable-next-line func-names
         "$store.state.currentOrg": function () {
             this.init();
         },

@@ -1,6 +1,11 @@
 <template>
     <v-container style="height: 100%">
         <v-row class="justify-end" style="margin-bottom: -15px; margin-top: 15px">
+            <v-snackbar :timeout="-1" :value="containsTopicAndOrg" absolute top left color="primary" text>
+                Currently searching clips by <kbd>Topic</kbd> and <kbd>Organization</kbd> is not supported. No
+                <b>clips</b> will show up.
+            </v-snackbar>
+
             <v-col sm="4" md="2" class="py-1">
                 <v-select v-model="filter.sort" :items="options.sort" dense label="Sort By"></v-select>
             </v-col>
@@ -50,6 +55,7 @@ export default {
             loading: false,
             horizontal: false,
             executedQuery: null,
+            containsTopicAndOrg: false,
             filter: {
                 sort: "newest",
                 type: "all",
@@ -85,7 +91,7 @@ export default {
                     },
                     {
                         text: this.$t("views.search.type.official"),
-                        value: "official",
+                        value: "stream",
                         query_value: {
                             channel_type: "vtuber",
                         },
@@ -130,19 +136,21 @@ export default {
             const { q } = this.$route.query;
             this.executedQuery = q; // save to executed query;
             const parsedQuery = await csv2jsonAsync(q);
-            console.log("PARSED", parsedQuery);
+            // console.log("PARSED", parsedQuery);
             const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
+                sort: this.filter.sort,
                 lang: ["en"],
-                target: ["stream", "clip"],
-                conditions: [
-                    /* { text: "Hello world" } */
-                ],
+                target: this.filter.type === "all" ? ["stream", "clip"] : [this.filter.type],
+                conditions: [],
                 topic: [],
                 vch: [],
                 org: [],
                 comment: [],
             });
-            console.log("SEARCHING", searchQuery);
+            // console.log("SEARCHING", searchQuery);
+            this.containsTopicAndOrg =
+                searchQuery.target.includes("clip") && (searchQuery.topic.length > 0 || searchQuery.topic.org > 0);
+
             if (searchQuery.comment.length === 0)
                 api.searchVideo(searchQuery)
                     .then((res) => {
