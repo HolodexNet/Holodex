@@ -118,7 +118,8 @@ export default {
                 return this.$store.state.settings.clipLangs;
             },
             set(val) {
-                this.$store.commit("settings/setClipLangs", val);
+                // sort array to increase cache hit rate
+                this.$store.commit("settings/setClipLangs", val.sort());
             },
         },
     },
