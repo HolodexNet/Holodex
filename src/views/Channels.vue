@@ -126,15 +126,15 @@ export default {
                     },
                     ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
                         ? [
-                              {
-                                  text: this.$t("views.channels.sortOptions.group"),
-                                  value: "group",
-                                  query_value: {
-                                      sort: "suborg",
-                                      order: "asc",
-                                  },
-                              },
-                          ]
+                            {
+                                text: this.$t("views.channels.sortOptions.group"),
+                                value: "group",
+                                query_value: {
+                                    sort: "group",
+                                    order: "asc",
+                                },
+                            },
+                        ]
                         : []),
                     {
                         text: this.$t("views.channels.sortOptions.videoCount"),
@@ -146,15 +146,15 @@ export default {
                     },
                     ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
                         ? [
-                              {
-                                  text: this.$t("views.channels.sortOptions.clipCount"),
-                                  value: "clip_count",
-                                  query_value: {
-                                      sort: "clip_count",
-                                      order: "desc",
-                                  },
-                              },
-                          ]
+                            {
+                                text: this.$t("views.channels.sortOptions.clipCount"),
+                                value: "clip_count",
+                                query_value: {
+                                    sort: "clip_count",
+                                    order: "desc",
+                                },
+                            },
+                        ]
                         : []),
                 ];
             },
