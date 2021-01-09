@@ -50,7 +50,8 @@
                 :grouped="sort === 'group'"
                 :cardView="cardView"
             />
-            <infinite-loading
+            <!-- <v-card v-intersect="intersect"></v-card> -->
+            <!-- <infinite-loading
                 @infinite="loadNext"
                 style="min-height: 10px"
                 :identifier="infiniteId"
@@ -61,8 +62,9 @@
                 <template v-slot:error>
                     <ApiErrorMessage />
                 </template>
-            </infinite-loading>
+            </infinite-loading> -->
         </v-container>
+        <InfiniteLoad @infinite="load" :identifier="infiniteId"></InfiniteLoad>
         <!-- Favorites specific view items: -->
         <template v-if="category === Tabs.FAVORITES">
             <div v-if="favorites.length > 0" class="text--secondary text-caption">
@@ -79,6 +81,8 @@
 import ChannelList from "@/components/channel/ChannelList";
 import InfiniteLoading from "vue-infinite-loading";
 import ApiErrorMessage from "@/components/common/ApiErrorMessage";
+import InfiniteLoad from "@/components/common/InfiniteLoad";
+
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
 import { mapState } from "vuex";
 import { localSortChannels } from "@/utils/functions";
@@ -92,6 +96,7 @@ export default {
         ChannelList,
         InfiniteLoading,
         ApiErrorMessage,
+        InfiniteLoad,
     },
     data() {
         return {
@@ -199,6 +204,25 @@ export default {
         },
     },
     methods: {
+        load($state) {
+            const lastLength = this.channels.length;
+            this.$store
+                .dispatch("channels/fetchNextChannels", {
+                    type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
+                    ...this.currentSortValue.query_value,
+                })
+                .then(() => {
+                    if (this.channels.length !== lastLength) {
+                        $state.loaded();
+                    } else {
+                        $state.completed();
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                    $state.error();
+                });
+        },
         // changing category also changes sort, which will cause this to trigger twice
         // eslint-disable-next-line func-names
         resetChannels() {
