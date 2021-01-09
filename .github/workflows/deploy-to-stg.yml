@@ -1,0 +1,19 @@
+name: Deploy to staging
+
+on:
+  push:
+    branches:
+      - v2-deployable
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Execute deploy.sh
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script: /opt/holodex/deploy.sh
