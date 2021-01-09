@@ -126,7 +126,7 @@ export default {
                     if (this.videos.length !== lastLength) {
                         $state?.loaded();
                     } else {
-                        $state?.complete();
+                        $state?.completed();
                     }
                 })
                 .catch((e) => {
