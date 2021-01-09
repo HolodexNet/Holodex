@@ -30,18 +30,7 @@
                     {{ this.expanded ? mdiChevronUp : mdiChevronDown }}
                 </v-icon>
             </v-btn>
-            <infinite-loading
-                v-if="infiniteLoad"
-                @infinite="emitInfinite"
-                :distance="100"
-                style="min-height: 100px"
-                :identifier="infiniteId"
-                spinner="spiral"
-            >
-                <template v-slot:error>
-                    <ApiErrorMessage />
-                </template>
-            </infinite-loading>
+            <InfiniteLoad v-if="infiniteLoad" @infinite="emitInfinite" :identifier="infiniteId" />
         </div>
     </v-row>
 </template>
@@ -57,6 +46,7 @@ export default {
         VideoCard,
         ApiErrorMessage,
         InfiniteLoading: () => import("vue-infinite-loading"),
+        InfiniteLoad: () => import("@/components/common/InfiniteLoad"),
     },
     data() {
         return {

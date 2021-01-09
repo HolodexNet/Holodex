@@ -64,7 +64,7 @@
                 </template>
             </infinite-loading> -->
         </v-container>
-        <InfiniteLoad @infinite="load" :identifier="infiniteId"></InfiniteLoad>
+        <InfiniteLoad @infinite="load" :identifier="infiniteId" v-if="category !== Tabs.FAVORITES" />
         <!-- Favorites specific view items: -->
         <template v-if="category === Tabs.FAVORITES">
             <div v-if="favorites.length > 0" class="text--secondary text-caption">

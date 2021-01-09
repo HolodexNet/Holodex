@@ -1,5 +1,5 @@
 <template>
-    <v-card v-intersect="onIntersect" class="d-flex justify-center">
+    <div v-intersect="onIntersect" class="d-flex justify-center py-4">
         <v-progress-circular
             v-if="status === STATUSES.LOADING"
             indeterminate
@@ -9,7 +9,7 @@
         ></v-progress-circular>
         <ApiErrorMessage v-if="status === STATUSES.ERROR" />
         <div v-if="status === STATUSES.COMPLETED">End of list</div>
-    </v-card>
+    </div>
 </template>
 
 <script>
