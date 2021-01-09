@@ -20,6 +20,15 @@
                         </template>
                     </v-radio>
                 </v-radio-group>
+                <v-select
+                    v-model="clipLangs"
+                    :items="validClipLangs"
+                    label="Clip Languages"
+                    multiple
+                    chips
+                    hint="Show clips in these languages"
+                    persistent-hint
+                ></v-select>
                 <v-switch
                     v-model="darkMode"
                     :label="$t('views.settings.darkModeLabel')"
@@ -104,11 +113,45 @@ export default {
                 this.$store.commit("settings/setHideThumbnail", val);
             },
         },
+        clipLangs: {
+            get() {
+                return this.$store.state.settings.clipLangs;
+            },
+            set(val) {
+                this.$store.commit("settings/setClipLangs", val);
+            },
+        },
     },
     data() {
         return {
             langs,
             mdiTranslate,
+            validClipLangs: Object.freeze([
+                {
+                    text: "English",
+                    value: "en",
+                },
+                {
+                    text: "Japanese",
+                    value: "ja",
+                },
+                {
+                    text: "Spanish",
+                    value: "es",
+                },
+                {
+                    text: "Chinese",
+                    value: "zh",
+                },
+                {
+                    text: "Korean",
+                    value: "kr",
+                },
+                {
+                    text: "French",
+                    value: "fr",
+                },
+            ]),
         };
     },
     methods: {

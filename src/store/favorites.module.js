@@ -63,6 +63,7 @@ const actions = {
                 status: "past",
                 ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
                 include: "clips",
+                lang: rootState.settings.clipLangs.join(","),
                 ...params,
             })
             .then(({ data }) => {

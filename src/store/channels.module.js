@@ -48,6 +48,7 @@ const actions = {
                 limit: 25,
                 offset: state.currentOffset,
                 ...(params?.type === CHANNEL_TYPES.VTUBER && { org: rootState.currentOrg }),
+                ...(params?.type === CHANNEL_TYPES.SUBBER && { lang: rootState.settings.clipLangs.join(",") }),
                 ...params,
             })
             .then(({ data }) => {

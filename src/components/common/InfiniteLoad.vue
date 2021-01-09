@@ -29,9 +29,6 @@ export default {
                 COMPLETED: 3,
             }),
             status: 0,
-            hasMore: true,
-            error: false,
-            isLoading: true,
         };
     },
     props: {
