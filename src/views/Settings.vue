@@ -133,23 +133,23 @@ export default {
                     value: "en",
                 },
                 {
-                    text: "Japanese",
+                    text: "日本語",
                     value: "ja",
                 },
                 {
-                    text: "Spanish",
+                    text: "Español",
                     value: "es",
                 },
                 {
-                    text: "Chinese",
+                    text: "中文",
                     value: "zh",
                 },
                 {
-                    text: "Korean",
+                    text: "한국어",
                     value: "kr",
                 },
                 {
-                    text: "French",
+                    text: "français",
                     value: "fr",
                 },
             ]),
