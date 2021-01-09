@@ -1,90 +1,89 @@
 hello: world
 component:
-    apiError:
-        title: Maafkeun
-        textBeforeTwitter: "Ada kesalahan saat memuat konten, silahkan cek twitter "
-        textAfterTwitter: " atau laporkan hal ini melalui"
-        aboutPage: halaman tentang
-    channelList:
-        otherText: Lainnya
-    channelInfo:
-        videoCount: "{0} Video"
-        clipCount: "{n} Klip"
-        subscriberCount: "{n} Subscribers"
-        subscriberNA: Jumlah Subscriber tidak tersedia
-    channelSocials:
-        addToFavorites: Tambahkan ke Favorit
-        removeFromFavorites: Hapus dari Favorit
-    mainNav:
-        home: Halaman Utama
-        favorites: Favorit
-        channels: Saluran
-        about: Tentang
-        library: Koleksi
-        settings: Pengaturan
-    videoCard:
-        clips: "{n} Klip"
-        watching: "{0} sedang menonton"
-        liveNow: Sedang Berlangsung
-    videoDescription:
-        description: Deskripsi
+  apiError:
+    title: Maafkeun
+    textBeforeTwitter: 'Ada kesalahan saat memuat konten, silahkan cek twitter '
+    textAfterTwitter: ' atau laporkan hal ini melalui'
+    aboutPage: halaman tentang
+  channelList:
+    otherText: Lainnya
+  channelInfo:
+    videoCount: '{0} Video'
+    clipCount: '{n} Klip'
+    subscriberCount: '{n} Subscribers'
+    subscriberNA: Jumlah Subscriber tidak tersedia
+  channelSocials:
+    addToFavorites: Tambahkan ke Favorit
+    removeFromFavorites: Hapus dari Favorit
+  mainNav:
+    home: Halaman Utama
+    favorites: Favorit
+    channels: Saluran
+    about: Tentang
+    library: Koleksi
+    settings: Pengaturan
+  videoCard:
+    clips: '{n} Klip'
+    watching: '{0} sedang menonton'
+    liveNow: Sedang Berlangsung
+  videoDescription:
+    description: Deskripsi
 views:
-    channels:
-        channelType:
-            subber: subber
-            vtuber: vtuber
-        sortOptions:
-            subscribers: Subscribers
-            group: Grup
-            recentUpload: Unggahan Terkini
-            videoCount: Jumlah Video
-            clipCount: Jumlah Klip
-        tabs:
-            Vtuber: Vtuber
-            Subber: Subber
-            Favorites: Favorit
-        favoriteLastUpdated: "Terakhir Diperbaharui {0} yang lalu"
-        favoritesAreEmpty: Kamu tidak memiliki favorit!
-    home:
-        liveOrUpcomingHeading: Sedang Berlangsung / Akan Tayang
-        recentVideosHeading: Video Terkini
-        recentVideoToggles:
-            all: Semua
-            official: Resmi
-            subber: Klip
-    library:
-        savedVideosTitle: Video Tersimpan
-        createYtPlaylistButton: "Buat YT Playlist ({0})"
-        deleteFromLibraryButton: "Hapus ({0})"
-        deleteConfirmation: "Apa kamu yakin ingin menghapus video {0} ?"
-        deleteConfirmationOK: Hapus
-        deleteConfirmationCancel: Batal
-        selectionReset: Reset
-        selectionSelectAll: Pilih Semua
-        emptyLibrary: Kamu tidak menyimpan video apapun!
-    notFound:
-        title: Konten tidak ditemukan
-        back: Kembali ke Halaman Utama
-    search:
-        sort:
-            newest: Terbaru
-            oldest: Terlama
-        type:
-            all: Semua
-            official: Resmi
-            clip: Klip
-    settings:
-        title: Pengaturan
-        darkModeLabel: Mode Malam
-        darkModeMsg: Mengubah tema dari mode siang ke mode malam
-        redirectModeLabel: Buka di YouTube
-        redirectModeMsg: Memilih video manapun akan diarahkan langsung ke Youtube
-        useEnglishNameLabel: Menggunakan Nama Inggris
-        useEnglishNameMsg: Menampilkan nama saluran VTuber dalam bahasa inggris
-        hideVideoThumbnailsLabel: Sembunyikan Thumbnail Video
-        hideVideoThumbnailsMsg: >-
-            Menyembunyikan video thumbnail, membantu meningkatkan proses memuat
-            halaman dan mempersingkat halaman pada tampilan hp
-        pushNotificationLabel: Pemberitahuan notif (Akan Datang)
-        pushNotificationMsg: Mengaktifkan notifikasi untuk saluran favorit
-        resetAllSettings: Reset Semua Pengaturan/Data
+  channels:
+    channelType:
+      subber: subber
+      vtuber: vtuber
+    sortOptions:
+      subscribers: Subscribers
+      group: Grup
+      recentUpload: Unggahan Terkini
+      videoCount: Jumlah Video
+      clipCount: Jumlah Klip
+    tabs:
+      Vtuber: Vtuber
+      Subber: Subber
+      Favorites: Favorit
+    favoritesAreEmpty: Kamu tidak memiliki favorit!
+  home:
+    liveOrUpcomingHeading: Sedang Berlangsung / Akan Tayang
+    recentVideosHeading: Video Terkini
+    recentVideoToggles:
+      all: Semua
+      official: Resmi
+      subber: Klip
+  library:
+    savedVideosTitle: Video Tersimpan
+    createYtPlaylistButton: 'Buat YT Playlist ({0})'
+    deleteFromLibraryButton: 'Hapus ({0})'
+    deleteConfirmation: 'Apa kamu yakin ingin menghapus video {0} ?'
+    deleteConfirmationOK: Hapus
+    deleteConfirmationCancel: Batal
+    selectionReset: Reset
+    selectionSelectAll: Pilih Semua
+    emptyLibrary: Kamu tidak menyimpan video apapun!
+  notFound:
+    title: Konten tidak ditemukan
+    back: Kembali ke Halaman Utama
+  search:
+    sort:
+      newest: Terbaru
+      oldest: Terlama
+    type:
+      all: Semua
+      official: Resmi
+      clip: Klip
+  settings:
+    title: Pengaturan
+    darkModeLabel: Mode Malam
+    darkModeMsg: Mengubah tema dari mode siang ke mode malam
+    redirectModeLabel: Buka di YouTube
+    redirectModeMsg: Memilih video manapun akan diarahkan langsung ke Youtube
+    useEnglishNameLabel: Menggunakan Nama Inggris
+    useEnglishNameMsg: Menampilkan nama saluran VTuber dalam bahasa inggris
+    hideVideoThumbnailsLabel: Sembunyikan Thumbnail Video
+    hideVideoThumbnailsMsg: >-
+      Menyembunyikan video thumbnail, membantu meningkatkan proses memuat
+      halaman dan mempersingkat halaman pada tampilan hp
+    pushNotificationLabel: Pemberitahuan notif (Akan Datang)
+    pushNotificationMsg: Mengaktifkan notifikasi untuk saluran favorit
+    resetAllSettings: Reset Semua Pengaturan/Data

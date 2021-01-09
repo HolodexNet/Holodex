@@ -50,26 +50,10 @@
                 :grouped="sort === 'group'"
                 :cardView="cardView"
             />
-            <!-- <v-card v-intersect="intersect"></v-card> -->
-            <!-- <infinite-loading
-                @infinite="loadNext"
-                style="min-height: 10px"
-                :identifier="infiniteId"
-                spinner="spiral"
-                v-if="category !== Tabs.FAVORITES"
-            >
-                <template v-slot:no-more><span></span></template>
-                <template v-slot:error>
-                    <ApiErrorMessage />
-                </template>
-            </infinite-loading> -->
         </v-container>
         <InfiniteLoad @infinite="load" :identifier="infiniteId"></InfiniteLoad>
         <!-- Favorites specific view items: -->
         <template v-if="category === Tabs.FAVORITES">
-            <div v-if="favorites.length > 0" class="text--secondary text-caption">
-                <!-- {{ $t("views.channels.favoriteLastUpdated", [lastUpdated]) }} -->
-            </div>
             <div v-if="!favorites || favorites.length === 0">
                 {{ $t("views.channels.favoritesAreEmpty") }}
             </div>
@@ -140,14 +124,18 @@ export default {
                             order: "desc",
                         },
                     },
-                    {
-                        text: this.$t("views.channels.sortOptions.group"),
-                        value: "group",
-                        query_value: {
-                            sort: "suborg",
-                            order: "asc",
-                        },
-                    },
+                    ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
+                        ? [
+                            {
+                                text: this.$t("views.channels.sortOptions.group"),
+                                value: "group",
+                                query_value: {
+                                    sort: "suborg",
+                                    order: "asc",
+                                },
+                            },
+                        ]
+                        : []),
                     {
                         text: this.$t("views.channels.sortOptions.videoCount"),
                         value: "video_count",
@@ -156,14 +144,18 @@ export default {
                             order: "desc",
                         },
                     },
-                    {
-                        text: this.$t("views.channels.sortOptions.clipCount"),
-                        value: "clip_count",
-                        query_value: {
-                            sort: "clip_count",
-                            order: "desc",
-                        },
-                    },
+                    ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
+                        ? [
+                            {
+                                text: this.$t("views.channels.sortOptions.clipCount"),
+                                value: "clip_count",
+                                query_value: {
+                                    sort: "clip_count",
+                                    order: "desc",
+                                },
+                            },
+                        ]
+                        : []),
                 ];
             },
         },

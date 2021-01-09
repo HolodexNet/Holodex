@@ -15,12 +15,11 @@
                     <!-- TODO ADD CONFIRMATION DIALOG -->
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn sm outlined>
+                            <v-btn sm outlined @click.stop="toggleFavoriteAll(index)">
                                 <v-icon
                                     :color="group.allFavorited && isLoggedIn ? 'red' : 'grey'"
                                     v-bind="attrs"
                                     v-on="on"
-                                    @click.stop="toggleFavoriteAll(index)"
                                 >
                                     {{ icons.mdiHeart }}
                                 </v-icon>

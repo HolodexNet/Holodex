@@ -1,9 +1,9 @@
 <template>
-    <v-card v-intersect="onIntersect" class="d-flex justify-center">
+    <v-card :key="identifier" v-intersect="onIntersect" class="d-flex justify-center">
         <v-progress-circular
             v-if="status === STATUSES.LOADING"
             indeterminate
-            size="32"
+            size="82"
             class="ma-auto"
             color="primary"
         ></v-progress-circular>

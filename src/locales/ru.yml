@@ -1,92 +1,91 @@
-# Credit: Kirillbarnaul#8499
 hello: world
-example: fill me in with {0} or {1} parameters
-example2: "{0} text starting with a param needs to be quoted in quotes"
+example: 'fill me in with {0} or {1} parameters'
+example2: '{0} text starting with a param needs to be quoted in quotes'
 component:
-    apiError:
-        title: Извините!
-        textBeforeTwitter: "Произошла ошибка при получении данных, пожалуйста, проверьте Twitter "
-        textAfterTwitter: " или сообщите об ошибке через"
-        aboutPage: О сайте
-    channelList:
-        otherText: Другие
-        #Other here is for the "other" group vs Hololive or Nijisanji etc.
-    channelInfo:
-        videoCount: "{0} видео"
-        clipCount: "0 клипов | {n} клип | {n} клипа | {n} клипов"
-        subscriberCount: "0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков"
-        subscriberNA: Количество подписчиков недоступно
-    channelSocials:
-        addToFavorites: Добавить в избранное
-        removeFromFavorites: Убрать из избранного
-    mainNav:
-        home: Главная
-        favorites: Избранное
-        channels: Каналы
-        about: О сайте
-        library: Библиотека
-        settings: Настройки
-    videoCard:
-        clips: "0 клипов | {n} клип | {n} клипа | {n} клипов"
-        watching: "{0} смотрят"
-        liveNow: LIVE
-    videoDescription:
-        description: Описание
+  apiError:
+    title: Извините!
+    textBeforeTwitter: 'Произошла ошибка при получении данных, пожалуйста, проверьте Twitter '
+    textAfterTwitter: ' или сообщите об ошибке через'
+    aboutPage: О сайте
+  channelList:
+    otherText: Другие
+  channelInfo:
+    videoCount: '{0} видео'
+    clipCount: '0 клипов | {n} клип | {n} клипа | {n} клипов'
+    subscriberCount: '0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков'
+    subscriberNA: Количество подписчиков недоступно
+  channelSocials:
+    addToFavorites: Добавить в избранное
+    removeFromFavorites: Убрать из избранного
+  mainNav:
+    home: Главная
+    favorites: Избранное
+    channels: Каналы
+    about: О сайте
+    library: Библиотека
+    settings: Настройки
+  videoCard:
+    clips: '0 клипов | {n} клип | {n} клипа | {n} клипов'
+    watching: '{0} смотрят'
+    liveNow: LIVE
+  videoDescription:
+    description: Описание
 views:
-    channels:
-        channelType:
-            subber: саббер
-            vtuber: витубер
-        sortOptions:
-            subscribers: Подписчики
-            group: Группа
-            recentUpload: Последняя загрузка
-            videoCount: Количество видео
-            clipCount: Количество клипов
-        tabs:
-            Vtuber: Витуберы
-            Subber: Сабберы
-            Favorites: Избранное
-        favoriteLastUpdated: "Последний раз обновлено {0} назад"
-        favoritesAreEmpty: Вы ничего не добавили в избранное
-    home:
-        liveOrUpcomingHeading: LIVE / Скоро
-        recentVideosHeading: Последние видео
-        recentVideoToggles:
-            all: Все
-            official: Официальные
-            subber: Клипы
-    library:
-        savedVideosTitle: Сохраненные видео
-        createYtPlaylistButton: "Создать YouTube плейлист ({0})"
-        deleteFromLibraryButton: "Удалить ({0})"
-        deleteConfirmation: "Вы уверены, что хотите удалить {0} видео?"
-        deleteConfirmationOK: "Удалить"
-        deleteConfirmationCancel: "Отмена"
-        selectionReset: "Сброс"
-        selectionSelectAll: "Выбрать все"
-        emptyLibrary: У вас нет сохраненных видео!
-    notFound:
-        title: Контент не найден
-        back: Вернуться на главную
-    search:
-        sort:
-            newest: Сначала новое
-            oldest: Сначала старое
-        type:
-            all: Все
-            official: Официальные
-            clip: Клипы
-    settings:
-        title: Настройки
-        darkModeLabel: Ночная тема
-        darkModeMsg: Изменяет тему сайта
-        redirectModeLabel: Открыть на YouTube
-        redirectModeMsg: Нажатие по любому видео откроет его на YouTube
-        useEnglishNameLabel: Использовать английские имена
-        useEnglishNameMsg: Использовать локализованные на английский имена для каналов витуберов
-        hideVideoThumbnailsLabel: Скрыть миниатюры видео
-        hideVideoThumbnailsMsg: Скрыть миниатюры видео — помогает сократить время загрузки и меньше листать на телефонах
-        pushNotificationLabel: Пуш-уведомления (Скоро!)
-        pushNotificationMsg: Включить пуш-уведомления для каналов в избранном
-        resetAllSettings: Сбросить все настройки/данные
+  channels:
+    channelType:
+      subber: саббер
+      vtuber: витубер
+    sortOptions:
+      subscribers: Подписчики
+      group: Группа
+      recentUpload: Последняя загрузка
+      videoCount: Количество видео
+      clipCount: Количество клипов
+    tabs:
+      Vtuber: Витуберы
+      Subber: Сабберы
+      Favorites: Избранное
+    favoritesAreEmpty: Вы ничего не добавили в избранное
+  home:
+    liveOrUpcomingHeading: LIVE / Скоро
+    recentVideosHeading: Последние видео
+    recentVideoToggles:
+      all: Все
+      official: Официальные
+      subber: Клипы
+  library:
+    savedVideosTitle: Сохраненные видео
+    createYtPlaylistButton: 'Создать YouTube плейлист ({0})'
+    deleteFromLibraryButton: 'Удалить ({0})'
+    deleteConfirmation: 'Вы уверены, что хотите удалить {0} видео?'
+    deleteConfirmationOK: Удалить
+    deleteConfirmationCancel: Отмена
+    selectionReset: Сброс
+    selectionSelectAll: Выбрать все
+    emptyLibrary: У вас нет сохраненных видео!
+  notFound:
+    title: Контент не найден
+    back: Вернуться на главную
+  search:
+    sort:
+      newest: Сначала новое
+      oldest: Сначала старое
+    type:
+      all: Все
+      official: Официальные
+      clip: Клипы
+  settings:
+    title: Настройки
+    darkModeLabel: Ночная тема
+    darkModeMsg: Изменяет тему сайта
+    redirectModeLabel: Открыть на YouTube
+    redirectModeMsg: Нажатие по любому видео откроет его на YouTube
+    useEnglishNameLabel: Использовать английские имена
+    useEnglishNameMsg: Использовать локализованные на английский имена для каналов витуберов
+    hideVideoThumbnailsLabel: Скрыть миниатюры видео
+    hideVideoThumbnailsMsg: >-
+      Скрыть миниатюры видео — помогает сократить время загрузки и меньше
+      листать на телефонах
+    pushNotificationLabel: Пуш-уведомления (Скоро!)
+    pushNotificationMsg: Включить пуш-уведомления для каналов в избранном
+    resetAllSettings: Сбросить все настройки/данные

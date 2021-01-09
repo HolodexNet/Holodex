@@ -1,90 +1,89 @@
 hello: world
 component:
-    apiError:
-        aboutPage: ページについて
-        textAfterTwitter: または、を通じてエラーを報告します
-        textBeforeTwitter: コンテンツの取得中にエラーが発生しました。Twitterを確認してください
-        title: Gomenasorry!
-    channelInfo:
-        clipCount: "{n}本の切り抜き"
-        subscriberCount: "{n}登録者"
-        subscriberNA: 登録者数は現在利用できません
-        videoCount: "{0}本の動画"
-    channelList:
-        otherText: その他
-    channelSocials:
-        addToFavorites: お気に入りに追加
-        removeFromFavorites: お気に入りから削除
-    mainNav:
-        about: 詳細
-        channels: チャンネル
-        favorites: お気に入り
-        home: ホーム
-        library: ライブラリ
-        settings: 設定
-    videoCard:
-        clips: "{n}切り抜き"
-        liveNow: 配信中
-        watching: "{0}人視聴中"
-    videoDescription:
-        description: 概要
-example: "{0}または{1}パラメータを入力してください"
-example2: "パラメータで始まる{0}テキストは引用符で囲む必要があります"
+  apiError:
+    aboutPage: ページについて
+    textAfterTwitter: または、を通じてエラーを報告します
+    textBeforeTwitter: コンテンツの取得中にエラーが発生しました。Twitterを確認してください
+    title: Gomenasorry!
+  channelInfo:
+    clipCount: '{n}本の切り抜き'
+    subscriberCount: '{n}登録者'
+    subscriberNA: 登録者数は現在利用できません
+    videoCount: '{0}本の動画'
+  channelList:
+    otherText: その他
+  channelSocials:
+    addToFavorites: お気に入りに追加
+    removeFromFavorites: お気に入りから削除
+  mainNav:
+    about: 詳細
+    channels: チャンネル
+    favorites: お気に入り
+    home: ホーム
+    library: ライブラリ
+    settings: 設定
+  videoCard:
+    clips: '{n}切り抜き'
+    liveNow: 配信中
+    watching: '{0}人視聴中'
+  videoDescription:
+    description: 概要
+example: '{0}または{1}パラメータを入力してください'
+example2: 'パラメータで始まる{0}テキストは引用符で囲む必要があります'
 views:
-    channels:
-        channelType:
-            subber: 切り抜きチャンネル
-            vtuber: Vtuber
-        favoriteLastUpdated: "最終更新{0}前"
-        favoritesAreEmpty: お気に入りにはまだなにも登録されていません！
-        sortOptions:
-            clipCount: 切り抜き数
-            group: グループ
-            recentUpload: 最近の投稿
-            subscribers: 登録者数
-            videoCount: 動画数
-        tabs:
-            Favorites: お気に入り
-            Subber: 切り抜きチャンネル
-            Vtuber: Vtuber
-    home:
-        liveOrUpcomingHeading: 配信中/配信予定
-        recentVideoToggles:
-            all: すべて
-            official: 公式
-            subber: 切り抜き
-        recentVideosHeading: 最近の動画
-    library:
-        createYtPlaylistButton: "Youtubeのプレイリストを作成（{0}）"
-        deleteConfirmation: "{0}本当に動画を削除しますか？"
-        deleteConfirmationCancel: キャンセル
-        deleteConfirmationOK: 削除
-        deleteFromLibraryButton: "削除（{0}）"
-        emptyLibrary: 保存されたビデオはありません！
-        savedVideosTitle: 保存したビデオ
-        selectionReset: リセット
-        selectionSelectAll: すべて選択
-    notFound:
-        back: 戻る
-        title: コンテンツが見つかりません
-    search:
-        sort:
-            newest: 新しい順
-            oldest: 古い順
-        type:
-            all: すべて
-            clip: クリップ
-            official: 公式
-    settings:
-        darkModeLabel: ダークモード
-        darkModeMsg: テーマをライトモードとダークモードの間で変更します
-        hideVideoThumbnailsLabel: サムネイルを非表示にする
-        hideVideoThumbnailsMsg: 動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
-        pushNotificationLabel: プッシュ通知（準備中）
-        pushNotificationMsg: お気に入りのチャンネルのプッシュ通知を有効にする
-        redirectModeLabel: Youtubeで開く
-        redirectModeMsg: ビデオをクリックすると、Youtubeの視聴ページに移動します
-        resetAllSettings: すべての設定/データをリセット
-        title: 設定
-        useEnglishNameLabel: 英語名を使用する
-        useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
+  channels:
+    channelType:
+      subber: 切り抜きチャンネル
+      vtuber: Vtuber
+    favoritesAreEmpty: お気に入りにはまだなにも登録されていません！
+    sortOptions:
+      clipCount: 切り抜き数
+      group: グループ
+      recentUpload: 最近の投稿
+      subscribers: 登録者数
+      videoCount: 動画数
+    tabs:
+      Favorites: お気に入り
+      Subber: 切り抜きチャンネル
+      Vtuber: Vtuber
+  home:
+    liveOrUpcomingHeading: 配信中/配信予定
+    recentVideoToggles:
+      all: すべて
+      official: 公式
+      subber: 切り抜き
+    recentVideosHeading: 最近の動画
+  library:
+    createYtPlaylistButton: 'Youtubeのプレイリストを作成（{0}）'
+    deleteConfirmation: '{0}本当に動画を削除しますか？'
+    deleteConfirmationCancel: キャンセル
+    deleteConfirmationOK: 削除
+    deleteFromLibraryButton: '削除（{0}）'
+    emptyLibrary: 保存されたビデオはありません！
+    savedVideosTitle: 保存したビデオ
+    selectionReset: リセット
+    selectionSelectAll: すべて選択
+  notFound:
+    back: 戻る
+    title: コンテンツが見つかりません
+  search:
+    sort:
+      newest: 新しい順
+      oldest: 古い順
+    type:
+      all: すべて
+      clip: クリップ
+      official: 公式
+  settings:
+    darkModeLabel: ダークモード
+    darkModeMsg: テーマをライトモードとダークモードの間で変更します
+    hideVideoThumbnailsLabel: サムネイルを非表示にする
+    hideVideoThumbnailsMsg: 動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
+    pushNotificationLabel: プッシュ通知（準備中）
+    pushNotificationMsg: お気に入りのチャンネルのプッシュ通知を有効にする
+    redirectModeLabel: Youtubeで開く
+    redirectModeMsg: ビデオをクリックすると、Youtubeの視聴ページに移動します
+    resetAllSettings: すべての設定/データをリセット
+    title: 設定
+    useEnglishNameLabel: 英語名を使用する
+    useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
