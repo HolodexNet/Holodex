@@ -1,24 +1,17 @@
 <template>
     <div :key="identifier" v-intersect="onIntersect" class="d-flex justify-center py-4">
-        <v-progress-circular
-            v-if="status === STATUSES.LOADING"
-            indeterminate
-            size="82"
-            class="ma-auto"
-            color="primary"
-        ></v-progress-circular>
-        <ApiErrorMessage v-if="status === STATUSES.ERROR" />
+        <LoadingOverlay :isLoading="status === STATUSES.LOADING" :showError="status === STATUSES.ERROR" />
         <div v-if="status === STATUSES.COMPLETED">End of list</div>
     </div>
 </template>
 
 <script>
-import ApiErrorMessage from "@/components/common/ApiErrorMessage";
+import LoadingOverlay from "@/components/common/LoadingOverlay";
 
 export default {
     name: "InfiniteLoad",
     components: {
-        ApiErrorMessage,
+        LoadingOverlay,
     },
     data() {
         return {
