@@ -231,6 +231,14 @@ export default {
     white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
+    /* https://css-tricks.com/almanac/properties/w/word-break/ */
+    word-break: break-all;
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;

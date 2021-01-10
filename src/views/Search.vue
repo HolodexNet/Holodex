@@ -55,7 +55,6 @@ export default {
             horizontal: false,
             executedQuery: null,
             containsTopicAndOrg: false,
-            mykey: null,
             filter: {
                 sort: "newest",
                 type: "all",
@@ -144,8 +143,6 @@ export default {
     mounted() {
         // console.log(this.$route);
         this.syncFilters();
-        this.key = this.$vnode.key;
-        debugger;
         if (this.$route.query?.q !== this.executedQuery) this.searchVideo();
     },
     methods: {
