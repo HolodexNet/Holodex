@@ -3,7 +3,7 @@
         <template v-slot:activator="{ on }">
             <div class="multi-button d-inline-block">
                 <v-btn color="blue" :disabled="!topic">
-                    <v-icon left>{{ icons.mdiMapMarker }}</v-icon>
+                    <v-icon left>{{ icons.mdiAnimationPlay }}</v-icon>
                     {{ topic || "Topic Not Set" }}
                 </v-btn>
                 <v-btn
@@ -21,6 +21,7 @@
         <!-- <v-card v-if="role=== 'editor' || role === 'admin'"> -->
         <v-card>
             <v-card-title>
+                <v-icon left>{{ icons.mdiAnimationPlay }}</v-icon>
                 <h5>Change stream topic</h5>
             </v-card-title>
             <v-card-text>
