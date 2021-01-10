@@ -26,6 +26,7 @@ function defaultState() {
             user: null,
             jwt: null,
         },
+        isMobile: true,
         currentOrg: "Hololive",
         // navigation history tracking
         routerHistory: [],
@@ -72,6 +73,9 @@ export default new Vuex.Store({
         setCurrentOrg(state, val) {
             if (!ORGS.find((org) => org === val)) return;
             state.currentOrg = val;
+        },
+        setIsMobile(state, val) {
+            state.isMobile = val;
         },
         // login
         setUser(state, { user, jwt }) {

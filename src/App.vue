@@ -66,16 +66,20 @@ export default {
         };
     },
     created() {
+        // check if browser support webp
         if (!this.$store.testedWebP) {
             this.supportsWebp().then((res) => {
                 if (!res) this.$store.commit("settings/noWebPSupport");
             });
             this.$store.commit("settings/testedWebP");
         }
+        // set theme
         this.$vuetify.theme.dark = this.darkMode;
+        // set lang
         this.$i18n.locale = this.$store.state.settings.lang;
         this.$vuetify.lang.current = this.$store.state.settings.lang;
-        this.$store.dispatch("checkChannelCache");
+
+        // check for pwa updates
         document.addEventListener(
             "swUpdated",
             (event) => {
@@ -86,19 +90,21 @@ export default {
                 once: true,
             },
         );
+
+        // on update, reresh page and set update notification flag
         navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (this.refreshing) return;
             this.refreshing = true;
             this.showUpdateDetails = true;
             window.location.reload();
         });
+
+        // check current breakpoint and set isMobile
+        this.updateIsMobile();
     },
     computed: {
         darkMode() {
             return this.$store.state.settings.darkMode;
-        },
-        isXs() {
-            return this.$vuetify.breakpoint.name === "xs";
         },
         showUpdateDetails: {
             set(val) {
@@ -122,8 +128,18 @@ export default {
             this.$i18n.locale = this.$store.state.settings.lang;
             this.$vuetify.lang.current = this.$store.state.settings.lang;
         },
+        // eslint-disable-next-line func-names
+        "$vuetify.breakpoint.name": function () {
+            this.updateIsMobile();
+        },
     },
     methods: {
+        updateIsMobile() {
+            this.$store.commit(
+                "setIsMobile",
+                this.$vuetify.breakpoint.name === "xs" || this.$vuetify.breakpoint.name === "sm",
+            );
+        },
         async supportsWebp() {
             // eslint-disable-next-line no-restricted-globals
             if (!self.createImageBitmap) return false;

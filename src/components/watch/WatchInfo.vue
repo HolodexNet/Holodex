@@ -114,9 +114,6 @@ export default {
         thumbnail_src() {
             return getVideoThumbnails(this.video.id).medium;
         },
-        isXs() {
-            return this.$vuetify.breakpoint.name === "xs";
-        },
     },
 };
 </script>

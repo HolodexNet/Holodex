@@ -124,7 +124,7 @@ export default {
 }
 .embedded-video > iframe {
     position: absolute;
-    width: 100%;
+    width: auto;
     height: 100%;
 }
 </style>

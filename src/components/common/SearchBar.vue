@@ -2,7 +2,7 @@
     <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
     <v-autocomplete
         class="ma-auto search-bar"
-        :class="{ 'search-bar-small': isXs }"
+        :class="{ 'search-bar-small': isMobile }"
         solo
         flat
         multiple
@@ -142,8 +142,8 @@ export default {
     },
 
     computed: {
-        isXs() {
-            return this.$vuetify.breakpoint.name === "xs";
+        isMobile() {
+            return this.$store.state.isMobile;
         },
         cachedChannels() {
             return this.$store.state.cachedChannels;
