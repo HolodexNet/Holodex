@@ -1,7 +1,13 @@
 <template>
     <v-row style="min-height: 50%" v-if="isLoading || showError">
         <v-col class="d-flex align-center justify-center flex-column">
-            <v-progress-circular indeterminate size="32" v-if="isLoading && !showError"></v-progress-circular>
+            <v-progress-circular
+                v-if="isLoading && !showError"
+                indeterminate
+                size="82"
+                class="ma-auto"
+                color="primary"
+            ></v-progress-circular>
             <ApiErrorMessage v-if="showError" />
             <NotFound v-if="showNotFound" />
         </v-col>

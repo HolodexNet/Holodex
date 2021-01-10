@@ -1,6 +1,10 @@
 #!/bin/sh
 
-git pull origin master
+set -o errexit
+
+cd /opt/holodex || { echo "No directory found"; exit 1; }
+
+git pull
 
 npm install
 

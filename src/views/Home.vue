@@ -110,7 +110,6 @@ export default {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
             this.infiniteId = +new Date();
-            this.loadNext();
         },
         resetVideos() {
             this.$store.commit("home/resetVideos");

@@ -7,6 +7,7 @@ const validLangs = new Set(langs.map((x) => x.val));
 
 const initialState = {
     lang: validLangs.has(userLanguage) ? userLanguage : "en",
+    clipLangs: [validLangs.has(userLanguage) ? userLanguage : "en"],
     darkMode: true,
     redirectMode: false,
     canUseWebP: true,
@@ -46,6 +47,9 @@ const mutations = {
     },
     setLanguage(state, val) {
         state.lang = val;
+    },
+    setClipLangs(state, val) {
+        state.clipLangs = val;
     },
     resetState(state) {
         Object.assign(state, initialState);

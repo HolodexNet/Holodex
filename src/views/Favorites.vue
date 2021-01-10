@@ -129,7 +129,6 @@ export default {
                 this.$store.dispatch("favorites/fetchLive");
                 this.infiniteId = +new Date();
             }
-            // this.loadNext();
         },
         resetVideos() {
             this.$store.commit("favorites/resetVideos");

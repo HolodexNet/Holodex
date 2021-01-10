@@ -58,6 +58,7 @@ const actions = {
                 ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
                 include: "clips",
                 org: rootState.currentOrg,
+                lang: rootState.settings.clipLangs.join(","),
                 ...params,
             })
             .then(({ data }) => {
