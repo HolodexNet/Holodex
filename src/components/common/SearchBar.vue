@@ -25,12 +25,11 @@
         :append-icon="''"
         :append-outer-icon="icons.mdiMagnify"
         @click:append-outer="commitSearch"
-        label="> Search"
+        label="Search"
         :filter="(a, b) => true"
         return-object
+        hide-details
     >
-        <!--         hide-details
- -->
         <template v-slot:selection="selection">
             <v-card
                 :color="$vuetify.theme.dark ? 'grey darken-3' : 'teal accent-2'"
@@ -240,6 +239,7 @@ export default {
 <style>
 .search-bar {
     max-width: 670px;
+    margin-bottom: -5px;
 }
 .search-bar-small {
     max-width: 90vw !important;
@@ -315,6 +315,10 @@ export default {
 
 .search-bar .search-item {
     /* max-width: 30vw; */
+}
+
+.search-bar > .v-input__control > .v-input__slot > .v-select__slot > label {
+    left: 10px !important;
 }
 /* .search-bar.theme--light > .v-input__append-outer > .v-input__icon > .v-icon {
     color: black !important;
