@@ -20,8 +20,10 @@ export {
     mdiLoginVariant,
     mdiLogoutVariant,
     mdiMagnify,
+    mdiMapMarker,
     mdiMenu,
-    mdiMessageCogOutline, // for changing language
+    mdiMessageCogOutline,
+    mdiPencil, // for changing language
     mdiRefresh,
     mdiStarFourPointsOutline,
     mdiTwitter,

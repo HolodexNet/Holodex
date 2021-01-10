@@ -11,14 +11,6 @@ export const axiosInstance = axios.create({
     shouldResetTimeout: true,
 });
 
-export const axiosV2 = axios.create({
-    baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2" : "/api/v2",
-    retries: 3,
-    retryDelay: axiosRetry.exponentialDelay,
-    retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
-    shouldResetTimeout: true,
-});
-
 export default {
     channels(query) {
         const q = querystring.stringify(query);
@@ -76,7 +68,7 @@ export default {
         return axiosInstance.get(`/channels/${channelId}/${type}?${q}`);
     },
     login(jwt, authToken, service) {
-        return axiosV2.post(
+        return axiosInstance.post(
             "/user/login",
             { token: authToken, service },
             {
@@ -85,13 +77,13 @@ export default {
         );
     },
     favorites(jwt) {
-        return axiosV2.get("/users/favorites", {
+        return axiosInstance.get("/users/favorites", {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
     favoritesVideos(jwt, query) {
         const q = querystring.stringify(query);
-        return axiosV2.get(`/users/videos?${q}`, {
+        return axiosInstance.get(`/users/videos?${q}`, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
@@ -107,8 +99,21 @@ export default {
         );
     },
     patchFavorites(jwt, operations) {
-        return axiosV2.patch("/users/favorites", operations, {
+        return axiosInstance.patch("/users/favorites", operations, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
+    },
+    topics() {
+        // gets topics from backend
+        return axiosInstance.get("/topics");
+    },
+    topicSet(topicId, videoId, jwt) {
+        return axiosInstance.post(
+            "/topics/video",
+            { videoId, topicId },
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
+        );
     },
 };
