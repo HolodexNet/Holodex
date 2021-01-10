@@ -18,7 +18,7 @@
         <v-row>
             <v-col class="offset-xl-1 col-xl-10">
                 <VideoCardList
-                    :videos="videos"
+                    :videos="filteredVideos"
                     :horizontal="horizontal"
                     includeChannel
                     :cols="{
@@ -55,6 +55,7 @@ export default {
             horizontal: false,
             executedQuery: null,
             containsTopicAndOrg: false,
+            mykey: null,
             filter: {
                 sort: "newest",
                 type: "all",
@@ -113,6 +114,14 @@ export default {
         currentPage() {
             return Number(this.$route.query.page) || 1;
         },
+        filteredVideos() {
+            const acceptable = this.filter.type === "all" ? ["stream", "clip"] : [this.filter.type];
+            const sorter =
+                this.filter.sort === "oldest"
+                    ? (x, y) => new Date(x.available_at) - new Date(y.available_at)
+                    : (x, y) => new Date(y.available_at) - new Date(x.available_at);
+            return this.videos.filter((v) => acceptable.includes(v.type)).sort(sorter);
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -121,10 +130,22 @@ export default {
             console.log(x.q, this.executedQuery);
             if (x.q !== this.executedQuery && x.q) this.searchVideo();
         },
+        // eslint-disable-next-line func-names
+        "filter.sort": function () {
+            // do search if the videos returned is too many.
+            if (this.videos.length > 400) this.searchVideo();
+        },
+        // eslint-disable-next-line func-names
+        "filter.type": function () {
+            // do search if the videos returned is too many.
+            if (this.videos.length > 400) this.searchVideo();
+        },
     },
     mounted() {
         // console.log(this.$route);
         this.syncFilters();
+        this.key = this.$vnode.key;
+        debugger;
         if (this.$route.query?.q !== this.executedQuery) this.searchVideo();
     },
     methods: {
@@ -138,7 +159,7 @@ export default {
             // console.log("PARSED", parsedQuery);
             const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
                 sort: this.filter.sort,
-                lang: ["en"],
+                lang: this.$store.state.settings.clipLangs,
                 target: this.filter.type === "all" ? ["stream", "clip"] : [this.filter.type],
                 conditions: [],
                 topic: [],
