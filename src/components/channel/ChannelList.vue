@@ -48,7 +48,7 @@
                     <v-list-item-avatar size="55">
                         <ChannelImg :channel="channel" size="55" />
                     </v-list-item-avatar>
-                    <ChannelInfo :channel="channel" :includeVideoCount="includeVideoCount">
+                    <ChannelInfo :channel="channel" :includeVideoCount="includeVideoCount" style="width: 80px">
                         <ChannelSocials :channel="channel" class="pa-0 justify-start" v-if="isXs" />
                     </ChannelInfo>
                     <ChannelSocials :channel="channel" v-if="!isXs" />
@@ -117,7 +117,7 @@ export default {
     },
     computed: {
         isXs() {
-            return this.$vuetify.breakpoint.width <= 410;
+            return this.$vuetify.breakpoint.width <= 420;
         },
         channelsByGroup() {
             const groupedChannels = [];
@@ -164,4 +164,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.v-list-group__header {
+    padding-left: 16px !important;
+}
+</style>

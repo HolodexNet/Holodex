@@ -60,15 +60,6 @@ const actions = {
 };
 
 const mutations = {
-    // fetchStart(state) {
-    //     state.isLoading = true;
-    // },
-    // fetchEnd(state) {
-    //     state.isLoading = false;
-    // },
-    // fetchError(state) {
-    //     state.hasError = true;
-    // },
     updateChannels(state, channels) {
         state.currentOffset += channels.length;
         state.channels = state.channels.concat(channels);
@@ -82,14 +73,6 @@ const mutations = {
     setCardView(state, val) {
         Vue.set(state.cardView, state.category, val);
     },
-    // setRecentVideoFilter(state, filter) {
-    //     state.recentVideoFilter = filter;
-    // },
-    // updateVideos(state, videos) {
-    //     // increment offset
-    //     state.currentOffset += videos.length;
-    //     state.videos = state.videos.concat(videos);
-    // },
     resetChannels(state) {
         state.currentOffset = 0;
         state.channels = [];

@@ -1,23 +1,23 @@
 <template>
     <div>
-        <NavDrawer :pages="pages" v-model="drawer" v-if="!isXs" />
+        <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile" />
         <!--* nav drawer is for the left --->
-        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-else />
+        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile && !isWatchPage" />
         <!--* bottom bar --->
 
-        <v-app-bar id="top-bar" class="blue lighten-1" app clipped-left flat>
+        <v-app-bar id="top-bar" class="blue lighten-1" :app="!isMobile" clipped-left flat>
             <!--=============================== Top Bar (Regular View) =============================-->
 
-            <template v-if="!isXs || (isXs && !searchBarExpanded)">
+            <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
                 <!--================= Back button ⬅️ (Mobile only) ================-->
 
-                <v-app-bar-nav-icon @click.stop="goBack()" v-if="isXs && isFirstPage">
+                <v-app-bar-nav-icon @click.stop="goBack()" v-if="isMobile && isFirstPage">
                     <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
                 </v-app-bar-nav-icon>
 
                 <!--================= Logo & Search Bar (Space permitting) ================-->
 
-                <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isXs">
+                <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isMobile">
                     <v-icon>{{ icons.mdiMenu }}</v-icon>
                 </v-app-bar-nav-icon>
                 <v-toolbar-title style="overflow: visible">
@@ -30,7 +30,7 @@
                                 v-bind="attrs"
                                 v-on="on"
                                 class="d-inline nav-title"
-                                :class="isXs ? 'nav-title-slim' : ''"
+                                :class="isMobile ? 'nav-title-slim' : ''"
                                 style="position: relative"
                             >
                                 <transition name="fade" mode="out-in">
@@ -65,11 +65,11 @@
                         </v-list>
                     </v-menu>
                 </v-toolbar-title>
-                <SearchBar v-if="!isXs" key="main-search-bar" />
+                <SearchBar v-if="!isMobile" key="main-search-bar" />
 
                 <!--================= Account [👤] Button (Desktop Only) ================-->
 
-                <v-menu left offset-y transition="slide-y-transition" v-if="!isXs">
+                <v-menu left offset-y transition="slide-y-transition" v-if="!isMobile">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
                             <v-icon>{{ icons.mdiAccountCircleOutline }}</v-icon>
@@ -82,26 +82,32 @@
 
                 <!--================= Refresh [⟳] Button (Mobile Only) ================-->
 
-                <v-btn icon class="ml-auto" :class="{ 'refresh-rotate': refreshing }" v-if="isXs" @click="onRefresh">
+                <v-btn
+                    icon
+                    class="ml-auto"
+                    :class="{ 'refresh-rotate': refreshing }"
+                    v-if="isMobile"
+                    @click="onRefresh"
+                >
                     <v-icon>{{ icons.mdiRefresh }}</v-icon>
                 </v-btn>
 
                 <!--================= Search [🔍] Button (Mobile Only) ================-->
 
-                <v-btn icon v-if="isXs" @click="searchBarExpanded = true">
+                <v-btn icon v-if="isMobile" @click="searchBarExpanded = true">
                     <v-icon>{{ icons.mdiMagnify }}</v-icon>
                 </v-btn>
 
                 <!--================= Condensed [⋮] Menu (Mobile Only) ================-->
 
-                <v-menu left offset-y v-if="isXs">
+                <v-menu left offset-y v-if="isMobile">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
                             <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                         </v-btn>
                     </template>
 
-                    <v-list v-if="isXs">
+                    <v-list v-if="isMobile">
                         <!-- <v-list-item
                             v-for="page in pages.filter((item) => item.collapsible)"
                             :key="page.name"
@@ -130,7 +136,7 @@
                 <v-app-bar-nav-icon @click="searchBarExpanded = false" class="backButton">
                     <v-icon>{{ icons.mdiClose }}</v-icon>
                 </v-app-bar-nav-icon>
-                <SearchBar :autofocus="isXs" key="main-search-bar" />
+                <SearchBar :autofocus="isMobile" key="main-search-bar" />
             </template>
 
             <!--=================== END OF Expanded Search (Mobile Only) =======================-->
@@ -186,8 +192,11 @@ export default {
         };
     },
     computed: {
-        isXs() {
-            return this.$vuetify.breakpoint.name === "xs";
+        isMobile() {
+            return this.$store.state.isMobile;
+        },
+        isWatchPage() {
+            return this.$route.name === "watch_id" || this.$route.name === "watch";
         },
         currentOrg: {
             get() {
@@ -232,7 +241,7 @@ export default {
                     name: this.$t("component.mainNav.settings"),
                     path: "/settings",
                     icon: icons.mdiCog,
-                    collapsible: false,
+                    collapsible: true,
                 },
                 // {
                 //     name: "Login",
