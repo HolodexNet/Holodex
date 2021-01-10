@@ -20,15 +20,19 @@
                         </template>
                     </v-radio>
                 </v-radio-group>
+                <div class="pt-4 mb-0">
+                    <v-icon>{{ mdiFilter }}</v-icon>
+                    See Clips in these Languages:
+                </div>
                 <v-select
                     v-model="clipLangs"
                     :items="validClipLangs"
-                    label="Clip Languages"
                     multiple
                     chips
                     hint="Show clips in these languages"
                     persistent-hint
-                ></v-select>
+                >
+                </v-select>
                 <v-switch
                     v-model="darkMode"
                     :label="$t('views.settings.darkModeLabel')"
@@ -65,7 +69,7 @@
 
 <script>
 import { langs } from "@/plugins/vuetify";
-import { mdiTranslate } from "@mdi/js";
+import { mdiTranslate, mdiFilter } from "@mdi/js";
 
 export default {
     name: "Settings",
@@ -127,6 +131,7 @@ export default {
         return {
             langs,
             mdiTranslate,
+            mdiFilter,
             validClipLangs: Object.freeze([
                 {
                     text: "English",

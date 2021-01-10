@@ -23,8 +23,6 @@
         :search-input.sync="search"
         @input="onInput"
         :append-icon="''"
-        :append-outer-icon="icons.mdiMagnify"
-        @click:append-outer="commitSearch"
         label="Search"
         :filter="(a, b) => true"
         return-object
@@ -32,7 +30,7 @@
     >
         <template v-slot:selection="selection">
             <v-card
-                :color="$vuetify.theme.dark ? 'grey darken-3' : 'teal accent-2'"
+                :color="$vuetify.theme.dark ? 'grey darken-3' : 'light-blue accent-4'"
                 :label="selection.item.type !== 'channel'"
                 class="pa-0 selected-card"
                 :dark="$vuetify.theme.dark"
@@ -55,7 +53,7 @@
                     </v-list-item-content>
 
                     <v-list-item-action>
-                        <v-icon small color="yellow darken-3" @click="deleteChip(selection.item)">{{
+                        <v-icon small color="red accent-2" @click="deleteChip(selection.item)">{{
                             icons.mdiClose
                         }}</v-icon>
                     </v-list-item-action>
@@ -79,16 +77,9 @@
                 </v-list-item-content>
             </div>
         </template>
-        <!-- <template v-slot:append-outer>
-            <v-slide-x-reverse-transition mode="out-in">
-                <v-icon
-                    :key="`icon-${isEditing}`"
-                    :color="isEditing ? 'success' : 'info'"
-                    @click="isEditing = !isEditing"
-                    v-text="isEditing ? 'mdi-check-outline' : 'mdi-circle-edit-outline'"
-                ></v-icon>
-            </v-slide-x-reverse-transition>
-        </template> -->
+        <template v-slot:append-outer>
+            <v-icon key="searchbtn" large color="info" @click="commitSearch" v-text="icons.mdiMagnify"></v-icon>
+        </template>
     </v-autocomplete>
 </template>
 
@@ -188,7 +179,6 @@ export default {
                     ];
                 })
                 .catch((e) => console.log(e));
-            // .finally(() => alert(this.fromApi.map(item => item.text)));
         }, 500),
     },
     methods: {
@@ -202,7 +192,7 @@ export default {
             this.query.splice(this.query.map((q) => q.value).indexOf(item.value), 1);
         },
         async commitSearch() {
-            if (!this.query) return;
+            if (!this.query || this.query.length === 0) return;
 
             if (this.query.length === 1 && this.query[0].type === "channel") {
                 this.$router.push(`/channel/${this.query[0].value}`);
@@ -248,6 +238,7 @@ export default {
     margin: 3px;
     max-width: 100%;
     min-width: 80px;
+    overflow: hidden;
 }
 
 .search-bar.v-input > .v-input__control {
@@ -260,7 +251,7 @@ export default {
 }
 
 .search-bar.v-input--dense > .v-input__append-outer {
-    background-color: #424242;
+    /* background-color: #424242; */
     min-width: 48px;
     min-height: 47px !important;
     height: 100%;
@@ -286,9 +277,10 @@ export default {
 
 .search-bar .selected-card-type {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 3px;
+    left: 3px;
     background-color: rgba(100, 100, 100, 0.3);
+    line-height: 1rem;
 }
 
 .search-bar.v-input > .v-input__control {
@@ -301,16 +293,18 @@ export default {
     padding-top: 1px !important;
 }
 
-.search-bar > .v-input__append-outer > .v-input__icon > .v-icon {
-    color: gray !important;
-}
-
 .search-bar > .v-input__append-outer > .v-input__icon > .v-icon.primary--text {
     color: white !important;
 }
-
+.search-bar > .v-input__append-outer {
+    padding-left: 4px;
+    padding-right: 12px;
+}
 .search-bar.theme--light > .v-input__append-outer {
-    background-color: #eee;
+    background-color: rgb(255, 255, 255);
+}
+.search-bar.theme--dark > .v-input__append-outer {
+    background-color: rgb(66, 66, 66);
 }
 
 .search-bar .search-item {
