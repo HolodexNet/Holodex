@@ -32,7 +32,7 @@
                 </WatchTimeline> -->
                 <WatchInfo :video="video" :fetchComments="true" />
             </v-col>
-            <v-col cols="12" sm="12" lg="3" xl="3" md="12" class="related-videos pa-1">
+            <v-col cols="12" lg="3" class="related-videos pa-1">
                 <!-- <WatchTranscript
                     :translations="translations"
                     :otherMessages="otherMessages"
@@ -114,7 +114,7 @@ export default {
             this.$store.commit("watch/resetState");
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
-                if (!this.hasWatched) this.$store.commit("library/addWatchedVideo", this.video);
+                if (!this.hasWatched) this.$strore.commit("library/addWatchedVideo", this.video);
             });
         },
         ready(event) {
@@ -243,9 +243,9 @@ export default {
     position: relative;
 }
 
-@media screen and (min-width: 600px) {
+/* @media screen and (min-width: 600px) {
     .related-videos {
-        min-width: 350px;
+        min-width: 20px;
     }
-}
+} */
 </style>

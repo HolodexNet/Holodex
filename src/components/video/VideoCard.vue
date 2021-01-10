@@ -26,7 +26,7 @@
                     <v-icon
                         :color="hasSaved ? 'primary' : 'white'"
                         class="video-card-action"
-                        :class="{ 'hover-show': !hasSaved && !isXs }"
+                        :class="{ 'hover-show': !hasSaved && !isMobile }"
                         @click="toggleSaved($event)"
                     >
                         {{ hasSaved ? mdiCheck : mdiPlusBox }}
@@ -141,11 +141,6 @@ export default {
             type: Number,
             default: 1,
         },
-        isXs: {
-            required: false,
-            type: Boolean,
-            default: false,
-        },
     },
     computed: {
         title() {
@@ -196,6 +191,9 @@ export default {
         },
         hasSaved() {
             return this.$store.getters["library/hasSaved"](this.video.id);
+        },
+        isMobile() {
+            return this.$store.state.isMobile;
         },
     },
     methods: {
