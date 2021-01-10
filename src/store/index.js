@@ -123,8 +123,9 @@ export default new Vuex.Store({
                 }
             }
         },
-        async logout({ commit }) {
+        async logout({ dispatch, commit }) {
             commit("setUser", { user: null, jwt: null });
+            dispatch("favorites/resetFavorites");
         },
     },
     modules: {

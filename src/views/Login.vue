@@ -12,7 +12,6 @@ import GAuth from "vue-google-oauth2";
 import open from "oauth-open";
 import api from "@/utils/backend-api";
 import dayjs from "dayjs";
-// import { mdiHeart } from "@mdi/js";
 import utc from "dayjs/plugin/utc";
 import Vue from "vue";
 
@@ -27,8 +26,7 @@ const gauthOption = {
 };
 Vue.use(GAuth, gauthOption);
 
-const redirectUri =
-    process.env.NODE_ENV === "development" ? "http://localhost:8080/discord" : "https://holodex.net/discord";
+const apiURI = process.env.NODE_ENV === "development" ? "http://localhost:2434" : "/api";
 // the fact this URI is invalid doesn't matter,
 // all it matters is we own the domain so oauth-open can grab the URI from the window
 
@@ -43,16 +41,22 @@ export default {
     },
     mounted() {},
     computed: {
-        userdata () { return this.$store.state.userdata }
+        userdata() {
+            return this.$store.state.userdata;
+        },
     },
     methods: {
         async loginGoogle() {
             const authCode = await this.$gAuth.getAuthCode();
             const resp = await api.login(this.$store.state.userdata.jwt, authCode, "google");
             console.log(resp);
-            this.$store.commit("setUser", resp.data)
+            this.$store.commit("setUser", resp.data);
+            this.$store.dispatch("favorites/resetFavorites");
         },
         async loginDiscord() {
+            // redirect location:
+            const redirectUri = `${window.location.protocol}//${window.location.host}/discord`;
+
             // out:
             // {token_type: "Bearer", access_token: "<SOMEACCESSTOKEN>", expires_in: "604800", scope: "identify"}
             open(
@@ -62,16 +66,18 @@ export default {
                 async (err, out) => {
                     const resp = await api.login(this.$store.state.userdata.jwt, out.access_token, "discord");
                     console.log(resp);
-                    this.$store.commit("setUser", resp.data)
+                    this.$store.commit("setUser", resp.data);
+                    this.$store.dispatch("favorites/resetFavorites");
                 },
             );
         },
         async loginTwitter() {
-            open("http://localhost:2434/v2/user/login/twitter", async (err, out) => {
+            open(`${apiURI}/v2/user/login/twitter`, async (err, out) => {
                 const twitterTempJWT = out.jwt;
                 const resp = await api.login(this.$store.state.userdata.jwt, twitterTempJWT, "twitter");
                 console.log(resp);
-                this.$store.commit("setUser", resp.data)
+                this.$store.commit("setUser", resp.data);
+                this.$store.dispatch("favorites/resetFavorites");
             });
         },
     },

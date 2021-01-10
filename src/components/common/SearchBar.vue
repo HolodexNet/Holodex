@@ -171,15 +171,16 @@ export default {
             const formatted = val.replace("#", "").toLowerCase();
             this.getAutocomplete(formatted)
                 .then((res) => {
+                    let textQueries = [];
+                    if (encodeURIComponent(val).length > 2)
+                        textQueries = [
+                            { type: "title & desc", value: `${val}title & desc`, text: val },
+                            { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                            { type: "comments", value: `${val}comments`, text: val },
+                            { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                        ];
                     this.fromApi = [
-                        ...(encodeURIComponent(val).length > 2
-                            ? [
-                                { type: "title & desc", value: `${val}title & desc`, text: val },
-                                { type: "none", disabled: true, divider: true, value: "div", text: "div" },
-                                { type: "comments", value: `${val}comments`, text: val },
-                                { type: "none", disabled: true, divider: true, value: "div", text: "div" },
-                            ]
-                            : []),
+                        ...textQueries,
                         ...res.data.map((x) => {
                             if (!x.text) x.text = x.value;
                             // x.value = x.text + x.type;
@@ -203,6 +204,11 @@ export default {
         },
         async commitSearch() {
             if (!this.query) return;
+
+            if (this.query.length === 1 && this.query[0].type === "channel") {
+                this.$router.push(`/channel/${this.query[0].value}`);
+                return;
+            }
 
             this.$router.push({
                 path: "/search",
