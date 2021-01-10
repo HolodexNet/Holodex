@@ -15,6 +15,7 @@
             </v-list-item>
         </v-list>
         <v-card-text class="py-2">
+            <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible> </video-topic>
             <ChannelChip
                 v-for="channel in channel_chips"
                 :channel="channel"
@@ -58,11 +59,13 @@ import VideoDescription from "@/components/video/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
 import { dayjs } from "@/utils/time";
 import api from "@/utils/backend-api";
+import VideoTopic from "@/components/video/VideoTopic";
 
 export default {
     name: "WatchInfo",
     components: {
         ChannelChip,
+        VideoTopic,
         ChannelInfo,
         ChannelSocials,
         ChannelImg,
@@ -79,7 +82,9 @@ export default {
         },
     },
     data() {
-        return { comments: [] };
+        return {
+            comments: [],
+        };
     },
     methods: {
         formatTime(t) {

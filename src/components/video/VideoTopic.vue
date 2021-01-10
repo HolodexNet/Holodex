@@ -7,7 +7,7 @@
                     {{ topic || "Topic Not Set" }}
                 </v-btn>
                 <v-btn
-                    v-if="videoId && showEditIfPossible"
+                    v-if="videoId && showEditIfPossible && (role === 'admin' || role === 'editor')"
                     color="white"
                     class="blue darken-2"
                     elevation="2"
