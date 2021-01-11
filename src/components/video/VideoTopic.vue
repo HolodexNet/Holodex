@@ -84,6 +84,7 @@ export default {
         saveTopic() {
             this.dialog = false;
             backendApi.topicSet(this.newTopic, this.videoId, this.$store.state.userdata.jwt);
+            this.topic = this.newTopic;
         },
     },
 };
