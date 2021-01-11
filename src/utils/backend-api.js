@@ -27,9 +27,7 @@ export default {
             res.data
                 // .concat(res.data.upcoming)
                 // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
-                .filter((live) => !(!live.live_start && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))))
-                // get currently live and upcoming lives within the next 3 weeks
-                .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))),
+                .filter((live) => !(!live.live_start && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h")))),
         );
     },
     channel(id) {
