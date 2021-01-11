@@ -37,6 +37,9 @@ function defaultState() {
  *               Put Migrations Here
  *---------------------------------------------* */
 
+const syncedModules = /^(?:library|settings|favorites|home)/;
+const syncedMutations = /^(?:resetState|setUser|setCurrentOrg|setShowUpdatesDetail)/;
+
 export default new Vuex.Store({
     plugins: [
         createPersistedState({
@@ -46,17 +49,14 @@ export default new Vuex.Store({
                 const o = { ...state };
                 // don't want to persist router history across tabs/sessions.
                 o.routerHistory = [];
+
                 return o;
             },
         }),
         createMutationsSharer({
             predicate: (mutation /* state */) => {
                 console.info(mutation);
-                return (
-                    !mutation.type.match("^history") &&
-                    !mutation.type.match("^watch") &&
-                    !mutation.type.match("^channel")
-                ); // channel & channels
+                return mutation.type.match(syncedModules) || mutation.type.match(syncedMutations); // channel & channels
             },
         }), // Share all mutations except historyPop/Push across tabs.
     ],
