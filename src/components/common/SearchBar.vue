@@ -297,8 +297,8 @@ export default {
     color: white !important;
 }
 .search-bar > .v-input__append-outer {
-    padding-left: 4px;
-    padding-right: 12px;
+    padding-left: 5px;
+    padding-right: 8px;
 }
 .search-bar.theme--light > .v-input__append-outer {
     background-color: rgb(255, 255, 255);

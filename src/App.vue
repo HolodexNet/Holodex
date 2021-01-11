@@ -166,4 +166,7 @@ export default {
     text-decoration: none;
     color: inherit !important;
 }
+.body {
+    overscroll-behavior-y: none;
+}
 </style>
