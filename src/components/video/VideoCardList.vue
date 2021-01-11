@@ -5,8 +5,8 @@
             :key="`${index}-${video.id}`"
             :class="['video-col', `video-${colSize}`]"
         >
-            <v-lazy
-                ><VideoCard
+            <v-lazy>
+                <VideoCard
                     :video="video"
                     fluid
                     :includeChannel="includeChannel"
@@ -17,8 +17,9 @@
                     <!-- pass slot to each individual video card -->
                     <template v-slot:action>
                         <slot name="action" :video="video"></slot>
-                    </template> </VideoCard
-            ></v-lazy>
+                    </template>
+                </VideoCard>
+            </v-lazy>
         </v-col>
         <div class="text-center" style="width: 100%">
             <v-btn

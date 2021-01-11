@@ -114,7 +114,7 @@ export default {
             this.$store.commit("watch/resetState");
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
-                if (!this.hasWatched) this.$strore.commit("library/addWatchedVideo", this.video);
+                if (!this.hasWatched) this.$store.commit("library/addWatchedVideo", this.video);
             });
         },
         ready(event) {
