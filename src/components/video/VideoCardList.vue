@@ -5,7 +5,7 @@
             :key="`${index}-${video.id}`"
             :class="['video-col', `video-${colSize}`]"
         >
-            <v-lazy>
+            <v-lazy style="width: 100%">
                 <VideoCard
                     :video="video"
                     fluid
