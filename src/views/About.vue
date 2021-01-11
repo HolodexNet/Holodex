@@ -10,6 +10,21 @@
             </v-col>
 
             <v-col cols="12" md="8" sm="8" lg="9" xl="10">
+                <div class="text-h5">Quick Links</div>
+
+                <v-btn color="info" class="ma-3" large href="https://forms.gle/xkN4w8fyPr6YTGfx6"
+                    ><v-icon>{{ icons.mdiPencil }}</v-icon
+                    >Add my channel to Holodex</v-btn
+                ><br />
+                <v-btn color="indigo" class="ma-3" large href="https://discord.gg/jctkgHBt4b"
+                    ><v-icon>{{ icons.mdiDiscord }}</v-icon
+                    >Holodex Discord</v-btn
+                ><br />
+                <v-btn color="teal" class="ma-3" large href="https://discord.gg/xJd9Der"
+                    ><v-icon>{{ icons.mdiDiscord }}</v-icon
+                    >Hololive Creators Discord (#holodex)</v-btn
+                >
+
                 <div class="text-h5">FAQ</div>
                 <v-expansion-panels>
                     <v-expansion-panel>
@@ -211,6 +226,7 @@
 
 <script>
 import { mdiDotsVertical, mdiExportVariant } from "@mdi/js";
+import * as icons from "@/utils/icons";
 import TwitterFeed from "@/components/common/TwitterFeed";
 
 export default {
@@ -223,6 +239,7 @@ export default {
     },
     data() {
         return {
+            icons,
             mdiExportVariant,
             mdiDotsVertical,
         };
