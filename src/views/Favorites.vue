@@ -115,7 +115,7 @@ export default {
             },
         },
         pageLength() {
-            return this.$vuetify.breakpoint.toString() === "md" ? 12 : 24;
+            return 24;
         },
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;

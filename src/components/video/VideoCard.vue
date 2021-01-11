@@ -174,7 +174,7 @@ export default {
             if (this.colSize > 2 && this.colSize <= 8) {
                 return srcs.medium;
             }
-            return srcs.hq720;
+            return srcs.standard;
         },
         redirectMode() {
             return this.$store.state.settings.redirectMode;

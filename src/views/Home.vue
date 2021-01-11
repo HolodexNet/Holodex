@@ -45,7 +45,7 @@
                     infiniteLoad
                     @infinite="loadNext"
                     :infiniteId="infiniteId"
-                    style="min-height: 100vh"
+                    style=""
                     :cols="{
                         xs: 1,
                         sm: 3,
@@ -102,7 +102,7 @@ export default {
             },
         },
         pageLength() {
-            return this.$vuetify.breakpoint.toString() === "md" ? 12 : 24;
+            return 24;
         },
     },
     methods: {
