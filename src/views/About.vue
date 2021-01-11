@@ -13,15 +13,15 @@
                 <div class="text-h5">Quick Links</div>
 
                 <v-btn color="info" class="ma-3" large href="https://forms.gle/xkN4w8fyPr6YTGfx6"
-                    ><v-icon>{{ icons.mdiPencil }}</v-icon
+                    ><v-icon left>{{ icons.mdiPencil }}</v-icon
                     >Add my channel to Holodex</v-btn
                 ><br />
                 <v-btn color="indigo" class="ma-3" large href="https://discord.gg/jctkgHBt4b"
-                    ><v-icon>{{ icons.mdiDiscord }}</v-icon
+                    ><v-icon left>{{ icons.mdiDiscord }}</v-icon
                     >Holodex Discord</v-btn
                 ><br />
                 <v-btn color="teal" class="ma-3" large href="https://discord.gg/xJd9Der"
-                    ><v-icon>{{ icons.mdiDiscord }}</v-icon
+                    ><v-icon left>{{ icons.mdiDiscord }}</v-icon
                     >Hololive Creators Discord (#holodex)</v-btn
                 >
 
