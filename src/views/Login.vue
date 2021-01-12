@@ -1,9 +1,43 @@
 <template>
     <v-container fluid style="height: 100%">
-        {{ userdata }}
-        <button @click.prevent="loginGoogle">Login with Google</button><br />
-        <button @click.prevent="loginDiscord">Login with Discord</button><br />
-        <button @click.prevent="loginTwitter">Login with Twitter</button>
+        <v-card class="ma-auto mt-6" elevation="12" max-width="500px">
+            <user-card v-if="userdata.user"></user-card>
+            <v-divider></v-divider>
+            <v-card-subtitle class="justify-center">{{
+                userdata.user ? "Link another account" : "Login"
+            }}</v-card-subtitle>
+            <v-card-text class="d-flex flex-column">
+                <v-btn
+                    class="my-3"
+                    v-if="!userdata.user || !userdata.user.google_id"
+                    @click.prevent="loginGoogle"
+                    color="red accent-2"
+                >
+                    <v-icon left>{{ icons.mdiGoogle }}</v-icon>
+                    Login with Google
+                </v-btn>
+                <v-btn
+                    class="my-3"
+                    v-if="!userdata.user || !userdata.user.discord_id"
+                    @click.prevent="loginDiscord"
+                    color="indigo"
+                >
+                    <v-icon left>{{ icons.mdiDiscord }}</v-icon>
+
+                    Login with Discord
+                </v-btn>
+                <v-btn
+                    class="my-3"
+                    v-if="!userdata.user || !userdata.user.twitter_id"
+                    @click.prevent="loginTwitter"
+                    color="cyan darken-2"
+                >
+                    <v-icon left>{{ icons.mdiTwitter }}</v-icon>
+
+                    Login with Twitter
+                </v-btn>
+            </v-card-text>
+        </v-card>
     </v-container>
 </template>
 
@@ -14,6 +48,8 @@ import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import Vue from "vue";
+import UserCard from "@/components/user/UserCard";
+import * as icons from "@/utils/icons";
 
 dayjs.extend(utc);
 
@@ -35,9 +71,9 @@ export default {
     metaInfo: {
         title: "Login",
     },
-    components: {},
+    components: { UserCard },
     data() {
-        return {};
+        return { icons };
     },
     mounted() {},
     computed: {

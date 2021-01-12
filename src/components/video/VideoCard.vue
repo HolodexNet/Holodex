@@ -68,7 +68,14 @@
                         <span v-if="video.clips && video.clips.length > 0">
                             •
                             <router-link :to="`/watch/${video.id}`" class="no-decoration primary--text">
-                                {{ $tc("component.videoCard.clips", formatCount(video.clips.length)) }}
+                                {{
+                                    $tc(
+                                        "component.videoCard.clips",
+                                        formatCount(
+                                            typeof video.clips === "string" ? +video.clips : video.clips.length,
+                                        ),
+                                    )
+                                }}
                             </router-link>
                         </span>
                         <span v-else-if="video.status === 'live' && video.live_viewers > 0">
