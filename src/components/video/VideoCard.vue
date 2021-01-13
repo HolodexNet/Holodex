@@ -31,7 +31,7 @@
                     >
                         {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
                     </v-icon>
-                    <div v-if="video.duration > 0 || video.live_start" class="video-duration">
+                    <div v-if="video.duration > 0 || video.start_actual" class="video-duration">
                         {{ formattedDuration }}
                     </div>
                 </div>
@@ -166,8 +166,8 @@ export default {
         },
         formattedDuration() {
             const duration =
-                this.video.live_start && this.video.status === "live"
-                    ? dayjs().diff(dayjs(this.video.live_start))
+                this.video.start_actual && this.video.status === "live"
+                    ? dayjs().diff(dayjs(this.video.start_actual))
                     : this.video.duration * 1000;
 
             return duration ? this.formatDuration(duration) : "";
