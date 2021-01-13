@@ -1,6 +1,9 @@
 <template>
     <v-card class="watch-card rounded-0">
-        <v-card-title>{{ video.title }}</v-card-title>
+        <!-- <div class="video-actions justify-space-between d-flex align-center px-4 pt-2"> -->
+        <slot name="actions"></slot>
+        <!-- </div> -->
+        <v-card-title class="pt-2">{{ video.title }}</v-card-title>
         <v-card-subtitle>
             {{ formatTime(video.published_at) }}
         </v-card-subtitle>
@@ -14,15 +17,14 @@
                 <ChannelSocials :channel="video.channel" />
             </v-list-item>
         </v-list>
-        <v-card-text class="py-2">
-            <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible> </video-topic>
+        <!-- <v-card-text class="py-2">
             <ChannelChip
                 v-for="channel in channel_chips"
                 :channel="channel"
                 :key="channel.id"
                 class="ma-1"
             ></ChannelChip>
-            <!-- <v-chip
+            <v-chip
                 v-for="tag in video.tags.filter((t) => !t.channel_ref)"
                 label
                 link
@@ -31,8 +33,8 @@
                 :to="`/search?tags=${tag.name}`"
             >
                 {{ `#${tag.name} (${tag.count})` }}
-            </v-chip> -->
-        </v-card-text>
+            </v-chip>
+        </v-card-text> -->
         <VideoDescription :description="video.description"></VideoDescription>
         <v-divider />
         <v-list

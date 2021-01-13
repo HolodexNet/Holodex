@@ -2,7 +2,7 @@
     <v-dialog persistent v-model="dialog">
         <template v-slot:activator="{ on }">
             <div class="multi-button d-inline-block">
-                <v-btn color="blue" :disabled="!topic">
+                <v-btn color="blue" :disabled="!topic" small>
                     <v-icon left>{{ icons.mdiAnimationPlay }}</v-icon>
                     {{ topic || "Topic Not Set" }}
                 </v-btn>
@@ -13,6 +13,7 @@
                     elevation="2"
                     icon
                     v-on="on"
+                    small
                 >
                     <v-icon>{{ icons.mdiPencil }}</v-icon>
                 </v-btn>

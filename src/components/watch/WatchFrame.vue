@@ -4,7 +4,7 @@
     <div v-if="!redirectMode && video">
         <div class="video">
             <slot name="youtube"></slot>
-            <div class="watch-overlay text-center">
+            <!-- <div class="watch-overlay text-center">
                 <template v-for="message in showMessages">
                     <div class="watch-translation" :key="message.message">
                         <div class="watch-translation-author">
@@ -18,7 +18,7 @@
                     </div>
                     <br :key="message.message + 'br'" />
                 </template>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="thumbnail" v-else>
@@ -40,15 +40,15 @@ export default {
         video: {
             required: true,
         },
-        translations: {
-            required: false,
-            type: Array,
-        },
-        otherMessages: {
-            required: false,
-            type: Array,
-        },
-        currentTime: {},
+        // translations: {
+        //     required: false,
+        //     type: Array,
+        // },
+        // otherMessages: {
+        //     required: false,
+        //     type: Array,
+        // },
+        // currentTime: {},
     },
     data() {
         return {
@@ -66,31 +66,28 @@ export default {
     // },
     methods: {},
     computed: {
-        video_src() {
-            return `https://www.youtube.com/embed/${this.video.id}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
-        },
         thumbnail_src() {
             return getVideoThumbnails(this.video.id).medium;
         },
         redirectMode() {
-            return this.$store.state.redirectMode;
+            return this.$store.state.settings.redirectMode;
         },
-        translationsWithDuration() {
-            return this.translations.map((m) => {
-                m.endTime = m.time_secs + m.message.length / 12 + 1;
-                return m;
-            });
-        },
-        showMessages() {
-            return this.translationsWithDuration.filter(
-                (m) =>
-                    this.currentTime >= m.time_secs - this.sub_offset &&
-                    this.currentTime <= m.endTime - this.sub_offset,
-            );
-        },
-        lastMessage() {
-            return this.translations[this.translations.length - 1];
-        },
+        // translationsWithDuration() {
+        //     return this.translations.map((m) => {
+        //         m.endTime = m.time_secs + m.message.length / 12 + 1;
+        //         return m;
+        //     });
+        // },
+        // showMessages() {
+        //     return this.translationsWithDuration.filter(
+        //         (m) =>
+        //             this.currentTime >= m.time_secs - this.sub_offset &&
+        //             this.currentTime <= m.endTime - this.sub_offset,
+        //     );
+        // },
+        // lastMessage() {
+        //     return this.translations[this.translations.length - 1];
+        // },
     },
 };
 </script>
@@ -99,7 +96,7 @@ export default {
 .video {
     position: relative;
 }
-.watch-overlay {
+/* .watch-overlay {
     position: absolute;
     width: 100%;
     bottom: 7%;
@@ -117,7 +114,7 @@ export default {
 }
 .watch-translation-author {
     text-align: start;
-}
+} */
 .embedded-video {
     position: relative;
     padding-bottom: 56.25%;

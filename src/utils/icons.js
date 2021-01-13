@@ -29,4 +29,6 @@ export {
     mdiTwitter,
     mdiYoutube,
     mdiMenuDown,
+    mdiPlusBox,
+    mdiCheck,
 } from "@mdi/js";
