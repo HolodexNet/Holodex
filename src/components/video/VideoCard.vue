@@ -65,7 +65,7 @@
                         <router-link
                             :to="`/channel/${video.channel.id}`"
                             class="no-decoration channel-name"
-                            :class="{ 'name-vtuber': video.type === 'stream' || channel.type === 'vtuber' }"
+                            :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
                         >
                             {{ channelName }}
                         </router-link>
