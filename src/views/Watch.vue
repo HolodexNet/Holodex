@@ -34,16 +34,16 @@
                 >
                     <span class="watch-chips">
                         <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic>
-                        <template v-for="mention in channelMentions">
+                        <template v-for="mention in channelChips">
                             <ChannelChip :channel="mention" :key="mention.id" />
                         </template>
                         <a
                             @click="showAllMentions = !showAllMentions"
                             style="white-space: pre"
                             class="text-subtitle-2"
-                            v-if="video.mentions.length > 3"
+                            v-if="mentions.length > 3"
                         >
-                            {{ showAllMentions ? "Hide" : "Show" }} {{ video.mentions.length - 3 }} more
+                            {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
                         </a>
                     </span>
                     <div class="watch-btn-group d-flex">
@@ -273,10 +273,11 @@ export default {
             if (!this.video.id) return undefined;
             return getVideoThumbnails(this.video.id).maxres;
         },
-        channelMentions() {
-            return this.video.mentions.length > 3 && !this.showAllMentions
-                ? this.video.mentions.slice(0, 3)
-                : this.video.mentions;
+        mentions() {
+            return this.video.mentions || [];
+        },
+        channelChips() {
+            return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
         },
     },
     watch: {
