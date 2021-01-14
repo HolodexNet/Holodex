@@ -15,6 +15,7 @@ const ChannelStats = () => import("../views/channel_views/ChannelStats");
 const Settings = () => import("../views/Settings");
 const NotFound = () => import("../views/NotFound");
 const Login = () => import("../views/Login");
+const MugenClips = () => import("../views/MugenClips");
 Vue.use(VueRouter);
 
 const routes = [
@@ -73,6 +74,11 @@ const routes = [
         name: "watch",
         path: "/watch",
         component: Watch,
+    },
+    {
+        name: "mugen-clips",
+        path: "/infinite",
+        component: MugenClips,
     },
     {
         name: "library",

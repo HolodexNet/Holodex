@@ -114,4 +114,7 @@ export default {
             },
         );
     },
+    rotation() {
+        return axiosInstance.get("/rotation");
+    },
 };

@@ -20,7 +20,11 @@ export default {
     props: {
         video: {
             type: Object,
-            required: true,
+            required: false,
+        },
+        videoId: {
+            type: String,
+            required: false,
         },
         // hasLiveChat: {
         //     type: Boolean,
@@ -29,8 +33,8 @@ export default {
     },
     computed: {
         liveChatUrl() {
-            if (!this.video) return null;
-            return `https://www.youtube.com/live_chat?v=${this.video.id}&embed_domain=${
+            if (!this.video && !this.videoId) return null;
+            return `https://www.youtube.com/live_chat?v=${this.videoId ? this.videoId : this.video.id}&embed_domain=${
                 window.location.hostname
             }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
         },

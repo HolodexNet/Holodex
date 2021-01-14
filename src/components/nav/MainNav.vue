@@ -151,6 +151,7 @@ import SearchBar from "@/components/common/SearchBar";
 import Logo from "@/components/common/Logo";
 import UserCard from "@/components/user/UserCard";
 import { ORGS, ORGS_PREFIX } from "@/utils/consts";
+import { mdiInfinity } from "@mdi/js";
 import NavDrawer from "./NavDrawer";
 import BottomNav from "./BottomNav";
 
@@ -230,6 +231,12 @@ export default {
                     name: this.$t("component.mainNav.library"),
                     path: "/library",
                     icon: icons.mdiAnimationPlay,
+                },
+                {
+                    name: "MugenClips<sup>beta</sup>",
+                    path: "/infinite",
+                    icon: mdiInfinity,
+                    collapsible: true,
                 },
                 {
                     name: this.$t("component.mainNav.about"),

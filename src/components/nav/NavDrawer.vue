@@ -20,9 +20,7 @@
                         <v-icon>{{ page.icon }}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>
-                            {{ page.name }}
-                        </v-list-item-title>
+                        <v-list-item-title v-html="page.name"> </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </template>
