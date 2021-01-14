@@ -185,7 +185,7 @@ export default {
             else {
                 api.searchComments(searchQuery)
                     .then((res) => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.horizontal = true;
                         this.videos = res.data;
                         return this;

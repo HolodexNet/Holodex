@@ -25,12 +25,25 @@
             <v-btn
                 icon
                 @click="expanded = !expanded"
-                v-if="limitRows > 0 && videos.length > this.limitRows * this.colSize"
+                v-if="!isMobile && limitRows > 0 && videos.length > this.limitRows * this.colSize"
             >
                 <v-icon>
                     {{ this.expanded ? mdiChevronUp : mdiChevronDown }}
                 </v-icon>
             </v-btn>
+            <v-btn
+                elevation="4"
+                block
+                large
+                @click="expanded = !expanded"
+                color="cyan accent-4"
+                v-if="isMobile && limitRows > 0 && videos.length > this.limitRows * this.colSize"
+            >
+                <v-icon>
+                    {{ this.expanded ? mdiChevronUp : mdiChevronDown }}
+                </v-icon>
+            </v-btn>
+
             <InfiniteLoad v-if="infiniteLoad" @infinite="emitInfinite" :identifier="infiniteId" />
         </div>
     </v-row>
@@ -119,6 +132,9 @@ export default {
             set(val) {
                 this.$emit("changePage", val, this.pageSize);
             },
+        },
+        isMobile() {
+            return this.$store.state.isMobile;
         },
     },
 };
