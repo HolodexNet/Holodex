@@ -3,9 +3,6 @@
         <v-row>
             <v-col :lg="theatherMode ? 12 : 9" cols="12" class="pt-0">
                 <WatchFrame v-if="video" :video="video">
-                    <!-- :translations="translations"
-                    :otherMessages="otherMessages"
-                    :currentTime="currentTime" -->
                     <template v-slot:youtube>
                         <youtube
                             class="embedded-video"
@@ -18,15 +15,6 @@
                         </youtube>
                     </template>
                 </WatchFrame>
-                <!-- <WatchTimeline
-                    :v-if="translations.length"
-                    :video="video"
-                    :translations="translations"
-                    :otherMessages="otherMessages"
-                    :currentTime="currentTime"
-                    class="pa-3"
-                >
-                </WatchTimeline> -->
                 <v-card
                     tile
                     class="justify-space-between d-flex align-start px-4 pt-2"
@@ -114,14 +102,11 @@
 </template>
 
 <script>
-// import api from "@/utils/backend-api";
 import LoadingOverlay from "@/components/common/LoadingOverlay";
 import WatchInfo from "@/components/watch/WatchInfo";
 import WatchFrame from "@/components/watch/WatchFrame";
 import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
-// import WatchTimeline from "@/components/watch/WatchTimeline";
-// import WatchTranscript from "@/components/watch/WatchTranscript";
 import ChannelChip from "@/components/channel/ChannelChip";
 import VideoTopic from "@/components/video/VideoTopic";
 import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
@@ -161,8 +146,6 @@ export default {
         WatchFrame,
         WatchLiveChat,
         ChannelChip,
-        // WatchTimeline,
-        // WatchTranscript,
         WatchRelatedVideos,
         VideoTopic,
     },
