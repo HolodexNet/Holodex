@@ -3,9 +3,10 @@
         <!-- <div class="video-actions justify-space-between d-flex align-center px-4 pt-2"> -->
         <slot name="actions"></slot>
         <!-- </div> -->
-        <v-card-title class="pt-2">{{ video.title }}</v-card-title>
+        <v-card-title class="pt-2" style="font-size: 1.125rem; font-weight: 400">{{ video.title }}</v-card-title>
         <v-card-subtitle>
-            {{ formatTime(video.published_at) }}
+            {{ formattedTime }}<template v-if="video.status === 'live'"> • {{ liveViewers }} viewers></template>
+            <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
         </v-card-subtitle>
         <v-divider />
         <v-list two-line>
@@ -35,7 +36,9 @@
                 {{ `#${tag.name} (${tag.count})` }}
             </v-chip>
         </v-card-text> -->
-        <VideoDescription :description="video.description"></VideoDescription>
+        <v-card-text class="text-body-2">
+            <truncated-text :html="video.description" lines="3" />
+        </v-card-text>
         <v-divider />
         <v-list
             style="max-height: 400px"
@@ -57,11 +60,13 @@ import ChannelChip from "@/components/channel/ChannelChip";
 import ChannelInfo from "@/components/channel/ChannelInfo";
 import ChannelSocials from "@/components/channel/ChannelSocials";
 import ChannelImg from "@/components/channel/ChannelImg";
-import VideoDescription from "@/components/video/VideoDescription";
+// import VideoDescription from "@/components/video/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
-import { dayjs } from "@/utils/time";
+import { formatDuration, formatStreamStart, dayjs } from "@/utils/time";
+import * as icons from "@/utils/icons";
 import api from "@/utils/backend-api";
 import VideoTopic from "@/components/video/VideoTopic";
+import TruncatedText from "@/components/common/TruncatedText";
 
 export default {
     name: "WatchInfo",
@@ -71,7 +76,8 @@ export default {
         ChannelInfo,
         ChannelSocials,
         ChannelImg,
-        VideoDescription,
+        TruncatedText,
+        // VideoDescription,
         Comment: () => import("@/components/video/Comment"),
     },
     props: {
@@ -86,11 +92,26 @@ export default {
     data() {
         return {
             comments: [],
+            timer: null,
+            elapsedTime: 0,
+            icons,
         };
     },
     methods: {
-        formatTime(t) {
-            return dayjs(t).format("MMM DD, YYYY");
+        formatDuration,
+        formatStreamStart,
+        setTimer() {
+            if (this.timer) clearInterval(this.timer);
+            // if(this.video.status === "live" || this.video.status === "upcoming") {
+            //     this.timer = setInterval(()=> {
+            //         this.formattedTime = this.formatTime();
+            //     }, this.video.status === "live" ? 1000 : 1000*60);
+            // }
+            if (this.video.status === "live") {
+                this.timer = setInterval(() => {
+                    this.elapsedTime = this.formatDuration(dayjs().diff(dayjs(this.video.start_actual)));
+                }, 1000);
+            }
         },
     },
     mounted() {
@@ -99,6 +120,16 @@ export default {
                 this.comments = res.data;
             });
         }
+        this.setTimer();
+    },
+    watch: {
+        // eslint-disable-next-line func-names
+        "video.status": function () {
+            this.setTimer();
+        },
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
     },
     computed: {
         channel_chips() {
@@ -120,6 +151,19 @@ export default {
         },
         thumbnail_src() {
             return getVideoThumbnails(this.video.id).medium;
+        },
+        formattedTime() {
+            switch (this.video.status) {
+                case "upcoming":
+                    return `Starts ${this.formatStreamStart(this.video.start_scheduled)}`;
+                case "live":
+                    return `Streaming for ${this.elapsedTime}`;
+                default:
+                    return dayjs(this.video.available_at).format("MMM DD, YYYY");
+            }
+        },
+        liveViewers() {
+            return (+this.video.live_viewers).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
     },
 };

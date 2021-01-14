@@ -105,7 +105,6 @@ import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
 // import WatchTimeline from "@/components/watch/WatchTimeline";
 // import WatchTranscript from "@/components/watch/WatchTranscript";
-import VideoDescription from "@/components/video/VideoDescription";
 import VideoTopic from "@/components/video/VideoTopic";
 import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
@@ -145,7 +144,6 @@ export default {
         WatchLiveChat,
         // WatchTimeline,
         // WatchTranscript,
-        VideoDescription,
         WatchRelatedVideos,
         VideoTopic,
     },
