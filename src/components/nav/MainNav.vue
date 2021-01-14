@@ -274,6 +274,12 @@ export default {
             window.history.go(Math.min(-1, 0));
         },
     },
+    watch: {
+        isWatchPage() {
+            // close drawer on watch page
+            this.drawer = !this.isWatchPage;
+        },
+    },
 };
 </script>
 

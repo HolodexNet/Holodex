@@ -29,7 +29,7 @@
                         :class="{ 'hover-show': !hasSaved && !isMobile }"
                         @click="toggleSaved($event)"
                     >
-                        {{ hasSaved ? mdiCheck : mdiPlusBox }}
+                        {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
                     </v-icon>
                     <div v-if="video.duration > 0 || video.live_start" class="video-duration">
                         {{ formattedDuration }}
@@ -102,7 +102,7 @@
 <script>
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { formatDuration, formatStreamStart, dayjs } from "@/utils/time";
-import { mdiCheck, mdiPlusBox } from "@mdi/js";
+import * as icons from "@/utils/icons";
 /* eslint-disable no-unused-vars */
 
 export default {
@@ -114,8 +114,7 @@ export default {
     data() {
         return {
             forceJPG: true,
-            mdiPlusBox,
-            mdiCheck,
+            icons,
         };
     },
     props: {

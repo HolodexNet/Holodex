@@ -6,6 +6,7 @@
         width="240"
         clipped
         class="nav-scroll"
+        :temporary="$route.name === 'watch_id'"
     >
         <v-list dense>
             <template v-for="page in pages">
