@@ -5,7 +5,7 @@
         <!-- </div> -->
         <v-card-title class="pt-2" style="font-size: 1.125rem; font-weight: 400">{{ video.title }}</v-card-title>
         <v-card-subtitle>
-            {{ formattedTime }}<template v-if="video.status === 'live'"> • {{ liveViewers }} viewers></template>
+            {{ formattedTime }} <template v-if="video.status === 'live'"> • {{ liveViewers }} viewers</template>
             <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
         </v-card-subtitle>
         <v-divider />

@@ -27,9 +27,26 @@
                     class="pa-3"
                 >
                 </WatchTimeline> -->
-                <v-card class="video-actions justify-space-between d-flex align-center px-4 pt-2">
-                    <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible> </video-topic>
-                    <span class="video-btn-group">
+                <v-card
+                    tile
+                    class="justify-space-between d-flex align-start px-4 pt-2"
+                    :class="{ 'pb-2': theatherMode }"
+                >
+                    <span class="watch-chips">
+                        <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic>
+                        <template v-for="mention in channelMentions">
+                            <ChannelChip :channel="mention" :key="mention.id" />
+                        </template>
+                        <a
+                            @click="showAllMentions = !showAllMentions"
+                            style="white-space: pre"
+                            class="text-subtitle-2"
+                            v-if="video.mentions.length > 3"
+                        >
+                            {{ showAllMentions ? "Hide" : "Show" }} {{ video.mentions.length - 3 }} more
+                        </a>
+                    </span>
+                    <div class="watch-btn-group d-flex">
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn
@@ -76,7 +93,7 @@
                             </template>
                             <span>Save video to Library</span>
                         </v-tooltip>
-                    </span>
+                    </div>
                 </v-card>
                 <WatchInfo :video="video" v-if="!theatherMode" :fetchComments="true" key="info" />
             </v-col>
@@ -105,6 +122,7 @@ import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
 // import WatchTimeline from "@/components/watch/WatchTimeline";
 // import WatchTranscript from "@/components/watch/WatchTranscript";
+import ChannelChip from "@/components/channel/ChannelChip";
 import VideoTopic from "@/components/video/VideoTopic";
 import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
@@ -142,6 +160,7 @@ export default {
         WatchInfo,
         WatchFrame,
         WatchLiveChat,
+        ChannelChip,
         // WatchTimeline,
         // WatchTranscript,
         WatchRelatedVideos,
@@ -152,6 +171,7 @@ export default {
             // translations: [],
             // otherMessages: [],
             theatherMode: false,
+            showAllMentions: false,
             // currentTime: 0,
             // timer: null,
             mdiOpenInNew,
@@ -253,6 +273,11 @@ export default {
             if (!this.video.id) return undefined;
             return getVideoThumbnails(this.video.id).maxres;
         },
+        channelMentions() {
+            return this.video.mentions.length > 3 && !this.showAllMentions
+                ? this.video.mentions.slice(0, 3)
+                : this.video.mentions;
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -306,8 +331,12 @@ export default {
 .thumbnail {
     position: relative;
 }
-.video-btn-group > .v-btn {
+.watch-btn-group > .v-btn {
     margin-right: 5px;
+}
+
+.watch-chips > * {
+    margin: 2.5px;
 }
 
 /* @media screen and (min-width: 600px) {

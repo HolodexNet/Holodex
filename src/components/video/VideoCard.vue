@@ -21,18 +21,27 @@
                     <v-row class="fill-height ma-0" align="center" justify="center"></v-row>
                 </template>
                 <!-- Image Overlay -->
-                <div class="video-card-overlay d-flex flex-column align-end justify-space-between" style="height: 100%">
-                    <!-- Check box for saved video -->
-                    <v-icon
-                        :color="hasSaved ? 'primary' : 'white'"
-                        class="video-card-action"
-                        :class="{ 'hover-show': !hasSaved && !isMobile }"
-                        @click="toggleSaved($event)"
-                    >
-                        {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
-                    </v-icon>
-                    <div v-if="video.duration > 0 || video.start_actual" class="video-duration">
-                        {{ formattedDuration }}
+                <div class="video-card-overlay d-flex justify-space-between flex-column" style="height: 100%">
+                    <div class="d-flex justify-space-between align-start">
+                        <!-- Topic Id display -->
+                        <div class="video-topic">{{ video.topic_id }}</div>
+
+                        <!-- Check box for saved video -->
+                        <v-icon
+                            :color="hasSaved ? 'primary' : 'white'"
+                            class="video-card-action"
+                            :class="{ 'hover-show': !hasSaved && !isMobile }"
+                            @click="toggleSaved($event)"
+                        >
+                            {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
+                        </v-icon>
+                    </div>
+
+                    <!-- Video duration -->
+                    <div class="d-flex flex-column align-end">
+                        <div v-if="video.duration > 0 || video.start_actual" class="video-duration">
+                            {{ formattedDuration }}
+                        </div>
                     </div>
                 </div>
             </v-img>
@@ -275,6 +284,16 @@ export default {
     text-align: center;
     font-size: 0.8125rem;
     letter-spacing: 0.025em;
+}
+
+.video-topic {
+    background-color: rgba(0, 0, 0, 0.8);
+    margin: 2px;
+    padding: 1px 5px;
+    text-align: center;
+    font-size: 0.8125rem;
+    letter-spacing: 0.025em;
+    text-transform: capitalize;
 }
 
 .video-card-action {

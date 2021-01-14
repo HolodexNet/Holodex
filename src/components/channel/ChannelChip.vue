@@ -1,5 +1,5 @@
 <template>
-    <v-chip pill :to="`/channel/${channel.id}`" :close="close">
+    <v-chip pill :to="`/channel/${channel.id}`" class="channel-chip">
         <v-avatar left>
             <ChannelImg :channel="channel" />
         </v-avatar>
@@ -20,10 +20,10 @@ export default {
             type: Object,
             required: true,
         },
-        close: {
-            type: Boolean,
-            required: false,
-        },
+        // close: {
+        //     type: Boolean,
+        //     required: false,
+        // },
     },
     computed: {
         channelName() {
@@ -35,4 +35,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.channel-chip {
+    font-size: 14px;
+    height: 28px;
+}
+</style>
