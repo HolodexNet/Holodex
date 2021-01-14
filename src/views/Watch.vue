@@ -211,7 +211,7 @@ export default {
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
         videoClips() {
-            return this.video?.clips || [];
+            return this.video?.clips?.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)) || [];
         },
         videoSources() {
             return this.video?.sources || [];
