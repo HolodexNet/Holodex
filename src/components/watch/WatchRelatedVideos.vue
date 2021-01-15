@@ -1,34 +1,25 @@
 <template>
     <div>
-        <div class="text-subtitle-2 ma-2" v-if="simulcasts.length > 0">Simulcasts</div>
-        <VideoCardList
-            :videos="simulcasts"
-            horizontal
-            includeChannel
-            :cols="{
-                lg: 12,
-                md: 4,
-                cols: 12,
-                sm: 6,
-            }"
-        />
-        <div class="text-subtitle-2 ma-2" v-if="clips.length > 0">Clips</div>
-        <VideoCardList
-            :videos="clips"
-            horizontal
-            includeChannel
-            :cols="{
-                lg: 12,
-                md: 12,
-                cols: 12,
-                sm: 12,
-            }"
-        />
-        <v-divider />
-
-        <div v-if="clips.length + simulcasts.length === 0" style="text-align: center" class="pa-2">
-            No clips or related video yet
-        </div>
+        <template v-for="relation in Object.keys(related)">
+            <template v-if="related[relation].length">
+                <div class="text-overline ma-2" :key="`${relation}-title`">
+                    {{ relation }}
+                </div>
+                <VideoCardList
+                    :key="`${relation}-videos`"
+                    :videos="related[relation]"
+                    horizontal
+                    includeChannel
+                    :cols="{
+                        lg: 12,
+                        md: 4,
+                        cols: 12,
+                        sm: 6,
+                    }"
+                >
+                </VideoCardList>
+            </template>
+        </template>
     </div>
 </template>
 
@@ -41,11 +32,9 @@ export default {
         VideoCardList,
     },
     props: {
-        simulcasts: {
+        related: {
             required: true,
-        },
-        clips: {
-            required: true,
+            type: Object,
         },
     },
 };

@@ -92,7 +92,7 @@
                     </v-col>
                     <v-col cols="12" :lg="theatherMode ? 3 : 12" class="pt-0 pl-lg-0">
                         <WatchLiveChat v-if="hasLiveChat" :video="video" />
-                        <WatchRelatedVideos :simulcasts="simulcasts" :clips="clips" />
+                        <WatchRelatedVideos :related="related" />
                     </v-col>
                 </v-row>
             </v-col>
@@ -211,15 +211,22 @@ export default {
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
-        clips() {
-            return (
-                (this.video.clips &&
-                    this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang))) ||
-                []
-            );
+        related() {
+            return {
+                clips:
+                    (this.video.clips &&
+                        this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang))) ||
+                    [],
+                simulcasts: this.video.simulcasts || [],
+                refers: this.video.refers || [],
+                sources: this.video.sources || [],
+            };
         },
-        simulcasts() {
-            return this.video.simulcasts || [];
+        mentions() {
+            return this.video.mentions || [];
+        },
+        channelChips() {
+            return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
         },
         videoId() {
             return this.$route.params.id || this.$route.query.v;
@@ -251,7 +258,7 @@ export default {
             return this.$store.getters["library/hasSaved"](this.video.id);
         },
         metaDescription() {
-            return this.video && this.video.description.substr(0, 100);
+            return this.video && this.video.description && this.video.description.substr(0, 100);
         },
         metaTitle() {
             return decodeHTMLEntities(this.video.title) || "";
@@ -259,12 +266,6 @@ export default {
         metaImage() {
             if (!this.video.id) return undefined;
             return getVideoThumbnails(this.video.id).maxres;
-        },
-        mentions() {
-            return this.video.mentions || [];
-        },
-        channelChips() {
-            return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
         },
     },
     watch: {
