@@ -38,7 +38,7 @@ const actions = {
                     ...params,
                     lang: rootState.settings.clipLangs.join(","),
                     offset: state.currentOffset,
-                    include: "clips",
+                    include: "clips,live_info",
                 },
             })
             .then(({ data }) => {

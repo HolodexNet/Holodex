@@ -17,7 +17,7 @@
                 </WatchFrame>
                 <v-card
                     tile
-                    class="justify-space-between d-flex align-start px-4 pt-2"
+                    class="d-flex justify-space-between px-4 pt-2 flex-wrap-reverse flex-sm-nowrap"
                     :class="{ 'pb-2': theatherMode }"
                 >
                     <span class="watch-chips">
@@ -34,7 +34,7 @@
                             {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
                         </a>
                     </span>
-                    <div class="watch-btn-group d-flex">
+                    <div class="watch-btn-group ml-auto d-flex">
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn
@@ -179,6 +179,10 @@ export default {
         },
         formatTime(t) {
             return dayjs(t).format("MMM DD, YYYY");
+        },
+        seekTo(time) {
+            if (!this.player) return;
+            this.player.seekTo(time);
         },
         // startSync() {
         //     // to be replaced by has transcript check
