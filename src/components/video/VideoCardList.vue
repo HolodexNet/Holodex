@@ -13,6 +13,7 @@
                     :horizontal="horizontal"
                     :includeAvatar="includeAvatar"
                     :colSize="colSize"
+                    :active="video.id === activeId"
                 >
                     <!-- pass slot to each individual video card -->
                     <template v-slot:action>
@@ -97,7 +98,7 @@ export default {
         },
         limitRows: {
             required: false,
-            type: Number,
+            type: [Number, String],
             default: 0,
         },
         infiniteLoad: {
@@ -108,6 +109,10 @@ export default {
         infiniteId: {
             required: false,
             default: 0,
+        },
+        activeId: {
+            required: false,
+            type: String,
         },
     },
     methods: {

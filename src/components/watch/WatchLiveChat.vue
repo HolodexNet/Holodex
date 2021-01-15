@@ -22,7 +22,7 @@ export default {
             type: Object,
             required: false,
         },
-        videoId: {
+        mugenId: {
             type: String,
             required: false,
         },
@@ -34,7 +34,7 @@ export default {
     computed: {
         liveChatUrl() {
             if (!this.video && !this.videoId) return null;
-            return `https://www.youtube.com/live_chat?v=${this.videoId ? this.videoId : this.video.id}&embed_domain=${
+            return `https://www.youtube.com/live_chat?v=${this.mugenId ? this.mugenId : this.video.id}&embed_domain=${
                 window.location.hostname
             }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
         },

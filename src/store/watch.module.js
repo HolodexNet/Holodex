@@ -10,14 +10,7 @@ const initialState = {
 
 export const state = { ...initialState };
 
-const getters = {
-    videoClips(state) {
-        return state.video?.clips || [];
-    },
-    videoSources(state) {
-        return state.video?.sources || [];
-    },
-};
+const getters = {};
 
 const actions = {
     fetchVideo({ state, commit }) {
