@@ -2,7 +2,7 @@
     <v-container fluid v-if="!isLoading && !hasError">
         <v-row>
             <v-col :lg="theatherMode ? 12 : 9" cols="12" class="pt-0">
-                <WatchFrame v-if="video" :video="video">
+                <WatchFrame v-if="video.id" :video="video">
                     <template v-slot:youtube>
                         <youtube
                             class="embedded-video"
@@ -83,7 +83,7 @@
                         </v-tooltip>
                     </div>
                 </v-card>
-                <WatchInfo :video="video" v-if="!theatherMode" :fetchComments="true" key="info" />
+                <WatchInfo :video="video" v-if="!theatherMode && video.channel" :fetchComments="true" key="info" />
             </v-col>
             <v-col class="related-videos pt-0" :lg="theatherMode ? 12 : 3">
                 <v-row fluid>
@@ -91,7 +91,8 @@
                         <WatchInfo :video="video" :fetchComments="true" key="info" />
                     </v-col>
                     <v-col cols="12" :lg="theatherMode ? 3 : 12" class="pt-0 pl-lg-0">
-                        <WatchLiveChat v-if="hasLiveChat" :video="video" />
+                        <WatchLiveChat v-if="hasLiveChat" :video="video" mugenId="4ANxvWIM3Bs" />
+                        <WatchMugen @playNext="playNext" v-if="isMugen" />
                         <WatchRelatedVideos :related="related" />
                     </v-col>
                 </v-row>
@@ -114,6 +115,7 @@ import { mapState } from "vuex";
 import { mdiOpenInNew, mdiOverscan, mdiRectangleOutline } from "@mdi/js";
 import * as icons from "@/utils/icons";
 import { dayjs } from "@/utils/time";
+import WatchMugen from "@/components/watch/WatchMugen";
 
 export default {
     name: "Watch",
@@ -148,15 +150,13 @@ export default {
         ChannelChip,
         WatchRelatedVideos,
         VideoTopic,
+        WatchMugen,
     },
     data() {
         return {
-            // translations: [],
-            // otherMessages: [],
             theatherMode: false,
             showAllMentions: false,
-            // currentTime: 0,
-            // timer: null,
+            startTime: 0,
             mdiOpenInNew,
             mdiOverscan,
             mdiRectangleOutline,
@@ -164,7 +164,7 @@ export default {
         };
     },
     created() {
-        this.init();
+        this.isMugen ? this.initMugen() : this.init();
     },
     methods: {
         init() {
@@ -174,8 +174,15 @@ export default {
                 if (!this.hasWatched && this.videoId) this.$store.commit("library/addWatchedVideo", this.video);
             });
         },
+        initMugen() {
+            this.$store.commit("watch/resetState");
+            this.$store.commit("watch/fetchEnd");
+        },
         ready(event) {
             this.player = event.target;
+            // if(this.startTime) {
+            //     this.player.seekTo(this.timeOffset);
+            // }
         },
         formatTime(t) {
             return dayjs(t).format("MMM DD, YYYY");
@@ -184,29 +191,10 @@ export default {
             if (!this.player) return;
             this.player.seekTo(time);
         },
-        // startSync() {
-        //     // to be replaced by has transcript check
-        //     if (!this.hasLiveChat) return;
-        //     const vm = this;
-        //     this.timer = setInterval(() => {
-        //         vm.currentTime = vm.player.getCurrentTime();
-        //     }, 1000);
-        // },
-        // stopSync() {
-        //     // to be replaced by has transcript check
-        //     if (!this.hasLiveChat) return;
-        //     clearInterval(this.timer);
-        //     this.timer = null;
-        // },
-        // playing(event) {
-        //     console.log(event.target.getCurrentTime());
-        //     this.startSync();
-        //     // this.updateMessages(this.player.getCurrentTime());
-        // },
-        // paused(event) {
-        //     console.log(event);
-        //     this.stopSync();
-        // },
+        playNext({ video, timeOffset }) {
+            this.$store.commit("watch/setVideo", video);
+            this.startTime = timeOffset;
+        },
         toggleSaved() {
             this.hasSaved
                 ? this.$store.commit("library/removeSavedVideo", this.video.id)
@@ -236,23 +224,15 @@ export default {
             return this.$route.params.id || this.$route.query.v;
         },
         timeOffset() {
-            return +this.$route.query.t || 0;
-        },
-        liveChatUrl() {
-            if (!this.video) return null;
-            return `https://www.youtube.com/live_chat?v=${this.video.id}&embed_domain=${
-                window.location.hostname
-            }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
+            return +this.$route.query.t || this.startTime;
         },
         title() {
             return decodeHTMLEntities(this.video.title) || "";
         },
         hasLiveChat() {
             return (
-                (this.video.status === "live" || this.video.status === "upcoming") &&
-                !this.redirectMode &&
-                this.liveChatUrl &&
-                !this.isXs
+                this.isMugen ||
+                ((this.video.status === "live" || this.video.status === "upcoming") && !this.redirectMode)
             );
         },
         hasWatched() {
@@ -260,6 +240,9 @@ export default {
         },
         hasSaved() {
             return this.$store.getters["library/hasSaved"](this.video.id);
+        },
+        isMugen() {
+            return this.$route.name === "mugen-clips";
         },
         metaDescription() {
             return this.video && this.video.description && this.video.description.substr(0, 100);

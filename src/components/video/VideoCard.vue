@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ 'video-card-fluid': fluid }">
+    <div :class="{ 'video-card-fluid': fluid, 'video-card-active': active }">
         <v-card
             outlined
             :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
@@ -64,7 +64,7 @@
                     <v-list-item-subtitle v-if="includeChannel">
                         <router-link
                             :to="`/channel/${video.channel.id}`"
-                            class="no-decoration channel-name"
+                            class="no-decoration channel-name text-truncate"
                             :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
                         >
                             {{ channelName }}
@@ -156,9 +156,15 @@ export default {
             type: Number,
             default: 1,
         },
+        active: {
+            required: false,
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         title() {
+            if (!this.video.title) return "";
             return decodeHTMLEntities(this.video.title);
         },
         formattedTime() {
@@ -312,5 +318,10 @@ export default {
 
 .name-vtuber {
     color: #42a5f5 !important;
+}
+
+.video-card-active {
+    /* primary color with opacity */
+    background-color: #f0629257;
 }
 </style>
