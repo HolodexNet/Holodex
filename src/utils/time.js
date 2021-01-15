@@ -1,9 +1,13 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import relativeTime from "dayjs/plugin/relativeTime";
-import advancedFormat from "dayjs/plugin/advancedFormat";
+// import advancedFormat from "dayjs/plugin/advancedFormat";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import isTomorrow from "dayjs/plugin/isTomorrow";
 
-dayjs.extend(advancedFormat);
+dayjs.extend(localizedFormat);
+dayjs.extend(isTomorrow);
+// dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 const thresholds = [
     { l: "s", r: 1 },
@@ -29,18 +33,16 @@ export function formatDuration(secs) {
 export function formatDistance(time, lang = "en", $t) {
     let diff;
     if (Math.abs(dayjs().diff(time, "minutes")) < 1) return $t("time.soon");
+    if (Math.abs(dayjs().diff(time, "hour")) > 23) return dayjs(time).locale(lang).format("LLL");
+    const timeObj = dayjs(time);
     if (new Date(time) > Date.now()) {
         diff = $t("time.diff_future_date", [
-            dayjs(time).locale(lang).fromNow(),
-            dayjs(time).locale(lang).format("hh:mm"),
+            timeObj.locale(lang).fromNow(),
+            timeObj.locale(lang).format(`${timeObj.isTomorrow() ? "ddd " : ""}LT`),
         ]);
         return diff;
     }
-    if (Math.abs(dayjs().diff(time, "hour")) > 23) return dayjs(time).locale(lang).format("ddd MMM Do, hh:mm");
-    diff = $t("time.distance_past_date", [
-        dayjs(time).locale(lang).fromNow(),
-        dayjs(time).locale(lang).format("hh:mm"),
-    ]);
+    diff = $t("time.distance_past_date", [timeObj.locale(lang).fromNow(), timeObj.locale(lang).format("LT")]);
     return diff;
 }
 
