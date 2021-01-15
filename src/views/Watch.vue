@@ -91,8 +91,8 @@
                         <WatchInfo :video="video" :fetchComments="true" key="info" />
                     </v-col>
                     <v-col cols="12" :lg="theatherMode ? 3 : 12" class="pt-0 pl-lg-0">
-                        <WatchLiveChat v-if="hasLiveChat" :video="video" key="chat" />
-                        <WatchRelatedVideos :videoSources="videoSources" :videoClips="videoClips" key="clips" />
+                        <WatchLiveChat v-if="hasLiveChat" :video="video" />
+                        <WatchRelatedVideos :simulcasts="simulcasts" :clips="clips" />
                     </v-col>
                 </v-row>
             </v-col>
@@ -211,11 +211,11 @@ export default {
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
-        videoClips() {
-            return this.video?.clips?.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)) || [];
+        clips() {
+            return this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)) || [];
         },
-        videoSources() {
-            return this.video?.sources || [];
+        simulcasts() {
+            return this.video.simulcasts || [];
         },
         videoId() {
             return this.$route?.params?.id || this.$route?.query?.v;

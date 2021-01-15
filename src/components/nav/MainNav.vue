@@ -5,7 +5,15 @@
         <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile && !isWatchPage" />
         <!--* bottom bar --->
 
-        <v-app-bar id="top-bar" class="blue lighten-1" app clipped-left flat :hide-on-scroll="isMobile">
+        <v-app-bar
+            id="top-bar"
+            class="blue lighten-1"
+            app
+            clipped-left
+            flat
+            :hide-on-scroll="isMobile"
+            scroll-threshold="100"
+        >
             <!--=============================== Top Bar (Regular View) =============================-->
 
             <template v-if="!isMobile || (isMobile && !searchBarExpanded)">

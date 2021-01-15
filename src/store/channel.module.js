@@ -12,23 +12,7 @@ const initialState = {
 
 export const state = { ...initialState };
 
-const getters = {
-    // channels(state) {
-    //     return state.channels;
-    // },
-    // isLoading(state) {
-    //     return state.isLoading;
-    // },
-    // hasError(state) {
-    //     return state.hasError;
-    // },
-    // currentOffset(state) {
-    //     return state.currentOffset;
-    // },
-    // recentVideoFilter(state) {
-    //     return state.recentVideoFilter;
-    // },
-};
+const getters = {};
 
 const actions = {
     fetchChannel({ state, commit }) {
@@ -46,12 +30,13 @@ const actions = {
                 commit("fetchError");
             });
     },
-    fetchNextVideos({ state, commit }, { type, params }) {
+    fetchNextVideos({ state, commit, rootState }, { type, params }) {
         return api
             .channelVideos(state.id, {
                 type,
                 query: {
                     ...params,
+                    lang: rootState.settings.clipLangs.join(","),
                     offset: state.currentOffset,
                     include: "clips",
                 },
