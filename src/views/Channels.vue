@@ -116,6 +116,7 @@ export default {
     computed: {
         sortOptions: {
             get() {
+                /* eslint-disable indent */
                 return [
                     {
                         text: this.$t("views.channels.sortOptions.subscribers"),
@@ -158,6 +159,7 @@ export default {
                           ]
                         : []),
                 ];
+                /* eslint-enable indent */
             },
         },
         ...mapState("channels", ["channels", "isLoading", "hasError", "currentOffset"]),
