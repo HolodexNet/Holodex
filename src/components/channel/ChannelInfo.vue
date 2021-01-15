@@ -70,7 +70,10 @@ export default {
     computed: {
         subscriberCount() {
             if (this.channel.subscriber_count) {
-                return this.$tc("component.channelInfo.subscriberCount", formatCount(this.channel.subscriber_count));
+                return this.$tc(
+                    "component.channelInfo.subscriberCount",
+                    formatCount(this.channel.subscriber_count, this.$store.state.settings.lang),
+                );
             }
             return this.$t("component.channelInfo.subscriberNA");
         },

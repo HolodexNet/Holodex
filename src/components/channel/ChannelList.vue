@@ -23,7 +23,7 @@
                                 >
                                     {{ icons.mdiHeart }}
                                 </v-icon>
-                                All
+                                {{ $t("views.search.type.all") }}
                             </v-btn>
                         </template>
                         <span>

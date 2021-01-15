@@ -22,14 +22,14 @@
                 </v-radio-group>
                 <div class="pt-4 mb-0">
                     <v-icon>{{ mdiFilter }}</v-icon>
-                    See Clips in these Languages:
+                    {{ $t("views.settings.clipLanguageSelection") }}
                 </div>
                 <v-select
                     v-model="clipLangs"
                     :items="validClipLangs"
                     multiple
                     chips
-                    hint="Show clips in these languages"
+                    :hint="$t('views.settings.clipLanguageSelection')"
                     persistent-hint
                 >
                 </v-select>

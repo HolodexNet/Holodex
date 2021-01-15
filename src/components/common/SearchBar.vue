@@ -23,7 +23,7 @@
         :search-input.sync="search"
         @input="onInput"
         :append-icon="''"
-        label="Search"
+        :label="$t('component.search.searchLabel')"
         :filter="(a, b) => true"
         return-object
         hide-details
@@ -42,7 +42,7 @@
                         <v-icon x-small v-if="selection.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
                         <v-icon x-small v-if="selection.item.type === 'title & desc'">{{ mdiTextSearch }}</v-icon>
                         <v-icon x-small v-if="selection.item.type === 'comments'">{{ mdiCommentSearch }}</v-icon>
-                        {{ selection.item.type }}
+                        {{ i18nItem(selection.item.type) }}
                     </div>
 
                     <v-list-item-content class="py-1 pt-4">
@@ -65,7 +65,7 @@
                 <!-- @click="addItem(dropdownItem.item) -->
                 <v-list-item-content class="py-1 pt-1">
                     <v-list-item-subtitle class="text--primary">
-                        {{ dropdownItem.item.type }}
+                        {{ i18nItem(selection.item.type) }}
                         <v-icon small v-if="dropdownItem.item.type === 'channel'">{{ icons.mdiYoutube }}</v-icon>
                         <v-icon small v-if="dropdownItem.item.type === 'topic'">{{ icons.mdiAnimationPlay }}</v-icon>
                         <v-icon small v-if="dropdownItem.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
@@ -221,6 +221,22 @@ export default {
             if (countcomments === 1 && currentQuery.filter((x) => x.type === "title & desc").length > 0)
                 return "Cannot search using comment + title & desc filters at the same time.";
             return true;
+        },
+        i18nItem(item) {
+            switch (item) {
+                case "channel":
+                    return this.$t("component.search.type.channel");
+                case "topic":
+                    return this.$t("component.search.type.topic");
+                case "org":
+                    return this.$t("component.search.type.org");
+                case "title & desc":
+                    return this.$t("component.search.type.titledesc");
+                case "comments":
+                    return this.$t("component.search.type.comments");
+                default:
+                    return "";
+            }
         },
     },
 };

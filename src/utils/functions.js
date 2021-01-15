@@ -118,7 +118,7 @@ export function localSortChannels(channels, { sort, order = "asc" }) {
         //     return dateA > dateB ? 1 : -1;
         // }
         if (sort === "video_count" || sort === "subscriber_count") {
-            return parseInt(a[sort], 10) > parseInt(b[sort], 10) ? 1 : -1;
+            return Number(a[sort]) > Number(b[sort]) ? 1 : -1;
         }
         return a[sort] > b[sort] ? 1 : -1;
     });

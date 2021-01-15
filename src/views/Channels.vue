@@ -38,17 +38,18 @@
                 </v-menu>
 
                 <!-- Toggle of Card or Row view -->
-                <v-btn icon @click="cardView = !cardView">
+                <!-- <v-btn icon @click="cardView = !cardView">
                     <v-icon>
                         {{ cardView ? mdiViewModule : mdiViewList }}
                     </v-icon>
-                </v-btn>
+                </v-btn> -->
             </v-list>
             <ChannelList
                 :channels="category === Tabs.FAVORITES ? sortedFavorites : channels"
                 includeVideoCount
                 :grouped="sort === 'group'"
                 :cardView="cardView"
+                :key="`channel-list-${category}`"
             />
         </v-container>
         <InfiniteLoad @infinite="load" :identifier="infiniteId" v-if="category !== Tabs.FAVORITES" />
@@ -126,15 +127,15 @@ export default {
                     },
                     ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
                         ? [
-                            {
-                                text: this.$t("views.channels.sortOptions.group"),
-                                value: "group",
-                                query_value: {
-                                    sort: "group",
-                                    order: "asc",
-                                },
-                            },
-                        ]
+                              {
+                                  text: this.$t("views.channels.sortOptions.group"),
+                                  value: "group",
+                                  query_value: {
+                                      sort: "suborg",
+                                      order: "asc",
+                                  },
+                              },
+                          ]
                         : []),
                     {
                         text: this.$t("views.channels.sortOptions.videoCount"),
@@ -146,15 +147,15 @@ export default {
                     },
                     ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
                         ? [
-                            {
-                                text: this.$t("views.channels.sortOptions.clipCount"),
-                                value: "clip_count",
-                                query_value: {
-                                    sort: "clip_count",
-                                    order: "desc",
-                                },
-                            },
-                        ]
+                              {
+                                  text: this.$t("views.channels.sortOptions.clipCount"),
+                                  value: "clip_count",
+                                  query_value: {
+                                      sort: "clip_count",
+                                      order: "desc",
+                                  },
+                              },
+                          ]
                         : []),
                 ];
             },

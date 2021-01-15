@@ -130,7 +130,7 @@
                             <v-list-item-icon>
                                 <v-icon>{{ icons.mdiHelpCircle }}</v-icon>
                             </v-list-item-icon>
-                            <v-list-item-title> About </v-list-item-title>
+                            <v-list-item-title> {{ $t("component.mainNav.about") }} </v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
@@ -241,7 +241,7 @@ export default {
                     icon: icons.mdiAnimationPlay,
                 },
                 {
-                    name: "MugenClips<sup>beta</sup>",
+                    name: this.$t("component.mainNav.MugenClips"),
                     path: "/infinite",
                     icon: mdiInfinity,
                     collapsible: true,

@@ -24,6 +24,7 @@
 
 <script>
 import MainNav from "@/components/nav/MainNav";
+import { dayjsLangs } from "./plugins/vuetify";
 
 export default {
     name: "App",
@@ -76,9 +77,9 @@ export default {
         // set theme
         this.$vuetify.theme.dark = this.darkMode;
         // set lang
+        dayjsLangs[this.$store.state.settings.lang]();
         this.$i18n.locale = this.$store.state.settings.lang;
         this.$vuetify.lang.current = this.$store.state.settings.lang;
-
         // check for pwa updates
         document.addEventListener(
             "swUpdated",
@@ -125,6 +126,8 @@ export default {
         },
         lang() {
             // watches the computed.lang variable and updates vue I18N
+            // import(`dayjs/locale/${this.lang}`) // ES 2015
+            dayjsLangs[this.$store.state.settings.lang]();
             this.$i18n.locale = this.$store.state.settings.lang;
             this.$vuetify.lang.current = this.$store.state.settings.lang;
         },

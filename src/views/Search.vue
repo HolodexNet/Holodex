@@ -1,9 +1,6 @@
 <template>
     <v-container style="height: 100%">
-        <v-alert :v-if="containsTopicAndOrg" color="primary">
-            Currently searching clips by <kbd>Topic</kbd> and <kbd>Organization</kbd> is not supported. No
-            <b>clips</b> will show up.
-        </v-alert>
+        <v-alert :v-if="containsTopicAndOrg" color="primary" v-html="$t('views.search.unsupportedQuery')"> </v-alert>
         <v-row class="justify-end" style="margin-bottom: -10px">
             <v-col sm="4" md="2" class="py-1">
                 <v-select v-model="filter.sort" :items="options.sort" dense label="Sort By"></v-select>

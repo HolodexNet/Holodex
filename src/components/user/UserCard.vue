@@ -52,7 +52,7 @@
                     <v-list-item-action>
                         <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
                     </v-list-item-action>
-                    <v-list-item-content>Login</v-list-item-content>
+                    <v-list-item-content>{{ $t("component.mainNav.login") }}</v-list-item-content>
                 </v-list-item>
 
                 <v-divider></v-divider>
@@ -61,13 +61,13 @@
                     <v-list-item-action>
                         <v-icon>{{ icons.mdiCog }}</v-icon>
                     </v-list-item-action>
-                    <v-list-item-content>Settings</v-list-item-content>
+                    <v-list-item-content>{{ $t("component.mainNav.settings") }}</v-list-item-content>
                 </v-list-item>
                 <v-list-item v-if="user" @click.prevent="logout">
                     <v-list-item-action>
                         <v-icon>{{ icons.mdiLogoutVariant }}</v-icon>
                     </v-list-item-action>
-                    <v-list-item-content>Logout</v-list-item-content>
+                    <v-list-item-content>{{ $t("component.mainNav.logout") }}</v-list-item-content>
                 </v-list-item>
             </v-list-item-group>
         </v-list>
@@ -107,5 +107,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

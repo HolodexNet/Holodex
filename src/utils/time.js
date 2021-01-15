@@ -26,13 +26,22 @@ export function formatDuration(secs) {
     return secs > 60 * 60 * 1000 ? dayjs.utc(secs).format("H:mm:ss") : dayjs.utc(secs).format("m:ss");
 }
 
-export function formatStreamStart(time) {
-    const diff = dayjs(time).diff(dayjs());
-    if (diff > 24 * 60 * 60 * 1000) return dayjs(this.video.start_scheduled).format("ddd MMM Do, h:mm a");
-    if (diff < 1000) return "soon";
-    // might need to replace this with locale string
-    // return dayjs(time).fromNow();
-    return dayjs.utc(diff).format(`[in ]${diff > 60 * 60 * 1000 ? "H[ hour and ]" : ""}m[ minutes]`);
+export function formatDistance(time, lang = "en", $t) {
+    let diff;
+    if (Math.abs(dayjs().diff(time, "minutes")) < 1) return $t("time.soon");
+    if (new Date(time) > Date.now()) {
+        diff = $t("time.diff_future_date", [
+            dayjs(time).locale(lang).fromNow(),
+            dayjs(time).locale(lang).format("hh:mm"),
+        ]);
+        return diff;
+    }
+    if (Math.abs(dayjs().diff(time, "hour")) > 23) return dayjs(time).locale(lang).format("ddd MMM Do, hh:mm");
+    diff = $t("time.distance_past_date", [
+        dayjs(time).locale(lang).fromNow(),
+        dayjs(time).locale(lang).format("hh:mm"),
+    ]);
+    return diff;
 }
 
 export { dayjs };

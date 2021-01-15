@@ -62,7 +62,7 @@ import ChannelSocials from "@/components/channel/ChannelSocials";
 import ChannelImg from "@/components/channel/ChannelImg";
 // import VideoDescription from "@/components/video/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
-import { formatDuration, formatStreamStart, dayjs } from "@/utils/time";
+import { formatDuration, formatDistance, dayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
 import api from "@/utils/backend-api";
 import VideoTopic from "@/components/video/VideoTopic";
@@ -99,7 +99,7 @@ export default {
     },
     methods: {
         formatDuration,
-        formatStreamStart,
+        formatDistance,
         setTimer() {
             if (this.timer) clearInterval(this.timer);
             // if(this.video.status === "live" || this.video.status === "upcoming") {
@@ -132,6 +132,9 @@ export default {
         clearInterval(this.timer);
     },
     computed: {
+        lang() {
+            return this.$store.state.settings.lang;
+        },
         channel_chips() {
             // const allMentions = new Map();
             // // Get channel mentions for this video, and add any channel mentions from the source
@@ -155,11 +158,11 @@ export default {
         formattedTime() {
             switch (this.video.status) {
                 case "upcoming":
-                    return `Starts ${this.formatStreamStart(this.video.start_scheduled)}`;
+                    return this.formatDistance(this.video.start_scheduled, this.lang, this.$t.bind(this));
                 case "live":
-                    return `Streaming for ${this.elapsedTime}`;
+                    return this.$t("component.watch.streamingFor", [this.elapsedTime]);
                 default:
-                    return dayjs(this.video.available_at).format("MMM DD, YYYY");
+                    return dayjs(this.video.available_at).locale(this.lang).format("MMM DD, YYYY");
             }
         },
         liveViewers() {

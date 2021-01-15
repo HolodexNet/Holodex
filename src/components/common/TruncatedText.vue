@@ -10,7 +10,9 @@
         </div>
         <a @click="expanded = !expanded">
             <slot name="button">
-                <span class="text-button">{{ expanded ? "Show Less" : "Show More" }}</span>
+                <span class="text-button">{{
+                    expanded ? $t("component.description.showLess") : $t("component.description.showMore")
+                }}</span>
             </slot>
         </a>
     </div>

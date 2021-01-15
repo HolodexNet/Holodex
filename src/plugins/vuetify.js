@@ -41,6 +41,30 @@ export const langs = [
     { val: "ru", display: "Русский язык", credit: "kirillbarnaul#8499" },
 ];
 
+export const dayjsLangs = {
+    async en() {
+        import("dayjs/locale/en");
+    },
+    async ja() {
+        import("dayjs/locale/ja");
+    },
+    async zh() {
+        import("dayjs/locale/zh");
+    },
+    async es() {
+        import("dayjs/locale/es");
+    },
+    async ms() {
+        import("dayjs/locale/ms");
+    },
+    async id() {
+        import("dayjs/locale/id");
+    },
+    async ru() {
+        import("dayjs/locale/ru");
+    },
+};
+
 export const i18n = new VueI18n({
     locale: "en", // Set locale
     messages, // Set locale messages,

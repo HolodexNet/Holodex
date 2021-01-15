@@ -112,7 +112,7 @@
 
 <script>
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
-import { formatDuration, formatStreamStart, dayjs } from "@/utils/time";
+import { formatDuration, formatDistance, dayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
 /* eslint-disable no-unused-vars */
 
@@ -171,11 +171,11 @@ export default {
                 case "upcoming":
                     // print relative time in hours if less than 24 hours,
                     // print full date if greater than 24 hours
-                    return `Starts ${this.formatStreamStart(this.video.start_scheduled)}`;
+                    return formatDistance(this.video.start_scheduled, this.lang, this.$t.bind(this));
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:
-                    return this.formatFromNow(this.video.available_at);
+                    return formatDistance(this.video.available_at, this.lang, this.$t.bind(this));
             }
         },
         formattedDuration() {
@@ -217,12 +217,9 @@ export default {
         },
     },
     methods: {
-        formatFromNow(time) {
-            return dayjs(time).fromNow();
-        },
         formatDuration,
         formatCount,
-        formatStreamStart,
+        formatDistance,
         toggleSaved(event) {
             event.preventDefault();
             this.hasSaved

@@ -63,6 +63,7 @@ const mutations = {
     updateChannels(state, channels) {
         state.currentOffset += channels.length;
         state.channels = state.channels.concat(channels);
+        state.isLoading = false;
     },
     setCategory(state, category) {
         state.category = category;
@@ -76,6 +77,7 @@ const mutations = {
     resetChannels(state) {
         state.currentOffset = 0;
         state.channels = [];
+        state.isLoading = true;
     },
     resetState(state) {
         Object.assign(state, initialState);

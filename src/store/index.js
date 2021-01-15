@@ -55,7 +55,7 @@ export default new Vuex.Store({
         }),
         createMutationsSharer({
             predicate: (mutation /* state */) => {
-                console.info(mutation);
+                // console.info(mutation);
                 return mutation.type.match(syncedModules) || mutation.type.match(syncedMutations); // channel & channels
             },
         }), // Share all mutations except historyPop/Push across tabs.
