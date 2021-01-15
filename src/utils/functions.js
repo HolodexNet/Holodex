@@ -51,10 +51,14 @@ export function getBannerImages(url) {
     };
 }
 
-export function formatCount(subs) {
-    if (subs >= 1000000) return `${(subs / 1000000).toFixed(2)}M`;
-    if (subs >= 1000) return `${Math.round(subs / 1000)}K`;
-    return subs;
+const formatters = {};
+
+export function formatCount(n, lang = "en") {
+    if (!formatters[lang])
+        formatters[lang] = new Intl.NumberFormat(lang, { compactDisplay: "long", notation: "compact" });
+    let num = n;
+    if (typeof n === "string") num = +n;
+    return formatters[lang].format(num);
 }
 
 export function debounce(func, wait, immediate) {

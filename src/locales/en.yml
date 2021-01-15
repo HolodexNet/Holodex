@@ -91,3 +91,13 @@ views:
     pushNotificationLabel: Push Notifications (Coming Soon)
     pushNotificationMsg: Enable push notification for favorited channels
     resetAllSettings: Reset All Settings/Data
+  app:
+    update_available: An update is available
+    update_btn: Update
+    close_btn: Close
+    check_about_page: Visit the About page to see new changes
+  about:
+    add_my_channel: Add my channel to Holodex
+  watch:
+    theaterMode: Theather Mode
+    saveToLibrary: Save video to Library

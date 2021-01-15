@@ -80,16 +80,18 @@
                                 {{
                                     $tc(
                                         "component.videoCard.clips",
-                                        formatCount(
-                                            typeof video.clips === "string" ? +video.clips : video.clips.length,
-                                        ),
+                                        typeof video.clips === "object" ? video.clips.length : +video.clips,
                                     )
                                 }}
                             </router-link>
                         </span>
                         <span v-else-if="video.status === 'live' && video.live_viewers > 0">
                             •
-                            {{ $t("component.videoCard.watching", [formatCount(video.live_viewers)]) }}
+                            {{
+                                $tc("component.videoCard.watching", formatCount(video.live_viewers, lang), [
+                                    formatCount(video.live_viewers, lang),
+                                ])
+                            }}
                         </span>
                     </v-list-item-subtitle>
                 </v-list-item-content>
@@ -160,6 +162,9 @@ export default {
     computed: {
         title() {
             return decodeHTMLEntities(this.video.title);
+        },
+        lang() {
+            return this.$store.state.settings.lang;
         },
         formattedTime() {
             switch (this.video.status) {

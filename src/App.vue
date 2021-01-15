@@ -2,21 +2,21 @@
     <v-app>
         <MainNav />
         <v-main>
-            <keep-alive max="4" exclude="Watch">
+            <keep-alive max="4" exclude="Watch,MugenClips">
                 <router-view :key="$router.path" />
             </keep-alive>
         </v-main>
         <v-snackbar bottom right :value="updateExists" :timeout="-1" color="primary" v-if="updateExists">
-            An update is available
+            {{ $t("views.app.update_available") }}
             <template v-slot:action>
-                <v-btn text @click="refreshApp" class="ml-auto"> Update </v-btn>
-                <v-btn text @click="updateExists = false" class="ml-auto"> Close </v-btn>
+                <v-btn text @click="refreshApp" class="ml-auto"> {{ $t("views.app.update_btn") }} </v-btn>
+                <v-btn text @click="updateExists = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
             </template>
         </v-snackbar>
         <v-snackbar bottom center :value="showUpdateDetails" color="primary" :timeout="-1">
-            Visit the About page to see new changes
+            {{ $t("views.app.check_about_page") }}
             <template v-slot:action>
-                <v-btn text @click="showUpdateDetails = false" class="ml-auto"> Close </v-btn>
+                <v-btn text @click="showUpdateDetails = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
             </template>
         </v-snackbar>
     </v-app>

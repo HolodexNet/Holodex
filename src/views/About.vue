@@ -2,7 +2,7 @@
     <v-container class="pt-0">
         <v-row>
             <v-col cols="12">
-                <div class="text-h4">About</div>
+                <div class="text-h4">{{ $t("component.mainNav.about") }}</div>
             </v-col>
             <v-col cols="12" md="4" sm="4" lg="3" xl="2" float-right>
                 <div class="text-h5">News</div>
@@ -14,7 +14,7 @@
 
                 <v-btn color="info" class="ma-3" large href="https://forms.gle/xkN4w8fyPr6YTGfx6"
                     ><v-icon left>{{ icons.mdiPencil }}</v-icon
-                    >Add my channel to Holodex</v-btn
+                    >{{ $t("views.about.add_my_channel") }}</v-btn
                 ><br />
                 <v-btn color="indigo" class="ma-3" large href="https://discord.gg/jctkgHBt4b"
                     ><v-icon left>{{ icons.mdiDiscord }}</v-icon
