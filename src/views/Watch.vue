@@ -212,16 +212,20 @@ export default {
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
         clips() {
-            return this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)) || [];
+            return (
+                (this.video.clips &&
+                    this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang))) ||
+                []
+            );
         },
         simulcasts() {
             return this.video.simulcasts || [];
         },
         videoId() {
-            return this.$route?.params?.id || this.$route?.query?.v;
+            return this.$route.params.id || this.$route.query.v;
         },
         timeOffset() {
-            return Number(this.$route?.query?.t ?? 0);
+            return +this.$route.query.t || 0;
         },
         liveChatUrl() {
             if (!this.video) return null;
@@ -247,10 +251,10 @@ export default {
             return this.$store.getters["library/hasSaved"](this.video.id);
         },
         metaDescription() {
-            return this.video?.description?.substr(0, 100);
+            return this.video && this.video.description.substr(0, 100);
         },
         metaTitle() {
-            return this.video?.title;
+            return decodeHTMLEntities(this.video.title) || "";
         },
         metaImage() {
             if (!this.video.id) return undefined;
