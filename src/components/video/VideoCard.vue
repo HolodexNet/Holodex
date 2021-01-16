@@ -190,7 +190,11 @@ export default {
                 case "upcoming":
                     // print relative time in hours if less than 24 hours,
                     // print full date if greater than 24 hours
-                    return formatDistance(this.video.start_scheduled, this.lang, this.$t.bind(this));
+                    return formatDistance(
+                        this.video.start_scheduled || this.video.available_at,
+                        this.lang,
+                        this.$t.bind(this),
+                    );
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:

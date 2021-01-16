@@ -32,6 +32,7 @@ export function formatDuration(secs) {
 
 export function formatDistance(time, lang = "en", $t) {
     let diff;
+    if (!time) return "?";
     if (Math.abs(dayjs().diff(time, "minutes")) < 1) return $t("time.soon");
     if (Math.abs(dayjs().diff(time, "hour")) > 23) return dayjs(time).locale(lang).format("LLL");
     const timeObj = dayjs(time);
