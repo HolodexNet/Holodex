@@ -22,12 +22,31 @@ component:
     home: ホーム
     library: ライブラリ
     settings: 設定
+    MugenClips: ''
+    login: ''
+    logout: ''
   videoCard:
     clips: '{n}切り抜き'
     liveNow: 配信中
     watching: '{0}人視聴中'
   videoDescription:
     description: 概要
+  description:
+    showLess: ''
+    showMore: ''
+  search:
+    searchLabel: ''
+    type:
+      channel: ''
+      comments: ''
+      org: ''
+      titledesc: ''
+      topic: ''
+  video:
+    comment:
+      openOnYoutube: ''
+  watch:
+    streamingFor: ''
 example: '{0}または{1}パラメータを入力してください'
 example2: 'パラメータで始まる{0}テキストは引用符で囲む必要があります'
 views:
@@ -74,6 +93,7 @@ views:
       all: すべて
       clip: クリップ
       official: 公式
+    unsupportedQuery: ''
   settings:
     darkModeLabel: ダークモード
     darkModeMsg: テーマをライトモードとダークモードの間で変更します
@@ -87,3 +107,18 @@ views:
     title: 設定
     useEnglishNameLabel: 英語名を使用する
     useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
+    clipLanguageSelection: ''
+  about:
+    add_my_channel: ''
+  app:
+    check_about_page: ''
+    close_btn: ''
+    update_available: ''
+    update_btn: ''
+  watch:
+    saveToLibrary: ''
+    theaterMode: ''
+time:
+  diff_future_date: ''
+  distance_past_date: ''
+  soon: ''

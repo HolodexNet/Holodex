@@ -24,12 +24,31 @@ component:
     about: О сайте
     library: Библиотека
     settings: Настройки
+    MugenClips: ''
+    login: ''
+    logout: ''
   videoCard:
     clips: '0 клипов | {n} клип | {n} клипа | {n} клипов'
     watching: '{0} смотрят'
     liveNow: LIVE
   videoDescription:
     description: Описание
+  description:
+    showLess: ''
+    showMore: ''
+  search:
+    searchLabel: ''
+    type:
+      channel: ''
+      comments: ''
+      org: ''
+      titledesc: ''
+      topic: ''
+  video:
+    comment:
+      openOnYoutube: ''
+  watch:
+    streamingFor: ''
 views:
   channels:
     channelType:
@@ -74,6 +93,7 @@ views:
       all: Все
       official: Официальные
       clip: Клипы
+    unsupportedQuery: ''
   settings:
     title: Настройки
     darkModeLabel: Ночная тема
@@ -89,3 +109,18 @@ views:
     pushNotificationLabel: Пуш-уведомления (Скоро!)
     pushNotificationMsg: Включить пуш-уведомления для каналов в избранном
     resetAllSettings: Сбросить все настройки/данные
+    clipLanguageSelection: ''
+  about:
+    add_my_channel: ''
+  app:
+    check_about_page: ''
+    close_btn: ''
+    update_available: ''
+    update_btn: ''
+  watch:
+    saveToLibrary: ''
+    theaterMode: ''
+time:
+  diff_future_date: ''
+  distance_past_date: ''
+  soon: ''
