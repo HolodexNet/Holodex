@@ -3,12 +3,13 @@
         <v-card
             outlined
             :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
-            :to="!redirectMode ? `/watch/${video.id}` : ''"
-            :href="`https://youtu.be/${video.id}`"
             :target="redirectMode ? '_blank' : ''"
             rel="noopener"
             link
+            @click.stop="goToVideo(video.id)"
         >
+            <!-- :to="!redirectMode ? `/watch/${video.id}` : ''" -->
+            <!-- :href="`https://youtu.be/${video.id}`" -->
             <!-- Video Image with Duration -->
             <v-img
                 class="white--text"
@@ -17,9 +18,9 @@
                 :width="horizontal ? '150px' : '100%'"
                 v-if="!hideThumbnail"
             >
-                <template v-slot:placeholder>
+                <!-- <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center"></v-row>
-                </template>
+                </template> -->
                 <!-- Image Overlay -->
                 <div class="video-card-overlay d-flex justify-space-between flex-column" style="height: 100%">
                     <div class="d-flex justify-space-between align-start">
@@ -48,27 +49,32 @@
 
             <v-list-item three-line class="pa-0">
                 <!-- Render Channel Avatar if necessary -->
-                <router-link
+                <!-- <router-link
                     :to="`/channel/${video.channel.id}`"
                     v-if="includeChannel && includeAvatar && !horizontal && video.channel"
-                >
-                    <v-list-item-avatar>
-                        <ChannelImg :channel="video.channel" />
-                    </v-list-item-avatar>
-                </router-link>
+                > -->
+                <v-list-item-avatar v-if="includeChannel && includeAvatar && !horizontal && video.channel">
+                    <ChannelImg :channel="video.channel" />
+                </v-list-item-avatar>
+                <!-- </router-link> -->
 
                 <v-list-item-content class="pa-0">
                     <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
                         {{ title }}
                     </v-list-item-title>
-                    <v-list-item-subtitle v-if="includeChannel">
-                        <router-link
+                    <v-list-item-subtitle
+                        v-if="includeChannel"
+                        @click.stop="goToChannel(video.channel.id)"
+                        class="channel-name"
+                        :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
+                    >
+                        <!-- <router-link
                             :to="`/channel/${video.channel.id}`"
                             class="no-decoration channel-name text-truncate"
                             :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
-                        >
-                            {{ channelName }}
-                        </router-link>
+                        > -->
+                        {{ channelName }}
+                        <!-- </router-link> -->
                     </v-list-item-subtitle>
                     <v-list-item-subtitle>
                         <span :class="'text-' + this.video.status">
@@ -76,14 +82,14 @@
                         </span>
                         <span v-if="video.clips && video.clips.length > 0">
                             •
-                            <router-link :to="`/watch/${video.id}`" class="no-decoration primary--text">
-                                {{
-                                    $tc(
-                                        "component.videoCard.clips",
-                                        typeof video.clips === "object" ? video.clips.length : +video.clips,
-                                    )
-                                }}
-                            </router-link>
+                            <!-- <router-link :to="`/watch/${video.id}`" class="no-decoration primary--text"> -->
+                            {{
+                                $tc(
+                                    "component.videoCard.clips",
+                                    typeof video.clips === "object" ? video.clips.length : +video.clips,
+                                )
+                            }}
+                            <!-- </router-link> -->
                         </span>
                         <span v-else-if="video.status === 'live' && video.live_viewers > 0">
                             •
@@ -232,6 +238,12 @@ export default {
                 ? this.$store.commit("library/removeSavedVideo", this.video.id)
                 : this.$store.commit("library/addSavedVideo", this.video);
         },
+        goToVideo(id) {
+            this.$router.push({ path: `/watch/${this.video.id}` });
+        },
+        goToChannel(id) {
+            this.$router.push({ path: `/channel/${this.video.channel.id}` });
+        },
     },
 };
 </script>
@@ -275,6 +287,10 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+
+.channel-name:hover {
+    color: white !important;
 }
 
 .video-card-overlay .hover-show {
