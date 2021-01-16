@@ -49,6 +49,11 @@ component:
       openOnYoutube: ''
   watch:
     streamingFor: ''
+  relatedVideo:
+    clipsLabel: ''
+    refersLabel: ''
+    simulcastsLabel: ''
+    sourcesLabel: ''
 views:
   channels:
     channelType:
@@ -117,6 +122,8 @@ views:
     close_btn: ''
     update_available: ''
     update_btn: ''
+    loginCallToAction: ''
+    nowSupportsMultiOrg: ''
   watch:
     saveToLibrary: ''
     theaterMode: ''

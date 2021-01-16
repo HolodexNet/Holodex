@@ -38,7 +38,8 @@ export default {
         //         name: "description",
         //         property: "og:description",
         //         content:
-        //             "Holodex is a collection of official and translated Hololive vtuber videos and clips made by the community",
+        //             "Holodex is a collection of official and
+        // translated Hololive vtuber videos and clips made by the community",
         //     },
         //     {
         //         property: "og:type",

@@ -47,6 +47,11 @@ component:
       openOnYoutube: ''
   watch:
     streamingFor: ''
+  relatedVideo:
+    clipsLabel: ''
+    refersLabel: ''
+    simulcastsLabel: ''
+    sourcesLabel: ''
 example: '{0}または{1}パラメータを入力してください'
 example2: 'パラメータで始まる{0}テキストは引用符で囲む必要があります'
 views:
@@ -115,6 +120,8 @@ views:
     close_btn: ''
     update_available: ''
     update_btn: ''
+    loginCallToAction: ''
+    nowSupportsMultiOrg: ''
   watch:
     saveToLibrary: ''
     theaterMode: ''
