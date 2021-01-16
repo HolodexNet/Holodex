@@ -49,6 +49,11 @@ component:
       org: org
       titledesc: title & disc
       comments: comments
+  relatedVideo:
+    clipsLabel: clips
+    simulcastsLabel: simulcasts
+    refersLabel: refers
+    sourcesLabel: sources
 views:
   channels:
     channelType:

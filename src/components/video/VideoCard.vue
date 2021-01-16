@@ -11,7 +11,7 @@
         >
             <!-- Video Image with Duration -->
             <v-img
-                class="white--text"
+                class="white--text rounded"
                 :src="imageSrc"
                 :aspect-ratio="16 / 9"
                 :width="horizontal ? '150px' : '100%'"
@@ -24,12 +24,12 @@
                 <div class="video-card-overlay d-flex justify-space-between flex-column" style="height: 100%">
                     <div class="d-flex justify-space-between align-start">
                         <!-- Topic Id display -->
-                        <div class="video-topic">{{ video.topic_id }}</div>
+                        <div class="video-topic rounded-tl-sm">{{ video.topic_id }}</div>
 
                         <!-- Check box for saved video -->
                         <v-icon
                             :color="hasSaved ? 'primary' : 'white'"
-                            class="video-card-action"
+                            class="video-card-action rounded-tr-sm"
                             :class="{ 'hover-show': !hasSaved && !isMobile }"
                             @click="toggleSaved($event)"
                         >
@@ -39,7 +39,7 @@
 
                     <!-- Video duration -->
                     <div class="d-flex flex-column align-end">
-                        <div v-if="video.duration > 0 || video.start_actual" class="video-duration">
+                        <div v-if="video.duration > 0 || video.start_actual" class="video-duration rounded-br-sm">
                             {{ formattedDuration }}
                         </div>
                     </div>

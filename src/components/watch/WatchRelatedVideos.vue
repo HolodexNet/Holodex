@@ -3,7 +3,7 @@
         <template v-for="relation in Object.keys(related)">
             <template v-if="related[relation].length">
                 <div class="text-overline ma-2" :key="`${relation}-title`">
-                    {{ relation }}
+                    {{ relationI18N(relation) }}
                 </div>
                 <VideoCardList
                     :key="`${relation}-videos`"
@@ -35,6 +35,22 @@ export default {
         related: {
             required: true,
             type: Object,
+        },
+    },
+    methods: {
+        relationI18N(relation) {
+            switch (relation) {
+                case "clips":
+                    return this.$t("component.relatedVideo.clipsLabel");
+                case "simulcasts":
+                    return this.$t("component.relatedVideo.simulcastsLabel");
+                case "refers":
+                    return this.$t("component.relatedVideo.refersLabel");
+                case "sources":
+                    return this.$t("component.relatedVideo.sourcesLabel");
+                default:
+                    return "";
+            }
         },
     },
 };

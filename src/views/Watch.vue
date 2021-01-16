@@ -48,7 +48,7 @@
                                     <v-icon>{{ mdiRectangleOutline }}</v-icon>
                                 </v-btn>
                             </template>
-                            <span>Theather Mode</span>
+                            <span>{{ $t("views.watch.theaterMode") }}</span>
                         </v-tooltip>
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
@@ -64,7 +64,7 @@
                                     <v-icon>{{ mdiOpenInNew }}</v-icon>
                                 </v-btn>
                             </template>
-                            <span>Open on Youtube</span>
+                            <span>{{ $t("views.settings.redirectModeLabel") }}</span>
                         </v-tooltip>
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
@@ -79,7 +79,7 @@
                                     <v-icon>{{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}</v-icon>
                                 </v-btn>
                             </template>
-                            <span>Save video to Library</span>
+                            <span>{{ $t("views.watch.saveToLibrary") }}</span>
                         </v-tooltip>
                     </div>
                 </v-card>
