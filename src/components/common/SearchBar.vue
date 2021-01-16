@@ -65,7 +65,7 @@
                 <!-- @click="addItem(dropdownItem.item) -->
                 <v-list-item-content class="py-1 pt-1">
                     <v-list-item-subtitle class="text--primary">
-                        {{ i18nItem(selection.item.type) }}
+                        {{ i18nItem(dropdownItem.item.type) }}
                         <v-icon small v-if="dropdownItem.item.type === 'channel'">{{ icons.mdiYoutube }}</v-icon>
                         <v-icon small v-if="dropdownItem.item.type === 'topic'">{{ icons.mdiAnimationPlay }}</v-icon>
                         <v-icon small v-if="dropdownItem.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
