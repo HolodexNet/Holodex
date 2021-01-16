@@ -2,7 +2,7 @@
     <v-container class="channel-container" fluid v-if="!isLoading && !hasError">
         <v-card>
             <v-img :src="bannerImage" class="channel-banner" />
-            <v-container>
+            <v-container :class="{ 'pa-0': isMobile }">
                 <v-list>
                     <v-list-item>
                         <v-list-item-avatar :size="avatarSize">
@@ -40,26 +40,11 @@ import { mapState } from "vuex";
 export default {
     name: "Channel",
     metaInfo() {
+        const vm = this;
         return {
-            title: this.metaTitle,
-            meta: [
-                {
-                    vmid: "description",
-                    name: "description",
-                    property: "og:description",
-                    content: this.metaDescription,
-                },
-                {
-                    vmid: "image",
-                    name: "image",
-                    content: this.metaImage,
-                },
-                {
-                    vmid: "url",
-                    property: "og:url",
-                    content: `https://holodex.net/channel/${this.channel_id}`,
-                },
-            ],
+            get title() {
+                return `${vm.channelName} - Holodex`;
+            },
         };
     },
     components: {
@@ -78,6 +63,7 @@ export default {
     },
     computed: {
         ...mapState("channel", ["id", "channel", "isLoading", "hasError"]),
+        ...mapState(["isMobile"]),
         bannerImage() {
             if (!this.channel.banner) {
                 return "";
@@ -126,9 +112,6 @@ export default {
         },
         metaDescription() {
             return this.channel?.description?.substr(0, 100);
-        },
-        metaTitle() {
-            return this.channelName;
         },
         metaImage() {
             return this.channel.photo;

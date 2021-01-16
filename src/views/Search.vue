@@ -40,7 +40,7 @@ import { csv2jsonAsync } from "json-2-csv";
 export default {
     name: "Search",
     metaInfo: {
-        title: "Search",
+        title: "Search - Holodex",
     },
     components: {
         VideoCardList,

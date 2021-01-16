@@ -11,7 +11,7 @@
         <v-divider />
         <v-list two-line>
             <v-list-item>
-                <v-list-item-avatar size="50">
+                <v-list-item-avatar size="40">
                     <ChannelImg :channel="video.channel" />
                 </v-list-item-avatar>
                 <ChannelInfo :channel="video.channel" />

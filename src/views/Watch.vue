@@ -120,26 +120,29 @@ import WatchMugen from "@/components/watch/WatchMugen";
 export default {
     name: "Watch",
     metaInfo() {
+        const vm = this;
         return {
-            title: this.video.title,
-            meta: [
-                {
-                    vmid: "description",
-                    name: "description",
-                    property: "og:description",
-                    content: this.metaDescription,
-                },
-                {
-                    vmid: "image",
-                    name: "image",
-                    content: this.metaImage,
-                },
-                {
-                    vmid: "url",
-                    property: "og:url",
-                    content: `https://holodex.net/watch/${this.$route.params.id}`,
-                },
-            ],
+            get title() {
+                return vm.video.title;
+            },
+            // meta: [
+            //     {
+            //         vmid: "description",
+            //         name: "description",
+            //         property: "og:description",
+            //         content: this.metaDescription,
+            //     },
+            //     {
+            //         vmid: "image",
+            //         name: "image",
+            //         content: this.metaImage,
+            //     },
+            //     {
+            //         vmid: "url",
+            //         property: "og:url",
+            //         content: `https://holodex.net/watch/${this.$route.params.id}`,
+            //     },
+            // ],
         };
     },
     components: {

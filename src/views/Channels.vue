@@ -75,7 +75,7 @@ import { localSortChannels } from "@/utils/functions";
 export default {
     name: "Channels",
     metaInfo: {
-        title: "Channels",
+        title: "Channels - Holodex",
     },
     components: {
         ChannelList,

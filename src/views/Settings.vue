@@ -74,7 +74,7 @@ import { mdiTranslate, mdiFilter } from "@mdi/js";
 export default {
     name: "Settings",
     metaInfo: {
-        title: "Settings",
+        title: "Settings - Holodex",
     },
     computed: {
         language: {

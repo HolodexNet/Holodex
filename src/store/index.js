@@ -20,6 +20,7 @@ Vue.use(Vuex);
 function defaultState() {
     return {
         // other
+        firstVisit: true,
         showUpdateDetails: false,
         // authorization
         userdata: {
@@ -33,6 +34,8 @@ function defaultState() {
     };
 }
 
+localStorage.removeItem("holodex");
+
 /**--------------------------------------------
  *               Put Migrations Here
  *---------------------------------------------* */
@@ -43,7 +46,7 @@ const syncedMutations = /^(?:resetState|setUser|setCurrentOrg|setShowUpdatesDeta
 export default new Vuex.Store({
     plugins: [
         createPersistedState({
-            key: "holodex",
+            key: "holodex-v2",
             // eslint-disable-next-line no-unused-vars
             reducer: (state, paths) => {
                 const o = { ...state };
@@ -91,6 +94,9 @@ export default new Vuex.Store({
         },
         historyPush(state, { from }) {
             state.routerHistory.push(from);
+        },
+        setVisited(state) {
+            state.firstVisit = false;
         },
     },
     actions: {

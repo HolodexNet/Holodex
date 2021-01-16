@@ -84,7 +84,7 @@ import { mapState } from "vuex";
 export default {
     name: "Favorites",
     metaInfo: {
-        title: "Favorites",
+        title: "Favorites - Holodex",
     },
     components: {
         VideoCardList,

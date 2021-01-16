@@ -68,7 +68,7 @@ import { mapGetters } from "vuex";
 export default {
     name: "Home",
     metaInfo: {
-        title: "Home",
+        title: "Home - Holodex",
     },
     components: {
         VideoCardList,

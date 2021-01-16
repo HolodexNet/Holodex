@@ -46,14 +46,28 @@
                                         ORGS_PREFIX[currentOrg] || currentOrg
                                     }}</span>
                                 </transition>
-                                <span class="primary--text text--lighten-2">dex</span>
-                                <v-icon
-                                    size="30"
-                                    class="change-org-icon"
-                                    :class="{ 'rotate-180': attrs['aria-expanded'] === 'true' }"
+                                <span class="primary--text text--lighten-2" ref="dexBtn">dex</span>
+                                <v-tooltip
+                                    v-model="firstVisitComputed"
+                                    right
+                                    bottom
+                                    z-index="120"
+                                    content-class="first-visit-tooltip"
                                 >
-                                    {{ icons.mdiMenuDown }}
-                                </v-icon>
+                                    <template v-slot:activator="{}">
+                                        <v-icon
+                                            size="30"
+                                            class="change-org-icon"
+                                            :class="{ 'rotate-180': attrs['aria-expanded'] === 'true' }"
+                                            v-on="on"
+                                        >
+                                            {{ icons.mdiMenuDown }}
+                                        </v-icon>
+                                    </template>
+                                    <div>{{ $t("views.app.nowSupportsMultiOrg") }}</div>
+                                    <div>{{ $t("views.app.loginCallToAction") }}</div>
+                                </v-tooltip>
+
                                 <!-- 
                                     <div style="position: absolute; bottom: -6px; left: 0px; font-size: 12px;" 
                                         class="text--secondary">
@@ -160,6 +174,7 @@ import Logo from "@/components/common/Logo";
 import UserCard from "@/components/user/UserCard";
 import { ORGS, ORGS_PREFIX } from "@/utils/consts";
 import { mdiInfinity } from "@mdi/js";
+import { mapState } from "vuex";
 import NavDrawer from "./NavDrawer";
 import BottomNav from "./BottomNav";
 
@@ -218,6 +233,14 @@ export default {
         isFirstPage() {
             return this.$store.state.routerHistory.length > 1;
         },
+        firstVisitComputed: {
+            get() {
+                return this.$store.state.firstVisit;
+            },
+            set() {
+                return this.$store.commit("setVisited");
+            },
+        },
         pages() {
             return [
                 {
@@ -266,12 +289,24 @@ export default {
                 // },
             ];
         },
+        ...mapState(["firstVisit"]),
     },
     created() {
         // eslint-disable-next-line no-unused-vars
         this.$router.afterEach((to, from) => {
             this.refreshing = false;
         });
+        if (this.$store.state.firstVisit) {
+            const vm = this;
+            setTimeout(() => {
+                vm.$store.commit("setVisited");
+            }, 30000);
+            setTimeout(() => {
+                // eslint-disable-next-line no-unused-vars
+                const menu = vm.$refs.dexBtn;
+                menu.click();
+            }, 10000);
+        }
     },
     methods: {
         onRefresh() {
@@ -336,6 +371,23 @@ export default {
     opacity: 0 !important;
 }
 
+.first-visit-tooltip {
+    width: 80%;
+    max-width: 480px;
+    background: rgb(91, 157, 211);
+    font-weight: 500;
+    box-shadow: 2px 2px 4px black;
+}
+.first-visit-tooltip:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 105px;
+    width: 0;
+    border-bottom: 10px solid rgb(91, 157, 211);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
 .nav-title {
     text-decoration: none;
     font-size: 24px;
