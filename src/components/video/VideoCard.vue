@@ -1,12 +1,14 @@
 <template>
     <div :class="{ 'video-card-fluid': fluid, 'video-card-active': active }">
         <v-card
+            tag="a"
             outlined
             :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
             :target="redirectMode ? '_blank' : ''"
             rel="noopener"
             link
-            @click.stop="goToVideo(video.id)"
+            :href="!redirectMode ? `/watch/${video.id}` : `https://youtu.be/${video.id}`"
+            @click.prevent="goToVideo(video.id)"
         >
             <!-- :to="!redirectMode ? `/watch/${video.id}` : ''" -->
             <!-- :href="`https://youtu.be/${video.id}`" -->
@@ -64,16 +66,21 @@
                     </v-list-item-title>
                     <v-list-item-subtitle
                         v-if="includeChannel"
-                        @click.stop="goToChannel(video.channel.id)"
+                        @click.stop.prevent="goToChannel(video.channel.id)"
                         class="channel-name"
-                        :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
                     >
                         <!-- <router-link
                             :to="`/channel/${video.channel.id}`"
                             class="no-decoration channel-name text-truncate"
                             :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
                         > -->
-                        {{ channelName }}
+                        <a
+                            class="channel-name"
+                            :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
+                            :href="`/channel/${video.channel.id}`"
+                        >
+                            {{ channelName }}
+                        </a>
                         <!-- </router-link> -->
                     </v-list-item-subtitle>
                     <v-list-item-subtitle>
@@ -286,6 +293,7 @@ export default {
 .channel-name {
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-decoration: none;
     overflow: hidden;
 }
 

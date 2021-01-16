@@ -12,14 +12,16 @@
         :to="`/channel/${channel.id}`"
     /> -->
     <!-- otherwise render using vuetify lazy  -->
-    <v-img
-        :src="photo"
-        crossorigin="anonymous"
-        :alt="`${channel.name}'s profile picture`"
-        :width="size"
-        :height="size"
-        @click.stop="goToChannel(channel.id)"
-    />
+    <a :href="`/channel/${channel.id}`">
+        <v-img
+            :src="photo"
+            crossorigin="anonymous"
+            :alt="`${channel.name}'s profile picture`"
+            :width="size"
+            :height="size"
+            @click.stop.prevent="goToChannel(channel.id)"
+        />
+    </a>
     <!-- v-else -->
     <!-- :to="`/channel/${channel.id}`" -->
 </template>
