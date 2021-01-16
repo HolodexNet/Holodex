@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueGTag from "vue-gtag";
-import VueMeta from "vue-meta";
+import VueSimpleHeadful from "vue-simple-headful";
 import linkify from "vue-linkify";
 import VueI18n from "vue-i18n";
 import VueYouTubeEmbed from "vue-youtube-embed";
@@ -22,9 +22,12 @@ Vue.use(
     },
     router,
 );
-Vue.use(VueMeta, {
-    refreshOnceOnNavigation: true,
+Vue.use(VueSimpleHeadful, {
+    key: "metaInfo", // custom key for component option
 });
+// Vue.use(VueMeta, {
+//     refreshOnceOnNavigation: true,
+// });
 Vue.use(VueI18n);
 Vue.use(VueYouTubeEmbed);
 Vue.directive("linkified", linkify);

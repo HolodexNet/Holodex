@@ -11,7 +11,7 @@ const Watch = () => import("../views/Watch");
 const About = () => import("../views/About");
 const Search = () => import("../views/Search");
 const Library = () => import("../views/Library");
-const ChannelStats = () => import("../views/channel_views/ChannelStats");
+// const ChannelStats = () => import("../views/channel_views/ChannelStats");
 const Settings = () => import("../views/Settings");
 const NotFound = () => import("../views/NotFound");
 const Login = () => import("../views/Login");
@@ -43,11 +43,11 @@ const routes = [
                 name: "channel_about",
                 component: ChannelAbout,
             },
-            {
-                path: "stats",
-                name: "channel_stats",
-                component: ChannelStats,
-            },
+            // {
+            //     path: "stats",
+            //     name: "channel_stats",
+            //     component: ChannelStats,
+            // },
             {
                 path: "",
                 name: "channel",

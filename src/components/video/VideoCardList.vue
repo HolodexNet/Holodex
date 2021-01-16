@@ -60,7 +60,7 @@ export default {
     components: {
         VideoCard,
         ApiErrorMessage,
-        InfiniteLoading: () => import("vue-infinite-loading"),
+        // InfiniteLoading: () => import("vue-infinite-loading"),
         InfiniteLoad: () => import("@/components/common/InfiniteLoad"),
     },
     data() {

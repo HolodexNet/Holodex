@@ -30,8 +30,6 @@
     "@mdi/js": "^5.8.55",
     "axios": "^0.21.1",
     "axios-retry": "^3.1.9",
-    "chart.js": "3.0.0-beta.3",
-    "core-js": "^3.7.0",
     "dayjs": "^1.9.6",
     "json-2-csv": "^3.10.2",
     "oauth-open": "^1.0.4",
@@ -40,15 +38,15 @@
     "vue-google-oauth2": "^1.5.5",
     "vue-gtag": "^1.10.0",
     "vue-i18n": "^8.22.2",
-    "vue-infinite-loading": "^2.4.5",
     "vue-linkify": "^1.0.1",
-    "vue-meta": "^2.4.0",
     "vue-router": "^3.4.9",
+    "vue-simple-headful": "^2.2.6",
     "vue-youtube-embed": "^2.2.2",
     "vuetify": "^2.3.18",
     "vuex": "^3.4.0",
     "vuex-persistedstate": "^3.1.0",
-    "vuex-shared-mutations": "^1.0.2"
+    "vuex-shared-mutations": "^1.0.2",
+    "webpack-bundle-analyzer": "^4.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.7",

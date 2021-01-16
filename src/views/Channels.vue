@@ -64,7 +64,7 @@
 
 <script>
 import ChannelList from "@/components/channel/ChannelList";
-import InfiniteLoading from "vue-infinite-loading";
+// import InfiniteLoading from "vue-infinite-loading";
 import ApiErrorMessage from "@/components/common/ApiErrorMessage";
 import InfiniteLoad from "@/components/common/InfiniteLoad";
 
@@ -79,7 +79,7 @@ export default {
     },
     components: {
         ChannelList,
-        InfiniteLoading,
+        // InfiniteLoading,
         ApiErrorMessage,
         InfiniteLoad,
     },
