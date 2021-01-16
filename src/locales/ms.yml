@@ -7,11 +7,15 @@ component:
     aboutPage: Laman Perihal
   channelList:
     otherText: Lain-lain
+    favoriteAllInGroup: ''
+    signInToFavorite: ''
+    unfavoriteAllInGroup: ''
   channelInfo:
     videoCount: '{0} Video'
     clipCount: '{n} Sedutan'
     subscriberCount: '{n} Langganan'
     subscriberNA: Bilangan langganan tidak tersedia
+    totalViews: ''
   channelSocials:
     addToFavorites: Tambahkan pada Kegemaran
     removeFromFavorites: Alih keluar daripada Kegemaran
@@ -47,6 +51,7 @@ component:
       openOnYoutube: ''
   watch:
     streamingFor: ''
+    nextUpInMugen: ''
   relatedVideo:
     clipsLabel: ''
     refersLabel: ''
@@ -125,6 +130,8 @@ views:
   watch:
     saveToLibrary: ''
     theaterMode: ''
+  favorites:
+    promptForAction: ''
 example: ''
 example2: ''
 time:

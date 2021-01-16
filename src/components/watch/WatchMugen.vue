@@ -1,6 +1,6 @@
 <template>
     <v-card tile class="mb-2">
-        <v-card-subtitle>Next Up {{ nextUpTime }}</v-card-subtitle>
+        <v-card-subtitle>{{ $t("component.watch.nextUpInMugen") }} {{ nextUpTime }}</v-card-subtitle>
         <!-- <v-card-text> -->
         <v-progress-linear
             :color="countdownProgress > 0 ? 'primary' : 'grey'"

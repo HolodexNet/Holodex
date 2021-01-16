@@ -7,11 +7,15 @@ component:
     aboutPage: 關於本站
   channelList:
     otherText: 其他Vtuber
+    favoriteAllInGroup: ''
+    signInToFavorite: ''
+    unfavoriteAllInGroup: ''
   channelInfo:
     videoCount: '{0}部影片'
     clipCount: '{n}部剪輯'
     subscriberCount: '{n}位訂閱者'
     subscriberNA: 無法取得訂閱者數據
+    totalViews: ''
   channelSocials:
     addToFavorites: 加入收藏
     removeFromFavorites: 移除收藏
@@ -47,6 +51,7 @@ component:
       openOnYoutube: ''
   watch:
     streamingFor: ''
+    nextUpInMugen: ''
   relatedVideo:
     clipsLabel: ''
     refersLabel: ''
@@ -123,6 +128,8 @@ views:
   watch:
     saveToLibrary: ''
     theaterMode: ''
+  favorites:
+    promptForAction: ''
 example: ''
 example2: ''
 time:

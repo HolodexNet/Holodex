@@ -9,11 +9,15 @@ component:
     aboutPage: О сайте
   channelList:
     otherText: Другие
+    favoriteAllInGroup: ''
+    signInToFavorite: ''
+    unfavoriteAllInGroup: ''
   channelInfo:
     videoCount: '{0} видео'
     clipCount: '0 клипов | {n} клип | {n} клипа | {n} клипов'
     subscriberCount: '0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков'
     subscriberNA: Количество подписчиков недоступно
+    totalViews: ''
   channelSocials:
     addToFavorites: Добавить в избранное
     removeFromFavorites: Убрать из избранного
@@ -49,6 +53,7 @@ component:
       openOnYoutube: ''
   watch:
     streamingFor: ''
+    nextUpInMugen: ''
   relatedVideo:
     clipsLabel: ''
     refersLabel: ''
@@ -127,6 +132,8 @@ views:
   watch:
     saveToLibrary: ''
     theaterMode: ''
+  favorites:
+    promptForAction: ''
 time:
   diff_future_date: ''
   distance_past_date: ''

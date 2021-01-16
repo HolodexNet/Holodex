@@ -63,7 +63,7 @@
                 <v-col class="d-flex align-center justify-center flex-column">
                     <v-icon color="primary" large>{{ icons.mdiHeart }}</v-icon>
                     <div class="text-body-1 text-center">
-                        Create a list of favorite vtubers and see their latest clips and lives on this page.
+                        {{ $t("views.favorites.promptForAction") }}
                     </div>
                     <v-btn :to="isLoggedIn ? '/channel' : '/login'">
                         {{ isLoggedIn ? "Manage Favorites" : "Log In" }}

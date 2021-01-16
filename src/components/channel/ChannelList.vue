@@ -29,8 +29,10 @@
                         <span>
                             {{
                                 !isLoggedIn
-                                    ? "Sign in to favorite"
-                                    : `${group.allFavorited ? "Unf" : "F"}avorite all in group`
+                                    ? $t("component.channelList.signInToFavorite")
+                                    : group.allFavorited
+                                    ? $t("component.channelList.unfavoriteAllInGroup")
+                                    : $t("component.channelList.favoriteAllInGroup")
                             }}
                         </span>
                     </v-tooltip>

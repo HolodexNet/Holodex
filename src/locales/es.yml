@@ -9,11 +9,15 @@ component:
     aboutPage: página de información
   channelList:
     otherText: Otros
+    favoriteAllInGroup: ''
+    signInToFavorite: ''
+    unfavoriteAllInGroup: ''
   channelInfo:
     videoCount: '{0} Videos'
     clipCount: '{n} Clips'
     subscriberCount: '{n} Subscriptores'
     subscriberNA: Contador de subscriptores no disponible
+    totalViews: ''
   channelSocials:
     addToFavorites: Añadir a favoritos
     removeFromFavorites: Borrar de favoritos
@@ -49,6 +53,7 @@ component:
       openOnYoutube: ''
   watch:
     streamingFor: ''
+    nextUpInMugen: ''
   relatedVideo:
     clipsLabel: ''
     refersLabel: ''
@@ -127,6 +132,8 @@ views:
   watch:
     saveToLibrary: ''
     theaterMode: ''
+  favorites:
+    promptForAction: ''
 time:
   diff_future_date: ''
   distance_past_date: ''

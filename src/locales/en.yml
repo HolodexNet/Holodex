@@ -9,11 +9,15 @@ component:
     aboutPage: About page
   channelList:
     otherText: Other
+    signInToFavorite: Sign in to favorite
+    unfavoriteAllInGroup: Unfavorite all in group
+    favoriteAllInGroup: Favorite all in group
   channelInfo:
     videoCount: '{0} Videos'
     clipCount: '{n} Clips'
     subscriberCount: '{n} Subscribers'
     subscriberNA: Subscriber count unavailable
+    totalViews: Total Views
   channelSocials:
     addToFavorites: Add to Favorites
     removeFromFavorites: Remove from Favorites
@@ -41,6 +45,7 @@ component:
     showMore: Show More
   watch:
     streamingFor: 'Streaming for {0}'
+    nextUpInMugen: Next Up
   search:
     searchLabel: Search
     type:
@@ -132,6 +137,10 @@ views:
   watch:
     theaterMode: Theather Mode
     saveToLibrary: Save video to Library
+  favorites:
+    promptForAction: >-
+      Create a list of favorite vtubers and see their latest clips and lives on
+      this page.
 time:
   soon: soon
   diff_future_date: 'Starts {0} ({1})'

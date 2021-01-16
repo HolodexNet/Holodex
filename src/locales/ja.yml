@@ -10,8 +10,12 @@ component:
     subscriberCount: '{n}登録者'
     subscriberNA: 登録者数は現在利用できません
     videoCount: '{0}本の動画'
+    totalViews: ''
   channelList:
     otherText: その他
+    favoriteAllInGroup: ''
+    signInToFavorite: ''
+    unfavoriteAllInGroup: ''
   channelSocials:
     addToFavorites: お気に入りに追加
     removeFromFavorites: お気に入りから削除
@@ -47,6 +51,7 @@ component:
       openOnYoutube: ''
   watch:
     streamingFor: ''
+    nextUpInMugen: ''
   relatedVideo:
     clipsLabel: ''
     refersLabel: ''
@@ -125,6 +130,8 @@ views:
   watch:
     saveToLibrary: ''
     theaterMode: ''
+  favorites:
+    promptForAction: ''
 time:
   diff_future_date: ''
   distance_past_date: ''
