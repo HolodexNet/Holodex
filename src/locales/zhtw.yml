@@ -37,7 +37,8 @@ component:
     description: 影片資訊
   video:
     comment:
-      openOnYoutube: 於 {0} 查看本留言
+      openOnYoutube: 於
+      openOnYoutubeAfter: 查看本留言
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -133,4 +134,4 @@ views:
 time:
   soon: 即將開始
   diff_future_date: 開始於 {0} ({1})
-  distance_past_date: { 0 }
+  distance_past_date: "{0}"

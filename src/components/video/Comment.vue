@@ -7,8 +7,10 @@
             label
             :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`"
         >
-            {{ $t("component.video.comment.openOnYoutube") }}&emsp;&emsp;<v-icon>{{ mdiYoutube }}</v-icon></v-chip
-        >
+            {{ $t("component.video.comment.openOnYoutube") }}&emsp;&emsp;
+            <v-icon>{{ mdiYoutube }}</v-icon>
+            {{ $t("component.video.comment.openOnYoutubeAfter") }}
+        </v-chip>
         <br />
         <span style="white-space: pre-wrap" v-html="processedMessage"></span>
         <!-- comment body -->
