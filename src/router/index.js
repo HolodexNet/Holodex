@@ -2,20 +2,19 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home";
 
-import Channel from "../views/Channel";
-import Channels from "../views/Channels";
-import Favorites from "../views/Favorites";
-import ChannelVideos from "../views/channel_views/ChannelVideos";
-import ChannelAbout from "../views/channel_views/ChannelAbout";
-import Watch from "../views/Watch";
-import About from "../views/About";
-import Search from "../views/Search";
-import Library from "../views/Library";
-import Settings from "../views/Settings";
-import NotFound from "../views/NotFound";
-import Login from "../views/Login";
-// const ChannelStats = () => import("../views/channel_views/ChannelStats");
-
+const Channel = () => import("../views/Channel");
+const Channels = () => import("../views/Channels");
+const Favorites = () => import("../views/Favorites");
+const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
+const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
+const Watch = () => import("../views/Watch");
+const About = () => import("../views/About");
+const Search = () => import("../views/Search");
+const Library = () => import("../views/Library");
+const ChannelStats = () => import("../views/channel_views/ChannelStats");
+const Settings = () => import("../views/Settings");
+const NotFound = () => import("../views/NotFound");
+const Login = () => import("../views/Login");
 // const MugenClips = () => import("../views/MugenClips");
 Vue.use(VueRouter);
 
@@ -44,11 +43,11 @@ const routes = [
                 name: "channel_about",
                 component: ChannelAbout,
             },
-            // {
-            //     path: "stats",
-            //     name: "channel_stats",
-            //     component: ChannelStats,
-            // },
+            {
+                path: "stats",
+                name: "channel_stats",
+                component: ChannelStats,
+            },
             {
                 path: "",
                 name: "channel",

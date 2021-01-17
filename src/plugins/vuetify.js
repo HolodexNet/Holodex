@@ -15,13 +15,6 @@ import msTL from "@/locales/ms.yml";
 import zhTL from "@/locales/zhtw.yml";
 import idTL from "@/locales/id.yml";
 import ruTL from "@/locales/ru.yml";
-import "dayjs/locale/en";
-import "dayjs/locale/ja";
-import "dayjs/locale/zh-tw";
-import "dayjs/locale/es";
-import "dayjs/locale/ms";
-import "dayjs/locale/id";
-import "dayjs/locale/ru";
 
 Vue.use(Vuetify);
 
@@ -50,25 +43,25 @@ export const langs = [
 
 export const dayjsLangs = {
     async en() {
-        // await import("dayjs/locale/en");
+        import("dayjs/locale/en");
     },
     async ja() {
-        // await import("dayjs/locale/ja");
+        import("dayjs/locale/ja");
     },
     async zh() {
-        // await import("dayjs/locale/zh-tw");
+        import("dayjs/locale/zh");
     },
     async es() {
-        // await import("dayjs/locale/es");
+        import("dayjs/locale/es");
     },
     async ms() {
-        // await import("dayjs/locale/ms");
+        import("dayjs/locale/ms");
     },
     async id() {
-        // await import("dayjs/locale/id");
+        import("dayjs/locale/id");
     },
     async ru() {
-        // await import("dayjs/locale/ru");
+        import("dayjs/locale/ru");
     },
 };
 

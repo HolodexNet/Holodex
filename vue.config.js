@@ -1,30 +1,4 @@
 module.exports = {
-    configureWebpack: {
-        optimization: {
-            chunkIds: "size",
-            removeAvailableModules: true,
-            occurrenceOrder: true,
-            mangleWasmImports: true,
-            splitChunks: {
-                maxAsyncRequests: 4,
-                maxInitialRequests: 4,
-                enforceSizeThreshold: 200000,
-                cacheGroups: {
-                    // defaultVendors: {
-                    //     test: /[\\/]node_modules[\\/]/,
-                    //     priority: -10,
-                    //     reuseExistingChunk: true
-                    // },
-                    default: {
-                        name: "entry",
-                        minChunks: 2,
-                        priority: 50,
-                        reuseExistingChunk: false,
-                    },
-                },
-            },
-        },
-    },
     css: {
         extract: { ignoreOrder: true },
     },
