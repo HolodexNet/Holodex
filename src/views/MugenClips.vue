@@ -166,7 +166,7 @@ export default {
             vm.currentTime = Math.floor(new Date().getTime() / 1000);
         }, 1000);
     },
-    destroyed() {
+    beforeDestroy() {
         clearInterval(this.timer);
     },
     methods: {

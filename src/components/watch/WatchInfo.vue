@@ -62,7 +62,7 @@ import ChannelSocials from "@/components/channel/ChannelSocials";
 import ChannelImg from "@/components/channel/ChannelImg";
 // import VideoDescription from "@/components/video/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
-import { formatDuration, formatDistance, dayjs } from "@/utils/time";
+import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
 import api from "@/utils/backend-api";
 import VideoTopic from "@/components/video/VideoTopic";
@@ -162,7 +162,7 @@ export default {
                 case "live":
                     return this.$t("component.watch.streamingFor", [this.elapsedTime]);
                 default:
-                    return dayjs(this.video.available_at).locale(this.lang).format("MMM DD, YYYY");
+                    return localizedDayjs(this.video.available_at, this.lang).format("MMM DD, YYYY");
             }
         },
         liveViewers() {

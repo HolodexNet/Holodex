@@ -114,7 +114,6 @@ import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiOverscan, mdiRectangleOutline } from "@mdi/js";
 import * as icons from "@/utils/icons";
-import { dayjs } from "@/utils/time";
 import WatchMugen from "@/components/watch/WatchMugen";
 
 export default {
@@ -186,9 +185,6 @@ export default {
             // if(this.startTime) {
             //     this.player.seekTo(this.timeOffset);
             // }
-        },
-        formatTime(t) {
-            return dayjs(t).format("MMM DD, YYYY");
         },
         seekTo(time) {
             if (!this.player) return;

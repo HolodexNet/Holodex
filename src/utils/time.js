@@ -30,20 +30,26 @@ export function formatDuration(secs) {
     return secs > 60 * 60 * 1000 ? dayjs.utc(secs).format("H:mm:ss") : dayjs.utc(secs).format("m:ss");
 }
 
+export function localizedDayjs(time, lang) {
+    // eslint-disable-next-line no-param-reassign
+    if (lang === "zh") lang = "zh-tw";
+    return dayjs(time).locale(lang);
+}
+
 export function formatDistance(time, lang = "en", $t) {
     let diff;
     if (!time) return "?";
     if (Math.abs(dayjs().diff(time, "minutes")) < 1) return $t("time.soon");
-    if (Math.abs(dayjs().diff(time, "hour")) > 23) return dayjs(time).locale(lang).format("LLL");
-    const timeObj = dayjs(time);
+    if (Math.abs(dayjs().diff(time, "hour")) > 23) return localizedDayjs(time, lang).format("LLL");
+    const timeObj = localizedDayjs(time, lang);
     if (new Date(time) > Date.now()) {
         diff = $t("time.diff_future_date", [
-            timeObj.locale(lang).fromNow(),
-            timeObj.locale(lang).format(`${timeObj.isTomorrow() ? "ddd " : ""}LT`),
+            timeObj.fromNow(),
+            timeObj.format(`${timeObj.isTomorrow() ? "ddd " : ""}LT`),
         ]);
         return diff;
     }
-    diff = $t("time.distance_past_date", [timeObj.locale(lang).fromNow(), timeObj.locale(lang).format("LT")]);
+    diff = $t("time.distance_past_date", [timeObj.fromNow(), timeObj.format("LT")]);
     return diff;
 }
 

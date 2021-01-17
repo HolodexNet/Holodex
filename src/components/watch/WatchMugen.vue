@@ -54,7 +54,7 @@ export default {
         }, 1000);
         this.init();
     },
-    destroyed() {
+    beforeDestroy() {
         clearInterval(this.timer);
     },
     methods: {

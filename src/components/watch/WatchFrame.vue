@@ -58,7 +58,7 @@ export default {
             darkMode: true,
         };
     },
-    destroyed() {
+    beforeDestroy() {
         if (this.timer) this.stopSync();
     },
     // created() {

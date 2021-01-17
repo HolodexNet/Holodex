@@ -43,25 +43,25 @@ export const langs = [
 
 export const dayjsLangs = {
     async en() {
-        import("dayjs/locale/en");
+        await import("dayjs/locale/en");
     },
     async ja() {
-        import("dayjs/locale/ja");
+        await import("dayjs/locale/ja");
     },
     async zh() {
-        import("dayjs/locale/zh");
+        await import("dayjs/locale/zh-tw");
     },
     async es() {
-        import("dayjs/locale/es");
+        await import("dayjs/locale/es");
     },
     async ms() {
-        import("dayjs/locale/ms");
+        await import("dayjs/locale/ms");
     },
     async id() {
-        import("dayjs/locale/id");
+        await import("dayjs/locale/id");
     },
     async ru() {
-        import("dayjs/locale/ru");
+        await import("dayjs/locale/ru");
     },
 };
 
