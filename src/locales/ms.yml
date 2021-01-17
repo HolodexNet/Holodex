@@ -7,12 +7,12 @@ component:
     aboutPage: laman Perihal
   channelList:
     otherText: Lain-lain
-    favoriteAllInGroup: Masukkan semuanya ke dalam Kegemaran
+    favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
     signInToFavorite: Pendaftaran diperlukan
-    unfavoriteAllInGroup: Keluarkan semuanya daripada Kegemaran
+    unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
   channelInfo:
-    videoCount: "{0} Video"
-    clipCount: "{n} Sedutan"
+    videoCount: "{0} Buah Video"
+    clipCount: "{n} Buah Sedutan"
     subscriberCount: "{n} Langganan"
     subscriberNA: Bilangan langganan tidak tersedia
     totalViews: Jumlah Tontonan
@@ -31,7 +31,7 @@ component:
     logout: Daftar Keluar
   videoCard:
     clips: "{n} Sedutan"
-    watching: "{0} Menonton"
+    watching: "{0} Tontonan Sekarang"
     liveNow: Langsung Sekarang
   videoDescription:
     description: Perihalan
@@ -48,15 +48,15 @@ component:
       topic: topik
   video:
     comment:
-      openOnYoutube: buka di
+      openOnYoutube: buka ulasan di YouTube
   watch:
     streamingFor: "Telah berlangsung selama {0}"
     nextUpInMugen: Seterusnya
   relatedVideo:
     clipsLabel: sedutan
-    refersLabel: berkaitan
+    refersLabel: yang berkaitan
     simulcastsLabel: siaran serentak
-    sourcesLabel: sumber
+    sourcesLabel: daripada
 views:
   channels:
     channelType:
@@ -109,7 +109,7 @@ views:
     darkModeLabel: Tema Gelap
     darkModeMsg: Tukar antara tema cerah dan tema gelap
     redirectModeLabel: Buka di YouTube
-    redirectModeMsg: Mana-mana video yang ditekan akan terbuka di Youtube
+    redirectModeMsg: Mana-mana video yang ditekan akan terbuka di laman Youtube
     useEnglishNameLabel: Gunakan Nama Inggeris
     useEnglishNameMsg: Gunakan nama Inggeris bagi nama saluran YouTube
     hideVideoThumbnailsLabel: Sembunyikan Lakaran Kecil (Gambar Kenit) Video
@@ -138,6 +138,6 @@ views:
 example: ""
 example2: ""
 time:
-  diff_future_date: "Berlangsung {0} pada pukul {1}"
+  diff_future_date: "Berlangsung {0} ({1})"
   distance_past_date: "{0}"
   soon: sebentar lagi
