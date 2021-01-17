@@ -65,8 +65,13 @@ import VideoCardList from "@/components/video/VideoCardList";
 
 export default {
     name: "Library",
-    metaInfo: {
-        title: "Library - Holodex",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.library")} - Holodex`;
+            },
+        };
     },
     components: {
         VideoCardList,

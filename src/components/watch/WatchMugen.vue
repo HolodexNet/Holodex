@@ -28,6 +28,7 @@
 <script>
 import api from "@/utils/backend-api";
 import VideoCardList from "@/components/video/VideoCardList";
+import { localizedDayjs } from "@/utils/time";
 
 export default {
     name: "WatchMugen",
@@ -68,6 +69,7 @@ export default {
             const now = new Date().getTime() / 1000;
             this.playlist = this.playlist.filter((x) => +x.timestamp + x.video.duration > now);
             const toPlay = this.playlist[0];
+            console.log("triggered");
             this.nextCheck = this.playlist[1].timestamp;
             api.video(toPlay.video.id).then((res) => {
                 this.timeOffset = Math.floor(now - toPlay.timestamp);
@@ -87,7 +89,7 @@ export default {
             if (diff < 0 /* && this.isLoading */) {
                 return "Loading...";
             }
-            return `in ${diff}s`;
+            return localizedDayjs(new Date(this.nextCheck * 1000), this.$store.state.settings.lang).fromNow();
         },
     },
     watch: {

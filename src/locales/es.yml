@@ -1,23 +1,23 @@
 hello: world
-example: 'fill me in with {0} or {1} parameters'
-example2: '{0} text starting with a param needs to be quoted in quotes'
+example: "fill me in with {0} or {1} parameters"
+example2: "{0} text starting with a param needs to be quoted in quotes"
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
-    textAfterTwitter: ' O reporta el error a través de la'
-    aboutPage: página de información
+    textBeforeTwitter: "Ha ocurrido un error recuperando el contenido, por favor revisa Twitter "
+    textAfterTwitter: " O reporta el error a través de la"
+    aboutPage: Página de información
   channelList:
     otherText: Otros
-    favoriteAllInGroup: ''
-    signInToFavorite: ''
-    unfavoriteAllInGroup: ''
+    favoriteAllInGroup: "Marcar todos en el grupo como favorito"
+    signInToFavorite: "Registrate para marcar como favorito"
+    unfavoriteAllInGroup: "Desmarcar todos como favoritos"
   channelInfo:
-    videoCount: '{0} Videos'
-    clipCount: '{n} Clips'
-    subscriberCount: '{n} Subscriptores'
+    videoCount: "{0} Videos"
+    clipCount: "{n} Clips"
+    subscriberCount: "{n} Subscriptores"
     subscriberNA: Contador de subscriptores no disponible
-    totalViews: ''
+    totalViews: "Visualizaciones totales"
   channelSocials:
     addToFavorites: Añadir a favoritos
     removeFromFavorites: Borrar de favoritos
@@ -28,37 +28,37 @@ component:
     about: Acerca de
     library: Biblioteca
     settings: Opciones
-    MugenClips: ''
-    login: ''
-    logout: ''
+    MugenClips: "MugenClips"
+    login: "Iniciar Sesión"
+    logout: "Cerrar Sesión"
   videoCard:
-    clips: '{n} Clips'
-    watching: '{0} Mirando'
+    clips: "{n} Clips"
+    watching: "{0} Mirando"
     liveNow: En Vivo
   videoDescription:
     description: Descripción
   description:
-    showLess: ''
-    showMore: ''
+    showLess: "Mostrar Menos"
+    showMore: "Mostrar Mas"
   search:
-    searchLabel: ''
+    searchLabel: "Buscar"
     type:
-      channel: ''
-      comments: ''
-      org: ''
-      titledesc: ''
-      topic: ''
+      channel: "Canal"
+      comments: "Comentarios"
+      org: "org"
+      titledesc: "título y descripción"
+      topic: "Tema"
   video:
     comment:
-      openOnYoutube: ''
+      openOnYoutube: "Abrir comentario en"
   watch:
-    streamingFor: ''
-    nextUpInMugen: ''
+    streamingFor: "En directo durante {0}"
+    nextUpInMugen: "Siguiente"
   relatedVideo:
-    clipsLabel: ''
-    refersLabel: ''
-    simulcastsLabel: ''
-    sourcesLabel: ''
+    clipsLabel: "clips"
+    refersLabel: "transmisión simultanea"
+    simulcastsLabel: "referencias"
+    sourcesLabel: "fuentes"
 views:
   channels:
     channelType:
@@ -84,9 +84,9 @@ views:
       subber: Clips
   library:
     savedVideosTitle: Videos Guardados
-    createYtPlaylistButton: 'Crear Playlist de YT ({0})'
-    deleteFromLibraryButton: 'Borrar ({0})'
-    deleteConfirmation: 'Estas seguro de que quieres borrar {0} videos?'
+    createYtPlaylistButton: "Crear Playlist de YT ({0})"
+    deleteFromLibraryButton: "Borrar ({0})"
+    deleteConfirmation: "Estas seguro de que quieres borrar {0} videos?"
     deleteConfirmationOK: Borrar
     deleteConfirmationCancel: Cancelar
     selectionReset: Reiniciar
@@ -103,7 +103,7 @@ views:
       all: Todos
       official: Oficial
       clip: Clip
-    unsupportedQuery: ''
+    unsupportedQuery: ""
   settings:
     title: Opciones
     darkModeLabel: Modo Oscuro
@@ -119,22 +119,22 @@ views:
     pushNotificationLabel: Notificaciones emergentes
     pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
     resetAllSettings: Reiniciar todas las opciones/datos
-    clipLanguageSelection: ''
+    clipLanguageSelection: "Ver clips en estos idiomas"
   about:
-    add_my_channel: ''
+    add_my_channel: "Añadir mi canal a Holodex"
   app:
-    check_about_page: ''
-    close_btn: ''
-    update_available: ''
-    update_btn: ''
-    loginCallToAction: ''
-    nowSupportsMultiOrg: ''
+    check_about_page: "Visita la pagina Acerca de para ver los nuevos cambios"
+    close_btn: "Cerrar"
+    update_available: "Una actualización está disponible"
+    update_btn: "Actualizar"
+    loginCallToAction: "Inicia sesión para juntar a tus propios favoritos!"
+    nowSupportsMultiOrg: "Holodex ahora soporta multiples organizaciones."
   watch:
-    saveToLibrary: ''
-    theaterMode: ''
+    saveToLibrary: "Guardar el video en la Biblioteca"
+    theaterMode: "Modo Teatro"
   favorites:
-    promptForAction: ''
+    promptForAction: "Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en esta pagina"
 time:
-  diff_future_date: ''
-  distance_past_date: ''
-  soon: ''
+  diff_future_date: "Inicia {0} ({1})"
+  distance_past_date: "{0}"
+  soon: "Proximamente"

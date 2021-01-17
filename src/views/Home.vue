@@ -67,8 +67,13 @@ import { mapGetters } from "vuex";
 
 export default {
     name: "Home",
-    metaInfo: {
-        title: "Home - Holodex",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.home")} - Holodex`;
+            },
+        };
     },
     components: {
         VideoCardList,

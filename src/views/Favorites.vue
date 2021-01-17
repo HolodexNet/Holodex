@@ -62,9 +62,7 @@
             <v-row style="min-height: 50%">
                 <v-col class="d-flex align-center justify-center flex-column">
                     <v-icon color="primary" large>{{ icons.mdiHeart }}</v-icon>
-                    <div class="text-body-1 text-center">
-                        {{ $t("views.favorites.promptForAction") }}
-                    </div>
+                    <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
                     <v-btn :to="isLoggedIn ? '/channel' : '/login'">
                         {{ isLoggedIn ? "Manage Favorites" : "Log In" }}
                     </v-btn>
@@ -83,8 +81,13 @@ import { mapState } from "vuex";
 
 export default {
     name: "Favorites",
-    metaInfo: {
-        title: "Favorites - Holodex",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.favorites")} - Holodex`;
+            },
+        };
     },
     components: {
         VideoCardList,

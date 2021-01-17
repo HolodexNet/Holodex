@@ -44,7 +44,7 @@ component:
     showMore: 顯示更多
   watch:
     streamingFor: 已實況 {0}
-    nextUpInMugen: 下一個剪輯開始於
+    nextUpInMugen: 下一個剪輯
   search:
     searchLabel: 搜尋
     type:
