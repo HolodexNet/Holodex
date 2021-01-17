@@ -64,18 +64,14 @@
                     <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
                         {{ title }}
                     </v-list-item-title>
-                    <v-list-item-subtitle
-                        v-if="includeChannel"
-                        @click.stop.prevent="goToChannel(video.channel.id)"
-                        class="channel-name"
-                    >
+                    <v-list-item-subtitle v-if="includeChannel" @click.stop.prevent="goToChannel(video.channel.id)">
                         <!-- <router-link
                             :to="`/channel/${video.channel.id}`"
                             class="no-decoration channel-name text-truncate"
                             :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
                         > -->
                         <a
-                            class="channel-name"
+                            class="channel-name no-decoration"
                             :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
                             :href="`/channel/${video.channel.id}`"
                         >
@@ -297,11 +293,13 @@ export default {
 .channel-name {
     text-overflow: ellipsis;
     white-space: nowrap;
-    text-decoration: none;
     overflow: hidden;
 }
 
 .channel-name:hover {
+    color: black !important;
+}
+.theme--dark.v-list-item .v-list-item__subtitle .channel-name:hover {
     color: white !important;
 }
 
@@ -349,6 +347,9 @@ export default {
 .name-vtuber {
     color: #42a5f5 !important;
 }
+/* .name-subber {
+    color: #ffffffB3 !important;
+} */
 
 .video-card-active {
     /* primary color with opacity */
