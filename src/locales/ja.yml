@@ -6,16 +6,16 @@ component:
     textBeforeTwitter: コンテンツの取得中にエラーが発生しました。Twitterを確認してください
     title: Gomenasorry!
   channelInfo:
-    clipCount: '{n}本の切り抜き'
-    subscriberCount: '{n}登録者'
+    clipCount: "{n}本の切り抜き"
+    subscriberCount: "{n}登録者"
     subscriberNA: 登録者数は現在利用できません
-    videoCount: '{0}本の動画'
-    totalViews: ''
+    videoCount: "{0}本の動画"
+    totalViews: "累計視聴回数"
   channelList:
     otherText: その他
-    favoriteAllInGroup: ''
-    signInToFavorite: ''
-    unfavoriteAllInGroup: ''
+    favoriteAllInGroup: "グループをすべてお気に入りに追加"
+    signInToFavorite: "お気に入りに登録"
+    unfavoriteAllInGroup: "グループをすべてお気に入りから削除"
   channelSocials:
     addToFavorites: お気に入りに追加
     removeFromFavorites: お気に入りから削除
@@ -26,39 +26,39 @@ component:
     home: ホーム
     library: ライブラリ
     settings: 設定
-    MugenClips: ''
-    login: ''
-    logout: ''
+    MugenClips: "MugenClip<sup>beta</sup>"
+    login: "ログイン"
+    logout: "ログアウト"
   videoCard:
-    clips: '{n}切り抜き'
+    clips: "{n}本の切り抜き"
     liveNow: 配信中
-    watching: '{0}人視聴中'
+    watching: "{0}人視聴中"
   videoDescription:
-    description: 概要
+    description: "概要"
   description:
-    showLess: ''
-    showMore: ''
+    showLess: "省略表示"
+    showMore: "詳細表示"
   search:
-    searchLabel: ''
+    searchLabel: "検索"
     type:
-      channel: ''
-      comments: ''
-      org: ''
-      titledesc: ''
-      topic: ''
+      channel: "チャンネル"
+      comments: "コメント"
+      org: "組織"
+      titledesc: "タイトル/概要"
+      topic: "トピック"
   video:
     comment:
-      openOnYoutube: ''
+      openOnYoutube: "コメントをYoutubeで開く"
   watch:
-    streamingFor: ''
-    nextUpInMugen: ''
+    streamingFor: "{0}分経過"
+    nextUpInMugen: "次の動画"
   relatedVideo:
-    clipsLabel: ''
-    refersLabel: ''
-    simulcastsLabel: ''
-    sourcesLabel: ''
-example: '{0}または{1}パラメータを入力してください'
-example2: 'パラメータで始まる{0}テキストは引用符で囲む必要があります'
+    clipsLabel: "切り抜き"
+    refersLabel: "関連配信"
+    simulcastsLabel: "裏枠"
+    sourcesLabel: "切り抜き元"
+example: "{0}または{1}パラメータを入力してください"
+example2: "パラメータで始まる{0}テキストは引用符で囲む必要があります"
 views:
   channels:
     channelType:
@@ -83,11 +83,11 @@ views:
       subber: 切り抜き
     recentVideosHeading: 最近の動画
   library:
-    createYtPlaylistButton: 'Youtubeのプレイリストを作成（{0}）'
-    deleteConfirmation: '{0}本当に動画を削除しますか？'
+    createYtPlaylistButton: "Youtubeのプレイリストを作成（{0}）"
+    deleteConfirmation: "{0}本当に動画を削除しますか？"
     deleteConfirmationCancel: キャンセル
     deleteConfirmationOK: 削除
-    deleteFromLibraryButton: '削除（{0}）'
+    deleteFromLibraryButton: "削除（{0}）"
     emptyLibrary: 保存されたビデオはありません！
     savedVideosTitle: 保存したビデオ
     selectionReset: リセット
@@ -103,10 +103,10 @@ views:
       all: すべて
       clip: クリップ
       official: 公式
-    unsupportedQuery: ''
+    unsupportedQuery: "現在 <kbd>トピック</kbd>と<kbd>組織</kbd>での検索はサポートされていません。検索結果の<b>クリップ</b>は表示されません。"
   settings:
     darkModeLabel: ダークモード
-    darkModeMsg: テーマをライトモードとダークモードの間で変更します
+    darkModeMsg: ライトモードとダークモードを変更します
     hideVideoThumbnailsLabel: サムネイルを非表示にする
     hideVideoThumbnailsMsg: 動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
     pushNotificationLabel: プッシュ通知（準備中）
@@ -117,22 +117,22 @@ views:
     title: 設定
     useEnglishNameLabel: 英語名を使用する
     useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
-    clipLanguageSelection: ''
+    clipLanguageSelection: "以下の言語の切り抜きを表示:"
   about:
-    add_my_channel: ''
+    add_my_channel: "チャンネルをHolodexに登録"
   app:
-    check_about_page: ''
-    close_btn: ''
-    update_available: ''
-    update_btn: ''
-    loginCallToAction: ''
-    nowSupportsMultiOrg: ''
+    check_about_page: "Aboutページで更新内容を確認可能です"
+    close_btn: "閉じる"
+    update_available: "ページの更新を利用可能です"
+    update_btn: "アップデート"
+    loginCallToAction: "お気に入りを利用するにはログインしてください!"
+    nowSupportsMultiOrg: "Holodexで他箱のライバーを視聴可能になりました!"
   watch:
-    saveToLibrary: ''
-    theaterMode: ''
+    saveToLibrary: "ライブラリに保存"
+    theaterMode: "シアターモード"
   favorites:
-    promptForAction: ''
+    promptForAction: "お気に入りのライバーリストを作るとそのページでお気に入りライバーの最新動画を確認できます。"
 time:
-  diff_future_date: ''
-  distance_past_date: ''
-  soon: ''
+  diff_future_date: "{0}に開始 ({1})"
+  distance_past_date: "{0}"
+  soon: "まもなく開始"
