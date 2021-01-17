@@ -28,7 +28,7 @@
 <script>
 import api from "@/utils/backend-api";
 import VideoCardList from "@/components/video/VideoCardList";
-import { formatDistance } from "@/utils/time";
+import { localizedDayjs } from "@/utils/time";
 
 export default {
     name: "WatchMugen",
@@ -89,11 +89,7 @@ export default {
             if (diff < 0 /* && this.isLoading */) {
                 return "Loading...";
             }
-            return formatDistance.bind(this)(
-                new Date(this.nextCheck * 1000),
-                this.$store.state.settings.lang,
-                this.$t.bind(this),
-            );
+            return localizedDayjs(new Date(this.nextCheck * 1000), this.$store.state.settings.lang).fromNow();
         },
     },
     watch: {
