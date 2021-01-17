@@ -27,7 +27,12 @@
                 <div class="video-card-overlay d-flex justify-space-between flex-column" style="height: 100%">
                     <div class="d-flex justify-space-between align-start">
                         <!-- Topic Id display -->
-                        <div class="video-topic rounded-tl-sm">{{ video.topic_id }}</div>
+                        <div
+                            class="video-topic rounded-tl-sm"
+                            :style="{ visibility: video.topic_id ? 'visible' : 'hidden' }"
+                        >
+                            {{ video.topic_id }}
+                        </div>
 
                         <!-- Check box for saved video -->
                         <v-icon
