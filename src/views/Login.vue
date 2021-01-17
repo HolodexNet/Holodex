@@ -68,8 +68,13 @@ const apiURI = process.env.NODE_ENV === "development" ? "http://localhost:2434" 
 
 export default {
     name: "Login",
-    metaInfo: {
-        title: "Login to Holodex",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.login")} - Holodex`;
+            },
+        };
     },
     components: { UserCard },
     data() {

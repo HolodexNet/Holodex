@@ -73,8 +73,13 @@ import { mdiTranslate, mdiFilter } from "@mdi/js";
 
 export default {
     name: "Settings",
-    metaInfo: {
-        title: "Settings - Holodex",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.settings")} - Holodex`;
+            },
+        };
     },
     computed: {
         language: {

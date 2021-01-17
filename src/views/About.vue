@@ -231,10 +231,13 @@ import TwitterFeed from "@/components/common/TwitterFeed";
 
 export default {
     name: "About",
-    metaInfo: {
-        title() {
-            return `${this.$t("component.mainNav.about")} - Holodex`;
-        },
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.about")} - Holodex`;
+            },
+        };
     },
     components: {
         TwitterFeed,
