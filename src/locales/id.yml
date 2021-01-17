@@ -103,7 +103,8 @@ views:
       clip: Klip
     unsupportedQuery: >-
       Saat ini mencari klip dengan <kbd>Topik</kbd> dan <kbd>Organisasi/kbd>
-      belum dapat dilakukan. Tidak ada <b>klip</b> yang akan muncul.
+      belum dapat dilakukan. Tidak ada
+                  <b>klip</b> yang akan muncul.
   settings:
     title: Pengaturan
     darkModeLabel: Mode Malam
@@ -143,4 +144,4 @@ example2: ""
 time:
   diff_future_date: "Mulai {0} ({1})"
   distance_past_date: "{0}"
-  soon: "nanti"
+  soon: "segera mulai"
