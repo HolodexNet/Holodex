@@ -23,7 +23,6 @@ export default {
             required: false,
         },
         mugenId: {
-            type: String,
             required: false,
         },
         // hasLiveChat: {

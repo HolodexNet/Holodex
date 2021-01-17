@@ -18,40 +18,9 @@
                 <ChannelSocials :channel="video.channel" />
             </v-list-item>
         </v-list>
-        <!-- <v-card-text class="py-2">
-            <ChannelChip
-                v-for="channel in channel_chips"
-                :channel="channel"
-                :key="channel.id"
-                class="ma-1"
-            ></ChannelChip>
-            <v-chip
-                v-for="tag in video.tags.filter((t) => !t.channel_ref)"
-                label
-                link
-                :key="tag.id"
-                style="margin-right: 5px"
-                :to="`/search?tags=${tag.name}`"
-            >
-                {{ `#${tag.name} (${tag.count})` }}
-            </v-chip>
-        </v-card-text> -->
         <v-card-text class="text-body-2">
             <truncated-text :html="video.description" lines="3" />
         </v-card-text>
-        <v-divider />
-        <v-list
-            style="max-height: 400px"
-            dense
-            class="pa-0 transparent overflow-y-auto caption"
-            v-if="fetchComments && comments"
-        >
-            <v-divider class="mx-4" style="flex-basis: 100%; height: 0"></v-divider>
-            <!-- Render Channel Avatar if necessary -->
-            <v-list-item class="pa-0" v-for="comment in comments" :key="comment.comment_key">
-                <comment :comment="comment" :videoId="video.id"></comment>
-            </v-list-item>
-        </v-list>
     </v-card>
 </template>
 
@@ -78,7 +47,6 @@ export default {
         ChannelImg,
         TruncatedText,
         // VideoDescription,
-        Comment: () => import("@/components/video/Comment"),
     },
     props: {
         video: {

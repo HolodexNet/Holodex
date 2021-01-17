@@ -14,27 +14,7 @@
                             @paused="paused" -->
                         </youtube>
                     </template>
-                </WatchFrame>
-                <v-card
-                    tile
-                    class="d-flex justify-space-between px-4 pt-2 flex-wrap-reverse flex-sm-nowrap"
-                    :class="{ 'pb-2': theatherMode }"
-                >
-                    <span class="watch-chips">
-                        <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic>
-                        <template v-for="mention in channelChips">
-                            <ChannelChip :channel="mention" :key="mention.id" />
-                        </template>
-                        <a
-                            @click="showAllMentions = !showAllMentions"
-                            style="white-space: pre"
-                            class="text-subtitle-2"
-                            v-if="mentions.length > 3"
-                        >
-                            {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
-                        </a>
-                    </span>
-                    <div class="watch-btn-group ml-auto d-flex">
+                    <template v-slot:buttons>
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn
@@ -50,40 +30,11 @@
                             </template>
                             <span>{{ $t("views.watch.theaterMode") }}</span>
                         </v-tooltip>
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn
-                                    icon
-                                    lg
-                                    :href="`https://youtu.be/${video.id}`"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                >
-                                    <v-icon>{{ mdiOpenInNew }}</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>{{ $t("views.settings.redirectModeLabel") }}</span>
-                        </v-tooltip>
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn
-                                    icon
-                                    lg
-                                    @click="toggleSaved"
-                                    :color="hasSaved ? 'primary' : 'white'"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                >
-                                    <v-icon>{{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>{{ $t("views.watch.saveToLibrary") }}</span>
-                        </v-tooltip>
-                    </div>
-                </v-card>
+                    </template>
+                </WatchFrame>
                 <WatchInfo :video="video" v-if="!theatherMode && video.channel" :fetchComments="true" key="info" />
+                <v-divider />
+                <WatchComments :comments="comments" :video="video" />
             </v-col>
             <v-col class="related-videos pt-0" :lg="theatherMode ? 12 : 3">
                 <v-row fluid>
@@ -91,7 +42,7 @@
                         <WatchInfo :video="video" :fetchComments="true" key="info" />
                     </v-col>
                     <v-col cols="12" :lg="theatherMode ? 3 : 12" class="pt-0 pl-lg-0">
-                        <WatchLiveChat v-if="hasLiveChat" :video="video" mugenId="4ANxvWIM3Bs" />
+                        <WatchLiveChat v-if="hasLiveChat" :video="video" :mugenId="isMugen && '4ANxvWIM3Bs'" />
                         <WatchMugen @playNext="playNext" v-if="isMugen" />
                         <WatchRelatedVideos :related="related" />
                     </v-col>
@@ -108,13 +59,12 @@ import WatchInfo from "@/components/watch/WatchInfo";
 import WatchFrame from "@/components/watch/WatchFrame";
 import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
-import ChannelChip from "@/components/channel/ChannelChip";
-import VideoTopic from "@/components/video/VideoTopic";
+import WatchComments from "@/components/watch/WatchComments";
 import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiOverscan, mdiRectangleOutline } from "@mdi/js";
+import { mdiOpenInNew, mdiRectangleOutline } from "@mdi/js";
 import * as icons from "@/utils/icons";
-import WatchMugen from "@/components/watch/WatchMugen";
+import api from "@/utils/backend-api";
 
 export default {
     name: "Watch",
@@ -149,24 +99,28 @@ export default {
         WatchInfo,
         WatchFrame,
         WatchLiveChat,
-        ChannelChip,
+        // ChannelChip,
         WatchRelatedVideos,
-        VideoTopic,
-        WatchMugen,
+        WatchComments,
+        // VideoTopic,
+        WatchMugen: () => import("@/components/watch/WatchMugen"),
     },
     data() {
         return {
             theatherMode: false,
-            showAllMentions: false,
             startTime: 0,
             mdiOpenInNew,
-            mdiOverscan,
+            // mdiOverscan,
             mdiRectangleOutline,
             icons,
+            comments: [],
         };
     },
     created() {
         this.isMugen ? this.initMugen() : this.init();
+        api.comments(this.videoId).then((res) => {
+            this.comments = res.data;
+        });
     },
     methods: {
         init() {
@@ -194,11 +148,6 @@ export default {
             this.$store.commit("watch/setVideo", video);
             this.startTime = timeOffset;
         },
-        toggleSaved() {
-            this.hasSaved
-                ? this.$store.commit("library/removeSavedVideo", this.video.id)
-                : this.$store.commit("library/addSavedVideo", this.video);
-        },
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
@@ -212,12 +161,6 @@ export default {
                 refers: this.video.refers || [],
                 sources: this.video.sources || [],
             };
-        },
-        mentions() {
-            return this.video.mentions || [];
-        },
-        channelChips() {
-            return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
         },
         videoId() {
             return this.$route.params.id || this.$route.query.v;
@@ -236,9 +179,6 @@ export default {
         },
         hasWatched() {
             return this.$store.getters["library/hasWatched"](this.video.id);
-        },
-        hasSaved() {
-            return this.$store.getters["library/hasSaved"](this.video.id);
         },
         isMugen() {
             return this.$route.name === "mugen-clips";

@@ -1,7 +1,7 @@
 <template>
-    <v-list-item class="d-block">
+    <v-list-item class="d-block mb-3">
         <!-- punchout to comment directly -->
-        <v-chip
+        <!-- <v-chip
             class="d-inline"
             small
             label
@@ -10,21 +10,34 @@
             {{ $t("component.video.comment.openOnYoutube") }}&emsp;&emsp;
             <v-icon>{{ mdiYoutube }}</v-icon>
             {{ $t("component.video.comment.openOnYoutubeAfter") }}
-        </v-chip>
+        </v-chip> -->
         <br />
-        <span style="white-space: pre-wrap" v-html="processedMessage"></span>
+        <!-- <truncated-text 
+            style="white-space: pre-wrap" 
+            class="text-body-2" 
+            :html="processedMessage"
+            lines="5"
+        >
+            <template v-slot:button="{ expanded }">
+                <span class="text-body-2">
+                    {{ expanded ? $t("component.description.showLess") : $t("component.description.showMore") }}
+                </span>
+            </template>
+        </truncated-text> -->
+        <span style="white-space: pre-wrap" class="text-body-2" v-html="processedMessage" />
         <!-- comment body -->
     </v-list-item>
 </template>
 
 <script>
 import { mdiYoutube } from "@/utils/icons";
+import TruncatedText from "../common/TruncatedText";
 
 const COMMENT_TIMESTAMP_REGEX = /(?:(\d+):)?(\d+):(\d+)/gm;
 
 export default {
     name: "Comment",
-    components: {},
+    components: { TruncatedText },
     data() {
         return {
             mdiYoutube,
