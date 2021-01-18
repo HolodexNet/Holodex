@@ -34,7 +34,12 @@
                 </WatchFrame>
                 <WatchInfo :video="video" v-if="!theatherMode && video.channel" :fetchComments="true" key="info" />
                 <v-divider />
-                <WatchComments :comments="comments" :video="video" />
+                <WatchComments
+                    :comments="comments"
+                    :video="video"
+                    :limit="$store.state.isMobile ? 5 : 0"
+                    @timeJump="seekTo"
+                />
             </v-col>
             <v-col class="related-videos pt-0" :lg="theatherMode ? 12 : 3">
                 <v-row fluid>

@@ -1,5 +1,5 @@
 <template>
-    <v-list-item class="d-block mb-3">
+    <v-list-item class="d-block my-3 comment">
         <!-- punchout to comment directly -->
         <!-- <v-chip
             class="d-inline"
@@ -11,7 +11,6 @@
             <v-icon>{{ mdiYoutube }}</v-icon>
             {{ $t("component.video.comment.openOnYoutubeAfter") }}
         </v-chip> -->
-        <br />
         <!-- <truncated-text 
             style="white-space: pre-wrap" 
             class="text-body-2" 
@@ -24,14 +23,22 @@
                 </span>
             </template>
         </truncated-text> -->
-        <span style="white-space: pre-wrap" class="text-body-2" v-html="processedMessage" />
+        <truncated-text style="white-space: pre-wrap" class="text-body-2" :html="processedMessage" lines="5">
+            <template v-slot:button="{ expanded }">
+                <span class="text-subtitle-2" style="color: #aaa">{{ expanded ? "Close" : "Read more" }}</span>
+            </template>
+        </truncated-text>
+        <!-- <v-btn class="openOnYoutube" small icon plain :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`">
+            <v-icon small>{{ mdiOpenInNew }}</v-icon>
+        </v-btn> -->
         <!-- comment body -->
     </v-list-item>
 </template>
 
 <script>
-import { mdiYoutube } from "@/utils/icons";
+import { mdiOpenInNew } from "@mdi/js";
 import TruncatedText from "../common/TruncatedText";
+// import TruncatedText from '../common/TruncatedText.vue';
 
 const COMMENT_TIMESTAMP_REGEX = /(?:(\d+):)?(\d+):(\d+)/gm;
 
@@ -40,7 +47,7 @@ export default {
     components: { TruncatedText },
     data() {
         return {
-            mdiYoutube,
+            mdiOpenInNew,
         };
     },
     props: {
@@ -53,6 +60,7 @@ export default {
             type: String,
         },
     },
+    methods: {},
     computed: {
         processedMessage() {
             const decoder = document.createElement("div");
@@ -61,7 +69,7 @@ export default {
             const vidUrl = (this.$store.state.settings.redirectMode ? "https://youtu.be/" : "/watch/") + this.videoId;
             return sanitized.replace(COMMENT_TIMESTAMP_REGEX, (match, hr, min, sec) => {
                 const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
-                return `<a class="comment-chip" href="${vidUrl}?t=${time}"> ${match} </a>`;
+                return `<a class="comment-chip" href="${vidUrl}?t=${time}" data-time="${time}"> ${match} </a>`;
             });
         },
     },
@@ -70,12 +78,32 @@ export default {
 
 <style>
 .comment-chip {
-    background-color: rgba(231, 159, 245, 0.281);
-    padding: 1px 4px;
+    /* background-color: rgba(231, 159, 245, 0.281); */
+    line-height: initial;
+    padding: 1px 1px;
     border-radius: 4px;
     display: inline-block;
+    text-decoration: none;
+    /* border: 1px solid; */
 }
 .comment-chip:hover {
     background-color: rgba(105, 70, 72, 0.8);
+}
+.comment {
+    border-left: 2px solid rgba(255, 255, 255, 0.5);
+    min-height: 0px !important;
+    padding: 0.25rem 1rem;
+    position: relative;
+}
+
+.comment:hover .openOnYoutube {
+    display: block;
+}
+
+.openOnYoutube {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 </style>

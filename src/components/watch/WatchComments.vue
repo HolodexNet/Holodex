@@ -2,35 +2,27 @@
     <v-card>
         <v-card-title class="text-body-1">Comments</v-card-title>
         <v-card-text>
-            <v-btn
-                class="mr-2 mb-2"
-                label
-                @click="currentFilter = -1"
-                :color="currentFilter === -1 && 'primary darken-1'"
-            >
-                All ({{ comments.length }})
-            </v-btn>
             <template v-for="b in buckets">
                 <v-btn
                     class="mr-2 mb-2"
                     :key="b.time"
                     label
                     @click="currentFilter = b.time"
-                    :color="currentFilter === b.time && 'primary darken-1'"
+                    :color="currentFilter === b.time ? 'primary darken-1' : ''"
+                    small
                 >
                     {{ b.display }} ({{ b.count }})
                 </v-btn>
             </template>
             <v-divider />
-            <v-list dense class="pa-0 transparent caption" v-if="comments">
-                <template v-for="comment in filteredComments">
-                    <!-- Render Channel Avatar if necessary -->
-                    <!-- <v-list-item class="pa-0"  :key="comment.comment_key"> -->
+            <v-list dense class="pa-0 transparent caption" v-if="comments" @click.native="handleClick">
+                <template v-for="comment in limitComment">
                     <Comment :comment="comment" :videoId="video.id" :key="comment.comment_key"></Comment>
-                    <v-divider style="flex-basis: 100%; height: 0" :key="`divider-${comment.comment_key}`"></v-divider>
-                    <!-- </v-list-item> -->
                 </template>
             </v-list>
+            <v-btn plain small text @click="expanded = !expanded" v-if="shouldLimit">
+                {{ expanded ? "Close" : "Show All" }}</v-btn
+            >
         </v-card-text>
     </v-card>
 </template>
@@ -49,6 +41,7 @@ export default {
     data() {
         return {
             currentFilter: -1,
+            expanded: false,
         };
     },
     props: {
@@ -60,17 +53,31 @@ export default {
             type: Object,
             required: true,
         },
-    },
-    mounted() {
-        this.$nextTick(() => {
-            console.log(this.groupedComments);
-            console.log(this.buckets);
-        });
+        limit: {
+            type: Number,
+            required: false,
+            default: 3,
+        },
     },
     methods: {
         formatDuration,
+        handleClick(e) {
+            if (e.target.matches(".comment-chip")) {
+                console.log(e.target.getAttribute("data-time"));
+                this.$emit("timeJump", e.target.getAttribute("data-time"));
+                e.preventDefault();
+            }
+        },
     },
     computed: {
+        shouldLimit() {
+            return this.limit && this.filteredComments.length > this.limit;
+        },
+        limitComment() {
+            return this.shouldLimit && !this.expanded
+                ? this.filteredComments.slice(0).splice(0, this.limit)
+                : this.filteredComments;
+        },
         filteredComments() {
             if (this.currentFilter < 0) {
                 return this.comments.sort((a, b) => b.times.length - a.times.length);
@@ -98,18 +105,30 @@ export default {
         },
         buckets() {
             const arr = [];
+            // extract all timestamps from each comment and sort
             this.groupedComments.forEach((c) => {
                 arr.push(...c.times);
             });
             arr.sort((a, b) => a - b);
+
             const buckets = [];
+            // push default bucket All comments filter
+            buckets.push({
+                time: -1,
+                count: this.comments.length,
+                display: "All",
+            });
+
             let currentBucket = 0;
             let subBucket = [];
             arr.forEach((t) => {
+                // put into curent subbucket if time is within 10 secs
                 if (t - currentBucket <= 10) {
                     subBucket.push(t);
                 } else {
+                    // only add the bucket if it has more than one result
                     if (subBucket.length > 1) {
+                        // select floor median has the display time
                         const median = subBucket[Math.floor(subBucket.length / 2)];
                         buckets.push({
                             time: median,
@@ -117,7 +136,7 @@ export default {
                             display: formatDuration(median * 1000),
                         });
                     }
-
+                    // clear and set a new bucket
                     currentBucket = t;
                     subBucket = [];
                     subBucket.push(t);
