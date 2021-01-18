@@ -1,7 +1,7 @@
 <template>
     <v-container fluid v-if="!isLoading && !hasError">
         <v-row>
-            <v-col :lg="theatherMode ? 12 : 9" cols="12" class="pa-0 px-md-3">
+            <v-col :lg="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3">
                 <WatchFrame v-if="video.id" :video="video">
                     <template v-slot:youtube>
                         <youtube
@@ -203,6 +203,7 @@ export default {
 .embedded-video > iframe {
     position: absolute;
     width: 100%;
+    height: 100%;
 }
 
 .embedded-chat {
