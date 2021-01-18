@@ -1,7 +1,7 @@
 <template>
     <v-container fluid v-if="!isLoading && !hasError">
         <v-row>
-            <v-col :lg="theatherMode ? 12 : 9" cols="12" class="pt-0 px-sm-0 px-md-3">
+            <v-col :lg="theatherMode ? 12 : 9" cols="12" class="pa-0 px-md-3">
                 <WatchFrame v-if="video.id" :video="video">
                     <template v-slot:youtube>
                         <youtube
@@ -13,7 +13,7 @@
                         </youtube>
                     </template>
                     <template v-slot:buttons>
-                        <v-tooltip bottom>
+                        <v-tooltip bottom v-if="!$store.state.isMobile">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn
                                     icon
@@ -30,19 +30,32 @@
                         </v-tooltip>
                     </template>
                 </WatchFrame>
-                <WatchInfo :video="video" v-if="!theatherMode && video.channel" :fetchComments="true" key="info" />
-                <v-divider />
-                <WatchComments
-                    :comments="comments"
-                    :video="video"
-                    :limit="$store.state.isMobile ? 5 : 0"
-                    @timeJump="seekTo"
-                />
+                <template v-if="!theatherMode">
+                    <WatchInfo :video="video" :fetchComments="true" key="info" />
+                    <v-divider />
+                    <WatchComments
+                        :comments="comments.length"
+                        :video="video"
+                        :limit="$store.state.isMobile ? 5 : 0"
+                        @timeJump="seekTo"
+                        key="comments"
+                        v-if="comments"
+                    />
+                </template>
             </v-col>
             <v-col class="related-videos pt-0" :lg="theatherMode ? 12 : 3">
                 <v-row fluid>
                     <v-col v-if="theatherMode" lg="9" class="pt-0">
-                        <WatchInfo :video="video" :fetchComments="true" key="info" />
+                        <WatchInfo :video="video" key="info" />
+                        <v-divider />
+                        <WatchComments
+                            :comments="comments"
+                            :video="video"
+                            :limit="$store.state.isMobile ? 5 : 0"
+                            @timeJump="seekTo"
+                            key="comments"
+                            v-if="comments.length"
+                        />
                     </v-col>
                     <v-col cols="12" :lg="theatherMode ? 3 : 12" class="pt-0 pl-lg-0">
                         <WatchLiveChat v-if="hasLiveChat" :video="video" :mugenId="isMugen && '4ANxvWIM3Bs'" />

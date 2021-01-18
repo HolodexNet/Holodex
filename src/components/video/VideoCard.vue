@@ -19,6 +19,7 @@
                 :aspect-ratio="16 / 9"
                 :width="horizontal ? '150px' : '100%'"
                 v-if="!hideThumbnail"
+                @click.stop="redirectMode && goToYoutube(video.id)"
             >
                 <!-- <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center"></v-row>
@@ -69,7 +70,7 @@
                     <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
                         {{ title }}
                     </v-list-item-title>
-                    <v-list-item-subtitle v-if="includeChannel" @click.stop.prevent="goToChannel(video.channel.id)">
+                    <v-list-item-subtitle v-if="includeChannel">
                         <!-- <router-link
                             :to="`/channel/${video.channel.id}`"
                             class="no-decoration channel-name text-truncate"
@@ -79,6 +80,7 @@
                             class="channel-name no-decoration"
                             :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
                             :href="`/channel/${video.channel.id}`"
+                            @click.stop.prevent="goToChannel(video.channel.id)"
                         >
                             {{ channelName }}
                         </a>
@@ -90,13 +92,15 @@
                         </span>
                         <span v-if="video.clips && video.clips.length > 0">
                             •
-                            <!-- <router-link :to="`/watch/${video.id}`" class="no-decoration primary--text"> -->
-                            {{
-                                $tc(
-                                    "component.videoCard.clips",
-                                    typeof video.clips === "object" ? video.clips.length : +video.clips,
-                                )
-                            }}
+                            <!-- <router-link :to="`/watch/${video.id}`" > -->
+                            <span class="primary--text">
+                                {{
+                                    $tc(
+                                        "component.videoCard.clips",
+                                        typeof video.clips === "object" ? video.clips.length : +video.clips,
+                                    )
+                                }}
+                            </span>
                             <!-- </router-link> -->
                         </span>
                         <span v-else-if="video.status === 'live' && video.live_viewers > 0">
@@ -255,6 +259,11 @@ export default {
         },
         goToChannel(id) {
             this.$router.push({ path: `/channel/${this.video.channel.id}` });
+        },
+        goToYoutube(id) {
+            const url = `https://www.youtube.com/watch?v=${id}`;
+
+            window.open(url, "_blank", "noopener");
         },
     },
 };
