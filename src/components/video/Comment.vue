@@ -28,9 +28,9 @@
                 <span class="text-subtitle-2" style="color: #aaa">{{ expanded ? "Close" : "Read more" }}</span>
             </template>
         </truncated-text>
-        <!-- <v-btn class="openOnYoutube" small icon plain :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`">
+        <a class="openOnYoutube" :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`">
             <v-icon small>{{ mdiOpenInNew }}</v-icon>
-        </v-btn> -->
+        </a>
         <!-- comment body -->
     </v-list-item>
 </template>
@@ -97,6 +97,9 @@ export default {
 }
 
 .comment:hover .openOnYoutube {
+    display: block;
+}
+.comment:focus .openOnYoutube {
     display: block;
 }
 
