@@ -33,7 +33,6 @@ import ChannelImg from "@/components/channel/ChannelImg";
 import { getVideoThumbnails } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
-import api from "@/utils/backend-api";
 import VideoTopic from "@/components/video/VideoTopic";
 import TruncatedText from "@/components/common/TruncatedText";
 
@@ -52,14 +51,9 @@ export default {
         video: {
             required: true,
         },
-        fetchComments: {
-            type: Boolean,
-            required: false,
-        },
     },
     data() {
         return {
-            comments: [],
             timer: null,
             elapsedTime: 0,
             icons,
@@ -83,12 +77,10 @@ export default {
         },
     },
     mounted() {
-        if (this.fetchComments) {
-            api.comments(this.video.id).then((res) => {
-                this.comments = res.data;
-            });
-        }
         this.setTimer();
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -96,29 +88,9 @@ export default {
             this.setTimer();
         },
     },
-    beforeDestroy() {
-        clearInterval(this.timer);
-    },
     computed: {
         lang() {
             return this.$store.state.settings.lang;
-        },
-        channel_chips() {
-            // const allMentions = new Map();
-            // // Get channel mentions for this video, and add any channel mentions from the source
-            // // (in case the uploader forgot to link everyone)
-            // this.video.channel_mentions
-            //     .filter((channel) => channel.id !== this.video.channel_id)
-            //     .forEach((channel) =>
-            //         allMentions.set(channel.id, {
-            //             id: channel.id,
-            //             name: channel.name,
-            //             name_en: channel.english_name,
-            //             photo: channel.photo,
-            //         }),
-            //     );
-            // return Array.from(allMentions.values());
-            return [];
         },
         thumbnail_src() {
             return getVideoThumbnails(this.video.id).medium;

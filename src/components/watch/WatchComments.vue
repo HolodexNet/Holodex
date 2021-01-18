@@ -120,26 +120,29 @@ export default {
 
             let currentBucket = 0;
             let subBucket = [];
-            arr.forEach((t) => {
+            arr.forEach((t, index) => {
                 // put into curent subbucket if time is within 10 secs
+                if (t - currentBucket <= 10 && index !== arr.length - 1) {
+                    subBucket.push(t);
+                    return;
+                }
                 if (t - currentBucket <= 10) {
                     subBucket.push(t);
-                } else {
-                    // only add the bucket if it has more than one result
-                    if (subBucket.length > 1) {
-                        // select floor median has the display time
-                        const median = subBucket[Math.floor(subBucket.length / 2)];
-                        buckets.push({
-                            time: median,
-                            count: subBucket.length,
-                            display: formatDuration(median * 1000),
-                        });
-                    }
-                    // clear and set a new bucket
-                    currentBucket = t;
-                    subBucket = [];
-                    subBucket.push(t);
                 }
+                // only add the bucket if it has more than one result
+                if (subBucket.length > 1) {
+                    // select floor median has the display time
+                    const median = subBucket[Math.floor(subBucket.length / 2)];
+                    buckets.push({
+                        time: median,
+                        count: subBucket.length,
+                        display: formatDuration(median * 1000),
+                    });
+                }
+                // clear and set a new bucket
+                currentBucket = t;
+                subBucket = [];
+                subBucket.push(t);
             });
             return buckets.sort((a, b) => b.count - a.count);
         },

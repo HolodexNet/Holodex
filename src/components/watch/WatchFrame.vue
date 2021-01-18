@@ -117,37 +117,3 @@ export default {
     },
 };
 </script>
-
-<style>
-.video {
-    position: relative;
-}
-/* .watch-overlay {
-    position: absolute;
-    width: 100%;
-    bottom: 7%;
-    z-index: 10;
-}
-.watch-translation {
-    display: inline-block;
-    font-size: 1.85rem;
-    line-height: 1;
-}
-.watch-translation-message {
-    white-space: pre-wrap;
-    background: rgba(8, 8, 8, 0.75);
-    padding: 0.25em !important;
-}
-.watch-translation-author {
-    text-align: start;
-} */
-.embedded-video {
-    position: relative;
-    padding-bottom: 56.25%;
-}
-.embedded-video > iframe {
-    position: absolute;
-    width: auto;
-    height: 100%;
-}
-</style>

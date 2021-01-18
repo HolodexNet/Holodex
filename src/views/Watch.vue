@@ -31,7 +31,7 @@
                     </template>
                 </WatchFrame>
                 <template v-if="!theatherMode">
-                    <WatchInfo :video="video" :fetchComments="true" key="info" />
+                    <WatchInfo :video="video" key="info" />
                     <v-divider />
                     <WatchComments
                         :comments="comments"
@@ -76,7 +76,7 @@ import WatchFrame from "@/components/watch/WatchFrame";
 import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
 import WatchComments from "@/components/watch/WatchComments";
-import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
+import { decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiRectangleOutline } from "@mdi/js";
 import * as icons from "@/utils/icons";
@@ -88,26 +88,8 @@ export default {
         const vm = this;
         return {
             get title() {
-                return vm.video.title;
+                return vm.title;
             },
-            // meta: [
-            //     {
-            //         vmid: "description",
-            //         name: "description",
-            //         property: "og:description",
-            //         content: this.metaDescription,
-            //     },
-            //     {
-            //         vmid: "image",
-            //         name: "image",
-            //         content: this.metaImage,
-            //     },
-            //     {
-            //         vmid: "url",
-            //         property: "og:url",
-            //         content: `https://holodex.net/watch/${this.$route.params.id}`,
-            //     },
-            // ],
         };
     },
     components: {
@@ -126,7 +108,6 @@ export default {
             theatherMode: false,
             startTime: 0,
             mdiOpenInNew,
-            // mdiOverscan,
             mdiRectangleOutline,
             icons,
             comments: [],
@@ -134,9 +115,11 @@ export default {
     },
     created() {
         this.isMugen ? this.initMugen() : this.init();
-        api.comments(this.videoId).then((res) => {
-            this.comments = res.data;
-        });
+        if (!this.isMugen) {
+            api.comments(this.videoId).then((res) => {
+                this.comments = res.data;
+            });
+        }
     },
     methods: {
         init() {
@@ -152,9 +135,6 @@ export default {
         },
         ready(event) {
             this.player = event.target;
-            // if(this.startTime) {
-            //     this.player.seekTo(this.timeOffset);
-            // }
         },
         seekTo(time) {
             if (!this.player) return;
@@ -185,7 +165,7 @@ export default {
             return +this.$route.query.t || this.startTime;
         },
         title() {
-            return decodeHTMLEntities(this.video.title) || "";
+            return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
         },
         hasLiveChat() {
             return (
@@ -198,16 +178,6 @@ export default {
         },
         isMugen() {
             return this.$route.name === "mugen-clips";
-        },
-        metaDescription() {
-            return this.video && this.video.description && this.video.description.substr(0, 100);
-        },
-        metaTitle() {
-            return decodeHTMLEntities(this.video.title) || "";
-        },
-        metaImage() {
-            if (!this.video.id) return undefined;
-            return getVideoThumbnails(this.video.id).maxres;
         },
     },
     watch: {
