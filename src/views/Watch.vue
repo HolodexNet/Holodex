@@ -34,7 +34,7 @@
                     <WatchInfo :video="video" :fetchComments="true" key="info" />
                     <v-divider />
                     <WatchComments
-                        :comments="comments.length"
+                        :comments="comments"
                         :video="video"
                         :limit="$store.state.isMobile ? 5 : 0"
                         @timeJump="seekTo"
@@ -57,7 +57,7 @@
                             v-if="comments.length"
                         />
                     </v-col>
-                    <v-col cols="12" :lg="theatherMode ? 3 : 12" class="pt-0 pl-lg-0">
+                    <v-col cols="12" :lg="theatherMode ? 3 : 12" class="pa-0 pr-lg-3">
                         <WatchLiveChat v-if="hasLiveChat" :video="video" :mugenId="isMugen && '4ANxvWIM3Bs'" />
                         <WatchMugen @playNext="playNext" v-if="isMugen" />
                         <WatchRelatedVideos :related="related" />
