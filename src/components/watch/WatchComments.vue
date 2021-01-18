@@ -63,7 +63,6 @@ export default {
         formatDuration,
         handleClick(e) {
             if (e.target.matches(".comment-chip")) {
-                console.log(e.target.getAttribute("data-time"));
                 this.$emit("timeJump", e.target.getAttribute("data-time"));
                 e.preventDefault();
             }

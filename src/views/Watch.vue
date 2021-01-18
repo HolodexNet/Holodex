@@ -1,7 +1,7 @@
 <template>
     <v-container fluid v-if="!isLoading && !hasError">
         <v-row>
-            <v-col :lg="theatherMode ? 12 : 9" cols="12" class="pt-0">
+            <v-col :lg="theatherMode ? 12 : 9" cols="12" class="pt-0 px-sm-0 px-md-3">
                 <WatchFrame v-if="video.id" :video="video">
                     <template v-slot:youtube>
                         <youtube
@@ -10,8 +10,6 @@
                             @ready="ready"
                             :playerVars="{ start: timeOffset, autoplay: 1, playsinline: 1 }"
                         >
-                            <!-- @playing="playing"
-                            @paused="paused" -->
                         </youtube>
                     </template>
                     <template v-slot:buttons>

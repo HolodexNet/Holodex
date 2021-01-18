@@ -40,7 +40,6 @@ export default {
         },
         // eslint-disable-next-line no-unused-vars
         onIntersect(entries, observer, isIntersecting) {
-            console.log(isIntersecting);
             if (!(this.status === this.STATUSES.READY && isIntersecting)) return;
 
             this.$on("$InfiniteLoad:loaded", () => {
