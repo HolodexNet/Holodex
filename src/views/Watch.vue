@@ -39,7 +39,7 @@
                         :limit="$store.state.isMobile ? 5 : 0"
                         @timeJump="seekTo"
                         key="comments"
-                        v-if="comments"
+                        v-if="comments.length"
                     />
                 </template>
             </v-col>
