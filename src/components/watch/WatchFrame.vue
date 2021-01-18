@@ -53,7 +53,6 @@ export default {
     data() {
         return {
             sub_offset: 8, // offset by 4 seconds
-
             // chart: null,
             darkMode: true,
         };
