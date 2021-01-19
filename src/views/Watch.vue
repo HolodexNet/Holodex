@@ -80,7 +80,7 @@ import { decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiRectangleOutline } from "@mdi/js";
 import * as icons from "@/utils/icons";
-import api from "@/utils/backend-api";
+// import api from "@/utils/backend-api";
 
 export default {
     name: "Watch",
@@ -110,16 +110,10 @@ export default {
             mdiOpenInNew,
             mdiRectangleOutline,
             icons,
-            comments: [],
         };
     },
     created() {
         this.isMugen ? this.initMugen() : this.init();
-        if (!this.isMugen) {
-            api.comments(this.videoId).then((res) => {
-                this.comments = res.data;
-            });
-        }
     },
     methods: {
         init() {
@@ -127,6 +121,10 @@ export default {
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
                 if (!this.hasWatched && this.videoId) this.$store.commit("library/addWatchedVideo", this.video);
+                // double check video type before querying for comments
+                if (this.video.type === "stream") {
+                    this.$store.dispatch("watch/fetchComments");
+                }
             });
         },
         initMugen() {
@@ -146,16 +144,16 @@ export default {
         },
     },
     computed: {
-        ...mapState("watch", ["video", "isLoading", "hasError"]),
+        ...mapState("watch", ["video", "comments", "isLoading", "hasError"]),
         related() {
             return {
+                simulcasts: this.video.simulcasts || [],
                 clips:
                     (this.video.clips &&
                         this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang))) ||
                     [],
-                simulcasts: this.video.simulcasts || [],
-                refers: this.video.refers || [],
                 sources: this.video.sources || [],
+                refers: this.video.refers || [],
             };
         },
         videoId() {
