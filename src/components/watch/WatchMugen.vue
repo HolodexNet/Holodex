@@ -61,7 +61,7 @@ export default {
     methods: {
         init() {
             api.rotation().then((res) => {
-                this.playlist = res.data;
+                this.playlist = res.data.sort((x, y) => +x.timestamp - y.timestamp);
                 this.calculateVideo();
             });
         },
