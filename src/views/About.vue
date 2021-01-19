@@ -119,6 +119,15 @@
                             and I'll add you on.
                         </v-expansion-panel-content>
                     </v-expansion-panel>
+                    <v-expansion-panel>
+                        <v-expansion-panel-header> GDPR and my data </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                            A Google Analytics cookie is used to track pageviews for our analytical purposes. After
+                            login, we associate your social media account username and ID with your favorites. This data
+                            may include your Email (for Google), Discord ID, or Twitter handle respectively.
+                            <b>For deletion of your user data, please contact us on discord!</b>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
                 </v-expansion-panels>
                 <br />
 
