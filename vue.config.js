@@ -14,6 +14,7 @@ module.exports = {
         msTileColor: "#42a5f5",
         appleMobileWebAppCapable: "yes",
         appleMobileWebAppStatusBarStyle: "#42a5f5",
+        scope: "/",
         workboxOptions: {
             runtimeCaching: [
                 {
