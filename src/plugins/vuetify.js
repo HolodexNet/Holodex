@@ -121,26 +121,6 @@ export const config = {
     },
 };
 
-Vue.use(Vuetify, config);
+Vue.use(Vuetify);
 
-export const vuetify = new Vuetify({
-    treeShake: true,
-    icons: {
-        iconfont: "mdiSvg",
-    },
-    theme: {
-        themes: {
-            dark: {
-                primary: primaryColor,
-                secondary: secondaryColor,
-            },
-            light: {
-                primary: primaryColor,
-                secondary: secondaryColor,
-            },
-        },
-    },
-    lang: {
-        t: (key, ...params) => i18n.t(key, params),
-    },
-});
+export const vuetify = new Vuetify(config);

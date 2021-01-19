@@ -2,7 +2,7 @@
     <v-card color="indigo" dark>
         <div class="d-flex flex-no-wrap justify-space-between">
             <div>
-                <v-card-title class="headline"> Some Title </v-card-title>
+                <v-card-title class="headline">Some Title</v-card-title>
 
                 <v-card-subtitle>Some Artist</v-card-subtitle>
 
