@@ -16,8 +16,6 @@ import zhTL from "@/locales/zhtw.yml";
 import idTL from "@/locales/id.yml";
 import ruTL from "@/locales/ru.yml";
 
-Vue.use(Vuetify);
-
 // ====== i18n setup ======
 Vue.use(VueI18n);
 
@@ -100,6 +98,30 @@ export const i18n = new VueI18n({
     },
 });
 // ====== end i18n setup ======
+
+export const config = {
+    treeShake: true,
+    icons: {
+        iconfont: "mdiSvg",
+    },
+    theme: {
+        themes: {
+            dark: {
+                primary: primaryColor,
+                secondary: secondaryColor,
+            },
+            light: {
+                primary: primaryColor,
+                secondary: secondaryColor,
+            },
+        },
+    },
+    lang: {
+        t: (key, ...params) => i18n.t(key, params),
+    },
+};
+
+Vue.use(Vuetify, config);
 
 export const vuetify = new Vuetify({
     treeShake: true,
