@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile" />
+        <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile" :temporary="isWatchPage" />
         <!--* nav drawer is for the left --->
         <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile && !isWatchPage" />
         <!--* bottom bar --->
@@ -207,6 +207,7 @@ export default {
     data() {
         return {
             drawer: null,
+            temporary: false,
             icons,
             favoritesExpanded: false,
             searchBarExpanded: false,
@@ -296,6 +297,7 @@ export default {
         this.$router.afterEach((to, from) => {
             this.refreshing = false;
         });
+
         if (this.$store.state.firstVisit) {
             const vm = this;
             setTimeout(() => {
