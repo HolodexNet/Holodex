@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
-import api from "@/utils/backend-api";
 import { ORGS } from "@/utils/consts";
 
 // import { dayjs } from "@/utils/time";
@@ -33,8 +32,6 @@ function defaultState() {
         routerHistory: [],
     };
 }
-
-localStorage.removeItem("holodex");
 
 /**--------------------------------------------
  *               Put Migrations Here
@@ -103,35 +100,6 @@ export default new Vuex.Store({
         async navigate({ commit }, { from = undefined }) {
             if (from) commit("historyPush", { from });
             else commit("historyPop");
-        },
-        async tryUpdatingLive({ state, commit, dispatch }, payload) {
-            // will only trigger after user visits the first page that triggers a tryUpdatingLive dispatch.
-            // currently only the Home component does this.
-
-            const currentTime = new Date().getTime();
-            const firstTimeInvoked = !window.liveDispatchSetup;
-            if (firstTimeInvoked) {
-                // use a global variable to ensure we generate a single dispatch loop every tab
-                window.liveDispatchSetup = true;
-                setInterval(() => {
-                    dispatch("tryUpdatingLive");
-                }, 1000 * 30);
-            }
-
-            if (
-                firstTimeInvoked ||
-                (payload && payload.forced) ||
-                currentTime - state.liveLastUpdated >= 1000 * 60 * 5
-            ) {
-                // only update every 5 minutes
-                commit("private_startUpdateLive");
-                try {
-                    commit("private_setLive", await api.live());
-                } catch (err) {
-                    console.error(err);
-                    commit("private_liveUpdateError", err);
-                }
-            }
         },
         async logout({ dispatch, commit }) {
             commit("setUser", { user: null, jwt: null });

@@ -1,7 +1,13 @@
 <template>
     <v-bottom-navigation :value="value" grow app>
         <template v-for="page in pages">
-            <v-btn :value="page.path" :key="page.name" :to="page.path" class="nav-btn" @click.native="scrollToTop">
+            <v-btn
+                :value="page.path"
+                :key="page.name"
+                :to="page.path"
+                class="nav-btn"
+                @click.native="scrollToTop(page)"
+            >
                 <span>{{ page.name }}</span>
                 <v-icon>{{ page.icon }}</v-icon>
             </v-btn>
@@ -24,12 +30,14 @@ export default {
         };
     },
     methods: {
-        scrollToTop() {
-            window.scroll({
-                top: 0,
-                left: 0,
-                behavior: "smooth",
-            });
+        scrollToTop(page) {
+            if (page.path === this.$route.path) {
+                window.scroll({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth",
+                });
+            }
         },
     },
 };
