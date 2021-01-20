@@ -85,11 +85,8 @@ import * as icons from "@/utils/icons";
 export default {
     name: "Watch",
     metaInfo() {
-        const vm = this;
         return {
-            get title() {
-                return vm.title;
-            },
+            title: this.title,
         };
     },
     components: {

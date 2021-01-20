@@ -42,9 +42,7 @@ export default {
     metaInfo() {
         const vm = this;
         return {
-            get title() {
-                return `${vm.channelName} - Holodex`;
-            },
+            title: `${vm.channelName} - Holodex`,
         };
     },
     components: {
