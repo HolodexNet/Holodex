@@ -50,7 +50,7 @@ component:
     comment:
       openOnYoutube: "Buka komentar di"
   watch:
-    streamingFor: "Streaming untuk {0}"
+    streamingFor: "Streaming selama {0}"
     nextUpInMugen: "Selanjutnya"
   relatedVideo:
     clipsLabel: "Klip"
@@ -102,7 +102,7 @@ views:
       official: Resmi
       clip: Klip
     unsupportedQuery: >-
-      Saat ini mencari klip dengan <kbd>Topik</kbd> dan <kbd>Organisasi/kbd>
+      Saat ini mencari klip dengan <kbd>Topik</kbd> dan <kbd>Organisasi</kbd>
       belum dapat dilakukan. Tidak ada
                   <b>klip</b> yang akan muncul.
   settings:
