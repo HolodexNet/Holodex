@@ -137,6 +137,6 @@ views:
   favorites:
     promptForAction: "Создайте список любимых витуберов и вы увидите их новые стримы и клипы с ними на этой странице."
 time:
-  diff_future_date: "Начнется через {0} ({1})"
+  diff_future_date: "Начнется {0} ({1})"
   distance_past_date: "{0}"
   soon: "Скоро"
