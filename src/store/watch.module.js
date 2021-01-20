@@ -6,6 +6,7 @@ const initialState = {
     video: {},
     isLoading: true,
     hasError: false,
+    comments: [],
 };
 
 export const state = { ...initialState };
@@ -28,6 +29,11 @@ const actions = {
                 commit("fetchError");
             });
     },
+    fetchComments({ state, commit }) {
+        return api.comments(state.id).then(({ data }) => {
+            commit("setComments", data);
+        });
+    },
 };
 
 const mutations = {
@@ -46,6 +52,9 @@ const mutations = {
     },
     setVideo(state, video) {
         state.video = video;
+    },
+    setComments(state, comments) {
+        state.comments = comments;
     },
     resetState(state) {
         Object.assign(state, initialState);

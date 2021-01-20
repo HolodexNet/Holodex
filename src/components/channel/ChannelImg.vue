@@ -1,18 +1,19 @@
 <template>
     <!-- Render with opaque response for cache if size is lte 40 -->
-    <!-- <router-link
-        v-if="size <= 40"
-        tag="img"
-        :src="photo"
-        crossorigin="anonymous"
-        loading="lazy"
-        :alt="`${channel.name}'s profile picture`"
-        :width="size"
-        :height="size"
-        :to="`/channel/${channel.id}`"
-    /> -->
-    <!-- otherwise render using vuetify lazy  -->
     <a :href="`/channel/${channel.id}`">
+        <v-lazy
+            tag="img"
+            :src="photo"
+            crossorigin="anonymous"
+            loading="lazy"
+            :alt="`${channel.name}'s profile picture`"
+            :width="size"
+            :height="size"
+            class="d-block"
+        />
+    </a>
+    <!-- otherwise render using vuetify lazy  -->
+    <!-- <a :href="`/channel/${channel.id}`">
         <v-img
             :src="photo"
             crossorigin="anonymous"
@@ -21,7 +22,7 @@
             :height="size"
             @click.stop.prevent="goToChannel(channel.id)"
         />
-    </a>
+    </a> -->
     <!-- v-else -->
     <!-- :to="`/channel/${channel.id}`" -->
 </template>

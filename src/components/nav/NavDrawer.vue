@@ -6,7 +6,7 @@
         width="240"
         clipped
         class="nav-scroll"
-        :temporary="$route.name === 'watch_id'"
+        :temporary="temporary"
     >
         <v-list dense>
             <!-- <v-list> -->
@@ -83,7 +83,7 @@
                     @click="$router.push(`/channel/${channel.id}`).catch(() => {})"
                 >
                     <v-list-item-avatar :size="30">
-                        <ChannelImg :channel="channel" />
+                        <ChannelImg :channel="channel" :size="30" />
                     </v-list-item-avatar>
                     <ChannelInfo :channel="channel" noSubscriberCount noGroup />
                 </v-list-item>
@@ -133,6 +133,10 @@ export default {
             type: Array,
         },
         value: {
+            type: Boolean,
+            default: false,
+        },
+        temporary: {
             type: Boolean,
             default: false,
         },
