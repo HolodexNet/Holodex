@@ -1,5 +1,5 @@
 <template>
-    <div :key="identifier" v-intersect="onIntersect" class="d-flex justify-center py-4">
+    <div :key="identifier" v-intersect="onIntersect" class="d-flex justify-center py-4" style="min-height: 100px">
         <LoadingOverlay :isLoading="status === STATUSES.LOADING" :showError="status === STATUSES.ERROR" />
         <div v-if="status === STATUSES.COMPLETED">End of list</div>
     </div>
