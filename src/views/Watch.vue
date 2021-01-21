@@ -7,13 +7,13 @@
         </v-alert>
         <v-row>
             <v-col :lg="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3">
-                <WatchFrame :video="video">
+                <WatchFrame :video="video" v-if="video.id">
                     <template v-slot:youtube>
                         <youtube
                             class="embedded-video"
                             :video-id="video.id"
                             @ready="ready"
-                            :playerVars="{ start: timeOffset, autoplay: 1, playsinline: 1 }"
+                            :playerVars="{ ...(timeOffset && { start: timeOffset }), autoplay: 1, playsinline: 1 }"
                         >
                         </youtube>
                     </template>
@@ -119,6 +119,7 @@ export default {
     },
     methods: {
         init() {
+            this.startTime = 0;
             if (this.isMugen) {
                 this.initMugen();
                 return;

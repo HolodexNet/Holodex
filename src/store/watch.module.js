@@ -3,7 +3,12 @@ import api from "@/utils/backend-api";
 
 const initialState = {
     id: null,
-    video: {},
+    video: {
+        channel: {},
+        id: null,
+        title: "Loading...",
+        description: "",
+    },
     isLoading: true,
     hasError: false,
     comments: [],
