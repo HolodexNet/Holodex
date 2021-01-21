@@ -1,6 +1,6 @@
 <template>
     <v-container fluid v-if="!isLoading && !hasError">
-        <v-alert dense text type="info" dismissible v-model="firstVisitMugen">
+        <v-alert dense text type="info" dismissible v-model="firstVisitMugen" v-if="isMugen">
             Welcome to MugenClips! Everyone on this page is seeing the same randomly selected English Hololive clip.
             Watch along and chat with Hololive fans from across the world. If you skip ahead and want to be re-sync'd
             with everyone, please refresh the page
