@@ -90,7 +90,7 @@ export default {
         async loginGoogle() {
             const authCode = await this.$gAuth.getAuthCode();
             const resp = await api.login(this.$store.state.userdata.jwt, authCode, "google");
-            console.log(resp);
+            // console.log(resp);
             this.$store.commit("setUser", resp.data);
             this.$store.dispatch("favorites/resetFavorites");
         },
@@ -106,7 +106,7 @@ export default {
                 )}&response_type=token&scope=identify`,
                 async (err, out) => {
                     const resp = await api.login(this.$store.state.userdata.jwt, out.access_token, "discord");
-                    console.log(resp);
+                    // console.log(resp);
                     this.$store.commit("setUser", resp.data);
                     this.$store.dispatch("favorites/resetFavorites");
                 },
@@ -116,7 +116,7 @@ export default {
             open(`${apiURI}/v2/user/login/twitter`, async (err, out) => {
                 const twitterTempJWT = out.jwt;
                 const resp = await api.login(this.$store.state.userdata.jwt, twitterTempJWT, "twitter");
-                console.log(resp);
+                // console.log(resp);
                 this.$store.commit("setUser", resp.data);
                 this.$store.dispatch("favorites/resetFavorites");
             });

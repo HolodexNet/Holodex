@@ -48,7 +48,7 @@ export default {
             isLoading: true,
         };
     },
-    created() {
+    mounted() {
         const vm = this;
         this.timer = setInterval(() => {
             vm.currentTime = Math.floor(new Date().getTime() / 1000);
@@ -69,7 +69,7 @@ export default {
             const now = new Date().getTime() / 1000;
             this.playlist = this.playlist.filter((x) => +x.timestamp + x.video.duration > now);
             const toPlay = this.playlist[0];
-            console.log("triggered");
+
             this.nextCheck = this.playlist[1].timestamp;
             api.video(toPlay.video.id).then((res) => {
                 this.timeOffset = Math.floor(now - toPlay.timestamp);

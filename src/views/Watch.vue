@@ -109,11 +109,15 @@ export default {
             icons,
         };
     },
-    created() {
-        this.isMugen ? this.initMugen() : this.init();
+    mounted() {
+        this.init();
     },
     methods: {
         init() {
+            if (this.isMugen) {
+                this.initMugen();
+                return;
+            }
             this.$store.commit("watch/resetState");
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {

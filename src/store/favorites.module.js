@@ -47,7 +47,7 @@ const actions = {
                 channels: state.favorites.map((f) => f.id).join(","),
             })
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 commit("setLive", res);
                 commit("fetchEnd");
             })
@@ -82,7 +82,7 @@ const actions = {
             .patchFavorites(rootState.userdata.jwt, operations)
             .then((res) => {
                 if (res.status === 200) {
-                    console.log("success");
+                    // console.log("success");
                     commit("setFavorites", res.data);
                 } else {
                     throw new Error("Error while adding favorite");

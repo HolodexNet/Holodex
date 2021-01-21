@@ -147,7 +147,7 @@ export default {
     },
     watch: {
         async $route(to) {
-            console.log("UPDATED");
+            // console.log("UPDATED");
             if (to.query?.q && this.query.length === 0) {
                 this.query = await csv2jsonAsync(to.query?.q);
             }
@@ -205,7 +205,7 @@ export default {
             });
         },
         addItem(item) {
-            console.log(item);
+            // console.log(item);
             this.query.push({ ...item });
         },
         onInput() {
