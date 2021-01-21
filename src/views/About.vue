@@ -172,6 +172,7 @@
                             set the langauges you want to see clips in
                         </li>
                         <li>Added topics to each list and improved search</li>
+                        <li>New and improved watch page with theather mode and top comments</li>
                         <li>
                             Laid groundwork for more features in the future, including a new user contributed tagging
                             system, song tracking and more!

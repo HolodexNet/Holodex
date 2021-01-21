@@ -142,7 +142,7 @@ export default {
     },
     data() {
         return {
-            forceJPG: true,
+            forceJPG: false,
             icons,
         };
     },
