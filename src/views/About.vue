@@ -70,11 +70,10 @@
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
-                        <v-expansion-panel-header> What is Mugenclips </v-expansion-panel-header>
+                        <v-expansion-panel-header> What is MugenClips? </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            MugenClips, or infinite clips, is a mini watch along party where people on the site can
-                            watch a constantly rotating variety of clips uploaded by the many community translation
-                            channels, with live chat.
+                            MugenClips, or infinite clips, is a watch along party where people on the site can watch a
+                            constantly rotating variety of clips uploaded by the many community translation channels
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>

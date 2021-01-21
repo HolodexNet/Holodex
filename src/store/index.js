@@ -21,6 +21,7 @@ function defaultState() {
         // other
         firstVisit: true,
         showUpdateDetails: false,
+        firstVisitMugen: true,
         // authorization
         userdata: {
             user: null,
@@ -94,6 +95,9 @@ export default new Vuex.Store({
         },
         setVisited(state) {
             state.firstVisit = false;
+        },
+        setVisitedMugen(state) {
+            state.firstVisitMugen = false;
         },
     },
     actions: {

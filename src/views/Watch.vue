@@ -1,8 +1,13 @@
 <template>
     <v-container fluid v-if="!isLoading && !hasError">
+        <v-alert dense text type="info" dismissible v-model="firstVisitMugen">
+            Welcome to MugenClips! Everyone on this page is seeing the same randomly selected English Hololive clip.
+            Watch along and chat with Hololive fans from across the world. If you skip ahead and want to be re-sync'd
+            with everyone, please refresh the page
+        </v-alert>
         <v-row>
             <v-col :lg="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3">
-                <WatchFrame v-if="video.id" :video="video">
+                <WatchFrame :video="video">
                     <template v-slot:youtube>
                         <youtube
                             class="embedded-video"
@@ -177,6 +182,14 @@ export default {
         },
         isMugen() {
             return this.$route.name === "mugen-clips";
+        },
+        firstVisitMugen: {
+            get() {
+                return this.$store.state.firstVisitMugen;
+            },
+            set() {
+                return this.$store.commit("setVisitedMugen");
+            },
         },
     },
     watch: {
