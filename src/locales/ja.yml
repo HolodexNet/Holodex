@@ -1,90 +1,138 @@
 hello: world
 component:
-    apiError:
-        aboutPage: ページについて
-        textAfterTwitter: または、を通じてエラーを報告します
-        textBeforeTwitter: コンテンツの取得中にエラーが発生しました。Twitterを確認してください
-        title: Gomenasorry!
-    channelInfo:
-        clipCount: "{n}本の切り抜き"
-        subscriberCount: "{n}登録者"
-        subscriberNA: 登録者数は現在利用できません
-        videoCount: "{0}本の動画"
-    channelList:
-        otherText: その他
-    channelSocials:
-        addToFavorites: お気に入りに追加
-        removeFromFavorites: お気に入りから削除
-    mainNav:
-        about: 詳細
-        channels: チャンネル
-        favorites: お気に入り
-        home: ホーム
-        library: ライブラリ
-        settings: 設定
-    videoCard:
-        clips: "{n}切り抜き"
-        liveNow: 配信中
-        watching: "{0}人視聴中"
-    videoDescription:
-        description: 概要
+  apiError:
+    aboutPage: ページについて
+    textAfterTwitter: または、を通じてエラーを報告します
+    textBeforeTwitter: コンテンツの取得中にエラーが発生しました。Twitterを確認してください
+    title: Gomenasorry!
+  channelInfo:
+    clipCount: "{n}本の切り抜き"
+    subscriberCount: "{n}登録者"
+    subscriberNA: 登録者数は現在利用できません
+    videoCount: "{0}本の動画"
+    totalViews: "累計視聴回数"
+  channelList:
+    otherText: その他
+    favoriteAllInGroup: "グループをすべてお気に入りに追加"
+    signInToFavorite: "お気に入りに登録"
+    unfavoriteAllInGroup: "グループをすべてお気に入りから削除"
+  channelSocials:
+    addToFavorites: お気に入りに追加
+    removeFromFavorites: お気に入りから削除
+  mainNav:
+    about: 詳細
+    channels: チャンネル
+    favorites: お気に入り
+    home: ホーム
+    library: ライブラリ
+    settings: 設定
+    MugenClips: "MugenClip<sup>beta</sup>"
+    login: "ログイン"
+    logout: "ログアウト"
+  videoCard:
+    clips: "{n}本の切り抜き"
+    liveNow: 配信中
+    watching: "{0}人視聴中"
+  videoDescription:
+    description: "概要"
+  description:
+    showLess: "省略表示"
+    showMore: "詳細表示"
+  search:
+    searchLabel: "検索"
+    type:
+      channel: "チャンネル"
+      comments: "コメント"
+      org: "組織"
+      titledesc: "タイトル/概要"
+      topic: "トピック"
+  video:
+    comment:
+      openOnYoutube: "コメントをYoutubeで開く"
+  watch:
+    streamingFor: "{0}分経過"
+    nextUpInMugen: "次の動画"
+  relatedVideo:
+    clipsLabel: "切り抜き"
+    refersLabel: "関連配信"
+    simulcastsLabel: "裏枠"
+    sourcesLabel: "切り抜き元"
 example: "{0}または{1}パラメータを入力してください"
 example2: "パラメータで始まる{0}テキストは引用符で囲む必要があります"
 views:
-    channels:
-        channelType:
-            subber: 切り抜きチャンネル
-            vtuber: Vtuber
-        favoriteLastUpdated: "最終更新{0}前"
-        favoritesAreEmpty: お気に入りにはまだなにも登録されていません！
-        sortOptions:
-            clipCount: 切り抜き数
-            group: グループ
-            recentUpload: 最近の投稿
-            subscribers: 登録者数
-            videoCount: 動画数
-        tabs:
-            Favorites: お気に入り
-            Subber: 切り抜きチャンネル
-            Vtuber: Vtuber
-    home:
-        liveOrUpcomingHeading: 配信中/配信予定
-        recentVideoToggles:
-            all: すべて
-            official: 公式
-            subber: 切り抜き
-        recentVideosHeading: 最近の動画
-    library:
-        createYtPlaylistButton: "Youtubeのプレイリストを作成（{0}）"
-        deleteConfirmation: "{0}本当に動画を削除しますか？"
-        deleteConfirmationCancel: キャンセル
-        deleteConfirmationOK: 削除
-        deleteFromLibraryButton: "削除（{0}）"
-        emptyLibrary: 保存されたビデオはありません！
-        savedVideosTitle: 保存したビデオ
-        selectionReset: リセット
-        selectionSelectAll: すべて選択
-    notFound:
-        back: 戻る
-        title: コンテンツが見つかりません
-    search:
-        sort:
-            newest: 新しい順
-            oldest: 古い順
-        type:
-            all: すべて
-            clip: クリップ
-            official: 公式
-    settings:
-        darkModeLabel: ダークモード
-        darkModeMsg: テーマをライトモードとダークモードの間で変更します
-        hideVideoThumbnailsLabel: サムネイルを非表示にする
-        hideVideoThumbnailsMsg: 動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
-        pushNotificationLabel: プッシュ通知（準備中）
-        pushNotificationMsg: お気に入りのチャンネルのプッシュ通知を有効にする
-        redirectModeLabel: Youtubeで開く
-        redirectModeMsg: ビデオをクリックすると、Youtubeの視聴ページに移動します
-        resetAllSettings: すべての設定/データをリセット
-        title: 設定
-        useEnglishNameLabel: 英語名を使用する
-        useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
+  channels:
+    channelType:
+      subber: 切り抜きチャンネル
+      vtuber: Vtuber
+    favoritesAreEmpty: お気に入りにはまだなにも登録されていません！
+    sortOptions:
+      clipCount: 切り抜き数
+      group: グループ
+      recentUpload: 最近の投稿
+      subscribers: 登録者数
+      videoCount: 動画数
+    tabs:
+      Favorites: お気に入り
+      Subber: 切り抜きチャンネル
+      Vtuber: Vtuber
+  home:
+    liveOrUpcomingHeading: 配信中/配信予定
+    recentVideoToggles:
+      all: すべて
+      official: 公式
+      subber: 切り抜き
+    recentVideosHeading: 最近の動画
+  library:
+    createYtPlaylistButton: "Youtubeのプレイリストを作成（{0}）"
+    deleteConfirmation: "{0}本当に動画を削除しますか？"
+    deleteConfirmationCancel: キャンセル
+    deleteConfirmationOK: 削除
+    deleteFromLibraryButton: "削除（{0}）"
+    emptyLibrary: 保存されたビデオはありません！
+    savedVideosTitle: 保存したビデオ
+    selectionReset: リセット
+    selectionSelectAll: すべて選択
+  notFound:
+    back: 戻る
+    title: コンテンツが見つかりません
+  search:
+    sort:
+      newest: 新しい順
+      oldest: 古い順
+    type:
+      all: すべて
+      clip: クリップ
+      official: 公式
+    unsupportedQuery: "現在 <kbd>トピック</kbd>と<kbd>組織</kbd>での検索はサポートされていません。検索結果の<b>クリップ</b>は表示されません。"
+  settings:
+    darkModeLabel: ダークモード
+    darkModeMsg: ライトモードとダークモードを変更します
+    hideVideoThumbnailsLabel: サムネイルを非表示にする
+    hideVideoThumbnailsMsg: 動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
+    pushNotificationLabel: プッシュ通知（準備中）
+    pushNotificationMsg: お気に入りのチャンネルのプッシュ通知を有効にする
+    redirectModeLabel: Youtubeで開く
+    redirectModeMsg: ビデオをクリックすると、Youtubeの視聴ページに移動します
+    resetAllSettings: すべての設定/データをリセット
+    title: 設定
+    useEnglishNameLabel: 英語名を使用する
+    useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
+    clipLanguageSelection: "以下の言語の切り抜きを表示:"
+  about:
+    add_my_channel: "チャンネルをHolodexに登録"
+  app:
+    check_about_page: "Aboutページで更新内容を確認可能です"
+    close_btn: "閉じる"
+    update_available: "ページの更新を利用可能です"
+    update_btn: "アップデート"
+    loginCallToAction: "お気に入りを利用するにはログインしてください!"
+    nowSupportsMultiOrg: "Holodexで他箱のライバーを視聴可能になりました!"
+  watch:
+    saveToLibrary: "ライブラリに保存"
+    theaterMode: "シアターモード"
+  favorites:
+    promptForAction: "お気に入りのライバーリストを作るとそのページでお気に入りライバーの最新動画を確認できます。"
+time:
+  diff_future_date: "{0}に開始 ({1})"
+  distance_past_date: "{0}"
+  soon: "まもなく開始"

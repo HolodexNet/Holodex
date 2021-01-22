@@ -38,30 +38,23 @@
                 </v-menu>
 
                 <!-- Toggle of Card or Row view -->
-                <v-btn icon @click="cardView = !cardView">
+                <!-- <v-btn icon @click="cardView = !cardView">
                     <v-icon>
                         {{ cardView ? mdiViewModule : mdiViewList }}
                     </v-icon>
-                </v-btn>
+                </v-btn> -->
             </v-list>
             <ChannelList
-                :channels="channels"
+                :channels="category === Tabs.FAVORITES ? sortedFavorites : channels"
                 includeVideoCount
-                :includeGroupHeader="sort === 'group'"
+                :grouped="sort === 'group'"
                 :cardView="cardView"
+                :key="`channel-list-${category}`"
             />
-            <infinite-loading @infinite="loadData" style="min-height: 10px" :identifier="infiniteId" spinner="spiral">
-                <template v-slot:no-more><span></span></template>
-                <template v-slot:error>
-                    <ApiErrorMessage />
-                </template>
-            </infinite-loading>
         </v-container>
+        <InfiniteLoad @infinite="load" :identifier="infiniteId" v-if="category !== Tabs.FAVORITES" />
         <!-- Favorites specific view items: -->
         <template v-if="category === Tabs.FAVORITES">
-            <div v-if="favorites.length > 0" class="text--secondary text-caption">
-                {{ $t("views.channels.favoriteLastUpdated", [lastUpdated]) }}
-            </div>
             <div v-if="!favorites || favorites.length === 0">
                 {{ $t("views.channels.favoritesAreEmpty") }}
             </div>
@@ -70,60 +63,65 @@
 </template>
 
 <script>
-import ChannelList from "@/components/ChannelList";
-import api from "@/utils/backend-api";
-import InfiniteLoading from "vue-infinite-loading";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import ApiErrorMessage from "@/components/ApiErrorMessage";
-import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
+import ChannelList from "@/components/channel/ChannelList";
+// import InfiniteLoading from "vue-infinite-loading";
+import ApiErrorMessage from "@/components/common/ApiErrorMessage";
+import InfiniteLoad from "@/components/common/InfiniteLoad";
 
-dayjs.extend(relativeTime);
+import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
+import { mapState } from "vuex";
+import { localSortChannels } from "@/utils/functions";
 
 export default {
     name: "Channels",
-    metaInfo: {
-        title: "Channels",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.channels")} - Holodex`;
+            },
+        };
     },
     components: {
         ChannelList,
-        InfiniteLoading,
+        // InfiniteLoading,
         ApiErrorMessage,
+        InfiniteLoad,
     },
     data() {
         return {
             ...{ mdiArrowDown, mdiViewList, mdiViewModule },
-            channels: [],
-            // category: 0,
-            currentOffset: 0,
-            perPage: 25,
+            // perPage: 25,
             infiniteId: +new Date(),
+            // freeze object to stop Vue from creating watchers (small optimization)
+            Tabs: Object.freeze({
+                SUBBER: 1,
+                VTUBER: 0,
+                FAVORITES: 2,
+            }),
+            defaultSort: "subscribers",
         };
     },
-    beforeCreate() {
-        // shorthand the translation
-        this.Tabs = {
-            SUBBER: 1,
-            VTUBER: 0,
-            FAVORITES: 2,
-        };
+    mounted() {
+        this.$store.commit("channels/resetState");
     },
     watch: {
         category() {
-            this.init();
+            this.resetChannels();
+            if (this.category === this.Tabs.FAVORITES) this.$store.dispatch("favorites/fetchFavorites");
         },
         sort() {
-            if (this.category === this.Tabs.SUBBER) this.init();
-            else this.localSortChannel();
+            if (this.category !== this.Tabs.FAVORITES) this.resetChannels();
         },
-        favorites() {
-            // update our `channel` whenever the favorites changes.
-            if (this.category === this.Tabs.FAVORITES) this.loadFavorites();
+        // eslint-disable-next-line func-names
+        "$store.state.currentOrg": function () {
+            this.resetChannels();
         },
     },
     computed: {
         sortOptions: {
             get() {
+                /* eslint-disable indent */
                 return [
                     {
                         text: this.$t("views.channels.sortOptions.subscribers"),
@@ -133,22 +131,18 @@ export default {
                             order: "desc",
                         },
                     },
-                    {
-                        text: this.$t("views.channels.sortOptions.group"),
-                        value: "group",
-                        query_value: {
-                            sort: "group",
-                            order: "asc",
-                        },
-                    },
-                    {
-                        text: this.$t("views.channels.sortOptions.recentUpload"),
-                        value: "recent_upload",
-                        query_value: {
-                            sort: "latest_published_at",
-                            order: "desc",
-                        },
-                    },
+                    ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
+                        ? [
+                              {
+                                  text: this.$t("views.channels.sortOptions.group"),
+                                  value: "group",
+                                  query_value: {
+                                      sort: "suborg",
+                                      order: "asc",
+                                  },
+                              },
+                          ]
+                        : []),
                     {
                         text: this.$t("views.channels.sortOptions.videoCount"),
                         value: "video_count",
@@ -157,129 +151,102 @@ export default {
                             order: "desc",
                         },
                     },
-                    {
-                        text: this.$t("views.channels.sortOptions.clipCount"),
-                        value: "clip_count",
-                        query_value: {
-                            sort: "clip_count",
-                            order: "desc",
-                        },
-                    },
+                    ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
+                        ? [
+                              {
+                                  text: this.$t("views.channels.sortOptions.clipCount"),
+                                  value: "clip_count",
+                                  query_value: {
+                                      sort: "clip_count",
+                                      order: "desc",
+                                  },
+                              },
+                          ]
+                        : []),
                 ];
+                /* eslint-enable indent */
             },
         },
-        favorites() {
-            return this.$store.state.favorites;
-        },
-        cachedChannels() {
-            return this.$store.state.cachedChannels;
-        },
-        lastUpdated() {
-            return dayjs(this.$store.state.cachedChannelsLastUpdated).toNow(true);
-        },
+        ...mapState("channels", ["channels", "isLoading", "hasError", "currentOffset"]),
+        ...mapState("favorites", ["favorites", "live"]),
         category: {
             get() {
-                return this.$store.state.channelsCategory;
+                return this.$store.state.channels.category;
             },
             set(val) {
-                return this.$store.commit("setChannelsCategory", val);
+                return this.$store.commit("channels/setCategory", val);
             },
         },
         sort: {
             get() {
-                return this.$store.state.channelsSort[this.category];
+                return this.$store.state.channels.sort[this.category];
             },
             set(val) {
-                return this.$store.commit("setChannelsSort", {
-                    category: this.category,
-                    value: val,
-                });
+                if (this.findSortValue(val)) {
+                    return this.$store.commit("channels/setSort", val);
+                }
+                return this.$store.commit("channels/setSort", this.defaultSort);
             },
         },
         cardView: {
             get() {
-                return this.$store.state.channelsCardView[this.category];
+                return this.$store.state.channels.cardView[this.category];
             },
             set(val) {
-                return this.$store.commit("setChannelsCardView", {
-                    category: this.category,
-                    value: val,
-                });
+                return this.$store.commit("channels/setCardView", val);
             },
         },
         currentSortValue() {
-            return this.findSortValue(this.sort);
+            return this.findSortValue(this.sort) || this.findSortValue(this.defaultSort);
+        },
+        sortedFavorites() {
+            return localSortChannels(this.$store.state.favorites.favorites, this.currentSortValue.query_value);
         },
     },
     methods: {
-        init() {
-            this.channels = [];
-            this.currentOffset = 0;
-            this.infiniteId += 1;
-            // if (this.category == this.Tabs.FAVORITES) {
-            //     this.loadFavorites();
-            // }
-        },
-        loadData($state) {
-            // load favorites directly from storage
-            if (this.category === this.Tabs.FAVORITES) {
-                this.loadFavorites();
-                $state.loaded();
-                $state.complete();
-                return;
-            }
-
-            api.channels({
-                limit: this.category === this.Tabs.SUBBER ? this.perPage : 100,
-                offset: this.currentOffset * this.perPage,
-                type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
-                ...(this.category === this.Tabs.SUBBER && {
+        load($state) {
+            const lastLength = this.channels.length;
+            this.$store
+                .dispatch("channels/fetchNextChannels", {
+                    type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
                     ...this.currentSortValue.query_value,
-                }),
-            })
-                .then((res) => {
-                    if (res.data.channels.length) {
-                        this.channels.push(...res.data.channels);
-                        if (this.category === this.Tabs.VTUBER) {
-                            // update channel cache when fresh data is pulled
-                            res.data.channels.map((channelObj) => this.$store.commit("addCachedChannel", channelObj));
-                            this.localSortChannel();
-
-                            // vtubers are loaded all at once, so inifinite scrolling should do nothing
-                            $state.complete();
-                        }
-                        this.currentOffset += 1;
+                })
+                .then(() => {
+                    if (this.channels.length !== lastLength) {
+                        $state.loaded();
+                    } else {
+                        $state.completed();
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                    $state.error();
+                });
+        },
+        // changing category also changes sort, which will cause this to trigger twice
+        // eslint-disable-next-line func-names
+        resetChannels() {
+            this.infiniteId = +new Date();
+            this.$store.commit("channels/resetChannels");
+        },
+        loadNext($state) {
+            const lastLength = this.channels.length;
+            this.$store
+                .dispatch("channels/fetchNextChannels", {
+                    type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
+                    ...this.currentSortValue.query_value,
+                })
+                .then(() => {
+                    if (this.channels.length !== lastLength) {
                         $state.loaded();
                     } else {
                         $state.complete();
                     }
                 })
                 .catch((e) => {
-                    console.log(e);
+                    console.error(e);
                     $state.error();
                 });
-        },
-        async loadFavorites() {
-            // check if any channels missing from favorites and update the cache
-            await this.$store.dispatch("checkChannelCache");
-            this.channels = this.favorites.map((channelId) => this.cachedChannels[channelId]);
-            this.localSortChannel();
-        },
-        localSortChannel() {
-            const sortProp = this.currentSortValue.query_value;
-            if (!sortProp) return;
-            this.channels.sort((a, b) => {
-                if (sortProp.sort === "latest_published_at") {
-                    const dateA = new Date(a[sortProp.sort]).getTime();
-                    const dateB = new Date(b[sortProp.sort]).getTime();
-                    return dateA > dateB ? 1 : -1;
-                }
-                if (sortProp.sort === "video_count") {
-                    return parseInt(a[sortProp.sort], 10) > parseInt(b[sortProp.sort], 10) ? 1 : -1;
-                }
-                return a[sortProp.sort] > b[sortProp.sort] ? 1 : -1;
-            });
-            if (sortProp.order === "desc") this.channels.reverse();
         },
         findSortValue(sort) {
             return this.sortOptions.find((opt) => opt.value === sort);

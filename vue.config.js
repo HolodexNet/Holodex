@@ -1,4 +1,22 @@
 module.exports = {
+    chainWebpack: (config) => {
+        if (process.env.STORYBOOK && process.env.STORYBOOK.trim() === "true") {
+            console.info("info => Updating webpack using chain-webpack");
+            config.module
+                .rule("addon-storysource")
+                .enforce()
+                .pre()
+                .test(/\.stories\.jsx?$/)
+                .use("@storybook/addon-storysource/loader")
+                .loader("@storybook/addon-storysource/loader")
+                .options({
+                    semi: false,
+                    printWidth: 120,
+                    singleQuote: true,
+                })
+                .end();
+        }
+    },
     css: {
         extract: { ignoreOrder: true },
     },
@@ -14,6 +32,7 @@ module.exports = {
         msTileColor: "#42a5f5",
         appleMobileWebAppCapable: "yes",
         appleMobileWebAppStatusBarStyle: "#42a5f5",
+        scope: "/",
         workboxOptions: {
             runtimeCaching: [
                 {
@@ -37,6 +56,20 @@ module.exports = {
                         expiration: {
                             maxAgeSeconds: 86400,
                             purgeOnQuotaError: true,
+                        },
+                        cacheableResponse: {
+                            statuses: [0, 200],
+                        },
+                    },
+                },
+                {
+                    urlPattern: new RegExp("https://www.youtube.com/player_api"),
+                    handler: "cacheFirst",
+                    options: {
+                        cacheName: "youtube-player",
+                        expiration: {
+                            maxAgeSeconds: 10800,
+                            maxEntries: 1,
                         },
                         cacheableResponse: {
                             statuses: [0, 200],

@@ -1,16 +1,16 @@
 <template>
-    <v-container fluid style="height: 100%">
-        <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
-        <template v-if="favorites.length > 0">
+    <v-container class="home pt-0" fluid>
+        <template v-if="isLoggedIn && favorites.length > 0">
+            <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
             <v-row v-show="!isLoading && !hasError">
-                <v-col class="px-lg-10">
-                    <v-row class="d-flex justify-space-between pa-1">
+                <v-col>
+                    <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
                         <div class="text-h6">
                             {{ $t("views.home.liveOrUpcomingHeading") }}
                         </div>
                     </v-row>
                     <VideoCardList
-                        :videos="filteredLiveVideos"
+                        :videos="live"
                         includeChannel
                         includeAvatar
                         :cols="{
@@ -23,43 +23,49 @@
                         :limitRows="2"
                     >
                     </VideoCardList>
-                    <v-row v-if="!filteredLiveVideos.length && !hasError">
-                        <v-col class="ma-auto text-center pa-8">
-                            No one is streaming soon in your favorites. Please check out the other vtubers!
-                        </v-col>
-                    </v-row>
-                    <v-divider class="my-5" />
-                    <v-row class="d-flex justify-space-between pa-1">
+                    <v-divider class="my-3" />
+                    <v-row class="d-flex justify-space-between px-3 pt-1 pb-3">
                         <div class="text-h6">
                             {{ $t("views.home.recentVideosHeading") }}
                         </div>
-                        <v-btn-toggle v-model="favoritesVideoFilter" mandatory dense>
+                        <v-btn-toggle v-model="recentVideoFilter" mandatory dense>
                             <v-btn value="all">
                                 {{ $t("views.home.recentVideoToggles.all") }}
                             </v-btn>
-                            <v-btn value="vtuber">
+                            <v-btn value="stream">
                                 {{ $t("views.home.recentVideoToggles.official") }}
                             </v-btn>
-                            <v-btn value="subber">
+                            <v-btn value="clip">
                                 {{ $t("views.home.recentVideoToggles.subber") }}
                             </v-btn>
                         </v-btn-toggle>
                     </v-row>
-                    <FavoritesVideoList :videoLists="filteredByChannelType" />
-                    <div class="text-center" @click="loadNext">
-                        <v-btn class="ma-auto" outlined color="primary"> Load Next </v-btn>
-                    </div>
+                    <VideoCardList
+                        :videos="videos"
+                        includeChannel
+                        infiniteLoad
+                        @infinite="loadNext"
+                        :infiniteId="infiniteId"
+                        style="min-height: 100px"
+                        :cols="{
+                            xs: 1,
+                            sm: 3,
+                            md: 4,
+                            lg: 6,
+                            xl: 7,
+                        }"
+                    ></VideoCardList>
                 </v-col>
             </v-row>
         </template>
         <template v-else>
             <v-row style="min-height: 50%">
                 <v-col class="d-flex align-center justify-center flex-column">
-                    <v-icon color="primary" large>{{ mdiHeart }}</v-icon>
-                    <div class="text-body-1 text-center">
-                        Create a list of favorite vtubers to their latest clips and lives on this page.
-                    </div>
-                    <v-btn to="/channel"> Manage Favorites</v-btn>
+                    <v-icon color="primary" large>{{ icons.mdiHeart }}</v-icon>
+                    <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
+                    <v-btn :to="isLoggedIn ? '/channel' : '/login'">
+                        {{ isLoggedIn ? "Manage Favorites" : "Log In" }}
+                    </v-btn>
                 </v-col>
             </v-row>
         </template>
@@ -67,124 +73,87 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/VideoCardList.vue";
-import FavoritesVideoList from "@/components/FavoritesVideoList.vue";
-import LoadingOverlay from "@/components/LoadingOverlay.vue";
-import api from "@/utils/backend-api";
-import dayjs from "dayjs";
-import { mdiHeart } from "@mdi/js";
-import utc from "dayjs/plugin/utc";
-
-dayjs.extend(utc);
+import VideoCardList from "@/components/video/VideoCardList";
+import LoadingOverlay from "@/components/common/LoadingOverlay";
+// eslint-disable-next-line no-unused-vars
+import * as icons from "@/utils/icons";
+import { mapState } from "vuex";
 
 export default {
     name: "Favorites",
-    metaInfo: {
-        title: "Favorites",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.favorites")} - Holodex`;
+            },
+        };
     },
     components: {
         VideoCardList,
-        FavoritesVideoList,
         LoadingOverlay,
     },
     data() {
         return {
-            // TODO: smaller pagelength with mobile/diff breakpoints
-            filteredVideoLists: [],
-            daysBefore: 0,
-            hasError: false,
-            isLoading: true,
-            mdiHeart,
-            shouldRenderNext: false,
+            icons,
+            infiniteId: +new Date(),
         };
     },
     mounted() {
-        Promise.all([this.$store.dispatch("tryUpdatingLive", { forced: true }), this.loadFavorites()]).finally(() => {
-            this.isLoading = false;
-        });
+        this.init();
+    },
+    watch: {
+        recentVideoFilter() {
+            this.resetVideos();
+        },
     },
     computed: {
-        favorites() {
-            return this.$store.state.favorites;
-        },
-        filteredLiveVideos() {
-            return this.$store.state.live.filter(
-                (live) =>
-                    this.favorites.includes(live.channel.id) ||
-                    live.channel_mentions.filter((channel) => this.favorites.includes(channel.id)).length > 0,
-            );
-        },
-        filteredByChannelType() {
-            if (this.favoritesVideoFilter === "all") {
-                return this.filteredVideoLists;
-            }
-            return this.filteredVideoLists.map((videoList) => {
-                return {
-                    title: videoList.title,
-                    videos: videoList.videos.filter((video) =>
-                        this.favoritesVideoFilter === "vtuber" ? video.channel.id < 1000 : video.channel.id > 1000,
-                    ),
-                };
-            });
-        },
-        favoritesVideoFilter: {
+        ...mapState("favorites", ["favorites", "live", "videos", "isLoading", "hasError", "currentOffset"]),
+        recentVideoFilter: {
             get() {
-                return this.$store.state.favoritesVideoFilter;
+                return this.$store.state.favorites.recentVideoFilter;
             },
-            set(val) {
-                return this.$store.commit("setFavoritesVideoFilter", val);
+            set(value) {
+                this.$store.commit("favorites/setRecentVideoFilter", value);
             },
+        },
+        pageLength() {
+            return 24;
+        },
+        isLoggedIn() {
+            return this.$store.getters.isLoggedIn;
         },
     },
     methods: {
-        loadNext() {
-            this.daysBefore += 1;
-            this.loadFavorites();
-        },
-        loadFavorites(clear = false) {
-            const targetDate = dayjs().subtract(this.daysBefore, "d");
-            if (clear) this.filteredVideoLists = [];
-            return api
-                .videos({
-                    limit: 100,
-                    include_channel: 1,
-                    status: "past",
-                    tag_status: "tagged",
-                    start_date: targetDate.startOf("day").utc().toISOString(),
-                    end_date: targetDate.endOf("day").utc().toISOString(),
-                    sort: "published_at",
-                    order: "desc",
-                })
-                .then((res) => {
-                    if (res.data.videos.length) {
-                        this.filteredVideoLists.push({
-                            title: this.formatDayTitle(this.daysBefore),
-                            videos: this.filterByFavorites(res.data.videos),
-                        });
-                        // TODO: If there is more than 100 videos in a day, then we need to query the api again.
-                        // if (res.data.videos.length > 100)
-                        //     console.log("too many videos");
-                    }
-                    // if less than 50 videos uploaded today, then grab yesterday's
-                    if (res.data.videos.length < 50 && this.daysBefore < 3) {
-                        this.loadNext();
-                    }
-                });
-        },
-        // check if video is posted by favorited channel or mentioned in the video
-        filterByFavorites(videos) {
-            return videos.filter((video) => {
-                return (
-                    this.favorites.includes(video.channel.id) ||
-                    video.channel_mentions.filter((channel) => this.favorites.includes(channel.id)).length > 0
-                );
-            });
-        },
-        formatDayTitle(daysAgo) {
-            if (daysAgo < 2) {
-                return daysAgo === 0 ? "Today" : "Yesterday";
+        init() {
+            if (this.favorites.length > 0 && this.isLoggedIn) {
+                this.$store.dispatch("favorites/resetState");
+                this.resetVideos();
+                this.$store.dispatch("favorites/fetchLive");
+                this.infiniteId = +new Date();
             }
-            return `${daysAgo} days ago`;
+        },
+        resetVideos() {
+            this.$store.commit("favorites/resetVideos");
+            this.infiniteId = +new Date();
+        },
+        loadNext($state) {
+            const lastLength = this.videos.length;
+            this.$store
+                .dispatch("favorites/fetchNextVideos", {
+                    limit: this.pageLength,
+                })
+                .then(() => {
+                    if (this.videos.length !== lastLength) {
+                        $state?.loaded();
+                    } else {
+                        $state?.complete();
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                    $state?.error();
+                });
         },
     },
 };

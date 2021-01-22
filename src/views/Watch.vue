@@ -1,251 +1,206 @@
 <template>
-    <v-container fluid v-if="!isLoading && !showError">
-        <v-row class="align-start">
-            <v-col class="pa-0 pa-lg-3">
-                <v-card class="watch-card">
-                    <div class="embedded-video" v-if="!redirectMode && video_src">
-                        <iframe :src="video_src" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="thumbnail" v-else>
-                        <v-img :aspect-ratio="16 / 9" :src="thumbnail_src" />
-                        <div class="thumbnail-overlay d-flex">
-                            <div class="text-h4 ma-auto">
-                                <a :href="`https://youtu.be/${video.yt_video_key}`"> Open on Youtube </a>
-                            </div>
-                        </div>
-                    </div>
-                    <v-card-title>{{ title }}</v-card-title>
-                    <v-card-subtitle>
-                        {{ formatTime(video.published_at) }}
-                    </v-card-subtitle>
-                    <v-divider />
-                    <v-list two-line>
-                        <v-list-item>
-                            <v-list-item-avatar size="50">
-                                <ChannelImg :channel="video.channel" />
-                            </v-list-item-avatar>
-                            <ChannelInfo :channel="video.channel" />
-                            <ChannelSocials :channel="video.channel" />
-                        </v-list-item>
-                    </v-list>
-                    <v-card-text class="py-2">
-                        <ChannelChip
-                            v-for="channel in channel_chips"
-                            :channel="channel"
-                            :key="channel.id"
-                            class="ma-1"
-                        ></ChannelChip>
-                        <v-chip
-                            v-for="tag in tags.filter((t) => !t.channel_ref)"
-                            label
-                            link
-                            :key="tag.id"
-                            style="margin-right: 5px"
-                            :to="`/search?tags=${tag.name}`"
+    <v-container fluid v-if="!isLoading && !hasError">
+        <v-alert dense text type="info" dismissible v-model="firstVisitMugen" v-if="isMugen">
+            Welcome to MugenClips! Everyone on this page is seeing the same randomly selected English Hololive clip.
+            Watch along and chat with Hololive fans from across the world. If you skip ahead and want to be re-sync'd
+            with everyone, please refresh the page
+        </v-alert>
+        <v-row>
+            <v-col :lg="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3">
+                <WatchFrame :video="video" v-if="video.id">
+                    <template v-slot:youtube>
+                        <youtube
+                            class="embedded-video"
+                            :video-id="video.id"
+                            @ready="ready"
+                            :playerVars="{ ...(timeOffset && { start: timeOffset }), autoplay: 1, playsinline: 1 }"
                         >
-                            {{ `#${tag.name} (${tag.count})` }}
-                        </v-chip>
-                    </v-card-text>
-                    <VideoDescription :description="video.description"></VideoDescription>
+                        </youtube>
+                    </template>
+                    <template v-slot:buttons>
+                        <v-tooltip bottom v-if="!$store.state.isMobile">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    icon
+                                    lg
+                                    @click="theatherMode = !theatherMode"
+                                    :color="theatherMode ? 'primary' : 'white'"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    <v-icon>{{ mdiRectangleOutline }}</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>{{ $t("views.watch.theaterMode") }}</span>
+                        </v-tooltip>
+                    </template>
+                </WatchFrame>
+                <template v-if="!theatherMode">
+                    <WatchInfo :video="video" key="info" />
                     <v-divider />
-                </v-card>
+                    <WatchComments
+                        :comments="comments"
+                        :video="video"
+                        :limit="$store.state.isMobile ? 5 : 0"
+                        @timeJump="seekTo"
+                        key="comments"
+                        v-if="comments.length"
+                    />
+                </template>
             </v-col>
-            <v-col cols="12" sm="12" lg="3" xl="3" md="12" class="related-videos pa-1">
-                <div class="embedded-chat" v-if="hasLiveChat & !hideLiveChat">
-                    <iframe :src="live_chat_src" frameborder="0" />
-                </div>
-                <div class="text-end pa-1 text-caption" v-if="hasLiveChat">
-                    <a @click="hideLiveChat = !hideLiveChat"> {{ hideLiveChat ? "Show" : "Hide" }} Live Chat </a>
-                </div>
-                <div class="text-subtitle-2 ma-2" v-if="video_clips.length > 0">Clips</div>
-                <VideoCardList
-                    :videos="video_clips"
-                    horizontal
-                    includeChannel
-                    :cols="{
-                        lg: 12,
-                        md: 12,
-                        cols: 12,
-                        sm: 12,
-                    }"
-                />
-                <v-divider />
-                <div class="text-subtitle-2 ma-2" v-if="video_sources.length > 0">Related</div>
-                <VideoCardList
-                    :videos="video_sources"
-                    horizontal
-                    includeChannel
-                    :cols="{
-                        lg: 12,
-                        md: 4,
-                        cols: 12,
-                        sm: 6,
-                    }"
-                />
-                <div v-if="video_sources.length + video_clips.length === 0" style="text-align: center" class="pa-2">
-                    No clips or related video yet
-                </div>
+            <v-col class="related-videos pt-0" :lg="theatherMode ? 12 : 3">
+                <v-row fluid>
+                    <v-col v-if="theatherMode" lg="9" class="pt-0">
+                        <WatchInfo :video="video" key="info" />
+                        <v-divider />
+                        <WatchComments
+                            :comments="comments"
+                            :video="video"
+                            :limit="$store.state.isMobile ? 5 : 0"
+                            @timeJump="seekTo"
+                            key="comments"
+                            v-if="comments.length"
+                        />
+                    </v-col>
+                    <v-col cols="12" :lg="theatherMode ? 3 : 12" class="pa-0 pr-lg-3">
+                        <WatchLiveChat v-if="hasLiveChat" :video="video" :mugenId="isMugen && '4ANxvWIM3Bs'" />
+                        <WatchMugen @playNext="playNext" v-if="isMugen" />
+                        <WatchRelatedVideos :related="related" />
+                    </v-col>
+                </v-row>
             </v-col>
         </v-row>
     </v-container>
-    <LoadingOverlay :isLoading="isLoading" :showError="showError" v-else />
+    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
 </template>
 
 <script>
-import api from "@/utils/backend-api";
-import VideoCardList from "@/components/VideoCardList";
-import ChannelChip from "@/components/ChannelChip";
-import dayjs from "dayjs";
-import ChannelInfo from "@/components/ChannelInfo";
-import ChannelSocials from "@/components/ChannelSocials";
-import ChannelImg from "@/components/ChannelImg";
-import LoadingOverlay from "@/components/LoadingOverlay";
-import VideoDescription from "@/components/VideoDescription";
-
-import { getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
+import LoadingOverlay from "@/components/common/LoadingOverlay";
+import WatchInfo from "@/components/watch/WatchInfo";
+import WatchFrame from "@/components/watch/WatchFrame";
+import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
+import WatchLiveChat from "@/components/watch/WatchLiveChat";
+import WatchComments from "@/components/watch/WatchComments";
+import { decodeHTMLEntities } from "@/utils/functions";
+import { mapState } from "vuex";
+import { mdiOpenInNew, mdiRectangleOutline } from "@mdi/js";
+import * as icons from "@/utils/icons";
+// import api from "@/utils/backend-api";
 
 export default {
     name: "Watch",
     metaInfo() {
         return {
-            title: this.video.title,
-            meta: [
-                {
-                    vmid: "description",
-                    name: "description",
-                    property: "og:description",
-                    content: this.metaDescription,
-                },
-                {
-                    vmid: "image",
-                    name: "image",
-                    content: this.metaImage,
-                },
-                {
-                    vmid: "url",
-                    property: "og:url",
-                    content: `https://holodex.net/channel/${this.channel_id}`,
-                },
-            ],
+            title: this.title,
         };
     },
     components: {
-        VideoCardList,
-        ChannelChip,
-        ChannelInfo,
-        VideoDescription,
-        ChannelSocials,
-        ChannelImg,
-        // NotFound: () => import("@/views/NotFound"),
         LoadingOverlay,
+        WatchInfo,
+        WatchFrame,
+        WatchLiveChat,
+        // ChannelChip,
+        WatchRelatedVideos,
+        WatchComments,
+        // VideoTopic,
+        WatchMugen: () => import("@/components/watch/WatchMugen"),
     },
     data() {
         return {
-            isLoading: true,
-            showError: false,
-            video: {},
-            video_clips: [],
-            video_sources: [],
-            channel_mentions: [],
-            tags: [],
-            video_src: "",
-            live_chat_src: "",
-            hideLiveChat: false,
+            theatherMode: false,
+            startTime: 0,
+            mdiOpenInNew,
+            mdiRectangleOutline,
+            icons,
         };
     },
-    created() {
-        this.loadData(this.$route.params.id);
+    mounted() {
+        this.init();
     },
     methods: {
-        loadData(id) {
-            // destroy iframe and recreate it so it doesn't break history mode
-            this.video_src = "";
-            this.isLoading = true;
-            api.video(id)
-                .then((res) => {
-                    if (res.data) {
-                        this.video_clips = res.data.clips;
-                        this.video_sources = res.data.sources;
-                        this.channel_mentions = res.data.channel_mentions;
-                        this.tags = res.data.tags;
-                        this.video = res.data;
-                        this.video_src = `https://www.youtube.com/embed/${this.video.yt_video_key}?autoplay=1&rel=0&widget_referrer=${window.location.hostname}`;
-                        this.live_chat_src = `https://www.youtube.com/live_chat?v=${this.video.yt_video_key}&embed_domain=${window.location.hostname}&dark_theme=1`;
-                        if (!this.hasWatched) this.setWatched();
-                    }
-                })
-                .catch((e) => {
-                    console.log(e);
-                    this.showError = true;
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                });
+        init() {
+            this.startTime = 0;
+            if (this.isMugen) {
+                this.initMugen();
+                return;
+            }
+            this.$store.commit("watch/resetState");
+            this.$store.commit("watch/setId", this.videoId);
+            this.$store.dispatch("watch/fetchVideo").then(() => {
+                if (!this.hasWatched && this.videoId) this.$store.commit("library/addWatchedVideo", this.video);
+                // double check video type before querying for comments
+                if (this.video.type === "stream") {
+                    this.$store.dispatch("watch/fetchComments");
+                }
+            });
         },
-        formatTime(t) {
-            return dayjs(t).format("MMM DD, YYYY");
+        initMugen() {
+            this.$store.commit("watch/resetState");
+            this.$store.commit("watch/fetchEnd");
         },
-        setWatched() {
-            this.$store.commit("addWatchedVideo", this.video);
+        ready(event) {
+            this.player = event.target;
+        },
+        seekTo(time) {
+            if (!this.player) return;
+            this.player.seekTo(time);
+        },
+        playNext({ video, timeOffset }) {
+            this.$store.commit("watch/setVideo", video);
+            this.startTime = timeOffset;
         },
     },
     computed: {
+        ...mapState("watch", ["video", "comments", "isLoading", "hasError"]),
+        related() {
+            return {
+                simulcasts: this.video.simulcasts || [],
+                clips:
+                    (this.video.clips &&
+                        this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang))) ||
+                    [],
+                sources: this.video.sources || [],
+                refers: this.video.refers || [],
+            };
+        },
+        videoId() {
+            return this.$route.params.id || this.$route.query.v;
+        },
+        timeOffset() {
+            return +this.$route.query.t || this.startTime;
+        },
         title() {
-            return decodeHTMLEntities(this.video.title);
-        },
-        channel_chips() {
-            const allMentions = new Map();
-            this.channel_mentions
-                .concat(this.video_sources.map((video) => video.channel))
-                .filter((channel) => channel.id !== this.video.channel_id)
-                .forEach((channel) =>
-                    allMentions.set(channel.id, {
-                        id: channel.id,
-                        name: channel.name,
-                        name_en: channel.name_en,
-                        photo: channel.photo,
-                    }),
-                );
-            return Array.from(allMentions.values());
-        },
-        redirectMode() {
-            return this.$store.state.redirectMode;
-        },
-        thumbnail_src() {
-            return getVideoThumbnails(this.video.yt_video_key).medium;
-        },
-        isXs() {
-            return this.$vuetify.breakpoint.name === "xs";
+            return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
         },
         hasLiveChat() {
             return (
-                (this.video.status === "live" || this.video.status === "upcoming") &&
-                !this.redirectMode &&
-                this.video_src &&
-                !this.isXs
+                this.isMugen ||
+                ((this.video.status === "live" || this.video.status === "upcoming") && !this.redirectMode)
             );
         },
         hasWatched() {
-            if (!this.video) return false;
-            return this.$store.getters.hasWatched(this.video.id);
+            return this.$store.getters["library/hasWatched"](this.video.id);
         },
-        metaDescription() {
-            if (!this.video.description) return undefined;
-            return this.video.description.substr(0, 100);
+        isMugen() {
+            return this.$route.name === "mugen-clips";
         },
-        metaTitle() {
-            if (!this.video.title) return undefined;
-            return this.video.title;
-        },
-        metaImage() {
-            if (!this.video.yt_video_key) return undefined;
-            return getVideoThumbnails(this.video.yt_video_key).maxres;
+        firstVisitMugen: {
+            get() {
+                return this.$store.state.firstVisitMugen;
+            },
+            set() {
+                return this.$store.commit("setVisitedMugen");
+            },
         },
     },
     watch: {
         // eslint-disable-next-line func-names
-        "$route.params.id": function (val) {
-            this.loadData(val);
+        "$route.params.id": function () {
+            this.init();
+        },
+        // eslint-disable-next-line func-names
+        "$route.query.v": function () {
+            this.init();
         },
     },
 };
@@ -255,13 +210,7 @@ export default {
 /* maintains 16:9 aspect ratio */
 .embedded-video {
     position: relative;
-    padding-bottom: 56.25%;
-}
-
-.embedded-video > iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    padding-bottom: min(56.25%, calc(100vh - 220px));
 }
 
 .embedded-video > iframe {
@@ -297,10 +246,17 @@ export default {
 .thumbnail {
     position: relative;
 }
-
-@media screen and (min-width: 600px) {
-    .related-videos {
-        min-width: 350px;
-    }
+.watch-btn-group > .v-btn {
+    margin-right: 5px;
 }
+
+.watch-chips > * {
+    margin: 2.5px;
+}
+
+/* @media screen and (min-width: 600px) {
+    .related-videos {
+        min-width: 20px;
+    }
+} */
 </style>

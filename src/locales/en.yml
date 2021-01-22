@@ -1,91 +1,148 @@
 hello: world
-example: fill me in with {0} or {1} parameters
+example: "fill me in with {0} or {1} parameters"
 example2: "{0} text starting with a param needs to be quoted in quotes"
 component:
-    apiError:
-        title: Gomenasorry!
-        textBeforeTwitter: "There was an error retrieving content, please check twitter "
-        textAfterTwitter: " or report an error through the"
-        aboutPage: About page
-    channelList:
-        otherText: Other
-        #Other here is for the "other" group vs Hololive or Nijisanji etc.
-    channelInfo:
-        videoCount: "{0} Videos"
-        clipCount: "{n} Clips"
-        subscriberCount: "{n} Subscribers"
-        subscriberNA: Subscriber count unavailable
-    channelSocials:
-        addToFavorites: Add to Favorites
-        removeFromFavorites: Remove from Favorites
-    mainNav:
-        home: Home
-        favorites: Favorites
-        channels: Channels
-        about: About
-        library: Library
-        settings: Settings
-    videoCard:
-        clips: "{n} Clips"
-        watching: "{0} Watching"
-        liveNow: Live Now
-    videoDescription:
-        description: Description
+  apiError:
+    title: Gomenasorry!
+    textBeforeTwitter: "There was an error retrieving content, please check twitter "
+    textAfterTwitter: " or report an error through the"
+    aboutPage: About page
+  channelList:
+    otherText: Other
+    signInToFavorite: Sign in to favorite
+    unfavoriteAllInGroup: Unfavorite all in group
+    favoriteAllInGroup: Favorite all in group
+  channelInfo:
+    videoCount: "{0} Videos"
+    clipCount: "{n} Clips"
+    subscriberCount: "{n} Subscribers"
+    subscriberNA: Subscriber count unavailable
+    totalViews: Total Views
+  channelSocials:
+    addToFavorites: Add to Favorites
+    removeFromFavorites: Remove from Favorites
+  mainNav:
+    home: Home
+    favorites: Favorites
+    channels: Channels
+    about: About
+    library: Library
+    settings: Settings
+    login: Login
+    logout: Logout
+    MugenClips: MugenClips<sup>beta</sup>
+  videoCard:
+    clips: "{n} Clips"
+    watching: "{0} Watching"
+    liveNow: Live Now
+  videoDescription:
+    description: Description
+  video:
+    comment:
+      openOnYoutube: open comment on
+      openOnYoutubeAfter: ""
+  description:
+    showLess: Show Less
+    showMore: Show More
+  watch:
+    streamingFor: "Streaming for {0}"
+    nextUpInMugen: Next Up
+  search:
+    searchLabel: Search
+    type:
+      channel: channel
+      topic: topic
+      org: org
+      titledesc: title & disc
+      comments: comments
+  relatedVideo:
+    clipsLabel: clips
+    simulcastsLabel: simulcasts
+    refersLabel: refers
+    sourcesLabel: sources
 views:
-    channels:
-        channelType:
-            subber: subber
-            vtuber: vtuber
-        sortOptions:
-            subscribers: Subscribers
-            group: Group
-            recentUpload: Recent Upload
-            videoCount: Video Count
-            clipCount: Clip Count
-        tabs:
-            Vtuber: Vtuber
-            Subber: Subber
-            Favorites: Favorites
-        favoriteLastUpdated: "Last Updated {0} ago"
-        favoritesAreEmpty: You have no favorites!
-    home:
-        liveOrUpcomingHeading: Live / Upcoming
-        recentVideosHeading: Recent Videos
-        recentVideoToggles:
-            all: All
-            official: Official
-            subber: Clips
-    library:
-        savedVideosTitle: Saved Videos
-        createYtPlaylistButton: "Create YT Playlist ({0})"
-        deleteFromLibraryButton: "Delete ({0})"
-        deleteConfirmation: "Are you sure you want to delete {0} videos?"
-        deleteConfirmationOK: "Delete"
-        deleteConfirmationCancel: "Cancel"
-        selectionReset: "Reset"
-        selectionSelectAll: "Select All"
-        emptyLibrary: You have no saved videos!
-    notFound:
-        title: Content not found
-        back: Return Home
-    search:
-        sort:
-            newest: Newest
-            oldest: Oldest
-        type:
-            all: All
-            official: Official
-            clip: Clip
-    settings:
-        title: Settings
-        darkModeLabel: Dark Mode
-        darkModeMsg: Changes the theme between light mode and dark mode
-        redirectModeLabel: Open on Youtube
-        redirectModeMsg: Clicking on any video will open it in Youtube, clicking on clips under official videos will still show related clips on Holodex
-        useEnglishNameLabel: Use English Name
-        useEnglishNameMsg: Uses English localized names for VTuber channels
-        hideVideoThumbnailsLabel: Hide Video Thumbnails
-        hideVideoThumbnailsMsg: Hide video thumbnails, helps speed up loading time and less scrolling on mobile
-        pushNotificationLabel: Push Notifications (Coming Soon)
-        pushNotificationMsg: Enable push notification for favorited channels
-        resetAllSettings: Reset All Settings/Data
+  channels:
+    channelType:
+      subber: subber
+      vtuber: vtuber
+    sortOptions:
+      subscribers: Subscribers
+      group: Group
+      recentUpload: Recent Upload
+      videoCount: Video Count
+      clipCount: Clip Count
+    tabs:
+      Vtuber: Vtuber
+      Subber: Subber
+      Favorites: Favorites
+    favoritesAreEmpty: You have no favorites!
+  home:
+    liveOrUpcomingHeading: Live / Upcoming
+    recentVideosHeading: Recent Videos
+    recentVideoToggles:
+      all: All
+      official: Official
+      subber: Clips
+  library:
+    savedVideosTitle: Saved Videos
+    createYtPlaylistButton: "Create YT Playlist ({0})"
+    deleteFromLibraryButton: "Delete ({0})"
+    deleteConfirmation: "Are you sure you want to delete {0} videos?"
+    deleteConfirmationOK: Delete
+    deleteConfirmationCancel: Cancel
+    selectionReset: Reset
+    selectionSelectAll: Select All
+    emptyLibrary: You have no saved videos!
+  notFound:
+    title: Content not found
+    back: Return Home
+  search:
+    sort:
+      newest: Newest
+      oldest: Oldest
+    type:
+      all: All
+      official: Official
+      clip: Clip
+    unsupportedQuery: >-
+      Currently searching clips by <kbd>Topic</kbd> and <kbd>Organization</kbd>
+      is not supported. No
+                  <b>clips</b> will show up.
+  settings:
+    title: Settings
+    darkModeLabel: Dark Mode
+    darkModeMsg: Changes the theme between light mode and dark mode
+    redirectModeLabel: Open on Youtube
+    redirectModeMsg: >-
+      Clicking on any video will open it in Youtube, clicking on clips under
+      official videos will still show related clips on Holodex
+    useEnglishNameLabel: Use English Name
+    useEnglishNameMsg: Uses English localized names for VTuber channels
+    hideVideoThumbnailsLabel: Hide Video Thumbnails
+    hideVideoThumbnailsMsg: >-
+      Hide video thumbnails, helps speed up loading time and less scrolling on
+      mobile
+    pushNotificationLabel: Push Notifications (Coming Soon)
+    pushNotificationMsg: Enable push notification for favorited channels
+    resetAllSettings: Reset All Settings/Data
+    clipLanguageSelection: "See Clips in these Languages:"
+  app:
+    update_available: An update is available
+    update_btn: Update
+    close_btn: Close
+    check_about_page: Visit the About page to see new changes
+    nowSupportsMultiOrg: Holodex now supports multiple organizations.
+    loginCallToAction: Login to gather your own favorites!
+  about:
+    add_my_channel: Add my channel to Holodex
+  watch:
+    theaterMode: Theather Mode
+    saveToLibrary: Save video to Library
+  favorites:
+    promptForAction: >-
+      Create a list of favorite vtubers and see their latest clips and lives on
+      this page.
+time:
+  soon: soon
+  diff_future_date: "Starts {0} ({1})"
+  distance_past_date: "{0}"

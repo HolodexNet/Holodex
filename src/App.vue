@@ -2,56 +2,60 @@
     <v-app>
         <MainNav />
         <v-main>
-            <router-view />
+            <keep-alive max="4" exclude="Watch,MugenClips">
+                <router-view :key="$router.path" />
+            </keep-alive>
         </v-main>
         <v-snackbar bottom right :value="updateExists" :timeout="-1" color="primary" v-if="updateExists">
-            An update is available
+            {{ $t("views.app.update_available") }}
             <template v-slot:action>
-                <v-btn text @click="refreshApp" class="ml-auto"> Update </v-btn>
-                <v-btn text @click="updateExists = false" class="ml-auto"> Close </v-btn>
+                <v-btn text @click="refreshApp" class="ml-auto"> {{ $t("views.app.update_btn") }} </v-btn>
+                <v-btn text @click="updateExists = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
             </template>
         </v-snackbar>
         <v-snackbar bottom center :value="showUpdateDetails" color="primary" :timeout="-1">
-            Visit the About page to see new changes
+            {{ $t("views.app.check_about_page") }}
             <template v-slot:action>
-                <v-btn text @click="showUpdateDetails = false" class="ml-auto"> Close </v-btn>
+                <v-btn text @click="showUpdateDetails = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
             </template>
         </v-snackbar>
     </v-app>
 </template>
 
 <script>
-import MainNav from "@/components/MainNav.vue";
+import MainNav from "@/components/nav/MainNav";
+import { dayjsLangs } from "./plugins/vuetify";
 
 export default {
     name: "App",
     // default meta info
     metaInfo: {
         title: "Holodex",
-        titleTemplate: "%s - Holodex",
-        meta: [
-            {
-                vmid: "description",
-                name: "description",
-                property: "og:description",
-                content:
-                    "Holodex is a collection of official and translated Hololive vtuber videos and clips made by the community",
-            },
-            {
-                property: "og:type",
-                content: "website",
-            },
-            {
-                vmid: "url",
-                property: "og:url",
-                content: "https://holodex.net",
-            },
-            {
-                vmid: "image",
-                property: "og:image",
-                content: "https://holodex.net/img/icons/logo.png",
-            },
-        ],
+        // titleTemplate: "%s - Holodex",
+        // meta: [
+        //     {
+        //         vmid: "description",
+        //         name: "description",
+        //         property: "og:description",
+        //         content:
+        //             "Holodex is a collection of official and
+        // translated Hololive vtuber videos and clips made by the community",
+        //     },
+        //     {
+        //         property: "og:type",
+        //         content: "website",
+        //     },
+        //     {
+        //         vmid: "url",
+        //         property: "og:url",
+        //         content: "https://holodex.net",
+        //     },
+        //     {
+        //         vmid: "image",
+        //         property: "og:image",
+        //         content: "https://holodex.net/img/icons/logo.png",
+        //     },
+        // ],
     },
     components: {
         MainNav,
@@ -64,16 +68,20 @@ export default {
         };
     },
     created() {
+        // check if browser support webp
         if (!this.$store.testedWebP) {
             this.supportsWebp().then((res) => {
-                if (!res) this.$store.commit("noWebPSupport");
+                if (!res) this.$store.commit("settings/noWebPSupport");
             });
-            this.$store.commit("testedWebP");
+            this.$store.commit("settings/testedWebP");
         }
+        // set theme
         this.$vuetify.theme.dark = this.darkMode;
-        this.$i18n.locale = this.$store.state.lang;
-        this.$vuetify.lang.current = this.$store.state.lang;
-        this.$store.dispatch("checkChannelCache");
+        // set lang
+        dayjsLangs[this.$store.state.settings.lang]();
+        this.$i18n.locale = this.$store.state.settings.lang;
+        this.$vuetify.lang.current = this.$store.state.settings.lang;
+        // check for pwa updates
         document.addEventListener(
             "swUpdated",
             (event) => {
@@ -84,19 +92,21 @@ export default {
                 once: true,
             },
         );
+
+        // on update, reresh page and set update notification flag
         navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (this.refreshing) return;
             this.refreshing = true;
             this.showUpdateDetails = true;
             window.location.reload();
         });
+
+        // check current breakpoint and set isMobile
+        this.updateIsMobile();
     },
     computed: {
         darkMode() {
-            return this.$store.state.darkMode;
-        },
-        isXs() {
-            return this.$vuetify.breakpoint.name === "xs";
+            return this.$store.state.settings.darkMode;
         },
         showUpdateDetails: {
             set(val) {
@@ -108,7 +118,7 @@ export default {
         },
         lang() {
             // connected to the watch.lang hook below.
-            return this.$store.state.lang;
+            return this.$store.state.settings.lang;
         },
     },
     watch: {
@@ -117,11 +127,23 @@ export default {
         },
         lang() {
             // watches the computed.lang variable and updates vue I18N
-            this.$i18n.locale = this.$store.state.lang;
-            this.$vuetify.lang.current = this.$store.state.lang;
+            // import(`dayjs/locale/${this.lang}`) // ES 2015
+            dayjsLangs[this.$store.state.settings.lang]();
+            this.$i18n.locale = this.$store.state.settings.lang;
+            this.$vuetify.lang.current = this.$store.state.settings.lang;
+        },
+        // eslint-disable-next-line func-names
+        "$vuetify.breakpoint.name": function () {
+            this.updateIsMobile();
         },
     },
     methods: {
+        updateIsMobile() {
+            this.$store.commit(
+                "setIsMobile",
+                this.$vuetify.breakpoint.name === "xs" || this.$vuetify.breakpoint.name === "sm",
+            );
+        },
         async supportsWebp() {
             // eslint-disable-next-line no-restricted-globals
             if (!self.createImageBitmap) return false;
@@ -143,3 +165,12 @@ export default {
     },
 };
 </script>
+<style>
+.no-decoration {
+    text-decoration: none;
+    color: inherit !important;
+}
+.body {
+    overscroll-behavior-y: none;
+}
+</style>

@@ -1,19 +1,21 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "../views/Home";
 
-const Channel = () => import("../views/Channel.vue");
-const Channels = () => import("../views/Channels.vue");
-const Favorites = () => import("../views/Favorites.vue");
+const Channel = () => import("../views/Channel");
+const Channels = () => import("../views/Channels");
+const Favorites = () => import("../views/Favorites");
 const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
 const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
-const Watch = () => import("../views/Watch.vue");
-const About = () => import("../views/About.vue");
-const Search = () => import("../views/Search.vue");
-const Library = () => import("../views/Library.vue");
-const ChannelStats = () => import("../views/channel_views/ChannelStats.vue");
-const Settings = () => import("../views/Settings.vue");
-const NotFound = () => import("../views/NotFound.vue");
+const Watch = () => import("../views/Watch");
+const About = () => import("../views/About");
+const Search = () => import("../views/Search");
+const Library = () => import("../views/Library");
+// const ChannelStats = () => import("../views/channel_views/ChannelStats");
+const Settings = () => import("../views/Settings");
+const NotFound = () => import("../views/NotFound");
+const Login = () => import("../views/Login");
+// const MugenClips = () => import("../views/MugenClips");
 Vue.use(VueRouter);
 
 const routes = [
@@ -41,11 +43,11 @@ const routes = [
                 name: "channel_about",
                 component: ChannelAbout,
             },
-            {
-                path: "stats",
-                name: "channel_stats",
-                component: ChannelStats,
-            },
+            // {
+            //     path: "stats",
+            //     name: "channel_stats",
+            //     component: ChannelStats,
+            // },
             {
                 path: "",
                 name: "channel",
@@ -64,8 +66,18 @@ const routes = [
         component: Favorites,
     },
     {
-        name: "watch",
+        name: "watch_id",
         path: "/watch/:id",
+        component: Watch,
+    },
+    {
+        name: "watch",
+        path: "/watch",
+        component: Watch,
+    },
+    {
+        name: "mugen-clips",
+        path: "/infinite",
         component: Watch,
     },
     {
@@ -89,6 +101,11 @@ const routes = [
         component: Settings,
     },
     {
+        name: "login",
+        path: "/login",
+        component: Login,
+    },
+    {
         path: "/404",
         component: NotFound,
     },
@@ -104,10 +121,15 @@ const router = new VueRouter({
     routes,
     // eslint-disable-next-line no-unused-vars
     scrollBehavior(to, from, savedPosition) {
-        if (savedPosition) {
-            return savedPosition;
+        const fromHistory = Boolean(savedPosition);
+
+        if (fromHistory && this.app.$store.state.routerHistory.length > 0) {
+            this.app.$store.dispatch("navigate", {});
+        } else {
+            this.app.$store.dispatch("navigate", { from: from.fullPath });
         }
-        return { x: 0, y: 0 };
+        // console.log(from);
+        return savedPosition || { x: 0, y: 0 };
     },
 });
 

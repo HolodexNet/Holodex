@@ -1,7 +1,7 @@
 <template>
     <v-container class="home pt-0" fluid>
-        <LoadingOverlay :isLoading="isLoading" :showError="liveHasError" />
-        <v-row v-show="!isLoading && !liveHasError">
+        <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
+        <v-row v-show="!isLoading && !hasError">
             <v-col>
                 <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
                     <div class="text-h6">
@@ -14,10 +14,10 @@
                     includeAvatar
                     :cols="{
                         xs: 1,
-                        sm: 2,
-                        md: 3,
-                        lg: 4,
-                        xl: 5,
+                        sm: 3,
+                        md: 4,
+                        lg: 5,
+                        xl: 6,
                     }"
                     :limitRows="2"
                 >
@@ -31,27 +31,27 @@
                         <v-btn value="all">
                             {{ $t("views.home.recentVideoToggles.all") }}
                         </v-btn>
-                        <v-btn value="vtuber">
+                        <v-btn value="stream">
                             {{ $t("views.home.recentVideoToggles.official") }}
                         </v-btn>
-                        <v-btn value="subber">
+                        <v-btn value="clip">
                             {{ $t("views.home.recentVideoToggles.subber") }}
                         </v-btn>
                     </v-btn-toggle>
                 </v-row>
                 <VideoCardList
-                    v-if="!isLoading"
                     :videos="videos"
                     includeChannel
                     infiniteLoad
                     @infinite="loadNext"
                     :infiniteId="infiniteId"
+                    style=""
                     :cols="{
                         xs: 1,
                         sm: 3,
                         md: 4,
-                        lg: 5,
-                        xl: 6,
+                        lg: 6,
+                        xl: 7,
                     }"
                 ></VideoCardList>
             </v-col>
@@ -60,15 +60,19 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/VideoCardList.vue";
-import LoadingOverlay from "@/components/LoadingOverlay.vue";
-import api from "@/utils/backend-api";
-import { mapState } from "vuex";
+import VideoCardList from "@/components/video/VideoCardList";
+import LoadingOverlay from "@/components/common/LoadingOverlay";
+// import api from "@/utils/backend-api";
+import { mapGetters } from "vuex";
 
 export default {
     name: "Home",
-    metaInfo: {
-        title: "Home",
+    metaInfo() {
+        return {
+            get title() {
+                return "Holodex";
+            },
+        };
     },
     components: {
         VideoCardList,
@@ -76,66 +80,61 @@ export default {
     },
     data() {
         return {
-            videos: [],
-            currentOffset: 0,
             infiniteId: +new Date(),
-            isLoading: true,
         };
     },
     created() {
-        this.$store.dispatch("tryUpdatingLive", { forced: true }).finally(() => {
-            this.isLoading = false;
-        });
+        this.init();
     },
     watch: {
         recentVideoFilter() {
             this.resetVideos();
         },
+        // eslint-disable-next-line func-names
+        "$store.state.currentOrg": function () {
+            this.init();
+        },
     },
     computed: {
+        ...mapGetters("home", ["live", "videos", "isLoading", "hasError", "currentOffset"]),
         recentVideoFilter: {
             get() {
-                return this.$store.state.recentVideoFilter;
+                return this.$store.state.home.recentVideoFilter;
             },
             set(value) {
-                this.$store.commit("setRecentVideoFilter", value);
+                this.$store.commit("home/setRecentVideoFilter", value);
             },
         },
         pageLength() {
-            return this.$vuetify.breakpoint.toString() === "md" ? 12 : 24;
+            return 24;
         },
-        ...mapState(["live", "liveHasError"]),
     },
     methods: {
+        init() {
+            this.$store.commit("home/resetState");
+            this.$store.dispatch("home/fetchLive");
+            this.infiniteId = +new Date();
+        },
         resetVideos() {
-            this.videos = [];
-            this.currentOffset = 0;
-            this.infiniteId += 1;
-            this.daysBefore = 0;
+            this.$store.commit("home/resetVideos");
+            this.infiniteId = +new Date();
         },
         loadNext($state) {
-            api.videos({
-                limit: this.pageLength,
-                offset: this.currentOffset,
-                include_channel: 1,
-                status: "past",
-                tag_status: "tagged",
-                // only include type param if there is a filter
-                ...(this.recentVideoFilter !== "all" && {
-                    channel_type: this.recentVideoFilter,
-                }),
-            })
-                .then((res) => {
-                    if (res.data.videos.length) {
-                        this.videos = this.videos.concat(res.data.videos);
-                        this.currentOffset += this.pageLength;
-                        $state.loaded();
+            const lastLength = this.videos.length;
+            this.$store
+                .dispatch("home/fetchNextVideos", {
+                    limit: this.pageLength,
+                })
+                .then(() => {
+                    if (this.videos.length !== lastLength) {
+                        $state?.loaded();
                     } else {
-                        $state.complete();
+                        $state?.completed();
                     }
                 })
-                .catch(() => {
-                    $state.error();
+                .catch((e) => {
+                    console.error(e);
+                    $state?.error();
                 });
         },
     },

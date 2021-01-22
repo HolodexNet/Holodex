@@ -1,6 +1,7 @@
 <template>
     <v-container style="height: 100%">
-        <v-row class="justify-end" style="margin-bottom: -15px; margin-top: 15px">
+        <v-alert :v-if="containsTopicAndOrg" color="primary" v-html="$t('views.search.unsupportedQuery')"> </v-alert>
+        <v-row class="justify-end" style="margin-bottom: -10px">
             <v-col sm="4" md="2" class="py-1">
                 <v-select v-model="filter.sort" :items="options.sort" dense label="Sort By"></v-select>
             </v-col>
@@ -14,7 +15,8 @@
         <v-row>
             <v-col class="offset-xl-1 col-xl-10">
                 <VideoCardList
-                    :videos="videos"
+                    :videos="filteredVideos"
+                    :horizontal="horizontal"
                     includeChannel
                     :cols="{
                         xs: 1,
@@ -23,11 +25,6 @@
                         lg: 5,
                         xl: 6,
                     }"
-                    paginated
-                    @changePage="loadPage"
-                    :currentPage="currentPage"
-                    :pageSize="pageSize"
-                    :total="totalVideos"
                 ></VideoCardList>
             </v-col>
         </v-row>
@@ -35,13 +32,15 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList";
 import api from "@/utils/backend-api";
+import { forwardTransformSearchToAPIQuery } from "@/utils/functions";
+import { csv2jsonAsync } from "json-2-csv";
 
 export default {
     name: "Search",
     metaInfo: {
-        title: "Search",
+        title: "Search - Holodex",
     },
     components: {
         VideoCardList,
@@ -49,9 +48,10 @@ export default {
     data() {
         return {
             videos: [],
-            totalVideos: 1,
-            pageSize: 30,
             loading: false,
+            horizontal: false,
+            executedQuery: null,
+            containsTopicAndOrg: false,
             filter: {
                 sort: "newest",
                 type: "all",
@@ -87,7 +87,7 @@ export default {
                     },
                     {
                         text: this.$t("views.search.type.official"),
-                        value: "official",
+                        value: "stream",
                         query_value: {
                             channel_type: "vtuber",
                         },
@@ -110,58 +110,90 @@ export default {
         currentPage() {
             return Number(this.$route.query.page) || 1;
         },
+        filteredVideos() {
+            const acceptable = this.filter.type === "all" ? ["stream", "clip"] : [this.filter.type];
+            const sorter =
+                this.filter.sort === "oldest"
+                    ? (x, y) => new Date(x.available_at) - new Date(y.available_at)
+                    : (x, y) => new Date(y.available_at) - new Date(x.available_at);
+            return this.videos.filter((v) => acceptable.includes(v.type)).sort(sorter);
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
-        "$route.query": function () {
+        "$route.query": function (x) {
             this.syncFilters();
-            this.searchVideo();
+            console.log(x.q, this.executedQuery);
+            if (x.q !== this.executedQuery && x.q) this.searchVideo();
         },
-        filter: {
-            handler() {
-                this.$router.push({
-                    path: "/search",
-                    query: {
-                        tags: this.$route.query.tags,
-                        title: this.$route.query.title,
-                        type: this.filter.type,
-                        sort: this.filter.sort,
-                    },
-                });
-            },
-            deep: true,
+        // eslint-disable-next-line func-names
+        "filter.sort": function () {
+            // do search if the videos returned is too many.
+            if (this.videos.length > 400) this.searchVideo();
+        },
+        // eslint-disable-next-line func-names
+        "filter.type": function () {
+            // do search if the videos returned is too many.
+            if (this.videos.length > 400) this.searchVideo();
         },
     },
     mounted() {
         // console.log(this.$route);
         this.syncFilters();
-        this.searchVideo();
+        if (this.$route.query?.q !== this.executedQuery) this.searchVideo();
     },
     methods: {
-        searchVideo() {
+        async searchVideo() {
+            if (this.loading) return;
             this.loading = true;
             this.videos = [];
-            const query = {
-                tags: this.$route.query.tags,
-                title: this.$route.query.title,
-                ...this.options.sort.find((opt) => opt.value === this.filter.sort.toLowerCase()).query_value,
-                ...this.options.type.find((opt) => opt.value === this.filter.type.toLowerCase()).query_value,
-                include_channel: 1,
-                limit: this.pageSize,
-                offset: (this.currentPage - 1) * this.pageSize,
-            };
-            api.videos(query)
-                .then((res) => {
-                    this.videos = res.data.videos;
-                    this.totalVideos = res.data.total;
-                    return this;
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+            const { q } = this.$route.query;
+            this.executedQuery = q; // save to executed query;
+            const parsedQuery = await csv2jsonAsync(q);
+            // console.log("PARSED", parsedQuery);
+            const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
+                sort: this.filter.sort,
+                lang: this.$store.state.settings.clipLangs,
+                target: this.filter.type === "all" ? ["stream", "clip"] : [this.filter.type],
+                conditions: [],
+                topic: [],
+                vch: [],
+                org: [],
+                comment: [],
+            });
+            // console.log("SEARCHING", searchQuery);
+            this.containsTopicAndOrg =
+                searchQuery.target.includes("clip") && (searchQuery.topic.length > 0 || searchQuery.topic.org > 0);
+
+            if (searchQuery.comment.length === 0)
+                api.searchVideo(searchQuery)
+                    .then((res) => {
+                        console.log(res.data);
+                        this.horizontal = false;
+                        this.videos = res.data;
+                        return this;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+            else {
+                api.searchComments(searchQuery)
+                    .then((res) => {
+                        // console.log(res.data);
+                        this.horizontal = true;
+                        this.videos = res.data;
+                        return this;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+            }
         },
         loadPage(page) {
             this.$router.push({

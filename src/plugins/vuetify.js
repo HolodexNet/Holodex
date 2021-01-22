@@ -16,8 +16,6 @@ import zhTL from "@/locales/zhtw.yml";
 import idTL from "@/locales/id.yml";
 import ruTL from "@/locales/ru.yml";
 
-Vue.use(Vuetify);
-
 // ====== i18n setup ======
 Vue.use(VueI18n);
 
@@ -40,6 +38,30 @@ export const langs = [
     { val: "id", display: "Bahasa Indonesia", credit: "alcyneous#2803" },
     { val: "ru", display: "Русский язык", credit: "kirillbarnaul#8499" },
 ];
+
+export const dayjsLangs = {
+    async en() {
+        await import("dayjs/locale/en");
+    },
+    async ja() {
+        await import("dayjs/locale/ja");
+    },
+    async zh() {
+        await import("dayjs/locale/zh-tw");
+    },
+    async es() {
+        await import("dayjs/locale/es");
+    },
+    async ms() {
+        await import("dayjs/locale/ms");
+    },
+    async id() {
+        await import("dayjs/locale/id");
+    },
+    async ru() {
+        await import("dayjs/locale/ru");
+    },
+};
 
 export const i18n = new VueI18n({
     locale: "en", // Set locale
@@ -77,7 +99,7 @@ export const i18n = new VueI18n({
 });
 // ====== end i18n setup ======
 
-export const vuetify = new Vuetify({
+export const config = {
     treeShake: true,
     icons: {
         iconfont: "mdiSvg",
@@ -97,4 +119,8 @@ export const vuetify = new Vuetify({
     lang: {
         t: (key, ...params) => i18n.t(key, params),
     },
-});
+};
+
+Vue.use(Vuetify);
+
+export const vuetify = new Vuetify(config);

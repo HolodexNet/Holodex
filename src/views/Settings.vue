@@ -20,6 +20,19 @@
                         </template>
                     </v-radio>
                 </v-radio-group>
+                <div class="pt-4 mb-0">
+                    <v-icon>{{ mdiFilter }}</v-icon>
+                    {{ $t("views.settings.clipLanguageSelection") }}
+                </div>
+                <v-select
+                    v-model="clipLangs"
+                    :items="validClipLangs"
+                    multiple
+                    chips
+                    :hint="$t('views.settings.clipLanguageSelection')"
+                    persistent-hint
+                >
+                </v-select>
                 <v-switch
                     v-model="darkMode"
                     :label="$t('views.settings.darkModeLabel')"
@@ -56,49 +69,66 @@
 
 <script>
 import { langs } from "@/plugins/vuetify";
-import { mdiTranslate } from "@mdi/js";
+import { mdiTranslate, mdiFilter } from "@mdi/js";
 
 export default {
     name: "Settings",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.settings")} - Holodex`;
+            },
+        };
+    },
     computed: {
         language: {
             get() {
-                return this.$store.state.lang;
+                return this.$store.state.settings.lang;
             },
             set(val) {
-                this.$store.commit("setLanguage", val);
+                this.$store.commit("settings/setLanguage", val);
             },
         },
         darkMode: {
             get() {
-                return this.$store.state.darkMode;
+                return this.$store.state.settings.darkMode;
             },
             set(val) {
-                this.$store.commit("setDarkMode", val);
+                this.$store.commit("settings/setDarkMode", val);
             },
         },
         redirectMode: {
             get() {
-                return this.$store.state.redirectMode;
+                return this.$store.state.settings.redirectMode;
             },
             set(val) {
-                this.$store.commit("setRedirectMode", val);
+                this.$store.commit("settings/setRedirectMode", val);
             },
         },
         useEnName: {
             get() {
-                return this.$store.getters.useEnName;
+                return this.$store.getters["settings/useEnName"];
             },
             set(val) {
-                this.$store.commit("setUseEnName", val);
+                this.$store.commit("settings/setUseEnName", val);
             },
         },
         hideThumbnail: {
             get() {
-                return this.$store.state.hideThumbnail;
+                return this.$store.state.settings.hideThumbnail;
             },
             set(val) {
-                this.$store.commit("setHideThumbnail", val);
+                this.$store.commit("settings/setHideThumbnail", val);
+            },
+        },
+        clipLangs: {
+            get() {
+                return this.$store.state.settings.clipLangs;
+            },
+            set(val) {
+                // sort array to increase cache hit rate
+                this.$store.commit("settings/setClipLangs", val.sort());
             },
         },
     },
@@ -106,11 +136,38 @@ export default {
         return {
             langs,
             mdiTranslate,
+            mdiFilter,
+            validClipLangs: Object.freeze([
+                {
+                    text: "English",
+                    value: "en",
+                },
+                {
+                    text: "日本語",
+                    value: "ja",
+                },
+                {
+                    text: "Español",
+                    value: "es",
+                },
+                {
+                    text: "中文",
+                    value: "zh",
+                },
+                {
+                    text: "한국어",
+                    value: "kr",
+                },
+                {
+                    text: "français",
+                    value: "fr",
+                },
+            ]),
         };
     },
     methods: {
         resetSettings() {
-            this.$store.commit("resetState");
+            this.$store.commit("settings/resetState");
         },
     },
 };

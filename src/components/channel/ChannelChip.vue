@@ -1,0 +1,43 @@
+<template>
+    <v-chip pill :to="`/channel/${channel.id}`" class="channel-chip">
+        <v-avatar left>
+            <ChannelImg :channel="channel" />
+        </v-avatar>
+        {{ channelName }}
+    </v-chip>
+</template>
+
+<script>
+import ChannelImg from "./ChannelImg";
+
+export default {
+    name: "ChannelChip",
+    components: {
+        ChannelImg,
+    },
+    props: {
+        channel: {
+            type: Object,
+            required: true,
+        },
+        // close: {
+        //     type: Boolean,
+        //     required: false,
+        // },
+    },
+    computed: {
+        channelName() {
+            const prop = this.$store.state.settings.nameProperty;
+            if (this.channel[prop]) return this.channel[prop];
+            return this.channel.name;
+        },
+    },
+};
+</script>
+
+<style scoped>
+.channel-chip {
+    font-size: 14px;
+    height: 28px;
+}
+</style>

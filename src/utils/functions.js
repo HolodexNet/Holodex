@@ -51,10 +51,14 @@ export function getBannerImages(url) {
     };
 }
 
-export function formatCount(subs) {
-    if (subs >= 1000000) return `${(subs / 1000000).toFixed(2)}M`;
-    if (subs >= 1000) return `${Math.round(subs / 1000)}K`;
-    return subs;
+const formatters = {};
+
+export function formatCount(n, lang = "en") {
+    if (!formatters[lang])
+        formatters[lang] = new Intl.NumberFormat(lang, { compactDisplay: "short", notation: "compact" });
+    let num = n;
+    if (typeof n === "string") num = +n;
+    return formatters[lang].format(num);
 }
 
 export function debounce(func, wait, immediate) {
@@ -76,4 +80,48 @@ export function debounce(func, wait, immediate) {
 
 export function decodeHTMLEntities(str) {
     return str.split("&amp;").join("&").split("&quot;").join('"');
+}
+
+export function forwardTransformSearchToAPIQuery(obj, initialObject) {
+    return obj.reduceRight((req, item) => {
+        switch (item.type) {
+            case "title & desc":
+                req.conditions.push({
+                    text: item.text,
+                });
+                break;
+            case "comments":
+                req.comment = [item.text];
+                break;
+            case "channel":
+                req.vch.push(item.value);
+                break;
+            case "topic":
+                req.topic.push(item.value);
+                break;
+            case "org":
+                req.org.push(item.value);
+                break;
+            default:
+                break;
+        }
+        return req;
+    }, initialObject);
+}
+
+export function localSortChannels(channels, { sort, order = "asc" }) {
+    if (!sort) return channels;
+    channels.sort((a, b) => {
+        // if (sort === "latest_published_at") {
+        //     const dateA = new Date(a[sort]).getTime();
+        //     const dateB = new Date(b[sort]).getTime();
+        //     return dateA > dateB ? 1 : -1;
+        // }
+        if (sort === "video_count" || sort === "subscriber_count") {
+            return Number(a[sort]) > Number(b[sort]) ? 1 : -1;
+        }
+        return a[sort] > b[sort] ? 1 : -1;
+    });
+    if (order === "desc") channels.reverse();
+    return channels;
 }
