@@ -30,11 +30,11 @@
                     class="my-3"
                     v-if="!userdata.user || !userdata.user.twitter_id"
                     @click.prevent="loginTwitter"
-                    color="cyan darken-2"
+                    color="grey"
                 >
                     <v-icon left>{{ icons.mdiTwitter }}</v-icon>
 
-                    Login with Twitter
+                    Login with Twitter (bugged)
                 </v-btn>
             </v-card-text>
         </v-card>
