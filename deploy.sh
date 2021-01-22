@@ -2,9 +2,9 @@
 
 set -o errexit
 
-cd /opt/holodex || { echo "No directory found"; exit 1; }
+cd /opt/holoclips || { echo "No directory found"; exit 1; }
 
-git pull
+git pull origin master
 
 npm install
 
