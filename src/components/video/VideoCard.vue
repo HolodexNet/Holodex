@@ -40,7 +40,7 @@
                             :color="hasSaved ? 'primary' : 'white'"
                             class="video-card-action rounded-tr-sm"
                             :class="{ 'hover-show': !hasSaved && !isMobile }"
-                            @click="toggleSaved($event)"
+                            @click.prevent.stop="toggleSaved($event)"
                         >
                             {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
                         </v-icon>
