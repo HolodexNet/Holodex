@@ -48,7 +48,10 @@ const actions = {
             })
             .then((res) => {
                 // console.log(res);
-                commit("setLive", res);
+                commit(
+                    "setLive",
+                    res.sort((a, b) => new Date(a.available_at) - new Date(b.available_at)),
+                );
                 commit("fetchEnd");
             })
             .catch((e) => {

@@ -127,7 +127,7 @@ export default {
     methods: {
         init() {
             if (this.favorites.length > 0 && this.isLoggedIn) {
-                this.$store.dispatch("favorites/resetState");
+                this.$store.dispatch("favorites/resetFavorites");
                 this.resetVideos();
                 this.$store.dispatch("favorites/fetchLive");
                 this.infiniteId = +new Date();
