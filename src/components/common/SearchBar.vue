@@ -26,6 +26,7 @@
         :label="$t('component.search.searchLabel')"
         :filter="(a, b) => true"
         return-object
+        @keydown.enter="onEnterKeyDown"
         hide-details
     >
         <template v-slot:selection="selection">
@@ -164,18 +165,18 @@ export default {
                     let textQueries = [];
                     if (encodeURIComponent(val).length > 2)
                         textQueries = [
+                            { type: "none", disabled: true, divider: true, value: "div", text: "div" },
                             { type: "title & desc", value: `${val}title & desc`, text: val },
                             { type: "none", disabled: true, divider: true, value: "div", text: "div" },
                             { type: "comments", value: `${val}comments`, text: val },
-                            { type: "none", disabled: true, divider: true, value: "div", text: "div" },
                         ];
                     this.fromApi = [
-                        ...textQueries,
                         ...res.data.map((x) => {
                             if (!x.text) x.text = x.value;
                             // x.value = x.text + x.type;
                             return x;
                         }),
+                        ...textQueries,
                     ];
                 })
                 .catch((e) => console.log(e));
@@ -236,6 +237,11 @@ export default {
                     return this.$t("component.search.type.comments");
                 default:
                     return "";
+            }
+        },
+        onEnterKeyDown() {
+            if (this.search === null || this.search.length === 0) {
+                this.commitSearch();
             }
         },
     },
