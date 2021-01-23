@@ -1,4 +1,7 @@
 # Holodex
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/RiceCakess/holodex/blob/master/LICENSE)
+[![Discord Chat](https://img.shields.io/discord/796190073271353385.svg)](https://discord.gg/)
+[![Deploy to Staging](https://github.com/RiceCakess/holoclips/workflows/Deploy%20to%20staging/badge.svg)](https://github.com/RiceCakess/holoclips/actions?query=workflow%3A%22Deploy+to+staging%22)
 
 ## Reporting a Bug/Feature Request
 * For bugs, please make sure to include a picture describing the issue (if applicable)
@@ -25,7 +28,7 @@ intellsmi.comment-translate
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. 
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Project Structure
 ```
