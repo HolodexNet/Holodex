@@ -70,7 +70,7 @@
                     <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
                         {{ title }}
                     </v-list-item-title>
-                    <v-list-item-subtitle v-if="includeChannel">
+                    <v-list-item-subtitle class="channel-name" v-if="includeChannel">
                         <!-- <router-link
                             :to="`/channel/${video.channel.id}`"
                             class="no-decoration channel-name text-truncate"
@@ -308,6 +308,10 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    white-space: initial;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
 }
 
 .channel-name:hover {

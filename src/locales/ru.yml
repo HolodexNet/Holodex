@@ -38,8 +38,8 @@ component:
   videoDescription:
     description: Описание
   description:
-    showLess: "Ещё"
-    showMore: "Свернуть"
+    showLess: "Свернуть"
+    showMore: "Ещё"
   search:
     searchLabel: "Поиск"
     type:
@@ -74,7 +74,7 @@ views:
       Vtuber: Витуберы
       Subber: Сабберы
       Favorites: Избранное
-    favoritesAreEmpty: Вы ничего не добавили в избранное!
+    favoritesAreEmpty: Вы ничего не добавили в избранное
   home:
     liveOrUpcomingHeading: LIVE / Скоро
     recentVideosHeading: Последние видео
@@ -105,7 +105,7 @@ views:
       clip: Клипы
     unsupportedQuery:
       "На данный момент поиск клипов по <kbd>теме</kbd> и <kbd>агенствам</kbd>
-      не поддерживается. <b>Клипов</b> в результатах не будет."
+      не поддерживается. Ни одного <b>клипа</b> не выйдет в результатах."
   settings:
     title: Настройки
     darkModeLabel: Ночная тема

@@ -162,6 +162,14 @@ export default {
                     text: "français",
                     value: "fr",
                 },
+                {
+                    text: "Indonesian / Malay",
+                    value: "id",
+                },
+                {
+                    text: "Русский язык",
+                    value: "ru",
+                },
             ]),
         };
     },
