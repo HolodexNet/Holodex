@@ -49,7 +49,7 @@ module.exports = {
                     },
                 },
                 {
-                    urlPattern: new RegExp("https://yt3.ggpht.com/a/(.*)=s40-c-k-c0x00ffffff-no-rj-mo(.*)"),
+                    urlPattern: new RegExp("https://yt3.ggpht.com/(a/|ytc/)(.*)=s40-c-k-c0x00ffffff-no-rj-mo(.*)"),
                     handler: "CacheFirst",
                     options: {
                         cacheName: "channel-photo",
