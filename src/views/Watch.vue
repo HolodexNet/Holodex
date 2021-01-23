@@ -210,6 +210,7 @@ export default {
 /* maintains 16:9 aspect ratio */
 .embedded-video {
     position: relative;
+    padding-bottom: 56.25%;
     padding-bottom: min(56.25%, calc(100vh - 220px));
 }
 
