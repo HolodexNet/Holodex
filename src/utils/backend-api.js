@@ -4,7 +4,7 @@ import { dayjs } from "@/utils/time";
 import querystring from "querystring";
 
 export const axiosInstance = axios.create({
-    baseURL: process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api/v2" : "/api/v2",
+    baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2/" : "/api/v2",
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
@@ -91,7 +91,7 @@ export default {
             res.data
                 // .concat(res.data.upcoming)
                 // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
-                .filter((live) => !(!live.live_start && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))))
+                .filter((live) => !(!live.start_actual && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))))
                 // get currently live and upcoming lives within the next 3 weeks
                 .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))),
         );
