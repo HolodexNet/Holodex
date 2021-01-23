@@ -1,43 +1,57 @@
 # Holodex
 
-## Project setup
+## Reporting a Bug/Feature Request
+* For bugs, please make sure to include a picture describing the issue (if applicable)
+* If the bug is urgent, please send us a message in the Discord server
 
+## Setup for Development
 ```
+git clone git@github.com:RiceCakess/holoclips.git
 npm install
-```
-
-### Compiles and hot-reloads for development
-
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
+## Suggested VSCode Extensions
+```
+formulahendry.auto-close-tag
+antfu.i18n-ally
+irongeek.vscode-env
+jpruliere.env-autocomplete
+lukas-tr.materialdesignicons-intellisense
+octref.vetur
+jcbuisson.vue
+dbaeumer.vscode-eslint
+intellsmi.comment-translate
+```
 
-```
-npm run build
-```
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. 
 
-### Lints and fixes files
-
+## Project Structure
 ```
-npm run lint
+├── components              # Vue components
+├── locales                 # UI text translations for each languages
+├── plugins                 # Vuetify and other plugin files
+├── router                  # Router definitions for path and views
+├── store                   # Vuex store modules, each file loosley corresponds to each page. All api calls go through here
+├── utils                   # Utility functions
+├── views                   # Page defintions
+└── App.vue                 # Main entry point, sets up router-view
 ```
------
 
 ## Roadmap
-* Watch Page refresh 
-  - overlay live translations/data from live chat from archived streams
-  - refresh currently live in the background/service worker
-* Make repo public
-* Add user logins
+- [x] Watch Page refresh 
+- [x] Make repo public
+- [x] Add user logins
   - save favorites to database
-  - Add video commenting??
-  - Add push notifications
-* Add multi language support
+  - add video commenting??
+- [x] Add multi language support
   - Use tagging system?? or maybe just have a row indicating language
-* Expand vtuber list
-* Updated tagging system
+- [x] Expand vtuber list
+- [ ] Updated tagging system
   - User contributed tagging 
   - Tag aliasing
   - Tag categories
+- [ ] public API / API key for user account
+- [ ] live chat features / TL transcript 
+- [ ] music player / radio / tagging songs in singing streams
