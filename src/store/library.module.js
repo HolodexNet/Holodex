@@ -48,9 +48,9 @@ const mutations = {
         state.currentOffset = 0;
         state.channels = [];
     },
-    resetState(state) {
-        Object.assign(state, initialState);
-    },
+    // resetState(state) {
+    //     Object.assign(state, initialState);
+    // },
 };
 
 export default {

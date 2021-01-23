@@ -11,13 +11,18 @@ const initialState = {
     isLoading: true,
     hasError: false,
     currentOffset: 0,
-    recentVideoFilter: "all",
 
     stagedFavorites: {},
     // lastLiveUpdate: "2021-01-07T18:31:22-08:00",
 };
+const persistState = {
+    recentVideoFilter: "all",
+};
 
-export const state = { ...initialState };
+export const state = {
+    ...initialState,
+    ...persistState,
+};
 
 const getters = {
     isFavorited: (state) => (channelId) => {
@@ -48,10 +53,7 @@ const actions = {
             })
             .then((res) => {
                 // console.log(res);
-                commit(
-                    "setLive",
-                    res.sort((a, b) => new Date(a.available_at) - new Date(b.available_at)),
-                );
+                commit("setLive", res);
                 commit("fetchEnd");
             })
             .catch((e) => {

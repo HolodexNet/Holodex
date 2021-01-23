@@ -7,10 +7,16 @@ const initialState = {
     isLoading: true,
     hasError: false,
     currentOffset: 0,
+};
+
+const persistState = {
     recentVideoFilter: "all",
 };
 
-export const state = { ...initialState };
+export const state = {
+    ...initialState,
+    ...persistState,
+};
 
 const getters = {
     live(state) {

@@ -8,8 +8,9 @@ const initialState = {
     isLoading: true,
     hasError: false,
     currentOffset: 0,
+};
 
-    // persisted
+const persistState = {
     category: 0,
     sort: {
         0: "group",
@@ -23,7 +24,10 @@ const initialState = {
     },
 };
 
-export const state = { ...initialState };
+export const state = {
+    ...initialState,
+    ...persistState,
+};
 
 const getters = {
     channels(state) {
