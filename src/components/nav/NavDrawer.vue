@@ -14,7 +14,7 @@
                 <v-list-item
                     link
                     :key="page.name"
-                    @click.stop="handlePageClick(page)"
+                    @click.prevent="handlePageClick(page)"
                     :href="page.path"
                     :class="{ 'v-list-item--active': $route.path === page.path }"
                 >
