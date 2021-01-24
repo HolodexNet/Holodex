@@ -115,6 +115,8 @@ views:
     hideVideoThumbnailsMsg: 隱藏影片縮圖可以加快讀取時間並減少移動端的網頁卷軸需求。
     pushNotificationLabel: 推送通知（尚未實裝）
     pushNotificationMsg: 啟用已收藏頻道的即時新增內容通知。
+    autoplayVideoLabel: 自動播放影片
+    autoplayVideoMsg: 啟用視頻自動播放
     resetAllSettings: 重設所有設定/資料
     clipLanguageSelection: 顯示以下語言的剪輯影片
   app:

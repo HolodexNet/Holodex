@@ -120,6 +120,8 @@ views:
       листать на телефонах
     pushNotificationLabel: Пуш-уведомления (Скоро!)
     pushNotificationMsg: Включить пуш-уведомления для каналов в избранном
+    autoplayVideoLabel: Автозапуск видео
+    autoplayVideoMsg: Включить автоматическое воспроизведение видео
     resetAllSettings: Сбросить все настройки/данные
     clipLanguageSelection: "Посмотрите клипы на этих языках:"
   about:

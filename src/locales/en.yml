@@ -124,6 +124,8 @@ views:
       mobile
     pushNotificationLabel: Push Notifications (Coming Soon)
     pushNotificationMsg: Enable push notification for favorited channels
+    autoplayVideoLabel: Autoplay Video
+    autoplayVideoMsg:  Enable automatic playback of videos
     resetAllSettings: Reset All Settings/Data
     clipLanguageSelection: "See Clips in these Languages:"
   app:

@@ -13,7 +13,11 @@
                             class="embedded-video"
                             :video-id="video.id"
                             @ready="ready"
-                            :playerVars="{ ...(timeOffset && { start: timeOffset }), autoplay: 1, playsinline: 1 }"
+                            :playerVars="{
+                                ...(timeOffset && { start: timeOffset }),
+                                autoplay: $store.state.settings.autoplayVideo ? 1 : 0,
+                                playsinline: 1,
+                            }"
                         >
                         </youtube>
                     </template>

@@ -118,6 +118,8 @@ views:
       deslizar en mobiles
     pushNotificationLabel: Notificaciones emergentes
     pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
+    autoplayVideoLabel: Reproducción automática de video
+    autoplayVideoMsg: Habilitar la reproducción automática de videos
     resetAllSettings: Reiniciar todas las opciones/datos
     clipLanguageSelection: "Ver clips en estos idiomas"
   about:

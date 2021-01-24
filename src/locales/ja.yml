@@ -111,6 +111,8 @@ views:
     hideVideoThumbnailsMsg: 動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
     pushNotificationLabel: プッシュ通知（準備中）
     pushNotificationMsg: お気に入りのチャンネルのプッシュ通知を有効にする
+    autoplayVideoLabel: ビデオを自動再生する
+    autoplayVideoMsg: ビデオを開くときに自動再生する
     redirectModeLabel: Youtubeで開く
     redirectModeMsg: ビデオをクリックすると、Youtubeの視聴ページに移動します
     resetAllSettings: すべての設定/データをリセット
