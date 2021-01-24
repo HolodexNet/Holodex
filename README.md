@@ -1,7 +1,7 @@
 # Holodex
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/RiceCakess/holodex/blob/master/LICENSE)
 [![Discord Chat](https://img.shields.io/discord/796190073271353385.svg)](https://discord.gg/)
-[![Deploy to Staging](https://github.com/RiceCakess/holoclips/workflows/Deploy%20to%20staging/badge.svg)](https://github.com/RiceCakess/holoclips/actions?query=workflow%3A%22Deploy+to+staging%22)
+[![Deploy to Prod](https://github.com/RiceCakess/holoclips/workflows/Deploy%20to%20production/badge.svg)](https://github.com/RiceCakess/holoclips/actions?query=workflow%3A%22Deploy+to+production%22)
 
 ## Reporting a Bug/Feature Request
 * For bugs, please make sure to include a picture describing the issue (if applicable)
@@ -9,8 +9,9 @@
 
 ## Setup for Development
 ```
-git clone git@github.com:RiceCakess/holoclips.git
+git clone git@github.com:RiceCakess/Holodex.git
 npm install
+# By default the api url points to localhost, change to "https://holodex.net/api/v2" in util/backend.js if working on frontend only
 npm run serve
 ```
 
@@ -34,7 +35,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ```
 ├── components              # Vue components
 ├── locales                 # UI text translations for each languages
-├── plugins                 # Vuetify and other plugin files
+├── plugins                 # Vuetify, i18n and other plugin definitions
 ├── router                  # Router definitions for path and views
 ├── store                   # Vuex store modules, each file loosley corresponds to each page. All api calls go through here
 ├── utils                   # Utility functions
