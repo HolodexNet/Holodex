@@ -53,7 +53,7 @@ component:
       channel: channel
       topic: topic
       org: org
-      titledesc: title & disc
+      titledesc: title & desc
       comments: comments
   relatedVideo:
     clipsLabel: clips
@@ -114,8 +114,8 @@ views:
     darkModeMsg: Changes the theme between light mode and dark mode
     redirectModeLabel: Open on Youtube
     redirectModeMsg: >-
-      Clicking on any video will open it in Youtube, clicking on clips under
-      official videos will still show related clips on Holodex
+      Clicking on video thumbnails will open it in Youtube, clicking the video title
+      will open on Holodex
     useEnglishNameLabel: Use English Name
     useEnglishNameMsg: Uses English localized names for VTuber channels
     hideVideoThumbnailsLabel: Hide Video Thumbnails
@@ -138,7 +138,7 @@ views:
   about:
     add_my_channel: Add my channel to Holodex
   watch:
-    theaterMode: Theather Mode
+    theaterMode: Theater Mode
     saveToLibrary: Save video to Library
   favorites:
     promptForAction: >-
