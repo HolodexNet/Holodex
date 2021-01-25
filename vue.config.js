@@ -2,6 +2,7 @@ module.exports = {
     chainWebpack: (config) => {
         if (process.env.STORYBOOK && process.env.STORYBOOK.trim() === "true") {
             console.info("info => Updating webpack using chain-webpack");
+            // eslint-disable-next-line no-param-reassign
             config.module
                 .rule("addon-storysource")
                 .enforce()
@@ -16,6 +17,7 @@ module.exports = {
                 })
                 .end();
         }
+        return config;
     },
     css: {
         extract: { ignoreOrder: true },

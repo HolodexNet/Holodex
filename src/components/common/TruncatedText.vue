@@ -19,7 +19,12 @@
 </template>
 
 <script>
+import linkify from "vue-linkify";
+
 export default {
+    directives: {
+        linkified: linkify,
+    },
     data() {
         return {
             expanded: false,

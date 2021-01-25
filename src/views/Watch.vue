@@ -79,6 +79,8 @@
 </template>
 
 <script>
+import VueYouTubeEmbed from "vue-youtube-embed";
+import Vue from "vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay";
 import WatchInfo from "@/components/watch/WatchInfo";
 import WatchFrame from "@/components/watch/WatchFrame";
@@ -117,6 +119,9 @@ export default {
             mdiRectangleOutline,
             icons,
         };
+    },
+    created() {
+        Vue.use(VueYouTubeEmbed);
     },
     mounted() {
         this.init();

@@ -1,8 +1,9 @@
 import Vue from "vue";
 import linkify from "vue-linkify";
 import VueI18n from "vue-i18n";
-import VueYouTubeEmbed from "vue-youtube-embed";
-import { vuetify } from "@/plugins/vuetify";
+import store from "@/store/index";
+import router from "@/router";
+import { i18n, vuetify } from "@/plugins/vuetify";
 
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.css";
@@ -13,7 +14,6 @@ import { addDecorator } from "@storybook/vue";
 // Vue.config.performance = true;
 
 Vue.use(VueI18n);
-Vue.use(VueYouTubeEmbed);
 Vue.directive("linkified", linkify);
 Vue.use(Vuetify);
 
@@ -21,6 +21,9 @@ export const decorators = [
     (_) => {
         return {
             vuetify: vuetify,
+            i18n,
+            store,
+            router,
             template: `
         <v-app>
           <v-main>
