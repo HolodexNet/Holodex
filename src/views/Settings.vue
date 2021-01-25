@@ -12,9 +12,7 @@
                     <v-radio v-for="l in langs" :key="l.val" :value="l.val">
                         <template v-slot:label>
                             <div>
-                                <strong class="primary--text">
-                                    {{ l.display }}
-                                </strong>
+                                <span class="primary--text" style="font-weight: 500">{{ l.display }}</span>
                                 <span class="px-2 text--secondary text-caption"> ♡ {{ l.credit }}</span>
                             </div>
                         </template>

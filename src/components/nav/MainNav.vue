@@ -28,9 +28,9 @@
                 <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isMobile">
                     <v-icon>{{ icons.mdiMenu }}</v-icon>
                 </v-app-bar-nav-icon>
-                <v-toolbar-title style="overflow: visible">
+                <v-toolbar-title style="overflow: visible" :class="{ 'pa-0': isMobile }">
                     <router-link to="/">
-                        <Logo width="24" height="24" style="margin-bottom: -4px" />
+                        <Logo width="24" height="24" style="margin-bottom: -4px" v-if="!isMobile" />
                     </router-link>
                     <v-menu bottom offset-y>
                         <template v-slot:activator="{ on, attrs }">
@@ -336,8 +336,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=PT+Sans+Narrow&display=swap");
-
 .backButton {
     height: 32px !important;
     width: 32px !important;
@@ -394,9 +392,6 @@ export default {
     text-decoration: none;
     font-size: 24px;
     line-height: 1.2px;
-}
-.nav-title.nav-title-slim {
-    font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
 }
 
 .rotate-180 {
