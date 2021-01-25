@@ -58,6 +58,11 @@
                     :messages="$t('views.settings.pushNotificationMsg')"
                     disabled
                 ></v-switch>
+                <v-switch
+                    v-model="autoplayVideo"
+                    :label="$t('views.settings.autoplayVideoLabel')"
+                    :messages="$t('views.settings.autoplayVideoMsg')"
+                ></v-switch>
                 <br />
                 <v-btn @click="resetSettings">
                     {{ $t("views.settings.resetAllSettings") }}
@@ -104,6 +109,14 @@ export default {
             },
             set(val) {
                 this.$store.commit("settings/setRedirectMode", val);
+            },
+        },
+        autoplayVideo: {
+            get() {
+                return this.$store.state.settings.autoplayVideo;
+            },
+            set(val) {
+                this.$store.commit("settings/setAutoplayVideo", val);
             },
         },
         useEnName: {

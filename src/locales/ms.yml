@@ -118,6 +118,8 @@ views:
       tatalan pada peranti bimbit
     pushNotificationLabel: Pemberitahuan Segera (Akan Datang)
     pushNotificationMsg: Pemberitahuan segera akan diterima bagi saluran kegemaran
+    autoplayVideoLabel: Automain Video
+    autoplayVideoMsg: Dayakan main semula video secara automatik
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
     clipLanguageSelection: "Paparkan sedutan yang berbahasa:"
   about:

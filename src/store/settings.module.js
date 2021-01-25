@@ -10,6 +10,7 @@ const initialState = {
     clipLangs: [validLangs.has(userLanguage) ? userLanguage : "en"],
     darkMode: true,
     redirectMode: false,
+    autoplayVideo: true,
     canUseWebP: true,
     testedWebP: false,
     nameProperty: "english_name",
@@ -32,6 +33,9 @@ const mutations = {
     },
     setRedirectMode(state, val) {
         state.redirectMode = val;
+    },
+    setAutoplayVideo(state, val) {
+        state.autoplayVideo = val;
     },
     noWebPSupport(state) {
         state.canUseWebP = false;

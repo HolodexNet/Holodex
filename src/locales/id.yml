@@ -121,6 +121,8 @@ views:
       halaman dan mempersingkat halaman pada tampilan hp
     pushNotificationLabel: Pemberitahuan notif (Akan Datang)
     pushNotificationMsg: Mengaktifkan notifikasi untuk saluran favorit
+    autoplayVideoLabel: Video Putar Otomatis
+    autoplayVideoMsg: Aktifkan pemutaran otomatis video
     resetAllSettings: Reset Semua Pengaturan/Data
     clipLanguageSelection: "Melihat Klip dalam bahasa berikut:"
   about:
