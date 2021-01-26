@@ -5,7 +5,7 @@
             outlined
             :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
             link
-            @click="(e) => !redirectMode && e.preventDefault() && goToVideo(video.id)"
+            @click.prevent="(e) => (!redirectMode ? goToVideo(video.id) : goToYoutube(video.id))"
             :target="redirectMode ? '_blank' : ''"
             :href="!redirectMode ? `/watch/${video.id}` : `https://youtu.be/${video.id}`"
             rel="noopener"
@@ -245,6 +245,10 @@ export default {
         },
         goToChannel(id) {
             this.$router.push({ path: `/channel/${this.video.channel.id}` });
+        },
+        goToYoutube(id) {
+            const url = `https://www.youtube.com/watch?v=${id}`;
+            window.open(url, "_blank", "noopener");
         },
     },
 };
