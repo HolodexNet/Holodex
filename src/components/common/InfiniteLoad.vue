@@ -1,10 +1,5 @@
 <template>
-    <div
-        :key="identifier"
-        v-intersect="onIntersect"
-        class="d-flex justify-center py-4"
-        style="min-height: 100px; width: 100%; margin: auto"
-    >
+    <div :key="identifier" v-intersect="onIntersect" class="d-flex justify-center py-4" style="min-height: 100px">
         <LoadingOverlay :isLoading="status === STATUSES.LOADING" :showError="status === STATUSES.ERROR" />
         <div v-if="status === STATUSES.COMPLETED">End of list</div>
     </div>
@@ -33,6 +28,13 @@ export default {
         identifier: {
             default: +new Date(),
         },
+        emitFirstLoad: {
+            default: false,
+            type: Boolean,
+        },
+    },
+    mounted() {
+        this.emitFirstLoad && this.emitEvent();
     },
     watch: {
         identifier() {
@@ -46,11 +48,13 @@ export default {
         // eslint-disable-next-line no-unused-vars
         onIntersect(entries, observer, isIntersecting) {
             if (!(this.status === this.STATUSES.READY && isIntersecting)) return;
-
+            this.emitEvent();
+        },
+        emitEvent() {
+            // event listeners for events defined below
             this.$on("$InfiniteLoad:loaded", () => {
                 this.reset();
             });
-
             this.$on("$InfiniteLoad:completed", () => {
                 this.status = this.STATUSES.COMPLETED;
             });
@@ -59,6 +63,7 @@ export default {
                 this.status = this.STATUSES.ERROR;
             });
 
+            // $state object to emit event to self
             const loaded = () => {
                 this.$emit("$InfiniteLoad:loaded", { target: this });
             };
@@ -75,6 +80,7 @@ export default {
                 error,
             };
 
+            // pass $state to components
             this.$emit("infinite", $state);
             this.status = this.STATUSES.LOADING;
         },

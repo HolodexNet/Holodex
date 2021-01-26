@@ -1,5 +1,5 @@
 <template>
-    <v-row style="min-height: 50%" v-if="isLoading || showError">
+    <v-row v-if="isLoading || showError">
         <v-col class="d-flex align-center justify-center flex-column">
             <v-progress-circular
                 v-if="isLoading && !showError"

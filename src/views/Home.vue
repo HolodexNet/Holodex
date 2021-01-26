@@ -45,7 +45,6 @@
                     infiniteLoad
                     @infinite="loadNext"
                     :infiniteId="infiniteId"
-                    style=""
                     :cols="{
                         xs: 1,
                         sm: 3,

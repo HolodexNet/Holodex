@@ -1,19 +1,22 @@
 <template>
     <!-- pad bottom for 100px to allow space for infiniteload -->
-    <v-container class="pt-0 pl-0 pr-0" :style="{ 'padding-bottom': infiniteLoad ? '100px' : '0' }" fluid>
+    <v-container
+        class="pt-0 pl-0 pr-0"
+        style="position: relative"
+        :style="{ 'padding-bottom': infiniteLoad ? '100px' : '0' }"
+        fluid
+    >
         <!-- Video Card grid rows -->
         <!-- Set min height to account for layout shifting of show more button -->
-        <v-row
-            :style="hasExpansion && `min-height: calc(${limitRows} * ((100vw - 240px)/${colSize} * .5625 + 88px));`"
-            dense
-        >
+        <v-row :style="hasExpansion && `min-height: calc(${limitRows} * ((90vw)/${colSize} * .5625 + 88px));`" dense>
             <!-- Video Cards with custom grid size class based on breakpoint -->
             <v-col
                 v-for="(video, index) in spliced"
                 :key="`${index}-${video.id}`"
                 :class="['video-col', `video-${colSize}`]"
             >
-                <v-lazy style="width: 100%">
+                <!-- Dont lazy load cards immediately seen -->
+                <v-lazy style="width: 100%" v-if="index > colSize * (limitRows + 1)">
                     <VideoCard
                         :video="video"
                         fluid
@@ -29,6 +32,21 @@
                         </template>
                     </VideoCard>
                 </v-lazy>
+                <VideoCard
+                    :video="video"
+                    fluid
+                    :includeChannel="includeChannel"
+                    :horizontal="horizontal"
+                    :includeAvatar="includeAvatar"
+                    :colSize="colSize"
+                    :active="video.id === activeId"
+                    v-else
+                >
+                    <!-- pass slot to each individual video card -->
+                    <template v-slot:action>
+                        <slot name="action" :video="video"></slot>
+                    </template>
+                </VideoCard>
             </v-col>
         </v-row>
         <!-- Expand button/show more -->
@@ -45,7 +63,8 @@
             v-if="infiniteLoad"
             @infinite="emitInfinite"
             :identifier="infiniteId"
-            style="position: absolute; bottom: 10px"
+            emitFirstLoad
+            style="position: absolute; bottom: 10px; width: 100%; margin: auto"
         />
     </v-container>
 </template>
