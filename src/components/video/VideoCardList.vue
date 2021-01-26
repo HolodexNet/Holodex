@@ -3,12 +3,12 @@
     <v-container
         class="pt-0 pl-0 pr-0"
         style="position: relative"
-        :style="{ 'padding-bottom': infiniteLoad ? '100px' : '0' }"
+        :style="{ 'padding-bottom': infiniteLoad ? '150px' : '0' }"
         fluid
     >
         <!-- Video Card grid rows -->
         <!-- Set min height to account for layout shifting of show more button -->
-        <v-row :style="hasExpansion && `min-height: calc(${limitRows} * ((90vw)/${colSize} * .5625 + 88px));`" dense>
+        <v-row :style="calcMinHeight" dense>
             <!-- Video Cards with custom grid size class based on breakpoint -->
             <v-col
                 v-for="(video, index) in spliced"
@@ -64,7 +64,7 @@
             @infinite="emitInfinite"
             :identifier="infiniteId"
             emitFirstLoad
-            style="position: absolute; bottom: 10px; width: 100%; margin: auto"
+            style="position: absolute; bottom: 0px; width: 100%; margin: auto"
         />
     </v-container>
 </template>
@@ -170,6 +170,18 @@ export default {
         },
         isMobile() {
             return this.$store.state.isMobile;
+        },
+        hideThumbnail() {
+            return this.$store.state.settings.hideThumbnail;
+        },
+        calcMinHeight() {
+            return (
+                !this.horizontal &&
+                this.hasExpansion &&
+                `min-height: calc(${this.limitRows} * (${this.hideThumbnail ? 0 : 1} * (90vw)/${
+                    this.colSize
+                } * .5625 + 88px));`
+            );
         },
     },
 };
