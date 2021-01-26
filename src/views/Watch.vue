@@ -7,10 +7,10 @@
         </v-alert>
         <v-row>
             <v-col :lg="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3">
-                <WatchFrame :video="video" v-if="video.id">
+                <WatchFrame :video="video">
                     <template v-slot:youtube>
                         <youtube
-                            class="embedded-video"
+                            v-if="video.id"
                             :video-id="video.id"
                             @ready="ready"
                             :playerVars="{
@@ -217,7 +217,7 @@ export default {
 
 <style>
 /* maintains 16:9 aspect ratio */
-.embedded-video {
+/* .embedded-video {
     position: relative;
     padding-bottom: 56.25%;
     padding-bottom: min(56.25%, calc(100vh - 220px));
@@ -227,7 +227,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-}
+} */
 
 .embedded-chat {
     position: relative;
