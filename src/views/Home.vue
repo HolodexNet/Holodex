@@ -45,7 +45,6 @@
                     infiniteLoad
                     @infinite="loadNext"
                     :infiniteId="infiniteId"
-                    style=""
                     :cols="{
                         xs: 1,
                         sm: 3,
@@ -127,9 +126,9 @@ export default {
                 })
                 .then(() => {
                     if (this.videos.length !== lastLength) {
-                        $state?.loaded();
+                        $state.loaded();
                     } else {
-                        $state?.completed();
+                        $state.completed();
                     }
                 })
                 .catch((e) => {

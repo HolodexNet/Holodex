@@ -1,11 +1,37 @@
 <template>
-    <v-row dense>
-        <v-col
-            v-for="(video, index) in spliced"
-            :key="`${index}-${video.id}`"
-            :class="['video-col', `video-${colSize}`]"
-        >
-            <v-lazy style="width: 100%">
+    <!-- pad bottom for 100px to allow space for infiniteload -->
+    <v-container
+        class="pt-0 pl-0 pr-0"
+        style="position: relative"
+        :style="{ 'padding-bottom': infiniteLoad ? '150px' : '0' }"
+        fluid
+    >
+        <!-- Video Card grid rows -->
+        <!-- Set min height to account for layout shifting of show more button -->
+        <v-row :style="calcMinHeight" dense>
+            <!-- Video Cards with custom grid size class based on breakpoint -->
+            <v-col
+                v-for="(video, index) in spliced"
+                :key="`${index}-${video.id}`"
+                :class="['video-col', `video-${colSize}`]"
+            >
+                <!-- Dont lazy load cards immediately seen -->
+                <v-lazy style="width: 100%" v-if="index > colSize * (limitRows + 1)">
+                    <VideoCard
+                        :video="video"
+                        fluid
+                        :includeChannel="includeChannel"
+                        :horizontal="horizontal"
+                        :includeAvatar="includeAvatar"
+                        :colSize="colSize"
+                        :active="video.id === activeId"
+                    >
+                        <!-- pass slot to each individual video card -->
+                        <template v-slot:action>
+                            <slot name="action" :video="video"></slot>
+                        </template>
+                    </VideoCard>
+                </v-lazy>
                 <VideoCard
                     :video="video"
                     fluid
@@ -14,40 +40,33 @@
                     :includeAvatar="includeAvatar"
                     :colSize="colSize"
                     :active="video.id === activeId"
+                    v-else
                 >
                     <!-- pass slot to each individual video card -->
                     <template v-slot:action>
                         <slot name="action" :video="video"></slot>
                     </template>
                 </VideoCard>
-            </v-lazy>
-        </v-col>
-        <div class="text-center" style="width: 100%">
-            <v-btn
-                icon
-                @click="expanded = !expanded"
-                v-if="!isMobile && limitRows > 0 && videos.length > this.limitRows * this.colSize"
-            >
+            </v-col>
+        </v-row>
+        <!-- Expand button/show more -->
+        <div class="text-center" style="width: 100%" v-if="hasExpansion">
+            <v-btn :text="!isMobile" @click="expanded = !expanded" v-if="hasExpansion" color="primary" ref="expandBtn">
+                {{ this.expanded ? $t("component.description.showLess") : $t("component.description.showMore") }}
                 <v-icon>
                     {{ this.expanded ? mdiChevronUp : mdiChevronDown }}
                 </v-icon>
             </v-btn>
-            <v-btn
-                elevation="4"
-                block
-                large
-                @click="expanded = !expanded"
-                color="cyan accent-4"
-                v-if="isMobile && limitRows > 0 && videos.length > this.limitRows * this.colSize"
-            >
-                <v-icon>
-                    {{ this.expanded ? mdiChevronUp : mdiChevronDown }}
-                </v-icon>
-            </v-btn>
-
-            <InfiniteLoad v-if="infiniteLoad" @infinite="emitInfinite" :identifier="infiniteId" />
         </div>
-    </v-row>
+        <!-- Infiniteloading observer -->
+        <InfiniteLoad
+            v-if="infiniteLoad"
+            @infinite="emitInfinite"
+            :identifier="infiniteId"
+            emitFirstLoad
+            style="position: absolute; bottom: 0px; width: 100%; margin: auto"
+        />
+    </v-container>
 </template>
 
 <script>
@@ -120,8 +139,19 @@ export default {
             this.$emit("infinite", $state);
         },
     },
-    mounted() {},
+    watch: {
+        expanded() {
+            // on close, set the scroll position back to the expand button
+            if (!this.expanded)
+                this.$nextTick(() => {
+                    this.$refs.expandBtn.$el.scrollIntoView({ block: "center" });
+                });
+        },
+    },
     computed: {
+        hasExpansion() {
+            return this.limitRows > 0 && this.videos.length > this.limitRows * this.colSize;
+        },
         spliced() {
             if (this.limitRows <= 0 || this.expanded) return this.videos;
             return this.videos.slice(0).splice(0, this.limitRows * this.colSize);
@@ -141,11 +171,23 @@ export default {
         isMobile() {
             return this.$store.state.isMobile;
         },
+        hideThumbnail() {
+            return this.$store.state.settings.hideThumbnail;
+        },
+        calcMinHeight() {
+            return (
+                !this.horizontal &&
+                this.hasExpansion &&
+                `min-height: calc(${this.limitRows} * (${this.hideThumbnail ? 0 : 1} * (90vw)/${
+                    this.colSize
+                } * .5625 + 88px));`
+            );
+        },
     },
 };
 </script>
 
-<style>
+<style scoped>
 .video-col {
     display: flex;
     justify-content: center;

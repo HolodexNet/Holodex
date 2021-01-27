@@ -4,14 +4,12 @@
             tag="a"
             outlined
             :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
-            :target="redirectMode ? '_blank' : ''"
-            rel="noopener"
             link
+            @click.prevent="(e) => (!redirectMode ? goToVideo(video.id) : goToYoutube(video.id))"
+            :target="redirectMode ? '_blank' : ''"
             :href="!redirectMode ? `/watch/${video.id}` : `https://youtu.be/${video.id}`"
-            @click.prevent="goToVideo(video.id)"
+            rel="noopener"
         >
-            <!-- :to="!redirectMode ? `/watch/${video.id}` : ''" -->
-            <!-- :href="`https://youtu.be/${video.id}`" -->
             <!-- Video Image with Duration -->
             <v-img
                 class="white--text rounded"
@@ -19,11 +17,7 @@
                 :aspect-ratio="16 / 9"
                 :width="horizontal ? '150px' : '100%'"
                 v-if="!hideThumbnail"
-                @click.stop="redirectMode && goToYoutube(video.id)"
             >
-                <!-- <template v-slot:placeholder>
-                    <v-row class="fill-height ma-0" align="center" justify="center"></v-row>
-                </template> -->
                 <!-- Image Overlay -->
                 <div class="video-card-overlay d-flex justify-space-between flex-column" style="height: 100%">
                     <div class="d-flex justify-space-between align-start">
@@ -55,27 +49,22 @@
                 </div>
             </v-img>
 
-            <v-list-item three-line class="pa-0">
-                <!-- Render Channel Avatar if necessary -->
-                <!-- <router-link
-                    :to="`/channel/${video.channel.id}`"
-                    v-if="includeChannel && includeAvatar && !horizontal && video.channel"
-                > -->
+            <v-list-item
+                three-line
+                class="pa-0"
+                @click.stop.prevent="goToVideo(video.id)"
+                :href="`/watch/${video.id}`"
+                rel="noopener"
+            >
                 <v-list-item-avatar v-if="includeChannel && includeAvatar && !horizontal && video.channel">
                     <ChannelImg :channel="video.channel" />
                 </v-list-item-avatar>
-                <!-- </router-link> -->
 
                 <v-list-item-content class="pa-0">
                     <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
                         {{ title }}
                     </v-list-item-title>
                     <v-list-item-subtitle class="channel-name" v-if="includeChannel">
-                        <!-- <router-link
-                            :to="`/channel/${video.channel.id}`"
-                            class="no-decoration channel-name text-truncate"
-                            :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
-                        > -->
                         <a
                             class="channel-name no-decoration"
                             :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
@@ -84,7 +73,6 @@
                         >
                             {{ channelName }}
                         </a>
-                        <!-- </router-link> -->
                     </v-list-item-subtitle>
                     <v-list-item-subtitle>
                         <span :class="'text-' + this.video.status">
@@ -92,7 +80,6 @@
                         </span>
                         <span v-if="video.clips && video.clips.length > 0">
                             •
-                            <!-- <router-link :to="`/watch/${video.id}`" > -->
                             <span class="primary--text">
                                 {{
                                     $tc(
@@ -101,7 +88,6 @@
                                     )
                                 }}
                             </span>
-                            <!-- </router-link> -->
                         </span>
                         <span v-else-if="video.status === 'live' && video.live_viewers > 0">
                             •
@@ -262,7 +248,6 @@ export default {
         },
         goToYoutube(id) {
             const url = `https://www.youtube.com/watch?v=${id}`;
-
             window.open(url, "_blank", "noopener");
         },
     },

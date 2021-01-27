@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="video" v-if="!redirectMode && video">
+        <div class="video" v-if="!redirectMode">
             <slot name="youtube"></slot>
         </div>
         <div class="thumbnail" v-else>
@@ -117,3 +117,16 @@ export default {
     },
 };
 </script>
+<style>
+.video {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-bottom: min(56.25%, calc(100vh - 220px));
+    width: 100%;
+}
+.video > div > iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+</style>
