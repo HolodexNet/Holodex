@@ -8,19 +8,17 @@
                         <div class="text-h6">
                             {{ $t("views.home.liveOrUpcomingHeading") }}
                         </div>
+                        <v-btn icon @click="currentGridSize = (currentGridSize + 1) % 3" v-if="!$store.state.isMobile">
+                            <v-icon>{{ $store.getters.gridIcon }}</v-icon>
+                        </v-btn>
                     </v-row>
                     <VideoCardList
                         :videos="live"
                         includeChannel
                         includeAvatar
-                        :cols="{
-                            xs: 1,
-                            sm: 2,
-                            md: 3,
-                            lg: 4,
-                            xl: 5,
-                        }"
                         :limitRows="2"
+                        :cols="colSizes"
+                        :dense="currentGridSize > 0"
                     >
                     </VideoCardList>
                     <v-divider class="my-3" />
@@ -46,14 +44,8 @@
                         infiniteLoad
                         @infinite="loadNext"
                         :infiniteId="infiniteId"
-                        style="min-height: 100px"
-                        :cols="{
-                            xs: 1,
-                            sm: 3,
-                            md: 4,
-                            lg: 6,
-                            xl: 7,
-                        }"
+                        :cols="colSizes"
+                        :dense="currentGridSize > 0"
                     ></VideoCardList>
                 </v-col>
             </v-row>
@@ -123,6 +115,23 @@ export default {
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
         },
+        currentGridSize: {
+            get() {
+                return this.$store.state.currentGridSize;
+            },
+            set(val) {
+                this.$store.commit("setCurrentGridSize", val);
+            },
+        },
+        colSizes() {
+            return {
+                xs: 1,
+                sm: 2,
+                md: 3 + this.currentGridSize,
+                lg: 4 + this.currentGridSize,
+                xl: 5 + this.currentGridSize,
+            };
+        },
     },
     methods: {
         init() {
@@ -145,14 +154,14 @@ export default {
                 })
                 .then(() => {
                     if (this.videos.length !== lastLength) {
-                        $state?.loaded();
+                        $state.loaded();
                     } else {
-                        $state?.completed();
+                        $state.completed();
                     }
                 })
                 .catch((e) => {
                     console.error(e);
-                    $state?.error();
+                    $state.error();
                 });
         },
     },

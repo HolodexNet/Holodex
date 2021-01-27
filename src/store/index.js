@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import { ORGS } from "@/utils/consts";
+import * as icons from "@/utils/icons";
 
 // import { dayjs } from "@/utils/time";
 
@@ -29,6 +30,7 @@ function defaultState() {
         },
         isMobile: true,
         currentOrg: "Hololive",
+        currentGridSize: 0,
         // navigation history tracking
         routerHistory: [],
     };
@@ -66,6 +68,16 @@ export default new Vuex.Store({
         isLoggedIn(state) {
             return state.userdata?.jwt;
         },
+        gridIcon(state) {
+            switch (state.currentGridSize) {
+                case 1:
+                    return icons.mdiGrid;
+                case 2:
+                    return icons.mdiSquareOutline;
+                default:
+                    return icons.mdiGridLarge;
+            }
+        },
     },
     mutations: {
         // other
@@ -98,6 +110,9 @@ export default new Vuex.Store({
         },
         setVisitedMugen(state) {
             state.firstVisitMugen = false;
+        },
+        setCurrentGridSize(state, size) {
+            state.currentGridSize = size;
         },
     },
     actions: {

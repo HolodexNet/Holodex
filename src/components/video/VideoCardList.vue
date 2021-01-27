@@ -8,7 +8,7 @@
     >
         <!-- Video Card grid rows -->
         <!-- Set min height to account for layout shifting of show more button -->
-        <v-row :style="calcMinHeight" dense>
+        <v-row :style="calcMinHeight" :dense="dense">
             <!-- Video Cards with custom grid size class based on breakpoint -->
             <v-col
                 v-for="(video, index) in spliced"
@@ -63,7 +63,6 @@
             v-if="infiniteLoad"
             @infinite="emitInfinite"
             :identifier="infiniteId"
-            emitFirstLoad
             style="position: absolute; bottom: 0px; width: 100%; margin: auto"
         />
     </v-container>
@@ -132,6 +131,10 @@ export default {
         activeId: {
             required: false,
             type: String,
+        },
+        dense: {
+            type: Boolean,
+            default: false,
         },
     },
     methods: {
