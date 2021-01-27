@@ -18,26 +18,7 @@ export const state = {
     ...persistState,
 };
 
-const getters = {
-    live(state) {
-        return state.live;
-    },
-    videos(state) {
-        return state.videos;
-    },
-    isLoading(state) {
-        return state.isLoading;
-    },
-    hasError(state) {
-        return state.hasError;
-    },
-    currentOffset(state) {
-        return state.currentOffset;
-    },
-    recentVideoFilter(state) {
-        return state.recentVideoFilter;
-    },
-};
+const getters = {};
 
 const actions = {
     fetchLive({ commit, rootState }, params) {

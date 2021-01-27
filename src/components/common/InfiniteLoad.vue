@@ -28,13 +28,13 @@ export default {
         identifier: {
             default: +new Date(),
         },
-        emitFirstLoad: {
-            default: false,
-            type: Boolean,
-        },
+        // emitFirstLoad: {
+        //     default: false,
+        //     type: Boolean,
+        // },
     },
     mounted() {
-        this.emitFirstLoad && this.emitEvent();
+        // this.emitFirstLoad && this.emitEvent();
     },
     watch: {
         identifier() {
