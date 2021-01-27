@@ -80,7 +80,6 @@ import {
 } from "@mdi/js";
 import * as icons from "@/utils/icons";
 import { debounce } from "@/utils/functions";
-import { json2csvAsync, csv2jsonAsync } from "json-2-csv";
 import jsonp from "jsonp-es6";
 import { formatDuration } from "@/utils/time";
 
@@ -89,7 +88,7 @@ export default {
     components: {},
     data() {
         return {
-            query: [],
+            query: this.value,
             icons,
             mdiLabel,
             mdiAccountMultiple,
@@ -111,8 +110,11 @@ export default {
             type: Boolean,
             default: false,
         },
+        value: {
+            type: Object,
+            default: null,
+        },
     },
-
     computed: {
         isMobile() {
             return this.$store.state.isMobile;
@@ -125,12 +127,6 @@ export default {
         },
     },
     watch: {
-        async $route(to) {
-            // console.log("UPDATED");
-            if (to.query?.q && this.query.length === 0) {
-                this.query = await csv2jsonAsync(to.query?.q);
-            }
-        },
         // eslint-disable-next-line func-names
         search: debounce(function (val) {
             if (!val) return;
@@ -141,6 +137,9 @@ export default {
             // jsonp();
             this.getAutocomplete(val);
         }, 500),
+        query() {
+            if (this.query) this.$emit("input", this.query);
+        },
     },
     methods: {
         formatDuration,
@@ -149,8 +148,18 @@ export default {
             const res = await this.searchAutocomplete(query);
             if (res && res.results) {
                 this.fromApi = res.results.map(
-                    ({ trackId, collectionName, releaseDate, artistName, trackName, artworkUrl100, trackViewUrl }) => ({
+                    ({
                         trackId,
+                        collectionName,
+                        releaseDate,
+                        artistName,
+                        trackName,
+                        trackTimeMillis,
+                        artworkUrl100,
+                        trackViewUrl,
+                    }) => ({
+                        trackId,
+                        trackTimeMillis,
                         collectionName,
                         releaseDate,
                         artistName,
@@ -160,7 +169,6 @@ export default {
                     }),
                 );
             }
-            console.log(res);
             this.isLoading = false;
             return res;
         },
@@ -173,31 +181,9 @@ export default {
                 lang: "ja_jp",
             });
         },
-        async commitSearch() {
-            if (!this.query || this.query.length === 0) return;
-
-            if (this.query.length === 1 && this.query[0].type === "channel") {
-                this.$router.push(`/channel/${this.query[0].value}`);
-                return;
-            }
-
-            this.$router.push({
-                path: "/search",
-                query: { q: await json2csvAsync(this.query) },
-            });
-        },
-        addItem(item) {
-            // console.log(item);
-            this.query.push({ ...item });
-        },
         onInput() {
             this.search = null;
             this.fromApi = [];
-        },
-        onEnterKeyDown() {
-            if (this.search === null || this.search.length === 0) {
-                this.commitSearch();
-            }
         },
     },
 };
