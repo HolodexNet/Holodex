@@ -91,7 +91,6 @@ import { decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiRectangleOutline } from "@mdi/js";
 import * as icons from "@/utils/icons";
-// import api from "@/utils/backend-api";
 
 export default {
     name: "Watch",

@@ -14,7 +14,7 @@
         <v-card tile class="d-flex justify-space-between px-4 pt-2 flex-wrap-reverse flex-sm-nowrap">
             <!-- :class="{ 'pb-2': theatherMode }" -->
             <span class="watch-chips">
-                <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic>
+                <video-topic :videoId="video.id" :topic="video.topic_id"></video-topic>
                 <template v-for="mention in channelChips">
                     <ChannelChip :channel="mention" :key="mention.id" />
                 </template>

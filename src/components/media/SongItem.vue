@@ -23,7 +23,7 @@
 </template>
 
 <script>
-const jsonp = require("jsonp-es6");
+// const jsonp = require("jsonp-es6");
 
 export default {
     name: "SongItem",
@@ -53,13 +53,13 @@ export default {
     computed: {},
     mounted() {
         if (this.song.itunesid) {
-            jsonp("https://itunes.apple.com/lookup", { upc: 720642462928 }).then((res) => {
-                console.log(res);
-                if (res.results && res.results[0] && res.results[0].artworkUrl100) {
-                    this.albumArt = res.results[0].artworkUrl100.replace("100x100", "200x200");
-                }
-                // this.albumArt = res.
-            });
+            // jsonp("https://itunes.apple.com/lookup", { upc: 720642462928 }).then((res) => {
+            //     console.log(res);
+            //     if (res.results && res.results[0] && res.results[0].artworkUrl100) {
+            //         this.albumArt = res.results[0].artworkUrl100.replace("100x100", "200x200");
+            //     }
+            //     // this.albumArt = res.
+            // });
         }
     },
 };
