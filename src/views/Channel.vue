@@ -57,7 +57,7 @@ export default {
         };
     },
     mounted() {
-        if (this.$route.params.id !== this.channel_id) this.init();
+        if (this.$route.params.id !== this.channel.id) this.init();
     },
     computed: {
         ...mapState("channel", ["id", "channel", "isLoading", "hasError"]),
@@ -118,7 +118,12 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         "$route.params.id": function () {
-            this.init();
+            if (
+                !this.channel ||
+                (this.$route.params.id !== this.channel.id && this.$route.fullPath.includes("channel"))
+            ) {
+                this.init();
+            }
         },
     },
     methods: {
