@@ -1,5 +1,5 @@
 <template>
-    <v-container class="home pt-0" fluid>
+    <v-container class="home pt-4" fluid>
         <template v-if="isLoggedIn && favorites.length > 0">
             <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
             <v-row v-show="!isLoading && !hasError">
@@ -22,7 +22,7 @@
                     >
                     </VideoCardList>
                     <v-divider class="my-3" />
-                    <v-row class="d-flex justify-space-between px-3 pt-1 pb-3">
+                    <v-row class="d-flex justify-space-between px-3 pt-3 pb-3">
                         <div class="text-h6">
                             {{ $t("views.home.recentVideosHeading") }}
                         </div>

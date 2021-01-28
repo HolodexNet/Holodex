@@ -1,5 +1,5 @@
 <template>
-    <v-container class="pt-0">
+    <v-container class="pt-3">
         <v-row>
             <v-col cols="12">
                 <div class="text-h4">{{ $t("component.mainNav.about") }}</div>
