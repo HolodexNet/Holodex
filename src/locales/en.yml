@@ -60,6 +60,9 @@ component:
     simulcastsLabel: simulcasts
     refersLabel: refers
     sourcesLabel: sources
+  paginateLoad:
+    newer: Newer
+    older: Older
 views:
   channels:
     channelType:

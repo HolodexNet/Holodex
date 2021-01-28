@@ -57,6 +57,9 @@ component:
     refersLabel: "関連配信"
     simulcastsLabel: "裏枠"
     sourcesLabel: "切り抜き元"
+  paginateLoad:
+    newer: 次
+    older: 前
 example: "{0}または{1}パラメータを入力してください"
 example2: "パラメータで始まる{0}テキストは引用符で囲む必要があります"
 views:
@@ -111,6 +114,8 @@ views:
     hideVideoThumbnailsMsg: 動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
     pushNotificationLabel: プッシュ通知（準備中）
     pushNotificationMsg: お気に入りのチャンネルのプッシュ通知を有効にする
+    scrollModeLabel: スクロールモード
+    scrollModeMsg: スクロール/タップしてページをめくる
     autoplayVideoLabel: 動画を自動再生する
     autoplayVideoMsg: 動画を開くときに自動再生する
     redirectModeLabel: Youtubeで開く

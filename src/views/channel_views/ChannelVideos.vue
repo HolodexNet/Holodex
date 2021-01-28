@@ -63,6 +63,7 @@ export default {
         "$route.name": function () {
             this.resetVideos();
         },
+        // eslint-disable-next-line func-names
         "$route.param.id": function () {
             this.resetVideos();
         },

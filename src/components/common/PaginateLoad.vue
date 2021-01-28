@@ -4,8 +4,14 @@
         <template v-if="status !== STATUSES.LOADING">
             <v-pagination v-model="page" :length="pages" v-if="!pageLess"></v-pagination>
             <div v-else>
-                <v-btn class="ma-2" @click="page -= 1" :disabled="page === 1"> Newer </v-btn>
-                <v-btn class="ma-2" @click="page += 1" :disabled="status === STATUSES.COMPLETED"> Older </v-btn>
+                <v-btn class="ma-2 pr-6" @click="page -= 1" :disabled="page === 1">
+                    <v-icon>{{ mdiChevronLeft }}</v-icon>
+                    {{ $t("component.paginateLoad.newer") }}
+                </v-btn>
+                <v-btn class="ma-2 pl-6" @click="page += 1" :disabled="status === STATUSES.COMPLETED">
+                    {{ $t("component.paginateLoad.older") }}
+                    <v-icon>{{ mdiChevronRight }}</v-icon>
+                </v-btn>
             </div>
         </template>
     </div>
@@ -13,6 +19,7 @@
 
 <script>
 import LoadingOverlay from "@/components/common/LoadingOverlay";
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 
 export default {
     name: "PaginateLoad",
@@ -28,6 +35,8 @@ export default {
                 COMPLETED: 3,
             }),
             status: 0,
+            mdiChevronLeft,
+            mdiChevronRight,
         };
     },
     props: {
@@ -50,7 +59,6 @@ export default {
             },
             set(val) {
                 this.$router.push({
-                    // path: "/",
                     query: {
                         ...this.$router.query,
                         page: val,
@@ -60,7 +68,6 @@ export default {
         },
     },
     created() {
-        console.log("emit from mounetd");
         this.emitEvent();
     },
     watch: {
@@ -71,7 +78,6 @@ export default {
                 this.page = 1;
                 return;
             }
-            console.log("id change");
             this.emitEvent();
         },
         // eslint-disable-next-line func-names
