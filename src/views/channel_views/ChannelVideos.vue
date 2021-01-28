@@ -1,8 +1,5 @@
 <template>
     <div style="height: 100%">
-        <!-- <v-row v-if="loading">
-            <v-progress-circular indeterminate size="32" class="ma-auto"></v-progress-circular>
-        </v-row> -->
         <VideoCardList
             :videos="videos"
             :includeChannel="hasChannelInfo"
@@ -16,6 +13,7 @@
                 lg: 5,
                 xl: 6,
             }"
+            :dense="true"
         />
     </div>
 </template>
@@ -77,9 +75,9 @@ export default {
                 })
                 .then(() => {
                     if (this.videos.length !== lastLength) {
-                        $state?.loaded();
+                        $state.loaded();
                     } else {
-                        $state?.completed();
+                        $state.completed();
                     }
                 })
                 .catch((e) => {

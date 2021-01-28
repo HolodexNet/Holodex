@@ -31,4 +31,7 @@ export {
     mdiMenuDown,
     mdiPlusBox,
     mdiCheck,
+    mdiGridLarge,
+    mdiGrid,
+    mdiSquareOutline,
 } from "@mdi/js";
