@@ -15,7 +15,7 @@
                 <!--todo PUT TAGS EDITING HERE --->
             </v-card-text>
             <v-card-text>
-                <song-search></song-search>
+                <video-songs></video-songs>
             </v-card-text>
             <v-divider />
         </template>
@@ -46,7 +46,7 @@ import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/t
 import * as icons from "@/utils/icons";
 import VideoTopic from "@/components/video/VideoTopic";
 import TruncatedText from "@/components/common/TruncatedText";
-import SongSearch from "@/components/media/SongSearch";
+import VideoSongs from "@/components/media/VideoSongs";
 
 export default {
     name: "WatchInfo",
@@ -57,7 +57,7 @@ export default {
         ChannelSocials,
         ChannelImg,
         TruncatedText,
-        SongSearch,
+        VideoSongs,
         // VideoDescription,
     },
     props: {

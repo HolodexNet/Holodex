@@ -70,10 +70,12 @@ export default {
     created() {
         // check if browser support webp
         if (!this.$store.testedWebP) {
-            this.supportsWebp().then((res) => {
-                if (!res) this.$store.commit("settings/noWebPSupport");
+            this.$nextTick(() => {
+                this.supportsWebp().then((res) => {
+                    if (!res) this.$store.commit("settings/noWebPSupport");
+                });
+                this.$store.commit("settings/testedWebP");
             });
-            this.$store.commit("settings/testedWebP");
         }
         // set theme
         this.$vuetify.theme.dark = this.darkMode;
