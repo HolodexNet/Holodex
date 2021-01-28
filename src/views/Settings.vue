@@ -51,15 +51,20 @@
                     :label="$t('views.settings.hideVideoThumbnailsLabel')"
                     :messages="$t('views.settings.hideVideoThumbnailsMsg')"
                 ></v-switch>
-                <v-switch
+                <!-- <v-switch
                     :label="$t('views.settings.pushNotificationLabel')"
                     :messages="$t('views.settings.pushNotificationMsg')"
                     disabled
-                ></v-switch>
+                ></v-switch> -->
                 <v-switch
                     v-model="autoplayVideo"
                     :label="$t('views.settings.autoplayVideoLabel')"
                     :messages="$t('views.settings.autoplayVideoMsg')"
+                ></v-switch>
+                <v-switch
+                    v-model="scrollMode"
+                    :label="$t('views.settings.scrollModeLabel')"
+                    :messages="$t('views.settings.scrollModeMsg')"
                 ></v-switch>
                 <br />
                 <v-btn @click="resetSettings">
@@ -115,6 +120,14 @@ export default {
             },
             set(val) {
                 this.$store.commit("settings/setAutoplayVideo", val);
+            },
+        },
+        scrollMode: {
+            get() {
+                return this.$store.state.settings.scrollMode;
+            },
+            set(val) {
+                this.$store.commit("settings/setScrollMode", val);
             },
         },
         useEnName: {

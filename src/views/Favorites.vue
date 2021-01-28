@@ -41,11 +41,14 @@
                     <VideoCardList
                         :videos="videos"
                         includeChannel
-                        infiniteLoad
-                        @infinite="loadNext"
-                        :infiniteId="infiniteId"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
+                        :lazy="scrollMode"
+                        :identifier="identifier"
+                        :paginateLoad="!scrollMode"
+                        :infiniteLoad="scrollMode"
+                        @load="loadNext"
+                        pageLess
                     ></VideoCardList>
                 </v-col>
             </v-row>
@@ -88,7 +91,8 @@ export default {
     data() {
         return {
             icons,
-            infiniteId: +new Date(),
+            identifier: +new Date(),
+            pageLength: 24,
         };
     },
     mounted() {
@@ -98,6 +102,9 @@ export default {
         recentVideoFilter() {
             this.resetVideos();
         },
+        // favorites() {
+        //     this.init();
+        // },
     },
     computed: {
         ...mapState("favorites", ["favorites", "live", "videos", "isLoading", "hasError", "currentOffset"]),
@@ -109,11 +116,11 @@ export default {
                 this.$store.commit("favorites/setRecentVideoFilter", value);
             },
         },
-        pageLength() {
-            return 24;
-        },
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
+        },
+        scrollMode() {
+            return this.$store.state.settings.scrollMode;
         },
         currentGridSize: {
             get() {
@@ -139,7 +146,6 @@ export default {
                 this.$store.dispatch("favorites/resetFavorites");
                 this.resetVideos();
                 this.$store.dispatch("favorites/fetchLive");
-                this.infiniteId = +new Date();
             }
         },
         resetVideos() {
@@ -148,16 +154,21 @@ export default {
         },
         loadNext($state) {
             const lastLength = this.videos.length;
+            if (!this.scrollMode) this.$store.commit("favorites/resetVideos");
             this.$store
                 .dispatch("favorites/fetchNextVideos", {
                     limit: this.pageLength,
+                    ...(!this.scrollMode && { offset: this.pageLength * ($state.page - 1) }),
                 })
                 .then(() => {
-                    if (this.videos.length !== lastLength) {
-                        $state.loaded();
-                    } else {
+                    if (
+                        (this.scrollMode && this.videos.length === lastLength) ||
+                        (!this.scrollMode && this.videos.length !== this.pageLength)
+                    ) {
                         $state.completed();
+                        return;
                     }
+                    $state.loaded();
                 })
                 .catch((e) => {
                     console.error(e);

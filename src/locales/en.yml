@@ -126,6 +126,8 @@ views:
     pushNotificationMsg: Enable push notification for favorited channels
     autoplayVideoLabel: Autoplay Video
     autoplayVideoMsg:  Enable automatic playback of videos
+    scrollModeLabel: Scroll Mode
+    scrollModeMsg: Use scroll/tap to turn pages
     resetAllSettings: Reset All Settings/Data
     clipLanguageSelection: "See Clips in these Languages:"
   app:

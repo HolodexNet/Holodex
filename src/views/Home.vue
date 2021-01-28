@@ -40,11 +40,14 @@
                 <VideoCardList
                     :videos="videos"
                     includeChannel
-                    infiniteLoad
-                    @infinite="loadNext"
-                    :infiniteId="infiniteId"
                     :cols="colSizes"
                     :dense="currentGridSize > 0"
+                    :lazy="scrollMode"
+                    :identifier="identifier"
+                    :paginateLoad="!scrollMode"
+                    :infiniteLoad="scrollMode"
+                    @load="loadNext"
+                    pageLess
                 ></VideoCardList>
             </v-col>
         </v-row>
@@ -71,10 +74,11 @@ export default {
     },
     data() {
         return {
-            infiniteId: +new Date(),
+            identifier: +new Date(),
+            pageLength: 24,
         };
     },
-    created() {
+    mounted() {
         this.init();
     },
     watch: {
@@ -96,8 +100,8 @@ export default {
                 this.$store.commit("home/setRecentVideoFilter", value);
             },
         },
-        pageLength() {
-            return 24;
+        scrollMode() {
+            return this.$store.state.settings.scrollMode;
         },
         currentGridSize: {
             get() {
@@ -121,24 +125,29 @@ export default {
         init() {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
-            this.infiniteId = +new Date();
+            this.identifier = +new Date();
         },
         resetVideos() {
             this.$store.commit("home/resetVideos");
-            this.infiniteId = +new Date();
+            this.identifier = +new Date();
         },
         loadNext($state) {
             const lastLength = this.videos.length;
+            if (!this.scrollMode) this.$store.commit("home/resetVideos");
             this.$store
                 .dispatch("home/fetchNextVideos", {
                     limit: this.pageLength,
+                    ...(!this.scrollMode && { offset: this.pageLength * ($state.page - 1) }),
                 })
                 .then(() => {
-                    if (this.videos.length !== lastLength) {
-                        $state.loaded();
-                    } else {
+                    if (
+                        (this.scrollMode && this.videos.length === lastLength) ||
+                        (!this.scrollMode && this.videos.length !== this.pageLength)
+                    ) {
                         $state.completed();
+                        return;
                     }
+                    $state.loaded();
                 })
                 .catch((e) => {
                     console.error(e);
