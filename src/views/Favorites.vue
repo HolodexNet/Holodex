@@ -13,7 +13,7 @@
                         </v-btn>
                     </v-row>
                     <VideoCardList
-                        :videos="live"
+                        :videos="sortedLive"
                         includeChannel
                         includeAvatar
                         :limitRows="2"
@@ -138,6 +138,13 @@ export default {
                 lg: 4 + this.currentGridSize,
                 xl: 5 + this.currentGridSize,
             };
+        },
+        sortedLive() {
+            return this.live.sort((a, b) => {
+                const dateA = new Date(a.available_at).getTime();
+                const dateB = new Date(b.available_at).getTime();
+                return dateA > dateB ? 1 : -1;
+            });
         },
     },
     methods: {
