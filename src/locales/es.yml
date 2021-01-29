@@ -59,6 +59,9 @@ component:
     refersLabel: "transmisión simultanea"
     simulcastsLabel: "referencias"
     sourcesLabel: "fuentes"
+  paginateLoad:
+    newer: Más recientes
+    older: Más antiguas
 views:
   channels:
     channelType:
@@ -118,6 +121,8 @@ views:
       deslizar en mobiles
     pushNotificationLabel: Notificaciones emergentes
     pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
+    scrollModeLabel: Modo de desplazamiento
+    scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     autoplayVideoLabel: Reproducir vídeos automáticamente
     autoplayVideoMsg: Activa la reproducción automática de videos
     resetAllSettings: Reiniciar todas las opciones/datos

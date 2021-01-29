@@ -3,9 +3,6 @@
         <VideoCardList
             :videos="videos"
             :includeChannel="hasChannelInfo"
-            infiniteLoad
-            @infinite="loadNext"
-            :infiniteId="infiniteId"
             :cols="{
                 xs: 1,
                 sm: 3,
@@ -14,7 +11,14 @@
                 xl: 6,
             }"
             :dense="true"
+            paginateLoad
+            :identifier="identifier"
+            :paginatePages="pages"
+            @load="loadNext"
         />
+        <!-- infiniteLoad
+            @infinite="loadNext"
+            :infiniteId="infiniteId" -->
     </div>
 </template>
 
@@ -30,15 +34,12 @@ export default {
     },
     data() {
         return {
-            infiniteId: +new Date(),
+            identifier: +new Date(),
             pageLength: 25,
         };
     },
-    mounted() {
-        this.resetVideos();
-    },
     computed: {
-        ...mapState("channel", ["videos"]),
+        ...mapState("channel", ["videos", "total"]),
         hasChannelInfo() {
             // get uploader name for videos not uploaded by current channel
             return this.$route.name === "channel_clips" || this.$route.name === "channel_collabs";
@@ -53,24 +54,35 @@ export default {
                     return "videos";
             }
         },
+        pages() {
+            return Math.ceil(this.total / this.pageLength);
+        },
     },
     watch: {
-        $route() {
+        // eslint-disable-next-line func-names
+        "$route.name": function () {
+            this.resetVideos();
+        },
+        // eslint-disable-next-line func-names
+        "$route.param.id": function () {
             this.resetVideos();
         },
     },
     methods: {
         resetVideos() {
-            this.infiniteId = +new Date();
+            this.identifier = +new Date();
             this.$store.commit("channel/resetVideos");
         },
         loadNext($state) {
             const lastLength = this.videos.length;
+            this.$store.commit("channel/resetVideos");
             this.$store
                 .dispatch("channel/fetchNextVideos", {
                     type: this.type,
                     params: {
                         limit: this.pageLength,
+                        offset: this.pageLength * ($state.page - 1),
+                        paginated: true,
                     },
                 })
                 .then(() => {
@@ -82,7 +94,7 @@ export default {
                 })
                 .catch((e) => {
                     console.error(e);
-                    $state?.error();
+                    $state.error();
                 });
         },
     },

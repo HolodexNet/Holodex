@@ -20,6 +20,7 @@
                 lg: 5,
                 xl: 5,
             }"
+            dense
         />
         <!-- </v-card-text> -->
     </v-card>

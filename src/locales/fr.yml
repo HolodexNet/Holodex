@@ -57,6 +57,9 @@ component:
   watch:
     nextUpInMugen: "Prochain"
     streamingFor: "En direct depuis {0}"
+  paginateLoad:
+    newer: Plus récente
+    older: Plus ancienne
 example: "remplis-moi avec les paramètres {0} ou {1}"
 example2: "{0} le texte commençant par un paramètre doit être entouré de guillemets"
 hello: "world"
@@ -130,6 +133,8 @@ views:
     hideVideoThumbnailsMsg: "Cacher les vignettes des vidéos aide au temps de chargement et demande moins de défilement sur mobile"
     pushNotificationLabel: "Notifications Push ( Bientôt disponible )"
     pushNotificationMsg: "Activer les notifications push pour vos chaînes favorites"
+    scrollModeLabel: Mode défilement
+    scrollModeMsg: Utilisez défiler ou toucher pour tourner les pages
     redirectModeLabel: "Ouvrir sur Youtube"
     redirectModeMsg: "Cliquer sur une vidéo l'ouvrira sur Youtube. Cliquer sur les clips sous la vignette d'une vidéo officielle continuera d'afficher les clips liés sur Holodex."
     resetAllSettings: "Réinitialiser tous les paramètres/toutes les données"

@@ -57,6 +57,9 @@ component:
     refersLabel: yang berkaitan
     simulcastsLabel: siaran serentak
     sourcesLabel: daripada
+  paginateLoad:
+    newer: Lebih baharu
+    older: Lebih lama
 views:
   channels:
     channelType:
@@ -118,6 +121,8 @@ views:
       tatalan pada peranti bimbit
     pushNotificationLabel: Pemberitahuan Segera (Akan Datang)
     pushNotificationMsg: Pemberitahuan segera akan diterima bagi saluran kegemaran
+    scrollModeLabel: Mod Tatal
+    scrollModeMsg: Use scroll/tap to turn pages
     autoplayVideoLabel: Automain Video
     autoplayVideoMsg: Dayakan main semula video secara automatik
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data

@@ -15,6 +15,7 @@ const initialState = {
     testedWebP: false,
     nameProperty: "english_name",
     hideThumbnail: false,
+    scrollMode: true,
 };
 
 export const state = { ...initialState };
@@ -54,6 +55,9 @@ const mutations = {
     },
     setClipLangs(state, val) {
         state.clipLangs = val;
+    },
+    setScrollMode(state, val) {
+        state.scrollMode = val;
     },
     resetState(state) {
         Object.assign(state, initialState);
