@@ -90,7 +90,6 @@ export default {
             this.status = this.STATUSES.READY;
         },
         emitEvent() {
-            console.log("try load");
             this.$on("$PaginateLoad:completed", () => {
                 this.status = this.STATUSES.COMPLETED;
             });

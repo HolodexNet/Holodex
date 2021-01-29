@@ -157,7 +157,7 @@ export default {
         },
         resetVideos() {
             this.$store.commit("favorites/resetVideos");
-            this.infiniteId = +new Date();
+            this.identifier = +new Date();
         },
         loadNext($state) {
             const lastLength = this.videos.length;

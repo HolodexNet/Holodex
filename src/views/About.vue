@@ -10,21 +10,32 @@
             </v-col>
 
             <v-col cols="12" md="8" sm="8" lg="9" xl="10">
+                <v-alert dense text type="info">
+                    We are aware of an issue regarding Live Chat not working, some reports suggest clearing cookies for
+                    youtube.com and holodex.net fixes it. The issue is most likely on Youtube's end, but we are still
+                    investigating work arounds
+                </v-alert>
                 <div class="text-h5">Quick Links</div>
 
-                <v-btn color="indigo" class="ma-3" large href="https://discord.gg/jctkgHBt4b"
-                    ><v-icon left>{{ icons.mdiDiscord }}</v-icon
-                    >Holodex Discord</v-btn
-                ><br />
-                <v-btn color="info" class="ma-3" large href="https://forms.gle/xkN4w8fyPr6YTGfx6"
-                    ><v-icon left>{{ icons.mdiPencil }}</v-icon
-                    >{{ $t("views.about.add_my_channel") }}</v-btn
-                ><br />
-                <v-btn color="teal" class="ma-3" large href="https://discord.gg/xJd9Der"
-                    ><v-icon left>{{ icons.mdiDiscord }}</v-icon
-                    >Hololive Creators Discord (#holodex)</v-btn
-                >
-
+                <v-btn color="indigo" class="ma-3" large href="https://discord.gg/jctkgHBt4b">
+                    <v-icon left>{{ icons.mdiDiscord }}</v-icon>
+                    Holodex Discord
+                </v-btn>
+                <br />
+                <v-btn color="info" class="ma-3" large href="https://forms.gle/xkN4w8fyPr6YTGfx6">
+                    <v-icon left>{{ icons.mdiPencil }}</v-icon>
+                    {{ $t("views.about.add_my_channel") }}
+                </v-btn>
+                <br />
+                <v-btn color="teal" class="ma-3" large href="https://discord.gg/xJd9Der">
+                    <v-icon left>{{ icons.mdiDiscord }}</v-icon>
+                    Hololive Creators Discord (#holodex)
+                </v-btn>
+                <br />
+                <v-btn class="ma-3" large href="https://github.com/RiceCakess/Holodex">
+                    <v-icon left>{{ mdiGithub }}</v-icon>
+                    Issue Tracker / Source
+                </v-btn>
                 <div class="text-h5">FAQ</div>
                 <v-expansion-panels>
                     <v-expansion-panel>
@@ -36,7 +47,7 @@
                                 <li>
                                     Android Chrome: Navigate to the site, click the three dots
                                     <v-icon color="primary">
-                                        {{ mdiDotsVertical }}
+                                        {{ icons.mdiDotsVertical }}
                                     </v-icon>
                                     on the top right and find "Add to Home Screen".
                                 </li>
@@ -162,6 +173,23 @@
 
                 <div class="text-h5">Changelog</div>
                 <div class="text-body-2">
+                    <span class="text--secondary">January 29th, 2021</span>
+                    <ul>
+                        <li>
+                            Added ability to change video thumbnail/grid sizes for Home/Favorites (use the icon on the
+                            top right)
+                        </li>
+                        <li>Added setting to enable/disable autoplay videos</li>
+                        <li>Added French localization</li>
+                        <li>
+                            Added ScrollMode setting to switch between infinite scroll loading and page by page
+                            navigation
+                        </li>
+                        <li>Frontend is now open source!</li>
+                        <li>Fixed lots of bugs and introduced new ones probably</li>
+                    </ul>
+                    <br />
+                    <br />
                     <span class="text--secondary">January 20th, 2021</span>
                     <ul>
                         <li>Massive upgrade to support over 600+ Vtuber channels and 1000+ clipping channels</li>
@@ -226,7 +254,7 @@
 </template>
 
 <script>
-import { mdiDotsVertical, mdiExportVariant } from "@mdi/js";
+import { mdiExportVariant, mdiGithub } from "@mdi/js";
 import * as icons from "@/utils/icons";
 import TwitterFeed from "@/components/common/TwitterFeed";
 
@@ -247,7 +275,7 @@ export default {
         return {
             icons,
             mdiExportVariant,
-            mdiDotsVertical,
+            mdiGithub,
         };
     },
 };
