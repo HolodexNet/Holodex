@@ -15,7 +15,7 @@
                 <!--todo PUT TAGS EDITING HERE --->
             </v-card-text>
             <v-card-text>
-                <video-songs></video-songs>
+                <video-songs :video="video"></video-songs>
             </v-card-text>
             <v-divider />
         </template>

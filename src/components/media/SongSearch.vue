@@ -8,7 +8,6 @@
         disable-lookup
         hide-no-data
         auto-select-first
-        dense
         clearable
         :autofocus="autofocus"
         :small-chips="dense"
@@ -25,7 +24,7 @@
         hide-details
     >
         <template v-slot:selection="x">
-            <div class="ma-n1 py-0 pl-3 pr-1 d-flex">
+            <div class="ma-n1 py-0 pl-3 pr-1 d-flex" style="width: 100%">
                 <!-- @click="addItem(dropdownItem.item) -->
                 <v-list-item-avatar tile>
                     <v-img :src="x.item.artworkUrl100"></v-img>
