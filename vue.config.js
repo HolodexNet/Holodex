@@ -20,7 +20,7 @@ module.exports = {
         return config;
     },
     css: {
-        extract: { ignoreOrder: true },
+        extract: process.env.NODE_ENV !== "production" ? undefined : { ignoreOrder: true },
     },
     pages: {
         index: {

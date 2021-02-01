@@ -1,28 +1,37 @@
 <template>
-    <v-card color="indigo" dark>
+    <v-list-item @click="() => {}">
         <v-list-item-avatar tile>
-            <v-img :src="song.artworkUrl100"></v-img>
+            <v-img :src="song.art"></v-img>
         </v-list-item-avatar>
-
         <v-list-item-content class="py-1 pt-1">
-            <v-list-item-subtitle class="text--primary">
-                🎵 {{ song.name }} [{{ Math.floor(song.duration / 1000 / 60) }}:{{
-                    Math.round(song.duration / 1000) % 60
-                }}]
+            <v-list-item-subtitle class="text--primary text-subtitle-1">
+                <span class="limit-width"> {{ song.name }} / {{ song.originalArtist }}</span>
             </v-list-item-subtitle>
-            <v-list-item-subtitle class="text--caption"> 🎤 {{ song.originalArtist }} </v-list-item-subtitle>
+
+            <v-list-item-subtitle class="text--caption">
+                <div class="float-right">
+                    [{{ Math.floor((song.end - song.start) / 60) }}:{{
+                        (Math.round(song.end - song.start) % 60).toString().padStart(2, "0")
+                    }}]
+                </div>
+
+                {{ song.channel.name }}
+            </v-list-item-subtitle>
         </v-list-item-content>
-    </v-card>
+    </v-list-item>
 </template>
 
 <script>
 // const jsonp = require("jsonp-es6");
+
+import { mdiMusicBoxOutline } from "@mdi/js";
 
 export default {
     name: "SongItem",
     data() {
         return {
             albumArt: null,
+            mdiMusicBoxOutline,
         };
     },
     props: {
@@ -48,4 +57,25 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.limit-width {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* https://css-tricks.com/almanac/properties/w/word-break/ */
+    word-break: break-all;
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+
+    justify-content: left;
+    text-align: left;
+}
+</style>

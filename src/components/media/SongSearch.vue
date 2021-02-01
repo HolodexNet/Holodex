@@ -1,6 +1,5 @@
 <template>
     <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
-    <!--         :class="{ 'search-bar-small': isMobile }" -->
     <v-autocomplete
         class="ma-auto song-lookup"
         solo
@@ -10,7 +9,6 @@
         auto-select-first
         clearable
         :autofocus="autofocus"
-        :small-chips="dense"
         v-model="query"
         :loading="isLoading"
         :items="results"
@@ -101,16 +99,16 @@ export default {
         };
     },
     props: {
-        dense: {
-            type: Boolean,
-            default: false,
-        },
         autofocus: {
             type: Boolean,
             default: false,
         },
         value: {
             type: Object,
+            default: null,
+        },
+        id: {
+            type: Number,
             default: null,
         },
     },
@@ -132,8 +130,6 @@ export default {
             this.fromApi = [];
             const entropy = encodeURIComponent(val).length;
             if (entropy <= 2) return;
-            // const formatted = val.replace("#", "").toLowerCase();
-            // jsonp();
             this.getAutocomplete(val);
         }, 500),
         query() {

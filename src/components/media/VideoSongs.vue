@@ -6,7 +6,7 @@
         </v-row>
         <v-row dense>
             <v-col cols="8" sm="9" md="10" lg="5">
-                <song-search :value="current.song" :id="current.id" @input="processSearch"></song-search>
+                <song-search :value="current.song" :id="current.itunesid" @input="processSearch"></song-search>
             </v-col>
             <v-col cols="4" sm="3" md="2" lg="1">
                 <v-text-field
@@ -52,7 +52,7 @@
                 </v-text-field>
             </v-col>
             <v-col cols="4" sm="6" md="8">
-                <v-btn color="success" elevation="5" width="100%">Add</v-btn>
+                <v-btn color="success" elevation="5" width="100%" @click="addSong" :disabled="!canSave">Add</v-btn>
             </v-col>
             <v-col cols="2" sm="2" md="1">
                 <v-btn color="red" elevation="5" width="100%" style="padding: 0 0px; min-width: 30px">
@@ -70,13 +70,22 @@
                 </v-btn>
             </v-col>
         </v-row>
-        <v-row class="pt-3"> </v-row>
+        <v-row class="pt-3">
+            <v-col cols="12">
+                <v-list>
+                    <template v-for="song in songList">
+                        <song-item :song="song" :key="song.name"></song-item>
+                    </template>
+                </v-list>
+            </v-col>
+        </v-row>
     </div>
 </template>
 
 <script>
 import { mdiEarHearing, mdiRestore } from "@mdi/js";
 import SongSearch from "./SongSearch";
+import SongItem from "./SongItem";
 
 function humanToSeconds(str) {
     const p = str.split(":");
@@ -102,9 +111,9 @@ function getEmptySong(video) {
     return {
         // current -> the item being edited at the moment.
         song: null, // itunes song object (ephemeral, not always present)
-        id: null,
-        start: "",
-        end: "",
+        itunesid: null,
+        start: 0,
+        end: 0,
         name: "",
         originalArtist: "",
         amUrl: null,
@@ -122,13 +131,14 @@ function getEmptySong(video) {
 export default {
     components: {
         SongSearch,
+        SongItem,
     },
     data() {
         return {
             mdiEarHearing,
             mdiRestore,
             current: getEmptySong(this.video),
-            list: [],
+            songList: [],
         };
     },
     props: {
@@ -164,20 +174,23 @@ export default {
                 }
             },
         },
+        canSave() {
+            return this.current.end - this.current.start > 0 && this.current.name;
+        },
     },
     methods: {
         processSearch(item) {
             console.log(item);
             this.current.song = item;
             if (item) {
-                this.current.id = item.trackId;
+                this.current.itunesid = item.trackId;
                 this.current.name = item.trackName;
                 this.current.originalArtist = item.artistName;
                 this.currentEndTime = `+${Math.ceil(item.trackTimeMillis / 1000)}`;
                 this.current.amUrl = item.trackViewUrl;
                 this.current.art = item.artworkUrl100;
             } else {
-                this.current.id = -1;
+                this.current.itunesid = -1;
                 this.current.amUrl = null;
                 this.current.art = null;
             }
@@ -189,6 +202,10 @@ export default {
             return endTimeRegex.test(val);
         },
         secondsToHuman,
+        addSong() {
+            this.songList.push(this.current);
+            this.current = getEmptySong(this.video);
+        },
     },
 };
 </script>
