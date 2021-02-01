@@ -1,57 +1,55 @@
 <template>
-    <v-container class="home pt-4" fluid>
+    <v-container fluid>
         <template v-if="isLoggedIn && favorites.length > 0">
             <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
-            <v-row v-show="!isLoading && !hasError">
-                <v-col>
-                    <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
-                        <div class="text-h6">
-                            {{ $t("views.home.liveOrUpcomingHeading") }}
-                        </div>
-                        <v-btn icon @click="currentGridSize = (currentGridSize + 1) % 3" v-if="!$store.state.isMobile">
-                            <v-icon>{{ $store.getters.gridIcon }}</v-icon>
+            <div v-show="!isLoading && !hasError">
+                <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
+                    <div class="text-h6">
+                        {{ $t("views.home.liveOrUpcomingHeading") }}
+                    </div>
+                    <v-btn icon @click="currentGridSize = (currentGridSize + 1) % 3" v-if="!$store.state.isMobile">
+                        <v-icon>{{ $store.getters.gridIcon }}</v-icon>
+                    </v-btn>
+                </v-row>
+                <VideoCardList
+                    :videos="sortedLive"
+                    includeChannel
+                    includeAvatar
+                    :limitRows="2"
+                    :cols="colSizes"
+                    :dense="currentGridSize > 0"
+                >
+                </VideoCardList>
+                <v-divider class="my-3" />
+                <v-row class="d-flex justify-space-between px-3 pt-3 pb-3">
+                    <div class="text-h6">
+                        {{ $t("views.home.recentVideosHeading") }}
+                    </div>
+                    <v-btn-toggle v-model="recentVideoFilter" mandatory dense>
+                        <v-btn value="all">
+                            {{ $t("views.home.recentVideoToggles.all") }}
                         </v-btn>
-                    </v-row>
-                    <VideoCardList
-                        :videos="sortedLive"
-                        includeChannel
-                        includeAvatar
-                        :limitRows="2"
-                        :cols="colSizes"
-                        :dense="currentGridSize > 0"
-                    >
-                    </VideoCardList>
-                    <v-divider class="my-3" />
-                    <v-row class="d-flex justify-space-between px-3 pt-3 pb-3">
-                        <div class="text-h6">
-                            {{ $t("views.home.recentVideosHeading") }}
-                        </div>
-                        <v-btn-toggle v-model="recentVideoFilter" mandatory dense>
-                            <v-btn value="all">
-                                {{ $t("views.home.recentVideoToggles.all") }}
-                            </v-btn>
-                            <v-btn value="stream">
-                                {{ $t("views.home.recentVideoToggles.official") }}
-                            </v-btn>
-                            <v-btn value="clip">
-                                {{ $t("views.home.recentVideoToggles.subber") }}
-                            </v-btn>
-                        </v-btn-toggle>
-                    </v-row>
-                    <VideoCardList
-                        :videos="videos"
-                        includeChannel
-                        :cols="colSizes"
-                        :dense="currentGridSize > 0"
-                        :lazy="scrollMode"
-                        :identifier="identifier"
-                        :paginateLoad="!scrollMode"
-                        :infiniteLoad="scrollMode"
-                        @load="loadNext"
-                        pageLess
-                    ></VideoCardList>
-                </v-col>
-            </v-row>
+                        <v-btn value="stream">
+                            {{ $t("views.home.recentVideoToggles.official") }}
+                        </v-btn>
+                        <v-btn value="clip">
+                            {{ $t("views.home.recentVideoToggles.subber") }}
+                        </v-btn>
+                    </v-btn-toggle>
+                </v-row>
+                <VideoCardList
+                    :videos="videos"
+                    includeChannel
+                    :cols="colSizes"
+                    :dense="currentGridSize > 0"
+                    :lazy="scrollMode"
+                    :identifier="identifier"
+                    :paginateLoad="!scrollMode"
+                    :infiniteLoad="scrollMode"
+                    @load="loadNext"
+                    pageLess
+                ></VideoCardList>
+            </div>
         </template>
         <template v-else>
             <v-row style="min-height: 50%">
@@ -102,9 +100,9 @@ export default {
         recentVideoFilter() {
             this.resetVideos();
         },
-        // favorites() {
-        //     this.init();
-        // },
+        favorites() {
+            this.init();
+        },
     },
     computed: {
         ...mapState("favorites", ["favorites", "live", "videos", "isLoading", "hasError", "currentOffset"]),
@@ -150,9 +148,9 @@ export default {
     methods: {
         init() {
             if (this.favorites.length > 0 && this.isLoggedIn) {
-                this.$store.dispatch("favorites/resetFavorites");
-                this.resetVideos();
+                this.$store.commit("favorites/resetState");
                 this.$store.dispatch("favorites/fetchLive");
+                this.$store.commit("favorites/resetVideos");
             }
         },
         resetVideos() {

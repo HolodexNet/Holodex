@@ -1,7 +1,7 @@
 <template>
-    <v-container class="home pt-4" fluid>
+    <v-container fluid>
         <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
-        <template v-if="!isLoading && !hasError">
+        <div v-show="!isLoading && !hasError">
             <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
                 <div class="text-h6">
                     {{ $t("views.home.liveOrUpcomingHeading") }}
@@ -48,7 +48,7 @@
                 @load="loadNext"
                 pageLess
             ></VideoCardList>
-        </template>
+        </div>
     </v-container>
 </template>
 
@@ -123,7 +123,7 @@ export default {
         init() {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
-            this.identifier = +new Date();
+            this.$store.commit("home/resetVideos");
         },
         resetVideos() {
             this.$store.commit("home/resetVideos");

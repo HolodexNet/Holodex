@@ -41,6 +41,7 @@
                     :includeAvatar="includeAvatar"
                     :colSize="colSize"
                     :active="video.id === activeId"
+                    :style="`padding-bottom: calc(${hideThumbnail ? '56.25%' : ''} + 88px)`"
                     v-else
                 >
                     <!-- pass slot to each individual video card -->

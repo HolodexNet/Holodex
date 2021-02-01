@@ -158,7 +158,10 @@ export default {
             return langs.find((x) => x.val === this.$store.state.settings.lang).display;
         },
         favorites() {
-            return this.$store.state.favorites.favorites;
+            const fav = this.$store.state.favorites.favorites.slice(0);
+            const nameProp = this.$store.state.settings.nameProperty;
+            fav.sort((a, b) => a[nameProp].localeCompare(b[nameProp]));
+            return fav;
         },
         collapsedFavorites() {
             return !this.favoritesExpanded && this.favorites.length > 5 ? this.favorites.slice(0, 5) : this.favorites;
@@ -203,7 +206,9 @@ export default {
         formatDistance,
         handlePageClick(page) {
             // reload the page if user clicks on the same tab
-            page.path === this.$route.path ? this.$router.go(0) : this.$router.push({ path: page.path });
+            page.path === this.$route.path && !this.$route.query.page
+                ? this.$router.go(0)
+                : this.$router.push({ path: page.path });
         },
         formatTimeLabel(time) {
             const hours = dayjs(time).diff(dayjs(), "hour");

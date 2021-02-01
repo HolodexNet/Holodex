@@ -37,6 +37,7 @@ export default {
             status: 0,
             mdiChevronLeft,
             mdiChevronRight,
+            isActive: true,
         };
     },
     props: {
@@ -67,8 +68,14 @@ export default {
             },
         },
     },
-    created() {
+    mounted() {
         this.emitEvent();
+    },
+    activated() {
+        this.isActive = true;
+    },
+    deactivated() {
+        this.isActive = false;
     },
     watch: {
         identifier() {
@@ -82,7 +89,9 @@ export default {
         },
         // eslint-disable-next-line func-names
         "$route.query.page": function () {
-            this.emitEvent();
+            if (this.isActive) {
+                this.emitEvent();
+            }
         },
     },
     methods: {

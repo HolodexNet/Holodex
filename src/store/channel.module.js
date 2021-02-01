@@ -43,7 +43,6 @@ const actions = {
                 },
             })
             .then(({ data }) => {
-                console.log(data);
                 commit("setTotal", Number(data.total));
                 commit("updateVideos", data.items);
             });
