@@ -144,13 +144,13 @@ const mutations = {
             Vue.delete(state.stagedFavorites, channelId);
             return;
         }
-        console.log(state.favorites.find((f) => f.id === channelId));
+        // console.log(state.favorites.find((f) => f.id === channelId));
         if (state.favorites.find((f) => f.id === channelId)) {
             Vue.set(state.stagedFavorites, channelId, "remove");
         } else {
             Vue.set(state.stagedFavorites, channelId, "add");
         }
-        console.log(state.stagedFavorites);
+        // console.log(state.stagedFavorites);
     },
 };
 

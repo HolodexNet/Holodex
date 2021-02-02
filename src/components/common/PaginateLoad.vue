@@ -20,9 +20,12 @@
 <script>
 import LoadingOverlay from "@/components/common/LoadingOverlay";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import isActive from "@/mixins/isActive";
+import { debounce } from "@/utils/functions";
 
 export default {
     name: "PaginateLoad",
+    mixins: [isActive],
     components: {
         LoadingOverlay,
     },
@@ -37,7 +40,6 @@ export default {
             status: 0,
             mdiChevronLeft,
             mdiChevronRight,
-            isActive: true,
         };
     },
     props: {
@@ -71,34 +73,33 @@ export default {
     mounted() {
         this.emitEvent();
     },
-    activated() {
-        this.isActive = true;
-    },
-    deactivated() {
-        this.isActive = false;
-    },
     watch: {
         identifier() {
             this.reset();
+
             // if page not 1, set it and let the route watcher handle emit
             if (this.page !== 1) {
                 this.page = 1;
                 return;
             }
+            // emitevent pretend it's remounted
             this.emitEvent();
         },
         // eslint-disable-next-line func-names
         "$route.query.page": function () {
+            // only emit if component is active and page changed
             if (this.isActive) {
                 this.emitEvent();
             }
         },
     },
     methods: {
+        debounce,
         reset() {
             this.status = this.STATUSES.READY;
         },
-        emitEvent() {
+        // eslint-disable-next-line func-names
+        emitEvent: debounce(function () {
             this.$on("$PaginateLoad:completed", () => {
                 this.status = this.STATUSES.COMPLETED;
             });
@@ -127,7 +128,7 @@ export default {
 
             this.$emit("paginate", $state);
             this.status = this.STATUSES.LOADING;
-        },
+        }, 25),
     },
 };
 </script>

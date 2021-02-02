@@ -26,9 +26,11 @@
 import VideoCardList from "@/components/video/VideoCardList";
 // import api from "@/utils/backend-api";
 import { mapState } from "vuex";
+import isActive from "@/mixins/isActive";
 
 export default {
     name: "ChannelVideos",
+    mixins: [isActive],
     components: {
         VideoCardList,
     },
@@ -61,11 +63,11 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         "$route.name": function () {
-            this.resetVideos();
+            if (this.isActive) this.resetVideos();
         },
         // eslint-disable-next-line func-names
         "$route.param.id": function () {
-            this.resetVideos();
+            if (this.isActive) this.resetVideos();
         },
     },
     methods: {
