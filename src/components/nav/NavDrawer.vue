@@ -160,7 +160,17 @@ export default {
         favorites() {
             const fav = this.$store.state.favorites.favorites.slice(0);
             const nameProp = this.$store.state.settings.nameProperty;
-            fav.sort((a, b) => a[nameProp].localeCompare(b[nameProp]));
+            // make sure nav works even if sort fails for some reason
+            try {
+                fav.sort(
+                    (a, b) =>
+                        // fall back if english name doesn't exist
+                        (a[nameProp] && b[nameProp] && a[nameProp].localeCompare(b[nameProp])) ||
+                        a.name.localeCompare(b.name),
+                );
+            } catch (e) {
+                console.log(e);
+            }
             return fav;
         },
         collapsedFavorites() {
