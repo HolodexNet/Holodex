@@ -123,7 +123,7 @@ export default {
         init() {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
-            this.$store.commit("home/resetVideos");
+            this.resetVideos();
         },
         resetVideos() {
             this.$store.commit("home/resetVideos");

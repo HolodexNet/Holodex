@@ -150,7 +150,7 @@ export default {
             if (this.favorites.length > 0 && this.isLoggedIn) {
                 this.$store.commit("favorites/resetState");
                 this.$store.dispatch("favorites/fetchLive");
-                this.$store.commit("favorites/resetVideos");
+                this.resetVideos();
             }
         },
         resetVideos() {

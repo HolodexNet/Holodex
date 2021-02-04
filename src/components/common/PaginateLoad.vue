@@ -40,6 +40,7 @@ export default {
             status: 0,
             mdiChevronLeft,
             mdiChevronRight,
+            lastPage: 1,
         };
     },
     props: {
@@ -55,12 +56,19 @@ export default {
             type: Boolean,
         },
     },
+    activated() {
+        // page has changed between activation/deactivation, resync
+        if (this.lastPage !== this.page) {
+            this.emitEvent();
+        }
+    },
     computed: {
         page: {
             get() {
                 return Number(this.$route.query.page) || 1;
             },
             set(val) {
+                this.lastPage = this.page;
                 this.$router.push({
                     query: {
                         ...this.$router.query,
