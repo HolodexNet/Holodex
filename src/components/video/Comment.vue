@@ -45,7 +45,7 @@ import { mdiOpenInNew } from "@mdi/js";
 import TruncatedText from "../common/TruncatedText";
 // import TruncatedText from '../common/TruncatedText.vue';
 
-const COMMENT_TIMESTAMP_REGEX = /(?:(\d+):)?(\d+):(\d+)/gm;
+const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
 
 export default {
     name: "Comment",

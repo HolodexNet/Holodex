@@ -31,7 +31,7 @@
 import Comment from "@/components/video/Comment";
 import { formatDuration } from "@/utils/time";
 
-const COMMENT_TIMESTAMP_REGEX = /(?:(\d+):)?(\d+):(\d+)/gm;
+const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
 
 export default {
     name: "WatchComments",
