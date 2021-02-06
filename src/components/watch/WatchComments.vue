@@ -82,20 +82,20 @@ export default {
                 return this.comments.sort((a, b) => b.times.length - a.times.length);
             }
             return this.comments
-                .filter((c) => c.times.find((t) => Math.abs(this.currentFilter - t) <= 10))
+                .filter((c) => Array.from(c.times).find((t) => Math.abs(this.currentFilter - t) <= 10))
                 .sort((a, b) => a.times.length - b.times.length);
         },
         groupedComments() {
             return this.comments.map((c) => {
                 // console.log(c);
                 let match = COMMENT_TIMESTAMP_REGEX.exec(c.message);
-                const times = [];
+                const times = new Set();
                 while (match != null) {
                     const hr = match[1];
                     const min = match[2];
                     const sec = match[3];
                     const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
-                    times.push(time);
+                    times.add(time);
                     match = COMMENT_TIMESTAMP_REGEX.exec(c.message);
                 }
                 c.times = times;
