@@ -10,9 +10,9 @@
 
             <v-list-item-subtitle class="text--caption">
                 <div class="float-right">
-                    [{{ Math.floor((song.end - song.start) / 60) }}:{{
+                    {{ Math.floor((song.end - song.start) / 60) }}:{{
                         (Math.round(song.end - song.start) % 60).toString().padStart(2, "0")
-                    }}]
+                    }}
                 </div>
 
                 {{ song.channel.name }}
