@@ -1,6 +1,6 @@
 <template>
     <v-card class="watch-card rounded-0">
-        <v-btn icon class="float-right mt-2 mr-2" @click="editMode = !editMode">
+        <v-btn icon class="float-right mt-2 mr-2" :to="`/edit/video/${video.id}`">
             <v-icon>{{ icons.mdiPencil }}</v-icon>
         </v-btn>
         <v-card-title class="pt-2" style="font-size: 1.125rem; font-weight: 400">{{ video.title }}</v-card-title>
@@ -8,17 +8,16 @@
             {{ formattedTime }} <template v-if="video.status === 'live'"> • {{ liveViewers }} viewers</template>
             <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
         </v-card-subtitle>
-        <template v-if="editMode">
+        <!-- <template v-if="editMode">
             <v-divider />
             <v-card-text>
                 <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic>
-                <!--todo PUT TAGS EDITING HERE --->
             </v-card-text>
             <v-card-text>
                 <video-songs :video="video"></video-songs>
             </v-card-text>
             <v-divider />
-        </template>
+        </template> -->
         <v-divider />
         <v-list two-line>
             <v-list-item>
