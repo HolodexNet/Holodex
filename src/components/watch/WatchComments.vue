@@ -31,7 +31,7 @@
 import Comment from "@/components/video/Comment";
 import { formatDuration } from "@/utils/time";
 
-const COMMENT_TIMESTAMP_REGEX = /(?:(\d+):)?(\d+):(\d+)/gm;
+const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
 
 export default {
     name: "WatchComments",
@@ -89,16 +89,16 @@ export default {
             return this.comments.map((c) => {
                 // console.log(c);
                 let match = COMMENT_TIMESTAMP_REGEX.exec(c.message);
-                const times = [];
+                const times = new Set();
                 while (match != null) {
                     const hr = match[1];
                     const min = match[2];
                     const sec = match[3];
                     const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
-                    times.push(time);
+                    times.add(time);
                     match = COMMENT_TIMESTAMP_REGEX.exec(c.message);
                 }
-                c.times = times;
+                c.times = Array.from(times);
                 return c;
             });
         },
