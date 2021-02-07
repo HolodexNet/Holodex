@@ -213,7 +213,7 @@ export default {
             return this.$store.state.isMobile;
         },
         isWatchPage() {
-            return this.$route.name === "watch_id" || this.$route.name === "watch";
+            return this.$route.name === "watch";
         },
         currentOrg: {
             get() {

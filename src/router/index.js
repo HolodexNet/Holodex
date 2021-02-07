@@ -66,13 +66,8 @@ const routes = [
         component: Favorites,
     },
     {
-        name: "watch_id",
-        path: "/watch/:id",
-        component: Watch,
-    },
-    {
         name: "watch",
-        path: "/watch",
+        path: "/watch/:id?",
         component: Watch,
     },
     {
