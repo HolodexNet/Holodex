@@ -175,4 +175,7 @@ export default {
 .body {
     overscroll-behavior-y: none;
 }
+.row {
+    margin: 0px -12px;
+}
 </style>

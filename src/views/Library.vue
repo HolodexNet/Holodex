@@ -44,14 +44,9 @@
                 </div>
             </v-col>
         </v-row>
-        <VideoCardList :videos="savedVideosList" horizontal includeChannel v-if="savedVideosList.length > 0">
+        <VideoCardList :videos="savedVideosList" horizontal includeChannel v-if="savedVideosList.length > 0" dense>
             <template v-slot:action="prop">
-                <v-checkbox
-                    v-model="selected"
-                    :value="prop.video.id"
-                    hide-details
-                    @click="(e) => e.preventDefault()"
-                ></v-checkbox>
+                <v-checkbox v-model="selected" :value="prop.video.id" hide-details @click.prevent.stop></v-checkbox>
             </template>
         </VideoCardList>
         <div v-else class="text-center">

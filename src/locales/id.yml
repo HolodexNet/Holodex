@@ -57,6 +57,9 @@ component:
     refersLabel: "Referensi"
     simulcastsLabel: "Siaran"
     sourcesLabel: "Sumber"
+  paginateLoad:
+    newer: Terbaru
+    older: Terlama
 views:
   channels:
     channelType:
@@ -119,6 +122,8 @@ views:
     hideVideoThumbnailsMsg: >-
       Menyembunyikan video thumbnail, membantu meningkatkan proses memuat
       halaman dan mempersingkat halaman pada tampilan hp
+    scrollModeLabel: Mode Gulir
+    scrollModeMsg: Menggulir halaman menggunakan scroll / menekan tombol.
     pushNotificationLabel: Pemberitahuan notif (Akan Datang)
     pushNotificationMsg: Mengaktifkan notifikasi untuk saluran favorit
     autoplayVideoLabel: Video Putar Otomatis

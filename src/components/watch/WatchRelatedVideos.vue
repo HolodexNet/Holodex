@@ -16,6 +16,7 @@
                         cols: 12,
                         sm: 6,
                     }"
+                    dense
                 >
                 </VideoCardList>
             </template>

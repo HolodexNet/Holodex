@@ -28,7 +28,12 @@
                 <span class="text-subtitle-2" style="color: #aaa">{{ expanded ? "Close" : "Read more" }}</span>
             </template>
         </truncated-text>
-        <a class="openOnYoutube" :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`">
+        <a
+            class="openOnYoutube"
+            :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
             <v-icon small>{{ mdiOpenInNew }}</v-icon>
         </a>
         <!-- comment body -->
@@ -40,7 +45,7 @@ import { mdiOpenInNew } from "@mdi/js";
 import TruncatedText from "../common/TruncatedText";
 // import TruncatedText from '../common/TruncatedText.vue';
 
-const COMMENT_TIMESTAMP_REGEX = /(?:(\d+):)?(\d+):(\d+)/gm;
+const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
 
 export default {
     name: "Comment",

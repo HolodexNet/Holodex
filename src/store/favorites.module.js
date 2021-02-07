@@ -4,8 +4,6 @@ import Vue from "vue";
 import { debounce } from "@/utils/functions";
 
 const initialState = {
-    favorites: [],
-
     live: [],
     videos: [],
     isLoading: true,
@@ -16,6 +14,7 @@ const initialState = {
     // lastLiveUpdate: "2021-01-07T18:31:22-08:00",
 };
 const persistState = {
+    favorites: [],
     recentVideoFilter: "all",
 };
 
@@ -95,13 +94,13 @@ const actions = {
             })
             .finally(() => commit("clearStagedFavorites"));
     }, 2000),
-    async resetFavorites({ dispatch, commit, rootState }) {
-        commit("resetVideos");
-        commit("resetState");
-        if (rootState.userdata?.jwt) await dispatch("fetchFavorites");
-        if (rootState.userdata?.jwt) await dispatch("fetchLive");
-        else commit("setFavorites", []);
-    },
+    // async resetFavorites({ dispatch, commit, rootState }) {
+    //     commit("resetVideos");
+    //     commit("resetState");
+    //     if (rootState.userdata?.jwt) await dispatch("fetchFavorites");
+    //     if (rootState.userdata?.jwt) await dispatch("fetchLive");
+    //     else commit("setFavorites", []);
+    // },
 };
 
 const mutations = {
@@ -133,9 +132,9 @@ const mutations = {
         state.videos = [];
     },
     resetState(state) {
-        state.hasError = false;
-        state.isLoading = true;
-        // Object.assign(state, initialState);
+        // state.hasError = false;
+        // state.isLoading = true;
+        Object.assign(state, initialState);
     },
     clearStagedFavorites(state) {
         state.stagedFavorites = {};
@@ -145,13 +144,13 @@ const mutations = {
             Vue.delete(state.stagedFavorites, channelId);
             return;
         }
-        console.log(state.favorites.find((f) => f.id === channelId));
+        // console.log(state.favorites.find((f) => f.id === channelId));
         if (state.favorites.find((f) => f.id === channelId)) {
             Vue.set(state.stagedFavorites, channelId, "remove");
         } else {
             Vue.set(state.stagedFavorites, channelId, "add");
         }
-        console.log(state.stagedFavorites);
+        // console.log(state.stagedFavorites);
     },
 };
 

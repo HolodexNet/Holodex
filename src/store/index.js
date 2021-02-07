@@ -40,8 +40,8 @@ function defaultState() {
  *               Put Migrations Here
  *---------------------------------------------* */
 
-const syncedModules = /^(?:library|settings|favorites|home)/;
-const syncedMutations = /^(?:resetState|setUser|setCurrentOrg|setShowUpdatesDetail)/;
+const syncedModules = /^(?:library|settings)/;
+const syncedMutations = /^(?:setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites)/;
 
 export default new Vuex.Store({
     plugins: [

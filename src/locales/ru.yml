@@ -59,6 +59,9 @@ component:
     refersLabel: "связанные видео"
     simulcastsLabel: "связанные стримы"
     sourcesLabel: "источники"
+  paginateLoad:
+    newer: Новее
+    older: старее
 views:
   channels:
     channelType:
@@ -122,6 +125,8 @@ views:
     pushNotificationMsg: Включить пуш-уведомления для каналов в избранном
     autoplayVideoLabel: Автоматическое воспроизведение видео
     autoplayVideoMsg: Включить автоматическое воспроизведение видео
+    scrollModeLabel: Режим прокрутки
+    scrollModeMsg: Используйте прокрутку для переворачивания страниц
     resetAllSettings: Сбросить все настройки/данные
     clipLanguageSelection: "Посмотрите клипы на этих языках:"
   about:

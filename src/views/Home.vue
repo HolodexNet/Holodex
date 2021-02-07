@@ -1,7 +1,7 @@
 <template>
-    <v-container class="home pt-4" fluid>
+    <v-container fluid>
         <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
-        <template v-if="!isLoading && !hasError">
+        <div v-show="!isLoading && !hasError">
             <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
                 <div class="text-h6">
                     {{ $t("views.home.liveOrUpcomingHeading") }}
@@ -39,13 +39,16 @@
             <VideoCardList
                 :videos="videos"
                 includeChannel
-                infiniteLoad
-                @infinite="loadNext"
-                :infiniteId="infiniteId"
                 :cols="colSizes"
                 :dense="currentGridSize > 0"
+                :lazy="scrollMode"
+                :identifier="identifier"
+                :paginateLoad="!scrollMode"
+                :infiniteLoad="scrollMode"
+                @load="loadNext"
+                pageLess
             ></VideoCardList>
-        </template>
+        </div>
     </v-container>
 </template>
 
@@ -69,10 +72,11 @@ export default {
     },
     data() {
         return {
-            infiniteId: +new Date(),
+            identifier: +new Date(),
+            pageLength: 24,
         };
     },
-    created() {
+    mounted() {
         this.init();
     },
     watch: {
@@ -94,8 +98,8 @@ export default {
                 this.$store.commit("home/setRecentVideoFilter", value);
             },
         },
-        pageLength() {
-            return 24;
+        scrollMode() {
+            return this.$store.state.settings.scrollMode;
         },
         currentGridSize: {
             get() {
@@ -119,24 +123,29 @@ export default {
         init() {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
-            this.infiniteId = +new Date();
+            this.resetVideos();
         },
         resetVideos() {
             this.$store.commit("home/resetVideos");
-            this.infiniteId = +new Date();
+            this.identifier = +new Date();
         },
         loadNext($state) {
             const lastLength = this.videos.length;
+            if (!this.scrollMode) this.$store.commit("home/resetVideos");
             this.$store
                 .dispatch("home/fetchNextVideos", {
                     limit: this.pageLength,
+                    ...(!this.scrollMode && { offset: this.pageLength * ($state.page - 1) }),
                 })
                 .then(() => {
-                    if (this.videos.length !== lastLength) {
-                        $state.loaded();
-                    } else {
+                    if (
+                        (this.scrollMode && this.videos.length === lastLength) ||
+                        (!this.scrollMode && this.videos.length !== this.pageLength)
+                    ) {
                         $state.completed();
+                        return;
                     }
+                    $state.loaded();
                 })
                 .catch((e) => {
                     console.error(e);

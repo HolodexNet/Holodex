@@ -6,6 +6,7 @@ const initialState = {
     channel: {},
     videos: [],
     currentOffset: 0,
+    total: 1,
     isLoading: true,
     hasError: false,
 };
@@ -35,14 +36,15 @@ const actions = {
             .channelVideos(state.id, {
                 type,
                 query: {
-                    ...params,
                     lang: rootState.settings.clipLangs.join(","),
                     offset: state.currentOffset,
                     include: "clips,live_info",
+                    ...params,
                 },
             })
             .then(({ data }) => {
-                commit("updateVideos", data);
+                commit("setTotal", Number(data.total));
+                commit("updateVideos", data.items);
             });
     },
 };
@@ -63,6 +65,9 @@ const mutations = {
     },
     setChannel(state, channel) {
         state.channel = channel;
+    },
+    setTotal(state, count) {
+        state.total = count;
     },
     updateVideos(state, videos) {
         // increment offset
