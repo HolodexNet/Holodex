@@ -82,7 +82,7 @@ export default {
                 return this.comments.sort((a, b) => b.times.length - a.times.length);
             }
             return this.comments
-                .filter((c) => Array.from(c.times).find((t) => Math.abs(this.currentFilter - t) <= 10))
+                .filter((c) => c.times.find((t) => Math.abs(this.currentFilter - t) <= 10))
                 .sort((a, b) => a.times.length - b.times.length);
         },
         groupedComments() {
@@ -98,7 +98,7 @@ export default {
                     times.add(time);
                     match = COMMENT_TIMESTAMP_REGEX.exec(c.message);
                 }
-                c.times = times;
+                c.times = Array.from(times);
                 return c;
             });
         },
