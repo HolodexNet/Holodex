@@ -44,7 +44,7 @@
                             </v-card-actions> -->
                         </div>
                         <div v-show="currentTab === TABS.SONGS">
-                            <video-songs :video="video"></video-songs>
+                            <video-songs :video="video" :currentTime="currentTime"></video-songs>
                         </div>
                     </v-col>
                 </v-row>
@@ -64,6 +64,7 @@ import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
 import VideoSongs from "@/components/media/VideoSongs";
 import { decodeHTMLEntities } from "@/utils/functions";
+// import { dayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
 import api from "@/utils/backend-api";
 
@@ -101,6 +102,9 @@ export default {
 
             newTopic: null,
             topics: [],
+
+            timer: null,
+            currentTime: 0,
         };
     },
     created() {
@@ -108,6 +112,9 @@ export default {
     },
     mounted() {
         this.init();
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
     },
     methods: {
         init() {
@@ -122,6 +129,7 @@ export default {
         },
         ready(event) {
             this.player = event.target;
+            this.setTimer();
         },
         seekTo(time) {
             if (!this.player) return;
@@ -151,6 +159,14 @@ export default {
             this.dialog = false;
             api.topicSet(this.newTopic, this.videoId, this.$store.state.userdata.jwt);
             this.topic = this.newTopic;
+        },
+        setTimer() {
+            if (this.timer) clearInterval(this.timer);
+            if (this.player) {
+                this.timer = setInterval(() => {
+                    this.currentTime = this.player.getCurrentTime();
+                }, 1000);
+            }
         },
     },
     computed: {
