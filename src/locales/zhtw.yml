@@ -58,6 +58,9 @@ component:
     simulcastsLabel: 同時聯播
     refersLabel: 相關影片
     sourcesLabel: 剪輯來源
+  paginateLoad:
+    newer: 較新
+    older: 較舊
 views:
   channels:
     channelType:
@@ -115,6 +118,8 @@ views:
     hideVideoThumbnailsMsg: 隱藏影片縮圖可以加快讀取時間並減少移動端的網頁卷軸需求。
     pushNotificationLabel: 推送通知（尚未實裝）
     pushNotificationMsg: 啟用已收藏頻道的即時新增內容通知。
+    scrollModeLabel: 捲動模式
+    scrollModeMsg: 用捲動/輕點翻頁
     autoplayVideoLabel: 自動播放影片
     autoplayVideoMsg: 啟用視頻自動播放
     resetAllSettings: 重設所有設定/資料

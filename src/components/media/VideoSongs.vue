@@ -31,10 +31,11 @@
                     label="Start"
                     placeholder="12:31"
                     hide-details="auto"
-                    :append-icon="mdiEarHearing"
+                    :append-icon="mdiRestore"
                     v-model="currentStartTime"
                     :rules="[checkStartTime]"
                     validate-on-blur
+                    @click:append="currentStartTime = secondsToHuman(currentTime)"
                 >
                 </v-text-field>
             </v-col>
@@ -139,12 +140,17 @@ export default {
             mdiRestore,
             current: getEmptySong(this.video),
             songList: [],
+            // currentStartTime: 0,
         };
     },
     props: {
         video: {
             type: Object,
             required: true,
+        },
+        currentTime: {
+            type: Number,
+            required: false,
         },
     },
     computed: {

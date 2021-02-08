@@ -36,9 +36,11 @@ import VideoCardList from "@/components/video/VideoCardList";
 import api from "@/utils/backend-api";
 import { forwardTransformSearchToAPIQuery } from "@/utils/functions";
 import { csv2jsonAsync } from "json-2-csv";
+import isActive from "@/mixins/isActive";
 
 export default {
     name: "Search",
+    mixins: [isActive],
     metaInfo: {
         title: "Search - Holodex",
     },
@@ -122,8 +124,9 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         "$route.query": function (x) {
+            if (!this.isActive) return;
             this.syncFilters();
-            console.log(x.q, this.executedQuery);
+            // console.log(x.q, this.executedQuery);
             if (x.q !== this.executedQuery && x.q) this.searchVideo();
         },
         // eslint-disable-next-line func-names
@@ -168,7 +171,7 @@ export default {
             if (searchQuery.comment.length === 0)
                 api.searchVideo(searchQuery)
                     .then((res) => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.horizontal = false;
                         this.videos = res.data;
                         return this;

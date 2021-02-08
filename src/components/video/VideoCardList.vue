@@ -8,7 +8,7 @@
     >
         <!-- Video Card grid rows -->
         <!-- Set min height to account for layout shifting of show more button -->
-        <v-row :style="calcMinHeight" :dense="dense">
+        <v-row :dense="dense">
             <!-- Video Cards with custom grid size class based on breakpoint -->
             <v-col
                 v-for="(video, index) in spliced"
@@ -16,7 +16,7 @@
                 :class="['video-col', `video-${colSize}`]"
             >
                 <!-- Dont lazy load cards immediately seen -->
-                <v-lazy style="width: 100%" v-if="index > colSize * (limitRows + 1)">
+                <v-lazy style="width: 100%" v-if="lazy && index > colSize * (limitRows + 1)">
                     <VideoCard
                         :video="video"
                         fluid
@@ -25,6 +25,7 @@
                         :includeAvatar="includeAvatar"
                         :colSize="colSize"
                         :active="video.id === activeId"
+                        :style="`padding-bottom: calc(${hideThumbnail ? '56.25%' : ''} + 88px)`"
                     >
                         <!-- pass slot to each individual video card -->
                         <template v-slot:action>
@@ -40,6 +41,7 @@
                     :includeAvatar="includeAvatar"
                     :colSize="colSize"
                     :active="video.id === activeId"
+                    :style="`padding-bottom: calc(${hideThumbnail ? '56.25%' : ''} + 88px)`"
                     v-else
                 >
                     <!-- pass slot to each individual video card -->
@@ -61,9 +63,17 @@
         <!-- Infiniteloading observer -->
         <InfiniteLoad
             v-if="infiniteLoad"
-            @infinite="emitInfinite"
-            :identifier="infiniteId"
+            @infinite="emitLoad"
+            :identifier="identifier"
             style="position: absolute; bottom: 0px; width: 100%; margin: auto"
+        />
+
+        <PaginateLoad
+            v-if="paginateLoad"
+            :identifier="identifier"
+            :pages="paginatePages"
+            @paginate="emitLoad"
+            :pageLess="pageLess"
         />
     </v-container>
 </template>
@@ -80,6 +90,7 @@ export default {
         ApiErrorMessage,
         // InfiniteLoading: () => import("vue-infinite-loading"),
         InfiniteLoad: () => import("@/components/common/InfiniteLoad"),
+        PaginateLoad: () => import("@/components/common/PaginateLoad"),
     },
     data() {
         return {
@@ -119,15 +130,6 @@ export default {
             type: [Number, String],
             default: 0,
         },
-        infiniteLoad: {
-            required: false,
-            type: Boolean,
-            default: false,
-        },
-        infiniteId: {
-            required: false,
-            default: 0,
-        },
         activeId: {
             required: false,
             type: String,
@@ -136,10 +138,39 @@ export default {
             type: Boolean,
             default: false,
         },
+        lazy: {
+            type: Boolean,
+            default: false,
+        },
+        // pagination/infinite key prop
+        identifier: {
+            required: false,
+            default: 0,
+        },
+        // infinite load props
+        infiniteLoad: {
+            required: false,
+            type: Boolean,
+            default: false,
+        },
+        // pagination props
+        paginateLoad: {
+            required: false,
+            type: Boolean,
+            default: false,
+        },
+        paginatePages: {
+            type: Number,
+            default: 1,
+        },
+        pageLess: {
+            type: Boolean,
+            default: false,
+        },
     },
     methods: {
-        emitInfinite($state) {
-            this.$emit("infinite", $state);
+        emitLoad($state) {
+            this.$emit("load", $state);
         },
     },
     watch: {
@@ -177,15 +208,15 @@ export default {
         hideThumbnail() {
             return this.$store.state.settings.hideThumbnail;
         },
-        calcMinHeight() {
-            return (
-                !this.horizontal &&
-                this.hasExpansion &&
-                `min-height: calc(${this.limitRows} * (${this.hideThumbnail ? 0 : 1} * (90vw)/${
-                    this.colSize
-                } * .5625 + 88px));`
-            );
-        },
+        // calcMinHeight() {
+        //     return (
+        //         !this.horizontal &&
+        //         this.hasExpansion &&
+        //         `min-height: calc(${this.limitRows} * (${this.hideThumbnail ? 0 : 1} * (90vw)/${
+        //             this.colSize
+        //         } * .5625 + 88px));`
+        //     );
+        // },
     },
 };
 </script>
