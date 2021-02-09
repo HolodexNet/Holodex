@@ -216,28 +216,17 @@ export default {
 </script>
 
 <style>
-/* maintains 16:9 aspect ratio */
-/* .embedded-video {
-    position: relative;
-    padding-bottom: 56.25%;
-    padding-bottom: min(56.25%, calc(100vh - 220px));
-}
-
-.embedded-video > iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-} */
-
 .embedded-chat {
     position: relative;
-    min-height: 600px;
+    height: 600px;
+    min-height: calc((75vw - 24px) * 0.5625);
+    min-height: min(calc((75vw - 24px) * 0.5625), calc(100vh - 220px));
 }
 
 .embedded-chat > iframe {
     position: absolute;
     width: 100%;
-    min-height: 600px;
+    height: 100%;
 }
 
 .watch-card {
