@@ -64,9 +64,9 @@
                     <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
                         {{ title }}
                     </v-list-item-title>
-                    <v-list-item-subtitle class="channel-name" v-if="includeChannel">
+                    <v-list-item-subtitle v-if="includeChannel" class="channel-name">
                         <a
-                            class="channel-name no-decoration"
+                            class="no-decoration"
                             :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
                             :href="`/channel/${video.channel.id}`"
                             @click.stop.prevent="goToChannel(video.channel.id)"
@@ -299,10 +299,10 @@ export default {
     display: -webkit-box;
 }
 
-.channel-name:hover {
+.channel-name > a:hover {
     color: black !important;
 }
-.theme--dark.v-list-item .v-list-item__subtitle .channel-name:hover {
+.theme--dark.v-list-item .channel-name > a:hover {
     color: white !important;
 }
 
