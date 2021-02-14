@@ -28,7 +28,7 @@
                     </WatchFrame>
                     <WatchToolBar :video="video" noChips>
                         <template v-slot:buttons>
-                            <v-btn icon lg @click="showLiveChat = !showLiveChat">
+                            <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                                 <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
                             </v-btn>
                             <v-tooltip bottom v-if="!$store.state.isMobile">
@@ -114,7 +114,7 @@
                 </WatchFrame>
                 <WatchToolBar :video="video" noChips>
                     <template v-slot:buttons>
-                        <v-btn icon lg @click="showLiveChat = !showLiveChat">
+                        <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                             <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
                         </v-btn>
                     </template>
