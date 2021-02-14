@@ -16,4 +16,4 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
-        script: /opt/holodex/deploy.sh
+        script: /opt/holodex/deploy-staging.sh
