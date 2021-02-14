@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-container>
         <template v-for="relation in Object.keys(related)">
             <template v-if="related[relation].length">
                 <div class="text-overline ma-2" :key="`${relation}-title`">
@@ -21,7 +21,7 @@
                 </VideoCardList>
             </template>
         </template>
-    </div>
+    </v-container>
 </template>
 
 <script>

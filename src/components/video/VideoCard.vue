@@ -241,7 +241,11 @@ export default {
                 : this.$store.commit("library/addSavedVideo", this.video);
         },
         goToVideo(id) {
-            this.$router.push({ path: `/watch/${this.video.id}` });
+            if (this.$route.path.match("^/watch") && this.isMobile) {
+                this.$router.replace({ path: `/watch/${this.video.id}` });
+            } else {
+                this.$router.push({ path: `/watch/${this.video.id}` });
+            }
         },
         goToChannel(id) {
             this.$router.push({ path: `/channel/${this.video.channel.id}` });
