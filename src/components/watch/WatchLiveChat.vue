@@ -1,10 +1,7 @@
 <template>
-    <div>
-        <div class="embedded-chat" v-if="!hideLiveChat">
+    <div class="watch-live-chat" :class="{ 'fixed-bottom': fixedBottom, 'fixed-right': fixedRight }">
+        <div class="embedded-chat">
             <iframe :src="liveChatUrl" frameborder="0" />
-        </div>
-        <div class="text-end pa-1 text-caption">
-            <a @click="hideLiveChat = !hideLiveChat"> {{ hideLiveChat ? "Show" : "Hide" }} Live Chat </a>
         </div>
     </div>
 </template>
@@ -12,11 +9,6 @@
 <script>
 export default {
     name: "WatchLiveChat",
-    data() {
-        return {
-            hideLiveChat: false,
-        };
-    },
     props: {
         video: {
             type: Object,
@@ -25,10 +17,14 @@ export default {
         mugenId: {
             required: false,
         },
-        // hasLiveChat: {
-        //     type: Boolean,
-        //     default: false,
-        // }
+        fixedBottom: {
+            type: Boolean,
+            default: false,
+        },
+        fixedRight: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         liveChatUrl() {
@@ -41,4 +37,51 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+/* Desktop */
+.embedded-chat {
+    position: relative;
+    height: 600px;
+    min-height: calc((75vw - 24px) * 0.5625);
+    min-height: min(calc((75vw - 24px) * 0.5625), calc(100vh - 220px));
+}
+
+.embedded-chat > iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* Fixed Bottom */
+.watch-live-chat.fixed-bottom {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    z-index: 10;
+}
+
+.watch-live-chat.fixed-bottom .embedded-chat {
+    position: relative;
+    height: calc(100vh - 36px - 100vw * 0.5625);
+    /* height: 100vh; */
+}
+
+/* Fixed Right */
+.watch-live-chat.fixed-right {
+    position: fixed;
+    right: 0px;
+    width: 220px;
+}
+
+.watch-live-chat.fixed-right > .embedded-chat {
+    height: 100vh;
+    width: 100%;
+}
+
+.watch-live-chat.fixed-right > .embedded-chat > iframe {
+    transform: scale(0.75);
+    transform-origin: top left;
+    height: 133%;
+    width: 133%;
+}
+</style>
