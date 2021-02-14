@@ -1,5 +1,6 @@
 <template>
     <div class="watch-live-chat" :class="{ 'fixed-bottom': fixedBottom, 'fixed-right': fixedRight }">
+        <span class="loading-text">Loading...</span>
         <div class="embedded-chat">
             <iframe :src="liveChatUrl" frameborder="0" />
         </div>
@@ -38,12 +39,24 @@ export default {
 </script>
 
 <style>
+.watch-live-chat {
+    position: relative;
+}
+
+.watch-live-chat .loading-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 /* Desktop */
 .embedded-chat {
     position: relative;
     height: 600px;
     min-height: calc((75vw - 24px) * 0.5625);
     min-height: min(calc((75vw - 24px) * 0.5625), calc(100vh - 220px));
+    border: solid 1px rgba(255, 255, 255, 0.1);
 }
 
 .embedded-chat > iframe {

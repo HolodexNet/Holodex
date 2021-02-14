@@ -9,6 +9,7 @@
         <!-- Desktop (md/lg/xl) Layout -->
         <v-container v-if="!$store.state.isMobile" fluid>
             <v-row :class="{ 'flex-nowrap': !theatherMode }">
+                <!-- Left side -->
                 <v-col :md="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3 flex-shrink-1">
                     <WatchFrame :video="video">
                         <template v-slot:youtube>
@@ -60,11 +61,8 @@
                         />
                     </template>
                 </v-col>
-                <v-col
-                    class="related-videos pt-0"
-                    :md="theatherMode ? 12 : 3"
-                    style="min-width: 324px; flex-basis: 324px; max-width: 100%"
-                >
+                <!-- Right side -->
+                <v-col class="related-videos pt-0" :md="theatherMode ? 12 : 3" style="min-width: 324px">
                     <v-row fluid>
                         <v-col v-if="theatherMode" md="9" class="pt-0">
                             <WatchInfo :video="video" key="info" />
@@ -79,7 +77,11 @@
                             />
                         </v-col>
                         <v-col cols="12" :md="theatherMode ? 3 : 12" class="pa-0 pr-lg-3">
-                            <WatchLiveChat v-if="hasLiveChat" :video="video" :mugenId="isMugen && '4ANxvWIM3Bs'" />
+                            <WatchLiveChat
+                                v-if="hasLiveChat && showLiveChat"
+                                :video="video"
+                                :mugenId="isMugen && '4ANxvWIM3Bs'"
+                            />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
                             <WatchRelatedVideos :related="related" />
                         </v-col>
@@ -87,11 +89,14 @@
                 </v-col>
             </v-row>
         </v-container>
+        <!-- Mobile Layout (sm/xs) Layout -->
         <div class="d-flex flex-column flex-sm-row" v-else>
             <div
                 class="d-inline-flex flex-grow-1 flex-column"
-                :style="{ 'padding-right': showLiveChat && landscape ? '220px' : 0 }"
+                style="width: 100%"
+                :style="{ 'padding-right': hasLiveChat && showLiveChat && landscape ? '220px' : 0 }"
             >
+                <!-- Video/Video meta -->
                 <WatchFrame :video="video" fluid>
                     <template v-slot:youtube>
                         <youtube
@@ -117,7 +122,16 @@
                 <WatchInfo :video="video" key="info" />
                 <WatchMugen @playNext="playNext" v-if="isMugen" />
                 <WatchRelatedVideos :related="related" />
+                <WatchComments
+                    :comments="comments"
+                    :video="video"
+                    :limit="$store.state.isMobile ? 5 : 0"
+                    @timeJump="seekTo"
+                    key="comments"
+                    v-if="comments.length"
+                />
             </div>
+            <!-- floated/fixed live chat -->
             <WatchLiveChat
                 v-if="hasLiveChat"
                 v-show="showLiveChat"
@@ -292,12 +306,5 @@ export default {
 
 .thumbnail {
     position: relative;
-}
-.watch-btn-group > .v-btn {
-    margin-right: 5px;
-}
-
-.watch-chips > * {
-    margin: 2.5px;
 }
 </style>

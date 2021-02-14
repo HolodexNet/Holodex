@@ -1,6 +1,8 @@
 <template>
     <v-card tile class="d-flex justify-space-between flex-wrap-reverse flex-sm-nowrap">
-        <v-icon>{{ mdiArrowLeft }}</v-icon>
+        <v-btn icon lg>
+            <v-icon>{{ mdiArrowLeft }}</v-icon>
+        </v-btn>
         <span class="watch-chips" v-if="!noChips">
             <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic>
             <template v-for="mention in channelChips">
