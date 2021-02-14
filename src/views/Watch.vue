@@ -8,8 +8,8 @@
         </v-alert>
         <!-- Desktop (md/lg/xl) Layout -->
         <v-container v-if="!$store.state.isMobile" fluid>
-            <v-row>
-                <v-col :md="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3">
+            <v-row :class="{ 'flex-nowrap': !theatherMode }">
+                <v-col :md="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3 flex-shrink-1">
                     <WatchFrame :video="video">
                         <template v-slot:youtube>
                             <youtube
@@ -60,7 +60,11 @@
                         />
                     </template>
                 </v-col>
-                <v-col class="related-videos pt-0" :md="theatherMode ? 12 : 3">
+                <v-col
+                    class="related-videos pt-0"
+                    :md="theatherMode ? 12 : 3"
+                    style="min-width: 324px; flex-basis: 324px; max-width: 100%"
+                >
                     <v-row fluid>
                         <v-col v-if="theatherMode" md="9" class="pt-0">
                             <WatchInfo :video="video" key="info" />
