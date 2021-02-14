@@ -1,6 +1,6 @@
 <template>
     <v-card tile class="d-flex justify-space-between flex-wrap-reverse flex-sm-nowrap">
-        <v-btn icon lg>
+        <v-btn icon lg @click="goBack()">
             <v-icon>{{ mdiArrowLeft }}</v-icon>
         </v-btn>
         <span class="watch-chips" v-if="!noChips">
@@ -87,6 +87,9 @@ export default {
             this.hasSaved
                 ? this.$store.commit("library/removeSavedVideo", this.video.id)
                 : this.$store.commit("library/addSavedVideo", this.video);
+        },
+        goBack() {
+            this.$router.go(-1);
         },
     },
     computed: {
