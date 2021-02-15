@@ -5,7 +5,7 @@
         <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile && !isWatchPage" />
         <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile && isWatchPage" :temporary="true" />
         <!--* nav drawer is for the left --->
-        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile && !isWatchPage" />
+        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile" :active="!isWatchPage" />
         <!--* bottom bar --->
 
         <v-app-bar
@@ -15,6 +15,7 @@
             clipped-left
             flat
             v-show="!(isMobile && isWatchPage)"
+            :dense="isMobile"
         >
             <!--=============================== Top Bar (Regular View) =============================-->
 

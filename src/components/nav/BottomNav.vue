@@ -1,5 +1,5 @@
 <template>
-    <v-bottom-navigation :value="value" grow app>
+    <v-bottom-navigation :value="value" grow app :input-value="active" height="48" :scroll-threshold="1000">
         <template v-for="page in pages">
             <v-btn
                 :value="page.path"
@@ -22,6 +22,11 @@ export default {
         pages: {
             required: true,
             type: Array,
+        },
+        active: {
+            type: Boolean,
+            require: false,
+            default: true,
         },
     },
     data() {
