@@ -1,5 +1,13 @@
 <template>
-    <v-bottom-navigation :value="value" grow app :input-value="active" height="48" :scroll-threshold="1000">
+    <v-bottom-navigation
+        :value="value"
+        grow
+        app
+        :input-value="active"
+        height="48"
+        :scroll-threshold="1000"
+        class="bottom-nav"
+    >
         <template v-for="page in pages">
             <v-btn
                 :value="page.path"
@@ -53,5 +61,9 @@ export default {
     font-size: 0.875rem;
     font-weight: 400;
     height: inherit !important;
+}
+.bottom-nav {
+    /* iPhone X/iOS 11.2+ offset for gesture nav bar */
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
 }
 </style>

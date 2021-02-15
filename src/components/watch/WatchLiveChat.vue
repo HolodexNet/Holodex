@@ -86,10 +86,10 @@ export default {
     position: fixed;
     right: 0px;
     width: 220px;
+    height: 100%;
 }
 
 .watch-live-chat.fixed-right > .embedded-chat {
-    height: 100vh;
     width: 100%;
 }
 
