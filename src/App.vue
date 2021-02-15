@@ -175,7 +175,7 @@ export default {
     text-decoration: none;
     color: inherit !important;
 }
-.body {
+body {
     overscroll-behavior-y: none;
     background: black;
 }
