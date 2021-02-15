@@ -1,10 +1,10 @@
 <template>
-    <div class="watch-live-chat" :class="{ 'fixed-bottom': fixedBottom, 'fixed-right': fixedRight }">
-        <span class="loading-text">Loading...</span>
+    <v-sheet class="watch-live-chat" :class="{ 'fixed-bottom': fixedBottom, 'fixed-right': fixedRight }">
+        <span class="loading-text">Loading Chat...</span>
         <div class="embedded-chat">
             <iframe :src="liveChatUrl" frameborder="0" />
         </div>
-    </div>
+    </v-sheet>
 </template>
 
 <script>

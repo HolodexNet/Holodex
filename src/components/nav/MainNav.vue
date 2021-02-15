@@ -1,6 +1,9 @@
 <template>
     <div>
-        <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile" :temporary="isWatchPage" />
+        <!-- watch page nav drawer is temporary, but causes layout shifting from hiding/unhiding -->
+        <!-- create two different instances as a work around -->
+        <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile && !isWatchPage" />
+        <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile && isWatchPage" :temporary="true" />
         <!--* nav drawer is for the left --->
         <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile && !isWatchPage" />
         <!--* bottom bar --->
@@ -220,7 +223,7 @@ export default {
             return this.$store.state.isMobile;
         },
         isWatchPage() {
-            return this.$route.name === "watch_id" || this.$route.name === "watch";
+            return ["watch_id", "watch", "mugen-clips"].includes(this.$route.name);
         },
         currentOrg: {
             get() {
