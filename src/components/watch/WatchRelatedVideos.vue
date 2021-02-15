@@ -21,6 +21,9 @@
                 </VideoCardList>
             </template>
         </template>
+        <!-- <template v-if="totalRelations === 0">
+            No clips or related videos yet...
+        </template> -->
     </v-container>
 </template>
 
@@ -37,6 +40,11 @@ export default {
             required: true,
             type: Object,
         },
+    },
+    computed: {
+        // totalRelations() {
+        //     return Object.values(this.related).map(r => r.length).reduce((a, b) => a+b);
+        // }
     },
     methods: {
         relationI18N(relation) {

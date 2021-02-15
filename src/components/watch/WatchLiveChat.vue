@@ -71,11 +71,13 @@ export default {
     bottom: 0px;
     width: 100%;
     z-index: 10;
+    height: calc(100% - 36px - 100vw * 0.5625);
 }
 
 .watch-live-chat.fixed-bottom .embedded-chat {
     position: relative;
-    height: calc(100vh - 36px - 100vw * 0.5625);
+    height: 100%;
+    /* height: calc(100vh - 36px - 100vw * 0.5625); */
     /* height: 100vh; */
 }
 

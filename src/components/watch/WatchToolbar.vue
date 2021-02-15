@@ -1,6 +1,6 @@
 <template>
-    <v-card tile class="d-flex justify-space-between flex-wrap-reverse flex-sm-nowrap">
-        <v-btn icon lg @click="goBack()">
+    <v-card tile class="d-flex justify-space-between flex-wrap-reverse flex-sm-nowrap px-lg-4">
+        <v-btn icon lg @click="goBack()" v-if="!noBackButton">
             <v-icon>{{ mdiArrowLeft }}</v-icon>
         </v-btn>
         <span class="watch-chips" v-if="!noChips">
@@ -73,6 +73,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        noBackButton: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -109,4 +113,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.watch-btn-group > .v-btn {
+    margin-right: 5px;
+}
+.watch-chips > * {
+    margin: auto 2.5px;
+}
+</style>

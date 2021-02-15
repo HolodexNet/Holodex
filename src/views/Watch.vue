@@ -26,7 +26,7 @@
                             </youtube>
                         </template>
                     </WatchFrame>
-                    <WatchToolBar :video="video" noChips>
+                    <WatchToolBar :video="video" noBackButton>
                         <template v-slot:buttons>
                             <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                                 <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
