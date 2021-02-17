@@ -124,7 +124,7 @@ export default {
 .video {
     position: relative;
     padding-bottom: 56.25%;
-    padding-bottom: min(56.25%, calc(100vh - 220px));
+    padding-bottom: min(56.25%, calc(100vh - 120px));
     width: 100%;
 }
 

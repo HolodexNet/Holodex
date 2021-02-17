@@ -142,6 +142,8 @@
                 :fixedBottom="!landscape"
             />
         </div>
+        <!-- Used to add spacing so bottom bar won't clash with description or videos -->
+        <div style="height: 60px" v-if="$store.state.isMobile" />
     </div>
     <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
 </template>
