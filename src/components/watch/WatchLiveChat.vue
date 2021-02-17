@@ -74,7 +74,7 @@ export default {
     height: calc(100% - 36px - 100vw * 0.5625);
 }
 
-.watch-live-chat.fixed-bottom .embedded-chat {
+.watch-live-chat.fixed-bottom > .embedded-chat {
     position: relative;
     height: 100%;
     /* height: calc(100vh - 36px - 100vw * 0.5625); */
@@ -91,6 +91,7 @@ export default {
 
 .watch-live-chat.fixed-right > .embedded-chat {
     width: 100%;
+    height: 100%;
 }
 
 .watch-live-chat.fixed-right > .embedded-chat > iframe {
