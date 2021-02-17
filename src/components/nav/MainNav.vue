@@ -359,6 +359,8 @@ export default {
 
 #top-bar {
     background-color: #2b79ad !important;
+    padding-left: min(calc(env(safe-area-inset-left)), 30px);
+    padding-right: min(calc(env(safe-area-inset-right)), 30px);
 }
 
 .fade-enter-active,
