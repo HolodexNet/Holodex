@@ -292,21 +292,4 @@ export default {
 };
 </script>
 
-<style>
-.watch-card {
-    border: none !important;
-    box-shadow: none !important;
-}
-
-.thumbnail-overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-}
-
-.thumbnail {
-    position: relative;
-}
-</style>
+<style></style>

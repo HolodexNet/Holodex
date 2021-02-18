@@ -154,6 +154,7 @@ export default {
 }
 
 .channel-banner {
+    height: 100px; /* legacy device support */
     height: calc(100vw / 6.2 - 1px);
 }
 
