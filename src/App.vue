@@ -178,8 +178,6 @@ export default {
 body {
     overscroll-behavior-y: none;
     background: black;
-    padding-left: min(calc(env(safe-area-inset-left)), 30px);
-    padding-right: min(calc(env(safe-area-inset-right)), 30px);
 }
 .row {
     margin: 0px -12px;

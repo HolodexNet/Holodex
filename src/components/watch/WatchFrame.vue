@@ -121,18 +121,6 @@ export default {
 };
 </script>
 <style>
-.thumbnail {
-    position: relative;
-}
-
-.thumbnail-overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-}
-
 .video {
     position: relative;
     padding-bottom: 56.25%;

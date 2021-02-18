@@ -112,9 +112,4 @@ export default {
 };
 </script>
 
-<style>
-.watch-card {
-    border: none !important;
-    box-shadow: none !important;
-}
-</style>
+<style></style>
