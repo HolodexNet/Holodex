@@ -1,7 +1,7 @@
 <template>
     <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
     <v-autocomplete
-        class="my-auto mx-2 search-bar"
+        class="ma-auto search-bar"
         :class="{ 'search-bar-small': isMobile }"
         solo
         flat
@@ -252,7 +252,6 @@ export default {
 .search-bar {
     max-width: 670px;
     margin-bottom: -5px;
-    margin-left: 20px;
 }
 .search-bar-small {
     max-width: 90vw !important;
