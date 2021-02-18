@@ -21,6 +21,22 @@
         <v-card-text class="text-body-2">
             <truncated-text :html="video.description" lines="3" />
         </v-card-text>
+        <v-card-text>
+            <span class="watch-chips" v-if="!noChips">
+                <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic>
+                <template v-for="mention in channelChips">
+                    <ChannelChip :channel="mention" :key="mention.id" />
+                </template>
+                <a
+                    @click="showAllMentions = !showAllMentions"
+                    style="white-space: pre"
+                    class="text-subtitle-2"
+                    v-if="mentions.length > 3"
+                >
+                    {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
+                </a>
+            </span>
+        </v-card-text>
     </v-card>
 </template>
 
@@ -51,12 +67,17 @@ export default {
         video: {
             required: true,
         },
+        noChips: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
             timer: null,
             elapsedTime: 0,
             icons,
+            showAllMentions: false,
         };
     },
     methods: {
@@ -107,6 +128,9 @@ export default {
         },
         liveViewers() {
             return (+this.video.live_viewers).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        mentions() {
+            return this.video.mentions || [];
         },
     },
 };

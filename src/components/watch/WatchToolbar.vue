@@ -3,20 +3,6 @@
         <v-btn icon lg @click="goBack()" v-if="!noBackButton">
             <v-icon>{{ mdiArrowLeft }}</v-icon>
         </v-btn>
-        <span class="watch-chips" v-if="!noChips">
-            <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic>
-            <template v-for="mention in channelChips">
-                <ChannelChip :channel="mention" :key="mention.id" />
-            </template>
-            <a
-                @click="showAllMentions = !showAllMentions"
-                style="white-space: pre"
-                class="text-subtitle-2"
-                v-if="mentions.length > 3"
-            >
-                {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
-            </a>
-        </span>
         <div class="watch-btn-group ml-auto d-flex">
             <slot name="buttons"></slot>
             <v-tooltip bottom>
@@ -69,10 +55,6 @@ export default {
         video: {
             required: true,
         },
-        noChips: {
-            type: Boolean,
-            default: false,
-        },
         noBackButton: {
             type: Boolean,
             default: false,
@@ -81,7 +63,6 @@ export default {
     data() {
         return {
             darkMode: true,
-            showAllMentions: false,
             mdiOpenInNew,
             mdiArrowLeft,
         };
@@ -99,9 +80,6 @@ export default {
     computed: {
         redirectMode() {
             return this.$store.state.settings.redirectMode;
-        },
-        mentions() {
-            return this.video.mentions || [];
         },
         channelChips() {
             return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
