@@ -57,21 +57,10 @@ export default {
 .bottom-nav {
     /* iPhone X/iOS 11.2+ offset for gesture nav bar */
     padding-bottom: min(max(calc(env(safe-area-inset-bottom)), 2px), 16px);
-    height: 48px;
-}
-.bottom-nav {
     height: auto !important;
 }
-
 .bottom-nav > .nav-btn {
     padding-top: 0.4rem !important;
     padding-bottom: 0.2rem !important;
-    /* padding-bottom: calc(constant( safe-area-inset-bottom )); move footer up on iPhone X - iOS 11.0 */
-    /* margin-bottom: calc(env(safe-area-inset-bottom)); move footer up on iPhone X - iOS 11.2 */
-}
-
-body {
-    padding-left: min(calc(env(safe-area-inset-left)), 30px);
-    padding-right: min(calc(env(safe-area-inset-right)), 30px);
 }
 </style>
