@@ -92,11 +92,14 @@
             </v-row>
         </v-container>
         <!-- Mobile Layout (sm/xs) Layout -->
-        <div class="d-flex flex-column flex-sm-row" v-else>
+        <div class="d-flex flex-column flex-sm-row" style="padding-bottom: 60px" v-else>
             <div
                 class="d-inline-flex flex-grow-1 flex-column"
                 style="width: 100%"
-                :style="{ 'padding-right': hasLiveChat && showLiveChat && landscape ? '220px' : 0 }"
+                :style="{
+                    'padding-right': hasLiveChat && showLiveChat && landscape ? '220px' : 0,
+                    'min-height': landscape || !showLiveChat ? '0' : '160vh',
+                }"
             >
                 <!-- Video/Video meta -->
                 <WatchFrame :video="video" fluid :key="'ytframe' + video.id">
@@ -133,7 +136,6 @@
                     v-if="comments.length"
                 />
                 <WatchRelatedVideos :related="related" />
-                <div :style="{ height: landscape ? '0' : '60vh' }"></div>
             </div>
             <!-- floated/fixed live chat -->
             <WatchLiveChat
@@ -146,8 +148,6 @@
                 :fixedBottom="!landscape"
             />
         </div>
-        <!-- Used to add spacing so bottom bar won't clash with description or videos -->
-        <div style="height: 60px" v-if="$store.state.isMobile" />
     </div>
     <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
 </template>
