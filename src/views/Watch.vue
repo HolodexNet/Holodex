@@ -11,9 +11,10 @@
             <v-row :class="{ 'flex-nowrap': !theatherMode }">
                 <!-- Left side -->
                 <v-col :md="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3 flex-shrink-1">
-                    <WatchFrame :video="video">
+                    <WatchFrame :video="video" :key="'ytframe' + video.id">
                         <template v-slot:youtube>
                             <youtube
+                                :key="'ytplayer' + video.id"
                                 v-if="video.id"
                                 :video-id="video.id"
                                 @ready="ready"
@@ -81,6 +82,7 @@
                                 v-if="hasLiveChat && showLiveChat"
                                 :video="video"
                                 :mugenId="isMugen && '4ANxvWIM3Bs'"
+                                :key="'ytchat' + video.id"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
                             <WatchRelatedVideos :related="related" />
@@ -97,9 +99,10 @@
                 :style="{ 'padding-right': hasLiveChat && showLiveChat && landscape ? '220px' : 0 }"
             >
                 <!-- Video/Video meta -->
-                <WatchFrame :video="video" fluid>
+                <WatchFrame :video="video" fluid :key="'ytframe' + video.id">
                     <template v-slot:youtube>
                         <youtube
+                            :key="'ytplayer' + video.id"
                             v-if="video.id"
                             :video-id="video.id"
                             @ready="ready"
@@ -121,7 +124,6 @@
                 </WatchToolBar>
                 <WatchInfo :video="video" key="info" />
                 <WatchMugen @playNext="playNext" v-if="isMugen" />
-                <WatchRelatedVideos :related="related" />
                 <WatchComments
                     :comments="comments"
                     :video="video"
@@ -130,14 +132,16 @@
                     key="comments"
                     v-if="comments.length"
                 />
+                <WatchRelatedVideos :related="related" />
+                <div :style="{ height: landscape ? '0' : '60vh' }"></div>
             </div>
             <!-- floated/fixed live chat -->
             <WatchLiveChat
-                v-if="hasLiveChat"
-                v-show="showLiveChat"
+                v-if="hasLiveChat && showLiveChat"
                 :video="video"
                 :mugenId="isMugen && '4ANxvWIM3Bs'"
                 class="mobile-live-chat"
+                :key="'ytchat' + video.id"
                 :fixedRight="landscape"
                 :fixedBottom="!landscape"
             />
