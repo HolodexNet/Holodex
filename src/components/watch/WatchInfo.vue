@@ -9,33 +9,48 @@
             <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
         </v-card-subtitle>
         <v-divider />
-        <v-list two-line>
-            <v-list-item>
-                <v-list-item-avatar size="40">
-                    <ChannelImg :channel="video.channel" />
-                </v-list-item-avatar>
-                <ChannelInfo :channel="video.channel" />
-                <ChannelSocials :channel="video.channel" />
-            </v-list-item>
-        </v-list>
+        <v-row>
+            <v-col cols="12" lg="6">
+                <v-list>
+                    <v-list-item>
+                        <v-list-item-avatar size="80">
+                            <ChannelImg :channel="video.channel" size="80" />
+                        </v-list-item-avatar>
+                        <ChannelInfo :channel="video.channel">
+                            <span class="text-caption" v-show="video.topic_id">
+                                <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
+                                {{ video.topic_id }}
+                            </span>
+                        </ChannelInfo>
+
+                        <ChannelSocials :channel="video.channel" />
+                    </v-list-item>
+                </v-list>
+            </v-col>
+            <v-col cols="12" lg="6">
+                <v-list>
+                    <v-list-item class="watch-chips" v-if="!noChips">
+                        <!-- <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic> -->
+                        <v-avatar rounded left size="70" v-if="channelChips">
+                            <v-icon size="30" color="grey darken-3">{{ mdiAccountGroup }}</v-icon>
+                        </v-avatar>
+                        <template v-for="mention in channelChips">
+                            <ChannelChip :channel="mention" :key="mention.id" />
+                        </template>
+                        <a
+                            @click="showAllMentions = !showAllMentions"
+                            style="white-space: pre"
+                            class="text-subtitle-2"
+                            v-if="mentions.length > 3"
+                        >
+                            {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
+                        </a>
+                    </v-list-item>
+                </v-list>
+            </v-col>
+        </v-row>
         <v-card-text class="text-body-2">
             <truncated-text :html="video.description" lines="3" />
-        </v-card-text>
-        <v-card-text>
-            <span class="watch-chips" v-if="!noChips">
-                <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic>
-                <template v-for="mention in channelChips">
-                    <ChannelChip :channel="mention" :key="mention.id" />
-                </template>
-                <a
-                    @click="showAllMentions = !showAllMentions"
-                    style="white-space: pre"
-                    class="text-subtitle-2"
-                    v-if="mentions.length > 3"
-                >
-                    {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
-                </a>
-            </span>
         </v-card-text>
     </v-card>
 </template>
@@ -48,7 +63,7 @@ import ChannelImg from "@/components/channel/ChannelImg";
 // import VideoDescription from "@/components/video/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
-import * as icons from "@/utils/icons";
+import { mdiAccountGroup } from "@mdi/js";
 import VideoTopic from "@/components/video/VideoTopic";
 import TruncatedText from "@/components/common/TruncatedText";
 
@@ -76,7 +91,7 @@ export default {
         return {
             timer: null,
             elapsedTime: 0,
-            icons,
+            mdiAccountGroup,
             showAllMentions: false,
         };
     },
@@ -145,6 +160,6 @@ export default {
     box-shadow: none !important;
 }
 .watch-chips > * {
-    margin: auto 2.5px;
+    margin: 8px 2.5px;
 }
 </style>

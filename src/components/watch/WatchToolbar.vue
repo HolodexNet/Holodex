@@ -41,16 +41,11 @@
 </template>
 
 <script>
-import VideoTopic from "@/components/video/VideoTopic";
-import ChannelChip from "@/components/channel/ChannelChip";
 import { mdiOpenInNew, mdiArrowLeft } from "@mdi/js";
 
 export default {
     name: "WatchToolbar",
-    components: {
-        ChannelChip,
-        VideoTopic,
-    },
+    components: {},
     props: {
         video: {
             required: true,
