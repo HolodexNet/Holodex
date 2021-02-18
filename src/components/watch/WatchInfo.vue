@@ -132,6 +132,9 @@ export default {
         mentions() {
             return this.video.mentions || [];
         },
+        channelChips() {
+            return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
+        },
     },
 };
 </script>
@@ -140,5 +143,8 @@ export default {
 .watch-card {
     border: none !important;
     box-shadow: none !important;
+}
+.watch-chips > * {
+    margin: auto 2.5px;
 }
 </style>

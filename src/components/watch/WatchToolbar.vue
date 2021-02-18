@@ -81,9 +81,6 @@ export default {
         redirectMode() {
             return this.$store.state.settings.redirectMode;
         },
-        channelChips() {
-            return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
-        },
         hasSaved() {
             return this.$store.getters["library/hasSaved"](this.video.id);
         },
@@ -94,8 +91,5 @@ export default {
 <style>
 .watch-btn-group > .v-btn {
     margin-right: 5px;
-}
-.watch-chips > * {
-    margin: auto 2.5px;
 }
 </style>
