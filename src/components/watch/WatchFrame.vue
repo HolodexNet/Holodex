@@ -65,8 +65,8 @@
 </template>
 
 <script>
-import VideoTopic from "@/components/video/VideoTopic";
-import ChannelChip from "@/components/channel/ChannelChip";
+// import VideoTopic from "@/components/video/VideoTopic";
+// import ChannelChip from "@/components/channel/ChannelChip";
 import { getVideoThumbnails } from "@/utils/functions";
 import { mdiOpenInNew } from "@mdi/js";
 import * as icons from "@/utils/icons";
@@ -74,8 +74,8 @@ import * as icons from "@/utils/icons";
 export default {
     name: "WatchFrame",
     components: {
-        ChannelChip,
-        VideoTopic,
+        // ChannelChip,
+        // VideoTopic,
     },
     props: {
         video: {

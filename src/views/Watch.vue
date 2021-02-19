@@ -38,7 +38,7 @@
                                         icon
                                         lg
                                         @click="theatherMode = !theatherMode"
-                                        :color="theatherMode ? 'primary' : 'white'"
+                                        :color="theatherMode ? 'primary' : ''"
                                         v-bind="attrs"
                                         v-on="on"
                                     >
