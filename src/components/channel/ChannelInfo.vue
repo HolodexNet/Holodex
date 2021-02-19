@@ -1,6 +1,6 @@
 <template>
     <v-list-item-content>
-        <v-list-item-title>
+        <v-list-item-title style="align-self: flex-start">
             <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
                 {{ channelName }}
                 <div class="text-body-2 text--secondary" v-if="!noGroup && channel.group">

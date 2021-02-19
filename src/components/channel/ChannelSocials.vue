@@ -1,8 +1,8 @@
 <template>
     <!-- prevent default on entire div to make dead click zone -->
-    <v-list-item-action :class="{ 'channel-social-horizontal': !vertical }" @click.stop="">
+    <div :class="{ 'channel-social-horizontal': !vertical }" @click.stop="">
         <v-btn
-            v-if="channel.id"
+            v-if="channel.id && !hideYt"
             icon
             sm
             :href="`https://www.youtube.com/channel/${channel.id}`"
@@ -12,7 +12,7 @@
             <v-icon color="#C4302B">{{ icons.mdiYoutube }}</v-icon>
         </v-btn>
         <v-btn
-            v-if="channel.twitter"
+            v-if="channel.twitter && !hideTwitter"
             icon
             sm
             :href="`https://twitter.com/${channel.twitter}`"
@@ -21,7 +21,7 @@
         >
             <v-icon color="#00ACEE">{{ icons.mdiTwitter }}</v-icon>
         </v-btn>
-        <v-tooltip bottom v-if="channel.type === 'vtuber'">
+        <v-tooltip bottom v-if="channel.type === 'vtuber' && !hideFav">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn icon sm>
                     <v-icon
@@ -38,7 +38,7 @@
                 {{ tooltip }}
             </span>
         </v-tooltip>
-    </v-list-item-action>
+    </div>
 </template>
 
 <script>
@@ -58,6 +58,21 @@ export default {
         },
         vertical: {
             type: Boolean,
+            required: false,
+        },
+        hideYt: {
+            type: Boolean,
+            default: false,
+            required: false,
+        },
+        hideTwitter: {
+            type: Boolean,
+            default: false,
+            required: false,
+        },
+        hideFav: {
+            type: Boolean,
+            default: false,
             required: false,
         },
     },

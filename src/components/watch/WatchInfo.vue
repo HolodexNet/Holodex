@@ -5,48 +5,42 @@
         <!-- </div> -->
         <v-card-title class="pt-2" style="font-size: 1.125rem; font-weight: 400">{{ video.title }}</v-card-title>
         <v-card-subtitle>
-            {{ formattedTime }} <template v-if="video.status === 'live'"> • {{ liveViewers }} viewers</template>
+            {{ formattedTime }}
+            <template v-if="video.status === 'live'"> • {{ liveViewers }} viewers</template>
+            <span class="mx-1" v-show="video.topic_id">
+                <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
+                {{ video.topic_id }}
+            </span>
             <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
         </v-card-subtitle>
         <v-divider />
-        <v-row>
-            <v-col cols="12" lg="6">
+        <v-row class="flex-row" style="align-items: stretch">
+            <v-col cols="auto" class="my-0 py-0 flex-grow-1" style="flex-basis: auto">
                 <v-list>
                     <v-list-item>
                         <v-list-item-avatar size="80">
                             <ChannelImg :channel="video.channel" size="80" />
                         </v-list-item-avatar>
-                        <ChannelInfo :channel="video.channel">
-                            <span class="text-caption" v-show="video.topic_id">
-                                <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
-                                {{ video.topic_id }}
-                            </span>
-                        </ChannelInfo>
-
+                        <ChannelInfo :channel="video.channel" class="uploader-data-list"> </ChannelInfo>
                         <ChannelSocials :channel="video.channel" />
                     </v-list-item>
                 </v-list>
             </v-col>
-            <v-col cols="12" lg="6">
-                <v-list>
-                    <v-list-item class="watch-chips" v-if="!noChips">
-                        <!-- <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic> -->
-                        <v-avatar rounded left size="70" v-if="channelChips">
-                            <v-icon size="30" color="grey darken-3">{{ mdiAccountGroup }}</v-icon>
-                        </v-avatar>
-                        <template v-for="mention in channelChips">
-                            <ChannelChip :channel="mention" :key="mention.id" />
-                        </template>
-                        <a
-                            @click="showAllMentions = !showAllMentions"
-                            style="white-space: pre"
-                            class="text-subtitle-2"
-                            v-if="mentions.length > 3"
-                        >
-                            {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
-                        </a>
-                    </v-list-item>
-                </v-list>
+            <v-col cols="auto" class="ml-auto my-0 py-0 d-flex flex-grow-1" style="align-items: center">
+                <v-avatar rounded left size="70" v-if="channelChips">
+                    <v-icon size="30" color="grey darken-3">{{ mdiAccountGroup }}</v-icon>
+                </v-avatar>
+                <template v-for="mention in channelChips">
+                    <ChannelChip :channel="mention" :key="mention.id" />
+                </template>
+                <a
+                    @click="showAllMentions = !showAllMentions"
+                    style="white-space: pre"
+                    class="text-subtitle-2"
+                    v-if="mentions.length > 3"
+                >
+                    {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
+                </a>
             </v-col>
         </v-row>
         <v-card-text class="text-body-2">
@@ -64,14 +58,12 @@ import ChannelImg from "@/components/channel/ChannelImg";
 import { getVideoThumbnails } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
 import { mdiAccountGroup } from "@mdi/js";
-import VideoTopic from "@/components/video/VideoTopic";
 import TruncatedText from "@/components/common/TruncatedText";
 
 export default {
     name: "WatchInfo",
     components: {
         ChannelChip,
-        VideoTopic,
         ChannelInfo,
         ChannelSocials,
         ChannelImg,
@@ -161,5 +153,11 @@ export default {
 }
 .watch-chips > * {
     margin: 8px 2.5px;
+}
+.uploader-data-list {
+    flex-basis: auto;
+    flex-direction: column;
+    align-items: stretch;
+    margin-right: 12px;
 }
 </style>
