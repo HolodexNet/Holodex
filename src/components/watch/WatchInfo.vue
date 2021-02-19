@@ -31,8 +31,9 @@
                 class="ml-auto my-0 py-0 pr-6 d-flex flex-grow-1"
                 style="align-items: center; justify-content: flex-end"
             >
-                <v-avatar rounded left size="50" v-if="channelChips">
-                    <v-icon size="30" color="grey darken-3">{{ mdiAccountGroup }}</v-icon>
+                <v-avatar rounded left size="60" v-if="channelChips">
+                    <v-icon size="25" color="grey darken-3">{{ icons.mdiAccountBoxMultiple }}</v-icon>
+                    <span class="icon-subtext text--grey text--darken-3">MENTIONS</span>
                 </v-avatar>
                 <template v-for="mention in channelChips">
                     <ChannelChip :channel="mention" :key="mention.id" :size="60" />
@@ -61,7 +62,6 @@ import ChannelImg from "@/components/channel/ChannelImg";
 // import VideoDescription from "@/components/video/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
-import { mdiAccountGroup } from "@mdi/js";
 import TruncatedText from "@/components/common/TruncatedText";
 
 export default {
@@ -87,7 +87,6 @@ export default {
         return {
             timer: null,
             elapsedTime: 0,
-            mdiAccountGroup,
             showAllMentions: false,
         };
     },
@@ -163,5 +162,17 @@ export default {
     flex-direction: column;
     align-items: stretch;
     margin-right: 12px;
+}
+.icon-subtext {
+    display: block;
+    position: absolute;
+    font-size: 9px;
+    font-weight: 600;
+    color: rgb(138, 138, 138);
+    bottom: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-smooth: never;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: none;
 }
 </style>

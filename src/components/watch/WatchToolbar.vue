@@ -23,14 +23,7 @@
             </v-tooltip>
             <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                        icon
-                        lg
-                        @click="toggleSaved"
-                        :color="hasSaved ? 'primary' : 'white'"
-                        v-bind="attrs"
-                        v-on="on"
-                    >
+                    <v-btn icon lg @click="toggleSaved" :color="hasSaved ? 'primary' : ''" v-bind="attrs" v-on="on">
                         <v-icon>{{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}</v-icon>
                     </v-btn>
                 </template>

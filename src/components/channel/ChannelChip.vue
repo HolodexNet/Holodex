@@ -23,7 +23,7 @@
                 <v-fade-transition>
                     <v-overlay v-show="isHover" absolute class="chip-overlay">
                         <!-- <span class="channel-name-overlay">{{ channelName }}</span> -->
-                        <v-btn icon
+                        <v-btn icon :to="`/channel/${channel.id}`"
                             ><v-icon>{{ icons.mdiLoginVariant }}</v-icon></v-btn
                         >
                     </v-overlay>
