@@ -26,11 +26,7 @@
                     </v-list-item>
                 </v-list>
             </v-col>
-            <v-col
-                cols="auto"
-                class="ml-auto my-0 py-0 pr-6 d-flex flex-grow-1"
-                style="align-items: center; justify-content: flex-end"
-            >
+            <v-col cols="auto" class="ml-auto my-0 py-0 pr-6 mentions-row">
                 <v-avatar rounded left size="60" v-if="channelChips">
                     <v-icon size="25" color="grey darken-3">{{ icons.mdiAccountBoxMultiple }}</v-icon>
                     <span class="icon-subtext text--grey text--darken-3">MENTIONS</span>
@@ -174,5 +170,15 @@ export default {
     font-smooth: never;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: none;
+}
+.mentions-row {
+    align-items: center;
+    justify-content: flex-end;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    /* flex-shrink: 1; */
+    flex: 1 1 auto;
+    flex-wrap: wrap;
 }
 </style>
