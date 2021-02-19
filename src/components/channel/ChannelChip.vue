@@ -84,26 +84,6 @@ export default {
 </script>
 
 <style>
-.channel-name-overlay {
-    font-size: 9px;
-    line-height: 1.4;
-    padding: 6px 3px 0 3px;
-    margin-bottom: 3px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    white-space: initial;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    text-decoration: underline;
-    cursor: pointer;
-}
-.chip-overlay .channel-social-horizontal {
-    padding: 0px;
-    transform: scale(0.8);
-    width: 100%;
-}
 .channel-hover-tooltip {
     background-color: rgba(58, 58, 58, 0.7);
     display: flex;
