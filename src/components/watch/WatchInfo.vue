@@ -15,7 +15,7 @@
         </v-card-subtitle>
         <v-divider />
         <v-row class="flex-row" style="align-items: stretch">
-            <v-col cols="auto" class="my-0 py-0 flex-grow-1" style="flex-basis: auto">
+            <v-col cols="auto" class="my-0 py-0 flex-grow-0" style="flex-basis: auto">
                 <v-list>
                     <v-list-item>
                         <v-list-item-avatar size="80">
@@ -26,12 +26,16 @@
                     </v-list-item>
                 </v-list>
             </v-col>
-            <v-col cols="auto" class="ml-auto my-0 py-0 d-flex flex-grow-1" style="align-items: center">
-                <v-avatar rounded left size="70" v-if="channelChips">
+            <v-col
+                cols="auto"
+                class="ml-auto my-0 py-0 pr-6 d-flex flex-grow-1"
+                style="align-items: center; justify-content: flex-end"
+            >
+                <v-avatar rounded left size="50" v-if="channelChips">
                     <v-icon size="30" color="grey darken-3">{{ mdiAccountGroup }}</v-icon>
                 </v-avatar>
                 <template v-for="mention in channelChips">
-                    <ChannelChip :channel="mention" :key="mention.id" />
+                    <ChannelChip :channel="mention" :key="mention.id" :size="60" />
                 </template>
                 <a
                     @click="showAllMentions = !showAllMentions"

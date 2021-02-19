@@ -6,13 +6,13 @@
         :open-on-hover="!$store.state.isMobile"
         class=""
         top
-        nudge-top="75"
+        :nudge-top="size + 5"
         content-class="elevation-0"
         close-delay="250"
         v-model="isHover"
     >
         <template v-slot:activator="{ on: tooltip }">
-            <v-avatar left size="70" v-on="tooltip">
+            <v-avatar left :size="size" v-on="tooltip">
                 <v-img
                     :src="photo"
                     crossorigin="anonymous"
@@ -56,13 +56,18 @@ export default {
             type: Object,
             required: true,
         },
+        size: {
+            type: Number,
+            required: false,
+            default: 60,
+        },
         // close: {
         //     type: Boolean,
         //     required: false,
         // },
     },
     data() {
-        return { size: 80, isHover: false };
+        return { isHover: false };
     },
     computed: {
         channelName() {
