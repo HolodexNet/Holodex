@@ -3,7 +3,7 @@
         <MainNav />
         <!-- remove watch page view from being wrapped in v-main, to avoid layout shifts -->
         <v-main v-if="!isWatchPage">
-            <keep-alive max="4" exclude="Watch,MugenClips">
+            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo">
                 <router-view :key="$router.path" />
             </keep-alive>
         </v-main>
@@ -127,7 +127,7 @@ export default {
             return this.$store.state.settings.lang;
         },
         isWatchPage() {
-            return ["watch_id", "watch", "mugen-clips"].includes(this.$route.name);
+            return ["watch_id", "watch", "mugen-clips", "edit_video"].includes(this.$route.name);
         },
     },
     watch: {
