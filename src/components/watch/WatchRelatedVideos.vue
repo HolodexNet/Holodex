@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-container>
         <template v-for="relation in Object.keys(related)">
             <template v-if="related[relation].length">
                 <div class="text-overline ma-2" :key="`${relation}-title`">
@@ -21,7 +21,10 @@
                 </VideoCardList>
             </template>
         </template>
-    </div>
+        <!-- <template v-if="totalRelations === 0">
+            No clips or related videos yet...
+        </template> -->
+    </v-container>
 </template>
 
 <script>
@@ -37,6 +40,11 @@ export default {
             required: true,
             type: Object,
         },
+    },
+    computed: {
+        // totalRelations() {
+        //     return Object.values(this.related).map(r => r.length).reduce((a, b) => a+b);
+        // }
     },
     methods: {
         relationI18N(relation) {

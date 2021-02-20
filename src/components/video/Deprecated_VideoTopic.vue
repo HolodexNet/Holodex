@@ -1,3 +1,5 @@
+<!-- This component is no longer used -->
+
 <template>
     <v-dialog persistent v-model="dialog">
         <template v-slot:activator="{ on }">

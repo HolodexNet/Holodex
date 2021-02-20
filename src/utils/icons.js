@@ -34,4 +34,6 @@ export {
     mdiGridLarge,
     mdiGrid,
     mdiSquareOutline,
+    mdiChevronDown,
+    mdiChevronUp,
 } from "@mdi/js";

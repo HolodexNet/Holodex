@@ -5,7 +5,12 @@
         </v-btn>
         <v-card-title class="pt-2" style="font-size: 1.125rem; font-weight: 400">{{ video.title }}</v-card-title>
         <v-card-subtitle>
-            {{ formattedTime }} <template v-if="video.status === 'live'"> • {{ liveViewers }} viewers</template>
+            {{ formattedTime }}
+            <template v-if="video.status === 'live'"> • {{ liveViewers }} viewers</template>
+            <span class="mx-1" v-show="video.topic_id">
+                <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
+                {{ video.topic_id }}
+            </span>
             <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
         </v-card-subtitle>
         <!-- <template v-if="editMode">
@@ -19,15 +24,36 @@
             <v-divider />
         </template> -->
         <v-divider />
-        <v-list two-line>
-            <v-list-item>
-                <v-list-item-avatar size="40">
-                    <ChannelImg :channel="video.channel" />
-                </v-list-item-avatar>
-                <ChannelInfo :channel="video.channel" />
-                <ChannelSocials :channel="video.channel" />
-            </v-list-item>
-        </v-list>
+        <v-row class="flex-row" style="align-items: stretch">
+            <v-col cols="auto" class="my-0 py-0 flex-grow-0" style="flex-basis: auto">
+                <v-list>
+                    <v-list-item>
+                        <v-list-item-avatar size="80">
+                            <ChannelImg :channel="video.channel" size="80" />
+                        </v-list-item-avatar>
+                        <ChannelInfo :channel="video.channel" class="uploader-data-list"> </ChannelInfo>
+                        <ChannelSocials :channel="video.channel" />
+                    </v-list-item>
+                </v-list>
+            </v-col>
+            <v-col cols="auto" class="ml-auto my-0 py-0 pr-6 mentions-row">
+                <v-avatar rounded left size="60" v-if="channelChips">
+                    <v-icon size="25" color="grey darken-3">{{ icons.mdiAccountBoxMultiple }}</v-icon>
+                    <span class="icon-subtext text--grey text--darken-3">MENTIONS</span>
+                </v-avatar>
+                <template v-for="mention in channelChips">
+                    <ChannelChip :channel="mention" :key="mention.id" :size="60" />
+                </template>
+                <a
+                    @click="showAllMentions = !showAllMentions"
+                    style="white-space: pre"
+                    class="text-subtitle-2"
+                    v-if="mentions.length > 3"
+                >
+                    {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
+                </a>
+            </v-col>
+        </v-row>
         <v-card-text class="text-body-2">
             <truncated-text :html="video.description" lines="3" />
         </v-card-text>
@@ -42,8 +68,6 @@ import ChannelImg from "@/components/channel/ChannelImg";
 // import VideoDescription from "@/components/video/VideoDescription";
 import { getVideoThumbnails } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
-import * as icons from "@/utils/icons";
-import VideoTopic from "@/components/video/VideoTopic";
 import TruncatedText from "@/components/common/TruncatedText";
 import VideoSongs from "@/components/media/VideoSongs";
 
@@ -51,7 +75,6 @@ export default {
     name: "WatchInfo",
     components: {
         ChannelChip,
-        VideoTopic,
         ChannelInfo,
         ChannelSocials,
         ChannelImg,
@@ -63,13 +86,17 @@ export default {
         video: {
             required: true,
         },
+        noChips: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
             timer: null,
             elapsedTime: 0,
-            icons,
             editMode: false,
+            showAllMentions: false,
         };
     },
     methods: {
@@ -121,8 +148,50 @@ export default {
         liveViewers() {
             return (+this.video.live_viewers).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
+        mentions() {
+            return this.video.mentions || [];
+        },
+        channelChips() {
+            return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
+        },
     },
 };
 </script>
 
-<style></style>
+<style>
+.watch-card {
+    border: none !important;
+    box-shadow: none !important;
+}
+.watch-chips > * {
+    margin: 8px 2.5px;
+}
+.uploader-data-list {
+    flex-basis: auto;
+    flex-direction: column;
+    align-items: stretch;
+    margin-right: 12px;
+}
+.icon-subtext {
+    display: block;
+    position: absolute;
+    font-size: 9px;
+    font-weight: 600;
+    color: rgb(138, 138, 138);
+    bottom: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-smooth: never;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: none;
+}
+.mentions-row {
+    align-items: center;
+    justify-content: flex-end;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    /* flex-shrink: 1; */
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+}
+</style>

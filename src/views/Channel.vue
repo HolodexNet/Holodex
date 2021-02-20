@@ -129,6 +129,7 @@ export default {
     methods: {
         init() {
             this.$store.commit("channel/resetState");
+            this.$store.commit("channel/resetVideos");
             this.$store.commit("channel/setId", this.$route.params.id);
             this.$store.dispatch("channel/fetchChannel");
         },
@@ -153,6 +154,7 @@ export default {
 }
 
 .channel-banner {
+    height: 100px; /* legacy device support */
     height: calc(100vw / 6.2 - 1px);
 }
 

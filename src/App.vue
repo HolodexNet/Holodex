@@ -1,11 +1,15 @@
 <template>
     <v-app>
         <MainNav />
-        <v-main>
+        <!-- remove watch page view from being wrapped in v-main, to avoid layout shifts -->
+        <v-main v-if="!isWatchPage">
             <keep-alive max="4" exclude="Watch,MugenClips">
                 <router-view :key="$router.path" />
             </keep-alive>
         </v-main>
+        <template v-else>
+            <router-view :key="$router.path" />
+        </template>
         <v-snackbar bottom right :value="updateExists" :timeout="-1" color="primary" v-if="updateExists">
             {{ $t("views.app.update_available") }}
             <template v-slot:action>
@@ -122,6 +126,9 @@ export default {
             // connected to the watch.lang hook below.
             return this.$store.state.settings.lang;
         },
+        isWatchPage() {
+            return ["watch_id", "watch", "mugen-clips"].includes(this.$route.name);
+        },
     },
     watch: {
         darkMode() {
@@ -134,6 +141,7 @@ export default {
             this.$i18n.locale = this.$store.state.settings.lang;
             this.$vuetify.lang.current = this.$store.state.settings.lang;
         },
+        // watches change in breakpoint from vuetify and updates store
         // eslint-disable-next-line func-names
         "$vuetify.breakpoint.name": function () {
             this.updateIsMobile();
@@ -141,10 +149,7 @@ export default {
     },
     methods: {
         updateIsMobile() {
-            this.$store.commit(
-                "setIsMobile",
-                this.$vuetify.breakpoint.name === "xs" || this.$vuetify.breakpoint.name === "sm",
-            );
+            this.$store.commit("setIsMobile", ["xs", "sm"].includes(this.$vuetify.breakpoint.name));
         },
         async supportsWebp() {
             // eslint-disable-next-line no-restricted-globals
@@ -172,8 +177,11 @@ export default {
     text-decoration: none;
     color: inherit !important;
 }
-.body {
+body {
     overscroll-behavior-y: none;
+    background: black;
+    padding-left: min(calc(env(safe-area-inset-left)), 30px);
+    padding-right: min(calc(env(safe-area-inset-right)), 30px);
 }
 .row {
     margin: 0px -12px;

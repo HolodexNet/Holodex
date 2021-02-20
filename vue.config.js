@@ -33,7 +33,7 @@ module.exports = {
         themeColor: "#42a5f5",
         msTileColor: "#42a5f5",
         appleMobileWebAppCapable: "yes",
-        appleMobileWebAppStatusBarStyle: "#42a5f5",
+        appleMobileWebAppStatusBarStyle: "black-translucent",
         scope: "/",
         workboxOptions: {
             runtimeCaching: [

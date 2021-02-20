@@ -77,6 +77,7 @@ const mutations = {
     resetVideos(state) {
         state.currentOffset = 0;
         state.videos = [];
+        state.total = 0;
     },
     resetState(state) {
         Object.assign(state, initialState);
