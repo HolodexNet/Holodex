@@ -224,7 +224,7 @@ export default {
             return this.$store.state.isMobile;
         },
         isWatchPage() {
-            return ["watch_id", "watch", "mugen-clips"].includes(this.$route.name);
+            return ["watch_id", "watch", "mugen-clips", "edit_video"].includes(this.$route.name);
         },
         currentOrg: {
             get() {

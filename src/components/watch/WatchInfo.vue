@@ -1,8 +1,8 @@
 <template>
     <v-card class="watch-card rounded-0">
-        <!-- <div class="video-actions justify-space-between d-flex align-center px-4 pt-2"> -->
-        <slot name="actions"></slot>
-        <!-- </div> -->
+        <v-btn icon class="float-right mt-2 mr-2" :to="`/edit/video/${video.id}`">
+            <v-icon>{{ icons.mdiPencil }}</v-icon>
+        </v-btn>
         <v-card-title class="pt-2" style="font-size: 1.125rem; font-weight: 400">{{ video.title }}</v-card-title>
         <v-card-subtitle>
             {{ formattedTime }}
@@ -27,7 +27,7 @@
                 </v-list>
             </v-col>
             <v-col cols="auto">
-                <v-avatar rounded left size="60" v-if="channelChips">
+                <v-avatar rounded left size="60" v-if="channelChips && channelChips.length > 0">
                     <v-icon size="25" color="grey darken-3">{{ icons.mdiAccountBoxMultiple }}</v-icon>
                     <span class="icon-subtext text--grey text--darken-3">MENTIONS</span>
                 </v-avatar>
@@ -59,6 +59,7 @@ import ChannelImg from "@/components/channel/ChannelImg";
 import { getVideoThumbnails } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
 import TruncatedText from "@/components/common/TruncatedText";
+// import VideoSongs from "@/components/media/VideoEditSongs";
 
 export default {
     name: "WatchInfo",
@@ -68,6 +69,7 @@ export default {
         ChannelSocials,
         ChannelImg,
         TruncatedText,
+        // VideoSongs,
         // VideoDescription,
     },
     props: {
@@ -83,6 +85,7 @@ export default {
         return {
             timer: null,
             elapsedTime: 0,
+            editMode: false,
             showAllMentions: false,
         };
     },
@@ -149,9 +152,6 @@ export default {
 .watch-card {
     border: none !important;
     box-shadow: none !important;
-}
-.watch-chips > * {
-    margin: 8px 2.5px;
 }
 .uploader-data-list {
     flex-basis: auto;

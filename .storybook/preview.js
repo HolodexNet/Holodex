@@ -7,7 +7,7 @@ import { i18n, vuetify } from "@/plugins/vuetify";
 
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.css";
-import { addDecorator } from "@storybook/vue";
+import { addDecorator, configure } from "@storybook/vue";
 // import "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900";
 
 // Vue.config.productionTip = false;
@@ -17,6 +17,9 @@ Vue.use(VueI18n);
 Vue.directive("linkified", linkify);
 Vue.use(Vuetify);
 
+Vue.prototype.$store = store;
+// Vue.prototype.$i18n = i18n;
+
 export const decorators = [
     (_) => {
         return {
@@ -25,13 +28,13 @@ export const decorators = [
             store,
             router,
             template: `
-        <v-app>
-          <v-main>
-            <v-container fluid>
-              <story />
-            </v-container>
-          </v-main>
-        </v-app>`,
+            <v-app>
+              <v-main>
+                <v-container fluid>
+                  <story />
+                </v-container>
+              </v-main>
+            </v-app>`,
         };
     },
 ];
@@ -41,3 +44,5 @@ export const parameters = {
         iframeHeight: "60px",
     },
 };
+
+configure(require.context("../src/stories", true, /\.stories\.js$/), module);

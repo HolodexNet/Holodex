@@ -15,6 +15,7 @@ const Library = () => import("../views/Library");
 const Settings = () => import("../views/Settings");
 const NotFound = () => import("../views/NotFound");
 const Login = () => import("../views/Login");
+const EditVideo = () => import("../views/EditVideo");
 // const MugenClips = () => import("../views/MugenClips");
 Vue.use(VueRouter);
 
@@ -66,14 +67,14 @@ const routes = [
         component: Favorites,
     },
     {
-        name: "watch_id",
-        path: "/watch/:id",
+        name: "watch",
+        path: "/watch/:id?",
         component: Watch,
     },
     {
-        name: "watch",
-        path: "/watch",
-        component: Watch,
+        name: "edit_video",
+        path: "/edit/video/:id",
+        component: EditVideo,
     },
     {
         name: "mugen-clips",
