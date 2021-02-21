@@ -13,16 +13,6 @@
             </span>
             <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
         </v-card-subtitle>
-        <!-- <template v-if="editMode">
-            <v-divider />
-            <v-card-text>
-                <video-topic :videoId="video.id" :topic="video.topic_id" showEditIfPossible></video-topic>
-            </v-card-text>
-            <v-card-text>
-                <video-songs :video="video"></video-songs>
-            </v-card-text>
-            <v-divider />
-        </template> -->
         <v-divider />
         <v-row class="flex-row" style="align-items: stretch">
             <v-col cols="auto" class="my-0 py-0 flex-grow-0" style="flex-basis: auto">
@@ -37,7 +27,7 @@
                 </v-list>
             </v-col>
             <v-col cols="auto" class="ml-auto my-0 py-0 pr-6 mentions-row">
-                <v-avatar rounded left size="60" v-if="channelChips">
+                <v-avatar rounded left size="60" v-if="channelChips && channelChips.length > 0">
                     <v-icon size="25" color="grey darken-3">{{ icons.mdiAccountBoxMultiple }}</v-icon>
                     <span class="icon-subtext text--grey text--darken-3">MENTIONS</span>
                 </v-avatar>
@@ -69,7 +59,7 @@ import ChannelImg from "@/components/channel/ChannelImg";
 import { getVideoThumbnails } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
 import TruncatedText from "@/components/common/TruncatedText";
-import VideoSongs from "@/components/media/VideoSongs";
+// import VideoSongs from "@/components/media/VideoEditSongs";
 
 export default {
     name: "WatchInfo",
@@ -79,7 +69,7 @@ export default {
         ChannelSocials,
         ChannelImg,
         TruncatedText,
-        VideoSongs,
+        // VideoSongs,
         // VideoDescription,
     },
     props: {

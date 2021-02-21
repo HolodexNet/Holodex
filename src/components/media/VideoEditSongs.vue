@@ -1,8 +1,8 @@
 <template>
     <div>
         <v-row align="center">
-            <v-divider></v-divider><span class="text-overline">Song Metadata: Add a new Song</span
-            ><v-divider></v-divider>
+            <v-divider> </v-divider> <span class="text-overline"> Song Metadata: Add a new Song </span>
+            <v-divider> </v-divider>
         </v-row>
         <v-row dense>
             <v-col cols="8" sm="9" md="10" lg="5">
@@ -15,7 +15,7 @@
                     disabled
                     label="TrackId"
                     hide-details="auto"
-                    :value="current.id || 'N/A'"
+                    :value="current.itunesid || 'N/A'"
                     style="font-size: 12px"
                 />
             </v-col>
@@ -23,7 +23,7 @@
                 <v-text-field outlined label="Track Name" hide-details="auto" v-model="current.name" />
             </v-col>
             <v-col cols="12" sm="5" md="4" lg="6">
-                <v-text-field outlined label="Original Artist" hide-details="auto" v-model="current.originalArtist" />
+                <v-text-field outlined label="Original Artist" hide-details="auto" v-model="current.original_artist" />
             </v-col>
             <v-col cols="6" sm="4" md="2" lg="3">
                 <v-text-field
@@ -31,11 +31,13 @@
                     label="Start"
                     placeholder="12:31"
                     hide-details="auto"
-                    :append-icon="mdiRestore"
+                    :prepend-inner-icon="mdiTimerOutline + icons.mdiMenuDown"
+                    :append-icon="mdiDebugStepOver"
                     v-model="currentStartTime"
                     :rules="[checkStartTime]"
                     validate-on-blur
-                    @click:append="currentStartTime = secondsToHuman(currentTime)"
+                    @click:prepend-inner="currentStartTime = secondsToHuman(currentTime)"
+                    @click:append="$emit('timeJump', current.start)"
                 >
                 </v-text-field>
             </v-col>
@@ -45,23 +47,28 @@
                     :label="`End / Duration ${secondsToHuman(current.end)}`"
                     placeholder="3:40 or +312"
                     hide-details="auto"
+                    :prepend-inner-icon="mdiTimerOutline"
                     :append-icon="mdiEarHearing"
                     v-model="currentEndTime"
                     :rules="[checkEndTime]"
+                    @click:prepend-inner="currentEndTime = secondsToHuman(currentTime)"
+                    @click:append="$emit('timeJump', Math.max(current.end - 3, 0))"
                     validate-on-blur
                 >
                 </v-text-field>
             </v-col>
             <v-col cols="4" sm="6" md="8">
-                <v-btn color="success" elevation="5" width="100%" @click="addSong" :disabled="!canSave">Add</v-btn>
+                <v-btn color="success" elevation="5" width="100%" @click="addSong" :disabled="!canSave">
+                    {{ addOrUpdate }}
+                </v-btn>
             </v-col>
             <v-col cols="2" sm="2" md="1">
-                <v-btn color="red" elevation="5" width="100%" style="padding: 0 0px; min-width: 30px">
+                <v-btn color="red" elevation="5" width="100%" style="padding: 0 0px; min-width: 30px" @click="reset">
                     <v-icon>{{ mdiRestore }}</v-icon>
                 </v-btn>
             </v-col>
             <v-col cols="6" sm="4" md="3">
-                <v-btn elevation="5" width="100%" class="am-listen-btn">
+                <v-btn :disabled="!current.amUrl" elevation="5" width="100%" class="am-listen-btn" href="current.amUrl">
                     <v-avatar left tile size="26px">
                         <v-img
                             src="https://apple-resources.s3.amazonaws.com/medusa/production/images/5f600674c4f022000191d6c4/en-us-large@1x.png"
@@ -71,11 +78,26 @@
                 </v-btn>
             </v-col>
         </v-row>
-        <v-row class="pt-3">
+        <v-row align="center">
+            <v-divider> </v-divider> <span class="text-overline"> Song List : {{ video.title }} </span>
+            <v-divider> </v-divider>
+        </v-row>
+        <v-row dense>
             <v-col cols="12">
                 <v-list>
                     <template v-for="song in songList">
-                        <song-item :song="song" :key="song.name"></song-item>
+                        <song-item
+                            :song="song"
+                            :key="song.name"
+                            detailed
+                            @remove="removeSong"
+                            @play="
+                                (x) => {
+                                    $emit('timeJump', x.start);
+                                    current = x;
+                                }
+                            "
+                        ></song-item>
                     </template>
                 </v-list>
             </v-col>
@@ -84,7 +106,8 @@
 </template>
 
 <script>
-import { mdiEarHearing, mdiRestore } from "@mdi/js";
+import { mdiEarHearing, mdiRestore, mdiTimerOutline, mdiDebugStepOver } from "@mdi/js";
+import backendApi from "@/utils/backend-api";
 import SongSearch from "./SongSearch";
 import SongItem from "./SongItem";
 
@@ -116,11 +139,11 @@ function getEmptySong(video) {
         start: 0,
         end: 0,
         name: "",
-        originalArtist: "",
+        original_artist: "",
         amUrl: null,
         art: null,
         video_id: video.id,
-        channel_id: video.channel_id,
+        channel_id: video.channel.id,
         channel: {
             name: video.channel.name,
             name_en: video.channel.name_en,
@@ -138,6 +161,8 @@ export default {
         return {
             mdiEarHearing,
             mdiRestore,
+            mdiTimerOutline,
+            mdiDebugStepOver,
             current: getEmptySong(this.video),
             songList: [],
             // currentStartTime: 0,
@@ -152,6 +177,9 @@ export default {
             type: Number,
             required: false,
         },
+    },
+    mounted() {
+        this.refreshSongList();
     },
     computed: {
         currentStartTime: {
@@ -183,6 +211,12 @@ export default {
         canSave() {
             return this.current.end - this.current.start > 0 && this.current.name;
         },
+        addOrUpdate() {
+            if (this.songList.find((m) => m.name === this.current.name)) {
+                return "Update";
+            }
+            return "Add";
+        },
     },
     methods: {
         processSearch(item) {
@@ -191,7 +225,7 @@ export default {
             if (item) {
                 this.current.itunesid = item.trackId;
                 this.current.name = item.trackName;
-                this.current.originalArtist = item.artistName;
+                this.current.original_artist = item.artistName;
                 this.currentEndTime = `+${Math.ceil(item.trackTimeMillis / 1000)}`;
                 this.current.amUrl = item.trackViewUrl;
                 this.current.art = item.artworkUrl100;
@@ -208,9 +242,26 @@ export default {
             return endTimeRegex.test(val);
         },
         secondsToHuman,
-        addSong() {
-            this.songList.push(this.current);
+        async addSong() {
+            await this.saveCurrentSong();
+            // this.songList.push(this.current);
             this.current = getEmptySong(this.video);
+            await this.refreshSongList();
+        },
+        async refreshSongList() {
+            this.songList = (await backendApi.videoSongList(this.video.channel.id, this.video.id, false)).data;
+        },
+        async saveCurrentSong() {
+            const res = await backendApi.tryCreateSong(this.current, this.$store.state.userdata.jwt);
+            console.log(res);
+        },
+        reset() {
+            this.current = getEmptySong(this.video);
+            this.refreshSongList();
+        },
+        async removeSong(song) {
+            await backendApi.deleteSong(song, this.$store.state.userdata.jwt);
+            this.refreshSongList();
         },
     },
 };
@@ -236,5 +287,7 @@ export default {
     justify-content: left;
     text-align: left;
     font-size: small;
+
+    padding-top: 3px !important;
 }
 </style>

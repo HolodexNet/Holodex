@@ -1,14 +1,40 @@
 <template>
-    <v-list-item @click="() => {}">
+    <v-list-item @click.stop="$emit('play', song)">
         <v-list-item-avatar tile>
             <v-img :src="song.art"></v-img>
         </v-list-item-avatar>
         <v-list-item-content class="py-1 pt-1">
             <v-list-item-subtitle class="text--primary text-subtitle-1">
-                <span class="limit-width"> {{ song.name }} / {{ song.originalArtist }}</span>
+                <a
+                    class="text-caption error--text float-right ml-1 clickable"
+                    v-if="detailed && $listeners.remove && userCanDelete"
+                    @click.stop="$emit('remove', song)"
+                >
+                    Remove
+                </a>
+                <div v-if="detailed" class="float-right text-caption">[{{ song.start }} - {{ song.end }}]s</div>
+
+                <span class="limit-width">
+                    {{ song.name }} /
+                    <span class="primary--text text--lighten-2">{{ song.original_artist }}</span></span
+                >
             </v-list-item-subtitle>
 
-            <v-list-item-subtitle class="text--caption">
+            <v-list-item-subtitle
+                class="text--caption clickable"
+                v-if="$listeners.channel"
+                @click.stop="$emit('channel', song)"
+            >
+                <div class="float-right">
+                    {{ Math.floor((song.end - song.start) / 60) }}:{{
+                        (Math.round(song.end - song.start) % 60).toString().padStart(2, "0")
+                    }}
+                </div>
+
+                {{ song.channel.name }}
+            </v-list-item-subtitle>
+            <!-- Else: -->
+            <v-list-item-subtitle class="text--caption" v-else>
                 <div class="float-right">
                     {{ Math.floor((song.end - song.start) / 60) }}:{{
                         (Math.round(song.end - song.start) % 60).toString().padStart(2, "0")
@@ -51,8 +77,17 @@ export default {
             type: Boolean,
             default: true,
         },
+        detailed: {
+            type: Boolean,
+            default: false,
+        },
     },
-    computed: {},
+    computed: {
+        userCanDelete() {
+            const u = this.$store.state.userdata;
+            return u && u.user && u.user.role && u.user.role !== "user";
+        },
+    },
     mounted() {},
 };
 </script>
@@ -77,5 +112,11 @@ export default {
 
     justify-content: left;
     text-align: left;
+}
+.clickable {
+    text-decoration: none;
+}
+.clickable:hover {
+    text-decoration: underline;
 }
 </style>
