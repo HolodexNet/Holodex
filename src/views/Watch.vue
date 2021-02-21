@@ -94,8 +94,7 @@
         <!-- Mobile Layout (sm/xs) Layout -->
         <div class="d-flex flex-column flex-sm-row" style="padding-bottom: 60px" v-else>
             <div
-                class="d-inline-flex flex-grow-1 flex-column"
-                style="width: 100%"
+                class="d-inline-flex flex-grow-1 flex-column w-100"
                 :style="{
                     'padding-right': hasLiveChat && showLiveChat && landscape ? '220px' : 0,
                     'min-height': landscape || !showLiveChat ? '0' : '160vh',
