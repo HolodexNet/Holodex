@@ -153,9 +153,6 @@ export default {
     border: none !important;
     box-shadow: none !important;
 }
-.watch-chips > * {
-    margin: 8px 2.5px;
-}
 .uploader-data-list {
     flex-basis: auto;
     flex-direction: column;

@@ -11,72 +11,17 @@
                 </div>
             </div>
         </div>
-        <!-- <v-card tile class="d-flex justify-space-between px-4 pt-2 flex-wrap-reverse flex-sm-nowrap">
-            <span class="watch-chips">
-                <video-topic :videoId="video.id" :topic="video.topic_id"></video-topic>
-                <template v-for="mention in channelChips">
-                    <ChannelChip :channel="mention" :key="mention.id" />
-                </template>
-                <a
-                    @click="showAllMentions = !showAllMentions"
-                    style="white-space: pre"
-                    class="text-subtitle-2"
-                    v-if="mentions.length > 3"
-                >
-                    {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
-                </a>
-            </span>
-            <div class="watch-btn-group ml-auto d-flex">
-                <slot name="buttons"></slot>
-                <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                            icon
-                            lg
-                            :href="`https://youtu.be/${video.id}`"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            v-bind="attrs"
-                            v-on="on"
-                        >
-                            <v-icon>{{ mdiOpenInNew }}</v-icon>
-                        </v-btn>
-                    </template>
-                    <span>Open on Youtube</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                            icon
-                            lg
-                            @click="toggleSaved"
-                            :color="hasSaved ? 'primary' : 'white'"
-                            v-bind="attrs"
-                            v-on="on"
-                        >
-                            <v-icon>{{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}</v-icon>
-                        </v-btn>
-                    </template>
-                    <span>Save video to Library</span>
-                </v-tooltip>
-            </div>
-        </v-card> -->
     </div>
 </template>
 
 <script>
-// import VideoTopic from "@/components/video/VideoTopic";
-// import ChannelChip from "@/components/channel/ChannelChip";
 import { getVideoThumbnails } from "@/utils/functions";
 import { mdiOpenInNew } from "@mdi/js";
 import * as icons from "@/utils/icons";
 
 export default {
     name: "WatchFrame",
-    components: {
-        // ChannelChip,
-        // VideoTopic,
-    },
+    components: {},
     props: {
         video: {
             required: true,

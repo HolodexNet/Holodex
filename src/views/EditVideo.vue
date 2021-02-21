@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid v-if="!isLoading && !hasError">
+    <v-container fluid v-if="!isLoading && !hasError" class="video-editor">
         <v-row>
             <v-col :md="3" :lg="4" cols="12" class="px-0 pt-0 px-md-3">
                 <WatchFrame :video="video">
@@ -36,8 +36,6 @@
                         <v-tab disabled>Sources/Clips</v-tab>
                     </v-tabs>
                     <v-col cols="12" class="pa-4">
-                        <!-- <WatchLiveChat v-if="hasLiveChat" :video="video" /> -->
-                        <!-- <WatchRelatedVideos :related="related" /> -->
                         <div v-show="currentTab === TABS.TOPIC">
                             <v-card-title>
                                 <v-icon left>{{ icons.mdiAnimationPlay }}</v-icon>
@@ -232,36 +230,23 @@ export default {
 </script>
 
 <style>
-/* maintains 16:9 aspect ratio */
-/* .embedded-video {
-    position: relative;
-    padding-bottom: 56.25%;
-    padding-bottom: min(56.25%, calc(100vh - 220px));
-}
-
-.embedded-video > iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-} */
-
-.embedded-chat {
+.video-editor .embedded-chat {
     position: relative;
     min-height: 600px;
 }
 
-.embedded-chat > iframe {
+.video-editor .embedded-chat > iframe {
     position: absolute;
     width: 100%;
     min-height: 600px;
 }
 
-.watch-card {
+.video-editor .watch-card {
     border: none !important;
     box-shadow: none !important;
 }
 
-.thumbnail-overlay {
+.video-editor .thumbnail-overlay {
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 100%;
@@ -269,14 +254,10 @@ export default {
     top: 0;
 }
 
-.thumbnail {
+.video-editor .thumbnail {
     position: relative;
 }
-.watch-btn-group > .v-btn {
+.video-editor .watch-btn-group > .v-btn {
     margin-right: 5px;
-}
-
-.watch-chips > * {
-    margin: 2.5px;
 }
 </style>

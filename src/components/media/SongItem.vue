@@ -6,7 +6,7 @@
         <v-list-item-content class="py-1 pt-1">
             <v-list-item-subtitle class="text--primary text-subtitle-1">
                 <a
-                    class="text-caption error--text float-right ml-1 clickable"
+                    class="text-caption error--text float-right ml-1 song-clickable"
                     v-if="detailed && $listeners.remove && userCanDelete"
                     @click.stop="$emit('remove', song)"
                 >
@@ -21,7 +21,7 @@
             </v-list-item-subtitle>
 
             <v-list-item-subtitle
-                class="text--caption clickable"
+                class="text--caption song-clickable"
                 v-if="$listeners.channel"
                 @click.stop="$emit('channel', song)"
             >
@@ -113,10 +113,10 @@ export default {
     justify-content: left;
     text-align: left;
 }
-.clickable {
+.song-clickable {
     text-decoration: none;
 }
-.clickable:hover {
+.song-clickable:hover {
     text-decoration: underline;
 }
 </style>
