@@ -8,14 +8,14 @@
             {{ formattedTime }}
             <template v-if="video.status === 'live'"> • {{ liveViewers }} viewers</template>
             <span class="mx-1" v-show="video.topic_id">
-                <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
+                • <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
                 {{ video.topic_id }}
             </span>
             <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
         </v-card-subtitle>
         <v-divider />
-        <v-row class="flex-row" style="align-items: stretch">
-            <v-col cols="auto" class="my-0 py-0 flex-grow-0" style="flex-basis: auto">
+        <div class="d-flex justify-space-between flex-wrap align-center">
+            <v-col cols="auto">
                 <v-list>
                     <v-list-item>
                         <v-list-item-avatar size="80">
@@ -26,7 +26,7 @@
                     </v-list-item>
                 </v-list>
             </v-col>
-            <v-col cols="auto" class="ml-auto my-0 py-0 pr-6 mentions-row">
+            <v-col cols="auto">
                 <v-avatar rounded left size="60" v-if="channelChips && channelChips.length > 0">
                     <v-icon size="25" color="grey darken-3">{{ icons.mdiAccountBoxMultiple }}</v-icon>
                     <span class="icon-subtext text--grey text--darken-3">MENTIONS</span>
@@ -43,9 +43,9 @@
                     {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
                 </a>
             </v-col>
-        </v-row>
+        </div>
         <v-card-text class="text-body-2">
-            <truncated-text :html="video.description" lines="3" />
+            <truncated-text :html="video.description" lines="4" />
         </v-card-text>
     </v-card>
 </template>
@@ -173,15 +173,5 @@ export default {
     font-smooth: never;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: none;
-}
-.mentions-row {
-    align-items: center;
-    justify-content: flex-end;
-    max-width: 100%;
-    display: flex;
-    flex-direction: row;
-    /* flex-shrink: 1; */
-    flex: 1 1 auto;
-    flex-wrap: wrap;
 }
 </style>

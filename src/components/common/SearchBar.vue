@@ -248,7 +248,7 @@ export default {
 
 <style>
 .search-bar {
-    max-width: 670px;
+    max-width: 670px !important;
     margin-bottom: -5px;
 }
 .search-bar-small {
