@@ -118,4 +118,20 @@ export default {
     rotation() {
         return axiosInstance.get("/rotation");
     },
+    videoSongList(channelId, videoId, allowCache) {
+        const dt = allowCache ? "_" : Date.now();
+        return axiosInstance.post(`/songs/latest?c=${dt}`, { channel_id: channelId, video_id: videoId });
+    },
+    tryCreateSong(songObj, jwt) {
+        return axiosInstance.put("/songs", songObj, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    deleteSong(songObj, jwt) {
+        return axiosInstance.delete("/songs", {
+            data: { ...songObj },
+
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
 };
