@@ -5,10 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "storybook:serve": "SET STORYBOOK=true & vue-cli-service storybook:serve -p 6006 -c .storybook"
+    "lint": "vue-cli-service lint"
   },
   "prettier": {
     "tabWidth": 4,
@@ -58,13 +55,6 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@kazupon/vue-i18n-loader": "^0.5.0",
-    "@storybook/addon-actions": "^6.1.15",
-    "@storybook/addon-backgrounds": "^6.1.15",
-    "@storybook/addon-essentials": "^6.1.15",
-    "@storybook/addon-links": "^6.1.15",
-    "@storybook/addon-storysource": "^4.1.7",
-    "@storybook/addon-viewport": "^4.1.7",
-    "@storybook/vue": "^6.1.15",
     "@vue/cli-plugin-babel": "^4.5.11",
     "@vue/cli-plugin-eslint": "^4.5.11",
     "@vue/cli-plugin-pwa": "^4.5.11",
@@ -85,7 +75,6 @@
     "prettier": "^2.2.1",
     "sass": "^1.32.5",
     "sass-loader": "^10.1.1",
-    "vue-cli-plugin-storybook": "^2.0.0",
     "vue-cli-plugin-vuetify": "^2.0.9",
     "vue-cli-plugin-yaml": "^1.0.2",
     "vue-template-compiler": "^2.6.11",
