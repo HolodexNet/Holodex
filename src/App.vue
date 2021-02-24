@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app :style="{ background: $vuetify.theme.themes[this.darkMode ? 'dark' : 'light'].background }">
         <MainNav />
         <!-- remove watch page view from being wrapped in v-main, to avoid layout shifts -->
         <v-main v-if="!isWatchPage">

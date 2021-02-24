@@ -6,15 +6,18 @@
                 :key="'ytplayer' + videoId"
                 v-if="videoId"
                 :video-id="videoId"
-                @ready="handlerGenerator('ready')"
-                @playing="handlerGenerator('playing')"
-                @progress="handlerGenerator('progress')"
-                @pause="handlerGenerator('pause')"
-                @play="handlerGenerator('play')"
+                @ready="ready"
+                @playing="(x) => handlerGenerator('playing')(x)"
+                @progress="(x) => handlerGenerator('progress')(x)"
+                @paused="(x) => handlerGenerator('paused')(x)"
+                @buffering="(x) => handlerGenerator('buffering')(x)"
                 :playerVars="{
-                    ...(start && { start: start }),
+                    ...(start && { start }),
+                    ...(end && { end }),
                     autoplay: $store.state.settings.autoplayVideo ? 1 : 0,
                     playsinline: 1,
+                    controls: 0,
+                    disablekb: 1,
                 }"
             >
             </youtube>
@@ -40,7 +43,11 @@ export default {
         },
     },
     data() {
-        return {};
+        return {
+            timer: null,
+            player: null,
+            currentTime: 0,
+        };
     },
     computed: {},
     methods: {
@@ -48,6 +55,18 @@ export default {
             return (evt) => {
                 console.log(event, evt);
             };
+        },
+        ready(evt) {
+            this.player = evt.target;
+        },
+        setTimer() {
+            if (this.timer) clearInterval(this.timer);
+            if (this.player) {
+                this.timer = setInterval(() => {
+                    this.currentTime = this.player.getCurrentTime();
+                    if (this.currentTime >= this.end) this.$emit("done");
+                }, 1000);
+            }
         },
     },
 };

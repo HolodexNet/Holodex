@@ -11,7 +11,11 @@
 
         <v-app-bar
             id="top-bar"
-            class="blue lighten-1"
+            class=""
+            :class="{
+                'secondary darken-3': darkMode,
+                'primary lighten-1': !darkMode,
+            }"
             :app="!isWatchPage"
             clipped-left
             flat
@@ -46,11 +50,22 @@
                                 style="position: relative"
                             >
                                 <transition name="fade" mode="out-in">
-                                    <span :key="currentOrg" style="text-decoration: underline">{{
-                                        ORGS_PREFIX[currentOrg] || currentOrg
-                                    }}</span>
+                                    <span
+                                        :key="currentOrg"
+                                        style="text-decoration: underline"
+                                        :class="{
+                                            'grey--text text--darken-4': !darkMode,
+                                            'grey-text text--lighten-2': darkMode,
+                                        }"
+                                        >{{ ORGS_PREFIX[currentOrg] || currentOrg }}</span
+                                    >
                                 </transition>
-                                <span class="primary--text text--lighten-2" ref="dexBtn">dex</span>
+                                <span
+                                    class="primary--text"
+                                    :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
+                                    ref="dexBtn"
+                                    >dex</span
+                                >
                                 <v-tooltip
                                     v-model="firstVisitComputed"
                                     right
@@ -181,7 +196,6 @@ import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
 import NavDrawer from "./NavDrawer";
 import BottomNav from "./BottomNav";
-import MusicBar from "./MusicBar";
 
 /**
  * Returns the index of the last element in the array where predicate is true, and -1
@@ -208,7 +222,7 @@ export default {
         BottomNav,
         UserCard,
         Logo,
-        MusicBar,
+        MusicBar: () => import("./MusicBar"),
     },
     data() {
         return {
@@ -225,6 +239,9 @@ export default {
     computed: {
         isMobile() {
             return this.$store.state.isMobile;
+        },
+        darkMode() {
+            return this.$store.state.settings.darkMode;
         },
         isWatchPage() {
             return ["watch_id", "watch", "mugen-clips", "edit_video"].includes(this.$route.name);
@@ -361,7 +378,7 @@ export default {
 }
 
 #top-bar {
-    background-color: #2b79ad !important;
+    /* background-color: #2b79ad !important; */
     padding-left: min(calc(env(safe-area-inset-left)), 30px);
     padding-right: min(calc(env(safe-area-inset-right)), 30px);
 }

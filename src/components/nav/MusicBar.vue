@@ -22,7 +22,18 @@
                 </div>
             </div>
 
-            <song-frame videoId="9wF4hxa7w40" :start="300" :end="500" style="width: 200px; height: 100%"></song-frame>
+            <v-row class="frame-row">
+                <v-col cols="auto">
+                    <song-frame
+                        videoId="9wF4hxa7w40"
+                        :start="300"
+                        :end="500"
+                        style="width: 250px; width: 356px"
+                    ></song-frame>
+                </v-col>
+                <v-col cols="auto"> </v-col>
+                <v-col cols="auto"> </v-col>
+            </v-row>
         </v-bottom-sheet>
         <div
             key="musicplayertogglebtn"
@@ -49,22 +60,7 @@ Vue.use(VueYouTubeEmbed);
 export default {
     components: { SongFrame },
     name: "MusicBar",
-    props: {
-        pages: {
-            required: true,
-            type: Array,
-        },
-        active: {
-            type: Boolean,
-            require: false,
-            default: true,
-        },
-        showNav: {
-            // whether or not navigation buttons will show up
-            type: Boolean,
-            default: false,
-        },
-    },
+    props: {},
     data() {
         return {
             value: "/",
@@ -80,7 +76,6 @@ export default {
                 this.$refs.sheet.showScroll();
                 // either set :retain-focus="false" above or do this:
                 this.$nextTick(() => this.$refs.sheet.unbind());
-                console.log(this.$refs.heightchecker);
             });
         },
     },
@@ -106,6 +101,27 @@ export default {
 <style>
 .music-player-bar {
     position: relative;
+    border-top: 2px solid #007bff;
+    background: rgb(39, 38, 44);
+    /* background: linear-gradient(180deg, rgba(80,80,80,1) 0%, rgba(43,47,50,1) 100%);  */
+    /* box-shadow: 1px 0px 2px inset #007bff; */
+}
+.music-player-bar iframe {
+    border-radius: 4px;
+}
+.music-player-bar .song-player-container {
+    border-radius: 5px;
+    width: 356px;
+    position: relative;
+    margin-top: -120px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding: 2px;
+    background: #007bff;
+    box-shadow: 0px 6px 6px -2px rgba(0, 0, 0, 0.452), 0px 6px 16px -2px rgba(0, 0, 0, 0.582);
+}
+.frame-row {
+    width: inherit;
 }
 .music-player-toggle {
     position: fixed;
