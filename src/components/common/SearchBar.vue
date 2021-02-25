@@ -200,6 +200,15 @@ export default {
                 return;
             }
 
+            if (this.query.length === 1 && this.query[0].type === "title & desc") {
+                // eslint-disable-next-line no-useless-escape
+                const url = this.query[0].value.match(/(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11})/);
+                if (url) {
+                    this.$router.push(`/watch/${url[1]}`);
+                    return;
+                }
+            }
+
             this.$router.push({
                 path: "/search",
                 query: { q: await json2csvAsync(this.query) },

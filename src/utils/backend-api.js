@@ -53,6 +53,12 @@ export default {
         return axiosInstance.get(`/clips?${q}`);
     },
     searchAutocomplete(query) {
+        // eslint-disable-next-line max-len, no-useless-escape
+        const q = query.match(/(?:(?:http|https):\/\/|)(?:www\.|)youtube\.com\/(channel|user)\/([a-zA-Z0-9\-_]{1,})/);
+
+        if (q)
+            return axiosInstance.get(`/search/autocomplete?q=${q[2]}`);
+
         return axiosInstance.get(`/search/autocomplete?q=${query}`);
     },
     searchVideo(queryObject) {
