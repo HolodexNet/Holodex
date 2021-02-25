@@ -1,7 +1,7 @@
 <template>
     <v-list-item @click.stop="$emit('play', song)">
         <v-list-item-avatar tile>
-            <v-img :src="song.art"></v-img>
+            <v-img lazy-src :src="song.art"></v-img>
         </v-list-item-avatar>
         <v-list-item-content class="py-1 pt-1">
             <v-list-item-subtitle class="text--primary text-subtitle-1">

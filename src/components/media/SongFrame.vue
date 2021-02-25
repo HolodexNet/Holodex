@@ -16,7 +16,7 @@
                     ...(end && { end }),
                     autoplay: $store.state.settings.autoplayVideo ? 1 : 0,
                     playsinline: 1,
-                    controls: 0,
+                    controls: 1,
                     disablekb: 1,
                 }"
             >
