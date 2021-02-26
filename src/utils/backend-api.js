@@ -3,6 +3,11 @@ import axiosRetry from "axios-retry";
 import { dayjs } from "@/utils/time";
 import querystring from "querystring";
 
+// eslint-disable-next-line max-len,no-useless-escape
+const CHANNEL_URL_REGEX = /(?:(?:http|https):\/\/|)(?:www\.|)youtube\.com\/(channel|user)\/([a-zA-Z0-9\-_]{1,})/;
+// eslint-disable-next-line max-len,no-useless-escape
+const VIDEO_URL_REGEX = /(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11})/;
+
 export const axiosInstance = axios.create({
     // baseURL: process.env.NODE_ENV === "development" ? "https://holodex.net/api/v2" : "/api/v2",
     baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2" : "/api/v2",
@@ -53,11 +58,14 @@ export default {
         return axiosInstance.get(`/clips?${q}`);
     },
     searchAutocomplete(query) {
-        // eslint-disable-next-line max-len, no-useless-escape
-        const q = query.match(/(?:(?:http|https):\/\/|)(?:www\.|)youtube\.com\/(channel|user)\/([a-zA-Z0-9\-_]{1,})/);
+        const channelId = query.match(CHANNEL_URL_REGEX);
+        const videoId = query.match(VIDEO_URL_REGEX);
 
-        if (q)
-            return axiosInstance.get(`/search/autocomplete?q=${q[2]}`);
+        if (channelId) return axiosInstance.get(`/search/autocomplete?q=${channelId[2]}`);
+
+        if (videoId) {
+            return { data: [{ type: "video url", value: `${videoId[1]}` }] };
+        }
 
         return axiosInstance.get(`/search/autocomplete?q=${query}`);
     },

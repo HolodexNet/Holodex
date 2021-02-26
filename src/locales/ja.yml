@@ -46,6 +46,7 @@ component:
       org: "組織"
       titledesc: "タイトル/概要"
       topic: "トピック"
+      videourl: "ビデオURL"
   video:
     comment:
       openOnYoutube: "コメントをYoutubeで開く"

@@ -44,6 +44,7 @@ component:
       org: "org"
       titledesc: "titre et desc."
       topic: "sujet"
+      videourl: "url de la vidéo"
   video:
     comment:
       openOnYoutube: "ouvrir le commentaire sur"
