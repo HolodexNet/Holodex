@@ -3,13 +3,23 @@
         <span class="loading-text">Loading Chat...</span>
         <div class="embedded-chat">
             <iframe :src="liveChatUrl" frameborder="0" />
+            <!-- {{JSON.stringify(tlHistory)}} -->
+            <WatchLiveTranslations :video="video" v-if="showTL" />
+            <a class="show-overlay-btn d-flex align-center text-body-2" @click="showTL = !showTL">
+                {{ showTL ? "Hide" : "Show" }} TLs
+            </a>
         </div>
     </v-sheet>
 </template>
 
 <script>
+import WatchLiveTranslations from "./WatchLiveTranslations";
+
 export default {
     name: "WatchLiveChat",
+    components: {
+        WatchLiveTranslations,
+    },
     props: {
         video: {
             type: Object,
@@ -26,6 +36,11 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    data() {
+        return {
+            showTL: false,
+        };
     },
     computed: {
         liveChatUrl() {
@@ -99,5 +114,25 @@ export default {
     transform-origin: top left;
     height: 133%;
     width: 133%;
+}
+
+/* .watch-live-chat.fixed-right > .embedded-chat .chat-overlay {
+    transform: scale(0.75);
+    transform-origin: top left;
+    width: 133%;
+    height: calc(35vh * 1.33);
+} */
+
+.chat-overlay {
+    width: 100%;
+    /* height: 35%; */
+    position: absolute;
+    top: 0;
+}
+.show-overlay-btn {
+    right: 30%;
+    height: 38px;
+    position: absolute;
+    z-index: 10;
 }
 </style>
