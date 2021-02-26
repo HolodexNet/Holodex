@@ -7,7 +7,7 @@
             <v-list-item-subtitle class="text--primary text-subtitle-1">
                 <a
                     class="text-caption error--text float-right ml-1 song-clickable"
-                    v-if="detailed && $listeners.remove && userCanDelete"
+                    v-if="alwaysShowDeletion || (detailed && $listeners.remove && userCanDelete)"
                     @click.stop="$emit('remove', song)"
                 >
                     Remove
@@ -78,6 +78,10 @@ export default {
             default: true,
         },
         detailed: {
+            type: Boolean,
+            default: false,
+        },
+        alwaysShowDeletion: {
             type: Boolean,
             default: false,
         },

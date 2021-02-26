@@ -6,11 +6,8 @@
                 :key="'ytplayer' + videoId"
                 v-if="videoId"
                 :video-id="videoId"
+                v-on="$listeners"
                 @ready="ready"
-                @playing="(x) => handlerGenerator('playing')(x)"
-                @progress="(x) => handlerGenerator('progress')(x)"
-                @paused="(x) => handlerGenerator('paused')(x)"
-                @buffering="(x) => handlerGenerator('buffering')(x)"
                 :playerVars="{
                     ...(start && { start }),
                     ...(end && { end }),
@@ -46,25 +43,22 @@ export default {
         return {
             timer: null,
             player: null,
-            currentTime: 0,
+            // currentTime: 0,
         };
     },
     computed: {},
     methods: {
-        handlerGenerator(event) {
-            return (evt) => {
-                console.log(event, evt);
-            };
-        },
         ready(evt) {
             this.player = evt.target;
+            this.setTimer();
         },
         setTimer() {
             if (this.timer) clearInterval(this.timer);
             if (this.player) {
                 this.timer = setInterval(() => {
-                    this.currentTime = this.player.getCurrentTime();
-                    if (this.currentTime >= this.end) this.$emit("done");
+                    const currentTime = this.player.getCurrentTime();
+                    this.$emit("progress", currentTime);
+                    // if (this.currentTime >= this.end) this.$emit("done");
                 }, 1000);
             }
         },

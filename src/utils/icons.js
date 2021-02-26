@@ -23,6 +23,7 @@ export {
     mdiMapMarker,
     mdiMenu,
     mdiMessageCogOutline,
+    mdiMusic,
     mdiPencil, // for changing language
     mdiRefresh,
     mdiStarFourPointsOutline,

@@ -1,11 +1,13 @@
 <template>
-    <v-list dense class="song-list">
+    <v-list dense class="song-list" v-intersect="shown">
         <song-item
             v-for="(song, idx) in songs"
             :song="song"
-            :key="song.name + song.video_id"
+            :key="song.name + song.video_id + idx"
             :class="{ active: idx === currentId }"
+            alwaysShowDeletion
             @play="$store.commit('music/skipTo', idx)"
+            @remove="$store.commit('music/removeSong', idx)"
         ></song-item>
     </v-list>
 </template>
@@ -22,7 +24,15 @@ export default {
         },
         currentId: {
             type: Number,
-            required: true,
+            required: false,
+            default: null,
+        },
+    },
+    methods: {
+        shown() {
+            if (this.currentId && this.currentId !== 0) {
+                document.querySelector(".song-list .active").scrollIntoView();
+            }
         },
     },
 };

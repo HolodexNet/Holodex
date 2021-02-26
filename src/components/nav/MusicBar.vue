@@ -1,5 +1,5 @@
 <template>
-    <div class="bottom-nav">
+    <div>
         <v-bottom-sheet
             hide-overlay
             persistent
@@ -8,12 +8,13 @@
             :value="togglePlayer"
             :retain-focus="false"
             content-class="music-player-bar"
+            v-if="currentSong"
         >
             <div
                 key="musicplayertogglebtn"
                 class="music-player-toggle"
                 color="info"
-                @click="togglePlayer = !togglePlayer"
+                @click="closePlayer"
                 style="bottom: 100%; position: absolute"
                 v-if="togglePlayer"
             >
@@ -24,7 +25,7 @@
 
             <v-row class="frame-row">
                 <!-- Progress bar (positioned so it starts at the video and ends at screen right.) -->
-                <v-progress-linear class="music-progress" value="40" height="3"></v-progress-linear>
+                <v-progress-linear class="music-progress" :value="progress" height="3"></v-progress-linear>
                 <v-col cols="auto">
                     <song-frame
                         :videoId="currentSong.video_id"
@@ -32,22 +33,33 @@
                         :end="currentSong.end"
                         :key="currentSong.video_id + playId"
                         style="width: 250px; width: 356px"
+                        @playing="songIsPlaying"
+                        @paused="songIsPaused"
+                        @ended="songIsDone"
+                        @progress="songProgress"
                     ></song-frame>
                 </v-col>
                 <!-- Controls -->
                 <v-spacer></v-spacer>
                 <v-col style="min-width: 38%" class="flex-column d-flex pt-1 justify-space-around">
                     <div class="d-flex flex-row justify-left align-baseline">
-                        <v-btn fab elevation="5" class="mr-1" style="margin-top: -20px" color="primary">
-                            <v-icon large>{{ mdiPlay }}</v-icon>
+                        <v-btn
+                            fab
+                            elevation="5"
+                            class="mr-1"
+                            style="margin-top: -20px"
+                            color="primary"
+                            @click="playPause"
+                        >
+                            <v-icon large>{{ playButtonIcon }}</v-icon>
                         </v-btn>
-                        <v-btn icon class="mx-1">
+                        <v-btn icon class="mx-1" @click="$store.commit('music/nextSong', true)">
                             <v-icon>{{ mdiSkipNext }}</v-icon>
                         </v-btn>
-                        <v-btn icon class="mx-1">
-                            <v-icon>{{ mdiShuffleVariant }}</v-icon>
+                        <v-btn icon class="mx-1" @click="$store.commit('music/cycleMode')">
+                            <v-icon>{{ shuffleButtonIcon }}</v-icon>
                         </v-btn>
-                        <v-slider
+                        <!-- <v-slider
                             class="mx-2"
                             track-fill-color="secondary"
                             thumb-color="secondary"
@@ -57,7 +69,7 @@
                             min="0"
                             max="100"
                             :prepend-icon="mdiVolumeHigh"
-                        ></v-slider>
+                        ></v-slider> -->
                     </div>
                     <div class="justify-center">
                         <!-- Song Information -->
@@ -71,7 +83,7 @@
                 <!-- Current Song art -->
                 <v-col cols="auto" class="pa-1">
                     <v-img
-                        v-if="currentSong"
+                        v-if="currentSong && currentSong.art"
                         :src="currentSong.art.replace('100x100', '200x200')"
                         aspect-ratio="1"
                         height="100%"
@@ -82,9 +94,9 @@
                 <v-col cols="auto">
                     <v-menu :close-on-content-click="false" offset-y top content-class="scrollable-music-queue">
                         <template v-slot:activator="{ on }">
-                            <v-btn dark color="warning darken-2" large height="100%" v-on="on"
-                                ><v-icon>{{ mdiPlaylistMusic }}</v-icon
-                                >Queue({{ playlist.length }})
+                            <v-btn dark color="warning darken-2" large height="100%" v-on="on">
+                                <v-icon large>{{ mdiPlaylistMusic }}</v-icon>
+                                <div class="">({{ playlist.length }})</div>
                             </v-btn>
                         </template>
                         <song-playlist :songs="playlist" :currentId="currentId"></song-playlist>
@@ -95,12 +107,14 @@
         <div
             key="musicplayertogglebtn"
             class="music-player-toggle"
+            :class="{ 'error-animation': animateOpenError }"
+            @animationend="animateOpenError = false"
             color="info"
-            @click="togglePlayer = !togglePlayer"
+            @click="tryOpeningPlayer"
             v-if="!togglePlayer"
         >
             <div class="music-player-toggle-bg">
-                <v-icon large>{{ mdiMusic }}</v-icon>
+                <v-icon large>{{ icons.mdiMusic }}</v-icon>
             </div>
         </div>
     </div>
@@ -108,8 +122,8 @@
 
 <script>
 import {
-    mdiMusic,
     mdiPlay,
+    mdiPause,
     mdiSkipNext,
     mdiVolumeHigh,
     mdiShuffleVariant,
@@ -122,11 +136,19 @@ import {
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
 import { mapGetters, mapState } from "vuex";
-import backendApi from "@/utils/backend-api";
+// import backendApi from "@/utils/backend-api";
+import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
 import SongFrame from "../media/SongFrame";
 import SongPlaylist from "../media/SongPlaylist";
 
 Vue.use(VueYouTubeEmbed);
+
+const ICON_MODE = {
+    [MUSIC_PLAYBACK_MODE.NATURAL]: mdiRepeatOff,
+    [MUSIC_PLAYBACK_MODE.LOOP]: mdiRepeat,
+    [MUSIC_PLAYBACK_MODE.LOOPONE]: mdiRepeatOnce,
+    [MUSIC_PLAYBACK_MODE.SHUFFLE]: mdiShuffleVariant,
+};
 
 export default {
     components: { SongFrame, SongPlaylist },
@@ -135,9 +157,7 @@ export default {
     data() {
         return {
             value: "/",
-            mdiMusic,
             togglePlayer: false,
-            mdiPlay,
             mdiSkipNext,
             mdiVolumeHigh,
             mdiShuffleVariant,
@@ -146,13 +166,17 @@ export default {
             mdiRepeatOnce,
             mdiMicrophoneVariant,
             mdiPlaylistMusic,
+
+            progress: 0,
+            player: null,
+            animateOpenError: false,
         };
     },
     mounted() {
-        this.$store.commit("music/resetState");
-        backendApi.videoSongList("UCZlDXzGoo7d44bwdNObFacg", undefined, false).then((x) => {
-            x.data.map((c) => this.$store.commit("music/addSong", c));
-        });
+        // this.$store.commit("music/resetState");
+        // backendApi.videoSongList("UCZlDXzGoo7d44bwdNObFacg", undefined, false).then((x) => {
+        //     x.data.map((c) => this.$store.commit("music/addSong", c));
+        // });
     },
     watch: {
         togglePlayer() {
@@ -169,18 +193,56 @@ export default {
         isMobile() {
             return this.$store.state.isMobile;
         },
+        playButtonIcon() {
+            if (this.state === MUSIC_PLAYER_STATE.PLAYING) return mdiPause;
+            return mdiPlay;
+        },
+        shuffleButtonIcon() {
+            return ICON_MODE[this.mode];
+        },
         ...mapState("music", ["currentId", "playId", "playlist", "state", "mode"]),
         ...mapGetters("music", ["currentSong", "canPlay"]),
     },
     methods: {
-        scrollToTop(page) {
-            if (page.path === this.$route.path) {
-                window.scroll({
-                    top: 0,
-                    left: 0,
-                    behavior: "smooth",
-                });
+        // event handlers:
+        songIsDone(player) {
+            console.log(player);
+            this.$store.commit("music/nextSong");
+        },
+        songIsPlaying(player) {
+            this.player = player.target;
+            console.log(player);
+            this.$store.commit("music/play");
+        },
+        songIsPaused(player) {
+            console.log(player);
+            this.$store.commit("music/pause");
+        },
+        songProgress(time) {
+            if (!this.currentSong) this.progress = 0;
+
+            const { start, end } = this.currentSong;
+            this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
+        },
+        playPause() {
+            // if(this.state === MUSIC_PLAYER_STATE.PLAYING) this.$store.commit("music/pause");
+            // else this.$store.commit("music/play");
+            if (this.player) {
+                if (this.state === MUSIC_PLAYER_STATE.PLAYING) this.player.pauseVideo();
+                else this.player.playVideo();
             }
+        },
+        tryOpeningPlayer() {
+            if (this.currentSong) {
+                this.togglePlayer = true;
+            } else {
+                this.animateOpenError = true;
+            }
+        },
+        closePlayer() {
+            this.togglePlayer = false;
+            if (this.player) this.player.pauseVideo();
+            this.$store.commit("music/pause");
         },
     },
 };
@@ -191,7 +253,7 @@ export default {
     background: rgba(237, 227, 241, 0.95);
 }
 .theme--dark .music-player-bar {
-    background: rgba(41, 43, 49, 0.95);
+    background: rgba(41, 43, 49, 0.99);
 }
 .music-player-bar {
     position: relative;
@@ -256,6 +318,52 @@ export default {
 }
 .music-player-toggle:hover .music-player-toggle-bg {
     border-color: transparent transparent #4aa2ff transparent;
+}
+
+.music-player-toggle.error-animation .music-player-toggle-bg {
+    border-color: transparent transparent #c43 transparent;
+    animation: errorshake 0.6s;
+    animation-iteration-count: 1;
+}
+
+@-webkit-keyframes errorshake {
+    0%,
+    100% {
+        -webkit-transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        -webkit-transform: translateX(-2px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        -webkit-transform: translateX(2px);
+    }
+}
+
+@keyframes errorshake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-2px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(2px);
+    }
 }
 
 .music-player-toggle span.v-icon {

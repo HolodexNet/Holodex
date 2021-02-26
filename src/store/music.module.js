@@ -31,14 +31,15 @@ const mutations = {
         state.playlist.push(song);
     },
     removeSong(state, index) {
+        if (index < state.currentId) state.currentId -= 1;
         state.playlist.splice(index, 1);
         if (state.playlist.length === 0) {
             // empty playlist
             this.resetState(state);
             return;
         }
-        state.playId += 1;
         if (state.currentId === index && state.currentId === state.playlist.length) {
+            state.playId += 1;
             // if the removed thing is the currently playing, normally it's okay - we'll just automatically
             // switch currentSong to NEXT song.
             // however, if the removed thing causes the currentId to go out of bounds
@@ -62,22 +63,37 @@ const mutations = {
             }
         }
         if (state.currentId === index) {
-            if (state.mode === MUSIC_PLAYBACK_MODE.SHUFFLE)
+            state.playId += 1;
+            if (state.mode === MUSIC_PLAYBACK_MODE.SHUFFLE) {
                 state.currentId = Math.floor(Math.random() * state.playlist.length);
+            }
         }
     },
     resetState(state) {
         Object.assign(state, initialState);
     },
-    nextSong(state) {
-        switch (state.mode) {
+    nextSong(state, alwaysNew) {
+        let { mode } = state;
+        // if always new, will always move the playhead to a new song (or try to)
+        if (alwaysNew && mode === MUSIC_PLAYBACK_MODE.LOOPONE) mode = MUSIC_PLAYBACK_MODE.LOOP;
+        switch (mode) {
             case MUSIC_PLAYBACK_MODE.NATURAL:
             case MUSIC_PLAYBACK_MODE.LOOP:
-                this.nextSongNaturally(state);
+                /* next song naturally */
+                if (state.currentId + 1 === state.playlist.length) {
+                    if (state.mode === MUSIC_PLAYBACK_MODE.LOOP) {
+                        state.currentId = 0;
+                        state.playId += 1;
+                    } else if (state.mode === MUSIC_PLAYBACK_MODE.NATURAL) state.state = MUSIC_PLAYER_STATE.PAUSED;
+                } else {
+                    state.currentId += 1;
+                    state.playId += 1;
+                    state.state = MUSIC_PLAYER_STATE.PLAYING;
+                }
                 return;
             case MUSIC_PLAYBACK_MODE.LOOPONE:
                 state.playId += 1;
-                state.state = MUSIC_PLAYER_STATE.PAUSED;
+                // state.state = MUSIC_PLAYER_STATE.PAUSED;
                 return;
             case MUSIC_PLAYBACK_MODE.SHUFFLE:
                 state.currentId = Math.floor(Math.random() * state.playlist.length);
@@ -85,18 +101,18 @@ const mutations = {
             default:
         }
     },
-    nextSongNaturally(state) {
-        if (state.currentId + 1 === state.playlist.length) {
-            if (state.mode === MUSIC_PLAYBACK_MODE.LOOP) {
-                state.currentId = 0;
-                state.playId += 1;
-            } else if (state.mode === MUSIC_PLAYBACK_MODE.NATURAL) state.state = MUSIC_PLAYER_STATE.PAUSED;
-        } else {
-            state.currentId += 1;
-            state.playId += 1;
-            state.state = MUSIC_PLAYER_STATE.PLAYING;
-        }
-    },
+    // nextSongNaturally(state) {
+    //     if (state.currentId + 1 === state.playlist.length) {
+    //         if (state.mode === MUSIC_PLAYBACK_MODE.LOOP) {
+    //             state.currentId = 0;
+    //             state.playId += 1;
+    //         } else if (state.mode === MUSIC_PLAYBACK_MODE.NATURAL) state.state = MUSIC_PLAYER_STATE.PAUSED;
+    //     } else {
+    //         state.currentId += 1;
+    //         state.playId += 1;
+    //         state.state = MUSIC_PLAYER_STATE.PLAYING;
+    //     }
+    // },
     cycleMode(state) {
         switch (state.mode) {
             case MUSIC_PLAYBACK_MODE.NATURAL:
