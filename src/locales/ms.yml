@@ -46,6 +46,7 @@ component:
       org: kumpulan
       titledesc: tajuk dan perihalan
       topic: topik
+      videourl: url video
   video:
     comment:
       openOnYoutube: buka ulasan di YouTube
