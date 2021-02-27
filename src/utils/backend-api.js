@@ -6,11 +6,11 @@ import querystring from "querystring";
 // eslint-disable-next-line max-len,no-useless-escape
 const CHANNEL_URL_REGEX = /(?:(?:http|https):\/\/|)(?:www\.|)youtube\.com\/(channel|user)\/([a-zA-Z0-9\-_]{1,})/;
 // eslint-disable-next-line max-len,no-useless-escape
-const VIDEO_URL_REGEX = /(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11})/;
+const YOUTUBE_URL_REGEX = /(?:https?:)?(?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com(\S*?[^\w\s-]))([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/;
 
 export const axiosInstance = axios.create({
-    // baseURL: process.env.NODE_ENV === "development" ? "https://holodex.net/api/v2" : "/api/v2",
-    baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2" : "/api/v2",
+    baseURL: process.env.NODE_ENV === "development" ? "https://holodex.net/api/v2" : "/api/v2",
+    // baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2" : "/api/v2",
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
@@ -59,12 +59,15 @@ export default {
     },
     searchAutocomplete(query) {
         const channelId = query.match(CHANNEL_URL_REGEX);
-        const videoId = query.match(VIDEO_URL_REGEX);
+        const videoId = query.match(YOUTUBE_URL_REGEX);
 
         if (channelId) return axiosInstance.get(`/search/autocomplete?q=${channelId[2]}`);
 
         if (videoId) {
-            return { data: [{ type: "video url", value: `${videoId[1]}` }] };
+            if (videoId[1] !== undefined || !videoId[1].includes("/c")) {
+                console.log("should be working D:");
+                return { data: [{ type: "video url", value: `${videoId[2]}` }] };
+            }
         }
 
         return axiosInstance.get(`/search/autocomplete?q=${query}`);
