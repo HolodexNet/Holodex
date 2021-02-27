@@ -1,16 +1,13 @@
 <template>
-    <v-card class="chat-overlay text-body-2">
-        <v-overlay absolute :value="showOverlay || (socket && socket.disconnected)">
+    <v-card class="text-body-2 tl-overlay" tile flat>
+        <v-overlay absolute :value="showOverlay || (socket && socket.disconnected)" opacity="0.8">
             <div v-if="isLoading">Loading ...</div>
             <div class="pa-3" v-else>{{ overlayMessage }}</div>
             <v-btn v-if="!isLoading" @click="tlChatReconnect()">Retry</v-btn>
         </v-overlay>
         <v-card-subtitle class="py-2">Translations</v-card-subtitle>
         <v-divider />
-        <v-card-text
-            style="overflow: auto; height: 35vh; max-height: 250px"
-            class="text-body-2 d-flex flex-column-reverse pa-1 pa-lg-3"
-        >
+        <v-card-text class="text-body-2 tl-body d-flex flex-column-reverse pa-1 pa-lg-3">
             <template v-for="(item, index) in tlHistory">
                 <div :key="index">
                     <span class="text-caption mr-1" v-if="item.timestamp">{{ utcToTimestamp(item.timestamp) }}</span>
@@ -18,13 +15,19 @@
                 </div>
                 <div
                     :key="index + '-name'"
-                    v-if="index == 0 || item.name !== tlHistory[index - 1].name"
+                    v-if="index === 0 || index === tlHistory.length - 1 || item.name !== tlHistory[index - 1].name"
                     class="text-caption"
                 >
                     <v-divider class="my-1" />
                     {{ item.name }}:
                 </div>
             </template>
+            <div>
+                <div class="text-caption">Holodex:</div>
+                <div>
+                    <span class="text--primary">Connected to translations chat</span>
+                </div>
+            </div>
         </v-card-text>
     </v-card>
 </template>
@@ -86,7 +89,7 @@ export default {
                 !dayjs().isAfter(dayjs(this.video.start_scheduled).subtract(8, "hours").subtract(15, "minutes"))
             ) {
                 this.overlayMessage =
-                    "Stream has not started yet, please try again when stream is within 15 minutes of being live";
+                    "Stream is not live yet, please try again when the stream is within 15 minutes of being live";
                 this.isLoading = false;
                 this.showOverlay = true;
                 return;
@@ -102,28 +105,29 @@ export default {
             this.socket.on("connect", () => {
                 this.showOverlay = false;
                 this.isLoading = false;
-                this.tlHistory.push({
-                    name: "Holodex",
-                    message: "Successfully connected to translations chat",
-                });
+                // this.tlHistory.push({
+                //     name: "Holodex",
+                //     message: "Successfully connected to translations chat",
+                // });
             });
 
             this.socket.on("connect_error", (err) => {
                 console.log(err);
                 this.overlayMessage = err;
                 this.isLoading = false;
+                this.showOverlay = true;
             });
 
             this.socket.on(this.video.id, (msg) => {
                 // if no type, process as regular message
                 if (!msg.type) {
                     this.tlHistory.unshift(msg);
+                    this.$emit("historyLength", this.tlHistory.length);
                     return;
                 }
                 switch (msg.type) {
                     case this.MESSAGE_TYPES.UPDATE:
-                        this.$emit("video_status_update", msg);
-                        console.log(msg);
+                        this.$emit("videoUpdate", msg);
                         break;
                     case this.MESSAGE_TYPES.END:
                         this.overlayMessage = msg.message;
@@ -145,7 +149,7 @@ export default {
             if (this.socket) this.socket.close();
         },
         tlChatReconnect() {
-            // this.isLoading = true;
+            this.isLoading = true;
             this.tlChatConnect();
         },
         utcToTimestamp(utc) {
@@ -158,5 +162,15 @@ export default {
 <style>
 .v-overlay__content {
     text-align: center;
+}
+
+.tl-body {
+    overflow-y: auto;
+    height: 25vh;
+}
+
+.tl-overlay {
+    border: 1px solid rgba(65, 65, 65, 0.2) !important;
+    box-sizing: border-box;
 }
 </style>

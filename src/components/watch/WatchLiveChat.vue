@@ -1,12 +1,21 @@
 <template>
-    <v-sheet class="watch-live-chat" :class="{ 'fixed-bottom': fixedBottom, 'fixed-right': fixedRight }">
+    <v-sheet
+        class="watch-live-chat"
+        :class="{ 'fixed-bottom': fixedBottom, 'fixed-right': fixedRight, 'show-tl-overlay': showTL }"
+    >
         <span class="loading-text">Loading Chat...</span>
+        <WatchLiveTranslations
+            :video="video"
+            v-if="showTLFirstTime"
+            v-show="showTL"
+            :class="{ 'chat-overlay': fixedBottom || fixedRight }"
+            @videoUpdate="handleVideoUpdate"
+            @historyLength="handleHistoryLength"
+        />
         <div class="embedded-chat">
             <iframe :src="liveChatUrl" frameborder="0" />
-            <!-- {{JSON.stringify(tlHistory)}} -->
-            <WatchLiveTranslations :video="video" v-if="showTL" />
-            <a class="show-overlay-btn d-flex align-center text-body-2" @click="showTL = !showTL">
-                {{ showTL ? "Hide" : "Show" }} TLs
+            <a class="show-overlay-btn d-flex align-center text-body-2" @click="toggleTL">
+                {{ showTL ? "Hide" : "Show" }} TLs {{ newTL > 0 ? `(${newTL} new)` : "" }}
             </a>
         </div>
     </v-sheet>
@@ -40,6 +49,8 @@ export default {
     data() {
         return {
             showTL: false,
+            showTLFirstTime: false,
+            newTL: 0,
         };
     },
     computed: {
@@ -50,6 +61,26 @@ export default {
             }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
         },
     },
+    methods: {
+        toggleTL() {
+            // showTLFirstTime will initiate connection
+            // showTL toggle will show/hide without terminating connection
+            if (!this.showTLFirstTime) {
+                this.showTLFirstTime = true;
+                this.showTL = true;
+                return;
+            }
+            this.showTL = !this.showTL;
+            this.newTL = 0;
+        },
+        handleVideoUpdate(update) {
+            // bubble event to Watch view
+            this.$emit("videoUpdate", update);
+        },
+        handleHistoryLength() {
+            if (!this.showTL) this.newTL += 1;
+        },
+    },
 };
 </script>
 
@@ -58,6 +89,7 @@ export default {
     position: relative;
 }
 
+/* center pre loading text */
 .watch-live-chat .loading-text {
     position: absolute;
     top: 50%;
@@ -65,19 +97,34 @@ export default {
     transform: translate(-50%, -50%);
 }
 
-/* Desktop */
-.embedded-chat {
-    position: relative;
-    height: 600px;
-    min-height: calc((75vw - 24px) * 0.5625);
-    min-height: min(calc((75vw - 24px) * 0.5625), calc(100vh - 220px));
-    border: solid 1px rgba(255, 255, 255, 0.1);
-}
-
+/* iframe size is same as container */
 .embedded-chat > iframe {
     position: absolute;
     width: 100%;
     height: 100%;
+}
+
+/* Desktop */
+.watch-live-chat {
+    height: 600px;
+    min-height: calc((75vw - 24px) * 0.5625);
+    min-height: min(calc((75vw - 24px) * 0.5625), calc(100vh - 120px));
+    border: solid 1px rgba(255, 255, 255, 0.1);
+}
+
+.embedded-chat {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* tl box static size of 200 px */
+.watch-live-chat.show-tl-overlay .embedded-chat {
+    height: calc(100% - 200px);
+}
+
+.watch-live-chat.show-tl-overlay .tl-overlay .tl-body {
+    height: 200px;
 }
 
 /* Fixed Bottom */
@@ -116,22 +163,26 @@ export default {
     width: 133%;
 }
 
-/* .watch-live-chat.fixed-right > .embedded-chat .chat-overlay {
-    transform: scale(0.75);
-    transform-origin: top left;
-    width: 133%;
-    height: calc(35vh * 1.33);
-} */
+.watch-live-chat.fixed-right > .tl-overlay .tl-body {
+    height: 35vh;
+}
+
+/* reposition Show TL button when chat is scaled */
+.fixed-right .embedded-chat .show-overlay-btn {
+    height: 36px;
+    right: 36px;
+}
 
 .chat-overlay {
     width: 100%;
     /* height: 35%; */
     position: absolute;
+    z-index: 5;
     top: 0;
 }
 .show-overlay-btn {
-    right: 30%;
-    height: 38px;
+    right: 48px;
+    height: 48px;
     position: absolute;
     z-index: 10;
 }
