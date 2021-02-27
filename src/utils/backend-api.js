@@ -136,11 +136,14 @@ export default {
     },
     /**
      * Fetches song lists up to LIMIT count with offset. Always ordered by available_at date.
-     * @param {{org?, channel_id?, q?}} condition one of the conditions
+     * @param {{org?, channel_id?, video_id?, q?}} condition one of the conditions
      * @param {number} offset
      * @param {number} limit
      */
-    songListByOrg(condition, offset, limit) {
+    songListByCondition(condition, offset, limit) {
         return axiosInstance.post("/songs/latest", { ...condition, offset, limit });
+    },
+    trackSongPlay(channelId, videoId, name) {
+        return axiosInstance.get(`/songs/record/${channelId}/${videoId}/${name}`);
     },
 };

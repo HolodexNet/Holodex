@@ -186,4 +186,8 @@ body {
 .row {
     margin: 0px -12px;
 }
+.v-main__wrap {
+    padding-bottom: 250px;
+    /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
+}
 </style>

@@ -19,7 +19,7 @@
                 v-if="togglePlayer"
             >
                 <div class="music-player-toggle-bg">
-                    <v-icon large>{{ mdiMusic }}</v-icon>
+                    <v-icon large>{{ icons.mdiMusic }}</v-icon>
                 </div>
             </div>
 
@@ -92,9 +92,25 @@
                 </v-col>
                 <!-- Queue -->
                 <v-col cols="auto">
-                    <v-menu :close-on-content-click="false" offset-y top content-class="scrollable-music-queue">
+                    <v-menu
+                        :close-on-content-click="false"
+                        offset-y
+                        top
+                        origin="right bottom"
+                        transition="slide-y-reverse-transition"
+                        content-class="scrollable-music-queue"
+                    >
                         <template v-slot:activator="{ on }">
-                            <v-btn dark color="warning darken-2" large height="100%" v-on="on">
+                            <v-btn
+                                dark
+                                color="warning darken-2"
+                                large
+                                height="100%"
+                                v-on="on"
+                                class="queue-btn"
+                                :class="{ 'added-animation': animateAdded }"
+                                @animationend="animateAdded = false"
+                            >
                                 <v-icon large>{{ mdiPlaylistMusic }}</v-icon>
                                 <div class="">({{ playlist.length }})</div>
                             </v-btn>
@@ -107,8 +123,13 @@
         <div
             key="musicplayertogglebtn"
             class="music-player-toggle"
-            :class="{ 'error-animation': animateOpenError }"
-            @animationend="animateOpenError = false"
+            :class="{ 'error-animation': animateOpenError, 'added-animation': animateAdded }"
+            @animationend="
+                () => {
+                    animateOpenError = false;
+                    animateAdded = false;
+                }
+            "
             color="info"
             @click="tryOpeningPlayer"
             v-if="!togglePlayer"
@@ -138,6 +159,7 @@ import Vue from "vue";
 import { mapGetters, mapState } from "vuex";
 // import backendApi from "@/utils/backend-api";
 import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
+import backendApi from "@/utils/backend-api";
 import SongFrame from "../media/SongFrame";
 import SongPlaylist from "../media/SongPlaylist";
 
@@ -174,7 +196,7 @@ export default {
     },
     mounted() {
         // this.$store.commit("music/resetState");
-        // backendApi.videoSongList("UCZlDXzGoo7d44bwdNObFacg", undefined, false).then((x) => {
+        // backendApi.songListByVideo("UCZlDXzGoo7d44bwdNObFacg", undefined, false).then((x) => {
         //     x.data.map((c) => this.$store.commit("music/addSong", c));
         // });
     },
@@ -188,6 +210,17 @@ export default {
                 this.$nextTick(() => this.$refs.sheet.unbind());
             });
         },
+        playlist(nv) {
+            if (nv.length === 0) this.togglePlayer = false;
+        },
+        currentSong(ns, os) {
+            if (os != null && this.progress > 80) {
+                console.log("track song");
+
+                backendApi.trackSongPlay(os.channel_id, os.video_id, os.name).catch((err) => console.error(err));
+            }
+            console.log("change song");
+        },
     },
     computed: {
         isMobile() {
@@ -200,22 +233,29 @@ export default {
         shuffleButtonIcon() {
             return ICON_MODE[this.mode];
         },
-        ...mapState("music", ["currentId", "playId", "playlist", "state", "mode"]),
+        animateAdded: {
+            get() {
+                return this.addedAnimation;
+            },
+            set() {
+                this.$store.commit("music/stopAddedAnimation");
+            },
+        },
+        ...mapState("music", ["currentId", "playId", "playlist", "state", "mode", "addedAnimation"]),
         ...mapGetters("music", ["currentSong", "canPlay"]),
     },
     methods: {
         // event handlers:
-        songIsDone(player) {
-            console.log(player);
+        // eslint-disable-next-line no-unused-vars
+        songIsDone(_player) {
             this.$store.commit("music/nextSong");
         },
         songIsPlaying(player) {
             this.player = player.target;
-            console.log(player);
             this.$store.commit("music/play");
         },
-        songIsPaused(player) {
-            console.log(player);
+        // eslint-disable-next-line no-unused-vars
+        songIsPaused(_player) {
             this.$store.commit("music/pause");
         },
         songProgress(time) {
@@ -258,6 +298,7 @@ export default {
 .music-player-bar {
     position: relative;
     border-top: 2px solid #007bff;
+    backdrop-filter: blur(5px);
     /* background: linear-gradient(180deg, rgba(80,80,80,1) 0%, rgba(43,47,50,1) 100%);  */
     /* box-shadow: 1px 0px 2px inset #007bff; */
 }
@@ -286,6 +327,7 @@ export default {
     position: absolute;
     right: 0;
     left: 360px;
+    width: auto;
 }
 .scrollable-music-queue {
     overflow-y: scroll;
@@ -363,6 +405,41 @@ export default {
     60%,
     80% {
         transform: translateX(2px);
+    }
+}
+
+.music-player-toggle.added-animation .music-player-toggle-bg {
+    border-color: transparent transparent rgb(51, 173, 204) transparent;
+    animation: added-music-bounce 0.2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 3;
+    transform-origin: bottom right;
+    -webkit-transform-origin: bottom right;
+}
+.queue-btn.added-animation {
+    border-color: transparent transparent rgb(51, 173, 204) transparent;
+    animation: added-music-bounce 0.2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 3;
+}
+
+@-webkit-keyframes added-music-bounce {
+    0%,
+    100% {
+        -webkit-transform: scale(1.02);
+    }
+    40% {
+        -webkit-transform: scale(0.94);
+    }
+}
+
+@keyframes added-music-bounce {
+    0%,
+    100% {
+        transform: scale(1.02);
+    }
+    40% {
+        transform: scale(0.94);
     }
 }
 

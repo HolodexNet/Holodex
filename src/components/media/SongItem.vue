@@ -16,33 +16,24 @@
 
                 <span class="limit-width">
                     {{ song.name }} /
-                    <span class="primary--text text--lighten-2">{{ song.original_artist }}</span></span
-                >
+                    <span class="primary--text">{{ song.original_artist }}</span>
+                </span>
             </v-list-item-subtitle>
 
-            <v-list-item-subtitle
-                class="text--caption song-clickable"
-                v-if="$listeners.channel"
-                @click.stop="$emit('channel', song)"
-            >
+            <v-list-item-subtitle class="text--caption">
                 <div class="float-right">
+                    <span class="muted" v-if="showTime">{{ formattedTime }}</span>
                     {{ Math.floor((song.end - song.start) / 60) }}:{{
                         (Math.round(song.end - song.start) % 60).toString().padStart(2, "0")
                     }}
                 </div>
 
-                {{ song.channel.name }}
+                <span class="song-clickable" v-if="$listeners.channel" @click.stop="$emit('channel', song)">
+                    {{ song.channel.name }}
+                </span>
+                <span v-else> {{ song.channel.name }} </span>
             </v-list-item-subtitle>
             <!-- Else: -->
-            <v-list-item-subtitle class="text--caption" v-else>
-                <div class="float-right">
-                    {{ Math.floor((song.end - song.start) / 60) }}:{{
-                        (Math.round(song.end - song.start) % 60).toString().padStart(2, "0")
-                    }}
-                </div>
-
-                {{ song.channel.name }}
-            </v-list-item-subtitle>
         </v-list-item-content>
     </v-list-item>
 </template>
@@ -51,6 +42,7 @@
 // const jsonp = require("jsonp-es6");
 
 import { mdiMusicBoxOutline } from "@mdi/js";
+import { formatDistance } from "@/utils/time";
 
 export default {
     name: "SongItem",
@@ -85,11 +77,18 @@ export default {
             type: Boolean,
             default: false,
         },
+        showTime: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         userCanDelete() {
             const u = this.$store.state.userdata;
             return u && u.user && u.user.role && u.user.role !== "user";
+        },
+        formattedTime() {
+            return formatDistance(this.song.available_at, this.$store.state.settings.lang, this.$t.bind(this));
         },
     },
     mounted() {},
@@ -122,5 +121,9 @@ export default {
 }
 .song-clickable:hover {
     text-decoration: underline;
+    background-color: rgba(120, 120, 120, 0.4);
+}
+.text--caption .muted {
+    opacity: 0.4;
 }
 </style>

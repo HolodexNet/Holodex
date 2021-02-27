@@ -8,6 +8,8 @@ const initialState = {
     playlist: [],
     state: MUSIC_PLAYER_STATE.PAUSED,
     mode: MUSIC_PLAYBACK_MODE.LOOP,
+
+    addedAnimation: false, // state keeping for bouncing the icon.
 };
 
 export const state = { ...initialState };
@@ -29,13 +31,14 @@ const actions = {};
 const mutations = {
     addSong(state, song) {
         state.playlist.push(song);
+        state.addedAnimation = true;
     },
     removeSong(state, index) {
         if (index < state.currentId) state.currentId -= 1;
         state.playlist.splice(index, 1);
         if (state.playlist.length === 0) {
             // empty playlist
-            this.resetState(state);
+            Object.assign(state, initialState);
             return;
         }
         if (state.currentId === index && state.currentId === state.playlist.length) {
@@ -140,6 +143,9 @@ const mutations = {
     skipTo(state, idx) {
         state.currentId = idx;
         state.playId += 1;
+    },
+    stopAddedAnimation(state) {
+        state.addedAnimation = false;
     },
 };
 
