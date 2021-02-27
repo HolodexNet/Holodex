@@ -16,8 +16,6 @@
 
 <script>
 import { getVideoThumbnails } from "@/utils/functions";
-import { mdiOpenInNew } from "@mdi/js";
-import * as icons from "@/utils/icons";
 
 export default {
     name: "WatchFrame",
@@ -32,35 +30,15 @@ export default {
         },
     },
     data() {
-        return {
-            darkMode: true,
-            showAllMentions: false,
-            mdiOpenInNew,
-            icons,
-        };
+        return {};
     },
-    methods: {
-        toggleSaved() {
-            this.hasSaved
-                ? this.$store.commit("library/removeSavedVideo", this.video.id)
-                : this.$store.commit("library/addSavedVideo", this.video);
-        },
-    },
+    methods: {},
     computed: {
         thumbnail_src() {
             return getVideoThumbnails(this.video.id).medium;
         },
         redirectMode() {
             return this.$store.state.settings.redirectMode;
-        },
-        mentions() {
-            return this.video.mentions || [];
-        },
-        channelChips() {
-            return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
-        },
-        hasSaved() {
-            return this.$store.getters["library/hasSaved"](this.video.id);
         },
     },
 };

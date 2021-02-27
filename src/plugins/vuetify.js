@@ -117,10 +117,12 @@ export const config = {
             dark: {
                 primary: primaryColor,
                 secondary: secondaryColor,
+                background: "#121212",
             },
             light: {
                 primary: primaryColor,
                 secondary: secondaryColor,
+                background: "#f2f2f2", // Not automatically applied
             },
         },
     },

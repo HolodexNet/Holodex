@@ -7,6 +7,7 @@ const Channels = () => import("../views/Channels");
 const Favorites = () => import("../views/Favorites");
 const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
 const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
+const ChannelMusic = () => import("../views/channel_views/ChannelMusic");
 const Watch = () => import("../views/Watch");
 const About = () => import("../views/About");
 const Search = () => import("../views/Search");
@@ -44,6 +45,12 @@ const routes = [
                 name: "channel_about",
                 component: ChannelAbout,
             },
+            {
+                path: "music",
+                name: "channel_music",
+                component: ChannelMusic,
+            },
+
             // {
             //     path: "stats",
             //     name: "channel_stats",

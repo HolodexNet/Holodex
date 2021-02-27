@@ -133,7 +133,7 @@ export default {
     rotation() {
         return axiosInstance.get("/rotation");
     },
-    videoSongList(channelId, videoId, allowCache) {
+    songListByVideo(channelId, videoId, allowCache) {
         const dt = allowCache ? "_" : Date.now();
         return axiosInstance.post(`/songs/latest?c=${dt}`, { channel_id: channelId, video_id: videoId });
     },
@@ -151,5 +151,17 @@ export default {
     },
     chatHistory(id) {
         return axiosInstance.get(`/chat/${id}/history`);
+    },
+    /**
+     * Fetches song lists up to LIMIT count with offset. Always ordered by available_at date.
+     * @param {{org?, channel_id?, video_id?, q?}} condition one of the conditions
+     * @param {number} offset
+     * @param {number} limit
+     */
+    songListByCondition(condition, offset, limit) {
+        return axiosInstance.post("/songs/latest", { ...condition, offset, limit });
+    },
+    trackSongPlay(channelId, videoId, name) {
+        return axiosInstance.get(`/songs/record/${channelId}/${videoId}/${name}`);
     },
 };
