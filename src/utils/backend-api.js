@@ -61,8 +61,8 @@ export default {
         const channelId = query.match(CHANNEL_URL_REGEX);
         const videoId = query.match(VIDEO_URL_REGEX);
 
-        if (channelId)
-            if (!channelId[0].includes("/c/")) return axiosInstance.get(`/search/autocomplete?q=${channelId[1]}`);
+        if (channelId && !channelId[0].includes("/c/"))
+            return axiosInstance.get(`/search/autocomplete?q=${channelId[1]}`);
 
         if (videoId) return { data: [{ type: "video url", value: `${videoId[1]}` }] };
 
