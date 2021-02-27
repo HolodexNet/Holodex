@@ -46,6 +46,7 @@ component:
       org: "org"
       titledesc: "judul & desk"
       topic: "topik"
+      videourl: "url video"
   video:
     comment:
       openOnYoutube: "Buka komentar di"

@@ -55,6 +55,7 @@ component:
       org: org
       titledesc: title & desc
       comments: comments
+      videourl: video url
   relatedVideo:
     clipsLabel: clips
     simulcastsLabel: simulcasts

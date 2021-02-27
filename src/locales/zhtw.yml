@@ -53,6 +53,7 @@ component:
       org: 團體
       titledesc: 標題與描述
       comments: 留言
+      videourl: 視頻地址
   relatedVideo:
     clipsLabel: 翻譯剪輯
     simulcastsLabel: 同時聯播
