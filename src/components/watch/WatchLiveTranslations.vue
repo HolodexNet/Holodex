@@ -35,7 +35,7 @@
 <script>
 // eslint-disable-next-line import/no-unresolved
 import { Manager } from "socket.io-client";
-import api from "@/utils/backend-api";
+import api, { API_BASE_URL } from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
 
 export default {
@@ -72,7 +72,7 @@ export default {
     methods: {
         tlChatConnect() {
             if (!this.manager) {
-                this.manager = new Manager("http://localhost:2434", {
+                this.manager = new Manager(API_BASE_URL, {
                     query: { id: this.video.id },
                     reconnectionAttempts: 10,
                 });
