@@ -1,5 +1,5 @@
 <template>
-    <v-bottom-navigation :value="value" grow app :input-value="active" :scroll-threshold="1000" class="bottom-nav">
+    <v-bottom-navigation :value="value" grow app :input-value="active" :scroll-threshold="10000" class="bottom-nav">
         <template v-for="page in pages">
             <v-btn
                 :value="page.path"
