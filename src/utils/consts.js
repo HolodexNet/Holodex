@@ -11,6 +11,18 @@ export const VIDEO_TYPES = Object.freeze({
     STREAM: "stream",
 });
 
+export const MUSIC_PLAYER_STATE = Object.freeze({
+    PLAYING: 1,
+    PAUSED: 0,
+});
+
+export const MUSIC_PLAYBACK_MODE = Object.freeze({
+    LOOP: 0,
+    LOOPONE: 1,
+    SHUFFLE: 2,
+    NATURAL: 4,
+});
+
 export const ORGS = Object.freeze([
     "All Vtubers",
     "Hololive",

@@ -48,6 +48,7 @@ component:
       org: "агенство"
       titledesc: "название и описание"
       topic: "тема"
+      videourl: "ссылка на видео"
   video:
     comment:
       openOnYoutube: "открыть комментарий на"
