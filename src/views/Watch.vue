@@ -83,6 +83,7 @@
                                 :video="video"
                                 :mugenId="isMugen && '4ANxvWIM3Bs'"
                                 :key="'ytchat' + video.id"
+                                @videoUpdate="handleVideoUpdate"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
                             <WatchRelatedVideos :related="related" />
@@ -94,10 +95,11 @@
         <!-- Mobile Layout (sm/xs) Layout -->
         <div class="d-flex flex-column flex-sm-row" style="padding-bottom: 60px" v-else>
             <div
-                class="d-inline-flex flex-grow-1 flex-column w-100"
+                class="d-inline-flex flex-grow-1 flex-column"
                 :style="{
                     'padding-right': hasLiveChat && showLiveChat && landscape ? '220px' : 0,
                     'min-height': landscape || !showLiveChat ? '0' : '160vh',
+                    width: '100%',
                 }"
             >
                 <!-- Video/Video meta -->
@@ -233,6 +235,10 @@ export default {
         playNext({ video, timeOffset }) {
             this.$store.commit("watch/setVideo", video);
             this.startTime = timeOffset;
+        },
+        handleVideoUpdate(update) {
+            this.video.live_viewers = update.live_viewers;
+            this.video.status = update.status;
         },
     },
     computed: {
