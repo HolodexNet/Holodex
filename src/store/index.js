@@ -8,6 +8,7 @@ import * as icons from "@/utils/icons";
 
 // import { dayjs } from "@/utils/time";
 
+import backendApi from "@/utils/backend-api";
 import home from "./home.module";
 import channel from "./channel.module";
 import channels from "./channels.module";
@@ -137,6 +138,16 @@ export default new Vuex.Store({
                 }
             }
             // do nothing.
+        },
+        async loginVerify({ state, dispatch }) {
+            if (state.userdata && state.userdata.jwt) {
+                const valid = await backendApi.loginIsValid(state.userdata.jwt);
+                if (valid) {
+                    console.log("Login credentials validated, OK");
+                } else {
+                    await dispatch("logout");
+                }
+            }
         },
     },
     modules: {

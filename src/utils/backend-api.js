@@ -90,6 +90,14 @@ export default {
             },
         );
     },
+    loginIsValid(jwt) {
+        return axiosInstance
+            .get("/user/check", {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            })
+            .then(() => true)
+            .catch(() => false);
+    },
     favorites(jwt) {
         return axiosInstance.get("/users/favorites", {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},

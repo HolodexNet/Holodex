@@ -33,7 +33,7 @@ const getters = {
 };
 
 const actions = {
-    fetchFavorites({ commit, rootState }) {
+    fetchFavorites({ commit, rootState, dispatch }) {
         return api
             .favorites(rootState.userdata.jwt)
             .then((res) => {
@@ -41,6 +41,7 @@ const actions = {
             })
             .catch((e) => {
                 console.error(e);
+                dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
             });
     },
     fetchLive({ state, commit }) {
@@ -60,7 +61,7 @@ const actions = {
                 commit("fetchError");
             });
     },
-    fetchNextVideos({ state, commit, rootState }, params) {
+    fetchNextVideos({ state, commit, rootState, dispatch }, params) {
         return api
             .favoritesVideos(rootState.userdata.jwt, {
                 offset: state.currentOffset,
@@ -70,12 +71,16 @@ const actions = {
                 lang: rootState.settings.clipLangs.join(","),
                 ...params,
             })
+            .catch((e) => {
+                console.error(e);
+                dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
+            })
             .then(({ data }) => {
                 commit("updateVideos", data);
             });
     },
     // eslint-disable-next-line no-unused-vars
-    updateFavorites: debounce(({ state, commit, rootState }) => {
+    updateFavorites: debounce(({ state, commit, dispatch, rootState }) => {
         const operations = Object.keys(state.stagedFavorites).map((key) => {
             return {
                 op: state.stagedFavorites[key],
@@ -84,6 +89,10 @@ const actions = {
         });
         return api
             .patchFavorites(rootState.userdata.jwt, operations)
+            .catch((e) => {
+                console.error(e);
+                dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
+            })
             .then((res) => {
                 if (res.status === 200) {
                     // console.log("success");

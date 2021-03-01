@@ -28,7 +28,12 @@
                 />
             </v-col>
             <v-col class="related-videos pt-0" :md="9" :lg="8">
-                <v-alert :v-if="!$store.userdata.user" color="primary" v-html="$t('views.editor.needlogin')"> </v-alert>
+                <v-alert
+                    :v-if="!$store.userdata || !$store.userdata.user"
+                    color="error"
+                    v-html="$t('views.editor.needlogin')"
+                >
+                </v-alert>
 
                 <v-row fluid>
                     <v-tabs v-model="currentTab">
