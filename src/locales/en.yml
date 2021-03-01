@@ -1,11 +1,11 @@
 hello: world
-example: "fill me in with {0} or {1} parameters"
-example2: "{0} text starting with a param needs to be quoted in quotes"
+example: fill me in with {0} or {1} parameters
+example2: '{0} text starting with a param needs to be quoted in quotes'
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: "There was an error retrieving content, please check twitter "
-    textAfterTwitter: " or report an error through the"
+    textBeforeTwitter: 'There was an error retrieving content, please check twitter '
+    textAfterTwitter: ' or report an error through the'
     aboutPage: About page
   channelList:
     otherText: Other
@@ -13,9 +13,9 @@ component:
     unfavoriteAllInGroup: Unfavorite all in group
     favoriteAllInGroup: Favorite all in group
   channelInfo:
-    videoCount: "{0} Videos"
-    clipCount: "{n} Clips"
-    subscriberCount: "{n} Subscribers"
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} Subscribers'
     subscriberNA: Subscriber count unavailable
     totalViews: Total Views
   channelSocials:
@@ -32,20 +32,20 @@ component:
     logout: Logout
     MugenClips: MugenClips<sup>beta</sup>
   videoCard:
-    clips: "{n} Clips"
-    watching: "{0} Watching"
+    clips: '{n} Clips'
+    watching: '{0} Watching'
     liveNow: Live Now
   videoDescription:
     description: Description
   video:
     comment:
       openOnYoutube: open comment on
-      openOnYoutubeAfter: ""
+      openOnYoutubeAfter: ''
   description:
     showLess: Show Less
     showMore: Show More
   watch:
-    streamingFor: "Streaming for {0}"
+    streamingFor: Streaming for {0}
     nextUpInMugen: Next Up
   search:
     searchLabel: Search
@@ -89,9 +89,9 @@ views:
       subber: Clips
   library:
     savedVideosTitle: Saved Videos
-    createYtPlaylistButton: "Create YT Playlist ({0})"
-    deleteFromLibraryButton: "Delete ({0})"
-    deleteConfirmation: "Are you sure you want to delete {0} videos?"
+    createYtPlaylistButton: Create YT Playlist ({0})
+    deleteFromLibraryButton: Delete ({0})
+    deleteConfirmation: Are you sure you want to delete {0} videos?
     deleteConfirmationOK: Delete
     deleteConfirmationCancel: Cancel
     selectionReset: Reset
@@ -118,8 +118,8 @@ views:
     darkModeMsg: Changes the theme between light mode and dark mode
     redirectModeLabel: Open on Youtube
     redirectModeMsg: >-
-      Clicking on video thumbnails will open it in Youtube, clicking the video title
-      will open on Holodex
+      Clicking on video thumbnails will open it in Youtube, clicking the video
+      title will open on Holodex
     useEnglishNameLabel: Use English Name
     useEnglishNameMsg: Uses English localized names for VTuber channels
     hideVideoThumbnailsLabel: Hide Video Thumbnails
@@ -129,11 +129,11 @@ views:
     pushNotificationLabel: Push Notifications (Coming Soon)
     pushNotificationMsg: Enable push notification for favorited channels
     autoplayVideoLabel: Autoplay Video
-    autoplayVideoMsg:  Enable automatic playback of videos
+    autoplayVideoMsg: Enable automatic playback of videos
     scrollModeLabel: Scroll Mode
     scrollModeMsg: Use scroll/tap to turn pages
     resetAllSettings: Reset All Settings/Data
-    clipLanguageSelection: "See Clips in these Languages:"
+    clipLanguageSelection: 'See Clips in these Languages:'
   app:
     update_available: An update is available
     update_btn: Update
@@ -150,7 +150,9 @@ views:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on
       this page.
+  editor:
+    needlogin: You'll need to login to make edits to Holodex video and song metadata.
 time:
   soon: soon
-  diff_future_date: "Starts {0} ({1})"
-  distance_past_date: "{0}"
+  diff_future_date: Starts {0} ({1})
+  distance_past_date: '{0}'

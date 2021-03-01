@@ -94,13 +94,13 @@ const actions = {
             })
             .finally(() => commit("clearStagedFavorites"));
     }, 2000),
-    // async resetFavorites({ dispatch, commit, rootState }) {
-    //     commit("resetVideos");
-    //     commit("resetState");
-    //     if (rootState.userdata?.jwt) await dispatch("fetchFavorites");
-    //     if (rootState.userdata?.jwt) await dispatch("fetchLive");
-    //     else commit("setFavorites", []);
-    // },
+    async resetFavorites({ dispatch, commit, rootState }) {
+        commit("resetVideos");
+        commit("resetState");
+        if (rootState.userdata?.jwt) await dispatch("fetchFavorites");
+        if (rootState.userdata?.jwt) await dispatch("fetchLive");
+        else commit("setFavorites", []);
+    },
 };
 
 const mutations = {

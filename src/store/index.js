@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
+import jwtDecode from "jwt-decode";
 import { ORGS } from "@/utils/consts";
 import * as icons from "@/utils/icons";
 
@@ -124,6 +125,18 @@ export default new Vuex.Store({
         async logout({ dispatch, commit }) {
             commit("setUser", { user: null, jwt: null });
             dispatch("favorites/resetFavorites");
+        },
+        async loginCheck({ state, dispatch }) {
+            if (state.userdata.jwt) {
+                const { exp } = jwtDecode(state.userdata.jwt);
+                const dist = (exp - Date.now()) / 1000;
+                console.log(`Login token expiring in ${dist} ms`);
+                if (dist < 0) {
+                    // already expired
+                    await dispatch("logout");
+                }
+            }
+            // do nothing.
         },
     },
     modules: {

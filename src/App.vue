@@ -99,6 +99,9 @@ export default {
             },
         );
 
+        // relog if necessary:
+        this.$store.dispatch("loginCheck");
+
         // on update, reresh page and set update notification flag
         navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (this.refreshing) return;
