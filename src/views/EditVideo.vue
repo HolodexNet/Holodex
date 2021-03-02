@@ -29,7 +29,7 @@
             </v-col>
             <v-col class="related-videos pt-0" :md="9" :lg="8">
                 <v-alert
-                    :v-if="!($store.state.userdata && $store.state.userdata.jwt)"
+                    v-if="!$store.state.userdata || !$store.state.userdata.jwt"
                     color="error"
                     v-html="$t('views.editor.needlogin')"
                 >
