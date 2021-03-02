@@ -25,6 +25,8 @@ export {
     mdiMessageCogOutline,
     mdiMusic,
     mdiPencil, // for changing language
+    mdiPlay,
+    mdiPlaylistMusic,
     mdiRefresh,
     mdiStarFourPointsOutline,
     mdiTwitter,

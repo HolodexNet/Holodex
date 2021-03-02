@@ -111,7 +111,7 @@
                                 :class="{ 'added-animation': animateAdded }"
                                 @animationend="animateAdded = false"
                             >
-                                <v-icon large>{{ mdiPlaylistMusic }}</v-icon>
+                                <v-icon large>{{ icons.mdiPlaylistMusic }}</v-icon>
                                 <div class="">({{ playlist.length }})</div>
                             </v-btn>
                         </template>
@@ -152,7 +152,6 @@ import {
     mdiRepeatOff,
     mdiRepeatOnce,
     mdiMicrophoneVariant,
-    mdiPlaylistMusic,
 } from "@mdi/js";
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
@@ -187,7 +186,6 @@ export default {
             mdiRepeatOff,
             mdiRepeatOnce,
             mdiMicrophoneVariant,
-            mdiPlaylistMusic,
 
             progress: 0,
             player: null,
@@ -210,8 +208,10 @@ export default {
                 this.$nextTick(() => this.$refs.sheet.unbind());
             });
         },
-        playlist(nv) {
-            if (nv.length === 0) this.togglePlayer = false;
+        playlist(nw) {
+            console.log("playlist: ", nw.length);
+            if (nw.length === 0) this.togglePlayer = false;
+            if (this.togglePlayer === false > 0 && nw.length === 0) this.togglePlayer = true;
         },
         currentSong(ns, os) {
             if (os != null && this.progress > 80) {

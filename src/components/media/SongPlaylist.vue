@@ -8,6 +8,7 @@
             alwaysShowDeletion
             @play="$store.commit('music/skipTo', idx)"
             @remove="$store.commit('music/removeSong', idx)"
+            :hoverIcon="icons.mdiPlay"
         ></song-item>
     </v-list>
 </template>

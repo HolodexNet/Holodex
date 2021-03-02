@@ -153,9 +153,10 @@ export default {
             this.player = event.target;
             this.setTimer();
         },
-        seekTo(time) {
+        seekTo(time, playNow) {
             if (!this.player) return;
             this.player.seekTo(time);
+            if (playNow) this.player.playVideo();
         },
         fetchVideo() {
             if (!this.id) throw new Error("Invalid id");

@@ -13,7 +13,10 @@
                         :song="song"
                         :key="'clist' + song.name + song.video_id + idx"
                         @play="$store.commit('music/addSong', song)"
+                        @playNow="skipToSong"
                         showTime
+                        :hoverIcon="icons.mdiPlaylistMusic"
+                        :artworkHoverIcon="icons.mdiPlay"
                     ></song-item>
                     <v-divider></v-divider>
                     <v-list-item class="d-flex">
@@ -99,6 +102,11 @@ export default {
             //     this.recentLimit,
             // );
             // this.recentSongs = data;
+        },
+        skipToSong(song) {
+            console.log("skipping: ", this.$store.state.music.playlist.length - 1);
+            this.$store.commit("music/addSong", song);
+            this.$store.commit("music/skipTo", this.$store.state.music.playlist.length - 1);
         },
     },
 };

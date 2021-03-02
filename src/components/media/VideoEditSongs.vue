@@ -97,6 +97,9 @@
                                     current = x;
                                 }
                             "
+                            @playNow="(x) => $emit('timeJump', x.start, true)"
+                            :hoverIcon="icons.mdiPencil"
+                            :artworkHoverIcon="icons.mdiPlay"
                         ></song-item>
                     </template>
                 </v-list>
