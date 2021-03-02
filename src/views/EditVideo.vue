@@ -29,12 +29,11 @@
             </v-col>
             <v-col class="related-videos pt-0" :md="9" :lg="8">
                 <v-alert
-                    :v-if="!$store.userdata || !$store.userdata.user"
+                    :v-if="!($store.state.userdata && $store.state.userdata.jwt)"
                     color="error"
                     v-html="$t('views.editor.needlogin')"
                 >
                 </v-alert>
-
                 <v-row fluid>
                     <v-tabs v-model="currentTab">
                         <v-tab>Topic</v-tab>

@@ -44,7 +44,7 @@ function defaultState() {
  *---------------------------------------------* */
 
 const syncedModules = /^(?:library|settings)/;
-const syncedMutations = /^(?:setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites)/;
+const syncedMutations = /^(?:setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites)/;
 
 export default new Vuex.Store({
     plugins: [
@@ -130,8 +130,8 @@ export default new Vuex.Store({
         async loginCheck({ state, dispatch }) {
             if (state.userdata.jwt) {
                 const { exp } = jwtDecode(state.userdata.jwt);
-                const dist = (exp - Date.now()) / 1000;
-                console.log(`Login token expiring in ${dist} ms`);
+                const dist = exp - Date.now() / 1000;
+                console.log(`Login token expiring in ${dist} s`);
                 if (dist < 0) {
                     // already expired
                     await dispatch("logout");
