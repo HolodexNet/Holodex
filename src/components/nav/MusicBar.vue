@@ -288,7 +288,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .theme--light .music-player-bar {
     background: rgba(237, 227, 241, 0.95);
 }
@@ -301,25 +301,26 @@ export default {
     backdrop-filter: blur(5px);
     /* background: linear-gradient(180deg, rgba(80,80,80,1) 0%, rgba(43,47,50,1) 100%);  */
     /* box-shadow: 1px 0px 2px inset #007bff; */
+    iframe {
+        border-radius: 4px;
+    }
+    .song-player-container {
+        border-radius: 5px;
+        width: 356px;
+        position: relative;
+        margin-top: -110px;
+        margin-bottom: 5px;
+        margin-left: 5px;
+        padding: 2px;
+        background: #007bff;
+        box-shadow: 0px 6px 6px -2px rgba(0, 0, 0, 0.452), 0px 6px 16px -2px rgba(0, 0, 0, 0.582);
+    }
+    .music-title {
+        font-weight: 500;
+        font-size: 20px;
+    }
 }
-.music-player-bar iframe {
-    border-radius: 4px;
-}
-.music-player-bar .song-player-container {
-    border-radius: 5px;
-    width: 356px;
-    position: relative;
-    margin-top: -110px;
-    margin-bottom: 5px;
-    margin-left: 5px;
-    padding: 2px;
-    background: #007bff;
-    box-shadow: 0px 6px 6px -2px rgba(0, 0, 0, 0.452), 0px 6px 16px -2px rgba(0, 0, 0, 0.582);
-}
-.music-player-bar .music-title {
-    font-weight: 500;
-    font-size: 20px;
-}
+
 .frame-row {
     width: inherit;
 }
@@ -340,8 +341,8 @@ export default {
     z-index: 20;
     right: 0px;
     overflow: visible;
-    height: 50px;
-    width: 50px;
+    height: 50px !important;
+    width: 50px !important;
     cursor: pointer;
 }
 .music-player-toggle .music-player-toggle-bg {
