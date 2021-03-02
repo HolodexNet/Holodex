@@ -3,8 +3,7 @@ import axiosRetry from "axios-retry";
 import { dayjs } from "@/utils/time";
 import querystring from "querystring";
 
-export const API_BASE_URL =
-    process.env.NODE_ENV === "development" ? "http://localhost:2434" : "https://holodex.net/api";
+export const API_BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:2434" : "/api";
 // eslint-disable-next-line max-len,no-useless-escape
 const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?:channel|c)\/([\w\-\_]*)/i;
 // eslint-disable-next-line max-len,no-useless-escape
