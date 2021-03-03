@@ -35,7 +35,7 @@
 <script>
 // eslint-disable-next-line import/no-unresolved
 import { Manager } from "socket.io-client";
-import api, { API_BASE_URL } from "@/utils/backend-api";
+import api from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
 
 export default {
@@ -72,11 +72,13 @@ export default {
     methods: {
         tlChatConnect() {
             if (!this.manager) {
-                this.manager = new Manager(API_BASE_URL, {
+                // URL is hardcoded because socket.io does not like relative paths
+                // swap to localhost:port path if working on sockets
+                this.manager = new Manager("https://holodex.net", {
                     query: { id: this.video.id },
                     reconnectionAttempts: 10,
-                    path: process.env.NODE_ENV === "development" ? "/socket.io/" : "/api/socket.io/",
-                    secure: process.env.NODE_ENV !== "development",
+                    path: /* process.env.NODE_ENV === "development" ? "/socket.io/" : */ "/api/socket.io/",
+                    secure: true,
                 });
                 this.manager.on("reconnect_attempt", (attempt) => {
                     this.overlayMessage = `Auto Reconnecting... ${attempt}/10`;
