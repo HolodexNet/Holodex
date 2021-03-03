@@ -26,7 +26,12 @@
 
                     Login with Discord
                 </v-btn>
-                <v-btn class="my-3" v-if="!userdata.user || !userdata.user.twitter_id" @click.prevent="loginTwitter">
+                <v-btn
+                    class="my-3"
+                    v-if="!userdata.user || !userdata.user.twitter_id"
+                    @click.prevent="loginTwitter"
+                    color="blue lighten-1"
+                >
                     <v-icon left>{{ icons.mdiTwitter }}</v-icon>
 
                     Login with Twitter

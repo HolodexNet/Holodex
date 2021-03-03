@@ -75,6 +75,7 @@ export default {
                 this.manager = new Manager(API_BASE_URL, {
                     query: { id: this.video.id },
                     reconnectionAttempts: 10,
+                    path: process.env.NODE_ENV === "development" ? "/socket.io/" : "/api/socket.io/",
                 });
                 this.manager.on("reconnect_attempt", (attempt) => {
                     this.overlayMessage = `Auto Reconnecting... ${attempt}/10`;

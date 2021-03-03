@@ -2,12 +2,10 @@ import axios from "axios";
 import axiosRetry from "axios-retry";
 import { dayjs } from "@/utils/time";
 import querystring from "querystring";
+import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 
 export const API_BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:2434" : "/api";
-// eslint-disable-next-line max-len,no-useless-escape
-const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?:channel|c)\/([\w\-\_]*)/i;
-// eslint-disable-next-line max-len,no-useless-escape
-const VIDEO_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(?:.*\&|\?)?(?:t?=?)?(\d+[\dhms]*)?/i;
+// export const API_BASE_URL = "https://holodex.net/api";
 
 export const axiosInstance = axios.create({
     // baseURL: process.env.NODE_ENV === "development" ? "https://holodex.net/api/v2" : "/api/v2",
