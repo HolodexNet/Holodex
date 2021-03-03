@@ -4,8 +4,9 @@ import { dayjs } from "@/utils/time";
 import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 
-export const API_BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:2434" : "/api";
-// export const API_BASE_URL = "https://holodex.net/api";
+export const API_BASE_URL =
+    process.env.NODE_ENV === "development" ? "http://localhost:2434" : `${window.location.orgin}/api`;
+// export const API_BASE_URL = "http://holodex.net/api";
 
 export const axiosInstance = axios.create({
     // baseURL: process.env.NODE_ENV === "development" ? "https://holodex.net/api/v2" : "/api/v2",
