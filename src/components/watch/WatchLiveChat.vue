@@ -89,6 +89,11 @@ export default {
     position: relative;
 }
 
+.watch-live-chat.mobile-live-chat {
+    margin-right: 0px; /*calc(env(safe-area-inset-right) - 15px)*/
+    margin-right: calc(env(safe-area-inset-right) / 2);
+}
+
 /* center pre loading text */
 .watch-live-chat .loading-text {
     position: absolute;

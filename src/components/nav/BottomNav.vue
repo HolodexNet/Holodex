@@ -6,6 +6,7 @@
                 :key="page.name"
                 :to="page.path"
                 class="nav-btn"
+                style="background: transparent"
                 @click.native="scrollToTop(page)"
             >
                 <span>{{ page.name }}</span>
@@ -50,9 +51,11 @@ export default {
 
 <style>
 .nav-btn {
-    font-size: 0.875rem;
     font-weight: 400;
     height: inherit !important;
+}
+.nav-btn.v-btn--active {
+    color: #64b5f6 !important;
 }
 .bottom-nav {
     /* iPhone X/iOS 11.2+ offset for gesture nav bar */

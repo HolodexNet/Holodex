@@ -203,9 +203,11 @@ export default {
             // workaround to allow scrolling when media is popped open:
             // https://github.com/vuetifyjs/vuetify/issues/6495#issuecomment-663547354
             this.$nextTick(() => {
-                this.$refs.sheet.showScroll();
-                // either set :retain-focus="false" above or do this:
-                this.$nextTick(() => this.$refs.sheet.unbind());
+                if (this.$refs.sheet) {
+                    this.$refs.sheet.showScroll();
+                    // either set :retain-focus="false" above or do this:
+                    this.$nextTick(() => this.$refs.sheet.unbind());
+                }
             });
         },
         playlist(nw) {

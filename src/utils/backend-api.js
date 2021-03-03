@@ -10,8 +10,8 @@ const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?:channe
 const VIDEO_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(?:.*\&|\?)?(?:t?=?)?(\d+[\dhms]*)?/i;
 
 export const axiosInstance = axios.create({
-    // baseURL: process.env.NODE_ENV === "development" ? "https://holodex.net/api/v2" : "/api/v2",
-    baseURL: `${API_BASE_URL}/v2`,
+    baseURL: process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api/v2" : "/api/v2",
+    // baseURL: `${API_BASE_URL}/v2`,
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",

@@ -33,6 +33,10 @@ module.exports = {
         themeColor: "#42a5f5",
         msTileColor: "#42a5f5",
         appleMobileWebAppCapable: "yes",
+        manifestOptions: {
+            display: "fullscreen",
+            backgroundColor: "#215183",
+        },
         appleMobileWebAppStatusBarStyle: "black-translucent",
         scope: "/",
         workboxOptions: {
