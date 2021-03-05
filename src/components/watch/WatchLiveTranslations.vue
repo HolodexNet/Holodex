@@ -72,9 +72,13 @@ export default {
     methods: {
         tlChatConnect() {
             if (!this.manager) {
+                // URL is hardcoded because socket.io does not like relative paths
+                // swap to localhost:port path if working on sockets
                 this.manager = new Manager(API_BASE_URL, {
                     query: { id: this.video.id },
                     reconnectionAttempts: 10,
+                    path: process.env.NODE_ENV === "development" ? "/socket.io/" : "/api/socket.io/",
+                    secure: true,
                 });
                 this.manager.on("reconnect_attempt", (attempt) => {
                     this.overlayMessage = `Auto Reconnecting... ${attempt}/10`;

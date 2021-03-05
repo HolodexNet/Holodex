@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+
 export const primaryColor = "#F06292";
 export const secondaryColor = "#64B5F6";
 
@@ -78,6 +80,11 @@ export const ORGS_PREFIX = Object.freeze({
     "Yuni Create": "Yuni",
     "All Vtubers": "Vtuber",
 });
+
+export const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?:channel|c)\/([\w\-\_]*)/i;
+
+// eslint-disable-next-line max-len
+export const VIDEO_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(?:.*\&|\?)?(?:t?=?)?(\d+[\dhms]*)?/i;
 
 // exports.CHANNEL_TYPE_TO_VIDEO_TYPE = {
 //     [this.CHANNEL_TYPES.VTUBER]: this.VIDEO_TYPES.STREAM,
