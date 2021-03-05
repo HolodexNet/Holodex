@@ -5,7 +5,7 @@
             persistent
             no-click-animation
             ref="sheet"
-            :value="togglePlayer"
+            :value="isOpen"
             :retain-focus="false"
             content-class="music-player-bar"
             v-if="currentSong"
@@ -16,7 +16,7 @@
                 color="info"
                 @click="closePlayer"
                 style="bottom: 100%; position: absolute"
-                v-if="togglePlayer"
+                v-if="isOpen"
             >
                 <div class="music-player-toggle-bg">
                     <v-icon large>{{ icons.mdiMusic }}</v-icon>
@@ -132,7 +132,7 @@
             "
             color="info"
             @click="tryOpeningPlayer"
-            v-if="!togglePlayer"
+            v-if="!isOpen"
         >
             <div class="music-player-toggle-bg">
                 <v-icon large>{{ icons.mdiMusic }}</v-icon>
@@ -178,7 +178,6 @@ export default {
     data() {
         return {
             value: "/",
-            togglePlayer: false,
             mdiSkipNext,
             mdiVolumeHigh,
             mdiShuffleVariant,
@@ -199,7 +198,7 @@ export default {
         // });
     },
     watch: {
-        togglePlayer() {
+        isOpen() {
             // workaround to allow scrolling when media is popped open:
             // https://github.com/vuetifyjs/vuetify/issues/6495#issuecomment-663547354
             this.$nextTick(() => {
@@ -212,8 +211,8 @@ export default {
         },
         playlist(nw) {
             console.log("playlist: ", nw.length);
-            if (nw.length === 0) this.togglePlayer = false;
-            if (this.togglePlayer === false > 0 && nw.length === 0) this.togglePlayer = true;
+            if (nw.length === 0) this.store.commit("music/closeBar");
+            if (this.isOpen === false > 0 && nw.length === 0) this.store.commit("music/openBar");
         },
         currentSong(ns, os) {
             if (os != null && this.progress > 80) {
@@ -243,7 +242,7 @@ export default {
                 this.$store.commit("music/stopAddedAnimation");
             },
         },
-        ...mapState("music", ["currentId", "playId", "playlist", "state", "mode", "addedAnimation"]),
+        ...mapState("music", ["currentId", "playId", "playlist", "state", "mode", "addedAnimation", "isOpen"]),
         ...mapGetters("music", ["currentSong", "canPlay"]),
     },
     methods: {
@@ -276,13 +275,13 @@ export default {
         },
         tryOpeningPlayer() {
             if (this.currentSong) {
-                this.togglePlayer = true;
+                this.$store.commit("music/openBar");
             } else {
                 this.animateOpenError = true;
             }
         },
         closePlayer() {
-            this.togglePlayer = false;
+            this.$store.commit("music/closeBar");
             if (this.player) this.player.pauseVideo();
             this.$store.commit("music/pause");
         },

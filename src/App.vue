@@ -1,5 +1,8 @@
 <template>
-    <v-app :style="{ background: $vuetify.theme.themes[this.darkMode ? 'dark' : 'light'].background }">
+    <v-app
+        :style="{ background: $vuetify.theme.themes[this.darkMode ? 'dark' : 'light'].background }"
+        :class="{ 'bump-bottom': $store.state.music.isOpen }"
+    >
         <MainNav />
         <!-- remove watch page view from being wrapped in v-main, to avoid layout shifts -->
         <v-main v-if="!isWatchPage">
@@ -189,7 +192,7 @@ body {
 .row {
     margin: 0px -12px;
 }
-.v-main__wrap {
+.bump-bottom .v-main__wrap {
     padding-bottom: 250px;
     /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
 }

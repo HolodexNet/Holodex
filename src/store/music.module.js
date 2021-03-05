@@ -9,6 +9,7 @@ const initialState = {
     state: MUSIC_PLAYER_STATE.PAUSED,
     mode: MUSIC_PLAYBACK_MODE.LOOP,
 
+    isOpen: false,
     addedAnimation: false, // state keeping for bouncing the icon.
 };
 
@@ -29,6 +30,12 @@ const getters = {
 const actions = {};
 
 const mutations = {
+    openBar(state) {
+        state.isOpen = true;
+    },
+    closeBar(state) {
+        state.isOpen = false;
+    },
     addSong(state, song) {
         state.playlist.push(song);
         state.addedAnimation = true;
