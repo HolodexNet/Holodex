@@ -5,7 +5,30 @@
             <div class="pa-3" v-else>{{ overlayMessage }}</div>
             <v-btn v-if="!isLoading" @click="tlChatReconnect()">Retry</v-btn>
         </v-overlay>
-        <v-card-subtitle class="py-2">Translations</v-card-subtitle>
+        <v-card-subtitle class="py-2 d-flex justify-space-between">
+            TLs [{{ lang }}]
+            <v-dialog v-model="dialog">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon x-small v-bind="attrs" v-on="on">
+                        <v-icon>
+                            {{ icons.mdiCog }}
+                        </v-icon>
+                    </v-btn>
+                </template>
+
+                <v-card>
+                    <v-card-title> TL Settings </v-card-title>
+
+                    <v-card-text>
+                        <v-switch
+                            v-model="liveTLStickBottom"
+                            label="Stick Bottom (mobile)"
+                            messages="TL box sticks to the bottom of chat (default stick to top on mobile)"
+                        ></v-switch>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
+        </v-card-subtitle>
         <v-divider />
         <v-card-text class="text-body-2 tl-body d-flex flex-column-reverse pa-1 pa-lg-3">
             <template v-for="(item, index) in tlHistory">
@@ -69,11 +92,22 @@ export default {
     beforeDestroy() {
         this.tlChatDisconnect();
     },
+    computed: {
+        lang() {
+            return this.$store.state.settings.lang;
+        },
+        liveTLStickBottom: {
+            get() {
+                return this.$store.state.settings.liveTLStickBottom;
+            },
+            set(val) {
+                this.$store.commit("settings/setliveTLStickBottom", val);
+            },
+        },
+    },
     methods: {
         tlChatConnect() {
             if (!this.manager) {
-                // URL is hardcoded because socket.io does not like relative paths
-                // swap to localhost:port path if working on sockets
                 this.manager = new Manager(API_BASE_URL, {
                     query: { id: this.video.id },
                     reconnectionAttempts: 10,
@@ -90,7 +124,11 @@ export default {
 
             if (
                 this.video.status !== "live" &&
-                !dayjs().isAfter(dayjs(this.video.start_scheduled).subtract(8, "hours").subtract(15, "minutes"))
+                !dayjs().isAfter(
+                    dayjs(this.video.start_scheduled)
+                        // .subtract(8, "hours")
+                        .subtract(15, "minutes"),
+                )
             ) {
                 this.overlayMessage =
                     "Stream is not live yet, please try again when the stream is within 15 minutes of being live";
@@ -102,17 +140,13 @@ export default {
             this.socket = this.manager.socket("/");
             this.socket.connect();
 
-            api.chatHistory(this.video.id).then(({ data }) => {
+            api.chatHistory(this.video.id, this.lang).then(({ data }) => {
                 this.tlHistory = data.reverse();
             });
 
             this.socket.on("connect", () => {
                 this.showOverlay = false;
                 this.isLoading = false;
-                // this.tlHistory.push({
-                //     name: "Holodex",
-                //     message: "Successfully connected to translations chat",
-                // });
             });
 
             this.socket.on("connect_error", (err) => {
@@ -122,7 +156,7 @@ export default {
                 this.showOverlay = true;
             });
 
-            this.socket.on(this.video.id, (msg) => {
+            this.socket.on(`${this.video.id}/${this.lang}`, (msg) => {
                 // if no type, process as regular message
                 if (!msg.type) {
                     this.tlHistory.unshift(msg);

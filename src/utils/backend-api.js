@@ -6,11 +6,10 @@ import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 
 export const API_BASE_URL =
     process.env.NODE_ENV === "development" ? "http://localhost:2434" : `${window.location.origin}/api`;
-// export const API_BASE_URL = "http://holodex.net/api";
+// export const API_BASE_URL = "https://staging.holodex.net/api/";
 
 export const axiosInstance = axios.create({
-    baseURL: process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api/v2" : "/api/v2",
-    // baseURL: `${API_BASE_URL}/v2`,
+    baseURL: `${API_BASE_URL}/v2`,
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
@@ -155,8 +154,8 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    chatHistory(id) {
-        return axiosInstance.get(`/chat/${id}/history`);
+    chatHistory(id, lang) {
+        return axiosInstance.get(`/chat/${id}/history?lang=${lang}`);
     },
     /**
      * Fetches song lists up to LIMIT count with offset. Always ordered by available_at date.

@@ -8,15 +8,22 @@
             :video="video"
             v-if="showTLFirstTime"
             v-show="showTL"
-            :class="{ 'chat-overlay': fixedBottom || fixedRight }"
+            :class="{
+                'chat-overlay': fixedBottom || fixedRight,
+                'chat-overlay-stickbottom': $store.state.settings.liveTLStickBottom,
+            }"
             @videoUpdate="handleVideoUpdate"
             @historyLength="handleHistoryLength"
-        />
+        >
+            <template v-slot:button> </template>
+        </WatchLiveTranslations>
         <div class="embedded-chat">
             <iframe :src="liveChatUrl" frameborder="0" />
-            <a class="show-overlay-btn d-flex align-center text-body-2" @click="toggleTL">
-                {{ showTL ? "Hide" : "Show" }} TLs {{ newTL > 0 ? `(${newTL} new)` : "" }}
-            </a>
+            <div class="chat-overlay-btn d-flex align-center">
+                <a class="text-body-2" @click="toggleTL">
+                    {{ showTL ? "Hide" : "Show" }} TLs {{ newTL > 0 ? `(${newTL} new)` : "" }}
+                </a>
+            </div>
         </div>
     </v-sheet>
 </template>
@@ -51,6 +58,7 @@ export default {
             showTL: false,
             showTLFirstTime: false,
             newTL: 0,
+            stickTop: false,
         };
     },
     computed: {
@@ -125,11 +133,11 @@ export default {
 
 /* tl box static size of 200 px */
 .watch-live-chat.show-tl-overlay .embedded-chat {
-    height: calc(100% - 200px);
+    height: calc(100% - 20vh);
 }
 
 .watch-live-chat.show-tl-overlay .tl-overlay .tl-body {
-    height: 200px;
+    height: 20vh;
 }
 
 /* Fixed Bottom */
@@ -173,9 +181,9 @@ export default {
 }
 
 /* reposition Show TL button when chat is scaled */
-.fixed-right .embedded-chat .show-overlay-btn {
+.fixed-right .embedded-chat .chat-overlay-btn {
     height: 36px;
-    right: 36px;
+    /* right: 36px; */
 }
 
 .chat-overlay {
@@ -185,7 +193,13 @@ export default {
     z-index: 5;
     top: 0;
 }
-.show-overlay-btn {
+
+.chat-overlay-stickbottom {
+    bottom: 0;
+    top: initial;
+}
+.chat-overlay-btn {
+    /* right: 48px; */
     right: 48px;
     height: 48px;
     position: absolute;
