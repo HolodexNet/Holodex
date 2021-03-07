@@ -39,6 +39,7 @@
                 <v-list-item class="ma-n1 py-0 pl-3 pr-1">
                     <div class="selected-card-type px-1 py-0 ma-0 rounded text--disabled caption">
                         <v-icon x-small v-if="selection.item.type === 'channel'">{{ icons.mdiYoutube }}</v-icon>
+                        <v-icon x-small v-if="selection.item.type === 'video url'">{{ icons.mdiYoutube }}</v-icon>
                         <v-icon x-small v-if="selection.item.type === 'topic'">{{ icons.mdiAnimationPlay }}</v-icon>
                         <v-icon x-small v-if="selection.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
                         <v-icon x-small v-if="selection.item.type === 'title & desc'">{{ mdiTextSearch }}</v-icon>
@@ -68,6 +69,7 @@
                     <v-list-item-subtitle class="text--primary">
                         {{ i18nItem(dropdownItem.item.type) }}
                         <v-icon small v-if="dropdownItem.item.type === 'channel'">{{ icons.mdiYoutube }}</v-icon>
+                        <v-icon small v-if="dropdownItem.item.type === 'video url'">{{ icons.mdiYoutube }}</v-icon>
                         <v-icon small v-if="dropdownItem.item.type === 'topic'">{{ icons.mdiAnimationPlay }}</v-icon>
                         <v-icon small v-if="dropdownItem.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
                         <v-icon small v-if="dropdownItem.item.type === 'title & desc'">{{ mdiTextSearch }}</v-icon>
@@ -159,7 +161,7 @@ export default {
             this.fromApi = [];
             const entropy = encodeURIComponent(val).length;
             if (entropy <= 2) return;
-            const formatted = val.replace("#", "").toLowerCase();
+            const formatted = val.replace("#", "");
             this.getAutocomplete(formatted)
                 .then((res) => {
                     let textQueries = [];
@@ -200,6 +202,11 @@ export default {
                 return;
             }
 
+            if (this.query.length === 1 && this.query[0].type === "video url") {
+                this.$router.push(`/watch/${this.query[0].value}`);
+                return;
+            }
+
             this.$router.push({
                 path: "/search",
                 query: { q: await json2csvAsync(this.query) },
@@ -227,6 +234,8 @@ export default {
             switch (item) {
                 case "channel":
                     return this.$t("component.search.type.channel");
+                case "video url":
+                    return this.$t("component.search.type.videourl");
                 case "topic":
                     return this.$t("component.search.type.topic");
                 case "org":
