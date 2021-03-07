@@ -6,7 +6,7 @@
             </v-col>
             <v-col cols="12" md="4" sm="4" lg="3" xl="2" float-right>
                 <div class="text-h5">News</div>
-                <TwitterFeed />
+                <TwitterFeed :key="timelinekey" />
             </v-col>
 
             <v-col cols="12" md="8" sm="8" lg="9" xl="10">
@@ -271,11 +271,15 @@ export default {
     components: {
         TwitterFeed,
     },
+    activated() {
+        this.timelinekey += 1;
+    },
     data() {
         return {
             icons,
             mdiExportVariant,
             mdiGithub,
+            timelinekey: 12,
         };
     },
 };
