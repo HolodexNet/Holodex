@@ -18,8 +18,8 @@
                 <ChannelSocials :channel="video.channel" />
             </v-list-item>
         </v-list>
-        <v-card-text class="text-body-2">
-            <truncated-text :html="video.description" lines="3" />
+        <v-card-text class="text-body-2" @click="handleClick">
+            <truncated-text :html="processedMessage" lines="3" />
         </v-card-text>
     </v-card>
 </template>
@@ -35,6 +35,8 @@ import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/t
 import * as icons from "@/utils/icons";
 import VideoTopic from "@/components/video/VideoTopic";
 import TruncatedText from "@/components/common/TruncatedText";
+
+const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
 
 export default {
     name: "WatchInfo",
@@ -75,6 +77,12 @@ export default {
                 }, 1000);
             }
         },
+        handleClick(e) {
+            if (e.target.matches(".comment-chip")) {
+                this.$emit("timeJump", e.target.getAttribute("data-time"));
+                e.preventDefault();
+            }
+        },
     },
     mounted() {
         this.setTimer();
@@ -107,6 +115,16 @@ export default {
         },
         liveViewers() {
             return (+this.video.live_viewers).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        processedMessage() {
+            const decoder = document.createElement("div");
+            decoder.innerHTML = this.video.description; // using browser assembly script to sanitize
+            const sanitized = decoder.textContent;
+            const vidUrl = (this.$store.state.settings.redirectMode ? "https://youtu.be/" : "/watch/") + this.videoId;
+            return sanitized.replace(COMMENT_TIMESTAMP_REGEX, (match, hr, min, sec) => {
+                const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
+                return `<a class="comment-chip" href="${vidUrl}?t=${time}" data-time="${time}"> ${match} </a>`;
+            });
         },
     },
 };
