@@ -128,3 +128,7 @@ export function localSortChannels(channels, { sort, order = "asc" }) {
     if (order === "desc") channels.reverse();
     return channels;
 }
+
+export function arrayChunk(arr, size) {
+    return Array.from(new Array(Math.ceil(arr.length / size)), (_, i) => arr.slice(i * size, i * size + size));
+}

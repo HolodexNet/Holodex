@@ -46,7 +46,7 @@
     "vue-router": "^3.5.1",
     "vue-simple-headful": "^2.2.6",
     "vue-youtube-embed": "^2.2.2",
-    "vuetify": "^2.4.3",
+    "vuetify": "^2.4.5",
     "vuex": "^3.6.2",
     "vuex-persistedstate": "^3.2.0",
     "vuex-shared-mutations": "^1.0.2",

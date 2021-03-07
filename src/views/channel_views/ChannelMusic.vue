@@ -1,6 +1,27 @@
 <template>
     <!-- <v-container> -->
     <v-row>
+        <v-col cols="12">
+            <v-carousel hide-delimiters height="340" class="transparent">
+                <v-carousel-item v-for="(songarr, idx) in arrayChunk(recentSongs, 5)" :key="'clist1' + idx">
+                    <v-sheet class="d-flex justify-space-around">
+                        <template v-for="(song, idy) in songarr">
+                            <song-item-card
+                                class="ma-4"
+                                style="width: 200px"
+                                :song="song"
+                                @play="$store.commit('music/addSong', song)"
+                                @playNow="skipToSong"
+                                showTime
+                                :hoverIcon="icons.mdiPlaylistMusic"
+                                :artworkHoverIcon="icons.mdiPlay"
+                                :key="'clist2' + idy"
+                            ></song-item-card>
+                        </template>
+                    </v-sheet>
+                </v-carousel-item>
+            </v-carousel>
+        </v-col>
         <v-col sm="12" md="6">
             <v-card elevation="5">
                 <v-card-subtitle>
@@ -50,11 +71,12 @@
 
 <script>
 import backendApi from "@/utils/backend-api";
-
-const { default: SongItem } = require("@/components/media/SongItem");
+import SongItemCard from "@/components/media/SongItemCard";
+import SongItem from "@/components/media/SongItem";
+import { arrayChunk } from "@/utils/functions";
 
 export default {
-    components: { SongItem },
+    components: { SongItem, SongItemCard },
     name: "ChannelMusic",
     data() {
         return {
@@ -108,6 +130,7 @@ export default {
             this.$store.commit("music/addSong", song);
             this.$store.commit("music/skipTo", this.$store.state.music.playlist.length - 1);
         },
+        arrayChunk,
     },
 };
 </script>
