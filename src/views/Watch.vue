@@ -40,7 +40,7 @@
                     </template>
                 </WatchFrame>
                 <template v-if="!theatherMode">
-                    <WatchInfo :video="video" key="info" />
+                    <WatchInfo :video="video" key="info" @timeJump="seekTo" />
                     <v-divider />
                     <WatchComments
                         :comments="comments"
