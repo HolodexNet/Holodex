@@ -289,7 +289,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .theme--light .music-player-bar {
     background: rgba(237, 227, 241, 0.95);
 }

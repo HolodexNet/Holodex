@@ -6,7 +6,8 @@
         <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile && isWatchPage" :temporary="true" />
         <!--* nav drawer is for the left --->
         <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile" :active="!isWatchPage" />
-        <music-bar></music-bar>
+        <!-- <music-bar></music-bar> -->
+        <MusicBar2 />
         <!--* bottom bar --->
 
         <v-app-bar
@@ -204,6 +205,7 @@ import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
 import NavDrawer from "./NavDrawer";
 import BottomNav from "./BottomNav";
+import MusicBar2 from "./MusicBar2";
 
 /**
  * Returns the index of the last element in the array where predicate is true, and -1
@@ -230,6 +232,7 @@ export default {
         BottomNav,
         UserCard,
         Logo,
+        MusicBar2,
         MusicBar: () => import("./MusicBar"),
     },
     data() {

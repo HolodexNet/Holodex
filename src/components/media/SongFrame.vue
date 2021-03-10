@@ -70,7 +70,7 @@ export default {
 .song-player {
     position: relative;
     padding-bottom: 56.25%;
-    padding-bottom: min(56.25%, calc(100vh - 120px));
+    /* padding-bottom: min(56.25%, calc(100vh - 120px)); */
     width: 100%;
 }
 
