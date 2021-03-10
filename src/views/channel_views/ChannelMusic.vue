@@ -2,25 +2,24 @@
     <!-- <v-container> -->
     <v-row>
         <v-col cols="12">
-            <v-carousel hide-delimiters height="340" class="transparent">
-                <v-carousel-item v-for="(songarr, idx) in arrayChunk(recentSongs, 5)" :key="'clist1' + idx">
-                    <v-sheet class="d-flex justify-space-around">
-                        <template v-for="(song, idy) in songarr">
-                            <song-item-card
-                                class="ma-4"
-                                style="width: 200px"
-                                :song="song"
-                                @play="$store.commit('music/addSong', song)"
-                                @playNow="skipToSong"
-                                showTime
-                                :hoverIcon="icons.mdiPlaylistMusic"
-                                :artworkHoverIcon="icons.mdiPlay"
-                                :key="'clist2' + idy"
-                            ></song-item-card>
-                        </template>
-                    </v-sheet>
-                </v-carousel-item>
-            </v-carousel>
+            <carousel
+                :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
+                :itemWidth="220"
+                :itemCount="recentSongs.length"
+            >
+                <template v-for="(song, idx) in recentSongs">
+                    <song-item-card
+                        style="width: 200px; margin: 10px"
+                        :song="song"
+                        @play="$store.commit('music/addSong', song)"
+                        @playNow="skipToSong"
+                        showTime
+                        :hoverIcon="icons.mdiPlaylistMusic"
+                        :artworkHoverIcon="icons.mdiPlay"
+                        :key="'clist2' + idx"
+                    ></song-item-card>
+                </template>
+            </carousel>
         </v-col>
         <v-col sm="12" md="6">
             <v-card elevation="5">
@@ -73,10 +72,10 @@
 import backendApi from "@/utils/backend-api";
 import SongItemCard from "@/components/media/SongItemCard";
 import SongItem from "@/components/media/SongItem";
-import { arrayChunk } from "@/utils/functions";
+import Carousel from "@/components/common/Carousel";
 
 export default {
-    components: { SongItem, SongItemCard },
+    components: { SongItem, SongItemCard, Carousel },
     name: "ChannelMusic",
     data() {
         return {
@@ -87,6 +86,14 @@ export default {
             popularOffset: 0,
             popularLimit: 20,
             popularSongs: [],
+
+            BREAKPOINTS: {
+                xs: 4,
+                sm: 3,
+                md: 4,
+                lg: 5,
+                xl: 7,
+            },
         };
     },
     mounted() {
@@ -130,7 +137,6 @@ export default {
             this.$store.commit("music/addSong", song);
             this.$store.commit("music/skipTo", this.$store.state.music.playlist.length - 1);
         },
-        arrayChunk,
     },
 };
 </script>

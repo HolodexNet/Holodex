@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-tabs v-model="category">
+        <v-tabs v-model="category" class="channels-tabs">
             <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
             <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
             <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
@@ -261,7 +261,7 @@ export default {
     flex: auto;
 }
 
-.v-slide-group__prev--disabled {
+.channels-tabs .v-slide-group__prev--disabled {
     display: none !important;
 }
 

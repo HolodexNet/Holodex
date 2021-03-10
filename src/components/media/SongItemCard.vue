@@ -1,7 +1,7 @@
 <template>
     <v-hover v-slot="{ hover }">
-        <v-card @click.stop="$emit('play', song)" style="max-width: 200px" color="transparent">
-            <v-sheet class="song-card-artwork">
+        <v-card @click.stop="$emit('play', song)" elevation="0" style="max-width: 200px" color="transparent">
+            <v-sheet class="song-card-artwork rounded" :elevation="hover ? 6 : 3">
                 <!-- actual artwork -->
                 <div class="song-card-data mx-1">
                     <!-- <span class="muted" v-if="showTime">{{ formattedTime }}</span> -->
@@ -16,11 +16,12 @@
                     :src="song.art.replace('100x100', '200x200')"
                     width="200px"
                     aspect-ratio="1"
+                    class="rounded"
                 ></v-img>
                 <!-- artwork not available, have a stand-in -->
-                <v-sheet v-else width="100%" height="100%" color="grey darken-1" class="d-flex pa-1">
-                    <v-btn small icon class="ma-auto" outlined disabled>
-                        <v-icon small>{{ icons.mdiMusic }}</v-icon>
+                <v-sheet v-else width="100%" height="100%" color="grey darken-1" class="d-flex pa-1 rounded">
+                    <v-btn x-large icon class="ma-auto" outlined disabled>
+                        <v-icon x-large>{{ icons.mdiMusic }}</v-icon>
                     </v-btn>
                 </v-sheet>
                 <!-- Queue up button or default item click button -->
@@ -29,7 +30,7 @@
                     width="100%"
                     height="100%"
                     color="transparent"
-                    class="d-flex pa-1 hover-item"
+                    class="d-flex pa-1 hover-item rounded"
                     style="position: absolute; left: 0px"
                 >
                     <v-btn x-small fab class="ma-auto" color="blue lighten-3" elevation="2">
