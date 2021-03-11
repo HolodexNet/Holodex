@@ -108,22 +108,34 @@ const mutations = {
                 return;
             case MUSIC_PLAYBACK_MODE.SHUFFLE:
                 state.currentId = Math.floor(Math.random() * state.playlist.length);
+                state.playId += 1;
                 break;
             default:
         }
     },
-    // nextSongNaturally(state) {
-    //     if (state.currentId + 1 === state.playlist.length) {
-    //         if (state.mode === MUSIC_PLAYBACK_MODE.LOOP) {
-    //             state.currentId = 0;
-    //             state.playId += 1;
-    //         } else if (state.mode === MUSIC_PLAYBACK_MODE.NATURAL) state.state = MUSIC_PLAYER_STATE.PAUSED;
-    //     } else {
-    //         state.currentId += 1;
-    //         state.playId += 1;
-    //         state.state = MUSIC_PLAYER_STATE.PLAYING;
-    //     }
-    // },
+    prevSong(state) {
+        const { mode } = state;
+        switch (mode) {
+            case MUSIC_PLAYBACK_MODE.NATURAL:
+            case MUSIC_PLAYBACK_MODE.LOOP:
+            case MUSIC_PLAYBACK_MODE.LOOPONE:
+                /* next song naturally */
+                if (state.currentId - 1 < 0) {
+                    state.currentId = state.playlist.length - 1;
+                    state.playId += 1;
+                } else {
+                    state.currentId -= 1;
+                    state.playId += 1;
+                    state.state = MUSIC_PLAYER_STATE.PLAYING;
+                }
+                return;
+            case MUSIC_PLAYBACK_MODE.SHUFFLE:
+                state.currentId = Math.floor(Math.random() * state.playlist.length);
+                state.playId += 1;
+                break;
+            default:
+        }
+    },
     cycleMode(state) {
         switch (state.mode) {
             case MUSIC_PLAYBACK_MODE.NATURAL:

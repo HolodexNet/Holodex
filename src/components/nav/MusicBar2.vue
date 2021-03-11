@@ -41,7 +41,7 @@
         <v-slider class="music-progress" hide-details :value="progress" height="3" @change="progressChange" />
         <div class="d-flex justify-space-between pa-2">
             <div class="player-controls">
-                <v-btn icon class="mx-1" @click="">
+                <v-btn icon class="mx-1" @click="prevButtonHandler">
                     <v-icon>{{ mdiSkipPrevious }}</v-icon>
                 </v-btn>
                 <v-btn icon fab @click="playPause" color="primary">
@@ -268,6 +268,13 @@ export default {
             const percent = progress / 100;
             const newOffsetTime = start + totalLength * percent;
             this.player.seekTo(newOffsetTime);
+        },
+        prevButtonHandler() {
+            if (this.progress > 5) {
+                this.player.seekTo(this.currentSong.start);
+                return;
+            }
+            this.$store.commit("music/prevSong");
         },
     },
 };
