@@ -93,7 +93,7 @@
                     >
                 </v-slide-x-transition>
             </div>
-            <v-slide-y-transition>
+            <v-slide-y-transition leave-absolute>
                 <div class="song-info d-flex align-center" :key="'snip' + (currentSong && currentSong.name)">
                     <div class="pr-2">
                         <v-img
