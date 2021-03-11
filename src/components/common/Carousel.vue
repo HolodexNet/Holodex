@@ -5,7 +5,7 @@
                 ><v-icon>{{ mdiMenuLeft }}</v-icon></v-btn
             >
         </div>
-        <div class="card-carousel" v-bind:style="{ width: itemWidth * windowSize + 'px' }">
+        <div class="card-carousel" v-bind:style="{ 'min-width': itemWidth * windowSize + 'px' }">
             <div class="card-carousel--overflow-container">
                 <div
                     class="card-carousel-cards"

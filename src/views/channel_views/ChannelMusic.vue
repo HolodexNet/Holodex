@@ -2,6 +2,7 @@
     <!-- <v-container> -->
     <v-row>
         <v-col cols="12">
+            <span class="text-h5">Weekly Top Plays</span>
             <carousel
                 :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
                 :itemWidth="220"
@@ -88,10 +89,10 @@ export default {
             popularSongs: [],
 
             BREAKPOINTS: {
-                xs: 4,
-                sm: 3,
+                xs: 1,
+                sm: 2,
                 md: 4,
-                lg: 5,
+                lg: 4,
                 xl: 7,
             },
         };
