@@ -167,6 +167,12 @@ const mutations = {
     stopAddedAnimation(state) {
         state.addedAnimation = false;
     },
+    clearPlaylist(state) {
+        state.playlist = [];
+        state.state = MUSIC_PLAYER_STATE.PAUSED;
+        state.isOpen = false;
+        state.playId += 1;
+    },
 };
 
 export default {

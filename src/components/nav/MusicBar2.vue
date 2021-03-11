@@ -7,6 +7,7 @@
         :retain-focus="false"
         content-class="music-player-bar"
         v-if="currentSong"
+        ref="sheet"
     >
         <!-- <div
                 key="musicplayertogglebtn"
@@ -62,6 +63,7 @@
                     content-class="scrollable-music-queue"
                     min-width="30vw"
                     max-width="50vw"
+                    v-model="queueMenuOpen"
                 >
                     <template v-slot:activator="{ on }">
                         <v-btn
@@ -72,6 +74,7 @@
                             :class="{ 'added-animation': animateAdded }"
                             @animationend="animateAdded = false"
                             v-on="on"
+                            @click="queueMenuOpen = !queueMenuOpen"
                         >
                             <v-icon>{{ icons.mdiPlaylistMusic }}</v-icon>
                             <div class="">({{ playlist.length }})</div>
@@ -79,29 +82,39 @@
                     </template>
                     <song-playlist :songs="playlist" :currentId="currentId"></song-playlist>
                 </v-menu>
+                <v-slide-x-transition>
+                    <v-btn
+                        small
+                        v-if="queueMenuOpen"
+                        elevation="0"
+                        color="warning"
+                        @click="$store.commit('music/clearPlaylist')"
+                        ><v-icon left>{{ mdiPlaylistRemove }}</v-icon> Clear</v-btn
+                    >
+                </v-slide-x-transition>
             </div>
-
-            <div class="song-info d-flex align-center">
-                <div class="pr-2">
-                    <v-img
-                        v-if="currentSong && currentSong.art"
-                        :src="currentSong.art.replace('100x100', '50x50')"
-                        aspect-ratio="1"
-                        height="auto"
-                        width="50px"
-                    ></v-img>
-                </div>
-                <div>
-                    <div class="single-line-clamp text-h6">
-                        {{ currentSong.name }}
+            <v-slide-y-transition>
+                <div class="song-info d-flex align-center" :key="'snip' + (currentSong && currentSong.name)">
+                    <div class="pr-2">
+                        <v-img
+                            v-if="currentSong && currentSong.art"
+                            :src="currentSong.art.replace('100x100', '50x50')"
+                            aspect-ratio="1"
+                            height="auto"
+                            width="50px"
+                        ></v-img>
                     </div>
-                    <div class="single-line-clamp">
-                        <span class="text-subtitle-2 secondary--text mr-2">{{ currentSong.channel.name }}</span>
-                        <span class="text-subtitle-2 text--secondary">({{ currentSong.original_artist }})</span>
+                    <div>
+                        <div class="single-line-clamp text-h6">
+                            {{ currentSong.name }}
+                        </div>
+                        <div class="single-line-clamp">
+                            <span class="text-subtitle-2 secondary--text mr-2">{{ currentSong.channel.name }}</span>
+                            <span class="text-subtitle-2 text--secondary">({{ currentSong.original_artist }})</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-
+            </v-slide-y-transition>
             <div class="playlist-buttons align-self-center">
                 <v-btn icon large @click="closePlayer">
                     <v-icon>{{ icons.mdiChevronDown }}</v-icon>
@@ -138,6 +151,7 @@ import {
     mdiRepeatOff,
     mdiRepeatOnce,
     mdiMicrophoneVariant,
+    mdiPlaylistRemove,
 } from "@mdi/js";
 
 import SongFrame from "../media/SongFrame";
@@ -166,28 +180,33 @@ export default {
             mdiRepeatOnce,
             mdiMicrophoneVariant,
             mdiSkipPrevious,
+            mdiPlaylistRemove,
 
             progress: 0,
             player: null,
             animateOpenError: false,
+
+            queueMenuOpen: false,
         };
     },
     watch: {
         isOpen() {
             // workaround to allow scrolling when media is popped open:
             // https://github.com/vuetifyjs/vuetify/issues/6495#issuecomment-663547354
-            this.$nextTick(() => {
+            setTimeout(() => {
+                // console.log("fix scroll")
                 if (this.$refs.sheet) {
+                    console.log("fix scroll");
                     this.$refs.sheet.showScroll();
                     // either set :retain-focus="false" above or do this:
                     this.$nextTick(() => this.$refs.sheet.unbind());
                 }
-            });
+            }, 100);
         },
         playlist(nw) {
             console.log("playlist: ", nw.length);
-            if (nw.length === 0) this.store.commit("music/closeBar");
-            if (this.isOpen === false > 0 && nw.length === 0) this.store.commit("music/openBar");
+            if (nw.length === 0) this.$store.commit("music/closeBar");
+            if (this.isOpen === false > 0 && nw.length === 0) this.$store.commit("music/openBar");
         },
         currentSong(ns, os) {
             if (os != null && this.progress > 80) {
