@@ -60,12 +60,15 @@
                     origin="right bottom"
                     transition="slide-y-reverse-transition"
                     content-class="scrollable-music-queue"
+                    min-width="30vw"
+                    max-width="50vw"
                 >
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            icon
+                            color="transparent"
+                            elevation="0"
                             :ripple="false"
-                            class="queue-btn mx-1"
+                            class="queue-btn mx-1 px-1"
                             :class="{ 'added-animation': animateAdded }"
                             @animationend="animateAdded = false"
                             v-on="on"
@@ -153,7 +156,7 @@ export default {
     components: { SongFrame, SongPlaylist },
     data() {
         return {
-            isOpen: true,
+            // isOpen: true,
             value: "/",
             mdiSkipNext,
             mdiVolumeHigh,
@@ -214,7 +217,7 @@ export default {
                 this.$store.commit("music/stopAddedAnimation");
             },
         },
-        ...mapState("music", ["currentId", "playId", "playlist", "state", "mode", "addedAnimation" /* "isOpen" */]),
+        ...mapState("music", ["currentId", "playId", "playlist", "state", "mode", "addedAnimation", "isOpen"]),
         ...mapGetters("music", ["currentSong", "canPlay"]),
     },
     methods: {
