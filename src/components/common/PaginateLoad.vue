@@ -5,12 +5,12 @@
             <v-pagination v-model="page" :length="pages" v-if="!pageLess"></v-pagination>
             <div v-else>
                 <v-btn class="ma-2 pr-6" @click="page -= 1" :disabled="page === 1">
-                    <v-icon>{{ mdiChevronLeft }}</v-icon>
+                    <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
                     {{ $t("component.paginateLoad.newer") }}
                 </v-btn>
                 <v-btn class="ma-2 pl-6" @click="page += 1" :disabled="status === STATUSES.COMPLETED">
                     {{ $t("component.paginateLoad.older") }}
-                    <v-icon>{{ mdiChevronRight }}</v-icon>
+                    <v-icon>{{ icons.mdiChevronRight }}</v-icon>
                 </v-btn>
             </div>
         </template>
@@ -19,7 +19,6 @@
 
 <script>
 import LoadingOverlay from "@/components/common/LoadingOverlay";
-import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 import isActive from "@/mixins/isActive";
 import { debounce } from "@/utils/functions";
 
@@ -38,8 +37,6 @@ export default {
                 COMPLETED: 3,
             }),
             status: 0,
-            mdiChevronLeft,
-            mdiChevronRight,
             lastPage: 1,
         };
     },

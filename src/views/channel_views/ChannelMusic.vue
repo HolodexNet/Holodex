@@ -1,8 +1,9 @@
 <template>
-    <!-- <v-container> -->
     <v-row>
         <v-col cols="12">
-            <span class="text-h5">Weekly Top Plays</span>
+            <v-card-title>
+                <span class="text-h5">Weekly Top Plays</span>
+            </v-card-title>
             <carousel
                 :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
                 :itemWidth="220"
@@ -22,51 +23,59 @@
                 </template>
             </carousel>
         </v-col>
-        <v-col sm="12" md="6">
-            <v-card elevation="5">
-                <v-card-subtitle>
-                    Most recent songs ({{ recentOffset + 1 }} - {{ recentOffset + recentLimit }})
-                </v-card-subtitle>
-                <v-list>
-                    <v-divider></v-divider>
-                    <song-item
-                        v-for="(song, idx) in recentSongs"
-                        :song="song"
-                        :key="'clist' + song.name + song.video_id + idx"
-                        @play="$store.commit('music/addSong', song)"
-                        @playNow="skipToSong"
-                        showTime
-                        :hoverIcon="icons.mdiPlaylistMusic"
-                        :artworkHoverIcon="icons.mdiPlay"
-                    ></song-item>
-                    <v-divider></v-divider>
-                    <v-list-item class="d-flex">
-                        <v-btn class="flex-grow-1" @click="recentOffset = Math.max(0, recentOffset - recentLimit)"
-                            >Newer</v-btn
-                        >
-                        <v-btn class="flex-grow-1" @click="recentOffset += recentLimit">Older</v-btn>
-                    </v-list-item>
-                </v-list>
-            </v-card>
-        </v-col>
-        <v-col sm="12" md="6">
-            <v-card elevation="5">
-                <v-card-subtitle> By popularity on Holodex </v-card-subtitle>
-                <v-list>
-                    <v-divider></v-divider>
-                    <v-list-item>This feature is currently not implemented</v-list-item>
-                    <song-item
-                        v-for="(song, idx) in popularSongs"
-                        :song="song"
-                        :key="song.name + song.video_id + idx"
-                        @play="$store.commit('music/addSong', song)"
-                        showTime
-                    ></song-item>
-                </v-list>
-            </v-card>
+        <v-col sm="12" md="12">
+            <v-card-title>
+                <span class="text-h5">Recent Songs</span>
+                <v-spacer></v-spacer>
+                <v-text-field
+                    v-model="search"
+                    :append-icon="icons.mdiMagnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                ></v-text-field>
+            </v-card-title>
+            <v-data-table
+                :headers="RECENT_HEADER"
+                :items="recentSongs"
+                :item-class="() => 'selectable'"
+                item-key="name"
+                class="elevation-1 recent-table"
+                :search="search"
+                hide-default-footer
+                :items-per-page="PER_PAGE_ITEMS"
+                disable-sort
+                @click:row="
+                    (item) => {
+                        $store.commit('music/addSong', item);
+                    }
+                "
+            >
+                <!-- eslint-disable-next-line vue/valid-v-slot -->
+                <template v-slot:item.channel_id="{ item }">
+                    <v-btn small color="primary" icon outlined @click.stop="() => skipToSong(item)">
+                        <v-icon>{{ icons.mdiPlay }}</v-icon>
+                    </v-btn>
+                </template>
+                <!-- eslint-disable-next-line vue/valid-v-slot -->
+                <template v-slot:item.start="{ item }">
+                    <span>{{ formatDuration(item.end * 1000 - item.start * 1000) }}</span>
+                </template>
+                <!-- eslint-disable-next-line vue/valid-v-slot -->
+                <template v-slot:item.available_at="{ item }">
+                    <span class="blue-grey--text">{{ formatDate(item.available_at) }}</span>
+                    <v-btn icon target="_blank" :href="`/watch/${item.video_id}?t=${item.start}`">
+                        <v-icon small>{{ icons.mdiOpenInNew }}</v-icon>
+                    </v-btn>
+                </template>
+            </v-data-table>
+            <v-row>
+                <v-spacer></v-spacer>
+                <paginate-load @paginate="songsByRecent" pageLess />
+                <v-spacer></v-spacer>
+            </v-row>
         </v-col>
     </v-row>
-    <!-- </v-container> -->
 </template>
 
 <script>
@@ -74,55 +83,96 @@ import backendApi from "@/utils/backend-api";
 import SongItemCard from "@/components/media/SongItemCard";
 import SongItem from "@/components/media/SongItem";
 import Carousel from "@/components/common/Carousel";
+import PaginateLoad from "@/components/common/PaginateLoad";
+import { formatDistance, formatDuration } from "@/utils/time";
+
+const BREAKPOINTS = Object.freeze({
+    xs: 1,
+    sm: 2,
+    md: 4,
+    lg: 4,
+    xl: 7,
+});
+const PER_PAGE_ITEMS = 20;
+const RECENT_HEADER = [
+    {
+        text: "",
+        value: "channel_id",
+        width: "20px",
+    },
+    {
+        text: "Title",
+        align: "start",
+        sortable: false,
+        value: "name",
+        cellClass: "text-subtitle-2",
+    },
+    { text: "Covered by", value: "channel.name" },
+    { text: "Original Artist", value: "original_artist" },
+    { text: "Duration", value: "start", align: "end" },
+    { text: "Sang on", value: "available_at", align: "end" },
+];
 
 export default {
-    components: { SongItem, SongItemCard, Carousel },
+    components: { SongItem, SongItemCard, Carousel, PaginateLoad },
     name: "ChannelMusic",
     data() {
         return {
-            recentOffset: 0,
-            recentLimit: 20,
+            // recentOffset: 0,
+            // recentLimit: 20,
             recentSongs: [],
-
-            popularOffset: 0,
-            popularLimit: 20,
+            RECENT_HEADER,
+            // popularOffset: 0,
+            // popularLimit: 20,
             popularSongs: [],
 
-            BREAKPOINTS: {
-                xs: 1,
-                sm: 2,
-                md: 4,
-                lg: 4,
-                xl: 7,
-            },
+            BREAKPOINTS,
+            PER_PAGE_ITEMS,
+
+            search: "",
         };
     },
     mounted() {
-        this.songsByRecent();
-        this.songsByPopular();
+        // this.songsByRecent();
+        // this.songsByPopular();
     },
     computed: {
         channel() {
             return this.$store.state.channel.channel;
         },
+        page: {
+            get() {
+                return this.paginatePage;
+            },
+            set() {
+                // shouldn't happen.
+            },
+        },
     },
     watch: {
-        recentOffset() {
-            this.songsByRecent();
-        },
-        popularOffset() {
-            this.songsByPopular();
-        },
+        // recentOffset() {
+        //     this.songsByRecent();
+        // },
+        // popularOffset() {
+        //     this.songsByPopular();
+        // },
     },
     methods: {
-        async songsByRecent() {
-            console.log("fetching...");
-            const { data } = await backendApi.songListByCondition(
-                { channel_id: this.channel.id },
-                this.recentOffset,
-                this.recentLimit,
-            );
-            this.recentSongs = data;
+        async songsByRecent({ page, loaded, completed, error }) {
+            console.log("fetching...", page);
+            try {
+                const { data } = await backendApi.songListByCondition(
+                    { channel_id: this.channel.id },
+                    (page - 1) * PER_PAGE_ITEMS,
+                    PER_PAGE_ITEMS,
+                );
+                if (data.length < PER_PAGE_ITEMS) completed();
+                else loaded();
+
+                this.recentSongs = data;
+            } catch (e) {
+                error();
+            }
         },
         async songsByPopular() {
             console.log("tbd");
@@ -134,12 +184,21 @@ export default {
             // this.recentSongs = data;
         },
         skipToSong(song) {
+            console.log(song);
             console.log("skipping: ", this.$store.state.music.playlist.length - 1);
             this.$store.commit("music/addSong", song);
             this.$store.commit("music/skipTo", this.$store.state.music.playlist.length - 1);
         },
+        formatDate(dt) {
+            return formatDistance(dt, this.$store.state.settings.lang, this.$t.bind(this));
+        },
+        formatDuration,
     },
 };
 </script>
 
-<style></style>
+<style>
+.recent-table .selectable {
+    cursor: pointer;
+}
+</style>

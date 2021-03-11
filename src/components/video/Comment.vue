@@ -34,14 +34,13 @@
             target="_blank"
             rel="noopener noreferrer"
         >
-            <v-icon small>{{ mdiOpenInNew }}</v-icon>
+            <v-icon small>{{ icons.mdiOpenInNew }}</v-icon>
         </a>
         <!-- comment body -->
     </v-list-item>
 </template>
 
 <script>
-import { mdiOpenInNew } from "@mdi/js";
 import TruncatedText from "../common/TruncatedText";
 // import TruncatedText from '../common/TruncatedText.vue';
 
@@ -51,9 +50,7 @@ export default {
     name: "Comment",
     components: { TruncatedText },
     data() {
-        return {
-            mdiOpenInNew,
-        };
+        return {};
     },
     props: {
         comment: {

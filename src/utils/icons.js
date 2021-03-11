@@ -19,6 +19,7 @@ export {
     mdiHome,
     mdiLoginVariant,
     mdiLogoutVariant,
+    mdiOpenInNew,
     mdiMagnify,
     mdiMapMarker,
     mdiMenu,
@@ -39,4 +40,6 @@ export {
     mdiSquareOutline,
     mdiChevronDown,
     mdiChevronUp,
+    mdiChevronLeft,
+    mdiChevronRight,
 } from "@mdi/js";

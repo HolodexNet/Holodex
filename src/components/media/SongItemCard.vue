@@ -72,7 +72,6 @@
 <script>
 // const jsonp = require("jsonp-es6");
 
-import { mdiMusicBoxOutline } from "@mdi/js";
 import { formatDistance } from "@/utils/time";
 
 export default {
@@ -80,7 +79,6 @@ export default {
     data() {
         return {
             albumArt: null,
-            mdiMusicBoxOutline,
         };
     },
     props: {

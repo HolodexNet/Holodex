@@ -2,7 +2,7 @@
     <div class="card-carousel-wrapper">
         <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList">
             <v-btn icon
-                ><v-icon>{{ mdiMenuLeft }}</v-icon></v-btn
+                ><v-icon>{{ icons.mdiChevronLeft }}</v-icon></v-btn
             >
         </div>
         <div class="card-carousel" v-bind:style="{ 'min-width': itemWidth * windowSize + 'px' }">
@@ -17,15 +17,13 @@
         </div>
         <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList">
             <v-btn icon
-                ><v-icon>{{ mdiMenuRight }}</v-icon></v-btn
+                ><v-icon>{{ icons.mdiChevronRight }}</v-icon></v-btn
             >
         </div>
     </div>
 </template>
 
 <script>
-import { mdiMenuLeft, mdiMenuRight } from "@mdi/js";
-
 export default {
     name: "Carousel",
     props: {
@@ -47,8 +45,6 @@ export default {
     data() {
         return {
             currentOffset: 0,
-            mdiMenuLeft,
-            mdiMenuRight,
         };
     },
     computed: {
@@ -77,7 +73,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px 0 40px;
 }
 
 .card-carousel {

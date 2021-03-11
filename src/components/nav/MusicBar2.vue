@@ -88,7 +88,12 @@
                         v-if="queueMenuOpen"
                         elevation="0"
                         color="warning"
-                        @click="$store.commit('music/clearPlaylist')"
+                        @click="
+                            () => {
+                                queueMenuOpen = false;
+                                $store.commit('music/clearPlaylist');
+                            }
+                        "
                         ><v-icon left>{{ mdiPlaylistRemove }}</v-icon> Clear</v-btn
                     >
                 </v-slide-x-transition>
