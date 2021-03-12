@@ -16,6 +16,8 @@ const initialState = {
     nameProperty: "english_name",
     hideThumbnail: false,
     scrollMode: true,
+
+    liveTLStickBottom: false,
 };
 
 export const state = { ...initialState };
@@ -58,6 +60,9 @@ const mutations = {
     },
     setScrollMode(state, val) {
         state.scrollMode = val;
+    },
+    setliveTLStickBottom(state, val) {
+        state.liveTLStickBottom = val;
     },
     resetState(state) {
         Object.assign(state, initialState);
