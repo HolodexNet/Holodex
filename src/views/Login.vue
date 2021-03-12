@@ -37,6 +37,42 @@
                     Login with Twitter
                 </v-btn>
             </v-card-text>
+            <v-divider></v-divider>
+            <v-card-text v-if="userdata.user">
+                <span class="text-subtitle-2 mb-1 d-inline-block">Owned Youtube Channel</span>
+                <v-text-field
+                    readonly
+                    rounded
+                    filled
+                    dense
+                    hide-details
+                    :value="userdata.user.yt_channel_key || 'None on file'"
+                ></v-text-field>
+                <span class="text-caption">
+                    In the future, we plan on providing more services to channel owners like editing metadata for their
+                    own videos.
+                </span>
+                <br />
+                <br />
+                <span class="text-subtitle-2 mb-1 d-inline-block">API Key</span>
+                <v-text-field
+                    readonly
+                    rounded
+                    outlined
+                    dense
+                    hide-details
+                    :class="doneCopy ? 'green lighten-2' : ''"
+                    :value="userdata.user.api_key || 'None on file'"
+                    :append-icon="mdiClipboardPlusOutline"
+                    @click:append="copyToClipboard"
+                ></v-text-field>
+                <br />
+                <v-btn small block color="warning" @click="resetKey">Get new API Key</v-btn>
+                <span class="text-caption">
+                    You can use API key to query Holodex API programmatically. Only one key per account. After getting a
+                    new key, the old key will expire within 0-24 hours.
+                </span>
+            </v-card-text>
         </v-card>
     </v-container>
 </template>
@@ -49,7 +85,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import Vue from "vue";
 import UserCard from "@/components/user/UserCard";
-import * as icons from "@/utils/icons";
+import { mdiClipboardPlusOutline } from "@mdi/js";
 
 dayjs.extend(utc);
 
@@ -78,7 +114,10 @@ export default {
     },
     components: { UserCard },
     data() {
-        return { icons };
+        return {
+            mdiClipboardPlusOutline,
+            doneCopy: false,
+        };
     },
     mounted() {},
     computed: {
@@ -120,6 +159,39 @@ export default {
                 this.$store.commit("setUser", resp.data);
                 this.$store.dispatch("favorites/resetFavorites");
             });
+        },
+        async forceUserUpdate() {
+            const check = await api.loginIsValid(this.userdata.jwt);
+            if (check.data && check.data.id) {
+                this.$store.commit("setUser", { user: check.data, jwt: this.userdata.jwt });
+            } else {
+                this.$store.dispatch("logout");
+            }
+        },
+        async copyToClipboard() {
+            await navigator.clipboard.writeText(this.userdata.user.api_key);
+            this.doneCopy = true;
+            setTimeout(() => {
+                this.doneCopy = false;
+            }, 2000);
+        },
+        async resetKey() {
+            /* eslint-disable no-restricted-globals, no-alert */
+            if (this.userdata.user.api_key) {
+                const confirm1 = confirm("Are you sure you want to reset your API Key?");
+                if (!confirm1) {
+                    alert("OK just checking.");
+                    return;
+                }
+                const confirm2 = confirm("The old API key will have 0-24 hours before expiring. Really reset?");
+                if (!confirm2) {
+                    alert("OK just checking.");
+                    return;
+                }
+            }
+            await api.resetAPIKey(this.userdata.jwt);
+            this.forceUserUpdate();
+            /* eslint-enable no-restricted-globals, no-alert */
         },
     },
 };

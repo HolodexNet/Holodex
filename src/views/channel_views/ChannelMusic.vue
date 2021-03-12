@@ -53,7 +53,7 @@
             >
                 <!-- eslint-disable-next-line vue/valid-v-slot -->
                 <template v-slot:item.channel_id="{ item }">
-                    <v-btn small color="primary" icon outlined @click.stop="() => skipToSong(item)">
+                    <v-btn small class="hoverable" icon outlined @click.stop="() => skipToSong(item)">
                         <v-icon>{{ icons.mdiPlay }}</v-icon>
                     </v-btn>
                 </template>
@@ -200,5 +200,19 @@ export default {
 <style>
 .recent-table .selectable {
     cursor: pointer;
+}
+.recent-table.theme--dark .selectable .hoverable.v-btn {
+    color: rgb(182, 182, 182);
+    border-color: rgb(194, 194, 194);
+}
+.recent-table.theme--light .selectable .hoverable.v-btn {
+    color: rgb(87, 87, 87);
+    border-color: rgb(59, 59, 59);
+}
+
+.recent-table .selectable .hoverable.v-btn:hover {
+    color: rgb(227, 92, 240);
+    border-color: rgb(232, 125, 241);
+    background-color: rgba(134, 134, 134, 0.3);
 }
 </style>

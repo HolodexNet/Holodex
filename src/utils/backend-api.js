@@ -9,8 +9,8 @@ export const API_BASE_URL =
 // export const API_BASE_URL = "http://holodex.net/api";
 
 export const axiosInstance = axios.create({
-    baseURL: process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api/v2" : "/api/v2",
-    // baseURL: `${API_BASE_URL}/v2`,
+    // baseURL: process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api/v2" : "/api/v2",
+    baseURL: `${API_BASE_URL}/v2`,
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
@@ -93,9 +93,19 @@ export default {
             .get("/user/check", {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             })
-            .then(() => true)
             .catch(() => false);
     },
+    resetAPIKey(jwt) {
+        return (
+            axiosInstance
+                .get("/user/createKey", {
+                    headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+                })
+                // eslint-disable-next-line no-alert
+                .catch(() => alert("something went wrong creating your key..."))
+        );
+    },
+
     favorites(jwt) {
         return axiosInstance.get("/users/favorites", {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},

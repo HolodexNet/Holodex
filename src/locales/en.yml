@@ -31,6 +31,7 @@ component:
     login: Login
     logout: Logout
     MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Account Settings
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Watching'
