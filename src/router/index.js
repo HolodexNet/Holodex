@@ -18,6 +18,8 @@ const NotFound = () => import("../views/NotFound");
 const Login = () => import("../views/Login");
 const EditVideo = () => import("../views/EditVideo");
 // const MugenClips = () => import("../views/MugenClips");
+const MultiView = () => import("../views/MultiView");
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -87,6 +89,11 @@ const routes = [
         name: "mugen-clips",
         path: "/infinite",
         component: Watch,
+    },
+    {
+        name: "multiview",
+        path: "/multiview",
+        component: MultiView,
     },
     {
         name: "library",
