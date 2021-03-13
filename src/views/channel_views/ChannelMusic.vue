@@ -7,7 +7,7 @@
             <carousel
                 :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
                 :itemWidth="220"
-                :itemCount="recentSongs.length"
+                :itemCount="popularSongs.length"
             >
                 <template v-for="(song, idx) in recentSongs">
                     <song-item-card
@@ -134,7 +134,7 @@ export default {
     },
     mounted() {
         // this.songsByRecent();
-        // this.songsByPopular();
+        this.songsByPopular();
     },
     computed: {
         channel() {
@@ -150,6 +150,9 @@ export default {
         },
     },
     watch: {
+        channel() {
+            this.songsByPopular();
+        },
         // recentOffset() {
         //     this.songsByRecent();
         // },
@@ -176,12 +179,8 @@ export default {
         },
         async songsByPopular() {
             console.log("tbd");
-            // const { data } = await backendApi.songListByCondition(
-            //     { channel_id: this.channel.id },
-            //     this.recentOffset,
-            //     this.recentLimit,
-            // );
-            // this.recentSongs = data;
+            const { data } = await backendApi.topSongs(null, this.channel.id, "w");
+            this.popularSongs = data;
         },
         skipToSong(song) {
             console.log(song);

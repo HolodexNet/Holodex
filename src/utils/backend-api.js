@@ -179,4 +179,14 @@ export default {
     trackSongPlay(channelId, videoId, name) {
         return axiosInstance.get(`/songs/record/${channelId}/${videoId}/${name}`);
     },
+    /**
+     * Grabs top 20 songs from API.
+     * @param {*} org = org name
+     * @param {*} channelId = channel ID. only org name OR channel ID should be supplied, never both.
+     * @param {*} type type = 'w' for weekly, 'm' for monthly.
+     */
+    topSongs(org, channelId, type) {
+        const q = querystring.stringify(org ? { org, type } : { channel_id: channelId, type });
+        return axiosInstance.get(`/songs/top20?${q}`);
+    },
 };
