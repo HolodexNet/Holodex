@@ -149,7 +149,7 @@ function getEmptySong(video) {
         channel_id: video.channel.id,
         channel: {
             name: video.channel.name,
-            name_en: video.channel.name_en,
+            english_name: video.channel.english_name,
         },
         available_at: video.available_at,
     };

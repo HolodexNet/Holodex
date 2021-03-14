@@ -65,7 +65,7 @@
                     </v-list-item-title>
                     <v-list-item-subtitle class="text--caption song-artists">
                         <span class="song-clickable" v-if="$listeners.channel" @click.stop="$emit('channel', song)">
-                            {{ song.channel.name }}
+                            {{ song.channel[nameProperty] || song.channel.name }}
                         </span>
                         <span v-else> {{ song.channel.name }} </span> <br />
                         <span class="primary--text"> / {{ song.original_artist }}</span>
@@ -132,6 +132,9 @@ export default {
         },
         formattedTime() {
             return formatDistance(this.song.available_at, this.$store.state.settings.lang, this.$t.bind(this));
+        },
+        nameProperty() {
+            return this.$store.state.settings.nameProperty;
         },
     },
     mounted() {},

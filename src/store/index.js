@@ -45,7 +45,7 @@ function defaultState() {
 
 const syncedModules = /^(?:library|settings)/;
 // eslint-disable-next-line max-len
-const syncedMutations = /^(?:setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|music\/(?:addSong|removeSong|resetState|clearPlaylist))/;
+const syncedMutations = /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|music\/(?:addSong|removeSong|resetState|clearPlaylist))/;
 
 export default new Vuex.Store({
     plugins: [

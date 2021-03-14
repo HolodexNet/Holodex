@@ -119,9 +119,6 @@ export default {
         results() {
             return this.fromApi.concat(this.query ? this.query : []);
         },
-        nameProperty() {
-            return this.$store.state.settings.nameProperty;
-        },
     },
     watch: {
         // eslint-disable-next-line func-names

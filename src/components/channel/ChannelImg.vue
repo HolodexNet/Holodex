@@ -1,6 +1,6 @@
 <template>
     <!-- Render with opaque response for cache if size is lte 40 -->
-    <a :href="`/channel/${channel.id}`">
+    <a :href="`/channel/${channel.id}`" @click.stop>
         <v-lazy
             tag="img"
             :src="photo"

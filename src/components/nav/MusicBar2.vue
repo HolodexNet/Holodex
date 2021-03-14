@@ -130,7 +130,7 @@
                                 id="songChannel"
                                 :to="`/channel/${currentSong.channel_id}`"
                             >
-                                {{ currentSong.channel.name }}
+                                {{ currentSong.channel[nameProperty] || currentSong.channel.name }}
                             </router-link>
                             <span class="text-subtitle-2 text--secondary">({{ currentSong.original_artist }})</span>
                         </div>
@@ -269,6 +269,7 @@ export default {
                 this.$store.commit("music/stopAddedAnimation");
             },
         },
+        ...mapState("settings", ["nameProperty"]),
         ...mapState("music", ["currentId", "playId", "playlist", "state", "mode", "addedAnimation", "isOpen"]),
         ...mapGetters("music", ["currentSong", "canPlay"]),
     },

@@ -18,6 +18,7 @@
                             @playNow="skipToSong"
                             showTime
                             showArtist
+                            @channel="$router.push({ path: `/channel/${song.channel_id}` })"
                             :hoverIcon="icons.mdiPlaylistMusic"
                             :artworkHoverIcon="icons.mdiPlay"
                             :key="'clist3' + idx"
@@ -42,6 +43,7 @@
                             @playNow="skipToSong"
                             showTime
                             showArtist
+                            @channel="$router.push({ path: `/channel/${song.channel_id}` })"
                             :hoverIcon="icons.mdiPlaylistMusic"
                             :artworkHoverIcon="icons.mdiPlay"
                             :key="'clist4' + idx"
@@ -85,7 +87,7 @@
                     </template>
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template v-slot:item.channel.name="{ item, value }">
-                        <span>{{ value }}</span>
+                        <span>{{ item.channel[nameProperty] || value }}</span>
                         <v-btn class="popup" icon target="_blank" :href="`/channel/${item.channel_id}/music`">
                             <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
                         </v-btn>
@@ -184,6 +186,7 @@ export default {
     },
     computed: {
         ...mapState(["currentOrg"]),
+        ...mapState("settings", ["nameProperty"]),
     },
     watch: {
         currentOrg() {

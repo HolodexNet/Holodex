@@ -11,7 +11,7 @@ function getMinVideoObj(video) {
         channel: {
             id: video.channel.id,
             name: video.channel.name,
-            english_name: video.channel.name_en,
+            english_name: video.channel.english_name,
             type: video.channel.type,
         },
         available_at,
