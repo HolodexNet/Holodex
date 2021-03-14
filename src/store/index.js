@@ -17,6 +17,7 @@ import watch from "./watch.module";
 import settings from "./settings.module";
 import favorites from "./favorites.module";
 import music from "./music.module";
+import multiview from "./multiview.module";
 
 Vue.use(Vuex);
 
@@ -159,5 +160,6 @@ export default new Vuex.Store({
         settings,
         favorites,
         music,
+        multiview,
     },
 });

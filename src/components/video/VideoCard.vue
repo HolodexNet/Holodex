@@ -167,6 +167,11 @@ export default {
             type: Boolean,
             default: false,
         },
+        disableDefaultClick: {
+            required: false,
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         title() {
@@ -234,24 +239,33 @@ export default {
         formatDuration,
         formatCount,
         formatDistance,
+        // Adds video to saved videos library
         toggleSaved(event) {
             event.preventDefault();
             this.hasSaved
                 ? this.$store.commit("library/removeSavedVideo", this.video.id)
                 : this.$store.commit("library/addSavedVideo", this.video);
         },
-        goToVideo(id) {
+        goToVideo() {
+            this.$emit("videoClicked", this.video);
+            if (this.disableDefaultClick) return;
+            // On mobile, clicking on watch links should not increment browser history
+            // Back button will always return to the originating video list in one click
             if (this.$route.path.match("^/watch") && this.isMobile) {
                 this.$router.replace({ path: `/watch/${this.video.id}` });
             } else {
                 this.$router.push({ path: `/watch/${this.video.id}` });
             }
         },
-        goToChannel(id) {
+        goToChannel() {
+            this.$emit("videoClicked", this.video);
+            if (this.disableDefaultClick) return;
             this.$router.push({ path: `/channel/${this.video.channel.id}` });
         },
-        goToYoutube(id) {
-            const url = `https://www.youtube.com/watch?v=${id}`;
+        goToYoutube() {
+            this.$emit("videoClicked", this.video);
+            if (this.disableDefaultClick) return;
+            const url = `https://www.youtube.com/watch?v=${this.video.id}`;
             window.open(url, "_blank", "noopener");
         },
     },
