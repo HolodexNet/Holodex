@@ -116,7 +116,7 @@
                 </v-data-table>
                 <v-row>
                     <v-spacer></v-spacer>
-                    <paginate-load @paginate="songsByRecent" pageLess :identifier="currentOrg" />
+                    <paginate-load @paginate="songsByRecent" pageLess :identifier="currentOrg + search" />
                     <v-spacer></v-spacer>
                 </v-row>
             </v-col>
@@ -132,6 +132,7 @@ import Carousel from "@/components/common/Carousel";
 import PaginateLoad from "@/components/common/PaginateLoad";
 import { formatDistance, formatDuration } from "@/utils/time";
 import { mapState } from "vuex";
+import { debounce } from "@/utils/functions";
 
 const BREAKPOINTS = Object.freeze({
     xs: 1,
@@ -194,11 +195,12 @@ export default {
         },
     },
     methods: {
-        async songsByRecent({ page, loaded, completed, error }) {
-            console.log("fetching...", page);
+        // eslint-disable-next-line func-names
+        songsByRecent: debounce(async function ({ page, loaded, completed, error }) {
+            console.log("fetching...", page, this.search);
             try {
                 const { data } = await backendApi.songListByCondition(
-                    { org: this.currentOrg },
+                    { org: this.currentOrg, ...(this.search && { q: this.search }) },
                     (page - 1) * PER_PAGE_ITEMS,
                     PER_PAGE_ITEMS,
                 );
@@ -212,7 +214,7 @@ export default {
             } catch (e) {
                 error();
             }
-        },
+        }, 400),
         async songsByPopular() {
             const res1 = backendApi.topSongs(this.currentOrg, null, "m");
             const res2 = backendApi.topSongs(this.currentOrg, null, "w");

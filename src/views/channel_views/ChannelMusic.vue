@@ -58,12 +58,9 @@
                     </v-btn>
                 </template>
                 <!-- eslint-disable-next-line vue/valid-v-slot -->
-                <!-- <template v-slot:item.channel.name="{ item, value }">
-                    <span>{{ value }}</span>
-                    <v-btn class="popup" icon target="_blank" :href="`/channel/${item.channel_id}/music`">
-                        <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
-                    </v-btn>
-                </template> -->
+                <template v-slot:item.channel.name="{ item, value }">
+                    <span>{{ item.channel[nameProperty] || value }}</span>
+                </template>
                 <!-- eslint-disable-next-line vue/valid-v-slot -->
                 <template v-slot:item.start="{ item }">
                     <span>{{ formatDuration(item.end * 1000 - item.start * 1000) }}</span>
@@ -81,7 +78,7 @@
             </v-data-table>
             <v-row>
                 <v-spacer></v-spacer>
-                <paginate-load @paginate="songsByRecent" pageLess />
+                <paginate-load @paginate="songsByRecent" pageLess :identifier="channel.id + search" />
                 <v-spacer></v-spacer>
             </v-row>
         </v-col>
@@ -95,6 +92,8 @@ import SongItem from "@/components/media/SongItem";
 import Carousel from "@/components/common/Carousel";
 import PaginateLoad from "@/components/common/PaginateLoad";
 import { formatDistance, formatDuration } from "@/utils/time";
+import { mapState } from "vuex";
+import { debounce } from "@/utils/functions";
 
 const BREAKPOINTS = Object.freeze({
     xs: 1,
@@ -150,6 +149,7 @@ export default {
         channel() {
             return this.$store.state.channel.channel;
         },
+        ...mapState("settings", ["nameProperty"]),
     },
     watch: {
         channel() {
@@ -163,22 +163,25 @@ export default {
         // },
     },
     methods: {
-        async songsByRecent({ page, loaded, completed, error }) {
-            console.log("fetching...", page);
+        // eslint-disable-next-line func-names
+        songsByRecent: debounce(async function ({ page, loaded, completed, error }) {
+            console.log("fetching...", page, this.search);
             try {
                 const { data } = await backendApi.songListByCondition(
-                    { channel_id: this.channel.id },
+                    { channel_id: this.channel.id, ...(this.search && { q: this.search }) },
                     (page - 1) * PER_PAGE_ITEMS,
                     PER_PAGE_ITEMS,
                 );
-                if (data.length < PER_PAGE_ITEMS) completed();
-                else loaded();
-
+                if (data.length < PER_PAGE_ITEMS) {
+                    completed && completed();
+                } else {
+                    loaded && loaded();
+                }
                 this.recentSongs = data;
             } catch (e) {
                 error();
             }
-        },
+        }, 400),
         async songsByPopular() {
             console.log("tbd");
             const { data } = await backendApi.topSongs(null, this.channel.id, "w");
