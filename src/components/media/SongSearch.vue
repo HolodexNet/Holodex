@@ -15,7 +15,7 @@
         :item-value="(x) => x.trackId"
         :search-input.sync="search"
         @input="onInput"
-        label="Lookup on iTunes"
+        :label="$t('editor.music.itunesLookupPlaceholder')"
         :filter="(a, b) => true"
         return-object
         @keydown.enter="onEnterKeyDown"
@@ -79,6 +79,7 @@ import * as icons from "@/utils/icons";
 import { debounce } from "@/utils/functions";
 import jsonp from "jsonp-es6";
 import { formatDuration } from "@/utils/time";
+import { compareTwoStrings } from "string-similarity";
 
 export default {
     name: "SongSearch",
@@ -137,8 +138,19 @@ export default {
         formatDuration,
         async getAutocomplete(query) {
             this.isLoading = true;
-            const res = await this.searchAutocomplete(query);
+            const res = await this.searchAutocomplete(query, "ja_jp");
+            const resEn = await this.searchAutocomplete(query, "en_us");
+            const lookupEn = resEn.results || [];
+            console.log(lookupEn);
+            const fnLookupFn = (id, name) => {
+                const foundEn = lookupEn.find((x) => x.trackId === id);
+                if (foundEn && foundEn.trackName !== name && compareTwoStrings(foundEn.trackName, name) < 0.2) {
+                    return `${name} / ${foundEn.trackName}`;
+                }
+                return name;
+            };
             if (res && res.results) {
+                console.log(res.results);
                 this.fromApi = res.results.map(
                     ({
                         trackId,
@@ -155,7 +167,7 @@ export default {
                         collectionName,
                         releaseDate,
                         artistName,
-                        trackName,
+                        trackName: fnLookupFn(trackId, trackName),
                         artworkUrl100,
                         trackViewUrl,
                     }),
@@ -164,13 +176,13 @@ export default {
             this.isLoading = false;
             return res;
         },
-        async searchAutocomplete(query) {
+        async searchAutocomplete(query, lang = "ja_jp") {
             return jsonp("https://itunes.apple.com/search", {
                 term: query,
                 entity: "musicTrack",
                 country: "JP",
                 limit: 10,
-                lang: "ja_jp",
+                lang,
             });
         },
         onInput() {

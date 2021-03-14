@@ -17,7 +17,6 @@
                         </youtube>
                     </template>
                 </WatchFrame>
-                <WatchInfo :video="video" key="info" />
                 <WatchComments
                     :comments="comments"
                     :video="video"
@@ -36,10 +35,10 @@
                 </v-alert>
                 <v-row fluid>
                     <v-tabs v-model="currentTab">
-                        <v-tab>Topic</v-tab>
-                        <v-tab>Songs</v-tab>
-                        <v-tab disabled>Channel Mentions</v-tab>
-                        <v-tab disabled>Sources/Clips</v-tab>
+                        <v-tab>{{ $t("component.search.type.topic") }}</v-tab>
+                        <v-tab>{{ $t("component.mainNav.music") }}</v-tab>
+                        <v-tab disabled>Channel Mentions (in development)</v-tab>
+                        <v-tab disabled>Sources/Clips (in development)</v-tab>
                     </v-tabs>
                     <v-col cols="12" class="pa-4">
                         <div v-show="currentTab === TABS.TOPIC">
@@ -65,6 +64,9 @@
                                 @timeJump="seekTo"
                             ></VideoEditSongs>
                         </div>
+                    </v-col>
+                    <v-col cols="12">
+                        <WatchInfo :video="video" key="info" />
                     </v-col>
                 </v-row>
             </v-col>

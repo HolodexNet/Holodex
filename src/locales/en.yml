@@ -158,3 +158,25 @@ time:
   soon: soon
   diff_future_date: Starts {0} ({1})
   distance_past_date: '{0}'
+editor:
+  music:
+    add: Add
+    update: Update
+    permission: >-
+      You need to be an 'Editor' user level or higher to update or delete
+      existing songs. Please contact us on <a class='white--text'
+      href='/about'>discord</a> to notify editors of issues / abuse, or apply to
+      become an editor.
+    titles:
+      addSong: 'Song Metadata: Add a new Song'
+      songList: 'Song List : {0}'
+    itunesLookupPlaceholder: (Optional) Lookup on iTunes
+    moveRight2s: Move right 2s
+    testEnd: Test listen starting at 3 seconds before the end.
+    setToCurrentTime: Set to current time ({0})
+    moveLeft2s: Move left 2s
+    trackNameInput: Track Name
+    originalArtistInput: Original Artist
+    testStart: Test the start
+    startInput: Start
+    endInput: 'Duration in seconds: (end @ {0})'
