@@ -58,14 +58,24 @@
                     </v-btn>
                 </template>
                 <!-- eslint-disable-next-line vue/valid-v-slot -->
+                <!-- <template v-slot:item.channel.name="{ item, value }">
+                    <span>{{ value }}</span>
+                    <v-btn class="popup" icon target="_blank" :href="`/channel/${item.channel_id}/music`">
+                        <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
+                    </v-btn>
+                </template> -->
+                <!-- eslint-disable-next-line vue/valid-v-slot -->
                 <template v-slot:item.start="{ item }">
                     <span>{{ formatDuration(item.end * 1000 - item.start * 1000) }}</span>
                 </template>
                 <!-- eslint-disable-next-line vue/valid-v-slot -->
                 <template v-slot:item.available_at="{ item }">
                     <span class="blue-grey--text">{{ formatDate(item.available_at) }}</span>
-                    <v-btn icon target="_blank" :href="`/watch/${item.video_id}?t=${item.start}`">
-                        <v-icon small>{{ icons.mdiOpenInNew }}</v-icon>
+                    <v-btn class="popup" icon small target="_blank" :href="`/watch/${item.video_id}?t=${item.start}`">
+                        <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
+                    </v-btn>
+                    <v-btn class="popup" small icon target="_blank" :href="`/edit/video/${item.video_id}`">
+                        <v-icon small>{{ icons.mdiPencil }}</v-icon>
                     </v-btn>
                 </template>
             </v-data-table>
@@ -206,5 +216,11 @@ export default {
     color: rgb(227, 92, 240);
     border-color: rgb(232, 125, 241);
     background-color: rgba(134, 134, 134, 0.3);
+}
+
+.popup.v-btn:hover {
+    margin-bottom: 2px;
+    margin-top: -2px;
+    color: rgb(167, 50, 106);
 }
 </style>
