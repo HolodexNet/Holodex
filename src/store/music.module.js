@@ -38,7 +38,7 @@ const mutations = {
     },
     addSong(state, song) {
         state.playlist.push(song);
-        state.isOpen = true;
+        // state.isOpen = true;
         state.addedAnimation = true;
     },
     removeSong(state, index) {

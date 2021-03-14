@@ -48,13 +48,22 @@
                 <v-btn icon fab @click="playPause" color="primary">
                     <v-icon large>{{ playButtonIcon }}</v-icon>
                 </v-btn>
-                <v-btn icon class="mx-1" @click="$store.commit('music/nextSong', true)">
+                <v-btn
+                    icon
+                    class="mx-1"
+                    @click="
+                        () => {
+                            titleTransition = 'scroll-y-reverse-transition';
+                            $store.commit('music/nextSong', true);
+                        }
+                    "
+                >
                     <v-icon>{{ mdiSkipNext }}</v-icon>
                 </v-btn>
                 <v-btn icon class="mx-1" @click="$store.commit('music/cycleMode')">
                     <v-icon>{{ shuffleButtonIcon }}</v-icon>
                 </v-btn>
-                <v-menu
+                <ResponsiveMenu
                     :close-on-content-click="false"
                     offset-y
                     top
@@ -64,6 +73,7 @@
                     min-width="30vw"
                     max-width="50vw"
                     v-model="queueMenuOpen"
+                    :itemCount="playlist.length"
                 >
                     <template v-slot:activator="{ on }">
                         <v-btn
@@ -77,11 +87,11 @@
                             @click="queueMenuOpen = !queueMenuOpen"
                         >
                             <v-icon>{{ icons.mdiPlaylistMusic }}</v-icon>
-                            <div class="">({{ playlist.length }})</div>
+                            <div class="">({{ currentId + 1 }}/{{ playlist.length }})</div>
                         </v-btn>
                     </template>
                     <song-playlist :songs="playlist" :currentId="currentId"></song-playlist>
-                </v-menu>
+                </ResponsiveMenu>
                 <v-slide-x-transition>
                     <v-btn
                         small
@@ -98,7 +108,8 @@
                     >
                 </v-slide-x-transition>
             </div>
-            <v-slide-y-transition leave-absolute>
+            <!-- < v-scroll-y-transition mode="out-in"> -->
+            <transition :name="titleTransition" mode="out-in">
                 <div class="song-info d-flex align-center" :key="'snip' + (currentSong && currentSong.name)">
                     <div class="pr-2">
                         <v-img
@@ -114,15 +125,22 @@
                             {{ currentSong.name }}
                         </div>
                         <div class="single-line-clamp">
-                            <span class="text-subtitle-2 secondary--text mr-2">{{ currentSong.channel.name }}</span>
+                            <router-link
+                                class="text-subtitle-2 secondary--text mr-2"
+                                id="songChannel"
+                                :to="`/channel/${currentSong.channel_id}`"
+                            >
+                                {{ currentSong.channel.name }}
+                            </router-link>
                             <span class="text-subtitle-2 text--secondary">({{ currentSong.original_artist }})</span>
                         </div>
                     </div>
                 </div>
-            </v-slide-y-transition>
+            </transition>
+            <!-- </> -->
             <div class="playlist-buttons align-self-center">
                 <v-btn icon large @click="closePlayer">
-                    <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+                    <v-icon>{{ icons.mdiClose }}</v-icon>
                 </v-btn>
             </div>
         </div>
@@ -161,6 +179,7 @@ import {
 
 import SongFrame from "../media/SongFrame";
 import SongPlaylist from "../media/SongPlaylist";
+import ResponsiveMenu from "../common/ResponsiveMenu";
 
 Vue.use(VueYouTubeEmbed);
 
@@ -172,7 +191,7 @@ const ICON_MODE = {
 };
 export default {
     name: "MusicBar2",
-    components: { SongFrame, SongPlaylist },
+    components: { SongFrame, SongPlaylist, ResponsiveMenu },
     data() {
         return {
             // isOpen: true,
@@ -192,6 +211,8 @@ export default {
             animateOpenError: false,
 
             queueMenuOpen: false,
+
+            titleTransition: "scroll-y-reverse-transition",
         };
     },
     watch: {
@@ -220,6 +241,13 @@ export default {
                 backendApi.trackSongPlay(os.channel_id, os.video_id, os.name).catch((err) => console.error(err));
             }
             console.log("change song");
+        },
+        titleTransition(ns) {
+            if (ns !== "scroll-y-reverse-transition") {
+                setTimeout(() => {
+                    this.titleTransition = "scroll-y-reverse-transition";
+                }, 500);
+            }
         },
     },
     computed: {
@@ -252,6 +280,10 @@ export default {
         },
         songIsPlaying(player) {
             this.player = player.target;
+            if (!this.isOpen) {
+                this.player.pauseVideo();
+                return;
+            }
             this.$store.commit("music/play");
         },
         // eslint-disable-next-line no-unused-vars
@@ -298,6 +330,7 @@ export default {
                 this.player.seekTo(this.currentSong.start);
                 return;
             }
+            this.titleTransition = "scroll-y-transition";
             this.$store.commit("music/prevSong");
         },
     },
@@ -344,5 +377,8 @@ export default {
 }
 .v-btn::before {
     background-color: transparent;
+}
+#songChannel {
+    text-decoration: none;
 }
 </style>

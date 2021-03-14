@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import jwtDecode from "jwt-decode";
-import { ORGS } from "@/utils/consts";
+import { MUSIC_PLAYER_STATE, ORGS } from "@/utils/consts";
 import * as icons from "@/utils/icons";
 
 // import { dayjs } from "@/utils/time";
@@ -44,7 +44,7 @@ function defaultState() {
  *---------------------------------------------* */
 
 const syncedModules = /^(?:library|settings)/;
-const syncedMutations = /^(?:setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites)/;
+const syncedMutations = /^(?:setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|music\/(?:addSong|removeSong|resetState|clearPlaylist))/;
 
 export default new Vuex.Store({
     plugins: [
@@ -53,9 +53,11 @@ export default new Vuex.Store({
             // eslint-disable-next-line no-unused-vars
             reducer: (state, paths) => {
                 const o = { ...state };
+                o.music = { ...o.music };
                 // don't want to persist router history across tabs/sessions.
                 o.routerHistory = [];
-
+                o.music.state = MUSIC_PLAYER_STATE.PAUSED; // don't start new tab playing music.
+                o.music.isOpen = false; // hide it
                 return o;
             },
         }),

@@ -11,7 +11,7 @@
                 :playerVars="{
                     ...(start && { start }),
                     ...(end && { end }),
-                    autoplay: $store.state.settings.autoplayVideo ? 1 : 0,
+                    autoplay: 1,
                     playsinline: 1,
                     controls: 1,
                     disablekb: 1,
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+// import { MUSIC_PLAYER_STATE } from "@/utils/consts";
+
 export default {
     name: "SongFrame",
     components: {},
@@ -46,7 +48,12 @@ export default {
             // currentTime: 0,
         };
     },
-    computed: {},
+    computed: {
+        // shouldAutoPlay() {
+        //     maybe $store.state.settings.autoplayVideo ? probably not.
+        //     return this.$store.state.music.state === MUSIC_PLAYER_STATE.PLAYING ? 1 : 0;
+        // }
+    },
     methods: {
         ready(evt) {
             this.player = evt.target;

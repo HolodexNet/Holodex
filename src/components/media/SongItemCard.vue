@@ -24,6 +24,13 @@
                         <v-icon x-large>{{ icons.mdiMusic }}</v-icon>
                     </v-btn>
                 </v-sheet>
+                <v-avatar v-if="showArtist" class="floating-avatar" size="60">
+                    <!-- <img src="https://via.placeholder.com/88x88"> -->
+                    <channel-img
+                        :channel="{ photo: song.channel.photo, name: song.channel.name, id: song.channel_id }"
+                        :size="60"
+                    ></channel-img>
+                </v-avatar>
                 <!-- Queue up button or default item click button -->
                 <v-sheet
                     v-if="hover"
@@ -51,12 +58,12 @@
                 <!-- Play immediately button over the artwork -->
             </v-sheet>
 
-            <v-list-item three-line class="pa-0">
+            <v-list-item class="pa-0">
                 <v-list-item-content class="px-1">
                     <v-list-item-title class="limit-width" :title="song.name">
                         {{ song.name }}
                     </v-list-item-title>
-                    <v-list-item-subtitle class="text--caption">
+                    <v-list-item-subtitle class="text--caption song-artists">
                         <span class="song-clickable" v-if="$listeners.channel" @click.stop="$emit('channel', song)">
                             {{ song.channel.name }}
                         </span>
@@ -71,11 +78,12 @@
 
 <script>
 // const jsonp = require("jsonp-es6");
-
+import ChannelImg from "@/components/channel/ChannelImg";
 import { formatDistance } from "@/utils/time";
 
 export default {
     name: "SongItem",
+    components: { ChannelImg },
     data() {
         return {
             albumArt: null,
@@ -88,7 +96,7 @@ export default {
         },
         showArtist: {
             type: Boolean,
-            default: true,
+            default: false,
         },
         showSongArt: {
             type: Boolean,
@@ -130,18 +138,36 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .song-card-artwork {
     width: 200px;
     height: 200px;
     position: relative;
     display: flex;
+
+    .floating-avatar {
+        position: absolute;
+        z-index: 3;
+        left: 4px;
+        bottom: 4px;
+        border-radius: 50% 50% 50% 3px;
+        box-shadow: -1px 1px 1px #000;
+        // clip-path: path('M 2 0 C 2 0 2 0 2 0 C 3 0 4 1 4 2 C 4 3 3 4 2 4 C 1 4 0 3 0 2 C 1 2 2 1 2 0');
+    }
+    .floating-avatar:hover {
+        bottom: 5px;
+        box-shadow: -1px 1px 3px #000;
+    }
 }
 .song-card-data {
     position: absolute;
     bottom: 0px;
     right: 0px;
     z-index: 30;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0);
+    font-weight: 500;
+    -webkit-text-stroke-width: 0.2px;
+    -webkit-text-stroke-color: rgba(0, 0, 0);
 }
 .limit-width {
     white-space: normal;
@@ -172,5 +198,8 @@ export default {
 }
 .text--caption .muted {
     opacity: 0.4;
+}
+.song-artists {
+    -webkit-line-clamp: 3;
 }
 </style>

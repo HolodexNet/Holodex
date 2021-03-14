@@ -9,7 +9,7 @@
                 :itemWidth="220"
                 :itemCount="popularSongs.length"
             >
-                <template v-for="(song, idx) in recentSongs">
+                <template v-for="(song, idx) in popularSongs">
                     <song-item-card
                         style="width: 200px; margin: 10px"
                         :song="song"
@@ -140,14 +140,6 @@ export default {
         channel() {
             return this.$store.state.channel.channel;
         },
-        page: {
-            get() {
-                return this.paginatePage;
-            },
-            set() {
-                // shouldn't happen.
-            },
-        },
     },
     watch: {
         channel() {
@@ -186,6 +178,7 @@ export default {
             console.log(song);
             console.log("skipping: ", this.$store.state.music.playlist.length - 1);
             this.$store.commit("music/addSong", song);
+            this.$store.commit("music/openBar");
             this.$store.commit("music/skipTo", this.$store.state.music.playlist.length - 1);
         },
         formatDate(dt) {
