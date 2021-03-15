@@ -5,6 +5,8 @@ const userLanguage = (navigator.language || navigator.userLanguage || "en").spli
 
 const validLangs = new Set(langs.map((x) => x.val));
 
+const englishNamePrefs = new Set(["en", "es", "fr", "id"]);
+
 const initialState = {
     lang: validLangs.has(userLanguage) ? userLanguage : "en",
     clipLangs: [validLangs.has(userLanguage) ? userLanguage : "en"],
@@ -13,7 +15,7 @@ const initialState = {
     autoplayVideo: true,
     canUseWebP: true,
     testedWebP: false,
-    nameProperty: "english_name",
+    nameProperty: englishNamePrefs.has(userLanguage) ? "english_name" : "name",
     hideThumbnail: false,
     scrollMode: true,
 

@@ -1,14 +1,36 @@
 <template>
     <div>
         <v-row align="center">
-            <v-divider> </v-divider> <span class="text-overline"> Song Metadata: Add a new Song </span>
+            <v-divider> </v-divider> <span class="text-overline"> {{ $t("editor.music.titles.addSong") }} </span>
             <v-divider> </v-divider>
+            <v-dialog content-class="width-auto">
+                <template v-slot:activator="{ on }">
+                    <div v-on="on" @click="mountTwitter">
+                        <span class="text-overline"> {{ $t("editor.music.titles.help") }} </span>
+                        <v-btn fab color="info" class="mx-1" x-small
+                            ><v-icon>{{ icons.mdiHelpCircle }}</v-icon></v-btn
+                        >
+                    </div>
+                </template>
+                <v-card>
+                    <blockquote class="twitter-tweet">
+                        <p lang="en" dir="ltr">
+                            Easily create Music entries on Holodex, coming soon! 🎵🎶
+                            <a href="https://t.co/1KJXYDcJjo">pic.twitter.com/1KJXYDcJjo</a>
+                        </p>
+                        &mdash; Holodex (@holodex)
+                        <a href="https://twitter.com/holodex/status/1371290072058785797?ref_src=twsrc%5Etfw"
+                            >March 15, 2021</a
+                        >
+                    </blockquote>
+                </v-card>
+            </v-dialog>
         </v-row>
         <v-row dense>
-            <v-col cols="8" sm="9" md="10" lg="5">
+            <v-col cols="8" sm="9" md="10" lg="10">
                 <song-search :value="current.song" :id="current.itunesid" @input="processSearch"></song-search>
             </v-col>
-            <v-col cols="4" sm="3" md="2" lg="1">
+            <v-col cols="4" sm="3" md="2" lg="2">
                 <v-text-field
                     outlined
                     readonly
@@ -19,46 +41,146 @@
                     style="font-size: 12px"
                 />
             </v-col>
-            <v-col cols="12" sm="7" md="4" lg="6">
-                <v-text-field outlined label="Track Name" hide-details="auto" v-model="current.name" />
-            </v-col>
-            <v-col cols="12" sm="5" md="4" lg="6">
-                <v-text-field outlined label="Original Artist" hide-details="auto" v-model="current.original_artist" />
-            </v-col>
-            <v-col cols="6" sm="4" md="2" lg="3">
+            <v-col cols="12" sm="7" md="6" lg="6">
                 <v-text-field
                     outlined
-                    label="Start"
+                    :label="$t('editor.music.trackNameInput')"
+                    hide-details="auto"
+                    v-model="current.name"
+                />
+            </v-col>
+            <v-col cols="12" sm="5" md="6" lg="6">
+                <v-text-field
+                    outlined
+                    :label="$t('editor.music.originalArtistInput')"
+                    hide-details="auto"
+                    v-model="current.original_artist"
+                />
+            </v-col>
+            <v-col cols="12" sm="6" md="6" lg="6" class="d-flex align-justify">
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <button
+                            v-on="on"
+                            class="tweak-btn"
+                            @click="
+                                current.start -= 2;
+                                current.end -= 2;
+                            "
+                        >
+                            <v-icon small>{{ icons.mdiChevronLeft }}</v-icon> 2s
+                        </button>
+                    </template>
+                    <span>{{ $t("editor.music.moveLeft2s") }}</span>
+                </v-tooltip>
+
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <button v-on="on" class="tweak-btn red" @click="currentStartTime = secondsToHuman(currentTime)">
+                            <v-icon>{{ mdiTimerOutline }}</v-icon>
+                        </button>
+                    </template>
+                    <span>{{ $t("editor.music.setToCurrentTime", [secondsToHuman(currentTime)]) }}</span>
+                </v-tooltip>
+
+                <v-text-field
+                    outlined
+                    :label="$t('editor.music.startInput')"
                     placeholder="12:31"
                     hide-details="auto"
-                    :prepend-inner-icon="mdiTimerOutline + icons.mdiMenuDown"
-                    :append-icon="mdiDebugStepOver"
                     v-model="currentStartTime"
                     :rules="[checkStartTime]"
                     validate-on-blur
-                    @click:prepend-inner="currentStartTime = secondsToHuman(currentTime)"
-                    @click:append="$emit('timeJump', current.start)"
+                    class="tweak-input"
                 >
                 </v-text-field>
+
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <button v-on="on" class="tweak-btn" @click="$emit('timeJump', current.start, true)">
+                            <v-icon>{{ mdiDebugStepOver }}</v-icon>
+                        </button>
+                    </template>
+                    <span>{{ $t("editor.music.testStart") }}</span>
+                </v-tooltip>
+
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <button
+                            v-on="on"
+                            class="tweak-btn"
+                            @click="
+                                current.start += 2;
+                                current.end += 2;
+                            "
+                        >
+                            2s<v-icon small>{{ icons.mdiChevronRight }}</v-icon>
+                        </button>
+                    </template>
+                    <span>{{ $t("editor.music.moveRight2s") }}</span>
+                </v-tooltip>
             </v-col>
-            <v-col cols="6" sm="4" md="2" lg="3">
+            <v-col cols="12" sm="6" md="6" lg="6" class="d-flex align-justify">
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <button v-on="on" class="tweak-btn" @click="current.end -= 2">
+                            <v-icon small>{{ icons.mdiChevronLeft }}</v-icon> 2s
+                        </button>
+                    </template>
+                    <span>{{ $t("editor.music.moveLeft2s") }}</span>
+                </v-tooltip>
+
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <button v-on="on" class="tweak-btn red" @click="currentEndTime = secondsToHuman(currentTime)">
+                            <v-icon>{{ mdiTimerOutline }}</v-icon>
+                        </button>
+                    </template>
+                    <span>{{ $t("editor.music.setToCurrentTime", [secondsToHuman(currentTime)]) }}</span>
+                </v-tooltip>
+
                 <v-text-field
                     outlined
-                    :label="`End / Duration ${secondsToHuman(current.end)}`"
-                    placeholder="3:40 or +312"
+                    :label="$t('editor.music.endInput', [secondsToHuman(current.end)])"
+                    placeholder="312"
                     hide-details="auto"
-                    :prepend-inner-icon="mdiTimerOutline"
-                    :append-icon="mdiEarHearing"
                     v-model="currentEndTime"
                     :rules="[checkEndTime]"
-                    @click:prepend-inner="currentEndTime = secondsToHuman(currentTime)"
-                    @click:append="$emit('timeJump', Math.max(current.end - 3, 0))"
                     validate-on-blur
+                    class="tweak-input"
                 >
                 </v-text-field>
+
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <button
+                            v-on="on"
+                            class="tweak-btn"
+                            @click="$emit('timeJump', Math.max(current.end - 3, 0), true)"
+                        >
+                            <v-icon>{{ mdiEarHearing }}</v-icon>
+                        </button>
+                    </template>
+                    <span>{{ $t("editor.music.testEnd") }}</span>
+                </v-tooltip>
+
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <button v-on="on" class="tweak-btn" @click="current.end += 2">
+                            2s<v-icon small>{{ icons.mdiChevronRight }}</v-icon>
+                        </button>
+                    </template>
+                    <span>{{ $t("editor.music.moveRight2s") }}</span>
+                </v-tooltip>
             </v-col>
             <v-col cols="4" sm="6" md="8">
-                <v-btn color="success" elevation="5" width="100%" @click="addSong" :disabled="!canSave">
+                <v-btn
+                    color="success"
+                    elevation="5"
+                    width="100%"
+                    @click="addSong"
+                    :disabled="!canSave && !priviledgeSufficient"
+                >
                     {{ addOrUpdate }}
                 </v-btn>
             </v-col>
@@ -77,14 +199,19 @@
                     <span class="ml-2" style="font-size: 0.7rem">Listen on Apple Music</span>
                 </v-btn>
             </v-col>
+            <v-col cols="12">
+                <v-alert v-if="!canSave && !priviledgeSufficient" color="error" v-html="$t('editor.music.permission')">
+                </v-alert>
+            </v-col>
         </v-row>
         <v-row align="center">
-            <v-divider> </v-divider> <span class="text-overline"> Song List : {{ video.title }} </span>
+            <v-divider> </v-divider>
+            <span class="text-overline"> {{ $t("editor.music.titles.songList", [video.title]) }}</span>
             <v-divider> </v-divider>
         </v-row>
         <v-row dense>
             <v-col cols="12">
-                <v-list>
+                <v-list style="min-height: 30vh">
                     <template v-for="song in songList">
                         <song-item
                             :song="song"
@@ -118,12 +245,10 @@ function humanToSeconds(str) {
     const p = str.split(":");
     let s = 0;
     let m = 1;
-
     while (p.length > 0) {
         s += m * parseInt(p.pop(), 10);
         m *= 60;
     }
-
     return s;
 }
 
@@ -149,7 +274,7 @@ function getEmptySong(video) {
         channel_id: video.channel.id,
         channel: {
             name: video.channel.name,
-            name_en: video.channel.name_en,
+            english_name: video.channel.english_name,
         },
         available_at: video.available_at,
     };
@@ -185,6 +310,12 @@ export default {
         this.refreshSongList();
     },
     computed: {
+        priviledgeSufficient() {
+            const isUpdate = this.songList.find((m) => m.name === this.current.name);
+            const user = this.$store.state.userdata && this.$store.state.userdata.user;
+            const userRole = user && user.role;
+            return !isUpdate || (isUpdate && (userRole === "admin" || userRole === "editor"));
+        },
         currentStartTime: {
             get() {
                 return secondsToHuman(this.current.start);
@@ -199,14 +330,14 @@ export default {
         },
         currentEndTime: {
             get() {
-                return `+${this.current.end - this.current.start}`;
+                return `${this.current.end - this.current.start}`;
             },
             set(val) {
                 if (this.checkEndTime(val)) {
-                    if (val.startsWith("+")) {
-                        this.current.end = this.current.start + +val.slice(1);
-                    } else {
+                    if (val.includes(":")) {
                         this.current.end = humanToSeconds(val);
+                    } else {
+                        this.current.end = this.current.start + +val;
                     }
                 }
             },
@@ -216,9 +347,9 @@ export default {
         },
         addOrUpdate() {
             if (this.songList.find((m) => m.name === this.current.name)) {
-                return "Update";
+                return this.$t("editor.music.update");
             }
-            return "Add";
+            return this.$t("editor.music.add");
         },
     },
     methods: {
@@ -266,11 +397,17 @@ export default {
             await backendApi.deleteSong(song, this.$store.state.userdata.jwt);
             this.refreshSongList();
         },
+        mountTwitter() {
+            const externalScript = document.createElement("script");
+            externalScript.setAttribute("src", "https://platform.twitter.com/widgets.js");
+            externalScript.setAttribute("async", "true");
+            document.head.appendChild(externalScript);
+        },
     },
 };
 </script>
 
-<style>
+<style lang="scss">
 .am-listen-btn {
     white-space: normal;
     overflow: hidden;
@@ -292,5 +429,42 @@ export default {
     font-size: small;
 
     padding-top: 3px !important;
+}
+
+.theme--light .tweak-btn {
+    background-color: rgb(192, 240, 225);
+    color: #444;
+    &:hover {
+        background-color: rgb(162, 233, 210);
+        color: rgb(37, 37, 37);
+    }
+}
+
+.theme--dark .tweak-btn {
+    background-color: rgb(93, 138, 127);
+    color: rgb(241, 241, 241);
+    &:hover {
+        background-color: rgb(73, 107, 96);
+        color: rgb(255, 255, 255);
+    }
+}
+
+.tweak-btn .v-icon {
+    color: currentColor !important;
+}
+
+button.tweak-btn {
+    border-radius: 2px;
+    margin: 1px 2px;
+    padding: 5px;
+    min-width: 50px;
+}
+.tweak-input {
+    margin-left: 2px !important;
+    margin-right: 2px !important;
+}
+.width-auto {
+    width: auto !important;
+    box-shadow: none;
 }
 </style>

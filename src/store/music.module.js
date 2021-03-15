@@ -38,7 +38,9 @@ const mutations = {
     },
     addSong(state, song) {
         state.playlist.push(song);
-        state.isOpen = true;
+        // not sure why it started getting stuck.
+        if (state.currentId >= state.playlist.length) state.currentId = state.playlist.length - 1;
+        // state.isOpen = true;
         state.addedAnimation = true;
     },
     removeSong(state, index) {
@@ -169,6 +171,7 @@ const mutations = {
     },
     clearPlaylist(state) {
         state.playlist = [];
+        state.currentId = 0;
         state.state = MUSIC_PLAYER_STATE.PAUSED;
         state.isOpen = false;
         state.playId += 1;

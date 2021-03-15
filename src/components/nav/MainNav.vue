@@ -85,11 +85,6 @@
                                     <div>{{ $t("views.app.nowSupportsMultiOrg") }}</div>
                                     <div>{{ $t("views.app.loginCallToAction") }}</div>
                                 </v-tooltip>
-
-                                <!-- 
-                                    <div style="position: absolute; bottom: -6px; left: 0px; font-size: 12px;" 
-                                        class="text--secondary">
-                                    Select Org</div> -->
                             </div>
                         </template>
 
@@ -109,6 +104,15 @@
 
                 <!--================= Account [👤] Button (Desktop Only) ================-->
 
+                <v-slide-y-transition>
+                    <v-btn
+                        icon
+                        @click="$store.commit('music/openBar')"
+                        v-if="!isMobile && $store.state.music.playlist.length > 0 && !$store.state.music.isOpen"
+                    >
+                        <v-icon>{{ icons.mdiMusic }}</v-icon>
+                    </v-btn>
+                </v-slide-y-transition>
                 <v-menu left offset-y transition="slide-y-transition" v-if="!isMobile">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
@@ -124,8 +128,9 @@
                         </v-btn>
                     </template>
 
+                    <!------- USER CARD ------->
                     <user-card></user-card>
-                    <!--todo user card here. -->
+                    <!------- END USER CARD ------->
                 </v-menu>
 
                 <!--================= Refresh [⟳] Button (Mobile Only) ================-->
@@ -174,6 +179,7 @@
                         </v-list-item>
                     </v-list>
                 </v-menu>
+                <!--================= End of Condensed [⋮] Menu (Mobile Only) ================-->
             </template>
 
             <!--=========================== END OF Regular View ===========================-->
@@ -203,7 +209,6 @@ import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
 import NavDrawer from "./NavDrawer";
 import BottomNav from "./BottomNav";
-import MusicBar2 from "./MusicBar2";
 
 /**
  * Returns the index of the last element in the array where predicate is true, and -1
@@ -230,8 +235,7 @@ export default {
         BottomNav,
         UserCard,
         Logo,
-        MusicBar2,
-        MusicBar: () => import("./MusicBar"),
+        MusicBar2: () => import("./MusicBar2"),
     },
     data() {
         return {
@@ -304,6 +308,11 @@ export default {
                     path: "/multiview",
                     icon: icons.mdiDotsGrid,
                     collapsible: true,
+                },
+                {
+                    name: this.$t("component.mainNav.music"),
+                    path: "/music",
+                    icon: icons.mdiMusic,
                 },
                 {
                     name: this.$t("component.mainNav.MugenClips"),

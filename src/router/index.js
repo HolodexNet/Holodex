@@ -17,6 +17,7 @@ const Settings = () => import("../views/Settings");
 const NotFound = () => import("../views/NotFound");
 const Login = () => import("../views/Login");
 const EditVideo = () => import("../views/EditVideo");
+const OrgMusic = () => import("../views/OrgMusic");
 // const MugenClips = () => import("../views/MugenClips");
 const MultiView = () => import("../views/MultiView");
 
@@ -69,6 +70,11 @@ const routes = [
         path: "/channel/",
         name: "channels",
         component: Channels,
+    },
+    {
+        path: "/music/",
+        name: "music",
+        component: OrgMusic,
     },
     {
         path: "/favorites/",

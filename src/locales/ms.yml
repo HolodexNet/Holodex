@@ -1,9 +1,8 @@
-hello: world
 component:
   apiError:
     title: Sumimaaf!
     textBeforeTwitter: Terdapat ralat ketika mendapatkan kembali kandungan. Sila semak di Twitter
-    textAfterTwitter: " atau laporkan ralat melalui"
+    textAfterTwitter: ' atau laporkan ralat melalui'
     aboutPage: laman Perihal
   channelList:
     otherText: Lain-lain
@@ -11,9 +10,9 @@ component:
     signInToFavorite: Pendaftaran diperlukan
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
   channelInfo:
-    videoCount: "{0} Buah Video"
-    clipCount: "{n} Buah Sedutan"
-    subscriberCount: "{n} Langganan"
+    videoCount: '{0} Buah Video'
+    clipCount: '{n} Buah Sedutan'
+    subscriberCount: '{n} Langganan'
     subscriberNA: Bilangan langganan tidak tersedia
     totalViews: Jumlah Tontonan
   channelSocials:
@@ -29,9 +28,11 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     login: Daftar Masuk
     logout: Daftar Keluar
+    accountSettings: ''
+    music: ''
   videoCard:
-    clips: "{n} Sedutan"
-    watching: "{0} Tontonan Sekarang"
+    clips: '{n} Sedutan'
+    watching: '{0} Tontonan Sekarang'
     liveNow: Langsung Sekarang
   videoDescription:
     description: Perihalan
@@ -50,8 +51,9 @@ component:
   video:
     comment:
       openOnYoutube: buka ulasan di YouTube
+      openOnYoutubeAfter: ''
   watch:
-    streamingFor: "Telah berlangsung selama {0}"
+    streamingFor: Telah berlangsung selama {0}
     nextUpInMugen: Seterusnya
   relatedVideo:
     clipsLabel: sedutan
@@ -61,6 +63,19 @@ component:
   paginateLoad:
     newer: Lebih baharu
     older: Lebih lama
+  channelMusic:
+    recentSongsHeader: ''
+    weeklyTopPlaysHeader: ''
+  music:
+    clearPlaylist: ''
+  orgMusic:
+    monthlyTopForOrg: ''
+    weeklyTopForOrg: ''
+  songList:
+    sangOnTime: ''
+    songCoveredBy: ''
+    songDuration: ''
+    songTitle: ''
 views:
   channels:
     channelType:
@@ -86,9 +101,9 @@ views:
       subber: Sedutan
   library:
     savedVideosTitle: Video yang Disimpan
-    createYtPlaylistButton: "Buat Senarai Main YouTube ({0})"
-    deleteFromLibraryButton: "Padamkan ({0})"
-    deleteConfirmation: "Adakah anda pasti ingin memadamkan {0} video?"
+    createYtPlaylistButton: Buat Senarai Main YouTube ({0})
+    deleteFromLibraryButton: Padamkan ({0})
+    deleteConfirmation: Adakah anda pasti ingin memadamkan {0} video?
     deleteConfirmationOK: Padamkan
     deleteConfirmationCancel: Batal
     selectionReset: Tetapkan Semula
@@ -106,8 +121,8 @@ views:
       official: Rasmi
       clip: Sedutan
     unsupportedQuery: >-
-      Carian sedutan menggunakan <kbd>Topik</kbd> dan <kbd>Kumpulan</kbd>
-      masih belum disokong. <b>Sedutan</b> tidak akan terpapar.
+      Carian sedutan menggunakan <kbd>Topik</kbd> dan <kbd>Kumpulan</kbd> masih
+      belum disokong. <b>Sedutan</b> tidak akan terpapar.
   settings:
     title: Tetapan
     darkModeLabel: Tema Gelap
@@ -127,7 +142,7 @@ views:
     autoplayVideoLabel: Automain Video
     autoplayVideoMsg: Dayakan main semula video secara automatik
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
-    clipLanguageSelection: "Paparkan sedutan yang berbahasa:"
+    clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
   about:
     add_my_channel: Tambah saluran saya di Holodex
   app:
@@ -140,12 +155,55 @@ views:
   watch:
     saveToLibrary: Simpan video di Pustaka
     theaterMode: Mod Teater
+    chat:
+      StickBottomSettingLabel: ''
+      StickBottomSettingsDesc: ''
+      TLSettingsTitle: ''
+      hideTLBtn: ''
+      loading: ''
+      retryBtn: ''
+      showTLBtn: ''
+      status:
+        connectedToChat: ''
+        notLive: ''
+        reconnectFailed: ''
+        reconnecting: ''
+    mentionIconLabel: ''
   favorites:
     promptForAction: >-
-      Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
-example: ""
-example2: ""
+      Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat
+      YouTube maya yang digemari.
+  editor:
+    needlogin: ''
+  login:
+    apikeyMsg: ''
+    apikeyNew: ''
+    apikeyResetConfirm1: ''
+    apikeyResetConfirm2: ''
+    apikeyResetNvm: ''
+    futureYtcOwnerMessage: ''
+    linkAcc: ''
+    ownedYtChannel: ''
 time:
-  diff_future_date: "Berlangsung {0} ({1})"
-  distance_past_date: "{0}"
+  diff_future_date: Berlangsung {0} ({1})
+  distance_past_date: '{0}'
   soon: sebentar lagi
+editor:
+  music:
+    add: ''
+    endInput: ''
+    itunesLookupPlaceholder: ''
+    moveLeft2s: ''
+    moveRight2s: ''
+    originalArtistInput: ''
+    permission: ''
+    setToCurrentTime: ''
+    startInput: ''
+    testEnd: ''
+    testStart: ''
+    titles:
+      addSong: ''
+      help: ''
+      songList: ''
+    trackNameInput: ''
+    update: ''

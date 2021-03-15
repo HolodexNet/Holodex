@@ -1,9 +1,9 @@
 <template>
     <v-card class="text-body-2 tl-overlay" tile flat>
         <v-overlay absolute :value="showOverlay || (socket && socket.disconnected)" opacity="0.8">
-            <div v-if="isLoading">Loading ...</div>
+            <div v-if="isLoading">{{ $t("views.watch.chat.loading") }}</div>
             <div class="pa-3" v-else>{{ overlayMessage }}</div>
-            <v-btn v-if="!isLoading" @click="tlChatReconnect()">Retry</v-btn>
+            <v-btn v-if="!isLoading" @click="tlChatReconnect()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
         </v-overlay>
         <v-card-subtitle class="py-2 d-flex justify-space-between">
             TLs [{{ lang }}]
@@ -17,13 +17,13 @@
                 </template>
 
                 <v-card>
-                    <v-card-title> TL Settings </v-card-title>
+                    <v-card-title> {{ $t("views.watch.chat.TLSettingsTitle") }} </v-card-title>
 
                     <v-card-text>
                         <v-switch
                             v-model="liveTLStickBottom"
-                            label="Stick Bottom (mobile)"
-                            messages="TL box sticks to the bottom of chat (default stick to top on mobile)"
+                            :label="$t('views.watch.chat.StickBottomSettingLabel')"
+                            :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
                         ></v-switch>
                     </v-card-text>
                 </v-card>
@@ -48,7 +48,7 @@
             <div>
                 <div class="text-caption">Holodex:</div>
                 <div>
-                    <span class="text--primary">Connected to translations chat</span>
+                    <span class="text--primary">{{ $t("views.watch.chat.status.connectedToChat") }}</span>
                 </div>
             </div>
         </v-card-text>
@@ -79,7 +79,7 @@ export default {
                 MESSAGE: "message",
                 UPDATE: "update",
             }),
-            overlayMessage: "Loading...",
+            overlayMessage: this.$t("views.watch.chat.loading"),
             showOverlay: false,
             isLoading: true,
             manager: null,
@@ -115,10 +115,10 @@ export default {
                     secure: true,
                 });
                 this.manager.on("reconnect_attempt", (attempt) => {
-                    this.overlayMessage = `Auto Reconnecting... ${attempt}/10`;
+                    this.overlayMessage = `${this.$t("views.watch.chat.status.reconnecting")} ${attempt}/10`;
                 });
                 this.manager.on("reconnect_failed", () => {
-                    this.overlayMessage = "Could not reconnect";
+                    this.overlayMessage = this.$t("views.watch.chat.status.reconnectFailed");
                 });
             }
 
@@ -130,8 +130,7 @@ export default {
                         .subtract(15, "minutes"),
                 )
             ) {
-                this.overlayMessage =
-                    "Stream is not live yet, please try again when the stream is within 15 minutes of being live";
+                this.overlayMessage = this.$t("views.watch.chat.status.notLive");
                 this.isLoading = false;
                 this.showOverlay = true;
                 return;

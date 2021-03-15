@@ -5,7 +5,7 @@ import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 
 export const API_BASE_URL =
-    process.env.NODE_ENV === "development" ? "http://localhost:2434" : `${window.location.origin}/api`;
+    process.env.NODE_ENV === "development" ? "http://staging.holodex.net/api/" : `${window.location.origin}/api`;
 // export const API_BASE_URL = "https://staging.holodex.net/api/";
 
 export const axiosInstance = axios.create({
@@ -178,5 +178,15 @@ export default {
     },
     trackSongPlay(channelId, videoId, name) {
         return axiosInstance.get(`/songs/record/${channelId}/${videoId}/${name}`);
+    },
+    /**
+     * Grabs top 20 songs from API.
+     * @param {*} org = org name
+     * @param {*} channelId = channel ID. only org name OR channel ID should be supplied, never both.
+     * @param {*} type type = 'w' for weekly, 'm' for monthly.
+     */
+    topSongs(org, channelId, type) {
+        const q = querystring.stringify(org ? { org, type } : { channel_id: channelId, type });
+        return axiosInstance.get(`/songs/top20?${q}`);
     },
 };

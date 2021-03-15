@@ -199,7 +199,7 @@ export default {
     },
     methods: {
         resetSettings() {
-            this.$store.commit("settings/resetState");
+            this.$store.commit("resetState");
         },
     },
 };

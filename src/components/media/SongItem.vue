@@ -72,9 +72,9 @@
                     </div>
 
                     <span class="song-clickable" v-if="$listeners.channel" @click.stop="$emit('channel', song)">
-                        {{ song.channel.name }}
+                        {{ song.channel[nameProperty] || song.channel.name }}
                     </span>
-                    <span v-else> {{ song.channel.name }} </span>
+                    <span v-else> {{ song.channel[nameProperty] || song.channel.name }} </span>
                 </v-list-item-subtitle>
                 <!-- Else: -->
             </v-list-item-content>
@@ -83,8 +83,6 @@
 </template>
 
 <script>
-// const jsonp = require("jsonp-es6");
-
 import { formatDistance } from "@/utils/time";
 
 export default {
@@ -137,6 +135,9 @@ export default {
         },
         formattedTime() {
             return formatDistance(this.song.available_at, this.$store.state.settings.lang, this.$t.bind(this));
+        },
+        nameProperty() {
+            return this.$store.state.settings.nameProperty;
         },
     },
     mounted() {},

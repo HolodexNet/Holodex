@@ -33,6 +33,8 @@ export function formatDuration(secs) {
 export function localizedDayjs(time, lang) {
     // eslint-disable-next-line no-param-reassign
     if (lang === "zh") lang = "zh-tw";
+    // eslint-disable-next-line no-param-reassign
+    if (lang === "pt") lang = "pt-br";
     return dayjs(time).locale(lang);
 }
 

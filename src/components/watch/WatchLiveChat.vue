@@ -8,7 +8,7 @@
             fluid: fluid,
         }"
     >
-        <span class="loading-text">Loading Chat...</span>
+        <span class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
         <WatchLiveTranslations
             :video="video"
             v-if="showTLFirstTime"
@@ -26,7 +26,8 @@
             <iframe :src="liveChatUrl" frameborder="0" />
             <div class="chat-overlay-btn d-flex align-center">
                 <a class="text-body-2" @click="toggleTL">
-                    {{ showTL ? "Hide" : "Show" }} TLs {{ newTL > 0 ? `(${newTL} new)` : "" }}
+                    {{ showTL ? $t("views.watch.chat.hideTLBtn") : $t("views.watch.chat.showTLBtn") }}
+                    {{ newTL > 0 ? `(${newTL} new)` : "" }}
                 </a>
             </div>
         </div>
