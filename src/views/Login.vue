@@ -4,7 +4,7 @@
             <user-card v-if="userdata.user"></user-card>
             <v-divider></v-divider>
             <v-card-subtitle class="justify-center">{{
-                userdata.user ? "Link another account" : "Login"
+                userdata.user ? $t("views.login.linkAcc") : $t("component.mainNav.login")
             }}</v-card-subtitle>
             <v-card-text class="d-flex flex-column">
                 <v-btn
@@ -39,7 +39,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-text v-if="userdata.user">
-                <span class="text-subtitle-2 mb-1 d-inline-block">Owned Youtube Channel</span>
+                <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.ownedYtChannel") }}</span>
                 <v-text-field
                     readonly
                     rounded
@@ -49,8 +49,7 @@
                     :value="userdata.user.yt_channel_key || 'None on file'"
                 ></v-text-field>
                 <span class="text-caption">
-                    In the future, we plan on providing more services to channel owners like editing metadata for their
-                    own videos.
+                    {{ $t("views.login.futureYtcOwnerMessage") }}
                 </span>
                 <br />
                 <br />
@@ -67,10 +66,9 @@
                     @click:append="copyToClipboard"
                 ></v-text-field>
                 <br />
-                <v-btn small block color="warning" @click="resetKey">Get new API Key</v-btn>
+                <v-btn small block color="warning" @click="resetKey">{{ $t("views.login.apikeyNew") }}</v-btn>
                 <span class="text-caption">
-                    You can use API key to query Holodex API programmatically. Only one key per account. After getting a
-                    new key, the old key will expire within 0-24 hours.
+                    {{ $t("views.login.apikeyMsg") }}
                 </span>
             </v-card-text>
         </v-card>
@@ -178,14 +176,14 @@ export default {
         async resetKey() {
             /* eslint-disable no-restricted-globals, no-alert */
             if (this.userdata.user.api_key) {
-                const confirm1 = confirm("Are you sure you want to reset your API Key?");
+                const confirm1 = confirm(this.$t("views.login.apikeyResetConfirm1"));
                 if (!confirm1) {
-                    alert("OK just checking.");
+                    alert(this.$t("views.login.apikeyResetNvm"));
                     return;
                 }
-                const confirm2 = confirm("The old API key will have 0-24 hours before expiring. Really reset?");
+                const confirm2 = confirm(this.$t("views.login.apikeyResetConfirm2"));
                 if (!confirm2) {
-                    alert("OK just checking.");
+                    alert(this.$t("views.login.apikeyResetNvm"));
                     return;
                 }
             }

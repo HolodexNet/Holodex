@@ -9,18 +9,6 @@
         v-if="currentSong"
         ref="sheet"
     >
-        <!-- <div
-                key="musicplayertogglebtn"
-                class="music-player-toggle"
-                color="info"
-                @click="closePlayer"
-                style="bottom: 100%; position: absolute"
-                v-if="isOpen"
-            >
-                <div class="music-player-toggle-bg">
-                    <v-icon large>{{ icons.mdiMusic }}</v-icon>
-                </div>
-            </div> -->
         <div
             key="musicplayertogglebtn"
             class="music-player-toggle"
@@ -104,7 +92,7 @@
                                 $store.commit('music/clearPlaylist');
                             }
                         "
-                        ><v-icon left>{{ mdiPlaylistRemove }}</v-icon> Clear</v-btn
+                        ><v-icon left>{{ mdiPlaylistRemove }}</v-icon> {{ $t("component.music.clearPlaylist") }}</v-btn
                     >
                 </v-slide-x-transition>
             </div>
@@ -360,10 +348,7 @@ export default {
         position: absolute;
         padding: 2px;
         bottom: 100%;
-        // bottom: 0px;
         right: 0;
-        // background: #007bff;
-        // box-shadow: 0px 6px 6px -2px rgba(0, 0, 0, 0.452), 0px 6px 16px -2px rgba(0, 0, 0, 0.582);
     }
 }
 

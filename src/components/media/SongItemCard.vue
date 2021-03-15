@@ -77,7 +77,6 @@
 </template>
 
 <script>
-// const jsonp = require("jsonp-es6");
 import ChannelImg from "@/components/channel/ChannelImg";
 import { formatDistance } from "@/utils/time";
 

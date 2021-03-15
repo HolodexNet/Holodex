@@ -29,7 +29,7 @@
             <v-col cols="auto">
                 <v-avatar rounded left size="60" v-if="channelChips && channelChips.length > 0">
                     <v-icon size="25" color="grey darken-3">{{ icons.mdiAccountBoxMultiple }}</v-icon>
-                    <span class="icon-subtext text--grey text--darken-3">MENTIONS</span>
+                    <span class="icon-subtext text--grey text--darken-3">{{ $t("views.watch.mentionIconLabel") }}</span>
                 </v-avatar>
                 <template v-for="mention in channelChips">
                     <ChannelChip :channel="mention" :key="mention.id" :size="60" />

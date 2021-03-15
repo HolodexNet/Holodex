@@ -66,6 +66,19 @@ component:
   paginateLoad:
     newer: Newer
     older: Older
+  music:
+    clearPlaylist: Clear
+  channelMusic:
+    recentSongsHeader: Recent Songs
+    weeklyTopPlaysHeader: Weekly Top Plays
+  songList:
+    songTitle: Title
+    songCoveredBy: Covered by
+    songDuration: Duration
+    sangOnTime: Sang on
+  orgMusic:
+    monthlyTopForOrg: Monthly Top Plays for {0}
+    weeklyTopForOrg: Weekly Top Plays for {0}
 views:
   channels:
     channelType:
@@ -148,12 +161,43 @@ views:
   watch:
     theaterMode: Theater Mode
     saveToLibrary: Save video to Library
+    mentionIconLabel: MENTIONS
+    chat:
+      loading: Loading Chat...
+      hideTLBtn: Hide TLs
+      showTLBtn: Show TLs
+      TLSettingsTitle: TL Settings
+      StickBottomSettingLabel: Stick Bottom (mobile)
+      StickBottomSettingsDesc: TL box sticks to the bottom of chat (default stick to top on mobile)
+      retryBtn: Retry
+      status:
+        reconnecting: Auto Reconnecting...
+        reconnectFailed: Could not reconnect
+        notLive: >-
+          Stream is not live yet, please try again when the stream is within 15
+          minutes of being live
+        connectedToChat: Connected to translations chat
   favorites:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on
       this page.
   editor:
     needlogin: You'll need to login to make edits to Holodex video and song metadata.
+  login:
+    apikeyMsg: >-
+      You can use API key to query Holodex API programmatically. Only one key
+      per account. After getting a new key, the old key will expire within 0-24
+      hours.
+    apikeyNew: Get new API Key
+    ownedYtChannel: Owned Youtube Channel
+    futureYtcOwnerMessage: >-
+      In the future, we plan on providing more services to channel owners like
+      editing metadata for their
+                          own videos.
+    linkAcc: Link another account
+    apikeyResetConfirm1: Are you sure you want to reset your API Key?
+    apikeyResetConfirm2: The old API key will have 0-24 hours before expiring. Really reset?
+    apikeyResetNvm: Nothing interesting happened.
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})

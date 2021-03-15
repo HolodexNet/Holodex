@@ -83,8 +83,6 @@
 </template>
 
 <script>
-// const jsonp = require("jsonp-es6");
-
 import { formatDistance } from "@/utils/time";
 
 export default {

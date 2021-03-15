@@ -2,7 +2,7 @@
     <v-row>
         <v-col cols="12">
             <v-card-title>
-                <span class="text-h5">Weekly Top Plays</span>
+                <span class="text-h5">{{ $t("component.channelMusic.weeklyTopPlaysHeader") }}</span>
             </v-card-title>
             <carousel
                 :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
@@ -25,12 +25,12 @@
         </v-col>
         <v-col sm="12" md="12">
             <v-card-title>
-                <span class="text-h5">Recent Songs</span>
+                <span class="text-h5">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
                 <v-spacer></v-spacer>
                 <v-text-field
                     v-model="search"
                     :append-icon="icons.mdiMagnify"
-                    label="Search"
+                    :label="$t('component.search.searchLabel')"
                     single-line
                     hide-details
                 ></v-text-field>
@@ -103,24 +103,6 @@ const BREAKPOINTS = Object.freeze({
     xl: 7,
 });
 const PER_PAGE_ITEMS = 20;
-const RECENT_HEADER = [
-    {
-        text: "",
-        value: "channel_id",
-        width: "20px",
-    },
-    {
-        text: "Title",
-        align: "start",
-        sortable: false,
-        value: "name",
-        cellClass: "text-subtitle-2",
-    },
-    { text: "Covered by", value: "channel.name" },
-    { text: "Original Artist", value: "original_artist" },
-    { text: "Duration", value: "start", align: "end" },
-    { text: "Sang on", value: "available_at", align: "end" },
-];
 
 export default {
     components: { SongItem, SongItemCard, Carousel, PaginateLoad },
@@ -130,7 +112,24 @@ export default {
             // recentOffset: 0,
             // recentLimit: 20,
             recentSongs: [],
-            RECENT_HEADER,
+            RECENT_HEADER: Object.freeze([
+                {
+                    text: "",
+                    value: "channel_id",
+                    width: "20px",
+                },
+                {
+                    text: this.$t("editor.music.trackNameInput"),
+                    align: "start",
+                    sortable: false,
+                    value: "name",
+                    cellClass: "text-subtitle-2",
+                },
+                { text: this.$t("component.songList.songCoveredBy"), value: "channel.name" },
+                { text: this.$t("editor.music.originalArtistInput"), value: "original_artist" },
+                { text: this.$t("component.songList.songDuration"), value: "start", align: "end" },
+                { text: this.$t("component.songList.sangOnTime"), value: "available_at", align: "end" },
+            ]),
             // popularOffset: 0,
             // popularLimit: 20,
             popularSongs: [],
