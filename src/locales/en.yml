@@ -170,6 +170,7 @@ editor:
     titles:
       addSong: 'Song Metadata: Add a new Song'
       songList: 'Song List : {0}'
+      help: Guide
     itunesLookupPlaceholder: (Optional) Lookup on iTunes
     moveRight2s: Move right 2s
     testEnd: Test listen starting at 3 seconds before the end.

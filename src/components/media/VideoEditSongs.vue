@@ -3,6 +3,28 @@
         <v-row align="center">
             <v-divider> </v-divider> <span class="text-overline"> {{ $t("editor.music.titles.addSong") }} </span>
             <v-divider> </v-divider>
+            <v-dialog content-class="width-auto">
+                <template v-slot:activator="{ on }">
+                    <div v-on="on" @click="mountTwitter">
+                        <span class="text-overline"> {{ $t("editor.music.titles.help") }} </span>
+                        <v-btn fab color="info" class="mx-1" x-small
+                            ><v-icon>{{ icons.mdiHelpCircle }}</v-icon></v-btn
+                        >
+                    </div>
+                </template>
+                <v-card>
+                    <blockquote class="twitter-tweet">
+                        <p lang="en" dir="ltr">
+                            Easily create Music entries on Holodex, coming soon! 🎵🎶
+                            <a href="https://t.co/1KJXYDcJjo">pic.twitter.com/1KJXYDcJjo</a>
+                        </p>
+                        &mdash; Holodex (@holodex)
+                        <a href="https://twitter.com/holodex/status/1371290072058785797?ref_src=twsrc%5Etfw"
+                            >March 15, 2021</a
+                        >
+                    </blockquote>
+                </v-card>
+            </v-dialog>
         </v-row>
         <v-row dense>
             <v-col cols="8" sm="9" md="10" lg="10">
@@ -375,6 +397,12 @@ export default {
             await backendApi.deleteSong(song, this.$store.state.userdata.jwt);
             this.refreshSongList();
         },
+        mountTwitter() {
+            const externalScript = document.createElement("script");
+            externalScript.setAttribute("src", "https://platform.twitter.com/widgets.js");
+            externalScript.setAttribute("async", "true");
+            document.head.appendChild(externalScript);
+        },
     },
 };
 </script>
@@ -434,5 +462,9 @@ button.tweak-btn {
 .tweak-input {
     margin-left: 2px !important;
     margin-right: 2px !important;
+}
+.width-auto {
+    width: auto !important;
+    box-shadow: none;
 }
 </style>
