@@ -1,23 +1,20 @@
-hello: world
-example: "fill me in with {0} or {1} parameters"
-example2: "{0} text starting with a param needs to be quoted in quotes"
 component:
   apiError:
     title: Извините!
-    textBeforeTwitter: "Произошла ошибка при получении данных, пожалуйста, проверьте Twitter "
-    textAfterTwitter: " или сообщите об ошибке через"
+    textBeforeTwitter: 'Произошла ошибка при получении данных, пожалуйста, проверьте Twitter '
+    textAfterTwitter: ' или сообщите об ошибке через'
     aboutPage: О сайте
   channelList:
     otherText: Другие
-    favoriteAllInGroup: "Добавить всю группу в избранное"
-    signInToFavorite: "Войдите, чтобы управлять избранным"
-    unfavoriteAllInGroup: "Убрать всю группу из избранного"
+    favoriteAllInGroup: Добавить всю группу в избранное
+    signInToFavorite: Войдите, чтобы управлять избранным
+    unfavoriteAllInGroup: Убрать всю группу из избранного
   channelInfo:
-    videoCount: "{0} видео"
-    clipCount: "0 клипов | {n} клип | {n} клипа | {n} клипов"
-    subscriberCount: "0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков"
+    videoCount: '{0} видео'
+    clipCount: 0 клипов | {n} клип | {n} клипа | {n} клипов
+    subscriberCount: 0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков
     subscriberNA: Количество подписчиков недоступно
-    totalViews: "0 просмотров | {n} просмотр | {n} просмотра | {n} просмотров"
+    totalViews: 0 просмотров | {n} просмотр | {n} просмотра | {n} просмотров
   channelSocials:
     addToFavorites: Добавить в избранное
     removeFromFavorites: Убрать из избранного
@@ -28,41 +25,57 @@ component:
     about: О сайте
     library: Библиотека
     settings: Настройки
-    MugenClips: "MugenClips<sup>бета</sup>"
-    login: "Войти"
-    logout: "Выйти"
+    MugenClips: MugenClips<sup>бета</sup>
+    login: Войти
+    logout: Выйти
+    accountSettings: ''
+    music: ''
   videoCard:
-    clips: "0 клипов | {n} клип | {n} клипа | {n} клипов"
-    watching: "{0} смотрят"
+    clips: 0 клипов | {n} клип | {n} клипа | {n} клипов
+    watching: '{0} смотрят'
     liveNow: LIVE
   videoDescription:
     description: Описание
   description:
-    showLess: "Свернуть"
-    showMore: "Ещё"
+    showLess: Свернуть
+    showMore: Ещё
   search:
-    searchLabel: "Поиск"
+    searchLabel: Поиск
     type:
-      channel: "канал"
-      comments: "комментарии"
-      org: "агенство"
-      titledesc: "название и описание"
-      topic: "тема"
-      videourl: "ссылка на видео"
+      channel: канал
+      comments: комментарии
+      org: агенство
+      titledesc: название и описание
+      topic: тема
+      videourl: ссылка на видео
   video:
     comment:
-      openOnYoutube: "открыть комментарий на"
+      openOnYoutube: открыть комментарий на
+      openOnYoutubeAfter: ''
   watch:
-    streamingFor: "Стримит {0}"
-    nextUpInMugen: "Следущее в очереди"
+    streamingFor: Стримит {0}
+    nextUpInMugen: Следущее в очереди
   relatedVideo:
-    clipsLabel: "клипы"
-    refersLabel: "связанные видео"
-    simulcastsLabel: "связанные стримы"
-    sourcesLabel: "источники"
+    clipsLabel: клипы
+    refersLabel: связанные видео
+    simulcastsLabel: связанные стримы
+    sourcesLabel: источники
   paginateLoad:
     newer: Новее
     older: старее
+  channelMusic:
+    recentSongsHeader: ''
+    weeklyTopPlaysHeader: ''
+  music:
+    clearPlaylist: ''
+  orgMusic:
+    monthlyTopForOrg: ''
+    weeklyTopForOrg: ''
+  songList:
+    sangOnTime: ''
+    songCoveredBy: ''
+    songDuration: ''
+    songTitle: ''
 views:
   channels:
     channelType:
@@ -88,9 +101,9 @@ views:
       subber: Клипы
   library:
     savedVideosTitle: Сохраненные видео
-    createYtPlaylistButton: "Создать YouTube плейлист ({0})"
-    deleteFromLibraryButton: "Удалить ({0})"
-    deleteConfirmation: "Вы уверены, что хотите удалить {0} видео?"
+    createYtPlaylistButton: Создать YouTube плейлист ({0})
+    deleteFromLibraryButton: Удалить ({0})
+    deleteConfirmation: Вы уверены, что хотите удалить {0} видео?
     deleteConfirmationOK: Удалить
     deleteConfirmationCancel: Отмена
     selectionReset: Сброс
@@ -107,9 +120,9 @@ views:
       all: Все
       official: Официальные
       clip: Клипы
-    unsupportedQuery:
-      "На данный момент поиск клипов по <kbd>теме</kbd> и <kbd>агенствам</kbd>
-      не поддерживается. Ни одного <b>клипа</b> не выйдет в результатах."
+    unsupportedQuery: >-
+      На данный момент поиск клипов по <kbd>теме</kbd> и <kbd>агенствам</kbd> не
+      поддерживается. Ни одного <b>клипа</b> не выйдет в результатах.
   settings:
     title: Настройки
     darkModeLabel: Ночная тема
@@ -129,22 +142,68 @@ views:
     scrollModeLabel: Режим прокрутки
     scrollModeMsg: Используйте прокрутку для переворачивания страниц
     resetAllSettings: Сбросить все настройки/данные
-    clipLanguageSelection: "Посмотрите клипы на этих языках:"
+    clipLanguageSelection: 'Посмотрите клипы на этих языках:'
   about:
-    add_my_channel: "Добавить мой канал в Holodex"
+    add_my_channel: Добавить мой канал в Holodex
   app:
-    check_about_page: 'Перейдите на страницу "О сайте" чтобы узнать о нововведениях'
-    close_btn: "Закрыть"
-    update_available: "Доступно обновление"
-    update_btn: "Обновить"
-    loginCallToAction: "Войдите для создания своего списка избранного!"
-    nowSupportsMultiOrg: "Holodex теперь поддерживает разные агенства."
+    check_about_page: Перейдите на страницу "О сайте" чтобы узнать о нововведениях
+    close_btn: Закрыть
+    update_available: Доступно обновление
+    update_btn: Обновить
+    loginCallToAction: Войдите для создания своего списка избранного!
+    nowSupportsMultiOrg: Holodex теперь поддерживает разные агенства.
   watch:
-    saveToLibrary: "Сохранить видео в библиотеку"
-    theaterMode: "Широкий экран"
+    saveToLibrary: Сохранить видео в библиотеку
+    theaterMode: Широкий экран
+    chat:
+      StickBottomSettingLabel: ''
+      StickBottomSettingsDesc: ''
+      TLSettingsTitle: ''
+      hideTLBtn: ''
+      loading: ''
+      retryBtn: ''
+      showTLBtn: ''
+      status:
+        connectedToChat: ''
+        notLive: ''
+        reconnectFailed: ''
+        reconnecting: ''
+    mentionIconLabel: ''
   favorites:
-    promptForAction: "Создайте список любимых витуберов и вы увидите их новые стримы и клипы с ними на этой странице."
+    promptForAction: >-
+      Создайте список любимых витуберов и вы увидите их новые стримы и клипы с
+      ними на этой странице.
+  editor:
+    needlogin: ''
+  login:
+    apikeyMsg: ''
+    apikeyNew: ''
+    apikeyResetConfirm1: ''
+    apikeyResetConfirm2: ''
+    apikeyResetNvm: ''
+    futureYtcOwnerMessage: ''
+    linkAcc: ''
+    ownedYtChannel: ''
 time:
-  diff_future_date: "Начнется {0} ({1})"
-  distance_past_date: "{0}"
-  soon: "Скоро"
+  diff_future_date: Начнется {0} ({1})
+  distance_past_date: '{0}'
+  soon: Скоро
+editor:
+  music:
+    add: ''
+    endInput: ''
+    itunesLookupPlaceholder: ''
+    moveLeft2s: ''
+    moveRight2s: ''
+    originalArtistInput: ''
+    permission: ''
+    setToCurrentTime: ''
+    startInput: ''
+    testEnd: ''
+    testStart: ''
+    titles:
+      addSong: ''
+      help: ''
+      songList: ''
+    trackNameInput: ''
+    update: ''

@@ -1,4 +1,3 @@
-hello: world
 component:
   apiError:
     title: 非常抱歉！
@@ -11,9 +10,9 @@ component:
     unfavoriteAllInGroup: 取消收藏本群組所有頻道
     favoriteAllInGroup: 收藏本群組所有頻道
   channelInfo:
-    videoCount: "{0} 部影片"
-    clipCount: "{n} 部剪輯"
-    subscriberCount: "{n} 位訂閱者"
+    videoCount: '{0} 部影片'
+    clipCount: '{n} 部剪輯'
+    subscriberCount: '{n} 位訂閱者'
     subscriberNA: 無法取得訂閱者數據
     totalViews: 總觀看次數
   channelSocials:
@@ -29,9 +28,11 @@ component:
     login: 登入
     logout: 登出
     MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: ''
+    music: ''
   videoCard:
-    clips: "{n} 部剪輯"
-    watching: "{0} 人正在觀看"
+    clips: '{n} 部剪輯'
+    watching: '{0} 人正在觀看'
     liveNow: 實況中
   videoDescription:
     description: 影片資訊
@@ -62,6 +63,19 @@ component:
   paginateLoad:
     newer: 較新
     older: 較舊
+  channelMusic:
+    recentSongsHeader: ''
+    weeklyTopPlaysHeader: ''
+  music:
+    clearPlaylist: ''
+  orgMusic:
+    monthlyTopForOrg: ''
+    weeklyTopForOrg: ''
+  songList:
+    sangOnTime: ''
+    songCoveredBy: ''
+    songDuration: ''
+    songTitle: ''
 views:
   channels:
     channelType:
@@ -137,9 +151,53 @@ views:
   watch:
     theaterMode: 劇院模式
     saveToLibrary: 將影片儲存至媒體庫
+    chat:
+      StickBottomSettingLabel: ''
+      StickBottomSettingsDesc: ''
+      TLSettingsTitle: ''
+      hideTLBtn: ''
+      loading: ''
+      retryBtn: ''
+      showTLBtn: ''
+      status:
+        connectedToChat: ''
+        notLive: ''
+        reconnectFailed: ''
+        reconnecting: ''
+    mentionIconLabel: ''
   favorites:
     promptForAction: 創建含有您喜愛的Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
+  editor:
+    needlogin: ''
+  login:
+    apikeyMsg: ''
+    apikeyNew: ''
+    apikeyResetConfirm1: ''
+    apikeyResetConfirm2: ''
+    apikeyResetNvm: ''
+    futureYtcOwnerMessage: ''
+    linkAcc: ''
+    ownedYtChannel: ''
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: ''
+    endInput: ''
+    itunesLookupPlaceholder: ''
+    moveLeft2s: ''
+    moveRight2s: ''
+    originalArtistInput: ''
+    permission: ''
+    setToCurrentTime: ''
+    startInput: ''
+    testEnd: ''
+    testStart: ''
+    titles:
+      addSong: ''
+      help: ''
+      songList: ''
+    trackNameInput: ''
+    update: ''

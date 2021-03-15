@@ -1,11 +1,8 @@
-hello: world
-example: "fill me in with {0} or {1} parameters"
-example2: "{0} text starting with a param needs to be quoted in quotes"
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: "Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter"
-    textAfterTwitter: " ou relate o erro por meio da "
+    textBeforeTwitter: Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter
+    textAfterTwitter: ' ou relate o erro por meio da '
     aboutPage: página de Informações
   channelList:
     otherText: Outros
@@ -13,9 +10,9 @@ component:
     unfavoriteAllInGroup: Remover todos desse grupo dos favoritos
     favoriteAllInGroup: Adicionar todos desse grupo aos favoritos
   channelInfo:
-    videoCount: "{0} Videos"
-    clipCount: "{n} Clipes"
-    subscriberCount: "{n} Inscritos"
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clipes'
+    subscriberCount: '{n} Inscritos'
     subscriberNA: Número de inscritos indisponível
     totalViews: Total de Visualizações
   channelSocials:
@@ -31,21 +28,23 @@ component:
     login: Login
     logout: Sair
     MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: ''
+    music: ''
   videoCard:
-    clips: "{n} Clipes"
-    watching: "{0} assistindo agora"
+    clips: '{n} Clipes'
+    watching: '{0} assistindo agora'
     liveNow: Ao Vivo
   videoDescription:
     description: Descrição
   video:
     comment:
       openOnYoutube: Ver comentário no
-      openOnYoutubeAfter: ""
+      openOnYoutubeAfter: ''
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
   watch:
-    streamingFor: "Transmissão iniciada há {0}"
+    streamingFor: Transmissão iniciada há {0}
     nextUpInMugen: Próximo
   search:
     searchLabel: Pesquisar
@@ -55,6 +54,7 @@ component:
       org: Org
       titledesc: Título e Desc
       comments: Comentários
+      videourl: ''
   relatedVideo:
     clipsLabel: Clipes
     simulcastsLabel: Simulcasts
@@ -63,6 +63,19 @@ component:
   paginateLoad:
     newer: Novos
     older: Antigos
+  channelMusic:
+    recentSongsHeader: ''
+    weeklyTopPlaysHeader: ''
+  music:
+    clearPlaylist: ''
+  orgMusic:
+    monthlyTopForOrg: ''
+    weeklyTopForOrg: ''
+  songList:
+    sangOnTime: ''
+    songCoveredBy: ''
+    songDuration: ''
+    songTitle: ''
 views:
   channels:
     channelType:
@@ -88,9 +101,9 @@ views:
       subber: Clipes
   library:
     savedVideosTitle: Vídeos Salvos
-    createYtPlaylistButton: "Criar uma Playlist no Youtube ({0})"
-    deleteFromLibraryButton: "Deletar ({0})"
-    deleteConfirmation: "Tem certeza de que deseja excluir {0} vídeos?"
+    createYtPlaylistButton: Criar uma Playlist no Youtube ({0})
+    deleteFromLibraryButton: Deletar ({0})
+    deleteConfirmation: Tem certeza de que deseja excluir {0} vídeos?
     deleteConfirmationOK: Deletar
     deleteConfirmationCancel: Cancelar
     selectionReset: Redefinir
@@ -108,23 +121,22 @@ views:
       official: Oficiais
       clip: Clipe
     unsupportedQuery: >-
-      Atualmente, pesquisar clipes por <kbd>Tópico</kbd> e <kbd>Organização</kbd>
-      não é suportado. Nenhum <b> clipe </b> aparecerá.
+      Atualmente, pesquisar clipes por <kbd>Tópico</kbd> e
+      <kbd>Organização</kbd> não é suportado. Nenhum <b> clipe </b> aparecerá.
   settings:
     title: Configurações
     darkModeLabel: Modo Escuro
     darkModeMsg: Altera o tema entre modo claro e modo escuro
     redirectModeLabel: Assistir no Youtube
     redirectModeMsg: >-
-      Clique na thumnail de um vídeo para assistir no Youtube,
-      Clique no título de um vídeo para assistir no Holodex
+      Clique na thumnail de um vídeo para assistir no Youtube, Clique no título
+      de um vídeo para assistir no Holodex
     useEnglishNameLabel: Usar nomes em Inglês
     useEnglishNameMsg: Mostrar o nome dos VTuber em inglês
     hideVideoThumbnailsLabel: Esconder Thumbnails
     hideVideoThumbnailsMsg: >-
-      Esconde as Thumbnails dos vídeo
-      Pode ajudar no carregamento da pagina e barra de rolagem menor quando
-      acessando por celulares
+      Esconde as Thumbnails dos vídeo Pode ajudar no carregamento da pagina e
+      barra de rolagem menor quando acessando por celulares
     pushNotificationLabel: Push Notifications (Em Breve)
     pushNotificationMsg: Ativa push notification para seus canais favoritos
     autoplayVideoLabel: Autoplay de Videos
@@ -132,7 +144,7 @@ views:
     scrollModeLabel: Modo de Rolagem
     scrollModeMsg: Use rolar/tocar para navegar nas páginas
     resetAllSettings: Redefinir todas as configurações/dados
-    clipLanguageSelection: "Ver clipes nestes idiomas:"
+    clipLanguageSelection: 'Ver clipes nestes idiomas:'
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
@@ -145,11 +157,55 @@ views:
   watch:
     theaterMode: Modo Teatro
     saveToLibrary: Salvar vídeo na biblioteca
+    chat:
+      StickBottomSettingLabel: ''
+      StickBottomSettingsDesc: ''
+      TLSettingsTitle: ''
+      hideTLBtn: ''
+      loading: ''
+      retryBtn: ''
+      showTLBtn: ''
+      status:
+        connectedToChat: ''
+        notLive: ''
+        reconnectFailed: ''
+        reconnecting: ''
+    mentionIconLabel: ''
   favorites:
     promptForAction: >-
-      Crie uma lista de seus vtubers favoritos e veja seus clipes e lives 
-      mais recentes nesta página.
+      Crie uma lista de seus vtubers favoritos e veja seus clipes e lives  mais
+      recentes nesta página.
+  editor:
+    needlogin: ''
+  login:
+    apikeyMsg: ''
+    apikeyNew: ''
+    apikeyResetConfirm1: ''
+    apikeyResetConfirm2: ''
+    apikeyResetNvm: ''
+    futureYtcOwnerMessage: ''
+    linkAcc: ''
+    ownedYtChannel: ''
 time:
   soon: em breve
-  diff_future_date: "Ao Vivo {0} ({1})"
-  distance_past_date: "{0}"
+  diff_future_date: Ao Vivo {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: ''
+    endInput: ''
+    itunesLookupPlaceholder: ''
+    moveLeft2s: ''
+    moveRight2s: ''
+    originalArtistInput: ''
+    permission: ''
+    setToCurrentTime: ''
+    startInput: ''
+    testEnd: ''
+    testStart: ''
+    titles:
+      addSong: ''
+      help: ''
+      songList: ''
+    trackNameInput: ''
+    update: ''

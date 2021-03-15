@@ -1,21 +1,20 @@
-hello: world
 component:
   apiError:
     title: Maafkeun
-    textBeforeTwitter: "Ada kesalahan saat memuat konten, silahkan cek twitter "
-    textAfterTwitter: " atau laporkan hal ini melalui"
+    textBeforeTwitter: 'Ada kesalahan saat memuat konten, silahkan cek twitter '
+    textAfterTwitter: ' atau laporkan hal ini melalui'
     aboutPage: halaman tentang
   channelList:
     otherText: Lainnya
-    favoriteAllInGroup: "Favoritkan semua dalam grup"
-    signInToFavorite: "Masuk untuk menambahkan favorit"
-    unfavoriteAllInGroup: "Unfavoritkan semua dalam grup"
+    favoriteAllInGroup: Favoritkan semua dalam grup
+    signInToFavorite: Masuk untuk menambahkan favorit
+    unfavoriteAllInGroup: Unfavoritkan semua dalam grup
   channelInfo:
-    videoCount: "{0} Video"
-    clipCount: "{n} Klip"
-    subscriberCount: "{n} Subscribers"
+    videoCount: '{0} Video'
+    clipCount: '{n} Klip'
+    subscriberCount: '{n} Subscribers'
     subscriberNA: Jumlah Subscriber tidak tersedia
-    totalViews: "Jumlah Ditonton"
+    totalViews: Jumlah Ditonton
   channelSocials:
     addToFavorites: Tambahkan ke Favorit
     removeFromFavorites: Hapus dari Favorit
@@ -26,41 +25,57 @@ component:
     about: Tentang
     library: Koleksi
     settings: Pengaturan
-    MugenClips: "MugenClips<sup>beta</sup>"
-    login: "Masuk"
-    logout: "Keluar"
+    MugenClips: MugenClips<sup>beta</sup>
+    login: Masuk
+    logout: Keluar
+    accountSettings: ''
+    music: ''
   videoCard:
-    clips: "{n} Klip"
-    watching: "{0} sedang menonton"
+    clips: '{n} Klip'
+    watching: '{0} sedang menonton'
     liveNow: Sedang Berlangsung
   videoDescription:
     description: Deskripsi
   description:
-    showLess: "Tampilkan lebih sedikit"
-    showMore: "Tampilkan lebih banyak"
+    showLess: Tampilkan lebih sedikit
+    showMore: Tampilkan lebih banyak
   search:
-    searchLabel: "Cari"
+    searchLabel: Cari
     type:
-      channel: "Saluran"
-      comments: "Komen"
-      org: "org"
-      titledesc: "judul & desk"
-      topic: "topik"
-      videourl: "url video"
+      channel: Saluran
+      comments: Komen
+      org: org
+      titledesc: judul & desk
+      topic: topik
+      videourl: url video
   video:
     comment:
-      openOnYoutube: "Buka komentar di"
+      openOnYoutube: Buka komentar di
+      openOnYoutubeAfter: ''
   watch:
-    streamingFor: "Streaming selama {0}"
-    nextUpInMugen: "Selanjutnya"
+    streamingFor: Streaming selama {0}
+    nextUpInMugen: Selanjutnya
   relatedVideo:
-    clipsLabel: "Klip"
-    refersLabel: "Referensi"
-    simulcastsLabel: "Siaran"
-    sourcesLabel: "Sumber"
+    clipsLabel: Klip
+    refersLabel: Referensi
+    simulcastsLabel: Siaran
+    sourcesLabel: Sumber
   paginateLoad:
     newer: Terbaru
     older: Terlama
+  channelMusic:
+    recentSongsHeader: ''
+    weeklyTopPlaysHeader: ''
+  music:
+    clearPlaylist: ''
+  orgMusic:
+    monthlyTopForOrg: ''
+    weeklyTopForOrg: ''
+  songList:
+    sangOnTime: ''
+    songCoveredBy: ''
+    songDuration: ''
+    songTitle: ''
 views:
   channels:
     channelType:
@@ -86,9 +101,9 @@ views:
       subber: Klip
   library:
     savedVideosTitle: Video Tersimpan
-    createYtPlaylistButton: "Buat YT Playlist ({0})"
-    deleteFromLibraryButton: "Hapus ({0})"
-    deleteConfirmation: "Apa kamu yakin ingin menghapus {0} video?"
+    createYtPlaylistButton: Buat YT Playlist ({0})
+    deleteFromLibraryButton: Hapus ({0})
+    deleteConfirmation: Apa kamu yakin ingin menghapus {0} video?
     deleteConfirmationOK: Hapus
     deleteConfirmationCancel: Batal
     selectionReset: Reset
@@ -130,26 +145,68 @@ views:
     autoplayVideoLabel: Video Putar Otomatis
     autoplayVideoMsg: Aktifkan pemutaran otomatis video
     resetAllSettings: Reset Semua Pengaturan/Data
-    clipLanguageSelection: "Melihat Klip dalam bahasa berikut:"
+    clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
   about:
-    add_my_channel: "Tambah channel saya ke Holodex"
+    add_my_channel: Tambah channel saya ke Holodex
   app:
-    check_about_page: "Kunjungi halaman Tentang untuk melihat pembaharuan"
-    close_btn: "Tutup"
-    update_available: "Pembaharuan tersedia"
-    update_btn: "Perbarui"
-    loginCallToAction: "Masuk untuk mengumpulkan favorit kamu!"
-    nowSupportsMultiOrg: "Holodex kini mendukung berbagai organisasi"
+    check_about_page: Kunjungi halaman Tentang untuk melihat pembaharuan
+    close_btn: Tutup
+    update_available: Pembaharuan tersedia
+    update_btn: Perbarui
+    loginCallToAction: Masuk untuk mengumpulkan favorit kamu!
+    nowSupportsMultiOrg: Holodex kini mendukung berbagai organisasi
   watch:
-    saveToLibrary: "Simpan video ke koleksi"
-    theaterMode: "Mode Teater"
+    saveToLibrary: Simpan video ke koleksi
+    theaterMode: Mode Teater
+    chat:
+      StickBottomSettingLabel: ''
+      StickBottomSettingsDesc: ''
+      TLSettingsTitle: ''
+      hideTLBtn: ''
+      loading: ''
+      retryBtn: ''
+      showTLBtn: ''
+      status:
+        connectedToChat: ''
+        notLive: ''
+        reconnectFailed: ''
+        reconnecting: ''
+    mentionIconLabel: ''
   favorites:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada
       halaman ini.
-example: ""
-example2: ""
+  editor:
+    needlogin: ''
+  login:
+    apikeyMsg: ''
+    apikeyNew: ''
+    apikeyResetConfirm1: ''
+    apikeyResetConfirm2: ''
+    apikeyResetNvm: ''
+    futureYtcOwnerMessage: ''
+    linkAcc: ''
+    ownedYtChannel: ''
 time:
-  diff_future_date: "Mulai {0} ({1})"
-  distance_past_date: "{0}"
-  soon: "segera mulai"
+  diff_future_date: Mulai {0} ({1})
+  distance_past_date: '{0}'
+  soon: segera mulai
+editor:
+  music:
+    add: ''
+    endInput: ''
+    itunesLookupPlaceholder: ''
+    moveLeft2s: ''
+    moveRight2s: ''
+    originalArtistInput: ''
+    permission: ''
+    setToCurrentTime: ''
+    startInput: ''
+    testEnd: ''
+    testStart: ''
+    titles:
+      addSong: ''
+      help: ''
+      songList: ''
+    trackNameInput: ''
+    update: ''

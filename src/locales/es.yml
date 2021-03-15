@@ -1,23 +1,20 @@
-hello: world
-example: "fill me in with {0} or {1} parameters"
-example2: "{0} text starting with a param needs to be quoted in quotes"
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: "Ha ocurrido un error recuperando el contenido, por favor revisa Twitter "
-    textAfterTwitter: " O reporta el error a través de la"
+    textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
+    textAfterTwitter: ' O reporta el error a través de la'
     aboutPage: Página de información
   channelList:
     otherText: Otros
-    favoriteAllInGroup: "Marcar todos en el grupo como favorito"
-    signInToFavorite: "Registrate para marcar como favorito"
-    unfavoriteAllInGroup: "Desmarcar todos como favoritos"
+    favoriteAllInGroup: Marcar todos en el grupo como favorito
+    signInToFavorite: Registrate para marcar como favorito
+    unfavoriteAllInGroup: Desmarcar todos como favoritos
   channelInfo:
-    videoCount: "{0} Videos"
-    clipCount: "{n} Clips"
-    subscriberCount: "{n} Subscriptores"
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} Subscriptores'
     subscriberNA: Contador de subscriptores no disponible
-    totalViews: "Visualizaciones totales"
+    totalViews: Visualizaciones totales
   channelSocials:
     addToFavorites: Añadir a favoritos
     removeFromFavorites: Borrar de favoritos
@@ -28,41 +25,57 @@ component:
     about: Acerca de
     library: Biblioteca
     settings: Opciones
-    MugenClips: "MugenClips"
-    login: "Iniciar Sesión"
-    logout: "Cerrar Sesión"
+    MugenClips: MugenClips
+    login: Iniciar Sesión
+    logout: Cerrar Sesión
+    accountSettings: ''
+    music: ''
   videoCard:
-    clips: "{n} Clips"
-    watching: "{0} Mirando"
+    clips: '{n} Clips'
+    watching: '{0} Mirando'
     liveNow: En Vivo
   videoDescription:
     description: Descripción
   description:
-    showLess: "Mostrar Menos"
-    showMore: "Mostrar Mas"
+    showLess: Mostrar Menos
+    showMore: Mostrar Mas
   search:
-    searchLabel: "Buscar"
+    searchLabel: Buscar
     type:
-      channel: "Canal"
-      comments: "Comentarios"
-      org: "org"
-      titledesc: "título y descripción"
-      topic: "Tema"
-      videourl: "url de vídeo"
+      channel: Canal
+      comments: Comentarios
+      org: org
+      titledesc: título y descripción
+      topic: Tema
+      videourl: url de vídeo
   video:
     comment:
-      openOnYoutube: "Abrir comentario en"
+      openOnYoutube: Abrir comentario en
+      openOnYoutubeAfter: ''
   watch:
-    streamingFor: "En directo durante {0}"
-    nextUpInMugen: "Siguiente"
+    streamingFor: En directo durante {0}
+    nextUpInMugen: Siguiente
   relatedVideo:
-    clipsLabel: "clips"
-    refersLabel: "transmisión simultanea"
-    simulcastsLabel: "referencias"
-    sourcesLabel: "fuentes"
+    clipsLabel: clips
+    refersLabel: transmisión simultanea
+    simulcastsLabel: referencias
+    sourcesLabel: fuentes
   paginateLoad:
     newer: Más recientes
     older: Más antiguas
+  channelMusic:
+    recentSongsHeader: ''
+    weeklyTopPlaysHeader: ''
+  music:
+    clearPlaylist: ''
+  orgMusic:
+    monthlyTopForOrg: ''
+    weeklyTopForOrg: ''
+  songList:
+    sangOnTime: ''
+    songCoveredBy: ''
+    songDuration: ''
+    songTitle: ''
 views:
   channels:
     channelType:
@@ -88,9 +101,9 @@ views:
       subber: Clips
   library:
     savedVideosTitle: Videos Guardados
-    createYtPlaylistButton: "Crear Playlist de YT ({0})"
-    deleteFromLibraryButton: "Borrar ({0})"
-    deleteConfirmation: "Estas seguro de que quieres borrar {0} videos?"
+    createYtPlaylistButton: Crear Playlist de YT ({0})
+    deleteFromLibraryButton: Borrar ({0})
+    deleteConfirmation: Estas seguro de que quieres borrar {0} videos?
     deleteConfirmationOK: Borrar
     deleteConfirmationCancel: Cancelar
     selectionReset: Reiniciar
@@ -107,7 +120,7 @@ views:
       all: Todos
       official: Oficial
       clip: Clip
-    unsupportedQuery: ""
+    unsupportedQuery: ''
   settings:
     title: Opciones
     darkModeLabel: Modo Oscuro
@@ -127,22 +140,68 @@ views:
     autoplayVideoLabel: Reproducir vídeos automáticamente
     autoplayVideoMsg: Activa la reproducción automática de videos
     resetAllSettings: Reiniciar todas las opciones/datos
-    clipLanguageSelection: "Ver clips en estos idiomas"
+    clipLanguageSelection: Ver clips en estos idiomas
   about:
-    add_my_channel: "Añadir mi canal a Holodex"
+    add_my_channel: Añadir mi canal a Holodex
   app:
-    check_about_page: "Visita la pagina Acerca de para ver los nuevos cambios"
-    close_btn: "Cerrar"
-    update_available: "Una actualización está disponible"
-    update_btn: "Actualizar"
-    loginCallToAction: "Inicia sesión para juntar a tus propios favoritos!"
-    nowSupportsMultiOrg: "Holodex ahora soporta multiples organizaciones."
+    check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
+    close_btn: Cerrar
+    update_available: Una actualización está disponible
+    update_btn: Actualizar
+    loginCallToAction: Inicia sesión para juntar a tus propios favoritos!
+    nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
   watch:
-    saveToLibrary: "Guardar el video en la Biblioteca"
-    theaterMode: "Modo Teatro"
+    saveToLibrary: Guardar el video en la Biblioteca
+    theaterMode: Modo Teatro
+    chat:
+      StickBottomSettingLabel: ''
+      StickBottomSettingsDesc: ''
+      TLSettingsTitle: ''
+      hideTLBtn: ''
+      loading: ''
+      retryBtn: ''
+      showTLBtn: ''
+      status:
+        connectedToChat: ''
+        notLive: ''
+        reconnectFailed: ''
+        reconnecting: ''
+    mentionIconLabel: ''
   favorites:
-    promptForAction: "Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en esta pagina"
+    promptForAction: >-
+      Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en
+      esta pagina
+  editor:
+    needlogin: ''
+  login:
+    apikeyMsg: ''
+    apikeyNew: ''
+    apikeyResetConfirm1: ''
+    apikeyResetConfirm2: ''
+    apikeyResetNvm: ''
+    futureYtcOwnerMessage: ''
+    linkAcc: ''
+    ownedYtChannel: ''
 time:
-  diff_future_date: "Inicia {0} ({1})"
-  distance_past_date: "{0}"
-  soon: "Proximamente"
+  diff_future_date: Inicia {0} ({1})
+  distance_past_date: '{0}'
+  soon: Proximamente
+editor:
+  music:
+    add: ''
+    endInput: ''
+    itunesLookupPlaceholder: ''
+    moveLeft2s: ''
+    moveRight2s: ''
+    originalArtistInput: ''
+    permission: ''
+    setToCurrentTime: ''
+    startInput: ''
+    testEnd: ''
+    testStart: ''
+    titles:
+      addSong: ''
+      help: ''
+      songList: ''
+    trackNameInput: ''
+    update: ''
