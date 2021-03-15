@@ -168,14 +168,14 @@ views:
   favorites:
     promptForAction: 創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
   editor:
-    needlogin: 需要登入才能編輯Holodex影片/音樂的相關資料。
+    needlogin: 需要登入Holodex才能編輯影片/音樂的相關資料。
   login:
     apikeyMsg: 您可以透過API金鑰的方式來存取Holodex API。一個帳號最多只能取得一把金鑰。取得新API金鑰後，舊金鑰將會於0~24小時內過期。
     apikeyNew: 取得新API金鑰
     apikeyResetConfirm1: 您確定想要重設您的API金鑰嗎？
     apikeyResetConfirm2: 舊金鑰將會於0~24小時內過期，您確定要重設金鑰嗎？
     apikeyResetNvm: 什麼事情都沒有發生。
-    futureYtcOwnerMessage: 我們未來預計將會提供頻道擁有者在Holodex上編輯自己上傳影片的相關資料。
+    futureYtcOwnerMessage: 我們未來預計將會提供頻道擁有者在Holodex上編輯影片資料的功能。
     linkAcc: 連結其他帳號
     ownedYtChannel: 擁有的YouTube頻道
 time:
@@ -186,7 +186,7 @@ editor:
   music:
     add: 加入歌曲
     update: 更新
-    permission: 您需要擁有或取得高於「編輯者」身分組的權限才能更新/刪除歌曲。請至 <a class='white--text' href='/about'>Discord社群</a> 申請成為編輯者，或是回報問題與任何惡意使用的情況。
+    permission: 您需要擁有或取得高於「編輯者」身分組的權限才能更新/刪除歌曲。請至 <a class='white--text' href='/about'>Discord社群</a> 申請成為編輯者或是回報任何問題。
     titles:
       addSong: 歌曲資料：新增歌曲
       songList: 歌曲清單：{0}
@@ -200,4 +200,4 @@ editor:
     originalArtistInput: 原唱
     testStart: 測試起始點
     startInput: 起始時間
-    endInput: 總播放秒數（結束於 @ {0}）'
+    endInput: 總播放秒數（結束於 @ {0}）
