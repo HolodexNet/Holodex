@@ -6,9 +6,11 @@
             </v-tab>
         </v-tabs>
         <WatchLiveChat
+            v-if="activeVideos.length"
             :video="activeVideos[currentTab]"
             style="width: 100%; height: calc(100% - 48px)"
-            :key="activeVideos[currentTab]"
+            :key="activeVideos[currentTab].id"
+            fluid
         />
     </div>
 </template>

@@ -38,6 +38,7 @@ export {
     mdiGridLarge,
     mdiGrid,
     mdiSquareOutline,
+    mdiDotsGrid,
     mdiChevronDown,
     mdiChevronUp,
     mdiChevronLeft,

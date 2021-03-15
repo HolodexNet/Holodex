@@ -12,7 +12,6 @@
 
         <v-app-bar
             id="top-bar"
-            class=""
             :class="{
                 'secondary darken-3': darkMode,
                 'primary lighten-1': !darkMode,
@@ -20,8 +19,7 @@
             :app="!isWatchPage"
             clipped-left
             flat
-            v-show="!(isMobile && isWatchPage)"
-            :dense="isMobile"
+            v-show="!(isMobile && isWatchPage) && !isMultiView"
         >
             <!--=============================== Top Bar (Regular View) =============================-->
 
@@ -257,6 +255,9 @@ export default {
         isWatchPage() {
             return ["watch_id", "watch", "mugen-clips", "edit_video", "multiview"].includes(this.$route.name);
         },
+        isMultiView() {
+            return this.$route.name === "multiview";
+        },
         currentOrg: {
             get() {
                 return this.$store.state.currentOrg;
@@ -297,6 +298,12 @@ export default {
                     name: this.$t("component.mainNav.library"),
                     path: "/library",
                     icon: icons.mdiAnimationPlay,
+                },
+                {
+                    name: "MultiView",
+                    path: "/multiview",
+                    icon: icons.mdiDotsGrid,
+                    collapsible: true,
                 },
                 {
                     name: this.$t("component.mainNav.MugenClips"),

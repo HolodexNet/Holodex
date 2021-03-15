@@ -1,5 +1,35 @@
 <template>
     <div style="width: 100%">
+        <transition name="slide-y-transition" mode="out-in">
+            <v-toolbar dense class="mv-toolbar" v-if="!collapseToolbar">
+                <v-app-bar-nav-icon @click="$router.push({ path: '/' })"></v-app-bar-nav-icon>
+                <v-toolbar-title>MultiDex</v-toolbar-title>
+                <div class="flex-grow-1 justify-center d-flex mv-toolbar-btn">
+                    <v-btn @click="editMode = !editMode" :color="editMode ? 'green' : 'blue'">
+                        <v-icon left>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
+                        {{ editMode ? "Done" : "Edit Layout" }}
+                    </v-btn>
+                    <v-btn @click="addItem" v-if="editMode" color="orange">
+                        <v-icon left>{{ mdiViewGridPlus }}</v-icon>
+                        Add Cell
+                    </v-btn>
+                    <v-btn @click="clearAllItems" v-if="editMode" color="red">
+                        <v-icon left>{{ icons.mdiClose }}</v-icon>
+                        Clear All
+                    </v-btn>
+                    <v-btn>
+                        <v-icon left>{{ icons.mdiGridLarge }}</v-icon>
+                        Presets
+                    </v-btn>
+                </div>
+                <v-btn icon @click="collapseToolbar = true">
+                    <v-icon>{{ icons.mdiChevronUp }}</v-icon>
+                </v-btn>
+            </v-toolbar>
+            <v-btn v-else @click="collapseToolbar = false" class="open-toolbar-btn" tile small>
+                <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+            </v-btn>
+        </transition>
         <grid-layout
             :layout.sync="layout"
             :col-num="12"
@@ -10,6 +40,8 @@
             :responsive="false"
             :vertical-compact="false"
             :prevent-collision="true"
+            :margin="[5, 5]"
+            :maxRows="64"
             @layout-updated="layoutUpdatedEvent"
         >
             <grid-item
@@ -48,9 +80,19 @@
                         >
                             + <v-icon>{{ mdiMessage }}</v-icon>
                         </v-btn>
+                        <v-spacer />
+                        <v-btn @click="removeItemById(item.i)">
+                            <v-icon>{{ icons.mdiClose }}</v-icon>
+                        </v-btn>
+                        <v-icon style="position: absolute; bottom: 5px; right: 5px" color="primary">
+                            {{ mdiResizeBottomRight }}
+                        </v-icon>
                     </template>
                     <template v-else-if="layoutContent[item.i]">
-                        <div class="mv-frame ma-auto" v-if="layoutContent[item.i].type === 'video'">
+                        <div
+                            class="mv-frame ma-auto"
+                            v-if="layoutContent[item.i].type === 'video' && layoutContent[item.i].content.id"
+                        >
                             <youtube
                                 :key="'ytplayer-' + item.i"
                                 :video-id="layoutContent[item.i].content.id"
@@ -84,7 +126,7 @@ import WatchFrame from "@/components/watch/WatchFrame";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat";
 // import { mapState } from "vuex";
-import { mdiMessage } from "@mdi/js";
+import { mdiMessage, mdiResizeBottomRight, mdiViewGridPlus } from "@mdi/js";
 
 export default {
     name: "MultiView",
@@ -98,16 +140,13 @@ export default {
     },
     data() {
         return {
-            // layout: [
-            //     { x: 0, y: 0, w: 2, h: 2, i: "0" },
-            //     { x: 2, y: 0, w: 2, h: 4, i: "1" },
-            //     { x: 4, y: 0, w: 2, h: 5, i: "2" },
-            //     { x: 6, y: 0, w: 2, h: 3, i: "3" },
-            // ],
             editMode: false,
             index: 0,
             showSelectorForId: -1,
             mdiMessage,
+            mdiResizeBottomRight,
+            mdiViewGridPlus,
+            collapseToolbar: false,
         };
     },
     mounted() {},
@@ -135,11 +174,13 @@ export default {
         },
         activeVideos() {
             const active = [];
-            Object.keys(this.layoutContent).forEach((key) => {
-                if (this.layoutContent[key] && this.layoutContent[key].type === "video") {
-                    active.push(this.layoutContent[key].content);
-                }
-            });
+            this.layout
+                .map((item) => item.i)
+                .forEach((key) => {
+                    if (this.layoutContent[key] && this.layoutContent[key].type === "video") {
+                        active.push(this.layoutContent[key].content);
+                    }
+                });
             return active;
         },
     },
@@ -167,6 +208,15 @@ export default {
         },
         layoutUpdatedEvent(newLayout) {
             this.$store.commit("multiview/setLayout", newLayout);
+        },
+        removeItemById(i) {
+            this.$store.commit("multiview/removeLayoutItem", i);
+        },
+        clearAllItems() {
+            this.$store.commit("multiview/resetState");
+        },
+        addItem() {
+            this.$store.commit("multiview/addLayoutItem");
         },
         handleOutside(e) {
             console.log(e);
@@ -207,5 +257,23 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+.mv-toolbar-btn .v-btn {
+    margin-right: 4px;
+}
+.open-toolbar-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
 }
 </style>

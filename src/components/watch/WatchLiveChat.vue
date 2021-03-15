@@ -137,6 +137,7 @@ export default {
 .watch-live-chat.fluid {
     width: 100%;
     height: 100%;
+    min-height: 0px !important;
 }
 
 .embedded-chat {

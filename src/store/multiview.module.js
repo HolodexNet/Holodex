@@ -13,12 +13,8 @@ const initialState = {
     // isLoading: true,
     // hasError: false,
     // comments: [],
-    layout: [
-        { x: 0, y: 0, w: 2, h: 2, i: "0" },
-        { x: 2, y: 0, w: 2, h: 4, i: "1" },
-        { x: 4, y: 0, w: 2, h: 5, i: "2" },
-        { x: 6, y: 0, w: 2, h: 3, i: "3" },
-    ],
+    layout: [],
+    index: 3,
     layoutContent: {},
 };
 
@@ -56,6 +52,21 @@ const mutations = {
     setLayoutContent(state, payload) {
         const { id, content } = payload;
         Vue.set(state.layoutContent, id, content);
+    },
+    addLayoutItem(state) {
+        state.layout.push({
+            x: 0,
+            y: 0, // puts it at the bottom
+            w: 4,
+            h: 6,
+            i: state.index,
+        });
+        // Increment the counter to ensure key is always unique.
+        state.index += 1;
+    },
+    removeLayoutItem(state, id) {
+        const index = state.layout.map((item) => item.i).indexOf(id);
+        state.layout.splice(index, 1);
     },
     deleteLayoutContent(state, id) {
         Vue.delete(state.layoutContent, id);
