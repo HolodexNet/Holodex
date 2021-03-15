@@ -26,6 +26,8 @@
                         :colSize="colSize"
                         :active="video.id === activeId"
                         :style="`padding-bottom: calc(${hideThumbnail ? '56.25%' : ''} + 88px)`"
+                        :disableDefaultClick="disableDefaultClick"
+                        @videoClicked="handleVideoClick"
                     >
                         <!-- pass slot to each individual video card -->
                         <template v-slot:action>
@@ -42,6 +44,8 @@
                     :colSize="colSize"
                     :active="video.id === activeId"
                     :style="`padding-bottom: calc(${hideThumbnail ? '56.25%' : ''} + 88px)`"
+                    @videoClicked="handleVideoClick"
+                    :disableDefaultClick="disableDefaultClick"
                     v-else
                 >
                     <!-- pass slot to each individual video card -->
@@ -142,6 +146,11 @@ export default {
             type: Boolean,
             default: false,
         },
+        // to be used in conjunction with videoClicked event
+        disableDefaultClick: {
+            type: Boolean,
+            default: false,
+        },
         // pagination/infinite key prop
         identifier: {
             required: false,
@@ -171,6 +180,9 @@ export default {
     methods: {
         emitLoad($state) {
             this.$emit("load", $state);
+        },
+        handleVideoClick(video) {
+            this.$emit("videoClicked", video);
         },
     },
     watch: {

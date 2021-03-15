@@ -203,7 +203,7 @@ export default {
 
 .tl-body {
     overflow-y: auto;
-    height: 25vh;
+    height: 20vh;
 }
 
 .tl-overlay {
