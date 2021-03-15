@@ -1,7 +1,12 @@
 <template>
     <v-sheet
         class="watch-live-chat"
-        :class="{ 'fixed-bottom': fixedBottom, 'fixed-right': fixedRight, 'show-tl-overlay': showTL }"
+        :class="{
+            'fixed-bottom': fixedBottom,
+            'fixed-right': fixedRight,
+            'show-tl-overlay': showTL,
+            fluid: fluid,
+        }"
     >
         <span class="loading-text">Loading Chat...</span>
         <WatchLiveTranslations
@@ -49,6 +54,10 @@ export default {
             default: false,
         },
         fixedRight: {
+            type: Boolean,
+            default: false,
+        },
+        fluid: {
             type: Boolean,
             default: false,
         },
@@ -125,6 +134,11 @@ export default {
     border: solid 1px rgba(255, 255, 255, 0.1);
 }
 
+.watch-live-chat.fluid {
+    width: 100%;
+    height: 100%;
+}
+
 .embedded-chat {
     position: relative;
     width: 100%;
@@ -133,11 +147,12 @@ export default {
 
 /* tl box static size of 200 px */
 .watch-live-chat.show-tl-overlay .embedded-chat {
-    height: calc(100% - 20vh);
+    /* body: 200px, header: 38px */
+    height: calc(100% - 200px - 38px);
 }
 
 .watch-live-chat.show-tl-overlay .tl-overlay .tl-body {
-    height: 20vh;
+    height: 200px;
 }
 
 /* Fixed Bottom */

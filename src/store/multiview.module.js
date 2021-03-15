@@ -19,7 +19,7 @@ const initialState = {
         { x: 4, y: 0, w: 2, h: 5, i: "2" },
         { x: 6, y: 0, w: 2, h: 3, i: "3" },
     ],
-    layoutVideos: {},
+    layoutContent: {},
 };
 
 export const state = { ...initialState };
@@ -53,12 +53,12 @@ const mutations = {
     setLayout(state, layout) {
         state.layout = layout;
     },
-    setLayoutVideo(state, payload) {
-        const { id, video } = payload;
-        Vue.set(state.layoutVideos, id, video);
+    setLayoutContent(state, payload) {
+        const { id, content } = payload;
+        Vue.set(state.layoutContent, id, content);
     },
-    deleteLayoutVideo(state, id) {
-        Vue.delete(state.layoutVideos, id);
+    deleteLayoutContent(state, id) {
+        Vue.delete(state.layoutContent, id);
     },
     // updateLayoutId(state, id, obj) {
     //     Vue.set(state.layout, )
