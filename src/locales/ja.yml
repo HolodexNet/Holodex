@@ -30,6 +30,7 @@ component:
     logout: ログアウト
     accountSettings: ''
     music: ''
+    multiview: MultiView
   videoCard:
     clips: '{n}本の切り抜き'
     liveNow: 配信中

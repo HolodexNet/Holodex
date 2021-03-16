@@ -30,6 +30,7 @@ component:
     logout: Выйти
     accountSettings: ''
     music: ''
+    multiview: Мультипросмотр
   videoCard:
     clips: 0 клипов | {n} клип | {n} клипа | {n} клипов
     watching: '{0} смотрят'

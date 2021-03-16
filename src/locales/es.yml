@@ -1,8 +1,8 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: "Ha ocurrido un error recuperando el contenido, por favor revisa Twitter "
-    textAfterTwitter: " O reporta el error a través de la"
+    textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
+    textAfterTwitter: ' O reporta el error a través de la'
     aboutPage: Página de información
   channelList:
     otherText: Otros
@@ -10,9 +10,9 @@ component:
     signInToFavorite: Registrate para marcar como favorito
     unfavoriteAllInGroup: Desmarcar todos como favoritos
   channelInfo:
-    videoCount: "{0} Videos"
-    clipCount: "{n} Clips"
-    subscriberCount: "{n} Subscriptores"
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} Subscriptores'
     subscriberNA: Contador de subscriptores no disponible
     totalViews: Visualizaciones totales
   channelSocials:
@@ -28,11 +28,12 @@ component:
     MugenClips: MugenClips
     login: Iniciar Sesión
     logout: Cerrar Sesión
-    accountSettings: "Ajustes de Cuenta"
-    music: "Música"
+    accountSettings: Ajustes de Cuenta
+    music: Música
+    multiview: Multivista
   videoCard:
-    clips: "{n} Clips"
-    watching: "{0} Mirando"
+    clips: '{n} Clips'
+    watching: '{0} Mirando'
     liveNow: En Vivo
   videoDescription:
     description: Descripción
@@ -51,7 +52,7 @@ component:
   video:
     comment:
       openOnYoutube: Abrir comentario en
-      openOnYoutubeAfter: ""
+      openOnYoutubeAfter: ''
   watch:
     streamingFor: En directo durante {0}
     nextUpInMugen: Siguiente
@@ -64,18 +65,18 @@ component:
     newer: Más recientes
     older: Más antiguas
   channelMusic:
-    recentSongsHeader: "Canciones Recientes"
-    weeklyTopPlaysHeader: "Mas Reproducidas Semanalmente"
+    recentSongsHeader: Canciones Recientes
+    weeklyTopPlaysHeader: Mas Reproducidas Semanalmente
   music:
-    clearPlaylist: "Limpiar"
+    clearPlaylist: Limpiar
   orgMusic:
-    monthlyTopForOrg: "Mas Reproducidas Mensualmente para {0}"
-    weeklyTopForOrg: "Mas Reproducidas Semanalmente para {0}"
+    monthlyTopForOrg: Mas Reproducidas Mensualmente para {0}
+    weeklyTopForOrg: Mas Reproducidas Semanalmente para {0}
   songList:
-    sangOnTime: "Cantado en"
-    songCoveredBy: "Interpretado por"
-    songDuration: "Duración"
-    songTitle: "Titulo"
+    sangOnTime: Cantado en
+    songCoveredBy: Interpretado por
+    songDuration: Duración
+    songTitle: Titulo
 views:
   channels:
     channelType:
@@ -120,7 +121,7 @@ views:
       all: Todos
       official: Oficial
       clip: Clip
-    unsupportedQuery: ""
+    unsupportedQuery: ''
   settings:
     title: Opciones
     darkModeLabel: Modo Oscuro
@@ -154,56 +155,66 @@ views:
     saveToLibrary: Guardar el video en la Biblioteca
     theaterMode: Modo Teatro
     chat:
-      StickBottomSettingLabel: "Pegar abajo (Mobiles)"
-      StickBottomSettingsDesc: "TL box se pega abajo del chat (por defecto se pega arriba en mobiles)"
-      TLSettingsTitle: "Opciones de TL"
-      hideTLBtn: "Esconder TLs"
-      loading: "Cargando el chat..."
-      retryBtn: "Reintentar"
-      showTLBtn: "Mostrar TLs"
+      StickBottomSettingLabel: Pegar abajo (Mobiles)
+      StickBottomSettingsDesc: TL box se pega abajo del chat (por defecto se pega arriba en mobiles)
+      TLSettingsTitle: Opciones de TL
+      hideTLBtn: Esconder TLs
+      loading: Cargando el chat...
+      retryBtn: Reintentar
+      showTLBtn: Mostrar TLs
       status:
-        connectedToChat: "Conectado al chat de traducciones"
-        notLive: "El stream no está en vivo todavía, por favor intenta de nuevo cuando falten 15 minutos para comenzar"
-        reconnectFailed: "No se pudo reconectar"
-        reconnecting: "Reconectando automaticamente..."
-    mentionIconLabel: "MENCIONES"
+        connectedToChat: Conectado al chat de traducciones
+        notLive: >-
+          El stream no está en vivo todavía, por favor intenta de nuevo cuando
+          falten 15 minutos para comenzar
+        reconnectFailed: No se pudo reconectar
+        reconnecting: Reconectando automaticamente...
+    mentionIconLabel: MENCIONES
   favorites:
     promptForAction: >-
       Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en
       esta pagina
   editor:
-    needlogin: "Necesitas iniciar sesión para editar metadata de video y audio de Holodex"
+    needlogin: Necesitas iniciar sesión para editar metadata de video y audio de Holodex
   login:
-    apikeyMsg: "Puedes usar API key para consultar Holodex API programaticamente. Solo una key por cuenta. Después de conseguir una nueva key, la key vieja expirará entre 0-24 horas"
-    apikeyNew: "Obtener nueva API Key"
-    apikeyResetConfirm1: "¿Estas seguro de que quieres reiniciar tu API Key?"
-    apikeyResetConfirm2: "La API key antigua tendrá 0-24 horas antes de expirar. ¿De verdad reiniciar?"
-    apikeyResetNvm: "Nada interesante pasó"
-    futureYtcOwnerMessage: "En el futuro, planeamos proveer mas servicios a dueños de canales como editar metadata para sus propios videos"
-    linkAcc: "Vincular otra cuenta"
-    ownedYtChannel: "Canal de Youtube en propiedad"
+    apikeyMsg: >-
+      Puedes usar API key para consultar Holodex API programaticamente. Solo una
+      key por cuenta. Después de conseguir una nueva key, la key vieja expirará
+      entre 0-24 horas
+    apikeyNew: Obtener nueva API Key
+    apikeyResetConfirm1: ¿Estas seguro de que quieres reiniciar tu API Key?
+    apikeyResetConfirm2: >-
+      La API key antigua tendrá 0-24 horas antes de expirar. ¿De verdad
+      reiniciar?
+    apikeyResetNvm: Nada interesante pasó
+    futureYtcOwnerMessage: >-
+      En el futuro, planeamos proveer mas servicios a dueños de canales como
+      editar metadata para sus propios videos
+    linkAcc: Vincular otra cuenta
+    ownedYtChannel: Canal de Youtube en propiedad
 time:
   diff_future_date: Inicia {0} ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
   soon: Proximamente
 editor:
   music:
-    add: "Añadir"
-    endInput: "Actualizar"
-    itunesLookupPlaceholder: "(Opcional) Buscar en iTunes"
-    moveLeft2s: "Mover a izquierda 2s"
-    moveRight2s: "Mover a derecha 2s"
-    originalArtistInput: "Artista Original"
+    add: Añadir
+    endInput: Actualizar
+    itunesLookupPlaceholder: (Opcional) Buscar en iTunes
+    moveLeft2s: Mover a izquierda 2s
+    moveRight2s: Mover a derecha 2s
+    originalArtistInput: Artista Original
     permission: >-
-      Necesitas ser un usuario de nivel 'Editor' o mas oara actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text'
+      Necesitas ser un usuario de nivel 'Editor' o mas oara actualizar o borrar
+      canciones existentes. Por favor contactanos en <a class='white--text'
         href='/about'>discord</a> para notificar editores de problemas/abuso, o aplicar para volverse un editor
-    setToCurrentTime: "Establecer a tiempo actual ({0})"
-    startInput: "Iniciar"
-    testEnd: "Prueba de escucha iniciando 3 segundos antes del final"
-    testStart: "Prueba para iniciar"
+    setToCurrentTime: Establecer a tiempo actual ({0})
+    startInput: Iniciar
+    testEnd: Prueba de escucha iniciando 3 segundos antes del final
+    testStart: Prueba para iniciar
     titles:
-      addSong: "Metada de canciones: Añadir nueva canción"
-      help: "Guia"
-      songList: "Lista de canciones : {0}"
-    trackNameInput: "Nombre de la canción"
-    update: "Actualizar"
+      addSong: 'Metada de canciones: Añadir nueva canción'
+      help: Guia
+      songList: 'Lista de canciones : {0}'
+    trackNameInput: Nombre de la canción
+    update: Actualizar
