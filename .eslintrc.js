@@ -39,6 +39,7 @@ module.exports = {
             },
         ],
     },
+    ignorePatterns: ["src/external/**"],
     settings: {
         "import/resolver": {
             alias: {
