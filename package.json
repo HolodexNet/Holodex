@@ -7,6 +7,9 @@
     "build": "vue-cli-service build --modern",
     "lint": "vue-cli-service lint"
   },
+  "workspaces": [
+    "src/external/vue-grid-layout"
+  ],
   "prettier": {
     "tabWidth": 4,
     "semi": true,
@@ -40,7 +43,6 @@
     "string-similarity": "^4.0.4",
     "vue": "^2.6.11",
     "vue-google-oauth2": "^1.5.5",
-    "vue-grid-layout": "^2.3.12",
     "vue-gtag": "^1.10.0",
     "vue-i18n": "^8.22.4",
     "vue-linkify": "^1.0.1",
@@ -56,7 +58,9 @@
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
+    "@babel/eslint-parser": "^7.13.10",
     "@babel/preset-env": "^7.12.11",
+    "@babel/preset-flow": "^7.12.13",
     "@kazupon/vue-i18n-loader": "^0.5.0",
     "@vue/cli-plugin-babel": "^4.5.11",
     "@vue/cli-plugin-eslint": "^4.5.11",
@@ -65,8 +69,8 @@
     "@vue/cli-plugin-vuex": "^4.5.11",
     "@vue/cli-service": "^4.5.11",
     "@vue/eslint-config-prettier": "^6.0.0",
-    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
+    "babel-plugin-transform-flow-comments": "^6.7.0",
     "eslint": "^7.18.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-alias": "^1.1.2",

@@ -10,9 +10,9 @@ component:
     unfavoriteAllInGroup: 取消收藏本群組所有頻道
     favoriteAllInGroup: 收藏本群組所有頻道
   channelInfo:
-    videoCount: "{0} 部影片"
-    clipCount: "{n} 部剪輯"
-    subscriberCount: "{n} 位訂閱者"
+    videoCount: '{0} 部影片'
+    clipCount: '{n} 部剪輯'
+    subscriberCount: '{n} 位訂閱者'
     subscriberNA: 無法取得訂閱者數據
     totalViews: 總觀看次數
   channelSocials:
@@ -30,9 +30,10 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: 帳號設定
     music: 音樂播放
+    multiview: 多窗工具
   videoCard:
-    clips: "{n} 部剪輯"
-    watching: "{0} 人正在觀看"
+    clips: '{n} 部剪輯'
+    watching: '{0} 人正在觀看'
     liveNow: 實況中
   videoDescription:
     description: 影片資訊
@@ -69,8 +70,8 @@ component:
   music:
     clearPlaylist: 清除播放清單
   orgMusic:
-    monthlyTopForOrg: "{0} 本月熱門歌曲"
-    weeklyTopForOrg: "{0} 本週熱門歌曲"
+    monthlyTopForOrg: '{0} 本月熱門歌曲'
+    weeklyTopForOrg: '{0} 本週熱門歌曲'
   songList:
     sangOnTime: 演唱時間
     songCoveredBy: 翻唱者
@@ -181,12 +182,14 @@ views:
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
 editor:
   music:
     add: 加入歌曲
     update: 更新
-    permission: 您需要擁有或取得高於「編輯者」身分組的權限才能更新/刪除歌曲。請至 <a class='white--text' href='/about'>Discord社群</a> 申請成為編輯者或是回報任何問題。
+    permission: >-
+      您需要擁有或取得高於「編輯者」身分組的權限才能更新/刪除歌曲。請至 <a class='white--text'
+      href='/about'>Discord社群</a> 申請成為編輯者或是回報任何問題。
     titles:
       addSong: 歌曲資料：新增歌曲
       songList: 歌曲清單：{0}

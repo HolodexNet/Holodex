@@ -30,6 +30,7 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: ''
     music: ''
+    multiview: Multi-telas
   videoCard:
     clips: '{n} Clipes'
     watching: '{0} assistindo agora'

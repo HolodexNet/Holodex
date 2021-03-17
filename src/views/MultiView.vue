@@ -119,7 +119,7 @@
 <script>
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
-import VueGridLayout from "vue-grid-layout";
+import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
 import VideoSelector from "@/components/multiview/VideoSelector";
 import { getVideoThumbnails } from "@/utils/functions";
 import WatchFrame from "@/components/watch/WatchFrame";
@@ -131,8 +131,8 @@ import { mdiMessage, mdiResizeBottomRight, mdiViewGridPlus } from "@mdi/js";
 export default {
     name: "MultiView",
     components: {
-        GridLayout: VueGridLayout.GridLayout,
-        GridItem: VueGridLayout.GridItem,
+        GridLayout,
+        GridItem,
         VideoSelector,
         WatchFrame,
         WatchLiveChat,

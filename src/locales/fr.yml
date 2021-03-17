@@ -35,6 +35,7 @@ component:
     settings: Paramètres
     accountSettings: ''
     music: ''
+    multiview: Multivue
   relatedVideo:
     clipsLabel: clips
     refersLabel: références

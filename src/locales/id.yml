@@ -1,8 +1,8 @@
 component:
   apiError:
     title: Maafkeun
-    textBeforeTwitter: "Ada kesalahan saat memuat konten, silahkan cek twitter "
-    textAfterTwitter: " atau laporkan hal ini melalui"
+    textBeforeTwitter: 'Ada kesalahan saat memuat konten, silahkan cek twitter '
+    textAfterTwitter: ' atau laporkan hal ini melalui'
     aboutPage: halaman tentang
   channelList:
     otherText: Lainnya
@@ -10,9 +10,9 @@ component:
     signInToFavorite: Masuk untuk menambahkan favorit
     unfavoriteAllInGroup: Unfavoritkan semua dalam grup
   channelInfo:
-    videoCount: "{0} Video"
-    clipCount: "{n} Klip"
-    subscriberCount: "{n} Subscribers"
+    videoCount: '{0} Video'
+    clipCount: '{n} Klip'
+    subscriberCount: '{n} Subscribers'
     subscriberNA: Jumlah Subscriber tidak tersedia
     totalViews: Jumlah Ditonton
   channelSocials:
@@ -28,11 +28,12 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     login: Masuk
     logout: Keluar
-    accountSettings: "Pengaturan Akun"
-    music: "Musik"
+    accountSettings: Pengaturan Akun
+    music: Musik
+    multiview: ''
   videoCard:
-    clips: "{n} Klip"
-    watching: "{0} sedang menonton"
+    clips: '{n} Klip'
+    watching: '{0} sedang menonton'
     liveNow: Sedang Berlangsung
   videoDescription:
     description: Deskripsi
@@ -51,7 +52,7 @@ component:
   video:
     comment:
       openOnYoutube: Buka komentar di
-      openOnYoutubeAfter: ""
+      openOnYoutubeAfter: ''
   watch:
     streamingFor: Streaming selama {0}
     nextUpInMugen: Selanjutnya
@@ -64,18 +65,18 @@ component:
     newer: Terbaru
     older: Terlama
   channelMusic:
-    recentSongsHeader: "Lagu Terkini"
-    weeklyTopPlaysHeader: "Lagu Populer Mingguan"
+    recentSongsHeader: Lagu Terkini
+    weeklyTopPlaysHeader: Lagu Populer Mingguan
   music:
-    clearPlaylist: "Hapus"
+    clearPlaylist: Hapus
   orgMusic:
-    monthlyTopForOrg: "Lagu Populer Bulanan dari {0}"
-    weeklyTopForOrg: "Lagu Populer Mingguan dari {0}"
+    monthlyTopForOrg: Lagu Populer Bulanan dari {0}
+    weeklyTopForOrg: Lagu Populer Mingguan dari {0}
   songList:
-    sangOnTime: "Dinyanyikan pada"
-    songCoveredBy: "Dinyanyikan oleh"
-    songDuration: "Durasi"
-    songTitle: "Judul"
+    sangOnTime: Dinyanyikan pada
+    songCoveredBy: Dinyanyikan oleh
+    songDuration: Durasi
+    songTitle: Judul
 views:
   channels:
     channelType:
@@ -145,7 +146,7 @@ views:
     autoplayVideoLabel: Video Putar Otomatis
     autoplayVideoMsg: Aktifkan pemutaran otomatis video
     resetAllSettings: Reset Semua Pengaturan/Data
-    clipLanguageSelection: "Melihat Klip dalam bahasa berikut:"
+    clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
   about:
     add_my_channel: Tambah channel saya ke Holodex
   app:
@@ -159,61 +160,69 @@ views:
     saveToLibrary: Simpan video ke koleksi
     theaterMode: Mode Teater
     chat:
-      StickBottomSettingLabel: "Sematkan dibawah (HP)"
-      StickBottomSettingsDesc: "Kolom Terjemahan akan disematkan dibawah kolom chat (pengaturan awal disematkan diatas pada tampilan HP)"
-      TLSettingsTitle: "Pengaturan Terjemahan"
-      hideTLBtn: "Sembunyikan Terjemahan"
-      loading: "Memuat Chat..."
-      retryBtn: "Coba lagi"
-      showTLBtn: "Tampilkan Terjemahan"
+      StickBottomSettingLabel: Sematkan dibawah (HP)
+      StickBottomSettingsDesc: >-
+        Kolom Terjemahan akan disematkan dibawah kolom chat (pengaturan awal
+        disematkan diatas pada tampilan HP)
+      TLSettingsTitle: Pengaturan Terjemahan
+      hideTLBtn: Sembunyikan Terjemahan
+      loading: Memuat Chat...
+      retryBtn: Coba lagi
+      showTLBtn: Tampilkan Terjemahan
       status:
-        connectedToChat: "Terhubung ke chat terjemahan"
+        connectedToChat: Terhubung ke chat terjemahan
         notLive: >-
-          Saat ini Streaming belum dimulai, coba lagi nanti setelah stream 15 menit dimulai
-        reconnectFailed: "Tidak dapat menghubungkan"
-        reconnecting: "Menghubungkan otomatis..."
-    mentionIconLabel: "MENTION"
+          Saat ini Streaming belum dimulai, coba lagi nanti setelah stream 15
+          menit dimulai
+        reconnectFailed: Tidak dapat menghubungkan
+        reconnecting: Menghubungkan otomatis...
+    mentionIconLabel: MENTION
   favorites:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada
       halaman ini.
   editor:
-    needlogin: "Kamu harus masuk untuk mengubah metadata video dan lagu di Holodex."
+    needlogin: Kamu harus masuk untuk mengubah metadata video dan lagu di Holodex.
   login:
     apikeyMsg: >-
-      Kamu dapat menggunakan kunci API untuk Kueri Holodex API secara terprogram. Hanya satu kunci per akun. Setelah mendapat kunci baru, kunci lama akan kedaluwarsa dalam kurun 0-24
-      jam.'
-    apikeyNew: "Dapatkan Kunci API baru"
-    apikeyResetConfirm1: "Apa kamu yakin ingin mereset kunci API?"
-    apikeyResetConfirm2: "Kunci API lama akan membutuhkan waktu 0-24 jam sebelum kedaluwarsa. Yakin untuk direset?"
-    apikeyResetNvm: "Tidak terjadi apapun."
+      Kamu dapat menggunakan kunci API untuk Kueri Holodex API secara
+      terprogram. Hanya satu kunci per akun. Setelah mendapat kunci baru, kunci
+      lama akan kedaluwarsa dalam kurun 0-24 jam.'
+    apikeyNew: Dapatkan Kunci API baru
+    apikeyResetConfirm1: Apa kamu yakin ingin mereset kunci API?
+    apikeyResetConfirm2: >-
+      Kunci API lama akan membutuhkan waktu 0-24 jam sebelum kedaluwarsa. Yakin
+      untuk direset?
+    apikeyResetNvm: Tidak terjadi apapun.
     futureYtcOwnerMessage: >-
-      Kedepannya, kami berencana untuk menyediakan pelayanan bagi pemilik channel seperti mengubah metadata video unggahan
-      mereka sendiri.
-    linkAcc: "Sambungkan akun lain"
-    ownedYtChannel: "Memiliki Channel YouTube"
+      Kedepannya, kami berencana untuk menyediakan pelayanan bagi pemilik
+      channel seperti mengubah metadata video unggahan mereka sendiri.
+    linkAcc: Sambungkan akun lain
+    ownedYtChannel: Memiliki Channel YouTube
 time:
   diff_future_date: Mulai {0} ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
   soon: segera mulai
 editor:
   music:
-    add: "Tambah"
-    endInput: "Durasi dalam detik: (berakhir pd {0})"
-    itunesLookupPlaceholder: "(Opsional) Cari di iTunes"
-    moveLeft2s: "Geser kiri 2detik"
-    moveRight2s: "Geser kanan 2detik"
-    originalArtistInput: "Penyanyi Asli"
+    add: Tambah
+    endInput: 'Durasi dalam detik: (berakhir pd {0})'
+    itunesLookupPlaceholder: (Opsional) Cari di iTunes
+    moveLeft2s: Geser kiri 2detik
+    moveRight2s: Geser kanan 2detik
+    originalArtistInput: Penyanyi Asli
     permission: >-
-      Kamu perlu level pengguna 'Editor' atau lebih tinggi untuk memperbarui atau menghapus lagu yang sudah ada. Hubungi kami di <a class='white--text'
-      href='/about'>discord</a> untuk memberitau masalah/penyalahgunaan mengenai editor, atau mengajukan diri menjadi editor.
-    setToCurrentTime: "Setel ke waktu sekarang ({0})"
-    startInput: "Mulai"
-    testEnd: "Uji ketepatan akhiran dimulai pada 3 detik sebelum berakhir."
-    testStart: "Uji awal mulai"
+      Kamu perlu level pengguna 'Editor' atau lebih tinggi untuk memperbarui
+      atau menghapus lagu yang sudah ada. Hubungi kami di <a class='white--text'
+      href='/about'>discord</a> untuk memberitau masalah/penyalahgunaan mengenai
+      editor, atau mengajukan diri menjadi editor.
+    setToCurrentTime: Setel ke waktu sekarang ({0})
+    startInput: Mulai
+    testEnd: Uji ketepatan akhiran dimulai pada 3 detik sebelum berakhir.
+    testStart: Uji awal mulai
     titles:
-      addSong: "Metadata Lagu: Tambahkan lagu baru"
-      help: "Bantuan"
-      songList: "Daftar Lagu : {0}"
-    trackNameInput: "Judul Lagu"
-    update: "Perbarui"
+      addSong: 'Metadata Lagu: Tambahkan lagu baru'
+      help: Bantuan
+      songList: 'Daftar Lagu : {0}'
+    trackNameInput: Judul Lagu
+    update: Perbarui
