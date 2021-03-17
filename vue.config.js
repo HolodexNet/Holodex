@@ -34,7 +34,7 @@ module.exports = {
         msTileColor: "#42a5f5",
         appleMobileWebAppCapable: "yes",
         manifestOptions: {
-            display: "fullscreen",
+            display: "standalone",
             backgroundColor: "#215183",
         },
         appleMobileWebAppStatusBarStyle: "black-translucent",
