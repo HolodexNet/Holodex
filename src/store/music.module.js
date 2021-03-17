@@ -37,7 +37,8 @@ const mutations = {
         state.isOpen = false;
     },
     addSong(state, song) {
-        state.playlist.push(song);
+        if (Array.isArray(song)) state.playlist.push(...song);
+        else state.playlist.push(song);
         // not sure why it started getting stuck.
         if (state.currentId >= state.playlist.length) state.currentId = state.playlist.length - 1;
         // state.isOpen = true;

@@ -28,6 +28,8 @@ export {
     mdiPencil, // for changing language
     mdiPlay,
     mdiPlaylistMusic,
+    mdiPlaylistPlus,
+    mdiDatabaseOff,
     mdiRefresh,
     mdiStarFourPointsOutline,
     mdiTwitter,

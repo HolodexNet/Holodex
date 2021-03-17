@@ -3,7 +3,10 @@
         <v-row>
             <v-col cols="12 mb-0 pb-0">
                 <v-card-title>
-                    <span class="text-h5">{{ $t("component.orgMusic.monthlyTopForOrg", [currentOrg]) }}</span>
+                    <span class="text-h5 mr-3">{{ $t("component.orgMusic.monthlyTopForOrg", [currentOrg]) }}</span>
+                    <v-btn fab color="primary" @click="$store.commit('music/addSong', popularMonthlySongs)">
+                        <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
+                    </v-btn>
                 </v-card-title>
                 <carousel
                     :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
@@ -24,11 +27,15 @@
                             :key="'clist3' + idx"
                         ></song-item-card>
                     </template>
+                    <v-icon disabled v-if="popularMonthlySongs.length === 0">{{ icons.mdiDatabaseOff }}</v-icon>
                 </carousel>
             </v-col>
             <v-col cols="12" class="my-0 py-0">
                 <v-card-title>
-                    <span class="text-h5">{{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg]) }}</span>
+                    <span class="text-h5 mr-3">{{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg]) }}</span>
+                    <v-btn fab color="primary" @click="$store.commit('music/addSong', popularWeeklySongs)">
+                        <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
+                    </v-btn>
                 </v-card-title>
                 <carousel
                     :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
@@ -49,12 +56,18 @@
                             :key="'clist4' + idx"
                         ></song-item-card>
                     </template>
+                    <v-icon disabled v-if="popularWeeklySongs.length === 0">{{ icons.mdiDatabaseOff }}</v-icon>
                 </carousel>
             </v-col>
             <v-col cols="12" class="my-0 py-0">
                 <v-card-title>
-                    <span class="text-h5">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
+                    <span class="text-h5 mr-3">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
+                    <v-btn fab color="primary" @click="$store.commit('music/addSong', recentSongs)">
+                        <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
+                    </v-btn>
+
                     <v-spacer></v-spacer>
+
                     <v-text-field
                         v-model="search"
                         :append-icon="icons.mdiMagnify"
