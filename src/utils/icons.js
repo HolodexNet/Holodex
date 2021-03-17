@@ -43,4 +43,5 @@ export {
     mdiChevronUp,
     mdiChevronLeft,
     mdiChevronRight,
+    mdiFullscreen,
 } from "@mdi/js";

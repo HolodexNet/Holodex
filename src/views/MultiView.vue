@@ -1,31 +1,37 @@
 <template>
-    <div style="width: 100%">
+    <div style="width: 100%" ref="fullscreen-content">
+        <!-- Floating tool bar -->
         <transition name="slide-y-transition" mode="out-in">
             <v-toolbar dense class="mv-toolbar" style="right: 0" v-if="!collapseToolbar" absolute>
                 <v-app-bar-nav-icon @click="$router.push({ path: '/' })"></v-app-bar-nav-icon>
-                <div class="flex-grow-1 justify-center d-flex mv-toolbar-btn">
+                <div
+                    class="flex-grow-1 justify-center d-flex mv-toolbar-btn"
+                    :class="{ 'no-btn-text': $store.state.isMobile }"
+                >
+                    <v-btn @click="editMode = !editMode" :color="editMode ? 'green' : 'blue'">
+                        <v-icon>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
+                        <span class="collapsible-text">{{ editMode ? "Done" : "Edit" }}</span>
+                    </v-btn>
                     <v-btn @click="addItem" v-if="editMode" color="orange">
-                        <v-icon left>{{ mdiViewGridPlus }}</v-icon>
-                        Add Cell
+                        <v-icon>{{ mdiViewGridPlus }}</v-icon>
+                        <span class="collapsible-text">Add Cell</span>
                     </v-btn>
                     <v-btn @click="clearAllItems" v-if="editMode" color="red">
-                        <v-icon left>{{ icons.mdiClose }}</v-icon>
-                        Clear All
+                        <v-icon>{{ icons.mdiClose }}</v-icon>
+                        <span class="collapsible-text">Clear All</span>
                     </v-btn>
-                    <v-btn @click="editMode = !editMode" :color="editMode ? 'green' : 'blue'">
-                        <v-icon left>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
-                        {{ editMode ? "Done" : "Edit Layout" }}
+                    <v-btn v-if="!editMode">
+                        <v-icon>{{ icons.mdiGridLarge }}</v-icon>
+                        <span class="collapsible-text">Presets</span>
                     </v-btn>
-                    <v-btn>
-                        <v-icon left>{{ icons.mdiGridLarge }}</v-icon>
-                        Presets
+                    <v-btn @click="toggleFullScreen">
+                        <v-icon>{{ icons.mdiFullscreen }}</v-icon>
                     </v-btn>
-
                     <v-dialog v-model="shareDialog" width="400">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn v-bind="attrs" v-on="on">
-                                <v-icon left>{{ mdiLinkVariant }}</v-icon>
-                                Share
+                            <v-btn v-bind="attrs" v-on="on" v-show="!editMode">
+                                <v-icon>{{ mdiLinkVariant }}</v-icon>
+                                <!-- <span class="collapsible-text">Share</span> -->
                             </v-btn>
                         </template>
 
@@ -56,10 +62,12 @@
                     <v-icon>{{ icons.mdiChevronUp }}</v-icon>
                 </v-btn>
             </v-toolbar>
-            <v-btn v-else @click="collapseToolbar = false" class="open-toolbar-btn" tile small>
+            <v-btn v-else @click="collapseToolbar = false" class="open-mv-toolbar-btn" tile small>
                 <v-icon>{{ icons.mdiChevronDown }}</v-icon>
             </v-btn>
         </transition>
+        <!-- Grid Layout -->
+        <!-- rowHeight = 100vh/colNum, makes layout consistent across different heights -->
         <grid-layout
             :layout.sync="layout"
             :col-num="24"
@@ -93,6 +101,7 @@
                         backgroundImage: getBackgroundForItem(item),
                     }"
                 >
+                    <!-- Edit mode content -->
                     <template v-if="editMode">
                         <div
                             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"
@@ -101,23 +110,26 @@
                             <v-icon x-large>{{ mdiMessage }}</v-icon> Live Chat
                         </div>
                         <!-- <span class="text">{{ item.i }}</span> -->
-                        <v-btn @click="showSelectorForId = item.i" class="mr-1">
-                            <v-icon>{{ icons.mdiPencil }}</v-icon>
-                        </v-btn>
-                        <v-btn
-                            @click="setItemAsChat(item)"
-                            v-if="!(layoutContent[item.i] && layoutContent[item.i].type === 'chat')"
-                        >
-                            + <v-icon>{{ mdiMessage }}</v-icon>
-                        </v-btn>
-                        <v-spacer />
-                        <v-btn @click="removeItemById(item.i)">
-                            <v-icon>{{ icons.mdiClose }}</v-icon>
-                        </v-btn>
+                        <div class="d-flex flex-wrap">
+                            <v-btn @click="showSelectorForId = item.i">
+                                <v-icon>{{ icons.mdiPencil }}</v-icon>
+                            </v-btn>
+                            <v-btn
+                                @click="setItemAsChat(item)"
+                                v-if="!(layoutContent[item.i] && layoutContent[item.i].type === 'chat')"
+                            >
+                                <v-icon>{{ mdiMessage }}</v-icon>
+                            </v-btn>
+                            <v-spacer />
+                            <v-btn @click="removeItemById(item.i)">
+                                <v-icon>{{ icons.mdiClose }}</v-icon>
+                            </v-btn>
+                        </div>
                         <v-icon style="position: absolute; bottom: 5px; right: 5px" color="primary">
                             {{ mdiResizeBottomRight }}
                         </v-icon>
                     </template>
+                    <!-- Video/Chat iFrame based on type -->
                     <template v-else-if="layoutContent[item.i]">
                         <div
                             class="mv-frame ma-auto"
@@ -131,7 +143,6 @@
                                 }"
                             >
                             </youtube>
-                            <!-- <WatchLiveChat :video="" /> -->
                         </div>
                         <template v-if="layoutContent[item.i].type === 'chat'">
                             <TabbedLiveChat :activeVideos="activeVideos" />
@@ -140,41 +151,20 @@
                 </v-card>
             </grid-item>
         </grid-layout>
+
+        <!-- Video Selector -->
         <v-dialog v-model="showOverlay">
             <VideoSelector @videoClicked="handleVideoClicked" />
         </v-dialog>
+
+        <!-- Confirmation for deleting layout -->
         <v-dialog v-model="overwriteDialog" width="400">
             <v-card>
-                <v-card-title>
-                    <!-- Share -->
-                </v-card-title>
                 <v-card-text> Overwrite Current Layout </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn
-                        color="primary"
-                        text
-                        @click="
-                            () => {
-                                overwriteDialog = false;
-                                overwriteConfirm();
-                            }
-                        "
-                    >
-                        Confirm
-                    </v-btn>
-                    <v-btn
-                        color="primary"
-                        text
-                        @click="
-                            () => {
-                                overwriteDialog = false;
-                                overwriteCancel();
-                            }
-                        "
-                    >
-                        Cancel
-                    </v-btn>
+                    <v-btn color="primary" text @click="overwriteConfirm"> Confirm </v-btn>
+                    <v-btn color="primary" text @click="overwriteCancel"> Cancel </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -186,13 +176,13 @@ import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
 import VideoSelector from "@/components/multiview/VideoSelector";
-import { getVideoThumbnails } from "@/utils/functions";
 import WatchFrame from "@/components/watch/WatchFrame";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat";
-// import { mapState } from "vuex";
 import { mdiMessage, mdiResizeBottomRight, mdiViewGridPlus, mdiLinkVariant, mdiClipboardPlusOutline } from "@mdi/js";
 import copyToClipboard from "@/mixins/copyToClipboard";
+import { encodeLayout, decodeLayout } from "@/utils/mv-layout";
+import { getVideoThumbnails } from "@/utils/functions";
 
 export default {
     name: "MultiView",
@@ -207,16 +197,16 @@ export default {
     mixins: [copyToClipboard],
     data() {
         return {
-            editMode: false,
-            index: 0,
-            showSelectorForId: -1,
             mdiMessage,
             mdiResizeBottomRight,
             mdiViewGridPlus,
             mdiClipboardPlusOutline,
-            collapseToolbar: false,
             mdiLinkVariant,
+
+            editMode: false,
+            showSelectorForId: -1,
             shareDialog: false,
+            collapseToolbar: false,
 
             overwriteDialog: false,
             overwriteCancel: null,
@@ -227,17 +217,22 @@ export default {
         if (this.$route.query.layout) {
             // TODO: verify layout
             try {
-                const parsed = this.decodeLayout(this.$route.query.layout);
+                const parsed = decodeLayout(this.$route.query.layout);
                 console.log(parsed);
                 if (parsed.layout && parsed.content) {
+                    // no layout, overwrite without asking
                     if (!this.layout || Object.keys(this.layout).length === 0) {
                         this.setMultiview(parsed);
                         return;
                     }
+
                     this.overwriteConfirm = () => {
+                        this.overwriteDialog = false;
                         this.setMultiview(parsed);
                     };
                     this.overwriteCancel = () => {
+                        this.overwriteDialog = false;
+                        // clear out query on cancel
                         this.$router.replace({ path: this.$route.path });
                     };
                     this.overwriteDialog = true;
@@ -246,22 +241,16 @@ export default {
                 console.log("invalid layout");
             }
         }
-
-        // console.log(this.decodeLayout(this.encodeLayout(this.layout)));
     },
     created() {
         Vue.use(VueYouTubeEmbed);
     },
     computed: {
-        layout: {
-            get() {
-                return this.$store.state.multiview.layout;
-            },
+        layout() {
+            return this.$store.state.multiview.layout;
         },
-        layoutContent: {
-            get() {
-                return this.$store.state.multiview.layoutContent;
-            },
+        layoutContent() {
+            return this.$store.state.multiview.layoutContent;
         },
         showOverlay: {
             get() {
@@ -283,7 +272,12 @@ export default {
             return active;
         },
         exportLayout() {
-            const query = `?layout=${encodeURIComponent(this.encodeCurrentLayout())}`;
+            const query = `?layout=${encodeURIComponent(
+                encodeLayout({
+                    layout: this.layout,
+                    contents: this.layoutContent,
+                }),
+            )}`;
             return `${window.origin}/multiview${query}`;
         },
     },
@@ -302,8 +296,6 @@ export default {
             };
         },
         handleVideoClicked(video) {
-            console.log(video);
-            console.log(this.showSelectorForId);
             this.$store.commit("multiview/setLayoutContentById", {
                 id: this.showSelectorForId,
                 content: {
@@ -326,16 +318,12 @@ export default {
         },
         removeItemById(i) {
             this.$store.commit("multiview/removeLayoutItem", i);
-            if (this.layoutContent[i]) this.$store.commit("multiview/deleteLayoutcontent", i);
         },
         clearAllItems() {
             this.$store.commit("multiview/resetState");
         },
         addItem() {
             this.$store.commit("multiview/addLayoutItem");
-        },
-        handleOutside(e) {
-            console.log(e);
         },
         setMultiview({ layout, content }) {
             this.$store.commit("multiview/setLayout", layout);
@@ -352,81 +340,12 @@ export default {
             }
             return "";
         },
-        encodeCurrentLayout() {
-            const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-            const l = [];
-            try {
-                this.layout.forEach((item) => {
-                    let encodedBlock = "";
-                    let invalid = false;
-                    ["x", "y", "w", "h"].forEach((key) => {
-                        if (item[key] >= 64) {
-                            invalid = true;
-                        } else {
-                            encodedBlock += b64[item[key]];
-                        }
-                    });
-
-                    if (!invalid) {
-                        if (this.layoutContent[item.i]) {
-                            const { type, content } = this.layoutContent[item.i];
-                            if (type === "chat") {
-                                encodedBlock += "chat";
-                            } else if (type === "video") {
-                                encodedBlock += content.id + content.channel.name.split(" ")[0].replace(",", "");
-                            }
-                        }
-                        l.push(encodedBlock);
-                    }
-                });
-                return l.join(",");
-            } catch (e) {
-                return "error";
+        toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
             }
-        },
-        decodeLayout(l) {
-            const parsedLayout = [];
-            const parsedContent = {};
-            l.split(",").forEach((str, index) => {
-                console.log(index);
-                const xywh = str.substring(0, 4);
-                const idOrChat = str.substring(4, 15);
-                const channelName = str.substring(15);
-
-                // console.log(xywh, idOrChat, channelName);
-                const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-                const keys = ["x", "y", "w", "h"];
-                const layoutItem = {};
-                xywh.split("").forEach((char, keyIndex) => {
-                    const num = b64.indexOf(char);
-                    layoutItem[keys[keyIndex]] = num;
-                });
-                layoutItem.i = index;
-
-                parsedLayout.push(layoutItem);
-
-                if (idOrChat === "chat") {
-                    parsedContent[index] = {
-                        type: "chat",
-                    };
-                }
-
-                if (idOrChat.length === 11) {
-                    parsedContent[index] = {
-                        type: "video",
-                        content: {
-                            id: idOrChat,
-                            channel: {
-                                name: channelName,
-                            },
-                        },
-                    };
-                }
-            });
-            return {
-                layout: parsedLayout,
-                content: parsedContent,
-            };
         },
     },
 };
@@ -459,19 +378,28 @@ export default {
 .mv-toolbar-btn .v-btn {
     margin-right: 4px;
 }
-.open-toolbar-btn {
+
+.mv-toolbar-btn.no-btn-text > .v-btn > .v-btn__content > .collapsible-text {
+    display: none;
+}
+
+.collapsible-text {
+    margin-left: 2px;
+}
+
+.open-mv-toolbar-btn {
     position: absolute;
     top: 0;
     right: 0;
     z-index: 10;
+    opacity: 0.5;
 }
+
 .vue-grid-item {
-    /* transition: all 200ms ease; */
     transition: none;
 }
 
 .vue-grid-layout {
-    /* transition: height 200ms ease; */
     transition: none;
 }
 </style>
