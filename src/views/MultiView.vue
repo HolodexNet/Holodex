@@ -227,9 +227,13 @@ export default {
         if (this.$route.query.layout) {
             // TODO: verify layout
             try {
-                const parsed = JSON.parse(this.$route.query.layout);
+                const parsed = this.decodeLayout(this.$route.query.layout);
                 console.log(parsed);
                 if (parsed.layout && parsed.content) {
+                    if (!this.layout || Object.keys(this.layout).length === 0) {
+                        this.setMultiview(parsed);
+                        return;
+                    }
                     this.overwriteConfirm = () => {
                         this.setMultiview(parsed);
                     };
@@ -242,6 +246,8 @@ export default {
                 console.log("invalid layout");
             }
         }
+
+        // console.log(this.decodeLayout(this.encodeLayout(this.layout)));
     },
     created() {
         Vue.use(VueYouTubeEmbed);
@@ -277,10 +283,7 @@ export default {
             return active;
         },
         exportLayout() {
-            const query = `?layout=${JSON.stringify({
-                layout: this.layout,
-                content: this.layoutContent,
-            })}`;
+            const query = `?layout=${encodeURIComponent(this.encodeCurrentLayout())}`;
             return `${window.origin}/multiview${query}`;
         },
     },
@@ -289,13 +292,12 @@ export default {
         getMinVideoObj(video) {
             const {
                 id,
-                channel: { name, photo },
+                channel: { name },
             } = video;
             return {
                 id,
                 channel: {
                     name,
-                    photo,
                 },
             };
         },
@@ -349,6 +351,82 @@ export default {
                 }
             }
             return "";
+        },
+        encodeCurrentLayout() {
+            const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+            const l = [];
+            try {
+                this.layout.forEach((item) => {
+                    let encodedBlock = "";
+                    let invalid = false;
+                    ["x", "y", "w", "h"].forEach((key) => {
+                        if (item[key] >= 64) {
+                            invalid = true;
+                        } else {
+                            encodedBlock += b64[item[key]];
+                        }
+                    });
+
+                    if (!invalid) {
+                        if (this.layoutContent[item.i]) {
+                            const { type, content } = this.layoutContent[item.i];
+                            if (type === "chat") {
+                                encodedBlock += "chat";
+                            } else if (type === "video") {
+                                encodedBlock += content.id + content.channel.name.split(" ")[0].replace(",", "");
+                            }
+                        }
+                        l.push(encodedBlock);
+                    }
+                });
+                return l.join(",");
+            } catch (e) {
+                return "error";
+            }
+        },
+        decodeLayout(l) {
+            const parsedLayout = [];
+            const parsedContent = {};
+            l.split(",").forEach((str, index) => {
+                console.log(index);
+                const xywh = str.substring(0, 4);
+                const idOrChat = str.substring(4, 15);
+                const channelName = str.substring(15);
+
+                // console.log(xywh, idOrChat, channelName);
+                const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+                const keys = ["x", "y", "w", "h"];
+                const layoutItem = {};
+                xywh.split("").forEach((char, keyIndex) => {
+                    const num = b64.indexOf(char);
+                    layoutItem[keys[keyIndex]] = num;
+                });
+                layoutItem.i = index;
+
+                parsedLayout.push(layoutItem);
+
+                if (idOrChat === "chat") {
+                    parsedContent[index] = {
+                        type: "chat",
+                    };
+                }
+
+                if (idOrChat.length === 11) {
+                    parsedContent[index] = {
+                        type: "video",
+                        content: {
+                            id: idOrChat,
+                            channel: {
+                                name: channelName,
+                            },
+                        },
+                    };
+                }
+            });
+            return {
+                layout: parsedLayout,
+                content: parsedContent,
+            };
         },
     },
 };
