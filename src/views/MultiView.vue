@@ -1,14 +1,9 @@
 <template>
     <div style="width: 100%">
         <transition name="slide-y-transition" mode="out-in">
-            <v-toolbar dense class="mv-toolbar" v-if="!collapseToolbar">
+            <v-toolbar dense class="mv-toolbar" style="right: 0" v-if="!collapseToolbar" absolute>
                 <v-app-bar-nav-icon @click="$router.push({ path: '/' })"></v-app-bar-nav-icon>
-                <v-toolbar-title>MultiDex</v-toolbar-title>
                 <div class="flex-grow-1 justify-center d-flex mv-toolbar-btn">
-                    <v-btn @click="editMode = !editMode" :color="editMode ? 'green' : 'blue'">
-                        <v-icon left>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
-                        {{ editMode ? "Done" : "Edit Layout" }}
-                    </v-btn>
                     <v-btn @click="addItem" v-if="editMode" color="orange">
                         <v-icon left>{{ mdiViewGridPlus }}</v-icon>
                         Add Cell
@@ -17,10 +12,45 @@
                         <v-icon left>{{ icons.mdiClose }}</v-icon>
                         Clear All
                     </v-btn>
+                    <v-btn @click="editMode = !editMode" :color="editMode ? 'green' : 'blue'">
+                        <v-icon left>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
+                        {{ editMode ? "Done" : "Edit Layout" }}
+                    </v-btn>
                     <v-btn>
                         <v-icon left>{{ icons.mdiGridLarge }}</v-icon>
                         Presets
                     </v-btn>
+
+                    <v-dialog v-model="shareDialog" width="400">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn v-bind="attrs" v-on="on">
+                                <v-icon left>{{ mdiLinkVariant }}</v-icon>
+                                Share
+                            </v-btn>
+                        </template>
+
+                        <v-card>
+                            <v-card-title> Share </v-card-title>
+                            <v-card-text>
+                                <v-text-field
+                                    readonly
+                                    rounded
+                                    outlined
+                                    dense
+                                    hide-details
+                                    :class="doneCopy ? 'green lighten-2' : ''"
+                                    :value="exportLayout"
+                                    :append-icon="mdiClipboardPlusOutline"
+                                    @click:append="copyToClipboard(exportLayout)"
+                                    style="ma-1"
+                                ></v-text-field>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary" text @click="shareDialog = false"> Close </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
                 </div>
                 <v-btn icon @click="collapseToolbar = true">
                     <v-icon>{{ icons.mdiChevronUp }}</v-icon>
@@ -32,16 +62,15 @@
         </transition>
         <grid-layout
             :layout.sync="layout"
-            :col-num="12"
-            :row-height="30"
+            :col-num="24"
+            :row-height="Math.floor($vuetify.breakpoint.height / 24)"
             :col-width="30"
             :is-draggable="editMode"
             :is-resizable="editMode"
             :responsive="false"
             :vertical-compact="false"
             :prevent-collision="true"
-            :margin="[5, 5]"
-            :maxRows="64"
+            :margin="[5, 0]"
             @layout-updated="layoutUpdatedEvent"
         >
             <grid-item
@@ -55,6 +84,7 @@
                 :key="item.i"
             >
                 <v-card
+                    flat
                     class="mv-video d-flex"
                     :class="{
                         'edit-mode': editMode,
@@ -113,6 +143,41 @@
         <v-dialog v-model="showOverlay">
             <VideoSelector @videoClicked="handleVideoClicked" />
         </v-dialog>
+        <v-dialog v-model="overwriteDialog" width="400">
+            <v-card>
+                <v-card-title>
+                    <!-- Share -->
+                </v-card-title>
+                <v-card-text> Overwrite Current Layout </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="primary"
+                        text
+                        @click="
+                            () => {
+                                overwriteDialog = false;
+                                overwriteConfirm();
+                            }
+                        "
+                    >
+                        Confirm
+                    </v-btn>
+                    <v-btn
+                        color="primary"
+                        text
+                        @click="
+                            () => {
+                                overwriteDialog = false;
+                                overwriteCancel();
+                            }
+                        "
+                    >
+                        Cancel
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -126,7 +191,8 @@ import WatchFrame from "@/components/watch/WatchFrame";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat";
 // import { mapState } from "vuex";
-import { mdiMessage, mdiResizeBottomRight, mdiViewGridPlus } from "@mdi/js";
+import { mdiMessage, mdiResizeBottomRight, mdiViewGridPlus, mdiLinkVariant, mdiClipboardPlusOutline } from "@mdi/js";
+import copyToClipboard from "@/mixins/copyToClipboard";
 
 export default {
     name: "MultiView",
@@ -138,6 +204,7 @@ export default {
         WatchLiveChat,
         TabbedLiveChat,
     },
+    mixins: [copyToClipboard],
     data() {
         return {
             editMode: false,
@@ -146,10 +213,36 @@ export default {
             mdiMessage,
             mdiResizeBottomRight,
             mdiViewGridPlus,
+            mdiClipboardPlusOutline,
             collapseToolbar: false,
+            mdiLinkVariant,
+            shareDialog: false,
+
+            overwriteDialog: false,
+            overwriteCancel: null,
+            overwriteConfirm: null,
         };
     },
-    mounted() {},
+    mounted() {
+        if (this.$route.query.layout) {
+            // TODO: verify layout
+            try {
+                const parsed = JSON.parse(this.$route.query.layout);
+                console.log(parsed);
+                if (parsed.layout && parsed.content) {
+                    this.overwriteConfirm = () => {
+                        this.setMultiview(parsed);
+                    };
+                    this.overwriteCancel = () => {
+                        this.$router.replace({ path: this.$route.path });
+                    };
+                    this.overwriteDialog = true;
+                }
+            } catch (e) {
+                console.log("invalid layout");
+            }
+        }
+    },
     created() {
         Vue.use(VueYouTubeEmbed);
     },
@@ -183,23 +276,43 @@ export default {
                 });
             return active;
         },
+        exportLayout() {
+            const query = `?layout=${JSON.stringify({
+                layout: this.layout,
+                content: this.layoutContent,
+            })}`;
+            return `${window.origin}/multiview${query}`;
+        },
     },
     methods: {
         getVideoThumbnails,
+        getMinVideoObj(video) {
+            const {
+                id,
+                channel: { name, photo },
+            } = video;
+            return {
+                id,
+                channel: {
+                    name,
+                    photo,
+                },
+            };
+        },
         handleVideoClicked(video) {
             console.log(video);
             console.log(this.showSelectorForId);
-            this.$store.commit("multiview/setLayoutContent", {
+            this.$store.commit("multiview/setLayoutContentById", {
                 id: this.showSelectorForId,
                 content: {
                     type: "video",
-                    content: video,
+                    content: this.getMinVideoObj(video),
                 },
             });
             this.showSelectorForId = -1;
         },
         setItemAsChat(item) {
-            this.$store.commit("multiview/setLayoutContent", {
+            this.$store.commit("multiview/setLayoutContentById", {
                 id: item.i,
                 content: {
                     type: "chat",
@@ -211,6 +324,7 @@ export default {
         },
         removeItemById(i) {
             this.$store.commit("multiview/removeLayoutItem", i);
+            if (this.layoutContent[i]) this.$store.commit("multiview/deleteLayoutcontent", i);
         },
         clearAllItems() {
             this.$store.commit("multiview/resetState");
@@ -220,6 +334,10 @@ export default {
         },
         handleOutside(e) {
             console.log(e);
+        },
+        setMultiview({ layout, content }) {
+            this.$store.commit("multiview/setLayout", layout);
+            this.$store.commit("multiview/setLayoutContent", content);
         },
         getBackgroundForItem(item) {
             if (this.layoutContent[item.i] && this.editMode) {
@@ -241,10 +359,11 @@ export default {
     background-size: contain;
     background-position: center;
     height: 100%;
+    border: 1px solid #f0629118 !important;
 }
 
 .mv-video.edit-mode {
-    border: 1px solid pink;
+    border: 1px solid #f06291 !important;
 }
 
 .mv-frame > div > iframe {
@@ -268,12 +387,13 @@ export default {
     right: 0;
     z-index: 10;
 }
-
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s;
+.vue-grid-item {
+    /* transition: all 200ms ease; */
+    transition: none;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
+
+.vue-grid-layout {
+    /* transition: height 200ms ease; */
+    transition: none;
 }
 </style>

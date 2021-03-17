@@ -63,7 +63,7 @@
                     :class="doneCopy ? 'green lighten-2' : ''"
                     :value="userdata.user.api_key || 'None on file'"
                     :append-icon="mdiClipboardPlusOutline"
-                    @click:append="copyToClipboard"
+                    @click:append="copyToClipboard(userdata.user.api_key)"
                 ></v-text-field>
                 <br />
                 <v-btn small block color="warning" @click="resetKey">{{ $t("views.login.apikeyNew") }}</v-btn>
@@ -84,6 +84,7 @@ import utc from "dayjs/plugin/utc";
 import Vue from "vue";
 import UserCard from "@/components/user/UserCard";
 import { mdiClipboardPlusOutline } from "@mdi/js";
+import copyToClipboard from "@/mixins/copyToClipboard";
 
 dayjs.extend(utc);
 
@@ -110,6 +111,7 @@ export default {
             },
         };
     },
+    mixins: [copyToClipboard],
     components: { UserCard },
     data() {
         return {
@@ -165,13 +167,6 @@ export default {
             } else {
                 this.$store.dispatch("logout");
             }
-        },
-        async copyToClipboard() {
-            await navigator.clipboard.writeText(this.userdata.user.api_key);
-            this.doneCopy = true;
-            setTimeout(() => {
-                this.doneCopy = false;
-            }, 2000);
         },
         async resetKey() {
             /* eslint-disable no-restricted-globals, no-alert */
