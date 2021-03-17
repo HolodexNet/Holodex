@@ -2,7 +2,10 @@
     <v-row>
         <v-col cols="12">
             <v-card-title>
-                <span class="text-h5">{{ $t("component.channelMusic.weeklyTopPlaysHeader") }}</span>
+                <span class="text-h5 mr-3">{{ $t("component.channelMusic.weeklyTopPlaysHeader") }}</span>
+                <v-btn fab color="primary" @click="$store.commit('music/addSong', popularSongs)">
+                    <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
+                </v-btn>
             </v-card-title>
             <carousel
                 :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
@@ -16,17 +19,23 @@
                         @play="$store.commit('music/addSong', song)"
                         @playNow="skipToSong"
                         showTime
-                        :hoverIcon="icons.mdiPlaylistMusic"
+                        :hoverIcon="icons.mdiPlaylistPlus"
                         :artworkHoverIcon="icons.mdiPlay"
                         :key="'clist2' + idx"
                     ></song-item-card>
                 </template>
+                <v-icon disabled v-if="popularSongs.length === 0">{{ icons.mdiDatabaseOff }}</v-icon>
             </carousel>
         </v-col>
         <v-col sm="12" md="12">
             <v-card-title>
-                <span class="text-h5">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
+                <span class="text-h5 mr-3">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
+                <v-btn fab color="primary" @click="$store.commit('music/addSong', recentSongs)">
+                    <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
+                </v-btn>
+
                 <v-spacer></v-spacer>
+
                 <v-text-field
                     v-model="search"
                     :append-icon="icons.mdiMagnify"

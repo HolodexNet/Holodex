@@ -29,8 +29,8 @@ component:
     login: ログイン
     logout: ログアウト
     accountSettings: アカウント設定
-    music: オリジナル/カバー曲
-    multiview: MultiView
+    music: ミュージック
+    multiview: マルチビュー
   videoCard:
     clips: "{n}本の切り抜き"
     liveNow: 配信中

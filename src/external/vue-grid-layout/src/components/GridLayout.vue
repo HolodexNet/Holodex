@@ -351,6 +351,7 @@ export default {
             }
 
             // Move the element to the dragged location.
+            // eslint-disable-next-line vue/no-mutating-props
             this.layout = moveElement(this.layout, l, x, y, true, this.preventCollision);
             compact(this.layout, this.verticalCompact);
             // needed because vue can't detect changes on array element properties
