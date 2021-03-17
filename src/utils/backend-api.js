@@ -5,7 +5,7 @@ import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 
 export const API_BASE_URL =
-    process.env.NODE_ENV === "development" ? "http://staging.holodex.net/api/" : `${window.location.origin}/api`;
+    process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api/" : `${window.location.origin}/api`;
 // export const API_BASE_URL = "https://staging.holodex.net/api/";
 
 export const axiosInstance = axios.create({
