@@ -5,10 +5,10 @@ component:
     textBeforeTwitter: コンテンツの取得中にエラーが発生しました。Twitterを確認してください
     title: Gomenasorry!
   channelInfo:
-    clipCount: '{n}本の切り抜き'
-    subscriberCount: '{n}登録者'
+    clipCount: "{n}本の切り抜き"
+    subscriberCount: "{n}登録者"
     subscriberNA: 登録者数は現在利用できません
-    videoCount: '{0}本の動画'
+    videoCount: "{0}本の動画"
     totalViews: 累計視聴回数
   channelList:
     otherText: その他
@@ -28,13 +28,13 @@ component:
     MugenClips: MugenClip<sup>beta</sup>
     login: ログイン
     logout: ログアウト
-    accountSettings: ''
-    music: ''
+    accountSettings: アカウント設定
+    music: オリジナル/カバー曲
     multiview: MultiView
   videoCard:
-    clips: '{n}本の切り抜き'
+    clips: "{n}本の切り抜き"
     liveNow: 配信中
-    watching: '{0}人視聴中'
+    watching: "{0}人視聴中"
   videoDescription:
     description: 概要
   description:
@@ -52,9 +52,9 @@ component:
   video:
     comment:
       openOnYoutube: コメントをYoutubeで開く
-      openOnYoutubeAfter: ''
+      openOnYoutubeAfter: ""
   watch:
-    streamingFor: '{0}分経過'
+    streamingFor: "{0}分経過"
     nextUpInMugen: 次の動画
   relatedVideo:
     clipsLabel: 切り抜き
@@ -65,18 +65,18 @@ component:
     newer: 次
     older: 前
   channelMusic:
-    recentSongsHeader: ''
-    weeklyTopPlaysHeader: ''
+    recentSongsHeader: 最新曲
+    weeklyTopPlaysHeader: 週間のトップ曲
   music:
-    clearPlaylist: ''
+    clearPlaylist: キューを削除
   orgMusic:
-    monthlyTopForOrg: ''
-    weeklyTopForOrg: ''
+    monthlyTopForOrg: 最新曲
+    weeklyTopForOrg: 週間のトップ曲
   songList:
-    sangOnTime: ''
-    songCoveredBy: ''
-    songDuration: ''
-    songTitle: ''
+    sangOnTime: 配信日時
+    songCoveredBy: Covered by
+    songDuration: 再生時間
+    songTitle: タイトル
 views:
   channels:
     channelType:
@@ -102,7 +102,7 @@ views:
     recentVideosHeading: 最近の動画
   library:
     createYtPlaylistButton: Youtubeのプレイリストを作成（{0}）
-    deleteConfirmation: '{0}本当に動画を削除しますか？'
+    deleteConfirmation: "{0}本当に動画を削除しますか？"
     deleteConfirmationCancel: キャンセル
     deleteConfirmationOK: 削除
     deleteFromLibraryButton: 削除（{0}）
@@ -139,11 +139,11 @@ views:
     title: 設定
     useEnglishNameLabel: 英語名を使用する
     useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
-    clipLanguageSelection: '以下の言語の切り抜きを表示:'
+    clipLanguageSelection: "以下の言語の切り抜きを表示:"
   about:
     add_my_channel: チャンネルをHolodexに登録
   app:
-    check_about_page: Aboutページで更新内容を確認可能です
+    check_about_page: 詳細"ページで更新内容を確認可能です
     close_btn: 閉じる
     update_available: ページの更新を利用可能です
     update_btn: アップデート
@@ -153,52 +153,59 @@ views:
     saveToLibrary: ライブラリに保存
     theaterMode: シアターモード
     chat:
-      StickBottomSettingLabel: ''
-      StickBottomSettingsDesc: ''
-      TLSettingsTitle: ''
-      hideTLBtn: ''
-      loading: ''
-      retryBtn: ''
-      showTLBtn: ''
+      StickBottomSettingLabel: 下部に固定(モバイルのみ)
+      StickBottomSettingsDesc: 翻訳を画面下部に固定して表示します(デフォルトでは画面上部に表示します)
+      TLSettingsTitle: 翻訳設定
+      hideTLBtn: 翻訳を非表示
+      loading: チャットを読み込んでいます...
+      retryBtn: リトライ
+      showTLBtn: 翻訳を表示
       status:
-        connectedToChat: ''
-        notLive: ''
-        reconnectFailed: ''
-        reconnecting: ''
-    mentionIconLabel: ''
+        connectedToChat: 翻訳チャットに接続しました
+        notLive: >-
+          配信は現在オフラインです。配信がオンラインになってから最大およそ15分後にチャットが使用可能になります。
+        reconnectFailed: 再接続に失敗しました
+        reconnecting: 再接続中...
+    mentionIconLabel: メンション
   favorites:
     promptForAction: お気に入りのライバーリストを作るとそのページでお気に入りライバーの最新動画を確認できます。
   editor:
-    needlogin: ''
+    needlogin: Holodex上の動画を編集または曲情報を変更するにはログインが必要です
   login:
-    apikeyMsg: ''
-    apikeyNew: ''
-    apikeyResetConfirm1: ''
-    apikeyResetConfirm2: ''
-    apikeyResetNvm: ''
-    futureYtcOwnerMessage: ''
-    linkAcc: ''
-    ownedYtChannel: ''
+    apikeyMsg: >-
+      APIキーを使用することでプログラムからHolodex APIにクエリを送信することができます。
+      キーはアカウント毎に一つのみ使用可能で、新しくキーを取得すると過去のキーは24時間以内に失効します。
+    apikeyNew: 新規APIキーを取得する
+    apikeyResetConfirm1: 本当にAPIキーをリセットしてもよろしいですか?
+    apikeyResetConfirm2: 以前のAPIキーは24時間以内に失効します。本当にリセットしてもよろしいですか?
+    apikeyResetNvm: Nothing interesting happend.
+    futureYtcOwnerMessage: >-
+      今後のアップデートでHolodexに登録した自分のチャンネル上の動画のメタデータを編集可能になります
+    linkAcc: 別のアカウントをリンク
+    ownedYtChannel: あなたのYoutubeチャンネル
 time:
-  diff_future_date: '{0}に開始 ({1})'
-  distance_past_date: '{0}'
+  diff_future_date: "{0}に開始 ({1})"
+  distance_past_date: "{0}"
   soon: まもなく開始
 editor:
   music:
-    add: ''
-    endInput: ''
-    itunesLookupPlaceholder: ''
-    moveLeft2s: ''
-    moveRight2s: ''
-    originalArtistInput: ''
-    permission: ''
-    setToCurrentTime: ''
-    startInput: ''
-    testEnd: ''
-    testStart: ''
+    add: 追加
+    endInput: 再生時間(秒) ({0}に終了)
+    itunesLookupPlaceholder: (任意) iTunesで原曲を検索
+    moveLeft2s: 2秒戻る
+    moveRight2s: 2秒進む
+    originalArtistInput: 原曲の歌手
+    permission: >-
+      すでに登録された曲情報を更新もしくは削除するには「Editor」以上の権限が必要です。
+      「Editor」権限を新たに取得する場合または「Editor」に曲情報の不備を知らせるには
+      <a class='white--text' href='/about'>discord</a>上で私達に連絡してください。
+    setToCurrentTime: 現在の再生時間を設定 ({0})
+    startInput: 開始位置
+    testEnd: 終了3秒前から動画を再生
+    testStart: 開始位置を確認
     titles:
-      addSong: ''
-      help: ''
-      songList: ''
-    trackNameInput: ''
-    update: ''
+      addSong: "曲情報:曲を追加"
+      help: ヘルプ
+      songList: "セットリスト : {0}"
+    trackNameInput: 曲名
+    update: 更新

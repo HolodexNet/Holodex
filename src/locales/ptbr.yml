@@ -2,7 +2,7 @@ component:
   apiError:
     title: Gomenasorry!
     textBeforeTwitter: Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter
-    textAfterTwitter: ' ou relate o erro por meio da '
+    textAfterTwitter: " ou relate o erro por meio da "
     aboutPage: página de Informações
   channelList:
     otherText: Outros
@@ -10,9 +10,9 @@ component:
     unfavoriteAllInGroup: Remover todos desse grupo dos favoritos
     favoriteAllInGroup: Adicionar todos desse grupo aos favoritos
   channelInfo:
-    videoCount: '{0} Videos'
-    clipCount: '{n} Clipes'
-    subscriberCount: '{n} Inscritos'
+    videoCount: "{0} Videos"
+    clipCount: "{n} Clipes"
+    subscriberCount: "{n} Inscritos"
     subscriberNA: Número de inscritos indisponível
     totalViews: Total de Visualizações
   channelSocials:
@@ -28,19 +28,19 @@ component:
     login: Login
     logout: Sair
     MugenClips: MugenClips<sup>beta</sup>
-    accountSettings: ''
-    music: ''
+    accountSettings: Configurações da Conta
+    music: Música
     multiview: Multi-telas
   videoCard:
-    clips: '{n} Clipes'
-    watching: '{0} assistindo agora'
+    clips: "{n} Clipes"
+    watching: "{0} assistindo agora"
     liveNow: Ao Vivo
   videoDescription:
     description: Descrição
   video:
     comment:
       openOnYoutube: Ver comentário no
-      openOnYoutubeAfter: ''
+      openOnYoutubeAfter: ""
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -55,7 +55,7 @@ component:
       org: Org
       titledesc: Título e Desc
       comments: Comentários
-      videourl: ''
+      videourl: Vídeo URL
   relatedVideo:
     clipsLabel: Clipes
     simulcastsLabel: Simulcasts
@@ -64,19 +64,19 @@ component:
   paginateLoad:
     newer: Novos
     older: Antigos
-  channelMusic:
-    recentSongsHeader: ''
-    weeklyTopPlaysHeader: ''
   music:
-    clearPlaylist: ''
-  orgMusic:
-    monthlyTopForOrg: ''
-    weeklyTopForOrg: ''
+    clearPlaylist: Limpar
+  channelMusic:
+    recentSongsHeader: Músicas Recentes
+    weeklyTopPlaysHeader: Mais ouvidas da semana
   songList:
-    sangOnTime: ''
-    songCoveredBy: ''
-    songDuration: ''
-    songTitle: ''
+    songTitle: Título
+    songCoveredBy: Cover por
+    songDuration: Duração
+    sangOnTime: Cover feito em
+  orgMusic:
+    monthlyTopForOrg: Mais tocadas do mes por {0}
+    weeklyTopForOrg: Mais tocadas da semana por {0}
 views:
   channels:
     channelType:
@@ -130,7 +130,7 @@ views:
     darkModeMsg: Altera o tema entre modo claro e modo escuro
     redirectModeLabel: Assistir no Youtube
     redirectModeMsg: >-
-      Clique na thumnail de um vídeo para assistir no Youtube, Clique no título
+      Clique na thumbnail de um vídeo para assistir direto no Youtube, Clique no título
       de um vídeo para assistir no Holodex
     useEnglishNameLabel: Usar nomes em Inglês
     useEnglishNameMsg: Mostrar o nome dos VTuber em inglês
@@ -140,12 +140,12 @@ views:
       barra de rolagem menor quando acessando por celulares
     pushNotificationLabel: Push Notifications (Em Breve)
     pushNotificationMsg: Ativa push notification para seus canais favoritos
-    autoplayVideoLabel: Autoplay de Videos
+    autoplayVideoLabel: Reprodução automática de Videos
     autoplayVideoMsg: Liga a reprodução automática de vídeos
     scrollModeLabel: Modo de Rolagem
     scrollModeMsg: Use rolar/tocar para navegar nas páginas
     resetAllSettings: Redefinir todas as configurações/dados
-    clipLanguageSelection: 'Ver clipes nestes idiomas:'
+    clipLanguageSelection: "Ver clipes nestes idiomas:"
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
@@ -158,55 +158,64 @@ views:
   watch:
     theaterMode: Modo Teatro
     saveToLibrary: Salvar vídeo na biblioteca
+    mentionIconLabel: Menções
     chat:
-      StickBottomSettingLabel: ''
-      StickBottomSettingsDesc: ''
-      TLSettingsTitle: ''
-      hideTLBtn: ''
-      loading: ''
-      retryBtn: ''
-      showTLBtn: ''
+      loading: Carregando o Chat...
+      hideTLBtn: Esconder Traduções
+      showTLBtn: Mostrar Traduções
+      TLSettingsTitle: Configurações de tradução
+      StickBottomSettingLabel: Manter no Rodapé
+      StickBottomSettingsDesc: A caixa tradução ficara na parte inferior do Chat (Fica no topo por padrão)
+      retryBtn: Tentar Novamente
       status:
-        connectedToChat: ''
-        notLive: ''
-        reconnectFailed: ''
-        reconnecting: ''
-    mentionIconLabel: ''
+        reconnecting: Tentando Reconexão
+        reconnectFailed: Não foi possível reconectar
+        notLive: >-
+          A transmissão ainda não começou, tente novamente dentro de 15 minutos
+          após o início da transmissão
+        connectedToChat: Conectado ao Chat de Tradução
   favorites:
     promptForAction: >-
       Crie uma lista de seus vtubers favoritos e veja seus clipes e lives  mais
       recentes nesta página.
   editor:
-    needlogin: ''
+    needlogin: Você precisará fazer login para editar metadados de vídeo e música do Holodex.
   login:
-    apikeyMsg: ''
-    apikeyNew: ''
-    apikeyResetConfirm1: ''
-    apikeyResetConfirm2: ''
-    apikeyResetNvm: ''
-    futureYtcOwnerMessage: ''
-    linkAcc: ''
-    ownedYtChannel: ''
+    apikeyMsg: >-
+      Você pode usar a chave de API para consultar a Holodex API programaticamente. Apenas uma 
+      chave por conta. Gerar uma nova chave fará com que as chaves antigas expirem em até 24 horas.
+    apikeyNew: Gerar nova Chave de API
+    ownedYtChannel: ""
+    futureYtcOwnerMessage: >-
+      No futuro, planejamos disponibilizar mais ferramentas para quem tem canais editar
+      metadados de seus próprios vídeos.
+    linkAcc: Vincular outra conta
+    apikeyResetConfirm1: Tem certeza de que deseja resetar sua chave de API?
+    apikeyResetConfirm2: Isto fará com que as chaves antigas expirem em até 24 horas. Deseja realmente presseguir?
+    apikeyResetNvm: Nada de interessante aconteceu
 time:
   soon: em breve
   diff_future_date: Ao Vivo {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
-    add: ''
-    endInput: ''
-    itunesLookupPlaceholder: ''
-    moveLeft2s: ''
-    moveRight2s: ''
-    originalArtistInput: ''
-    permission: ''
-    setToCurrentTime: ''
-    startInput: ''
-    testEnd: ''
-    testStart: ''
+    add: Adicionar
+    update: Atualizar
+    permission: >-
+      Você precisa ser um usuário com título de "Editor" ou superior para atualizar ou excluir 
+      músicas existente. Use nosso <a class='white--text' href='/about'>discord</a> para
+      notificar os editores sobre problemas ou abusos, ou candidate-se para se tornar um editor.
     titles:
-      addSong: ''
-      help: ''
-      songList: ''
-    trackNameInput: ''
-    update: ''
+      addSong: "Metadados de Música: Adicionar uma nova Música"
+      songList: "Lista de Músicas: {0}"
+      help: Guia
+    itunesLookupPlaceholder: (Opcional) Procurar no iTunes
+    moveRight2s: Avançar 2 segundos
+    testEnd: Teste começando 3 segundos antes do final.
+    setToCurrentTime: Ir para ({0})
+    moveLeft2s: Retroceder 2 segundos
+    trackNameInput: Nome da Música
+    originalArtistInput: Artista Original
+    testStart: Testar o inicio
+    startInput: Iniciar
+    endInput: "Duração em segundos: (end @ {0})"
