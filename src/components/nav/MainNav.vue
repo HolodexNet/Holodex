@@ -3,7 +3,12 @@
         <!-- watch page nav drawer is temporary, but causes layout shifting from hiding/unhiding -->
         <!-- create two different instances as a work around -->
         <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile && !isWatchPage" />
-        <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile && isWatchPage" :temporary="true" />
+        <NavDrawer :pages="pages" v-model="drawer" v-if="isMobile || isWatchPage" :temporary="true">
+            <template v-if="isMobile">
+                <user-card noSetting style="background-color: inherit"></user-card>
+                <v-divider />
+            </template>
+        </NavDrawer>
         <!--* nav drawer is for the left --->
         <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile" :active="!isWatchPage" />
         <!-- <music-bar></music-bar> -->
@@ -26,13 +31,13 @@
             <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
                 <!--================= Back button ⬅️ (Mobile only) ================-->
 
-                <v-app-bar-nav-icon @click.stop="goBack()" v-if="isMobile && isFirstPage">
+                <!-- <v-app-bar-nav-icon @click.stop="goBack()" v-if="isMobile && isFirstPage">
                     <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
-                </v-app-bar-nav-icon>
+                </v-app-bar-nav-icon> -->
 
                 <!--================= Logo & Search Bar (Space permitting) ================-->
 
-                <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isMobile">
+                <v-app-bar-nav-icon @click.stop="drawer = !drawer">
                     <v-icon>{{ icons.mdiMenu }}</v-icon>
                 </v-app-bar-nav-icon>
                 <v-toolbar-title style="overflow: visible" :class="{ 'pa-0': isMobile }">
@@ -153,7 +158,7 @@
 
                 <!--================= Condensed [⋮] Menu (Mobile Only) ================-->
 
-                <v-menu left offset-y v-if="isMobile">
+                <!-- <v-menu left offset-y v-if="isMobile">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
                             <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
@@ -161,15 +166,6 @@
                     </template>
 
                     <v-list v-if="isMobile">
-                        <!-- <v-list-item
-                            v-for="page in pages.filter((item) => item.collapsible)"
-                            :key="page.name"
-                            :to="page.path"
-                        >
-                            <v-list-item-title>
-                                {{ page.name }}
-                            </v-list-item-title>
-                        </v-list-item> -->
                         <user-card></user-card>
                         <v-list-item to="/about" key="about">
                             <v-list-item-icon>
@@ -178,7 +174,7 @@
                             <v-list-item-title> {{ $t("component.mainNav.about") }} </v-list-item-title>
                         </v-list-item>
                     </v-list>
-                </v-menu>
+                </v-menu> -->
                 <!--================= End of Condensed [⋮] Menu (Mobile Only) ================-->
             </template>
 
@@ -302,6 +298,7 @@ export default {
                     name: this.$t("component.mainNav.library"),
                     path: "/library",
                     icon: icons.mdiAnimationPlay,
+                    divider: true,
                 },
                 {
                     name: this.$t("component.mainNav.multiview"),
@@ -313,12 +310,14 @@ export default {
                     name: this.$t("component.mainNav.music"),
                     path: "/music",
                     icon: icons.mdiMusic,
+                    collapsible: true,
                 },
                 {
                     name: this.$t("component.mainNav.MugenClips"),
                     path: "/infinite",
                     icon: mdiInfinity,
                     collapsible: true,
+                    divider: true,
                 },
                 {
                     name: this.$t("component.mainNav.about"),
