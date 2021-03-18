@@ -5,13 +5,13 @@
     >
         <MainNav />
         <!-- remove watch page view from being wrapped in v-main, to avoid layout shifts -->
-        <v-main v-if="!isWatchPage">
+        <v-main v-if="!isWatchPage" class="pull-to-refresh">
             <keep-alive max="4" exclude="Watch,MugenClips,EditVideo">
-                <router-view :key="$router.path" />
+                <router-view :key="$route.path" />
             </keep-alive>
         </v-main>
         <template v-else>
-            <router-view :key="$router.path" />
+            <router-view :key="$route.path" />
         </template>
         <v-snackbar bottom right :value="updateExists" :timeout="-1" color="primary" v-if="updateExists">
             {{ $t("views.app.update_available") }}
@@ -31,6 +31,7 @@
 
 <script>
 import MainNav from "@/components/nav/MainNav";
+import pulltorefresh from "vue-awesome-pulltorefresh";
 import { dayjsLangs } from "./plugins/vuetify";
 
 export default {
@@ -117,6 +118,27 @@ export default {
         // check current breakpoint and set isMobile
         this.updateIsMobile();
     },
+    mounted() {
+        const self = this;
+        pulltorefresh.init({
+            mainElement: ".pull-to-refresh",
+            onRefresh: () => {
+                this.$router.go(0);
+            },
+            passive: true,
+            iconArrow: "▼",
+            distIgnore: 10,
+            distReload: 120,
+            distMax: 200,
+            distThreshold: 120,
+            instructionsPullToRefresh: "F5",
+            instructionsReleaseToRefresh: ">>>F5<<<",
+            instructionsRefreshing: ">>>",
+            shouldPullToRefresh: () => {
+                return !window.scrollY && !self.$route.path.match(".*(multiview|infinite|watch).*");
+            },
+        });
+    },
     computed: {
         darkMode() {
             return this.$store.state.settings.darkMode;
@@ -185,7 +207,7 @@ export default {
     color: inherit !important;
 }
 body {
-    overscroll-behavior-y: none;
+    overscroll-behavior-y: contain;
     background: black;
     padding-left: min(calc(env(safe-area-inset-left)), 30px);
     padding-right: min(calc(env(safe-area-inset-right)), 30px);
@@ -196,5 +218,8 @@ body {
 .bump-bottom .v-main__wrap {
     padding-bottom: 250px;
     /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
+}
+.ptr--ptr .ptr--content {
+    background: rgb(143, 143, 170);
 }
 </style>
