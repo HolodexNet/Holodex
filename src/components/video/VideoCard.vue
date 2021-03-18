@@ -42,7 +42,10 @@
 
                     <!-- Video duration -->
                     <div class="d-flex flex-column align-end">
-                        <div v-if="video.duration > 0 || video.start_actual" class="video-duration rounded-br-sm">
+                        <div class="video-duration" v-if="video.songcount">
+                            <v-icon small>{{ icons.mdiMusic }}</v-icon>
+                        </div>
+                        <div v-if="video.duration > 0 && video.start_actual" class="video-duration rounded-br-sm">
                             {{ formattedDuration }}
                         </div>
                     </div>
@@ -61,6 +64,28 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content class="pa-0">
+                    <v-menu bottom nudge-top="20px">
+                        <template v-slot:activator="{ on }">
+                            <v-icon
+                                v-on="on"
+                                @click.stop.prevent
+                                :class="{ 'hover-show': !hasSaved && !isMobile }"
+                                class="video-card-more"
+                            >
+                                {{ icons.mdiDotsVertical }}
+                            </v-icon>
+                        </template>
+                        <v-list dense>
+                            <v-list-item :to="`/multiview?layout=AAUY${video.id}${video.channel.name}%2CUAEYchat`"
+                                ><v-icon left>{{ icons.mdiDotsGrid }}</v-icon>
+                                {{ $t("component.mainNav.multiview") }}
+                            </v-list-item>
+                            <v-list-item :to="`/edit/video/${video.id}`"
+                                ><v-icon left>{{ icons.mdiPencil }}</v-icon> {{ $t("component.videoCard.edit") }}
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+
                     <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
                         {{ title }}
                     </v-list-item-title>
@@ -104,6 +129,7 @@
                 </v-list-item-action>
             </v-list-item>
         </v-card>
+        <!-- comments are shown for search results when you search comments -->
         <v-list style="max-height: 400px" dense class="pa-0 transparent overflow-y-auto caption" v-if="video.comments">
             <v-divider class="mx-4" style="flex-basis: 100%; height: 0"></v-divider>
             <!-- Render Channel Avatar if necessary -->
@@ -301,6 +327,7 @@ export default {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    padding-right: 22px;
 }
 
 .video-watched {
@@ -324,21 +351,22 @@ export default {
     color: white !important;
 }
 
-.video-card-overlay .hover-show {
+.video-card .hover-show {
     visibility: hidden;
 }
 
-.video-card-overlay:hover .hover-show {
+.video-card:hover .hover-show {
     visibility: visible;
 }
 
 .video-duration {
     background-color: rgba(0, 0, 0, 0.8);
     margin: 2px;
-    padding: 1px 5px;
+    padding: 2px 5px;
     text-align: center;
     font-size: 0.8125rem;
     letter-spacing: 0.025em;
+    line-height: 0.81rem;
 }
 
 .video-topic {
@@ -355,6 +383,13 @@ export default {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 2px;
     margin: 2px;
+}
+
+.video-card-more {
+    position: absolute;
+    right: 0px;
+    display: inline-block;
+    top: 5px;
 }
 
 .video-card-horizontal {

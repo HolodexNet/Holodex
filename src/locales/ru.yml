@@ -35,6 +35,7 @@ component:
     clips: 0 клипов | {n} клип | {n} клипа | {n} клипов
     watching: '{0} смотрят'
     liveNow: LIVE
+    edit: Изменить
   videoDescription:
     description: Описание
   description:

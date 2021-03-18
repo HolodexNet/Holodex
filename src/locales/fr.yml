@@ -58,6 +58,7 @@ component:
     clips: '{n} Clips'
     liveNow: EN DIRECT
     watching: '{0} Visionnages'
+    edit: Modifier
   videoDescription:
     description: Description
   watch:
