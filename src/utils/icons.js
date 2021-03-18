@@ -40,10 +40,10 @@ export {
     mdiGridLarge,
     mdiGrid,
     mdiSquareOutline,
-    mdiDotsGrid,
     mdiChevronDown,
     mdiChevronUp,
     mdiChevronLeft,
     mdiChevronRight,
     mdiFullscreen,
+    mdiViewDashboard,
 } from "@mdi/js";

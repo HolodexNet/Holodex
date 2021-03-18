@@ -185,8 +185,13 @@
         <v-dialog v-model="overwriteDialog" width="400">
             <v-card>
                 <v-card-title> Overwrite current layout? </v-card-title>
-                <v-card-text class="d-flex justify-center">
+                <v-card-text class="d-flex flex-column justify-center align-center">
                     <LayoutPreview :layout="layoutPreview" />
+                    <v-checkbox
+                        v-model="overwriteMerge"
+                        :label="`Fill empty cells with current videos`"
+                        hide-details
+                    ></v-checkbox>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
@@ -242,6 +247,7 @@ export default {
             overwriteDialog: false,
             overwriteCancel: null,
             overwriteConfirm: null,
+            overwriteMerge: false,
 
             showPresetSelector: false,
 
@@ -264,7 +270,10 @@ export default {
                     this.layoutPreview = parsed.layout;
                     this.overwriteConfirm = () => {
                         this.overwriteDialog = false;
-                        this.setMultiview(parsed);
+                        this.setMultiview({
+                            ...parsed,
+                            mergeContent: this.overwriteMerge,
+                        });
                     };
                     this.overwriteCancel = () => {
                         this.overwriteDialog = false;
@@ -340,7 +349,10 @@ export default {
         },
         handlePresetClicked(preset) {
             this.showPresetSelector = false;
-            this.setMultiview(preset);
+            this.setMultiview({
+                ...preset,
+                mergeContent: true,
+            });
         },
         setItemAsChat(item) {
             this.$store.commit("multiview/setLayoutContentById", {
@@ -362,9 +374,38 @@ export default {
         addItem() {
             this.$store.commit("multiview/addLayoutItem");
         },
-        setMultiview({ layout, content }) {
+        setMultiview({ layout, content, mergeContent = false }) {
+            if (mergeContent) {
+                const contentsToMerge = {};
+                let activeVideosIndex = 0;
+                // filter out already set items
+                layout
+                    .filter((item) => {
+                        return !content[item.i];
+                    })
+                    .forEach((item) => {
+                        // fill until there's no more current videos
+                        if (activeVideosIndex >= this.activeVideos.length) {
+                            return;
+                        }
+                        const key = item.i;
+                        contentsToMerge[key] = {
+                            type: "video",
+                            content: this.activeVideos[activeVideosIndex],
+                        };
+                        activeVideosIndex += 1;
+                    });
+
+                // merge by key, prefer incoming content
+                const merged = {
+                    ...contentsToMerge,
+                    ...content,
+                };
+                this.$store.commit("multiview/setLayoutContent", merged);
+            } else {
+                this.$store.commit("multiview/setLayoutContent", content);
+            }
             this.$store.commit("multiview/setLayout", layout);
-            this.$store.commit("multiview/setLayoutContent", content);
         },
         getBackgroundForItem(item) {
             if (this.layoutContent[item.i]) {

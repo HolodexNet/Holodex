@@ -306,7 +306,7 @@ export default {
                 {
                     name: this.$t("component.mainNav.multiview"),
                     path: "/multiview",
-                    icon: icons.mdiDotsGrid,
+                    icon: icons.mdiViewDashboard,
                     collapsible: true,
                 },
                 {
