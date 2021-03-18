@@ -31,6 +31,16 @@
                     ></v-text-field>
                     <v-btn @click="addCustomVideo"> Add </v-btn>
                 </template>
+                <template v-else-if="selectedOrg === 0 && !$store.getters.isLoggedIn">
+                    <div class="pa-3">
+                        <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
+                        <center>
+                            <v-btn :to="isLoggedIn ? '/channel' : '/login'">
+                                {{ isLoggedIn ? "Manage Favorites" : "Log In" }}
+                            </v-btn>
+                        </center>
+                    </div>
+                </template>
                 <template v-else>
                     <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
                     <VideoCardList
@@ -71,7 +81,11 @@ export default {
         };
     },
     mounted() {
-        this.loadFavorites();
+        if (this.$store.getters.isLoggedIn) {
+            this.loadFavorites();
+        } else {
+            this.selectedOrg = 3;
+        }
     },
     watch: {
         selectedOrg() {
