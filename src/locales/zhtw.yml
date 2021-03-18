@@ -35,6 +35,7 @@ component:
     clips: '{n} 部剪輯'
     watching: '{0} 人正在觀看'
     liveNow: 實況中
+    edit: 編輯
   videoDescription:
     description: 影片資訊
   video:

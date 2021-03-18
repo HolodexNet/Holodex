@@ -34,6 +34,7 @@ component:
     clips: '{n} Sedutan'
     watching: '{0} Tontonan Sekarang'
     liveNow: Langsung Sekarang
+    edit: Edit
   videoDescription:
     description: Perihalan
   description:

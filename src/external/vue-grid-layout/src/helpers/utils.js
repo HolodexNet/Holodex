@@ -1,9 +1,15 @@
 // @flow
-export type LayoutItemRequired = {w: number, h: number, x: number, y: number, i: string};
-export type LayoutItem = LayoutItemRequired &
-                         {minW?: number, minH?: number, maxW?: number, maxH?: number,
-                          moved?: boolean, static?: boolean,
-                          isDraggable?: ?boolean, isResizable?: ?boolean};
+export type LayoutItemRequired = { w: number, h: number, x: number, y: number, i: string };
+export type LayoutItem = LayoutItemRequired & {
+    minW?: number,
+    minH?: number,
+    maxW?: number,
+    maxH?: number,
+    moved?: boolean,
+    static?: boolean,
+    isDraggable?: ?boolean,
+    isResizable?: ?boolean,
+};
 export type Layout = Array<LayoutItem>;
 // export type Position = {left: number, top: number, width: number, height: number};
 /*
@@ -15,7 +21,7 @@ export type DragCallbackData = {
 };
 */
 // export type DragEvent = {e: Event} & DragCallbackData;
-export type Size = {width: number, height: number};
+export type Size = { width: number, height: number };
 // export type ResizeEvent = {e: Event, node: HTMLElement, size: Size};
 
 // const isProduction = process.env.NODE_ENV === 'production';
@@ -26,25 +32,26 @@ export type Size = {width: number, height: number};
  * @return {Number}       Bottom coordinate.
  */
 export function bottom(layout: Layout): number {
-  let max = 0, bottomY;
-  for (let i = 0, len = layout.length; i < len; i++) {
-    bottomY = layout[i]. y + layout[i].h;
-    if (bottomY > max) max = bottomY;
-  }
-  return max;
+    let max = 0,
+        bottomY;
+    for (let i = 0, len = layout.length; i < len; i++) {
+        bottomY = layout[i].y + layout[i].h;
+        if (bottomY > max) max = bottomY;
+    }
+    return max;
 }
 
 export function cloneLayout(layout: Layout): Layout {
-  const newLayout = Array(layout.length);
-  for (let i = 0, len = layout.length; i < len; i++) {
-    newLayout[i] = cloneLayoutItem(layout[i]);
-  }
-  return newLayout;
+    const newLayout = Array(layout.length);
+    for (let i = 0, len = layout.length; i < len; i++) {
+        newLayout[i] = cloneLayoutItem(layout[i]);
+    }
+    return newLayout;
 }
 
 // Fast path to cloning, since this is monomorphic
 export function cloneLayoutItem(layoutItem: LayoutItem): LayoutItem {
-  /*return {
+    /*return {
     w: layoutItem.w, h: layoutItem.h, x: layoutItem.x, y: layoutItem.y, i: layoutItem.i,
     minW: layoutItem.minW, maxW: layoutItem.maxW, minH: layoutItem.minH, maxH: layoutItem.maxH,
     moved: Boolean(layoutItem.moved), static: Boolean(layoutItem.static),
@@ -60,12 +67,12 @@ export function cloneLayoutItem(layoutItem: LayoutItem): LayoutItem {
  * @return {Boolean}   True if colliding.
  */
 export function collides(l1: LayoutItem, l2: LayoutItem): boolean {
-  if (l1 === l2) return false; // same element
-  if (l1.x + l1.w <= l2.x) return false; // l1 is left of l2
-  if (l1.x >= l2.x + l2.w) return false; // l1 is right of l2
-  if (l1.y + l1.h <= l2.y) return false; // l1 is above l2
-  if (l1.y >= l2.y + l2.h) return false; // l1 is below l2
-  return true; // boxes overlap
+    if (l1 === l2) return false; // same element
+    if (l1.x + l1.w <= l2.x) return false; // l1 is left of l2
+    if (l1.x >= l2.x + l2.w) return false; // l1 is right of l2
+    if (l1.y + l1.h <= l2.y) return false; // l1 is above l2
+    if (l1.y >= l2.y + l2.h) return false; // l1 is below l2
+    return true; // boxes overlap
 }
 
 /**
@@ -79,51 +86,51 @@ export function collides(l1: LayoutItem, l2: LayoutItem): boolean {
  */
 export function compact(layout: Layout, verticalCompact: Boolean): Layout {
     // Statics go in the compareWith array right away so items flow around them.
-  const compareWith = getStatics(layout);
-  // We go through the items by row and column.
-  const sorted = sortLayoutItemsByRowCol(layout);
-  // Holding for new items.
-  const out = Array(layout.length);
+    const compareWith = getStatics(layout);
+    // We go through the items by row and column.
+    const sorted = sortLayoutItemsByRowCol(layout);
+    // Holding for new items.
+    const out = Array(layout.length);
 
-  for (let i = 0, len = sorted.length; i < len; i++) {
-    let l = sorted[i];
+    for (let i = 0, len = sorted.length; i < len; i++) {
+        let l = sorted[i];
 
-    // Don't move static elements
-    if (!l.static) {
-      l = compactItem(compareWith, l, verticalCompact);
+        // Don't move static elements
+        if (!l.static) {
+            l = compactItem(compareWith, l, verticalCompact);
 
-      // Add to comparison array. We only collide with items before this one.
-      // Statics are already in this array.
-      compareWith.push(l);
+            // Add to comparison array. We only collide with items before this one.
+            // Statics are already in this array.
+            compareWith.push(l);
+        }
+
+        // Add to output array to make sure they still come out in the right order.
+        out[layout.indexOf(l)] = l;
+
+        // Clear moved flag, if it exists.
+        l.moved = false;
     }
 
-    // Add to output array to make sure they still come out in the right order.
-    out[layout.indexOf(l)] = l;
-
-    // Clear moved flag, if it exists.
-    l.moved = false;
-  }
-
-  return out;
+    return out;
 }
 
 /**
  * Compact an item in the layout.
  */
 export function compactItem(compareWith: Layout, l: LayoutItem, verticalCompact: boolean): LayoutItem {
-  if (verticalCompact) {
-    // Move the element up as far as it can go without colliding.
-    while (l.y > 0 && !getFirstCollision(compareWith, l)) {
-      l.y--;
+    if (verticalCompact) {
+        // Move the element up as far as it can go without colliding.
+        while (l.y > 0 && !getFirstCollision(compareWith, l)) {
+            l.y--;
+        }
     }
-  }
 
-  // Move it down, and keep moving it down if it's colliding.
-  let collides;
-  while((collides = getFirstCollision(compareWith, l))) {
-    l.y = collides.y + collides.h;
-  }
-  return l;
+    // Move it down, and keep moving it down if it's colliding.
+    let collides;
+    while ((collides = getFirstCollision(compareWith, l))) {
+        l.y = collides.y + collides.h;
+    }
+    return l;
 }
 
 /**
@@ -132,27 +139,27 @@ export function compactItem(compareWith: Layout, l: LayoutItem, verticalCompact:
  * @param  {Array} layout Layout array.
  * @param  {Number} bounds Number of columns.
  */
-export function correctBounds(layout: Layout, bounds: {cols: number}): Layout {
-  const collidesWith = getStatics(layout);
-  for (let i = 0, len = layout.length; i < len; i++) {
-    const l = layout[i];
-    // Overflows right
-    if (l.x + l.w > bounds.cols) l.x = bounds.cols - l.w;
-    // Overflows left
-    if (l.x < 0) {
-      l.x = 0;
-      l.w = bounds.cols;
+export function correctBounds(layout: Layout, bounds: { cols: number }): Layout {
+    const collidesWith = getStatics(layout);
+    for (let i = 0, len = layout.length; i < len; i++) {
+        const l = layout[i];
+        // Overflows right
+        if (l.x + l.w > bounds.cols) l.x = bounds.cols - l.w;
+        // Overflows left
+        if (l.x < 0) {
+            l.x = 0;
+            l.w = bounds.cols;
+        }
+        if (!l.static) collidesWith.push(l);
+        else {
+            // If this is static and collides with other statics, we must move it down.
+            // We have to do something nicer than just letting them overlap.
+            while (getFirstCollision(collidesWith, l)) {
+                l.y++;
+            }
+        }
     }
-    if (!l.static) collidesWith.push(l);
-    else {
-      // If this is static and collides with other statics, we must move it down.
-      // We have to do something nicer than just letting them overlap.
-      while(getFirstCollision(collidesWith, l)) {
-        l.y++;
-      }
-    }
-  }
-  return layout;
+    return layout;
 }
 
 /**
@@ -163,9 +170,9 @@ export function correctBounds(layout: Layout, bounds: {cols: number}): Layout {
  * @return {LayoutItem}    Item at ID.
  */
 export function getLayoutItem(layout: Layout, id: string): ?LayoutItem {
-  for (let i = 0, len = layout.length; i < len; i++) {
-    if (layout[i].i === id) return layout[i];
-  }
+    for (let i = 0, len = layout.length; i < len; i++) {
+        if (layout[i].i === id) return layout[i];
+    }
 }
 
 /**
@@ -177,13 +184,13 @@ export function getLayoutItem(layout: Layout, id: string): ?LayoutItem {
  * @return {Object|undefined}  A colliding layout item, or undefined.
  */
 export function getFirstCollision(layout: Layout, layoutItem: LayoutItem): ?LayoutItem {
-  for (let i = 0, len = layout.length; i < len; i++) {
-    if (collides(layout[i], layoutItem)) return layout[i];
-  }
+    for (let i = 0, len = layout.length; i < len; i++) {
+        if (collides(layout[i], layoutItem)) return layout[i];
+    }
 }
 
 export function getAllCollisions(layout: Layout, layoutItem: LayoutItem): Array<LayoutItem> {
-  return layout.filter((l) => collides(l, layoutItem));
+    return layout.filter((l) => collides(l, layoutItem));
 }
 
 /**
@@ -206,56 +213,63 @@ export function getStatics(layout: Layout): Array<LayoutItem> {
  * @param  {Boolean}    [isUserAction] If true, designates that the item we're moving is
  *                                     being dragged/resized by th euser.
  */
-export function moveElement(layout: Layout, l: LayoutItem, x: Number, y: Number, isUserAction: Boolean, preventCollision: Boolean): Layout {
-  if (l.static) return layout;
+export function moveElement(
+    layout: Layout,
+    l: LayoutItem,
+    x: Number,
+    y: Number,
+    isUserAction: Boolean,
+    preventCollision: Boolean,
+): Layout {
+    if (l.static) return layout;
 
-  // Short-circuit if nothing to do.
-  //if (l.y === y && l.x === x) return layout;
+    // Short-circuit if nothing to do.
+    //if (l.y === y && l.x === x) return layout;
 
-  const oldX = l.x;
-  const oldY = l.y;
+    const oldX = l.x;
+    const oldY = l.y;
 
-  const movingUp = y && l.y > y;
-  // This is quite a bit faster than extending the object
-  if (typeof x === 'number') l.x = x;
-  if (typeof y === 'number') l.y = y;
-  l.moved = true;
+    const movingUp = y && l.y > y;
+    // This is quite a bit faster than extending the object
+    if (typeof x === "number") l.x = x;
+    if (typeof y === "number") l.y = y;
+    l.moved = true;
 
-  // If this collides with anything, move it.
-  // When doing this comparison, we have to sort the items we compare with
-  // to ensure, in the case of multiple collisions, that we're getting the
-  // nearest collision.
-  let sorted = sortLayoutItemsByRowCol(layout);
-  if (movingUp) sorted = sorted.reverse();
-  const collisions = getAllCollisions(sorted, l);
+    // If this collides with anything, move it.
+    // When doing this comparison, we have to sort the items we compare with
+    // to ensure, in the case of multiple collisions, that we're getting the
+    // nearest collision.
+    let sorted = sortLayoutItemsByRowCol(layout);
+    if (movingUp) sorted = sorted.reverse();
+    const collisions = getAllCollisions(sorted, l);
 
-  if (preventCollision && collisions.length) {
-    l.x = oldX;
-    l.y = oldY;
-    l.moved = false;
-    return layout;
-  }
-
-  // Move each item that collides away from this element.
-  for (let i = 0, len = collisions.length; i < len; i++) {
-    const collision = collisions[i];
-    // console.log('resolving collision between', l.i, 'at', l.y, 'and', collision.i, 'at', collision.y);
-
-    // Short circuit so we can't infinite loop
-    if (collision.moved) continue;
-
-    // This makes it feel a bit more precise by waiting to swap for just a bit when moving up.
-    if (l.y > collision.y && l.y - collision.y > collision.h / 4) continue;
-
-    // Don't move static items - we have to move *this* element away
-    if (collision.static) {
-      layout = moveElementAwayFromCollision(layout, collision, l, isUserAction);
-    } else {
-      layout = moveElementAwayFromCollision(layout, l, collision, isUserAction);
+    if (preventCollision && collisions.length) {
+        l.x = oldX;
+        l.y = oldY;
+        l.moved = false;
+        return layout;
     }
-  }
 
-  return layout;
+    // Move each item that collides away from this element.
+    for (let i = 0, len = collisions.length; i < len; i++) {
+        const collision = collisions[i];
+        // console.log('resolving collision between', l.i, 'at', l.y, 'and', collision.i, 'at', collision.y);
+
+        // Short circuit so we can't infinite loop
+        if (collision.moved) continue;
+
+        // This makes it feel a bit more precise by waiting to swap for just a bit when moving up.
+        if (l.y > collision.y && l.y - collision.y > collision.h / 4) continue;
+
+        // Don't move static items - we have to move *this* element away
+        if (collision.static) {
+            layout = moveElementAwayFromCollision(layout, collision, l, isUserAction);
+        } else {
+            layout = moveElementAwayFromCollision(layout, l, collision, isUserAction);
+        }
+    }
+
+    return layout;
 }
 
 /**
@@ -268,31 +282,34 @@ export function moveElement(layout: Layout, l: LayoutItem, x: Number, y: Number,
  * @param  {Boolean} [isUserAction]  If true, designates that the item we're moving is being dragged/resized
  *                                   by the user.
  */
-export function moveElementAwayFromCollision(layout: Layout, collidesWith: LayoutItem,
-                                             itemToMove: LayoutItem, isUserAction: ?boolean): Layout {
-
-  const preventCollision = false // we're already colliding
-  // If there is enough space above the collision to put this element, move it there.
-  // We only do this on the main collision as this can get funky in cascades and cause
-  // unwanted swapping behavior.
-  if (isUserAction) {
-    // Make a mock item so we don't modify the item here, only modify in moveElement.
-    const fakeItem: LayoutItem = {
-      x: itemToMove.x,
-      y: itemToMove.y,
-      w: itemToMove.w,
-      h: itemToMove.h,
-      i: '-1'
-    };
-    fakeItem.y = Math.max(collidesWith.y - itemToMove.h, 0);
-    if (!getFirstCollision(layout, fakeItem)) {
-      return moveElement(layout, itemToMove, undefined, fakeItem.y, preventCollision);
+export function moveElementAwayFromCollision(
+    layout: Layout,
+    collidesWith: LayoutItem,
+    itemToMove: LayoutItem,
+    isUserAction: ?boolean,
+): Layout {
+    const preventCollision = false; // we're already colliding
+    // If there is enough space above the collision to put this element, move it there.
+    // We only do this on the main collision as this can get funky in cascades and cause
+    // unwanted swapping behavior.
+    if (isUserAction) {
+        // Make a mock item so we don't modify the item here, only modify in moveElement.
+        const fakeItem: LayoutItem = {
+            x: itemToMove.x,
+            y: itemToMove.y,
+            w: itemToMove.w,
+            h: itemToMove.h,
+            i: "-1",
+        };
+        fakeItem.y = Math.max(collidesWith.y - itemToMove.h, 0);
+        if (!getFirstCollision(layout, fakeItem)) {
+            return moveElement(layout, itemToMove, undefined, fakeItem.y, preventCollision);
+        }
     }
-  }
 
-  // Previously this was optimized to move below the collision directly, but this can cause problems
-  // with cascading moves, as an item may actually leapflog a collision and cause a reversal in order.
-  return moveElement(layout, itemToMove, undefined, itemToMove.y + 1, preventCollision);
+    // Previously this was optimized to move below the collision directly, but this can cause problems
+    // with cascading moves, as an item may actually leapflog a collision and cause a reversal in order.
+    return moveElement(layout, itemToMove, undefined, itemToMove.y + 1, preventCollision);
 }
 
 /**
@@ -302,35 +319,12 @@ export function moveElementAwayFromCollision(layout: Layout, collidesWith: Layou
  * @return {String}     That number as a percentage.
  */
 export function perc(num: number): string {
-  return num * 100 + '%';
+    return num * 100 + "%";
 }
 
 export function setTransform(top, left, width, height): Object {
-  // Replace unitless items with px
-  const translate = "translate3d(" + left + "px," + top + "px, 0)";
-  return {
-    transform: translate,
-    WebkitTransform: translate,
-    MozTransform: translate,
-    msTransform: translate,
-    OTransform: translate,
-    width: width + "px",
-    height: height + "px",
-    position: 'absolute'
-  };
-}
-/**
- * Just like the setTransform method, but instead it will return a negative value of right.
- *
- * @param top
- * @param right
- * @param width
- * @param height
- * @returns {{transform: string, WebkitTransform: string, MozTransform: string, msTransform: string, OTransform: string, width: string, height: string, position: string}}
- */
-export function setTransformRtl(top, right, width, height): Object {
     // Replace unitless items with px
-    const translate = "translate3d(" + right * -1 + "px," + top + "px, 0)";
+    const translate = "translate3d(" + left + "px," + top + "px, 0)";
     return {
         transform: translate,
         WebkitTransform: translate,
@@ -339,7 +333,7 @@ export function setTransformRtl(top, right, width, height): Object {
         OTransform: translate,
         width: width + "px",
         height: height + "px",
-        position: 'absolute'
+        position: "absolute",
     };
 }
 
@@ -349,28 +343,9 @@ export function setTopLeft(top, left, width, height): Object {
         left: left + "px",
         width: width + "px",
         height: height + "px",
-        position: 'absolute'
+        position: "absolute",
     };
 }
-/**
- * Just like the setTopLeft method, but instead, it will return a right property instead of left.
- *
- * @param top
- * @param right
- * @param width
- * @param height
- * @returns {{top: string, right: string, width: string, height: string, position: string}}
- */
-export function setTopRight(top, right, width, height): Object {
-    return {
-        top: top + "px",
-        right: right+ "px",
-        width: width + "px",
-        height: height + "px",
-        position: 'absolute'
-    };
-}
-
 
 /**
  * Get layout items sorted from top left to right and down.
@@ -379,17 +354,17 @@ export function setTopRight(top, right, width, height): Object {
  * @return {Array}        Layout, sorted static items first.
  */
 export function sortLayoutItemsByRowCol(layout: Layout): Layout {
-  return [].concat(layout).sort(function(a, b) {
-    if (a.y === b.y && a.x === b.x) {
-      return 0;
-    }
+    return [].concat(layout).sort(function (a, b) {
+        if (a.y === b.y && a.x === b.x) {
+            return 0;
+        }
 
-    if (a.y > b.y || (a.y === b.y && a.x > b.x)) {
-      return 1;
-    }
+        if (a.y > b.y || (a.y === b.y && a.x > b.x)) {
+            return 1;
+        }
 
-    return -1;
-  });
+        return -1;
+    });
 }
 
 /**
@@ -460,43 +435,41 @@ export function synchronizeLayoutWithChildren(initialLayout: Layout, children: A
  * @throw  {Error}                Validation error.
  */
 export function validateLayout(layout: Layout, contextName: string): void {
-  contextName = contextName || "Layout";
-  const subProps = ['x', 'y', 'w', 'h'];
-  let keyArr = [];
-  if (!Array.isArray(layout)) throw new Error(contextName + " must be an array!");
-  for (let i = 0, len = layout.length; i < len; i++) {
-    const item = layout[i];
-    for (let j = 0; j < subProps.length; j++) {
-      if (typeof item[subProps[j]] !== 'number') {
-        throw new Error('VueGridLayout: ' + contextName + '[' + i + '].' + subProps[j] + ' must be a number!');
-      }
-    }
+    contextName = contextName || "Layout";
+    const subProps = ["x", "y", "w", "h"];
+    let keyArr = [];
+    if (!Array.isArray(layout)) throw new Error(contextName + " must be an array!");
+    for (let i = 0, len = layout.length; i < len; i++) {
+        const item = layout[i];
+        for (let j = 0; j < subProps.length; j++) {
+            if (typeof item[subProps[j]] !== "number") {
+                throw new Error("VueGridLayout: " + contextName + "[" + i + "]." + subProps[j] + " must be a number!");
+            }
+        }
 
-    if (item.i === undefined || item.i === null) {
-      throw new Error('VueGridLayout: ' + contextName + '[' + i + '].i cannot be null!');
-    }
+        if (item.i === undefined || item.i === null) {
+            throw new Error("VueGridLayout: " + contextName + "[" + i + "].i cannot be null!");
+        }
 
-    if (typeof item.i !== 'number' && typeof item.i !== 'string') {
-      throw new Error('VueGridLayout: ' + contextName + '[' + i + '].i must be a string or number!');
-    }
+        if (typeof item.i !== "number" && typeof item.i !== "string") {
+            throw new Error("VueGridLayout: " + contextName + "[" + i + "].i must be a string or number!");
+        }
 
-    if (keyArr.indexOf(item.i) >= 0) {
-      throw new Error('VueGridLayout: ' + contextName + '[' + i + '].i must be unique!');
-    }
-    keyArr.push(item.i);
+        if (keyArr.indexOf(item.i) >= 0) {
+            throw new Error("VueGridLayout: " + contextName + "[" + i + "].i must be unique!");
+        }
+        keyArr.push(item.i);
 
-    if (item.static !== undefined && typeof item.static !== 'boolean') {
-      throw new Error('VueGridLayout: ' + contextName + '[' + i + '].static must be a boolean!');
+        if (item.static !== undefined && typeof item.static !== "boolean") {
+            throw new Error("VueGridLayout: " + contextName + "[" + i + "].static must be a boolean!");
+        }
     }
-  }
 }
 
 // Flow can't really figure this out, so we just use Object
 export function autoBindHandlers(el: Object, fns: Array<string>): void {
-  fns.forEach((key) => el[key] = el[key].bind(el));
+    fns.forEach((key) => (el[key] = el[key].bind(el)));
 }
-
-
 
 /**
  * Convert a JS object to CSS string. Similar to React's output of CSS.
@@ -505,19 +478,19 @@ export function autoBindHandlers(el: Object, fns: Array<string>): void {
  */
 export function createMarkup(obj) {
     var keys = Object.keys(obj);
-    if (!keys.length) return '';
-    var i, len = keys.length;
-    var result = '';
+    if (!keys.length) return "";
+    var i,
+        len = keys.length;
+    var result = "";
 
     for (i = 0; i < len; i++) {
         var key = keys[i];
         var val = obj[key];
-        result += hyphenate(key) + ':' + addPx(key, val) + ';';
+        result += hyphenate(key) + ":" + addPx(key, val) + ";";
     }
 
     return result;
 }
-
 
 /* The following list is defined in React's core */
 export var IS_UNITLESS = {
@@ -550,9 +523,8 @@ export var IS_UNITLESS = {
     stopOpacity: true,
     strokeDashoffset: true,
     strokeOpacity: true,
-    strokeWidth: true
+    strokeWidth: true,
 };
-
 
 /**
  * Will add px to the end of style values which are Numbers.
@@ -561,13 +533,12 @@ export var IS_UNITLESS = {
  * @returns {*}
  */
 export function addPx(name, value) {
-    if(typeof value === 'number' && !IS_UNITLESS[ name ]) {
-        return value + 'px';
+    if (typeof value === "number" && !IS_UNITLESS[name]) {
+        return value + "px";
     } else {
         return value;
     }
 }
-
 
 /**
  * Hyphenate a camelCase string.
@@ -579,14 +550,11 @@ export function addPx(name, value) {
 export var hyphenateRE = /([a-z\d])([A-Z])/g;
 
 export function hyphenate(str) {
-    return str.replace(hyphenateRE, '$1-$2').toLowerCase();
+    return str.replace(hyphenateRE, "$1-$2").toLowerCase();
 }
 
-
 export function findItemInArray(array, property, value) {
-    for (var i=0; i < array.length; i++)
-        if (array[i][property] == value)
-            return true;
+    for (var i = 0; i < array.length; i++) if (array[i][property] == value) return true;
 
     return false;
 }

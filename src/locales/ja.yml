@@ -5,10 +5,10 @@ component:
     textBeforeTwitter: コンテンツの取得中にエラーが発生しました。Twitterを確認してください
     title: Gomenasorry!
   channelInfo:
-    clipCount: "{n}本の切り抜き"
-    subscriberCount: "{n}登録者"
+    clipCount: '{n}本の切り抜き'
+    subscriberCount: '{n}登録者'
     subscriberNA: 登録者数は現在利用できません
-    videoCount: "{0}本の動画"
+    videoCount: '{0}本の動画'
     totalViews: 累計視聴回数
   channelList:
     otherText: その他
@@ -32,9 +32,10 @@ component:
     music: ミュージック
     multiview: マルチビュー
   videoCard:
-    clips: "{n}本の切り抜き"
+    clips: '{n}本の切り抜き'
     liveNow: 配信中
-    watching: "{0}人視聴中"
+    watching: '{0}人視聴中'
+    edit: 編集
   videoDescription:
     description: 概要
   description:
@@ -52,9 +53,9 @@ component:
   video:
     comment:
       openOnYoutube: コメントをYoutubeで開く
-      openOnYoutubeAfter: ""
+      openOnYoutubeAfter: ''
   watch:
-    streamingFor: "{0}分経過"
+    streamingFor: '{0}分経過'
     nextUpInMugen: 次の動画
   relatedVideo:
     clipsLabel: 切り抜き
@@ -102,7 +103,7 @@ views:
     recentVideosHeading: 最近の動画
   library:
     createYtPlaylistButton: Youtubeのプレイリストを作成（{0}）
-    deleteConfirmation: "{0}本当に動画を削除しますか？"
+    deleteConfirmation: '{0}本当に動画を削除しますか？'
     deleteConfirmationCancel: キャンセル
     deleteConfirmationOK: 削除
     deleteFromLibraryButton: 削除（{0}）
@@ -139,7 +140,7 @@ views:
     title: 設定
     useEnglishNameLabel: 英語名を使用する
     useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
-    clipLanguageSelection: "以下の言語の切り抜きを表示:"
+    clipLanguageSelection: '以下の言語の切り抜きを表示:'
   about:
     add_my_channel: チャンネルをHolodexに登録
   app:
@@ -162,8 +163,7 @@ views:
       showTLBtn: 翻訳を表示
       status:
         connectedToChat: 翻訳チャットに接続しました
-        notLive: >-
-          配信は現在オフラインです。配信がオンラインになってから最大およそ15分後にチャットが使用可能になります。
+        notLive: 配信は現在オフラインです。配信がオンラインになってから最大およそ15分後にチャットが使用可能になります。
         reconnectFailed: 再接続に失敗しました
         reconnecting: 再接続中...
     mentionIconLabel: メンション
@@ -179,13 +179,12 @@ views:
     apikeyResetConfirm1: 本当にAPIキーをリセットしてもよろしいですか?
     apikeyResetConfirm2: 以前のAPIキーは24時間以内に失効します。本当にリセットしてもよろしいですか?
     apikeyResetNvm: Nothing interesting happend.
-    futureYtcOwnerMessage: >-
-      今後のアップデートでHolodexに登録した自分のチャンネル上の動画のメタデータを編集可能になります
+    futureYtcOwnerMessage: 今後のアップデートでHolodexに登録した自分のチャンネル上の動画のメタデータを編集可能になります
     linkAcc: 別のアカウントをリンク
     ownedYtChannel: あなたのYoutubeチャンネル
 time:
-  diff_future_date: "{0}に開始 ({1})"
-  distance_past_date: "{0}"
+  diff_future_date: '{0}に開始 ({1})'
+  distance_past_date: '{0}'
   soon: まもなく開始
 editor:
   music:
@@ -197,15 +196,15 @@ editor:
     originalArtistInput: 原曲の歌手
     permission: >-
       すでに登録された曲情報を更新もしくは削除するには「Editor」以上の権限が必要です。
-      「Editor」権限を新たに取得する場合または「Editor」に曲情報の不備を知らせるには
-      <a class='white--text' href='/about'>discord</a>上で私達に連絡してください。
+      「Editor」権限を新たに取得する場合または「Editor」に曲情報の不備を知らせるには <a class='white--text'
+      href='/about'>discord</a>上で私達に連絡してください。
     setToCurrentTime: 現在の再生時間を設定 ({0})
     startInput: 開始位置
     testEnd: 終了3秒前から動画を再生
     testStart: 開始位置を確認
     titles:
-      addSong: "曲情報:曲を追加"
+      addSong: 曲情報:曲を追加
       help: ヘルプ
-      songList: "セットリスト : {0}"
+      songList: 'セットリスト : {0}'
     trackNameInput: 曲名
     update: 更新

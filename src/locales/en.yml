@@ -35,6 +35,7 @@ component:
     clips: '{n} Clips'
     watching: '{0} Watching'
     liveNow: Live Now
+    edit: Edit
   videoDescription:
     description: Description
   video:

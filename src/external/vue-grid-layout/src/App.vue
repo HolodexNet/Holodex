@@ -26,8 +26,7 @@
             <button @click="increaseWidth">Increase Width</button>
             <button @click="addItem">Add an item</button>
             <button @click="addItemDynamically">Add an item dynamically</button>
-            <!-- Add to show rtl support -->
-            <button @click="changeDirection">Change Direction</button>
+
             <input type="checkbox" v-model="draggable" /> Draggable
             <input type="checkbox" v-model="resizable" /> Resizable
             <input type="checkbox" v-model="mirrored" /> Mirrored
@@ -117,7 +116,6 @@ import GridItem from "./components/GridItem.vue";
 import GridLayout from "./components/GridLayout.vue";
 // import ResponsiveGridLayout from './components/ResponsiveGridLayout.vue';
 import TestElement from "./components/TestElement.vue";
-import { getDocumentDir, setDocumentDir } from "./helpers/DOM";
 //var eventBus = require('./eventBus');
 
 let testLayout = [
@@ -259,20 +257,6 @@ export default {
                     ", W(px)=" +
                     newWPx,
             );
-        },
-        /**
-         * Add change direction button
-         */
-        changeDirection() {
-            let documentDirection = getDocumentDir();
-            let toggle = "";
-            if (documentDirection === "rtl") {
-                toggle = "ltr";
-            } else {
-                toggle = "rtl";
-            }
-            setDocumentDir(toggle);
-            //eventBus.$emit('directionchange');
         },
 
         layoutCreatedEvent: function (newLayout) {

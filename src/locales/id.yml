@@ -35,6 +35,7 @@ component:
     clips: '{n} Klip'
     watching: '{0} sedang menonton'
     liveNow: Sedang Berlangsung
+    edit: Edit
   videoDescription:
     description: Deskripsi
   description:

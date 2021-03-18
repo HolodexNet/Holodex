@@ -27,7 +27,15 @@
                     <v-btn @click="toggleFullScreen" icon>
                         <v-icon>{{ icons.mdiFullscreen }}</v-icon>
                     </v-btn>
-                    <v-dialog v-model="shareDialog" width="400">
+                    <v-menu
+                        :open-on-click="true"
+                        bottom
+                        nudge-bottom="40px"
+                        :close-on-content-click="false"
+                        :open-on-hover="false"
+                        v-model="shareDialog"
+                        width="400"
+                    >
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn v-bind="attrs" v-on="on" v-show="!editMode" icon>
                                 <v-icon>{{ mdiLinkVariant }}</v-icon>
@@ -35,28 +43,27 @@
                             </v-btn>
                         </template>
 
-                        <v-card>
-                            <v-card-title> Share </v-card-title>
+                        <v-card rounded="lg">
+                            <!-- <v-card-title> Share </v-card-title> -->
                             <v-card-text>
                                 <v-text-field
                                     readonly
-                                    rounded
-                                    outlined
+                                    solo-inverted
                                     dense
                                     hide-details
                                     :class="doneCopy ? 'green lighten-2' : ''"
-                                    :value="exportLayout"
+                                    :value="exportURL"
                                     :append-icon="mdiClipboardPlusOutline"
-                                    @click:append="copyToClipboard(exportLayout)"
+                                    @click:append.stop="startCopyToClipboard(exportURL)"
                                     style="ma-1"
                                 ></v-text-field>
                             </v-card-text>
-                            <v-card-actions>
+                            <!-- <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="primary" text @click="shareDialog = false"> Close </v-btn>
-                            </v-card-actions>
+                            </v-card-actions> -->
                         </v-card>
-                    </v-dialog>
+                    </v-menu>
                 </div>
                 <v-btn icon @click="collapseToolbar = true">
                     <v-icon>{{ icons.mdiChevronUp }}</v-icon>
@@ -282,11 +289,11 @@ export default {
                 });
             return active;
         },
-        exportLayout() {
+        exportURL() {
             const query = `?layout=${encodeURIComponent(
                 encodeLayout({
                     layout: this.layout,
-                    contents: this.layoutContent,
+                    content: this.content,
                 }),
             )}`;
             return `${window.origin}/multiview${query}`;
@@ -294,6 +301,13 @@ export default {
     },
     methods: {
         getVideoThumbnails,
+        startCopyToClipboard(txt) {
+            this.copyToClipboard(txt);
+            const thisCopy = this;
+            setTimeout(() => {
+                thisCopy.shareDialog = false;
+            }, 200);
+        },
         getMinVideoObj(video) {
             const {
                 id,

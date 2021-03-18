@@ -35,6 +35,7 @@ component:
     clips: '{n} Clips'
     watching: '{0} Mirando'
     liveNow: En Vivo
+    edit: Editar
   videoDescription:
     description: Descripción
   description:
