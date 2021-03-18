@@ -168,7 +168,7 @@ export default {
 }
 
 /* overflow-y: overlay does not work on temporary drawer */
-.nav-scroll.v-navigation-drawer--temporary > .v-navigation-drawer__content:hover {
+.nav-scroll.v-navigation-drawer--temporary > .v-navigation-drawer__content {
     overflow-y: auto !important;
 }
 

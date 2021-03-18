@@ -377,6 +377,7 @@ export default {
     },
     watch: {
         isWatchPage() {
+            if (this.isMobile) return;
             // close drawer on watch page
             this.drawer = !this.isWatchPage;
         },
