@@ -359,7 +359,7 @@ export default {
 
             let hasCollisions;
             // eslint-disable-next-line no-constant-condition
-            if (this.preventCollision && false) {
+            if (this.preventCollision) {
                 const collisions = getAllCollisions(this.layout, { ...l, w, h, x, y }).filter(
                     (layoutItem) => layoutItem.i !== l.i,
                 );
