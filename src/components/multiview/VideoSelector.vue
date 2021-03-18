@@ -70,6 +70,9 @@ export default {
             customURLError: false,
         };
     },
+    mounted() {
+        this.loadFavorites();
+    },
     watch: {
         selectedOrg() {
             if (this.selectedOrg === 1) {
