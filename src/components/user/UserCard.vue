@@ -62,7 +62,7 @@
                     <v-list-item-content>{{ $t("component.mainNav.accountSettings") }}</v-list-item-content>
                 </v-list-item>
 
-                <v-list-item to="/settings">
+                <v-list-item to="/settings" v-if="!noSetting">
                     <v-list-item-action>
                         <v-icon>{{ icons.mdiCog }}</v-icon>
                     </v-list-item-action>
@@ -88,6 +88,12 @@ export default {
     data: () => ({
         icons,
     }),
+    props: {
+        noSetting: {
+            type: Boolean,
+            default: false,
+        },
+    },
     computed: {
         userdata() {
             return this.$store.state.userdata;

@@ -38,6 +38,7 @@ const mutations = {
     removeLayoutItem(state, id) {
         const index = state.layout.map((item) => item.i).indexOf(id);
         state.layout.splice(index, 1);
+        if (state.layoutContent[id]) Vue.delete(state.layoutContent, id);
     },
     deleteLayoutContent(state, id) {
         Vue.delete(state.layoutContent, id);

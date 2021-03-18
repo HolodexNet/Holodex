@@ -21,13 +21,36 @@
                 </v-list-item-group>
             </v-col>
             <v-col cols="12" sm="8" md="10" style="max-height: 100%; overflow-y: auto">
-                <VideoCardList
-                    :videos="live"
-                    horizontal
-                    @videoClicked="handleVideoClick"
-                    disableDefaultClick
-                    includeChannel
-                ></VideoCardList>
+                <template v-if="selectedOrg === 1">
+                    <div class="text-h5">Add Custom Video</div>
+                    <v-text-field
+                        label="Youtube Video Link"
+                        hint="https://www.youtube.com/watch?v=..."
+                        v-model="customURL"
+                        :error="customURLError"
+                    ></v-text-field>
+                    <v-btn @click="addCustomVideo"> Add </v-btn>
+                </template>
+                <template v-else-if="selectedOrg === 0 && !$store.getters.isLoggedIn">
+                    <div class="pa-3">
+                        <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
+                        <center>
+                            <v-btn :to="isLoggedIn ? '/channel' : '/login'">
+                                {{ isLoggedIn ? "Manage Favorites" : "Log In" }}
+                            </v-btn>
+                        </center>
+                    </div>
+                </template>
+                <template v-else>
+                    <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
+                    <VideoCardList
+                        :videos="live"
+                        horizontal
+                        @videoClicked="handleVideoClick"
+                        disableDefaultClick
+                        includeChannel
+                    ></VideoCardList>
+                </template>
             </v-col>
         </v-row>
     </v-card>
@@ -36,27 +59,39 @@
 <script>
 import api from "@/utils/backend-api";
 import VideoCardList from "@/components/video/VideoCardList";
-import { ORGS } from "@/utils/consts";
+import LoadingOverlay from "@/components/common/LoadingOverlay";
+import { ORGS, VIDEO_URL_REGEX } from "@/utils/consts";
 
 export default {
     name: "VideoSelector",
     components: {
         VideoCardList,
+        LoadingOverlay,
     },
     data() {
         return {
-            // favoritesLive: [],
             live: [],
             selectedOrg: 0,
             ORGS,
+            isLoading: false,
+            hasError: false,
+
+            customURL: "",
+            customURLError: false,
         };
     },
     mounted() {
-        // this.loadFavorites();
-        this.loadOrg("Hololive");
+        if (this.$store.getters.isLoggedIn) {
+            this.loadFavorites();
+        } else {
+            this.selectedOrg = 3;
+        }
     },
     watch: {
         selectedOrg() {
+            if (this.selectedOrg === 1) {
+                return;
+            }
             if (this.selectedOrg === 0) {
                 this.loadFavorites();
                 return;
@@ -71,10 +106,14 @@ export default {
                     text: "Favorites",
                     value: 0,
                 },
+                {
+                    text: "Custom",
+                    value: 1,
+                },
                 ...this.ORGS.map((orgName, index) => {
                     return {
                         text: orgName,
-                        value: index + 1,
+                        value: index + 2,
                     };
                 }),
             ];
@@ -85,20 +124,46 @@ export default {
         handleVideoClick(video) {
             this.$emit("videoClicked", video);
         },
+        addCustomVideo() {
+            const match = this.customURL.match(VIDEO_URL_REGEX);
+            if (match && match[1] && match[1].length === 11) {
+                this.customURLError = false;
+                this.$emit("videoClicked", {
+                    id: match[1],
+                    channel: {
+                        name: match[1],
+                    },
+                });
+            } else {
+                this.customURLError = true;
+            }
+        },
         loadFavorites() {
+            this.live = [];
+            this.isLoading = true;
             api.favoritesLive({
                 channels: this.$store.state.favorites.favorites.map((f) => f.id).join(","),
-            }).then((data) => {
-                data.sort((a, b) => {
-                    const dateA = new Date(a.available_at).getTime();
-                    const dateB = new Date(b.available_at).getTime();
-                    return dateA > dateB ? 1 : -1;
+            })
+                .then((data) => {
+                    data.sort((a, b) => {
+                        const dateA = new Date(a.available_at).getTime();
+                        const dateB = new Date(b.available_at).getTime();
+                        return dateA > dateB ? 1 : -1;
+                    });
+                    console.log(data);
+                    this.live = data;
+                })
+                .catch((e) => {
+                    console.error(e);
+                    this.hasError = false;
+                })
+                .finally(() => {
+                    this.isLoading = false;
                 });
-                console.log(data);
-                this.live = data;
-            });
         },
         loadOrg(orgName) {
+            this.live = [];
+            this.isLoading = true;
             api.live({
                 org: orgName,
             })
@@ -107,6 +172,10 @@ export default {
                 })
                 .catch((e) => {
                     console.error(e);
+                    this.hasError = false;
+                })
+                .finally(() => {
+                    this.isLoading = false;
                 });
         },
     },
