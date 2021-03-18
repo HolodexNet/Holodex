@@ -1,11 +1,22 @@
 <template>
     <div ref="item" class="vue-grid-item" :class="classObj" :style="style">
         <slot></slot>
-        <span v-if="resizableAndNotStatic" ref="handle" :class="resizableHandleClass"></span>
+        <span
+            v-for="(dir, idx) in resizeDirections"
+            ref="handle"
+            :class="[
+                draggable && 'vue-resizable-handle',
+                `dir-${dir}`,
+                dir[0] && `h-${dir[0]}`,
+                dir[1] && `h-${dir[1]}`,
+            ]"
+            :key="'handle' + dir + idx"
+            :style="{ cursor: `${dir}-resize` }"
+        ></span>
         <!--<span v-if="draggable" ref="dragHandle" class="vue-draggable-handle"></span>-->
     </div>
 </template>
-<style>
+<style lang="scss">
 .vue-grid-item {
     transition: all 200ms ease;
     transition-property: left, top;
@@ -48,19 +59,41 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    bottom: 0;
-    right: 0;
+    // bottom: 0;
+    // right: 0;
     /* background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4="); */
-    background-position: bottom right;
+    // background-position: bottom right;
     padding: 0 3px 3px 0;
-    background-repeat: no-repeat;
-    background-origin: content-box;
+    // background-repeat: no-repeat;
+    // background-origin: content-box;
     box-sizing: border-box;
-    cursor: se-resize;
+
+    &.h-n {
+        top: 0 !important;
+        left: 50%;
+        bottom: unset;
+    }
+    &.h-w {
+        left: 0 !important;
+        top: 50%;
+        left: unset;
+    }
+    &.h-s {
+        bottom: 0 !important;
+        left: 50%;
+        top: unset !important;
+    }
+    &.h-e {
+        right: 0 !important;
+        top: 50%;
+        bottom: unset;
+        left: unset !important;
+    }
 }
 
 .vue-grid-item.disable-userselect {
-    user-select: none;
+    user-select: none !important;
+    cursor: none !important;
 }
 </style>
 <script>
@@ -172,6 +205,11 @@ export default {
             type: String,
             required: false,
             default: "a, button",
+        },
+        resizeDirections: {
+            type: Array,
+            required: false,
+            default: () => ["s", "w", "e", "n", "sw", "nw", "se", "ne"],
         },
         preserveAspectRatio: {
             type: Boolean,
@@ -409,6 +447,8 @@ export default {
                 pos.left = this.dragging.left;
             }
             if (this.isResizing) {
+                pos.top = this.resizing.top;
+                pos.left = this.resizing.left;
                 pos.width = this.resizing.width;
                 pos.height = this.resizing.height;
             }
@@ -440,25 +480,38 @@ export default {
             // Get the current drag point from the event. This is used as the offset.
             if (position == null) return; // not possible but satisfies flow
             const { x, y } = position;
-
-            const newSize = { width: 0, height: 0 };
+            // console.log(position);
+            // console.log(event);
+            let newSize = { width: 0, height: 0 };
             let pos;
+
+            // const newRect = {};
+            // let pos;
             switch (event.type) {
                 case "resizestart": {
                     this.previousW = this.innerW;
                     this.previousH = this.innerH;
-                    pos = this.calcPosition(this.innerX, this.innerY, this.innerW, this.innerH);
-                    newSize.width = pos.width;
-                    newSize.height = pos.height;
-                    this.resizing = newSize;
+                    // pos = ;
+                    // top left width height
+                    this.resizing = this.calcPosition(this.innerX, this.innerY, this.innerW, this.innerH);
+                    newSize = { ...this.resizing };
                     this.isResizing = true;
                     break;
                 }
                 case "resizemove": {
                     //                        console.log("### resize => " + event.type + ", lastW=" + this.lastW + ", lastH=" + this.lastH);
                     const coreEvent = createCoreData(this.lastW, this.lastH, x, y);
-                    newSize.width = this.resizing.width + coreEvent.deltaX;
-                    newSize.height = this.resizing.height + coreEvent.deltaY;
+                    newSize = { ...this.resizing };
+                    if (event.edges.bottom) newSize.height = this.resizing.height + coreEvent.deltaY;
+                    if (event.edges.right) newSize.width = this.resizing.width + coreEvent.deltaX;
+                    if (event.edges.left) {
+                        newSize.left = this.resizing.left + coreEvent.deltaX;
+                        newSize.width = this.resizing.width - coreEvent.deltaX;
+                    }
+                    if (event.edges.top) {
+                        newSize.top = this.resizing.top + coreEvent.deltaY;
+                        newSize.height = this.resizing.height - coreEvent.deltaY;
+                    }
 
                     ///console.log("### resize => " + event.type + ", deltaX=" + coreEvent.deltaX + ", deltaY=" + coreEvent.deltaY);
                     this.resizing = newSize;
@@ -467,8 +520,18 @@ export default {
                 case "resizeend": {
                     //console.log("### resize end => x=" +this.innerX + " y=" + this.innerY + " w=" + this.innerW + " h=" + this.innerH);
                     pos = this.calcPosition(this.innerX, this.innerY, this.innerW, this.innerH);
-                    newSize.width = pos.width;
-                    newSize.height = pos.height;
+                    const coreEvent = createCoreData(this.lastW, this.lastH, x, y);
+                    newSize = { ...this.resizing };
+                    if (event.edges.bottom) newSize.height = this.resizing.height + coreEvent.deltaY;
+                    if (event.edges.right) newSize.width = this.resizing.width + coreEvent.deltaX;
+                    if (event.edges.left) {
+                        newSize.left = this.resizing.left + coreEvent.deltaX;
+                        newSize.width = this.resizing.width - coreEvent.deltaX;
+                    }
+                    if (event.edges.top) {
+                        newSize.top = this.resizing.top + coreEvent.deltaY;
+                        newSize.height = this.resizing.height - coreEvent.deltaY;
+                    }
                     //                        console.log("### resize end => " + JSON.stringify(newSize));
                     this.resizing = null;
                     this.isResizing = false;
@@ -501,13 +564,19 @@ export default {
             this.lastW = x;
             this.lastH = y;
 
+            const newXY = this.calcXY(newSize.top, newSize.left);
+            // console.log(newSize);
+
             if (this.innerW !== pos.w || this.innerH !== pos.h) {
-                this.$emit("resize", this.i, pos.h, pos.w, newSize.height, newSize.width);
+                // this.$emit("resize", this.i, pos.h, pos.w, newSize.height, newSize.width);
             }
             if (event.type === "resizeend" && (this.previousW !== this.innerW || this.previousH !== this.innerH)) {
-                this.$emit("resized", this.i, pos.h, pos.w, newSize.height, newSize.width);
+                // this.$emit("resized", this.i, pos.h, pos.w, newSize.height, newSize.width);
             }
-            this.eventBus.$emit("resizeEvent", event.type, this.i, this.innerX, this.innerY, pos.h, pos.w);
+            // this.eventBus.$emit("resizeEvent", event.type, this.i, this.innerX, this.innerY, pos.h, pos.w);
+            // console.log(newSize.left, newSize.top);
+            // console.log(newXY.x, newXY.y, pos.h, pos.w)
+            this.eventBus.$emit("resizeEvent", event.type, this.i, newXY.x, newXY.y, pos.h, pos.w, event.edges);
         },
         handleDrag(event) {
             if (this.static) return;
@@ -575,6 +644,10 @@ export default {
             }
             this.eventBus.$emit("dragEvent", event.type, this.i, pos.x, pos.y, this.innerH, this.innerW);
         },
+        /**
+         * x, y, w, h =>
+         * left, top, width, height
+         */
         calcPosition: function (x, y, w, h) {
             const colWidth = this.calcColWidth();
             let out = {
@@ -701,12 +774,12 @@ export default {
                 const opts = {
                     // allowFrom: "." + this.resizableHandleClass.trim().replace(" ", "."),
                     edges: {
-                        left: false,
-                        right: "." + this.resizableHandleClass.trim().replace(" ", "."),
-                        bottom: "." + this.resizableHandleClass.trim().replace(" ", "."),
-                        top: false,
+                        top: "vue-resizable-handle.h-n",
+                        left: ".vue-resizable-handle.h-w",
+                        right: ".vue-resizable-handle.h-e",
+                        bottom: ".vue-resizable-handle.h-s",
                     },
-                    ignoreFrom: this.resizeIgnoreFrom,
+                    // ignoreFrom: this.resizeIgnoreFrom,
                     restrictSize: {
                         min: {
                             height: minimum.height,

@@ -84,10 +84,6 @@ export default {
             type: Boolean,
             default: true,
         },
-        useCssTransforms: {
-            type: Boolean,
-            default: true,
-        },
         verticalCompact: {
             type: Boolean,
             default: true,
@@ -121,10 +117,6 @@ export default {
         preventCollision: {
             type: Boolean,
             default: false,
-        },
-        useStyleCursor: {
-            type: Boolean,
-            default: true,
         },
     },
     data: function () {
@@ -355,16 +347,20 @@ export default {
             this.updateHeight();
             if (eventName === "dragend") this.$emit("layout-updated", this.layout);
         },
-        resizeEvent: function (eventName, id, x, y, h, w) {
+        // eslint-disable-next-line no-unused-vars
+        resizeEvent: function (eventName, id, x, y, h, w, edges) {
             let l = getLayoutItem(this.layout, id);
+            // if(eventName === "resizeend") debugger;
+            // edges
             //GetLayoutItem sometimes return null object
             if (l === undefined || l === null) {
                 l = { h: 0, w: 0 };
             }
 
             let hasCollisions;
-            if (this.preventCollision) {
-                const collisions = getAllCollisions(this.layout, { ...l, w, h }).filter(
+            // eslint-disable-next-line no-constant-condition
+            if (this.preventCollision && false) {
+                const collisions = getAllCollisions(this.layout, { ...l, w, h, x, y }).filter(
                     (layoutItem) => layoutItem.i !== l.i,
                 );
                 hasCollisions = collisions.length > 0;
@@ -388,12 +384,14 @@ export default {
                 // Set new width and height.
                 l.w = w;
                 l.h = h;
+                l.x = x;
+                l.y = y;
             }
 
             if (eventName === "resizestart" || eventName === "resizemove") {
                 this.placeholder.i = id;
-                this.placeholder.x = x;
-                this.placeholder.y = y;
+                this.placeholder.x = l.x;
+                this.placeholder.y = l.y;
                 this.placeholder.w = l.w;
                 this.placeholder.h = l.h;
                 this.$nextTick(function () {
