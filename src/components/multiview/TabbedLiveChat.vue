@@ -1,8 +1,8 @@
 <template>
     <div style="width: 100%; height: 100%">
-        <v-tabs v-model="currentTab">
+        <v-tabs v-model="currentTab" height="32">
             <v-tab v-for="(video, index) in activeVideos" :key="index">
-                {{ video.channel.name }}
+                {{ video.channel.name.split(" ")[0] }}
             </v-tab>
         </v-tabs>
         <WatchLiveChat

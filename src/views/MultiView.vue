@@ -5,7 +5,7 @@
             <v-toolbar dense class="mv-toolbar" style="right: 0" v-if="!collapseToolbar" absolute>
                 <v-app-bar-nav-icon @click="$router.push({ path: '/' })"></v-app-bar-nav-icon>
                 <div
-                    class="flex-grow-1 justify-center d-flex mv-toolbar-btn"
+                    class="flex-grow-1 justify-center d-flex mv-toolbar-btn align-center"
                     :class="{ 'no-btn-text': $store.state.isMobile }"
                 >
                     <v-btn @click="editMode = !editMode" :color="editMode ? 'green' : 'blue'">
@@ -24,12 +24,12 @@
                         <v-icon>{{ icons.mdiGridLarge }}</v-icon>
                         <span class="collapsible-text">Presets</span>
                     </v-btn>
-                    <v-btn @click="toggleFullScreen">
+                    <v-btn @click="toggleFullScreen" icon>
                         <v-icon>{{ icons.mdiFullscreen }}</v-icon>
                     </v-btn>
                     <v-dialog v-model="shareDialog" width="400">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn v-bind="attrs" v-on="on" v-show="!editMode">
+                            <v-btn v-bind="attrs" v-on="on" v-show="!editMode" icon>
                                 <v-icon>{{ mdiLinkVariant }}</v-icon>
                                 <!-- <span class="collapsible-text">Share</span> -->
                             </v-btn>
@@ -62,7 +62,7 @@
                     <v-icon>{{ icons.mdiChevronUp }}</v-icon>
                 </v-btn>
             </v-toolbar>
-            <v-btn v-else @click="collapseToolbar = false" class="open-mv-toolbar-btn" tile small>
+            <v-btn v-else @click="collapseToolbar = false" class="open-mv-toolbar-btn" tile small color="secondary">
                 <v-icon>{{ icons.mdiChevronDown }}</v-icon>
             </v-btn>
         </transition>
@@ -110,7 +110,7 @@
                             <v-icon x-large>{{ mdiMessage }}</v-icon> Live Chat
                         </div>
                         <!-- <span class="text">{{ item.i }}</span> -->
-                        <div class="d-flex flex-wrap">
+                        <div class="d-flex flex-wrap" style="width: 100%">
                             <v-btn @click="showSelectorForId = item.i">
                                 <v-icon>{{ icons.mdiPencil }}</v-icon>
                             </v-btn>
@@ -144,9 +144,20 @@
                             >
                             </youtube>
                         </div>
-                        <template v-if="layoutContent[item.i].type === 'chat'">
+                        <template v-else-if="layoutContent[item.i].type === 'chat'">
                             <TabbedLiveChat :activeVideos="activeVideos" />
                         </template>
+                    </template>
+                    <template v-else>
+                        <v-btn @click="showSelectorForId = item.i">
+                            <v-icon>{{ icons.mdiPencil }}</v-icon>
+                        </v-btn>
+                        <v-btn
+                            @click="setItemAsChat(item)"
+                            v-if="!(layoutContent[item.i] && layoutContent[item.i].type === 'chat')"
+                        >
+                            <v-icon>{{ mdiMessage }}</v-icon>
+                        </v-btn>
                     </template>
                 </v-card>
             </grid-item>
@@ -160,7 +171,7 @@
         <!-- Confirmation for deleting layout -->
         <v-dialog v-model="overwriteDialog" width="400">
             <v-card>
-                <v-card-text> Overwrite Current Layout </v-card-text>
+                <v-card-title> Overwrite Current Layout </v-card-title>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" text @click="overwriteConfirm"> Confirm </v-btn>
