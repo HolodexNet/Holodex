@@ -56,7 +56,7 @@ export default {
     border-color: #f5f5f5;
     background-color: #f5f5f5;
 }
-.layout-preview.theme--light > .layout > .cell {
+.layout-preview.theme--light > .cell {
     border-color: #f5f5f5;
     background-color: #e0e0e0;
 }

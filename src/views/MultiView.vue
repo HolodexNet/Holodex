@@ -24,9 +24,6 @@
                         <v-icon>{{ icons.mdiGridLarge }}</v-icon>
                         <span class="collapsible-text">Presets</span>
                     </v-btn>
-                    <v-btn @click="toggleFullScreen" icon>
-                        <v-icon>{{ icons.mdiFullscreen }}</v-icon>
-                    </v-btn>
                     <v-menu
                         :open-on-click="true"
                         bottom
@@ -37,9 +34,9 @@
                         width="400"
                     >
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn v-bind="attrs" v-on="on" v-show="!editMode" icon>
+                            <v-btn v-bind="attrs" v-on="on" v-show="!editMode">
                                 <v-icon>{{ mdiLinkVariant }}</v-icon>
-                                <!-- <span class="collapsible-text">Share</span> -->
+                                <span class="collapsible-text">Permalink</span>
                             </v-btn>
                         </template>
 
@@ -64,6 +61,9 @@
                             </v-card-actions> -->
                         </v-card>
                     </v-menu>
+                    <v-btn @click="toggleFullScreen" icon>
+                        <v-icon>{{ icons.mdiFullscreen }}</v-icon>
+                    </v-btn>
                 </div>
                 <v-btn icon @click="collapseToolbar = true">
                     <v-icon>{{ icons.mdiChevronUp }}</v-icon>

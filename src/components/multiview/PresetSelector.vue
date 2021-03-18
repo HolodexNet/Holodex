@@ -2,12 +2,12 @@
     <v-card>
         <v-card-title>Preset Layout</v-card-title>
         <v-card-text>
-            <v-alert dense color="blue-grey darken-2">
-                Have a cool layout to share? Let us know on our
+            <v-alert dense color="blue-grey">
+                Have a cool layout to share? Use the share button and let us know on our
                 <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
             </v-alert>
             <v-card-subtitle class="text-body-1">Desktop</v-card-subtitle>
-            <v-row justify="space-around">
+            <v-row>
                 <template v-for="preset in desktopPresets">
                     <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
                         <div class="layout-btn pa-2" @click="handleSelected(decodeLayout(preset.layout))">
@@ -80,6 +80,14 @@ export default {
                 {
                     layout: "QAII,QQII,IQII,QIII,AQII,AAQQ",
                     name: "p1s5",
+                },
+                {
+                    layout: "OAFY,TAFY,AMOM,AAOM",
+                    name: "2 Video, 2 Chat",
+                },
+                {
+                    layout: "MMGMchat,MAMM,AMMM,AAMM,SMGMchat",
+                    name: "3 Video, 2 Chat",
                 },
                 {
                     layout: "MAML,MLGH,GLGH,GSGG,SLGH,ASGG,MSGG,SSGG,ALGH,AAML",
