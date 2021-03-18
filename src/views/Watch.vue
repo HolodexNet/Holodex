@@ -86,6 +86,7 @@
                                 @videoUpdate="handleVideoUpdate"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
+                            <watch-song-list @timeJump="seekTo" v-if="video.songcount"></watch-song-list>
                             <WatchRelatedVideos :related="related" />
                         </v-col>
                     </v-row>
@@ -136,6 +137,8 @@
                     key="comments"
                     v-if="comments.length"
                 />
+
+                <watch-song-list @timeJump="seekTo" v-if="video.songcount"></watch-song-list>
                 <WatchRelatedVideos :related="related" />
             </div>
             <!-- floated/fixed live chat -->
@@ -163,6 +166,8 @@ import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
 import WatchComments from "@/components/watch/WatchComments";
 import WatchToolBar from "@/components/watch/WatchToolbar";
+import WatchSongList from "@/components/watch/WatchSongList";
+
 import { decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff } from "@mdi/js";
@@ -184,6 +189,7 @@ export default {
         WatchComments,
         WatchToolBar,
         WatchMugen: () => import("@/components/watch/WatchMugen"),
+        WatchSongList,
     },
     data() {
         return {
