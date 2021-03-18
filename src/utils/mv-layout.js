@@ -1,4 +1,9 @@
 const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+/**
+ * Encodes a layout array and contents to a compact URI
+ * @param {{layout, contents}} layout and layout contents
+ * @returns {string} encoded string
+ */
 export function encodeLayout({ layout, contents }) {
     const l = [];
     try {
@@ -27,15 +32,20 @@ export function encodeLayout({ layout, contents }) {
         });
         return l.join(",");
     } catch (e) {
+        console.error(e);
         return "error";
     }
 }
 
-export function decodeLayout(l) {
+/**
+ * Decodes a string to layout array and contents
+ * @param {string} encodedStr encoded string
+ * @returns {{layout, contents}} layout and layout contents as array and object
+ */
+export function decodeLayout(encodedStr) {
     const parsedLayout = [];
     const parsedContent = {};
-    l.split(",").forEach((str, index) => {
-        console.log(index);
+    encodedStr.split(",").forEach((str, index) => {
         const xywh = str.substring(0, 4);
         const idOrChat = str.substring(4, 15);
         const channelName = str.substring(15);

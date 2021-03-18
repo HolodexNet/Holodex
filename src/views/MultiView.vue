@@ -20,7 +20,7 @@
                         <v-icon>{{ icons.mdiClose }}</v-icon>
                         <span class="collapsible-text">Clear All</span>
                     </v-btn>
-                    <v-btn v-if="!editMode">
+                    <v-btn v-if="!editMode" @click="showPresetSelector = true">
                         <v-icon>{{ icons.mdiGridLarge }}</v-icon>
                         <span class="collapsible-text">Presets</span>
                     </v-btn>
@@ -108,15 +108,15 @@
                         backgroundImage: getBackgroundForItem(item),
                     }"
                 >
+                    <!-- Show cell is Live Chat regardless of mode -->
+                    <div
+                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"
+                        v-if="layoutContent[item.i] && layoutContent[item.i].type === 'chat'"
+                    >
+                        <v-icon x-large>{{ mdiMessage }}</v-icon> Live Chat
+                    </div>
                     <!-- Edit mode content -->
                     <template v-if="editMode">
-                        <div
-                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"
-                            v-if="layoutContent[item.i] && layoutContent[item.i].type === 'chat'"
-                        >
-                            <v-icon x-large>{{ mdiMessage }}</v-icon> Live Chat
-                        </div>
-                        <!-- <span class="text">{{ item.i }}</span> -->
                         <div class="d-flex flex-wrap" style="width: 100%">
                             <v-btn @click="showSelectorForId = item.i">
                                 <v-icon>{{ icons.mdiPencil }}</v-icon>
@@ -155,6 +155,7 @@
                             <TabbedLiveChat :activeVideos="activeVideos" />
                         </template>
                     </template>
+                    <!-- Show buttons if there is no content -->
                     <template v-else>
                         <v-btn @click="showSelectorForId = item.i">
                             <v-icon>{{ icons.mdiPencil }}</v-icon>
@@ -171,14 +172,22 @@
         </grid-layout>
 
         <!-- Video Selector -->
-        <v-dialog v-model="showOverlay">
+        <v-dialog v-model="showVideoSelector" width="1000">
             <VideoSelector @videoClicked="handleVideoClicked" />
+        </v-dialog>
+
+        <!-- Preset Selector -->
+        <v-dialog v-model="showPresetSelector" width="1000">
+            <PresetSelector @selected="handlePresetClicked" />
         </v-dialog>
 
         <!-- Confirmation for deleting layout -->
         <v-dialog v-model="overwriteDialog" width="400">
             <v-card>
-                <v-card-title> Overwrite Current Layout </v-card-title>
+                <v-card-title> Overwrite current layout? </v-card-title>
+                <v-card-text class="d-flex justify-center">
+                    <LayoutPreview :layout="layoutPreview" />
+                </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" text @click="overwriteConfirm"> Confirm </v-btn>
@@ -201,6 +210,8 @@ import { mdiMessage, mdiResizeBottomRight, mdiViewGridPlus, mdiLinkVariant, mdiC
 import copyToClipboard from "@/mixins/copyToClipboard";
 import { encodeLayout, decodeLayout } from "@/utils/mv-layout";
 import { getVideoThumbnails } from "@/utils/functions";
+import PresetSelector from "@/components/multiview/PresetSelector";
+import LayoutPreview from "@/components/multiview/LayoutPreview";
 
 export default {
     name: "MultiView",
@@ -211,6 +222,8 @@ export default {
         WatchFrame,
         WatchLiveChat,
         TabbedLiveChat,
+        PresetSelector,
+        LayoutPreview,
     },
     mixins: [copyToClipboard],
     data() {
@@ -229,6 +242,10 @@ export default {
             overwriteDialog: false,
             overwriteCancel: null,
             overwriteConfirm: null,
+
+            showPresetSelector: false,
+
+            layoutPreview: [],
         };
     },
     mounted() {
@@ -243,7 +260,8 @@ export default {
                         this.setMultiview(parsed);
                         return;
                     }
-
+                    // show dialog with confirm or cancel functions
+                    this.layoutPreview = parsed.layout;
                     this.overwriteConfirm = () => {
                         this.overwriteDialog = false;
                         this.setMultiview(parsed);
@@ -270,7 +288,8 @@ export default {
         layoutContent() {
             return this.$store.state.multiview.layoutContent;
         },
-        showOverlay: {
+        // Return true if there's an id requesting, setting false is setting id to -1
+        showVideoSelector: {
             get() {
                 return this.showSelectorForId !== -1;
             },
@@ -279,6 +298,7 @@ export default {
             },
         },
         activeVideos() {
+            // Filter out any videos that are not being displayed
             const active = [];
             this.layout
                 .map((item) => item.i)
@@ -293,7 +313,7 @@ export default {
             const query = `?layout=${encodeURIComponent(
                 encodeLayout({
                     layout: this.layout,
-                    content: this.content,
+                    contents: this.layoutContent,
                 }),
             )}`;
             return `${window.origin}/multiview${query}`;
@@ -308,27 +328,19 @@ export default {
                 thisCopy.shareDialog = false;
             }, 200);
         },
-        getMinVideoObj(video) {
-            const {
-                id,
-                channel: { name },
-            } = video;
-            return {
-                id,
-                channel: {
-                    name,
-                },
-            };
-        },
         handleVideoClicked(video) {
             this.$store.commit("multiview/setLayoutContentById", {
                 id: this.showSelectorForId,
                 content: {
                     type: "video",
-                    content: this.getMinVideoObj(video),
+                    content: video,
                 },
             });
             this.showSelectorForId = -1;
+        },
+        handlePresetClicked(preset) {
+            this.showPresetSelector = false;
+            this.setMultiview(preset);
         },
         setItemAsChat(item) {
             this.$store.commit("multiview/setLayoutContentById", {
@@ -355,8 +367,8 @@ export default {
             this.$store.commit("multiview/setLayoutContent", content);
         },
         getBackgroundForItem(item) {
-            if (this.layoutContent[item.i] && this.editMode) {
-                if (this.layoutContent[item.i].type === "video") {
+            if (this.layoutContent[item.i]) {
+                if (this.layoutContent[item.i].type === "video" && this.editMode) {
                     return `url(${getVideoThumbnails(this.layoutContent[item.i].content.id, false).medium})`;
                 }
                 if (this.layoutContent[item.i].type === "chat") {
