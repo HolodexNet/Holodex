@@ -3,9 +3,6 @@
         :style="{ background: $vuetify.theme.themes[this.darkMode ? 'dark' : 'light'].background }"
         :class="{ 'bump-bottom': $store.state.music.isOpen }"
     >
-        <div v-if="$vuetify.breakpoint.name == 'xs'" class="pull-to-refresh-observer" v-intersect="refreshPage">
-            RELOAD
-        </div>
         <MainNav />
         <!-- remove watch page view from being wrapped in v-main, to avoid layout shifts -->
         <v-main v-if="!isWatchPage">
@@ -179,13 +176,6 @@ export default {
             // send message to SW to skip the waiting and activate the new SW
             this.registration.waiting.postMessage({ type: "SKIP_WAITING" });
         },
-        refreshPage() {
-            console.log("intersecting");
-            // this.$router.go(0);
-            if (Date.now() - this.started > 10000) {
-                this.$router.go(0);
-            }
-        },
     },
 };
 </script>
@@ -206,9 +196,5 @@ body {
 .bump-bottom .v-main__wrap {
     padding-bottom: 250px;
     /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
-}
-.pull-to-refresh-observer {
-    position: absolute;
-    top: -200px;
 }
 </style>
