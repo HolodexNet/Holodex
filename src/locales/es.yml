@@ -5,7 +5,6 @@ component:
     textAfterTwitter: ' O reporta el error a través de la'
     aboutPage: Página de información
   channelList:
-    otherText: Otros
     favoriteAllInGroup: Marcar todos en el grupo como favorito
     signInToFavorite: Registrate para marcar como favorito
     unfavoriteAllInGroup: Desmarcar todos como favoritos
@@ -51,9 +50,7 @@ component:
       topic: Tema
       videourl: url de vídeo
   video:
-    comment:
-      openOnYoutube: Abrir comentario en
-      openOnYoutubeAfter: ''
+    comment: {}
   watch:
     streamingFor: En directo durante {0}
     nextUpInMugen: Siguiente
@@ -80,9 +77,7 @@ component:
     songTitle: Titulo
 views:
   channels:
-    channelType:
-      subber: subber
-      vtuber: vtuber
+    channelType: {}
     sortOptions:
       subscribers: Subscriptores
       group: Grupo

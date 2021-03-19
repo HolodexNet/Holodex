@@ -5,7 +5,6 @@ component:
     textAfterTwitter: ' or report an error through the'
     aboutPage: About page
   channelList:
-    otherText: Other
     signInToFavorite: Sign in to favorite
     unfavoriteAllInGroup: Unfavorite all in group
     favoriteAllInGroup: Favorite all in group
@@ -39,9 +38,7 @@ component:
   videoDescription:
     description: Description
   video:
-    comment:
-      openOnYoutube: open comment on
-      openOnYoutubeAfter: ''
+    comment: {}
   description:
     showLess: Show Less
     showMore: Show More
@@ -80,9 +77,7 @@ component:
     weeklyTopForOrg: Weekly Top Plays for {0}
 views:
   channels:
-    channelType:
-      subber: subber
-      vtuber: vtuber
+    channelType: {}
     sortOptions:
       subscribers: Subscribers
       group: Group

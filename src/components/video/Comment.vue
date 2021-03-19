@@ -1,28 +1,5 @@
 <template>
     <v-list-item class="d-block my-3 comment">
-        <!-- punchout to comment directly -->
-        <!-- <v-chip
-            class="d-inline"
-            small
-            label
-            :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`"
-        >
-            {{ $t("component.video.comment.openOnYoutube") }}&emsp;&emsp;
-            <v-icon>{{ mdiYoutube }}</v-icon>
-            {{ $t("component.video.comment.openOnYoutubeAfter") }}
-        </v-chip> -->
-        <!-- <truncated-text 
-            style="white-space: pre-wrap" 
-            class="text-body-2" 
-            :html="processedMessage"
-            lines="5"
-        >
-            <template v-slot:button="{ expanded }">
-                <span class="text-body-2">
-                    {{ expanded ? $t("component.description.showLess") : $t("component.description.showMore") }}
-                </span>
-            </template>
-        </truncated-text> -->
         <truncated-text style="white-space: pre-wrap" class="text-body-2" :html="processedMessage" lines="5">
             <template v-slot:button="{ expanded }">
                 <span class="text-subtitle-2" style="color: #aaa">{{ expanded ? "Close" : "Read more" }}</span>

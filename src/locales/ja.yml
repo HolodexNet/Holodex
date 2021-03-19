@@ -11,7 +11,6 @@ component:
     videoCount: '{0}本の動画'
     totalViews: 累計視聴回数
   channelList:
-    otherText: その他
     favoriteAllInGroup: グループをすべてお気に入りに追加
     signInToFavorite: お気に入りに登録
     unfavoriteAllInGroup: グループをすべてお気に入りから削除
@@ -51,9 +50,7 @@ component:
       topic: トピック
       videourl: ビデオURL
   video:
-    comment:
-      openOnYoutube: コメントをYoutubeで開く
-      openOnYoutubeAfter: ''
+    comment: {}
   watch:
     streamingFor: '{0}分経過'
     nextUpInMugen: 次の動画
@@ -80,9 +77,7 @@ component:
     songTitle: タイトル
 views:
   channels:
-    channelType:
-      subber: 切り抜きチャンネル
-      vtuber: Vtuber
+    channelType: {}
     favoritesAreEmpty: お気に入りにはまだなにも登録されていません！
     sortOptions:
       clipCount: 切り抜き数

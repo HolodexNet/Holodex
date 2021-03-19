@@ -14,7 +14,6 @@ component:
     videoCount: '{0} Vidéos'
   channelList:
     favoriteAllInGroup: Ajouter tout le groupe aux favoris
-    otherText: Autre
     signInToFavorite: Veuillez-vous connecter pour ajouter aux favoris
     unfavoriteAllInGroup: Supprimer tout le groupe des favoris
   channelSocials:
@@ -51,9 +50,7 @@ component:
       topic: sujet
       videourl: url de la vidéo
   video:
-    comment:
-      openOnYoutube: ouvrir le commentaire sur
-      openOnYoutubeAfter: ''
+    comment: {}
   videoCard:
     clips: '{n} Clips'
     liveNow: EN DIRECT
@@ -95,9 +92,7 @@ views:
     update_available: Une mise à jour est disponible
     update_btn: Mettre à jour
   channels:
-    channelType:
-      subber: sous-titreur
-      vtuber: vtuber
+    channelType: {}
     favoritesAreEmpty: Vous n'avez aucun favoris
     sortOptions:
       clipCount: Nombre de Clips

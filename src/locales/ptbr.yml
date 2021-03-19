@@ -5,7 +5,6 @@ component:
     textAfterTwitter: ' ou relate o erro por meio da '
     aboutPage: página de Informações
   channelList:
-    otherText: Outros
     signInToFavorite: Conecte-se para adicionar canais ao Favoritos
     unfavoriteAllInGroup: Remover todos desse grupo dos favoritos
     favoriteAllInGroup: Adicionar todos desse grupo aos favoritos
@@ -39,9 +38,7 @@ component:
   videoDescription:
     description: Descrição
   video:
-    comment:
-      openOnYoutube: Ver comentário no
-      openOnYoutubeAfter: ''
+    comment: {}
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -80,9 +77,7 @@ component:
     weeklyTopForOrg: Mais tocadas da semana por {0}
 views:
   channels:
-    channelType:
-      subber: Subber
-      vtuber: VTuber
+    channelType: {}
     sortOptions:
       subscribers: Inscritos
       group: Groupo

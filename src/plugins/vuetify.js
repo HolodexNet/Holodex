@@ -84,7 +84,7 @@ export const i18n = new VueI18n({
     messages, // Set locale messages,
     pluralizationRules: {
         /**
-         * @param choice {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
+         * @param choice {number} a choice index given by the input to $tc: `$tc ('path.to.rule', choiceIndex)`
          * @param choicesLength {number} an overall amount of available choices
          * @returns a final choice index to select plural word by
          */

@@ -5,7 +5,6 @@ component:
     textAfterTwitter: ' atau laporkan hal ini melalui'
     aboutPage: halaman tentang
   channelList:
-    otherText: Lainnya
     favoriteAllInGroup: Favoritkan semua dalam grup
     signInToFavorite: Masuk untuk menambahkan favorit
     unfavoriteAllInGroup: Unfavoritkan semua dalam grup
@@ -51,9 +50,7 @@ component:
       topic: topik
       videourl: url video
   video:
-    comment:
-      openOnYoutube: Buka komentar di
-      openOnYoutubeAfter: ''
+    comment: {}
   watch:
     streamingFor: Streaming selama {0}
     nextUpInMugen: Selanjutnya
@@ -80,9 +77,7 @@ component:
     songTitle: Judul
 views:
   channels:
-    channelType:
-      subber: subber
-      vtuber: vtuber
+    channelType: {}
     sortOptions:
       subscribers: Subscribers
       group: Grup

@@ -77,7 +77,7 @@
                         </template>
                         <v-list dense>
                             <v-list-item :to="`/multiview?layout=AAUY${video.id}${video.channel.name}%2CUAEYchat`"
-                                ><v-icon left>{{ icons.mdiDotsGrid }}</v-icon>
+                                ><v-icon left>{{ icons.mdiViewDashboard }}</v-icon>
                                 {{ $t("component.mainNav.multiview") }}
                             </v-list-item>
                             <v-list-item :to="`/edit/video/${video.id}`"

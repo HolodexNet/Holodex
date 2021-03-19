@@ -5,7 +5,6 @@ component:
     textAfterTwitter: ' atau laporkan ralat melalui'
     aboutPage: laman Perihal
   channelList:
-    otherText: Lain-lain
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
     signInToFavorite: Pendaftaran diperlukan
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
@@ -50,9 +49,7 @@ component:
       topic: topik
       videourl: url video
   video:
-    comment:
-      openOnYoutube: buka ulasan di YouTube
-      openOnYoutubeAfter: ''
+    comment: {}
   watch:
     streamingFor: Telah berlangsung selama {0}
     nextUpInMugen: Seterusnya
@@ -79,9 +76,7 @@ component:
     songTitle: ''
 views:
   channels:
-    channelType:
-      subber: penyari kata
-      vtuber: penggiat YouTube maya
+    channelType: {}
     sortOptions:
       subscribers: Langganan
       group: Pecahan

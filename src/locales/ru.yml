@@ -5,7 +5,6 @@ component:
     textAfterTwitter: ' или сообщите об ошибке через'
     aboutPage: О сайте
   channelList:
-    otherText: Другие
     favoriteAllInGroup: Добавить всю группу в избранное
     signInToFavorite: Войдите, чтобы управлять избранным
     unfavoriteAllInGroup: Убрать всю группу из избранного
@@ -51,9 +50,7 @@ component:
       topic: тема
       videourl: ссылка на видео
   video:
-    comment:
-      openOnYoutube: открыть комментарий на
-      openOnYoutubeAfter: ''
+    comment: {}
   watch:
     streamingFor: Стримит {0}
     nextUpInMugen: Следущее в очереди
@@ -80,9 +77,7 @@ component:
     songTitle: ''
 views:
   channels:
-    channelType:
-      subber: саббер
-      vtuber: витубер
+    channelType: {}
     sortOptions:
       subscribers: Подписчики
       group: Группа

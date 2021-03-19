@@ -5,7 +5,6 @@ component:
     textAfterTwitter: 或是於推特回報錯誤給我們。
     aboutPage: 關於本站
   channelList:
-    otherText: 其他Vtuber
     signInToFavorite: 請登入以使用收藏功能
     unfavoriteAllInGroup: 取消收藏本群組所有頻道
     favoriteAllInGroup: 收藏本群組所有頻道
@@ -39,9 +38,7 @@ component:
   videoDescription:
     description: 影片資訊
   video:
-    comment:
-      openOnYoutube: 於
-      openOnYoutubeAfter: 查看本留言
+    comment: {}
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -80,9 +77,7 @@ component:
     songTitle: 曲名
 views:
   channels:
-    channelType:
-      subber: 翻譯剪輯
-      vtuber: Vtuber
+    channelType: {}
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
