@@ -195,6 +195,10 @@ views:
       channel seperti mengubah metadata video unggahan mereka sendiri.
     linkAcc: Sambungkan akun lain
     ownedYtChannel: Memiliki Channel YouTube
+  multiview:
+    permalink: Buat Tautan
+    confirmOverwrite: ''
+    confirmOverwriteYes: Konfirmasi
 time:
   diff_future_date: Mulai {0} ({1})
   distance_past_date: '{0}'

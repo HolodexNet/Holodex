@@ -180,6 +180,10 @@ views:
     futureYtcOwnerMessage: ''
     linkAcc: ''
     ownedYtChannel: ''
+  multiview:
+    permalink: ''
+    confirmOverwrite: ''
+    confirmOverwriteYes: Sahkan
 time:
   diff_future_date: Berlangsung {0} ({1})
   distance_past_date: '{0}'

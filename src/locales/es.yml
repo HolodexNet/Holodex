@@ -117,7 +117,11 @@ views:
       all: Todos
       official: Oficial
       clip: Clip
-    unsupportedQuery: ''
+    unsupportedQuery: >-
+      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y
+      <kbd> Organización </kbd>. 
+
+      No se mostrarán <b> clips </b>.
   settings:
     title: Opciones
     darkModeLabel: Modo Oscuro
@@ -188,6 +192,10 @@ views:
       editar metadata para sus propios videos
     linkAcc: Vincular otra cuenta
     ownedYtChannel: Canal de Youtube en propiedad
+  multiview:
+    permalink: Enlace Permanente
+    confirmOverwrite: ''
+    confirmOverwriteYes: Confirmar
 time:
   diff_future_date: Inicia {0} ({1})
   distance_past_date: '{0}'

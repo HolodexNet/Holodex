@@ -196,6 +196,10 @@ views:
       Isto fará com que as chaves antigas expirem em até 24 horas. Deseja
       realmente presseguir?
     apikeyResetNvm: Nada de interessante aconteceu
+  multiview:
+    permalink: Link Permanente
+    confirmOverwrite: ''
+    confirmOverwriteYes: Confirmar
 time:
   soon: em breve
   diff_future_date: Ao Vivo {0} ({1})

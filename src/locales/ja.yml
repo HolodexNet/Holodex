@@ -177,6 +177,10 @@ views:
     futureYtcOwnerMessage: 今後のアップデートでHolodexに登録した自分のチャンネル上の動画のメタデータを編集可能になります
     linkAcc: 別のアカウントをリンク
     ownedYtChannel: あなたのYoutubeチャンネル
+  multiview:
+    permalink: パーマリンク
+    confirmOverwrite: ''
+    confirmOverwriteYes: 確認
 time:
   diff_future_date: '{0}に開始 ({1})'
   distance_past_date: '{0}'

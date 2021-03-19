@@ -8,21 +8,21 @@
                     class="flex-grow-1 justify-center d-flex mv-toolbar-btn align-center"
                     :class="{ 'no-btn-text': $store.state.isMobile }"
                 >
-                    <v-btn @click="editMode = !editMode" :color="editMode ? 'green' : 'blue'">
-                        <v-icon>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
+                    <v-btn @click="editMode = !editMode" :color="editMode ? 'light-green' : 'blue'">
+                        <v-icon left>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
                         <span class="collapsible-text">{{ editMode ? "Done" : "Edit" }}</span>
                     </v-btn>
-                    <v-btn @click="addItem" v-if="editMode" color="orange">
-                        <v-icon>{{ mdiViewGridPlus }}</v-icon>
-                        <span class="collapsible-text">Add Cell</span>
+                    <v-btn @click="addItem" v-if="editMode" color="green">
+                        <v-icon left>{{ mdiViewGridPlus }}</v-icon>
+                        <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
                     </v-btn>
                     <v-btn @click="clearAllItems" v-if="editMode" color="red">
-                        <v-icon>{{ icons.mdiClose }}</v-icon>
-                        <span class="collapsible-text">Clear All</span>
+                        <v-icon left>{{ icons.mdiRefresh }}</v-icon>
+                        <span class="collapsible-text">{{ $t("component.music.clearPlaylist") }}</span>
                     </v-btn>
-                    <v-btn v-if="!editMode" @click="showPresetSelector = true">
-                        <v-icon>{{ icons.mdiGridLarge }}</v-icon>
-                        <span class="collapsible-text">Presets</span>
+                    <v-btn v-if="!editMode" color="green darken-1" @click="showPresetSelector = true">
+                        <v-icon left>{{ icons.mdiGridLarge }}</v-icon>
+                        <span class="collapsible-text">{{ $t("views.multiview.presets") }}</span>
                     </v-btn>
                     <v-menu
                         :open-on-click="true"
@@ -32,11 +32,12 @@
                         :open-on-hover="false"
                         v-model="shareDialog"
                         width="400"
+                        z-index="300"
                     >
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn v-bind="attrs" v-on="on" v-show="!editMode">
-                                <v-icon>{{ mdiLinkVariant }}</v-icon>
-                                <span class="collapsible-text">Permalink</span>
+                                <v-icon left>{{ mdiLinkVariant }}</v-icon>
+                                <span class="collapsible-text">{{ $t("views.multiview.permalink") }}</span>
                             </v-btn>
                         </template>
 
@@ -184,7 +185,7 @@
         <!-- Confirmation for deleting layout -->
         <v-dialog v-model="overwriteDialog" width="400">
             <v-card>
-                <v-card-title> Overwrite current layout? </v-card-title>
+                <v-card-title> {{ $t("views.multiview.confirmOverwrite") }} </v-card-title>
                 <v-card-text class="d-flex flex-column justify-center align-center">
                     <LayoutPreview :layout="layoutPreview" />
                     <v-checkbox
@@ -195,8 +196,12 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="overwriteConfirm"> Confirm </v-btn>
-                    <v-btn color="primary" text @click="overwriteCancel"> Cancel </v-btn>
+                    <v-btn color="primary" text @click="overwriteConfirm">
+                        {{ $t("views.multiview.confirmOverwriteYes") }}
+                    </v-btn>
+                    <v-btn color="primary" text @click="overwriteCancel">
+                        {{ $t("views.library.deleteConfirmationCancel") }}
+                    </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>

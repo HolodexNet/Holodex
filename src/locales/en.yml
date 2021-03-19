@@ -119,8 +119,7 @@ views:
       clip: Clip
     unsupportedQuery: >-
       Currently searching clips by <kbd>Topic</kbd> and <kbd>Organization</kbd>
-      is not supported. No
-                  <b>clips</b> will show up.
+      is not supported. No <b>clips</b> will show up.
   settings:
     title: Settings
     darkModeLabel: Dark Mode
@@ -192,6 +191,15 @@ views:
     apikeyResetConfirm1: Are you sure you want to reset your API Key?
     apikeyResetConfirm2: The old API key will have 0-24 hours before expiring. Really reset?
     apikeyResetNvm: Nothing interesting happened.
+  multiview:
+    confirmOverwrite: Overwrite current layout?
+    confirmOverwriteYes: Confirm
+    permalink: Permalink
+    presets: Presets
+    addframe: Add Cell
+    preset:
+      desktop: Desktop
+      mobile: Mobile
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})

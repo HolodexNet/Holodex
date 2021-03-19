@@ -191,6 +191,10 @@ views:
     futureYtcOwnerMessage: ''
     linkAcc: ''
     ownedYtChannel: ''
+  multiview:
+    permalink: Permalien
+    confirmOverwrite: ''
+    confirmOverwriteYes: Confirmer
 editor:
   music:
     add: ''

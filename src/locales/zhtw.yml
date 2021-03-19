@@ -175,6 +175,10 @@ views:
     futureYtcOwnerMessage: 我們未來預計將會提供頻道擁有者在Holodex上編輯影片資料的功能。
     linkAcc: 連結其他帳號
     ownedYtChannel: 擁有的YouTube頻道
+  multiview:
+    permalink: 永久連結
+    confirmOverwrite: 確定覆蓋設定？
+    confirmOverwriteYes: 確認
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})

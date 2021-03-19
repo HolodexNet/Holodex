@@ -1,12 +1,12 @@
 <template>
     <v-card>
-        <v-card-title>Preset Layout</v-card-title>
+        <v-card-title>{{ $t("views.multiview.presets") }}</v-card-title>
         <v-card-text>
             <v-alert dense color="blue-grey">
                 Have a cool layout to share? Use the share button and let us know on our
                 <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
             </v-alert>
-            <v-card-subtitle class="text-body-1">Desktop</v-card-subtitle>
+            <v-card-subtitle class="text-body-1">{{ $t("views.multiview.preset.desktop") }}</v-card-subtitle>
             <v-row>
                 <template v-for="preset in desktopPresets">
                     <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
@@ -19,7 +19,7 @@
                     </v-col>
                 </template>
             </v-row>
-            <v-card-subtitle class="text-body-1">Mobile</v-card-subtitle>
+            <v-card-subtitle class="text-body-1">{{ $t("views.multiview.preset.mobile") }}</v-card-subtitle>
             <v-row justify="space-around" align="center">
                 <template v-for="preset in mobilePresets">
                     <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
