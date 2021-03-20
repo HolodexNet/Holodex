@@ -1,7 +1,7 @@
 <template>
     <v-list dense>
         <song-item
-            v-for="(song, idx) in songs"
+            v-for="(song, idx) in songList"
             :song="song"
             :key="song.name + song.video_id + idx"
             @play="$emit('timeJump', song.start)"
@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import backendApi from "@/utils/backend-api";
 import { mapState } from "vuex";
 import SongItem from "@/components/media/SongItem";
 
@@ -20,33 +19,24 @@ export default {
     components: {
         SongItem,
     },
-    data() {
-        return {
-            currentVideoId: null,
-            songs: [],
-        };
-    },
     computed: {
-        ...mapState("watch", ["video", "comments", "isLoading", "hasError"]),
+        songList() {
+            if (this.video && this.video.songs) {
+                return this.video.songs.map((song) => {
+                    return {
+                        ...song,
+                        video_id: this.video.id,
+                        channel_id: this.video.channel.id,
+                        channel: this.video.channel,
+                    };
+                });
+            }
+            return [];
+        },
+        ...mapState("watch", ["video"]),
     },
     mounted() {
         this.$nextTick(this.updateSongs);
-    },
-    watch: {
-        async video() {
-            if (this.video.id !== this.currentVideoId) {
-                this.updateSongs();
-            }
-        },
-    },
-    methods: {
-        async updateSongs() {
-            console.log("fetching songs...");
-            this.songs = (
-                await backendApi.songListByVideo(this.video.channel_id || this.video.channel.id, this.video.id, true)
-            ).data;
-            this.currentVideoId = this.video.id;
-        },
     },
 };
 </script>
