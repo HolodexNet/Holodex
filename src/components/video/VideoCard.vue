@@ -45,7 +45,11 @@
                         <div class="video-duration" v-if="video.songcount">
                             <v-icon small>{{ icons.mdiMusic }}</v-icon>
                         </div>
-                        <div v-if="video.duration > 0 && video.start_actual" class="video-duration rounded-br-sm">
+                        <div
+                            v-if="video.duration > 0 || video.start_actual"
+                            class="video-duration rounded-br-sm"
+                            :class="video.status === 'live' && 'video-duration-live'"
+                        >
                             {{ formattedDuration }}
                         </div>
                     </div>
@@ -156,7 +160,27 @@ export default {
         return {
             forceJPG: true,
             icons,
+            now: Date.now(),
+            updatecycle: null,
         };
+    },
+    mounted() {
+        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+    },
+    activated() {
+        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+    },
+    deactivated() {
+        if (this.updatecycle) {
+            clearInterval(this.updatecycle);
+            this.updatecycle = null;
+        }
+    },
+    beforeDestroy() {
+        if (this.updatecycle) {
+            clearInterval(this.updatecycle);
+            this.updatecycle = null;
+        }
     },
     props: {
         video: {
@@ -226,7 +250,7 @@ export default {
         formattedDuration() {
             const duration =
                 this.video.start_actual && this.video.status === "live"
-                    ? dayjs().diff(dayjs(this.video.start_actual))
+                    ? dayjs(this.now).diff(dayjs(this.video.start_actual))
                     : this.video.duration * 1000;
 
             return duration ? this.formatDuration(duration) : "";
@@ -293,6 +317,9 @@ export default {
             if (this.disableDefaultClick) return;
             const url = `https://www.youtube.com/watch?v=${this.video.id}`;
             window.open(url, "_blank", "noopener");
+        },
+        updateNow() {
+            this.now = Date.now();
         },
     },
 };
@@ -367,6 +394,9 @@ export default {
     font-size: 0.8125rem;
     letter-spacing: 0.025em;
     line-height: 0.81rem;
+}
+.video-duration.video-duration-live {
+    background-color: rgba(148, 0, 0, 0.8);
 }
 
 .video-topic {
