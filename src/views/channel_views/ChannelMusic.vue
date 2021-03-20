@@ -3,7 +3,14 @@
         <v-col cols="12">
             <v-card-title>
                 <span class="text-h5 mr-3">{{ $t("component.channelMusic.weeklyTopPlaysHeader") }}</span>
-                <v-btn fab color="primary" @click="$store.commit('music/addSong', popularSongs)">
+                <v-btn
+                    fab
+                    color="primary"
+                    @click="
+                        $store.commit('music/addSong', popularSongs);
+                        $store.commit('music/openBar');
+                    "
+                >
                     <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
                 </v-btn>
             </v-card-title>
@@ -30,7 +37,14 @@
         <v-col sm="12" md="12">
             <v-card-title>
                 <span class="text-h5 mr-3">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
-                <v-btn fab color="primary" @click="$store.commit('music/addSong', recentSongs)">
+                <v-btn
+                    fab
+                    color="primary"
+                    @click="
+                        $store.commit('music/addSong', recentSongs);
+                        $store.commit('music/openBar');
+                    "
+                >
                     <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
                 </v-btn>
 

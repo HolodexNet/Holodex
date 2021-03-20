@@ -3,7 +3,7 @@
         <v-card @click.stop="$emit('play', song)" elevation="0" style="max-width: 200px" color="transparent">
             <v-sheet class="song-card-artwork rounded" :elevation="hover ? 6 : 3">
                 <!-- actual artwork -->
-                <div class="song-card-data mx-1">
+                <div class="song-card-data text-caption rounded-br-sm px-1">
                     <!-- <span class="muted" v-if="showTime">{{ formattedTime }}</span> -->
                     {{ Math.floor((song.end - song.start) / 60) }}:{{
                         (Math.round(song.end - song.start) % 60).toString().padStart(2, "0")
@@ -163,13 +163,11 @@ export default {
 }
 .song-card-data {
     position: absolute;
-    bottom: 0px;
-    right: 0px;
+    bottom: 3px;
+    right: 3px;
     z-index: 30;
-    text-shadow: 0px 0px 2px rgba(0, 0, 0);
-    font-weight: 500;
-    -webkit-text-stroke-width: 0.2px;
-    -webkit-text-stroke-color: rgba(0, 0, 0);
+    font-weight: 400;
+    background: rgba(0, 0, 0, 0.7);
 }
 .limit-width {
     white-space: normal;

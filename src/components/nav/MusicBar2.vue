@@ -9,7 +9,7 @@
         v-if="currentSong"
         ref="sheet"
     >
-        <div
+        <!-- <div
             key="musicplayertogglebtn"
             class="music-player-toggle"
             :class="{ 'error-animation': animateOpenError, 'added-animation': animateAdded }"
@@ -26,7 +26,7 @@
             <div class="music-player-toggle-bg">
                 <v-icon large>{{ icons.mdiMusic }}</v-icon>
             </div>
-        </div>
+        </div> -->
         <v-slider class="music-progress" hide-details :value="progress" height="3" @change="progressChange" />
         <div class="d-flex justify-space-between pa-2">
             <div class="player-controls">
@@ -60,6 +60,7 @@
                     content-class="scrollable-music-queue"
                     min-width="30vw"
                     max-width="50vw"
+                    max-height="50vh"
                     v-model="queueMenuOpen"
                     :itemCount="playlist.length"
                 >
@@ -366,5 +367,30 @@ export default {
 }
 #songChannel {
     text-decoration: none;
+}
+.added-animation {
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+@keyframes shake {
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
 }
 </style>

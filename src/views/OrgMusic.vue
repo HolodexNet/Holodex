@@ -4,7 +4,14 @@
             <v-col cols="12 mb-0 pb-0">
                 <v-card-title>
                     <span class="text-h5 mr-3">{{ $t("component.orgMusic.monthlyTopForOrg", [currentOrg]) }}</span>
-                    <v-btn fab color="primary" @click="$store.commit('music/addSong', popularMonthlySongs)">
+                    <v-btn
+                        fab
+                        color="primary"
+                        @click="
+                            $store.commit('music/addSong', popularMonthlySongs);
+                            $store.commit('music/openBar');
+                        "
+                    >
                         <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
                     </v-btn>
                 </v-card-title>
@@ -33,7 +40,14 @@
             <v-col cols="12" class="my-0 py-0">
                 <v-card-title>
                     <span class="text-h5 mr-3">{{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg]) }}</span>
-                    <v-btn fab color="primary" @click="$store.commit('music/addSong', popularWeeklySongs)">
+                    <v-btn
+                        fab
+                        color="primary"
+                        @click="
+                            $store.commit('music/addSong', popularWeeklySongs);
+                            $store.commit('music/openBar');
+                        "
+                    >
                         <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
                     </v-btn>
                 </v-card-title>
@@ -62,7 +76,14 @@
             <v-col cols="12" class="my-0 py-0">
                 <v-card-title>
                     <span class="text-h5 mr-3">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
-                    <v-btn fab color="primary" @click="$store.commit('music/addSong', recentSongs)">
+                    <v-btn
+                        fab
+                        color="primary"
+                        @click="
+                            $store.commit('music/addSong', recentSongs);
+                            $store.commit('music/openBar');
+                        "
+                    >
                         <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
                     </v-btn>
 
