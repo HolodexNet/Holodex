@@ -29,6 +29,7 @@ component:
     logout: Daftar Keluar
     accountSettings: ''
     music: ''
+    multiview: ''
   videoCard:
     clips: '{n} Sedutan'
     watching: '{0} Tontonan Sekarang'
@@ -184,6 +185,11 @@ views:
     permalink: ''
     confirmOverwrite: ''
     confirmOverwriteYes: Sahkan
+    addframe: ''
+    preset:
+      desktop: ''
+      mobile: ''
+    presets: ''
 time:
   diff_future_date: Berlangsung {0} ({1})
   distance_past_date: '{0}'

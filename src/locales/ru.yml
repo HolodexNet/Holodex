@@ -185,6 +185,11 @@ views:
     permalink: Постоянная ссылка
     confirmOverwrite: ''
     confirmOverwriteYes: Подтвердить
+    addframe: ''
+    preset:
+      desktop: ''
+      mobile: ''
+    presets: ''
 time:
   diff_future_date: Начнется {0} ({1})
   distance_past_date: '{0}'

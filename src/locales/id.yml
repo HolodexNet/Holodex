@@ -1,17 +1,17 @@
 component:
   apiError:
     title: Maafkeun
-    textBeforeTwitter: 'Ada kesalahan saat memuat konten, silahkan cek twitter '
-    textAfterTwitter: ' atau laporkan hal ini melalui'
+    textBeforeTwitter: "Ada kesalahan saat memuat konten, silahkan cek twitter "
+    textAfterTwitter: " atau laporkan hal ini melalui"
     aboutPage: halaman tentang
   channelList:
     favoriteAllInGroup: Favoritkan semua dalam grup
     signInToFavorite: Masuk untuk menambahkan favorit
     unfavoriteAllInGroup: Unfavoritkan semua dalam grup
   channelInfo:
-    videoCount: '{0} Video'
-    clipCount: '{n} Klip'
-    subscriberCount: '{n} Subscribers'
+    videoCount: "{0} Video"
+    clipCount: "{n} Klip"
+    subscriberCount: "{n} Subscribers"
     subscriberNA: Jumlah Subscriber tidak tersedia
     totalViews: Jumlah Ditonton
   channelSocials:
@@ -29,10 +29,9 @@ component:
     logout: Keluar
     accountSettings: Pengaturan Akun
     music: Musik
-    multiview: ''
   videoCard:
-    clips: '{n} Klip'
-    watching: '{0} sedang menonton'
+    clips: "{n} Klip"
+    watching: "{0} sedang menonton"
     liveNow: Sedang Berlangsung
     edit: Edit
   videoDescription:
@@ -142,7 +141,7 @@ views:
     autoplayVideoLabel: Video Putar Otomatis
     autoplayVideoMsg: Aktifkan pemutaran otomatis video
     resetAllSettings: Reset Semua Pengaturan/Data
-    clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
+    clipLanguageSelection: "Melihat Klip dalam bahasa berikut:"
   about:
     add_my_channel: Tambah channel saya ke Holodex
   app:
@@ -197,16 +196,15 @@ views:
     ownedYtChannel: Memiliki Channel YouTube
   multiview:
     permalink: Buat Tautan
-    confirmOverwrite: ''
     confirmOverwriteYes: Konfirmasi
 time:
   diff_future_date: Mulai {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
   soon: segera mulai
 editor:
   music:
     add: Tambah
-    endInput: 'Durasi dalam detik: (berakhir pd {0})'
+    endInput: "Durasi dalam detik: (berakhir pd {0})"
     itunesLookupPlaceholder: (Opsional) Cari di iTunes
     moveLeft2s: Geser kiri 2detik
     moveRight2s: Geser kanan 2detik
@@ -221,8 +219,8 @@ editor:
     testEnd: Uji ketepatan akhiran dimulai pada 3 detik sebelum berakhir.
     testStart: Uji awal mulai
     titles:
-      addSong: 'Metadata Lagu: Tambahkan lagu baru'
+      addSong: "Metadata Lagu: Tambahkan lagu baru"
       help: Bantuan
-      songList: 'Daftar Lagu : {0}'
+      songList: "Daftar Lagu : {0}"
     trackNameInput: Judul Lagu
     update: Perbarui

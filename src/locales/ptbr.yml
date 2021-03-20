@@ -200,6 +200,11 @@ views:
     permalink: Link Permanente
     confirmOverwrite: ''
     confirmOverwriteYes: Confirmar
+    addframe: ''
+    preset:
+      desktop: ''
+      mobile: ''
+    presets: ''
 time:
   soon: em breve
   diff_future_date: Ao Vivo {0} ({1})

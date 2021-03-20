@@ -194,8 +194,13 @@ views:
     ownedYtChannel: Canal de Youtube en propiedad
   multiview:
     permalink: Enlace Permanente
-    confirmOverwrite: ''
     confirmOverwriteYes: Confirmar
+    addframe: ''
+    confirmOverwrite: ''
+    preset:
+      desktop: ''
+      mobile: ''
+    presets: ''
 time:
   diff_future_date: Inicia {0} ({1})
   distance_past_date: '{0}'

@@ -5,10 +5,10 @@ component:
     textBeforeTwitter: コンテンツの取得中にエラーが発生しました。Twitterを確認してください
     title: Gomenasorry!
   channelInfo:
-    clipCount: '{n}本の切り抜き'
-    subscriberCount: '{n}登録者'
+    clipCount: "{n}本の切り抜き"
+    subscriberCount: "{n}登録者"
     subscriberNA: 登録者数は現在利用できません
-    videoCount: '{0}本の動画'
+    videoCount: "{0}本の動画"
     totalViews: 累計視聴回数
   channelList:
     favoriteAllInGroup: グループをすべてお気に入りに追加
@@ -31,9 +31,9 @@ component:
     music: ミュージック
     multiview: マルチビュー
   videoCard:
-    clips: '{n}本の切り抜き'
+    clips: "{n}本の切り抜き"
     liveNow: 配信中
-    watching: '{0}人視聴中'
+    watching: "{0}人視聴中"
     edit: 編集
   videoDescription:
     description: 概要
@@ -52,7 +52,7 @@ component:
   video:
     comment: {}
   watch:
-    streamingFor: '{0}分経過'
+    streamingFor: "{0}分経過"
     nextUpInMugen: 次の動画
   relatedVideo:
     clipsLabel: 切り抜き
@@ -98,7 +98,7 @@ views:
     recentVideosHeading: 最近の動画
   library:
     createYtPlaylistButton: Youtubeのプレイリストを作成（{0}）
-    deleteConfirmation: '{0}本当に動画を削除しますか？'
+    deleteConfirmation: "{0}本当に動画を削除しますか？"
     deleteConfirmationCancel: キャンセル
     deleteConfirmationOK: 削除
     deleteFromLibraryButton: 削除（{0}）
@@ -135,7 +135,7 @@ views:
     title: 設定
     useEnglishNameLabel: 英語名を使用する
     useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
-    clipLanguageSelection: '以下の言語の切り抜きを表示:'
+    clipLanguageSelection: "以下の言語の切り抜きを表示:"
   about:
     add_my_channel: チャンネルをHolodexに登録
   app:
@@ -179,11 +179,16 @@ views:
     ownedYtChannel: あなたのYoutubeチャンネル
   multiview:
     permalink: パーマリンク
-    confirmOverwrite: ''
     confirmOverwriteYes: 確認
+    addframe: ""
+    confirmOverwrite: ""
+    preset:
+      desktop: ""
+      mobile: ""
+    presets: ""
 time:
-  diff_future_date: '{0}に開始 ({1})'
-  distance_past_date: '{0}'
+  diff_future_date: "{0}に開始 ({1})"
+  distance_past_date: "{0}"
   soon: まもなく開始
 editor:
   music:
@@ -204,6 +209,6 @@ editor:
     titles:
       addSong: 曲情報:曲を追加
       help: ヘルプ
-      songList: 'セットリスト : {0}'
+      songList: "セットリスト : {0}"
     trackNameInput: 曲名
     update: 更新
