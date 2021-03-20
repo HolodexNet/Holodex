@@ -1,0 +1,218 @@
+---
+component:
+  apiError:
+    title: Извините!
+    textBeforeTwitter: 'Произошла ошибка при получении данных, пожалуйста, проверьте Twitter '
+    textAfterTwitter: ' или сообщите об ошибке через'
+    aboutPage: О сайте
+  channelList:
+    signInToFavorite: Войдите, чтобы управлять избранным
+    unfavoriteAllInGroup: Убрать всю группу из избранного
+    favoriteAllInGroup: Добавить всю группу в избранное
+  channelInfo:
+    videoCount: '{0} видео'
+    clipCount: '0 клипов | {n} клип | {n} клипа | {n} клипов'
+    subscriberCount: '0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков'
+    subscriberNA: Количество подписчиков недоступно
+    totalViews: 0 просмотров | {n} просмотр | {n} просмотра | {n} просмотров
+  channelSocials:
+    addToFavorites: Добавить в избранное
+    removeFromFavorites: Убрать из избранного
+  mainNav:
+    home: Главная
+    favorites: Избранное
+    channels: Каналы
+    about: О сайте
+    library: Библиотека
+    settings: Настройки
+    login: Войти
+    logout: Выйти
+    MugenClips: MugenClips<sup>бета</sup>
+    accountSettings: Настройки аккаунта
+    music: Музыка
+    multiview: Мультипросмотр
+  videoCard:
+    clips: '0 клипов | {n} клип | {n} клипа | {n} клипов'
+    watching: '{0} смотрят'
+    liveNow: LIVE
+    edit: Изменить
+  videoDescription:
+    description: Описание
+  video:
+    comment: { }
+  description:
+    showLess: Свернуть
+    showMore: Ещё
+  watch:
+    streamingFor: Стримит {0}
+    nextUpInMugen: Следущее в очереди
+  search:
+    searchLabel: Поиск
+    type:
+      channel: канал
+      topic: тема
+      org: агенство
+      titledesc: название и описание
+      comments: комментарии
+      videourl: ссылка на видео
+  relatedVideo:
+    clipsLabel: клипы
+    simulcastsLabel: связанные стримы
+    refersLabel: связанные видео
+    sourcesLabel: источники
+  paginateLoad:
+    newer: Новее
+    older: Старее
+  music:
+    clearPlaylist: Очистить
+  channelMusic:
+    recentSongsHeader: Новые песни
+    weeklyTopPlaysHeader: Самые проигрываемые за неделю
+  songList:
+    songTitle: Название
+    songCoveredBy: Автор кавера
+    songDuration: Длительность
+    sangOnTime: Спето
+  orgMusic:
+    monthlyTopForOrg: Топ {0} за месяц
+    weeklyTopForOrg: Топ {0} за неделю
+views:
+  channels:
+    channelType: { }
+    sortOptions:
+      subscribers: Подписчики
+      group: Группа
+      recentUpload: Последняя загрузка
+      videoCount: Количество видео
+      clipCount: Количество клипов
+    tabs:
+      Vtuber: Витуберы
+      Subber: Сабберы
+      Favorites: Избранное
+    favoritesAreEmpty: Вы ничего не добавили в избранное!
+  home:
+    liveOrUpcomingHeading: LIVE / Скоро
+    recentVideosHeading: Последние видео
+    recentVideoToggles:
+      all: Все
+      official: Официальные
+      subber: Клипы
+  library:
+    savedVideosTitle: Сохраненные видео
+    createYtPlaylistButton: Создать YouTube плейлист ({0})
+    deleteFromLibraryButton: Удалить ({0})
+    deleteConfirmation: Вы уверены, что хотите удалить {0} видео?
+    deleteConfirmationOK: Удалить
+    deleteConfirmationCancel: Отмена
+    selectionReset: Сброс
+    selectionSelectAll: Выбрать все
+    emptyLibrary: У вас нет сохраненных видео!
+  notFound:
+    title: Контент не найден
+    back: Вернуться на главную
+  search:
+    sort:
+      newest: Сначала новые
+      oldest: Сначала старые
+    type:
+      all: Все
+      official: Официальные
+      clip: Клипы
+    unsupportedQuery: >-
+      На данный момент поиск клипов по <kbd>теме</kbd> и <kbd>агенствам</kbd> не поддерживается. Ни одного <b>клипа</b> не выйдет в результатах.
+  settings:
+    title: Настройки
+    darkModeLabel: Ночная тема
+    darkModeMsg: Изменяет тему сайта
+    redirectModeLabel: Открыть на YouTube
+    redirectModeMsg: >-
+      Нажатие по любому видео откроет его на YouTube
+    useEnglishNameLabel: Использовать английские имена
+    useEnglishNameMsg: Использовать локализованные на английский имена для каналов витуберов
+    hideVideoThumbnailsLabel: Скрыть миниатюры видео
+    hideVideoThumbnailsMsg: >-
+      Скрыть миниатюры видео — помогает сократить время загрузки и меньше листать на телефонах
+    pushNotificationLabel: Пуш-уведомления (Скоро!)
+    pushNotificationMsg: Включить пуш-уведомления для каналов в избранном
+    autoplayVideoLabel: Автоматическое воспроизведение видео
+    autoplayVideoMsg: Включить автоматическое воспроизведение видео
+    scrollModeLabel: Режим прокрутки
+    scrollModeMsg: Используйте прокрутку для переворачивания страниц
+    resetAllSettings: Сбросить все настройки/данные
+    clipLanguageSelection: 'Посмотрите клипы на этих языках:'
+  app:
+    update_available: Доступно обновление
+    update_btn: Обновить
+    close_btn: Закрыть
+    check_about_page: Перейдите на страницу "О сайте" чтобы узнать о нововведениях
+    nowSupportsMultiOrg: Holodex теперь поддерживает разные агенства.
+    loginCallToAction: Войдите для создания своего списка избранного!
+  about:
+    add_my_channel: Добавить мой канал в Holodex
+  watch:
+    theaterMode: Широкий экран
+    saveToLibrary: Сохранить видео в библиотеку
+    mentionIconLabel: УПОМИНАНИЯ
+    chat:
+      loading: Загрузка чата...
+      hideTLBtn: Скрыть переводы
+      showTLBtn: Показать TL
+      TLSettingsTitle: Настройки перевода
+      StickBottomSettingLabel: Привязать к низу (для мобильных)
+      StickBottomSettingsDesc: TL чат привязывается к низу чата (по умолчанию на мобильных - к верху)
+      retryBtn: Повторить
+      status:
+        reconnecting: Переподключение...
+        reconnectFailed: Не удалось подключиться
+        notLive: >-
+          Стрим еще не начался, пожалуйста, попробуйте еще раз, когда с начала стрима пройдет 15 минут
+        connectedToChat: Подключен к чату переводов
+  favorites:
+    promptForAction: >-
+      Создайте список любимых витуберов и вы увидите их новые стримы и клипы с ними на этой странице.
+  editor:
+    needlogin: Вы должны войти в аккаунт для редактирования метаданных видео и песен в Holodex.
+  login:
+    apikeyMsg: >-
+      Вы можете использовать API ключ для программного доступа к Holodex API. Только один ключ на аккаунт. После получения нового ключа, старый ключ перестанет действовать через 0-24 часа.
+    apikeyNew: Получить новый API ключ
+    ownedYtChannel: Ваш YouTube канал
+    futureYtcOwnerMessage: >-
+      В будущем мы планируем предоставить больше сервисов владельцам каналов, таких как редактирование метаданных их собственных видео.
+    linkAcc: Привязать другой аккаунт
+    apikeyResetConfirm1: Вы уверены, что хотите сбросить свой API ключ?
+    apikeyResetConfirm2: Старый API ключ перестанет работать через 0-24 часа. Точно сбросить?
+    apikeyResetNvm: Ничего интересного не случилось.
+  multiview:
+    confirmOverwrite: Overwrite current layout?
+    confirmOverwriteYes: Подтвердить
+    permalink: Постоянная ссылка
+    presets: Presets
+    addframe: Add Cell
+    preset:
+      desktop: Desktop
+      mobile: Mobile
+time:
+  soon: Скоро
+  diff_future_date: Начнется {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: Добавить
+    update: Обновить
+    permission: >-
+      Вы должны быть пользователем уровня 'Редактор' или выше для обновления или удаления имеющихся песен. Пожалуйста, свяжитесь с нами в <a class='white--text' href='/about'>discord</a> чтобы оповестить редакторов о проблемах / злоупотреблениях, или для подачи заявки на статус редактора.
+    titles:
+      addSong: 'Метаданные песни: Добавить новую песню'
+      songList: 'Список песен : {0}'
+      help: Гайд
+    itunesLookupPlaceholder: (Опционально) Найти на iTunes
+    moveRight2s: Сдвинуть вправо на 2 сек.
+    testEnd: Протестировать конец
+    setToCurrentTime: Установить на текущее время ({0})
+    moveLeft2s: Сдвинуть влево на 2 сек.
+    trackNameInput: Название песни
+    originalArtistInput: Оригинальный артист
+    testStart: Протестировать начало
+    startInput: Начало
+    endInput: 'Длительность в секундах: (конец @ {0})'

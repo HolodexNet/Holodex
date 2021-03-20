@@ -1,3 +1,4 @@
+---
 component:
   apiError:
     title: Gomenasorry!
@@ -5,9 +6,9 @@ component:
     textAfterTwitter: ' O reporta el error a través de la'
     aboutPage: Página de información
   channelList:
-    favoriteAllInGroup: Marcar todos en el grupo como favorito
     signInToFavorite: Registrate para marcar como favorito
     unfavoriteAllInGroup: Desmarcar todos como favoritos
+    favoriteAllInGroup: Marcar todos en el grupo como favorito
   channelInfo:
     videoCount: '{0} Videos'
     clipCount: '{n} Clips'
@@ -24,9 +25,9 @@ component:
     about: Acerca de
     library: Biblioteca
     settings: Opciones
-    MugenClips: MugenClips
     login: Iniciar Sesión
     logout: Cerrar Sesión
+    MugenClips: MugenClips
     accountSettings: Ajustes de Cuenta
     music: Música
     multiview: Multivista
@@ -37,47 +38,47 @@ component:
     edit: Editar
   videoDescription:
     description: Descripción
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mas
+  watch:
+    streamingFor: En directo durante {0}
+    nextUpInMugen: Siguiente
   search:
     searchLabel: Buscar
     type:
       channel: Canal
-      comments: Comentarios
+      topic: Tema
       org: org
       titledesc: título y descripción
-      topic: Tema
+      comments: Comentarios
       videourl: url de vídeo
-  video:
-    comment: {}
-  watch:
-    streamingFor: En directo durante {0}
-    nextUpInMugen: Siguiente
   relatedVideo:
     clipsLabel: clips
-    refersLabel: transmisión simultanea
     simulcastsLabel: referencias
+    refersLabel: transmisión simultanea
     sourcesLabel: fuentes
   paginateLoad:
     newer: Más recientes
     older: Más antiguas
+  music:
+    clearPlaylist: Limpiar
   channelMusic:
     recentSongsHeader: Canciones Recientes
     weeklyTopPlaysHeader: Mas Reproducidas Semanalmente
-  music:
-    clearPlaylist: Limpiar
+  songList:
+    songTitle: Titulo
+    songCoveredBy: Interpretado por
+    songDuration: Duración
+    sangOnTime: Cantado en
   orgMusic:
     monthlyTopForOrg: Mas Reproducidas Mensualmente para {0}
     weeklyTopForOrg: Mas Reproducidas Semanalmente para {0}
-  songList:
-    sangOnTime: Cantado en
-    songCoveredBy: Interpretado por
-    songDuration: Duración
-    songTitle: Titulo
 views:
   channels:
-    channelType: {}
+    channelType: { }
     sortOptions:
       subscribers: Subscriptores
       group: Grupo
@@ -105,7 +106,7 @@ views:
     deleteConfirmationCancel: Cancelar
     selectionReset: Reiniciar
     selectionSelectAll: Seleccionar Todos
-    emptyLibrary: ¡No tienes videos guardados!
+    emptyLibrary: '¡No tienes videos guardados!'
   notFound:
     title: Contenido no encontrado
     back: Volver al Inicio
@@ -118,112 +119,101 @@ views:
       official: Oficial
       clip: Clip
     unsupportedQuery: >-
-      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y
-      <kbd> Organización </kbd>. 
-
+      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. 
       No se mostrarán <b> clips </b>.
   settings:
     title: Opciones
     darkModeLabel: Modo Oscuro
     darkModeMsg: Cambia el tema entre modo oscuro y modo claro
     redirectModeLabel: Abrir en Youtube
-    redirectModeMsg: Clickear en cualquier video lo abrirá en Youtube
+    redirectModeMsg: >-
+      Clickear en cualquier video lo abrirá en Youtube
     useEnglishNameLabel: Usar nombre Inglés
     useEnglishNameMsg: Usa nombres localizados al Inglés para los canales de Vtubers
     hideVideoThumbnailsLabel: Esconder miniaturas de videos
     hideVideoThumbnailsMsg: >-
-      Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos
-      deslizar en mobiles
+      Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos deslizar en mobiles
     pushNotificationLabel: Notificaciones emergentes
     pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
-    scrollModeLabel: Modo de desplazamiento
-    scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     autoplayVideoLabel: Reproducir vídeos automáticamente
     autoplayVideoMsg: Activa la reproducción automática de videos
+    scrollModeLabel: Modo de desplazamiento
+    scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
-    clipLanguageSelection: Ver clips en estos idiomas
-  about:
-    add_my_channel: Añadir mi canal a Holodex
+    clipLanguageSelection: 'Ver clips en estos idiomas'
   app:
-    check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
-    close_btn: Cerrar
     update_available: Una actualización está disponible
     update_btn: Actualizar
-    loginCallToAction: Inicia sesión para juntar a tus propios favoritos!
+    close_btn: Cerrar
+    check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
     nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
+    loginCallToAction: Inicia sesión para juntar a tus propios favoritos!
+  about:
+    add_my_channel: Añadir mi canal a Holodex
   watch:
-    saveToLibrary: Guardar el video en la Biblioteca
     theaterMode: Modo Teatro
+    saveToLibrary: Guardar el video en la Biblioteca
+    mentionIconLabel: MENCIONES
     chat:
+      loading: Cargando el chat...
+      hideTLBtn: Esconder TLs
+      showTLBtn: Mostrar TLs
+      TLSettingsTitle: Opciones de TL
       StickBottomSettingLabel: Pegar abajo (Mobiles)
       StickBottomSettingsDesc: TL box se pega abajo del chat (por defecto se pega arriba en mobiles)
-      TLSettingsTitle: Opciones de TL
-      hideTLBtn: Esconder TLs
-      loading: Cargando el chat...
       retryBtn: Reintentar
-      showTLBtn: Mostrar TLs
       status:
-        connectedToChat: Conectado al chat de traducciones
-        notLive: >-
-          El stream no está en vivo todavía, por favor intenta de nuevo cuando
-          falten 15 minutos para comenzar
-        reconnectFailed: No se pudo reconectar
         reconnecting: Reconectando automaticamente...
-    mentionIconLabel: MENCIONES
+        reconnectFailed: No se pudo reconectar
+        notLive: >-
+          El stream no está en vivo todavía, por favor intenta de nuevo cuando falten 15 minutos para comenzar
+        connectedToChat: Conectado al chat de traducciones
   favorites:
     promptForAction: >-
-      Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en
-      esta pagina
+      Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en esta pagina
   editor:
     needlogin: Necesitas iniciar sesión para editar metadata de video y audio de Holodex
   login:
     apikeyMsg: >-
-      Puedes usar API key para consultar Holodex API programaticamente. Solo una
-      key por cuenta. Después de conseguir una nueva key, la key vieja expirará
-      entre 0-24 horas
+      Puedes usar API key para consultar Holodex API programaticamente. Solo una key por cuenta. Después de conseguir una nueva key, la key vieja expirará entre 0-24 horas
     apikeyNew: Obtener nueva API Key
-    apikeyResetConfirm1: ¿Estas seguro de que quieres reiniciar tu API Key?
-    apikeyResetConfirm2: >-
-      La API key antigua tendrá 0-24 horas antes de expirar. ¿De verdad
-      reiniciar?
-    apikeyResetNvm: Nada interesante pasó
-    futureYtcOwnerMessage: >-
-      En el futuro, planeamos proveer mas servicios a dueños de canales como
-      editar metadata para sus propios videos
-    linkAcc: Vincular otra cuenta
     ownedYtChannel: Canal de Youtube en propiedad
+    futureYtcOwnerMessage: >-
+      En el futuro, planeamos proveer mas servicios a dueños de canales como editar metadata para sus propios videos
+    linkAcc: Vincular otra cuenta
+    apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu API Key?'
+    apikeyResetConfirm2: La API key antigua tendrá 0-24 horas antes de expirar. ¿De verdad reiniciar?
+    apikeyResetNvm: Nada interesante pasó
   multiview:
-    permalink: Enlace Permanente
+    confirmOverwrite: Overwrite current layout?
     confirmOverwriteYes: Confirmar
-    addframe: ''
-    confirmOverwrite: ''
+    permalink: Enlace Permanente
+    presets: Presets
+    addframe: Add Cell
     preset:
-      desktop: ''
-      mobile: ''
-    presets: ''
+      desktop: Desktop
+      mobile: Mobile
 time:
+  soon: Proximamente
   diff_future_date: Inicia {0} ({1})
   distance_past_date: '{0}'
-  soon: Proximamente
 editor:
   music:
     add: Añadir
-    endInput: Actualizar
-    itunesLookupPlaceholder: (Opcional) Buscar en iTunes
-    moveLeft2s: Mover a izquierda 2s
-    moveRight2s: Mover a derecha 2s
-    originalArtistInput: Artista Original
+    update: Actualizar
     permission: >-
-      Necesitas ser un usuario de nivel 'Editor' o mas oara actualizar o borrar
-      canciones existentes. Por favor contactanos en <a class='white--text'
-        href='/about'>discord</a> para notificar editores de problemas/abuso, o aplicar para volverse un editor
-    setToCurrentTime: Establecer a tiempo actual ({0})
-    startInput: Iniciar
-    testEnd: Prueba de escucha iniciando 3 segundos antes del final
-    testStart: Prueba para iniciar
+      Necesitas ser un usuario de nivel 'Editor' o mas oara actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar editores de problemas/abuso, o aplicar para volverse un editor
     titles:
       addSong: 'Metada de canciones: Añadir nueva canción'
-      help: Guia
       songList: 'Lista de canciones : {0}'
+      help: Guia
+    itunesLookupPlaceholder: (Opcional) Buscar en iTunes
+    moveRight2s: Mover a derecha 2s
+    testEnd: Prueba de escucha iniciando 3 segundos antes del final
+    setToCurrentTime: Establecer a tiempo actual ({0})
+    moveLeft2s: Mover a izquierda 2s
     trackNameInput: Nombre de la canción
-    update: Actualizar
+    originalArtistInput: Artista Original
+    testStart: Prueba para iniciar
+    startInput: Iniciar
+    endInput: 'Actualizar'

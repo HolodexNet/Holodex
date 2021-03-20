@@ -1,8 +1,9 @@
+---
 component:
   apiError:
     title: 非常抱歉！
-    textBeforeTwitter: 取得內容時發生錯誤，請於推特確認目前狀況。
-    textAfterTwitter: 或是於推特回報錯誤給我們。
+    textBeforeTwitter: '取得內容時發生錯誤，請於推特確認目前狀況。'
+    textAfterTwitter: '或是於推特回報錯誤給我們。'
     aboutPage: 關於本站
   channelList:
     signInToFavorite: 請登入以使用收藏功能
@@ -38,7 +39,7 @@ component:
   videoDescription:
     description: 影片資訊
   video:
-    comment: {}
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -62,22 +63,22 @@ component:
   paginateLoad:
     newer: 較新
     older: 較舊
+  music:
+    clearPlaylist: 清除播放清單
   channelMusic:
     recentSongsHeader: 近期新曲
     weeklyTopPlaysHeader: 本週熱門
-  music:
-    clearPlaylist: 清除播放清單
+  songList:
+    songTitle: 曲名
+    songCoveredBy: 翻唱者
+    songDuration: 歌曲長度
+    sangOnTime: 演唱時間
   orgMusic:
     monthlyTopForOrg: '{0} 本月熱門歌曲'
     weeklyTopForOrg: '{0} 本週熱門歌曲'
-  songList:
-    sangOnTime: 演唱時間
-    songCoveredBy: 翻唱者
-    songDuration: 歌曲長度
-    songTitle: 曲名
 views:
   channels:
-    channelType: {}
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -117,25 +118,28 @@ views:
       all: 全部
       official: 官方
       clip: 剪輯
-    unsupportedQuery: 目前無法透過 <kbd>影片內容</kbd> 與 <kbd>所屬團體</kbd> 搜尋剪輯影片。
+    unsupportedQuery: >-
+      目前無法透過 <kbd>影片內容</kbd> 與 <kbd>所屬團體</kbd> 搜尋剪輯影片。
   settings:
     title: 設定
     darkModeLabel: 深色主題
     darkModeMsg: 設定本站要以淺色模式或是深色模式呈現。
     redirectModeLabel: 於YouTube開啟影片
-    redirectModeMsg: 點擊影片時自動開啟其YouTube頁面。
+    redirectModeMsg: >-
+      點擊影片時自動開啟其YouTube頁面。
     useEnglishNameLabel: 使用英文名稱
     useEnglishNameMsg: 使用Vtuber英文名字呈現其頻道名稱。
     hideVideoThumbnailsLabel: 隱藏影片縮圖
-    hideVideoThumbnailsMsg: 隱藏影片縮圖可以加快讀取速度並減少移動端的網頁捲軸需求。
+    hideVideoThumbnailsMsg: >-
+      隱藏影片縮圖可以加快讀取速度並減少移動端的網頁捲軸需求。
     pushNotificationLabel: 推送通知（尚未實裝）
     pushNotificationMsg: 啟用已收藏頻道的即時新增內容通知。
-    scrollModeLabel: 瀑布流設計
-    scrollModeMsg: 選擇列表要使用分頁/無限捲軸模式。
     autoplayVideoLabel: 自動播放影片
     autoplayVideoMsg: 點擊影片後自動開始播放。
+    scrollModeLabel: 瀑布流設計
+    scrollModeMsg: 選擇列表要使用分頁/無限捲軸模式。
     resetAllSettings: 重設所有設定/資料
-    clipLanguageSelection: 顯示以下語言的剪輯影片
+    clipLanguageSelection: '顯示以下語言的剪輯影片'
   app:
     update_available: 已取得更新
     update_btn: 更新
@@ -158,32 +162,36 @@ views:
       StickBottomSettingsDesc: 將翻譯留言置底於聊天室下方（預設置頂）
       retryBtn: 重試
       status:
-        connectedToChat: 正在連線至翻譯聊天室
-        notLive: 實況尚未開始，請於實況開始15分鐘後再行嘗試連線。
-        reconnectFailed: 無法連線
         reconnecting: 嘗試重新連線…
+        reconnectFailed: 無法連線
+        notLive: >-
+          實況尚未開始，請於實況開始15分鐘後再行嘗試連線。
+        connectedToChat: 正在連線至翻譯聊天室
   favorites:
-    promptForAction: 創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
+    promptForAction: >-
+      創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
   editor:
     needlogin: 需要登入Holodex才能編輯影片/音樂的相關資料。
   login:
-    apikeyMsg: 您可以透過API金鑰的方式來存取Holodex API。一個帳號最多只能取得一把金鑰。取得新API金鑰後，舊金鑰將會於0~24小時內過期。
+    apikeyMsg: >-
+      您可以透過API金鑰的方式來存取Holodex API。一個帳號最多只能取得一把金鑰。取得新API金鑰後，舊金鑰將會於0~24小時內過期。
     apikeyNew: 取得新API金鑰
+    ownedYtChannel: 擁有的YouTube頻道
+    futureYtcOwnerMessage: >-
+      我們未來預計將會提供頻道擁有者在Holodex上編輯影片資料的功能。
+    linkAcc: 連結帳號
     apikeyResetConfirm1: 您確定想要重設您的API金鑰嗎？
     apikeyResetConfirm2: 舊金鑰將會於0~24小時內過期，您確定要重設金鑰嗎？
     apikeyResetNvm: 什麼事情都沒有發生。
-    futureYtcOwnerMessage: 我們未來預計將會提供頻道擁有者在Holodex上編輯影片資料的功能。
-    linkAcc: 連結其他帳號
-    ownedYtChannel: 擁有的YouTube頻道
   multiview:
-    permalink: 永久連結
     confirmOverwrite: 確定覆蓋設定？
     confirmOverwriteYes: 確認
-    addframe: ''
+    permalink: 永久連結
+    presets: 預設佈局
+    addframe: 增加新分割
     preset:
-      desktop: ''
-      mobile: ''
-    presets: ''
+      desktop: PC用
+      mobile: 手機用
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
@@ -193,11 +201,10 @@ editor:
     add: 加入歌曲
     update: 更新
     permission: >-
-      您需要擁有或取得高於「編輯者」身分組的權限才能更新/刪除歌曲。請至 <a class='white--text'
-      href='/about'>Discord社群</a> 申請成為編輯者或是回報任何問題。
+      您需要擁有或取得高於「編輯者」身分組的權限才能更新/刪除歌曲。請至 <a class='white--text' href='/about'>Discord社群</a> 申請成為編輯者或是回報任何問題。
     titles:
-      addSong: 歌曲資料：新增歌曲
-      songList: 歌曲清單：{0}
+      addSong: '歌曲資料：新增歌曲'
+      songList: '歌曲清單：{0}'
       help: 新手教學
     itunesLookupPlaceholder: 從iTunes搜尋歌曲（非必須）
     moveRight2s: 向後移動2秒
@@ -208,4 +215,4 @@ editor:
     originalArtistInput: 原唱
     testStart: 測試起始點
     startInput: 起始時間
-    endInput: 總播放秒數（結束於 @ {0}）
+    endInput: '總播放秒數（結束於 @ {0}）'

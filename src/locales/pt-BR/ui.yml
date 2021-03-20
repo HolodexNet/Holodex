@@ -1,7 +1,8 @@
+---
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter
+    textBeforeTwitter: 'Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter'
     textAfterTwitter: ' ou relate o erro por meio da '
     aboutPage: página de Informações
   channelList:
@@ -9,7 +10,7 @@ component:
     unfavoriteAllInGroup: Remover todos desse grupo dos favoritos
     favoriteAllInGroup: Adicionar todos desse grupo aos favoritos
   channelInfo:
-    videoCount: '{0} Videos'
+    videoCount: '{0} Vídeos'
     clipCount: '{n} Clipes'
     subscriberCount: '{n} Inscritos'
     subscriberNA: Número de inscritos indisponível
@@ -38,7 +39,7 @@ component:
   videoDescription:
     description: Descrição
   video:
-    comment: {}
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -77,7 +78,7 @@ component:
     weeklyTopForOrg: Mais tocadas da semana por {0}
 views:
   channels:
-    channelType: {}
+    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -86,7 +87,7 @@ views:
       clipCount: Número de Clipes
     tabs:
       Vtuber: VTuber
-      Subber: Subber
+      Subber: Tradutor
       Favorites: Favoritos
     favoritesAreEmpty: Você não tem favoritos!
   home:
@@ -118,22 +119,19 @@ views:
       official: Oficiais
       clip: Clipe
     unsupportedQuery: >-
-      Atualmente, pesquisar clipes por <kbd>Tópico</kbd> e
-      <kbd>Organização</kbd> não é suportado. Nenhum <b> clipe </b> aparecerá.
+      Atualmente, pesquisar clipes por <kbd>Tópico</kbd> e <kbd>Organização</kbd> não é suportado. Nenhum <b> clipe </b> aparecerá.
   settings:
     title: Configurações
     darkModeLabel: Modo Escuro
     darkModeMsg: Altera o tema entre modo claro e modo escuro
     redirectModeLabel: Assistir no Youtube
     redirectModeMsg: >-
-      Clique na thumbnail de um vídeo para assistir direto no Youtube, Clique no
-      título de um vídeo para assistir no Holodex
+      Clique na thumbnail de um vídeo para assistir direto no Youtube, Clique no título de um vídeo para assistir no Holodex
     useEnglishNameLabel: Usar nomes em Inglês
     useEnglishNameMsg: Mostrar o nome dos VTuber em inglês
     hideVideoThumbnailsLabel: Esconder Thumbnails
     hideVideoThumbnailsMsg: >-
-      Esconde as Thumbnails dos vídeo Pode ajudar no carregamento da pagina e
-      barra de rolagem menor quando acessando por celulares
+      Esconde as Thumbnails dos vídeo Pode ajudar no carregamento da pagina e barra de rolagem menor quando acessando por celulares
     pushNotificationLabel: Push Notifications (Em Breve)
     pushNotificationMsg: Ativa push notification para seus canais favoritos
     autoplayVideoLabel: Reprodução automática de Videos
@@ -161,50 +159,39 @@ views:
       showTLBtn: Mostrar Traduções
       TLSettingsTitle: Configurações de tradução
       StickBottomSettingLabel: Manter no Rodapé
-      StickBottomSettingsDesc: >-
-        A caixa tradução ficara na parte inferior do Chat (Fica no topo por
-        padrão)
+      StickBottomSettingsDesc: A caixa tradução ficara na parte inferior do Chat (Fica no topo por padrão)
       retryBtn: Tentar Novamente
       status:
         reconnecting: Tentando Reconexão
         reconnectFailed: Não foi possível reconectar
         notLive: >-
-          A transmissão ainda não começou, tente novamente dentro de 15 minutos
-          após o início da transmissão
+          A transmissão ainda não começou, tente novamente dentro de 15 minutos após o início da transmissão
         connectedToChat: Conectado ao Chat de Tradução
   favorites:
     promptForAction: >-
-      Crie uma lista de seus vtubers favoritos e veja seus clipes e lives  mais
-      recentes nesta página.
+      Crie uma lista de seus vtubers favoritos e veja seus clipes e lives  mais recentes nesta página.
   editor:
-    needlogin: >-
-      Você precisará fazer login para editar metadados de vídeo e música do
-      Holodex.
+    needlogin: Você precisará fazer login para editar metadados de vídeo e música do Holodex.
   login:
     apikeyMsg: >-
-      Você pode usar a chave de API para consultar a Holodex API
-      programaticamente. Apenas uma  chave por conta. Gerar uma nova chave fará
-      com que as chaves antigas expirem em até 24 horas.
+      Você pode usar a chave de API para consultar a Holodex API programaticamente. Apenas uma  chave por conta. Gerar uma nova chave fará com que as chaves antigas expirem em até 24 horas.
     apikeyNew: Gerar nova Chave de API
-    ownedYtChannel: ''
+    ownedYtChannel: Meu Canal do Youtube
     futureYtcOwnerMessage: >-
-      No futuro, planejamos disponibilizar mais ferramentas para quem tem canais
-      editar metadados de seus próprios vídeos.
+      No futuro, planejamos disponibilizar mais ferramentas para quem tem canais editar metadados de seus próprios vídeos.
     linkAcc: Vincular outra conta
     apikeyResetConfirm1: Tem certeza de que deseja resetar sua chave de API?
-    apikeyResetConfirm2: >-
-      Isto fará com que as chaves antigas expirem em até 24 horas. Deseja
-      realmente presseguir?
+    apikeyResetConfirm2: Isto fará com que as chaves antigas expirem em até 24 horas. Deseja realmente presseguir?
     apikeyResetNvm: Nada de interessante aconteceu
   multiview:
-    permalink: Link Permanente
-    confirmOverwrite: ''
+    confirmOverwrite: Sobrescrever layout atual?
     confirmOverwriteYes: Confirmar
-    addframe: ''
+    permalink: Link Permanente
+    presets: Predefinidas
+    addframe: Adicionar Célula
     preset:
-      desktop: ''
-      mobile: ''
-    presets: ''
+      desktop: Desktop
+      mobile: Mobile
 time:
   soon: em breve
   diff_future_date: Ao Vivo {0} ({1})
@@ -214,10 +201,7 @@ editor:
     add: Adicionar
     update: Atualizar
     permission: >-
-      Você precisa ser um usuário com título de "Editor" ou superior para
-      atualizar ou excluir  músicas existente. Use nosso <a class='white--text'
-      href='/about'>discord</a> para notificar os editores sobre problemas ou
-      abusos, ou candidate-se para se tornar um editor.
+      Você precisa ser um usuário com título de "Editor" ou superior para atualizar ou excluir  músicas existente. Use nosso <a class='white--text' href='/about'>discord</a> para notificar os editores sobre problemas ou abusos, ou candidate-se para se tornar um editor.
     titles:
       addSong: 'Metadados de Música: Adicionar uma nova Música'
       songList: 'Lista de Músicas: {0}'

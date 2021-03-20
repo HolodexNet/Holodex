@@ -12,14 +12,14 @@ import vuetifyFr from "vuetify/es5/locale/fr";
 import vuetifyPt from "vuetify/es5/locale/pt";
 
 import enTL from "@/locales/en.yml";
-import jaTL from "@/locales/ja.yml";
-import esTL from "@/locales/es.yml";
-import msTL from "@/locales/ms.yml";
-import zhTL from "@/locales/zhtw.yml";
-import idTL from "@/locales/id.yml";
-import ruTL from "@/locales/ru.yml";
-import frTL from "@/locales/fr.yml";
-import ptTL from "@/locales/ptbr.yml";
+import jaTL from "@/locales/ja/ui.yml";
+import esTL from "@/locales/es-ES/ui.yml";
+import msTL from "@/locales/ms/ui.yml";
+import zhTL from "@/locales/zh-TW/ui.yml";
+import idTL from "@/locales/id/ui.yml";
+import ruTL from "@/locales/ru/ui.yml";
+import frTL from "@/locales/fr/ui.yml";
+import ptTL from "@/locales/pt-BR/ui.yml";
 
 // ====== i18n setup ======
 Vue.use(VueI18n);
