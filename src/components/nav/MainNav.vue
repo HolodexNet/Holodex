@@ -2,8 +2,8 @@
     <div>
         <!-- watch page nav drawer is temporary, but causes layout shifting from hiding/unhiding -->
         <!-- create two different instances as a work around -->
-        <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile && !isWatchPage" />
-        <NavDrawer :pages="pages" v-model="drawer" v-if="isMobile || isWatchPage" :temporary="true">
+        <NavDrawer :pages="pages" v-model="navDrawer" :temporary="isMobile || isWatchPage">
+            <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
             <template v-if="isMobile">
                 <user-card noSetting style="background-color: inherit"></user-card>
                 <v-divider />
@@ -29,15 +29,9 @@
             <!--=============================== Top Bar (Regular View) =============================-->
 
             <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
-                <!--================= Back button ⬅️ (Mobile only) ================-->
-
-                <!-- <v-app-bar-nav-icon @click.stop="goBack()" v-if="isMobile && isFirstPage">
-                    <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
-                </v-app-bar-nav-icon> -->
-
                 <!--================= Logo & Search Bar (Space permitting) ================-->
 
-                <v-app-bar-nav-icon @click.stop="drawer = !drawer">
+                <v-app-bar-nav-icon @click.stop="navDrawer = !navDrawer">
                     <v-icon>{{ icons.mdiMenu }}</v-icon>
                 </v-app-bar-nav-icon>
                 <v-toolbar-title style="overflow: visible" :class="{ 'pa-0': isMobile }">
@@ -138,44 +132,11 @@
                     <!------- END USER CARD ------->
                 </v-menu>
 
-                <!--================= Refresh [⟳] Button (Mobile Only) ================-->
-
-                <v-btn
-                    icon
-                    class="ml-auto"
-                    :class="{ 'refresh-rotate': refreshing }"
-                    v-if="isMobile"
-                    @click="onRefresh"
-                >
-                    <v-icon>{{ icons.mdiRefresh }}</v-icon>
-                </v-btn>
-
                 <!--================= Search [🔍] Button (Mobile Only) ================-->
 
-                <v-btn icon v-if="isMobile" @click="searchBarExpanded = true">
+                <v-btn icon v-if="isMobile" @click="searchBarExpanded = true" class="ml-auto">
                     <v-icon>{{ icons.mdiMagnify }}</v-icon>
                 </v-btn>
-
-                <!--================= Condensed [⋮] Menu (Mobile Only) ================-->
-
-                <!-- <v-menu left offset-y v-if="isMobile">
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon v-bind="attrs" v-on="on">
-                            <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
-                        </v-btn>
-                    </template>
-
-                    <v-list v-if="isMobile">
-                        <user-card></user-card>
-                        <v-list-item to="/about" key="about">
-                            <v-list-item-icon>
-                                <v-icon>{{ icons.mdiHelpCircle }}</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-title> {{ $t("component.mainNav.about") }} </v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu> -->
-                <!--================= End of Condensed [⋮] Menu (Mobile Only) ================-->
             </template>
 
             <!--=========================== END OF Regular View ===========================-->
@@ -206,24 +167,6 @@ import { mapState } from "vuex";
 import NavDrawer from "./NavDrawer";
 import BottomNav from "./BottomNav";
 
-/**
- * Returns the index of the last element in the array where predicate is true, and -1
- * otherwise.
- * @param array The source array to search in
- * @param {(value: T, index: number, obj: T[]) => boolean} predicate
- *  find calls predicate once for each element of the array, in descending
- * order, until it finds one where predicate returns true. If such an element is found,
- * findLastIndex immediately returns that element index. Otherwise, findLastIndex returns -1.
- */
-// function findLastIndex(array, predicate) {
-//     let l = array.length;
-//     // eslint-disable-next-line no-plusplus
-//     while (l--) {
-//         if (predicate(array[l], l, array)) return l;
-//     }
-//     return -1;
-// }
-
 export default {
     components: {
         SearchBar,
@@ -235,12 +178,9 @@ export default {
     },
     data() {
         return {
-            drawer: null,
-            temporary: false,
             icons,
             favoritesExpanded: false,
             searchBarExpanded: false,
-            refreshing: false,
             ORGS,
             ORGS_PREFIX,
         };
@@ -275,6 +215,14 @@ export default {
             },
             set() {
                 return this.$store.commit("setVisited");
+            },
+        },
+        navDrawer: {
+            get() {
+                return this.$store.state.navDrawer;
+            },
+            set(val) {
+                return this.$store.commit("setNavDrawer", val);
             },
         },
         pages() {
@@ -364,22 +312,11 @@ export default {
             this.refreshing = true;
             this.$router.go(0);
         },
-        goBack() {
-            // this.$router.go(-1);
-            // const historyPaths = this.$store.state.routerHistory;
-            // const idx = findLastIndex(historyPaths, (v) => v.match("^/watch"));
-            // const returnAmount = idx >= 0? idx - historyPaths.length - 1 : 0;
-            // debugger;
-            // TODO there's some weirdness here, regarding going back > 1 pages
-            // coz the router doesn't understand it that well and our history desync's.
-            window.history.go(Math.min(-1, 0));
-        },
     },
     watch: {
         isWatchPage() {
             if (this.isMobile) return;
-            // close drawer on watch page
-            this.drawer = !this.isWatchPage;
+            this.navDrawer = !this.isWatchPage;
         },
     },
 };

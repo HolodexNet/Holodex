@@ -4,15 +4,12 @@
         :class="{ 'bump-bottom': $store.state.music.isOpen }"
     >
         <MainNav />
-        <!-- remove watch page view from being wrapped in v-main, to avoid layout shifts -->
-        <v-main v-if="!isWatchPage" class="pull-to-refresh">
+        <v-main class="pull-to-refresh">
             <keep-alive max="4" exclude="Watch,MugenClips,EditVideo">
                 <router-view :key="$route.path" />
             </keep-alive>
         </v-main>
-        <template v-else>
-            <router-view :key="$route.path" />
-        </template>
+
         <v-snackbar bottom right :value="updateExists" :timeout="-1" color="primary" v-if="updateExists">
             {{ $t("views.app.update_available") }}
             <template v-slot:action>
@@ -78,14 +75,14 @@ export default {
     },
     created() {
         // check if browser support webp
-        if (!this.$store.testedWebP) {
-            this.$nextTick(() => {
-                this.supportsWebp().then((res) => {
-                    if (!res) this.$store.commit("settings/noWebPSupport");
-                });
-                this.$store.commit("settings/testedWebP");
-            });
-        }
+        // if (!this.$store.testedWebP) {
+        //     this.$nextTick(() => {
+        //         this.supportsWebp().then((res) => {
+        //             if (!res) this.$store.commit("settings/noWebPSupport");
+        //         });
+        //         this.$store.commit("settings/testedWebP");
+        //     });
+        // }
         // set theme
         this.$vuetify.theme.dark = this.darkMode;
         // set lang
@@ -180,17 +177,18 @@ export default {
         updateIsMobile() {
             this.$store.commit("setIsMobile", ["xs", "sm"].includes(this.$vuetify.breakpoint.name));
         },
-        async supportsWebp() {
-            // eslint-disable-next-line no-restricted-globals
-            if (!self.createImageBitmap) return false;
+        /* Youtube thumbnails has inconsistent webp support */
+        // async supportsWebp() {
+        //     // eslint-disable-next-line no-restricted-globals
+        //     if (!self.createImageBitmap) return false;
 
-            const webpData = "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
-            const blob = await fetch(webpData).then((r) => r.blob());
-            return createImageBitmap(blob).then(
-                () => true,
-                () => false,
-            );
-        },
+        //     const webpData = "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
+        //     const blob = await fetch(webpData).then((r) => r.blob());
+        //     return createImageBitmap(blob).then(
+        //         () => true,
+        //         () => false,
+        //     );
+        // },
         refreshApp() {
             this.updateExists = false;
             // Make sure we only send a 'skip waiting' message if the SW is waiting

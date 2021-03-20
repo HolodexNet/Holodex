@@ -142,14 +142,6 @@ const router = new VueRouter({
     routes,
     // eslint-disable-next-line no-unused-vars
     scrollBehavior(to, from, savedPosition) {
-        const fromHistory = Boolean(savedPosition);
-
-        if (fromHistory && this.app.$store.state.routerHistory.length > 0) {
-            this.app.$store.dispatch("navigate", {});
-        } else {
-            this.app.$store.dispatch("navigate", { from: from.fullPath });
-        }
-        // console.log(from);
         return savedPosition || { x: 0, y: 0 };
     },
 });

@@ -33,6 +33,7 @@ function defaultState() {
             jwt: null,
         },
         isMobile: true,
+        navDrawer: false,
         currentOrg: "Hololive",
         currentGridSize: 0,
         // navigation history tracking
@@ -100,6 +101,9 @@ export default new Vuex.Store({
         },
         setIsMobile(state, val) {
             state.isMobile = val;
+        },
+        setNavDrawer(state, val) {
+            state.navDrawer = val;
         },
         // login
         setUser(state, { user, jwt }) {
