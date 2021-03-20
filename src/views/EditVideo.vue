@@ -54,7 +54,9 @@
                                 <v-select :items="topics" label="Topic (leave empty to unset)" v-model="newTopic" />
                             </v-card-text>
                             <v-card-actions>
-                                <v-btn color="blue darken-1" text @click="saveTopic"> Save </v-btn>
+                                <v-btn color="blue darken-1" text @click="saveTopic">
+                                    Save (May take 5 minutes to take effect)
+                                </v-btn>
                             </v-card-actions>
                         </div>
                         <div v-show="currentTab === TABS.SONGS">

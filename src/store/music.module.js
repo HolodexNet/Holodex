@@ -41,7 +41,7 @@ const mutations = {
         else state.playlist.push(song);
         // not sure why it started getting stuck.
         if (state.currentId >= state.playlist.length) state.currentId = state.playlist.length - 1;
-        // state.isOpen = true;
+        state.isOpen = true;
         state.addedAnimation = true;
     },
     removeSong(state, index) {
@@ -165,6 +165,7 @@ const mutations = {
     },
     skipTo(state, idx) {
         state.currentId = idx;
+        state.state = MUSIC_PLAYER_STATE.PLAYING;
         state.playId += 1;
     },
     stopAddedAnimation(state) {

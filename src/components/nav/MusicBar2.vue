@@ -9,24 +9,6 @@
         v-if="currentSong"
         ref="sheet"
     >
-        <!-- <div
-            key="musicplayertogglebtn"
-            class="music-player-toggle"
-            :class="{ 'error-animation': animateOpenError, 'added-animation': animateAdded }"
-            @animationend="
-                () => {
-                    animateOpenError = false;
-                    animateAdded = false;
-                }
-            "
-            color="info"
-            @click="tryOpeningPlayer"
-            v-if="!isOpen"
-        >
-            <div class="music-player-toggle-bg">
-                <v-icon large>{{ icons.mdiMusic }}</v-icon>
-            </div>
-        </div> -->
         <v-slider class="music-progress" hide-details :value="progress" height="3" @change="progressChange" />
         <div class="d-flex justify-space-between pa-2">
             <div class="player-controls">
@@ -197,7 +179,6 @@ export default {
 
             progress: 0,
             player: null,
-            animateOpenError: false,
 
             queueMenuOpen: false,
 
@@ -270,7 +251,7 @@ export default {
         },
         songIsPlaying(player) {
             this.player = player.target;
-            if (!this.isOpen) {
+            if (!this.isOpen || this.state === MUSIC_PLAYER_STATE.PAUSED) {
                 this.player.pauseVideo();
                 return;
             }
@@ -290,15 +271,13 @@ export default {
             // if(this.state === MUSIC_PLAYER_STATE.PLAYING) this.$store.commit("music/pause");
             // else this.$store.commit("music/play");
             if (this.player) {
-                if (this.state === MUSIC_PLAYER_STATE.PLAYING) this.player.pauseVideo();
-                else this.player.playVideo();
-            }
-        },
-        tryOpeningPlayer() {
-            if (this.currentSong) {
-                this.$store.commit("music/openBar");
-            } else {
-                this.animateOpenError = true;
+                if (this.state === MUSIC_PLAYER_STATE.PLAYING) {
+                    this.$store.commit("music/pause");
+                    this.player.pauseVideo();
+                } else {
+                    this.$store.commit("music/play");
+                    this.player.playVideo();
+                }
             }
         },
         closePlayer() {
