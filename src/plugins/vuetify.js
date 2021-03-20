@@ -11,7 +11,7 @@ import vuetifyId from "vuetify/es5/locale/id";
 import vuetifyFr from "vuetify/es5/locale/fr";
 import vuetifyPt from "vuetify/es5/locale/pt";
 
-import enTL from "@/locales/en.yml";
+import enTL from "@/locales/en/ui.yml";
 import jaTL from "@/locales/ja/ui.yml";
 import esTL from "@/locales/es-ES/ui.yml";
 import msTL from "@/locales/ms/ui.yml";
