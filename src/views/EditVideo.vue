@@ -84,7 +84,7 @@ import LoadingOverlay from "@/components/common/LoadingOverlay";
 import WatchInfo from "@/components/watch/WatchInfo";
 import WatchFrame from "@/components/watch/WatchFrame";
 import WatchComments from "@/components/watch/WatchComments";
-import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
+import WatchSideBar from "@/components/watch/WatchSideBar";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
 import VideoEditSongs from "@/components/media/VideoEditSongs";
 import { decodeHTMLEntities } from "@/utils/functions";
@@ -104,7 +104,7 @@ export default {
         WatchInfo,
         WatchFrame,
         WatchLiveChat,
-        WatchRelatedVideos,
+        WatchSideBar,
         VideoEditSongs,
         WatchComments,
         WatchMugen: () => import("@/components/watch/WatchMugen"),

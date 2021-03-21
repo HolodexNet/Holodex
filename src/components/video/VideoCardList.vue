@@ -1,9 +1,9 @@
 <template>
     <!-- pad bottom for 100px to allow space for infiniteload -->
     <v-container
-        class="pt-0 pl-0 pr-0"
+        class="py-0"
         style="position: relative"
-        :style="{ 'padding-bottom': infiniteLoad ? '150px' : '0' }"
+        :style="{ 'padding-bottom': infiniteLoad ? '150px' : '' }"
         fluid
     >
         <!-- Video Card grid rows -->

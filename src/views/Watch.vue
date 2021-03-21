@@ -86,15 +86,14 @@
                                 @videoUpdate="handleVideoUpdate"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
-                            <watch-song-list @timeJump="seekTo" v-if="video.songcount"></watch-song-list>
-                            <WatchRelatedVideos :related="related" />
+                            <WatchSideBar :video="video" @timeJump="seekTo" />
                         </v-col>
                     </v-row>
                 </v-col>
             </v-row>
         </v-container>
         <!-- Mobile Layout (sm/xs) Layout -->
-        <div class="d-flex flex-column flex-sm-row" style="padding-bottom: 60px" v-else>
+        <div class="d-flex flex-column flex-sm-row" v-else>
             <div
                 class="d-inline-flex flex-grow-1 flex-column"
                 :style="{
@@ -137,9 +136,7 @@
                     key="comments"
                     v-if="comments.length"
                 />
-
-                <watch-song-list @timeJump="seekTo" v-if="video.songcount"></watch-song-list>
-                <WatchRelatedVideos :related="related" />
+                <WatchSideBar :video="video" @timeJump="seekTo" />
             </div>
             <!-- floated/fixed live chat -->
             <WatchLiveChat
@@ -162,27 +159,15 @@ import Vue from "vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay";
 import WatchInfo from "@/components/watch/WatchInfo";
 import WatchFrame from "@/components/watch/WatchFrame";
-import WatchRelatedVideos from "@/components/watch/WatchRelatedVideos";
+import WatchSideBar from "@/components/watch/WatchSideBar";
 import WatchLiveChat from "@/components/watch/WatchLiveChat";
 import WatchComments from "@/components/watch/WatchComments";
 import WatchToolBar from "@/components/watch/WatchToolbar";
-import WatchSongList from "@/components/watch/WatchSongList";
 
 import { decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff } from "@mdi/js";
 import * as icons from "@/utils/icons";
-
-/* eslint-disable */
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
-/* eslint-enable */
 
 export default {
     name: "Watch",
@@ -196,11 +181,10 @@ export default {
         WatchInfo,
         WatchFrame,
         WatchLiveChat,
-        WatchRelatedVideos,
+        WatchSideBar,
         WatchComments,
         WatchToolBar,
         WatchMugen: () => import("@/components/watch/WatchMugen"),
-        WatchSongList,
     },
     data() {
         return {
@@ -260,20 +244,6 @@ export default {
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
-        related() {
-            this.video.recommendations && shuffleArray(this.video.recommendations);
-            // shuffle it ^
-            return {
-                simulcasts: this.video.simulcasts || [],
-                clips:
-                    (this.video.clips &&
-                        this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang))) ||
-                    [],
-                sources: this.video.sources || [],
-                refers: this.video.refers || [],
-                recommendations: this.video.recommendations.slice(0, 10) || [],
-            };
-        },
         videoId() {
             return this.$route.params.id || this.$route.query.v;
         },
