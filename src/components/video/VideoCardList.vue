@@ -240,6 +240,8 @@ export default {
 }
 
 .video-1 {
+    padding-left: 0px;
+    padding-right: 0px;
     width: 100%;
     max-width: 100%;
     flex-basis: 100%;

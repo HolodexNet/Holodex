@@ -297,14 +297,19 @@ export default {
         }
 
         // always pop out nav drawer if it's not watch page or mobile
-        if (this.$route.name !== null && !(this.isWatchPage || this.isMobile)) {
+        if (this.$route.name !== null && !this.isWatchPage && !this.isMobile) {
             this.navDrawer = true;
         }
     },
     watch: {
+        // toggle navdrawer when navigating between watch pages on desktop
         isWatchPage() {
             if (this.isMobile) return;
             this.navDrawer = !this.isWatchPage;
+        },
+        // if user is flipping between mobile/desktop breakpoints, keep navdrawer closed
+        isMobile() {
+            this.navDrawer = false;
         },
     },
 };

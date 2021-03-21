@@ -3,14 +3,14 @@
         <template v-if="isLoggedIn && favorites.length > 0">
             <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
             <div v-show="!isLoading && !hasError">
-                <v-row class="d-flex justify-space-between px-3 pb-3 pt-1">
+                <div class="d-flex justify-space-between px-0 pb-3 pt-1 px-sm-3">
                     <div class="text-h6">
                         {{ $t("views.home.liveOrUpcomingHeading") }}
                     </div>
                     <v-btn icon @click="currentGridSize = (currentGridSize + 1) % 3" v-if="!$store.state.isMobile">
                         <v-icon>{{ $store.getters.gridIcon }}</v-icon>
                     </v-btn>
-                </v-row>
+                </div>
                 <VideoCardList
                     :videos="sortedLive"
                     includeChannel
@@ -21,7 +21,7 @@
                 >
                 </VideoCardList>
                 <v-divider class="my-3" />
-                <v-row class="d-flex justify-space-between px-3 pt-3 pb-3">
+                <div class="d-flex justify-space-between px-0 pb-3 pt-1 px-sm-3">
                     <div class="text-h6">
                         {{ $t("views.home.recentVideosHeading") }}
                     </div>
@@ -36,7 +36,7 @@
                             {{ $t("views.home.recentVideoToggles.subber") }}
                         </v-btn>
                     </v-btn-toggle>
-                </v-row>
+                </div>
                 <VideoCardList
                     :videos="videos"
                     includeChannel
