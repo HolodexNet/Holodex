@@ -4,7 +4,7 @@
         :class="{ 'bump-bottom': $store.state.music.isOpen }"
     >
         <MainNav />
-        <v-main class="pull-to-refresh">
+        <v-main class="pull-to-refresh" style="transition: none">
             <keep-alive max="4" exclude="Watch,MugenClips,EditVideo">
                 <router-view :key="$route.path" />
             </keep-alive>

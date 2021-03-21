@@ -82,7 +82,7 @@ export default {
                     name: "p1s5",
                 },
                 {
-                    layout: "OAFY,TAFY,AMOM,AAOM",
+                    layout: "OAFYchat,TAFYchat,AMOM,AAOM",
                     name: "2 Video, 2 Chat",
                 },
                 {

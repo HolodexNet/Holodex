@@ -3,7 +3,7 @@
         <!-- Floating tool bar -->
         <transition name="slide-y-transition" mode="out-in">
             <v-toolbar dense class="mv-toolbar" style="right: 0" v-if="!collapseToolbar" absolute>
-                <v-app-bar-nav-icon @click="$router.push({ path: '/' })"></v-app-bar-nav-icon>
+                <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
                 <div
                     class="flex-grow-1 justify-center d-flex mv-toolbar-btn align-center"
                     :class="{ 'no-btn-text': $store.state.isMobile }"
@@ -429,6 +429,9 @@ export default {
             } else if (document.exitFullscreen) {
                 document.exitFullscreen();
             }
+        },
+        toggleMainNav() {
+            return this.$store.commit("setNavDrawer", !this.$store.state.navDrawer);
         },
     },
 };

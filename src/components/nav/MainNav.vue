@@ -279,22 +279,11 @@ export default {
                     icon: icons.mdiCog,
                     collapsible: true,
                 },
-                // {
-                //     name: "Login",
-                //     path: "/login",
-                //     icon: icons.mdiLoginVariant,
-                //     collapsible: true,
-                // },
             ];
         },
         ...mapState(["firstVisit"]),
     },
     created() {
-        // eslint-disable-next-line no-unused-vars
-        this.$router.afterEach((to, from) => {
-            this.refreshing = false;
-        });
-
         if (this.$store.state.firstVisit) {
             const vm = this;
             setTimeout(() => {
@@ -306,12 +295,11 @@ export default {
                 menu.click();
             }, 10000);
         }
-    },
-    methods: {
-        onRefresh() {
-            this.refreshing = true;
-            this.$router.go(0);
-        },
+
+        // always pop out nav drawer if it's not watch page or mobile
+        if (this.$route.name !== null && !(this.isWatchPage || this.isMobile)) {
+            this.navDrawer = true;
+        }
     },
     watch: {
         isWatchPage() {
