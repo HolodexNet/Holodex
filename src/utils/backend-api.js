@@ -38,8 +38,16 @@ export default {
     channel(id) {
         return axiosInstance.get(`/channels/${id}`);
     },
-    video(id) {
-        return axiosInstance.get(`/videos/${id}`);
+    /**
+     * Fetches a video
+     * @param {*} id the ID of the video
+     * @param {*} lang the acceptable subtitle languages
+     * @param {*} c whether to also provide comments, 1 to activate
+     * @returns
+     */
+    video(id, lang, c) {
+        const q = querystring.stringify({ lang, c });
+        return axiosInstance.get(`/videos/${id}?${q}`);
     },
     comments(videoId) {
         return axiosInstance.get(`/videos/${videoId}/comments`);

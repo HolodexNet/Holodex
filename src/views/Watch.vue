@@ -173,6 +173,17 @@ import { mapState } from "vuex";
 import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff } from "@mdi/js";
 import * as icons from "@/utils/icons";
 
+/* eslint-disable */
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+/* eslint-enable */
+
 export default {
     name: "Watch",
     metaInfo() {
@@ -222,9 +233,9 @@ export default {
             this.$store.dispatch("watch/fetchVideo").then(() => {
                 if (!this.hasWatched && this.videoId) this.$store.commit("library/addWatchedVideo", this.video);
                 // double check video type before querying for comments
-                if (this.video.type === "stream") {
-                    this.$store.dispatch("watch/fetchComments");
-                }
+                // if (this.video.type === "stream") {
+                //     this.$store.dispatch("watch/fetchComments");
+                // }
             });
         },
         initMugen() {
@@ -248,8 +259,10 @@ export default {
         },
     },
     computed: {
-        ...mapState("watch", ["video", "comments", "isLoading", "hasError"]),
+        ...mapState("watch", ["video", "isLoading", "hasError"]),
         related() {
+            this.video.recommendations && shuffleArray(this.video.recommendations);
+            // shuffle it ^
             return {
                 simulcasts: this.video.simulcasts || [],
                 clips:
@@ -258,6 +271,7 @@ export default {
                     [],
                 sources: this.video.sources || [],
                 refers: this.video.refers || [],
+                recommendations: this.video.recommendations.slice(0, 10) || [],
             };
         },
         videoId() {
@@ -291,6 +305,9 @@ export default {
             set() {
                 return this.$store.commit("setVisitedMugen");
             },
+        },
+        comments() {
+            return this.video.comments;
         },
     },
     watch: {

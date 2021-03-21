@@ -57,6 +57,8 @@ export default {
                     return this.$t("component.relatedVideo.refersLabel");
                 case "sources":
                     return this.$t("component.relatedVideo.sourcesLabel");
+                case "recommendations":
+                    return "Recommendations";
                 default:
                     return "";
             }
