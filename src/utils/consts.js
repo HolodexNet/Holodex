@@ -86,6 +86,33 @@ export const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?
 // eslint-disable-next-line max-len
 export const VIDEO_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(?:.*\&|\?)?(?:t?=?)?(\d+[\dhms]*)?/i;
 
+export const TL_LANGS = Object.freeze([
+    {
+        text: "English",
+        value: "en",
+    },
+    {
+        text: "日本語",
+        value: "ja",
+    },
+    {
+        text: "Español",
+        value: "es",
+    },
+    {
+        text: "中文",
+        value: "zh",
+    },
+    {
+        text: "Indonesian / Malay",
+        value: "id",
+    },
+    {
+        text: "Русский язык",
+        value: "ru",
+    },
+]);
+
 // exports.CHANNEL_TYPE_TO_VIDEO_TYPE = {
 //     [this.CHANNEL_TYPES.VTUBER]: this.VIDEO_TYPES.STREAM,
 //     [this.CHANNEL_TYPES.SUBBER]: this.VIDEO_TYPES.CLIP,

@@ -1,9 +1,11 @@
 /* eslint-disable no-shadow */
 import { langs } from "@/plugins/vuetify";
+import { TL_LANGS } from "@/utils/consts";
 
 const userLanguage = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
 
 const validLangs = new Set(langs.map((x) => x.val));
+const validTlLangs = new Set(TL_LANGS.map((x) => x.value));
 
 const englishNamePrefs = new Set(["en", "es", "fr", "id"]);
 
@@ -19,7 +21,8 @@ const initialState = {
     hideThumbnail: false,
     scrollMode: true,
 
-    liveTLStickBottom: false,
+    liveTlStickBottom: false,
+    liveTlLang: validTlLangs.has(userLanguage) ? userLanguage : "en",
 };
 
 export const state = { ...initialState };
@@ -63,8 +66,11 @@ const mutations = {
     setScrollMode(state, val) {
         state.scrollMode = val;
     },
-    setliveTLStickBottom(state, val) {
-        state.liveTLStickBottom = val;
+    setLiveTlStickBottom(state, val) {
+        state.liveTlStickBottom = val;
+    },
+    setLiveTlLang(state, val) {
+        state.liveTlLang = val;
     },
     resetState(state) {
         Object.assign(state, initialState);

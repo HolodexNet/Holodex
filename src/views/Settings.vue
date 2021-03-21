@@ -24,7 +24,7 @@
                 </div>
                 <v-select
                     v-model="clipLangs"
-                    :items="validClipLangs"
+                    :items="TL_LANGS"
                     multiple
                     chips
                     :hint="$t('views.settings.clipLanguageSelection')"
@@ -78,6 +78,7 @@
 <script>
 import { langs } from "@/plugins/vuetify";
 import { mdiTranslate, mdiFilter } from "@mdi/js";
+import { TL_LANGS } from "@/utils/consts";
 
 export default {
     name: "Settings",
@@ -161,40 +162,7 @@ export default {
             langs,
             mdiTranslate,
             mdiFilter,
-            validClipLangs: Object.freeze([
-                {
-                    text: "English",
-                    value: "en",
-                },
-                {
-                    text: "日本語",
-                    value: "ja",
-                },
-                {
-                    text: "Español",
-                    value: "es",
-                },
-                {
-                    text: "中文",
-                    value: "zh",
-                },
-                {
-                    text: "한국어",
-                    value: "kr",
-                },
-                {
-                    text: "français",
-                    value: "fr",
-                },
-                {
-                    text: "Indonesian / Malay",
-                    value: "id",
-                },
-                {
-                    text: "Русский язык",
-                    value: "ru",
-                },
-            ]),
+            TL_LANGS,
         };
     },
     methods: {

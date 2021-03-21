@@ -6,7 +6,7 @@
             <v-btn v-if="!isLoading" @click="tlChatReconnect()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
         </v-overlay>
         <v-card-subtitle class="py-2 d-flex justify-space-between">
-            TLs [{{ lang }}]
+            TLs [{{ liveTlLang }}]
             <v-dialog v-model="dialog">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn icon x-small v-bind="attrs" v-on="on">
@@ -21,10 +21,16 @@
 
                     <v-card-text>
                         <v-switch
-                            v-model="liveTLStickBottom"
+                            v-model="liveTlStickBottom"
                             :label="$t('views.watch.chat.StickBottomSettingLabel')"
                             :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
                         ></v-switch>
+                        <v-select
+                            v-model="liveTlLang"
+                            :items="TL_LANGS"
+                            :hint="$t('views.settings.clipLanguageSelection')"
+                            persistent-hint
+                        />
                     </v-card-text>
                 </v-card>
             </v-dialog>
@@ -45,7 +51,7 @@
                     {{ item.name }}:
                 </div>
             </template>
-            <div>
+            <div v-if="socket && !socket.disconnected">
                 <div class="text-caption">Holodex:</div>
                 <div>
                     <span class="text--primary">{{ $t("views.watch.chat.status.connectedToChat") }}</span>
@@ -60,6 +66,7 @@
 import { Manager } from "socket.io-client";
 import api, { API_BASE_URL } from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
+import { TL_LANGS } from "@/utils/consts";
 
 export default {
     name: "WatchLiveTranslations",
@@ -79,11 +86,13 @@ export default {
                 MESSAGE: "message",
                 UPDATE: "update",
             }),
+            TL_LANGS,
             overlayMessage: this.$t("views.watch.chat.loading"),
             showOverlay: false,
             isLoading: true,
             manager: null,
             socket: null,
+            dialog: false,
         };
     },
     mounted() {
@@ -92,16 +101,30 @@ export default {
     beforeDestroy() {
         this.tlChatDisconnect();
     },
+    watch: {
+        liveTlLang() {
+            this.tlChatDisconnect();
+            this.tlChatConnect();
+        },
+    },
     computed: {
         lang() {
             return this.$store.state.settings.lang;
         },
-        liveTLStickBottom: {
+        liveTlStickBottom: {
             get() {
                 return this.$store.state.settings.liveTLStickBottom;
             },
             set(val) {
-                this.$store.commit("settings/setliveTLStickBottom", val);
+                this.$store.commit("settings/setLiveTlStickBottom", val);
+            },
+        },
+        liveTlLang: {
+            get() {
+                return this.$store.state.settings.liveTlLang;
+            },
+            set(val) {
+                this.$store.commit("settings/setLiveTlLang", val);
             },
         },
     },
@@ -111,7 +134,7 @@ export default {
                 this.manager = new Manager(API_BASE_URL, {
                     query: { id: this.video.id },
                     reconnectionAttempts: 10,
-                    path: process.env.NODE_ENV === "development" ? "/socket.io/" : "/api/socket.io/",
+                    path: /* process.env.NODE_ENV === "development" ? "/socket.io/" : */ "/api/socket.io/",
                     secure: true,
                 });
                 this.manager.on("reconnect_attempt", (attempt) => {
@@ -139,7 +162,7 @@ export default {
             this.socket = this.manager.socket("/");
             this.socket.connect();
 
-            api.chatHistory(this.video.id, this.lang).then(({ data }) => {
+            api.chatHistory(this.video.id, this.liveTlLang).then(({ data }) => {
                 this.tlHistory = data.reverse();
             });
 
@@ -179,7 +202,7 @@ export default {
                     default:
                         break;
                 }
-                console.log(msg);
+                // console.log(msg);
             });
         },
         tlChatDisconnect() {
