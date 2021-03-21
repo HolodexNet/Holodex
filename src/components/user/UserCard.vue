@@ -16,7 +16,7 @@
                      *  
                      -->
     <v-card flat v-intersect="tryUpdateUser">
-        <v-list>
+        <v-list :dense="inNavDrawer" class="pb-0">
             <v-list-item v-if="user">
                 <v-list-item-avatar>
                     <img
@@ -46,35 +46,47 @@
                     </v-list-item-content>
                 </v-list-item-content>
             </v-list-item>
-            <v-list-item-group>
-                <v-list-item v-if="!user" to="/login">
-                    <v-list-item-action>
-                        <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>{{ $t("component.mainNav.login") }}</v-list-item-content>
-                </v-list-item>
+            <!-- <v-list dense> -->
+            <v-list-item v-if="!user" to="/login" link>
+                <v-list-item-icon>
+                    <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>{{ $t("component.mainNav.login") }}</v-list-item-title>
+            </v-list-item>
 
-                <v-divider></v-divider>
-                <v-list-item to="/login">
-                    <v-list-item-action>
-                        <v-icon>{{ icons.mdiAccountCircleOutline }}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>{{ $t("component.mainNav.accountSettings") }}</v-list-item-content>
-                </v-list-item>
+            <v-divider v-if="user"></v-divider>
+            <v-list-item to="/login" v-if="user" link>
+                <v-list-item-icon>
+                    <v-icon>{{ icons.mdiAccountCircleOutline }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title>
+                        {{ $t("component.mainNav.accountSettings") }}
+                    </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
 
-                <v-list-item to="/settings" v-if="!noSetting">
-                    <v-list-item-action>
-                        <v-icon>{{ icons.mdiCog }}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>{{ $t("component.mainNav.settings") }}</v-list-item-content>
-                </v-list-item>
-                <v-list-item v-if="user" @click.prevent="logout">
-                    <v-list-item-action>
-                        <v-icon>{{ icons.mdiLogoutVariant }}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>{{ $t("component.mainNav.logout") }}</v-list-item-content>
-                </v-list-item>
-            </v-list-item-group>
+            <v-list-item to="/settings" v-if="!noSetting" link>
+                <v-list-item-icon>
+                    <v-icon>{{ icons.mdiCog }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title>
+                        {{ $t("component.mainNav.settings") }}
+                    </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-if="user" @click.prevent="logout" link>
+                <v-list-item-icon>
+                    <v-icon>{{ icons.mdiLogoutVariant }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title>
+                        {{ $t("component.mainNav.logout") }}
+                    </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+            <!-- </v-list> -->
         </v-list>
     </v-card>
 </template>
@@ -90,6 +102,10 @@ export default {
     }),
     props: {
         noSetting: {
+            type: Boolean,
+            default: false,
+        },
+        inNavDrawer: {
             type: Boolean,
             default: false,
         },

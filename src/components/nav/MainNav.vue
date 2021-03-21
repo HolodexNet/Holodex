@@ -5,7 +5,7 @@
         <NavDrawer :pages="pages" v-model="navDrawer" :temporary="isMobile || isWatchPage">
             <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
             <template v-if="isMobile">
-                <user-card noSetting style="background-color: inherit"></user-card>
+                <user-card noSetting inNavDrawer style="background-color: inherit"></user-card>
                 <v-divider />
             </template>
         </NavDrawer>
@@ -289,11 +289,6 @@ export default {
             setTimeout(() => {
                 vm.$store.commit("setVisited");
             }, 30000);
-            setTimeout(() => {
-                // eslint-disable-next-line no-unused-vars
-                const menu = vm.$refs.dexBtn;
-                menu.click();
-            }, 10000);
         }
 
         // always pop out nav drawer if it's not watch page or mobile
@@ -316,15 +311,6 @@ export default {
 </script>
 
 <style scoped>
-.backButton {
-    height: 32px !important;
-    width: 32px !important;
-}
-
-.refresh-rotate {
-    animation: rotation 2s infinite linear;
-}
-
 @keyframes rotation {
     from {
         transform: rotate(0deg);

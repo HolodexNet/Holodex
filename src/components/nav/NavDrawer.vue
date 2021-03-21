@@ -9,7 +9,7 @@
         :temporary="temporary"
     >
         <slot />
-        <v-list dense>
+        <v-list dense class="py-0">
             <!-- <v-list> -->
             <template v-for="page in pages">
                 <v-list-item
@@ -174,11 +174,5 @@ export default {
 
 .nav-scroll > .v-navigation-drawer__content {
     overflow-y: hidden !important;
-}
-
-.live-badge {
-    padding: 3px 4px !important;
-    border-radius: 2px;
-    min-width: 32px !important;
 }
 </style>
