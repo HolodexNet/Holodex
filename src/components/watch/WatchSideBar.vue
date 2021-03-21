@@ -76,7 +76,7 @@ export default {
                     [],
                 sources: this.video.sources || [],
                 refers: this.video.refers || [],
-                recommendations: this.video.recommendations.slice(0, 10) || [],
+                recommendations: (this.video.recommendations && this.video.recommendations.slice(0, 10)) || [],
             };
         },
         songList() {

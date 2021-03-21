@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!isLoading && !hasError">
+    <div v-if="!isLoading && !hasError" ref="watchFullscreen" style="overflow-y: auto">
         <!-- Mugen info message -->
         <v-alert dense text type="info" dismissible v-model="firstVisitMugen" v-if="isMugen">
             Welcome to MugenClips! Everyone on this page is seeing the same randomly selected English Hololive clip.
@@ -31,6 +31,9 @@
                         <template v-slot:buttons>
                             <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                                 <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
+                            </v-btn>
+                            <v-btn icon lg @click="toggleFullScreen">
+                                <v-icon>{{ mdiFullscreen }}</v-icon>
                             </v-btn>
                             <v-tooltip bottom v-if="!$store.state.isMobile">
                                 <template v-slot:activator="{ on, attrs }">
@@ -124,6 +127,9 @@
                         <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                             <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
                         </v-btn>
+                        <v-btn icon lg @click="toggleFullScreen">
+                            <v-icon>{{ mdiFullscreen }}</v-icon>
+                        </v-btn>
                     </template>
                 </WatchToolBar>
                 <WatchInfo :video="video" key="info" />
@@ -166,7 +172,7 @@ import WatchToolBar from "@/components/watch/WatchToolbar";
 
 import { decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff } from "@mdi/js";
+import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff, mdiFullscreen } from "@mdi/js";
 import * as icons from "@/utils/icons";
 
 export default {
@@ -194,9 +200,12 @@ export default {
             mdiRectangleOutline,
             mdiMessage,
             mdiMessageOff,
+            mdiFullscreen,
             icons,
 
             showLiveChat: true,
+
+            fullScreen: false,
         };
     },
     created() {
@@ -241,6 +250,15 @@ export default {
             this.video.live_viewers = update.live_viewers;
             this.video.status = update.status;
         },
+        toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                this.fullScreen = true;
+                this.$refs.watchFullscreen.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+                this.fullScreen = false;
+            }
+        },
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
@@ -277,7 +295,7 @@ export default {
             },
         },
         comments() {
-            return this.video.comments;
+            return this.video.comments || [];
         },
     },
     watch: {
