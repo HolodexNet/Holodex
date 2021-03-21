@@ -88,7 +88,7 @@ const routes = [
     },
     {
         name: "edit_video",
-        path: "/edit/video/:id",
+        path: "/edit/video/:id/:tab?",
         component: EditVideo,
     },
     {

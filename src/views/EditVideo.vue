@@ -59,7 +59,7 @@
                                 </v-btn>
                             </v-card-actions>
                         </div>
-                        <div v-show="currentTab === TABS.SONGS">
+                        <div v-show="currentTab === TABS.MUSIC">
                             <VideoEditSongs
                                 :video="video"
                                 :currentTime="currentTime"
@@ -121,7 +121,7 @@ export default {
             currentTab: 0,
             TABS: Object.freeze({
                 TOPIC: 0,
-                SONGS: 1,
+                MUSIC: 1,
                 MENTIONS: 2,
                 SOURCES_CLIPS: 3,
             }),
@@ -137,6 +137,10 @@ export default {
         Vue.use(VueYouTubeEmbed);
     },
     mounted() {
+        // Load specific tab if defined in the tab param
+        if (this.$route.params.tab) {
+            this.currentTab = this.TABS[this.$route.params.tab.toUpperCase()] || 0;
+        }
         this.init();
     },
     beforeDestroy() {
@@ -200,17 +204,6 @@ export default {
         },
     },
     computed: {
-        related() {
-            return {
-                simulcasts: this.video.simulcasts || [],
-                clips:
-                    (this.video.clips &&
-                        this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang))) ||
-                    [],
-                sources: this.video.sources || [],
-                refers: this.video.refers || [],
-            };
-        },
         videoId() {
             return this.$route.params.id || this.$route.query.v;
         },
