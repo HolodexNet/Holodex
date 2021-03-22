@@ -106,8 +106,7 @@ views:
       all: Todos
       official: Oficial
     unsupportedQuery: >-
-      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. 
-      No se mostrarán <b> clips </b>.
+      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
   settings:
     title: Opciones
     darkModeLabel: Modo Oscuro
