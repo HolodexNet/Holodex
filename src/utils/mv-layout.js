@@ -83,3 +83,39 @@ export function decodeLayout(encodedStr) {
         content: parsedContent,
     };
 }
+
+// Auxilary function for making sure the biggest and left most cells are first
+// export function sortPresets(presets) {
+//     return  presets.map(obj => {
+//         const { layout, content } = decodeLayout(obj.layout);
+//         // console.log(content);
+//         const withContent = layout.map(x => {
+//             return {
+//                 ...x,
+//                 c: content[x.i]
+//             }
+//         });
+
+//         withContent.sort( (a,b) => {
+//             return b.w*b.h - a.w*a.h || (a.x) - (b.x) || a.y - b.y;
+//         });
+
+//         const newContent = {};
+//         const remapped =  withContent.map((obj2, index) => {
+//             obj2.i = index;
+//             if(obj2.c) {
+//                 newContent[index] = obj2.c;
+//             }
+//             delete obj2.c;
+//             return obj2;
+//         });
+
+//         return {
+//             ...obj,
+//             layout: encodeLayout({
+//                 layout: remapped,
+//                 contents: newContent,
+//             }),
+//         };
+//     });
+// }

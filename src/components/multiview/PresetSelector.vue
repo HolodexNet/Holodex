@@ -43,88 +43,42 @@ import { decodeLayout } from "@/utils/mv-layout";
 import LayoutPreview from "./LayoutPreview";
 
 export default {
-    name: "VideoSelector",
+    name: "PresetSelector",
     components: {
         VideoCardList,
         LoadingOverlay,
         LayoutPreview,
     },
+    mounted() {
+        // this.desktopPresets = sortPresets(this.desktopPresets);
+        // this.mobilePresets = sortPresets(this.mobilePresets);
+    },
     data() {
         return {
             desktopPresets: [
+                { layout: "AAMM,AMMM,MAMM,MMMM", name: "2 x 2" },
+                { layout: "AAII,AIII,AQII,IAII,IIII,IQII,QAII,QIII,QQII", name: "3 x 3" },
+                { layout: "AATY,TAFYchat", name: "Side Chat 1" },
+                { layout: "AARM,AMRM,RAHYchat", name: "Side Chat 2" },
+                { layout: "SAGYchat,AAJM,AMJM,JAJM,JMJM", name: "Side Chat 4" },
+                { layout: "AAMY,MAMM,MMMM", name: "p1s2" },
+                { layout: "AAQQ,AQII,IQII,QAII,QIII,QQII", name: "p1s5" },
+                { layout: "AAOM,AMOM,OAFYchat,TAFYchat", name: "2 Video, 2 Chat" },
+                { layout: "AAMM,AMMM,MAMM,MMGMchat,SMGMchat", name: "3 Video, 2 Chat" },
+                { layout: "AAML,MAML,ALGH,GLGH,MLGH,SLGH,ASGG,GSGG,MSGG,SSGG", name: "Among Us 1" },
+                { layout: "AAKL,KAKL,UAEYchat,ALFH,FLFH,KLFH,PLFH,ASFG,FSFG,KSFG,PSFG", name: "Among Us 2" },
+                { layout: "AASR,SAGYchat,ARGH,GRGH,MRGH", name: "Sports Fes 1" },
                 {
-                    layout: "AMMM,AAMM,MMMM,MAMM",
-                    name: "2 x 2",
-                },
-                {
-                    layout: "IQII,IAII,QIII,QQII,QAII,IIII,AAII,AQII,AIII",
-                    name: "3 x 3",
-                },
-                {
-                    layout: "TAFYchat,AATY",
-                    name: "Side Chat 1",
-                },
-
-                {
-                    layout: "AMRM,RAHYchat,AARM",
-                    name: "Side Chat 2",
-                },
-                {
-                    layout: "AMJM,JMJM,JAJM,SAGYchat,AAJM",
-                    name: "Side Chat 4",
-                },
-                {
-                    layout: "MMMM,MAMM,AAMY",
-                    name: "p1s2",
-                },
-                {
-                    layout: "QAII,QQII,IQII,QIII,AQII,AAQQ",
-                    name: "p1s5",
-                },
-                {
-                    layout: "OAFYchat,TAFYchat,AMOM,AAOM",
-                    name: "2 Video, 2 Chat",
-                },
-                {
-                    layout: "MMGMchat,MAMM,AMMM,AAMM,SMGMchat",
-                    name: "3 Video, 2 Chat",
-                },
-                {
-                    layout: "MAML,MLGH,GLGH,GSGG,SLGH,ASGG,MSGG,SSGG,ALGH,AAML",
-                    name: "Among Us 1",
-                },
-                {
-                    layout: "KAKL,KLFH,FLFH,FSFG,PLFH,ASFG,KSFG,PSFG,ALFH,UAEYchat,AAKL",
-                    name: "Among Us 2",
-                },
-                {
-                    layout: "SAGYchat,GRGH,ARGH,MRGH,AASR",
-                    name: "Sports Fes 1",
-                },
-                {
-                    layout: "MSGG,GMGG,GSGG,MGGG,ASGG,MMGG,AMGG,SAGYchat,MAGG,AAMM",
+                    layout: "AAMM,SAGYchat,AMGG,ASGG,GMGG,GSGG,MAGG,MGGG,MMGG,MSGG",
                     name: "Sports Fes 2",
                     type: "deskotp",
                 },
-                {
-                    layout: "SGGG,SSGG,SMGG,SAGG,ASGG,AMGG,AGGG,AAGG,GMMM,GAMM",
-                    name: "Sports Fes 3",
-                },
+                { layout: "GAMM,GMMM,AAGG,AGGG,AMGG,ASGG,SAGG,SGGG,SMGG,SSGG", name: "Sports Fes 3" },
             ],
             mobilePresets: [
-                {
-                    layout: "AIYI,AQYI,AAYI",
-                    name: "Mobile 1",
-                },
-                {
-                    layout: "AHYH,AOYK,AAYH",
-                    name: "Mobile 2",
-                },
-                {
-                    layout: "AAMM,MAMY,AMMM",
-                    name: "Mobile 3",
-                    landscape: true,
-                },
+                { layout: "AAYI,AIYI,AQYI", name: "Mobile 1" },
+                { layout: "AOYKchat,AAYH,AHYH", name: "Mobile 2" },
+                { layout: "MAMY,AAMM,AMMM", name: "Mobile 3", landscape: true },
             ],
         };
     },
