@@ -1,11 +1,6 @@
 <template>
     <!-- pad bottom for 100px to allow space for infiniteload -->
-    <v-container
-        class="py-0"
-        style="position: relative"
-        :style="{ 'padding-bottom': infiniteLoad ? '150px' : '' }"
-        fluid
-    >
+    <v-container class="py-0" style="position: relative" fluid>
         <!-- Video Card grid rows -->
         <!-- Set min height to account for layout shifting of show more button -->
         <v-row :dense="dense">
@@ -65,12 +60,7 @@
             </v-btn>
         </div>
         <!-- Infiniteloading observer -->
-        <InfiniteLoad
-            v-if="infiniteLoad"
-            @infinite="emitLoad"
-            :identifier="identifier"
-            style="position: absolute; bottom: 0px; width: 100%; margin: auto"
-        />
+        <InfiniteLoad v-if="infiniteLoad" @infinite="emitLoad" :identifier="identifier" />
 
         <PaginateLoad
             v-if="paginateLoad"
