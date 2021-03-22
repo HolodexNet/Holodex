@@ -39,7 +39,7 @@ module.exports = {
             },
         ],
     },
-    ignorePatterns: ["src/external/**"],
+    ignorePatterns: ["src/external/**", "src/locales/**"],
     settings: {
         "import/resolver": {
             alias: {
