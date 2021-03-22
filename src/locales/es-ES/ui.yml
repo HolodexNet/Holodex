@@ -1,7 +1,6 @@
 ---
 component:
   apiError:
-    title: Gomenasorry!
     textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
     textAfterTwitter: ' O reporta el error a través de la'
     aboutPage: Página de información
@@ -10,8 +9,6 @@ component:
     unfavoriteAllInGroup: Desmarcar todos como favoritos
     favoriteAllInGroup: Marcar todos en el grupo como favorito
   channelInfo:
-    videoCount: '{0} Videos'
-    clipCount: '{n} Clips'
     subscriberCount: '{n} Subscriptores'
     subscriberNA: Contador de subscriptores no disponible
     totalViews: Visualizaciones totales
@@ -32,14 +29,11 @@ component:
     music: Música
     multiview: Multivista
   videoCard:
-    clips: '{n} Clips'
     watching: '{0} Mirando'
     liveNow: En Vivo
     edit: Editar
   videoDescription:
     description: Descripción
-  video:
-    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mas
@@ -51,12 +45,10 @@ component:
     type:
       channel: Canal
       topic: Tema
-      org: org
       titledesc: título y descripción
       comments: Comentarios
       videourl: url de vídeo
   relatedVideo:
-    clipsLabel: clips
     simulcastsLabel: referencias
     refersLabel: transmisión simultanea
     sourcesLabel: fuentes
@@ -78,7 +70,6 @@ component:
     weeklyTopForOrg: Mas Reproducidas Semanalmente para {0}
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriptores
       group: Grupo
@@ -86,8 +77,6 @@ views:
       videoCount: Numero de videos
       clipCount: Numero de clips
     tabs:
-      Vtuber: Vtuber
-      Subber: Subber
       Favorites: Favoritos
     favoritesAreEmpty: No tienes favoritos!
   home:
@@ -96,7 +85,6 @@ views:
     recentVideoToggles:
       all: Todos
       official: Oficial
-      subber: Clips
   library:
     savedVideosTitle: Videos Guardados
     createYtPlaylistButton: Crear Playlist de YT ({0})
@@ -117,10 +105,8 @@ views:
     type:
       all: Todos
       official: Oficial
-      clip: Clip
     unsupportedQuery: >-
-      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. 
-      No se mostrarán <b> clips </b>.
+      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
   settings:
     title: Opciones
     darkModeLabel: Modo Oscuro
@@ -185,18 +171,11 @@ views:
     apikeyResetConfirm2: La API key antigua tendrá 0-24 horas antes de expirar. ¿De verdad reiniciar?
     apikeyResetNvm: Nada interesante pasó
   multiview:
-    confirmOverwrite: Overwrite current layout?
     confirmOverwriteYes: Confirmar
     permalink: Enlace Permanente
-    presets: Presets
-    addframe: Add Cell
-    preset:
-      desktop: Desktop
-      mobile: Mobile
 time:
   soon: Proximamente
   diff_future_date: Inicia {0} ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: Añadir
