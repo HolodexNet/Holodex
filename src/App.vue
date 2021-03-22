@@ -20,6 +20,7 @@
         <v-snackbar bottom center :value="showUpdateDetails" color="primary" :timeout="-1">
             {{ $t("views.app.check_about_page") }}
             <template v-slot:action>
+                <v-btn text @click="showUpdateDetails = false" class="ml-auto" to="/about#changelog"> Changelog </v-btn>
                 <v-btn text @click="showUpdateDetails = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
             </template>
         </v-snackbar>
