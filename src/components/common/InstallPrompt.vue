@@ -63,12 +63,9 @@ export default {
 
             // Optionally, send analytics event that PWA install promo was shown.
             console.log("'beforeinstallprompt' event was fired.");
-
-            console.log(this.deferredPrompt);
         });
 
         window.addEventListener("appinstalled", () => {
-            console.log("app uninstalled");
             this.deferredPrompt = null;
         });
     },
@@ -79,8 +76,6 @@ export default {
             if (this.isAppleDevice() && !this.isStandAlone() && promptWeekly) {
                 return true;
             }
-            console.log(this.deferredPrompt);
-            console.log(promptWeekly);
             if (this.deferredPrompt && promptWeekly) {
                 return true;
             }
@@ -91,7 +86,7 @@ export default {
         async install() {
             if (this.deferredPrompt) {
                 this.deferredPrompt.prompt();
-                const { outcome } = await this.defferedPrompt.userChoice;
+                const { outcome } = await this.deferedPrompt.userChoice;
                 console.log(`User response to the install prompt: ${outcome}`);
                 this.deferredPrompt = null;
             } else {
