@@ -38,8 +38,6 @@ component:
     edit: Изменить
   videoDescription:
     description: Описание
-  video:
-    comment: { }
   description:
     showLess: Свернуть
     showMore: Ещё
@@ -78,7 +76,6 @@ component:
     weeklyTopForOrg: Топ {0} за неделю
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Подписчики
       group: Группа
@@ -184,18 +181,11 @@ views:
     apikeyResetConfirm2: Старый API ключ перестанет работать через 0-24 часа. Точно сбросить?
     apikeyResetNvm: Ничего интересного не случилось.
   multiview:
-    confirmOverwrite: Overwrite current layout?
     confirmOverwriteYes: Подтвердить
     permalink: Постоянная ссылка
-    presets: Presets
-    addframe: Add Cell
-    preset:
-      desktop: Desktop
-      mobile: Mobile
 time:
   soon: Скоро
   diff_future_date: Начнется {0} ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: Добавить

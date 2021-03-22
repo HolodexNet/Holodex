@@ -1,7 +1,6 @@
 ---
 component:
   apiError:
-    title: Gomenasorry!
     textBeforeTwitter: 'コンテンツの取得中にエラーが発生しました。Twitterを確認してください'
     textAfterTwitter: 'または、を通じてエラーを報告します'
     aboutPage: ページについて
@@ -38,8 +37,6 @@ component:
     edit: 編集
   videoDescription:
     description: 概要
-  video:
-    comment: { }
   description:
     showLess: 省略表示
     showMore: 詳細表示
@@ -70,7 +67,6 @@ component:
     weeklyTopPlaysHeader: 週間のトップ曲
   songList:
     songTitle: タイトル
-    songCoveredBy: Covered by
     songDuration: 再生時間
     sangOnTime: 配信日時
   orgMusic:
@@ -78,7 +74,6 @@ component:
     weeklyTopForOrg: 週間のトップ曲
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 登録者数
       group: グループ
@@ -86,7 +81,6 @@ views:
       videoCount: 動画数
       clipCount: 切り抜き数
     tabs:
-      Vtuber: Vtuber
       Subber: 切り抜きチャンネル
       Favorites: お気に入り
     favoritesAreEmpty: お気に入りにはまだなにも登録されていません！
@@ -184,18 +178,11 @@ views:
     apikeyResetConfirm2: 以前のAPIキーは24時間以内に失効します。本当にリセットしてもよろしいですか?
     apikeyResetNvm: Nothing interesting happend.
   multiview:
-    confirmOverwrite: Overwrite current layout?
     confirmOverwriteYes: 確認
     permalink: パーマリンク
-    presets: Presets
-    addframe: Add Cell
-    preset:
-      desktop: Desktop
-      mobile: Mobile
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'
-  distance_past_date: '{0}'
 editor:
   music:
     add: 追加
