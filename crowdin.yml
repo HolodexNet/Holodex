@@ -1,0 +1,3 @@
+files:
+  - source: /src/locales/en/ui.yml
+    translation: /src/locales/%locale%/%original_file_name%

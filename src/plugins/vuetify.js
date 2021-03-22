@@ -12,13 +12,13 @@ import vuetifyFr from "vuetify/es5/locale/fr";
 import vuetifyPt from "vuetify/es5/locale/pt";
 
 import enTL from "@/locales/en/ui.yml";
-import jaTL from "@/locales/ja/ui.yml";
+import jaTL from "@/locales/ja-JP/ui.yml";
 import esTL from "@/locales/es-ES/ui.yml";
-import msTL from "@/locales/ms/ui.yml";
+import msTL from "@/locales/ms-MY/ui.yml";
 import zhTL from "@/locales/zh-TW/ui.yml";
-import idTL from "@/locales/id/ui.yml";
-import ruTL from "@/locales/ru/ui.yml";
-import frTL from "@/locales/fr/ui.yml";
+import idTL from "@/locales/id-ID/ui.yml";
+import ruTL from "@/locales/ru-RU/ui.yml";
+import frTL from "@/locales/fr-FR/ui.yml";
 import ptTL from "@/locales/pt-BR/ui.yml";
 
 // ====== i18n setup ======
