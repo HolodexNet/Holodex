@@ -65,7 +65,7 @@ component:
     clearPlaylist: Очистить
   channelMusic:
     recentSongsHeader: Новые песни
-    weeklyTopPlaysHeader: Самые проигрываемые за неделю
+    weeklyTopPlaysHeader: Самые прослушиваемые за неделю
   songList:
     songTitle: Название
     songCoveredBy: Автор кавера
@@ -153,7 +153,7 @@ views:
     chat:
       loading: Загрузка чата...
       hideTLBtn: Скрыть переводы
-      showTLBtn: Показать TL
+      showTLBtn: Показывать перевод
       TLSettingsTitle: Настройки перевода
       StickBottomSettingLabel: Привязать к низу (для мобильных)
       StickBottomSettingsDesc: TL чат привязывается к низу чата (по умолчанию на мобильных - к верху)
