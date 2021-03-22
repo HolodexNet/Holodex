@@ -27,10 +27,8 @@ component:
     settings: Pengaturan
     login: Masuk
     logout: Keluar
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Pengaturan Akun
     music: Musik
-    multiview: MultiView
   videoCard:
     clips: '{n} Klip'
     watching: '{0} sedang menonton'
@@ -38,8 +36,6 @@ component:
     edit: Ubah
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -51,7 +47,6 @@ component:
     type:
       channel: Saluran
       topic: topik
-      org: org
       titledesc: judul & desk
       comments: Komen
       videourl: url video
@@ -78,7 +73,6 @@ component:
     weeklyTopForOrg: Lagu Populer Mingguan dari {0}
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -86,8 +80,6 @@ views:
       videoCount: Jumlah Video
       clipCount: Jumlah Klip
     tabs:
-      Vtuber: Vtuber
-      Subber: Subber
       Favorites: Favorit
     favoritesAreEmpty: Kamu tidak memiliki favorit!
   home:
@@ -104,7 +96,6 @@ views:
     deleteConfirmation: Apa kamu yakin ingin menghapus {0} video?
     deleteConfirmationOK: Hapus
     deleteConfirmationCancel: Batal
-    selectionReset: Reset
     selectionSelectAll: Pilih Semua
     emptyLibrary: Kamu tidak menyimpan video apapun!
   notFound:
@@ -190,12 +181,10 @@ views:
     presets: Preset
     addframe: Tambah Skema
     preset:
-      desktop: Desktop
       mobile: Ponsel
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: Tambah
