@@ -166,7 +166,7 @@ export default {
             return this.$store.state.settings.lang;
         },
         isWatchPage() {
-            return ["watch_id", "watch", "mugen-clips", "edit_video"].includes(this.$route.name);
+            return ["watch_id", "watch", "mugen-clips", "edit_video", "multiview"].includes(this.$route.name);
         },
     },
     watch: {
