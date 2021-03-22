@@ -108,6 +108,7 @@ views:
     exportYtPlaylist: YouTube播放清單
     exportCsv: CSV檔案
     selectionSelect50: 選擇50部影片
+    exportYTExplanation: "以此功能建立的YouTube播放清單的瀏覽權限是<b>不公開</b>的，而且有可能會被YouTube刪除。<br /> 因為YouTube提供的功能不足，您需要透過以下方式來將<b>未列出的</b>YouTube播放清單儲存至帳號內。"
     exportYTHeading: YouTube播放清單保存教學
   notFound:
     title: 查無此內容
