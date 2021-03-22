@@ -27,19 +27,12 @@ component:
     settings: Tetapan
     login: Daftar Masuk
     logout: Daftar Keluar
-    MugenClips: MugenClips<sup>beta</sup>
-    accountSettings: Account Settings
-    music: Music
-    multiview: MultiView
   videoCard:
     clips: '{n} Sedutan'
     watching: '{0} Tontonan Sekarang'
     liveNow: Langsung Sekarang
-    edit: Edit
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -63,22 +56,8 @@ component:
   paginateLoad:
     newer: Lebih baharu
     older: Lebih lama
-  music:
-    clearPlaylist: Clear
-  channelMusic:
-    recentSongsHeader: Recent Songs
-    weeklyTopPlaysHeader: Weekly Top Plays
-  songList:
-    songTitle: Title
-    songCoveredBy: Covered by
-    songDuration: Duration
-    sangOnTime: Sang on
-  orgMusic:
-    monthlyTopForOrg: Monthly Top Plays for {0}
-    weeklyTopForOrg: Weekly Top Plays for {0}
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -152,67 +131,11 @@ views:
   watch:
     theaterMode: Mod Teater
     saveToLibrary: Simpan video di Pustaka
-    mentionIconLabel: MENTIONS
-    chat:
-      loading: Loading Chat...
-      hideTLBtn: Hide TLs
-      showTLBtn: Show TLs
-      TLSettingsTitle: TL Settings
-      StickBottomSettingLabel: Stick Bottom (mobile)
-      StickBottomSettingsDesc: TL box sticks to the bottom of chat (default stick to top on mobile)
-      retryBtn: Retry
-      status:
-        reconnecting: Auto Reconnecting...
-        reconnectFailed: Could not reconnect
-        notLive: >-
-          Stream is not live yet, please try again when the stream is within 15 minutes of being live
-        connectedToChat: Connected to translations chat
   favorites:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
-  editor:
-    needlogin: You'll need to login to make edits to Holodex video and song metadata.
-  login:
-    apikeyMsg: >-
-      You can use API key to query Holodex API programmatically. Only one key per account. After getting a new key, the old key will expire within 0-24 hours.
-    apikeyNew: Get new API Key
-    ownedYtChannel: Owned Youtube Channel
-    futureYtcOwnerMessage: >-
-      In the future, we plan on providing more services to channel owners like editing metadata for their own videos.
-    linkAcc: Link another account
-    apikeyResetConfirm1: Are you sure you want to reset your API Key?
-    apikeyResetConfirm2: The old API key will have 0-24 hours before expiring. Really reset?
-    apikeyResetNvm: Nothing interesting happened.
   multiview:
-    confirmOverwrite: Overwrite current layout?
     confirmOverwriteYes: Sahkan
-    permalink: Permalink
-    presets: Presets
-    addframe: Add Cell
-    preset:
-      desktop: Desktop
-      mobile: Mobile
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
-  distance_past_date: '{0}'
-editor:
-  music:
-    add: Add
-    update: Update
-    permission: >-
-      You need to be an 'Editor' user level or higher to update or delete existing songs. Please contact us on <a class='white--text' href='/about'>discord</a> to notify editors of issues / abuse, or apply to become an editor.
-    titles:
-      addSong: 'Song Metadata: Add a new Song'
-      songList: 'Song List : {0}'
-      help: Guide
-    itunesLookupPlaceholder: (Optional) Lookup on iTunes
-    moveRight2s: Move right 2s
-    testEnd: Test listen starting at 3 seconds before the end.
-    setToCurrentTime: Set to current time ({0})
-    moveLeft2s: Move left 2s
-    trackNameInput: Track Name
-    originalArtistInput: Original Artist
-    testStart: Test the start
-    startInput: Start
-    endInput: 'Duration in seconds: (end @ {0})'

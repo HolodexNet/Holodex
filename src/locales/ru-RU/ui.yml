@@ -67,7 +67,7 @@ component:
     clearPlaylist: Очистить
   channelMusic:
     recentSongsHeader: Новые песни
-    weeklyTopPlaysHeader: Самые проигрываемые за неделю
+    weeklyTopPlaysHeader: Самые прослушиваемые за неделю
   songList:
     songTitle: Название
     songCoveredBy: Автор кавера
@@ -155,8 +155,8 @@ views:
     mentionIconLabel: УПОМИНАНИЯ
     chat:
       loading: Загрузка чата...
-      hideTLBtn: Скрыть переводы
-      showTLBtn: Показать TL
+      hideTLBtn: Скрывать перевод
+      showTLBtn: Показывать перевод
       TLSettingsTitle: Настройки перевода
       StickBottomSettingLabel: Привязать к низу (для мобильных)
       StickBottomSettingsDesc: TL чат привязывается к низу чата (по умолчанию на мобильных - к верху)
@@ -184,14 +184,14 @@ views:
     apikeyResetConfirm2: Старый API ключ перестанет работать через 0-24 часа. Точно сбросить?
     apikeyResetNvm: Ничего интересного не случилось.
   multiview:
-    confirmOverwrite: Overwrite current layout?
+    confirmOverwrite: Перезаписать текущий макет?
     confirmOverwriteYes: Подтвердить
     permalink: Постоянная ссылка
-    presets: Presets
-    addframe: Add Cell
+    presets: Макеты
+    addframe: Добавить ячейку
     preset:
-      desktop: Desktop
-      mobile: Mobile
+      desktop: Для ПК
+      mobile: Для мобильных
 time:
   soon: Скоро
   diff_future_date: Начнется {0} ({1})

@@ -30,7 +30,6 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Pengaturan Akun
     music: Musik
-    multiview: MultiView
   videoCard:
     clips: '{n} Klip'
     watching: '{0} sedang menonton'
@@ -38,8 +37,6 @@ component:
     edit: Ubah
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -78,7 +75,6 @@ component:
     weeklyTopForOrg: Lagu Populer Mingguan dari {0}
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup

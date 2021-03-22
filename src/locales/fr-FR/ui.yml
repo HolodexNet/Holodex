@@ -2,17 +2,16 @@
 component:
   apiError:
     title: Oups!
-    textBeforeTwitter: "Il y a eu une erreur lors de la récupération du contenu, veuillez vérifier sur twitter"
-    textAfterTwitter: " ou signalez une erreur via la page"
+    textBeforeTwitter: 'Il y a eu une erreur lors de la récupération du contenu, veuillez vérifier sur twitter'
+    textAfterTwitter: ' ou signalez une erreur via la page'
     aboutPage: À propos
   channelList:
     signInToFavorite: Veuillez-vous connecter pour ajouter aux favoris
     unfavoriteAllInGroup: Supprimer tout le groupe des favoris
     favoriteAllInGroup: Ajouter tout le groupe aux favoris
   channelInfo:
-    videoCount: "{0} Vidéos"
-    clipCount: "{n} Clips"
-    subscriberCount: "{n} Abonnés"
+    videoCount: '{0} Vidéos'
+    subscriberCount: '{n} Abonnés'
     subscriberNA: Nombre d'abonnés indisponible
     totalViews: Vues Totales
   channelSocials:
@@ -27,19 +26,11 @@ component:
     settings: Paramètres
     login: Se connecter
     logout: Se déconnecter
-    MugenClips: MugenClips<sup>beta</sup>
-    accountSettings: Account Settings
-    music: Music
     multiview: Multivue
   videoCard:
-    clips: "{n} Clips"
-    watching: "{0} Visionnages"
+    watching: '{0} Visionnages'
     liveNow: EN DIRECT
     edit: Modifier
-  videoDescription:
-    description: Description
-  video:
-    comment: {}
   description:
     showLess: Afficher Moins
     showMore: Afficher Plus
@@ -51,34 +42,17 @@ component:
     type:
       channel: chaînes
       topic: sujet
-      org: org
       titledesc: titre et desc.
       comments: commentaires
       videourl: url de la vidéo
   relatedVideo:
-    clipsLabel: clips
     simulcastsLabel: diffusions simultanées
     refersLabel: références
-    sourcesLabel: sources
   paginateLoad:
     newer: Plus récente
     older: Plus ancienne
-  music:
-    clearPlaylist: Clear
-  channelMusic:
-    recentSongsHeader: Recent Songs
-    weeklyTopPlaysHeader: Weekly Top Plays
-  songList:
-    songTitle: Title
-    songCoveredBy: Covered by
-    songDuration: Duration
-    sangOnTime: Sang on
-  orgMusic:
-    monthlyTopForOrg: Monthly Top Plays for {0}
-    weeklyTopForOrg: Weekly Top Plays for {0}
 views:
   channels:
-    channelType: {}
     sortOptions:
       subscribers: Abonnés
       group: Groupe
@@ -86,7 +60,6 @@ views:
       videoCount: Nombre de vidéos
       clipCount: Nombre de Clips
     tabs:
-      Vtuber: Vtuber
       Subber: Sous-Titreur
       Favorites: Favoris
     favoritesAreEmpty: Vous n'avez aucun favoris
@@ -96,14 +69,13 @@ views:
     recentVideoToggles:
       all: Tout
       official: Officiel
-      subber: Clips
   library:
     savedVideosTitle: Vidéos Sauvegardées
     createYtPlaylistButton: Créer une playlist YT ({0})
-    deleteFromLibraryButton: Supprimer ({0})
-    deleteConfirmation: Voulez-vous vraiment supprimer {0} vidéos ?
+    deleteFromLibraryButton: Annuler
+    deleteConfirmation: Supprimer ({0})
     deleteConfirmationOK: Supprimer
-    deleteConfirmationCancel: Annuler
+    deleteConfirmationCancel: Voulez-vous vraiment supprimer {0} vidéos ?
     selectionReset: Désélectionner
     selectionSelectAll: Tout Sélectionner
     emptyLibrary: Vous n'avez aucune vidéo sauvegardée
@@ -117,7 +89,6 @@ views:
     type:
       all: Tout
       official: Officiel
-      clip: Clip
     unsupportedQuery: >-
       Actuellement, la recherche de clips par <kbd>Sujet</kbd> et <kbd>Organisation</kbd> n'est pas supportée. Aucun <b>clips</b> n'apparaîtra.
   settings:
@@ -139,7 +110,7 @@ views:
     scrollModeLabel: Mode défilement
     scrollModeMsg: Utilisez défiler ou toucher pour tourner les pages
     resetAllSettings: Réinitialiser tous les paramètres/toutes les données
-    clipLanguageSelection: "Voir des clips dans ces langues :"
+    clipLanguageSelection: 'Voir des clips dans ces langues :'
   app:
     update_available: Une mise à jour est disponible
     update_btn: Mettre à jour
@@ -152,67 +123,12 @@ views:
   watch:
     theaterMode: Mode Cinéma
     saveToLibrary: Ajouter à la librairie
-    mentionIconLabel: MENTIONS
-    chat:
-      loading: Loading Chat...
-      hideTLBtn: Hide TLs
-      showTLBtn: Show TLs
-      TLSettingsTitle: TL Settings
-      StickBottomSettingLabel: Stick Bottom (mobile)
-      StickBottomSettingsDesc: TL box sticks to the bottom of chat (default stick to top on mobile)
-      retryBtn: Retry
-      status:
-        reconnecting: Auto Reconnecting...
-        reconnectFailed: Could not reconnect
-        notLive: >-
-          Stream is not live yet, please try again when the stream is within 15 minutes of being live
-        connectedToChat: Connected to translations chat
   favorites:
     promptForAction: >-
       Créez une liste de vtubers favoris et retrouvez leurs derniers clips et leurs dernières diffusions sur cette page
-  editor:
-    needlogin: You'll need to login to make edits to Holodex video and song metadata.
-  login:
-    apikeyMsg: >-
-      You can use API key to query Holodex API programmatically. Only one key per account. After getting a new key, the old key will expire within 0-24 hours.
-    apikeyNew: Get new API Key
-    ownedYtChannel: Owned Youtube Channel
-    futureYtcOwnerMessage: >-
-      In the future, we plan on providing more services to channel owners like editing metadata for their own videos.
-    linkAcc: Link another account
-    apikeyResetConfirm1: Are you sure you want to reset your API Key?
-    apikeyResetConfirm2: The old API key will have 0-24 hours before expiring. Really reset?
-    apikeyResetNvm: Nothing interesting happened.
   multiview:
-    confirmOverwrite: Overwrite current layout?
     confirmOverwriteYes: Confirmer
     permalink: Permalien
-    presets: Presets
-    addframe: Add Cell
-    preset:
-      desktop: Desktop
-      mobile: Mobile
 time:
   soon: Bientôt
   diff_future_date: Commence {0} ({1})
-  distance_past_date: "{0}"
-editor:
-  music:
-    add: Add
-    update: Update
-    permission: >-
-      You need to be an 'Editor' user level or higher to update or delete existing songs. Please contact us on <a class='white--text' href='/about'>discord</a> to notify editors of issues / abuse, or apply to become an editor.
-    titles:
-      addSong: "Song Metadata: Add a new Song"
-      songList: "Song List : {0}"
-      help: Guide
-    itunesLookupPlaceholder: (Optional) Lookup on iTunes
-    moveRight2s: Move right 2s
-    testEnd: Test listen starting at 3 seconds before the end.
-    setToCurrentTime: Set to current time ({0})
-    moveLeft2s: Move left 2s
-    trackNameInput: Track Name
-    originalArtistInput: Original Artist
-    testStart: Test the start
-    startInput: Start
-    endInput: "Duration in seconds: (end @ {0})"
