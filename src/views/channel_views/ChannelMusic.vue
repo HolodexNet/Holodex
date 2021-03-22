@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <v-col cols="12">
+        <v-col cols="12" style="min-height: 404px">
             <v-card-title>
                 <span class="text-h5 mr-3">{{ $t("component.channelMusic.weeklyTopPlaysHeader") }}</span>
                 <v-btn
@@ -18,6 +18,7 @@
                 :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
                 :itemWidth="220"
                 :itemCount="popularSongs.length"
+                v-if="popularSongs.length"
             >
                 <template v-for="(song, idx) in popularSongs">
                     <song-item-card

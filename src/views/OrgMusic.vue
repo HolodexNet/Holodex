@@ -1,9 +1,9 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="12 mb-0 pb-0">
+            <v-col cols="12" class="mb-0 pa-0" style="min-height: 404px">
                 <v-card-title>
-                    <span class="text-h5 mr-3">{{ $t("component.orgMusic.monthlyTopForOrg", [currentOrg]) }}</span>
+                    <span class="text-lg-h5 mr-2">{{ $t("component.orgMusic.monthlyTopForOrg", [currentOrg]) }}</span>
                     <v-btn
                         fab
                         color="primary"
@@ -19,6 +19,7 @@
                     :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
                     :itemWidth="220"
                     :itemCount="popularMonthlySongs.length"
+                    v-if="popularMonthlySongs.length"
                 >
                     <template v-for="(song, idx) in popularMonthlySongs">
                         <song-item-card
@@ -37,9 +38,9 @@
                     <v-icon disabled v-if="popularMonthlySongs.length === 0">{{ icons.mdiDatabaseOff }}</v-icon>
                 </carousel>
             </v-col>
-            <v-col cols="12" class="my-0 py-0">
+            <v-col cols="12" class="my-0 pa-0" style="min-height: 404px">
                 <v-card-title>
-                    <span class="text-h5 mr-3">{{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg]) }}</span>
+                    <span class="text-lg-h5 mr-2">{{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg]) }}</span>
                     <v-btn
                         fab
                         color="primary"
@@ -55,6 +56,7 @@
                     :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
                     :itemWidth="220"
                     :itemCount="popularWeeklySongs.length"
+                    v-if="popularWeeklySongs.length"
                 >
                     <template v-for="(song, idx) in popularWeeklySongs">
                         <song-item-card
@@ -75,7 +77,7 @@
             </v-col>
             <v-col cols="12" class="my-0 py-0">
                 <v-card-title>
-                    <span class="text-h5 mr-3">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
+                    <span class="text-lg-h5 mr-2">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
                     <v-btn
                         fab
                         color="primary"
