@@ -123,16 +123,27 @@ export default {
                 this.$router.go(0);
             },
             passive: true,
-            iconArrow: "▼",
+            iconArrow: `<svg viewBox="0 0 24 24"><path fill="${self.darkMode ? "white" : "black"}" d="${
+                self.icons.mdiArrowLeft
+            }" /></svg>`,
             distIgnore: 10,
             distReload: 120,
-            distMax: 200,
+            distMax: 180,
             distThreshold: 120,
-            instructionsPullToRefresh: "F5",
-            instructionsReleaseToRefresh: ">>>F5<<<",
-            instructionsRefreshing: ">>>",
+            instructionsPullToRefresh: " ",
+            instructionsReleaseToRefresh: " ",
+            instructionsRefreshing: `<svg viewBox="0 0 24 24"><path fill="${self.darkMode ? "white" : "black"}" d="${
+                self.icons.mdiRefresh
+            }" /></svg>`,
             shouldPullToRefresh: () => {
-                return !window.scrollY && !self.$route.path.match(".*(multiview|infinite|watch).*");
+                return (
+                    !window.scrollY &&
+                    // disable on watch page
+                    !self.isWatchPage &&
+                    // disable on mobile when navdrawer is pulled out
+                    self.$store.isMobile &&
+                    !self.$store.state.navDrawer
+                );
             },
         });
     },
@@ -217,7 +228,59 @@ body {
     padding-bottom: 250px;
     /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
 }
-.ptr--ptr .ptr--content {
-    background: rgb(143, 143, 170);
+
+/* pull to refresh skin */
+
+.ptr--ptr {
+    box-shadow: none !important;
+}
+
+.ptr--box {
+    padding: 0px !important;
+    justify-content: center;
+    display: flex;
+}
+
+/* icon size */
+.ptr--icon,
+.ptr--text > svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* rotate left arrow to be down arrow, micro bandwidth savings */
+.ptr--icon {
+    transform: rotate(90deg);
+}
+
+/* only display either icon or text */
+.ptr--ptr.ptr--refresh .ptr--content .ptr--icon {
+    display: none;
+}
+
+.ptr--text {
+    display: none;
+}
+
+/* rotate arrow when threshold reached */
+.ptr--ptr.ptr--release .ptr--content .ptr--icon {
+    transform: rotate(270deg);
+}
+
+/* show text with refresh spinner and animate */
+.ptr--ptr.ptr--refresh .ptr--content .ptr--text {
+    animation: spin 1.1s infinite linear;
+    display: block;
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 </style>

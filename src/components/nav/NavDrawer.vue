@@ -9,7 +9,7 @@
         :temporary="temporary"
     >
         <slot />
-        <v-list dense class="py-0">
+        <v-list dense class="pb-0">
             <!-- <v-list> -->
             <template v-for="page in pages">
                 <v-list-item
