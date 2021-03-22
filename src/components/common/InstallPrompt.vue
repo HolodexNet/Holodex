@@ -63,9 +63,12 @@ export default {
 
             // Optionally, send analytics event that PWA install promo was shown.
             console.log("'beforeinstallprompt' event was fired.");
+
+            console.log(this.defferedPrompt);
         });
 
         window.addEventListener("appinstalled", () => {
+            console.log("app uninstalled");
             this.deferredPrompt = null;
         });
     },
@@ -76,6 +79,8 @@ export default {
             if (this.isAppleDevice() && !this.isStandAlone() && promptWeekly) {
                 return true;
             }
+            console.log(this.defferedPrompt);
+            console.log(promptWeekly);
             if (this.defferedPrompt && promptWeekly) {
                 return true;
             }
