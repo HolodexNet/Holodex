@@ -15,6 +15,7 @@
                 x-small
                 color="primary"
                 class="float-right"
+                v-if="video.type === 'stream'"
                 :to="$route.path.includes('edit') ? `/watch/${video.id}` : `/edit/video/${video.id}`"
                 id="video-edit-btn"
             >

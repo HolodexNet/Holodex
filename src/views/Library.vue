@@ -115,15 +115,11 @@
                 <v-card-text>
                     <v-row>
                         <v-col cols="">
-                            <p>
-                                {{ $t("views.library.exportYTExplanation") }}
-                            </p>
+                            <p v-html="$t('views.library.exportYTExplanation')"></p>
                             <br />
 
                             <br />
-                            <p>
-                                {{ $t("views.library.exportYTInstructions") }}
-                            </p>
+                            <p v-html="$t('views.library.exportYTInstructions')"></p>
                             <v-btn class="mt-2 mx-2" color="green" @click="exportSelected">
                                 {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
                             </v-btn>
