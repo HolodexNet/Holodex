@@ -1,7 +1,6 @@
 ---
 component:
   apiError:
-    title: Gomenasorry!
     textBeforeTwitter: 'Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter'
     textAfterTwitter: ' ou relate o erro por meio da '
     aboutPage: página de Informações
@@ -25,9 +24,7 @@ component:
     about: Informações
     library: Biblioteca
     settings: Configurações
-    login: Login
     logout: Sair
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Configurações da Conta
     music: Música
     multiview: Multi-telas
@@ -38,8 +35,6 @@ component:
     edit: Editar
   videoDescription:
     description: Descrição
-  video:
-    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -78,7 +73,6 @@ component:
     weeklyTopForOrg: Mais tocadas da semana por {0}
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -189,13 +183,9 @@ views:
     permalink: Link Permanente
     presets: Predefinidas
     addframe: Adicionar Célula
-    preset:
-      desktop: Desktop
-      mobile: Mobile
 time:
   soon: em breve
   diff_future_date: Ao Vivo {0} ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: Adicionar
