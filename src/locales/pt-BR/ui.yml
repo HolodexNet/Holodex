@@ -38,6 +38,8 @@ component:
     edit: Editar
   videoDescription:
     description: Descrição
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -76,6 +78,7 @@ component:
     weeklyTopForOrg: Mais tocadas da semana por {0}
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -105,6 +108,12 @@ views:
     selectionSelectAll: Selecionar Todos
     emptyLibrary: Você não tem vídeos salvos!
     exportSelected: Exportar Selecionado(s) ({0})
+    exportYtPlaylist: Playlist no Youtube
+    exportCsv: Arquivo CSV
+    selectionSelect50: Selecionar 50
+    exportYTExplanation: "A playlist criada por este recurso é <b>não listada</b> e pode ser excluída pelo\\r\n                                Youtube.\\r\n                                <br />\\r\n                                Por este recurso do Youtube estar incompleto, você precisa seguir os seguintes passos\\r\n                                para salvar a playlist <b>não listada</b> em sua conta do Youtube."
+    exportYTHeading: Instruções para salvar a Playlist no Youtube
+    exportYTInstructions: "<b class=\"red--text\">Passo 1</b>: Abra a playlist no youtube, e altere a interface \\r\n                                para o modo Miniplayer. <br /><br />\\r\n                                <b class=\"red--text\">Passo 2</b>: Escolha qualquer vídeo e adicione-o à fila. <br /><br />\\r\n                                <b class=\"red--text\">Passo 3</b>: Salve a playlist em sua conta clicando em Salvar. \\r\n"
   notFound:
     title: Conteúdo não encontrado
     back: Voltar para o Início
@@ -187,9 +196,13 @@ views:
     permalink: Link Permanente
     presets: Predefinidas
     addframe: Adicionar Célula
+    preset:
+      desktop: Desktop
+      mobile: Mobile
 time:
   soon: em breve
   diff_future_date: Ao Vivo {0} ({1})
+  distance_past_date: '{0}'
 editor:
   music:
     add: Adicionar
@@ -210,3 +223,5 @@ editor:
     testStart: Testar o inicio
     startInput: Iniciar
     endInput: 'Duração em segundos: (end @ {0})'
+  exitMode: Sair do Modo de Edição
+  enterMode: Editar Vídeo
