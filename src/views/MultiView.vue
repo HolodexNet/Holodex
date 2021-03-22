@@ -133,9 +133,29 @@
                                 <v-icon>{{ icons.mdiClose }}</v-icon>
                             </v-btn>
                         </div>
-                        <v-icon style="position: absolute; bottom: 5px; right: 5px" color="primary">
-                            {{ mdiResizeBottomRight }}
-                        </v-icon>
+                        <div class="mv-handlebars">
+                            <v-icon style="bottom: 5px; right: 5px">
+                                {{ mdiResizeBottomRight }}
+                            </v-icon>
+                            <v-icon style="bottom: 5px; left: 5px; transform: rotate(90deg)">
+                                {{ mdiResizeBottomRight }}
+                            </v-icon>
+                            <v-icon style="top: 5px; left: 5px; transform: rotate(180deg)">
+                                {{ mdiResizeBottomRight }}
+                            </v-icon>
+                            <v-icon style="top: 5px; right: 5px; transform: rotate(270deg)">
+                                {{ mdiResizeBottomRight }}
+                            </v-icon>
+                            <v-icon style="top: calc(50% - 10px); left: 5px; transform: rotate(135deg)">
+                                {{ mdiResizeBottomRight }}
+                            </v-icon>
+                            <v-icon style="top: calc(50% - 10px); right: 5px; transform: rotate(315deg)">
+                                {{ mdiResizeBottomRight }}
+                            </v-icon>
+                            <v-icon style="bottom: 10px; left: calc(50% - 10px); transform: rotate(45deg)">
+                                {{ mdiResizeBottomRight }}
+                            </v-icon>
+                        </div>
                     </template>
                     <!-- Video/Chat iFrame based on type -->
                     <template v-else-if="layoutContent[item.i]">
@@ -487,5 +507,10 @@ export default {
 
 .vue-grid-layout {
     transition: none;
+}
+
+.mv-handlebars > .v-icon {
+    position: absolute;
+    color: #f06291;
 }
 </style>
