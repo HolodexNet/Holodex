@@ -5,6 +5,7 @@
         <NavDrawer :pages="pages" v-model="navDrawer" :temporary="isMobile || isWatchPage">
             <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
             <template v-if="isMobile">
+                <InstallPrompt></InstallPrompt>
                 <user-card noSetting inNavDrawer style="background-color: inherit"></user-card>
                 <v-divider />
             </template>
@@ -164,6 +165,7 @@ import UserCard from "@/components/user/UserCard";
 import { ORGS, ORGS_PREFIX } from "@/utils/consts";
 import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
+import InstallPrompt from "@/components/common/InstallPrompt";
 import NavDrawer from "./NavDrawer";
 import BottomNav from "./BottomNav";
 
@@ -174,6 +176,7 @@ export default {
         BottomNav,
         UserCard,
         Logo,
+        InstallPrompt,
         MusicBar2: () => import("./MusicBar2"),
     },
     data() {
@@ -305,6 +308,11 @@ export default {
         // if user is flipping between mobile/desktop breakpoints, keep navdrawer closed
         isMobile() {
             this.navDrawer = false;
+        },
+    },
+    methods: {
+        getPWAInstalled() {
+            return navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
         },
     },
 };

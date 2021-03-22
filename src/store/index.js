@@ -27,6 +27,8 @@ function defaultState() {
         firstVisit: true,
         showUpdateDetails: false,
         firstVisitMugen: true,
+        lastShownInstallPrompt: 0,
+
         // authorization
         userdata: {
             user: null,
@@ -124,6 +126,9 @@ export default new Vuex.Store({
         },
         setCurrentGridSize(state, size) {
             state.currentGridSize = size;
+        },
+        installPromptShown(state) {
+            state.lastShownInstallPrompt = new Date().getTime();
         },
     },
     actions: {

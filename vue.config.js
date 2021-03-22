@@ -39,6 +39,7 @@ module.exports = {
         },
         appleMobileWebAppStatusBarStyle: "black-translucent",
         scope: "/",
+        start_url: "/?utm_source=homescreen",
         workboxOptions: {
             runtimeCaching: [
                 {
