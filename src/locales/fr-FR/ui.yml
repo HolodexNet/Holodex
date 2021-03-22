@@ -2,17 +2,17 @@
 component:
   apiError:
     title: Oups!
-    textBeforeTwitter: 'Il y a eu une erreur lors de la récupération du contenu, veuillez vérifier sur twitter'
-    textAfterTwitter: ' ou signalez une erreur via la page'
+    textBeforeTwitter: "Il y a eu une erreur lors de la récupération du contenu, veuillez vérifier sur twitter"
+    textAfterTwitter: " ou signalez une erreur via la page"
     aboutPage: À propos
   channelList:
     signInToFavorite: Veuillez-vous connecter pour ajouter aux favoris
     unfavoriteAllInGroup: Supprimer tout le groupe des favoris
     favoriteAllInGroup: Ajouter tout le groupe aux favoris
   channelInfo:
-    videoCount: '{0} Vidéos'
-    clipCount: '{n} Clips'
-    subscriberCount: '{n} Abonnés'
+    videoCount: "{0} Vidéos"
+    clipCount: "{n} Clips"
+    subscriberCount: "{n} Abonnés"
     subscriberNA: Nombre d'abonnés indisponible
     totalViews: Vues Totales
   channelSocials:
@@ -32,14 +32,14 @@ component:
     music: Music
     multiview: Multivue
   videoCard:
-    clips: '{n} Clips'
-    watching: '{0} Visionnages'
+    clips: "{n} Clips"
+    watching: "{0} Visionnages"
     liveNow: EN DIRECT
     edit: Modifier
   videoDescription:
     description: Description
   video:
-    comment: { }
+    comment: {}
   description:
     showLess: Afficher Moins
     showMore: Afficher Plus
@@ -78,7 +78,7 @@ component:
     weeklyTopForOrg: Weekly Top Plays for {0}
 views:
   channels:
-    channelType: { }
+    channelType: {}
     sortOptions:
       subscribers: Abonnés
       group: Groupe
@@ -100,10 +100,10 @@ views:
   library:
     savedVideosTitle: Vidéos Sauvegardées
     createYtPlaylistButton: Créer une playlist YT ({0})
-    deleteFromLibraryButton: Annuler
-    deleteConfirmation: Supprimer ({0})
+    deleteFromLibraryButton: Supprimer ({0})
+    deleteConfirmation: Voulez-vous vraiment supprimer {0} vidéos ?
     deleteConfirmationOK: Supprimer
-    deleteConfirmationCancel: Voulez-vous vraiment supprimer {0} vidéos ?
+    deleteConfirmationCancel: Annuler
     selectionReset: Désélectionner
     selectionSelectAll: Tout Sélectionner
     emptyLibrary: Vous n'avez aucune vidéo sauvegardée
@@ -139,7 +139,7 @@ views:
     scrollModeLabel: Mode défilement
     scrollModeMsg: Utilisez défiler ou toucher pour tourner les pages
     resetAllSettings: Réinitialiser tous les paramètres/toutes les données
-    clipLanguageSelection: 'Voir des clips dans ces langues :'
+    clipLanguageSelection: "Voir des clips dans ces langues :"
   app:
     update_available: Une mise à jour est disponible
     update_btn: Mettre à jour
@@ -195,7 +195,7 @@ views:
 time:
   soon: Bientôt
   diff_future_date: Commence {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Add
@@ -203,8 +203,8 @@ editor:
     permission: >-
       You need to be an 'Editor' user level or higher to update or delete existing songs. Please contact us on <a class='white--text' href='/about'>discord</a> to notify editors of issues / abuse, or apply to become an editor.
     titles:
-      addSong: 'Song Metadata: Add a new Song'
-      songList: 'Song List : {0}'
+      addSong: "Song Metadata: Add a new Song"
+      songList: "Song List : {0}"
       help: Guide
     itunesLookupPlaceholder: (Optional) Lookup on iTunes
     moveRight2s: Move right 2s
@@ -215,4 +215,4 @@ editor:
     originalArtistInput: Original Artist
     testStart: Test the start
     startInput: Start
-    endInput: 'Duration in seconds: (end @ {0})'
+    endInput: "Duration in seconds: (end @ {0})"

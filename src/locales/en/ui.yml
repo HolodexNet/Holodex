@@ -106,6 +106,13 @@ views:
     selectionReset: Reset
     selectionSelectAll: Select All
     emptyLibrary: You have no saved videos!
+    exportSelected: Export Selected ({0})
+    exportYtPlaylist: Youtube Playlist
+    exportCsv: CSV File
+    selectionSelect50: Select 50
+    exportYTExplanation: "The youtube playlist created by this feature is <b>unlisted</b> and may be deleted by\r\n                                Youtube.\r\n                                <br />\r\n                                Because Youtube's feature incompleteness, you need to do the following to save the\r\n                                <b>unlisted</b> Youtube playlist to your account."
+    exportYTHeading: Saving Youtube Playlist Instructions
+    exportYTInstructions: "<b class=\"red--text\">Step 1</b>: Play the youtube playlist, and change the player UI\r\n                                into mini-player. <br /><br />\r\n                                <b class=\"red--text\">Step 2</b>: Pick any video and add it to the Queue. <br /><br />\r\n                                <b class=\"red--text\">Step 3</b>: Play the youtube playlist, and change the UI into\r\n                                mini-player.\r\n"
   notFound:
     title: Content not found
     back: Return Home
