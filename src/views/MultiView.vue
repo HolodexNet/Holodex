@@ -9,19 +9,19 @@
                     :class="{ 'no-btn-text': $store.state.isMobile }"
                 >
                     <v-btn @click="editMode = !editMode" :color="editMode ? 'light-green' : 'blue'">
-                        <v-icon left>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
+                        <v-icon>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
                         <span class="collapsible-text">{{ editMode ? "Done" : "Edit" }}</span>
                     </v-btn>
                     <v-btn @click="addItem" v-if="editMode" color="green">
-                        <v-icon left>{{ mdiViewGridPlus }}</v-icon>
+                        <v-icon>{{ mdiViewGridPlus }}</v-icon>
                         <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
                     </v-btn>
                     <v-btn @click="clearAllItems" v-if="editMode" color="red">
-                        <v-icon left>{{ icons.mdiRefresh }}</v-icon>
+                        <v-icon>{{ icons.mdiRefresh }}</v-icon>
                         <span class="collapsible-text">{{ $t("component.music.clearPlaylist") }}</span>
                     </v-btn>
                     <v-btn v-if="!editMode" color="green darken-1" @click="showPresetSelector = true">
-                        <v-icon left>{{ icons.mdiGridLarge }}</v-icon>
+                        <v-icon>{{ icons.mdiGridLarge }}</v-icon>
                         <span class="collapsible-text">{{ $t("views.multiview.presets") }}</span>
                     </v-btn>
                     <v-menu
@@ -36,7 +36,7 @@
                     >
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn v-bind="attrs" v-on="on" v-show="!editMode">
-                                <v-icon left>{{ mdiLinkVariant }}</v-icon>
+                                <v-icon>{{ mdiLinkVariant }}</v-icon>
                                 <span class="collapsible-text">{{ $t("views.multiview.permalink") }}</span>
                             </v-btn>
                         </template>
