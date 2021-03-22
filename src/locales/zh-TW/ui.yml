@@ -102,6 +102,8 @@ views:
     selectionReset: 重設
     selectionSelectAll: 選取全部
     emptyLibrary: 您沒有任何儲存的影片！
+    exportSelected: 導出所選({0})項目
+    selectionSelect50: 選取50
   notFound:
     title: 查無此內容
     back: 返回首頁
