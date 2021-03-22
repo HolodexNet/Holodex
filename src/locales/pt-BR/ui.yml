@@ -1,6 +1,7 @@
 ---
 component:
   apiError:
+    title: Gomenasorry!
     textBeforeTwitter: 'Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter'
     textAfterTwitter: ' ou relate o erro por meio da '
     aboutPage: página de Informações
@@ -24,7 +25,9 @@ component:
     about: Informações
     library: Biblioteca
     settings: Configurações
+    login: Login
     logout: Sair
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Configurações da Conta
     music: Música
     multiview: Multi-telas
@@ -101,6 +104,7 @@ views:
     selectionReset: Redefinir
     selectionSelectAll: Selecionar Todos
     emptyLibrary: Você não tem vídeos salvos!
+    exportSelected: Exportar Selecionado(s) ({0})
   notFound:
     title: Conteúdo não encontrado
     back: Voltar para o Início
