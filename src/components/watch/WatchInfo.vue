@@ -1,10 +1,26 @@
 <template>
     <v-card class="watch-card rounded-0">
-        <v-btn icon class="float-right mt-2 mr-2" :to="`/edit/video/${video.id}`" id="video-edit-btn">
-            <v-icon>{{ icons.mdiPencil }}</v-icon>
-        </v-btn>
-        <v-card-title class="pt-2" style="font-size: 1.125rem; font-weight: 400">{{ video.title }}</v-card-title>
+        <v-card-title class="pt-2" style="font-size: 1.125rem; font-weight: 400">
+            <span v-if="!$route.path.includes('edit')">
+                {{ video.title }}
+            </span>
+
+            <router-link v-else tag="span" style="cursor: pointer" :to="`/watch/${video.id}`">
+                {{ video.title }}
+            </router-link>
+        </v-card-title>
         <v-card-subtitle>
+            <v-btn
+                text
+                x-small
+                color="primary"
+                class="float-right"
+                :to="$route.path.includes('edit') ? `/watch/${video.id}` : `/edit/video/${video.id}`"
+                id="video-edit-btn"
+            >
+                {{ $route.path.includes("edit") ? $t("editor.exitMode") : $t("editor.enterMode") }}
+            </v-btn>
+
             {{ formattedTime }}
             <template v-if="video.status === 'live'"> • {{ liveViewers }} viewers</template>
             <span class="mx-1" v-show="video.topic_id">
@@ -171,8 +187,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: none;
 }
-#video-edit-btn.v-btn--active {
-    background-color: red;
-    box-shadow: 0px 2px 10px rgba(240, 0, 0, 0.651);
+#video-edit-btn {
+    font-size: 12px;
 }
 </style>

@@ -225,10 +225,6 @@ export default {
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
                 if (!this.hasWatched && this.videoId) this.$store.commit("library/addWatchedVideo", this.video);
-                // double check video type before querying for comments
-                // if (this.video.type === "stream") {
-                //     this.$store.dispatch("watch/fetchComments");
-                // }
             });
         },
         initMugen() {

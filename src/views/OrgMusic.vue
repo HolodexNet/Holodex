@@ -143,7 +143,7 @@
                         >
                             <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
                         </v-btn>
-                        <v-btn class="popup" small icon target="_blank" :href="`/edit/video/${item.video_id}`">
+                        <v-btn class="popup" small icon target="_blank" :href="`/edit/video/${item.video_id}/music`">
                             <v-icon small>{{ icons.mdiPencil }}</v-icon>
                         </v-btn>
                     </template>

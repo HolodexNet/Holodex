@@ -128,7 +128,7 @@
                         </span>
                     </v-list-item-subtitle>
                 </v-list-item-content>
-                <v-list-item-action v-if="!!this.$slots.action">
+                <v-list-item-action v-if="!!this.$slots.action" :style="horizontal && 'margin-top:30px'">
                     <slot name="action"></slot>
                 </v-list-item-action>
             </v-list-item>

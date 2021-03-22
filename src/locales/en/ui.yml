@@ -234,3 +234,5 @@ editor:
     testStart: Test the start
     startInput: Start
     endInput: 'Duration in seconds: (end @ {0})'
+  exitMode: Exit Edit Mode
+  enterMode: Edit Video

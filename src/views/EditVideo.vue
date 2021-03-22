@@ -18,12 +18,12 @@
                     </template>
                 </WatchFrame>
                 <WatchComments
-                    :comments="comments"
+                    :comments="video.comments"
                     :video="video"
                     :limit="$store.state.isMobile ? 5 : 0"
                     @timeJump="seekTo"
                     key="comments"
-                    v-if="comments && comments.length"
+                    v-if="video && video.comments && video.comments.length"
                 />
             </v-col>
             <v-col class="related-videos pt-0" :md="9" :lg="8">
@@ -115,7 +115,6 @@ export default {
             hasError: false,
             id: 0,
             video: null,
-            comments: null,
             startTime: 0,
             icons,
             currentTab: 0,
@@ -170,12 +169,9 @@ export default {
             if (!this.id) throw new Error("Invalid id");
             this.isLoading = true;
             return api
-                .video(this.id)
+                .video(this.id, null, 1)
                 .then(({ data }) => {
                     this.video = data;
-                    api.comments(this.id).then((res) => {
-                        this.comments = res.data;
-                    });
                     this.isLoading = false;
                 })
                 .catch((e) => {

@@ -12,7 +12,7 @@
         v-model="isHover"
     >
         <template v-slot:activator="{ on: tooltip }">
-            <v-avatar left :size="size" v-on="tooltip">
+            <v-avatar left :size="size" v-on="tooltip" class="mr-1">
                 <v-img
                     :src="photo"
                     crossorigin="anonymous"
