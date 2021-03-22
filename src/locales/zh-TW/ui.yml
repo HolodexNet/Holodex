@@ -27,6 +27,7 @@ component:
     settings: 網站設定
     login: 登入
     logout: 登出
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: 帳號設定
     music: 音樂播放
     multiview: 多窗工具
@@ -103,7 +104,10 @@ views:
     selectionSelectAll: 選取全部
     emptyLibrary: 您沒有任何儲存的影片！
     exportSelected: 導出所選({0})項目
+    exportYtPlaylist: YouTube播放清單
+    exportCsv: CSV檔案
     selectionSelect50: 選取50
+    exportYTHeading: YouTube播放清單保存教學
   notFound:
     title: 查無此內容
     back: 返回首頁
@@ -192,6 +196,7 @@ views:
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
+  distance_past_date: '{0}'
 editor:
   music:
     add: 加入歌曲
