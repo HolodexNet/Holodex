@@ -130,6 +130,7 @@ export default {
             distReload: 120,
             distMax: 180,
             distThreshold: 120,
+            refreshTimeout: 200,
             instructionsPullToRefresh: " ",
             instructionsReleaseToRefresh: " ",
             instructionsRefreshing: `<svg viewBox="0 0 24 24"><path fill="${self.darkMode ? "white" : "black"}" d="${
@@ -141,7 +142,7 @@ export default {
                     // disable on watch page
                     !self.isWatchPage &&
                     // disable on mobile when navdrawer is pulled out
-                    self.$store.isMobile &&
+                    self.$store.state.isMobile &&
                     !self.$store.state.navDrawer
                 );
             },
