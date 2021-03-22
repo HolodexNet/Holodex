@@ -341,7 +341,8 @@ export default {
     -webkit-box-orient: vertical;
     display: -webkit-box;
 }
-.v-btn::before {
+
+.player-controls .v-btn::before {
     background-color: transparent;
 }
 #songChannel {

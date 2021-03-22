@@ -26,7 +26,7 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         itemCount: debounce(function () {
-            console.log("huh it changed");
+            // console.log("huh it changed");
             this.onResize();
         }, 500),
     },
