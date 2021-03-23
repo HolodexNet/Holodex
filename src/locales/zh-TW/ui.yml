@@ -38,6 +38,8 @@ component:
     edit: 編輯
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -74,8 +76,18 @@ component:
   orgMusic:
     monthlyTopForOrg: '{0} 本月熱門歌曲'
     weeklyTopForOrg: '{0} 本週熱門歌曲'
+  installPrompt:
+    title: 安裝 Holodex
+    callToAction: 將 Holodex 安裝至手機以獲得最佳使用體驗！
+    notNowBtn: 現在不要
+    installBtn: 安裝
+    iOS:
+      popup: 於 iOS 裝置上安裝 Holodex
+      afterExportIcon: 然後選擇「加入主畫面」
+      beforeExportIcon: 點擊
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
