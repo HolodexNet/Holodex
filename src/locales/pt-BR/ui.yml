@@ -38,6 +38,8 @@ component:
     edit: Editar
   videoDescription:
     description: Descrição
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -76,6 +78,7 @@ component:
     weeklyTopForOrg: Mais tocadas da semana por {0}
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -108,7 +111,9 @@ views:
     exportYtPlaylist: Playlist no Youtube
     exportCsv: Arquivo CSV
     selectionSelect50: Selecionar 50
+    exportYTExplanation: "A Playlist criada por este recurso é <b>não listada</b> e pode ser excluída pelo Youtube. <br /> Como os recursos do Youtube são incompletos, siga os seguintes passo para salvar a playlist <b>não listada</b> em sua conta do Youtube."
     exportYTHeading: Instruções para salvar a Playlist no Youtube
+    exportYTInstructions: '<b class="red--text">Passo 1</b>: Abra a playlist no youtube, e altere a interface para o modo Miniplayer. <br /><br /> <b class="red--text">Passo 2</b>: Escolha qualquer vídeo e adicione-o à fila. <br /><br /> <b class="red--text">Passo 3</b>: A Playlist agora pode ser salva em sua conta clicando em Salvar.'
   notFound:
     title: Conteúdo não encontrado
     back: Voltar para o Início
