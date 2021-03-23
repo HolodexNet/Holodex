@@ -2,17 +2,17 @@
 component:
   apiError:
     title: Извините!
-    textBeforeTwitter: 'Произошла ошибка при получении данных, пожалуйста, проверьте Twitter '
-    textAfterTwitter: ' или сообщите об ошибке через'
+    textBeforeTwitter: "Произошла ошибка при получении данных, пожалуйста, проверьте Twitter "
+    textAfterTwitter: " или сообщите об ошибке через"
     aboutPage: О сайте
   channelList:
     signInToFavorite: Войдите, чтобы управлять избранным
     unfavoriteAllInGroup: Убрать всю группу из избранного
     favoriteAllInGroup: Добавить всю группу в избранное
   channelInfo:
-    videoCount: '{0} видео'
-    clipCount: '0 клипов | {n} клип | {n} клипа | {n} клипов'
-    subscriberCount: '0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков'
+    videoCount: "{0} видео"
+    clipCount: "0 клипов | {n} клип | {n} клипа | {n} клипов"
+    subscriberCount: "0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков"
     subscriberNA: Количество подписчиков недоступно
     totalViews: 0 просмотров | {n} просмотр | {n} просмотра | {n} просмотров
   channelSocials:
@@ -32,8 +32,8 @@ component:
     music: Музыка
     multiview: Мультипросмотр
   videoCard:
-    clips: '0 клипов | {n} клип | {n} клипа | {n} клипов'
-    watching: '{0} смотрят'
+    clips: "0 клипов | {n} клип | {n} клипа | {n} клипов"
+    watching: "{0} смотрят"
     liveNow: LIVE
     edit: Изменить
   videoDescription:
@@ -136,7 +136,7 @@ views:
     scrollModeLabel: Режим прокрутки
     scrollModeMsg: Используйте прокрутку для переворачивания страниц
     resetAllSettings: Сбросить все настройки/данные
-    clipLanguageSelection: 'Посмотрите клипы на этих языках:'
+    clipLanguageSelection: "Посмотрите клипы на этих языках:"
   app:
     update_available: Доступно обновление
     update_btn: Обновить
@@ -163,7 +163,6 @@ views:
         reconnectFailed: Не удалось подключиться
         notLive: >-
           Стрим еще не начался, пожалуйста, попробуйте еще раз, когда с начала стрима пройдет 15 минут
-        connectedToChat: Подключен к чату переводов
   favorites:
     promptForAction: >-
       Создайте список любимых витуберов и вы увидите их новые стримы и клипы с ними на этой странице.
@@ -186,6 +185,7 @@ views:
 time:
   soon: Скоро
   diff_future_date: Начнется {0} ({1})
+  distance_past_date: "{0}"
 editor:
   music:
     add: Добавить
@@ -193,8 +193,8 @@ editor:
     permission: >-
       Вы должны быть пользователем уровня 'Редактор' или выше для обновления или удаления имеющихся песен. Пожалуйста, свяжитесь с нами в <a class='white--text' href='/about'>discord</a> чтобы оповестить редакторов о проблемах / злоупотреблениях, или для подачи заявки на статус редактора.
     titles:
-      addSong: 'Метаданные песни: Добавить новую песню'
-      songList: 'Список песен : {0}'
+      addSong: "Метаданные песни: Добавить новую песню"
+      songList: "Список песен : {0}"
       help: Гайд
     itunesLookupPlaceholder: (Опционально) Найти на iTunes
     moveRight2s: Сдвинуть вправо на 2 сек.
@@ -205,4 +205,4 @@ editor:
     originalArtistInput: Оригинальный артист
     testStart: Протестировать начало
     startInput: Начало
-    endInput: 'Длительность в секундах: (конец @ {0})'
+    endInput: "Длительность в секундах: (конец @ {0})"

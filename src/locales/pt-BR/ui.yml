@@ -2,17 +2,17 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: 'Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter'
-    textAfterTwitter: ' ou relate o erro por meio da '
+    textBeforeTwitter: "Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter"
+    textAfterTwitter: " ou relate o erro por meio da "
     aboutPage: página de Informações
   channelList:
     signInToFavorite: Conecte-se para adicionar canais ao Favoritos
     unfavoriteAllInGroup: Remover todos desse grupo dos favoritos
     favoriteAllInGroup: Adicionar todos desse grupo aos favoritos
   channelInfo:
-    videoCount: '{0} Vídeos'
-    clipCount: '{n} Clipes'
-    subscriberCount: '{n} Inscritos'
+    videoCount: "{0} Vídeos"
+    clipCount: "{n} Clipes"
+    subscriberCount: "{n} Inscritos"
     subscriberNA: Número de inscritos indisponível
     totalViews: Total de Visualizações
   channelSocials:
@@ -32,14 +32,12 @@ component:
     music: Música
     multiview: Multi-telas
   videoCard:
-    clips: '{n} Clipes'
-    watching: '{0} assistindo agora'
+    clips: "{n} Clipes"
+    watching: "{0} assistindo agora"
     liveNow: Ao Vivo
     edit: Editar
   videoDescription:
     description: Descrição
-  video:
-    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -78,7 +76,6 @@ component:
     weeklyTopForOrg: Mais tocadas da semana por {0}
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -111,9 +108,9 @@ views:
     exportYtPlaylist: Playlist no Youtube
     exportCsv: Arquivo CSV
     selectionSelect50: Selecionar 50
-    exportYTExplanation: "A playlist criada por este recurso é <b>não listada</b> e pode ser excluída pelo\\r\n                                Youtube.\\r\n                                <br />\\r\n                                Por este recurso do Youtube estar incompleto, você precisa seguir os seguintes passos\\r\n                                para salvar a playlist <b>não listada</b> em sua conta do Youtube."
+    exportYTExplanation: "A Playlist criada por este recurso é <b>não listada</b> e pode ser excluída pelo Youtube. <br /> Como os recursos do Youtube são incompletos, siga os seguintes passo para salvar a playlist <b>não listada</b> em sua conta do Youtube."
     exportYTHeading: Instruções para salvar a Playlist no Youtube
-    exportYTInstructions: "<b class=\"red--text\">Passo 1</b>: Abra a playlist no youtube, e altere a interface \\r\n                                para o modo Miniplayer. <br /><br />\\r\n                                <b class=\"red--text\">Passo 2</b>: Escolha qualquer vídeo e adicione-o à fila. <br /><br />\\r\n                                <b class=\"red--text\">Passo 3</b>: Salve a playlist em sua conta clicando em Salvar. \\r\n"
+    exportYTInstructions: '<b class="red--text">Passo 1</b>: Abra a playlist no youtube, e altere a interface para o modo Miniplayer. <br /><br /> <b class="red--text">Passo 2</b>: Escolha qualquer vídeo e adicione-o à fila. <br /><br /> <b class="red--text">Passo 3</b>: A Playlist agora pode ser salva em sua conta clicando em Salvar.'
   notFound:
     title: Conteúdo não encontrado
     back: Voltar para o Início
@@ -146,7 +143,7 @@ views:
     scrollModeLabel: Modo de Rolagem
     scrollModeMsg: Use rolar/tocar para navegar nas páginas
     resetAllSettings: Redefinir todas as configurações/dados
-    clipLanguageSelection: 'Ver clipes nestes idiomas:'
+    clipLanguageSelection: "Ver clipes nestes idiomas:"
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
@@ -173,7 +170,6 @@ views:
         reconnectFailed: Não foi possível reconectar
         notLive: >-
           A transmissão ainda não começou, tente novamente dentro de 15 minutos após o início da transmissão
-        connectedToChat: Conectado ao Chat de Tradução
   favorites:
     promptForAction: >-
       Crie uma lista de seus vtubers favoritos e veja seus clipes e lives  mais recentes nesta página.
@@ -202,7 +198,7 @@ views:
 time:
   soon: em breve
   diff_future_date: Ao Vivo {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Adicionar
@@ -210,8 +206,8 @@ editor:
     permission: >-
       Você precisa ser um usuário com título de "Editor" ou superior para atualizar ou excluir  músicas existente. Use nosso <a class='white--text' href='/about'>discord</a> para notificar os editores sobre problemas ou abusos, ou candidate-se para se tornar um editor.
     titles:
-      addSong: 'Metadados de Música: Adicionar uma nova Música'
-      songList: 'Lista de Músicas: {0}'
+      addSong: "Metadados de Música: Adicionar uma nova Música"
+      songList: "Lista de Músicas: {0}"
       help: Guia
     itunesLookupPlaceholder: (Opcional) Procurar no iTunes
     moveRight2s: Avançar 2 segundos
@@ -222,6 +218,6 @@ editor:
     originalArtistInput: Artista Original
     testStart: Testar o inicio
     startInput: Iniciar
-    endInput: 'Duração em segundos: (end @ {0})'
+    endInput: "Duração em segundos: (end @ {0})"
   exitMode: Sair do Modo de Edição
   enterMode: Editar Vídeo

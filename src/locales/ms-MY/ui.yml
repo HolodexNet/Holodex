@@ -2,17 +2,17 @@
 component:
   apiError:
     title: Sumimaaf!
-    textBeforeTwitter: 'Terdapat ralat ketika mendapatkan kembali kandungan. Sila semak di Twitter'
-    textAfterTwitter: ' atau laporkan ralat melalui'
+    textBeforeTwitter: "Terdapat ralat ketika mendapatkan kembali kandungan. Sila semak di Twitter"
+    textAfterTwitter: " atau laporkan ralat melalui"
     aboutPage: laman Perihal
   channelList:
     signInToFavorite: Pendaftaran diperlukan
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
   channelInfo:
-    videoCount: '{0} Buah Video'
-    clipCount: '{n} Buah Sedutan'
-    subscriberCount: '{n} Langganan'
+    videoCount: "{0} Buah Video"
+    clipCount: "{n} Buah Sedutan"
+    subscriberCount: "{n} Langganan"
     subscriberNA: Bilangan langganan tidak tersedia
     totalViews: Jumlah Tontonan
   channelSocials:
@@ -28,8 +28,8 @@ component:
     login: Daftar Masuk
     logout: Daftar Keluar
   videoCard:
-    clips: '{n} Sedutan'
-    watching: '{0} Tontonan Sekarang'
+    clips: "{n} Sedutan"
+    watching: "{0} Tontonan Sekarang"
     liveNow: Langsung Sekarang
   videoDescription:
     description: Perihalan
@@ -118,7 +118,7 @@ views:
     scrollModeLabel: Mod Tatal
     scrollModeMsg: Selak laman dengan menatal atau menekan butang
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
-    clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
+    clipLanguageSelection: "Paparkan sedutan yang berbahasa:"
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
