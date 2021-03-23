@@ -30,6 +30,7 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Pengaturan Akun
     music: Musik
+    multiview: MultiView
   videoCard:
     clips: "{n} Klip"
     watching: "{0} sedang menonton"
@@ -37,6 +38,8 @@ component:
     edit: Ubah
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -75,6 +78,7 @@ component:
     weeklyTopForOrg: Lagu Populer Mingguan dari {0}
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -103,6 +107,13 @@ views:
     selectionReset: Reset
     selectionSelectAll: Pilih Semua
     emptyLibrary: Kamu tidak menyimpan video apapun!
+    exportSelected: Ekspor yang dipilih ({0})
+    exportYtPlaylist: Playlist YouTube
+    exportCsv: Berkas CSV
+    selectionSelect50: Pilih 50
+    exportYTExplanation: "Playlist YouTube yang dihasilkan dari fitur ini yakni <b>Tidak Publik</b> dan mungkin akan terhapus oleh YouTube. <br /> Karena fitur YouTube tidak lengkap, kamu perlu melakukan hal berikut ini untuk menyimpan Playlist YouTube<b>Tidak Publik</b> ke akun kamu."
+    exportYTHeading: Panduan Menyimpan Playlist YouTube
+    exportYTInstructions: '<b class="red--text">Langkah 1</b>: Mainkan playlist youtube, dan ubah pemutar UI menjadi mini-player. <br /><br /> <b class="red--text">Langkah 2</b>: Cari video yang ingin kamu simpan lalu Tambahkan ke antrean. <br /><br /> <b class="red--text">Langkah 3</b>: Playlist kini dapat disimpan. Tekan simpan untuk menyimpannya.'
   notFound:
     title: Konten tidak ditemukan
     back: Kembali ke Beranda
@@ -162,6 +173,8 @@ views:
         reconnectFailed: Tidak dapat menghubungkan
         notLive: >-
           Saat ini Streaming belum dimulai, coba lagi nanti setelah stream 15 menit dimulai
+        connectedToChat: Terhubung
+        disconnectedToChat: Terputus
   favorites:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada halaman ini.
@@ -185,10 +198,12 @@ views:
     presets: Preset
     addframe: Tambah Skema
     preset:
+      desktop: Desktop
       mobile: Ponsel
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
+  distance_past_date: "{0}"
 editor:
   music:
     add: Tambah
@@ -209,3 +224,5 @@ editor:
     testStart: Uji awal mulai
     startInput: Mulai
     endInput: "Durasi dalam detik: (berakhir pd {0})"
+  exitMode: Keluar dari Mode Edit
+  enterMode: Edit Video
