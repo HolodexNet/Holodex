@@ -38,8 +38,6 @@ component:
     edit: Editar
   videoDescription:
     description: Descrição
-  video:
-    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -78,7 +76,6 @@ component:
     weeklyTopForOrg: Mais tocadas da semana por {0}
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -173,7 +170,6 @@ views:
         reconnectFailed: Não foi possível reconectar
         notLive: >-
           A transmissão ainda não começou, tente novamente dentro de 15 minutos após o início da transmissão
-        connectedToChat: Conectado ao Chat de Tradução
   favorites:
     promptForAction: >-
       Crie uma lista de seus vtubers favoritos e veja seus clipes e lives  mais recentes nesta página.
