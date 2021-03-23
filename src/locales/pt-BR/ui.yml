@@ -38,6 +38,8 @@ component:
     edit: Editar
   videoDescription:
     description: Descrição
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -74,8 +76,18 @@ component:
   orgMusic:
     monthlyTopForOrg: Mais tocadas do mes por {0}
     weeklyTopForOrg: Mais tocadas da semana por {0}
+  installPrompt:
+    title: Instalar Holodex
+    callToAction: Assistir vídeos no Holodex funciona melhor quando adicionado à tela inicial
+    notNowBtn: Agora Não
+    installBtn: Instalar
+    iOS:
+      popup: Instalar Holodex no iOS
+      afterExportIcon: e "Adicionar à Tela de Início"
+      beforeExportIcon: Toque
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
