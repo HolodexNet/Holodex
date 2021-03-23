@@ -6,7 +6,16 @@
             <v-btn v-if="!isLoading" @click="tlChatReconnect()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
         </v-overlay>
         <v-card-subtitle class="py-2 d-flex justify-space-between">
-            TLs [{{ liveTlLang }}]
+            <div>
+                TLs [{{ liveTlLang }}]
+                <span :class="connected ? 'green--text' : 'red--text'">
+                    {{
+                        connected
+                            ? $t("views.watch.chat.status.connectedToChat")
+                            : $t("views.watch.chat.status.disconnectedToChat")
+                    }}
+                </span>
+            </div>
             <v-dialog v-model="dialog">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn icon x-small v-bind="attrs" v-on="on">
@@ -39,24 +48,21 @@
         <v-card-text class="text-body-2 tl-body d-flex flex-column-reverse pa-1 pa-lg-3">
             <template v-for="(item, index) in tlHistory">
                 <div :key="index">
-                    <span class="text-caption mr-1" v-if="item.timestamp">{{ utcToTimestamp(item.timestamp) }}</span>
-                    <span class="text--primary">{{ item.message }}</span>
-                </div>
-                <div
-                    :key="index + '-name'"
-                    v-if="index === 0 || index === tlHistory.length - 1 || item.name !== tlHistory[index - 1].name"
-                    class="text-caption"
-                >
-                    <v-divider class="my-1" />
-                    {{ item.name }}:
+                    <div
+                        v-if="index === 0 || index === tlHistory.length - 1 || item.name !== tlHistory[index - 1].name"
+                        class="text-caption"
+                    >
+                        <v-divider class="my-1" />
+                        {{ item.name }}:
+                    </div>
+                    <div>
+                        <span class="text-caption mr-1" v-if="item.timestamp">
+                            {{ utcToTimestamp(item.timestamp) }}
+                        </span>
+                        <span class="text--primary">{{ item.message }}</span>
+                    </div>
                 </div>
             </template>
-            <div v-if="socket && !socket.disconnected">
-                <div class="text-caption">Holodex:</div>
-                <div>
-                    <span class="text--primary">{{ $t("views.watch.chat.status.connectedToChat") }}</span>
-                </div>
-            </div>
         </v-card-text>
     </v-card>
 </template>
@@ -127,6 +133,9 @@ export default {
                 this.$store.commit("settings/setLiveTlLang", val);
             },
         },
+        connected() {
+            return this.socket && !this.socket.disconnected;
+        },
     },
     methods: {
         tlChatConnect() {
@@ -134,6 +143,8 @@ export default {
                 this.manager = new Manager(API_BASE_URL, {
                     query: { id: this.video.id },
                     reconnectionAttempts: 10,
+                    transports: ["websocket"],
+                    upgrade: false,
                     path: /* process.env.NODE_ENV === "development" ? "/socket.io/" : */ "/api/socket.io/",
                     secure: true,
                 });
@@ -206,7 +217,7 @@ export default {
             });
         },
         tlChatDisconnect() {
-            if (this.socket) this.socket.close();
+            if (this.socket) this.socket.off();
         },
         tlChatReconnect() {
             this.isLoading = true;
@@ -226,6 +237,7 @@ export default {
 
 .tl-body {
     overflow-y: auto;
+    overscroll-behavior: contain;
     height: 20vh;
 }
 

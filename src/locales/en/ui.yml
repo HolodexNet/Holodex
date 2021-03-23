@@ -176,7 +176,8 @@ views:
         notLive: >-
           Stream is not live yet, please try again when the stream is within 15
           minutes of being live
-        connectedToChat: Connected to translations chat
+        connectedToChat: Connected
+        disconnectedToChat: Disconnected
   favorites:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on

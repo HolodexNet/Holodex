@@ -15,7 +15,7 @@
             v-show="showTL"
             :class="{
                 'chat-overlay': fixedBottom || fixedRight,
-                'chat-overlay-stickbottom': $store.state.settings.liveTLStickBottom,
+                'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
             }"
             @videoUpdate="handleVideoUpdate"
             @historyLength="handleHistoryLength"
@@ -171,6 +171,10 @@ export default {
     height: 100%;
     /* height: calc(100vh - 36px - 100vw * 0.5625); */
     /* height: 100vh; */
+}
+
+.watch-live-chat.fixed-bottom > .tl-overlay .tl-body {
+    height: 20vh;
 }
 
 /* Fixed Right */
