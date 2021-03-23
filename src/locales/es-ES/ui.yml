@@ -153,7 +153,6 @@ views:
         reconnectFailed: No se pudo reconectar
         notLive: >-
           El stream no está en vivo todavía, por favor intenta de nuevo cuando falten 15 minutos para comenzar
-        connectedToChat: Conectado al chat de traducciones
   favorites:
     promptForAction: >-
       Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en esta pagina
