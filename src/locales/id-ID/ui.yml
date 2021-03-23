@@ -2,17 +2,17 @@
 component:
   apiError:
     title: Maafkeun
-    textBeforeTwitter: "Ada kesalahan saat memuat konten, silahkan cek twitter "
-    textAfterTwitter: " atau laporkan hal ini melalui"
+    textBeforeTwitter: 'Ada kesalahan saat memuat konten, silahkan cek twitter '
+    textAfterTwitter: ' atau laporkan hal ini melalui'
     aboutPage: halaman tentang
   channelList:
     signInToFavorite: Masuk untuk menambahkan favorit
     unfavoriteAllInGroup: Unfavoritkan semua dalam grup
     favoriteAllInGroup: Favoritkan semua dalam grup
   channelInfo:
-    videoCount: "{0} Video"
-    clipCount: "{n} Klip"
-    subscriberCount: "{n} Subscriber"
+    videoCount: '{0} Video'
+    clipCount: '{n} Klip'
+    subscriberCount: '{n} Subscriber'
     subscriberNA: Jumlah Subscriber tidak tersedia
     totalViews: Jumlah Ditonton
   channelSocials:
@@ -32,14 +32,12 @@ component:
     music: Musik
     multiview: MultiView
   videoCard:
-    clips: "{n} Klip"
-    watching: "{0} sedang menonton"
+    clips: '{n} Klip'
+    watching: '{0} sedang menonton'
     liveNow: Sedang Berlangsung
     edit: Ubah
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -78,7 +76,6 @@ component:
     weeklyTopForOrg: Lagu Populer Mingguan dari {0}
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -111,9 +108,11 @@ views:
     exportYtPlaylist: Playlist YouTube
     exportCsv: Berkas CSV
     selectionSelect50: Pilih 50
-    exportYTExplanation: "Playlist YouTube yang dihasilkan dari fitur ini yakni <b>Tidak Publik</b> dan mungkin akan terhapus oleh YouTube. <br /> Karena fitur YouTube tidak lengkap, kamu perlu melakukan hal berikut ini untuk menyimpan Playlist YouTube<b>Tidak Publik</b> ke akun kamu."
+    exportYTExplanation: >-
+      Playlist YouTube yang dihasilkan dari fitur ini yakni <b>Tidak Publik</b> dan mungkin akan terhapus oleh YouTube. <br /> Karena fitur YouTube tidak lengkap, kamu perlu melakukan hal berikut ini untuk menyimpan Playlist YouTube<b>Tidak Publik</b> ke akun kamu.
     exportYTHeading: Panduan Menyimpan Playlist YouTube
-    exportYTInstructions: '<b class="red--text">Langkah 1</b>: Mainkan playlist youtube, dan ubah pemutar UI menjadi mini-player. <br /><br /> <b class="red--text">Langkah 2</b>: Cari video yang ingin kamu simpan lalu Tambahkan ke antrean. <br /><br /> <b class="red--text">Langkah 3</b>: Playlist kini dapat disimpan. Tekan simpan untuk menyimpannya.'
+    exportYTInstructions: >-
+      <b class="red--text">Langkah 1</b>: Mainkan playlist youtube, dan ubah pemutar UI menjadi mini-player. <br /><br /> <b class="red--text">Langkah 2</b>: Cari video yang ingin kamu simpan lalu Tambahkan ke antrean. <br /><br /> <b class="red--text">Langkah 3</b>: Playlist kini dapat disimpan. Tekan simpan untuk menyimpannya.
   notFound:
     title: Konten tidak ditemukan
     back: Kembali ke Beranda
@@ -146,7 +145,7 @@ views:
     scrollModeLabel: Mode Gulir
     scrollModeMsg: Menggulir halaman menggunakan scroll / menekan tombol.
     resetAllSettings: Reset Semua Pengaturan/Data
-    clipLanguageSelection: "Melihat Klip dalam bahasa berikut:"
+    clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
   app:
     update_available: Pembaharuan tersedia
     update_btn: Perbarui
@@ -203,7 +202,7 @@ views:
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
 editor:
   music:
     add: Tambah
@@ -211,8 +210,8 @@ editor:
     permission: >-
       Kamu perlu level pengguna 'Editor' atau lebih tinggi untuk memperbarui atau menghapus lagu yang sudah ada. Hubungi kami di <a class='white--text' href='/about'>discord</a> untuk memberitau masalah/penyalahgunaan mengenai editor, atau mengajukan diri menjadi editor.
     titles:
-      addSong: "Metadata Lagu: Tambahkan lagu baru"
-      songList: "Daftar Lagu : {0}"
+      addSong: 'Metadata Lagu: Tambahkan lagu baru'
+      songList: 'Daftar Lagu : {0}'
       help: Bantuan
     itunesLookupPlaceholder: (Opsional) Cari di iTunes
     moveRight2s: Geser kanan 2detik
@@ -223,6 +222,6 @@ editor:
     originalArtistInput: Penyanyi Asli
     testStart: Uji awal mulai
     startInput: Mulai
-    endInput: "Durasi dalam detik: (berakhir pd {0})"
+    endInput: 'Durasi dalam detik: (berakhir pd {0})'
   exitMode: Keluar dari Mode Edit
   enterMode: Edit Video
