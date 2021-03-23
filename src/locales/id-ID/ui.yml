@@ -157,7 +157,6 @@ views:
         reconnectFailed: Tidak dapat menghubungkan
         notLive: >-
           Saat ini Streaming belum dimulai, coba lagi nanti setelah stream 15 menit dimulai
-        connectedToChat: Terhubung ke chat terjemahan
   favorites:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada halaman ini.
