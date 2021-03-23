@@ -1,17 +1,17 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: "There was an error retrieving content, please check twitter "
-    textAfterTwitter: " or report an error through the"
+    textBeforeTwitter: 'There was an error retrieving content, please check twitter '
+    textAfterTwitter: ' or report an error through the'
     aboutPage: About page
   channelList:
     signInToFavorite: Sign in to favorite
     unfavoriteAllInGroup: Unfavorite all in group
     favoriteAllInGroup: Favorite all in group
   channelInfo:
-    videoCount: "{0} Videos"
-    clipCount: "{n} Clips"
-    subscriberCount: "{n} Subscribers"
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} Subscribers'
     subscriberNA: Subscriber count unavailable
     totalViews: Total Views
   channelSocials:
@@ -31,8 +31,8 @@ component:
     music: Music
     multiview: MultiView
   videoCard:
-    clips: "{n} Clips"
-    watching: "{0} Watching"
+    clips: '{n} Clips'
+    watching: '{0} Watching'
     liveNow: Live Now
     edit: Edit
   videoDescription:
@@ -75,6 +75,15 @@ component:
   orgMusic:
     monthlyTopForOrg: Monthly Top Plays for {0}
     weeklyTopForOrg: Weekly Top Plays for {0}
+  installPrompt:
+    title: Install Holodex
+    callToAction: Watching videos on Holodex works best when added to home screen
+    notNowBtn: Not Now
+    installBtn: Install
+    iOS:
+      popup: Install Holodex on iOS
+      afterExportIcon: then 'Add to Home Screen
+      beforeExportIcon: Tap
 views:
   channels:
     channelType: {}
@@ -110,9 +119,18 @@ views:
     exportYtPlaylist: Youtube Playlist
     exportCsv: CSV File
     selectionSelect50: Select 50
-    exportYTExplanation: "The youtube playlist created by this feature is <b>unlisted</b> and may be deleted by Youtube. <br /> Because Youtube's feature incompleteness, you need to do the following to save the <b>unlisted</b> Youtube playlist to your account."
+    exportYTExplanation: >-
+      The youtube playlist created by this feature is <b>unlisted</b> and may be
+      deleted by Youtube. <br /> Because Youtube's feature incompleteness, you
+      need to do the following to save the <b>unlisted</b> Youtube playlist to
+      your account.
     exportYTHeading: Saving Youtube Playlist Instructions
-    exportYTInstructions: '<b class="red--text">Step 1</b>: Play the youtube playlist, and change the player UI into mini-player. <br /><br /> <b class="red--text">Step 2</b>: Pick any video and add it to the Queue. <br /><br /> <b class="red--text">Step 3</b>: The Playlist is now save-able. Click save to save it.'
+    exportYTInstructions: >-
+      <b class="red--text">Step 1</b>: Play the youtube playlist, and change the
+      player UI into mini-player. <br /><br /> <b class="red--text">Step 2</b>:
+      Pick any video and add it to the Queue. <br /><br /> <b
+      class="red--text">Step 3</b>: The Playlist is now save-able. Click save to
+      save it.
   notFound:
     title: Content not found
     back: Return Home
@@ -148,7 +166,7 @@ views:
     scrollModeLabel: Scroll Mode
     scrollModeMsg: Use scroll/tap to turn pages
     resetAllSettings: Reset All Settings/Data
-    clipLanguageSelection: "See Clips in these Languages:"
+    clipLanguageSelection: 'See Clips in these Languages:'
   app:
     update_available: An update is available
     update_btn: Update
@@ -211,7 +229,7 @@ views:
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
 editor:
   music:
     add: Add
@@ -222,8 +240,8 @@ editor:
       href='/about'>discord</a> to notify editors of issues / abuse, or apply to
       become an editor.
     titles:
-      addSong: "Song Metadata: Add a new Song"
-      songList: "Song List : {0}"
+      addSong: 'Song Metadata: Add a new Song'
+      songList: 'Song List : {0}'
       help: Guide
     itunesLookupPlaceholder: (Optional) Lookup on iTunes
     moveRight2s: Move right 2s
@@ -234,6 +252,6 @@ editor:
     originalArtistInput: Original Artist
     testStart: Test the start
     startInput: Start
-    endInput: "Duration in seconds: (end @ {0})"
+    endInput: 'Duration in seconds: (end @ {0})'
   exitMode: Exit Edit Mode
   enterMode: Edit Video
