@@ -38,6 +38,8 @@ component:
     edit: 編輯
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -58,6 +60,7 @@ component:
     simulcastsLabel: 同時聯播
     refersLabel: 相關影片
     sourcesLabel: 剪輯來源
+    songsLabel: 歌曲
     recommendationsLabel: 推薦影片
   paginateLoad:
     newer: 較新
@@ -86,6 +89,7 @@ component:
       beforeExportIcon: 點擊
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -188,6 +192,7 @@ views:
   favorites:
     promptForAction: >-
       創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
+    manageFavorites: 管理我的收藏
   editor:
     needlogin: 需要登入Holodex才能編輯影片/音樂的相關資料。
   login:
@@ -208,8 +213,12 @@ views:
     presets: 預設佈局
     addframe: 增加新分割
     preset:
+      shareOnDiscord: 想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
       desktop: 桌上型電腦佈局
       mobile: 手機專用佈局
+    video:
+      selectLive: 選擇實況
+      addCustomVideo: 加入自訂影片
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
