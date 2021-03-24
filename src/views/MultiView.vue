@@ -99,96 +99,7 @@
                 :i="item.i"
                 :key="item.i"
             >
-                <v-card
-                    flat
-                    class="mv-video d-flex"
-                    :class="{
-                        'edit-mode': editMode,
-                    }"
-                    :style="{
-                        backgroundImage: getBackgroundForItem(item),
-                    }"
-                >
-                    <!-- Show cell is Live Chat regardless of mode -->
-                    <div
-                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"
-                        v-if="layoutContent[item.i] && layoutContent[item.i].type === 'chat'"
-                    >
-                        <v-icon x-large>{{ mdiMessage }}</v-icon> Live Chat
-                    </div>
-                    <!-- Edit mode content -->
-                    <template v-if="editMode">
-                        <div class="d-flex flex-wrap" style="width: 100%">
-                            <v-btn @click="showSelectorForId = item.i">
-                                <v-icon>{{ icons.mdiPencil }}</v-icon>
-                            </v-btn>
-                            <v-btn
-                                @click="setItemAsChat(item)"
-                                v-if="!(layoutContent[item.i] && layoutContent[item.i].type === 'chat')"
-                            >
-                                <v-icon>{{ mdiMessage }}</v-icon>
-                            </v-btn>
-                            <v-spacer />
-                            <v-btn @click="removeItemById(item.i)">
-                                <v-icon>{{ icons.mdiClose }}</v-icon>
-                            </v-btn>
-                        </div>
-                        <div class="mv-handlebars">
-                            <v-icon style="bottom: 5px; right: 5px">
-                                {{ mdiResizeBottomRight }}
-                            </v-icon>
-                            <v-icon style="bottom: 5px; left: 5px; transform: rotate(90deg)">
-                                {{ mdiResizeBottomRight }}
-                            </v-icon>
-                            <v-icon style="top: 5px; left: 5px; transform: rotate(180deg)">
-                                {{ mdiResizeBottomRight }}
-                            </v-icon>
-                            <v-icon style="top: 5px; right: 5px; transform: rotate(270deg)">
-                                {{ mdiResizeBottomRight }}
-                            </v-icon>
-                            <v-icon style="top: calc(50% - 10px); left: 5px; transform: rotate(135deg)">
-                                {{ mdiResizeBottomRight }}
-                            </v-icon>
-                            <v-icon style="top: calc(50% - 10px); right: 5px; transform: rotate(315deg)">
-                                {{ mdiResizeBottomRight }}
-                            </v-icon>
-                            <v-icon style="bottom: 10px; left: calc(50% - 10px); transform: rotate(45deg)">
-                                {{ mdiResizeBottomRight }}
-                            </v-icon>
-                        </div>
-                    </template>
-                    <!-- Video/Chat iFrame based on type -->
-                    <template v-else-if="layoutContent[item.i]">
-                        <div
-                            class="mv-frame ma-auto"
-                            v-if="layoutContent[item.i].type === 'video' && layoutContent[item.i].content.id"
-                        >
-                            <youtube
-                                :key="'ytplayer-' + item.i"
-                                :video-id="layoutContent[item.i].content.id"
-                                :playerVars="{
-                                    playsinline: 1,
-                                }"
-                            >
-                            </youtube>
-                        </div>
-                        <template v-else-if="layoutContent[item.i].type === 'chat'">
-                            <TabbedLiveChat :activeVideos="activeVideos" />
-                        </template>
-                    </template>
-                    <!-- Show buttons if there is no content -->
-                    <template v-else>
-                        <v-btn @click="showSelectorForId = item.i">
-                            <v-icon>{{ icons.mdiPencil }}</v-icon>
-                        </v-btn>
-                        <v-btn
-                            @click="setItemAsChat(item)"
-                            v-if="!(layoutContent[item.i] && layoutContent[item.i].type === 'chat')"
-                        >
-                            <v-icon>{{ mdiMessage }}</v-icon>
-                        </v-btn>
-                    </template>
-                </v-card>
+                <cell :item="item" :editMode="editMode" @showSelector="(id) => (showSelectorForId = id)"></cell>
             </grid-item>
         </grid-layout>
 
@@ -233,15 +144,20 @@ import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
 import VideoSelector from "@/components/multiview/VideoSelector";
-import WatchFrame from "@/components/watch/WatchFrame";
-import WatchLiveChat from "@/components/watch/WatchLiveChat";
-import TabbedLiveChat from "@/components/multiview/TabbedLiveChat";
-import { mdiMessage, mdiResizeBottomRight, mdiViewGridPlus, mdiLinkVariant, mdiClipboardPlusOutline } from "@mdi/js";
+import {
+    mdiMessage,
+    mdiResizeBottomRight,
+    mdiViewGridPlus,
+    mdiLinkVariant,
+    mdiClipboardPlusOutline,
+    mdiDelete,
+} from "@mdi/js";
 import copyToClipboard from "@/mixins/copyToClipboard";
 import { encodeLayout, decodeLayout } from "@/utils/mv-layout";
-import { getVideoThumbnails } from "@/utils/functions";
 import PresetSelector from "@/components/multiview/PresetSelector";
 import LayoutPreview from "@/components/multiview/LayoutPreview";
+import Cell from "@/components/multiview/Cell";
+import { mapState, mapGetters } from "vuex";
 
 export default {
     name: "MultiView",
@@ -249,11 +165,9 @@ export default {
         GridLayout,
         GridItem,
         VideoSelector,
-        WatchFrame,
-        WatchLiveChat,
-        TabbedLiveChat,
         PresetSelector,
         LayoutPreview,
+        Cell,
     },
     mixins: [copyToClipboard],
     data() {
@@ -263,6 +177,7 @@ export default {
             mdiViewGridPlus,
             mdiClipboardPlusOutline,
             mdiLinkVariant,
+            mdiDelete,
 
             editMode: false,
             showSelectorForId: -1,
@@ -316,12 +231,14 @@ export default {
         Vue.use(VueYouTubeEmbed);
     },
     computed: {
-        layout() {
-            return this.$store.state.multiview.layout;
-        },
-        layoutContent() {
-            return this.$store.state.multiview.layoutContent;
-        },
+        ...mapState("multiview", ["layout", "layoutContent"]),
+        ...mapGetters("multiview", ["activeVideos"]),
+        // layout() {
+        //     return this.$store.state.multiview.layout;
+        // },
+        // layoutContent() {
+        //     return this.$store.state.multiview.layoutContent;
+        // },
         // Return true if there's an id requesting, setting false is setting id to -1
         showVideoSelector: {
             get() {
@@ -330,18 +247,6 @@ export default {
             set(open) {
                 if (!open) this.showSelectorForId = -1;
             },
-        },
-        activeVideos() {
-            // Filter out any videos that are not being displayed
-            const active = [];
-            this.layout
-                .map((item) => item.i)
-                .forEach((key) => {
-                    if (this.layoutContent[key] && this.layoutContent[key].type === "video") {
-                        active.push(this.layoutContent[key].content);
-                    }
-                });
-            return active;
         },
         exportURL() {
             const query = `?layout=${encodeURIComponent(
@@ -354,7 +259,6 @@ export default {
         },
     },
     methods: {
-        getVideoThumbnails,
         startCopyToClipboard(txt) {
             this.copyToClipboard(txt);
             const thisCopy = this;
@@ -377,14 +281,6 @@ export default {
             this.setMultiview({
                 ...preset,
                 mergeContent: true,
-            });
-        },
-        setItemAsChat(item) {
-            this.$store.commit("multiview/setLayoutContentById", {
-                id: item.i,
-                content: {
-                    type: "chat",
-                },
             });
         },
         layoutUpdatedEvent(newLayout) {
@@ -431,17 +327,6 @@ export default {
                 this.$store.commit("multiview/setLayoutContent", content);
             }
             this.$store.commit("multiview/setLayout", layout);
-        },
-        getBackgroundForItem(item) {
-            if (this.layoutContent[item.i]) {
-                if (this.layoutContent[item.i].type === "video" && this.editMode) {
-                    return `url(${getVideoThumbnails(this.layoutContent[item.i].content.id, false).medium})`;
-                }
-                if (this.layoutContent[item.i].type === "chat") {
-                    return mdiMessage;
-                }
-            }
-            return "";
         },
         toggleFullScreen() {
             if (!document.fullscreenElement) {
