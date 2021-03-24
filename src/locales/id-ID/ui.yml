@@ -38,6 +38,8 @@ component:
     edit: Ubah
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -74,8 +76,18 @@ component:
   orgMusic:
     monthlyTopForOrg: Lagu Populer Bulanan dari {0}
     weeklyTopForOrg: Lagu Populer Mingguan dari {0}
+  installPrompt:
+    title: Pasang Holodex
+    callToAction: Menonton video di Holodex bekerja dengan baik ketika ditambahkan ke layar beranda
+    notNowBtn: Jangan Sekarang
+    installBtn: Pasang
+    iOS:
+      popup: Pasang Holodex pada iOS
+      afterExportIcon: lalu "Tambahkan ke Layar Beranda"
+      beforeExportIcon: Tekan
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
