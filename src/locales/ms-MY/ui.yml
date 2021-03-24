@@ -27,10 +27,14 @@ component:
     settings: Tetapan
     login: Daftar Masuk
     logout: Daftar Keluar
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Tetapan Akaun
+    music: Muzik
   videoCard:
     clips: '{n} Sedutan'
     watching: '{0} Tontonan Sekarang'
     liveNow: Langsung Sekarang
+    edit: Sunting
   videoDescription:
     description: Perihalan
   description:
@@ -53,6 +57,7 @@ component:
     simulcastsLabel: siaran serentak
     refersLabel: yang berkaitan
     sourcesLabel: daripada
+    songsLabel: lagu
   paginateLoad:
     newer: Lebih baharu
     older: Lebih lama
