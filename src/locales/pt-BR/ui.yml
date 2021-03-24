@@ -38,6 +38,8 @@ component:
     edit: Editar
   videoDescription:
     description: Descrição
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -58,6 +60,8 @@ component:
     simulcastsLabel: Simulcasts
     refersLabel: Ref
     sourcesLabel: Fontes
+    songsLabel: músicas
+    recommendationsLabel: recomendados
   paginateLoad:
     newer: Novos
     older: Antigos
@@ -85,6 +89,7 @@ component:
       beforeExportIcon: Toque
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -186,6 +191,7 @@ views:
   favorites:
     promptForAction: >-
       Crie uma lista de seus vtubers favoritos e veja seus clipes e lives  mais recentes nesta página.
+    manageFavorites: Gerenciar Favoritos
   editor:
     needlogin: Você precisará fazer login para editar metadados de vídeo e música do Holodex.
   login:
@@ -206,8 +212,12 @@ views:
     presets: Predefinidas
     addframe: Adicionar Célula
     preset:
+      shareOnDiscord: Tem um layout legal para compartilhar? Use o botão compartilhar e nos informe no nosso <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
       desktop: Desktop
       mobile: Mobile
+    video:
+      selectLive: Selecionar Live
+      addCustomVideo: Adicionar Vídeo
 time:
   soon: em breve
   diff_future_date: Ao Vivo {0} ({1})
