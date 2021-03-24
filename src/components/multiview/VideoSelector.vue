@@ -12,10 +12,17 @@
                 ></v-select>
                 <v-list-item-group v-model="selectedOrg" mandatory v-else>
                     <template v-for="org in orgList">
-                        <v-list-item :key="org.value">
+                        <v-list-item v-if="org.value !== 1" :key="org.value">
                             <v-list-item-content>
                                 <v-list-item-title>{{ org.text }}</v-list-item-title>
                             </v-list-item-content>
+                        </v-list-item>
+                        <!-- Custom! -->
+                        <v-list-item v-else :key="org.value">
+                            <!-- <v-list-item-content> -->
+                            <v-icon class="mr-2">{{ icons.mdiYoutube }}</v-icon>
+                            <v-list-item-title>URL</v-list-item-title>
+                            <!-- </v-list-item-content> -->
                         </v-list-item>
                     </template>
                 </v-list-item-group>
@@ -29,7 +36,12 @@
                         v-model="customURL"
                         :error="customURLError"
                     ></v-text-field>
-                    <v-btn @click="addCustomVideo"> Add </v-btn>
+                    <v-btn
+                        @click="addCustomVideo"
+                        :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
+                    >
+                        <v-icon>{{ icons.mdiCheck }}</v-icon>
+                    </v-btn>
                 </template>
                 <template v-else-if="selectedOrg === 0 && !$store.getters.isLoggedIn">
                     <div class="pa-3">

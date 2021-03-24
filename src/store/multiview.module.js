@@ -9,7 +9,18 @@ const initialState = {
 
 export const state = { ...initialState };
 
-const getters = {};
+const getters = {
+    activeVideos(state) {
+        return state.layout
+            .filter((item) => {
+                if (state.layoutContent[item.i] && state.layoutContent[item.i].type === "video") {
+                    return true;
+                }
+                return false;
+            })
+            .map((item) => state.layoutContent[item.i].content);
+    },
+};
 
 const actions = {};
 
