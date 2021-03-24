@@ -79,14 +79,14 @@
         <grid-layout
             :layout.sync="layout"
             :col-num="24"
-            :row-height="Math.floor($vuetify.breakpoint.height / 24)"
+            :row-height="($vuetify.breakpoint.height - 26.0) / 24.0"
             :col-width="30"
             :is-draggable="editMode"
             :is-resizable="editMode"
             :responsive="false"
-            :vertical-compact="false"
+            :vertical-compact="true"
             :prevent-collision="true"
-            :margin="[5, 0]"
+            :margin="[1, 1]"
             @layout-updated="layoutUpdatedEvent"
         >
             <grid-item
@@ -193,6 +193,13 @@ export default {
 
             layoutPreview: [],
         };
+    },
+    watch: {
+        editMode(nw) {
+            if (nw) {
+                this.$store.dispatch("favorites/fetchLive");
+            }
+        },
     },
     mounted() {
         if (this.$route.query.layout) {
@@ -343,29 +350,6 @@ export default {
 </script>
 
 <style lang="scss">
-.mv-video {
-    background-size: contain;
-    background-position: center;
-    height: 100%;
-    border: 1px solid #f0629118 !important;
-}
-
-.mv-video.edit-mode {
-    border: 1px solid #f06291 !important;
-}
-
-.mv-frame > div > iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.mv-frame {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
 .mv-toolbar-btn .v-btn {
     margin-right: 4px;
 }
@@ -392,10 +376,5 @@ export default {
 
 .vue-grid-layout {
     transition: none;
-}
-
-.mv-handlebars > .v-icon {
-    position: absolute;
-    color: #f06291;
 }
 </style>

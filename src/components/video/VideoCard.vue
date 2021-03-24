@@ -16,7 +16,7 @@
                 :src="imageSrc"
                 :aspect-ratio="16 / 9"
                 :width="horizontal ? '150px' : '100%'"
-                v-if="!hideThumbnail"
+                v-if="!shouldHideThumbnail"
             >
                 <!-- Image Overlay -->
                 <div class="video-card-overlay d-flex justify-space-between flex-column" style="height: 100%">
@@ -202,6 +202,11 @@ export default {
             type: Boolean,
             default: false,
         },
+        hideThumbnail: {
+            required: false,
+            type: Boolean,
+            deafult: false,
+        },
         horizontal: {
             required: false,
             type: Boolean,
@@ -268,8 +273,8 @@ export default {
         redirectMode() {
             return this.$store.state.settings.redirectMode;
         },
-        hideThumbnail() {
-            return this.$store.state.settings.hideThumbnail;
+        shouldHideThumbnail() {
+            return this.$store.state.settings.hideThumbnail || this.hideThumbnail;
         },
         channelName() {
             const prop = this.$store.state.settings.nameProperty;

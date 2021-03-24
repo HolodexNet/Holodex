@@ -20,9 +20,10 @@
                         :includeAvatar="includeAvatar"
                         :colSize="colSize"
                         :active="video.id === activeId"
-                        :style="`padding-bottom: calc(${hideThumbnail ? '56.25%' : ''} + 88px)`"
+                        :style="!horizontal && `padding-bottom: calc(${shouldHideThumbnail ? '56.25%' : ''} + 88px)`"
                         :disableDefaultClick="disableDefaultClick"
                         @videoClicked="handleVideoClick"
+                        :hideThumbnail="shouldHideThumbnail"
                     >
                         <!-- pass slot to each individual video card -->
                         <template v-slot:action>
@@ -38,9 +39,10 @@
                     :includeAvatar="includeAvatar"
                     :colSize="colSize"
                     :active="video.id === activeId"
-                    :style="`padding-bottom: calc(${hideThumbnail ? '56.25%' : ''} + 88px)`"
+                    :style="!horizontal && `padding-bottom: calc(${shouldHideThumbnail ? '56.25%' : ''} + 88px)`"
                     @videoClicked="handleVideoClick"
                     :disableDefaultClick="disableDefaultClick"
+                    :hideThumbnail="shouldHideThumbnail"
                     v-else
                 >
                     <!-- pass slot to each individual video card -->
@@ -104,6 +106,11 @@ export default {
         includeAvatar: {
             required: false,
             type: Boolean,
+        },
+        hideThumbnail: {
+            required: false,
+            type: Boolean,
+            deafult: false,
         },
         horizontal: {
             required: false,
@@ -207,8 +214,8 @@ export default {
         isMobile() {
             return this.$store.state.isMobile;
         },
-        hideThumbnail() {
-            return this.$store.state.settings.hideThumbnail;
+        shouldHideThumbnail() {
+            return this.$store.state.settings.hideThumbnail || this.hideThumbnail;
         },
         // calcMinHeight() {
         //     return (

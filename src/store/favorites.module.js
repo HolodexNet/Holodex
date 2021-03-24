@@ -11,7 +11,7 @@ const initialState = {
     currentOffset: 0,
 
     stagedFavorites: {},
-    // lastLiveUpdate: "2021-01-07T18:31:22-08:00",
+    lastLiveUpdate: 0,
 };
 const persistState = {
     favorites: [],
@@ -45,21 +45,24 @@ const actions = {
             });
     },
     fetchLive({ state, commit }) {
-        commit("fetchStart");
-        return api
-            .favoritesLive({
-                // last_update: "2021-01-07T18:31:22-08:00",
-                channels: state.favorites.map((f) => f.id).join(","),
-            })
-            .then((res) => {
-                // console.log(res);
-                commit("setLive", res);
-                commit("fetchEnd");
-            })
-            .catch((e) => {
-                console.error(e);
-                commit("fetchError");
-            });
+        if (!state.lastLiveUpdate || Date.now() - state.lastLiveUpdate > 2 * 60 * 1000) {
+            commit("fetchStart");
+            return api
+                .favoritesLive({
+                    // last_update: "2021-01-07T18:31:22-08:00",
+                    channels: state.favorites.map((f) => f.id).join(","),
+                })
+                .then((res) => {
+                    // console.log(res);
+                    commit("setLive", res);
+                    commit("fetchEnd");
+                })
+                .catch((e) => {
+                    console.error(e);
+                    commit("fetchError");
+                });
+        }
+        return null;
     },
     fetchNextVideos({ state, commit, rootState, dispatch }, params) {
         return api
@@ -124,6 +127,7 @@ const mutations = {
     },
     setLive(state, live) {
         state.live = live;
+        state.lastLiveUpdate = Date.now();
     },
     setRecentVideoFilter(state, filter) {
         state.recentVideoFilter = filter;
