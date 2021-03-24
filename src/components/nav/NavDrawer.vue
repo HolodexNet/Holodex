@@ -77,7 +77,6 @@ import ChannelImg from "@/components/channel/ChannelImg";
 import ChannelInfo from "@/components/channel/ChannelInfo";
 import { langs } from "@/plugins/vuetify";
 import { mapState } from "vuex";
-import { formatDistance, dayjs } from "@/utils/time";
 
 export default {
     name: "NavDrawer",
@@ -130,20 +129,11 @@ export default {
         },
     },
     methods: {
-        formatDistance,
         handlePageClick(page) {
             // reload the page if user clicks on the same tab
             page.path === this.$route.path && !this.$route.query.page
                 ? this.$router.go(0)
                 : this.$router.push({ path: page.path });
-        },
-        formatTimeLabel(time) {
-            const hours = dayjs(time).diff(dayjs(), "hour");
-            if (hours) {
-                return `${hours}h`;
-            }
-            const minutes = dayjs(time).diff(dayjs(), "minutes");
-            return `${minutes}m`;
         },
     },
 };

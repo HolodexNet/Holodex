@@ -294,8 +294,13 @@ export default {
             }, 30000);
         }
 
-        // always pop out nav drawer if it's not watch page or mobile
-        if (this.$route.name !== null && !this.isWatchPage && !this.isMobile) {
+        // always pop out nav drawer if it's not watch page or collapsed
+        if (
+            this.$route.name !== null &&
+            !this.isWatchPage &&
+            !this.isMobile &&
+            this.$vuetify.breakpoint.name !== "md"
+        ) {
             this.navDrawer = true;
         }
     },
@@ -308,11 +313,6 @@ export default {
         // if user is flipping between mobile/desktop breakpoints, keep navdrawer closed
         isMobile() {
             this.navDrawer = false;
-        },
-    },
-    methods: {
-        getPWAInstalled() {
-            return navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
         },
     },
 };

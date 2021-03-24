@@ -27,7 +27,7 @@
             <div class="chat-overlay-btn d-flex align-center">
                 <a class="text-body-2" @click="toggleTL">
                     {{ showTL ? $t("views.watch.chat.hideTLBtn") : $t("views.watch.chat.showTLBtn") }}
-                    {{ newTL > 0 ? `(${newTL} new)` : "" }}
+                    {{ newTL > 0 ? `(${newTL}*)` : "" }}
                 </a>
             </div>
         </div>

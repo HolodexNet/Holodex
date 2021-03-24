@@ -3,8 +3,7 @@
         <v-card-title>{{ $t("views.multiview.presets") }}</v-card-title>
         <v-card-text>
             <v-alert dense color="blue-grey">
-                Have a cool layout to share? Use the share button and let us know on our
-                <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+                {{ $t("views.multiview.preset.shareOnDiscord") }}
             </v-alert>
             <v-card-subtitle class="text-body-1">{{ $t("views.multiview.preset.desktop") }}</v-card-subtitle>
             <v-row>

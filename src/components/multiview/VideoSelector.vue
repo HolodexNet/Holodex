@@ -2,7 +2,7 @@
     <v-card class="pa-3">
         <v-row>
             <v-col cols="12" sm="4" md="2" style="border-right: 1px solid white">
-                <v-card-title>Select Live</v-card-title>
+                <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
                 <v-select
                     :items="orgList"
                     filled
@@ -22,7 +22,7 @@
             </v-col>
             <v-col cols="12" sm="8" md="10" style="max-height: 100%; overflow-y: auto">
                 <template v-if="selectedOrg === 1">
-                    <div class="text-h5">Add Custom Video</div>
+                    <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
                     <v-text-field
                         label="Youtube Video Link"
                         hint="https://www.youtube.com/watch?v=..."
@@ -36,7 +36,7 @@
                         <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
                         <center>
                             <v-btn :to="isLoggedIn ? '/channel' : '/login'">
-                                {{ isLoggedIn ? "Manage Favorites" : "Log In" }}
+                                {{ isLoggedIn ? $t("views.favorites.manageFavorites") : $t("component.mainNav.login") }}
                             </v-btn>
                         </center>
                     </div>

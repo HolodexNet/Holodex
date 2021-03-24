@@ -59,6 +59,8 @@ component:
     simulcastsLabel: simulcasts
     refersLabel: refers
     sourcesLabel: sources
+    songsLabel: songs
+    recommendationsLabel: recommended 
   paginateLoad:
     newer: Newer
     older: Older
@@ -200,6 +202,7 @@ views:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on
       this page.
+    manageFavorites: Manage Favorites
   editor:
     needlogin: You'll need to login to make edits to Holodex video and song metadata.
   login:
@@ -224,8 +227,12 @@ views:
     presets: Presets
     addframe: Add Cell
     preset:
+      shareOnDiscord: Have a cool layout to share? Use the share button and let us know on our <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
       desktop: Desktop
       mobile: Mobile
+    video:
+      selectLive: Select Live
+      addCustomVideo: Add Custom Video
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})

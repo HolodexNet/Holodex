@@ -11,9 +11,6 @@
         <v-list-item-subtitle>
             <template v-if="!noSubscriberCount">
                 {{ subscriberCount }}
-                <span class="green--text" v-if="subscriberGains">
-                    {{ subscriberGains }}
-                </span>
             </template>
             <template v-if="includeVideoCount">
                 <br />
@@ -76,9 +73,6 @@ export default {
                 );
             }
             return this.$t("component.channelInfo.subscriberNA");
-        },
-        subscriberGains() {
-            return this.channel.subscriber_gains ? `(+${formatCount(this.channel.subscriber_gains)})` : null;
         },
         channelName() {
             const prop = this.$store.state.settings.nameProperty;

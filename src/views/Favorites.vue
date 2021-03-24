@@ -57,7 +57,7 @@
                     <v-icon color="primary" large>{{ icons.mdiHeart }}</v-icon>
                     <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
                     <v-btn :to="isLoggedIn ? '/channel' : '/login'">
-                        {{ isLoggedIn ? "Manage Favorites" : "Log In" }}
+                        {{ isLoggedIn ? $t("views.favorites.manageFavorites") : $t("component.mainNav.login") }}
                     </v-btn>
                 </v-col>
             </v-row>

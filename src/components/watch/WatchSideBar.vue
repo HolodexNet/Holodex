@@ -108,9 +108,9 @@ export default {
                 case "sources":
                     return this.$t("component.relatedVideo.sourcesLabel");
                 case "recommendations":
-                    return "Recommendations";
+                    return this.$t("component.relatedVideo.recommendationsLabel");
                 case "songs":
-                    return "Songs";
+                    return this.$t("component.relatedVideo.songsLabel");
                 default:
                     return "";
             }

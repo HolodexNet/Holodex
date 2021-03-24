@@ -7,7 +7,7 @@
             <v-img :aspect-ratio="16 / 9" :src="thumbnail_src" />
             <div class="thumbnail-overlay d-flex">
                 <div class="text-h4 ma-auto">
-                    <a :href="`https://youtu.be/${video.id}`"> Open on Youtube </a>
+                    <a :href="`https://youtu.be/${video.id}`"> {{ $t("views.settings.redirectModeLabel") }} </a>
                 </div>
             </div>
         </div>

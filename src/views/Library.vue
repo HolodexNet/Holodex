@@ -87,7 +87,7 @@
         <div v-else class="text-center">
             {{ $t("views.library.emptyLibrary") }}
         </div>
-        <v-card v-if="recoveredVideos.length > 0" class="mt-2">
+        <!-- <v-card v-if="recoveredVideos.length > 0" class="mt-2">
             <v-card-title>Where's my saved videos!?</v-card-title>
             <v-card-text>
                 The new library is incompatible with the old library data. The links below will take you to the same
@@ -108,7 +108,7 @@
                     {{ video.title }}
                 </v-list-item>
             </v-list>
-        </v-card>
+        </v-card> -->
         <v-dialog v-model="instructionsDialog" :width="$store.state.isMobile ? '90%' : '60vw'">
             <v-card>
                 <v-card-title>{{ $t("views.library.exportYTHeading") }}</v-card-title>
@@ -165,19 +165,19 @@ export default {
         };
     },
     created() {
-        if (localStorage.getItem("holodex") !== null) {
-            const oldStore = JSON.parse(localStorage.getItem("holodex"));
-            const oldSavedVideos = oldStore.savedVideos;
-            if (oldSavedVideos) {
-                const videos = Object.values(oldSavedVideos);
-                // this.recoveryUrl =
-                this.recoveredVideos = videos;
-                this.recoveredUrl = `https://www.youtube.com/watch_videos?video_ids=${videos
-                    .map((v) => v.yt_video_key)
-                    .join(",")}`;
-            }
-            // localStorage.removeItem("holodex");
-        }
+        // if (localStorage.getItem("holodex") !== null) {
+        //     const oldStore = JSON.parse(localStorage.getItem("holodex"));
+        //     const oldSavedVideos = oldStore.savedVideos;
+        //     if (oldSavedVideos) {
+        //         const videos = Object.values(oldSavedVideos);
+        //         // this.recoveryUrl =
+        //         this.recoveredVideos = videos;
+        //         this.recoveredUrl = `https://www.youtube.com/watch_videos?video_ids=${videos
+        //             .map((v) => v.yt_video_key)
+        //             .join(",")}`;
+        //     }
+        //     // localStorage.removeItem("holodex");
+        // }
     },
     computed: {
         savedVideos() {
@@ -219,10 +219,10 @@ export default {
             window.open(url, "_blank", "noopener");
             this.reset();
         },
-        clearOldStorage() {
-            localStorage.removeItem("holodex");
-            this.$router.go(0);
-        },
+        // clearOldStorage() {
+        //     localStorage.removeItem("holodex");
+        //     this.$router.go(0);
+        // },
         async downloadAsCSV() {
             const selectedSet = new Set(this.selected);
             const csvString = await json2csvAsync(this.savedVideosList.filter((v) => selectedSet.has(v.id)));
