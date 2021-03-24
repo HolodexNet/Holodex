@@ -30,6 +30,7 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Tetapan Akaun
     music: Muzik
+    multiview: Berbilang Tontonan
   videoCard:
     clips: '{n} Sedutan'
     watching: '{0} Tontonan Sekarang'
@@ -37,6 +38,8 @@ component:
     edit: Sunting
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -86,6 +89,7 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -118,6 +122,8 @@ views:
     exportYtPlaylist: Senarai Main YouTube
     exportCsv: Fail CSV
     selectionSelect50: Pilih 50
+    exportYTExplanation: >-
+      Senarai main yang dibuat <b>tidak tersenarai</b> di YouTube serta berkebarangkalian dihapuskan oleh YouTube.<br /> Sekiranya anda mahu menyimpan senarai main <b>tidak tersenarai</b> ini di YouTube, anda harus mengikuti langkah berikut.
     exportYTHeading: Arahan Menyimpan Senarai Main YouTube
     exportYTInstructions: >-
       <b class="red--text">Langkah 1</b>: Mainkan senarai main YouTube kemudian gunakan antara muka pemain mini. <br /><br /> <b class="red--text">Langkah 2</b>: Pilih mana-mana video kemudian tambahkan pada baris gilir. <br /><br /> <b class="red--text">Langkah 3</b>: Senarai main ini telah boleh disimpan. Simpan dengan menekan simpan.
@@ -196,15 +202,40 @@ views:
     futureYtcOwnerMessage: >-
       Kami berancang akan menyediakan perkhidmatan tambahan kepada empunya saluran dengan kebolehan menyunting data meta video masing-masing.
     linkAcc: Pautkan akaun lain
+    apikeyResetConfirm1: Adakah anda pasti anda ingin menetapkan semula Kekunci API anda?
+    apikeyResetConfirm2: Kekunci API lama akan tamat tempoh dalam masa 24 jam. Betul mahu tetapkan semula?
+    apikeyResetNvm: Entahlah apa yang terjadi.
   multiview:
+    confirmOverwrite: Ubah tataletak semasa?
     confirmOverwriteYes: Sahkan
+    permalink: Buat Pautan
+    presets: Tataletak Tersedia
+    addframe: Tambah Petak
+    preset:
+      shareOnDiscord: Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
+      desktop: Peranti Atas Meja
+      mobile: Peranti Mudah Alih
+    video:
+      selectLive: Pilih Siaran Langsung
+      addCustomVideo: Tambah Video Tersuai
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
+  distance_past_date: '{0}'
 editor:
   music:
+    add: Tambah
+    update: Kemas Kini
+    permission: >-
+      Kuasa mengemas kini atau menghapuskan lagu hanya diberikan kepada pengguna berpangkat 'Penyunting' atau lebih tinggi. Sila hubungi kami di <a class='white--text' href='/about'>Discord</a> untuk memaklumkan penyunting akan sebarang kesilapan mahupun masalah atau membuat permohonan menjadi seorang penyunting.
+    titles:
+      addSong: 'Data Meta Lagu: Tambahkan lagu lain'
+      songList: 'Senarai Lagu: {0}'
+      help: Panduan
+    itunesLookupPlaceholder: (Pilihan) Cari di iTunes
     moveRight2s: Maju sebanyak 2 saat
     testEnd: Dengar balik 3 saat sebelum tamat.
+    setToCurrentTime: Tetapkan dengan masa semasa ({0})
     moveLeft2s: Mandir sebanyak 2 saat
     trackNameInput: Judul Runut
     originalArtistInput: Penyanyi Asal
