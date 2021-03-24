@@ -1,7 +1,7 @@
 ---
 component:
   apiError:
-    title: 非常抱歉！
+    title: 灰常拍謝！
     textBeforeTwitter: '取得內容時發生錯誤，請於推特確認目前狀況。'
     textAfterTwitter: '或是於推特回報錯誤給我們。'
     aboutPage: 關於本站
