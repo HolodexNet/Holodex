@@ -101,6 +101,7 @@ views:
     selectionReset: リセット
     selectionSelectAll: すべて選択
     emptyLibrary: 保存されたビデオはありません！
+    exportCsv: CSV ファイル
   notFound:
     title: コンテンツが見つかりません
     back: 戻る
@@ -160,6 +161,8 @@ views:
         reconnectFailed: 再接続に失敗しました
         notLive: >-
           配信は現在オフラインです。配信がオンラインになってから最大およそ15分後にチャットが使用可能になります。
+        connectedToChat: 接続されました
+        disconnectedToChat: 切断しました
   favorites:
     promptForAction: >-
       お気に入りのライバーリストを作るとそのページでお気に入りライバーの最新動画を確認できます。
