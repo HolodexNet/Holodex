@@ -58,6 +58,7 @@ component:
     simulcastsLabel: 同時聯播
     refersLabel: 相關影片
     sourcesLabel: 剪輯來源
+    recommendationsLabel: 推薦影片
   paginateLoad:
     newer: 較新
     older: 較舊
