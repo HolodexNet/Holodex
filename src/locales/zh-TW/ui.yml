@@ -1,18 +1,18 @@
 ---
 component:
   apiError:
-    title: 非常抱歉！
-    textBeforeTwitter: "取得內容時發生錯誤，請於推特確認目前狀況。"
-    textAfterTwitter: "或是於推特回報錯誤給我們。"
+    title: 灰常拍謝！
+    textBeforeTwitter: '取得內容時發生錯誤，請於推特確認目前狀況。'
+    textAfterTwitter: '或是於推特回報錯誤給我們。'
     aboutPage: 關於本站
   channelList:
     signInToFavorite: 請登入以使用收藏功能
     unfavoriteAllInGroup: 取消收藏本群組所有頻道
     favoriteAllInGroup: 收藏本群組所有頻道
   channelInfo:
-    videoCount: "{0} 部影片"
-    clipCount: "{n} 部剪輯"
-    subscriberCount: "{n} 位訂閱者"
+    videoCount: '{0} 部影片'
+    clipCount: '{n} 部剪輯'
+    subscriberCount: '{n} 位訂閱者'
     subscriberNA: 無法取得訂閱者數據
     totalViews: 總觀看次數
   channelSocials:
@@ -32,8 +32,8 @@ component:
     music: 音樂播放
     multiview: 多窗工具
   videoCard:
-    clips: "{n} 部剪輯"
-    watching: "{0} 人正在觀看"
+    clips: '{n} 部剪輯'
+    watching: '{0} 人正在觀看'
     liveNow: 實況中
     edit: 編輯
   videoDescription:
@@ -60,6 +60,8 @@ component:
     simulcastsLabel: 同時聯播
     refersLabel: 相關影片
     sourcesLabel: 剪輯來源
+    songsLabel: 歌曲
+    recommendationsLabel: 推薦影片
   paginateLoad:
     newer: 較新
     older: 較舊
@@ -76,6 +78,15 @@ component:
   orgMusic:
     monthlyTopForOrg: '{0} 本月熱門歌曲'
     weeklyTopForOrg: '{0} 本週熱門歌曲'
+  installPrompt:
+    title: 安裝 Holodex
+    callToAction: 將 Holodex 安裝至手機以獲得最佳使用體驗！
+    notNowBtn: 現在不要
+    installBtn: 安裝
+    iOS:
+      popup: 於 iOS 裝置上安裝 Holodex
+      afterExportIcon: 然後選擇「加入主畫面」
+      beforeExportIcon: 點擊
 views:
   channels:
     channelType: { }
@@ -111,9 +122,12 @@ views:
     exportYtPlaylist: YouTube播放清單
     exportCsv: CSV檔案
     selectionSelect50: 選擇50部影片
-    exportYTExplanation: "以此功能建立的YouTube播放清單的瀏覽權限是<b>不公開</b>的，而且有可能會被YouTube刪除。<br />\n因為YouTube提供的功能不足，您需要透過以下方式來將<b>未列出的</b>YouTube播放清單儲存至帳號內。"
+    exportYTExplanation: >-
+      以此功能建立的YouTube播放清單的瀏覽權限是<b>不公開</b>的，而且有可能會被YouTube刪除。<br />
+      因為YouTube提供的功能不足，您需要透過以下方式來將<b>未列出的</b>YouTube播放清單儲存至帳號內。
     exportYTHeading: YouTube播放清單保存教學
-    exportYTInstructions: '<b class="red--text">第一步</b>：播放YouTube播放清單，並且將介面變更為迷你播放器模式。<br /><br /><b class="red--text">第二步</b>：選擇任何影片，將其加入播放列表。<br /><br /><b class="red--text">第三步</b>：播放清單已可透過點擊「儲存」按鈕儲存。'
+    exportYTInstructions: >-
+      <b class="red--text">第一步</b>：播放YouTube播放清單，並且將介面變更為迷你播放器模式。<br /><br /><b class="red--text">第二步</b>：選擇任何影片，將其加入播放列表。<br /><br /><b class="red--text">第三步</b>：播放清單已可透過點擊「儲存」按鈕儲存。
   notFound:
     title: 查無此內容
     back: 返回首頁
@@ -146,7 +160,7 @@ views:
     scrollModeLabel: 瀑布流設計
     scrollModeMsg: 選擇列表要使用分頁/無限捲軸模式。
     resetAllSettings: 重設所有設定/資料
-    clipLanguageSelection: "顯示以下語言的剪輯影片"
+    clipLanguageSelection: '顯示以下語言的剪輯影片'
   app:
     update_available: 已取得更新
     update_btn: 更新
@@ -178,6 +192,7 @@ views:
   favorites:
     promptForAction: >-
       創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
+    manageFavorites: 管理我的收藏
   editor:
     needlogin: 需要登入Holodex才能編輯影片/音樂的相關資料。
   login:
@@ -198,12 +213,16 @@ views:
     presets: 預設佈局
     addframe: 增加新分割
     preset:
+      shareOnDiscord: 想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
       desktop: 桌上型電腦佈局
       mobile: 手機專用佈局
+    video:
+      selectLive: 選擇實況
+      addCustomVideo: 加入自訂影片
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
 editor:
   music:
     add: 加入歌曲
@@ -211,8 +230,8 @@ editor:
     permission: >-
       您需要擁有或取得高於「編輯者」身分組的權限才能更新/刪除歌曲。請至 <a class='white--text' href='/about'>Discord社群</a> 申請成為編輯者或是回報任何問題。
     titles:
-      addSong: "歌曲資料：新增歌曲"
-      songList: "歌曲清單：{0}"
+      addSong: '歌曲資料：新增歌曲'
+      songList: '歌曲清單：{0}'
       help: 新手教學
     itunesLookupPlaceholder: 從iTunes搜尋歌曲（非必須）
     moveRight2s: 向後移動2秒
@@ -223,6 +242,6 @@ editor:
     originalArtistInput: 原唱
     testStart: 測試起始點
     startInput: 起始時間
-    endInput: "總播放秒數（結束於 @ {0}）"
+    endInput: '總播放秒數（結束於 @ {0}）'
   exitMode: 離開編輯模式
   enterMode: 編輯影片資料

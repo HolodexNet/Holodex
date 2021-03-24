@@ -1,15 +1,15 @@
 ---
 component:
   apiError:
-    textBeforeTwitter: "Ha ocurrido un error recuperando el contenido, por favor revisa Twitter "
-    textAfterTwitter: " O reporta el error a través de la"
+    textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
+    textAfterTwitter: ' O reporta el error a través de la'
     aboutPage: Página de información
   channelList:
     signInToFavorite: Registrate para marcar como favorito
     unfavoriteAllInGroup: Desmarcar todos como favoritos
     favoriteAllInGroup: Marcar todos en el grupo como favorito
   channelInfo:
-    subscriberCount: "{n} Subscriptores"
+    subscriberCount: '{n} Subscriptores'
     subscriberNA: Contador de subscriptores no disponible
     totalViews: Visualizaciones totales
   channelSocials:
@@ -29,7 +29,7 @@ component:
     music: Música
     multiview: Multivista
   videoCard:
-    watching: "{0} Mirando"
+    watching: '{0} Mirando'
     liveNow: En Vivo
     edit: Editar
   videoDescription:
@@ -126,7 +126,7 @@ views:
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
-    clipLanguageSelection: "Ver clips en estos idiomas"
+    clipLanguageSelection: 'Ver clips en estos idiomas'
   app:
     update_available: Una actualización está disponible
     update_btn: Actualizar
@@ -182,8 +182,8 @@ editor:
     permission: >-
       Necesitas ser un usuario de nivel 'Editor' o mas oara actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar editores de problemas/abuso, o aplicar para volverse un editor
     titles:
-      addSong: "Metada de canciones: Añadir nueva canción"
-      songList: "Lista de canciones : {0}"
+      addSong: 'Metada de canciones: Añadir nueva canción'
+      songList: 'Lista de canciones : {0}'
       help: Guia
     itunesLookupPlaceholder: (Opcional) Buscar en iTunes
     moveRight2s: Mover a derecha 2s
@@ -194,4 +194,4 @@ editor:
     originalArtistInput: Artista Original
     testStart: Prueba para iniciar
     startInput: Iniciar
-    endInput: "Actualizar"
+    endInput: 'Actualizar'
