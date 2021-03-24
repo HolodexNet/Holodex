@@ -58,9 +58,32 @@ component:
     refersLabel: yang berkaitan
     sourcesLabel: daripada
     songsLabel: lagu
+    recommendationsLabel: disyorkan
   paginateLoad:
     newer: Lebih baharu
     older: Lebih lama
+  music:
+    clearPlaylist: Kosongkan
+  channelMusic:
+    recentSongsHeader: Lagu Terkini
+    weeklyTopPlaysHeader: Lagu Teratas Mingguan
+  songList:
+    songTitle: Judul
+    songCoveredBy: Dinyanyikan oleh
+    songDuration: Tempoh
+    sangOnTime: Dinyanyikan pada
+  orgMusic:
+    monthlyTopForOrg: Lagu Teratas Bulanan {0}
+    weeklyTopForOrg: Lagu Teratas Mingguan {0}
+  installPrompt:
+    title: Pasang Holodex
+    callToAction: Video di Holodex boleh ditonton sebaiknya jika ditambahkan di layar utama
+    notNowBtn: Jangan Lagi
+    installBtn: Pasang
+    iOS:
+      popup: Pasang Holodex di iOS
+      afterExportIcon: lalu "Tambahkan di Layar Utama"
+      beforeExportIcon: Tekan
 views:
   channels:
     sortOptions:
@@ -91,6 +114,13 @@ views:
     selectionReset: Tetapkan Semula
     selectionSelectAll: Pilih Semua
     emptyLibrary: Tiada video yang disimpan!
+    exportSelected: Eksport yang dipilih ({0})
+    exportYtPlaylist: Senarai Main YouTube
+    exportCsv: Fail CSV
+    selectionSelect50: Pilih 50
+    exportYTHeading: Arahan Menyimpan Senarai Main YouTube
+    exportYTInstructions: >-
+      <b class="red--text">Langkah 1</b>: Mainkan senarai main YouTube kemudian gunakan antara muka pemain mini. <br /><br /> <b class="red--text">Langkah 2</b>: Pilih mana-mana video kemudian tambahkan pada baris gilir. <br /><br /> <b class="red--text">Langkah 3</b>: Senarai main ini telah boleh disimpan. Simpan dengan menekan simpan.
   notFound:
     title: Kandungan tidak ditemui
     back: Kembali ke Halaman Utama
@@ -136,11 +166,50 @@ views:
   watch:
     theaterMode: Mod Teater
     saveToLibrary: Simpan video di Pustaka
+    mentionIconLabel: MENYEBUT
+    chat:
+      loading: Sedang Memuat Sembang...
+      hideTLBtn: Sembunyikan Terjemahan
+      showTLBtn: Paparkan Terjemahan
+      TLSettingsTitle: Tetapan Terjemahan
+      StickBottomSettingLabel: Letakkan di Bawah (peranti mudah alih)
+      StickBottomSettingsDesc: Ruangan terjemahan diletakkan di bawah sembang (secara lalainya ruangan ini terletak di bahagian atas bagi peranti mudah alih)
+      retryBtn: Cuba Lagi
+      status:
+        reconnecting: Sedang Menyambung Semula Secara Kendiri...
+        reconnectFailed: Sambungan semula gagal
+        notLive: >-
+          Siaran langsung masih belum berlangsung. Cuba lagi apabila siaran berlangsung dalam masa 15 minit
+        connectedToChat: Bersambung
+        disconnectedToChat: Terputus
   favorites:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
+    manageFavorites: Uruskan Kegemaran
+  editor:
+    needlogin: Penyuntingan data meta video dan lagu di Holodex hanya untuk yang telah mengelog masuk.
+  login:
+    apikeyMsg: >-
+      Kekunci API boleh digunakan dalam pengaturcaraan untuk membuat pertanyaan kepada API Holodex. Setiap akaun hanya terbatas dengan serentetan kekunci. Setelah mendapat kekunci baharu, kekunci lama akan tamat tempoh dalam masa 24 jam.
+    apikeyNew: Dapatkan Kekunci API baharu
+    ownedYtChannel: Saluran YouTube Milik Anda
+    futureYtcOwnerMessage: >-
+      Kami berancang akan menyediakan perkhidmatan tambahan kepada empunya saluran dengan kebolehan menyunting data meta video masing-masing.
+    linkAcc: Pautkan akaun lain
   multiview:
     confirmOverwriteYes: Sahkan
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
+editor:
+  music:
+    moveRight2s: Maju sebanyak 2 saat
+    testEnd: Dengar balik 3 saat sebelum tamat.
+    moveLeft2s: Mandir sebanyak 2 saat
+    trackNameInput: Judul Runut
+    originalArtistInput: Penyanyi Asal
+    testStart: Semak masa mula
+    startInput: Masa Mula
+    endInput: 'Tempoh (saat): (tamat pada {0})'
+  exitMode: Selesaikan Suntingan
+  enterMode: Sunting Video
