@@ -38,8 +38,6 @@ component:
     edit: Ubah
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -87,7 +85,6 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
