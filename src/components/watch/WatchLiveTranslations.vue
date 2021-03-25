@@ -204,7 +204,7 @@ export default {
                 this.showOverlay = true;
             });
 
-            this.socket.on(`${this.video.id}/${this.lang}`, (msg) => {
+            this.socket.on(`${this.video.id}/${this.liveTlLang}`, (msg) => {
                 // if no type, process as regular message
                 if (!msg.type) {
                     this.tlHistory.unshift(msg);
