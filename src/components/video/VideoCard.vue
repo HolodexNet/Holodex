@@ -16,7 +16,7 @@
                 :src="imageSrc"
                 :aspect-ratio="16 / 9"
                 :width="horizontal ? '150px' : '100%'"
-                v-if="!hideThumbnail"
+                v-if="!shouldHideThumbnail"
             >
                 <!-- Image Overlay -->
                 <div class="video-card-overlay d-flex justify-space-between flex-column" style="height: 100%">
@@ -42,7 +42,14 @@
 
                     <!-- Video duration -->
                     <div class="d-flex flex-column align-end">
-                        <div v-if="video.duration > 0 || video.start_actual" class="video-duration rounded-br-sm">
+                        <div class="video-duration" v-if="video.songcount">
+                            <v-icon small>{{ icons.mdiMusic }}</v-icon>
+                        </div>
+                        <div
+                            v-if="video.duration > 0 || video.start_actual"
+                            class="video-duration rounded-br-sm"
+                            :class="video.status === 'live' && 'video-duration-live'"
+                        >
                             {{ formattedDuration }}
                         </div>
                     </div>
@@ -61,12 +68,39 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content class="pa-0">
+                    <v-menu bottom nudge-top="20px">
+                        <template v-slot:activator="{ on }">
+                            <v-icon
+                                v-on="on"
+                                @click.stop.prevent
+                                :class="{ 'hover-show': !hasSaved && !isMobile }"
+                                class="video-card-more"
+                            >
+                                {{ icons.mdiDotsVertical }}
+                            </v-icon>
+                        </template>
+                        <v-list dense>
+                            <v-list-item
+                                :disabled="video.type === 'clip'"
+                                :to="`/multiview/AAUY${video.id}${video.channel.name}%2CUAEYchat`"
+                                ><v-icon left :color="video.type === 'clip' && 'grey'">{{
+                                    icons.mdiViewDashboard
+                                }}</v-icon>
+                                {{ $t("component.mainNav.multiview") }}
+                            </v-list-item>
+                            <v-list-item :disabled="video.type === 'clip'" :to="`/edit/video/${video.id}`"
+                                ><v-icon left :color="video.type === 'clip' && 'grey'">{{ icons.mdiPencil }}</v-icon>
+                                {{ $t("component.videoCard.edit") }}
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+
                     <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
                         {{ title }}
                     </v-list-item-title>
-                    <v-list-item-subtitle class="channel-name" v-if="includeChannel">
+                    <v-list-item-subtitle v-if="includeChannel" class="channel-name">
                         <a
-                            class="channel-name no-decoration"
+                            class="no-decoration"
                             :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
                             :href="`/channel/${video.channel.id}`"
                             @click.exact.stop.prevent="goToChannel(video.channel.id)"
@@ -99,11 +133,12 @@
                         </span>
                     </v-list-item-subtitle>
                 </v-list-item-content>
-                <v-list-item-action v-if="!!this.$slots.action">
+                <v-list-item-action v-if="!!this.$slots.action" :style="horizontal && 'margin-top:30px'">
                     <slot name="action"></slot>
                 </v-list-item-action>
             </v-list-item>
         </v-card>
+        <!-- comments are shown for search results when you search comments -->
         <v-list style="max-height: 400px" dense class="pa-0 transparent overflow-y-auto caption" v-if="video.comments">
             <v-divider class="mx-4" style="flex-basis: 100%; height: 0"></v-divider>
             <!-- Render Channel Avatar if necessary -->
@@ -130,7 +165,27 @@ export default {
         return {
             forceJPG: true,
             icons,
+            now: Date.now(),
+            updatecycle: null,
         };
+    },
+    mounted() {
+        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+    },
+    activated() {
+        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+    },
+    deactivated() {
+        if (this.updatecycle) {
+            clearInterval(this.updatecycle);
+            this.updatecycle = null;
+        }
+    },
+    beforeDestroy() {
+        if (this.updatecycle) {
+            clearInterval(this.updatecycle);
+            this.updatecycle = null;
+        }
     },
     props: {
         video: {
@@ -152,6 +207,11 @@ export default {
             type: Boolean,
             default: false,
         },
+        hideThumbnail: {
+            required: false,
+            type: Boolean,
+            deafult: false,
+        },
         horizontal: {
             required: false,
             type: Boolean,
@@ -163,6 +223,11 @@ export default {
             default: 1,
         },
         active: {
+            required: false,
+            type: Boolean,
+            default: false,
+        },
+        disableDefaultClick: {
             required: false,
             type: Boolean,
             default: false,
@@ -195,7 +260,7 @@ export default {
         formattedDuration() {
             const duration =
                 this.video.start_actual && this.video.status === "live"
-                    ? dayjs().diff(dayjs(this.video.start_actual))
+                    ? dayjs(this.now).diff(dayjs(this.video.start_actual))
                     : this.video.duration * 1000;
 
             return duration ? this.formatDuration(duration) : "";
@@ -213,8 +278,8 @@ export default {
         redirectMode() {
             return this.$store.state.settings.redirectMode;
         },
-        hideThumbnail() {
-            return this.$store.state.settings.hideThumbnail;
+        shouldHideThumbnail() {
+            return this.$store.state.settings.hideThumbnail || this.hideThumbnail;
         },
         channelName() {
             const prop = this.$store.state.settings.nameProperty;
@@ -234,27 +299,51 @@ export default {
         formatDuration,
         formatCount,
         formatDistance,
+        // Adds video to saved videos library
         toggleSaved(event) {
             event.preventDefault();
             this.hasSaved
                 ? this.$store.commit("library/removeSavedVideo", this.video.id)
                 : this.$store.commit("library/addSavedVideo", this.video);
         },
-        goToVideo(id) {
-            this.$router.push({ path: `/watch/${this.video.id}` });
+        goToVideo() {
+            this.$emit("videoClicked", this.video);
+            if (this.disableDefaultClick) return;
+            // On mobile, clicking on watch links should not increment browser history
+            // Back button will always return to the originating video list in one click
+            if (this.$route.path.match("^/watch") && this.isMobile) {
+                this.$router.replace({ path: `/watch/${this.video.id}` });
+            } else {
+                this.$router.push({ path: `/watch/${this.video.id}` });
+            }
         },
-        goToChannel(id) {
+        goToChannel() {
+            this.$emit("videoClicked", this.video);
+            if (this.disableDefaultClick) return;
             this.$router.push({ path: `/channel/${this.video.channel.id}` });
         },
-        goToYoutube(id) {
-            const url = `https://www.youtube.com/watch?v=${id}`;
+        goToYoutube() {
+            this.$emit("videoClicked", this.video);
+            if (this.disableDefaultClick) return;
+            const url = `https://www.youtube.com/watch?v=${this.video.id}`;
             window.open(url, "_blank", "noopener");
+        },
+        updateNow() {
+            this.now = Date.now();
         },
     },
 };
 </script>
 
 <style scoped>
+.theme--light .video-watched {
+    color: #94659c !important;
+}
+
+.theme--dark .video-watched {
+    color: #ce93d8 !important;
+}
+
 .video-card {
     border-radius: 0 !important;
     border: none !important;
@@ -283,10 +372,7 @@ export default {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-}
-
-.video-watched {
-    color: #ce93d8 !important;
+    padding-right: 22px;
 }
 
 .channel-name {
@@ -299,28 +385,32 @@ export default {
     display: -webkit-box;
 }
 
-.channel-name:hover {
+.channel-name > a:hover {
     color: black !important;
 }
-.theme--dark.v-list-item .v-list-item__subtitle .channel-name:hover {
+.theme--dark.v-list-item .channel-name > a:hover {
     color: white !important;
 }
 
-.video-card-overlay .hover-show {
+.video-card .hover-show {
     visibility: hidden;
 }
 
-.video-card-overlay:hover .hover-show {
+.video-card:hover .hover-show {
     visibility: visible;
 }
 
 .video-duration {
     background-color: rgba(0, 0, 0, 0.8);
     margin: 2px;
-    padding: 1px 5px;
+    padding: 2px 5px;
     text-align: center;
     font-size: 0.8125rem;
     letter-spacing: 0.025em;
+    line-height: 0.81rem;
+}
+.video-duration.video-duration-live {
+    background-color: rgba(148, 0, 0, 0.8);
 }
 
 .video-topic {
@@ -337,6 +427,13 @@ export default {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 2px;
     margin: 2px;
+}
+
+.video-card-more {
+    position: absolute;
+    right: 0px;
+    display: inline-block;
+    top: 5px;
 }
 
 .video-card-horizontal {

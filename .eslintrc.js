@@ -8,7 +8,7 @@ module.exports = {
     extends: ["airbnb-base", "eslint:recommended", "prettier", "prettier/vue"],
     parser: "vue-eslint-parser",
     parserOptions: {
-        parser: "babel-eslint",
+        parser: "@babel/eslint-parser",
     },
     rules: {
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
@@ -39,6 +39,7 @@ module.exports = {
             },
         ],
     },
+    ignorePatterns: ["src/external/**", "src/locales/**"],
     settings: {
         "import/resolver": {
             alias: {

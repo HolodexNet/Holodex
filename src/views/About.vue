@@ -1,42 +1,63 @@
 <template>
     <v-container class="pt-3">
         <v-row>
-            <v-col cols="12">
+            <v-col cols="12" v-if="!$store.state.isMobile">
                 <div class="text-h4">{{ $t("component.mainNav.about") }}</div>
             </v-col>
             <v-col cols="12" md="4" sm="4" lg="3" xl="2" float-right>
-                <div class="text-h5">News</div>
+                <div class="text-h5 mb-2">News</div>
                 <TwitterFeed :key="'twtrTimeline' + timelinekey" />
             </v-col>
 
             <v-col cols="12" md="8" sm="8" lg="9" xl="10">
-                <v-alert dense text type="info">
-                    We are aware of an issue regarding Live Chat not working, some reports suggest clearing cookies for
-                    youtube.com and holodex.net fixes it. The issue is most likely on Youtube's end, but we are still
-                    investigating work arounds
-                </v-alert>
-                <div class="text-h5">Quick Links</div>
+                <div class="text-h5 mb-2">Quick Links</div>
 
-                <v-btn color="indigo" class="ma-3" large href="https://discord.gg/jctkgHBt4b">
-                    <v-icon left>{{ icons.mdiDiscord }}</v-icon>
-                    Holodex Discord
-                </v-btn>
-                <br />
-                <v-btn color="info" class="ma-3" large href="https://forms.gle/xkN4w8fyPr6YTGfx6">
-                    <v-icon left>{{ icons.mdiPencil }}</v-icon>
-                    {{ $t("views.about.add_my_channel") }}
-                </v-btn>
-                <br />
-                <v-btn color="teal" class="ma-3" large href="https://discord.gg/xJd9Der">
-                    <v-icon left>{{ icons.mdiDiscord }}</v-icon>
-                    Hololive Creators Discord (#holodex)
-                </v-btn>
-                <br />
-                <v-btn class="ma-3" large href="https://github.com/RiceCakess/Holodex">
-                    <v-icon left>{{ mdiGithub }}</v-icon>
-                    Issue Tracker / Source
-                </v-btn>
-                <div class="text-h5">FAQ</div>
+                <v-row dense class="mx-1">
+                    <v-col cols="12" md="auto">
+                        <v-btn
+                            color="indigo"
+                            block
+                            class="text-left justify-start"
+                            large
+                            href="https://discord.gg/jctkgHBt4b"
+                        >
+                            <v-icon large left>{{ icons.mdiDiscord }}</v-icon>
+                            Holodex Discord
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="12" md="auto">
+                        <v-btn
+                            color="info"
+                            block
+                            class="text-left justify-start"
+                            large
+                            href="https://forms.gle/xkN4w8fyPr6YTGfx6"
+                        >
+                            <v-icon large left>{{ icons.mdiPencil }}</v-icon>
+                            {{ $t("views.about.add_my_channel") }}
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="12" md="auto">
+                        <v-btn
+                            color="teal"
+                            block
+                            class="text-left justify-start"
+                            large
+                            href="https://discord.gg/xJd9Der"
+                        >
+                            <v-icon large left>{{ icons.mdiDiscord }}</v-icon>
+                            Hololive Creators (#holodex)
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="12" md="auto">
+                        <v-btn class="text-left justify-start" block large href="https://github.com/RiceCakess/Holodex">
+                            <v-icon large left>{{ mdiGithub }}</v-icon>
+                            Issue Tracker / Source
+                        </v-btn>
+                    </v-col>
+                </v-row>
+
+                <div class="text-h5 mb-2 mt-4">FAQ</div>
                 <v-expansion-panels>
                     <v-expansion-panel>
                         <v-expansion-panel-header> Is there an Android/iOS app for Holodex? </v-expansion-panel-header>
@@ -147,15 +168,12 @@
                     or find the Holodex team on Discord
                     <br />
                     <br />
-                    Discord: #holodex channel on
-                    <a href="https://discord.gg/xJd9Der"> Hololive Creators Club Discord </a>
-                    <br />
                     Reddit:
                     <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
                 </p>
                 <br />
 
-                <div class="text-h5">Credits</div>
+                <div class="text-h5" id="changelog">Credits</div>
                 <p class="text-body-2">
                     I would like to give big thanks to the
                     <a href="https://hololive.jetri.co/">HoloTools</a> team for their work on
@@ -173,7 +191,74 @@
 
                 <div class="text-h5">Changelog</div>
                 <div class="text-body-2">
+                    <span class="text--secondary">March 26th, 2021</span> <br />
+                    <span class="text-body-1">Holodex V2.1 Main Features</span>
+                    <ul>
+                        <li>
+                            Added <b>MultiView</b> functionality, with customizable layouts supporting everything a DD
+                            wants. <b>Also works on mobile</b>, if your phone is powerful enough (on some mobile devices
+                            and platforms, you can only hear one stream's audio, but can play multiple videos.).
+                        </li>
+                        <li>
+                            Isolated Stream-Translations chat built into Mobile and Desktop views, you can also get
+                            Live-TL-esque features on Mobile (and desktop).
+                        </li>
+                        <li>Massive improvements to mobile experience.</li>
+                        <li>
+                            Removed top status bar from the App version of the website, but may require a reinstall for
+                            some platforms.
+                        </li>
+                        <li>
+                            Added Music Player / Music Curation platform. You can browse, search, and listen to karaoke
+                            streams / covers as if it is Spotify. Best part is, the views go towards the singer (instead
+                            of clippers who split the Karaoke stream into pieces). Everyone can contribute and create
+                            music annotations, so feel free to help out your oshi by tagging their karaoke songs.
+                        </li>
+                        <li>
+                            Normal users are now able to add topics (and music) annotation to videos. If you want us to
+                            add new topics into Holodex, please join our discord and recommend it!
+                        </li>
+                        <li>
+                            Editors are now more powerful on Holodex, being able to change topics and delete/update song
+                            information. Users interested in becoming Holodex editors should talk to us on discord.
+                        </li>
+                        <li>Made light mode pretty</li>
+                        <li>
+                            Logged in users can now request for an API Key on the Account page, we will require API Key
+                            for CORS requests into Holodex backend in the short future.
+                        </li>
+                    </ul>
+                    <span class="text-body-1">New Localizations:</span>
+                    <ul>
+                        <li>Added pt-BR locale.</li>
+                    </ul>
+                    <span class="text-body-1">Bugfixes:</span>
+                    <ul>
+                        <li>Twitter login works again!</li>
+                        <li>Cleaned up video export to Youtube with a guide</li>
+                        <li>We now check when a video use @CHANNEL NAME in description to mention vtubers.</li>
+                        <li>Improved usability across the website.</li>
+                    </ul>
+                    <br />
+                    <br />
                     <span class="text--secondary">January 29th, 2021</span>
+                    <ul>
+                        <li>
+                            Added ability to change video thumbnail/grid sizes for Home/Favorites (use the icon on the
+                            top right)
+                        </li>
+                        <li>Added setting to enable/disable autoplay videos</li>
+                        <li>Added French localization</li>
+                        <li>
+                            Added ScrollMode setting to switch between infinite scroll loading and page by page
+                            navigation
+                        </li>
+                        <li>Frontend is now open source!</li>
+                        <li>Fixed lots of bugs and introduced new ones probably</li>
+                    </ul>
+                    <br />
+                    <br />
+                    <!-- <span class="text--secondary">January 29th, 2021</span>
                     <ul>
                         <li>
                             Added ability to change video thumbnail/grid sizes for Home/Favorites (use the icon on the
@@ -206,7 +291,7 @@
                         </li>
                     </ul>
                     <br />
-                    <br />
+                    <br /> -->
                     <!-- <span class="text--secondary">November 2, 2020</span>
                     <ul>
                         <li>Hotfix video duration</li>

@@ -166,7 +166,7 @@ export default {
             });
             // console.log("SEARCHING", searchQuery);
             this.containsTopicAndOrg =
-                searchQuery.target.includes("clip") && (searchQuery.topic.length > 0 || searchQuery.topic.org > 0);
+                searchQuery.target.includes("clip") && (searchQuery.topic.length > 0 || searchQuery.org.length > 0);
 
             if (searchQuery.comment.length === 0)
                 api.searchVideo(searchQuery)

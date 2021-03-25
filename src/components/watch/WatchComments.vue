@@ -21,7 +21,7 @@
                 </template>
             </v-list>
             <v-btn plain small text @click="expanded = !expanded" v-if="shouldLimit">
-                {{ expanded ? "Close" : "Show All" }}</v-btn
+                {{ expanded ? $t("views.app.close_btn") : $t("component.description.showMore") }}</v-btn
             >
         </v-card-text>
     </v-card>

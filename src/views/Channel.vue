@@ -1,11 +1,11 @@
 <template>
     <v-container class="channel-container" fluid v-if="!isLoading && !hasError">
         <v-card>
-            <v-img :src="bannerImage" class="channel-banner" />
-            <v-container :class="{ 'pa-0': isMobile }">
+            <v-img v-if="bannerImage" :src="bannerImage" class="channel-banner" />
+            <v-container :class="{ 'pa-0': isMobile, 'pa-1': !isMobile }">
                 <v-list>
                     <v-list-item>
-                        <v-list-item-avatar :size="avatarSize">
+                        <v-list-item-avatar class="my-0" :size="avatarSize">
                             <ChannelImg :size="avatarSize" :channel="channel" />
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" />
@@ -93,12 +93,17 @@ export default {
                 {
                     path: `/channel/${this.id}/clips`,
                     name: "Clips",
-                    hide: this.channel_id > 1000,
+                    hide: this.channel.type === "subber",
+                },
+                {
+                    path: `/channel/${this.id}/music`,
+                    name: "Music",
+                    hide: this.channel.type === "subber",
                 },
                 {
                     path: `/channel/${this.id}/collabs`,
                     name: "Collabs",
-                    hide: this.channel_id > 1000,
+                    hide: this.channel.type === "subber",
                 },
                 { path: `/channel/${this.id}/about`, name: "About" },
                 // { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
@@ -129,6 +134,7 @@ export default {
     methods: {
         init() {
             this.$store.commit("channel/resetState");
+            this.$store.commit("channel/resetVideos");
             this.$store.commit("channel/setId", this.$route.params.id);
             this.$store.dispatch("channel/fetchChannel");
         },
@@ -143,7 +149,7 @@ export default {
 
 .channel-container > .v-card {
     border-radius: 0;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 }
 
 .v-list-item-horizontal {
@@ -153,6 +159,7 @@ export default {
 }
 
 .channel-banner {
+    height: 100px; /* legacy device support */
     height: calc(100vw / 6.2 - 1px);
 }
 

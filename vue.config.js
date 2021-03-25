@@ -1,26 +1,26 @@
 module.exports = {
     chainWebpack: (config) => {
-        if (process.env.STORYBOOK && process.env.STORYBOOK.trim() === "true") {
-            console.info("info => Updating webpack using chain-webpack");
-            // eslint-disable-next-line no-param-reassign
-            config.module
-                .rule("addon-storysource")
-                .enforce()
-                .pre()
-                .test(/\.stories\.jsx?$/)
-                .use("@storybook/addon-storysource/loader")
-                .loader("@storybook/addon-storysource/loader")
-                .options({
-                    semi: false,
-                    printWidth: 120,
-                    singleQuote: true,
-                })
-                .end();
-        }
+        // if (process.env.STORYBOOK && process.env.STORYBOOK.trim() === "true") {
+        //     console.info("info => Updating webpack using chain-webpack");
+        //     // eslint-disable-next-line no-param-reassign
+        //     config.module
+        //         .rule("addon-storysource")
+        //         .enforce()
+        //         .pre()
+        //         .test(/\.stories\.jsx?$/)
+        //         .use("@storybook/addon-storysource/loader")
+        //         .loader("@storybook/addon-storysource/loader")
+        //         .options({
+        //             semi: false,
+        //             printWidth: 120,
+        //             singleQuote: true,
+        //         })
+        //         .end();
+        // }
         return config;
     },
     css: {
-        extract: { ignoreOrder: true },
+        extract: process.env.NODE_ENV !== "production" ? undefined : { ignoreOrder: true },
     },
     pages: {
         index: {
@@ -33,8 +33,13 @@ module.exports = {
         themeColor: "#42a5f5",
         msTileColor: "#42a5f5",
         appleMobileWebAppCapable: "yes",
-        appleMobileWebAppStatusBarStyle: "#42a5f5",
+        manifestOptions: {
+            display: "standalone",
+            backgroundColor: "#215183",
+        },
+        appleMobileWebAppStatusBarStyle: "black-translucent",
         scope: "/",
+        start_url: "/?utm_source=homescreen",
         workboxOptions: {
             runtimeCaching: [
                 {

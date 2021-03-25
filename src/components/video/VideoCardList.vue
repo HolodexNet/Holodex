@@ -1,11 +1,6 @@
 <template>
     <!-- pad bottom for 100px to allow space for infiniteload -->
-    <v-container
-        class="pt-0 pl-0 pr-0"
-        style="position: relative"
-        :style="{ 'padding-bottom': infiniteLoad ? '150px' : '0' }"
-        fluid
-    >
+    <v-container class="py-0" style="position: relative" fluid>
         <!-- Video Card grid rows -->
         <!-- Set min height to account for layout shifting of show more button -->
         <v-row :dense="dense">
@@ -25,7 +20,10 @@
                         :includeAvatar="includeAvatar"
                         :colSize="colSize"
                         :active="video.id === activeId"
-                        :style="`padding-bottom: calc(${hideThumbnail ? '56.25%' : ''} + 88px)`"
+                        :style="!horizontal && `padding-bottom: calc(${shouldHideThumbnail ? '56.25%' : ''} + 88px)`"
+                        :disableDefaultClick="disableDefaultClick"
+                        @videoClicked="handleVideoClick"
+                        :hideThumbnail="shouldHideThumbnail"
                     >
                         <!-- pass slot to each individual video card -->
                         <template v-slot:action>
@@ -41,7 +39,10 @@
                     :includeAvatar="includeAvatar"
                     :colSize="colSize"
                     :active="video.id === activeId"
-                    :style="`padding-bottom: calc(${hideThumbnail ? '56.25%' : ''} + 88px)`"
+                    :style="!horizontal && `padding-bottom: calc(${shouldHideThumbnail ? '56.25%' : ''} + 88px)`"
+                    @videoClicked="handleVideoClick"
+                    :disableDefaultClick="disableDefaultClick"
+                    :hideThumbnail="shouldHideThumbnail"
                     v-else
                 >
                     <!-- pass slot to each individual video card -->
@@ -61,12 +62,7 @@
             </v-btn>
         </div>
         <!-- Infiniteloading observer -->
-        <InfiniteLoad
-            v-if="infiniteLoad"
-            @infinite="emitLoad"
-            :identifier="identifier"
-            style="position: absolute; bottom: 0px; width: 100%; margin: auto"
-        />
+        <InfiniteLoad v-if="infiniteLoad" @infinite="emitLoad" :identifier="identifier" />
 
         <PaginateLoad
             v-if="paginateLoad"
@@ -111,6 +107,11 @@ export default {
             required: false,
             type: Boolean,
         },
+        hideThumbnail: {
+            required: false,
+            type: Boolean,
+            deafult: false,
+        },
         horizontal: {
             required: false,
             type: Boolean,
@@ -139,6 +140,11 @@ export default {
             default: false,
         },
         lazy: {
+            type: Boolean,
+            default: false,
+        },
+        // to be used in conjunction with videoClicked event
+        disableDefaultClick: {
             type: Boolean,
             default: false,
         },
@@ -171,6 +177,9 @@ export default {
     methods: {
         emitLoad($state) {
             this.$emit("load", $state);
+        },
+        handleVideoClick(video) {
+            this.$emit("videoClicked", video);
         },
     },
     watch: {
@@ -205,8 +214,8 @@ export default {
         isMobile() {
             return this.$store.state.isMobile;
         },
-        hideThumbnail() {
-            return this.$store.state.settings.hideThumbnail;
+        shouldHideThumbnail() {
+            return this.$store.state.settings.hideThumbnail || this.hideThumbnail;
         },
         // calcMinHeight() {
         //     return (
@@ -228,6 +237,8 @@ export default {
 }
 
 .video-1 {
+    padding-left: 0px;
+    padding-right: 0px;
     width: 100%;
     max-width: 100%;
     flex-basis: 100%;

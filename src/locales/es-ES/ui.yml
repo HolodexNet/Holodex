@@ -1,0 +1,197 @@
+---
+component:
+  apiError:
+    textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
+    textAfterTwitter: ' O reporta el error a través de la'
+    aboutPage: Página de información
+  channelList:
+    signInToFavorite: Registrate para marcar como favorito
+    unfavoriteAllInGroup: Desmarcar todos como favoritos
+    favoriteAllInGroup: Marcar todos en el grupo como favorito
+  channelInfo:
+    subscriberCount: '{n} Subscriptores'
+    subscriberNA: Contador de subscriptores no disponible
+    totalViews: Visualizaciones totales
+  channelSocials:
+    addToFavorites: Añadir a favoritos
+    removeFromFavorites: Borrar de favoritos
+  mainNav:
+    home: Inicio
+    favorites: Favoritos
+    channels: Canales
+    about: Acerca de
+    library: Biblioteca
+    settings: Opciones
+    login: Iniciar Sesión
+    logout: Cerrar Sesión
+    MugenClips: MugenClips
+    accountSettings: Ajustes de Cuenta
+    music: Música
+    multiview: Multivista
+  videoCard:
+    watching: '{0} Mirando'
+    liveNow: En Vivo
+    edit: Editar
+  videoDescription:
+    description: Descripción
+  description:
+    showLess: Mostrar Menos
+    showMore: Mostrar Mas
+  watch:
+    streamingFor: En directo durante {0}
+    nextUpInMugen: Siguiente
+  search:
+    searchLabel: Buscar
+    type:
+      channel: Canal
+      topic: Tema
+      titledesc: título y descripción
+      comments: Comentarios
+      videourl: url de vídeo
+  relatedVideo:
+    simulcastsLabel: referencias
+    refersLabel: transmisión simultanea
+    sourcesLabel: fuentes
+  paginateLoad:
+    newer: Más recientes
+    older: Más antiguas
+  music:
+    clearPlaylist: Limpiar
+  channelMusic:
+    recentSongsHeader: Canciones Recientes
+    weeklyTopPlaysHeader: Mas Reproducidas Semanalmente
+  songList:
+    songTitle: Titulo
+    songCoveredBy: Interpretado por
+    songDuration: Duración
+    sangOnTime: Cantado en
+  orgMusic:
+    monthlyTopForOrg: Mas Reproducidas Mensualmente para {0}
+    weeklyTopForOrg: Mas Reproducidas Semanalmente para {0}
+views:
+  channels:
+    sortOptions:
+      subscribers: Subscriptores
+      group: Grupo
+      recentUpload: Cargas recientes
+      videoCount: Numero de videos
+      clipCount: Numero de clips
+    tabs:
+      Favorites: Favoritos
+    favoritesAreEmpty: No tienes favoritos!
+  home:
+    liveOrUpcomingHeading: En vivo / Proximamente
+    recentVideosHeading: Videos recientes
+    recentVideoToggles:
+      all: Todos
+      official: Oficial
+  library:
+    savedVideosTitle: Videos Guardados
+    createYtPlaylistButton: Crear Playlist de YT ({0})
+    deleteFromLibraryButton: Borrar ({0})
+    deleteConfirmation: Estas seguro de que quieres borrar {0} videos?
+    deleteConfirmationOK: Borrar
+    deleteConfirmationCancel: Cancelar
+    selectionReset: Reiniciar
+    selectionSelectAll: Seleccionar Todos
+    emptyLibrary: '¡No tienes videos guardados!'
+  notFound:
+    title: Contenido no encontrado
+    back: Volver al Inicio
+  search:
+    sort:
+      newest: Mas nuevo
+      oldest: Mas viejo
+    type:
+      all: Todos
+      official: Oficial
+    unsupportedQuery: >-
+      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
+  settings:
+    title: Opciones
+    darkModeLabel: Modo Oscuro
+    darkModeMsg: Cambia el tema entre modo oscuro y modo claro
+    redirectModeLabel: Abrir en Youtube
+    redirectModeMsg: >-
+      Clickear en cualquier video lo abrirá en Youtube
+    useEnglishNameLabel: Usar nombre Inglés
+    useEnglishNameMsg: Usa nombres localizados al Inglés para los canales de Vtubers
+    hideVideoThumbnailsLabel: Esconder miniaturas de videos
+    hideVideoThumbnailsMsg: >-
+      Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos deslizar en mobiles
+    pushNotificationLabel: Notificaciones emergentes
+    pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
+    autoplayVideoLabel: Reproducir vídeos automáticamente
+    autoplayVideoMsg: Activa la reproducción automática de videos
+    scrollModeLabel: Modo de desplazamiento
+    scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
+    resetAllSettings: Reiniciar todas las opciones/datos
+    clipLanguageSelection: 'Ver clips en estos idiomas'
+  app:
+    update_available: Una actualización está disponible
+    update_btn: Actualizar
+    close_btn: Cerrar
+    check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
+    nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
+    loginCallToAction: Inicia sesión para juntar a tus propios favoritos!
+  about:
+    add_my_channel: Añadir mi canal a Holodex
+  watch:
+    theaterMode: Modo Teatro
+    saveToLibrary: Guardar el video en la Biblioteca
+    mentionIconLabel: MENCIONES
+    chat:
+      loading: Cargando el chat...
+      hideTLBtn: Esconder TLs
+      showTLBtn: Mostrar TLs
+      TLSettingsTitle: Opciones de TL
+      StickBottomSettingLabel: Pegar abajo (Mobiles)
+      StickBottomSettingsDesc: TL box se pega abajo del chat (por defecto se pega arriba en mobiles)
+      retryBtn: Reintentar
+      status:
+        reconnecting: Reconectando automaticamente...
+        reconnectFailed: No se pudo reconectar
+        notLive: >-
+          El stream no está en vivo todavía, por favor intenta de nuevo cuando falten 15 minutos para comenzar
+  favorites:
+    promptForAction: >-
+      Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en esta pagina
+  editor:
+    needlogin: Necesitas iniciar sesión para editar metadata de video y audio de Holodex
+  login:
+    apikeyMsg: >-
+      Puedes usar API key para consultar Holodex API programaticamente. Solo una key por cuenta. Después de conseguir una nueva key, la key vieja expirará entre 0-24 horas
+    apikeyNew: Obtener nueva API Key
+    ownedYtChannel: Canal de Youtube en propiedad
+    futureYtcOwnerMessage: >-
+      En el futuro, planeamos proveer mas servicios a dueños de canales como editar metadata para sus propios videos
+    linkAcc: Vincular otra cuenta
+    apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu API Key?'
+    apikeyResetConfirm2: La API key antigua tendrá 0-24 horas antes de expirar. ¿De verdad reiniciar?
+    apikeyResetNvm: Nada interesante pasó
+  multiview:
+    confirmOverwriteYes: Confirmar
+    permalink: Enlace Permanente
+time:
+  soon: Proximamente
+  diff_future_date: Inicia {0} ({1})
+editor:
+  music:
+    add: Añadir
+    update: Actualizar
+    permission: >-
+      Necesitas ser un usuario de nivel 'Editor' o mas oara actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar editores de problemas/abuso, o aplicar para volverse un editor
+    titles:
+      addSong: 'Metada de canciones: Añadir nueva canción'
+      songList: 'Lista de canciones : {0}'
+      help: Guia
+    itunesLookupPlaceholder: (Opcional) Buscar en iTunes
+    moveRight2s: Mover a derecha 2s
+    testEnd: Prueba de escucha iniciando 3 segundos antes del final
+    setToCurrentTime: Establecer a tiempo actual ({0})
+    moveLeft2s: Mover a izquierda 2s
+    trackNameInput: Nombre de la canción
+    originalArtistInput: Artista Original
+    testStart: Prueba para iniciar
+    startInput: Iniciar
+    endInput: 'Actualizar'

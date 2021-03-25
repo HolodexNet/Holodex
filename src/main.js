@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueGTag from "vue-gtag";
 import VueMeta from "vue-meta";
 import VueI18n from "vue-i18n";
+import * as icons from "@/utils/icons";
 import App from "./App";
 import store from "./store";
 import router from "./router";
@@ -27,6 +28,8 @@ Vue.use(VueMeta, {
     refreshOnceOnNavigation: true,
 });
 Vue.use(VueI18n);
+
+Vue.prototype.icons = icons;
 
 new Vue({
     i18n,

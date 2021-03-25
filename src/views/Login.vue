@@ -4,7 +4,7 @@
             <user-card v-if="userdata.user"></user-card>
             <v-divider></v-divider>
             <v-card-subtitle class="justify-center">{{
-                userdata.user ? "Link another account" : "Login"
+                userdata.user ? $t("views.login.linkAcc") : $t("component.mainNav.login")
             }}</v-card-subtitle>
             <v-card-text class="d-flex flex-column">
                 <v-btn
@@ -30,12 +30,46 @@
                     class="my-3"
                     v-if="!userdata.user || !userdata.user.twitter_id"
                     @click.prevent="loginTwitter"
-                    color="grey"
+                    color="blue lighten-1"
                 >
                     <v-icon left>{{ icons.mdiTwitter }}</v-icon>
 
-                    Login with Twitter (bugged)
+                    Login with Twitter
                 </v-btn>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-text v-if="userdata.user">
+                <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.ownedYtChannel") }}</span>
+                <v-text-field
+                    readonly
+                    rounded
+                    filled
+                    dense
+                    hide-details
+                    :value="userdata.user.yt_channel_key || 'None on file'"
+                ></v-text-field>
+                <span class="text-caption">
+                    {{ $t("views.login.futureYtcOwnerMessage") }}
+                </span>
+                <br />
+                <br />
+                <span class="text-subtitle-2 mb-1 d-inline-block">API Key</span>
+                <v-text-field
+                    readonly
+                    rounded
+                    outlined
+                    dense
+                    hide-details
+                    :class="doneCopy ? 'green lighten-2' : ''"
+                    :value="userdata.user.api_key || 'None on file'"
+                    :append-icon="mdiClipboardPlusOutline"
+                    @click:append="copyToClipboard(userdata.user.api_key)"
+                ></v-text-field>
+                <br />
+                <v-btn small block color="warning" @click="resetKey">{{ $t("views.login.apikeyNew") }}</v-btn>
+                <span class="text-caption">
+                    {{ $t("views.login.apikeyMsg") }}
+                </span>
             </v-card-text>
         </v-card>
     </v-container>
@@ -49,7 +83,8 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import Vue from "vue";
 import UserCard from "@/components/user/UserCard";
-import * as icons from "@/utils/icons";
+import { mdiClipboardPlusOutline } from "@mdi/js";
+import copyToClipboard from "@/mixins/copyToClipboard";
 
 dayjs.extend(utc);
 
@@ -76,9 +111,13 @@ export default {
             },
         };
     },
+    mixins: [copyToClipboard],
     components: { UserCard },
     data() {
-        return { icons };
+        return {
+            mdiClipboardPlusOutline,
+            doneCopy: false,
+        };
     },
     mounted() {},
     computed: {
@@ -120,6 +159,32 @@ export default {
                 this.$store.commit("setUser", resp.data);
                 this.$store.dispatch("favorites/resetFavorites");
             });
+        },
+        async forceUserUpdate() {
+            const check = await api.loginIsValid(this.userdata.jwt);
+            if (check.data && check.data.id) {
+                this.$store.commit("setUser", { user: check.data, jwt: this.userdata.jwt });
+            } else {
+                this.$store.dispatch("logout");
+            }
+        },
+        async resetKey() {
+            /* eslint-disable no-restricted-globals, no-alert */
+            if (this.userdata.user.api_key) {
+                const confirm1 = confirm(this.$t("views.login.apikeyResetConfirm1"));
+                if (!confirm1) {
+                    alert(this.$t("views.login.apikeyResetNvm"));
+                    return;
+                }
+                const confirm2 = confirm(this.$t("views.login.apikeyResetConfirm2"));
+                if (!confirm2) {
+                    alert(this.$t("views.login.apikeyResetNvm"));
+                    return;
+                }
+            }
+            await api.resetAPIKey(this.userdata.jwt);
+            this.forceUserUpdate();
+            /* eslint-enable no-restricted-globals, no-alert */
         },
     },
 };

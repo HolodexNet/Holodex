@@ -9,15 +9,17 @@ import vuetifyZh from "vuetify/es5/locale/zh-Hant";
 import vuetifyEs from "vuetify/es5/locale/es";
 import vuetifyId from "vuetify/es5/locale/id";
 import vuetifyFr from "vuetify/es5/locale/fr";
+import vuetifyPt from "vuetify/es5/locale/pt";
 
-import enTL from "@/locales/en.yml";
-import jaTL from "@/locales/ja.yml";
-import esTL from "@/locales/es.yml";
-import msTL from "@/locales/ms.yml";
-import zhTL from "@/locales/zhtw.yml";
-import idTL from "@/locales/id.yml";
-import ruTL from "@/locales/ru.yml";
-import frTL from "@/locales/fr.yml";
+import enTL from "@/locales/en/ui.yml";
+import jaTL from "@/locales/ja-JP/ui.yml";
+import esTL from "@/locales/es-ES/ui.yml";
+import msTL from "@/locales/ms-MY/ui.yml";
+import zhTL from "@/locales/zh-TW/ui.yml";
+import idTL from "@/locales/id-ID/ui.yml";
+import ruTL from "@/locales/ru-RU/ui.yml";
+import frTL from "@/locales/fr-FR/ui.yml";
+import ptTL from "@/locales/pt-BR/ui.yml";
 
 // ====== i18n setup ======
 Vue.use(VueI18n);
@@ -31,6 +33,7 @@ const messages = {
     zh: { $vuetify: vuetifyZh, ...zhTL },
     ru: { $vuetify: vuetifyEn, ...ruTL },
     fr: { $vuetify: vuetifyFr, ...frTL },
+    pt: { $vuetify: vuetifyPt, ...ptTL },
 };
 
 export const langs = [
@@ -42,6 +45,7 @@ export const langs = [
     { val: "id", display: "Bahasa Indonesia", credit: "alcyneous#2803" },
     { val: "ru", display: "Русский язык", credit: "kirillbarnaul#8499" },
     { val: "fr", display: "Français", credit: "pinembour#7770" },
+    { val: "pt", display: "Luso-Brasileiros", credit: "Useless TrAsh#5090" },
 ];
 
 export const dayjsLangs = {
@@ -69,14 +73,18 @@ export const dayjsLangs = {
     async fr() {
         await import("dayjs/locale/fr");
     },
+    async pt() {
+        await import("dayjs/locale/pt-br");
+    },
 };
 
 export const i18n = new VueI18n({
     locale: "en", // Set locale
+    fallbackLocale: "en",
     messages, // Set locale messages,
     pluralizationRules: {
         /**
-         * @param choice {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
+         * @param choice {number} a choice index given by the input to $tc: `$tc ('path.to.rule', choiceIndex)`
          * @param choicesLength {number} an overall amount of available choices
          * @returns a final choice index to select plural word by
          */
@@ -117,10 +125,12 @@ export const config = {
             dark: {
                 primary: primaryColor,
                 secondary: secondaryColor,
+                background: "#121212",
             },
             light: {
                 primary: primaryColor,
                 secondary: secondaryColor,
+                background: "#f2f2f2", // Not automatically applied
             },
         },
     },

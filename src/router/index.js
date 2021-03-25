@@ -7,6 +7,7 @@ const Channels = () => import("../views/Channels");
 const Favorites = () => import("../views/Favorites");
 const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
 const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
+const ChannelMusic = () => import("../views/channel_views/ChannelMusic");
 const Watch = () => import("../views/Watch");
 const About = () => import("../views/About");
 const Search = () => import("../views/Search");
@@ -15,7 +16,11 @@ const Library = () => import("../views/Library");
 const Settings = () => import("../views/Settings");
 const NotFound = () => import("../views/NotFound");
 const Login = () => import("../views/Login");
+const EditVideo = () => import("../views/EditVideo");
+const OrgMusic = () => import("../views/OrgMusic");
 // const MugenClips = () => import("../views/MugenClips");
+const MultiView = () => import("../views/MultiView");
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -43,6 +48,12 @@ const routes = [
                 name: "channel_about",
                 component: ChannelAbout,
             },
+            {
+                path: "music",
+                name: "channel_music",
+                component: ChannelMusic,
+            },
+
             // {
             //     path: "stats",
             //     name: "channel_stats",
@@ -61,24 +72,34 @@ const routes = [
         component: Channels,
     },
     {
+        path: "/music/",
+        name: "music",
+        component: OrgMusic,
+    },
+    {
         path: "/favorites/",
         name: "favorites",
         component: Favorites,
     },
     {
-        name: "watch_id",
-        path: "/watch/:id",
+        name: "watch",
+        path: "/watch/:id?",
         component: Watch,
     },
     {
-        name: "watch",
-        path: "/watch",
-        component: Watch,
+        name: "edit_video",
+        path: "/edit/video/:id/:tab?",
+        component: EditVideo,
     },
     {
         name: "mugen-clips",
         path: "/infinite",
         component: Watch,
+    },
+    {
+        name: "multiview",
+        path: "/multiview/:layout?",
+        component: MultiView,
     },
     {
         name: "library",
@@ -121,14 +142,6 @@ const router = new VueRouter({
     routes,
     // eslint-disable-next-line no-unused-vars
     scrollBehavior(to, from, savedPosition) {
-        const fromHistory = Boolean(savedPosition);
-
-        if (fromHistory && this.app.$store.state.routerHistory.length > 0) {
-            this.app.$store.dispatch("navigate", {});
-        } else {
-            this.app.$store.dispatch("navigate", { from: from.fullPath });
-        }
-        // console.log(from);
         return savedPosition || { x: 0, y: 0 };
     },
 });

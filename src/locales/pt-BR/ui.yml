@@ -1,0 +1,246 @@
+---
+component:
+  apiError:
+    title: Gomenasorry!
+    textBeforeTwitter: 'Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter'
+    textAfterTwitter: ' ou relate o erro por meio da '
+    aboutPage: página de Informações
+  channelList:
+    signInToFavorite: Conecte-se para adicionar canais ao Favoritos
+    unfavoriteAllInGroup: Remover todos desse grupo dos favoritos
+    favoriteAllInGroup: Adicionar todos desse grupo aos favoritos
+  channelInfo:
+    videoCount: '{0} Vídeos'
+    clipCount: '{n} Clipes'
+    subscriberCount: '{n} Inscritos'
+    subscriberNA: Número de inscritos indisponível
+    totalViews: Total de Visualizações
+  channelSocials:
+    addToFavorites: Adicionar aos favoritos
+    removeFromFavorites: Remover dos favoritos
+  mainNav:
+    home: Início
+    favorites: Favoritos
+    channels: Canais
+    about: Informações
+    library: Biblioteca
+    settings: Configurações
+    login: Login
+    logout: Sair
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Configurações da Conta
+    music: Música
+    multiview: Multi-telas
+  videoCard:
+    clips: '{n} Clipes'
+    watching: '{0} assistindo agora'
+    liveNow: Ao Vivo
+    edit: Editar
+  videoDescription:
+    description: Descrição
+  video:
+    comment: { }
+  description:
+    showLess: Mostrar Menos
+    showMore: Mostrar Mais
+  watch:
+    streamingFor: Transmissão iniciada há {0}
+    nextUpInMugen: Próximo
+  search:
+    searchLabel: Pesquisar
+    type:
+      channel: Canal
+      topic: Tópico
+      org: Org
+      titledesc: Título e Desc
+      comments: Comentários
+      videourl: Vídeo URL
+  relatedVideo:
+    clipsLabel: Clipes
+    simulcastsLabel: Simulcasts
+    refersLabel: Ref
+    sourcesLabel: Fontes
+    songsLabel: músicas
+    recommendationsLabel: recomendados
+  paginateLoad:
+    newer: Novos
+    older: Antigos
+  music:
+    clearPlaylist: Limpar
+  channelMusic:
+    recentSongsHeader: Músicas Recentes
+    weeklyTopPlaysHeader: Mais ouvidas da semana
+  songList:
+    songTitle: Título
+    songCoveredBy: Cover por
+    songDuration: Duração
+    sangOnTime: Cover feito em
+  orgMusic:
+    monthlyTopForOrg: Mais tocadas do mes por {0}
+    weeklyTopForOrg: Mais tocadas da semana por {0}
+  installPrompt:
+    title: Instalar Holodex
+    callToAction: Assistir vídeos no Holodex funciona melhor quando adicionado à tela inicial
+    notNowBtn: Agora Não
+    installBtn: Instalar
+    iOS:
+      popup: Instalar Holodex no iOS
+      afterExportIcon: e "Adicionar à Tela de Início"
+      beforeExportIcon: Toque
+views:
+  channels:
+    channelType: { }
+    sortOptions:
+      subscribers: Inscritos
+      group: Groupo
+      recentUpload: Uploads Recentes
+      videoCount: Número de Vídeos
+      clipCount: Número de Clipes
+    tabs:
+      Vtuber: VTuber
+      Subber: Tradutor
+      Favorites: Favoritos
+    favoritesAreEmpty: Você não tem favoritos!
+  home:
+    liveOrUpcomingHeading: Live / Próximas Transmissões
+    recentVideosHeading: Vídeos Recentes
+    recentVideoToggles:
+      all: Todos
+      official: Oficiais
+      subber: Clipes
+  library:
+    savedVideosTitle: Vídeos Salvos
+    createYtPlaylistButton: Criar uma Playlist no Youtube ({0})
+    deleteFromLibraryButton: Deletar ({0})
+    deleteConfirmation: Tem certeza de que deseja excluir {0} vídeos?
+    deleteConfirmationOK: Deletar
+    deleteConfirmationCancel: Cancelar
+    selectionReset: Redefinir
+    selectionSelectAll: Selecionar Todos
+    emptyLibrary: Você não tem vídeos salvos!
+    exportSelected: Exportar Selecionado(s) ({0})
+    exportYtPlaylist: Playlist no Youtube
+    exportCsv: Arquivo CSV
+    selectionSelect50: Selecionar 50
+    exportYTExplanation: >-
+      A Playlist criada por este recurso é <b>não listada</b> e pode ser excluída pelo Youtube. <br /> Como os recursos do Youtube são incompletos, siga os seguintes passo para salvar a playlist <b>não listada</b> em sua conta do Youtube.
+    exportYTHeading: Instruções para salvar a Playlist no Youtube
+    exportYTInstructions: >-
+      <b class="red--text">Passo 1</b>: Abra a playlist no youtube, e altere a interface para o modo Miniplayer. <br /><br /> <b class="red--text">Passo 2</b>: Escolha qualquer vídeo e adicione-o à fila. <br /><br /> <b class="red--text">Passo 3</b>: A Playlist agora pode ser salva em sua conta clicando em Salvar.
+  notFound:
+    title: Conteúdo não encontrado
+    back: Voltar para o Início
+  search:
+    sort:
+      newest: Novos
+      oldest: Angitos
+    type:
+      all: Todos
+      official: Oficiais
+      clip: Clipe
+    unsupportedQuery: >-
+      Atualmente, pesquisar clipes por <kbd>Tópico</kbd> e <kbd>Organização</kbd> não é suportado. Nenhum <b> clipe </b> aparecerá.
+  settings:
+    title: Configurações
+    darkModeLabel: Modo Escuro
+    darkModeMsg: Altera o tema entre modo claro e modo escuro
+    redirectModeLabel: Assistir no Youtube
+    redirectModeMsg: >-
+      Clique na thumbnail de um vídeo para assistir direto no Youtube, Clique no título de um vídeo para assistir no Holodex
+    useEnglishNameLabel: Usar nomes em Inglês
+    useEnglishNameMsg: Mostrar o nome dos VTuber em inglês
+    hideVideoThumbnailsLabel: Esconder Thumbnails
+    hideVideoThumbnailsMsg: >-
+      Esconde as Thumbnails dos vídeo Pode ajudar no carregamento da pagina e barra de rolagem menor quando acessando por celulares
+    pushNotificationLabel: Push Notifications (Em Breve)
+    pushNotificationMsg: Ativa push notification para seus canais favoritos
+    autoplayVideoLabel: Reprodução automática de Videos
+    autoplayVideoMsg: Liga a reprodução automática de vídeos
+    scrollModeLabel: Modo de Rolagem
+    scrollModeMsg: Use rolar/tocar para navegar nas páginas
+    resetAllSettings: Redefinir todas as configurações/dados
+    clipLanguageSelection: 'Ver clipes nestes idiomas:'
+  app:
+    update_available: Uma atualização está disponível
+    update_btn: Atualizar
+    close_btn: Fechar
+    check_about_page: Veja o que há de novo no Holodex acessando a página de Informações
+    nowSupportsMultiOrg: Holodex agora suporta múltiplas organizações.
+    loginCallToAction: Faça login para ter seus próprios favoritos!
+  about:
+    add_my_channel: Adicionar meu canal ao Holodex
+  watch:
+    theaterMode: Modo Teatro
+    saveToLibrary: Salvar vídeo na biblioteca
+    mentionIconLabel: Menções
+    chat:
+      loading: Carregando o Chat...
+      hideTLBtn: Esconder Traduções
+      showTLBtn: Mostrar Traduções
+      TLSettingsTitle: Configurações de tradução
+      StickBottomSettingLabel: Manter no Rodapé
+      StickBottomSettingsDesc: A caixa tradução ficara na parte inferior do Chat (Fica no topo por padrão)
+      retryBtn: Tentar Novamente
+      status:
+        reconnecting: Tentando Reconexão
+        reconnectFailed: Não foi possível reconectar
+        notLive: >-
+          A transmissão ainda não começou, tente novamente dentro de 15 minutos após o início da transmissão
+        connectedToChat: Conectado
+        disconnectedToChat: Desconectado
+  favorites:
+    promptForAction: >-
+      Crie uma lista de seus vtubers favoritos e veja seus clipes e lives  mais recentes nesta página.
+    manageFavorites: Gerenciar Favoritos
+  editor:
+    needlogin: Você precisará fazer login para editar metadados de vídeo e música do Holodex.
+  login:
+    apikeyMsg: >-
+      Você pode usar a chave de API para consultar a Holodex API programaticamente. Apenas uma  chave por conta. Gerar uma nova chave fará com que as chaves antigas expirem em até 24 horas.
+    apikeyNew: Gerar nova Chave de API
+    ownedYtChannel: Meu Canal do Youtube
+    futureYtcOwnerMessage: >-
+      No futuro, planejamos disponibilizar mais ferramentas para quem tem canais editar metadados de seus próprios vídeos.
+    linkAcc: Vincular outra conta
+    apikeyResetConfirm1: Tem certeza de que deseja resetar sua chave de API?
+    apikeyResetConfirm2: Isto fará com que as chaves antigas expirem em até 24 horas. Deseja realmente presseguir?
+    apikeyResetNvm: Nada de interessante aconteceu
+  multiview:
+    confirmOverwrite: Sobrescrever layout atual?
+    confirmOverwriteYes: Confirmar
+    permalink: Link Permanente
+    presets: Predefinidas
+    addframe: Adicionar Célula
+    preset:
+      shareOnDiscord: Tem um layout legal para compartilhar? Use o botão compartilhar e nos informe no nosso <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
+      desktop: Desktop
+      mobile: Mobile
+    video:
+      selectLive: Selecionar Live
+      addCustomVideo: Adicionar Vídeo
+time:
+  soon: em breve
+  diff_future_date: Ao Vivo {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: Adicionar
+    update: Atualizar
+    permission: >-
+      Você precisa ser um usuário com título de "Editor" ou superior para atualizar ou excluir  músicas existente. Use nosso <a class='white--text' href='/about'>discord</a> para notificar os editores sobre problemas ou abusos, ou candidate-se para se tornar um editor.
+    titles:
+      addSong: 'Metadados de Música: Adicionar uma nova Música'
+      songList: 'Lista de Músicas: {0}'
+      help: Guia
+    itunesLookupPlaceholder: (Opcional) Procurar no iTunes
+    moveRight2s: Avançar 2 segundos
+    testEnd: Teste começando 3 segundos antes do final.
+    setToCurrentTime: Ir para ({0})
+    moveLeft2s: Retroceder 2 segundos
+    trackNameInput: Nome da Música
+    originalArtistInput: Artista Original
+    testStart: Testar o inicio
+    startInput: Iniciar
+    endInput: 'Duração em segundos: (end @ {0})'
+  exitMode: Sair do Modo de Edição
+  enterMode: Editar Vídeo

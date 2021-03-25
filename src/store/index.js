@@ -2,11 +2,13 @@ import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
-import { ORGS } from "@/utils/consts";
+import jwtDecode from "jwt-decode";
+import { MUSIC_PLAYER_STATE, ORGS } from "@/utils/consts";
 import * as icons from "@/utils/icons";
 
 // import { dayjs } from "@/utils/time";
 
+import backendApi from "@/utils/backend-api";
 import home from "./home.module";
 import channel from "./channel.module";
 import channels from "./channels.module";
@@ -14,6 +16,8 @@ import library from "./library.module";
 import watch from "./watch.module";
 import settings from "./settings.module";
 import favorites from "./favorites.module";
+import music from "./music.module";
+import multiview from "./multiview.module";
 
 Vue.use(Vuex);
 
@@ -23,12 +27,15 @@ function defaultState() {
         firstVisit: true,
         showUpdateDetails: false,
         firstVisitMugen: true,
+        lastShownInstallPrompt: 0,
+
         // authorization
         userdata: {
             user: null,
             jwt: null,
         },
         isMobile: true,
+        navDrawer: false,
         currentOrg: "Hololive",
         currentGridSize: 0,
         // navigation history tracking
@@ -41,7 +48,8 @@ function defaultState() {
  *---------------------------------------------* */
 
 const syncedModules = /^(?:library|settings)/;
-const syncedMutations = /^(?:setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites)/;
+// eslint-disable-next-line max-len
+const syncedMutations = /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|music\/(?:addSong|removeSong|resetState|clearPlaylist))/;
 
 export default new Vuex.Store({
     plugins: [
@@ -50,9 +58,11 @@ export default new Vuex.Store({
             // eslint-disable-next-line no-unused-vars
             reducer: (state, paths) => {
                 const o = { ...state };
+                o.music = { ...o.music };
                 // don't want to persist router history across tabs/sessions.
                 o.routerHistory = [];
-
+                o.music.state = MUSIC_PLAYER_STATE.PAUSED; // don't start new tab playing music.
+                o.music.isOpen = false; // hide it
                 return o;
             },
         }),
@@ -94,6 +104,9 @@ export default new Vuex.Store({
         setIsMobile(state, val) {
             state.isMobile = val;
         },
+        setNavDrawer(state, val) {
+            state.navDrawer = val;
+        },
         // login
         setUser(state, { user, jwt }) {
             Vue.set(state.userdata, "user", user);
@@ -114,6 +127,9 @@ export default new Vuex.Store({
         setCurrentGridSize(state, size) {
             state.currentGridSize = size;
         },
+        installPromptShown(state) {
+            state.lastShownInstallPrompt = new Date().getTime();
+        },
     },
     actions: {
         async navigate({ commit }, { from = undefined }) {
@@ -124,6 +140,28 @@ export default new Vuex.Store({
             commit("setUser", { user: null, jwt: null });
             dispatch("favorites/resetFavorites");
         },
+        async loginCheck({ state, dispatch }) {
+            if (state.userdata.jwt) {
+                const { exp } = jwtDecode(state.userdata.jwt);
+                const dist = exp - Date.now() / 1000;
+                console.log(`Login token expiring in ${dist} s`);
+                if (dist < 0) {
+                    // already expired
+                    await dispatch("logout");
+                }
+            }
+            // do nothing.
+        },
+        async loginVerify({ state, dispatch }) {
+            if (state.userdata && state.userdata.jwt) {
+                const valid = await backendApi.loginIsValid(state.userdata.jwt);
+                if (valid) {
+                    console.log("Login credentials validated, OK");
+                } else {
+                    await dispatch("logout");
+                }
+            }
+        },
     },
     modules: {
         home,
@@ -133,5 +171,7 @@ export default new Vuex.Store({
         watch,
         settings,
         favorites,
+        music,
+        multiview,
     },
 });

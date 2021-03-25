@@ -96,7 +96,6 @@ import {
     mdiCommentSearch,
 } from "@mdi/js";
 import * as icons from "@/utils/icons";
-import ChannelChip from "@/components/channel/ChannelChip";
 import api from "@/utils/backend-api";
 import ChannelImg from "@/components/channel/ChannelImg";
 import { debounce } from "@/utils/functions";
@@ -105,7 +104,6 @@ import { json2csvAsync, csv2jsonAsync } from "json-2-csv";
 export default {
     name: "SearchBar",
     components: {
-        ChannelChip,
         ChannelImg,
     },
     data() {
@@ -259,7 +257,7 @@ export default {
 
 <style>
 .search-bar {
-    max-width: 670px;
+    max-width: 670px !important;
     margin-bottom: -5px;
 }
 .search-bar-small {

@@ -2,15 +2,14 @@ import axios from "axios";
 import axiosRetry from "axios-retry";
 import { dayjs } from "@/utils/time";
 import querystring from "querystring";
+import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 
-// eslint-disable-next-line max-len,no-useless-escape
-const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?:channel|c)\/([\w\-\_]*)/i;
-// eslint-disable-next-line max-len,no-useless-escape
-const VIDEO_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(?:.*\&|\?)?(?:t?=?)?(\d+[\dhms]*)?/i;
+export const API_BASE_URL =
+    process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api" : `${window.location.origin}/api`;
+// export const API_BASE_URL = "https://staging.holodex.net/api/";
 
 export const axiosInstance = axios.create({
-    // baseURL: process.env.NODE_ENV === "development" ? "https://holodex.net/api/v2" : "/api/v2",
-    baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2434/v2" : "/api/v2",
+    baseURL: `${API_BASE_URL}/v2`,
     retries: 3,
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
@@ -39,8 +38,16 @@ export default {
     channel(id) {
         return axiosInstance.get(`/channels/${id}`);
     },
-    video(id) {
-        return axiosInstance.get(`/videos/${id}`);
+    /**
+     * Fetches a video
+     * @param {*} id the ID of the video
+     * @param {*} lang the acceptable subtitle languages
+     * @param {*} c whether to also provide comments, 1 to activate
+     * @returns
+     */
+    video(id, lang, c) {
+        const q = querystring.stringify({ lang, c });
+        return axiosInstance.get(`/videos/${id}?${q}`);
     },
     comments(videoId) {
         return axiosInstance.get(`/videos/${videoId}/comments`);
@@ -88,6 +95,24 @@ export default {
             },
         );
     },
+    loginIsValid(jwt) {
+        return axiosInstance
+            .get("/user/check", {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            })
+            .catch(() => false);
+    },
+    resetAPIKey(jwt) {
+        return (
+            axiosInstance
+                .get("/user/createKey", {
+                    headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+                })
+                // eslint-disable-next-line no-alert
+                .catch(() => alert("something went wrong creating your key..."))
+        );
+    },
+
     favorites(jwt) {
         return axiosInstance.get("/users/favorites", {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
@@ -130,5 +155,46 @@ export default {
     },
     rotation() {
         return axiosInstance.get("/rotation");
+    },
+    songListByVideo(channelId, videoId, allowCache) {
+        const dt = allowCache ? "_" : Date.now();
+        return axiosInstance.post(`/songs/latest?c=${dt}`, { channel_id: channelId, video_id: videoId });
+    },
+    tryCreateSong(songObj, jwt) {
+        return axiosInstance.put("/songs", songObj, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    deleteSong(songObj, jwt) {
+        return axiosInstance.delete("/songs", {
+            data: { ...songObj },
+
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    chatHistory(id, lang) {
+        return axiosInstance.get(`/chat/${id}/history?lang=${lang}`);
+    },
+    /**
+     * Fetches song lists up to LIMIT count with offset. Always ordered by available_at date.
+     * @param {{org?, channel_id?, video_id?, q?}} condition one of the conditions
+     * @param {number} offset
+     * @param {number} limit
+     */
+    songListByCondition(condition, offset, limit) {
+        return axiosInstance.post("/songs/latest", { ...condition, offset, limit });
+    },
+    trackSongPlay(channelId, videoId, name) {
+        return axiosInstance.get(`/songs/record/${channelId}/${videoId}/${name}`);
+    },
+    /**
+     * Grabs top 20 songs from API.
+     * @param {*} org = org name
+     * @param {*} channelId = channel ID. only org name OR channel ID should be supplied, never both.
+     * @param {*} type type = 'w' for weekly, 'm' for monthly.
+     */
+    topSongs(org, channelId, type) {
+        const q = querystring.stringify(org ? { org, type } : { channel_id: channelId, type });
+        return axiosInstance.get(`/songs/top20?${q}`);
     },
 };

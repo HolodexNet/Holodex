@@ -33,6 +33,8 @@ export function formatDuration(secs) {
 export function localizedDayjs(time, lang) {
     // eslint-disable-next-line no-param-reassign
     if (lang === "zh") lang = "zh-tw";
+    // eslint-disable-next-line no-param-reassign
+    if (lang === "pt") lang = "pt-br";
     return dayjs(time).locale(lang);
 }
 
@@ -40,7 +42,9 @@ export function formatDistance(time, lang = "en", $t) {
     let diff;
     if (!time) return "?";
     if (Math.abs(dayjs().diff(time, "minutes")) < 1) return $t("time.soon");
-    if (Math.abs(dayjs().diff(time, "hour")) > 23) return localizedDayjs(time, lang).format("LLL");
+    if (Math.abs(dayjs().diff(time, "days")) > 60) return localizedDayjs(time, lang).format("ll");
+    if (Math.abs(dayjs().diff(time, "hour")) > 23)
+        return `${localizedDayjs(time, lang).format("l")} (${localizedDayjs(time, lang).format("LT")})`;
     const timeObj = localizedDayjs(time, lang);
     if (new Date(time) > Date.now()) {
         diff = $t("time.diff_future_date", [

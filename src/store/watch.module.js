@@ -11,7 +11,7 @@ const initialState = {
     },
     isLoading: true,
     hasError: false,
-    comments: [],
+    // comments: [],
 };
 
 export const state = { ...initialState };
@@ -19,12 +19,12 @@ export const state = { ...initialState };
 const getters = {};
 
 const actions = {
-    fetchVideo({ state, commit }) {
+    fetchVideo({ state, commit, rootState }) {
         if (!state.id) return commit("fetchError");
 
         commit("fetchStart");
         return api
-            .video(state.id)
+            .video(state.id, rootState.settings.clipLangs.join(","), 1)
             .then(({ data }) => {
                 commit("setVideo", data);
                 commit("fetchEnd");
@@ -34,11 +34,11 @@ const actions = {
                 commit("fetchError");
             });
     },
-    fetchComments({ state, commit }) {
-        return api.comments(state.id).then(({ data }) => {
-            commit("setComments", data);
-        });
-    },
+    // fetchComments({ state, commit }) {
+    //     return api.comments(state.id).then(({ data }) => {
+    //         commit("setComments", data);
+    //     });
+    // },
 };
 
 const mutations = {
@@ -58,9 +58,9 @@ const mutations = {
     setVideo(state, video) {
         state.video = video;
     },
-    setComments(state, comments) {
-        state.comments = comments;
-    },
+    // setComments(state, comments) {
+    //     state.comments = comments;
+    // },
     resetState(state) {
         Object.assign(state, initialState);
     },

@@ -1,28 +1,5 @@
 <template>
     <v-list-item class="d-block my-3 comment">
-        <!-- punchout to comment directly -->
-        <!-- <v-chip
-            class="d-inline"
-            small
-            label
-            :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`"
-        >
-            {{ $t("component.video.comment.openOnYoutube") }}&emsp;&emsp;
-            <v-icon>{{ mdiYoutube }}</v-icon>
-            {{ $t("component.video.comment.openOnYoutubeAfter") }}
-        </v-chip> -->
-        <!-- <truncated-text 
-            style="white-space: pre-wrap" 
-            class="text-body-2" 
-            :html="processedMessage"
-            lines="5"
-        >
-            <template v-slot:button="{ expanded }">
-                <span class="text-body-2">
-                    {{ expanded ? $t("component.description.showLess") : $t("component.description.showMore") }}
-                </span>
-            </template>
-        </truncated-text> -->
         <truncated-text style="white-space: pre-wrap" class="text-body-2" :html="processedMessage" lines="5">
             <template v-slot:button="{ expanded }">
                 <span class="text-subtitle-2" style="color: #aaa">{{ expanded ? "Close" : "Read more" }}</span>
@@ -34,14 +11,13 @@
             target="_blank"
             rel="noopener noreferrer"
         >
-            <v-icon small>{{ mdiOpenInNew }}</v-icon>
+            <v-icon small>{{ icons.mdiOpenInNew }}</v-icon>
         </a>
         <!-- comment body -->
     </v-list-item>
 </template>
 
 <script>
-import { mdiOpenInNew } from "@mdi/js";
 import TruncatedText from "../common/TruncatedText";
 // import TruncatedText from '../common/TruncatedText.vue';
 
@@ -51,9 +27,7 @@ export default {
     name: "Comment",
     components: { TruncatedText },
     data() {
-        return {
-            mdiOpenInNew,
-        };
+        return {};
     },
     props: {
         comment: {

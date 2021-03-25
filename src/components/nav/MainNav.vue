@@ -1,23 +1,38 @@
 <template>
     <div>
-        <NavDrawer :pages="pages" v-model="drawer" v-if="!isMobile" :temporary="isWatchPage" />
+        <!-- watch page nav drawer is temporary, but causes layout shifting from hiding/unhiding -->
+        <!-- create two different instances as a work around -->
+        <NavDrawer :pages="pages" v-model="navDrawer" :temporary="isMobile || isWatchPage">
+            <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
+            <template v-if="isMobile">
+                <InstallPrompt></InstallPrompt>
+                <user-card noSetting inNavDrawer style="background-color: inherit"></user-card>
+                <v-divider />
+            </template>
+        </NavDrawer>
         <!--* nav drawer is for the left --->
-        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile && !isWatchPage" />
+        <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile" :active="!isWatchPage" />
+        <!-- <music-bar></music-bar> -->
+        <MusicBar2 v-if="$store.state.music.isOpen" />
         <!--* bottom bar --->
 
-        <v-app-bar id="top-bar" class="blue lighten-1" :app="!isWatchPage" clipped-left flat>
+        <v-app-bar
+            id="top-bar"
+            :class="{
+                'secondary darken-3': darkMode,
+                'primary lighten-1': !darkMode,
+            }"
+            :app="!isWatchPage"
+            clipped-left
+            flat
+            v-show="!(isMobile && isWatchPage) && !isMultiView"
+        >
             <!--=============================== Top Bar (Regular View) =============================-->
 
             <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
-                <!--================= Back button ⬅️ (Mobile only) ================-->
-
-                <v-app-bar-nav-icon @click.stop="goBack()" v-if="isMobile && isFirstPage">
-                    <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
-                </v-app-bar-nav-icon>
-
                 <!--================= Logo & Search Bar (Space permitting) ================-->
 
-                <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="!isMobile">
+                <v-app-bar-nav-icon @click.stop="navDrawer = !navDrawer">
                     <v-icon>{{ icons.mdiMenu }}</v-icon>
                 </v-app-bar-nav-icon>
                 <v-toolbar-title style="overflow: visible" :class="{ 'pa-0': isMobile }">
@@ -34,11 +49,22 @@
                                 style="position: relative"
                             >
                                 <transition name="fade" mode="out-in">
-                                    <span :key="currentOrg" style="text-decoration: underline">{{
-                                        ORGS_PREFIX[currentOrg] || currentOrg
-                                    }}</span>
+                                    <span
+                                        :key="currentOrg"
+                                        style="text-decoration: underline"
+                                        :class="{
+                                            'grey--text text--darken-4': !darkMode,
+                                            'grey-text text--lighten-2': darkMode,
+                                        }"
+                                        >{{ ORGS_PREFIX[currentOrg] || currentOrg }}</span
+                                    >
                                 </transition>
-                                <span class="primary--text text--lighten-2" ref="dexBtn">dex</span>
+                                <span
+                                    class="primary--text"
+                                    :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
+                                    ref="dexBtn"
+                                    >dex</span
+                                >
                                 <v-tooltip
                                     v-model="firstVisitComputed"
                                     right
@@ -59,11 +85,6 @@
                                     <div>{{ $t("views.app.nowSupportsMultiOrg") }}</div>
                                     <div>{{ $t("views.app.loginCallToAction") }}</div>
                                 </v-tooltip>
-
-                                <!-- 
-                                    <div style="position: absolute; bottom: -6px; left: 0px; font-size: 12px;" 
-                                        class="text--secondary">
-                                    Select Org</div> -->
                             </div>
                         </template>
 
@@ -83,63 +104,40 @@
 
                 <!--================= Account [👤] Button (Desktop Only) ================-->
 
+                <v-slide-y-transition>
+                    <v-btn
+                        icon
+                        @click="$store.commit('music/openBar')"
+                        v-if="!isMobile && $store.state.music.playlist.length > 0 && !$store.state.music.isOpen"
+                    >
+                        <v-icon>{{ icons.mdiMusic }}</v-icon>
+                    </v-btn>
+                </v-slide-y-transition>
                 <v-menu left offset-y transition="slide-y-transition" v-if="!isMobile">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
-                            <v-icon>{{ icons.mdiAccountCircleOutline }}</v-icon>
+                            <v-icon v-if="!($store.state.userdata && $store.state.userdata.user)">{{
+                                icons.mdiAccountCircleOutline
+                            }}</v-icon>
+                            <v-avatar size="40" v-else>
+                                <img
+                                    :src="`https://avatars.dicebear.com/api/jdenticon/${$store.state.userdata.user.id}.svg`"
+                                    alt="Avatar generated by your user ID"
+                                />
+                            </v-avatar>
                         </v-btn>
                     </template>
 
+                    <!------- USER CARD ------->
                     <user-card></user-card>
-                    <!--todo user card here. -->
+                    <!------- END USER CARD ------->
                 </v-menu>
-
-                <!--================= Refresh [⟳] Button (Mobile Only) ================-->
-
-                <v-btn
-                    icon
-                    class="ml-auto"
-                    :class="{ 'refresh-rotate': refreshing }"
-                    v-if="isMobile"
-                    @click="onRefresh"
-                >
-                    <v-icon>{{ icons.mdiRefresh }}</v-icon>
-                </v-btn>
 
                 <!--================= Search [🔍] Button (Mobile Only) ================-->
 
-                <v-btn icon v-if="isMobile" @click="searchBarExpanded = true">
+                <v-btn icon v-if="isMobile" @click="searchBarExpanded = true" class="ml-auto">
                     <v-icon>{{ icons.mdiMagnify }}</v-icon>
                 </v-btn>
-
-                <!--================= Condensed [⋮] Menu (Mobile Only) ================-->
-
-                <v-menu left offset-y v-if="isMobile">
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon v-bind="attrs" v-on="on">
-                            <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
-                        </v-btn>
-                    </template>
-
-                    <v-list v-if="isMobile">
-                        <!-- <v-list-item
-                            v-for="page in pages.filter((item) => item.collapsible)"
-                            :key="page.name"
-                            :to="page.path"
-                        >
-                            <v-list-item-title>
-                                {{ page.name }}
-                            </v-list-item-title>
-                        </v-list-item> -->
-                        <user-card></user-card>
-                        <v-list-item to="/about" key="about">
-                            <v-list-item-icon>
-                                <v-icon>{{ icons.mdiHelpCircle }}</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-title> {{ $t("component.mainNav.about") }} </v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
             </template>
 
             <!--=========================== END OF Regular View ===========================-->
@@ -167,26 +165,9 @@ import UserCard from "@/components/user/UserCard";
 import { ORGS, ORGS_PREFIX } from "@/utils/consts";
 import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
+import InstallPrompt from "@/components/common/InstallPrompt";
 import NavDrawer from "./NavDrawer";
 import BottomNav from "./BottomNav";
-
-/**
- * Returns the index of the last element in the array where predicate is true, and -1
- * otherwise.
- * @param array The source array to search in
- * @param {(value: T, index: number, obj: T[]) => boolean} predicate
- *  find calls predicate once for each element of the array, in descending
- * order, until it finds one where predicate returns true. If such an element is found,
- * findLastIndex immediately returns that element index. Otherwise, findLastIndex returns -1.
- */
-// function findLastIndex(array, predicate) {
-//     let l = array.length;
-//     // eslint-disable-next-line no-plusplus
-//     while (l--) {
-//         if (predicate(array[l], l, array)) return l;
-//     }
-//     return -1;
-// }
 
 export default {
     components: {
@@ -195,15 +176,14 @@ export default {
         BottomNav,
         UserCard,
         Logo,
+        InstallPrompt,
+        MusicBar2: () => import("./MusicBar2"),
     },
     data() {
         return {
-            drawer: null,
-            temporary: false,
             icons,
             favoritesExpanded: false,
             searchBarExpanded: false,
-            refreshing: false,
             ORGS,
             ORGS_PREFIX,
         };
@@ -212,8 +192,14 @@ export default {
         isMobile() {
             return this.$store.state.isMobile;
         },
+        darkMode() {
+            return this.$store.state.settings.darkMode;
+        },
         isWatchPage() {
-            return this.$route.name === "watch_id" || this.$route.name === "watch";
+            return ["watch_id", "watch", "mugen-clips", "edit_video", "multiview"].includes(this.$route.name);
+        },
+        isMultiView() {
+            return this.$route.name === "multiview";
         },
         currentOrg: {
             get() {
@@ -232,6 +218,14 @@ export default {
             },
             set() {
                 return this.$store.commit("setVisited");
+            },
+        },
+        navDrawer: {
+            get() {
+                return this.$store.state.navDrawer;
+            },
+            set(val) {
+                return this.$store.commit("setNavDrawer", val);
             },
         },
         pages() {
@@ -255,12 +249,26 @@ export default {
                     name: this.$t("component.mainNav.library"),
                     path: "/library",
                     icon: icons.mdiAnimationPlay,
+                    divider: true,
+                },
+                {
+                    name: this.$t("component.mainNav.multiview"),
+                    path: "/multiview",
+                    icon: icons.mdiViewDashboard,
+                    collapsible: true,
+                },
+                {
+                    name: this.$t("component.mainNav.music"),
+                    path: "/music",
+                    icon: icons.mdiMusic,
+                    collapsible: true,
                 },
                 {
                     name: this.$t("component.mainNav.MugenClips"),
                     path: "/infinite",
                     icon: mdiInfinity,
                     collapsible: true,
+                    divider: true,
                 },
                 {
                     name: this.$t("component.mainNav.about"),
@@ -274,69 +282,43 @@ export default {
                     icon: icons.mdiCog,
                     collapsible: true,
                 },
-                // {
-                //     name: "Login",
-                //     path: "/login",
-                //     icon: icons.mdiLoginVariant,
-                //     collapsible: true,
-                // },
             ];
         },
         ...mapState(["firstVisit"]),
     },
     created() {
-        // eslint-disable-next-line no-unused-vars
-        this.$router.afterEach((to, from) => {
-            this.refreshing = false;
-        });
-
         if (this.$store.state.firstVisit) {
             const vm = this;
             setTimeout(() => {
                 vm.$store.commit("setVisited");
             }, 30000);
-            setTimeout(() => {
-                // eslint-disable-next-line no-unused-vars
-                const menu = vm.$refs.dexBtn;
-                menu.click();
-            }, 10000);
+        }
+
+        // always pop out nav drawer if it's not watch page or collapsed
+        if (
+            this.$route.name !== null &&
+            !this.isWatchPage &&
+            !this.isMobile &&
+            this.$vuetify.breakpoint.name !== "md"
+        ) {
+            this.navDrawer = true;
         }
     },
-    methods: {
-        onRefresh() {
-            this.refreshing = true;
-            this.$router.go(0);
-        },
-        goBack() {
-            // this.$router.go(-1);
-            // const historyPaths = this.$store.state.routerHistory;
-            // const idx = findLastIndex(historyPaths, (v) => v.match("^/watch"));
-            // const returnAmount = idx >= 0? idx - historyPaths.length - 1 : 0;
-            // debugger;
-            // TODO there's some weirdness here, regarding going back > 1 pages
-            // coz the router doesn't understand it that well and our history desync's.
-            window.history.go(Math.min(-1, 0));
-        },
-    },
     watch: {
+        // toggle navdrawer when navigating between watch pages on desktop
         isWatchPage() {
-            // close drawer on watch page
-            this.drawer = !this.isWatchPage;
+            if (this.isMobile) return;
+            this.navDrawer = !this.isWatchPage;
+        },
+        // if user is flipping between mobile/desktop breakpoints, keep navdrawer closed
+        isMobile() {
+            this.navDrawer = false;
         },
     },
 };
 </script>
 
 <style scoped>
-.backButton {
-    height: 32px !important;
-    width: 32px !important;
-}
-
-.refresh-rotate {
-    animation: rotation 2s infinite linear;
-}
-
 @keyframes rotation {
     from {
         transform: rotate(0deg);
@@ -347,7 +329,9 @@ export default {
 }
 
 #top-bar {
-    background-color: #2b79ad !important;
+    /* background-color: #2b79ad !important; */
+    padding-left: min(calc(env(safe-area-inset-left)), 30px);
+    padding-right: min(calc(env(safe-area-inset-right)), 30px);
 }
 
 .fade-enter-active,

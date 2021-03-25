@@ -11,7 +11,7 @@ const initialState = {
     currentOffset: 0,
 
     stagedFavorites: {},
-    // lastLiveUpdate: "2021-01-07T18:31:22-08:00",
+    lastLiveUpdate: 0,
 };
 const persistState = {
     favorites: [],
@@ -33,7 +33,7 @@ const getters = {
 };
 
 const actions = {
-    fetchFavorites({ commit, rootState }) {
+    fetchFavorites({ commit, rootState, dispatch }) {
         return api
             .favorites(rootState.userdata.jwt)
             .then((res) => {
@@ -41,26 +41,30 @@ const actions = {
             })
             .catch((e) => {
                 console.error(e);
+                dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
             });
     },
     fetchLive({ state, commit }) {
-        commit("fetchStart");
-        return api
-            .favoritesLive({
-                // last_update: "2021-01-07T18:31:22-08:00",
-                channels: state.favorites.map((f) => f.id).join(","),
-            })
-            .then((res) => {
-                // console.log(res);
-                commit("setLive", res);
-                commit("fetchEnd");
-            })
-            .catch((e) => {
-                console.error(e);
-                commit("fetchError");
-            });
+        if (!state.lastLiveUpdate || Date.now() - state.lastLiveUpdate > 2 * 60 * 1000) {
+            commit("fetchStart");
+            return api
+                .favoritesLive({
+                    // last_update: "2021-01-07T18:31:22-08:00",
+                    channels: state.favorites.map((f) => f.id).join(","),
+                })
+                .then((res) => {
+                    // console.log(res);
+                    commit("setLive", res);
+                    commit("fetchEnd");
+                })
+                .catch((e) => {
+                    console.error(e);
+                    commit("fetchError");
+                });
+        }
+        return null;
     },
-    fetchNextVideos({ state, commit, rootState }, params) {
+    fetchNextVideos({ state, commit, rootState, dispatch }, params) {
         return api
             .favoritesVideos(rootState.userdata.jwt, {
                 offset: state.currentOffset,
@@ -70,12 +74,16 @@ const actions = {
                 lang: rootState.settings.clipLangs.join(","),
                 ...params,
             })
+            .catch((e) => {
+                console.error(e);
+                dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
+            })
             .then(({ data }) => {
                 commit("updateVideos", data);
             });
     },
     // eslint-disable-next-line no-unused-vars
-    updateFavorites: debounce(({ state, commit, rootState }) => {
+    updateFavorites: debounce(({ state, commit, dispatch, rootState }) => {
         const operations = Object.keys(state.stagedFavorites).map((key) => {
             return {
                 op: state.stagedFavorites[key],
@@ -84,6 +92,10 @@ const actions = {
         });
         return api
             .patchFavorites(rootState.userdata.jwt, operations)
+            .catch((e) => {
+                console.error(e);
+                dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
+            })
             .then((res) => {
                 if (res.status === 200) {
                     // console.log("success");
@@ -94,13 +106,13 @@ const actions = {
             })
             .finally(() => commit("clearStagedFavorites"));
     }, 2000),
-    // async resetFavorites({ dispatch, commit, rootState }) {
-    //     commit("resetVideos");
-    //     commit("resetState");
-    //     if (rootState.userdata?.jwt) await dispatch("fetchFavorites");
-    //     if (rootState.userdata?.jwt) await dispatch("fetchLive");
-    //     else commit("setFavorites", []);
-    // },
+    async resetFavorites({ dispatch, commit, rootState }) {
+        commit("resetVideos");
+        commit("resetState");
+        if (rootState.userdata?.jwt) await dispatch("fetchFavorites");
+        if (rootState.userdata?.jwt) await dispatch("fetchLive");
+        else commit("setFavorites", []);
+    },
 };
 
 const mutations = {
@@ -115,6 +127,7 @@ const mutations = {
     },
     setLive(state, live) {
         state.live = live;
+        state.lastLiveUpdate = Date.now();
     },
     setRecentVideoFilter(state, filter) {
         state.recentVideoFilter = filter;
