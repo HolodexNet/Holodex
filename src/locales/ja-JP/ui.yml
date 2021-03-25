@@ -1,7 +1,7 @@
 ---
 component:
   apiError:
-    title: ゴメナソリー!
+    title: ゴメナソーリー!
     textBeforeTwitter: 'コンテンツの取得中にエラーが発生しました。Twitterを確認してください'
     textAfterTwitter: 'または、を通じてエラーを報告します'
     aboutPage: ページについて
@@ -38,6 +38,8 @@ component:
     edit: 編集
   videoDescription:
     description: 概要
+  video:
+    comment: { }
   description:
     showLess: 省略表示
     showMore: 詳細表示
@@ -58,6 +60,8 @@ component:
     simulcastsLabel: 裏枠
     refersLabel: 関連配信
     sourcesLabel: 切り抜き元
+    songsLabel: 楽曲
+    recommendationsLabel: おすすめ
   paginateLoad:
     newer: 次
     older: 前
@@ -75,9 +79,17 @@ component:
     monthlyTopForOrg: 最新曲
     weeklyTopForOrg: 週間のトップ曲
   installPrompt:
-    title: Holodexをインストール
+    title: Holodexをインストールしませんか?
+    callToAction: Holodexをホーム画面に追加することでより便利にHolodexを使えます!
+    notNowBtn: また今度
+    installBtn: インストールする
+    iOS:
+      popup: iOSにHolodexをインストール
+      afterExportIcon: をタップして「ホーム画面に追加」を選択
+      beforeExportIcon: '  '
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 登録者数
       group: グループ
@@ -85,6 +97,7 @@ views:
       videoCount: 動画数
       clipCount: 切り抜き数
     tabs:
+      Vtuber: Vtuber
       Subber: 切り抜きチャンネル
       Favorites: お気に入り
     favoritesAreEmpty: お気に入りにはまだなにも登録されていません！
@@ -105,7 +118,15 @@ views:
     selectionReset: リセット
     selectionSelectAll: すべて選択
     emptyLibrary: 保存されたビデオはありません！
+    exportSelected: 選択済みをエクスポート ({0})
+    exportYtPlaylist: 再生リスト
     exportCsv: CSV ファイル
+    selectionSelect50: 50個選択
+    exportYTExplanation: >-
+      この機能によって作られた再生リストはYoutube側の仕様により<b>非公開</b>になり、その後削除される可能性があります。<br /> <b>非公開</b>のリストをアカウントに保存しておくには次の手順に従ってください。
+    exportYTHeading: Youtubeの再生リストの保存方法
+    exportYTInstructions: >-
+      <b class="red--text">ステップ 1</b>: Youtubeの再生リストを再生してミニプレイヤーに表示を変更してください。<br /><br /> <b class="red--text">ステップ 2</b>: 何かしらの動画をキューに追加してください。<br /><br /> <b class="red--text">ステップ 3</b>: 再生リストが保存可能になります。画像に従って保存してください。
   notFound:
     title: コンテンツが見つかりません
     back: 戻る
@@ -170,6 +191,7 @@ views:
   favorites:
     promptForAction: >-
       お気に入りのライバーリストを作るとそのページでお気に入りライバーの最新動画を確認できます。
+    manageFavorites: お気に入りを管理
   editor:
     needlogin: Holodex上の動画を編集または曲情報を変更するにはログインが必要です
   login:
@@ -184,8 +206,18 @@ views:
     apikeyResetConfirm2: 以前のAPIキーは24時間以内に失効します。本当にリセットしてもよろしいですか?
     apikeyResetNvm: Nothing interesting happend.
   multiview:
+    confirmOverwrite: 既存のレイアウトを上書きしてもよろしいですか？
     confirmOverwriteYes: 確認
-    permalink: パーマリンク
+    permalink: レイアウトを共有
+    presets: プリセット
+    addframe: セルを追加
+    preset:
+      shareOnDiscord: なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
+      desktop: デスクトップ
+      mobile: モバイル
+    video:
+      selectLive: 配信を選択
+      addCustomVideo: 任意の動画を追加
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'
@@ -210,3 +242,5 @@ editor:
     testStart: 開始位置を確認
     startInput: 開始位置
     endInput: '再生時間(秒) ({0}に終了)'
+  exitMode: 編集モードを終了
+  enterMode: 動画を編集
