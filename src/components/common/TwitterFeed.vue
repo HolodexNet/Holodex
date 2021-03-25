@@ -14,10 +14,14 @@
 <script>
 export default {
     mounted() {
-        const externalScript = document.createElement("script");
-        externalScript.setAttribute("src", "https://platform.twitter.com/widgets.js");
-        externalScript.setAttribute("async", "true");
-        document.head.appendChild(externalScript);
+        if (!window.twttr) {
+            const externalScript = document.createElement("script");
+            externalScript.setAttribute("src", "https://platform.twitter.com/widgets.js");
+            externalScript.setAttribute("async", "true");
+            document.head.appendChild(externalScript);
+        } else {
+            window.twttr.widgets.load();
+        }
     },
 };
 </script>

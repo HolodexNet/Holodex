@@ -132,7 +132,7 @@
                         </v-btn>
                     </template>
                 </WatchToolBar>
-                <WatchInfo :video="video" key="info" />
+                <WatchInfo :video="video" key="info" @timeJump="seekTo" />
                 <WatchMugen @playNext="playNext" v-if="isMugen" />
                 <WatchComments
                     :comments="comments"

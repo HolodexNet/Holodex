@@ -61,8 +61,8 @@
                 </a>
             </v-col>
         </div>
-        <v-card-text class="text-body-2">
-            <truncated-text :html="video.description" lines="4" />
+        <v-card-text class="text-body-2" @click="handleClick">
+            <truncated-text :html="processedMessage" lines="4" />
         </v-card-text>
     </v-card>
 </template>
@@ -77,6 +77,8 @@ import { getVideoThumbnails } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
 import TruncatedText from "@/components/common/TruncatedText";
 // import VideoSongs from "@/components/media/VideoEditSongs";
+
+const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
 
 export default {
     name: "WatchInfo",
@@ -122,6 +124,12 @@ export default {
                 }, 1000);
             }
         },
+        handleClick(e) {
+            if (e.target.matches(".comment-chip")) {
+                this.$emit("timeJump", e.target.getAttribute("data-time"));
+                e.preventDefault();
+            }
+        },
     },
     mounted() {
         this.setTimer();
@@ -160,6 +168,16 @@ export default {
         },
         channelChips() {
             return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
+        },
+        processedMessage() {
+            const decoder = document.createElement("div");
+            decoder.innerHTML = this.video.description; // using browser assembly script to sanitize
+            const sanitized = decoder.textContent;
+            const vidUrl = (this.$store.state.settings.redirectMode ? "https://youtu.be/" : "/watch/") + this.videoId;
+            return sanitized.replace(COMMENT_TIMESTAMP_REGEX, (match, hr, min, sec) => {
+                const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
+                return `<a class="comment-chip" href="${vidUrl}?t=${time}" data-time="${time}"> ${match} </a>`;
+            });
         },
     },
 };

@@ -5,7 +5,7 @@
             outlined
             :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
             link
-            @click.prevent="(e) => (!redirectMode ? goToVideo(video.id) : goToYoutube(video.id))"
+            @click.exact.prevent="(e) => (!redirectMode ? goToVideo(video.id) : goToYoutube(video.id))"
             :target="redirectMode ? '_blank' : ''"
             :href="!redirectMode ? `/watch/${video.id}` : `https://youtu.be/${video.id}`"
             rel="noopener"
@@ -59,7 +59,7 @@
             <v-list-item
                 three-line
                 class="pa-0"
-                @click.stop.prevent="goToVideo(video.id)"
+                @click.exact.stop.prevent="goToVideo(video.id)"
                 :href="`/watch/${video.id}`"
                 rel="noopener"
             >
@@ -103,7 +103,7 @@
                             class="no-decoration"
                             :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
                             :href="`/channel/${video.channel.id}`"
-                            @click.stop.prevent="goToChannel(video.channel.id)"
+                            @click.exact.stop.prevent="goToChannel(video.channel.id)"
                         >
                             {{ channelName }}
                         </a>
