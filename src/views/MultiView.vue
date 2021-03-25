@@ -84,7 +84,7 @@
             :is-draggable="editMode"
             :is-resizable="editMode"
             :responsive="false"
-            :vertical-compact="true"
+            :vertical-compact="false"
             :prevent-collision="true"
             :margin="[1, 1]"
             @layout-updated="layoutUpdatedEvent"
