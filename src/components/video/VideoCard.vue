@@ -80,12 +80,17 @@
                             </v-icon>
                         </template>
                         <v-list dense>
-                            <v-list-item :to="`/multiview?layout=AAUY${video.id}${video.channel.name}%2CUAEYchat`"
-                                ><v-icon left>{{ icons.mdiViewDashboard }}</v-icon>
+                            <v-list-item
+                                :disabled="video.type === 'clip'"
+                                :to="`/multiview?layout=AAUY${video.id}${video.channel.name}%2CUAEYchat`"
+                                ><v-icon left :color="video.type === 'clip' && 'grey'">{{
+                                    icons.mdiViewDashboard
+                                }}</v-icon>
                                 {{ $t("component.mainNav.multiview") }}
                             </v-list-item>
-                            <v-list-item :to="`/edit/video/${video.id}`"
-                                ><v-icon left>{{ icons.mdiPencil }}</v-icon> {{ $t("component.videoCard.edit") }}
+                            <v-list-item :disabled="video.type === 'clip'" :to="`/edit/video/${video.id}`"
+                                ><v-icon left :color="video.type === 'clip' && 'grey'">{{ icons.mdiPencil }}</v-icon>
+                                {{ $t("component.videoCard.edit") }}
                             </v-list-item>
                         </v-list>
                     </v-menu>
@@ -331,6 +336,14 @@ export default {
 </script>
 
 <style scoped>
+.theme--light .video-watched {
+    color: #94659c !important;
+}
+
+.theme--dark .video-watched {
+    color: #ce93d8 !important;
+}
+
 .video-card {
     border-radius: 0 !important;
     border: none !important;
@@ -360,10 +373,6 @@ export default {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     padding-right: 22px;
-}
-
-.video-watched {
-    color: #ce93d8 !important;
 }
 
 .channel-name {
