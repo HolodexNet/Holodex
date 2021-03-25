@@ -126,6 +126,7 @@ export default {
         },
         handleClick(e) {
             if (e.target.matches(".comment-chip")) {
+                console.log("timejumping");
                 this.$emit("timeJump", e.target.getAttribute("data-time"));
                 e.preventDefault();
             }
@@ -173,7 +174,7 @@ export default {
             const decoder = document.createElement("div");
             decoder.innerHTML = this.video.description; // using browser assembly script to sanitize
             const sanitized = decoder.textContent;
-            const vidUrl = (this.$store.state.settings.redirectMode ? "https://youtu.be/" : "/watch/") + this.videoId;
+            const vidUrl = (this.$store.state.settings.redirectMode ? "https://youtu.be/" : "/watch/") + this.video.id;
             return sanitized.replace(COMMENT_TIMESTAMP_REGEX, (match, hr, min, sec) => {
                 const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
                 return `<a class="comment-chip" href="${vidUrl}?t=${time}" data-time="${time}"> ${match} </a>`;

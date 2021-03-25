@@ -53,7 +53,7 @@
                         </template>
                     </WatchToolBar>
                     <template v-if="!theatherMode">
-                        <WatchInfo :video="video" key="info" />
+                        <WatchInfo :video="video" key="info" @timeJump="seekTo" />
                         <v-divider />
                         <WatchComments
                             :comments="comments"
@@ -69,7 +69,7 @@
                 <v-col class="related-videos pt-0" :md="theatherMode ? 12 : 3" style="min-width: 324px">
                     <v-row fluid>
                         <v-col v-if="theatherMode" md="9" class="pt-0">
-                            <WatchInfo :video="video" key="info" />
+                            <WatchInfo :video="video" key="info" @timeJump="seekTo" />
                             <v-divider />
                             <WatchComments
                                 :comments="comments"
@@ -89,7 +89,7 @@
                                 @videoUpdate="handleVideoUpdate"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
-                            <WatchSideBar :video="video" @timeJump="seekTo" />
+                            <WatchSideBar :video="video" />
                         </v-col>
                     </v-row>
                 </v-col>
@@ -236,7 +236,9 @@ export default {
         },
         seekTo(time) {
             if (!this.player) return;
+            window.scrollTo(0, 0);
             this.player.seekTo(time);
+            this.player.playVideo();
         },
         playNext({ video, timeOffset }) {
             this.$store.commit("watch/setVideo", video);
