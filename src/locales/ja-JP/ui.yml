@@ -1,6 +1,7 @@
 ---
 component:
   apiError:
+    title: ゴメナソリー!
     textBeforeTwitter: 'コンテンツの取得中にエラーが発生しました。Twitterを確認してください'
     textAfterTwitter: 'または、を通じてエラーを報告します'
     aboutPage: ページについて
@@ -67,11 +68,14 @@ component:
     weeklyTopPlaysHeader: 週間のトップ曲
   songList:
     songTitle: タイトル
+    songCoveredBy: Covered by
     songDuration: 再生時間
     sangOnTime: 配信日時
   orgMusic:
     monthlyTopForOrg: 最新曲
     weeklyTopForOrg: 週間のトップ曲
+  installPrompt:
+    title: Holodexをインストール
 views:
   channels:
     sortOptions:
@@ -185,6 +189,7 @@ views:
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'
+  distance_past_date: '{0}'
 editor:
   music:
     add: 追加
