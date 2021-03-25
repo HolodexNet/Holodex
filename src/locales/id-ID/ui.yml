@@ -58,6 +58,8 @@ component:
     simulcastsLabel: Siaran
     refersLabel: Referensi
     sourcesLabel: Sumber
+    songsLabel: lagu
+    recommendationsLabel: rekomendasi
   paginateLoad:
     newer: Terbaru
     older: Terlama
