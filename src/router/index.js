@@ -98,7 +98,7 @@ const routes = [
     },
     {
         name: "multiview",
-        path: "/multiview",
+        path: "/multiview/:layout?",
         component: MultiView,
     },
     {

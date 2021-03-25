@@ -202,10 +202,10 @@ export default {
         },
     },
     mounted() {
-        if (this.$route.query.layout) {
+        if (this.$route.params.layout) {
             // TODO: verify layout
             try {
-                const parsed = decodeLayout(this.$route.query.layout);
+                const parsed = decodeLayout(this.$route.params.layout);
                 console.log(parsed);
                 if (parsed.layout && parsed.content) {
                     // no layout, overwrite without asking
@@ -225,7 +225,7 @@ export default {
                     this.overwriteCancel = () => {
                         this.overwriteDialog = false;
                         // clear out query on cancel
-                        this.$router.replace({ path: this.$route.path });
+                        this.$router.replace({ path: "/multiview" });
                     };
                     this.overwriteDialog = true;
                 }
@@ -256,13 +256,13 @@ export default {
             },
         },
         exportURL() {
-            const query = `?layout=${encodeURIComponent(
+            const layoutParam = `/${encodeURIComponent(
                 encodeLayout({
                     layout: this.layout,
                     contents: this.layoutContent,
                 }),
             )}`;
-            return `${window.origin}/multiview${query}`;
+            return `${window.origin}/multiview${layoutParam}`;
         },
     },
     methods: {

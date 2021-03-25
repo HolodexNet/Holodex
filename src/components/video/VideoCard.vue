@@ -82,7 +82,7 @@
                         <v-list dense>
                             <v-list-item
                                 :disabled="video.type === 'clip'"
-                                :to="`/multiview?layout=AAUY${video.id}${video.channel.name}%2CUAEYchat`"
+                                :to="`/multiview/AAUY${video.id}${video.channel.name}%2CUAEYchat`"
                                 ><v-icon left :color="video.type === 'clip' && 'grey'">{{
                                     icons.mdiViewDashboard
                                 }}</v-icon>
