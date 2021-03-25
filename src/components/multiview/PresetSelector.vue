@@ -2,9 +2,7 @@
     <v-card>
         <v-card-title>{{ $t("views.multiview.presets") }}</v-card-title>
         <v-card-text>
-            <v-alert dense color="blue-grey">
-                {{ $t("views.multiview.preset.shareOnDiscord") }}
-            </v-alert>
+            <v-alert dense color="blue-grey" v-html="$t('views.multiview.preset.shareOnDiscord')"> </v-alert>
             <v-card-subtitle class="text-body-1">{{ $t("views.multiview.preset.desktop") }}</v-card-subtitle>
             <v-row>
                 <template v-for="preset in desktopPresets">
