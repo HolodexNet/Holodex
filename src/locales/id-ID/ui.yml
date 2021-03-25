@@ -38,6 +38,8 @@ component:
     edit: Ubah
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -87,6 +89,7 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -188,6 +191,7 @@ views:
   favorites:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada halaman ini.
+    manageFavorites: Kelola Favorit
   editor:
     needlogin: Kamu harus masuk untuk mengubah metadata video dan lagu di Holodex.
   login:
@@ -208,8 +212,12 @@ views:
     presets: Preset
     addframe: Tambah Skema
     preset:
+      shareOnDiscord: Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!
       desktop: Desktop
       mobile: Ponsel
+    video:
+      selectLive: Pilih Siaran Langsung
+      addCustomVideo: Tambah Video Lain
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
