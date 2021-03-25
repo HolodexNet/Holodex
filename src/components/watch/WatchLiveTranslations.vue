@@ -3,7 +3,7 @@
         <v-overlay absolute :value="showOverlay || (socket && socket.disconnected)" opacity="0.8">
             <div v-if="isLoading">{{ $t("views.watch.chat.loading") }}</div>
             <div class="pa-3" v-else>{{ overlayMessage }}</div>
-            <v-btn v-if="!isLoading" @click="tlChatReconnect()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
+            <v-btn v-if="!isLoading" @click="tlChatConnect()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
         </v-overlay>
         <v-card-subtitle class="py-2 d-flex justify-space-between">
             <div>
@@ -51,6 +51,7 @@
                     <div
                         v-if="index === 0 || index === tlHistory.length - 1 || item.name !== tlHistory[index - 1].name"
                         class="text-caption"
+                        :color="item.isOwner ? 'primary' : ''"
                     >
                         <v-divider class="my-1" />
                         {{ item.name }}:
@@ -73,6 +74,7 @@ import { Manager } from "socket.io-client";
 import api, { API_BASE_URL } from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
 import { TL_LANGS } from "@/utils/consts";
+import { debounce } from "@/utils/functions";
 
 export default {
     name: "WatchLiveTranslations",
@@ -109,6 +111,7 @@ export default {
     },
     watch: {
         liveTlLang() {
+            // this.tlChatReconnect();
             this.tlChatDisconnect();
             this.tlChatConnect();
         },
@@ -138,16 +141,20 @@ export default {
         },
     },
     methods: {
-        tlChatConnect() {
+        // eslint-disable-next-line func-names
+        tlChatConnect: debounce(function () {
             if (!this.manager) {
-                this.manager = new Manager(API_BASE_URL, {
-                    query: { id: this.video.id },
-                    reconnectionAttempts: 10,
-                    transports: ["websocket"],
-                    upgrade: false,
-                    path: /* process.env.NODE_ENV === "development" ? "/socket.io/" : */ "/api/socket.io/",
-                    secure: true,
-                });
+                this.manager = new Manager(
+                    process.env.NODE_ENV === "development" ? "http://localhost:2434" : API_BASE_URL,
+                    {
+                        query: { id: this.video.id },
+                        reconnectionAttempts: 10,
+                        transports: ["websocket"],
+                        upgrade: false,
+                        path: process.env.NODE_ENV !== "development" && "/api/socket.io/",
+                        secure: true,
+                    },
+                );
                 this.manager.on("reconnect_attempt", (attempt) => {
                     this.overlayMessage = `${this.$t("views.watch.chat.status.reconnecting")} ${attempt}/10`;
                 });
@@ -169,6 +176,7 @@ export default {
                 this.showOverlay = true;
                 return;
             }
+            this.isLoading = true;
 
             this.socket = this.manager.socket("/");
             this.socket.connect();
@@ -176,8 +184,15 @@ export default {
             api.chatHistory(this.video.id, this.liveTlLang).then(({ data }) => {
                 this.tlHistory = data.reverse();
             });
+            this.socket.emit("subscribe", { video_id: this.video.id, lang: this.liveTlLang });
 
-            this.socket.on("connect", () => {
+            this.socket.on("subscribeError", (err) => {
+                this.overlayMessage = err.message;
+                this.isLoading = false;
+                this.showOverlay = true;
+                this.tlChatDisconnect();
+            });
+            this.socket.on("subscribeSuccess", () => {
                 this.showOverlay = false;
                 this.isLoading = false;
             });
@@ -215,14 +230,18 @@ export default {
                 }
                 // console.log(msg);
             });
-        },
+        }, 300),
         tlChatDisconnect() {
-            if (this.socket) this.socket.off();
+            if (this.socket) {
+                this.socket.disconnect(true);
+                this.socket = null;
+                this.manager = null;
+            }
         },
-        tlChatReconnect() {
-            this.isLoading = true;
-            this.tlChatConnect();
-        },
+        // tlChatReconnect() {
+        //     this.isLoading = true;
+        //     this.tlChatConnect();
+        // },
         utcToTimestamp(utc) {
             return formatDuration(dayjs.utc(utc).subtract(dayjs(this.video.start_actual)));
         },
