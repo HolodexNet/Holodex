@@ -127,7 +127,7 @@ views:
       因為YouTube提供的功能不足，您需要透過以下方式來將<b>未列出的</b>YouTube播放清單儲存至帳號內。
     exportYTHeading: YouTube播放清單保存教學
     exportYTInstructions: >-
-      <b class="red--text">第一步</b>：播放YouTube播放清單，並且將介面變更為迷你播放器模式。<br /><br /><b class="red--text">第二步</b>：選擇任何影片，將其加入播放列表。<br /><br /><b class="red--text">第三步</b>：播放清單已可透過點擊「儲存」按鈕儲存。
+      <b class="red--text">第一步</b>：播放YouTube播放清單，並且將介面變更為迷你播放器模式。<br /><br /><b class="red--text">第二步</b>：選擇任意影片，將其加入待播清單。<br /><br /><b class="red--text">第三步</b>：播放清單已可透過點擊「儲存」按鈕儲存。
   notFound:
     title: 查無此內容
     back: 返回首頁
