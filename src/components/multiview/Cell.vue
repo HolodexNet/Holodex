@@ -35,7 +35,7 @@
             </v-btn>
 
             <v-list
-                class="ma-3"
+                class="ma-3 thin-scroll-bar"
                 :max-height="(item.h / 24) * 100 * 0.9 + 'vh'"
                 width="100%"
                 v-if="!layoutContent[item.i]"

@@ -5,7 +5,7 @@
     >
         <MainNav />
         <v-main class="pull-to-refresh" style="transition: none">
-            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo">
+            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView">
                 <router-view :key="$route.path" />
             </keep-alive>
         </v-main>
@@ -284,5 +284,18 @@ body {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
+}
+
+.thin-scroll-bar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.thin-scroll-bar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.thin-scroll-bar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.4);
 }
 </style>
