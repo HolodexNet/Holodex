@@ -30,7 +30,7 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Configurações da Conta
     music: Música
-    multiview: Multi-telas
+    multiview: Multi Stream
   videoCard:
     clips: '{n} Clipes'
     watching: '{0} assistindo agora'
@@ -54,7 +54,7 @@ component:
       org: Org
       titledesc: Título e Desc
       comments: Comentários
-      videourl: Vídeo URL
+      videourl: URL de Vídeo
   relatedVideo:
     clipsLabel: Clipes
     simulcastsLabel: Simulcasts
@@ -76,8 +76,8 @@ component:
     songDuration: Duração
     sangOnTime: Cover feito em
   orgMusic:
-    monthlyTopForOrg: Mais tocadas do mes por {0}
-    weeklyTopForOrg: Mais tocadas da semana por {0}
+    monthlyTopForOrg: Mais ouvidas do mes por {0}
+    weeklyTopForOrg: Mais ouvidas da semana por {0}
   installPrompt:
     title: Instalar Holodex
     callToAction: Assistir vídeos no Holodex funciona melhor quando adicionado à tela inicial
@@ -85,7 +85,7 @@ component:
     installBtn: Instalar
     iOS:
       popup: Instalar Holodex no iOS
-      afterExportIcon: e "Adicionar à Tela de Início"
+      afterExportIcon: ', "Adicionar à Tela de Início"'
       beforeExportIcon: Toque
 views:
   channels:
@@ -98,7 +98,7 @@ views:
       clipCount: Número de Clipes
     tabs:
       Vtuber: VTuber
-      Subber: Tradutor
+      Subber: Tradutores
       Favorites: Favoritos
     favoritesAreEmpty: Você não tem favoritos!
   home:
@@ -146,12 +146,12 @@ views:
     darkModeMsg: Altera o tema entre modo claro e modo escuro
     redirectModeLabel: Assistir no Youtube
     redirectModeMsg: >-
-      Clique na thumbnail de um vídeo para assistir direto no Youtube, Clique no título de um vídeo para assistir no Holodex
+      Clique na thumbnail de um vídeo para assistir direto no Youtube ou clique no título para assistir no Holodex
     useEnglishNameLabel: Usar nomes em Inglês
-    useEnglishNameMsg: Mostrar o nome dos VTuber em inglês
+    useEnglishNameMsg: Mostrar o nome dos VTubers em Inglês
     hideVideoThumbnailsLabel: Esconder Thumbnails
     hideVideoThumbnailsMsg: >-
-      Esconde as Thumbnails dos vídeo Pode ajudar no carregamento da pagina e barra de rolagem menor quando acessando por celulares
+      Esconde as thumbnails dos vídeo, molhora o carregamento da pagina e menos rolagem em celulares
     pushNotificationLabel: Push Notifications (Em Breve)
     pushNotificationMsg: Ativa push notification para seus canais favoritos
     autoplayVideoLabel: Reprodução automática de Videos
@@ -159,7 +159,7 @@ views:
     scrollModeLabel: Modo de Rolagem
     scrollModeMsg: Use rolar/tocar para navegar nas páginas
     resetAllSettings: Redefinir todas as configurações/dados
-    clipLanguageSelection: 'Ver clipes nestes idiomas:'
+    clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
@@ -178,7 +178,7 @@ views:
       hideTLBtn: Esconder Traduções
       showTLBtn: Mostrar Traduções
       TLSettingsTitle: Configurações de tradução
-      StickBottomSettingLabel: Manter no Rodapé
+      StickBottomSettingLabel: Manter no Rodapé (Celulares)
       StickBottomSettingsDesc: A caixa tradução ficara na parte inferior do Chat (Fica no topo por padrão)
       retryBtn: Tentar Novamente
       status:
@@ -190,7 +190,7 @@ views:
         disconnectedToChat: Desconectado
   favorites:
     promptForAction: >-
-      Crie uma lista de seus vtubers favoritos e veja seus clipes e lives  mais recentes nesta página.
+      Crie uma lista com seus vtubers favoritos para ver clipes e lives mais recentes nesta página.
     manageFavorites: Gerenciar Favoritos
   editor:
     needlogin: Você precisará fazer login para editar metadados de vídeo e música do Holodex.
