@@ -45,7 +45,7 @@ export const langs = [
     { val: "id", display: "Bahasa Indonesia", credit: "alcyneous#2803" },
     { val: "ru", display: "Русский язык", credit: "kirillbarnaul#8499" },
     { val: "fr", display: "Français", credit: "pinembour#7770" },
-    { val: "pt", display: "Luso-Brasileiros", credit: "Useless TrAsh#5090" },
+    { val: "pt", display: "Português Brasileiro", credit: "Ash Niartis#5090" },
 ];
 
 export const dayjsLangs = {
