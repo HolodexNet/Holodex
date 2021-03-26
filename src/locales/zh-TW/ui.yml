@@ -218,7 +218,7 @@ views:
       mobile: 手機專用佈局
     video:
       selectLive: 選擇實況
-      addCustomVideo: 加入自訂影片
+      addCustomVideo: 添加指定YouTube影片
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
