@@ -7,6 +7,7 @@
         clipped
         class="nav-scroll"
         :temporary="temporary"
+        :style="{ 'padding-top': safeHeight + 'px' }"
     >
         <slot />
         <v-list dense class="pb-0">
@@ -126,6 +127,11 @@ export default {
         },
         collapsedFavorites() {
             return !this.favoritesExpanded && this.favorites.length > 5 ? this.favorites.slice(0, 5) : this.favorites;
+        },
+        safeHeight() {
+            console.log(this.$vuetify.breakpoint.width);
+            // ^ very important, causes the function to link reactivity to width changes.
+            return Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sat")) / 2;
         },
     },
     methods: {

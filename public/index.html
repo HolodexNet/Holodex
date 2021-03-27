@@ -19,6 +19,14 @@
         <title><%= htmlWebpackPlugin.options.title %></title>
         <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" as="style">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap">
+        <style>
+            :root {
+                --sat: env(safe-area-inset-top);
+                --sar: env(safe-area-inset-right);
+                --sab: env(safe-area-inset-bottom);
+                --sal: env(safe-area-inset-left);
+            }
+        </style>
     </head>
     <body style="background-color: black;">
         <noscript>

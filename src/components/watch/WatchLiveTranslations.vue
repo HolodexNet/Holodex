@@ -45,7 +45,7 @@
             </v-dialog>
         </v-card-subtitle>
         <v-divider />
-        <v-card-text class="text-body-2 tl-body d-flex flex-column-reverse pa-1 pa-lg-3">
+        <v-card-text class="text-body-2 tl-body thin-scroll-bar d-flex flex-column-reverse pa-1 pa-lg-3">
             <template v-for="(item, index) in tlHistory">
                 <div :key="index">
                     <div
