@@ -26,6 +26,7 @@
             clipped-left
             flat
             v-show="!(isMobile && isWatchPage) && !isMultiView"
+            :height="getHeight"
         >
             <!--=============================== Top Bar (Regular View) =============================-->
 
@@ -284,6 +285,11 @@ export default {
                 },
             ];
         },
+        getHeight() {
+            console.log(this.$vuetify.breakpoint.width);
+            // ^ very important, causes the function to link reactivity to width changes.
+            return Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sat")) / 1.5 + 64;
+        },
         ...mapState(["firstVisit"]),
     },
     created() {
@@ -332,6 +338,8 @@ export default {
     /* background-color: #2b79ad !important; */
     padding-left: min(calc(env(safe-area-inset-left)), 30px);
     padding-right: min(calc(env(safe-area-inset-right)), 30px);
+    padding-top: min(calc(env(safe-area-inset-top) / 2), 30px);
+    /* height: calc(env(safe-area-inset-top,0px) + 30px); */
 }
 
 .fade-enter-active,
