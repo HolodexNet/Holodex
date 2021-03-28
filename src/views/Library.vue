@@ -227,9 +227,10 @@ export default {
             const selectedSet = new Set(this.selected);
             const csvString = await json2csvAsync(this.savedVideosList.filter((v) => selectedSet.has(v.id)));
             const a = document.createElement("a");
+            const timestamp = new Date().toISOString().replace("T", "_").substr(0, 19);
             a.href = `data:attachment/csv,${encodeURIComponent(csvString)}`;
             a.target = "_blank";
-            a.download = "holodexPlaylist.csv";
+            a.download = `holodexPlaylist_${timestamp}.csv`;
 
             document.body.appendChild(a);
             a.click();
