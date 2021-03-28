@@ -10,6 +10,7 @@ import vuetifyEs from "vuetify/es5/locale/es";
 import vuetifyId from "vuetify/es5/locale/id";
 import vuetifyFr from "vuetify/es5/locale/fr";
 import vuetifyPt from "vuetify/es5/locale/pt";
+import vuetifyDe from "vuetify/es5/locale/de";
 
 import enTL from "@/locales/en/ui.yml";
 import jaTL from "@/locales/ja-JP/ui.yml";
@@ -20,6 +21,7 @@ import idTL from "@/locales/id-ID/ui.yml";
 import ruTL from "@/locales/ru-RU/ui.yml";
 import frTL from "@/locales/fr-FR/ui.yml";
 import ptTL from "@/locales/pt-BR/ui.yml";
+import deTL from "@/locales/de-DE/ui.yml";
 
 // ====== i18n setup ======
 Vue.use(VueI18n);
@@ -34,6 +36,7 @@ const messages = {
     ru: { $vuetify: vuetifyEn, ...ruTL },
     fr: { $vuetify: vuetifyFr, ...frTL },
     pt: { $vuetify: vuetifyPt, ...ptTL },
+    de: { $vuetify: vuetifyDe, ...deTL },
 };
 
 export const langs = [
@@ -46,6 +49,7 @@ export const langs = [
     { val: "ru", display: "Русский язык", credit: "kirillbarnaul#8499" },
     { val: "fr", display: "Français", credit: "pinembour#7770" },
     { val: "pt", display: "Português Brasileiro", credit: "Ash Niartis#5090" },
+    { val: "de", display: "Deutsch", credit: "DatJocab#1803" },
 ];
 
 export const dayjsLangs = {
@@ -75,6 +79,9 @@ export const dayjsLangs = {
     },
     async pt() {
         await import("dayjs/locale/pt-br");
+    },
+    async de() {
+        await import("dayjs/locale/de");
     },
 };
 
