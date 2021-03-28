@@ -1,0 +1,61 @@
+---
+component:
+  apiError:
+    title: Gomenasorry!
+    textBeforeTwitter: 'Es ist ein Fehler beim Abrufen von Inhalten aufgetreten, bitte schau of Twitter '
+    textAfterTwitter: ' oder melde den Fehler über die'
+    aboutPage: Info-Seite
+  channelList:
+    signInToFavorite: Einloggen um zu favorisieren
+    unfavoriteAllInGroup: Alle in Gruppe entfavorisieren
+    favoriteAllInGroup: Alle in Gruppe favorisieren
+  channelInfo:
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} Abonnenten'
+    subscriberNA: Abonnentenzahl nicht verfügbar
+    totalViews: Aufrufe insgesamt
+  channelSocials:
+    addToFavorites: Zu Favoriten hinzufügen
+    removeFromFavorites: Aus Favoriten entfernen
+  mainNav:
+    home: Startseite
+    favorites: Favoriten
+    channels: Kanäle
+    about: Info
+    library: Bibliothek
+    settings: Einstellungen
+    login: Einloggen
+    logout: Ausloggen
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Kontoeinstellungen
+    music: Musik
+    multiview: Mehrfachansicht
+  videoCard:
+    clips: '{n} Clips'
+    watching: '{0} Zuschauer'
+    liveNow: Jetzt Live
+    edit: Bearbeiten
+  videoDescription:
+    description: Beschreibung
+  description:
+    showLess: Weniger anzeigen
+    showMore: Mehr anzeigen
+  watch:
+    streamingFor: Streamt für {0}
+    nextUpInMugen: Als Nächstes
+  search:
+    searchLabel: Suchen
+    type:
+      channel: Kanal
+      topic: Thema
+      org: org
+      titledesc: Titel & Beschreibung
+      comments: Kommentare
+      videourl: Video-URL
+  relatedVideo:
+    clipsLabel: Clips
+    simulcastsLabel: Simulcasts
+    refersLabel: verweist
+    sourcesLabel: Quellen
+    songsLabel: Songs
