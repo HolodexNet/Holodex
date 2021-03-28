@@ -144,7 +144,7 @@ views:
     title: Einstellungen
     darkModeLabel: Dunkelmodus
     darkModeMsg: Ändert das Design zwischen Licht- und Dunkelmodus
-    redirectModeLabel: Auf YouTube öffnen
+    redirectModeLabel: In YouTube öffnen
     redirectModeMsg: >-
       Ein Klick auf das Video-Thumbnail öffnet es in YouTube, ein Klick auf den Videotitel öffnet es in Holodex
     useEnglishNameLabel: Englischen Namen verwenden
