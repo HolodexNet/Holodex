@@ -53,7 +53,7 @@ export function formatDistance(time, lang = "en", $t) {
         ]);
         return diff;
     }
-    diff = $t("time.distance_past_date", [timeObj.fromNow(), timeObj.format("LT")]);
+    diff = $t("time.distance_past_date", [localizedDayjs(time, lang).fromNow()]);
     return diff;
 }
 

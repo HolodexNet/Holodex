@@ -38,6 +38,8 @@ component:
     edit: Изменить
   videoDescription:
     description: Описание
+  video:
+    comment: { }
   description:
     showLess: Свернуть
     showMore: Ещё
@@ -58,6 +60,8 @@ component:
     simulcastsLabel: связанные стримы
     refersLabel: связанные видео
     sourcesLabel: источники
+    songsLabel: Треки
+    recommendationsLabel: рекомендации
   paginateLoad:
     newer: Новее
     older: Старее
@@ -74,8 +78,18 @@ component:
   orgMusic:
     monthlyTopForOrg: Топ {0} за месяц
     weeklyTopForOrg: Топ {0} за неделю
+  installPrompt:
+    title: Установить Holodex
+    callToAction: Просмотр видео на Holodex лучше всего работает при добавлении на домашний экран
+    notNowBtn: Не Сейчас
+    installBtn: Установить
+    iOS:
+      popup: Установить Holodex на iOS
+      afterExportIcon: затем 'Добавить на домашний экран'
+      beforeExportIcon: Нажмите
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Подписчики
       group: Группа
@@ -104,6 +118,15 @@ views:
     selectionReset: Сброс
     selectionSelectAll: Выбрать все
     emptyLibrary: У вас нет сохраненных видео!
+    exportSelected: Экспортировать выделенное ({0})
+    exportYtPlaylist: Плейлист YouTube
+    exportCsv: CSV Файл
+    selectionSelect50: Выбрать 50
+    exportYTExplanation: >-
+      Youtube плейлист, созданный этой функцией, <b>не находится</b> в списке и может быть удален Youtube. <br /> В связи с неполнотой функционала Youtube, необходимо выполнить следующие действия, чтобы сохранить <b>не находящийся</b> на вашем Youtube аккаунте плейлист.
+    exportYTHeading: Инструкция по сохранению плейлиста на Youtube
+    exportYTInstructions: >-
+      <b class="red--text">Шаг 1</b>: проигрывайте Youtube плейлист, and или измените плеер в "Мини-проигрыватель". <br /><br /> <b class="red--text">Шаг 2</b>: Выберете любое видео и добавьте его в очередь. <br /><br /> <b class="red--text">Шаг 3</b>: Теперь плейлист доступен для сохранения. Нажмите кнопку "Сохранить".
   notFound:
     title: Контент не найден
     back: Вернуться на главную
@@ -163,9 +186,12 @@ views:
         reconnectFailed: Не удалось подключиться
         notLive: >-
           Стрим еще не начался, пожалуйста, попробуйте еще раз, когда с начала стрима пройдет 15 минут
+        connectedToChat: Подключен
+        disconnectedToChat: Нет подключения
   favorites:
     promptForAction: >-
       Создайте список любимых витуберов и вы увидите их новые стримы и клипы с ними на этой странице.
+    manageFavorites: Управление избранными
   editor:
     needlogin: Вы должны войти в аккаунт для редактирования метаданных видео и песен в Holodex.
   login:
@@ -180,8 +206,18 @@ views:
     apikeyResetConfirm2: Старый API ключ перестанет работать через 0-24 часа. Точно сбросить?
     apikeyResetNvm: Ничего интересного не случилось.
   multiview:
+    confirmOverwrite: Перезаписать текущий макет?
     confirmOverwriteYes: Подтвердить
     permalink: Постоянная ссылка
+    presets: Пресеты
+    addframe: Добавить ячейку
+    preset:
+      shareOnDiscord: У Вас есть классный макет, которым можно поделиться? Воспользуйтесь кнопкой "Поделиться" и дайте нам знать на нашем <a href="https://discord.gg/jctkgHBt4b">Discord сервере</a>!
+      desktop: Для ПК
+      mobile: Для мобильных
+    video:
+      selectLive: Выбрать трансляцию
+      addCustomVideo: Добавить своё видео
 time:
   soon: Скоро
   diff_future_date: Начнется {0} ({1})
@@ -206,3 +242,5 @@ editor:
     testStart: Протестировать начало
     startInput: Начало
     endInput: 'Длительность в секундах: (конец @ {0})'
+  exitMode: Выйти из режима редактирования
+  enterMode: Редактировать видео

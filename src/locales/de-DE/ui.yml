@@ -1,0 +1,246 @@
+---
+component:
+  apiError:
+    title: Gomenasorry!
+    textBeforeTwitter: 'Es ist ein Fehler beim Abrufen von Inhalten aufgetreten, bitte schau of Twitter '
+    textAfterTwitter: ' oder melde den Fehler über die'
+    aboutPage: Info-Seite
+  channelList:
+    signInToFavorite: Einloggen um zu favorisieren
+    unfavoriteAllInGroup: Alle in Gruppe entfavorisieren
+    favoriteAllInGroup: Alle in Gruppe favorisieren
+  channelInfo:
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} Abonnenten'
+    subscriberNA: Abonnentenzahl nicht verfügbar
+    totalViews: Aufrufe insgesamt
+  channelSocials:
+    addToFavorites: Zu Favoriten hinzufügen
+    removeFromFavorites: Aus Favoriten entfernen
+  mainNav:
+    home: Startseite
+    favorites: Favoriten
+    channels: Kanäle
+    about: Info
+    library: Bibliothek
+    settings: Einstellungen
+    login: Einloggen
+    logout: Ausloggen
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Kontoeinstellungen
+    music: Musik
+    multiview: Mehrfachansicht
+  videoCard:
+    clips: '{n} Clips'
+    watching: '{0} Zuschauer'
+    liveNow: Jetzt Live
+    edit: Bearbeiten
+  videoDescription:
+    description: Beschreibung
+  video:
+    comment: { }
+  description:
+    showLess: Weniger anzeigen
+    showMore: Mehr anzeigen
+  watch:
+    streamingFor: Live seit {0}
+    nextUpInMugen: Als Nächstes
+  search:
+    searchLabel: Suchen
+    type:
+      channel: Kanal
+      topic: Thema
+      org: org
+      titledesc: Titel & Beschreibung
+      comments: Kommentare
+      videourl: Video-URL
+  relatedVideo:
+    clipsLabel: Clips
+    simulcastsLabel: Simulcasts
+    refersLabel: Verweise
+    sourcesLabel: Quellen
+    songsLabel: Songs
+    recommendationsLabel: Empfehlungen
+  paginateLoad:
+    newer: Neuer
+    older: Älter
+  music:
+    clearPlaylist: Leeren
+  channelMusic:
+    recentSongsHeader: Aktuelle Songs
+    weeklyTopPlaysHeader: Wöchentliche Top Plays
+  songList:
+    songTitle: Titel
+    songCoveredBy: Coverversion von
+    songDuration: Dauer
+    sangOnTime: Gesungen am
+  orgMusic:
+    monthlyTopForOrg: Monatliche Top Plays für {0}
+    weeklyTopForOrg: Wöchentliche Top-Plays für {0}
+  installPrompt:
+    title: Holodex installieren
+    callToAction: Das Anschauen von Videos auf Holodex funktioniert am besten, wenn es zum Startbildschirm hinzugefügt wird
+    notNowBtn: Nicht jetzt
+    installBtn: Installieren
+    iOS:
+      popup: Holodex für iOS installieren
+      afterExportIcon: dann 'Zum Startbildschirm hinzufügen
+      beforeExportIcon: Tipp
+views:
+  channels:
+    channelType: { }
+    sortOptions:
+      subscribers: Abonnenten
+      group: Gruppe
+      recentUpload: Letzter Upload
+      videoCount: Videoanzahl
+      clipCount: Clip-Anzahl
+    tabs:
+      Vtuber: Vtuber
+      Subber: Subber
+      Favorites: Favoriten
+    favoritesAreEmpty: Du hast keine Favoriten!
+  home:
+    liveOrUpcomingHeading: Live / Anstehend
+    recentVideosHeading: Kürzliche Videos
+    recentVideoToggles:
+      all: Alle
+      official: Offiziell
+      subber: Clips
+  library:
+    savedVideosTitle: Gespeicherte Videos
+    createYtPlaylistButton: YT Playlist erstellen ({0})
+    deleteFromLibraryButton: ({0}) löschen
+    deleteConfirmation: Bist du sicher, dass du {0} Videos löschen möchtest?
+    deleteConfirmationOK: Löschen
+    deleteConfirmationCancel: Abbrechen
+    selectionReset: Zurücksetzen
+    selectionSelectAll: Alles auswählen
+    emptyLibrary: Du hast keine gespeicherten Videos!
+    exportSelected: Ausgewählte exportieren ({0})
+    exportYtPlaylist: YouTube-Playlist
+    exportCsv: CSV-Datei
+    selectionSelect50: 50 auswählen
+    exportYTExplanation: >-
+      Die mit dieser Funktion erstellte YouTube-Playlist ist <b>ungelistet</b> und könnte von YouTube gelöscht werden. <br /> Da die Funktion von YouTube unvollständig ist, musst du Folgendes tun, um die <b>ungelistete</b> YouTube-Playlist in deinem Konto zu speichern.
+    exportYTHeading: Anleitung YouTube Playlist speichern
+    exportYTInstructions: >-
+      <b class="red--text">Schritt 1</b>: Spiel die YouTube-Playlist ab, und änder die Player-Benutzeroberfläche in den Miniplayer-Modus. <br /><br /> <b class="red--text">Schritt 2</b>: Wähle ein beliebiges Video und füge es zur Warteschleife hinzu. <br /><br /> <b class="red--text">Schritt 3</b>: Die Playlist ist nun speicherbar. Klicke um sie zu speichern.
+  notFound:
+    title: Inhalt nicht gefunden
+    back: Zurück zur Startseite
+  search:
+    sort:
+      newest: Neuestes
+      oldest: Ältestes
+    type:
+      all: Alle
+      official: Offiziell
+      clip: Clip
+    unsupportedQuery: >-
+      Derzeit wird das Suchen von Clips nach <kbd>Thema</kbd> und <kbd>Organisation</kbd> nicht unterstützt. Es werden keine <b>Clips</b> angezeigt.
+  settings:
+    title: Einstellungen
+    darkModeLabel: Dunkelmodus
+    darkModeMsg: Ändert das Design zwischen Licht- und Dunkelmodus
+    redirectModeLabel: In YouTube öffnen
+    redirectModeMsg: >-
+      Ein Klick auf das Video-Thumbnail öffnet es in YouTube, ein Klick auf den Videotitel öffnet es in Holodex
+    useEnglishNameLabel: Englischen Namen verwenden
+    useEnglishNameMsg: Verwendet Englisch lokalisierte Namen für VTuber-Kanäle
+    hideVideoThumbnailsLabel: Thumbnails ausblenden
+    hideVideoThumbnailsMsg: >-
+      Video-Thumbnails ausblenden, beschleunigt die Ladezeit und verringert das Scrollen auf dem Handy
+    pushNotificationLabel: Push-Benachrichtigungen (Bald verfügbar)
+    pushNotificationMsg: Push-Benachrichtigung für favorisierte Kanäle aktivieren
+    autoplayVideoLabel: Automatische Wiedergabe
+    autoplayVideoMsg: Automatische Wiedergabe von Videos aktivieren
+    scrollModeLabel: Scroll-Modus
+    scrollModeMsg: Blättern/Tippen zum Umblättern der Seiten verwenden
+    resetAllSettings: Alle Einstellungen/Daten zurücksetzen
+    clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
+  app:
+    update_available: Ein Update ist verfügbar
+    update_btn: Update
+    close_btn: Schließen
+    check_about_page: Besuche die Info-Seite um neue Änderungen zu sehen
+    nowSupportsMultiOrg: Holodex unterstützt jetzt mehrere Organisationen.
+    loginCallToAction: Melde dich an, um deine eigenen Favoriten zu sammeln!
+  about:
+    add_my_channel: Meinen Kanal zu Holodex hinzufügen
+  watch:
+    theaterMode: Theatermodus
+    saveToLibrary: Video in Bibliothek speichern
+    mentionIconLabel: NENNUNG
+    chat:
+      loading: Chat wird geladen...
+      hideTLBtn: Übersetzungen ausblenden
+      showTLBtn: Übersetzungen anzeigen
+      TLSettingsTitle: Übersetzungseinstellungen
+      StickBottomSettingLabel: Unten anzeigen (mobil)
+      StickBottomSettingsDesc: Übersetzungsbox wird unten am Chat angezeigt (Standard ist oben)
+      retryBtn: Erneut versuchen
+      status:
+        reconnecting: Automatisch neu verbinden...
+        reconnectFailed: Verbindung fehlgeschlagen
+        notLive: >-
+          Der Stream ist noch nicht live - Bitte versuch es erneut, 15 Minuten bevor der Stream live gehen soll
+        connectedToChat: Verbunden
+        disconnectedToChat: Verbindung getrennt
+  favorites:
+    promptForAction: >-
+      Erstelle eine Liste mit deinen Lieblings-VTubern und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
+    manageFavorites: Favoriten verwalten
+  editor:
+    needlogin: Du musst dich einloggen, um Änderungen an Holodex Video- und Song-Metadaten vorzunehmen.
+  login:
+    apikeyMsg: >-
+      Du kannst den API-Schlüssel verwenden, um die Holodex-API automatisiert abzufragen. Nur ein Schlüssel pro Konto. Nachdem du einen neuen Schlüssel erhalten hast, läuft der alte Schlüssel innerhalb von 24 Stunden ab.
+    apikeyNew: Neuen API-Schlüssel erstellen
+    ownedYtChannel: Eigener YouTube-Kanal
+    futureYtcOwnerMessage: >-
+      In Zukunft planen wir, Channel-Besitzern mehr Dienste wie z.B. die Bearbeitung von Metadaten für ihre eigenen Videos anzubieten.
+    linkAcc: Ein anderes Konto verknüpfen
+    apikeyResetConfirm1: Bist du sicher, dass du deinen API-Schlüssel zurücksetzen möchtest?
+    apikeyResetConfirm2: Es dauert 0-24 Stunden bis der alte API-Schlüssel abläuft. Wirklich zurücksetzen?
+    apikeyResetNvm: Nichts Interessantes ist passiert.
+  multiview:
+    confirmOverwrite: Vorhandenes Layout überschreiben?
+    confirmOverwriteYes: Bestätigen
+    permalink: Permalink
+    presets: Vorlagen
+    addframe: Zelle hinzufügen
+    preset:
+      shareOnDiscord: Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+      desktop: Desktop
+      mobile: Mobil
+    video:
+      selectLive: Live auswählen
+      addCustomVideo: Benutzerdefiniertes Video hinzufügen
+time:
+  soon: bald
+  diff_future_date: Beginnt {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: Hinzufügen
+    update: Aktualisieren
+    permission: >-
+      Du musst 'Editor' oder höher sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
+    titles:
+      addSong: 'Song-Metadaten: Neuen Song hinzufügen'
+      songList: 'Songliste : {0}'
+      help: Anleitung
+    itunesLookupPlaceholder: (Optional) Suche auf iTunes
+    moveRight2s: Nach rechts 2s
+    testEnd: Testhören startet 3 Sekunden vor dem Ende.
+    setToCurrentTime: Auf aktuelle Zeit setzen ({0})
+    moveLeft2s: Nach links 2s
+    trackNameInput: Titel
+    originalArtistInput: Originaler Künstler
+    testStart: Teste den Start
+    startInput: Start
+    endInput: 'Dauer in Sekunden: (end @ {0})'
+  exitMode: Bearbeitungsmodus verlassen
+  enterMode: Video bearbeiten

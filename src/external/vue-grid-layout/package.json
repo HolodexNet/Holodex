@@ -37,6 +37,7 @@
     "element-resize-detector": "^1.2.1"
   },
   "devDependencies": {
+    "@babel/plugin-transform-flow-comments": "^7.12.13",
     "@babel/preset-env": "^7.12.11",
     "@vue/cli-plugin-babel": "^4.5.11",
     "@vue/cli-plugin-eslint": "^4.5.11",
@@ -46,9 +47,8 @@
     "@vue/test-utils": "^1.1.2",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^26.6.3",
-    "@babel/plugin-transform-flow-comments": "^7.12.13",
-    "node-sass": "^4.13.0",
     "rimraf": "^2.6.2",
+    "sass": "^1.32.8",
     "sass-loader": "^7.0.1",
     "vue": "^2.6.12",
     "vue-jest": "^3.0.7",

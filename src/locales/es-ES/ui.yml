@@ -1,20 +1,23 @@
 ---
 component:
   apiError:
+    title: '¡Gomenasorry!'
     textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
     textAfterTwitter: ' O reporta el error a través de la'
     aboutPage: Página de información
   channelList:
     signInToFavorite: Registrate para marcar como favorito
     unfavoriteAllInGroup: Desmarcar todos como favoritos
-    favoriteAllInGroup: Marcar todos en el grupo como favorito
+    favoriteAllInGroup: Marcar todo en el grupo como favorito
   channelInfo:
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
     subscriberCount: '{n} Subscriptores'
-    subscriberNA: Contador de subscriptores no disponible
+    subscriberNA: Número de suscriptores no disponible
     totalViews: Visualizaciones totales
   channelSocials:
     addToFavorites: Añadir a favoritos
-    removeFromFavorites: Borrar de favoritos
+    removeFromFavorites: Eliminar de favoritos
   mainNav:
     home: Inicio
     favorites: Favoritos
@@ -24,34 +27,41 @@ component:
     settings: Opciones
     login: Iniciar Sesión
     logout: Cerrar Sesión
-    MugenClips: MugenClips
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Ajustes de Cuenta
     music: Música
-    multiview: Multivista
+    multiview: Vista Múltiple
   videoCard:
+    clips: '{n} Clips'
     watching: '{0} Mirando'
     liveNow: En Vivo
     edit: Editar
   videoDescription:
     description: Descripción
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mas
   watch:
-    streamingFor: En directo durante {0}
+    streamingFor: Transmitiendo por {0}
     nextUpInMugen: Siguiente
   search:
     searchLabel: Buscar
     type:
-      channel: Canal
-      topic: Tema
+      channel: canal
+      topic: tema
+      org: org
       titledesc: título y descripción
-      comments: Comentarios
-      videourl: url de vídeo
+      comments: comentarios
+      videourl: link del vídeo
   relatedVideo:
-    simulcastsLabel: referencias
-    refersLabel: transmisión simultanea
+    clipsLabel: clips
+    simulcastsLabel: transmisiónes simultaneas
+    refersLabel: referencias
     sourcesLabel: fuentes
+    songsLabel: canciones
+    recommendationsLabel: recomendado
   paginateLoad:
     newer: Más recientes
     older: Más antiguas
@@ -59,24 +69,36 @@ component:
     clearPlaylist: Limpiar
   channelMusic:
     recentSongsHeader: Canciones Recientes
-    weeklyTopPlaysHeader: Mas Reproducidas Semanalmente
+    weeklyTopPlaysHeader: Mas Reproducciones Semanales
   songList:
     songTitle: Titulo
     songCoveredBy: Interpretado por
     songDuration: Duración
     sangOnTime: Cantado en
   orgMusic:
-    monthlyTopForOrg: Mas Reproducidas Mensualmente para {0}
-    weeklyTopForOrg: Mas Reproducidas Semanalmente para {0}
+    monthlyTopForOrg: Mas Reproducciones Mensuales para {0}
+    weeklyTopForOrg: Mas Reproducciones Semanales para {0}
+  installPrompt:
+    title: Instalar Holodex
+    callToAction: Ver vídeos en Holodex funciona mejor cuando se agrega a la pantalla de inicio
+    notNowBtn: Ahora no
+    installBtn: Instalar
+    iOS:
+      popup: Instalar Holodex en iOS
+      afterExportIcon: luego 'Agregar a la pantalla de inicio
+      beforeExportIcon: Pulse
 views:
   channels:
+    channelType: { }
     sortOptions:
-      subscribers: Subscriptores
+      subscribers: Suscriptores
       group: Grupo
       recentUpload: Cargas recientes
-      videoCount: Numero de videos
-      clipCount: Numero de clips
+      videoCount: Número de videos
+      clipCount: Número de clips
     tabs:
+      Vtuber: Vtuber
+      Subber: Subtitulador
       Favorites: Favoritos
     favoritesAreEmpty: No tienes favoritos!
   home:
@@ -85,26 +107,37 @@ views:
     recentVideoToggles:
       all: Todos
       official: Oficial
+      subber: Clips
   library:
     savedVideosTitle: Videos Guardados
-    createYtPlaylistButton: Crear Playlist de YT ({0})
-    deleteFromLibraryButton: Borrar ({0})
-    deleteConfirmation: Estas seguro de que quieres borrar {0} videos?
-    deleteConfirmationOK: Borrar
+    createYtPlaylistButton: Crear lista de reproducción de YT ({0})
+    deleteFromLibraryButton: Eliminar ({0})
+    deleteConfirmation: Estas seguro de que quieres eliminar {0} videos?
+    deleteConfirmationOK: Eliminar
     deleteConfirmationCancel: Cancelar
     selectionReset: Reiniciar
     selectionSelectAll: Seleccionar Todos
     emptyLibrary: '¡No tienes videos guardados!'
+    exportSelected: Exportar seleccionados ({0})
+    exportYtPlaylist: Lista de reproducción de Youtube
+    exportCsv: Archivo CSV
+    selectionSelect50: Seleccionar 50
+    exportYTExplanation: >-
+      La lista de reproducción de youtube creada por esta función esta <b>sin listar</b> y podriaser eliminada por Youtube. <br /> Gracias a la funcionalidad incompleta de Youtube, necesitas hacer lo siguiente para guardar la lista de reproducción de Youtube <b>sin listada</b> en tu cuenta.
+    exportYTHeading: Guardando instrucciones de la lista de reproducción de Youtube
+    exportYTInstructions: >-
+      <b class="red--text">Paso 1</b>: Reproduce la lista de reproducción de youtube y cambia la interfaz de usuario del reproductor a mini-reproductor. <br /><br /> <b class="red--text">Paso 2</b>: Elige cualquier video y añádelo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: La lista de reproducción puede ser guardada ahora. Has clic en guardar para guardarla.
   notFound:
     title: Contenido no encontrado
     back: Volver al Inicio
   search:
     sort:
       newest: Mas nuevo
-      oldest: Mas viejo
+      oldest: Más antiguo
     type:
       all: Todos
       official: Oficial
+      clip: Clip
     unsupportedQuery: >-
       Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
   settings:
@@ -113,16 +146,16 @@ views:
     darkModeMsg: Cambia el tema entre modo oscuro y modo claro
     redirectModeLabel: Abrir en Youtube
     redirectModeMsg: >-
-      Clickear en cualquier video lo abrirá en Youtube
-    useEnglishNameLabel: Usar nombre Inglés
+      Clickear en cualquier video lo abrirá en Youtube, clicker en el titulo del video lo abrirá en Holodex
+    useEnglishNameLabel: Usar nombre en inglés
     useEnglishNameMsg: Usa nombres localizados al Inglés para los canales de Vtubers
-    hideVideoThumbnailsLabel: Esconder miniaturas de videos
+    hideVideoThumbnailsLabel: Ocultar miniaturas
     hideVideoThumbnailsMsg: >-
       Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos deslizar en mobiles
     pushNotificationLabel: Notificaciones emergentes
-    pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
+    pushNotificationMsg: Activar notificaciónes emergentes para canales favoritos
     autoplayVideoLabel: Reproducir vídeos automáticamente
-    autoplayVideoMsg: Activa la reproducción automática de videos
+    autoplayVideoMsg: Activar la reproducción automática de vídeos
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
@@ -133,11 +166,11 @@ views:
     close_btn: Cerrar
     check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
     nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
-    loginCallToAction: Inicia sesión para juntar a tus propios favoritos!
+    loginCallToAction: '¡Inicia sesión para reunir tus propios favoritos!'
   about:
     add_my_channel: Añadir mi canal a Holodex
   watch:
-    theaterMode: Modo Teatro
+    theaterMode: Modo Cine
     saveToLibrary: Guardar el video en la Biblioteca
     mentionIconLabel: MENCIONES
     chat:
@@ -152,46 +185,62 @@ views:
         reconnecting: Reconectando automaticamente...
         reconnectFailed: No se pudo reconectar
         notLive: >-
-          El stream no está en vivo todavía, por favor intenta de nuevo cuando falten 15 minutos para comenzar
+          La transmisión aún no está activa, por favor inténtalo de nuevo cuando falter 15 minutos para comenzar
+        connectedToChat: Conectado
+        disconnectedToChat: Sin conexión
   favorites:
     promptForAction: >-
-      Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en esta pagina
+      Crea una lista de tus vtubers favoritos y mira sus ultimos clips y directos en esta pagina.
+    manageFavorites: Administrar Favoritos
   editor:
-    needlogin: Necesitas iniciar sesión para editar metadata de video y audio de Holodex
+    needlogin: Necesitarás iniciar sesión para editar los metadatos de vídeos y canciones de Holodex.
   login:
     apikeyMsg: >-
-      Puedes usar API key para consultar Holodex API programaticamente. Solo una key por cuenta. Después de conseguir una nueva key, la key vieja expirará entre 0-24 horas
-    apikeyNew: Obtener nueva API Key
-    ownedYtChannel: Canal de Youtube en propiedad
+      Puedes usar la clave de API para consultar Holodex API programaticamente. Solo una clave por cuenta. Después de conseguir una nueva clave, la clave antigua expirará entre 0-24 horas.
+    apikeyNew: Obtener nueva clave de API
+    ownedYtChannel: Canal de Youtube poseído
     futureYtcOwnerMessage: >-
-      En el futuro, planeamos proveer mas servicios a dueños de canales como editar metadata para sus propios videos
+      En el futuro, planeamos proveer mas servicios a dueños de canales como editar el metadata para sus propios videos.
     linkAcc: Vincular otra cuenta
-    apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu API Key?'
-    apikeyResetConfirm2: La API key antigua tendrá 0-24 horas antes de expirar. ¿De verdad reiniciar?
-    apikeyResetNvm: Nada interesante pasó
+    apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu clave de API?'
+    apikeyResetConfirm2: La clave de API tendrá 0-24 horas antes de expirar. ¿En verdad reiniciar?
+    apikeyResetNvm: No sucedió nada.
   multiview:
+    confirmOverwrite: '¿Sobreescribir el diseño existente?'
     confirmOverwriteYes: Confirmar
     permalink: Enlace Permanente
+    presets: Configuraciones
+    addframe: Añadir Celda
+    preset:
+      shareOnDiscord: '¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y háznoslo saber en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!'
+      desktop: Escritorio
+      mobile: Móvil
+    video:
+      selectLive: Seleccionar Directo
+      addCustomVideo: Añadir video personalizado
 time:
   soon: Proximamente
   diff_future_date: Inicia {0} ({1})
+  distance_past_date: '{0}'
 editor:
   music:
     add: Añadir
     update: Actualizar
     permission: >-
-      Necesitas ser un usuario de nivel 'Editor' o mas oara actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar editores de problemas/abuso, o aplicar para volverse un editor
+      Necesitas ser un usuario de nivel 'Editor' o mas alto para actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar a los editores de problemas / abusos, o aplica para volverte un editor.
     titles:
-      addSong: 'Metada de canciones: Añadir nueva canción'
+      addSong: 'Metadatos de la cancion: Añadir una nueva canción'
       songList: 'Lista de canciones : {0}'
       help: Guia
     itunesLookupPlaceholder: (Opcional) Buscar en iTunes
-    moveRight2s: Mover a derecha 2s
-    testEnd: Prueba de escucha iniciando 3 segundos antes del final
+    moveRight2s: Mover 2s a la derecha
+    testEnd: Prueba escuchar a partir de 3 segundos antes del final.
     setToCurrentTime: Establecer a tiempo actual ({0})
-    moveLeft2s: Mover a izquierda 2s
+    moveLeft2s: Mover 2s a la izquierda
     trackNameInput: Nombre de la canción
     originalArtistInput: Artista Original
-    testStart: Prueba para iniciar
+    testStart: Probar el inicio
     startInput: Iniciar
-    endInput: 'Actualizar'
+    endInput: 'Duración en segundos: (termina en {0})'
+  exitMode: Salir del modo de edición
+  enterMode: Editar video
