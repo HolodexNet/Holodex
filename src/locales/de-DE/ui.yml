@@ -58,7 +58,7 @@ component:
   relatedVideo:
     clipsLabel: Clips
     simulcastsLabel: Simulcasts
-    refersLabel: verweist
+    refersLabel: Verweise
     sourcesLabel: Quellen
     songsLabel: Songs
     recommendationsLabel: Empfehlungen
@@ -144,7 +144,7 @@ views:
     title: Einstellungen
     darkModeLabel: Dunkelmodus
     darkModeMsg: Ändert das Design zwischen Licht- und Dunkelmodus
-    redirectModeLabel: Auf YouTube öffnen
+    redirectModeLabel: In YouTube öffnen
     redirectModeMsg: >-
       Ein Klick auf das Video-Thumbnail öffnet es in YouTube, ein Klick auf den Videotitel öffnet es in Holodex
     useEnglishNameLabel: Englischen Namen verwenden
@@ -172,11 +172,11 @@ views:
   watch:
     theaterMode: Theatermodus
     saveToLibrary: Video in Bibliothek speichern
-    mentionIconLabel: ERWÄHNUNGEN
+    mentionIconLabel: NENNUNG
     chat:
       loading: Chat wird geladen...
-      hideTLBtn: Übersetzung ausblenden
-      showTLBtn: Übersetzung anzeigen
+      hideTLBtn: Übersetzungen ausblenden
+      showTLBtn: Übersetzungen anzeigen
       TLSettingsTitle: Übersetzungseinstellungen
       StickBottomSettingLabel: Unten anzeigen (mobil)
       StickBottomSettingsDesc: Übersetzungsbox wird unten am Chat angezeigt (Standard ist oben)
