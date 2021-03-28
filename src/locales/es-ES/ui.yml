@@ -9,6 +9,8 @@ component:
     unfavoriteAllInGroup: Desmarcar todos como favoritos
     favoriteAllInGroup: Marcar todos en el grupo como favorito
   channelInfo:
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
     subscriberCount: '{n} Subscriptores'
     subscriberNA: Contador de subscriptores no disponible
     totalViews: Visualizaciones totales
@@ -29,6 +31,7 @@ component:
     music: Música
     multiview: Multivista
   videoCard:
+    clips: '{n} Clips'
     watching: '{0} Mirando'
     liveNow: En Vivo
     edit: Editar
@@ -49,9 +52,12 @@ component:
       comments: Comentarios
       videourl: url de vídeo
   relatedVideo:
+    clipsLabel: clips
     simulcastsLabel: referencias
     refersLabel: transmisión simultanea
     sourcesLabel: fuentes
+    songsLabel: canciones
+    recommendationsLabel: recomendado
   paginateLoad:
     newer: Más recientes
     older: Más antiguas
@@ -68,6 +74,12 @@ component:
   orgMusic:
     monthlyTopForOrg: Mas Reproducidas Mensualmente para {0}
     weeklyTopForOrg: Mas Reproducidas Semanalmente para {0}
+  installPrompt:
+    title: Instalar Holodex
+    notNowBtn: Ahora no
+    installBtn: Instalar
+    iOS:
+      popup: Instalar Holodex en iOS
 views:
   channels:
     sortOptions:
@@ -77,6 +89,7 @@ views:
       videoCount: Numero de videos
       clipCount: Numero de clips
     tabs:
+      Vtuber: Vtuber
       Favorites: Favoritos
     favoritesAreEmpty: No tienes favoritos!
   home:
@@ -85,6 +98,7 @@ views:
     recentVideoToggles:
       all: Todos
       official: Oficial
+      subber: Clips
   library:
     savedVideosTitle: Videos Guardados
     createYtPlaylistButton: Crear Playlist de YT ({0})
@@ -95,6 +109,9 @@ views:
     selectionReset: Reiniciar
     selectionSelectAll: Seleccionar Todos
     emptyLibrary: '¡No tienes videos guardados!'
+    exportYtPlaylist: Lista de reproducción de Youtube
+    exportCsv: Archivo CSV
+    exportYTHeading: Guardando instrucciones de la lista de reproducción de Youtube
   notFound:
     title: Contenido no encontrado
     back: Volver al Inicio
@@ -105,6 +122,7 @@ views:
     type:
       all: Todos
       official: Oficial
+      clip: Clip
     unsupportedQuery: >-
       Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
   settings:
@@ -153,6 +171,7 @@ views:
         reconnectFailed: No se pudo reconectar
         notLive: >-
           El stream no está en vivo todavía, por favor intenta de nuevo cuando falten 15 minutos para comenzar
+        connectedToChat: Conectado
   favorites:
     promptForAction: >-
       Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en esta pagina
@@ -172,6 +191,10 @@ views:
   multiview:
     confirmOverwriteYes: Confirmar
     permalink: Enlace Permanente
+    preset:
+      shareOnDiscord: '¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y háznoslo saber en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!'
+    video:
+      addCustomVideo: Añadir video personalizado
 time:
   soon: Proximamente
   diff_future_date: Inicia {0} ({1})
@@ -195,3 +218,5 @@ editor:
     testStart: Prueba para iniciar
     startInput: Iniciar
     endInput: 'Actualizar'
+  exitMode: Salir del modo de edición
+  enterMode: Editar video
