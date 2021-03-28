@@ -1,22 +1,23 @@
 ---
 component:
   apiError:
+    title: '¡Gomenasorry!'
     textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
     textAfterTwitter: ' O reporta el error a través de la'
     aboutPage: Página de información
   channelList:
     signInToFavorite: Registrate para marcar como favorito
     unfavoriteAllInGroup: Desmarcar todos como favoritos
-    favoriteAllInGroup: Marcar todos en el grupo como favorito
+    favoriteAllInGroup: Marcar todo en el grupo como favorito
   channelInfo:
     videoCount: '{0} Videos'
     clipCount: '{n} Clips'
     subscriberCount: '{n} Subscriptores'
-    subscriberNA: Contador de subscriptores no disponible
+    subscriberNA: Número de suscriptores no disponible
     totalViews: Visualizaciones totales
   channelSocials:
     addToFavorites: Añadir a favoritos
-    removeFromFavorites: Borrar de favoritos
+    removeFromFavorites: Eliminar de favoritos
   mainNav:
     home: Inicio
     favorites: Favoritos
@@ -26,7 +27,7 @@ component:
     settings: Opciones
     login: Iniciar Sesión
     logout: Cerrar Sesión
-    MugenClips: MugenClips
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Ajustes de Cuenta
     music: Música
     multiview: Vista Múltiple
@@ -37,24 +38,27 @@ component:
     edit: Editar
   videoDescription:
     description: Descripción
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mas
   watch:
-    streamingFor: En directo durante {0}
+    streamingFor: Transmitiendo por {0}
     nextUpInMugen: Siguiente
   search:
     searchLabel: Buscar
     type:
-      channel: Canal
-      topic: Tema
+      channel: canal
+      topic: tema
+      org: org
       titledesc: título y descripción
-      comments: Comentarios
-      videourl: url de vídeo
+      comments: comentarios
+      videourl: link del vídeo
   relatedVideo:
     clipsLabel: clips
-    simulcastsLabel: referencias
-    refersLabel: transmisión simultanea
+    simulcastsLabel: transmisiónes simultaneas
+    refersLabel: referencias
     sourcesLabel: fuentes
     songsLabel: canciones
     recommendationsLabel: recomendado
@@ -65,23 +69,27 @@ component:
     clearPlaylist: Limpiar
   channelMusic:
     recentSongsHeader: Canciones Recientes
-    weeklyTopPlaysHeader: Mas Reproducidas Semanalmente
+    weeklyTopPlaysHeader: Mas Reproducciones Semanales
   songList:
     songTitle: Titulo
     songCoveredBy: Interpretado por
     songDuration: Duración
     sangOnTime: Cantado en
   orgMusic:
-    monthlyTopForOrg: Mas Reproducidas Mensualmente para {0}
-    weeklyTopForOrg: Mas Reproducidas Semanalmente para {0}
+    monthlyTopForOrg: Mas Reproducciones Mensuales para {0}
+    weeklyTopForOrg: Mas Reproducciones Semanales para {0}
   installPrompt:
     title: Instalar Holodex
+    callToAction: Ver vídeos en Holodex funciona mejor cuando se agrega a la pantalla de inicio
     notNowBtn: Ahora no
     installBtn: Instalar
     iOS:
       popup: Instalar Holodex en iOS
+      afterExportIcon: luego 'Agregar a la pantalla de inicio
+      beforeExportIcon: Pulse
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Suscriptores
       group: Grupo
@@ -114,14 +122,18 @@ views:
     exportYtPlaylist: Lista de reproducción de Youtube
     exportCsv: Archivo CSV
     selectionSelect50: Seleccionar 50
+    exportYTExplanation: >-
+      La lista de reproducción de youtube creada por esta función esta <b>sin listar</b> y podriaser eliminada por Youtube. <br /> Gracias a la funcionalidad incompleta de Youtube, necesitas hacer lo siguiente para guardar la lista de reproducción de Youtube <b>sin listada</b> en tu cuenta.
     exportYTHeading: Guardando instrucciones de la lista de reproducción de Youtube
+    exportYTInstructions: >-
+      <b class="red--text">Paso 1</b>: Reproduce la lista de reproducción de youtube y cambia la interfaz de usuario del reproductor a mini-reproductor. <br /><br /> <b class="red--text">Paso 2</b>: Elige cualquier video y añádelo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: La lista de reproducción puede ser guardada ahora. Has clic en guardar para guardarla.
   notFound:
     title: Contenido no encontrado
     back: Volver al Inicio
   search:
     sort:
       newest: Mas nuevo
-      oldest: Mas viejo
+      oldest: Más antiguo
     type:
       all: Todos
       official: Oficial
@@ -134,16 +146,16 @@ views:
     darkModeMsg: Cambia el tema entre modo oscuro y modo claro
     redirectModeLabel: Abrir en Youtube
     redirectModeMsg: >-
-      Clickear en cualquier video lo abrirá en Youtube
-    useEnglishNameLabel: Usar nombre Inglés
+      Clickear en cualquier video lo abrirá en Youtube, clicker en el titulo del video lo abrirá en Holodex
+    useEnglishNameLabel: Usar nombre en inglés
     useEnglishNameMsg: Usa nombres localizados al Inglés para los canales de Vtubers
-    hideVideoThumbnailsLabel: Esconder miniaturas de videos
+    hideVideoThumbnailsLabel: Ocultar miniaturas
     hideVideoThumbnailsMsg: >-
       Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos deslizar en mobiles
     pushNotificationLabel: Notificaciones emergentes
-    pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
+    pushNotificationMsg: Activar notificaciónes emergentes para canales favoritos
     autoplayVideoLabel: Reproducir vídeos automáticamente
-    autoplayVideoMsg: Activa la reproducción automática de videos
+    autoplayVideoMsg: Activar la reproducción automática de vídeos
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
@@ -154,11 +166,11 @@ views:
     close_btn: Cerrar
     check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
     nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
-    loginCallToAction: Inicia sesión para juntar a tus propios favoritos!
+    loginCallToAction: '¡Inicia sesión para reunir tus propios favoritos!'
   about:
     add_my_channel: Añadir mi canal a Holodex
   watch:
-    theaterMode: Modo Teatro
+    theaterMode: Modo Cine
     saveToLibrary: Guardar el video en la Biblioteca
     mentionIconLabel: MENCIONES
     chat:
@@ -173,11 +185,12 @@ views:
         reconnecting: Reconectando automaticamente...
         reconnectFailed: No se pudo reconectar
         notLive: >-
-          El stream no está en vivo todavía, por favor intenta de nuevo cuando falten 15 minutos para comenzar
+          La transmisión aún no está activa, por favor inténtalo de nuevo cuando falter 15 minutos para comenzar
         connectedToChat: Conectado
+        disconnectedToChat: Sin conexión
   favorites:
     promptForAction: >-
-      Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en esta pagina
+      Crea una lista de tus vtubers favoritos y mira sus ultimos clips y directos en esta pagina.
     manageFavorites: Administrar Favoritos
   editor:
     needlogin: Necesitarás iniciar sesión para editar los metadatos de vídeos y canciones de Holodex.
@@ -196,6 +209,8 @@ views:
     confirmOverwrite: '¿Sobreescribir el diseño existente?'
     confirmOverwriteYes: Confirmar
     permalink: Enlace Permanente
+    presets: Configuraciones
+    addframe: Añadir Celda
     preset:
       shareOnDiscord: '¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y háznoslo saber en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!'
       desktop: Escritorio
@@ -206,6 +221,7 @@ views:
 time:
   soon: Proximamente
   diff_future_date: Inicia {0} ({1})
+  distance_past_date: '{0}'
 editor:
   music:
     add: Añadir

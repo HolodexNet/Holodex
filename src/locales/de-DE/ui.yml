@@ -38,11 +38,13 @@ component:
     edit: Bearbeiten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
   watch:
-    streamingFor: Streamt für {0}
+    streamingFor: Live seit {0}
     nextUpInMugen: Als Nächstes
   search:
     searchLabel: Suchen
@@ -70,7 +72,7 @@ component:
     weeklyTopPlaysHeader: Wöchentliche Top Plays
   songList:
     songTitle: Titel
-    songCoveredBy: Covered von
+    songCoveredBy: Coverversion von
     songDuration: Dauer
     sangOnTime: Gesungen am
   orgMusic:
@@ -87,6 +89,7 @@ component:
       beforeExportIcon: Tipp
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -132,7 +135,7 @@ views:
       newest: Neuestes
       oldest: Ältestes
     type:
-      all: Alles
+      all: Alle
       official: Offiziell
       clip: Clip
     unsupportedQuery: >-
@@ -164,7 +167,40 @@ views:
     check_about_page: Besuche die Info-Seite um neue Änderungen zu sehen
     nowSupportsMultiOrg: Holodex unterstützt jetzt mehrere Organisationen.
     loginCallToAction: Melde dich an, um deine eigenen Favoriten zu sammeln!
+  about:
+    add_my_channel: Meinen Kanal zu Holodex hinzufügen
+  watch:
+    theaterMode: Theatermodus
+    saveToLibrary: Video in Bibliothek speichern
+    mentionIconLabel: ERWÄHNUNGEN
+    chat:
+      loading: Chat wird geladen...
+      hideTLBtn: Übersetzung ausblenden
+      showTLBtn: Übersetzung anzeigen
+      TLSettingsTitle: Übersetzungseinstellungen
+      StickBottomSettingLabel: Unten anzeigen (mobil)
+      StickBottomSettingsDesc: Übersetzungsbox wird unten am Chat angezeigt (Standard ist oben)
+      retryBtn: Erneut versuchen
+      status:
+        reconnecting: Automatisch neu verbinden...
+        reconnectFailed: Verbindung fehlgeschlagen
+        notLive: >-
+          Der Stream ist noch nicht live - Bitte versuch es erneut, 15 Minuten bevor der Stream live gehen soll
+        connectedToChat: Verbunden
+        disconnectedToChat: Verbindung getrennt
+  favorites:
+    promptForAction: >-
+      Erstelle eine Liste mit deinen Lieblings-VTubern und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
+    manageFavorites: Favoriten verwalten
+  editor:
+    needlogin: Du musst dich einloggen, um Änderungen an Holodex Video- und Song-Metadaten vorzunehmen.
   login:
+    apikeyMsg: >-
+      Du kannst den API-Schlüssel verwenden, um die Holodex-API automatisiert abzufragen. Nur ein Schlüssel pro Konto. Nachdem du einen neuen Schlüssel erhalten hast, läuft der alte Schlüssel innerhalb von 24 Stunden ab.
+    apikeyNew: Neuen API-Schlüssel erstellen
+    ownedYtChannel: Eigener YouTube-Kanal
+    futureYtcOwnerMessage: >-
+      In Zukunft planen wir, Channel-Besitzern mehr Dienste wie z.B. die Bearbeitung von Metadaten für ihre eigenen Videos anzubieten.
     linkAcc: Ein anderes Konto verknüpfen
     apikeyResetConfirm1: Bist du sicher, dass du deinen API-Schlüssel zurücksetzen möchtest?
     apikeyResetConfirm2: Es dauert 0-24 Stunden bis der alte API-Schlüssel abläuft. Wirklich zurücksetzen?
@@ -201,8 +237,8 @@ editor:
     testEnd: Testhören startet 3 Sekunden vor dem Ende.
     setToCurrentTime: Auf aktuelle Zeit setzen ({0})
     moveLeft2s: Nach links 2s
-    trackNameInput: Name des Tracks
-    originalArtistInput: Originalkünstler
+    trackNameInput: Titel
+    originalArtistInput: Originaler Künstler
     testStart: Teste den Start
     startInput: Start
     endInput: 'Dauer in Sekunden: (end @ {0})'
