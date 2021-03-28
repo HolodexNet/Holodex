@@ -59,3 +59,152 @@ component:
     refersLabel: verweist
     sourcesLabel: Quellen
     songsLabel: Songs
+    recommendationsLabel: Empfehlungen
+  paginateLoad:
+    newer: Neuer
+    older: Älter
+  music:
+    clearPlaylist: Leeren
+  channelMusic:
+    recentSongsHeader: Aktuelle Songs
+    weeklyTopPlaysHeader: Wöchentliche Top Plays
+  songList:
+    songTitle: Titel
+    songCoveredBy: Covered von
+    songDuration: Dauer
+    sangOnTime: Gesungen am
+  orgMusic:
+    monthlyTopForOrg: Monatliche Top Plays für {0}
+    weeklyTopForOrg: Wöchentliche Top-Plays für {0}
+  installPrompt:
+    title: Holodex installieren
+    callToAction: Das Anschauen von Videos auf Holodex funktioniert am besten, wenn es zum Startbildschirm hinzugefügt wird
+    notNowBtn: Nicht jetzt
+    installBtn: Installieren
+    iOS:
+      popup: Holodex für iOS installieren
+      afterExportIcon: dann 'Zum Startbildschirm hinzufügen
+      beforeExportIcon: Tipp
+views:
+  channels:
+    sortOptions:
+      subscribers: Abonnenten
+      group: Gruppe
+      recentUpload: Letzter Upload
+      videoCount: Videoanzahl
+      clipCount: Clip-Anzahl
+    tabs:
+      Vtuber: Vtuber
+      Subber: Subber
+      Favorites: Favoriten
+    favoritesAreEmpty: Du hast keine Favoriten!
+  home:
+    liveOrUpcomingHeading: Live / Anstehend
+    recentVideosHeading: Kürzliche Videos
+    recentVideoToggles:
+      all: Alle
+      official: Offiziell
+      subber: Clips
+  library:
+    savedVideosTitle: Gespeicherte Videos
+    createYtPlaylistButton: YT Playlist erstellen ({0})
+    deleteFromLibraryButton: ({0}) löschen
+    deleteConfirmation: Bist du sicher, dass du {0} Videos löschen möchtest?
+    deleteConfirmationOK: Löschen
+    deleteConfirmationCancel: Abbrechen
+    selectionReset: Zurücksetzen
+    selectionSelectAll: Alles auswählen
+    emptyLibrary: Du hast keine gespeicherten Videos!
+    exportSelected: Ausgewählte exportieren ({0})
+    exportYtPlaylist: YouTube-Playlist
+    exportCsv: CSV-Datei
+    selectionSelect50: 50 auswählen
+    exportYTExplanation: >-
+      Die mit dieser Funktion erstellte YouTube-Playlist ist <b>ungelistet</b> und könnte von YouTube gelöscht werden. <br /> Da die Funktion von YouTube unvollständig ist, musst du Folgendes tun, um die <b>ungelistete</b> YouTube-Playlist in deinem Konto zu speichern.
+    exportYTHeading: Anleitung YouTube Playlist speichern
+    exportYTInstructions: >-
+      <b class="red--text">Schritt 1</b>: Spiel die YouTube-Playlist ab, und änder die Player-Benutzeroberfläche in den Miniplayer-Modus. <br /><br /> <b class="red--text">Schritt 2</b>: Wähle ein beliebiges Video und füge es zur Warteschleife hinzu. <br /><br /> <b class="red--text">Schritt 3</b>: Die Playlist ist nun speicherbar. Klicke um sie zu speichern.
+  notFound:
+    title: Inhalt nicht gefunden
+    back: Zurück zur Startseite
+  search:
+    sort:
+      newest: Neuestes
+      oldest: Ältestes
+    type:
+      all: Alles
+      official: Offiziell
+      clip: Clip
+    unsupportedQuery: >-
+      Derzeit wird das Suchen von Clips nach <kbd>Thema</kbd> und <kbd>Organisation</kbd> nicht unterstützt. Es werden keine <b>Clips</b> angezeigt.
+  settings:
+    title: Einstellungen
+    darkModeLabel: Dunkelmodus
+    darkModeMsg: Ändert das Design zwischen Licht- und Dunkelmodus
+    redirectModeLabel: Auf YouTube öffnen
+    redirectModeMsg: >-
+      Ein Klick auf das Video-Thumbnail öffnet es in YouTube, ein Klick auf den Videotitel öffnet es in Holodex
+    useEnglishNameLabel: Englischen Namen verwenden
+    useEnglishNameMsg: Verwendet Englisch lokalisierte Namen für VTuber-Kanäle
+    hideVideoThumbnailsLabel: Thumbnails ausblenden
+    hideVideoThumbnailsMsg: >-
+      Video-Thumbnails ausblenden, beschleunigt die Ladezeit und verringert das Scrollen auf dem Handy
+    pushNotificationLabel: Push-Benachrichtigungen (Bald verfügbar)
+    pushNotificationMsg: Push-Benachrichtigung für favorisierte Kanäle aktivieren
+    autoplayVideoLabel: Automatische Wiedergabe
+    autoplayVideoMsg: Automatische Wiedergabe von Videos aktivieren
+    scrollModeLabel: Scroll-Modus
+    scrollModeMsg: Blättern/Tippen zum Umblättern der Seiten verwenden
+    resetAllSettings: Alle Einstellungen/Daten zurücksetzen
+    clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
+  app:
+    update_available: Ein Update ist verfügbar
+    update_btn: Update
+    close_btn: Schließen
+    check_about_page: Besuche die Info-Seite um neue Änderungen zu sehen
+    nowSupportsMultiOrg: Holodex unterstützt jetzt mehrere Organisationen.
+    loginCallToAction: Melde dich an, um deine eigenen Favoriten zu sammeln!
+  login:
+    linkAcc: Ein anderes Konto verknüpfen
+    apikeyResetConfirm1: Bist du sicher, dass du deinen API-Schlüssel zurücksetzen möchtest?
+    apikeyResetConfirm2: Es dauert 0-24 Stunden bis der alte API-Schlüssel abläuft. Wirklich zurücksetzen?
+    apikeyResetNvm: Nichts Interessantes ist passiert.
+  multiview:
+    confirmOverwrite: Vorhandenes Layout überschreiben?
+    confirmOverwriteYes: Bestätigen
+    permalink: Permalink
+    presets: Vorlagen
+    addframe: Zelle hinzufügen
+    preset:
+      shareOnDiscord: Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+      desktop: Desktop
+      mobile: Mobil
+    video:
+      selectLive: Live auswählen
+      addCustomVideo: Benutzerdefiniertes Video hinzufügen
+time:
+  soon: bald
+  diff_future_date: Beginnt {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: Hinzufügen
+    update: Aktualisieren
+    permission: >-
+      Du musst 'Editor' oder höher sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
+    titles:
+      addSong: 'Song-Metadaten: Neuen Song hinzufügen'
+      songList: 'Songliste : {0}'
+      help: Anleitung
+    itunesLookupPlaceholder: (Optional) Suche auf iTunes
+    moveRight2s: Nach rechts 2s
+    testEnd: Testhören startet 3 Sekunden vor dem Ende.
+    setToCurrentTime: Auf aktuelle Zeit setzen ({0})
+    moveLeft2s: Nach links 2s
+    trackNameInput: Name des Tracks
+    originalArtistInput: Originalkünstler
+    testStart: Teste den Start
+    startInput: Start
+    endInput: 'Dauer in Sekunden: (end @ {0})'
+  exitMode: Bearbeitungsmodus verlassen
+  enterMode: Video bearbeiten
