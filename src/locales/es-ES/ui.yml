@@ -29,7 +29,7 @@ component:
     MugenClips: MugenClips
     accountSettings: Ajustes de Cuenta
     music: Música
-    multiview: Multivista
+    multiview: Vista Múltiple
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Mirando'
@@ -83,13 +83,14 @@ component:
 views:
   channels:
     sortOptions:
-      subscribers: Subscriptores
+      subscribers: Suscriptores
       group: Grupo
       recentUpload: Cargas recientes
-      videoCount: Numero de videos
-      clipCount: Numero de clips
+      videoCount: Número de videos
+      clipCount: Número de clips
     tabs:
       Vtuber: Vtuber
+      Subber: Subtitulador
       Favorites: Favoritos
     favoritesAreEmpty: No tienes favoritos!
   home:
@@ -101,16 +102,18 @@ views:
       subber: Clips
   library:
     savedVideosTitle: Videos Guardados
-    createYtPlaylistButton: Crear Playlist de YT ({0})
-    deleteFromLibraryButton: Borrar ({0})
-    deleteConfirmation: Estas seguro de que quieres borrar {0} videos?
-    deleteConfirmationOK: Borrar
+    createYtPlaylistButton: Crear lista de reproducción de YT ({0})
+    deleteFromLibraryButton: Eliminar ({0})
+    deleteConfirmation: Estas seguro de que quieres eliminar {0} videos?
+    deleteConfirmationOK: Eliminar
     deleteConfirmationCancel: Cancelar
     selectionReset: Reiniciar
     selectionSelectAll: Seleccionar Todos
     emptyLibrary: '¡No tienes videos guardados!'
+    exportSelected: Exportar seleccionados ({0})
     exportYtPlaylist: Lista de reproducción de Youtube
     exportCsv: Archivo CSV
+    selectionSelect50: Seleccionar 50
     exportYTHeading: Guardando instrucciones de la lista de reproducción de Youtube
   notFound:
     title: Contenido no encontrado
@@ -175,25 +178,30 @@ views:
   favorites:
     promptForAction: >-
       Crea una lista de vtubers favoritos y mira sus ultimos clips y directos en esta pagina
+    manageFavorites: Administrar Favoritos
   editor:
-    needlogin: Necesitas iniciar sesión para editar metadata de video y audio de Holodex
+    needlogin: Necesitarás iniciar sesión para editar los metadatos de vídeos y canciones de Holodex.
   login:
     apikeyMsg: >-
-      Puedes usar API key para consultar Holodex API programaticamente. Solo una key por cuenta. Después de conseguir una nueva key, la key vieja expirará entre 0-24 horas
-    apikeyNew: Obtener nueva API Key
-    ownedYtChannel: Canal de Youtube en propiedad
+      Puedes usar la clave de API para consultar Holodex API programaticamente. Solo una clave por cuenta. Después de conseguir una nueva clave, la clave antigua expirará entre 0-24 horas.
+    apikeyNew: Obtener nueva clave de API
+    ownedYtChannel: Canal de Youtube poseído
     futureYtcOwnerMessage: >-
-      En el futuro, planeamos proveer mas servicios a dueños de canales como editar metadata para sus propios videos
+      En el futuro, planeamos proveer mas servicios a dueños de canales como editar el metadata para sus propios videos.
     linkAcc: Vincular otra cuenta
-    apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu API Key?'
-    apikeyResetConfirm2: La API key antigua tendrá 0-24 horas antes de expirar. ¿De verdad reiniciar?
-    apikeyResetNvm: Nada interesante pasó
+    apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu clave de API?'
+    apikeyResetConfirm2: La clave de API tendrá 0-24 horas antes de expirar. ¿En verdad reiniciar?
+    apikeyResetNvm: No sucedió nada.
   multiview:
+    confirmOverwrite: '¿Sobreescribir el diseño existente?'
     confirmOverwriteYes: Confirmar
     permalink: Enlace Permanente
     preset:
       shareOnDiscord: '¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y háznoslo saber en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!'
+      desktop: Escritorio
+      mobile: Móvil
     video:
+      selectLive: Seleccionar Directo
       addCustomVideo: Añadir video personalizado
 time:
   soon: Proximamente
@@ -203,20 +211,20 @@ editor:
     add: Añadir
     update: Actualizar
     permission: >-
-      Necesitas ser un usuario de nivel 'Editor' o mas oara actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar editores de problemas/abuso, o aplicar para volverse un editor
+      Necesitas ser un usuario de nivel 'Editor' o mas alto para actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar a los editores de problemas / abusos, o aplica para volverte un editor.
     titles:
-      addSong: 'Metada de canciones: Añadir nueva canción'
+      addSong: 'Metadatos de la cancion: Añadir una nueva canción'
       songList: 'Lista de canciones : {0}'
       help: Guia
     itunesLookupPlaceholder: (Opcional) Buscar en iTunes
-    moveRight2s: Mover a derecha 2s
-    testEnd: Prueba de escucha iniciando 3 segundos antes del final
+    moveRight2s: Mover 2s a la derecha
+    testEnd: Prueba escuchar a partir de 3 segundos antes del final.
     setToCurrentTime: Establecer a tiempo actual ({0})
-    moveLeft2s: Mover a izquierda 2s
+    moveLeft2s: Mover 2s a la izquierda
     trackNameInput: Nombre de la canción
     originalArtistInput: Artista Original
-    testStart: Prueba para iniciar
+    testStart: Probar el inicio
     startInput: Iniciar
-    endInput: 'Actualizar'
+    endInput: 'Duración en segundos: (termina en {0})'
   exitMode: Salir del modo de edición
   enterMode: Editar video
