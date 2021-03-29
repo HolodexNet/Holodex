@@ -6,7 +6,7 @@ component:
     textAfterTwitter: 'または、を通じてエラーを報告します'
     aboutPage: ページについて
   channelList:
-    signInToFavorite: お気に入りに登録
+    signInToFavorite: お気に入り登録にはサインインが必要
     unfavoriteAllInGroup: グループをすべてお気に入りから削除
     favoriteAllInGroup: グループをすべてお気に入りに追加
   channelInfo:
@@ -42,7 +42,7 @@ component:
     comment: { }
   description:
     showLess: 省略表示
-    showMore: 詳細表示
+    showMore: もっと見る
   watch:
     streamingFor: '{0}分経過'
     nextUpInMugen: 次の動画
@@ -77,7 +77,7 @@ component:
     sangOnTime: 配信日時
   orgMusic:
     monthlyTopForOrg: 最新曲
-    weeklyTopForOrg: 週間のトップ曲
+    weeklyTopForOrg: '{0}の週間のトップ曲'
   installPrompt:
     title: Holodexをインストールしませんか?
     callToAction: Holodexをホーム画面に追加することでより便利にHolodexを使えます!
