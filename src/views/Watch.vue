@@ -270,10 +270,7 @@ export default {
             return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
         },
         hasLiveChat() {
-            return (
-                this.isMugen ||
-                ((this.video.status === "live" || this.video.status === "upcoming") && !this.redirectMode)
-            );
+            return this.isMugen || this.video.status === "live" || this.video.status === "upcoming";
         },
         hasWatched() {
             return this.$store.getters["library/hasWatched"](this.video.id);
