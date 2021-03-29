@@ -110,6 +110,7 @@ export default {
 .watch-live-chat.mobile-live-chat {
     margin-right: 0px; /*calc(env(safe-area-inset-right) - 15px)*/
     margin-right: calc(env(safe-area-inset-right) / 2);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* center pre loading text */
@@ -163,7 +164,7 @@ export default {
     bottom: 0px;
     width: 100%;
     z-index: 10;
-    height: calc(100% - 36px - 100vw * 0.5625);
+    height: calc((100% - 36px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
 }
 
 .watch-live-chat.fixed-bottom > .embedded-chat {
