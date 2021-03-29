@@ -76,8 +76,8 @@ component:
     songDuration: 再生時間
     sangOnTime: 配信日時
   orgMusic:
-    monthlyTopForOrg: 最新曲
-    weeklyTopForOrg: '{0}の週間のトップ曲'
+    monthlyTopForOrg: '{0}の毎月のトッププレイ'
+    weeklyTopForOrg: '{0}の週間トッププレイ'
   installPrompt:
     title: Holodexをインストールしませんか?
     callToAction: Holodexをホーム画面に追加することでより便利にHolodexを使えます!
@@ -112,7 +112,7 @@ views:
     savedVideosTitle: 保存したビデオ
     createYtPlaylistButton: Youtubeのプレイリストを作成（{0}）
     deleteFromLibraryButton: 削除（{0}）
-    deleteConfirmation: '{0}本当に動画を削除しますか？'
+    deleteConfirmation: '{0}本の動画を削除してもよろしいですか？'
     deleteConfirmationOK: 削除
     deleteConfirmationCancel: キャンセル
     selectionReset: リセット
