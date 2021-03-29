@@ -84,7 +84,7 @@ export default {
             this.$store.commit("channel/resetVideos");
         },
         loadNext($state) {
-            const lastLength = this.videos.length;
+            // const lastLength = this.videos.length;
             this.$store.commit("channel/resetVideos");
             this.$store
                 .dispatch("channel/fetchNextVideos", {
@@ -96,7 +96,7 @@ export default {
                     },
                 })
                 .then(() => {
-                    if (this.videos.length !== lastLength) {
+                    if ($state.page <= this.pages) {
                         $state.loaded();
                     } else {
                         $state.completed();

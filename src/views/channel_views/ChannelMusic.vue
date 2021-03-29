@@ -65,6 +65,7 @@
                 :item-class="() => 'selectable'"
                 item-key="name"
                 class="elevation-1 recent-table"
+                id="songSearchTable"
                 :search="search"
                 hide-default-footer
                 :items-per-page="PER_PAGE_ITEMS"
@@ -102,7 +103,12 @@
             </v-data-table>
             <v-row>
                 <v-spacer></v-spacer>
-                <paginate-load @paginate="songsByRecent" pageLess :identifier="channel.id + search" />
+                <PaginateLoad
+                    @paginate="songsByRecent"
+                    pageLess
+                    :identifier="channel.id + search + 'songs'"
+                    scrollElementId="songSearchTable"
+                />
                 <v-spacer></v-spacer>
             </v-row>
         </v-col>
@@ -204,7 +210,7 @@ export default {
             } catch (e) {
                 error();
             }
-        }, 400),
+        }, 100),
         async songsByPopular() {
             console.log("tbd");
             const { data } = await backendApi.topSongs(null, this.channel.id, "w");

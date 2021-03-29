@@ -142,7 +142,7 @@ const router = new VueRouter({
     routes,
     // eslint-disable-next-line no-unused-vars
     scrollBehavior(to, from, savedPosition) {
-        return savedPosition || { x: 0, y: 0 };
+        return savedPosition;
     },
 });
 
