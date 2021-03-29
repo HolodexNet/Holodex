@@ -38,11 +38,11 @@
                 </v-menu>
 
                 <!-- Toggle of Card or Row view -->
-                <!-- <v-btn icon @click="cardView = !cardView">
+                <v-btn icon @click="cardView = !cardView">
                     <v-icon>
                         {{ cardView ? mdiViewModule : mdiViewList }}
                     </v-icon>
-                </v-btn> -->
+                </v-btn>
             </v-list>
             <ChannelList
                 :channels="category === Tabs.FAVORITES ? sortedFavorites : channels"
