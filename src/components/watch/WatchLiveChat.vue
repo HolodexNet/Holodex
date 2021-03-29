@@ -221,7 +221,7 @@ export default {
 }
 .chat-overlay-btn {
     /* right: 48px; */
-    right: 48px;
+    left: 128px;
     height: 48px;
     position: absolute;
     z-index: 10;
