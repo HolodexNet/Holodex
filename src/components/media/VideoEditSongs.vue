@@ -391,7 +391,9 @@ export default {
             await this.refreshSongList();
         },
         async refreshSongList() {
-            this.songList = (await backendApi.songListByVideo(this.video.channel.id, this.video.id, false)).data;
+            this.songList = (await backendApi.songListByVideo(this.video.channel.id, this.video.id, false)).data.sort(
+                (a, b) => a.start - b.start,
+            );
         },
         async saveCurrentSong() {
             const res = await backendApi.tryCreateSong(this.current, this.$store.state.userdata.jwt);

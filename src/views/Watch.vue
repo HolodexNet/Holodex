@@ -89,7 +89,7 @@
                                 @videoUpdate="handleVideoUpdate"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
-                            <WatchSideBar :video="video" />
+                            <WatchSideBar :video="video" @timeJump="seekTo" />
                         </v-col>
                     </v-row>
                 </v-col>
