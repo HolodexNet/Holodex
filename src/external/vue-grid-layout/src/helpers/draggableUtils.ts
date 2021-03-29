@@ -3,11 +3,11 @@ export function getControlPosition(e) {
     return offsetXYFromParentOf(e);
 }
 
-
 // Get from offsetParent
 export function offsetXYFromParentOf(evt) {
     const offsetParent = evt.target.offsetParent || document.body;
-    const offsetParentRect = evt.offsetParent === document.body ? {left: 0, top: 0} : offsetParent.getBoundingClientRect();
+    const offsetParentRect =
+        evt.offsetParent === document.body ? { left: 0, top: 0 } : offsetParent.getBoundingClientRect();
 
     const x = evt.clientX + offsetParent.scrollLeft - offsetParentRect.left;
     const y = evt.clientY + offsetParent.scrollTop - offsetParentRect.top;
@@ -15,10 +15,8 @@ export function offsetXYFromParentOf(evt) {
     /*const x = Math.round(evt.clientX + offsetParent.scrollLeft - offsetParentRect.left);
     const y = Math.round(evt.clientY + offsetParent.scrollTop - offsetParentRect.top);*/
 
-
-    return {x, y};
+    return { x, y };
 }
-
 
 // Create an data object exposed by <DraggableCore>'s events
 export function createCoreData(lastX, lastY, x, y) {
@@ -28,22 +26,26 @@ export function createCoreData(lastX, lastY, x, y) {
     if (isStart) {
         // If this is our first move, use the x and y as last coords.
         return {
-            deltaX: 0, deltaY: 0,
-            lastX: x, lastY: y,
-            x: x, y: y
+            deltaX: 0,
+            deltaY: 0,
+            lastX: x,
+            lastY: y,
+            x: x,
+            y: y,
         };
     } else {
         // Otherwise calculate proper values.
         return {
-            deltaX: x - lastX, deltaY: y - lastY,
-            lastX: lastX, lastY: lastY,
-            x: x, y: y
+            deltaX: x - lastX,
+            deltaY: y - lastY,
+            lastX: lastX,
+            lastY: lastY,
+            x: x,
+            y: y,
         };
     }
 }
 
-
-function isNum(num)  {
-    return typeof num === 'number' && !isNaN(num);
+function isNum(num) {
+    return typeof num === "number" && !isNaN(num);
 }
-
