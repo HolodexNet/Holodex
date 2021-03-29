@@ -96,7 +96,7 @@
             </v-row>
         </v-container>
         <!-- Mobile Layout (sm/xs) Layout -->
-        <div class="d-flex flex-column flex-sm-row" v-else>
+        <div class="d-flex flex-column flex-sm-row layout-mobile" v-else>
             <div
                 class="d-inline-flex flex-grow-1 flex-column"
                 :style="{
@@ -309,4 +309,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.layout-mobile {
+    /* pre-iOS 11.2 */
+    padding-top: constant(safe-area-inset-top);
+    /* iOS 11.2 and later */
+    padding-top: env(safe-area-inset-top, 0px);
+}
+</style>
