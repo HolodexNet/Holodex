@@ -38,7 +38,13 @@ export default {
         return {
             identifier: +new Date(),
             pageLength: 25,
+            associatedTab: null,
         };
+    },
+    mounted() {
+        if (this.associatedTab == null) {
+            this.associatedTab = this.type;
+        }
     },
     computed: {
         ...mapState("channel", ["videos", "total"]),
@@ -63,7 +69,9 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         "$route.name": function () {
-            if (this.isActive) this.resetVideos();
+            if (this.type === this.associatedTab) {
+                this.resetVideos();
+            }
         },
         // eslint-disable-next-line func-names
         "$route.param.id": function () {

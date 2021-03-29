@@ -179,7 +179,7 @@
                     elevation="5"
                     width="100%"
                     @click="addSong"
-                    :disabled="!canSave && !priviledgeSufficient"
+                    :disabled="!canSave || !priviledgeSufficient"
                 >
                     {{ addOrUpdate }}
                 </v-btn>
@@ -221,7 +221,7 @@
                             @play="
                                 (x) => {
                                     $emit('timeJump', x.start);
-                                    current = x;
+                                    current = JSON.parse(JSON.stringify(x));
                                 }
                             "
                             @playNow="(x) => $emit('timeJump', x.start, true)"
@@ -314,7 +314,15 @@ export default {
             const isUpdate = this.songList.find((m) => m.name === this.current.name);
             const user = this.$store.state.userdata && this.$store.state.userdata.user;
             const userRole = user && user.role;
-            return !isUpdate || (isUpdate && (userRole === "admin" || userRole === "editor"));
+            const userId = user && user.id;
+            return (
+                !isUpdate || // Additions are always allowed.
+                (isUpdate && // updates need some priviledges:
+                    (userRole === "admin" ||
+                        userRole === "editor" || // you are a superuser
+                        (userId && userId.length > 0 && +this.current.creator_id === +userId)))
+            );
+            // or you created it in the first place.
         },
         currentStartTime: {
             get() {
@@ -383,7 +391,9 @@ export default {
             await this.refreshSongList();
         },
         async refreshSongList() {
-            this.songList = (await backendApi.songListByVideo(this.video.channel.id, this.video.id, false)).data;
+            this.songList = (await backendApi.songListByVideo(this.video.channel.id, this.video.id, false)).data.sort(
+                (a, b) => a.start - b.start,
+            );
         },
         async saveCurrentSong() {
             const res = await backendApi.tryCreateSong(this.current, this.$store.state.userdata.jwt);

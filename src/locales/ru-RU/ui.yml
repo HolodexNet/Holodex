@@ -38,6 +38,8 @@ component:
     edit: Изменить
   videoDescription:
     description: Описание
+  video:
+    comment: { }
   description:
     showLess: Свернуть
     showMore: Ещё
@@ -79,11 +81,15 @@ component:
   installPrompt:
     title: Установить Holodex
     callToAction: Просмотр видео на Holodex лучше всего работает при добавлении на домашний экран
+    notNowBtn: Не Сейчас
     installBtn: Установить
     iOS:
       popup: Установить Holodex на iOS
+      afterExportIcon: затем 'Добавить на домашний экран'
+      beforeExportIcon: Нажмите
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Подписчики
       group: Группа
@@ -116,6 +122,8 @@ views:
     exportYtPlaylist: Плейлист YouTube
     exportCsv: CSV Файл
     selectionSelect50: Выбрать 50
+    exportYTExplanation: >-
+      Youtube плейлист, созданный этой функцией, <b>не находится</b> в списке и может быть удален Youtube. <br /> В связи с неполнотой функционала Youtube, необходимо выполнить следующие действия, чтобы сохранить <b>не находящийся</b> на вашем Youtube аккаунте плейлист.
     exportYTHeading: Инструкция по сохранению плейлиста на Youtube
     exportYTInstructions: >-
       <b class="red--text">Шаг 1</b>: проигрывайте Youtube плейлист, and или измените плеер в "Мини-проигрыватель". <br /><br /> <b class="red--text">Шаг 2</b>: Выберете любое видео и добавьте его в очередь. <br /><br /> <b class="red--text">Шаг 3</b>: Теперь плейлист доступен для сохранения. Нажмите кнопку "Сохранить".
@@ -178,6 +186,8 @@ views:
         reconnectFailed: Не удалось подключиться
         notLive: >-
           Стрим еще не начался, пожалуйста, попробуйте еще раз, когда с начала стрима пройдет 15 минут
+        connectedToChat: Подключен
+        disconnectedToChat: Нет подключения
   favorites:
     promptForAction: >-
       Создайте список любимых витуберов и вы увидите их новые стримы и клипы с ними на этой странице.
