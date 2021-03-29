@@ -1,5 +1,22 @@
 <template>
-    <v-list class="pa-0" v-if="grouped">
+    <v-container v-if="!cardView" dense>
+        <v-row v-if="grouped" dense>
+            <template v-for="(group, index) in channelsByGroup">
+                <v-col cols="12" class="text-h6" :key="'title-' + index">
+                    {{ group.title }}
+                </v-col>
+                <v-col cols="12" md="4" :key="channel.id" v-for="channel in group.items">
+                    <ChannelCard :channel="channel" />
+                </v-col>
+            </template>
+        </v-row>
+        <v-row v-else dense>
+            <v-col cols="12" md="4" :key="channel.id" v-for="channel in channels">
+                <ChannelCard :channel="channel" />
+            </v-col>
+        </v-row>
+    </v-container>
+    <v-list class="pa-0" v-else-if="grouped">
         <v-list-group
             v-for="(group, index) in channelsByGroup"
             :key="`${index}-${group.title}`"
