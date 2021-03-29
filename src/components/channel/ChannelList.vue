@@ -1,6 +1,9 @@
 <template>
-    <v-container v-if="!cardView" dense>
+    <!-- Show channel list as cards -->
+    <v-container v-if="cardView" dense>
+        <!-- Add headers if it's grouped channels -->
         <v-row v-if="grouped" dense>
+            <!-- channelsByGroup has group title and group items, nested loop -->
             <template v-for="(group, index) in channelsByGroup">
                 <v-col cols="12" class="text-h6" :key="'title-' + index">
                     {{ group.title }}
@@ -10,13 +13,16 @@
                 </v-col>
             </template>
         </v-row>
+        <!-- Or show normally -->
         <v-row v-else dense>
             <v-col cols="12" md="4" :key="channel.id" v-for="channel in channels">
                 <ChannelCard :channel="channel" />
             </v-col>
         </v-row>
     </v-container>
+    <!-- Grouped channel list with headers and a favorite by group button -->
     <v-list class="pa-0" v-else-if="grouped">
+        <!-- channelsByGroup has group title and group items, nested loop -->
         <v-list-group
             v-for="(group, index) in channelsByGroup"
             :key="`${index}-${group.title}`"
@@ -24,6 +30,7 @@
             sub-group
             value="0"
         >
+            <!-- Header with group name and a favorite all button + tooltip -->
             <template v-slot:activator>
                 <div class="d-flex justify-space-between flex-grow-1">
                     <v-list-item-title>
@@ -55,6 +62,7 @@
                     </v-tooltip>
                 </div>
             </template>
+            <!-- Channel list -->
             <template v-for="(channel, index) in group.items">
                 <v-divider :key="'divider-' + index"></v-divider>
                 <v-list-item
@@ -75,6 +83,7 @@
             </template>
         </v-list-group>
     </v-list>
+    <!-- Normal channel list -->
     <v-list class="pa-0" v-else>
         <template v-for="(channel, index) in channels">
             <v-divider :key="'divider-' + index"></v-divider>
