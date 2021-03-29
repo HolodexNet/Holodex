@@ -110,10 +110,12 @@ export default {
             default: true,
         },
         detailed: {
+            // will only show remove button if listener exists and user has DELETE/WRITE priviledge to this song.
             type: Boolean,
             default: false,
         },
         alwaysShowDeletion: {
+            // set to true to FORCE the remove button to show up. For use in playlists where removal is from playlist.
             type: Boolean,
             default: false,
         },
@@ -131,7 +133,13 @@ export default {
     computed: {
         userCanDelete() {
             const u = this.$store.state.userdata;
-            return u && u.user && u.user.role && u.user.role !== "user";
+            return (
+                u &&
+                u.user &&
+                u.user.role &&
+                u.user.id &&
+                (u.user.role !== "user" || +u.user.id === +this.song.creator_id)
+            );
         },
         formattedTime() {
             return formatDistance(this.song.available_at, this.$store.state.settings.lang, this.$t.bind(this));

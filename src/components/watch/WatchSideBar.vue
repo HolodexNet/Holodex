@@ -1,6 +1,9 @@
 <template>
     <div>
         <template v-if="video.songcount">
+            <v-btn icon small @click="showDetailed = !showDetailed" class="float-right mr-2"
+                ><v-icon small> {{ mdiTimerOutline }} </v-icon></v-btn
+            >
             <div class="text-overline ma-2">
                 {{ relationI18N("songs") }}
             </div>
@@ -9,6 +12,7 @@
                 <v-row>
                     <v-list dense>
                         <song-item
+                            :detailed="showDetailed"
                             v-for="(song, idx) in songList"
                             :song="song"
                             :key="song.name + song.video_id + idx"
@@ -50,6 +54,7 @@
 
 <script>
 import VideoCardList from "@/components/video/VideoCardList";
+import { mdiTimerOutline } from "@mdi/js";
 
 export default {
     name: "WatchSideBar",
@@ -62,6 +67,12 @@ export default {
             type: Object,
             required: true,
         },
+    },
+    data() {
+        return {
+            showDetailed: false,
+            mdiTimerOutline,
+        };
     },
     computed: {
         // totalRelations() {
@@ -81,14 +92,16 @@ export default {
         },
         songList() {
             if (this.video && this.video.songs) {
-                return this.video.songs.map((song) => {
-                    return {
-                        ...song,
-                        video_id: this.video.id,
-                        channel_id: this.video.channel.id,
-                        channel: this.video.channel,
-                    };
-                });
+                return this.video.songs
+                    .map((song) => {
+                        return {
+                            ...song,
+                            video_id: this.video.id,
+                            channel_id: this.video.channel.id,
+                            channel: this.video.channel,
+                        };
+                    })
+                    .sort((a, b) => a.start - b.start);
             }
             return [];
         },

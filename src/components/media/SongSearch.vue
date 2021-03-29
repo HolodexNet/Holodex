@@ -30,9 +30,7 @@
 
                 <v-list-item-content class="py-1 pt-1">
                     <v-list-item-subtitle class="text--primary">
-                        🎵 {{ x.item.trackName }} [{{ Math.floor(x.item.trackTimeMillis / 1000 / 60) }}:{{
-                            Math.round(x.item.trackTimeMillis / 1000) % 60
-                        }}]
+                        🎵 {{ x.item.trackName }} [{{ formatDuration(x.item.trackTimeMillis) }}]
                     </v-list-item-subtitle>
                     <v-list-item-subtitle class="text--caption">
                         🎤 {{ x.item.artistName }} / {{ x.item.collectionName }} / {{ x.item.releaseDate.slice(0, 7) }}
@@ -50,9 +48,7 @@
 
                 <v-list-item-content class="py-1 pt-1">
                     <v-list-item-subtitle class="text--primary">
-                        🎵 {{ x.item.trackName }} [{{ Math.floor(x.item.trackTimeMillis / 1000 / 60) }}:{{
-                            Math.round(x.item.trackTimeMillis / 1000) % 60
-                        }}]
+                        🎵 {{ x.item.trackName }} [{{ formatDuration(x.item.trackTimeMillis) }}]
                     </v-list-item-subtitle>
                     <v-list-item-subtitle class="text--caption">
                         🎤 {{ x.item.artistName }} / {{ x.item.collectionName }} / {{ x.item.releaseDate.slice(0, 7) }}
