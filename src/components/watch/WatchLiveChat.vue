@@ -164,6 +164,9 @@ export default {
     bottom: 0px;
     width: 100%;
     z-index: 10;
+    /* pre-iOS 11.2 */
+    height: calc((100% - 36px - 100vw * 0.5625) - constant(safe-area-inset-top));
+    /* iOS 11.2 and later */
     height: calc((100% - 36px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
 }
 

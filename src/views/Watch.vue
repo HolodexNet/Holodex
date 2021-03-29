@@ -311,6 +311,9 @@ export default {
 
 <style>
 .layout-mobile {
+    /* pre-iOS 11.2 */
+    padding-top: constant(safe-area-inset-top);
+    /* iOS 11.2 and later */
     padding-top: env(safe-area-inset-top, 0px);
 }
 </style>
