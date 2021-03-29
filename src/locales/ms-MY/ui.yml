@@ -52,7 +52,7 @@ component:
       channel: saluran
       topic: topik
       org: kumpulan
-      titledesc: tajuk dan perihalan
+      titledesc: tajuk dan penerangan
       comments: ulasan
       videourl: url video
   relatedVideo:
