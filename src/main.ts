@@ -3,7 +3,7 @@ import VueGTag from "vue-gtag";
 import VueMeta from "vue-meta";
 import VueI18n from "vue-i18n";
 import * as icons from "@/utils/icons";
-import App from "./App";
+import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import { i18n, vuetify } from "./plugins/vuetify";
@@ -37,4 +37,4 @@ new Vue({
     store,
     vuetify,
     render: (h) => h(App),
-}).$mount("#app");
+} as any).$mount("#app");

@@ -70,8 +70,8 @@
 
 <script>
 import api from "@/utils/backend-api";
-import VideoCardList from "@/components/video/VideoCardList";
-import LoadingOverlay from "@/components/common/LoadingOverlay";
+import VideoCardList from "@/components/video/VideoCardList.vue";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { ORGS, VIDEO_URL_REGEX } from "@/utils/consts";
 
 export default {

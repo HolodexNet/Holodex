@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/video/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList.vue";
 import api from "@/utils/backend-api";
 import { forwardTransformSearchToAPIQuery } from "@/utils/functions";
 import { csv2jsonAsync } from "json-2-csv";

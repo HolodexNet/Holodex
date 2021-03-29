@@ -63,10 +63,10 @@
 </template>
 
 <script>
-import ChannelList from "@/components/channel/ChannelList";
+import ChannelList from "@/components/channel/ChannelList.vue";
 // import InfiniteLoading from "vue-infinite-loading";
-import ApiErrorMessage from "@/components/common/ApiErrorMessage";
-import InfiniteLoad from "@/components/common/InfiniteLoad";
+import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
+import InfiniteLoad from "@/components/common/InfiniteLoad.vue";
 
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
 import { mapState } from "vuex";

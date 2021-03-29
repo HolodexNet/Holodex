@@ -42,8 +42,8 @@
 
 <script>
 import { resizeChannelPhoto } from "@/utils/functions";
-import ChannelSocials from "@/components/channel/ChannelSocials";
-import ChannelImg from "./ChannelImg";
+import ChannelSocials from "@/components/channel/ChannelSocials.vue";
+import ChannelImg from "./ChannelImg.vue";
 
 export default {
     name: "ChannelChip",

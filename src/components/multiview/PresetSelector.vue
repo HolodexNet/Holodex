@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/video/VideoCardList";
-import LoadingOverlay from "@/components/common/LoadingOverlay";
+import VideoCardList from "@/components/video/VideoCardList.vue";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { decodeLayout } from "@/utils/mv-layout";
-import LayoutPreview from "./LayoutPreview";
+import LayoutPreview from "./LayoutPreview.vue";
 
 export default {
     name: "PresetSelector",

@@ -159,16 +159,16 @@
 
 <script>
 import * as icons from "@/utils/icons";
-import SearchBar from "@/components/common/SearchBar";
-// import SearchBar from "@/components/nav/SearchBarSimple";
-import Logo from "@/components/common/Logo";
-import UserCard from "@/components/user/UserCard";
+import SearchBar from "@/components/common/SearchBar.vue";
+// import SearchBar from "@/components/nav/SearchBarSimple.vue";
+import Logo from "@/components/common/Logo.vue";
+import UserCard from "@/components/user/UserCard.vue";
 import { ORGS, ORGS_PREFIX } from "@/utils/consts";
 import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
-import InstallPrompt from "@/components/common/InstallPrompt";
-import NavDrawer from "./NavDrawer";
-import BottomNav from "./BottomNav";
+import InstallPrompt from "@/components/common/InstallPrompt.vue";
+import NavDrawer from "./NavDrawer.vue";
+import BottomNav from "./BottomNav.vue";
 
 export default {
     components: {

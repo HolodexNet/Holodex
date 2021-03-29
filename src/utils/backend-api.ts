@@ -8,13 +8,16 @@ export const API_BASE_URL =
     process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api" : `${window.location.origin}/api`;
 // export const API_BASE_URL = "https://staging.holodex.net/api/";
 
-export const axiosInstance = axios.create({
-    baseURL: `${API_BASE_URL}/v2`,
-    retries: 3,
-    retryDelay: axiosRetry.exponentialDelay,
-    retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
-    shouldResetTimeout: true,
-});
+export const axiosInstance = (() => {
+    const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
+    axiosRetry(instance, {
+        retries: 3,
+        retryDelay: axiosRetry.exponentialDelay,
+        retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
+        shouldResetTimeout: true,
+    });
+    return instance;
+})();
 
 export default {
     channels(query) {

@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import ChannelImg from "./ChannelImg";
-import ChannelInfo from "./ChannelInfo";
+import ChannelImg from "./ChannelImg.vue";
+import ChannelInfo from "./ChannelInfo.vue";
 
 export default {
     name: "ChannelCard",
