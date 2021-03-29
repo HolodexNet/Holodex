@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import ApiErrorMessage from "./ApiErrorMessage";
+import ApiErrorMessage from "./ApiErrorMessage.vue";
 
 export default {
     name: "LoadingOverlay",
     components: {
         ApiErrorMessage,
-        NotFound: () => import("@/views/NotFound"),
+        NotFound: () => import("@/views/NotFound.vue"),
     },
     props: {
         isLoading: {
