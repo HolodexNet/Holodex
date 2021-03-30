@@ -38,8 +38,6 @@ component:
     edit: Bearbeiten
   videoDescription:
     description: Beschreibung
-  video:
-    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -89,7 +87,6 @@ component:
       beforeExportIcon: Tipp
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -212,7 +209,8 @@ views:
     presets: Vorlagen
     addframe: Zelle hinzufügen
     preset:
-      shareOnDiscord: Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+      shareOnDiscord: >-
+        Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
       desktop: Desktop
       mobile: Mobil
     video:
