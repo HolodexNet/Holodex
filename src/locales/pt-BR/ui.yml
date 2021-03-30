@@ -38,8 +38,6 @@ component:
     edit: Editar
   videoDescription:
     description: Descrição
-  video:
-    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -89,7 +87,6 @@ component:
       beforeExportIcon: Toque
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -212,7 +209,8 @@ views:
     presets: Predefinidas
     addframe: Adicionar Célula
     preset:
-      shareOnDiscord: Tem um layout legal para compartilhar? Use o botão compartilhar e nos informe no nosso <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
+      shareOnDiscord: >-
+        Tem um layout legal para compartilhar? Use o botão compartilhar e nos informe no nosso <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
       desktop: Desktop
       mobile: Mobile
     video:
