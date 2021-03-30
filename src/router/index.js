@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 
+import store from "../store";
+
 const Channel = () => import("../views/Channel.vue");
 const Channels = () => import("../views/Channels.vue");
 const Favorites = () => import("../views/Favorites.vue");
@@ -142,6 +144,10 @@ const router = new VueRouter({
     routes,
     // eslint-disable-next-line no-unused-vars
     scrollBehavior(to, from, savedPosition) {
+        // try reload when entering new page, if not on Mobile
+        if (!store.state.isMobile && !savedPosition) {
+            store.dispatch("reloadCurrentPage", { source: "scrollBehavior", consumed: false });
+        }
         return savedPosition;
     },
 });

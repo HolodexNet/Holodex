@@ -11,10 +11,9 @@
             <v-row :class="{ 'flex-nowrap': !theatherMode }">
                 <!-- Left side -->
                 <v-col :md="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3 flex-shrink-1">
-                    <WatchFrame :video="video" :key="'ytframe' + video.id">
+                    <WatchFrame :video="video">
                         <template v-slot:youtube>
                             <youtube
-                                :key="'ytplayer' + video.id"
                                 v-if="video.id"
                                 :video-id="video.id"
                                 @ready="ready"
@@ -85,7 +84,7 @@
                                 v-if="hasLiveChat && showLiveChat"
                                 :video="video"
                                 :mugenId="isMugen && '4ANxvWIM3Bs'"
-                                :key="'ytchat' + video.id"
+                                :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
                                 @videoUpdate="handleVideoUpdate"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
@@ -106,10 +105,9 @@
                 }"
             >
                 <!-- Video/Video meta -->
-                <WatchFrame :video="video" fluid :key="'ytframe' + video.id">
+                <WatchFrame :video="video" fluid>
                     <template v-slot:youtube>
                         <youtube
-                            :key="'ytplayer' + video.id"
                             v-if="video.id"
                             :video-id="video.id"
                             @ready="ready"
@@ -306,11 +304,4 @@ export default {
 };
 </script>
 
-<style>
-.layout-mobile {
-    /* pre-iOS 11.2 */
-    padding-top: constant(safe-area-inset-top);
-    /* iOS 11.2 and later */
-    padding-top: env(safe-area-inset-top, 0px);
-}
-</style>
+<style></style>

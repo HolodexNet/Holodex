@@ -120,8 +120,16 @@ export default {
         const self = this;
         pulltorefresh.init({
             mainElement: ".pull-to-refresh",
-            onRefresh: () => {
-                this.$router.go(0);
+            onRefresh: async () => {
+                // check if there's a handler on the sequence
+                const handledRefresh = await self.$store.dispatch("reloadCurrentPage", {
+                    source: "ptr",
+                    consumed: false,
+                });
+                // do default refresh if none
+                if (!handledRefresh.consumed) {
+                    this.$router.go(0);
+                }
             },
             passive: true,
             iconArrow: `<svg viewBox="0 0 24 24"><path fill="${self.darkMode ? "white" : "black"}" d="${

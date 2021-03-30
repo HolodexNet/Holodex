@@ -56,6 +56,7 @@
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { mapState } from "vuex";
+import reloadable from "@/mixins/reloadable";
 
 export default {
     name: "Home",
@@ -66,6 +67,7 @@ export default {
             },
         };
     },
+    mixins: [reloadable],
     components: {
         VideoCardList,
         LoadingOverlay,
@@ -128,6 +130,10 @@ export default {
         resetVideos() {
             this.$store.commit("home/resetVideos");
             this.identifier = +new Date();
+        },
+        // called from mixin, simulate reload
+        reload() {
+            this.init();
         },
         loadNext($state) {
             const lastLength = this.videos.length;

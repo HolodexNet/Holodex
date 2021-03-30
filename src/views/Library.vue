@@ -123,7 +123,9 @@
                             <v-btn class="mt-2 mx-2" color="green" @click="exportSelected">
                                 {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
                             </v-btn>
-                            <v-btn class="mt-2 mx-2">{{ $t("views.library.deleteConfirmationCancel") }}</v-btn>
+                            <v-btn class="mt-2 mx-2" @click="instructionsDialog = false">{{
+                                $t("views.library.deleteConfirmationCancel")
+                            }}</v-btn>
                         </v-col>
                         <v-col cols="12" md="auto">
                             <img src="/img/playlist-instruction.jpg" />
