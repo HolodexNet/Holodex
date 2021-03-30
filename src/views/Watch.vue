@@ -28,6 +28,9 @@
                     </WatchFrame>
                     <WatchToolBar :video="video" noBackButton>
                         <template v-slot:buttons>
+                            <v-btn icon lg @click="toggleTL" :color="showTL ? 'primary' : ''">
+                                <v-icon>{{ mdiTranslate }}</v-icon>
+                            </v-btn>
                             <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                                 <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
                             </v-btn>
@@ -86,6 +89,8 @@
                                 :mugenId="isMugen && '4ANxvWIM3Bs'"
                                 :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
                                 @videoUpdate="handleVideoUpdate"
+                                :showTL="showTL"
+                                :showTLFirstTime="showTLFirstTime"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
                             <WatchSideBar :video="video" @timeJump="seekTo" />
@@ -122,6 +127,9 @@
                 </WatchFrame>
                 <WatchToolBar :video="video">
                     <template v-slot:buttons>
+                        <v-btn icon lg @click="toggleTL" :color="showTL ? 'primary' : ''">
+                            <v-icon>{{ mdiTranslate }}</v-icon>
+                        </v-btn>
                         <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                             <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
                         </v-btn>
@@ -151,6 +159,8 @@
                 :key="'ytchat' + video.id"
                 :fixedRight="landscape"
                 :fixedBottom="!landscape"
+                :showTL="showTL"
+                :showTLFirstTime="showTLFirstTime"
             />
         </div>
     </div>
@@ -170,7 +180,7 @@ import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 
 import { decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff, mdiFullscreen } from "@mdi/js";
+import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff, mdiFullscreen, mdiTranslate } from "@mdi/js";
 import * as icons from "@/utils/icons";
 
 export default {
@@ -199,7 +209,11 @@ export default {
             mdiMessage,
             mdiMessageOff,
             mdiFullscreen,
+            mdiTranslate,
             icons,
+
+            showTL: false,
+            showTLFirstTime: false,
 
             showLiveChat: true,
 
@@ -254,6 +268,16 @@ export default {
                 document.exitFullscreen();
                 this.fullScreen = false;
             }
+        },
+        toggleTL() {
+            // showTLFirstTime will initiate connection
+            // showTL toggle will show/hide without terminating connection
+            if (!this.showTLFirstTime) {
+                this.showTLFirstTime = true;
+                this.showTL = true;
+                return;
+            }
+            this.showTL = !this.showTL;
         },
     },
     computed: {
