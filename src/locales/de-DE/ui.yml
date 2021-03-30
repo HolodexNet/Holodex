@@ -38,6 +38,8 @@ component:
     edit: Bearbeiten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -87,6 +89,7 @@ component:
       beforeExportIcon: Tipp
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -157,6 +160,7 @@ views:
     scrollModeMsg: Blättern/Tippen zum Umblättern der Seiten verwenden
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
     clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
+    tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
   app:
     update_available: Ein Update ist verfügbar
     update_btn: Update
