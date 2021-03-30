@@ -357,6 +357,7 @@ export default {
     /* padding-top: min(calc(env(safe-area-inset-top) / 2), 30px); */
     /* height: calc(env(safe-area-inset-top,0px) + 30px); */
     padding-top: 0px;
+    margin-top: env(safe-area-inset-top, 0px) !important;
 }
 
 .fade-enter-active,
