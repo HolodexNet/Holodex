@@ -232,7 +232,7 @@ export default {
 
             showTL: !this.$store.state.isMobile,
             showTLFirstTime: !this.$store.state.isMobile,
-            newTL: 10,
+            newTL: 0,
 
             showLiveChat: true,
 
