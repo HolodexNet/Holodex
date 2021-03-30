@@ -14,7 +14,7 @@ component:
     clipCount: '{n} Buah Sedutan'
     subscriberCount: '{n} Langganan'
     subscriberNA: Bilangan langganan tidak tersedia
-    totalViews: Jumlah Tontonan
+    totalViews: Jumlah tontonan
   channelSocials:
     addToFavorites: Tambahkan pada Kegemaran
     removeFromFavorites: Alih keluar daripada Kegemaran
@@ -37,7 +37,9 @@ component:
     liveNow: Langsung Sekarang
     edit: Sunting
   videoDescription:
-    description: Perihalan
+    description: Penerangan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -51,10 +53,10 @@ component:
       topic: topik
       org: kumpulan
       titledesc: tajuk dan penerangan
-      comments: ulasan
+      comments: komen
       videourl: url video
   relatedVideo:
-    clipsLabel: sedutan
+    clipsLabel: klip
     simulcastsLabel: siaran serentak
     refersLabel: yang berkaitan
     sourcesLabel: daripada
@@ -69,42 +71,43 @@ component:
     recentSongsHeader: Lagu Terkini
     weeklyTopPlaysHeader: Lagu Teratas Mingguan
   songList:
-    songTitle: Judul
+    songTitle: Tajuk
     songCoveredBy: Dinyanyikan oleh
     songDuration: Tempoh
     sangOnTime: Dinyanyikan pada
   orgMusic:
-    monthlyTopForOrg: Lagu Teratas Bulanan {0}
-    weeklyTopForOrg: Lagu Teratas Mingguan {0}
+    monthlyTopForOrg: Lagu Teratas Bulanan untuk {0}
+    weeklyTopForOrg: Lagu Teratas Mingguan untuk {0}
   installPrompt:
     title: Pasang Holodex
-    callToAction: Video di Holodex boleh ditonton sebaiknya jika ditambahkan di layar utama
-    notNowBtn: Jangan Lagi
+    callToAction: Video di Holodex boleh ditonton dengan lebih baik jika ditambahkan di laman utama
+    notNowBtn: Bukqn sekarang
     installBtn: Pasang
     iOS:
       popup: Pasang Holodex di iOS
-      afterExportIcon: lalu "Tambahkan di Layar Utama"
+      afterExportIcon: kemudian "Tambahkan di Laman Utama"
       beforeExportIcon: Tekan
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
       recentUpload: Muat Naik Terkini
       videoCount: Bilangan Video
-      clipCount: Bilangan Sedutan
+      clipCount: Bilangan Klip
     tabs:
       Vtuber: Penggiat YouTube maya
       Subber: Penyari Kata
       Favorites: Kegemaran
-    favoritesAreEmpty: Tiada kegemaran lagi!
+    favoritesAreEmpty: Anda tidak mempunyai sebarang kegemaran!
   home:
     liveOrUpcomingHeading: Langsung / Akan Datang
     recentVideosHeading: Video Terkini
     recentVideoToggles:
       all: Semua
       official: Rasmi
-      subber: Sedutan
+      subber: Klip
   library:
     savedVideosTitle: Video yang Disimpan
     createYtPlaylistButton: Buat Senarai Main YouTube ({0})
@@ -157,6 +160,7 @@ views:
     scrollModeMsg: Selak laman dengan menatal atau menekan butang
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
     clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
+    tlLanguageSelection: Lihat terjemahan mesej langsung dalam bahasa berikut
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
