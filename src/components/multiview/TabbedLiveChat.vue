@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import WatchLiveChat from "@/components/watch/WatchLiveChat";
+import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 
 export default {
     name: "TabbedLiveChat",

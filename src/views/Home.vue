@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/video/VideoCardList";
-import LoadingOverlay from "@/components/common/LoadingOverlay";
+import VideoCardList from "@/components/video/VideoCardList.vue";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { mapState } from "vuex";
 
 export default {

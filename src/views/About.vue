@@ -341,7 +341,7 @@
 <script>
 import { mdiExportVariant, mdiGithub } from "@mdi/js";
 import * as icons from "@/utils/icons";
-import TwitterFeed from "@/components/common/TwitterFeed";
+import TwitterFeed from "@/components/common/TwitterFeed.vue";
 
 export default {
     name: "About",

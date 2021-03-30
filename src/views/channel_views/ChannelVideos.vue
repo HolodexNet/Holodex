@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/video/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList.vue";
 // import api from "@/utils/backend-api";
 import { mapState } from "vuex";
 import isActive from "@/mixins/isActive";

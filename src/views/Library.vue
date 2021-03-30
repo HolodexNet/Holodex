@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/video/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList.vue";
 import { mdiFileTable } from "@mdi/js";
 import { json2csvAsync } from "json-2-csv";
 

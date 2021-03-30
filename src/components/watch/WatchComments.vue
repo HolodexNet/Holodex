@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Comment from "@/components/video/Comment";
+import Comment from "@/components/video/Comment.vue";
 import { formatDuration } from "@/utils/time";
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;

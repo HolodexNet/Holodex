@@ -68,15 +68,15 @@
 </template>
 
 <script>
-import ChannelChip from "@/components/channel/ChannelChip";
-import ChannelInfo from "@/components/channel/ChannelInfo";
-import ChannelSocials from "@/components/channel/ChannelSocials";
-import ChannelImg from "@/components/channel/ChannelImg";
-// import VideoDescription from "@/components/video/VideoDescription";
+import ChannelChip from "@/components/channel/ChannelChip.vue";
+import ChannelInfo from "@/components/channel/ChannelInfo.vue";
+import ChannelSocials from "@/components/channel/ChannelSocials.vue";
+import ChannelImg from "@/components/channel/ChannelImg.vue";
+// import VideoDescription from "@/components/video/VideoDescription.vue";
 import { getVideoThumbnails } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
-import TruncatedText from "@/components/common/TruncatedText";
-// import VideoSongs from "@/components/media/VideoEditSongs";
+import TruncatedText from "@/components/common/TruncatedText.vue";
+// import VideoSongs from "@/components/media/VideoEditSongs.vue";
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
 

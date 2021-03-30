@@ -66,8 +66,8 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/video/VideoCardList";
-import LoadingOverlay from "@/components/common/LoadingOverlay";
+import VideoCardList from "@/components/video/VideoCardList.vue";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 // eslint-disable-next-line no-unused-vars
 import * as icons from "@/utils/icons";
 import { mapState } from "vuex";

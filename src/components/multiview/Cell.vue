@@ -130,9 +130,9 @@
 <script>
 import { mdiMessage, mdiResizeBottomRight, mdiDelete } from "@mdi/js";
 import { getVideoThumbnails } from "@/utils/functions";
-import TabbedLiveChat from "@/components/multiview/TabbedLiveChat";
+import TabbedLiveChat from "@/components/multiview/TabbedLiveChat.vue";
 import { mapState, mapGetters } from "vuex";
-import VideoCardList from "@/components/video/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList.vue";
 import { dayjs } from "@/utils/time";
 
 const HIDE_VIDEO_UNDER = {

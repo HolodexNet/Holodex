@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import SongItem from "./SongItem";
+import SongItem from "./SongItem.vue";
 
 export default {
     components: { SongItem },

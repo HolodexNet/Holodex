@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/video/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList.vue";
 
 export default {
     name: "FavoritesVideoList",
