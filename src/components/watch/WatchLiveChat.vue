@@ -24,12 +24,6 @@
         </WatchLiveTranslations>
         <div class="embedded-chat">
             <iframe :src="liveChatUrl" frameborder="0" />
-            <div class="chat-overlay-btn d-flex align-center">
-                <a class="text-body-2" @click="toggleTL">
-                    {{ showTL ? $t("views.watch.chat.hideTLBtn") : $t("views.watch.chat.showTLBtn") }}
-                    {{ newTL > 0 ? `(${newTL}*)` : "" }}
-                </a>
-            </div>
         </div>
     </v-sheet>
 </template>
@@ -62,12 +56,17 @@ export default {
             type: Boolean,
             default: false,
         },
+        showTL: {
+            type: Boolean,
+            default: false,
+        },
+        showTLFirstTime: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
-            showTL: false,
-            showTLFirstTime: false,
-            newTL: 0,
             stickTop: false,
         };
     },
@@ -80,23 +79,12 @@ export default {
         },
     },
     methods: {
-        toggleTL() {
-            // showTLFirstTime will initiate connection
-            // showTL toggle will show/hide without terminating connection
-            if (!this.showTLFirstTime) {
-                this.showTLFirstTime = true;
-                this.showTL = true;
-                return;
-            }
-            this.showTL = !this.showTL;
-            this.newTL = 0;
-        },
         handleVideoUpdate(update) {
             // bubble event to Watch view
             this.$emit("videoUpdate", update);
         },
-        handleHistoryLength() {
-            if (!this.showTL) this.newTL += 1;
+        handleHistoryLength(length) {
+            this.$emit("historyLength", length);
         },
     },
 };
