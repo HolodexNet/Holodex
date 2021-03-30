@@ -6,7 +6,7 @@ component:
     textAfterTwitter: 'または、を通じてエラーを報告します'
     aboutPage: ページについて
   channelList:
-    signInToFavorite: お気に入りに登録
+    signInToFavorite: お気に入り登録にはサインインが必要
     unfavoriteAllInGroup: グループをすべてお気に入りから削除
     favoriteAllInGroup: グループをすべてお気に入りに追加
   channelInfo:
@@ -42,7 +42,7 @@ component:
     comment: { }
   description:
     showLess: 省略表示
-    showMore: 詳細表示
+    showMore: もっと見る
   watch:
     streamingFor: '{0}分経過'
     nextUpInMugen: 次の動画
@@ -76,8 +76,8 @@ component:
     songDuration: 再生時間
     sangOnTime: 配信日時
   orgMusic:
-    monthlyTopForOrg: 最新曲
-    weeklyTopForOrg: 週間のトップ曲
+    monthlyTopForOrg: '{0}の毎月のトッププレイ'
+    weeklyTopForOrg: '{0}の週間トッププレイ'
   installPrompt:
     title: Holodexをインストールしませんか?
     callToAction: Holodexをホーム画面に追加することでより便利にHolodexを使えます!
@@ -112,7 +112,7 @@ views:
     savedVideosTitle: 保存したビデオ
     createYtPlaylistButton: Youtubeのプレイリストを作成（{0}）
     deleteFromLibraryButton: 削除（{0}）
-    deleteConfirmation: '{0}本当に動画を削除しますか？'
+    deleteConfirmation: '{0}本の動画を削除してもよろしいですか？'
     deleteConfirmationOK: 削除
     deleteConfirmationCancel: キャンセル
     selectionReset: リセット
