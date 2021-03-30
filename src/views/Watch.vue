@@ -28,9 +28,24 @@
                     </WatchFrame>
                     <WatchToolBar :video="video" noBackButton>
                         <template v-slot:buttons>
-                            <v-btn icon lg @click="toggleTL" :color="showTL ? 'primary' : ''">
-                                <v-icon>{{ mdiTranslate }}</v-icon>
-                            </v-btn>
+                            <v-tooltip bottom v-if="!$store.state.isMobile">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                        icon
+                                        lg
+                                        @click="toggleTL"
+                                        :color="showTL ? 'primary' : ''"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        <div class="notification-sticker" v-if="newTL > 0"></div>
+                                        <v-icon>{{ mdiTranslate }}</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>{{
+                                    showTL ? $t("views.watch.chat.hideTLBtn") : $t("views.watch.chat.showTLBtn")
+                                }}</span>
+                            </v-tooltip>
                             <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                                 <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
                             </v-btn>
@@ -91,6 +106,7 @@
                                 @videoUpdate="handleVideoUpdate"
                                 :showTL="showTL"
                                 :showTLFirstTime="showTLFirstTime"
+                                @historyLength="handleHistoryLength"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
                             <WatchSideBar :video="video" @timeJump="seekTo" />
@@ -128,6 +144,7 @@
                 <WatchToolBar :video="video">
                     <template v-slot:buttons>
                         <v-btn icon lg @click="toggleTL" :color="showTL ? 'primary' : ''">
+                            <div class="notification-sticker" v-if="newTL > 0"></div>
                             <v-icon>{{ mdiTranslate }}</v-icon>
                         </v-btn>
                         <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
@@ -161,6 +178,7 @@
                 :fixedBottom="!landscape"
                 :showTL="showTL"
                 :showTLFirstTime="showTLFirstTime"
+                @historyLength="handleHistoryLength"
             />
         </div>
     </div>
@@ -212,8 +230,9 @@ export default {
             mdiTranslate,
             icons,
 
-            showTL: false,
-            showTLFirstTime: false,
+            showTL: !this.$store.state.isMobile,
+            showTLFirstTime: !this.$store.state.isMobile,
+            newTL: 10,
 
             showLiveChat: true,
 
@@ -278,6 +297,12 @@ export default {
                 return;
             }
             this.showTL = !this.showTL;
+            this.newTL = 0;
+        },
+        handleHistoryLength() {
+            if (!this.showTL) {
+                this.newTL += 1;
+            }
         },
     },
     computed: {
@@ -328,4 +353,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+div.notification-sticker {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    border-radius: 4px;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(230, 33, 23);
+}
+</style>
