@@ -159,7 +159,7 @@ export default {
     name: "VideoCard",
     components: {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
-        Comment: () => import("./Comment"),
+        Comment: () => import("./Comment.vue"),
     },
     data() {
         return {

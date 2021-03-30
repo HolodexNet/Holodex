@@ -178,7 +178,7 @@ export default {
         UserCard,
         Logo,
         InstallPrompt,
-        MusicBar2: () => import("./MusicBar2"),
+        MusicBar2: () => import("./MusicBar2.vue"),
     },
     data() {
         return {

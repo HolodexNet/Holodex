@@ -124,7 +124,13 @@
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template v-slot:item.channel.name="{ item, value }">
                         <span>{{ item.channel[nameProperty] || value }}</span>
-                        <v-btn class="popup" icon target="_blank" :href="`/channel/${item.channel_id}/music`">
+                        <v-btn
+                            class="popup"
+                            icon
+                            target="_blank"
+                            :href="`/channel/${item.channel_id}/music`"
+                            @click.stop
+                        >
                             <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
                         </v-btn>
                     </template>
@@ -142,10 +148,18 @@
                             icon
                             target="_blank"
                             :href="`/watch/${item.video_id}?t=${item.start}`"
+                            @click.stop
                         >
                             <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
                         </v-btn>
-                        <v-btn class="popup" small icon target="_blank" :href="`/edit/video/${item.video_id}/music`">
+                        <v-btn
+                            class="popup"
+                            small
+                            icon
+                            target="_blank"
+                            :href="`/edit/video/${item.video_id}/music`"
+                            @click.stop
+                        >
                             <v-icon small>{{ icons.mdiPencil }}</v-icon>
                         </v-btn>
                     </template>

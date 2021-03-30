@@ -20,7 +20,6 @@
 <script>
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import isActive from "@/mixins/isActive";
-import { debounce } from "@/utils/functions";
 
 export default {
     name: "PaginateLoad",
@@ -52,6 +51,10 @@ export default {
             default: false,
             type: Boolean,
         },
+        scrollElementId: {
+            default: null,
+            type: String,
+        },
     },
     activated() {
         // page has changed between activation/deactivation, resync
@@ -66,12 +69,17 @@ export default {
             },
             set(val) {
                 this.lastPage = this.page;
-                this.$router.push({
-                    query: {
-                        ...this.$router.query,
-                        page: val,
-                    },
-                });
+                this.$router
+                    .push({
+                        query: {
+                            ...this.$router.query,
+                            page: val,
+                        },
+                    })
+                    .then(() => {
+                        this.scrollElementId &&
+                            window.scrollTo(0, document.getElementById(this.scrollElementId).offsetTop - 100);
+                    });
             },
         },
     },
@@ -85,10 +93,10 @@ export default {
             // if page not 1, set it and let the route watcher handle emit
             if (this.page !== 1) {
                 this.page = 1;
-                return;
+                // return;
             }
             // emitevent pretend it's remounted
-            this.emitEvent();
+            if (this.isActive) this.emitEvent();
         },
         // eslint-disable-next-line func-names
         "$route.query.page": function () {
@@ -99,12 +107,11 @@ export default {
         },
     },
     methods: {
-        debounce,
         reset() {
             this.status = this.STATUSES.READY;
         },
         // eslint-disable-next-line func-names
-        emitEvent: debounce(function () {
+        emitEvent() {
             this.$on("$PaginateLoad:completed", () => {
                 this.status = this.STATUSES.COMPLETED;
             });
@@ -130,10 +137,9 @@ export default {
                 completed,
                 error,
             };
-
             this.$emit("paginate", $state);
             this.status = this.STATUSES.LOADING;
-        }, 25),
+        },
     },
 };
 </script>

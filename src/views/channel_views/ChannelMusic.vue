@@ -65,6 +65,7 @@
                 :item-class="() => 'selectable'"
                 item-key="name"
                 class="elevation-1 recent-table"
+                id="songSearchTable"
                 :search="search"
                 hide-default-footer
                 :items-per-page="PER_PAGE_ITEMS"
@@ -92,17 +93,36 @@
                 <!-- eslint-disable-next-line vue/valid-v-slot -->
                 <template v-slot:item.available_at="{ item }">
                     <span class="blue-grey--text">{{ formatDate(item.available_at) }}</span>
-                    <v-btn class="popup" icon small target="_blank" :href="`/watch/${item.video_id}?t=${item.start}`">
+                    <v-btn
+                        class="popup"
+                        icon
+                        small
+                        target="_blank"
+                        :href="`/watch/${item.video_id}?t=${item.start}`"
+                        @click.stop
+                    >
                         <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
                     </v-btn>
-                    <v-btn class="popup" small icon target="_blank" :href="`/edit/video/${item.video_id}/music`">
+                    <v-btn
+                        class="popup"
+                        small
+                        icon
+                        target="_blank"
+                        :href="`/edit/video/${item.video_id}/music`"
+                        @click.stop
+                    >
                         <v-icon small>{{ icons.mdiPencil }}</v-icon>
                     </v-btn>
                 </template>
             </v-data-table>
             <v-row>
                 <v-spacer></v-spacer>
-                <paginate-load @paginate="songsByRecent" pageLess :identifier="channel.id + search" />
+                <PaginateLoad
+                    @paginate="songsByRecent"
+                    pageLess
+                    :identifier="channel.id + search + 'songs'"
+                    scrollElementId="songSearchTable"
+                />
                 <v-spacer></v-spacer>
             </v-row>
         </v-col>
@@ -204,7 +224,7 @@ export default {
             } catch (e) {
                 error();
             }
-        }, 400),
+        }, 100),
         async songsByPopular() {
             console.log("tbd");
             const { data } = await backendApi.topSongs(null, this.channel.id, "w");
