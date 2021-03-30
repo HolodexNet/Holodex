@@ -105,7 +105,7 @@ export default {
         };
     },
     mounted() {
-        this.$store.commit("channels/resetState");
+        this.init();
     },
     watch: {
         category() {
@@ -206,8 +206,11 @@ export default {
         },
     },
     methods: {
+        init() {
+            this.$store.commit("channels/resetState");
+        },
         reload() {
-            this.resetChannels();
+            this.init();
         },
         load($state) {
             const lastLength = this.channels.length;
