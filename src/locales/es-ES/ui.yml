@@ -38,8 +38,6 @@ component:
     edit: Editar
   videoDescription:
     description: Descripción
-  video:
-    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mas
@@ -89,7 +87,6 @@ component:
       beforeExportIcon: Pulse
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Suscriptores
       group: Grupo
@@ -212,7 +209,8 @@ views:
     presets: Configuraciones
     addframe: Añadir Celda
     preset:
-      shareOnDiscord: '¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y háznoslo saber en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!'
+      shareOnDiscord: >-
+        ¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y háznoslo saber en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!
       desktop: Escritorio
       mobile: Móvil
     video:
