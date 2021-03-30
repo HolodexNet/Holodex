@@ -28,7 +28,7 @@
 
 <script>
 import api from "@/utils/backend-api";
-import VideoCardList from "@/components/video/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList.vue";
 import { localizedDayjs } from "@/utils/time";
 
 export default {

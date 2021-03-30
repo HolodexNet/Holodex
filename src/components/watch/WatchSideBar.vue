@@ -53,14 +53,14 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/video/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList.vue";
 import { mdiTimerOutline } from "@mdi/js";
 
 export default {
     name: "WatchSideBar",
     components: {
         VideoCardList,
-        SongItem: () => import("@/components/media/SongItem"),
+        SongItem: () => import("@/components/media/SongItem.vue"),
     },
     props: {
         video: {

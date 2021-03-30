@@ -1,15 +1,19 @@
 module.exports = {
     root: true,
+
     env: {
         browser: true,
         node: true,
         es6: true,
     },
+
     extends: ["airbnb-base", "eslint:recommended", "prettier", "prettier/vue"],
     parser: "vue-eslint-parser",
+
     parserOptions: {
-        parser: "@babel/eslint-parser",
+        parser: "@typescript-eslint/parser",
     },
+
     rules: {
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
         "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
@@ -35,16 +39,19 @@ module.exports = {
             "always",
             {
                 js: "never",
-                vue: "never",
+                ts: "never",
+                vue: "always",
             },
         ],
     },
-    ignorePatterns: ["src/external/**", "src/locales/**"],
+
+    ignorePatterns: ["src/external/**", "src/locales/**", ".eslintrc.js"],
+
     settings: {
         "import/resolver": {
             alias: {
                 map: [["@", "./src"]],
-                extensions: [".js", ".vue"],
+                extensions: [".js", ".vue", ".ts"],
             },
             webpack: {
                 // https://github.com/vuejs/vue-cli/issues/2628
@@ -52,4 +59,6 @@ module.exports = {
             },
         },
     },
+
+    extends: ["airbnb-base", "eslint:recommended", "prettier", "prettier/vue", "@vue/typescript"],
 };

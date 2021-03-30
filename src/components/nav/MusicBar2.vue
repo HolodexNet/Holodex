@@ -148,9 +148,9 @@ import {
     mdiPlaylistRemove,
 } from "@mdi/js";
 
-import SongFrame from "../media/SongFrame";
-import SongPlaylist from "../media/SongPlaylist";
-import ResponsiveMenu from "../common/ResponsiveMenu";
+import SongFrame from "../media/SongFrame.vue";
+import SongPlaylist from "../media/SongPlaylist.vue";
+import ResponsiveMenu from "../common/ResponsiveMenu.vue";
 
 Vue.use(VueYouTubeEmbed);
 

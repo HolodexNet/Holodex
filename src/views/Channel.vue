@@ -30,10 +30,10 @@
 
 <script>
 // import api from "@/utils/backend-api";
-import ChannelSocials from "@/components/channel/ChannelSocials";
-import ChannelInfo from "@/components/channel/ChannelInfo";
-import ChannelImg from "@/components/channel/ChannelImg";
-import LoadingOverlay from "@/components/common/LoadingOverlay";
+import ChannelSocials from "@/components/channel/ChannelSocials.vue";
+import ChannelInfo from "@/components/channel/ChannelInfo.vue";
+import ChannelImg from "@/components/channel/ChannelImg.vue";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { getBannerImages } from "@/utils/functions";
 import { mapState } from "vuex";
 

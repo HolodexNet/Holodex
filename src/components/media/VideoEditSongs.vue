@@ -238,8 +238,8 @@
 <script>
 import { mdiEarHearing, mdiRestore, mdiTimerOutline, mdiDebugStepOver } from "@mdi/js";
 import backendApi from "@/utils/backend-api";
-import SongSearch from "./SongSearch";
-import SongItem from "./SongItem";
+import SongSearch from "./SongSearch.vue";
+import SongItem from "./SongItem.vue";
 
 function humanToSeconds(str) {
     const p = str.split(":");

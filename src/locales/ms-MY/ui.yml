@@ -6,7 +6,7 @@ component:
     textAfterTwitter: ' atau laporkan ralat melalui'
     aboutPage: laman Perihal
   channelList:
-    signInToFavorite: Pendaftaran diperlukan
+    signInToFavorite: Pendaftaran diperlukan untuk menambah ke kegemaran
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
   channelInfo:
@@ -52,7 +52,7 @@ component:
       channel: saluran
       topic: topik
       org: kumpulan
-      titledesc: tajuk dan perihalan
+      titledesc: tajuk dan penerangan
       comments: ulasan
       videourl: url video
   relatedVideo:

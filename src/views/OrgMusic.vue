@@ -124,7 +124,13 @@
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template v-slot:item.channel.name="{ item, value }">
                         <span>{{ item.channel[nameProperty] || value }}</span>
-                        <v-btn class="popup" icon target="_blank" :href="`/channel/${item.channel_id}/music`">
+                        <v-btn
+                            class="popup"
+                            icon
+                            target="_blank"
+                            :href="`/channel/${item.channel_id}/music`"
+                            @click.stop
+                        >
                             <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
                         </v-btn>
                     </template>
@@ -142,10 +148,18 @@
                             icon
                             target="_blank"
                             :href="`/watch/${item.video_id}?t=${item.start}`"
+                            @click.stop
                         >
                             <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
                         </v-btn>
-                        <v-btn class="popup" small icon target="_blank" :href="`/edit/video/${item.video_id}/music`">
+                        <v-btn
+                            class="popup"
+                            small
+                            icon
+                            target="_blank"
+                            :href="`/edit/video/${item.video_id}/music`"
+                            @click.stop
+                        >
                             <v-icon small>{{ icons.mdiPencil }}</v-icon>
                         </v-btn>
                     </template>
@@ -162,10 +176,10 @@
 
 <script>
 import backendApi from "@/utils/backend-api";
-import SongItemCard from "@/components/media/SongItemCard";
-import SongItem from "@/components/media/SongItem";
-import Carousel from "@/components/common/Carousel";
-import PaginateLoad from "@/components/common/PaginateLoad";
+import SongItemCard from "@/components/media/SongItemCard.vue";
+import SongItem from "@/components/media/SongItem.vue";
+import Carousel from "@/components/common/Carousel.vue";
+import PaginateLoad from "@/components/common/PaginateLoad.vue";
 import { formatDistance, formatDuration } from "@/utils/time";
 import { mapState } from "vuex";
 import { debounce } from "@/utils/functions";

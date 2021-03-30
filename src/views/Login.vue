@@ -82,7 +82,7 @@ import api from "@/utils/backend-api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import Vue from "vue";
-import UserCard from "@/components/user/UserCard";
+import UserCard from "@/components/user/UserCard.vue";
 import { mdiClipboardPlusOutline } from "@mdi/js";
 import copyToClipboard from "@/mixins/copyToClipboard";
 
