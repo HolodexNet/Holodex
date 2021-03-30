@@ -60,7 +60,7 @@ component:
     refersLabel: refers
     sourcesLabel: sources
     songsLabel: songs
-    recommendationsLabel: recommended 
+    recommendationsLabel: recommended
   paginateLoad:
     newer: Newer
     older: Older
@@ -169,6 +169,7 @@ views:
     scrollModeMsg: Use scroll/tap to turn pages
     resetAllSettings: Reset All Settings/Data
     clipLanguageSelection: 'See Clips in these Languages:'
+    tlLanguageSelection: See live-chat TL in these languages
   app:
     update_available: An update is available
     update_btn: Update
@@ -227,7 +228,9 @@ views:
     presets: Presets
     addframe: Add Cell
     preset:
-      shareOnDiscord: Have a cool layout to share? Use the share button and let us know on our <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+      shareOnDiscord: >-
+        Have a cool layout to share? Use the share button and let us know on our
+        <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
       desktop: Desktop
       mobile: Mobile
     video:
