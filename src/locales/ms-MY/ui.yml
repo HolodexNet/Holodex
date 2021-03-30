@@ -123,7 +123,7 @@ views:
     exportCsv: Fail CSV
     selectionSelect50: Pilih 50
     exportYTExplanation: >-
-      Senarai main yang dibuat <b>tidak tersenarai</b> di YouTube serta berkebarangkalian dihapuskan oleh YouTube.<br /> Sekiranya anda mahu menyimpan senarai main <b>tidak tersenarai</b> ini di YouTube, anda harus mengikuti langkah berikut.
+      Senarai main yang dibuat oleh ciri ini <b>tidak tersenarai</b> dan berkemungkinan telah dihapuskan oleh YouTube.<br /> Disebabkan kecacatan YouTube, anda perlu mengikuti langkah berikut untuk menyimpan senarai main <b>tidak tersenarai</b> ini di YouTube.
     exportYTHeading: Arahan Menyimpan Senarai Main YouTube
     exportYTInstructions: >-
       <b class="red--text">Langkah 1</b>: Mainkan senarai main YouTube kemudian gunakan antara muka pemain mini. <br /><br /> <b class="red--text">Langkah 2</b>: Pilih mana-mana video kemudian tambahkan pada baris gilir. <br /><br /> <b class="red--text">Langkah 3</b>: Senarai main ini telah boleh disimpan. Simpan dengan menekan simpan.
