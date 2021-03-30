@@ -38,6 +38,8 @@ component:
     edit: Ubah
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -87,6 +89,7 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -157,6 +160,7 @@ views:
     scrollModeMsg: Menggulir halaman menggunakan scroll / menekan tombol.
     resetAllSettings: Reset Semua Pengaturan/Data
     clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
+    tlLanguageSelection: Melihat Terjemahan dalam bahasa ini
   app:
     update_available: Pembaharuan tersedia
     update_btn: Perbarui

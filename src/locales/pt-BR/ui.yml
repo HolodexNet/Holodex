@@ -38,6 +38,8 @@ component:
     edit: Editar
   videoDescription:
     description: Descrição
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -87,6 +89,7 @@ component:
       beforeExportIcon: Toque
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -157,6 +160,7 @@ views:
     scrollModeMsg: Use rolar/tocar para navegar nas páginas
     resetAllSettings: Redefinir todas as configurações/dados
     clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
+    tlLanguageSelection: Ver Traduções no Chat nestes idiomas
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
