@@ -38,8 +38,6 @@ component:
     edit: 編輯
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -89,7 +87,6 @@ component:
       beforeExportIcon: 點擊
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -213,7 +210,8 @@ views:
     presets: 預設佈局
     addframe: 增加新分割
     preset:
-      shareOnDiscord: 想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
+      shareOnDiscord: >-
+        想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
       desktop: 桌上型電腦佈局
       mobile: 手機專用佈局
     video:

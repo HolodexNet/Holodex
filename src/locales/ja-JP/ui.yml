@@ -38,8 +38,6 @@ component:
     edit: 編集
   videoDescription:
     description: 概要
-  video:
-    comment: { }
   description:
     showLess: 省略表示
     showMore: もっと見る
@@ -89,7 +87,6 @@ component:
       beforeExportIcon: '  '
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 登録者数
       group: グループ
@@ -212,7 +209,8 @@ views:
     presets: プリセット
     addframe: セルを追加
     preset:
-      shareOnDiscord: なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
+      shareOnDiscord: >-
+        なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
       desktop: デスクトップ
       mobile: モバイル
     video:

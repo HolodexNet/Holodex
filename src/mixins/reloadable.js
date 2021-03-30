@@ -28,7 +28,7 @@ export default {
                     }
 
                     // throttle requests, only refresh after 30s has past since last refresh
-                    if (+new Date() - this.lastFetch < 1000 * 30) {
+                    if (+new Date() - this.lastFetch < 1000 * 30 && action.payload.source === "scrollBehavior") {
                         return;
                     }
 

@@ -38,8 +38,6 @@ component:
     edit: Изменить
   videoDescription:
     description: Описание
-  video:
-    comment: { }
   description:
     showLess: Свернуть
     showMore: Ещё
@@ -89,7 +87,6 @@ component:
       beforeExportIcon: Нажмите
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Подписчики
       group: Группа
@@ -212,7 +209,8 @@ views:
     presets: Пресеты
     addframe: Добавить ячейку
     preset:
-      shareOnDiscord: У Вас есть классный макет, которым можно поделиться? Воспользуйтесь кнопкой "Поделиться" и дайте нам знать на нашем <a href="https://discord.gg/jctkgHBt4b">Discord сервере</a>!
+      shareOnDiscord: >-
+        У Вас есть классный макет, которым можно поделиться? Воспользуйтесь кнопкой "Поделиться" и дайте нам знать на нашем <a href="https://discord.gg/jctkgHBt4b">Discord сервере</a>!
       desktop: Для ПК
       mobile: Для мобильных
     video:
