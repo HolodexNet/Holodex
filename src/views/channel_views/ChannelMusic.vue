@@ -111,10 +111,10 @@
 
 <script>
 import backendApi from "@/utils/backend-api";
-import SongItemCard from "@/components/media/SongItemCard";
-import SongItem from "@/components/media/SongItem";
-import Carousel from "@/components/common/Carousel";
-import PaginateLoad from "@/components/common/PaginateLoad";
+import SongItemCard from "@/components/media/SongItemCard.vue";
+import SongItem from "@/components/media/SongItem.vue";
+import Carousel from "@/components/common/Carousel.vue";
+import PaginateLoad from "@/components/common/PaginateLoad.vue";
 import { formatDistance, formatDuration } from "@/utils/time";
 import { mapState } from "vuex";
 import { debounce } from "@/utils/functions";

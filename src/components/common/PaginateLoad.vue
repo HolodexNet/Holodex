@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import LoadingOverlay from "@/components/common/LoadingOverlay";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import isActive from "@/mixins/isActive";
 import { debounce } from "@/utils/functions";
 

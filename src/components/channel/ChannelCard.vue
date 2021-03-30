@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import ChannelImg from "./ChannelImg";
-import ChannelInfo from "./ChannelInfo";
-import ChannelSocials from "./ChannelSocials";
+import ChannelImg from "./ChannelImg.vue";
+import ChannelInfo from "./ChannelInfo.vue";
+import ChannelSocials from "./ChannelSocials.vue";
 
 export default {
     name: "ChannelCard",

@@ -74,8 +74,8 @@
 </template>
 
 <script>
-import ChannelImg from "@/components/channel/ChannelImg";
-import ChannelInfo from "@/components/channel/ChannelInfo";
+import ChannelImg from "@/components/channel/ChannelImg.vue";
+import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
 import { mapState } from "vuex";
 

@@ -75,8 +75,8 @@
 </template>
 
 <script>
-import VideoCard from "@/components/video/VideoCard";
-import ApiErrorMessage from "@/components/common/ApiErrorMessage";
+import VideoCard from "@/components/video/VideoCard.vue";
+import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
 export default {
@@ -85,8 +85,8 @@ export default {
         VideoCard,
         ApiErrorMessage,
         // InfiniteLoading: () => import("vue-infinite-loading"),
-        InfiniteLoad: () => import("@/components/common/InfiniteLoad"),
-        PaginateLoad: () => import("@/components/common/PaginateLoad"),
+        InfiniteLoad: () => import("@/components/common/InfiniteLoad.vue"),
+        PaginateLoad: () => import("@/components/common/PaginateLoad.vue"),
     },
     data() {
         return {

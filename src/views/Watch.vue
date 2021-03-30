@@ -162,13 +162,13 @@
 <script>
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
-import LoadingOverlay from "@/components/common/LoadingOverlay";
-import WatchInfo from "@/components/watch/WatchInfo";
-import WatchFrame from "@/components/watch/WatchFrame";
-import WatchSideBar from "@/components/watch/WatchSideBar";
-import WatchLiveChat from "@/components/watch/WatchLiveChat";
-import WatchComments from "@/components/watch/WatchComments";
-import WatchToolBar from "@/components/watch/WatchToolbar";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
+import WatchInfo from "@/components/watch/WatchInfo.vue";
+import WatchFrame from "@/components/watch/WatchFrame.vue";
+import WatchSideBar from "@/components/watch/WatchSideBar.vue";
+import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
+import WatchComments from "@/components/watch/WatchComments.vue";
+import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 
 import { decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
@@ -190,7 +190,7 @@ export default {
         WatchSideBar,
         WatchComments,
         WatchToolBar,
-        WatchMugen: () => import("@/components/watch/WatchMugen"),
+        WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
     },
     data() {
         return {

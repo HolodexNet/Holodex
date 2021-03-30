@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import MainNav from "@/components/nav/MainNav";
+import MainNav from "@/components/nav/MainNav.vue";
 import pulltorefresh from "vue-awesome-pulltorefresh";
 import { dayjsLangs } from "./plugins/vuetify";
 

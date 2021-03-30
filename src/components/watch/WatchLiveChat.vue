@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import WatchLiveTranslations from "./WatchLiveTranslations";
+import WatchLiveTranslations from "./WatchLiveTranslations.vue";
 
 export default {
     name: "WatchLiveChat",

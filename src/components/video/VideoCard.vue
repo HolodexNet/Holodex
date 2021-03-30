@@ -158,7 +158,7 @@ import * as icons from "@/utils/icons";
 export default {
     name: "VideoCard",
     components: {
-        ChannelImg: () => import("@/components/channel/ChannelImg"),
+        ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
         Comment: () => import("./Comment"),
     },
     data() {
