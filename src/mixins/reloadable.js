@@ -3,7 +3,7 @@ export default {
         return {
             unsubscribe: null,
             isActive: true,
-            firstMount: true,
+            lastFetch: 0,
         };
     },
     activated() {
@@ -22,13 +22,20 @@ export default {
                     action.payload.consumed = true;
 
                     // do nothin on first load, let the main element handle it
-                    if (this.firstMount) {
-                        this.firstMount = false;
+                    if (!this.lastFetch) {
+                        this.lastFetch = +new Date();
+                        return;
+                    }
+
+                    // throttle requests, only refresh after 30s has past since last refresh
+                    if (+new Date() - this.lastFetch < 1000 * 30) {
                         return;
                     }
 
                     // call the reload function
                     this.reload();
+
+                    this.lastFetch = +new Date();
                 }
             },
             { prepend: true },

@@ -144,8 +144,8 @@ const router = new VueRouter({
     routes,
     // eslint-disable-next-line no-unused-vars
     scrollBehavior(to, from, savedPosition) {
-        // try reload
-        if (!savedPosition) {
+        // try reload when entering new page, if not on Mobile
+        if (!store.state.isMobile && !savedPosition) {
             store.dispatch("reloadCurrentPage", { source: "scrollBehavior", consumed: false });
         }
         return savedPosition;
