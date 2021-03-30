@@ -27,24 +27,6 @@
             flat
             v-show="!(isMobile && isWatchPage) && !isMultiView"
         >
-            <div
-                :class="{
-                    'secondary darken-3': darkMode,
-                    'primary lighten-1': !darkMode,
-                }"
-                style="
-                    position: absolute;
-                    top: calc(-1 * env(safe-area-inset-top));
-                    left: 0px;
-                    right: 0px;
-                    width: 100%;
-                    height: env(safe-area-inset-top);
-                    z-index: 300;
-                "
-            >
-                <!-- this is just the element that covers up the notch. don't worry about it. -->
-            </div>
-
             <!--=============================== Top Bar (Regular View) =============================-->
 
             <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
@@ -170,6 +152,23 @@
             </template>
 
             <!--=================== END OF Expanded Search (Mobile Only) =======================-->
+            <div
+                :class="{
+                    'secondary darken-3': darkMode,
+                    'primary lighten-1': !darkMode,
+                }"
+                style="
+                    position: absolute;
+                    top: calc(-1 * env(safe-area-inset-top));
+                    left: 0px;
+                    right: 0px;
+                    width: 100%;
+                    height: env(safe-area-inset-top);
+                    z-index: 300;
+                "
+            >
+                <!-- this is just the element that covers up the notch. don't worry about it. -->
+            </div>
         </v-app-bar>
     </div>
 </template>
@@ -357,16 +356,7 @@ export default {
     padding-right: min(calc(env(safe-area-inset-right)), 30px);
     /* padding-top: min(calc(env(safe-area-inset-top) / 2), 30px); */
     /* height: calc(env(safe-area-inset-top,0px) + 30px); */
-    border-top-width: env(safe-area-inset-top);
-    border-top-style: outset;
-    box-sizing: content-box;
-}
-
-#top-bar.primary {
-    border-top-color: rgb(255, 126, 172) !important;
-}
-#top-bar.secondary {
-    border-top-color: rgb(0, 103, 162) !important;
+    padding-top: 0px;
 }
 
 .fade-enter-active,
