@@ -162,6 +162,10 @@ export default new Vuex.Store({
                 }
             }
         },
+        // eslint-disable-next-line no-unused-vars
+        async reloadCurrentPage({ commit }, consumed) {
+            return consumed;
+        },
     },
     modules: {
         home,

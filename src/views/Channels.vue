@@ -71,9 +71,11 @@ import InfiniteLoad from "@/components/common/InfiniteLoad.vue";
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
 import { mapState } from "vuex";
 import { localSortChannels } from "@/utils/functions";
+import reloadable from "@/mixins/reloadable";
 
 export default {
     name: "Channels",
+    mixins: [reloadable],
     metaInfo() {
         const vm = this;
         return {
@@ -204,6 +206,9 @@ export default {
         },
     },
     methods: {
+        reload() {
+            this.resetChannels();
+        },
         load($state) {
             const lastLength = this.channels.length;
             this.$store
