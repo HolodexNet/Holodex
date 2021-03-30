@@ -38,8 +38,6 @@ component:
     edit: Sunting
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -89,7 +87,6 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -212,7 +209,8 @@ views:
     presets: Tataletak Tersedia
     addframe: Tambah Petak
     preset:
-      shareOnDiscord: Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
+      shareOnDiscord: >-
+        Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
       desktop: Peranti Atas Meja
       mobile: Peranti Mudah Alih
     video:
