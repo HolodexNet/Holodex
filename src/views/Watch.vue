@@ -28,7 +28,7 @@
                     </WatchFrame>
                     <WatchToolBar :video="video" noBackButton>
                         <template v-slot:buttons>
-                            <v-tooltip bottom v-if="!$store.state.isMobile">
+                            <v-tooltip bottom v-if="hasLiveChat && !$store.state.isMobile">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-btn
                                         icon
@@ -143,7 +143,7 @@
                 </WatchFrame>
                 <WatchToolBar :video="video">
                     <template v-slot:buttons>
-                        <v-btn icon lg @click="toggleTL" :color="showTL ? 'primary' : ''">
+                        <v-btn icon lg @click="toggleTL" :color="showTL ? 'primary' : ''" v-if="hasLiveChat">
                             <div class="notification-sticker" v-if="newTL > 0"></div>
                             <v-icon>{{ mdiTranslate }}</v-icon>
                         </v-btn>
