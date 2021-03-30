@@ -202,6 +202,7 @@ export default {
         },
     },
     mounted() {
+        this.$store.dispatch("favorites/fetchLive");
         if (this.$route.params.layout) {
             // TODO: verify layout
             try {
