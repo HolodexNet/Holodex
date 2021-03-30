@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <style>
-            :root {
-                --sat: env(safe-area-inset-top);
-                --sar: env(safe-area-inset-right);
-                --sab: env(safe-area-inset-bottom);
-                --sal: env(safe-area-inset-left);
-            }           
-        </style>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="viewport-fit=cover,initial-scale=1.0,width=device-width" />
@@ -28,7 +20,7 @@
         <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" as="style">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap">
     </head>
-    <body style="background-color: black; margin-top:  env(safe-area-inset-top)">
+    <body style="background-color: black; margin-top: env(safe-area-inset-top)">
         <noscript>
             <strong
                 >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript
