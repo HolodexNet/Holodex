@@ -159,12 +159,12 @@
                 }"
                 style="
                     position: absolute;
-                    top: calc(-1 * env(safe-area-inset-top));
+                    top: calc(env(safe-area-inset-top) / 6);
                     left: 0px;
                     right: 0px;
                     width: 100%;
                     height: env(safe-area-inset-top);
-                    z-index: 300;
+                    z-index: -1;
                 "
             >
                 <!-- this is just the element that covers up the notch. don't worry about it. -->
@@ -354,9 +354,8 @@ export default {
     /* background-color: #2b79ad !important; */
     padding-left: min(calc(env(safe-area-inset-left)), 30px);
     padding-right: min(calc(env(safe-area-inset-right)), 30px);
-    /* padding-top: min(calc(env(safe-area-inset-top) / 2), 30px); */
+    padding-top: env(safe-area-inset-top);
     /* height: calc(env(safe-area-inset-top,0px) + 30px); */
-    padding-top: 0px;
 }
 
 .fade-enter-active,
