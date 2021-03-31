@@ -2,9 +2,10 @@
 component:
   apiError:
     title: 灰常拍謝！
-    textBeforeTwitter: '取得內容時發生錯誤，請於推特確認目前狀況。'
-    textAfterTwitter: '或是於推特回報錯誤給我們。'
+    textBeforeTwitter: '取得內容時發生錯誤，請於推特確認目前狀況'
+    textAfterTwitter: '，或是從'
     aboutPage: 關於本站
+    afterAboutPageHyperlink: 頁面回報錯誤。
   channelList:
     signInToFavorite: 請登入以使用收藏功能
     unfavoriteAllInGroup: 取消收藏本群組所有頻道
@@ -141,6 +142,8 @@ views:
       clip: 剪輯
     unsupportedQuery: >-
       目前無法透過 <kbd>影片內容</kbd> 與 <kbd>所屬團體</kbd> 搜尋剪輯影片。
+    sortByLabel: 排序方式
+    typeDropdownLabel: 影片類型
   settings:
     title: 設定
     darkModeLabel: 深色主題
@@ -247,3 +250,31 @@ editor:
     endInput: '總播放秒數（結束於 @ {0}）'
   exitMode: 離開編輯模式
   enterMode: 編輯影片資料
+about:
+  quicklinks: 相關連結
+  discordBtn: Holodex Discord
+  issueTracker: Github原始碼 / 錯誤回報頁
+  faq:
+    title: 常見問題
+    ytchatHeader: YouTube聊天室顯示我尚未登入
+    ytchatContent: >-
+      請取消瀏覽器上有關「禁止第三方Cookie」的安全選項，或是將本站與youtube.com加入第三方Cookie的白名單內。
+    ytchatFirefox: 以上所述為Firefox的修正方法，其他瀏覽器的修正方式也大同小異。
+    autoplayHeader: 影片不會自動開始播放！
+    autoplayContent: 請用Google查詢如何啟用您所使用的瀏覽器的自動播放功能。
+    musicPlayer: 音樂播放器無法在行動裝置上正常使用！
+    musicPlayerContent: >-
+      非常抱歉，但行動裝置沒辦法像是電腦網頁那樣完美運作我們的音樂播放器。 <br/>有三個原因：<br/>１. 行動裝置的系統通常會禁用我們所需要的自動播放功能。<br/>２. 行動裝置通常不允許網站在背景播放音樂。<br/>３. 我們不會將您的播放清單整合到系統的音樂控制中心。
+    videoLinkage: 我該如何確保影片有確實與Vtuber關聯？
+    videoLinkageContent: >-
+      影片的所有訊息皆是由影片描述自動分析而來。如果您的剪輯來自特定實況，請確保在描述中附帶該次實況的官方連結。如果您的剪輯來自粉絲二創作品（舉例來說：B站），請確保在描述中附帶該剪輯中所出現的Vtuber頻道連結。如果您的影片描述中未包含任何Vtuber或是實況連結的話，Holodex就不會於網站上顯示該影片，因為所有剪輯都必需要連結到Holodex已知的Vtuber。
+    quitHolodex: "我是翻譯/剪輯者且我想要將自己的頻道自Holodex資料庫中移除\\r"
+    quitHolodexContent: >-
+      祝您一路順風 :(  如果有任何需要協助的，請讓我們知道。如果您依然想移除自己頻道的相關資料，請至 Holodex 的 Discord伺服器 傳訊息給我們。
+  gdpr: 關於GDPR與我的資料
+  gdprContent: >-
+    我們僅使用「Google分析」的cookie來追蹤每頁的瀏覽人數並分析資料。當您登入後，我們會將您社群媒體帳號的帳號名稱/ID與網站收藏庫的內容綁定。記錄下的內容可能包括您的電子郵件（Google帳號）、Discord ID，或是Twitter帳號。
+  gdprDeletion: 如果想刪除您的帳號資料，請至Discord與我們聯絡！
+  feedback: 意見回饋/回報錯誤
+  feedbackHtml: >-
+    您可至<a href="https://github.com/RiceCakess/Holodex/issues"> Github 問題回報頁 </a>創建貼文來回報問題，或是前往我們的 Discord伺服器 進行回報。<br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
