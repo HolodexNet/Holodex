@@ -59,7 +59,9 @@
                 </v-list-item-content>
             </v-list-item>
             <v-list-item>
-                <router-link to="/channel" style="font-size: 0.825rem" class="ma-auto"> Manage Favorites </router-link>
+                <router-link to="/channel" style="font-size: 0.825rem" class="ma-auto">
+                    {{ $t("views.favorites.manageFavorites") }}
+                </router-link>
             </v-list-item>
             <v-list-item>
                 <router-link to="/settings" style="font-size: 0.825rem" class="ma-auto">

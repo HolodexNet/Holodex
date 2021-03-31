@@ -10,7 +10,7 @@
             </v-col>
 
             <v-col cols="12" md="8" sm="8" lg="9" xl="10">
-                <div class="text-h5 mb-2">Quick Links</div>
+                <div class="text-h5 mb-2">{{ $t("about.quicklinks") }}</div>
 
                 <v-row dense class="mx-1">
                     <v-col cols="12" md="auto">
@@ -22,7 +22,7 @@
                             href="https://discord.gg/jctkgHBt4b"
                         >
                             <v-icon large left>{{ icons.mdiDiscord }}</v-icon>
-                            Holodex Discord
+                            {{ $t("about.discordBtn") }}
                         </v-btn>
                     </v-col>
                     <v-col cols="12" md="auto">
@@ -52,13 +52,54 @@
                     <v-col cols="12" md="auto">
                         <v-btn class="text-left justify-start" block large href="https://github.com/RiceCakess/Holodex">
                             <v-icon large left>{{ mdiGithub }}</v-icon>
-                            Issue Tracker / Source
+                            {{ $t("about.issueTracker") }}
                         </v-btn>
                     </v-col>
                 </v-row>
 
-                <div class="text-h5 mb-2 mt-4">FAQ</div>
+                <div class="text-h5 mb-2 mt-4">{{ $t("about.faq.title") }}</div>
                 <v-expansion-panels>
+                    <v-expansion-panel>
+                        <v-expansion-panel-header>
+                            {{ $t("about.faq.ytchatHeader") }}
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                            {{ $t("about.faq.ytchatContent") }}
+                            <br />
+                            <a
+                                href="https://support.mozilla.org/en-US/kb/third-party-cookies-firefox-tracking-protection?redirectslug=disable-third-party-cookies"
+                            >
+                                {{ $t("about.faq.ytchatFirefox") }}
+                            </a>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                    <v-expansion-panel>
+                        <v-expansion-panel-header>
+                            {{ $t("about.faq.autoplayHeader") }}
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                            {{ $t("about.faq.autoplayContent") }}
+                            <br />
+                            <br />Safari: <br />
+                            <img
+                                width="80%"
+                                src="https://www.imore.com/sites/imore.com/files/styles/large/public/field/image/2017/07/safari-custom-settings-websites-mac-screenshot-06.jpg?itok=ONVYTcno"
+                            />
+                            <br />Firefox: <br />
+                            <img
+                                width="80%"
+                                src="https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/firefox/files/2019/04/Screen-Shot-2019-04-01-at-11.21.21-AM.png"
+                            />
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                    <v-expansion-panel>
+                        <v-expansion-panel-header>
+                            {{ $t("about.faq.musicPlayer") }}
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content v-html="$t('about.faq.musicPlayerContent')">
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+
                     <v-expansion-panel>
                         <v-expansion-panel-header> Is there an Android/iOS app for Holodex? </v-expansion-panel-header>
                         <v-expansion-panel-content>
@@ -122,21 +163,18 @@
                     </v-expansion-panel>
                     <v-expansion-panel>
                         <v-expansion-panel-header>
-                            How do I make sure that videos are tagged properly?
+                            {{ $t("about.faq.videoLinkage") }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            All information is parsed from the video description. If you are clipping a stream, please
-                            make sure to link the official stream. If you are clipping fan made content (eg. from
-                            bilibili), just make sure to link the official channels of relevant vtubers.
+                            {{ $t("about.faq.videoLinkageContent") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
                         <v-expansion-panel-header>
-                            I'm a subber and I would like to have my channel removed from Holodex
+                            {{ $t("about.faq.quitHolodex") }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            Sad to see you go :(, please let me know if there's any issue I can help you with. If you
-                            would still like to have it removed, please send me a message on Discord.
+                            {{ $t("about.faq.quitHolodexContent") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -144,33 +182,23 @@
                             I have feedback/want to contribute to this project
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            All help and ideas are welcome! The project is currently in a private repo, but I hope to
-                            make it public once I clean up the code, in the mean time, feel free to contact me directly
-                            and I'll add you on.
+                            All help and ideas are welcome! The UI and Backend are both available for contribution,
+                            although only the UI is open source currently. Please contact us on discord to gain access
+                            to backend source, or simply chat about your ideas.
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
-                        <v-expansion-panel-header> GDPR and my data </v-expansion-panel-header>
+                        <v-expansion-panel-header> {{ $t("about.gdpr") }} </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            A Google Analytics cookie is used to track pageviews for our analytical purposes. After
-                            login, we associate your social media account username and ID with your favorites. This data
-                            may include your Email (for Google), Discord ID, or Twitter handle respectively.
-                            <b>For deletion of your user data, please contact us on discord!</b>
+                            {{ $t("about.gdprContent") }}
+                            <b>{{ $t("about.gdprDeletion") }}</b>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                 </v-expansion-panels>
                 <br />
 
-                <div class="text-h5">Feedback/Bug Reports</div>
-                <p class="text-body-2">
-                    You can create an issue in the
-                    <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a>
-                    or find the Holodex team on Discord
-                    <br />
-                    <br />
-                    Reddit:
-                    <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
-                </p>
+                <div class="text-h5">{{ $t("about.feedback") }}</div>
+                <p class="text-body-2" v-html="$t('about.feedbackHtml')"></p>
                 <br />
 
                 <div class="text-h5" id="changelog">Credits</div>
