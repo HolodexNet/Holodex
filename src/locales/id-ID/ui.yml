@@ -137,6 +137,8 @@ views:
       clip: Klip
     unsupportedQuery: >-
       Saat ini mencari klip dengan <kbd>Topik</kbd> dan <kbd>Organisasi</kbd> belum dapat dilakukan. Tidak ada <b>klip</b> yang akan muncul.
+    sortByLabel: Urutkan Berdasarkan
+    typeDropdownLabel: Tipe
   settings:
     title: Pengaturan
     darkModeLabel: Mode Malam
@@ -243,3 +245,15 @@ editor:
     endInput: 'Durasi dalam detik: (berakhir pd {0})'
   exitMode: Keluar dari Mode Edit
   enterMode: Edit Video
+about:
+  quicklinks: Tautan cepat
+  discordBtn: Discord Holodex
+  faq:
+    title: Pertanyaan Umum
+    ytchatHeader: Akun Youtube saya tidak login pada kolom chat!
+    ytchatContent: >-
+      Kamu harus mematikan fitur keamanan pada browser yang bernama Pemblokiran Cookie Pihak Ketiga, atau whitelist situs ini dan youtube.com untuk mengizinkan Cookie Pihak Ketiga.
+    ytchatFirefox: Panduan Firefox, browser lain mungkin sama.
+    autoplayHeader: AutoPlay tidak berfungsi!
+    autoplayContent: Kamu bisa cari di internet bagaimana cara mengaktifkan autoplay pada browsermu.
+    musicPlayer: Pemutar Musik tidak berfungsi dengan baik pada perangkat seluler!
