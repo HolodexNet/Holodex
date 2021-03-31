@@ -247,6 +247,7 @@ export default {
     },
     methods: {
         init() {
+            window.scrollTo(0, 0);
             this.startTime = 0;
             if (this.isMugen) {
                 this.initMugen();

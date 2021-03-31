@@ -98,7 +98,6 @@ export default {
 .watch-live-chat.mobile-live-chat {
     margin-right: 0px; /*calc(env(safe-area-inset-right) - 15px)*/
     margin-right: calc(env(safe-area-inset-right) / 2);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* center pre loading text */
@@ -154,8 +153,10 @@ export default {
     z-index: 10;
     /* pre-iOS 11.2 */
     height: calc((100% - 36px - 100vw * 0.5625) - constant(safe-area-inset-top));
+    padding-bottom: calc(constant(safe-area-inset-bottom) / 1.75);
     /* iOS 11.2 and later */
     height: calc((100% - 36px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
+    padding-bottom: calc(env(safe-area-inset-bottom) / 1.75);
 }
 
 .watch-live-chat.fixed-bottom > .embedded-chat {
