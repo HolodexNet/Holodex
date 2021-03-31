@@ -38,8 +38,6 @@ component:
     edit: 編輯
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -89,7 +87,6 @@ component:
       beforeExportIcon: 點擊
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
