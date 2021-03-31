@@ -5,6 +5,7 @@ component:
     textBeforeTwitter: 'Es ist ein Fehler beim Abrufen von Inhalten aufgetreten, bitte schau of Twitter '
     textAfterTwitter: ' oder melde den Fehler über die'
     aboutPage: Info-Seite
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Einloggen um zu favorisieren
     unfavoriteAllInGroup: Alle in Gruppe entfavorisieren
@@ -45,7 +46,7 @@ component:
     showMore: Mehr anzeigen
   watch:
     streamingFor: Live seit {0}
-    nextUpInMugen: Als Nächstes
+    nextUpInMugen: Es folgt ...
   search:
     searchLabel: Suchen
     type:
@@ -69,15 +70,15 @@ component:
     clearPlaylist: Leeren
   channelMusic:
     recentSongsHeader: Aktuelle Songs
-    weeklyTopPlaysHeader: Wöchentliche Top Plays
+    weeklyTopPlaysHeader: Top-Songs der Woche
   songList:
     songTitle: Titel
     songCoveredBy: Coverversion von
     songDuration: Dauer
     sangOnTime: Gesungen am
   orgMusic:
-    monthlyTopForOrg: Monatliche Top Plays für {0}
-    weeklyTopForOrg: Wöchentliche Top-Plays für {0}
+    monthlyTopForOrg: Top-Songs des Monats von {0}
+    weeklyTopForOrg: Top-Songs der Woche von {0}
   installPrompt:
     title: Holodex installieren
     callToAction: Das Anschauen von Videos auf Holodex funktioniert am besten, wenn es zum Startbildschirm hinzugefügt wird
@@ -102,8 +103,8 @@ views:
       Favorites: Favoriten
     favoritesAreEmpty: Du hast keine Favoriten!
   home:
-    liveOrUpcomingHeading: Live / Anstehend
-    recentVideosHeading: Kürzliche Videos
+    liveOrUpcomingHeading: Jetzt Live / Demnächst Live
+    recentVideosHeading: Aktuelle Videos
     recentVideoToggles:
       all: Alle
       official: Offiziell
@@ -118,7 +119,7 @@ views:
     selectionReset: Zurücksetzen
     selectionSelectAll: Alles auswählen
     emptyLibrary: Du hast keine gespeicherten Videos!
-    exportSelected: Ausgewählte exportieren ({0})
+    exportSelected: Auswahl exportieren ({0})
     exportYtPlaylist: YouTube-Playlist
     exportCsv: CSV-Datei
     selectionSelect50: 50 auswählen
@@ -140,6 +141,8 @@ views:
       clip: Clip
     unsupportedQuery: >-
       Derzeit wird das Suchen von Clips nach <kbd>Thema</kbd> und <kbd>Organisation</kbd> nicht unterstützt. Es werden keine <b>Clips</b> angezeigt.
+    sortByLabel: Sortieren nach
+    typeDropdownLabel: Art
   settings:
     title: Einstellungen
     darkModeLabel: Dunkelmodus
@@ -147,8 +150,8 @@ views:
     redirectModeLabel: In YouTube öffnen
     redirectModeMsg: >-
       Ein Klick auf das Video-Thumbnail öffnet es in YouTube, ein Klick auf den Videotitel öffnet es in Holodex
-    useEnglishNameLabel: Englischen Namen verwenden
-    useEnglishNameMsg: Verwendet Englisch lokalisierte Namen für VTuber-Kanäle
+    useEnglishNameLabel: Englische Namen verwenden
+    useEnglishNameMsg: Verwendet englisch lokalisierte Namen für VTuber-Kanäle
     hideVideoThumbnailsLabel: Thumbnails ausblenden
     hideVideoThumbnailsMsg: >-
       Video-Thumbnails ausblenden, beschleunigt die Ladezeit und verringert das Scrollen auf dem Handy
@@ -173,7 +176,7 @@ views:
   watch:
     theaterMode: Theatermodus
     saveToLibrary: Video in Bibliothek speichern
-    mentionIconLabel: NENNUNG
+    mentionIconLabel: VTUBER
     chat:
       loading: Chat wird geladen...
       hideTLBtn: Übersetzungen ausblenden
@@ -191,7 +194,7 @@ views:
         disconnectedToChat: Verbindung getrennt
   favorites:
     promptForAction: >-
-      Erstelle eine Liste mit deinen Lieblings-VTubern und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
+      Erstelle eine Liste mit deinen Lieblings-VTubern und sieh dir dann ihre neusten Clips und Livestreams auf dieser Seite an.
     manageFavorites: Favoriten verwalten
   editor:
     needlogin: Du musst dich einloggen, um Änderungen an Holodex Video- und Song-Metadaten vorzunehmen.
@@ -199,7 +202,7 @@ views:
     apikeyMsg: >-
       Du kannst den API-Schlüssel verwenden, um die Holodex-API automatisiert abzufragen. Nur ein Schlüssel pro Konto. Nachdem du einen neuen Schlüssel erhalten hast, läuft der alte Schlüssel innerhalb von 24 Stunden ab.
     apikeyNew: Neuen API-Schlüssel erstellen
-    ownedYtChannel: Eigener YouTube-Kanal
+    ownedYtChannel: Dein YouTube-Kanal
     futureYtcOwnerMessage: >-
       In Zukunft planen wir, Channel-Besitzern mehr Dienste wie z.B. die Bearbeitung von Metadaten für ihre eigenen Videos anzubieten.
     linkAcc: Ein anderes Konto verknüpfen
@@ -218,7 +221,7 @@ views:
       desktop: Desktop
       mobile: Mobil
     video:
-      selectLive: Live auswählen
+      selectLive: Stream auswählen
       addCustomVideo: Benutzerdefiniertes Video hinzufügen
 time:
   soon: bald
@@ -246,3 +249,31 @@ editor:
     endInput: 'Dauer in Sekunden: (end @ {0})'
   exitMode: Bearbeitungsmodus verlassen
   enterMode: Video bearbeiten
+about:
+  quicklinks: Kurzlinks
+  discordBtn: Holodex Discord
+  issueTracker: Fehlerverfolgung / Quelle
+  faq:
+    title: Häufig gestellte Fragen
+    ytchatHeader: Mein Youtube Chat ist nicht eingeloggt!
+    ytchatContent: >-
+      Bitte deaktiviere die Browser-Sicherheitsfunktion, "Blockieren von Cookies von Drittanbietern" oder füge diese Website und youtube.com als Ausnahme für diese hinzu.
+    ytchatFirefox: Firefox-Anleitung, andere Browser sollten ähnlich sein.
+    autoplayHeader: Automatische Wiedergabe funktioniert nicht!
+    autoplayContent: Bitte google, wie du automatische Wiedergabe / AutoPlay für deinen Browser aktivieren kannst.
+    musicPlayer: Die Musikwiedergabe funktioniert auf mobilen Geräten nicht gut!
+    musicPlayerContent: >-
+      Es tut uns leid, aber es ist zurzeit unmöglich die Musikwiedergabe auf dem Handy zu unterstützen. <br/>Drei Faktoren: 1. Mobile Geräte verbieten in der Regel automatische Wiedergabe / AutoPlay, was wir benötigen; 2. Mobile Geräte erlauben in der Regel nicht, dass Webseiten im Hintergrund Musik aneinanderreihen; 3. Wir integrieren deine Warteschlange nicht in Musiksteuerungszentralen auf Systemebene.
+    videoLinkage: Wie stelle ich sicher, dass Videos richtig mit Vtubern verlinkt werden?
+    videoLinkageContent: >-
+      Alle Informationen werden automatisch aus der Videoberschreibung gesammelt. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden Vtuber. Wenn du keine Vtuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem Vtuber benötigen, der Holodex bekannt ist.
+    quitHolodex: "Ich bin ein Subber (Untertitler) und möchte, dass mein Kanal von Holodex entfernt wird\\r\n"
+    quitHolodexContent: >-
+      Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir heölfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
+  gdpr: DSGVO und meine Daten
+  gdprContent: >-
+    Ein Google-Analytics-Cookie wird verwendet, um Seitenaufrufe für unsere analytischen Zwecke zu verfolgen. Nach dem Login verknüpfen wir den Benutzernamen und die ID deines Social Media Accounts mit deinen Favoriten. Diese Daten können, respektive, deine E-Mail (für Google), deine Discord ID oder dein Twitter-Handle beinhalten.
+  gdprDeletion: Um deine Benutzerdaten löschen zu lassen, kontaktiere uns bitte auf Discord!
+  feedback: Feedback / Fehlerberichte
+  feedbackHtml: >-
+    Du kannst einen Fehler im <a href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a> melden oder das Holodex Team auf Discord kontaktieren. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>

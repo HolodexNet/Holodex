@@ -6,7 +6,7 @@
         <MainNav />
         <v-main class="pull-to-refresh" style="transition: none">
             <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView">
-                <router-view :key="$route.path" />
+                <router-view :key="viewKey" />
             </keep-alive>
         </v-main>
 
@@ -70,20 +70,9 @@ export default {
         return {
             updateExists: false,
             registration: null,
-            doneHandler: null,
-            started: Date.now(),
         };
     },
     created() {
-        // check if browser support webp
-        // if (!this.$store.testedWebP) {
-        //     this.$nextTick(() => {
-        //         this.supportsWebp().then((res) => {
-        //             if (!res) this.$store.commit("settings/noWebPSupport");
-        //         });
-        //         this.$store.commit("settings/testedWebP");
-        //     });
-        // }
         // set theme
         this.$vuetify.theme.dark = this.darkMode;
         // set lang
@@ -158,6 +147,16 @@ export default {
         });
     },
     computed: {
+        viewKey() {
+            const key = this.$route.path;
+
+            // channel has subviewws that will cause unwanted keep-alive instances
+            // Key them all under channel/:id to avoid duplicating
+            if (key.match("^/channel/.{16}")) {
+                return key.substring(0, 34);
+            }
+            return key;
+        },
         darkMode() {
             return this.$store.state.settings.darkMode;
         },

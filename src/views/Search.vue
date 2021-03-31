@@ -3,10 +3,20 @@
         <v-alert :v-if="containsTopicAndOrg" color="primary" v-html="$t('views.search.unsupportedQuery')"> </v-alert>
         <v-row class="justify-end" style="margin-bottom: -10px">
             <v-col sm="4" md="2" class="py-1">
-                <v-select v-model="filter.sort" :items="options.sort" dense label="Sort By"></v-select>
+                <v-select
+                    v-model="filter.sort"
+                    :items="options.sort"
+                    dense
+                    :label="$t('views.search.sortByLabel')"
+                ></v-select>
             </v-col>
             <v-col sm="4" md="2" class="py-1">
-                <v-select v-model="filter.type" :items="options.type" dense label="Type"></v-select>
+                <v-select
+                    v-model="filter.type"
+                    :items="options.type"
+                    dense
+                    :label="$t('views.search.typeDropdownLabel')"
+                ></v-select>
             </v-col>
         </v-row>
         <v-row v-if="loading">

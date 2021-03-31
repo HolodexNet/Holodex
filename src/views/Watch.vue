@@ -173,7 +173,8 @@
                 :video="video"
                 :mugenId="isMugen && '4ANxvWIM3Bs'"
                 class="mobile-live-chat"
-                :key="'ytchat' + video.id"
+                :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
+                @videoUpdate="handleVideoUpdate"
                 :fixedRight="landscape"
                 :fixedBottom="!landscape"
                 :showTL="showTL"
@@ -247,6 +248,7 @@ export default {
     },
     methods: {
         init() {
+            window.scrollTo(0, 0);
             this.startTime = 0;
             if (this.isMugen) {
                 this.initMugen();
