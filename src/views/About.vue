@@ -96,7 +96,8 @@
                         <v-expansion-panel-header>
                             {{ $t("about.faq.musicPlayer") }}
                         </v-expansion-panel-header>
-                        <v-expansion-panel-content v-html="$t('about.faq.musicPlayerContent')">
+                        <v-expansion-panel-content>
+                            <div v-html="$t('about.faq.musicPlayerContent')"></div>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
 
