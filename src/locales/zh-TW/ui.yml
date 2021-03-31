@@ -38,6 +38,8 @@ component:
     edit: 編輯
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -87,6 +89,7 @@ component:
       beforeExportIcon: 點擊
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -158,6 +161,7 @@ views:
     scrollModeMsg: 選擇列表要使用分頁/無限捲軸模式。
     resetAllSettings: 重設所有設定/資料
     clipLanguageSelection: '顯示以下語言的剪輯影片'
+    tlLanguageSelection: 在翻譯聊天室中顯示下列語言
   app:
     update_available: 已取得更新
     update_btn: 更新
