@@ -23,7 +23,9 @@
             </v-btn>
 
             {{ formattedTime }}
-            <template v-if="video.status === 'live'"> • {{ liveViewers }} viewers</template>
+            <template v-if="video.status === 'live'">
+                • {{ $t("component.videoCard.watching", [liveViewers]) }}</template
+            >
             <span class="mx-1" v-show="video.topic_id">
                 • <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
                 {{ video.topic_id }}
@@ -57,7 +59,7 @@
                     class="text-subtitle-2"
                     v-if="mentions.length > 3"
                 >
-                    {{ showAllMentions ? "Hide" : "Show" }} {{ mentions.length - 3 }} more
+                    [ {{ showAllMentions ? "-" : "+" }} {{ mentions.length - 3 }} ]
                 </a>
             </v-col>
         </div>
