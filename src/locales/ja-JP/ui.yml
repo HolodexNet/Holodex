@@ -2,9 +2,10 @@
 component:
   apiError:
     title: ゴメナソーリー!
-    textBeforeTwitter: 'コンテンツの取得中にエラーが発生しました。Twitterを確認してください'
-    textAfterTwitter: 'または、を通じてエラーを報告します'
-    aboutPage: ページについて
+    textBeforeTwitter: 'コンテンツの取得中にエラーが発生しました。Twitter '
+    textAfterTwitter: ' をご確認いただくか、'
+    aboutPage: 詳細ページ
+    afterAboutPageHyperlink: からエラーを報告してください。
   channelList:
     signInToFavorite: お気に入り登録にはサインインが必要
     unfavoriteAllInGroup: グループをすべてお気に入りから削除
@@ -74,7 +75,7 @@ component:
     songDuration: 再生時間
     sangOnTime: 配信日時
   orgMusic:
-    monthlyTopForOrg: '{0}の毎月のトッププレイ'
+    monthlyTopForOrg: '{0}の月間トッププレイ'
     weeklyTopForOrg: '{0}の週間トッププレイ'
   installPrompt:
     title: Holodexをインストールしませんか?
@@ -242,3 +243,5 @@ editor:
     endInput: '再生時間(秒) ({0}に終了)'
   exitMode: 編集モードを終了
   enterMode: 動画を編集
+about:
+  feedback: フィードバック/バグ報告
