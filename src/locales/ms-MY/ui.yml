@@ -137,6 +137,8 @@ views:
       clip: Sedutan
     unsupportedQuery: >-
       Carian sedutan menggunakan <kbd>Topik</kbd> dan <kbd>Kumpulan</kbd> masih belum disokong. <b>Sedutan</b> tidak akan terpapar.
+    sortByLabel: Isih Mengikut
+    typeDropdownLabel: Jenis
   settings:
     title: Tetapan
     darkModeLabel: Tema Gelap
@@ -243,3 +245,24 @@ editor:
     endInput: 'Tempoh (saat): (tamat pada {0})'
   exitMode: Selesaikan Suntingan
   enterMode: Sunting Video
+about:
+  quicklinks: Pautan Pantas
+  discordBtn: Discord Holodex
+  issueTracker: Pengesan Masalah dan Kod Sumber
+  faq:
+    title: Soalan Lazim
+    ytchatHeader: Akaun saya tidak log masuk di ruangan sembang YouTube!
+    ytchatContent: >-
+      Anda harus melumpuhkan sekatan kuki pihak ketiga di penyemak imbas anda atau menyenaraikan tapak sesawang ini dan youtube.com dalam senarai putih bagi membenarkan kuki pihak ketiga.
+    ytchatFirefox: Arahan melumpuhkan kuki oleh Firefox. Penyemak imbas lain mungkin menggunakan kaedah yang sama.
+    autoplayHeader: AutoPlay tidak berfungsi!
+    autoplayContent: Gelintar di internet cara menghidupkan automain bagi penyemak imbas masing-masing.
+    musicPlayer: Peranti mudah alih tidak boleh menggunakan Pemain Muzik dengan baik!
+    musicPlayerContent: >-
+      Harap maklum, sokongan Pemain Muzik adalah tidak lengkap di peranti mudah alih. <br/>Puncanya ialah: 1. Fungsi automain yang diperlukan tidak dibenarkan oleh peranti mudah alih; 2. Kebanyakan peranti mudah alih tidak membenarkan perangkaian muzik di latar oleh tapak sesawang. 3. Baris gilir lagu anda tidak disepadukan di pusat kawalan muzik aras sistem.
+    videoLinkage: Bagaimana caranya agar penggiat YouTube maya yang berkenaan dipautkan dengan tepat?
+    videoLinkageContent: >-
+      Keseluruhan maklumat dihuraikan berdasarkan isi perihalan video. Jika anda membuat sedutan mana-mana siaran rasmi, pastikan pautannya disertakan sekali. Jika sedutan anda daripada hasil ciptaan peminat (contohnya di bilibili), pastikan penggiat YouTube maya (penggiyut maya) yang berkaitan dipautkan saluran YouTube-nya. Sedutan yang tidak memautkan saluran penggiyut maya yang berkenaan tidak akan dipaparkan di Holodex kerana sedutan di tapak ini harus ada pautan kepada penggiyut maya yang disenaraikan di Holodex.
+    quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex\\r\n"
+    quitHolodexContent: >-
+      Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.
