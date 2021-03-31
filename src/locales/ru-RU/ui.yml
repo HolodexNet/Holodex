@@ -137,6 +137,8 @@ views:
       clip: Клипы
     unsupportedQuery: >-
       На данный момент поиск клипов по <kbd>теме</kbd> и <kbd>агентствам</kbd> не поддерживается. Ни одного <b>клипа</b> не выйдет в результатах.
+    sortByLabel: Сортировать по
+    typeDropdownLabel: Тип
   settings:
     title: Настройки
     darkModeLabel: Ночная тема
@@ -242,3 +244,13 @@ editor:
     endInput: 'Длительность в секундах: (конец @ {0})'
   exitMode: Выйти из режима редактирования
   enterMode: Редактировать видео
+about:
+  faq:
+    title: Часто задаваемые вопросы
+  gdpr: GDPR и мои данные
+  gdprContent: >-
+    Куки Google Analytics используются для отслеживания просмотров страниц в наших аналитических целях. После входа мы свяжем имя пользователя и ID с избранным. Эти данные могут включать ваш адрес электронной почты (для Google), Discord ID или имя пользователя в Twitter соответственно.
+  gdprDeletion: Для удаления пользовательских данных, пожалуйста, свяжитесь с нами в Discord!
+  feedback: Отзывы/Сообщения об ошибках
+  feedbackHtml: >-
+    Вы можете создать тикет в <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> или найти команду Holodex в Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
