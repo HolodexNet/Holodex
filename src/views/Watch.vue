@@ -28,7 +28,7 @@
                     </WatchFrame>
                     <WatchToolBar :video="video" noBackButton>
                         <template v-slot:buttons>
-                            <v-tooltip bottom v-if="hasLiveChat && !$store.state.isMobile">
+                            <v-tooltip bottom v-if="hasLiveTL && hasLiveChat && !$store.state.isMobile">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-btn
                                         icon
@@ -106,6 +106,7 @@
                                 @videoUpdate="handleVideoUpdate"
                                 :showTL="showTL"
                                 :showTLFirstTime="showTLFirstTime"
+                                :isMugen="isMugen"
                                 @historyLength="handleHistoryLength"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
@@ -143,7 +144,13 @@
                 </WatchFrame>
                 <WatchToolBar :video="video">
                     <template v-slot:buttons>
-                        <v-btn icon lg @click="toggleTL" :color="showTL ? 'primary' : ''" v-if="hasLiveChat">
+                        <v-btn
+                            icon
+                            lg
+                            @click="toggleTL"
+                            :color="showTL ? 'primary' : ''"
+                            v-if="hasLiveTL && hasLiveChat"
+                        >
                             <div class="notification-sticker" v-if="newTL > 0"></div>
                             <v-icon>{{ mdiTranslate }}</v-icon>
                         </v-btn>
@@ -179,6 +186,7 @@
                 :fixedBottom="!landscape"
                 :showTL="showTL"
                 :showTLFirstTime="showTLFirstTime"
+                :isMugen="isMugen"
                 @historyLength="handleHistoryLength"
             />
         </div>
@@ -231,6 +239,9 @@ export default {
             mdiTranslate,
             icons,
 
+            // by default:
+            //   mobile: not open
+            //   desktop: open except in mugen (where TL doesnt work)
             showTL: !this.$store.state.isMobile,
             showTLFirstTime: !this.$store.state.isMobile,
             newTL: 0,
@@ -320,6 +331,9 @@ export default {
         },
         hasLiveChat() {
             return this.isMugen || this.video.status === "live" || this.video.status === "upcoming";
+        },
+        hasLiveTL() {
+            return this.video.status === "live";
         },
         hasWatched() {
             return this.$store.getters["library/hasWatched"](this.video.id);
