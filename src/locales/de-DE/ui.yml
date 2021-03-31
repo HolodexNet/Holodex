@@ -46,7 +46,7 @@ component:
     showMore: Mehr anzeigen
   watch:
     streamingFor: Live seit {0}
-    nextUpInMugen: Als Nächstes
+    nextUpInMugen: Es folgt ...
   search:
     searchLabel: Suchen
     type:
@@ -176,7 +176,7 @@ views:
   watch:
     theaterMode: Theatermodus
     saveToLibrary: Video in Bibliothek speichern
-    mentionIconLabel: NENNUNG
+    mentionIconLabel: VTUBER
     chat:
       loading: Chat wird geladen...
       hideTLBtn: Übersetzungen ausblenden
