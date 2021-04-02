@@ -11,12 +11,13 @@
             style="width: 100%; height: calc(100% - 32px)"
             :key="activeVideos[currentTab].id"
             fluid
+            :controlTL="true"
         />
     </div>
 </template>
 
 <script>
-import WatchLiveChat from "@/components/watch/WatchLiveChat";
+import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 
 export default {
     name: "TabbedLiveChat",

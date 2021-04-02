@@ -38,11 +38,11 @@
                 </v-menu>
 
                 <!-- Toggle of Card or Row view -->
-                <!-- <v-btn icon @click="cardView = !cardView">
+                <v-btn icon @click="cardView = !cardView">
                     <v-icon>
                         {{ cardView ? mdiViewModule : mdiViewList }}
                     </v-icon>
-                </v-btn> -->
+                </v-btn>
             </v-list>
             <ChannelList
                 :channels="category === Tabs.FAVORITES ? sortedFavorites : channels"
@@ -63,17 +63,19 @@
 </template>
 
 <script>
-import ChannelList from "@/components/channel/ChannelList";
+import ChannelList from "@/components/channel/ChannelList.vue";
 // import InfiniteLoading from "vue-infinite-loading";
-import ApiErrorMessage from "@/components/common/ApiErrorMessage";
-import InfiniteLoad from "@/components/common/InfiniteLoad";
+import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
+import InfiniteLoad from "@/components/common/InfiniteLoad.vue";
 
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
 import { mapState } from "vuex";
 import { localSortChannels } from "@/utils/functions";
+import reloadable from "@/mixins/reloadable";
 
 export default {
     name: "Channels",
+    mixins: [reloadable],
     metaInfo() {
         const vm = this;
         return {
@@ -103,7 +105,7 @@ export default {
         };
     },
     mounted() {
-        this.$store.commit("channels/resetState");
+        this.init();
     },
     watch: {
         category() {
@@ -204,6 +206,12 @@ export default {
         },
     },
     methods: {
+        init() {
+            this.$store.commit("channels/resetState");
+        },
+        reload() {
+            this.init();
+        },
         load($state) {
             const lastLength = this.channels.length;
             this.$store

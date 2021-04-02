@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/video/VideoCardList";
+import VideoCardList from "@/components/video/VideoCardList.vue";
 // import api from "@/utils/backend-api";
 import { mapState } from "vuex";
 import isActive from "@/mixins/isActive";
@@ -38,13 +38,7 @@ export default {
         return {
             identifier: +new Date(),
             pageLength: 25,
-            associatedTab: null,
         };
-    },
-    mounted() {
-        if (this.associatedTab == null) {
-            this.associatedTab = this.type;
-        }
     },
     computed: {
         ...mapState("channel", ["videos", "total"]),
@@ -69,9 +63,7 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         "$route.name": function () {
-            if (this.type === this.associatedTab) {
-                this.resetVideos();
-            }
+            if (this.isActive) this.resetVideos();
         },
         // eslint-disable-next-line func-names
         "$route.param.id": function () {
@@ -84,7 +76,7 @@ export default {
             this.$store.commit("channel/resetVideos");
         },
         loadNext($state) {
-            const lastLength = this.videos.length;
+            // const lastLength = this.videos.length;
             this.$store.commit("channel/resetVideos");
             this.$store
                 .dispatch("channel/fetchNextVideos", {
@@ -96,7 +88,7 @@ export default {
                     },
                 })
                 .then(() => {
-                    if (this.videos.length !== lastLength) {
+                    if ($state.page <= this.pages) {
                         $state.loaded();
                     } else {
                         $state.completed();

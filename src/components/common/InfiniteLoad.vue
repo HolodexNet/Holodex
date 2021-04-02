@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import LoadingOverlay from "@/components/common/LoadingOverlay";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 
 export default {
     name: "InfiniteLoad",

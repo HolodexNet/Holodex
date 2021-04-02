@@ -4,15 +4,15 @@
         :class="{
             'fixed-bottom': fixedBottom,
             'fixed-right': fixedRight,
-            'show-tl-overlay': showTL,
+            'show-tl-overlay': !isMugen && shouldShowLiveTL,
             fluid: fluid,
         }"
     >
         <span class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
         <WatchLiveTranslations
             :video="video"
-            v-if="showTLFirstTime"
-            v-show="showTL"
+            v-if="!isMugen && shouldConnectLiveTL"
+            v-show="shouldShowLiveTL"
             :class="{
                 'chat-overlay': fixedBottom || fixedRight,
                 'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
@@ -24,18 +24,19 @@
         </WatchLiveTranslations>
         <div class="embedded-chat">
             <iframe :src="liveChatUrl" frameborder="0" />
-            <div class="chat-overlay-btn d-flex align-center">
-                <a class="text-body-2" @click="toggleTL">
-                    {{ showTL ? $t("views.watch.chat.hideTLBtn") : $t("views.watch.chat.showTLBtn") }}
-                    {{ newTL > 0 ? `(${newTL}*)` : "" }}
-                </a>
+            <div class="chat-overlay-btn d-flex align-center" v-if="controlTL">
+                <v-btn icon lg @click="toggleTL" :color="shouldShowLiveTL ? 'primary' : '#999999'">
+                    <div class="notification-sticker" v-if="hasNewTranslations"></div>
+                    <v-icon>{{ mdiTranslate }}</v-icon>
+                </v-btn>
             </div>
         </div>
     </v-sheet>
 </template>
 
 <script>
-import WatchLiveTranslations from "./WatchLiveTranslations";
+import { mdiTranslate } from "@mdi/js";
+import WatchLiveTranslations from "./WatchLiveTranslations.vue";
 
 export default {
     name: "WatchLiveChat",
@@ -62,13 +63,35 @@ export default {
             type: Boolean,
             default: false,
         },
+        showTL: {
+            type: Boolean,
+            default: false,
+        },
+        showTLFirstTime: {
+            type: Boolean,
+            default: false,
+        },
+        controlTL: {
+            type: Boolean,
+            default: false,
+        },
+        isMugen: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
-            showTL: false,
-            showTLFirstTime: false,
-            newTL: 0,
+            mdiTranslate,
+
             stickTop: false,
+            // TODO: redesign live chat in multiview so that this jank can be removed
+            // duplicating the props here because TabbedLiveChat does not provide them.
+            tl: {
+                show: !this.$store.state.isMobile,
+                showFirstTime: !this.$store.state.isMobile,
+                new: 0,
+            },
         };
     },
     computed: {
@@ -78,25 +101,42 @@ export default {
                 window.location.hostname
             }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
         },
+        shouldConnectLiveTL() {
+            return this.controlTL ? this.tl.showFirstTime : this.showTLFirstTime;
+        },
+        shouldShowLiveTL() {
+            return this.controlTL ? this.tl.show : this.showTL;
+        },
+        hasNewTranslations() {
+            return (this.controlTL ? this.tl.new : this.newTL) > 0;
+        },
     },
     methods: {
-        toggleTL() {
-            // showTLFirstTime will initiate connection
-            // showTL toggle will show/hide without terminating connection
-            if (!this.showTLFirstTime) {
-                this.showTLFirstTime = true;
-                this.showTL = true;
-                return;
-            }
-            this.showTL = !this.showTL;
-            this.newTL = 0;
-        },
         handleVideoUpdate(update) {
             // bubble event to Watch view
             this.$emit("videoUpdate", update);
         },
-        handleHistoryLength() {
-            if (!this.showTL) this.newTL += 1;
+        handleHistoryLength(length) {
+            if (this.controlTL) {
+                if (!this.tl.show) this.tl.new += 1;
+            } else {
+                // in this case, bubble the event
+                this.$emit("historyLength", length);
+            }
+        },
+        toggleTL() {
+            if (this.controlTL) {
+                console.log("toggle TL from live chat overlay");
+                // showTLFirstTime will initiate connection
+                // showTL toggle will show/hide without terminating connection
+                if (!this.tl.showFirstTime) {
+                    this.tl.showFirstTime = true;
+                    this.tl.show = true;
+                    return;
+                }
+                this.tl.show = !this.tl.show;
+                this.tl.new = 0;
+            }
         },
     },
 };
@@ -163,7 +203,12 @@ export default {
     bottom: 0px;
     width: 100%;
     z-index: 10;
-    height: calc(100% - 36px - 100vw * 0.5625);
+    /* pre-iOS 11.2 */
+    height: calc((100% - 36px - 100vw * 0.5625) - constant(safe-area-inset-top));
+    padding-bottom: calc(constant(safe-area-inset-bottom) / 1.75);
+    /* iOS 11.2 and later */
+    height: calc((100% - 36px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
+    padding-bottom: calc(env(safe-area-inset-bottom) / 1.75);
 }
 
 .watch-live-chat.fixed-bottom > .embedded-chat {
@@ -220,10 +265,20 @@ export default {
     top: initial;
 }
 .chat-overlay-btn {
-    /* right: 48px; */
-    right: 48px;
+    bottom: 4px;
+    left: 64px;
     height: 48px;
     position: absolute;
     z-index: 10;
+}
+
+div.notification-sticker {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    border-radius: 4px;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(230, 33, 23);
 }
 </style>

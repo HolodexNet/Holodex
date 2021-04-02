@@ -143,7 +143,7 @@
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
-import VideoSelector from "@/components/multiview/VideoSelector";
+import VideoSelector from "@/components/multiview/VideoSelector.vue";
 import {
     mdiMessage,
     mdiResizeBottomRight,
@@ -154,9 +154,9 @@ import {
 } from "@mdi/js";
 import copyToClipboard from "@/mixins/copyToClipboard";
 import { encodeLayout, decodeLayout } from "@/utils/mv-layout";
-import PresetSelector from "@/components/multiview/PresetSelector";
-import LayoutPreview from "@/components/multiview/LayoutPreview";
-import Cell from "@/components/multiview/Cell";
+import PresetSelector from "@/components/multiview/PresetSelector.vue";
+import LayoutPreview from "@/components/multiview/LayoutPreview.vue";
+import Cell from "@/components/multiview/Cell.vue";
 import { mapState, mapGetters } from "vuex";
 
 export default {
@@ -202,6 +202,7 @@ export default {
         },
     },
     mounted() {
+        this.$store.dispatch("favorites/fetchLive");
         if (this.$route.params.layout) {
             // TODO: verify layout
             try {

@@ -37,7 +37,7 @@
                         <v-select
                             v-model="liveTlLang"
                             :items="TL_LANGS"
-                            :hint="$t('views.settings.clipLanguageSelection')"
+                            :hint="$t('views.settings.tlLanguageSelection')"
                             persistent-hint
                         />
                     </v-card-text>

@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import ChannelImg from "@/components/channel/ChannelImg";
+import ChannelImg from "@/components/channel/ChannelImg.vue";
 import { formatDistance } from "@/utils/time";
 
 export default {

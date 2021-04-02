@@ -11,6 +11,7 @@
                 <router-link to="/about">
                     {{ $t("component.apiError.aboutPage") }}
                 </router-link>
+                {{ $t("component.apiError.afterAboutPageHyperlink") }}
             </div>
         </v-col>
     </v-row>

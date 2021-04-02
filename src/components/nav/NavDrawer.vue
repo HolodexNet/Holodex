@@ -7,7 +7,7 @@
         clipped
         class="nav-scroll"
         :temporary="temporary"
-        :style="{ 'padding-top': safeHeight + 'px' }"
+        style="padding-top: env(safe-area-inset-top)"
     >
         <slot />
         <v-list dense class="pb-0">
@@ -59,7 +59,9 @@
                 </v-list-item-content>
             </v-list-item>
             <v-list-item>
-                <router-link to="/channel" style="font-size: 0.825rem" class="ma-auto"> Manage Favorites </router-link>
+                <router-link to="/channel" style="font-size: 0.825rem" class="ma-auto">
+                    {{ $t("views.favorites.manageFavorites") }}
+                </router-link>
             </v-list-item>
             <v-list-item>
                 <router-link to="/settings" style="font-size: 0.825rem" class="ma-auto">
@@ -74,8 +76,8 @@
 </template>
 
 <script>
-import ChannelImg from "@/components/channel/ChannelImg";
-import ChannelInfo from "@/components/channel/ChannelInfo";
+import ChannelImg from "@/components/channel/ChannelImg.vue";
+import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
 import { mapState } from "vuex";
 
@@ -127,11 +129,6 @@ export default {
         },
         collapsedFavorites() {
             return !this.favoritesExpanded && this.favorites.length > 5 ? this.favorites.slice(0, 5) : this.favorites;
-        },
-        safeHeight() {
-            console.log(this.$vuetify.breakpoint.width);
-            // ^ very important, causes the function to link reactivity to width changes.
-            return Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sat")) / 2;
         },
     },
     methods: {

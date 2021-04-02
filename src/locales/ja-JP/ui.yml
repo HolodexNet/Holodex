@@ -2,11 +2,12 @@
 component:
   apiError:
     title: ゴメナソーリー!
-    textBeforeTwitter: 'コンテンツの取得中にエラーが発生しました。Twitterを確認してください'
-    textAfterTwitter: 'または、を通じてエラーを報告します'
-    aboutPage: ページについて
+    textBeforeTwitter: 'コンテンツの取得中にエラーが発生しました。Twitter '
+    textAfterTwitter: ' をご確認いただくか、'
+    aboutPage: 詳細ページ
+    afterAboutPageHyperlink: からエラーを報告してください。
   channelList:
-    signInToFavorite: お気に入りに登録
+    signInToFavorite: お気に入り登録にはサインインが必要
     unfavoriteAllInGroup: グループをすべてお気に入りから削除
     favoriteAllInGroup: グループをすべてお気に入りに追加
   channelInfo:
@@ -38,11 +39,9 @@ component:
     edit: 編集
   videoDescription:
     description: 概要
-  video:
-    comment: { }
   description:
     showLess: 省略表示
-    showMore: 詳細表示
+    showMore: もっと見る
   watch:
     streamingFor: '{0}分経過'
     nextUpInMugen: 次の動画
@@ -76,8 +75,8 @@ component:
     songDuration: 再生時間
     sangOnTime: 配信日時
   orgMusic:
-    monthlyTopForOrg: 最新曲
-    weeklyTopForOrg: 週間のトップ曲
+    monthlyTopForOrg: '{0}の月間トッププレイ'
+    weeklyTopForOrg: '{0}の週間トッププレイ'
   installPrompt:
     title: Holodexをインストールしませんか?
     callToAction: Holodexをホーム画面に追加することでより便利にHolodexを使えます!
@@ -89,7 +88,6 @@ component:
       beforeExportIcon: '  '
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 登録者数
       group: グループ
@@ -112,7 +110,7 @@ views:
     savedVideosTitle: 保存したビデオ
     createYtPlaylistButton: Youtubeのプレイリストを作成（{0}）
     deleteFromLibraryButton: 削除（{0}）
-    deleteConfirmation: '{0}本当に動画を削除しますか？'
+    deleteConfirmation: '{0}本の動画を削除してもよろしいですか？'
     deleteConfirmationOK: 削除
     deleteConfirmationCancel: キャンセル
     selectionReset: リセット
@@ -212,7 +210,8 @@ views:
     presets: プリセット
     addframe: セルを追加
     preset:
-      shareOnDiscord: なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
+      shareOnDiscord: >-
+        なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
       desktop: デスクトップ
       mobile: モバイル
     video:
@@ -244,3 +243,5 @@ editor:
     endInput: '再生時間(秒) ({0}に終了)'
   exitMode: 編集モードを終了
   enterMode: 動画を編集
+about:
+  feedback: フィードバック/バグ報告

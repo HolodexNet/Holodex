@@ -5,6 +5,7 @@ component:
     textBeforeTwitter: 'Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter'
     textAfterTwitter: ' ou relate o erro por meio da '
     aboutPage: página de Informações
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Conecte-se para adicionar canais ao Favoritos
     unfavoriteAllInGroup: Remover todos desse grupo dos favoritos
@@ -140,6 +141,8 @@ views:
       clip: Clipe
     unsupportedQuery: >-
       Atualmente, pesquisar clipes por <kbd>Tópico</kbd> e <kbd>Organização</kbd> não é suportado. Nenhum <b> clipe </b> aparecerá.
+    sortByLabel: Ordenar por
+    typeDropdownLabel: Tipo
   settings:
     title: Configurações
     darkModeLabel: Modo Escuro
@@ -160,6 +163,7 @@ views:
     scrollModeMsg: Use rolar/tocar para navegar nas páginas
     resetAllSettings: Redefinir todas as configurações/dados
     clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
+    tlLanguageSelection: Ver Traduções no Chat nestes idiomas
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
@@ -212,7 +216,8 @@ views:
     presets: Predefinidas
     addframe: Adicionar Célula
     preset:
-      shareOnDiscord: Tem um layout legal para compartilhar? Use o botão compartilhar e nos informe no nosso <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
+      shareOnDiscord: >-
+        Tem um layout legal para compartilhar? Use o botão compartilhar e nos informe no nosso <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
       desktop: Desktop
       mobile: Mobile
     video:
@@ -244,3 +249,31 @@ editor:
     endInput: 'Duração em segundos: (end @ {0})'
   exitMode: Sair do Modo de Edição
   enterMode: Editar Vídeo
+about:
+  quicklinks: Links
+  discordBtn: Discord do Holodex
+  issueTracker: Issue Tracker / Fonte
+  faq:
+    title: FAQ - Perguntas Frequentes
+    ytchatHeader: Meu Chat do Youtube não está conectado!
+    ytchatContent: >-
+      Desative o recurso de segurança do seu navegador conhecido como "Bloqueio de Cookies de Terceiros", ou adicione este site e o youtube.com como exceções.
+    ytchatFirefox: Instruções do Firefox, outros navegadores podem ser similares.
+    autoplayHeader: O AutoPlay não está funcionando!
+    autoplayContent: Por favor, procure no Google como ativar a reprodução automática para o seu navegador.
+    musicPlayer: Reprodutor de música não funciona bem em dispositivos móveis!
+    musicPlayerContent: >-
+      Desculpe, mas é impossível suportar o Player de Música em um site no celular. <br/>Três fatores: 1. Dispositivos móveis geralmente proíbem a reprodução automática, o que precisamos; 2. Dispositivos móveis geralmente não permitem que sites toquem músicas em segundo plano. 3. Nós não integramosa a fila de músicas a centros de controle de música do sistema.
+    videoLinkage: Como posso me certificar de que os vídeos estão ligados aos vtubers apropriadamente?
+    videoLinkageContent: >-
+      Todas as informações são analisadas na descrição dos vídeos. Se você está clipando uma transmissão, por favor certifique-se de mencionar a transmissão oficial. Se você está clipando conteúdo feito por fãs (por exemplo, um vídeo do bilibili), apenas certifique-se de mencionar os canais oficiais do youtube de vtubers relevantes. Se você não mencionar nenhum canal de vtuber, então não mostraremos esse clipe no holodex, como todos os clipes requerem uma menção a um vtuber existente no holodex.
+    quitHolodex: "Sou um subber e gostaria que meu canal fosse removido do Holodex\\r\n"
+    quitHolodexContent: >-
+      Estou triste em vê-lo ir :(, por favor me avise se houver qualquer problema com que possamos lhe ajudar. Se você ainda deseja ser removido, por favor nos mande uma mensagem no Discord.
+  gdpr: GDPR e meus dados
+  gdprContent: >-
+    Um cookie do Google Analytics é usado para monitorar páginas visualizadas para nossos fins analíticos. Após o login, associamos o seu nome de usuário e ID de mídia social aos seus favoritos. Estes dados podem incluir seu e-mail (Google), ID do Discord ou ID do Twitter, respectivamente.
+  gdprDeletion: Para exclusão de seus dados de usuário, entre em contato conosco no discord!
+  feedback: Feedback/Reportar Bug
+  feedbackHtml: >-
+    Você pode criar uma issue no <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> ou contactar a equipe do Holodex no Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>

@@ -66,14 +66,16 @@
 </template>
 
 <script>
-import VideoCardList from "@/components/video/VideoCardList";
-import LoadingOverlay from "@/components/common/LoadingOverlay";
+import VideoCardList from "@/components/video/VideoCardList.vue";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 // eslint-disable-next-line no-unused-vars
 import * as icons from "@/utils/icons";
 import { mapState } from "vuex";
+import reloadable from "@/mixins/reloadable";
 
 export default {
     name: "Favorites",
+    mixins: [reloadable],
     metaInfo() {
         const vm = this;
         return {
@@ -152,6 +154,9 @@ export default {
                 this.$store.dispatch("favorites/fetchLive");
                 this.resetVideos();
             }
+        },
+        reload() {
+            this.init();
         },
         resetVideos() {
             this.$store.commit("favorites/resetVideos");

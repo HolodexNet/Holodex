@@ -1,0 +1,52 @@
+export default {
+    data() {
+        return {
+            unsubscribe: null,
+            isActive: true,
+            lastFetch: 0,
+        };
+    },
+    activated() {
+        this.isActive = true;
+    },
+    deactivated() {
+        this.isActive = false;
+    },
+    mounted() {
+        // listen to all actions
+        this.unsubscribe = this.$store.subscribeAction(
+            (action) => {
+                // catch reloadCurrentPage action, if it's active
+                if (this.isActive && action.type === "reloadCurrentPage") {
+                    // consume the event, and handle it
+                    action.payload.consumed = true;
+
+                    // do nothin on first load, let the main element handle it
+                    if (!this.lastFetch) {
+                        this.lastFetch = +new Date();
+                        return;
+                    }
+
+                    // throttle requests, only refresh after 30s has past since last refresh
+                    if (+new Date() - this.lastFetch < 1000 * 30 && action.payload.source === "scrollBehavior") {
+                        return;
+                    }
+
+                    // call the reload function
+                    this.reload();
+
+                    this.lastFetch = +new Date();
+                }
+            },
+            { prepend: true },
+        );
+    },
+    beforeDestroy() {
+        this.unsubscribe();
+    },
+    methods: {
+        reload() {
+            // this.$router.go(0);
+        },
+    },
+};

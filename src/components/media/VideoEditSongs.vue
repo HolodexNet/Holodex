@@ -94,7 +94,6 @@
                     class="tweak-input"
                 >
                 </v-text-field>
-
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <button v-on="on" class="tweak-btn" @click="$emit('timeJump', current.start, true)">
@@ -190,7 +189,15 @@
                 </v-btn>
             </v-col>
             <v-col cols="6" sm="4" md="3">
-                <v-btn :disabled="!current.amUrl" elevation="5" width="100%" class="am-listen-btn" href="current.amUrl">
+                <v-btn
+                    :disabled="!current.amUrl"
+                    elevation="5"
+                    width="100%"
+                    class="am-listen-btn"
+                    :href="current.amUrl"
+                    rel="norefferer"
+                    target="_blank"
+                >
                     <v-avatar left tile size="26px">
                         <v-img
                             src="https://apple-resources.s3.amazonaws.com/medusa/production/images/5f600674c4f022000191d6c4/en-us-large@1x.png"
@@ -222,6 +229,7 @@
                                 (x) => {
                                     $emit('timeJump', x.start);
                                     current = JSON.parse(JSON.stringify(x));
+                                    currentStartTimeInput = secondsToHuman(current.start);
                                 }
                             "
                             @playNow="(x) => $emit('timeJump', x.start, true)"
@@ -238,8 +246,9 @@
 <script>
 import { mdiEarHearing, mdiRestore, mdiTimerOutline, mdiDebugStepOver } from "@mdi/js";
 import backendApi from "@/utils/backend-api";
-import SongSearch from "./SongSearch";
-import SongItem from "./SongItem";
+import { secondsToHuman } from "@/utils/time";
+import SongSearch from "./SongSearch.vue";
+import SongItem from "./SongItem.vue";
 
 function humanToSeconds(str) {
     const p = str.split(":");
@@ -252,8 +261,26 @@ function humanToSeconds(str) {
     return s;
 }
 
-function secondsToHuman(s) {
-    return new Date(s * 1000).toISOString().substr(11, 8);
+function maskTimestamp(s) {
+    const p = s.split(":").join("").split("");
+    const newStr = [];
+
+    // remove prefix zeroes
+    while (p.length > 0 && p[0] === "0") {
+        p.shift();
+    }
+
+    // Parse numbers in groups of 2
+    while (p.length > 0) {
+        if (p.length === 1) {
+            newStr.unshift(`${p}`);
+            break;
+        }
+        const swap = p.pop();
+        newStr.unshift(p.pop() + swap);
+    }
+
+    return newStr.join(":");
 }
 
 const startTimeRegex = /^\d+([:]\d+)?([:]\d+)?$/;
@@ -293,7 +320,8 @@ export default {
             mdiDebugStepOver,
             current: getEmptySong(this.video),
             songList: [],
-            // currentStartTime: 0,
+
+            currentStartTimeInput: "",
         };
     },
     props: {
@@ -326,12 +354,15 @@ export default {
         },
         currentStartTime: {
             get() {
-                return secondsToHuman(this.current.start);
+                return this.currentStartTimeInput;
             },
             set(val) {
-                if (this.checkStartTime(val)) {
+                // Mask time input
+                this.currentStartTimeInput = maskTimestamp(val);
+                // only modify current.start if time is valid
+                if (this.checkStartTime(this.currentStartTimeInput)) {
                     const duration = this.current.end - this.current.start;
-                    this.current.start = humanToSeconds(val);
+                    this.current.start = humanToSeconds(this.currentStartTimeInput);
                     this.current.end = this.current.start + duration;
                 }
             },

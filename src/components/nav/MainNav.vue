@@ -26,7 +26,6 @@
             clipped-left
             flat
             v-show="!(isMobile && isWatchPage) && !isMultiView"
-            :height="getHeight"
         >
             <!--=============================== Top Bar (Regular View) =============================-->
 
@@ -153,22 +152,39 @@
             </template>
 
             <!--=================== END OF Expanded Search (Mobile Only) =======================-->
+            <div
+                :class="{
+                    'secondary darken-3': darkMode,
+                    'primary lighten-1': !darkMode,
+                }"
+                style="
+                    position: absolute;
+                    top: calc(-1 * env(safe-area-inset-top));
+                    left: 0px;
+                    right: 0px;
+                    width: 100%;
+                    height: env(safe-area-inset-top);
+                    z-index: 300;
+                "
+            >
+                <!-- this is just the element that covers up the notch. don't worry about it. -->
+            </div>
         </v-app-bar>
     </div>
 </template>
 
 <script>
 import * as icons from "@/utils/icons";
-import SearchBar from "@/components/common/SearchBar";
-// import SearchBar from "@/components/nav/SearchBarSimple";
-import Logo from "@/components/common/Logo";
-import UserCard from "@/components/user/UserCard";
+import SearchBar from "@/components/common/SearchBar.vue";
+// import SearchBar from "@/components/nav/SearchBarSimple.vue";
+import Logo from "@/components/common/Logo.vue";
+import UserCard from "@/components/user/UserCard.vue";
 import { ORGS, ORGS_PREFIX } from "@/utils/consts";
 import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
-import InstallPrompt from "@/components/common/InstallPrompt";
-import NavDrawer from "./NavDrawer";
-import BottomNav from "./BottomNav";
+import InstallPrompt from "@/components/common/InstallPrompt.vue";
+import NavDrawer from "./NavDrawer.vue";
+import BottomNav from "./BottomNav.vue";
 
 export default {
     components: {
@@ -178,7 +194,7 @@ export default {
         UserCard,
         Logo,
         InstallPrompt,
-        MusicBar2: () => import("./MusicBar2"),
+        MusicBar2: () => import("./MusicBar2.vue"),
     },
     data() {
         return {
@@ -285,11 +301,11 @@ export default {
                 },
             ];
         },
-        getHeight() {
-            console.log(this.$vuetify.breakpoint.width);
-            // ^ very important, causes the function to link reactivity to width changes.
-            return Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sat")) / 1.5 + 64;
-        },
+        // getHeight() {
+        //     console.log(this.$vuetify.breakpoint.width);
+        //     // ^ very important, causes the function to link reactivity to width changes.
+        //     return Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sat")) / 1.5 + 64;
+        // },
         ...mapState(["firstVisit"]),
     },
     created() {
@@ -338,8 +354,10 @@ export default {
     /* background-color: #2b79ad !important; */
     padding-left: min(calc(env(safe-area-inset-left)), 30px);
     padding-right: min(calc(env(safe-area-inset-right)), 30px);
-    padding-top: min(calc(env(safe-area-inset-top) / 2), 30px);
+    /* padding-top: min(calc(env(safe-area-inset-top) / 2), 30px); */
     /* height: calc(env(safe-area-inset-top,0px) + 30px); */
+    padding-top: 0px;
+    margin-top: env(safe-area-inset-top, 0px) !important;
 }
 
 .fade-enter-active,

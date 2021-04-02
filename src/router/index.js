@@ -1,25 +1,27 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home";
+import Home from "../views/Home.vue";
 
-const Channel = () => import("../views/Channel");
-const Channels = () => import("../views/Channels");
-const Favorites = () => import("../views/Favorites");
-const ChannelVideos = () => import("../views/channel_views/ChannelVideos");
-const ChannelAbout = () => import("../views/channel_views/ChannelAbout");
-const ChannelMusic = () => import("../views/channel_views/ChannelMusic");
-const Watch = () => import("../views/Watch");
-const About = () => import("../views/About");
-const Search = () => import("../views/Search");
-const Library = () => import("../views/Library");
-// const ChannelStats = () => import("../views/channel_views/ChannelStats");
-const Settings = () => import("../views/Settings");
-const NotFound = () => import("../views/NotFound");
-const Login = () => import("../views/Login");
-const EditVideo = () => import("../views/EditVideo");
-const OrgMusic = () => import("../views/OrgMusic");
-// const MugenClips = () => import("../views/MugenClips");
-const MultiView = () => import("../views/MultiView");
+import store from "../store";
+
+const Channel = () => import("../views/Channel.vue");
+const Channels = () => import("../views/Channels.vue");
+const Favorites = () => import("../views/Favorites.vue");
+const ChannelVideos = () => import("../views/channel_views/ChannelVideos.vue");
+const ChannelAbout = () => import("../views/channel_views/ChannelAbout.vue");
+const ChannelMusic = () => import("../views/channel_views/ChannelMusic.vue");
+const Watch = () => import("../views/Watch.vue");
+const About = () => import("../views/About.vue");
+const Search = () => import("../views/Search.vue");
+const Library = () => import("../views/Library.vue");
+// const ChannelStats = () => import("../views/channel_views/ChannelStats.vue");
+const Settings = () => import("../views/Settings.vue");
+const NotFound = () => import("../views/NotFound.vue");
+const Login = () => import("../views/Login.vue");
+const EditVideo = () => import("../views/EditVideo.vue");
+const OrgMusic = () => import("../views/OrgMusic.vue");
+// const MugenClips = () => import("../views/MugenClips.vue");
+const MultiView = () => import("../views/MultiView.vue");
 
 Vue.use(VueRouter);
 
@@ -142,7 +144,11 @@ const router = new VueRouter({
     routes,
     // eslint-disable-next-line no-unused-vars
     scrollBehavior(to, from, savedPosition) {
-        return savedPosition || { x: 0, y: 0 };
+        // try reload when entering new page, if not on Mobile
+        if (!store.state.isMobile && !savedPosition) {
+            store.dispatch("reloadCurrentPage", { source: "scrollBehavior", consumed: false });
+        }
+        return savedPosition;
     },
 });
 

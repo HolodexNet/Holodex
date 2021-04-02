@@ -6,7 +6,7 @@
         <MainNav />
         <v-main class="pull-to-refresh" style="transition: none">
             <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView">
-                <router-view :key="$route.path" />
+                <router-view :key="viewKey" />
             </keep-alive>
         </v-main>
 
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import MainNav from "@/components/nav/MainNav";
+import MainNav from "@/components/nav/MainNav.vue";
 import pulltorefresh from "vue-awesome-pulltorefresh";
 import { dayjsLangs } from "./plugins/vuetify";
 
@@ -70,20 +70,9 @@ export default {
         return {
             updateExists: false,
             registration: null,
-            doneHandler: null,
-            started: Date.now(),
         };
     },
     created() {
-        // check if browser support webp
-        // if (!this.$store.testedWebP) {
-        //     this.$nextTick(() => {
-        //         this.supportsWebp().then((res) => {
-        //             if (!res) this.$store.commit("settings/noWebPSupport");
-        //         });
-        //         this.$store.commit("settings/testedWebP");
-        //     });
-        // }
         // set theme
         this.$vuetify.theme.dark = this.darkMode;
         // set lang
@@ -120,8 +109,16 @@ export default {
         const self = this;
         pulltorefresh.init({
             mainElement: ".pull-to-refresh",
-            onRefresh: () => {
-                this.$router.go(0);
+            onRefresh: async () => {
+                // check if there's a handler on the sequence
+                const handledRefresh = await self.$store.dispatch("reloadCurrentPage", {
+                    source: "ptr",
+                    consumed: false,
+                });
+                // do default refresh if none
+                if (!handledRefresh.consumed) {
+                    this.$router.go(0);
+                }
             },
             passive: true,
             iconArrow: `<svg viewBox="0 0 24 24"><path fill="${self.darkMode ? "white" : "black"}" d="${
@@ -150,6 +147,16 @@ export default {
         });
     },
     computed: {
+        viewKey() {
+            const key = this.$route.path;
+
+            // channel has subviewws that will cause unwanted keep-alive instances
+            // Key them all under channel/:id to avoid duplicating
+            if (key.match("^/channel/.{16}")) {
+                return key.substring(0, 34);
+            }
+            return key;
+        },
         darkMode() {
             return this.$store.state.settings.darkMode;
         },

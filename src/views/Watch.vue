@@ -11,10 +11,9 @@
             <v-row :class="{ 'flex-nowrap': !theatherMode }">
                 <!-- Left side -->
                 <v-col :md="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3 flex-shrink-1">
-                    <WatchFrame :video="video" :key="'ytframe' + video.id">
+                    <WatchFrame :video="video">
                         <template v-slot:youtube>
                             <youtube
-                                :key="'ytplayer' + video.id"
                                 v-if="video.id"
                                 :video-id="video.id"
                                 @ready="ready"
@@ -29,6 +28,24 @@
                     </WatchFrame>
                     <WatchToolBar :video="video" noBackButton>
                         <template v-slot:buttons>
+                            <v-tooltip bottom v-if="hasLiveTL && hasLiveChat && !$store.state.isMobile">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                        icon
+                                        lg
+                                        @click="toggleTL"
+                                        :color="showTL ? 'primary' : ''"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        <div class="notification-sticker" v-if="newTL > 0"></div>
+                                        <v-icon>{{ mdiTranslate }}</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>{{
+                                    showTL ? $t("views.watch.chat.hideTLBtn") : $t("views.watch.chat.showTLBtn")
+                                }}</span>
+                            </v-tooltip>
                             <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                                 <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
                             </v-btn>
@@ -85,8 +102,12 @@
                                 v-if="hasLiveChat && showLiveChat"
                                 :video="video"
                                 :mugenId="isMugen && '4ANxvWIM3Bs'"
-                                :key="'ytchat' + video.id"
+                                :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
                                 @videoUpdate="handleVideoUpdate"
+                                :showTL="showTL"
+                                :showTLFirstTime="showTLFirstTime"
+                                :isMugen="isMugen"
+                                @historyLength="handleHistoryLength"
                             />
                             <WatchMugen @playNext="playNext" v-if="isMugen" />
                             <WatchSideBar :video="video" @timeJump="seekTo" />
@@ -96,7 +117,7 @@
             </v-row>
         </v-container>
         <!-- Mobile Layout (sm/xs) Layout -->
-        <div class="d-flex flex-column flex-sm-row" v-else>
+        <div class="d-flex flex-column flex-sm-row layout-mobile" v-else>
             <div
                 class="d-inline-flex flex-grow-1 flex-column"
                 :style="{
@@ -106,10 +127,9 @@
                 }"
             >
                 <!-- Video/Video meta -->
-                <WatchFrame :video="video" fluid :key="'ytframe' + video.id">
+                <WatchFrame :video="video" fluid>
                     <template v-slot:youtube>
                         <youtube
-                            :key="'ytplayer' + video.id"
                             v-if="video.id"
                             :video-id="video.id"
                             @ready="ready"
@@ -124,6 +144,16 @@
                 </WatchFrame>
                 <WatchToolBar :video="video">
                     <template v-slot:buttons>
+                        <v-btn
+                            icon
+                            lg
+                            @click="toggleTL"
+                            :color="showTL ? 'primary' : ''"
+                            v-if="hasLiveTL && hasLiveChat"
+                        >
+                            <div class="notification-sticker" v-if="newTL > 0"></div>
+                            <v-icon>{{ mdiTranslate }}</v-icon>
+                        </v-btn>
                         <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                             <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
                         </v-btn>
@@ -150,9 +180,14 @@
                 :video="video"
                 :mugenId="isMugen && '4ANxvWIM3Bs'"
                 class="mobile-live-chat"
-                :key="'ytchat' + video.id"
+                :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
+                @videoUpdate="handleVideoUpdate"
                 :fixedRight="landscape"
                 :fixedBottom="!landscape"
+                :showTL="showTL"
+                :showTLFirstTime="showTLFirstTime"
+                :isMugen="isMugen"
+                @historyLength="handleHistoryLength"
             />
         </div>
     </div>
@@ -162,17 +197,17 @@
 <script>
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
-import LoadingOverlay from "@/components/common/LoadingOverlay";
-import WatchInfo from "@/components/watch/WatchInfo";
-import WatchFrame from "@/components/watch/WatchFrame";
-import WatchSideBar from "@/components/watch/WatchSideBar";
-import WatchLiveChat from "@/components/watch/WatchLiveChat";
-import WatchComments from "@/components/watch/WatchComments";
-import WatchToolBar from "@/components/watch/WatchToolbar";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
+import WatchInfo from "@/components/watch/WatchInfo.vue";
+import WatchFrame from "@/components/watch/WatchFrame.vue";
+import WatchSideBar from "@/components/watch/WatchSideBar.vue";
+import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
+import WatchComments from "@/components/watch/WatchComments.vue";
+import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 
 import { decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff, mdiFullscreen } from "@mdi/js";
+import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff, mdiFullscreen, mdiTranslate } from "@mdi/js";
 import * as icons from "@/utils/icons";
 
 export default {
@@ -190,7 +225,7 @@ export default {
         WatchSideBar,
         WatchComments,
         WatchToolBar,
-        WatchMugen: () => import("@/components/watch/WatchMugen"),
+        WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
     },
     data() {
         return {
@@ -201,7 +236,15 @@ export default {
             mdiMessage,
             mdiMessageOff,
             mdiFullscreen,
+            mdiTranslate,
             icons,
+
+            // by default:
+            //   mobile: not open
+            //   desktop: open except in mugen (where TL doesnt work)
+            showTL: !this.$store.state.isMobile,
+            showTLFirstTime: !this.$store.state.isMobile,
+            newTL: 0,
 
             showLiveChat: true,
 
@@ -216,6 +259,7 @@ export default {
     },
     methods: {
         init() {
+            window.scrollTo(0, 0);
             this.startTime = 0;
             if (this.isMugen) {
                 this.initMugen();
@@ -257,6 +301,22 @@ export default {
                 this.fullScreen = false;
             }
         },
+        toggleTL() {
+            // showTLFirstTime will initiate connection
+            // showTL toggle will show/hide without terminating connection
+            if (!this.showTLFirstTime) {
+                this.showTLFirstTime = true;
+                this.showTL = true;
+                return;
+            }
+            this.showTL = !this.showTL;
+            this.newTL = 0;
+        },
+        handleHistoryLength() {
+            if (!this.showTL) {
+                this.newTL += 1;
+            }
+        },
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
@@ -270,10 +330,10 @@ export default {
             return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
         },
         hasLiveChat() {
-            return (
-                this.isMugen ||
-                ((this.video.status === "live" || this.video.status === "upcoming") && !this.redirectMode)
-            );
+            return this.isMugen || this.video.status === "live" || this.video.status === "upcoming";
+        },
+        hasLiveTL() {
+            return this.video.status === "live";
         },
         hasWatched() {
             return this.$store.getters["library/hasWatched"](this.video.id);
@@ -309,4 +369,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+div.notification-sticker {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    border-radius: 4px;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(230, 33, 23);
+}
+</style>

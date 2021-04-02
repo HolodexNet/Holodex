@@ -5,6 +5,7 @@ component:
     textBeforeTwitter: 'Ada kesalahan saat memuat konten, silahkan cek twitter '
     textAfterTwitter: ' atau laporkan hal ini melalui'
     aboutPage: halaman tentang
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Masuk untuk menambahkan favorit
     unfavoriteAllInGroup: Unfavoritkan semua dalam grup
@@ -140,6 +141,8 @@ views:
       clip: Klip
     unsupportedQuery: >-
       Saat ini mencari klip dengan <kbd>Topik</kbd> dan <kbd>Organisasi</kbd> belum dapat dilakukan. Tidak ada <b>klip</b> yang akan muncul.
+    sortByLabel: Urutkan Berdasarkan
+    typeDropdownLabel: Tipe
   settings:
     title: Pengaturan
     darkModeLabel: Mode Malam
@@ -160,6 +163,7 @@ views:
     scrollModeMsg: Menggulir halaman menggunakan scroll / menekan tombol.
     resetAllSettings: Reset Semua Pengaturan/Data
     clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
+    tlLanguageSelection: Melihat Terjemahan dalam bahasa ini
   app:
     update_available: Pembaharuan tersedia
     update_btn: Perbarui
@@ -212,7 +216,8 @@ views:
     presets: Preset
     addframe: Tambah Skema
     preset:
-      shareOnDiscord: Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!
+      shareOnDiscord: >-
+        Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!
       desktop: Desktop
       mobile: Ponsel
     video:
@@ -244,3 +249,31 @@ editor:
     endInput: 'Durasi dalam detik: (berakhir pd {0})'
   exitMode: Keluar dari Mode Edit
   enterMode: Edit Video
+about:
+  quicklinks: Tautan cepat
+  discordBtn: Discord Holodex
+  issueTracker: Pelacak Masalah / Sumber
+  faq:
+    title: Pertanyaan Umum
+    ytchatHeader: Akun Youtube saya tidak login pada kolom chat!
+    ytchatContent: >-
+      Kamu harus mematikan fitur keamanan pada browser yang bernama Pemblokiran Cookie Pihak Ketiga, atau whitelist situs ini dan youtube.com untuk mengizinkan Cookie Pihak Ketiga.
+    ytchatFirefox: Panduan Firefox, browser lain mungkin sama.
+    autoplayHeader: AutoPlay tidak berfungsi!
+    autoplayContent: Kamu bisa cari di internet bagaimana cara mengaktifkan autoplay pada browsermu.
+    musicPlayer: Pemutar Musik tidak berfungsi dengan baik pada perangkat seluler!
+    musicPlayerContent: >-
+      Maaf, karena mustahil untuk mendukung pemutar musik sebagai situs web pada perangkat seluler. <br/>karena faktor: 1. Perangkat seluler biasanya melarang autoplay, dimana kami memerlukan izin tersebut; 2. Perangkat seluler biasanya tidak mengizinkan situs untuk menumpuk banyak musik di latar belakang. 3. Kami tidak mengintegrasikan antrean kamu ke pusat kendali musik tingkat sistem.
+    videoLinkage: Bagaimana cara saya memastikan video yang diunggah terhubung dengan vtuber yang berkaitan?
+    videoLinkageContent: >-
+      Semua informasi video diuraikan dalam deskripsi video tersebut. jika kamu mengklip siaran, pastikan untuk mencantumkan tautan video resminya. Jika kamu mengklip konten buatan fans (contohnya dari bilibili), pastikan juga untuk mencantumkan tautan channel youtube resmi vtuber yang berkaitan. Jika kamu tidak mencantumkan channelnya, maka klip tidak akan muncul di holodex, karena semua klip membutuhkan keterkaitan tautan pada vtuber yang berkaitan untuk muncul di holodex.
+    quitHolodex: "Saya subber dan ingin channel saya dihapus dari Holodex\\r\n"
+    quitHolodexContent: >-
+      Yaaahhh :( , mohon beritahu kami jika terdapat masalah. jika kamu tetap ingin channelnya dihapus, tolong kirim pesan pada kami di Discord.
+  gdpr: GDPR dan data saya
+  gdprContent: >-
+    Cookie Google Analytics digunakan untuk melacak tampilan halaman untuk tujuan analitis kami. Setelah login, kami mengaitkan nama pengguna dan ID akun media sosial dengan favorit kamu. Data ini mungkin termasuk alamat Email (untuk Google), ID Discord, atau Twitter kamu.
+  gdprDeletion: Untuk penghapusan data pengguna milikmu, mohon kontak kami di discord!
+  feedback: Saran/Lapor Bug
+  feedbackHtml: >-
+    Kamu dapat membuat isu baru di <a href="https://github.com/RiceCakess/Holodex/issues"> Github Pelacak Masalah </a> atau berbicara dengan tim Holodex di Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>

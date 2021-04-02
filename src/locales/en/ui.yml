@@ -4,6 +4,7 @@ component:
     textBeforeTwitter: 'There was an error retrieving content, please check twitter '
     textAfterTwitter: ' or report an error through the'
     aboutPage: About page
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Sign in to favorite
     unfavoriteAllInGroup: Unfavorite all in group
@@ -60,7 +61,7 @@ component:
     refersLabel: refers
     sourcesLabel: sources
     songsLabel: songs
-    recommendationsLabel: recommended 
+    recommendationsLabel: recommended
   paginateLoad:
     newer: Newer
     older: Older
@@ -147,6 +148,8 @@ views:
     unsupportedQuery: >-
       Currently searching clips by <kbd>Topic</kbd> and <kbd>Organization</kbd>
       is not supported. No <b>clips</b> will show up.
+    sortByLabel: Sort By
+    typeDropdownLabel: Type
   settings:
     title: Settings
     darkModeLabel: Dark Mode
@@ -169,6 +172,7 @@ views:
     scrollModeMsg: Use scroll/tap to turn pages
     resetAllSettings: Reset All Settings/Data
     clipLanguageSelection: 'See Clips in these Languages:'
+    tlLanguageSelection: See live-chat TL in these languages
   app:
     update_available: An update is available
     update_btn: Update
@@ -227,7 +231,9 @@ views:
     presets: Presets
     addframe: Add Cell
     preset:
-      shareOnDiscord: Have a cool layout to share? Use the share button and let us know on our <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+      shareOnDiscord: >-
+        Have a cool layout to share? Use the share button and let us know on our
+        <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
       desktop: Desktop
       mobile: Mobile
     video:
@@ -262,3 +268,50 @@ editor:
     endInput: 'Duration in seconds: (end @ {0})'
   exitMode: Exit Edit Mode
   enterMode: Edit Video
+about:
+  quicklinks: Quick Links
+  discordBtn: Holodex Discord
+  issueTracker: Issue Tracker / Source
+  faq:
+    title: FAQ
+    ytchatHeader: My Youtube Chat is not logged in!
+    ytchatContent: >-
+      Please disable the browser security feature known as 3rd Party Cookies
+      blocking, or whitelist this website and youtube.com to allow 3rd Party
+      Cookies.
+    ytchatFirefox: Firefox instructions, other browsers may be similar.
+    autoplayHeader: AutoPlay isn't working!
+    autoplayContent: Please google how to enable autoplay for your browser.
+    musicPlayer: Music Player doesn't work well on Mobile Devices!
+    musicPlayerContent: >-
+      Sorry, but it's impossible to support Music Player as a website on mobile.
+      <br/>Two factors: 1. Mobile devices usually forbid autoplay, which we
+      require; 2. Mobile devices usually doesn't allow websites to chain up
+      music in the background. 3. We don't integrate your queue into system
+      level music control centers.
+    videoLinkage: How do I make sure that videos are linked properly to vtubers?
+    videoLinkageContent: >-
+      All information is parsed from the video description. If you are clipping
+      a stream, please make sure to link the official stream. If you are
+      clipping fan made content (eg. from bilibili), just make sure to link the
+      official youtube channels of relevant vtubers. If you do not link any
+      vtuber channels, then we will not show that clip on holodex, as all clips
+      require linkage to a vtuber known to holodex.
+    quitHolodex: "I'm a subber and I would like to have my channel removed from Holodex\r\n"
+    quitHolodexContent: >-
+      Sad to see you go :(, please let me know if there's any issue I can help
+      you with. If you would still like to have it removed, please send us a
+      message on Discord.
+  gdpr: GDPR and my data
+  gdprContent: >-
+    A Google Analytics cookie is used to track pageviews for our analytical
+    purposes. After login, we associate your social media account username and
+    ID with your favorites. This data may include your Email (for Google),
+    Discord ID, or Twitter handle respectively.
+  gdprDeletion: For deletion of your user data, please contact us on discord!
+  feedback: Feedback/Bug Reports
+  feedbackHtml: >-
+    You can create an issue in the <a
+    href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker
+    </a> or find the Holodex team on Discord <br /> <br /> Reddit: <a
+    href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
