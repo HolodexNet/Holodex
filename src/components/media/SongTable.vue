@@ -10,6 +10,7 @@
         hide-default-footer
         :items-per-page="PER_PAGE_ITEMS"
         disable-sort
+        :dense="$vuetify.breakpoint.smAndDown"
         @click:row="
             (item) => {
                 $store.commit('music/addSong', item);
@@ -42,7 +43,9 @@
         </template>
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template v-slot:item.available_at="{ item }">
-            <span class="blue-grey--text">{{ formatDate(item.available_at) }}</span>
+            <span class="blue-grey--text" v-if="$vuetify.breakpoint.xs || $vuetify.breakpoint.mdAndUp">{{
+                formatDate(item.available_at)
+            }}</span>
             <v-btn
                 class="popup"
                 icon
@@ -61,33 +64,14 @@
 </template>
 
 <script>
-import { formatDistance, formatDuration } from "@/utils/time";
+import { formatDistance, formatDuration, localizedDayjs } from "@/utils/time";
 import { mapState } from "vuex";
 
 export default {
     components: {},
     name: "ChannelMusic",
     data() {
-        return {
-            RECENT_HEADER: Object.freeze([
-                {
-                    text: "",
-                    value: "channel_id",
-                    width: "20px",
-                },
-                {
-                    text: this.$t("editor.music.trackNameInput"),
-                    align: "start",
-                    sortable: false,
-                    value: "name",
-                    cellClass: "text-subtitle-2",
-                },
-                { text: this.$t("component.songList.songCoveredBy"), value: "channel.name" },
-                { text: this.$t("editor.music.originalArtistInput"), value: "original_artist" },
-                { text: this.$t("component.songList.songDuration"), value: "start", align: "end" },
-                { text: this.$t("component.songList.sangOnTime"), value: "available_at", align: "end" },
-            ]),
-        };
+        return {};
     },
     props: {
         search: {
@@ -111,13 +95,44 @@ export default {
         },
     },
     computed: {
+        RECENT_HEADER() {
+            // const breakpoint = $vuetify.breakpoint.name
+
+            const datewidth = this.$vuetify.breakpoint.xlAndUp ? "190px" : "180px";
+
+            return [
+                {
+                    text: "",
+                    value: "channel_id",
+                    width: "20px",
+                },
+                {
+                    text: this.$t("editor.music.trackNameInput"),
+                    align: "start",
+                    sortable: false,
+                    value: "name",
+                    cellClass: "text-subtitle-2",
+                },
+                { text: this.$t("component.songList.songCoveredBy"), width: "25%", value: "channel.name" },
+                ...(this.$vuetify.breakpoint.mdAndUp
+                    ? [{ text: this.$t("editor.music.originalArtistInput"), width: "20%", value: "original_artist" }]
+                    : []),
+                { text: this.$t("component.songList.songDuration"), value: "start", width: "100px", align: "end" },
+                {
+                    text: this.$t("component.songList.sangOnTime"),
+                    value: "available_at",
+                    align: "end",
+                    width: this.$vuetify.breakpoint.mdAndUp ? datewidth : "90px",
+                },
+            ];
+        },
         ...mapState("settings", ["nameProperty"]),
     },
     methods: {
         formatDistance,
         formatDuration,
         formatDate(dt) {
-            return formatDistance(dt, this.$store.state.settings.lang, this.$t.bind(this));
+            return localizedDayjs(dt, this.$store.state.settings.lang).format("l");
         },
     },
 };
@@ -140,5 +155,12 @@ export default {
     color: rgb(227, 92, 240);
     border-color: rgb(232, 125, 241);
     background-color: rgba(134, 134, 134, 0.3);
+}
+
+.recent-table .clamp-2 {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    overflow: hidden;
 }
 </style>
