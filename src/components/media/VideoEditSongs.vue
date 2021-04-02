@@ -272,17 +272,17 @@ function maskTimestamp(s) {
     // Parse numbers in groups of 2
     while (p.length > 0) {
         if (p.length === 1) {
-            newStr.unshift(`0${p}`);
+            newStr.unshift(`${p}`);
             break;
         }
         const swap = p.pop();
         newStr.unshift(p.pop() + swap);
     }
 
-    // add padding back in
-    while (newStr.length < 3) {
-        newStr.unshift("00");
-    }
+    // // add padding back in
+    // while (newStr.length < 3) {
+    //     newStr.unshift("00");
+    // }
 
     return newStr.join(":");
 }
@@ -324,6 +324,8 @@ export default {
             mdiDebugStepOver,
             current: getEmptySong(this.video),
             songList: [],
+
+            currentStartTimeInput: "",
         };
     },
     props: {
@@ -356,12 +358,13 @@ export default {
         },
         currentStartTime: {
             get() {
-                return maskTimestamp(secondsToHuman(this.current.start));
+                return this.currentStartTimeInput;
             },
             set(val) {
-                if (this.checkStartTime(val)) {
+                this.currentStartTimeInput = maskTimestamp(val);
+                if (this.checkStartTime(this.currentStartTimeInput)) {
                     const duration = this.current.end - this.current.start;
-                    this.current.start = humanToSeconds(maskTimestamp(val));
+                    this.current.start = humanToSeconds(this.currentStartTimeInput);
                     this.current.end = this.current.start + duration;
                 }
             },
