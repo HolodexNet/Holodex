@@ -11,7 +11,7 @@ const englishNamePrefs = new Set(["en", "es", "fr", "id"]);
 
 const initialState = {
     lang: validLangs.has(userLanguage) ? userLanguage : "en",
-    clipLangs: [validLangs.has(userLanguage) ? userLanguage : "en"],
+    clipLangs: [validTlLangs.has(userLanguage) ? userLanguage : "en"],
     darkMode: true,
     redirectMode: false,
     autoplayVideo: true,
