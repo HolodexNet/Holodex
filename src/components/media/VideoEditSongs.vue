@@ -229,6 +229,7 @@
                                 (x) => {
                                     $emit('timeJump', x.start);
                                     current = JSON.parse(JSON.stringify(x));
+                                    currentStartTimeInput = secondsToHuman(current.start);
                                 }
                             "
                             @playNow="(x) => $emit('timeJump', x.start, true)"
@@ -278,11 +279,6 @@ function maskTimestamp(s) {
         const swap = p.pop();
         newStr.unshift(p.pop() + swap);
     }
-
-    // // add padding back in
-    // while (newStr.length < 3) {
-    //     newStr.unshift("00");
-    // }
 
     return newStr.join(":");
 }
@@ -361,7 +357,9 @@ export default {
                 return this.currentStartTimeInput;
             },
             set(val) {
+                // Mask time input
                 this.currentStartTimeInput = maskTimestamp(val);
+                // only modify current.start if time is valid
                 if (this.checkStartTime(this.currentStartTimeInput)) {
                     const duration = this.current.end - this.current.start;
                     this.current.start = humanToSeconds(this.currentStartTimeInput);
