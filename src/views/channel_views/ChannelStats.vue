@@ -63,7 +63,7 @@
 import api from "@/utils/backend-api";
 import { dayjs } from "@/utils/time";
 import { formatCount } from "@/utils/functions";
-// NOTE(jprochazk): this endpoint doesn't exist, but the component isn't used anywhere.
+// NOTE(jprochazk): this library is not in package.json, but the component isn't used anywhere.
 // import { CategoryScale, Chart, Line, LinearScale, LineController, Point, Tooltip } from "chart.js";
 
 // Chart.register(LineController, Line, Point, LinearScale, CategoryScale, Tooltip);
