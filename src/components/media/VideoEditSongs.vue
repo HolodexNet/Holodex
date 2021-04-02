@@ -189,7 +189,15 @@
                 </v-btn>
             </v-col>
             <v-col cols="6" sm="4" md="3">
-                <v-btn :disabled="!current.amUrl" elevation="5" width="100%" class="am-listen-btn" href="current.amUrl">
+                <v-btn
+                    :disabled="!current.amUrl"
+                    elevation="5"
+                    width="100%"
+                    class="am-listen-btn"
+                    :href="current.amUrl"
+                    rel="norefferer"
+                    target="_blank"
+                >
                     <v-avatar left tile size="26px">
                         <v-img
                             src="https://apple-resources.s3.amazonaws.com/medusa/production/images/5f600674c4f022000191d6c4/en-us-large@1x.png"
