@@ -91,7 +91,7 @@
     </v-card>
 </template>
 
-<script>
+<script lang="ts">
 import * as icons from "@/utils/icons";
 import backendApi from "@/utils/backend-api";
 
@@ -135,17 +135,20 @@ export default {
             this.$store.dispatch("logout");
         },
         async tryUpdateUser() {
+            // TODO(jprochazk): this probably shouldn't be on window
+            // @ts-ignore
             if (this.userdata && this.userdata.jwt && Date.now() - (window.lastUserCheck || 0) > 60000) {
+                // @ts-ignore
                 window.lastUserCheck = Date.now();
                 this.forceUserUpdate();
             }
         },
         async forceUserUpdate() {
             const check = await backendApi.loginIsValid(this.userdata.jwt);
-            if (check.data && check.data.id) {
-                this.$store.commit("setUser", { user: check.data, jwt: this.userdata.jwt });
-            } else {
+            if (check === false) {
                 this.$store.dispatch("logout");
+            } else if (check.data && check.data.id) {
+                this.$store.commit("setUser", { user: check.data, jwt: this.userdata.jwt });
             }
         },
     },

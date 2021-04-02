@@ -26,7 +26,7 @@
     </v-card>
 </template>
 
-<script>
+<script lang="ts">
 import api from "@/utils/backend-api";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import { localizedDayjs } from "@/utils/time";

@@ -16,7 +16,7 @@
     </v-bottom-navigation>
 </template>
 
-<script>
+<script lang="ts">
 export default {
     name: "BottomNav",
     props: {
@@ -26,7 +26,7 @@ export default {
         },
         active: {
             type: Boolean,
-            require: false,
+            required: false,
             default: true,
         },
     },

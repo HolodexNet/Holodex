@@ -28,7 +28,7 @@
     <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
 </template>
 
-<script>
+<script lang="ts">
 // import api from "@/utils/backend-api";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";

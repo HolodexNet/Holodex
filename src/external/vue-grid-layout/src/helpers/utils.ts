@@ -434,7 +434,7 @@ export function synchronizeLayoutWithChildren(initialLayout: Layout, children: A
  * @param  {String} [contextName] Context name for errors.
  * @throw  {Error}                Validation error.
  */
-export function validateLayout(layout: Layout, contextName: string): void {
+export function validateLayout(layout: Layout, contextName?: string): void {
     contextName = contextName || "Layout";
     const subProps = ["x", "y", "w", "h"];
     let keyArr = [];

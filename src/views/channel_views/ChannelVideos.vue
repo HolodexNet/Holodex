@@ -22,7 +22,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
 // import api from "@/utils/backend-api";
 import { mapState } from "vuex";

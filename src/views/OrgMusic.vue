@@ -112,7 +112,7 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import backendApi from "@/utils/backend-api";
 import SongItemCard from "@/components/media/SongItemCard.vue";
 import SongItem from "@/components/media/SongItem.vue";

@@ -74,7 +74,7 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import VideoCard from "@/components/video/VideoCard.vue";
 import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
@@ -110,7 +110,7 @@ export default {
         hideThumbnail: {
             required: false,
             type: Boolean,
-            deafult: false,
+            default: false,
         },
         horizontal: {
             required: false,

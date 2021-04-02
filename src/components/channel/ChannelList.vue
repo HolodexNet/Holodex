@@ -106,7 +106,7 @@
     </v-list>
 </template>
 
-<script>
+<script lang="ts">
 import * as icons from "@/utils/icons";
 import ChannelImg from "./ChannelImg.vue";
 import ChannelInfo from "./ChannelInfo.vue";
@@ -118,7 +118,7 @@ export default {
         ChannelImg,
         ChannelInfo,
         ChannelSocials,
-        ChannelCard: () => import("./ChannelCard"),
+        ChannelCard: () => import("./ChannelCard.vue"),
     },
     data() {
         return {

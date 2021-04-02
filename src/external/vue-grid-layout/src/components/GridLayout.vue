@@ -18,7 +18,7 @@
     transition: height 200ms ease;
 }
 </style>
-<script>
+<script lang="ts">
 import Vue from "vue";
 const elementResizeDetectorMaker = require("element-resize-detector");
 
@@ -315,7 +315,8 @@ export default {
         },
         dragEvent: function (eventName, id, x, y, h, w) {
             //console.log(eventName + " id=" + id + ", x=" + x + ", y=" + y);
-            let l = getLayoutItem(this.layout, id);
+            // TODO(jprochazk): trace this and give it a proper type
+            let l: any = getLayoutItem(this.layout, id);
             //GetLayoutItem sometimes returns null object
             if (l === undefined || l === null) {
                 l = { x: 0, y: 0 };
@@ -349,7 +350,8 @@ export default {
         },
         // eslint-disable-next-line no-unused-vars
         resizeEvent: function (eventName, id, x, y, h, w, edges) {
-            let l = getLayoutItem(this.layout, id);
+            // TODO(jprochazk): trace this and give it a proper type
+            let l: any = getLayoutItem(this.layout, id);
             // if(eventName === "resizeend") debugger;
             // edges
             //GetLayoutItem sometimes return null object

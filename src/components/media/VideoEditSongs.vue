@@ -243,7 +243,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { mdiEarHearing, mdiRestore, mdiTimerOutline, mdiDebugStepOver } from "@mdi/js";
 import backendApi from "@/utils/backend-api";
 import { secondsToHuman } from "@/utils/time";
@@ -307,6 +307,7 @@ function getEmptySong(video) {
     };
 }
 
+// TODO(jprochazk): `Vue.extend` for type inference instead of the lazy way of `const self = this as any`
 export default {
     components: {
         SongSearch,
@@ -371,7 +372,7 @@ export default {
             get() {
                 return `${this.current.end - this.current.start}`;
             },
-            set(val) {
+            set(val: string) {
                 if (this.checkEndTime(val)) {
                     if (val.includes(":")) {
                         this.current.end = humanToSeconds(val);
@@ -394,18 +395,19 @@ export default {
     methods: {
         processSearch(item) {
             console.log(item);
-            this.current.song = item;
+            const self = this as any;
+            self.current.song = item;
             if (item) {
-                this.current.itunesid = item.trackId;
-                this.current.name = item.trackName;
-                this.current.original_artist = item.artistName;
-                this.currentEndTime = `+${Math.ceil(item.trackTimeMillis / 1000)}`;
-                this.current.amUrl = item.trackViewUrl;
-                this.current.art = item.artworkUrl100;
+                self.current.itunesid = item.trackId;
+                self.current.name = item.trackName;
+                self.current.original_artist = item.artistName;
+                self.currentEndTime = `+${Math.ceil(item.trackTimeMillis / 1000)}`;
+                self.current.amUrl = item.trackViewUrl;
+                self.current.art = item.artworkUrl100;
             } else {
-                this.current.itunesid = -1;
-                this.current.amUrl = null;
-                this.current.art = null;
+                self.current.itunesid = -1;
+                self.current.amUrl = null;
+                self.current.art = null;
             }
         },
         checkStartTime(val) {
@@ -416,27 +418,32 @@ export default {
         },
         secondsToHuman,
         async addSong() {
-            await this.saveCurrentSong();
+            const self = this as any;
+            await self.saveCurrentSong();
             // this.songList.push(this.current);
-            this.current = getEmptySong(this.video);
-            await this.refreshSongList();
+            self.current = getEmptySong(self.video);
+            await self.refreshSongList();
         },
         async refreshSongList() {
-            this.songList = (await backendApi.songListByVideo(this.video.channel.id, this.video.id, false)).data.sort(
+            const self = this as any;
+            self.songList = (await backendApi.songListByVideo(self.video.channel.id, self.video.id, false)).data.sort(
                 (a, b) => a.start - b.start,
             );
         },
         async saveCurrentSong() {
-            const res = await backendApi.tryCreateSong(this.current, this.$store.state.userdata.jwt);
+            const self = this as any;
+            const res = await backendApi.tryCreateSong(self.current, this.$store.state.userdata.jwt);
             console.log(res);
         },
         reset() {
-            this.current = getEmptySong(this.video);
-            this.refreshSongList();
+            const self = this as any;
+            self.current = getEmptySong(self.video);
+            self.refreshSongList();
         },
         async removeSong(song) {
+            const self = this as any;
             await backendApi.deleteSong(song, this.$store.state.userdata.jwt);
-            this.refreshSongList();
+            self.refreshSongList();
         },
         mountTwitter() {
             const externalScript = document.createElement("script");

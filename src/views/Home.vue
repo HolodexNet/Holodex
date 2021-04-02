@@ -52,7 +52,7 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { mapState } from "vuex";
