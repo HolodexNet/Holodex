@@ -94,7 +94,6 @@
                     class="tweak-input"
                 >
                 </v-text-field>
-
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <button v-on="on" class="tweak-btn" @click="$emit('timeJump', current.start, true)">
@@ -238,6 +237,7 @@
 <script>
 import { mdiEarHearing, mdiRestore, mdiTimerOutline, mdiDebugStepOver } from "@mdi/js";
 import backendApi from "@/utils/backend-api";
+import { secondsToHuman } from "@/utils/time";
 import SongSearch from "./SongSearch.vue";
 import SongItem from "./SongItem.vue";
 
@@ -252,8 +252,31 @@ function humanToSeconds(str) {
     return s;
 }
 
-function secondsToHuman(s) {
-    return new Date(s * 1000).toISOString().substr(11, 8);
+function maskTimestamp(s) {
+    const p = s.split(":").join("").split("");
+    const newStr = [];
+
+    // remove prefix zeroes
+    while (p.length > 0 && p[0] === "0") {
+        p.shift();
+    }
+
+    // Parse numbers in groups of 2
+    while (p.length > 0) {
+        if (p.length === 1) {
+            newStr.unshift(`0${p}`);
+            break;
+        }
+        const swap = p.pop();
+        newStr.unshift(p.pop() + swap);
+    }
+
+    // add padding back in
+    while (newStr.length < 3) {
+        newStr.unshift("00");
+    }
+
+    return newStr.join(":");
 }
 
 const startTimeRegex = /^\d+([:]\d+)?([:]\d+)?$/;
@@ -293,7 +316,6 @@ export default {
             mdiDebugStepOver,
             current: getEmptySong(this.video),
             songList: [],
-            // currentStartTime: 0,
         };
     },
     props: {
@@ -326,12 +348,12 @@ export default {
         },
         currentStartTime: {
             get() {
-                return secondsToHuman(this.current.start);
+                return maskTimestamp(secondsToHuman(this.current.start));
             },
             set(val) {
                 if (this.checkStartTime(val)) {
                     const duration = this.current.end - this.current.start;
-                    this.current.start = humanToSeconds(val);
+                    this.current.start = humanToSeconds(maskTimestamp(val));
                     this.current.end = this.current.start + duration;
                 }
             },
