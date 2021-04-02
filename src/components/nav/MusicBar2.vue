@@ -266,6 +266,11 @@ export default {
 
             const { start, end } = this.currentSong;
             this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
+            if (time > end + 1) {
+                this.$store.commit("music/nextSong");
+            } else if (time < start - 10) {
+                this.player.seekTo(start);
+            }
         },
         playPause() {
             // if(this.state === MUSIC_PLAYER_STATE.PLAYING) this.$store.commit("music/pause");
