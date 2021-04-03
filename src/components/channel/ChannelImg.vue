@@ -27,7 +27,7 @@
     <!-- :to="`/channel/${channel.id}`" -->
 </template>
 
-<script lang="ts">
+<script>
 import { resizeChannelPhoto } from "@/utils/functions";
 
 export default {

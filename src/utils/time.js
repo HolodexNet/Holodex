@@ -57,8 +57,4 @@ export function formatDistance(time, lang = "en", $t) {
     return diff;
 }
 
-export function secondsToHuman(s) {
-    return new Date(s * 1000).toISOString().substr(11, 8);
-}
-
 export { dayjs };

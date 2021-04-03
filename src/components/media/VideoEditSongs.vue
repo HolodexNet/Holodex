@@ -94,6 +94,7 @@
                     class="tweak-input"
                 >
                 </v-text-field>
+
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                         <button v-on="on" class="tweak-btn" @click="$emit('timeJump', current.start, true)">
@@ -189,15 +190,7 @@
                 </v-btn>
             </v-col>
             <v-col cols="6" sm="4" md="3">
-                <v-btn
-                    :disabled="!current.amUrl"
-                    elevation="5"
-                    width="100%"
-                    class="am-listen-btn"
-                    :href="current.amUrl"
-                    rel="norefferer"
-                    target="_blank"
-                >
+                <v-btn :disabled="!current.amUrl" elevation="5" width="100%" class="am-listen-btn" href="current.amUrl">
                     <v-avatar left tile size="26px">
                         <v-img
                             src="https://apple-resources.s3.amazonaws.com/medusa/production/images/5f600674c4f022000191d6c4/en-us-large@1x.png"
@@ -229,7 +222,6 @@
                                 (x) => {
                                     $emit('timeJump', x.start);
                                     current = JSON.parse(JSON.stringify(x));
-                                    currentStartTimeInput = secondsToHuman(current.start);
                                 }
                             "
                             @playNow="(x) => $emit('timeJump', x.start, true)"
@@ -243,10 +235,9 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { mdiEarHearing, mdiRestore, mdiTimerOutline, mdiDebugStepOver } from "@mdi/js";
 import backendApi from "@/utils/backend-api";
-import { secondsToHuman } from "@/utils/time";
 import SongSearch from "./SongSearch.vue";
 import SongItem from "./SongItem.vue";
 
@@ -261,26 +252,8 @@ function humanToSeconds(str) {
     return s;
 }
 
-function maskTimestamp(s) {
-    const p = s.split(":").join("").split("");
-    const newStr = [];
-
-    // remove prefix zeroes
-    while (p.length > 0 && p[0] === "0") {
-        p.shift();
-    }
-
-    // Parse numbers in groups of 2
-    while (p.length > 0) {
-        if (p.length === 1) {
-            newStr.unshift(`${p}`);
-            break;
-        }
-        const swap = p.pop();
-        newStr.unshift(p.pop() + swap);
-    }
-
-    return newStr.join(":");
+function secondsToHuman(s) {
+    return new Date(s * 1000).toISOString().substr(11, 8);
 }
 
 const startTimeRegex = /^\d+([:]\d+)?([:]\d+)?$/;
@@ -307,7 +280,6 @@ function getEmptySong(video) {
     };
 }
 
-// TODO(jprochazk): `Vue.extend` for type inference instead of the lazy way of `const self = this as any`
 export default {
     components: {
         SongSearch,
@@ -321,8 +293,7 @@ export default {
             mdiDebugStepOver,
             current: getEmptySong(this.video),
             songList: [],
-
-            currentStartTimeInput: "",
+            // currentStartTime: 0,
         };
     },
     props: {
@@ -355,15 +326,12 @@ export default {
         },
         currentStartTime: {
             get() {
-                return this.currentStartTimeInput;
+                return secondsToHuman(this.current.start);
             },
             set(val) {
-                // Mask time input
-                this.currentStartTimeInput = maskTimestamp(val);
-                // only modify current.start if time is valid
-                if (this.checkStartTime(this.currentStartTimeInput)) {
+                if (this.checkStartTime(val)) {
                     const duration = this.current.end - this.current.start;
-                    this.current.start = humanToSeconds(this.currentStartTimeInput);
+                    this.current.start = humanToSeconds(val);
                     this.current.end = this.current.start + duration;
                 }
             },
@@ -372,7 +340,7 @@ export default {
             get() {
                 return `${this.current.end - this.current.start}`;
             },
-            set(val: string) {
+            set(val) {
                 if (this.checkEndTime(val)) {
                     if (val.includes(":")) {
                         this.current.end = humanToSeconds(val);
@@ -395,19 +363,18 @@ export default {
     methods: {
         processSearch(item) {
             console.log(item);
-            const self = this as any;
-            self.current.song = item;
+            this.current.song = item;
             if (item) {
-                self.current.itunesid = item.trackId;
-                self.current.name = item.trackName;
-                self.current.original_artist = item.artistName;
-                self.currentEndTime = `+${Math.ceil(item.trackTimeMillis / 1000)}`;
-                self.current.amUrl = item.trackViewUrl;
-                self.current.art = item.artworkUrl100;
+                this.current.itunesid = item.trackId;
+                this.current.name = item.trackName;
+                this.current.original_artist = item.artistName;
+                this.currentEndTime = `+${Math.ceil(item.trackTimeMillis / 1000)}`;
+                this.current.amUrl = item.trackViewUrl;
+                this.current.art = item.artworkUrl100;
             } else {
-                self.current.itunesid = -1;
-                self.current.amUrl = null;
-                self.current.art = null;
+                this.current.itunesid = -1;
+                this.current.amUrl = null;
+                this.current.art = null;
             }
         },
         checkStartTime(val) {
@@ -418,32 +385,27 @@ export default {
         },
         secondsToHuman,
         async addSong() {
-            const self = this as any;
-            await self.saveCurrentSong();
+            await this.saveCurrentSong();
             // this.songList.push(this.current);
-            self.current = getEmptySong(self.video);
-            await self.refreshSongList();
+            this.current = getEmptySong(this.video);
+            await this.refreshSongList();
         },
         async refreshSongList() {
-            const self = this as any;
-            self.songList = (await backendApi.songListByVideo(self.video.channel.id, self.video.id, false)).data.sort(
+            this.songList = (await backendApi.songListByVideo(this.video.channel.id, this.video.id, false)).data.sort(
                 (a, b) => a.start - b.start,
             );
         },
         async saveCurrentSong() {
-            const self = this as any;
-            const res = await backendApi.tryCreateSong(self.current, this.$store.state.userdata.jwt);
+            const res = await backendApi.tryCreateSong(this.current, this.$store.state.userdata.jwt);
             console.log(res);
         },
         reset() {
-            const self = this as any;
-            self.current = getEmptySong(self.video);
-            self.refreshSongList();
+            this.current = getEmptySong(this.video);
+            this.refreshSongList();
         },
         async removeSong(song) {
-            const self = this as any;
             await backendApi.deleteSong(song, this.$store.state.userdata.jwt);
-            self.refreshSongList();
+            this.refreshSongList();
         },
         mountTwitter() {
             const externalScript = document.createElement("script");

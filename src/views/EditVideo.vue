@@ -77,7 +77,7 @@
     <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
 </template>
 
-<script lang="ts">
+<script>
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";

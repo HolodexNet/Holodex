@@ -17,7 +17,7 @@
     </v-list-item>
 </template>
 
-<script lang="ts">
+<script>
 import TruncatedText from "../common/TruncatedText.vue";
 // import TruncatedText from '../common/TruncatedText.vue';
 

@@ -69,7 +69,7 @@
     </v-card>
 </template>
 
-<script lang="ts">
+<script>
 import ChannelChip from "@/components/channel/ChannelChip.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";

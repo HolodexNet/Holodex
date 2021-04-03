@@ -18,8 +18,7 @@
     </div>
 </template>
 
-<script lang="ts">
-// TODO(jprochazk): type declarations for this module
+<script>
 import linkify from "vue-linkify";
 
 export default {

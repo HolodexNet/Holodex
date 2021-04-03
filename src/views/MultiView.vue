@@ -139,7 +139,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
@@ -202,10 +202,6 @@ export default {
         },
     },
     mounted() {
-        // Check if layout is empty
-        if (this.layout.length === 0 && !this.$route.params.layout) {
-            this.showPresetSelector = true;
-        }
         this.$store.dispatch("favorites/fetchLive");
         if (this.$route.params.layout) {
             // TODO: verify layout

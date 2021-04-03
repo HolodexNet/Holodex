@@ -52,7 +52,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import { mdiTimerOutline } from "@mdi/js";
 

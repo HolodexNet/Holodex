@@ -75,7 +75,7 @@
     </v-container>
 </template>
 
-<script lang="ts">
+<script>
 import GAuth from "vue-google-oauth2";
 import open from "oauth-open";
 import api from "@/utils/backend-api";
@@ -162,10 +162,10 @@ export default {
         },
         async forceUserUpdate() {
             const check = await api.loginIsValid(this.userdata.jwt);
-            if (check === false) {
-                this.$store.dispatch("logout");
-            } else if (check.data && check.data.id) {
+            if (check.data && check.data.id) {
                 this.$store.commit("setUser", { user: check.data, jwt: this.userdata.jwt });
+            } else {
+                this.$store.dispatch("logout");
             }
         },
         async resetKey() {

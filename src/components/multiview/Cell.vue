@@ -127,7 +127,7 @@
     </v-card>
 </template>
 
-<script lang="ts">
+<script>
 import { mdiMessage, mdiResizeBottomRight, mdiDelete } from "@mdi/js";
 import { getVideoThumbnails } from "@/utils/functions";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat.vue";
