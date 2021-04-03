@@ -21,6 +21,7 @@
                 xl: 5,
             }"
             dense
+            ignoreBlock
         />
         <!-- </v-card-text> -->
     </v-card>
