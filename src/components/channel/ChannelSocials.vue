@@ -28,8 +28,10 @@
                     :color="isFavorited && isLoggedIn ? 'red' : 'grey'"
                     sm
                     @click.stop="toggleFavorite($event)"
+                    v-on="on"
+                    v-bind="attrs"
                 >
-                    <v-icon v-bind="attrs" v-on="on">
+                    <v-icon>
                         {{ icons.mdiHeart }}
                     </v-icon>
                     <!-- <span                         :left="isFavorited" v-if="isFavorited">FAV</span> -->
@@ -41,8 +43,15 @@
         </v-tooltip>
         <v-tooltip bottom v-if="showDelete">
             <template v-slot:activator="{ on, attrs }">
-                <v-btn :icon="!isBlocked" :color="isBlocked ? 'red' : 'grey'" sm @click.stop.prevent="toggleBlocked">
-                    <v-icon v-bind="attrs" v-on="on" :left="isBlocked">
+                <v-btn
+                    :icon="!isBlocked"
+                    :color="isBlocked ? 'red' : 'grey'"
+                    v-bind="attrs"
+                    v-on="on"
+                    sm
+                    @click.stop.prevent="toggleBlocked"
+                >
+                    <v-icon :left="isBlocked">
                         {{ mdiAccountCancel }}
                     </v-icon>
                     <span v-if="isBlocked">Blocked</span>

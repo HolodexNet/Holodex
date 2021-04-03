@@ -4,10 +4,11 @@
             <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
             <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
             <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
+            <v-tab>{{ $t("views.channels.tabs.Blocked") }}</v-tab>
         </v-tabs>
         <v-divider />
         <v-container fluid class="pa-0">
-            <v-list class="d-flex justify-space-between" style="background: none">
+            <v-list class="d-flex justify-space-between" style="background: none" v-if="category !== Tabs.BLOCKED">
                 <!-- Dropdown to pick sort-by into 'sort' data attr -->
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
@@ -45,18 +46,28 @@
                 </v-btn>
             </v-list>
             <ChannelList
-                :channels="category === Tabs.FAVORITES ? sortedFavorites : channels"
+                :channels="channelList"
                 includeVideoCount
                 :grouped="sort === 'group'"
                 :cardView="cardView"
                 :key="`channel-list-${category}`"
             />
         </v-container>
-        <InfiniteLoad @infinite="load" :identifier="infiniteId" v-if="category !== Tabs.FAVORITES" />
+        <InfiniteLoad
+            @infinite="load"
+            :identifier="infiniteId"
+            v-if="category !== Tabs.FAVORITES && category !== Tabs.BLOCKED"
+        />
         <!-- Favorites specific view items: -->
         <template v-if="category === Tabs.FAVORITES">
             <div v-if="!favorites || favorites.length === 0">
                 {{ $t("views.channels.favoritesAreEmpty") }}
+            </div>
+        </template>
+        <!-- Blocked list specific view items -->
+        <template v-if="category === Tabs.BLOCKED">
+            <div v-if="!blockedChannels || blockedChannels.length === 0">
+                {{ $t("views.channels.blockedAreEmpty") }}
             </div>
         </template>
     </v-container>
@@ -97,9 +108,10 @@ export default {
             infiniteId: +new Date(),
             // freeze object to stop Vue from creating watchers (small optimization)
             Tabs: Object.freeze({
-                SUBBER: 1,
                 VTUBER: 0,
+                SUBBER: 1,
                 FAVORITES: 2,
+                BLOCKED: 3,
             }),
             defaultSort: "subscribers",
         };
@@ -171,6 +183,7 @@ export default {
         },
         ...mapState("channels", ["channels", "isLoading", "hasError", "currentOffset"]),
         ...mapState("favorites", ["favorites", "live"]),
+        ...mapState("settings", ["blockedChannels"]),
         category: {
             get() {
                 return this.$store.state.channels.category;
@@ -189,6 +202,11 @@ export default {
                 }
                 return this.$store.commit("channels/setSort", this.defaultSort);
             },
+        },
+        channelList() {
+            if (this.category === this.Tabs.FAVORITES) return this.sortedFavorites;
+            if (this.category === this.Tabs.BLOCKED) return this.blockedChannels;
+            return this.channels;
         },
         cardView: {
             get() {
