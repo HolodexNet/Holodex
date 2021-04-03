@@ -34,7 +34,7 @@
     </v-sheet>
 </template>
 
-<script>
+<script lang="ts">
 import { mdiTranslate } from "@mdi/js";
 import WatchLiveTranslations from "./WatchLiveTranslations.vue";
 

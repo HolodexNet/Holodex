@@ -40,7 +40,7 @@
     </v-hover> -->
 </template>
 
-<script>
+<script lang="ts">
 import { resizeChannelPhoto } from "@/utils/functions";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 import ChannelImg from "./ChannelImg.vue";

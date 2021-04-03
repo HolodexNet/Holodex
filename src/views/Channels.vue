@@ -62,7 +62,7 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import ChannelList from "@/components/channel/ChannelList.vue";
 // import InfiniteLoading from "vue-infinite-loading";
 import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";

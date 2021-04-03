@@ -139,7 +139,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";

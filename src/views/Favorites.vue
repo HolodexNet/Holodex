@@ -65,7 +65,7 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 // eslint-disable-next-line no-unused-vars

@@ -128,7 +128,7 @@
         ></song-frame>
     </v-bottom-sheet>
 </template>
-<script>
+<script lang="ts">
 import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
@@ -202,7 +202,7 @@ export default {
         playlist(nw) {
             console.log("playlist: ", nw.length);
             if (nw.length === 0) this.$store.commit("music/closeBar");
-            if (this.isOpen === false > 0 && nw.length === 0) this.$store.commit("music/openBar");
+            if (this.isOpen === false && nw.length === 0) this.$store.commit("music/openBar");
         },
         currentSong(ns, os) {
             if (os != null && this.progress > 80) {

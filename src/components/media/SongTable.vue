@@ -63,7 +63,7 @@
     </v-data-table>
 </template>
 
-<script>
+<script lang="ts">
 import { formatDistance, formatDuration, localizedDayjs } from "@/utils/time";
 import { mapState } from "vuex";
 

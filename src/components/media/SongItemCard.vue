@@ -76,7 +76,7 @@
     </v-hover>
 </template>
 
-<script>
+<script lang="ts">
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import { formatDistance } from "@/utils/time";
 

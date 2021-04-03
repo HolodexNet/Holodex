@@ -41,7 +41,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import * as icons from "@/utils/icons";
 // import { mapMutations } from "vuex";
 

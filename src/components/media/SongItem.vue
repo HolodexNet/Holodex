@@ -84,7 +84,7 @@
     </v-hover>
 </template>
 
-<script>
+<script lang="ts">
 import { formatDistance, secondsToHuman } from "@/utils/time";
 
 export default {

@@ -96,7 +96,7 @@
     cursor: none !important;
 }
 </style>
-<script>
+<script lang="ts">
 import { setTopLeft, setTransform } from "../helpers/utils";
 import { getControlPosition, createCoreData } from "../helpers/draggableUtils";
 import { getColsFromBreakpoint } from "../helpers/responsiveUtils";
@@ -465,12 +465,12 @@ export default {
         emitContainerResized() {
             // this.style has width and height with trailing 'px'. The
             // resized event is without them
-            let styleProps = {};
+            let styleProps = { width: "", height: "" };
             for (let prop of ["width", "height"]) {
                 let val = this.style[prop];
                 let matches = val.match(/^(\d+)px$/);
                 if (!matches) return;
-                styleProps[prop] = matches[1];
+                styleProps[prop as keyof typeof styleProps] = matches[1];
             }
             this.$emit("container-resized", this.i, this.h, this.w, styleProps.height, styleProps.width);
         },
@@ -482,7 +482,7 @@ export default {
             const { x, y } = position;
             // console.log(position);
             // console.log(event);
-            let newSize = { width: 0, height: 0 };
+            let newSize: { left?: number; top?: number; width: number; height: number } = { width: 0, height: 0 };
             let pos;
 
             // const newRect = {};
@@ -563,7 +563,6 @@ export default {
 
             this.lastW = x;
             this.lastH = y;
-
             const newXY = this.calcXY(newSize.top, newSize.left);
             // console.log(newSize);
 
@@ -790,6 +789,7 @@ export default {
                             width: maximum.width,
                         },
                     },
+                    modifiers: [],
                 };
 
                 if (this.preserveAspectRatio) {
