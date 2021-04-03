@@ -23,16 +23,9 @@
         </v-btn>
         <v-tooltip bottom v-if="channel.type === 'vtuber' && !hideFav">
             <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    :icon="!isFavorited"
-                    :color="isFavorited && isLoggedIn ? 'red' : 'grey'"
-                    sm
-                    @click.stop="toggleFavorite($event)"
-                    v-on="on"
-                    v-bind="attrs"
-                >
-                    <v-icon>
-                        {{ icons.mdiHeart }}
+                <v-btn icon sm elevation="0" @click.stop="toggleFavorite($event)" v-on="on" v-bind="attrs">
+                    <v-icon :color="isFavorited && isLoggedIn ? 'red' : 'gray'">
+                        {{ isFavorited ? icons.mdiHeart : mdiHeartOutline }}
                     </v-icon>
                     <!-- <span                         :left="isFavorited" v-if="isFavorited">FAV</span> -->
                 </v-btn>
@@ -65,12 +58,13 @@
 </template>
 
 <script lang="ts">
-import { mdiAccountCancel } from "@mdi/js";
+import { mdiAccountCancel, mdiHeartOutline } from "@mdi/js";
 
 export default {
     data() {
         return {
             mdiAccountCancel,
+            mdiHeartOutline,
         };
     },
     props: {
