@@ -26,11 +26,9 @@
 import VideoCardList from "@/components/video/VideoCardList.vue";
 // import api from "@/utils/backend-api";
 import { mapState } from "vuex";
-import isActive from "@/mixins/isActive";
 
 export default {
     name: "ChannelVideos",
-    mixins: [isActive],
     components: {
         VideoCardList,
     },
