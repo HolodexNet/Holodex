@@ -203,7 +203,7 @@ export default {
     },
     mounted() {
         // Check if layout is empty
-        if (this.layout.length === 0) {
+        if (this.layout.length === 0 && !this.$route.params.layout) {
             this.showPresetSelector = true;
         }
         this.$store.dispatch("favorites/fetchLive");
