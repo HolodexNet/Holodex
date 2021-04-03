@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import axiosRetry from "axios-retry";
 import { dayjs } from "@/utils/time";
 import querystring from "querystring";
@@ -43,12 +43,12 @@ export default {
     },
     /**
      * Fetches a video
-     * @param {*} id the ID of the video
-     * @param {*} lang the acceptable subtitle languages
-     * @param {*} c whether to also provide comments, 1 to activate
+     * @param id the ID of the video
+     * @param lang the acceptable subtitle languages
+     * @param c whether to also provide comments, 1 to activate
      * @returns
      */
-    video(id, lang, c) {
+    video(id: string, lang?: string, c?: 1) {
         const q = querystring.stringify({ lang, c });
         return axiosInstance.get(`/videos/${id}?${q}`);
     },
@@ -98,7 +98,7 @@ export default {
             },
         );
     },
-    loginIsValid(jwt) {
+    loginIsValid(jwt): Promise<false | AxiosResponse<any>> {
         return axiosInstance
             .get("/user/check", {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},

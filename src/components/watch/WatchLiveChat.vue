@@ -4,14 +4,14 @@
         :class="{
             'fixed-bottom': fixedBottom,
             'fixed-right': fixedRight,
-            'show-tl-overlay': shouldShowLiveTL,
+            'show-tl-overlay': !isMugen && shouldShowLiveTL,
             fluid: fluid,
         }"
     >
         <span class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
         <WatchLiveTranslations
             :video="video"
-            v-if="shouldConnectLiveTL"
+            v-if="!isMugen && shouldConnectLiveTL"
             v-show="shouldShowLiveTL"
             :class="{
                 'chat-overlay': fixedBottom || fixedRight,
@@ -34,7 +34,7 @@
     </v-sheet>
 </template>
 
-<script>
+<script lang="ts">
 import { mdiTranslate } from "@mdi/js";
 import WatchLiveTranslations from "./WatchLiveTranslations.vue";
 
@@ -72,6 +72,10 @@ export default {
             default: false,
         },
         controlTL: {
+            type: Boolean,
+            default: false,
+        },
+        isMugen: {
             type: Boolean,
             default: false,
         },

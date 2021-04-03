@@ -55,7 +55,9 @@
                     >
                         Remove
                     </a>
-                    <div v-if="detailed" class="float-right text-caption">[{{ song.start }} - {{ song.end }}]s</div>
+                    <div v-if="detailed" class="float-right text-caption">
+                        [{{ secondsToHuman(song.start) }} - {{ secondsToHuman(song.end) }}]
+                    </div>
 
                     <span class="limit-width">
                         {{ song.name }} /
@@ -82,8 +84,8 @@
     </v-hover>
 </template>
 
-<script>
-import { formatDistance } from "@/utils/time";
+<script lang="ts">
+import { formatDistance, secondsToHuman } from "@/utils/time";
 
 export default {
     name: "SongItem",
@@ -147,6 +149,9 @@ export default {
         nameProperty() {
             return this.$store.state.settings.nameProperty;
         },
+    },
+    methods: {
+        secondsToHuman,
     },
     mounted() {},
 };

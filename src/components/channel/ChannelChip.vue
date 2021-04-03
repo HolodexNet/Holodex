@@ -32,15 +32,12 @@
         </template>
         <div class="channel-hover-tooltip">
             <ChannelSocials :channel="channel" vertical hideYt hideTwitter />
-            <span class="grey--text text--lighten-1">{{ channelName }}</span>
+            <span class="grey--text text--lighten-1 ml-2">{{ channelName }}</span>
         </div>
     </v-menu>
-
-    <!-- </template>
-    </v-hover> -->
 </template>
 
-<script>
+<script lang="ts">
 import { resizeChannelPhoto } from "@/utils/functions";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 import ChannelImg from "./ChannelImg.vue";

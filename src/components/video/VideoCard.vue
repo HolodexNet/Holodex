@@ -149,7 +149,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
@@ -210,7 +210,7 @@ export default {
         hideThumbnail: {
             required: false,
             type: Boolean,
-            deafult: false,
+            default: false,
         },
         horizontal: {
             required: false,

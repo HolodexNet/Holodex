@@ -9,7 +9,7 @@
                             <ChannelImg :size="avatarSize" :channel="channel" />
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" />
-                        <ChannelSocials :channel="channel" />
+                        <ChannelSocials :channel="channel" showDelete />
                     </v-list-item>
                 </v-list>
             </v-container>
@@ -28,7 +28,7 @@
     <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
 </template>
 
-<script>
+<script lang="ts">
 // import api from "@/utils/backend-api";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
@@ -56,8 +56,8 @@ export default {
             tab: 0,
         };
     },
-    mounted() {
-        if (this.$route.params.id !== this.channel.id) this.init();
+    created() {
+        this.init();
     },
     computed: {
         ...mapState("channel", ["id", "channel", "isLoading", "hasError"]),
@@ -118,17 +118,6 @@ export default {
         },
         metaImage() {
             return this.channel.photo;
-        },
-    },
-    watch: {
-        // eslint-disable-next-line func-names
-        "$route.params.id": function () {
-            if (
-                !this.channel ||
-                (this.$route.params.id !== this.channel.id && this.$route.fullPath.includes("channel"))
-            ) {
-                this.init();
-            }
         },
     },
     methods: {
