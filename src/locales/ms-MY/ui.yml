@@ -174,7 +174,7 @@ views:
     close_btn: Tutup
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
     nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong.
-    loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
+    loginCallToAction: Daftar masuk untuk mengumpul kegemaran anda sendiri!
   about:
     add_my_channel: Tambah saluran saya di Holodex
   watch:
@@ -198,37 +198,37 @@ views:
         disconnectedToChat: Terputus
   favorites:
     promptForAction: >-
-      Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
+      Cipta senarai vtuber kegemaran dan lihat sedutan terbaharu mereka dan siaran langsung di laman ini.
     manageFavorites: Uruskan Kegemaran
   editor:
-    needlogin: Penyuntingan data meta video dan lagu di Holodex hanya untuk yang telah mengelog masuk.
+    needlogin: Anda perlu daftar masuk untuk membuat penyuntingan pada video Holodex dan metadata lagu.
   login:
     apikeyMsg: >-
       Kekunci API boleh digunakan dalam pengaturcaraan untuk membuat pertanyaan kepada API Holodex. Setiap akaun hanya terbatas dengan serentetan kekunci. Setelah mendapat kekunci baharu, kekunci lama akan tamat tempoh dalam masa 24 jam.
     apikeyNew: Dapatkan Kekunci API baharu
     ownedYtChannel: Saluran YouTube Milik Anda
     futureYtcOwnerMessage: >-
-      Kami berancang akan menyediakan perkhidmatan tambahan kepada empunya saluran dengan kebolehan menyunting data meta video masing-masing.
+      Kami berancang untuk menyediakan perkhidmatan tambahan kepada empunya saluran seperti kebolehan menyunting metadata video masing-masing.
     linkAcc: Pautkan akaun lain
     apikeyResetConfirm1: Adakah anda pasti anda ingin menetapkan semula Kekunci API anda?
-    apikeyResetConfirm2: Kekunci API lama akan tamat tempoh dalam masa 24 jam. Betul mahu tetapkan semula?
-    apikeyResetNvm: Entahlah apa yang terjadi.
+    apikeyResetConfirm2: Kekunci API lama akan tamat tempoh dalam masa 24 jam. Anda pasti mahu tetapkan semula?
+    apikeyResetNvm: Tiada perkara menarik berlaku.
   multiview:
-    confirmOverwrite: Ubah tataletak semasa?
+    confirmOverwrite: Ubah susun atur semasa?
     confirmOverwriteYes: Sahkan
-    permalink: Buat Pautan
+    permalink: Pautan Kekal
     presets: Tataletak Tersedia
     addframe: Tambah Petak
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
-      desktop: Peranti Atas Meja
-      mobile: Peranti Mudah Alih
+      desktop: Komputer peribadi
+      mobile: Telefon bimbit
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Tersuai
 time:
-  soon: sebentar lagi
+  soon: tidak lama lagi
   diff_future_date: Berlangsung {0} ({1})
   distance_past_date: '{0}'
 editor:
