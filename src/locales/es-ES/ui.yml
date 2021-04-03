@@ -98,7 +98,9 @@ views:
       Vtuber: Vtuber
       Subber: Subtitulador
       Favorites: Favoritos
+      Blocked: Bloqueado
     favoritesAreEmpty: No tienes favoritos!
+    blockedAreEmpty: No tienes canales bloqueados.
   home:
     liveOrUpcomingHeading: En vivo / Proximamente
     recentVideosHeading: Videos recientes
