@@ -33,7 +33,7 @@
     </v-card>
 </template>
 
-<script lang="ts">
+<script>
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { decodeLayout } from "@/utils/mv-layout";

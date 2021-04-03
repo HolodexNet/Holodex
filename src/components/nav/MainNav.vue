@@ -173,7 +173,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import * as icons from "@/utils/icons";
 import SearchBar from "@/components/common/SearchBar.vue";
 // import SearchBar from "@/components/nav/SearchBarSimple.vue";
@@ -304,8 +304,7 @@ export default {
         // getHeight() {
         //     console.log(this.$vuetify.breakpoint.width);
         //     // ^ very important, causes the function to link reactivity to width changes.
-        //     return Number.parseFloat(
-        //         getComputedStyle(document.documentElement).getPropertyValue("--sat")) / 1.5 + 64;
+        //     return Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sat")) / 1.5 + 64;
         // },
         ...mapState(["firstVisit"]),
     },

@@ -13,7 +13,7 @@
     </v-list>
 </template>
 
-<script lang="ts">
+<script>
 import SongItem from "./SongItem.vue";
 
 export default {

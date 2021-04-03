@@ -5,7 +5,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 
 export default {

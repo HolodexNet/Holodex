@@ -62,7 +62,7 @@
     </v-autocomplete>
 </template>
 
-<script lang="ts">
+<script>
 import {
     mdiLabel,
     mdiMagnifyPlusOutline,
@@ -73,10 +73,8 @@ import {
 } from "@mdi/js";
 import * as icons from "@/utils/icons";
 import { debounce } from "@/utils/functions";
-// TODO(jprochazk): type declarations for this module
 import jsonp from "jsonp-es6";
 import { formatDuration } from "@/utils/time";
-// TODO(jprochazk): type declarations for this module
 import { compareTwoStrings } from "string-similarity";
 
 export default {

@@ -31,7 +31,7 @@ export const ORGS = Object.freeze([
     "Nijisanji",
     "Kizuna Ai Inc.",
     "Independents",
-    "VSpo",
+    "upd8",
     "VShojo",
     "774inc",
     "Eilene Family",

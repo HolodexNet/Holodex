@@ -16,7 +16,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 
 export default {
