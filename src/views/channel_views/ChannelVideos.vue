@@ -60,16 +60,6 @@ export default {
             return Math.ceil(this.total / this.pageLength);
         },
     },
-    watch: {
-        // eslint-disable-next-line func-names
-        "$route.name": function () {
-            if (this.isActive) this.resetVideos();
-        },
-        // eslint-disable-next-line func-names
-        "$route.param.id": function () {
-            if (this.isActive) this.resetVideos();
-        },
-    },
     methods: {
         resetVideos() {
             this.identifier = +new Date();

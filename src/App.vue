@@ -5,7 +5,7 @@
     >
         <MainNav />
         <v-main class="pull-to-refresh" style="transition: none">
-            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView">
+            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel">
                 <router-view :key="viewKey" />
             </keep-alive>
         </v-main>

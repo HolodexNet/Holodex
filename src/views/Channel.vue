@@ -56,8 +56,8 @@ export default {
             tab: 0,
         };
     },
-    mounted() {
-        if (this.$route.params.id !== this.channel.id) this.init();
+    created() {
+        this.init();
     },
     computed: {
         ...mapState("channel", ["id", "channel", "isLoading", "hasError"]),
@@ -118,17 +118,6 @@ export default {
         },
         metaImage() {
             return this.channel.photo;
-        },
-    },
-    watch: {
-        // eslint-disable-next-line func-names
-        "$route.params.id": function () {
-            if (
-                !this.channel ||
-                (this.$route.params.id !== this.channel.id && this.$route.fullPath.includes("channel"))
-            ) {
-                this.init();
-            }
         },
     },
     methods: {
