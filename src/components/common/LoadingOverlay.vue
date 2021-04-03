@@ -14,7 +14,7 @@
     </v-row>
 </template>
 
-<script lang="ts">
+<script>
 import ApiErrorMessage from "./ApiErrorMessage.vue";
 
 export default {

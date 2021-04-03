@@ -17,7 +17,7 @@
     </v-card>
 </template>
 
-<script lang="ts">
+<script>
 import ChannelImg from "./ChannelImg.vue";
 import ChannelInfo from "./ChannelInfo.vue";
 import ChannelSocials from "./ChannelSocials.vue";

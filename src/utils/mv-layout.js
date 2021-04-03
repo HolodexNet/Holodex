@@ -40,7 +40,7 @@ export function encodeLayout({ layout, contents }) {
 /**
  * Decodes a string to layout array and contents
  * @param {string} encodedStr encoded string
- * @returns {{layout, content}} layout and layout contents as array and object
+ * @returns {{layout, contents}} layout and layout contents as array and object
  */
 export function decodeLayout(encodedStr) {
     const parsedLayout = [];

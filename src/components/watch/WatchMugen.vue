@@ -21,13 +21,12 @@
                 xl: 5,
             }"
             dense
-            ignoreBlock
         />
         <!-- </v-card-text> -->
     </v-card>
 </template>
 
-<script lang="ts">
+<script>
 import api from "@/utils/backend-api";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import { localizedDayjs } from "@/utils/time";

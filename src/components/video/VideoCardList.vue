@@ -74,7 +74,7 @@
     </v-container>
 </template>
 
-<script lang="ts">
+<script>
 import VideoCard from "@/components/video/VideoCard.vue";
 import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
@@ -110,7 +110,7 @@ export default {
         hideThumbnail: {
             required: false,
             type: Boolean,
-            default: false,
+            deafult: false,
         },
         horizontal: {
             required: false,
@@ -173,10 +173,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        ignoreBlock: {
-            type: Boolean,
-            default: false,
-        },
     },
     methods: {
         emitLoad($state) {
@@ -200,18 +196,8 @@ export default {
             return this.limitRows > 0 && this.videos.length > this.limitRows * this.colSize;
         },
         spliced() {
-            const blockedChannels = this.$store.getters["settings/blockedChannelIDs"];
-            if (this.limitRows <= 0 || this.expanded) {
-                return this.videos.filter((x) => {
-                    return this.ignoreBlock || !blockedChannels.has(x.channel_id || x.channel.id);
-                });
-            }
-            return this.videos
-                .slice(0)
-                .splice(0, this.limitRows * this.colSize)
-                .filter((x) => {
-                    return this.ignoreBlock || !blockedChannels.has(x.channel_id || x.channel.id);
-                });
+            if (this.limitRows <= 0 || this.expanded) return this.videos;
+            return this.videos.slice(0).splice(0, this.limitRows * this.colSize);
         },
         colSize() {
             if (this.horizontal) return 1;

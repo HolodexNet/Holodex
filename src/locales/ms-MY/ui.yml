@@ -7,7 +7,7 @@ component:
     aboutPage: laman Perihal
     afterAboutPageHyperlink: .
   channelList:
-    signInToFavorite: Pendaftaran diperlukan
+    signInToFavorite: Pendaftaran diperlukan untuk menambah ke kegemaran
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
   channelInfo:
@@ -15,7 +15,7 @@ component:
     clipCount: '{n} Buah Sedutan'
     subscriberCount: '{n} Langganan'
     subscriberNA: Bilangan langganan tidak tersedia
-    totalViews: Jumlah Tontonan
+    totalViews: Jumlah tontonan
   channelSocials:
     addToFavorites: Tambahkan pada Kegemaran
     removeFromFavorites: Alih keluar daripada Kegemaran
@@ -38,7 +38,7 @@ component:
     liveNow: Langsung Sekarang
     edit: Sunting
   videoDescription:
-    description: Perihalan
+    description: Penerangan
   video:
     comment: { }
   description:
@@ -53,11 +53,11 @@ component:
       channel: saluran
       topic: topik
       org: kumpulan
-      titledesc: tajuk dan perihalan
-      comments: ulasan
+      titledesc: tajuk dan penerangan
+      comments: komen
       videourl: url video
   relatedVideo:
-    clipsLabel: sedutan
+    clipsLabel: klip
     simulcastsLabel: siaran serentak
     refersLabel: yang berkaitan
     sourcesLabel: daripada
@@ -72,21 +72,21 @@ component:
     recentSongsHeader: Lagu Terkini
     weeklyTopPlaysHeader: Lagu Teratas Mingguan
   songList:
-    songTitle: Judul
+    songTitle: Tajuk
     songCoveredBy: Dinyanyikan oleh
     songDuration: Tempoh
     sangOnTime: Dinyanyikan pada
   orgMusic:
-    monthlyTopForOrg: Lagu Teratas Bulanan {0}
-    weeklyTopForOrg: Lagu Teratas Mingguan {0}
+    monthlyTopForOrg: Lagu Teratas Bulanan untuk {0}
+    weeklyTopForOrg: Lagu Teratas Mingguan untuk {0}
   installPrompt:
     title: Pasang Holodex
-    callToAction: Video di Holodex boleh ditonton sebaiknya jika ditambahkan di layar utama
-    notNowBtn: Jangan Lagi
+    callToAction: Video di Holodex boleh ditonton dengan lebih baik jika ditambahkan di laman utama
+    notNowBtn: Bukqn sekarang
     installBtn: Pasang
     iOS:
       popup: Pasang Holodex di iOS
-      afterExportIcon: lalu "Tambahkan di Layar Utama"
+      afterExportIcon: kemudian "Tambahkan di Laman Utama"
       beforeExportIcon: Tekan
 views:
   channels:
@@ -96,19 +96,19 @@ views:
       group: Pecahan
       recentUpload: Muat Naik Terkini
       videoCount: Bilangan Video
-      clipCount: Bilangan Sedutan
+      clipCount: Bilangan Klip
     tabs:
       Vtuber: Penggiat YouTube maya
       Subber: Penyari Kata
       Favorites: Kegemaran
-    favoritesAreEmpty: Tiada kegemaran lagi!
+    favoritesAreEmpty: Anda tidak mempunyai sebarang kegemaran!
   home:
     liveOrUpcomingHeading: Langsung / Akan Datang
     recentVideosHeading: Video Terkini
     recentVideoToggles:
       all: Semua
       official: Rasmi
-      subber: Sedutan
+      subber: Klip
   library:
     savedVideosTitle: Video yang Disimpan
     createYtPlaylistButton: Buat Senarai Main YouTube ({0})
@@ -124,7 +124,7 @@ views:
     exportCsv: Fail CSV
     selectionSelect50: Pilih 50
     exportYTExplanation: >-
-      Senarai main yang dibuat <b>tidak tersenarai</b> di YouTube serta berkebarangkalian dihapuskan oleh YouTube.<br /> Sekiranya anda mahu menyimpan senarai main <b>tidak tersenarai</b> ini di YouTube, anda harus mengikuti langkah berikut.
+      Senarai main yang dibuat oleh ciri ini <b>tidak tersenarai</b> dan berkemungkinan telah dihapuskan oleh YouTube.<br /> Disebabkan kecacatan YouTube, anda perlu mengikuti langkah berikut untuk menyimpan senarai main <b>tidak tersenarai</b> ini di YouTube.
     exportYTHeading: Arahan Menyimpan Senarai Main YouTube
     exportYTInstructions: >-
       <b class="red--text">Langkah 1</b>: Mainkan senarai main YouTube kemudian gunakan antara muka pemain mini. <br /><br /> <b class="red--text">Langkah 2</b>: Pilih mana-mana video kemudian tambahkan pada baris gilir. <br /><br /> <b class="red--text">Langkah 3</b>: Senarai main ini telah boleh disimpan. Simpan dengan menekan simpan.
@@ -163,7 +163,7 @@ views:
     scrollModeMsg: Selak laman dengan menatal atau menekan butang
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
     clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
-    tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
+    tlLanguageSelection: Lihat terjemahan mesej langsung dalam bahasa berikut
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini

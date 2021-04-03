@@ -75,7 +75,7 @@
     </v-container>
 </template>
 
-<script lang="ts">
+<script>
 import { langs } from "@/plugins/vuetify";
 import { mdiTranslate, mdiFilter } from "@mdi/js";
 import { TL_LANGS } from "@/utils/consts";
@@ -151,7 +151,7 @@ export default {
             get() {
                 return this.$store.state.settings.clipLangs;
             },
-            set(val: any[]) {
+            set(val) {
                 // sort array to increase cache hit rate
                 this.$store.commit("settings/setClipLangs", val.sort());
             },
