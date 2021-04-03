@@ -19,6 +19,8 @@ component:
   channelSocials:
     addToFavorites: Añadir a favoritos
     removeFromFavorites: Eliminar de favoritos
+    unblock: Desbloquear este canal
+    block: Bloquear el contenido de este canal a través de Holodex
   mainNav:
     home: Inicio
     favorites: Favoritos
@@ -39,6 +41,8 @@ component:
     edit: Editar
   videoDescription:
     description: Descripción
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mas
@@ -88,6 +92,7 @@ component:
       beforeExportIcon: Pulse
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Suscriptores
       group: Grupo
