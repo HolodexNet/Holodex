@@ -1,4 +1,5 @@
 /* eslint-disable no-shadow */
+import Vue from "vue";
 import { langs } from "@/plugins/vuetify";
 import { TL_LANGS } from "@/utils/consts";
 
@@ -23,6 +24,8 @@ const initialState = {
 
     liveTlStickBottom: false,
     liveTlLang: validTlLangs.has(userLanguage) ? userLanguage : "en",
+
+    blockedChannels: [],
 };
 
 export const state = { ...initialState };
@@ -30,6 +33,9 @@ export const state = { ...initialState };
 const getters = {
     useEnName(state) {
         return state.nameProperty === "english_name";
+    },
+    blockedChannelIDs(state) {
+        return new Set(state.blockedChannels.map((x) => x.id));
     },
 };
 
@@ -74,6 +80,20 @@ const mutations = {
     },
     resetState(state) {
         Object.assign(state, initialState);
+    },
+    toggleBlocked(state, channel) {
+        // initialize if doesn't exist
+        if (!state.blockedChannels) Vue.set(state, "blockedChannels", []);
+
+        // determine to add or subtract:
+        if (state.blockedChannels.filter((x) => x.id === channel.id).length > 0) {
+            Vue.delete(
+                state.blockedChannels,
+                state.blockedChannels.findIndex((x) => x.id === channel.id),
+            );
+        } else {
+            state.blockedChannels.push(channel);
+        }
     },
 };
 

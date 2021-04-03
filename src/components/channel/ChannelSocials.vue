@@ -23,32 +23,45 @@
         </v-btn>
         <v-tooltip bottom v-if="channel.type === 'vtuber' && !hideFav">
             <template v-slot:activator="{ on, attrs }">
-                <v-btn icon sm>
-                    <v-icon
-                        :color="isFavorited && isLoggedIn ? 'red' : 'grey'"
-                        v-bind="attrs"
-                        v-on="on"
-                        @click.stop="toggleFavorite($event)"
-                    >
+                <v-btn
+                    :icon="!isFavorited"
+                    :color="isFavorited && isLoggedIn ? 'red' : 'grey'"
+                    sm
+                    @click.stop="toggleFavorite($event)"
+                >
+                    <v-icon v-bind="attrs" v-on="on">
                         {{ icons.mdiHeart }}
                     </v-icon>
+                    <!-- <span                         :left="isFavorited" v-if="isFavorited">FAV</span> -->
                 </v-btn>
             </template>
             <span>
                 {{ tooltip }}
             </span>
         </v-tooltip>
+        <v-tooltip bottom v-if="showDelete">
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn :icon="!isBlocked" :color="isBlocked ? 'red' : 'grey'" sm @click.stop.prevent="toggleBlocked">
+                    <v-icon v-bind="attrs" v-on="on" :left="isBlocked">
+                        {{ mdiAccountCancel }}
+                    </v-icon>
+                    <span v-if="isBlocked">Blocked</span>
+                </v-btn>
+            </template>
+            <span>
+                {{ blockTooltip }}
+            </span>
+        </v-tooltip>
     </div>
 </template>
 
 <script lang="ts">
-import * as icons from "@/utils/icons";
-// import { mapMutations } from "vuex";
+import { mdiAccountCancel } from "@mdi/js";
 
 export default {
     data() {
         return {
-            icons,
+            mdiAccountCancel,
         };
     },
     props: {
@@ -75,6 +88,11 @@ export default {
             default: false,
             required: false,
         },
+        showDelete: {
+            type: Boolean,
+            default: false,
+            required: false,
+        },
     },
     computed: {
         tooltip() {
@@ -83,6 +101,14 @@ export default {
             return !this.isFavorited
                 ? this.$t("component.channelSocials.addToFavorites")
                 : this.$t("component.channelSocials.removeFromFavorites");
+        },
+        blockTooltip() {
+            return !this.isBlocked
+                ? this.$t("component.channelSocials.block")
+                : this.$t("component.channelSocials.unblock");
+        },
+        isBlocked() {
+            return this.$store.getters["settings/blockedChannelIDs"].has(this.channel.id);
         },
         isFavorited() {
             return this.$store.getters["favorites/isFavorited"](this.channel.id);
@@ -99,6 +125,9 @@ export default {
             this.$store.commit("favorites/toggleFavorite", this.channel.id);
             this.$store.dispatch("favorites/updateFavorites");
             // this.isFavorited ? this.removeFavorite(this.channel.id) : this.addFavorite(this.channel.id);
+        },
+        toggleBlocked() {
+            this.$store.commit("settings/toggleBlocked", this.channel);
         },
     },
 };
