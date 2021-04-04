@@ -19,6 +19,8 @@ component:
   channelSocials:
     addToFavorites: Añadir a favoritos
     removeFromFavorites: Eliminar de favoritos
+    unblock: Desbloquear este canal
+    block: Bloquear el contenido de este canal a través de Holodex
   mainNav:
     home: Inicio
     favorites: Favoritos
@@ -101,7 +103,9 @@ views:
       Vtuber: Vtuber
       Subber: Subtitulador
       Favorites: Favoritos
+      Blocked: Bloqueado
     favoritesAreEmpty: No tienes favoritos!
+    blockedAreEmpty: No tienes canales bloqueados.
   home:
     liveOrUpcomingHeading: En vivo / Proximamente
     recentVideosHeading: Videos recientes
