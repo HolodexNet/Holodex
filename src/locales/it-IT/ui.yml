@@ -4,4 +4,148 @@ component:
     title: Gomennasorry!
     textBeforeTwitter: 'Si è verificato un errore nel recupero del contenuto, per favore, controlla Twitter. '
     textAfterTwitter: ' o segnala un errore tramite il'
+    aboutPage: Pagina delle Info
     afterAboutPageHyperlink: .
+  channelList:
+    signInToFavorite: Accedi per aggiungere i preferiti
+    unfavoriteAllInGroup: Rimuovi tutti dalla lista dei preferiti
+    favoriteAllInGroup: Imposta tutti come preferiti
+  channelInfo:
+    videoCount: '{0} Video'
+    clipCount: '{n} Clip'
+    subscriberCount: '{n} Iscritti'
+    subscriberNA: Counter degli iscritti non disponibile
+    totalViews: Visualizzazioni totali
+  channelSocials:
+    addToFavorites: Aggiungi ai Preferiti
+    removeFromFavorites: Rimuovi dai Preferiti
+    unblock: Sblocca questo canale
+    block: Blocca il contenuto di questo canale tramite Holodex
+  mainNav:
+    home: Home
+    favorites: Preferiti
+    channels: Canali
+    about: Info
+    library: Raccolta
+    settings: Impostazioni
+    login: Accedi
+    logout: Esci
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Impostazioni dell'account
+    music: Musica
+    multiview: Visualizzazione multi-stream
+  videoCard:
+    clips: '{n} Clip'
+    watching: '{0} stanno guardando'
+    liveNow: In diretta ora
+    edit: Modifica
+  videoDescription:
+    description: Descrizione
+  description:
+    showLess: Mostra meno
+    showMore: Mostra altro
+  watch:
+    streamingFor: In diretta da {0}
+    nextUpInMugen: Prossimo
+  search:
+    searchLabel: Cerca
+    type:
+      channel: canale
+      topic: argomento
+      org: org
+      titledesc: titolo e descrizione
+      comments: commenti
+      videourl: url del video
+  relatedVideo:
+    clipsLabel: clip
+    simulcastsLabel: simulcast
+    refersLabel: riferimenti
+    sourcesLabel: sorgenti
+    songsLabel: canzoni
+    recommendationsLabel: raccomandati
+  paginateLoad:
+    newer: Più recenti
+    older: Più vecchi
+  music:
+    clearPlaylist: Svuota
+  channelMusic:
+    recentSongsHeader: Brani Recenti
+    weeklyTopPlaysHeader: Canzoni Più Ascoltate della Settimana
+  songList:
+    songTitle: Titolo
+    songCoveredBy: Cantata da
+    songDuration: Durata
+    sangOnTime: Cantata su
+  orgMusic:
+    monthlyTopForOrg: Riprodotta {0} questo mese
+    weeklyTopForOrg: Canzoni Più Ascoltata della Settimana per {0} volte/a
+  installPrompt:
+    title: Installa Holodex
+    callToAction: Funziona meglio guardare i video su Holodex quando lo aggiungi alla schermata home
+    notNowBtn: Non ora
+    installBtn: Installa
+    iOS:
+      popup: Installa Holodex su iOS
+      afterExportIcon: poi 'Aggiungi alla Schermata Home
+      beforeExportIcon: Clicca
+views:
+  channels:
+    sortOptions:
+      subscribers: Iscritti
+      group: Gruppo
+      recentUpload: Caricamento Recente
+      videoCount: Numero di Video
+      clipCount: Numero di Clip
+    tabs:
+      Vtuber: Vtuber
+      Subber: Sottotitolatori
+      Favorites: Preferiti
+      Blocked: Bloccati
+    favoritesAreEmpty: Non hai preferiti!
+    blockedAreEmpty: Non hai canali bloccati.
+  home:
+    liveOrUpcomingHeading: Dirette / Prossime
+    recentVideosHeading: Video recenti
+    recentVideoToggles:
+      all: Tutti
+      official: Ufficiale
+      subber: Clip
+  library:
+    savedVideosTitle: Video salvati
+    createYtPlaylistButton: Crea una Playlist di YouTube ({0})
+    deleteFromLibraryButton: Elimina ({0})
+    deleteConfirmation: Sei sicuro di voler eliminare {0} video?
+    deleteConfirmationOK: Elimina
+    deleteConfirmationCancel: Annulla
+    selectionReset: Ripristina
+    selectionSelectAll: Seleziona Tutti
+    emptyLibrary: Non hai nessun video salvato!
+    exportSelected: Esporta i selezionati ({0})
+    exportYtPlaylist: Playlist di YouTube
+    exportCsv: File CSV
+    selectionSelect50: Seleziona 50
+    exportYTExplanation: >-
+      La playlist creata tramite questa funzione è <b>non in elenco</b> e potrebbe essere cancellata da YouTube. <br />Dato che la funzione di YouTube è incompleta, dovrai eseguire i seguenti passaggi per salvare la playlist <b>non in elenco</b> nel tuo account.
+    exportYTHeading: Istruzioni per il salvataggio della Playlist di YouTube
+    exportYTInstructions: >-
+      <b class="red--text">Primo passo</b>: Riproduci la playlist di YouTube e cambia l'interfaccia utente del player video in mini-player.<br /><br /><b class="red--text">Secondo passo</b>: Scegli qualsiasi video e aggiungilo alla coda. <br /><br /><b class="red--text">Terzo passo</b>: Ora puoi salvare la Playlist. Clicca su "Salva" per salvarla.
+  notFound:
+    title: Contenuto non trovato
+    back: Ritorna alla Home
+  search:
+    sort:
+      newest: Più recenti
+      oldest: Più vecchi
+    type:
+      all: Tutti
+      official: Ufficiale
+      clip: Clip
+    unsupportedQuery: >-
+      Attualmente non è supportata la ricerca di clip di un determinato <kbd>argomento</kbd> e di una determinata <kbd>Organizzazione</kbd>. Nessuna <b>clip</b> verrà mostrata.
+    sortByLabel: Ordina per
+    typeDropdownLabel: Tipo
+  settings:
+    title: Impostazioni
+    darkModeLabel: Tema scuro
+    darkModeMsg: Cambia il tema tra il "tema chiaro" e il "tema scuro"
+    redirectModeLabel: Apri su YouTube
