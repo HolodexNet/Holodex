@@ -293,6 +293,10 @@ body {
     }
 }
 
+.thin-scroll-bar {
+    scrollbar-width: thin;
+}
+
 .thin-scroll-bar::-webkit-scrollbar {
     width: 8px;
     height: 8px;
