@@ -153,7 +153,7 @@ export default {
             // channel has subviewws that will cause unwanted keep-alive instances
             // Key them all under channel/:id to avoid duplicating
             if (key.match("^/channel/.{16}")) {
-                return key.substring(0, 34);
+                return key.substring(0, 33);
             }
             return key;
         },
