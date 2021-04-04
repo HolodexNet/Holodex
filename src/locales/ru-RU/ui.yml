@@ -39,8 +39,6 @@ component:
     edit: Изменить
   videoDescription:
     description: Описание
-  video:
-    comment: { }
   description:
     showLess: Свернуть
     showMore: Ещё
@@ -90,7 +88,6 @@ component:
       beforeExportIcon: Нажмите
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Подписчики
       group: Группа
