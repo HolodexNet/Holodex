@@ -39,7 +39,7 @@ component:
     liveNow: Live Now
     edit: Edit
     copiedToClipboard: Link copied to clipboard.
-    copyLink: Copy Link
+    copyLink: Copy Holodex Link
   videoDescription:
     description: Description
   video:
