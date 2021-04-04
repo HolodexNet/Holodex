@@ -27,7 +27,14 @@ const getters = {
     },
 };
 
-const actions = {};
+const actions = {
+    skipToSong({ state, commit }, song) {
+        commit("addSong", song);
+        commit("openBar");
+        commit("skipTo", state.playlist.length - 1);
+        commit("play");
+    },
+};
 
 const mutations = {
     openBar(state) {

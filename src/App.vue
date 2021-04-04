@@ -5,7 +5,7 @@
     >
         <MainNav />
         <v-main class="pull-to-refresh" style="transition: none">
-            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView">
+            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel">
                 <router-view :key="viewKey" />
             </keep-alive>
         </v-main>
@@ -27,7 +27,7 @@
     </v-app>
 </template>
 
-<script>
+<script lang="ts">
 import MainNav from "@/components/nav/MainNav.vue";
 import pulltorefresh from "vue-awesome-pulltorefresh";
 import { dayjsLangs } from "./plugins/vuetify";
@@ -82,7 +82,7 @@ export default {
         // check for pwa updates
         document.addEventListener(
             "swUpdated",
-            (event) => {
+            (event: CustomEvent<any>) => {
                 this.registration = event.detail;
                 this.updateExists = true;
             },
