@@ -58,6 +58,12 @@ export default {
             return Math.ceil(this.total / this.pageLength);
         },
     },
+    watch: {
+        // eslint-disable-next-line func-names
+        "$route.name": function () {
+            this.resetVideos();
+        },
+    },
     methods: {
         resetVideos() {
             this.identifier = +new Date();
