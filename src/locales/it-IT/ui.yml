@@ -1,0 +1,7 @@
+---
+component:
+  apiError:
+    title: Gomennasorry!
+    textBeforeTwitter: 'Si è verificato un errore nel recupero del contenuto, per favore, controlla Twitter. '
+    textAfterTwitter: ' o segnala un errore tramite il'
+    afterAboutPageHyperlink: .
