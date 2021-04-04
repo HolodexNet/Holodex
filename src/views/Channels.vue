@@ -51,6 +51,7 @@
                 :grouped="sort === 'group'"
                 :cardView="cardView"
                 :key="`channel-list-${category}`"
+                :showDelete="category === Tabs.BLOCKED || category === Tabs.SUBBER"
             />
         </v-container>
         <InfiniteLoad
