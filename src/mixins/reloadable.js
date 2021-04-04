@@ -17,12 +17,13 @@ export default {
         this.unsubscribe = this.$store.subscribeAction(
             (action) => {
                 // catch reloadCurrentPage action, if it's active
+                // Gets called from either Pull to Refresh reload function or in router Scroll behavior
                 if (this.isActive && action.type === "reloadCurrentPage") {
                     // consume the event, and handle it
                     action.payload.consumed = true;
 
-                    // do nothin on first load, let the main element handle it
-                    if (!this.lastFetch) {
+                    // on desktop do nothin on first load, let the main element handle it
+                    if (!this.lastFetch && !this.$store.state.isMobile) {
                         this.lastFetch = +new Date();
                         return;
                     }
