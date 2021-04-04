@@ -367,7 +367,7 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import { mdiExportVariant, mdiGithub } from "@mdi/js";
 import * as icons from "@/utils/icons";
 import TwitterFeed from "@/components/common/TwitterFeed.vue";

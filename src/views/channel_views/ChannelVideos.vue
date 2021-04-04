@@ -22,15 +22,13 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
 // import api from "@/utils/backend-api";
 import { mapState } from "vuex";
-import isActive from "@/mixins/isActive";
 
 export default {
     name: "ChannelVideos",
-    mixins: [isActive],
     components: {
         VideoCardList,
     },
@@ -63,11 +61,7 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         "$route.name": function () {
-            if (this.isActive) this.resetVideos();
-        },
-        // eslint-disable-next-line func-names
-        "$route.param.id": function () {
-            if (this.isActive) this.resetVideos();
+            this.resetVideos();
         },
     },
     methods: {

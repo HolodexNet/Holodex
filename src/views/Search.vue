@@ -41,7 +41,7 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import api from "@/utils/backend-api";
 import { forwardTransformSearchToAPIQuery } from "@/utils/functions";
@@ -126,8 +126,8 @@ export default {
             const acceptable = this.filter.type === "all" ? ["stream", "clip"] : [this.filter.type];
             const sorter =
                 this.filter.sort === "oldest"
-                    ? (x, y) => new Date(x.available_at) - new Date(y.available_at)
-                    : (x, y) => new Date(y.available_at) - new Date(x.available_at);
+                    ? (x, y) => new Date(x.available_at).valueOf() - new Date(y.available_at).valueOf()
+                    : (x, y) => new Date(y.available_at).valueOf() - new Date(x.available_at).valueOf();
             return this.videos.filter((v) => acceptable.includes(v.type)).sort(sorter);
         },
     },

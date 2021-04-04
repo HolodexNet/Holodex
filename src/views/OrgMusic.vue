@@ -99,71 +99,9 @@
                         hide-details
                     ></v-text-field>
                 </v-card-title>
-                <v-data-table
-                    :headers="RECENT_HEADER"
-                    :items="recentSongs"
-                    :item-class="() => 'selectable'"
-                    item-key=""
-                    class="elevation-1 recent-table"
-                    :search="search"
-                    hide-default-footer
-                    :items-per-page="PER_PAGE_ITEMS"
-                    disable-sort
-                    @click:row="
-                        (item) => {
-                            $store.commit('music/addSong', item);
-                        }
-                    "
-                >
-                    <!-- eslint-disable-next-line vue/valid-v-slot -->
-                    <template v-slot:item.channel_id="{ item }">
-                        <v-btn small class="hoverable" icon outlined @click.stop="() => skipToSong(item)">
-                            <v-icon>{{ icons.mdiPlay }}</v-icon>
-                        </v-btn>
-                    </template>
-                    <!-- eslint-disable-next-line vue/valid-v-slot -->
-                    <template v-slot:item.channel.name="{ item, value }">
-                        <span>{{ item.channel[nameProperty] || value }}</span>
-                        <v-btn
-                            class="popup"
-                            icon
-                            target="_blank"
-                            :href="`/channel/${item.channel_id}/music`"
-                            @click.stop
-                        >
-                            <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
-                        </v-btn>
-                    </template>
 
-                    <!-- eslint-disable-next-line vue/valid-v-slot -->
-                    <template v-slot:item.start="{ item }">
-                        <span>{{ formatDuration(item.end * 1000 - item.start * 1000) }}</span>
-                    </template>
-                    <!-- eslint-disable-next-line vue/valid-v-slot -->
-                    <template v-slot:item.available_at="{ item }">
-                        <span class="blue-grey--text">{{ formatDate(item.available_at) }}</span>
-                        <v-btn
-                            class="popup"
-                            small
-                            icon
-                            target="_blank"
-                            :href="`/watch/${item.video_id}?t=${item.start}`"
-                            @click.stop
-                        >
-                            <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
-                        </v-btn>
-                        <v-btn
-                            class="popup"
-                            small
-                            icon
-                            target="_blank"
-                            :href="`/edit/video/${item.video_id}/music`"
-                            @click.stop
-                        >
-                            <v-icon small>{{ icons.mdiPencil }}</v-icon>
-                        </v-btn>
-                    </template>
-                </v-data-table>
+                <song-table :PER_PAGE_ITEMS="PER_PAGE_ITEMS" :search="search" :songs="recentSongs"></song-table>
+
                 <v-row>
                     <v-spacer></v-spacer>
                     <paginate-load @paginate="songsByRecent" pageLess :identifier="currentOrg + search" />
@@ -174,15 +112,15 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import backendApi from "@/utils/backend-api";
 import SongItemCard from "@/components/media/SongItemCard.vue";
 import SongItem from "@/components/media/SongItem.vue";
 import Carousel from "@/components/common/Carousel.vue";
 import PaginateLoad from "@/components/common/PaginateLoad.vue";
-import { formatDistance, formatDuration } from "@/utils/time";
 import { mapState } from "vuex";
 import { debounce } from "@/utils/functions";
+import SongTable from "@/components/media/SongTable.vue";
 
 const BREAKPOINTS = Object.freeze({
     xs: 1,
@@ -194,33 +132,11 @@ const BREAKPOINTS = Object.freeze({
 const PER_PAGE_ITEMS = 20;
 
 export default {
-    components: { SongItem, SongItemCard, Carousel, PaginateLoad },
+    components: { SongItem, SongItemCard, Carousel, PaginateLoad, SongTable },
     name: "OrgMusic",
     data() {
         return {
-            // recentOffset: 0,
-            // recentLimit: 20,
             recentSongs: [],
-            RECENT_HEADER: Object.freeze([
-                {
-                    text: "",
-                    value: "channel_id",
-                    width: "20px",
-                },
-                {
-                    text: this.$t("editor.music.trackNameInput"),
-                    align: "start",
-                    sortable: false,
-                    value: "name",
-                    cellClass: "text-subtitle-2",
-                },
-                { text: this.$t("component.songList.songCoveredBy"), value: "channel.name" },
-                { text: this.$t("editor.music.originalArtistInput"), value: "original_artist" },
-                { text: this.$t("component.songList.songDuration"), value: "start", align: "end" },
-                { text: this.$t("component.songList.sangOnTime"), value: "available_at", align: "end" },
-            ]),
-            // popularOffset: 0,
-            // popularLimit: 20,
             popularMonthlySongs: [],
             popularWeeklySongs: [],
 
@@ -236,7 +152,6 @@ export default {
     },
     computed: {
         ...mapState(["currentOrg"]),
-        ...mapState("settings", ["nameProperty"]),
     },
     watch: {
         currentOrg() {
@@ -259,7 +174,10 @@ export default {
                     loaded && loaded();
                 }
 
-                this.recentSongs = data;
+                this.recentSongs = data.map((x) => ({
+                    ...x,
+                    id: x.video_id + x.name,
+                }));
             } catch (e) {
                 error();
             }
@@ -278,10 +196,6 @@ export default {
             this.$store.commit("music/openBar");
             this.$store.commit("music/skipTo", this.$store.state.music.playlist.length - 1);
         },
-        formatDate(dt) {
-            return formatDistance(dt, this.$store.state.settings.lang, this.$t.bind(this));
-        },
-        formatDuration,
     },
 };
 </script>

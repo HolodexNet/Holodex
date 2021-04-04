@@ -138,7 +138,7 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import { mdiFileTable } from "@mdi/js";
 import { json2csvAsync } from "json-2-csv";
@@ -187,7 +187,7 @@ export default {
         },
         savedVideosList() {
             return Object.values(this.savedVideos)
-                .sort((a, b) => {
+                .sort((a: any, b: any) => {
                     const dateA = new Date(a.added_at).getTime();
                     const dateB = new Date(b.added_at).getTime();
                     return dateA > dateB ? 1 : -1;

@@ -27,7 +27,7 @@
     </v-card>
 </template>
 
-<script>
+<script lang="ts">
 import Comment from "@/components/video/Comment.vue";
 import { formatDuration } from "@/utils/time";
 

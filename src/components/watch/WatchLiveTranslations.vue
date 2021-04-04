@@ -68,7 +68,7 @@
     </v-card>
 </template>
 
-<script>
+<script lang="ts">
 // eslint-disable-next-line import/no-unresolved
 import { Manager } from "socket.io-client";
 import api, { API_BASE_URL } from "@/utils/backend-api";
@@ -232,10 +232,11 @@ export default {
             });
         }, 300),
         tlChatDisconnect() {
-            if (this.socket) {
-                this.socket.disconnect(true);
-                this.socket = null;
-                this.manager = null;
+            const self = this as any;
+            if (self.socket) {
+                self.socket.disconnect(true);
+                self.socket = null;
+                self.manager = null;
             }
         },
         // tlChatReconnect() {
@@ -243,7 +244,7 @@ export default {
         //     this.tlChatConnect();
         // },
         utcToTimestamp(utc) {
-            return formatDuration(dayjs.utc(utc).subtract(dayjs(this.video.start_actual)));
+            return formatDuration(dayjs.utc(utc).subtract(Number(dayjs(this.video.start_actual))));
         },
     },
 };

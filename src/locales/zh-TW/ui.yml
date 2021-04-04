@@ -39,8 +39,6 @@ component:
     edit: 編輯
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -90,7 +88,6 @@ component:
       beforeExportIcon: 點擊
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -262,13 +259,13 @@ about:
     ytchatFirefox: 以上所述為Firefox的修正方法，其他瀏覽器的修正方式也大同小異。
     autoplayHeader: 影片不會自動開始播放！
     autoplayContent: 請用Google查詢如何啟用您所使用的瀏覽器的自動播放功能。
-    musicPlayer: 音樂播放器無法在行動裝置上正常使用！
+    musicPlayer: 音樂播放器在行動裝置上無法正常使用！
     musicPlayerContent: >-
       非常抱歉，但行動裝置沒辦法像是電腦網頁那樣完美運作我們的音樂播放器。 <br/>有三個原因：<br/>１. 行動裝置的系統通常會禁用我們所需要的自動播放功能。<br/>２. 行動裝置通常不允許網站在背景播放音樂。<br/>３. 我們不會將您的播放清單整合到系統的音樂控制中心。
     videoLinkage: 我該如何確保影片有確實與Vtuber關聯？
     videoLinkageContent: >-
-      影片的所有訊息皆是由影片描述自動分析而來。如果您的剪輯來自特定實況，請確保在描述中附帶該次實況的官方連結。如果您的剪輯來自粉絲二創作品（舉例來說：B站），請確保在描述中附帶該剪輯中所出現的Vtuber頻道連結。如果您的影片描述中未包含任何Vtuber或是實況連結的話，Holodex就不會於網站上顯示該影片，因為所有剪輯都必需要連結到Holodex已知的Vtuber。
-    quitHolodex: "我是翻譯/剪輯者且我想要將自己的頻道自Holodex資料庫中移除\\r"
+      Holodex 的影片資料皆是由影片描述自動分析而來。如果您的剪輯來自特定實況，請確保在描述中附帶該次實況的官方連結。如果您的剪輯來自粉絲二創作品（舉例來說：B站），請確保在描述中附帶該剪輯中所出現的Vtuber頻道連結。如果您的影片描述中未包含任何 Vtuber 或是實況連結的話，Holodex就不會於網站上顯示該影片，所有的剪輯/翻譯影片都必需連結至 Holodex 已知的 Vtuber。
+    quitHolodex: "我是翻譯/剪輯者且我想要將自己的頻道自Holodex資料庫中移除\n"
     quitHolodexContent: >-
       祝您一路順風 :(  如果有任何需要協助的，請讓我們知道。如果您依然想移除自己頻道的相關資料，請至 Holodex 的 Discord伺服器 傳訊息給我們。
   gdpr: 關於GDPR與我的資料
@@ -277,4 +274,4 @@ about:
   gdprDeletion: 如果想刪除您的帳號資料，請至Discord與我們聯絡！
   feedback: 意見回饋/回報錯誤
   feedbackHtml: >-
-    您可至<a href="https://github.com/RiceCakess/Holodex/issues"> Github 問題回報頁 </a>創建貼文來回報問題，或是前往我們的 Discord伺服器 進行回報。<br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+    您可至 <a href="https://github.com/RiceCakess/Holodex/issues">Github 問題回報頁</a> 創建貼文來回報問題，或是前往我們的Discord伺服器進行回報。<br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>

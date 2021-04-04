@@ -7,7 +7,7 @@ component:
     aboutPage: laman Perihal
     afterAboutPageHyperlink: .
   channelList:
-    signInToFavorite: Pendaftaran diperlukan untuk menambah ke kegemaran
+    signInToFavorite: Pendaftaran diperlukan
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
   channelInfo:
@@ -15,10 +15,12 @@ component:
     clipCount: '{n} Buah Sedutan'
     subscriberCount: '{n} Langganan'
     subscriberNA: Bilangan langganan tidak tersedia
-    totalViews: Jumlah tontonan
+    totalViews: Jumlah Tontonan
   channelSocials:
     addToFavorites: Tambahkan pada Kegemaran
     removeFromFavorites: Alih keluar daripada Kegemaran
+    unblock: Nyahsekat saluran ini
+    block: Sekat kandungan saluran ini di seluruh Holodex
   mainNav:
     home: Laman Utama
     favorites: Kegemaran
@@ -38,7 +40,7 @@ component:
     liveNow: Langsung Sekarang
     edit: Sunting
   videoDescription:
-    description: Penerangan
+    description: Perihalan
   video:
     comment: { }
   description:
@@ -53,11 +55,11 @@ component:
       channel: saluran
       topic: topik
       org: kumpulan
-      titledesc: tajuk dan penerangan
-      comments: komen
+      titledesc: tajuk dan perihalan
+      comments: ulasan
       videourl: url video
   relatedVideo:
-    clipsLabel: klip
+    clipsLabel: sedutan
     simulcastsLabel: siaran serentak
     refersLabel: yang berkaitan
     sourcesLabel: daripada
@@ -72,21 +74,21 @@ component:
     recentSongsHeader: Lagu Terkini
     weeklyTopPlaysHeader: Lagu Teratas Mingguan
   songList:
-    songTitle: Tajuk
+    songTitle: Judul
     songCoveredBy: Dinyanyikan oleh
     songDuration: Tempoh
     sangOnTime: Dinyanyikan pada
   orgMusic:
-    monthlyTopForOrg: Lagu Teratas Bulanan untuk {0}
-    weeklyTopForOrg: Lagu Teratas Mingguan untuk {0}
+    monthlyTopForOrg: Lagu Teratas Bulanan {0}
+    weeklyTopForOrg: Lagu Teratas Mingguan {0}
   installPrompt:
     title: Pasang Holodex
-    callToAction: Video di Holodex boleh ditonton dengan lebih baik jika ditambahkan di laman utama
-    notNowBtn: Bukqn sekarang
+    callToAction: Video di Holodex boleh ditonton sebaiknya jika ditambahkan di layar utama
+    notNowBtn: Jangan Lagi
     installBtn: Pasang
     iOS:
       popup: Pasang Holodex di iOS
-      afterExportIcon: kemudian "Tambahkan di Laman Utama"
+      afterExportIcon: lalu "Tambahkan di Layar Utama"
       beforeExportIcon: Tekan
 views:
   channels:
@@ -96,19 +98,21 @@ views:
       group: Pecahan
       recentUpload: Muat Naik Terkini
       videoCount: Bilangan Video
-      clipCount: Bilangan Klip
+      clipCount: Bilangan Sedutan
     tabs:
       Vtuber: Penggiat YouTube maya
       Subber: Penyari Kata
       Favorites: Kegemaran
-    favoritesAreEmpty: Anda tidak mempunyai sebarang kegemaran!
+      Blocked: Disekat
+    favoritesAreEmpty: Tiada kegemaran lagi!
+    blockedAreEmpty: Anda tidak mempunyai sebarang saluran yg disekat.
   home:
     liveOrUpcomingHeading: Langsung / Akan Datang
     recentVideosHeading: Video Terkini
     recentVideoToggles:
       all: Semua
       official: Rasmi
-      subber: Klip
+      subber: Sedutan
   library:
     savedVideosTitle: Video yang Disimpan
     createYtPlaylistButton: Buat Senarai Main YouTube ({0})
@@ -124,10 +128,10 @@ views:
     exportCsv: Fail CSV
     selectionSelect50: Pilih 50
     exportYTExplanation: >-
-      Senarai main yang dibuat oleh ciri ini <b>tidak tersenarai</b> dan berkemungkinan telah dihapuskan oleh YouTube.<br /> Disebabkan kecacatan YouTube, anda perlu mengikuti langkah berikut untuk menyimpan senarai main <b>tidak tersenarai</b> ini di YouTube.
+      Senarai main yang dibuat <b>tidak tersenarai</b> di YouTube serta berkebarangkalian dihapuskan oleh YouTube.<br /> Sekiranya anda mahu menyimpan senarai main <b>tidak tersenarai</b> ini di YouTube, anda harus mengikuti langkah berikut.
     exportYTHeading: Arahan Menyimpan Senarai Main YouTube
     exportYTInstructions: >-
-      <b class="red--text">Langkah 1</b>: Mainkan senarai main YouTube kemudian gunakan antara muka pemain mini. <br /><br /> <b class="red--text">Langkah 2</b>: Pilih mana-mana video kemudian tambahkan pada baris gilir. <br /><br /> <b class="red--text">Langkah 3</b>: Senarai main ini telah boleh disimpan. Simpan dengan menekan simpan.
+      <b class="red--text">Langkah 1</b>: Mainkan senarai main YouTube kemudian gunakan antara muka pemain mini. <br /><br /> <b class="red--text">Langkah 2</b>: Pilih mana-mana video kemudian tambahkan pada baris gilir. <br /><br /> <b class="red--text">Langkah 3</b>: Senarai main ini sekarang boleh disimpan. Simpan dengan menekan simpan.
   notFound:
     title: Kandungan tidak ditemui
     back: Kembali ke Halaman Utama
@@ -141,7 +145,7 @@ views:
       clip: Sedutan
     unsupportedQuery: >-
       Carian sedutan menggunakan <kbd>Topik</kbd> dan <kbd>Kumpulan</kbd> masih belum disokong. <b>Sedutan</b> tidak akan terpapar.
-    sortByLabel: Isih Mengikut
+    sortByLabel: Susun Mengikut
     typeDropdownLabel: Jenis
   settings:
     title: Tetapan
@@ -149,28 +153,28 @@ views:
     darkModeMsg: Tukar antara tema cerah dan tema gelap
     redirectModeLabel: Buka di YouTube
     redirectModeMsg: >-
-      Mana-mana video yang ditekan akan terbuka di laman Youtube
+      Menekan gambar video akan membuka video tersebut di dalam YouTube, menekan di tajuk video akan membuka video tersebut di Holodex
     useEnglishNameLabel: Gunakan Nama Inggeris
-    useEnglishNameMsg: Gunakan nama Inggeris bagi nama saluran YouTube
+    useEnglishNameMsg: Gunakan nama Inggeris bagi nama saluran VTuber
     hideVideoThumbnailsLabel: Sembunyikan Lakaran Kecil (Gambar Kenit) Video
     hideVideoThumbnailsMsg: >-
-      Gambar kenit disembunyikan agar mempercepat pemuatan dan mengurangkan tatalan pada peranti bimbit
+      Sembunyikan gambar kenit (gambar kecil), mengurangkan masa pemuatan dan mengurangkan masa menatal pada telefon bimbit
     pushNotificationLabel: Pemberitahuan Segera (Akan Datang)
-    pushNotificationMsg: Pemberitahuan segera akan diterima bagi saluran kegemaran
+    pushNotificationMsg: Aktifkan pemberitahuan segera untuk saluran kegemaran
     autoplayVideoLabel: Automain Video
-    autoplayVideoMsg: Dayakan main semula video secara automatik
+    autoplayVideoMsg: Aktifkan main semula video secara automatik
     scrollModeLabel: Mod Tatal
     scrollModeMsg: Selak laman dengan menatal atau menekan butang
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
     clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
-    tlLanguageSelection: Lihat terjemahan mesej langsung dalam bahasa berikut
+    tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
     close_btn: Tutup
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
-    nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong
-    loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
+    nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong.
+    loginCallToAction: Daftar masuk untuk mengumpul kegemaran anda sendiri!
   about:
     add_my_channel: Tambah saluran saya di Holodex
   watch:
@@ -194,37 +198,37 @@ views:
         disconnectedToChat: Terputus
   favorites:
     promptForAction: >-
-      Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
+      Cipta senarai vtuber kegemaran dan lihat sedutan terbaharu mereka dan siaran langsung di laman ini.
     manageFavorites: Uruskan Kegemaran
   editor:
-    needlogin: Penyuntingan data meta video dan lagu di Holodex hanya untuk yang telah mengelog masuk.
+    needlogin: Anda perlu daftar masuk untuk membuat penyuntingan pada video Holodex dan metadata lagu.
   login:
     apikeyMsg: >-
       Kekunci API boleh digunakan dalam pengaturcaraan untuk membuat pertanyaan kepada API Holodex. Setiap akaun hanya terbatas dengan serentetan kekunci. Setelah mendapat kekunci baharu, kekunci lama akan tamat tempoh dalam masa 24 jam.
     apikeyNew: Dapatkan Kekunci API baharu
     ownedYtChannel: Saluran YouTube Milik Anda
     futureYtcOwnerMessage: >-
-      Kami berancang akan menyediakan perkhidmatan tambahan kepada empunya saluran dengan kebolehan menyunting data meta video masing-masing.
+      Kami berancang untuk menyediakan perkhidmatan tambahan kepada empunya saluran seperti kebolehan menyunting metadata video masing-masing.
     linkAcc: Pautkan akaun lain
     apikeyResetConfirm1: Adakah anda pasti anda ingin menetapkan semula Kekunci API anda?
-    apikeyResetConfirm2: Kekunci API lama akan tamat tempoh dalam masa 24 jam. Betul mahu tetapkan semula?
-    apikeyResetNvm: Entahlah apa yang terjadi.
+    apikeyResetConfirm2: Kekunci API lama akan tamat tempoh dalam masa 24 jam. Anda pasti mahu tetapkan semula?
+    apikeyResetNvm: Tiada perkara menarik berlaku.
   multiview:
-    confirmOverwrite: Ubah tataletak semasa?
+    confirmOverwrite: Ubah susun atur semasa?
     confirmOverwriteYes: Sahkan
-    permalink: Buat Pautan
+    permalink: Pautan Kekal
     presets: Tataletak Tersedia
     addframe: Tambah Petak
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
-      desktop: Peranti Atas Meja
-      mobile: Peranti Mudah Alih
+      desktop: Komputer peribadi
+      mobile: Telefon bimbit
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Tersuai
 time:
-  soon: sebentar lagi
+  soon: tidak lama lagi
   diff_future_date: Berlangsung {0} ({1})
   distance_past_date: '{0}'
 editor:

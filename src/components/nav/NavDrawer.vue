@@ -5,7 +5,7 @@
         app
         width="240"
         clipped
-        class="nav-scroll"
+        class="nav-scroll thin-scroll-bar"
         :temporary="temporary"
         style="padding-top: env(safe-area-inset-top)"
     >
@@ -75,7 +75,7 @@
     </v-navigation-drawer>
 </template>
 
-<script>
+<script lang="ts">
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
@@ -143,6 +143,10 @@ export default {
 </script>
 
 <style>
+.nav-scroll > .v-navigation-drawer__content {
+    scrollbar-width: thin; /* firefox fall back */
+}
+
 .nav-scroll > .v-navigation-drawer__content::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -157,6 +161,7 @@ export default {
 }
 
 .nav-scroll > .v-navigation-drawer__content:hover {
+    overflow-y: auto !important; /* firefox fallback */
     overflow-y: overlay !important;
 }
 

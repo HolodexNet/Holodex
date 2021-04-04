@@ -46,7 +46,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { mdiExportVariant } from "@mdi/js";
 
 export default {
@@ -104,7 +104,8 @@ export default {
             return ["iPhone", "iPad", "iPod"].includes(navigator.platform);
         },
         isStandAlone() {
-            return navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
+            type iOSNavigator = Navigator & { standalone: boolean };
+            return (navigator as iOSNavigator).standalone || window.matchMedia("(display-mode: standalone)").matches;
         },
     },
 };
