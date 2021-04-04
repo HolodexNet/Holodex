@@ -24,7 +24,7 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
 
 export default {

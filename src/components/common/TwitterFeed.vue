@@ -11,16 +11,18 @@
         </a>
     </div>
 </template>
-<script>
+<script lang="ts">
 export default {
     mounted() {
-        if (!window.twttr) {
+        // TODO(jprochazk): declare this in globals.d.ts
+        const w = window as any;
+        if (!w.twttr) {
             const externalScript = document.createElement("script");
             externalScript.setAttribute("src", "https://platform.twitter.com/widgets.js");
             externalScript.setAttribute("async", "true");
             document.head.appendChild(externalScript);
         } else {
-            window.twttr.widgets.load();
+            w.twttr.widgets.load();
         }
     },
 };

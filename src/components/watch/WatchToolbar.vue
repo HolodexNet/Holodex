@@ -33,7 +33,7 @@
     </v-card>
 </template>
 
-<script>
+<script lang="ts">
 import { mdiOpenInNew, mdiArrowLeft } from "@mdi/js";
 
 export default {

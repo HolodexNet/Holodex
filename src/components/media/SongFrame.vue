@@ -22,7 +22,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 // import { MUSIC_PLAYER_STATE } from "@/utils/consts";
 
 export default {

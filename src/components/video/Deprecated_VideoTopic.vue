@@ -39,7 +39,7 @@
     </v-dialog>
 </template>
 
-<script>
+<script lang="ts">
 import * as icons from "@/utils/icons";
 import backendApi from "@/utils/backend-api";
 

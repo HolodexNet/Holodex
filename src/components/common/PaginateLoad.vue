@@ -17,7 +17,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import isActive from "@/mixins/isActive";
 

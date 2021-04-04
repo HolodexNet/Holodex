@@ -28,12 +28,12 @@
     </v-list-item-content>
 </template>
 
-<script>
+<script lang="ts">
 import { formatCount } from "@/utils/functions";
 
 export default {
     components: {
-        ChannelSocials: () => import("./ChannelSocials"),
+        ChannelSocials: () => import("./ChannelSocials.vue"),
     },
     props: {
         channel: {

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { debounce } from "@/utils/functions";
 import VMenu from "vuetify/lib/components/VMenu/VMenu";
 

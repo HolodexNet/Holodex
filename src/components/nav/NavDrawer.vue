@@ -75,7 +75,7 @@
     </v-navigation-drawer>
 </template>
 
-<script>
+<script lang="ts">
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";

@@ -59,13 +59,14 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import api from "@/utils/backend-api";
 import { dayjs } from "@/utils/time";
 import { formatCount } from "@/utils/functions";
-import { CategoryScale, Chart, Line, LinearScale, LineController, Point, Tooltip } from "chart.js";
+// NOTE(jprochazk): this library is not in package.json, but the component isn't used anywhere.
+// import { CategoryScale, Chart, Line, LinearScale, LineController, Point, Tooltip } from "chart.js";
 
-Chart.register(LineController, Line, Point, LinearScale, CategoryScale, Tooltip);
+// Chart.register(LineController, Line, Point, LinearScale, CategoryScale, Tooltip);
 export default {
     name: "ChannelStats",
     data() {
@@ -78,6 +79,8 @@ export default {
         };
     },
     mounted() {
+        // NOTE(jprochazk): this endpoint doesn't exist, but the component isn't used anywhere.
+        // @ts-ignore
         api.channelStats(this.channel_id).then((res) => {
             this.allData = res.data.reverse();
             this.timeLabels = this.allData.map((row) => dayjs(row.day).format("M/D"));
@@ -103,8 +106,8 @@ export default {
             return dayjs(date).format("M/D");
         },
         formatCount,
-        loadChart(type) {
-            const ctx = document.getElementById(`${type}-chart`);
+        loadChart(/* type */) {
+            /* const ctx = document.getElementById(`${type}-chart`);
             const gridLineColor = this.darkMode ? "rgba(255,255,255,0.2)" : "rgba(0, 0, 0, 0.1)";
             const fontColor = this.darkMode ? "white" : "black";
             this.charts.push(
@@ -174,7 +177,7 @@ export default {
                         },
                     },
                 }),
-            );
+            ); */
         },
     },
 };
