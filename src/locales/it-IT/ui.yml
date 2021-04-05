@@ -41,6 +41,8 @@ component:
     edit: Modifica
   videoDescription:
     description: Descrizione
+  video:
+    comment: { }
   description:
     showLess: Mostra meno
     showMore: Mostra altro
@@ -90,6 +92,7 @@ component:
       beforeExportIcon: Clicca
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Iscritti
       group: Gruppo
@@ -200,6 +203,8 @@ views:
   editor:
     needlogin: Dovrai effettuare l'accesso per apportare modifiche al video di Holodex e ai metadati dei brani.
   login:
+    apikeyMsg: >-
+      Puoi usare la chiave di API per automatizzare le richieste all'API di Holodex. Puoi richiedere solo una chiave per account. Dopo aver ottenuto una nuova chiave, quella vecchia scadrà entro 0-24 ore.
     apikeyNew: Ottieni una nuova chiave API
     ownedYtChannel: Miei Canali di YouTube
     futureYtcOwnerMessage: >-
@@ -236,15 +241,43 @@ editor:
       addSong: 'Metadati della canzone: Aggiungi una nuova canzone'
       songList: 'Elenco dei brani : {0}'
       help: Guida
+    itunesLookupPlaceholder: (Facoltativo) Ricerca su iTunes
+    moveRight2s: Vai avanti di due secondi
+    testEnd: Prova ad ascoltare a partire da 3 secondi prima della fine.
+    setToCurrentTime: Imposta all'ora attuale ({0})
+    moveLeft2s: Vai indietro di 2 secondi
     trackNameInput: Nome della Traccia
     originalArtistInput: Artista originale
+    testStart: Prova l'avvio
     startInput: Avvia
+    endInput: 'Durata in secondi: (end @ {0})'
   exitMode: Esci Dalla Modalità Editor
   enterMode: Modifica Video
 about:
   quicklinks: Collegamenti rapidi
   discordBtn: Server di Discord
-  issueTracker: Rilevatore di problemi / Sorgente
+  issueTracker: Issue Tracker / Sorgente
   faq:
     title: Domande frequenti (FAQ)
     ytchatHeader: Il mio canale YouTube non è connesso!
+    ytchatContent: >-
+      Per favore disabilita la funzionalità di sicurezza nota come "Blocca cookie di terze parti" o escludi dal blocco questo sito e youtube.com per acconsentire i cookie di terze parti.
+    ytchatFirefox: Istruzioni di Firefox, gli altri browser potrebbero essere simili.
+    autoplayHeader: La riproduzione automatica non funziona!
+    autoplayContent: Cerca su Google come attivare la riproduzione automatica nel tuo browser.
+    musicPlayer: Il Riproduttore Musicale non funziona bene sui dispositivi mobili!
+    musicPlayerContent: >-
+      Siamo spiacenti, ma non è possibile supportare il Riproduttore Musicale come sito web sui dispositivi mobili. <br/>Per tre motivi: 1. I dispositivi mobili di solito bloccano la riproduzione automatica, di cui abbiamo bisogno; 2. I dispositivi mobili, di solito, non permettono ai siti web di concatenare la musica in background. 3. Non integriamo le tue liste di canzoni nel centro di controllo del volume della musica di sistema.
+    videoLinkage: Come posso assicurarmi che i video siano collegati correttamente ai relativi vtuber?
+    videoLinkageContent: >-
+      Tutte le informazioni sono analizzate dalla descrizione del video. Se stai clippando una diretta, per favore assicurati di linkare la diretta originale. Se stai clippando contenuti fan made (es. da bilibili) assicurati di aver linkato il canale ufficiale dei relativi vtuber. Se non linki alcun canale di un vtuber non mostreremo tale clip su Holodex poiché tutte le clip richiedono il link verso un vtuber conosciuto da Holodex.
+    quitHolodex: "Sono un sottotitolatore e vorrei che il mio canale venisse rimosso da Holodex\\r\n"
+    quitHolodexContent: >-
+      Ci spiace che tu te ne vada (っ °Д °;)っ. Per favore, fammi sapere se c'è qualche problema con cui posso aiutarti. Se vuoi comunque che il tuo canale venga rimosso, per favore, inviaci un messaggio su Discord.
+  gdpr: GDPR ed i miei dati
+  gdprContent: >-
+    Un cookie di Google Analytics è usato per tracciare le visualizzazioni della pagina a fini analitici. Dopo l'accesso associamo il tuo nome utente e l'ID del tuo account social media ai tuoi preferiti. Questi dati potrebbero includere la tua Email (per Google), il tuo ID di Discord o il tuo tag di Twitter.
+  gdprDeletion: Per l'eliminazione dei tuoi dati utente, contattaci su discord!
+  feedback: Inviaci un Feedback / Segnala un Bug
+  feedbackHtml: >-
+    Puoi segnalare un problema sull'<a href="https://github.com/RiceCakess/Holodex/issues"> Issue Tracker di Github </a> o contattare il team di Holodex su Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
