@@ -2,19 +2,19 @@
 component:
   apiError:
     title: Gomennasorry!
-    textBeforeTwitter: 'Si è verificato un errore nel recupero del contenuto, per favore, controlla Twitter. '
+    textBeforeTwitter: 'Si è verificato un errore nel recupero del contenuto, per favore, controlla la pagina Twitter di '
     textAfterTwitter: ' o segnala un errore tramite il'
     aboutPage: Pagina delle Info
     afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Accedi per aggiungere i preferiti
-    unfavoriteAllInGroup: Rimuovi tutti dalla lista dei preferiti
-    favoriteAllInGroup: Imposta tutti come preferiti
+    unfavoriteAllInGroup: Rimuovi tutti i canali dalla lista dei preferiti
+    favoriteAllInGroup: Imposta tutti i canali come preferiti
   channelInfo:
     videoCount: '{0} Video'
     clipCount: '{n} Clip'
     subscriberCount: '{n} Iscritti'
-    subscriberNA: Counter degli iscritti non disponibile
+    subscriberNA: Contatore degli iscritti non disponibile
     totalViews: Visualizzazioni totali
   channelSocials:
     addToFavorites: Aggiungi ai Preferiti
@@ -61,8 +61,8 @@ component:
   relatedVideo:
     clipsLabel: clip
     simulcastsLabel: simulcast
-    refersLabel: riferimenti
-    sourcesLabel: sorgenti
+    refersLabel: referenze
+    sourcesLabel: fonti
     songsLabel: canzoni
     recommendationsLabel: raccomandati
   paginateLoad:
@@ -79,7 +79,7 @@ component:
     songDuration: Durata
     sangOnTime: Cantata su
   orgMusic:
-    monthlyTopForOrg: Riprodotta {0} questo mese
+    monthlyTopForOrg: Riprodotta {0} volte questo mese
     weeklyTopForOrg: Canzoni Più Ascoltata della Settimana per {0} volte/a
   installPrompt:
     title: Installa Holodex
@@ -101,11 +101,11 @@ views:
       clipCount: Numero di Clip
     tabs:
       Vtuber: Vtuber
-      Subber: Sottotitolatori
+      Subber: Sottotitolatore
       Favorites: Preferiti
       Blocked: Bloccati
     favoritesAreEmpty: Non hai preferiti!
-    blockedAreEmpty: Non hai canali bloccati.
+    blockedAreEmpty: Non hai bloccato nessun canale.
   home:
     liveOrUpcomingHeading: Dirette / Prossime
     recentVideosHeading: Video recenti
@@ -122,7 +122,7 @@ views:
     deleteConfirmationCancel: Annulla
     selectionReset: Ripristina
     selectionSelectAll: Seleziona Tutti
-    emptyLibrary: Non hai nessun video salvato!
+    emptyLibrary: Non hai alcun video salvato!
     exportSelected: Esporta i selezionati ({0})
     exportYtPlaylist: Playlist di YouTube
     exportCsv: File CSV
@@ -131,7 +131,7 @@ views:
       La playlist creata tramite questa funzione è <b>non in elenco</b> e potrebbe essere cancellata da YouTube. <br />Dato che la funzione di YouTube è incompleta, dovrai eseguire i seguenti passaggi per salvare la playlist <b>non in elenco</b> nel tuo account.
     exportYTHeading: Istruzioni per il salvataggio della Playlist di YouTube
     exportYTInstructions: >-
-      <b class="red--text">Primo passo</b>: Riproduci la playlist di YouTube e cambia l'interfaccia utente del player video in mini-player.<br /><br /><b class="red--text">Secondo passo</b>: Scegli qualsiasi video e aggiungilo alla coda. <br /><br /><b class="red--text">Terzo passo</b>: Ora puoi salvare la Playlist. Clicca su "Salva" per salvarla.
+      <b class="red--text">Primo passo</b>: riproduci la playlist di YouTube e cambia l'interfaccia utente del player video in mini-player.<br /><br /><b class="red--text">Secondo passo</b>: scegli qualsiasi video e aggiungilo alla coda. <br /><br /><b class="red--text">Terzo passo</b>: ora puoi salvare la Playlist. Clicca su "Salva" per salvarla.
   notFound:
     title: Contenuto non trovato
     back: Ritorna alla Home
@@ -150,7 +150,7 @@ views:
   settings:
     title: Impostazioni
     darkModeLabel: Tema scuro
-    darkModeMsg: Cambia il tema tra il "tema chiaro" e il "tema scuro"
+    darkModeMsg: Scegli il tema tra il "tema chiaro" e il "tema scuro"
     redirectModeLabel: Apri su YouTube
     redirectModeMsg: >-
       Cliccando sulle copertine dei video, questi verranno aperti su YouTube, mentre, cliccando il titolo del video verrà aperto su Holodex
