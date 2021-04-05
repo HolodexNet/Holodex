@@ -154,16 +154,17 @@ export default {
             type: Object,
             required: true,
         },
-        editMode: {
-            type: Boolean,
-            required: true,
-        },
+        // editMode: {
+        //     type: Boolean,
+        //     required: true,
+        // },
     },
     data() {
         return {
             mdiMessage,
             mdiResizeBottomRight,
             mdiDelete,
+            editMode: true,
         };
     },
     computed: {

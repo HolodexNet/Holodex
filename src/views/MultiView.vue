@@ -8,19 +8,19 @@
                     class="flex-grow-1 justify-center d-flex mv-toolbar-btn align-center"
                     :class="{ 'no-btn-text': $store.state.isMobile }"
                 >
-                    <v-btn @click="editMode = !editMode" :color="editMode ? 'light-green' : 'blue'">
+                    <!-- <v-btn @click="editMode = !editMode" :color="editMode ? 'light-green' : 'blue'">
                         <v-icon>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
                         <span class="collapsible-text">{{ editMode ? "Done" : "Edit" }}</span>
-                    </v-btn>
-                    <v-btn @click="addItem" v-if="editMode" color="green">
+                    </v-btn> -->
+                    <v-btn @click="addItem" color="green">
                         <v-icon>{{ mdiViewGridPlus }}</v-icon>
                         <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
                     </v-btn>
-                    <v-btn @click="clearAllItems" v-if="editMode" color="red">
+                    <v-btn @click="clearAllItems" color="red">
                         <v-icon>{{ icons.mdiRefresh }}</v-icon>
                         <span class="collapsible-text">{{ $t("component.music.clearPlaylist") }}</span>
                     </v-btn>
-                    <v-btn v-if="!editMode" color="green darken-1" @click="showPresetSelector = true">
+                    <v-btn color="green darken-1" @click="showPresetSelector = true">
                         <v-icon>{{ icons.mdiGridLarge }}</v-icon>
                         <span class="collapsible-text">{{ $t("views.multiview.presets") }}</span>
                     </v-btn>
@@ -81,9 +81,8 @@
             :col-num="24"
             :row-height="($vuetify.breakpoint.height - 26.0) / 24.0"
             :col-width="30"
-            :is-draggable="editMode"
-            :is-resizable="editMode"
-            :responsive="false"
+            is-draggable
+            is-resizable
             :vertical-compact="false"
             :prevent-collision="true"
             :margin="[1, 1]"
@@ -97,9 +96,11 @@
                 :w="item.w"
                 :h="item.h"
                 :i="item.i"
+                :is-draggable="true"
+                :is-resizable="true"
                 :key="item.i"
             >
-                <cell :item="item" :editMode="editMode" @showSelector="(id) => (showSelectorForId = id)"></cell>
+                <cell :item="item" :editMode="true" @showSelector="(id) => (showSelectorForId = id)"> </cell>
             </grid-item>
         </grid-layout>
 
