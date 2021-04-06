@@ -239,11 +239,8 @@ export default {
             mdiTranslate,
             icons,
 
-            // by default:
-            //   mobile: not open
-            //   desktop: open except in mugen (where TL doesnt work)
-            showTL: !this.$store.state.isMobile,
-            showTLFirstTime: !this.$store.state.isMobile,
+            showTL: false,
+            showTLFirstTime: false,
             newTL: 0,
 
             showLiveChat: true,
@@ -333,7 +330,7 @@ export default {
             return this.isMugen || this.video.status === "live" || this.video.status === "upcoming";
         },
         hasLiveTL() {
-            return this.video.status === "live";
+            return this.video.status === "live" || this.video.status === "upcoming";
         },
         hasWatched() {
             return this.$store.getters["library/hasWatched"](this.video.id);
