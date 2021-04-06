@@ -19,6 +19,8 @@ component:
   channelSocials:
     addToFavorites: 加入收藏
     removeFromFavorites: 取消收藏
+    unblock: 取消封鎖此頻道
+    block: 在Holodex上封鎖此頻道
   mainNav:
     home: 首頁
     favorites: 我的收藏
@@ -39,6 +41,8 @@ component:
     edit: 編輯
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -88,6 +92,7 @@ component:
       beforeExportIcon: 點擊
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -98,7 +103,9 @@ views:
       Vtuber: Vtuber
       Subber: 翻譯剪輯
       Favorites: 我的收藏
+      Blocked: 黑名單
     favoritesAreEmpty: 您目前沒有任何收藏！
+    blockedAreEmpty: 沒有任何頻道在您的黑名單中
   home:
     liveOrUpcomingHeading: 現正／即將開始實況
     recentVideosHeading: 最近新增影片
