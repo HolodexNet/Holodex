@@ -228,7 +228,6 @@ export default {
         WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
     },
     data() {
-        const vm = this as any;
         return {
             theatherMode: false,
             startTime: 0,
@@ -240,11 +239,6 @@ export default {
             mdiTranslate,
             icons,
 
-            // by default:
-            //   mobile: not open
-            //   desktop: open except in mugen (where TL doesnt work)
-            showTL: vm.status === "live" && !this.$store.state.isMobile,
-            showTLFirstTime: vm.status === "live" && !this.$store.state.isMobile,
             newTL: 0,
 
             showLiveChat: true,
@@ -355,6 +349,12 @@ export default {
         },
         comments() {
             return this.video.comments || [];
+        },
+        showTL() {
+            return this.video.status === "live" && !this.$store.state.isMobile;
+        },
+        showTLFirstTime() {
+            return this.video.status === "live" && !this.$store.state.isMobile;
         },
     },
     watch: {
