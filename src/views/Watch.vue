@@ -228,6 +228,7 @@ export default {
         WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
     },
     data() {
+        const vm = this as any;
         return {
             theatherMode: false,
             startTime: 0,
@@ -242,8 +243,8 @@ export default {
             // by default:
             //   mobile: not open
             //   desktop: open except in mugen (where TL doesnt work)
-            showTL: !this.$store.state.isMobile,
-            showTLFirstTime: !this.$store.state.isMobile,
+            showTL: vm.status === "live" && !this.$store.state.isMobile,
+            showTLFirstTime: vm.status === "live" && !this.$store.state.isMobile,
             newTL: 0,
 
             showLiveChat: true,
