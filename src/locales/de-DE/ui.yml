@@ -39,8 +39,12 @@ component:
     watching: '{0} Zuschauer'
     liveNow: Jetzt Live
     edit: Bearbeiten
+    copiedToClipboard: Link in die Zwischenablage kopiert.
+    copyLink: Holodex-Link kopieren
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -90,6 +94,7 @@ component:
       beforeExportIcon: Tipp
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
