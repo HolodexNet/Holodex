@@ -111,7 +111,7 @@ views:
     recentVideosHeading: Video recenti
     recentVideoToggles:
       all: Tutti
-      official: Ufficiale
+      official: Ufficiali
       subber: Clip
   library:
     savedVideosTitle: Video salvati
