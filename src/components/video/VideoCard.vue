@@ -80,16 +80,27 @@
                             </v-icon>
                         </template>
                         <v-list dense>
+                            <v-list-item @click.stop="copyLink"
+                                ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
+                                {{ $t("component.videoCard.copyLink") }}
+                            </v-list-item>
+                            <v-list-item @click.stop target="_blank" :href="`https://youtu.be/${video.id}`"
+                                ><v-icon left>{{ icons.mdiYoutube }}</v-icon>
+                                {{ $t("views.settings.redirectModeLabel") }}
+                            </v-list-item>
+
                             <v-list-item
                                 :disabled="video.type === 'clip'"
                                 :to="`/multiview/AAUY${video.id}${video.channel.name}%2CUAEYchat`"
-                                ><v-icon left :color="video.type === 'clip' && 'grey'">{{
+                                ><v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{
                                     icons.mdiViewDashboard
                                 }}</v-icon>
                                 {{ $t("component.mainNav.multiview") }}
                             </v-list-item>
                             <v-list-item :disabled="video.type === 'clip'" :to="`/edit/video/${video.id}`"
-                                ><v-icon left :color="video.type === 'clip' && 'grey'">{{ icons.mdiPencil }}</v-icon>
+                                ><v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{
+                                    icons.mdiPencil
+                                }}</v-icon>
                                 {{ $t("component.videoCard.edit") }}
                             </v-list-item>
                         </v-list>
@@ -146,6 +157,15 @@
                 <comment :comment="comment" :videoId="video.id"></comment>
             </v-list-item>
         </v-list>
+
+        <v-snackbar app v-model="doneCopy" :timeout="3000" color="success">
+            {{ $t("component.videoCard.copiedToClipboard") }}
+            <template v-slot:action="{ attrs }">
+                <v-btn text v-bind="attrs" @click="doneCopy = false">
+                    {{ $t("views.app.close_btn") }}
+                </v-btn>
+            </template>
+        </v-snackbar>
     </div>
 </template>
 
@@ -153,6 +173,7 @@
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
+import copyToClipboard from "@/mixins/copyToClipboard";
 /* eslint-disable no-unused-vars */
 
 export default {
@@ -161,12 +182,14 @@ export default {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
         Comment: () => import("./Comment.vue"),
     },
+    mixins: [copyToClipboard],
     data() {
         return {
             forceJPG: true,
             icons,
             now: Date.now(),
             updatecycle: null,
+            doneCopy: false,
         };
     },
     mounted() {
@@ -330,6 +353,10 @@ export default {
         },
         updateNow() {
             this.now = Date.now();
+        },
+        copyLink() {
+            const link = `${window.origin}/watch/${this.video.id}`;
+            this.copyToClipboard(link);
         },
     },
 };

@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 100%" ref="fullscreen-content">
+    <div style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }" ref="fullscreen-content">
         <!-- Floating tool bar -->
         <transition name="slide-y-transition" mode="out-in">
             <v-toolbar dense class="mv-toolbar" style="right: 0" v-if="!collapseToolbar" absolute>
@@ -8,19 +8,19 @@
                     class="flex-grow-1 justify-center d-flex mv-toolbar-btn align-center"
                     :class="{ 'no-btn-text': $store.state.isMobile }"
                 >
-                    <v-btn @click="editMode = !editMode" :color="editMode ? 'light-green' : 'blue'">
+                    <!-- <v-btn @click="editMode = !editMode" :color="editMode ? 'light-green' : 'blue'">
                         <v-icon>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
                         <span class="collapsible-text">{{ editMode ? "Done" : "Edit" }}</span>
-                    </v-btn>
-                    <v-btn @click="addItem" v-if="editMode" color="green">
+                    </v-btn> -->
+                    <v-btn @click="addItem" color="green">
                         <v-icon>{{ mdiViewGridPlus }}</v-icon>
                         <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
                     </v-btn>
-                    <v-btn @click="clearAllItems" v-if="editMode" color="red">
+                    <v-btn @click="clearAllItems" color="red">
                         <v-icon>{{ icons.mdiRefresh }}</v-icon>
                         <span class="collapsible-text">{{ $t("component.music.clearPlaylist") }}</span>
                     </v-btn>
-                    <v-btn v-if="!editMode" color="green darken-1" @click="showPresetSelector = true">
+                    <v-btn color="green darken-1" @click="showPresetSelector = true">
                         <v-icon>{{ icons.mdiGridLarge }}</v-icon>
                         <span class="collapsible-text">{{ $t("views.multiview.presets") }}</span>
                     </v-btn>
@@ -81,9 +81,8 @@
             :col-num="24"
             :row-height="($vuetify.breakpoint.height - 26.0) / 24.0"
             :col-width="30"
-            :is-draggable="editMode"
-            :is-resizable="editMode"
-            :responsive="false"
+            is-draggable
+            is-resizable
             :vertical-compact="false"
             :prevent-collision="true"
             :margin="[1, 1]"
@@ -97,9 +96,11 @@
                 :w="item.w"
                 :h="item.h"
                 :i="item.i"
-                :key="item.i"
+                :is-draggable="item.isDraggable"
+                :is-resizable="item.isResizable"
+                :key="'mvgrid' + item.i"
             >
-                <cell :item="item" :editMode="editMode" @showSelector="(id) => (showSelectorForId = id)"></cell>
+                <cell :item="item" @showSelector="(id) => (showSelectorForId = id)"> </cell>
             </grid-item>
         </grid-layout>
 
@@ -355,6 +356,21 @@ export default {
 </script>
 
 <style lang="scss">
+.mobile-helpers {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: env(safe-area-inset-bottom);
+
+    .edit-mode {
+        padding: 5px;
+        .returnbtn {
+            margin-left: -17px !important;
+        }
+    }
+}
 .mv-toolbar-btn .v-btn {
     margin-right: 4px;
 }

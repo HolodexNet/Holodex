@@ -27,7 +27,7 @@
             <div class="chat-overlay-btn d-flex align-center" v-if="controlTL">
                 <v-btn icon lg @click="toggleTL" :color="shouldShowLiveTL ? 'primary' : '#999999'">
                     <div class="notification-sticker" v-if="hasNewTranslations"></div>
-                    <v-icon>{{ mdiTranslate }}</v-icon>
+                    <v-icon>{{ icons.mdiTranslate }}</v-icon>
                 </v-btn>
             </div>
         </div>
@@ -35,7 +35,6 @@
 </template>
 
 <script lang="ts">
-import { mdiTranslate } from "@mdi/js";
 import WatchLiveTranslations from "./WatchLiveTranslations.vue";
 
 export default {
@@ -82,8 +81,6 @@ export default {
     },
     data() {
         return {
-            mdiTranslate,
-
             stickTop: false,
             // TODO: redesign live chat in multiview so that this jank can be removed
             // duplicating the props here because TabbedLiveChat does not provide them.

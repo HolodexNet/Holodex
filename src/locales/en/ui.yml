@@ -38,6 +38,8 @@ component:
     watching: '{0} Watching'
     liveNow: Live Now
     edit: Edit
+    copiedToClipboard: Link copied to clipboard.
+    copyLink: Copy Holodex Link
   videoDescription:
     description: Description
   video:
