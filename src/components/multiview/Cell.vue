@@ -203,6 +203,10 @@ export default {
         cellContent(nw) {
             if (nw === null) this.pausedMode = true;
         },
+        pausedMode(ow, nw) {
+            if (nw) this.$store.commit("multiview/freezeLayoutItem", this.item.i);
+            else this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
+        },
     },
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),

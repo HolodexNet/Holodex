@@ -1,5 +1,13 @@
 <template>
-    <v-bottom-navigation :value="value" grow app :input-value="active" :scroll-threshold="10000" class="bottom-nav">
+    <v-bottom-navigation
+        :value="value"
+        grow
+        :input-value="active"
+        :app="!isWatchPage"
+        v-show="!isWatchPage"
+        :scroll-threshold="10000"
+        class="bottom-nav"
+    >
         <template v-for="page in pages">
             <v-btn
                 :value="page.path"
@@ -34,6 +42,11 @@ export default {
         return {
             value: "/",
         };
+    },
+    computed: {
+        isWatchPage() {
+            return ["watch_id", "watch", "mugen-clips", "edit_video", "multiview"].includes(this.$route.name);
+        },
     },
     methods: {
         scrollToTop(page) {

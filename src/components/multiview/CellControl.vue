@@ -16,7 +16,9 @@
                 small
                 elevation="0"
                 color="primary"
-                class="px-3"
+                class="px-3 flex-grow-1 ml-4"
+                style=""
+                max-width="100px"
             >
                 <v-icon>{{ playIcon }}</v-icon>
             </v-btn>

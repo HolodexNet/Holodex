@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 100%" ref="fullscreen-content">
+    <div style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }" ref="fullscreen-content">
         <!-- Floating tool bar -->
         <transition name="slide-y-transition" mode="out-in">
             <v-toolbar dense class="mv-toolbar" style="right: 0" v-if="!collapseToolbar" absolute>
@@ -96,8 +96,8 @@
                 :w="item.w"
                 :h="item.h"
                 :i="item.i"
-                :is-draggable="true"
-                :is-resizable="true"
+                :is-draggable="item.isDraggable"
+                :is-resizable="item.isResizable"
                 :key="'mvgrid' + item.i"
             >
                 <cell :item="item" @showSelector="(id) => (showSelectorForId = id)"> </cell>
@@ -356,6 +356,21 @@ export default {
 </script>
 
 <style lang="scss">
+.mobile-helpers {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: env(safe-area-inset-bottom);
+
+    .edit-mode {
+        padding: 5px;
+        .returnbtn {
+            margin-left: -17px !important;
+        }
+    }
+}
 .mv-toolbar-btn .v-btn {
     margin-right: 4px;
 }
