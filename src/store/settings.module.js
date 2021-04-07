@@ -8,7 +8,7 @@ const userLanguage = (navigator.language || navigator.userLanguage || "en").spli
 const validLangs = new Set(langs.map((x) => x.val));
 const validTlLangs = new Set(TL_LANGS.map((x) => x.value));
 
-const englishNamePrefs = new Set(["en", "es", "fr", "id", "pt", "de", "ru"]);
+const englishNamePrefs = new Set(["en", "es", "fr", "id", "pt", "de", "ru", "it"]);
 
 const initialState = {
     lang: validLangs.has(userLanguage) ? userLanguage : "en",
