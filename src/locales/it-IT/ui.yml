@@ -33,7 +33,7 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Impostazioni dell'account
     music: Musica
-    multiview: Visualizzazione multi-stream
+    multiview: Multi-Stream
   videoCard:
     clips: '{n} Clip'
     watching: '{0} stanno guardando'
@@ -79,8 +79,8 @@ component:
     songDuration: Durata
     sangOnTime: Cantata su
   orgMusic:
-    monthlyTopForOrg: Riprodotta {0} volte questo mese
-    weeklyTopForOrg: Canzoni Più Ascoltata della Settimana per {0} volte/a
+    monthlyTopForOrg: Più riprodotte di {0} durante questo mese
+    weeklyTopForOrg: Più riprodotte di {0} durante questa settimana
   installPrompt:
     title: Installa Holodex
     callToAction: Funziona meglio guardare i video su Holodex quando lo aggiungi alla schermata home
