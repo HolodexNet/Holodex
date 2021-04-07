@@ -39,6 +39,7 @@ component:
     watching: '{0} stanno guardando'
     liveNow: In diretta ora
     edit: Modifica
+    copiedToClipboard: Link copiato negli appunti.
   videoDescription:
     description: Descrizione
   description:
