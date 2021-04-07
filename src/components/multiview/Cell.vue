@@ -7,52 +7,35 @@
         }"
     >
         <!-- When Cell has no content: show video picker -->
-        <v-row class="mx-2" v-if="!cellContent">
+        <v-sheet style="height: 100%" class="d-flex flex-column pt-4" v-if="!cellContent">
             <!--================= No Content Mode ================-->
-
-            <v-btn
-                color="primary darken-3"
-                fab
-                large
-                @click="$store.commit('multiview/deleteLayoutContent', item.i)"
-                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"
-                v-if="cellContent"
-            >
-                <v-icon x-large>{{ icons.mdiClose }}</v-icon>
-            </v-btn>
-
-            <v-btn fab color="error" class="mv-rm-card" @click="deleteCell">
-                <v-icon>{{ icons.mdiDelete }}</v-icon>
-            </v-btn>
-
             <v-list
-                class="ma-3 thin-scroll-bar"
-                :max-height="(item.h / 24) * 100 * 0.9 + 'vh'"
-                width="100%"
+                class="mx-6 thin-scroll-bar flex-grow-1 flex-shrink-1"
                 v-if="!cellContent"
                 style="overflow-y: auto; overflow-x: hidden; position: relative"
             >
-                <v-sheet width="100%" class="px-0 d-flex flex-grow-1 align-stretch mb-1">
+                <v-sheet class="px-0 d-flex flex-grow-1 align-stretch mb-1">
                     <v-btn
-                        large
-                        class="flex-grow-1 mr-2 mt-3"
+                        class="flex-grow-1 mr-2"
                         color="indigo darken-1"
-                        style="max-width: 300px; basis: 2"
+                        style="max-width: 300px; flex-basis: 50%"
                         @click="$emit('showSelector', item.i)"
                     >
-                        <v-icon large>{{ icons.mdiMagnify }}</v-icon>
+                        <v-icon>{{ icons.mdiMagnify }}</v-icon>
                     </v-btn>
                     <v-btn
-                        large
-                        class="flex-grow-1 mt-3"
+                        class="flex-grow-1"
                         color="teal darken-1"
-                        style="max-width: 300px; basis: 0.4"
+                        style="max-width: 300px; flex-basis: 20%"
                         @click="setItemAsChat(item)"
                         v-if="!(cellContent && cellContent.type === 'chat')"
                     >
-                        <v-icon large>{{ mdiMessage }}</v-icon>
+                        <v-icon>{{ mdiMessage }}</v-icon>
                     </v-btn>
                 </v-sheet>
+                <div class="pa-0 ma-0">
+                    <span class="text-overline">{{ $t("component.mainNav.favorites") }}</span>
+                </div>
                 <VideoCardList
                     v-if="$store.state.userdata.user && $store.state.favorites.favorites.length > 0"
                     :videos="liveSoon"
@@ -71,7 +54,10 @@
                     >
                 </div>
             </v-list>
-        </v-row>
+            <template>
+                <CellControl :playIcon="icons.mdiPlay" @delete="deleteCell" class="mx-6 mb-6 mt-0 flex-grow-0" />
+            </template>
+        </v-sheet>
 
         <!-- Dragging handles -->
         <!-- v-show is required. do not change to v-if, because it breaks the youtube frame. -->
