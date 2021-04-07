@@ -98,9 +98,9 @@
                 :i="item.i"
                 :is-draggable="true"
                 :is-resizable="true"
-                :key="item.i"
+                :key="'mvgrid' + item.i"
             >
-                <cell :item="item" :editMode="true" @showSelector="(id) => (showSelectorForId = id)"> </cell>
+                <cell :item="item" @showSelector="(id) => (showSelectorForId = id)"> </cell>
             </grid-item>
         </grid-layout>
 

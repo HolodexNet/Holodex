@@ -39,7 +39,7 @@
                                         v-on="on"
                                     >
                                         <div class="notification-sticker" v-if="newTL > 0"></div>
-                                        <v-icon>{{ mdiTranslate }}</v-icon>
+                                        <v-icon>{{ icons.mdiTranslate }}</v-icon>
                                     </v-btn>
                                 </template>
                                 <span>{{
@@ -152,7 +152,7 @@
                             v-if="hasLiveTL && hasLiveChat"
                         >
                             <div class="notification-sticker" v-if="newTL > 0"></div>
-                            <v-icon>{{ mdiTranslate }}</v-icon>
+                            <v-icon>{{ icon.mdiTranslate }}</v-icon>
                         </v-btn>
                         <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                             <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
@@ -207,8 +207,7 @@ import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 
 import { decodeHTMLEntities } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff, mdiFullscreen, mdiTranslate } from "@mdi/js";
-import * as icons from "@/utils/icons";
+import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff, mdiFullscreen } from "@mdi/js";
 
 export default {
     name: "Watch",
@@ -236,8 +235,6 @@ export default {
             mdiMessage,
             mdiMessageOff,
             mdiFullscreen,
-            mdiTranslate,
-            icons,
 
             // by default:
             //   mobile: not open

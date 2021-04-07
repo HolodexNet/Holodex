@@ -4,7 +4,7 @@
             <v-col>
                 <div class="text-h4">{{ $t("views.settings.title") }}</div>
                 <div class="pt-4">
-                    <v-icon>{{ mdiTranslate }}</v-icon>
+                    <v-icon>{{ icons.mdiTranslate }}</v-icon>
                     Language:
                 </div>
                 <v-radio-group v-model="language" dense fluid>
@@ -77,7 +77,7 @@
 
 <script lang="ts">
 import { langs } from "@/plugins/vuetify";
-import { mdiTranslate, mdiFilter } from "@mdi/js";
+import { mdiFilter } from "@mdi/js";
 import { TL_LANGS } from "@/utils/consts";
 
 export default {
@@ -160,7 +160,6 @@ export default {
     data() {
         return {
             langs,
-            mdiTranslate,
             mdiFilter,
             TL_LANGS,
         };

@@ -33,6 +33,7 @@ export {
     mdiDatabaseOff,
     mdiRefresh,
     mdiStarFourPointsOutline,
+    mdiTranslate,
     mdiTwitter,
     mdiYoutube,
     mdiMenuDown,
