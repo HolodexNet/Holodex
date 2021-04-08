@@ -11,7 +11,7 @@
                 class="flex-grow-1 justify-end d-flex mv-toolbar-btn align-center"
                 :class="{ 'no-btn-text': $store.state.isMobile || true }"
             >
-                <v-switch v-model="autoLayout" persistent-hint="Auto Layout" hide-details></v-switch>
+                <v-switch v-model="autoLayout" hide-details></v-switch>
                 <v-btn @click="addItem" color="green">
                     <v-icon>{{ mdiViewGridPlus }}</v-icon>
                     <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
@@ -195,20 +195,20 @@ export default {
 
             layoutPreview: [],
 
+            // Auto Layout variables
             autoLayout: true,
-            currentPreset: {},
-            desktopPresets,
-
-            firstLayoutMount: true,
-            settingPreset: false,
+            currentPreset: {}, // current layout variable
+            desktopPresets, // presets to work with
+            firstLayoutMount: true, // detect first mount changes, to ignore
+            settingPreset: false, // detect autoLayout preset changes, to ignore
         };
     },
     mounted() {
         // Check if layout is empty
-        if (this.layout.length === 0 && !this.$route.params.layout) {
-            // this.showPresetSelector = true;
-            this.autoLayout = true;
-        }
+        // if (this.layout.length === 0 && !this.$route.params.layout) {
+        //     // this.showPresetSelector = true;
+        //     this.autoLayout = true;
+        // }
         if (this.$route.params.layout) {
             // TODO: verify layout
             try {
@@ -240,6 +240,11 @@ export default {
                 console.log("invalid layout");
             }
         }
+    },
+    watch: {
+        autoLayout(val) {
+            if (!val) this.currentPreset = {};
+        },
     },
     created() {
         Vue.use(VueYouTubeEmbed);
@@ -286,19 +291,24 @@ export default {
         },
         handleToolbarClick(video) {
             const maxCells = this.currentPreset.emptyCells || 0;
+            // more cells needed, increment to next preset with space
             if (this.autoLayout && this.activeVideos.length + 1 > maxCells) {
-                const newLayout = this.desktopPresets
-                    // .sort((a, b) => a.emptyCells - b.emptyCells)
-                    .find((preset) => preset.emptyCells >= this.activeVideos.length + 1);
+                const newLayout = this.desktopPresets.find(
+                    (preset) => preset.emptyCells >= this.activeVideos.length + 1,
+                );
+
+                // found new layout
                 if (newLayout) {
+                    // set flag so layoutUpdate event doesn't turn off autoLayout thinking it's user changed
+                    this.settingPreset = true;
                     this.currentPreset = newLayout;
                     const decodedNewLayout = decodeLayout(newLayout.layout);
-                    this.settingPreset = true;
                     this.setMultiview({
                         ...decodedNewLayout,
                         mergeContent: true,
                     });
                 } else {
+                    // no new layout (too many videos), do nothing
                     return;
                 }
             }
@@ -327,6 +337,20 @@ export default {
             });
         },
         layoutUpdatedEvent(newLayout) {
+            // make sure layout change is initiated by user, not Auto Layout or First Mount load
+            if (!this.firstLayoutMount && !this.settingPreset) {
+                this.autoLayout = false;
+            }
+
+            // reset values
+            this.firstLayoutMount = false;
+            if (this.settingPreset) this.settingPreset = false;
+
+            // active auto layout if there's nothing
+            if (newLayout.length === 0) {
+                this.autoLayout = true;
+            }
+
             this.$store.commit("multiview/setLayout", newLayout);
         },
         removeItemById(i) {
