@@ -1,85 +1,95 @@
 <template>
     <div style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }" ref="fullscreen-content">
         <!-- Floating tool bar -->
-        <transition name="slide-y-transition" mode="out-in">
-            <v-toolbar dense class="mv-toolbar" style="right: 0" v-if="!collapseToolbar" absolute>
-                <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
-                <div
-                    class="flex-grow-1 justify-center d-flex mv-toolbar-btn align-center"
-                    :class="{ 'no-btn-text': $store.state.isMobile }"
-                >
-                    <!-- <v-btn @click="editMode = !editMode" :color="editMode ? 'light-green' : 'blue'">
+        <!-- <transition name="slide-y-transition" mode="out-in"> -->
+        <v-toolbar class="mv-toolbar" style="right: 0" v-show="!collapseToolbar">
+            <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
+            <div class="flex-grow-1 justify-start d-flex mv-toolbar-btn align-center">
+                <VideoSelector horizontal @videoClicked="handleToolbarClick" />
+            </div>
+            <div
+                class="flex-grow-1 justify-end d-flex mv-toolbar-btn align-center"
+                :class="{ 'no-btn-text': $store.state.isMobile || true }"
+            >
+                <!-- <v-btn @click="editMode = !editMode" :color="editMode ? 'light-green' : 'blue'">
                         <v-icon>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
                         <span class="collapsible-text">{{ editMode ? "Done" : "Edit" }}</span>
                     </v-btn> -->
-                    <v-btn @click="addItem" color="green">
-                        <v-icon>{{ mdiViewGridPlus }}</v-icon>
-                        <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
-                    </v-btn>
-                    <v-btn @click="clearAllItems" color="red">
-                        <v-icon>{{ icons.mdiRefresh }}</v-icon>
-                        <span class="collapsible-text">{{ $t("component.music.clearPlaylist") }}</span>
-                    </v-btn>
-                    <v-btn color="green darken-1" @click="showPresetSelector = true">
-                        <v-icon>{{ icons.mdiGridLarge }}</v-icon>
-                        <span class="collapsible-text">{{ $t("views.multiview.presets") }}</span>
-                    </v-btn>
-                    <v-menu
-                        :open-on-click="true"
-                        bottom
-                        nudge-bottom="40px"
-                        :close-on-content-click="false"
-                        :open-on-hover="false"
-                        v-model="shareDialog"
-                        width="400"
-                        z-index="300"
-                    >
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn v-bind="attrs" v-on="on" v-show="!editMode">
-                                <v-icon>{{ mdiLinkVariant }}</v-icon>
-                                <span class="collapsible-text">{{ $t("views.multiview.permalink") }}</span>
-                            </v-btn>
-                        </template>
+                <v-btn @click="addItem" color="green">
+                    <v-icon>{{ mdiViewGridPlus }}</v-icon>
+                    <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
+                </v-btn>
+                <v-btn @click="clearAllItems" color="red">
+                    <v-icon>{{ icons.mdiRefresh }}</v-icon>
+                    <span class="collapsible-text">{{ $t("component.music.clearPlaylist") }}</span>
+                </v-btn>
+                <v-btn color="green darken-1" @click="showPresetSelector = true">
+                    <v-icon>{{ icons.mdiGridLarge }}</v-icon>
+                    <span class="collapsible-text">{{ $t("views.multiview.presets") }}</span>
+                </v-btn>
+                <v-menu
+                    :open-on-click="true"
+                    bottom
+                    nudge-bottom="40px"
+                    :close-on-content-click="false"
+                    :open-on-hover="false"
+                    v-model="shareDialog"
+                    width="400"
+                    z-index="300"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on" v-show="!editMode">
+                            <v-icon>{{ mdiLinkVariant }}</v-icon>
+                            <span class="collapsible-text">{{ $t("views.multiview.permalink") }}</span>
+                        </v-btn>
+                    </template>
 
-                        <v-card rounded="lg">
-                            <!-- <v-card-title> Share </v-card-title> -->
-                            <v-card-text>
-                                <v-text-field
-                                    readonly
-                                    solo-inverted
-                                    dense
-                                    hide-details
-                                    :class="doneCopy ? 'green lighten-2' : ''"
-                                    :value="exportURL"
-                                    :append-icon="mdiClipboardPlusOutline"
-                                    @click:append.stop="startCopyToClipboard(exportURL)"
-                                    style="ma-1"
-                                ></v-text-field>
-                            </v-card-text>
-                            <!-- <v-card-actions>
+                    <v-card rounded="lg">
+                        <!-- <v-card-title> Share </v-card-title> -->
+                        <v-card-text>
+                            <v-text-field
+                                readonly
+                                solo-inverted
+                                dense
+                                hide-details
+                                :class="doneCopy ? 'green lighten-2' : ''"
+                                :value="exportURL"
+                                :append-icon="mdiClipboardPlusOutline"
+                                @click:append.stop="startCopyToClipboard(exportURL)"
+                                style="ma-1"
+                            ></v-text-field>
+                        </v-card-text>
+                        <!-- <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="primary" text @click="shareDialog = false"> Close </v-btn>
                             </v-card-actions> -->
-                        </v-card>
-                    </v-menu>
-                    <v-btn @click="toggleFullScreen" icon>
-                        <v-icon>{{ icons.mdiFullscreen }}</v-icon>
-                    </v-btn>
-                </div>
-                <v-btn icon @click="collapseToolbar = true">
-                    <v-icon>{{ icons.mdiChevronUp }}</v-icon>
+                    </v-card>
+                </v-menu>
+                <v-btn @click="toggleFullScreen" icon>
+                    <v-icon>{{ icons.mdiFullscreen }}</v-icon>
                 </v-btn>
-            </v-toolbar>
-            <v-btn v-else @click="collapseToolbar = false" class="open-mv-toolbar-btn" tile small color="secondary">
-                <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+            </div>
+            <v-btn icon @click="collapseToolbar = true">
+                <v-icon>{{ icons.mdiChevronUp }}</v-icon>
             </v-btn>
-        </transition>
+        </v-toolbar>
+        <v-btn
+            v-if="collapseToolbar"
+            @click="collapseToolbar = false"
+            class="open-mv-toolbar-btn"
+            tile
+            small
+            color="secondary"
+        >
+            <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+        </v-btn>
+        <!-- </transition> -->
         <!-- Grid Layout -->
         <!-- rowHeight = 100vh/colNum, makes layout consistent across different heights -->
         <grid-layout
             :layout.sync="layout"
             :col-num="24"
-            :row-height="($vuetify.breakpoint.height - 26.0) / 24.0"
+            :row-height="($vuetify.breakpoint.height - 26.0 - (collapseToolbar ? 0 : 64)) / 24.0"
             :col-width="30"
             is-draggable
             is-resizable
@@ -196,18 +206,18 @@ export default {
         };
     },
     watch: {
-        editMode(nw) {
-            if (nw) {
-                this.$store.dispatch("favorites/fetchLive");
-            }
-        },
+        // editMode(nw) {
+        //     if (nw) {
+        //         this.$store.dispatch("favorites/fetchLive");
+        //     }
+        // },
     },
     mounted() {
         // Check if layout is empty
         if (this.layout.length === 0 && !this.$route.params.layout) {
             this.showPresetSelector = true;
         }
-        this.$store.dispatch("favorites/fetchLive");
+        // this.$store.dispatch("favorites/fetchLive");
         if (this.$route.params.layout) {
             // TODO: verify layout
             try {
@@ -246,6 +256,7 @@ export default {
     computed: {
         ...mapState("multiview", ["layout", "layoutContent"]),
         ...mapGetters("multiview", ["activeVideos"]),
+        // ...mapState("favorites", ["live"]),
         // layout() {
         //     return this.$store.state.multiview.layout;
         // },
@@ -288,6 +299,18 @@ export default {
                 },
             });
             this.showSelectorForId = -1;
+        },
+        handleToolbarClick(video) {
+            const emptyCell = this.layout.find((l) => {
+                return !this.layoutContent[l.i];
+            });
+            this.$store.commit("multiview/setLayoutContentById", {
+                id: emptyCell.i,
+                content: {
+                    type: "video",
+                    content: video,
+                },
+            });
         },
         handlePresetClicked(preset) {
             this.showPresetSelector = false;

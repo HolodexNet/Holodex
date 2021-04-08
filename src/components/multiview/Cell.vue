@@ -33,7 +33,7 @@
                         <v-icon>{{ mdiMessage }}</v-icon>
                     </v-btn>
                 </v-sheet>
-                <div class="pa-0 ma-0">
+                <!-- <div class="pa-0 ma-0">
                     <span class="text-overline">{{ $t("component.mainNav.favorites") }}</span>
                 </div>
                 <VideoCardList
@@ -52,7 +52,7 @@
                     <v-btn small text to="/login" v-if="!$store.state.userdata.user"
                         ><v-icon left>{{ icons.mdiLoginVariant }}</v-icon> {{ $t("component.mainNav.login") }}</v-btn
                     >
-                </div>
+                </div> -->
             </v-list>
             <template>
                 <CellControl :playIcon="icons.mdiPlay" @delete="deleteCell" class="mx-6 mb-6 mt-0 flex-grow-0" />
