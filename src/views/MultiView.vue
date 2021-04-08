@@ -11,6 +11,7 @@
                 class="flex-grow-1 justify-end d-flex mv-toolbar-btn align-center"
                 :class="{ 'no-btn-text': $store.state.isMobile || true }"
             >
+                <v-switch v-model="autoLayout" persistent-hint="Auto Layout" hide-details></v-switch>
                 <v-btn @click="addItem" color="green">
                     <v-icon>{{ mdiViewGridPlus }}</v-icon>
                     <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
@@ -155,7 +156,7 @@ import {
     mdiDelete,
 } from "@mdi/js";
 import copyToClipboard from "@/mixins/copyToClipboard";
-import { encodeLayout, decodeLayout } from "@/utils/mv-layout";
+import { desktopPresets, encodeLayout, decodeLayout } from "@/utils/mv-layout";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
 import LayoutPreview from "@/components/multiview/LayoutPreview.vue";
 import Cell from "@/components/multiview/Cell.vue";
@@ -193,13 +194,20 @@ export default {
             showPresetSelector: false,
 
             layoutPreview: [],
+
+            autoLayout: true,
+            currentPreset: {},
+            desktopPresets,
+
+            firstLayoutMount: true,
+            settingPreset: false,
         };
     },
-    watch: {},
     mounted() {
         // Check if layout is empty
         if (this.layout.length === 0 && !this.$route.params.layout) {
-            this.showPresetSelector = true;
+            // this.showPresetSelector = true;
+            this.autoLayout = true;
         }
         if (this.$route.params.layout) {
             // TODO: verify layout
@@ -277,16 +285,39 @@ export default {
             this.showSelectorForId = -1;
         },
         handleToolbarClick(video) {
+            const maxCells = this.currentPreset.emptyCells || 0;
+            if (this.autoLayout && this.activeVideos.length + 1 > maxCells) {
+                const newLayout = this.desktopPresets
+                    // .sort((a, b) => a.emptyCells - b.emptyCells)
+                    .find((preset) => preset.emptyCells >= this.activeVideos.length + 1);
+                if (newLayout) {
+                    this.currentPreset = newLayout;
+                    const decodedNewLayout = decodeLayout(newLayout.layout);
+                    this.settingPreset = true;
+                    this.setMultiview({
+                        ...decodedNewLayout,
+                        mergeContent: true,
+                    });
+                } else {
+                    return;
+                }
+            }
             const emptyCell = this.layout.find((l) => {
                 return !this.layoutContent[l.i];
             });
-            this.$store.commit("multiview/setLayoutContentById", {
-                id: emptyCell.i,
-                content: {
-                    type: "video",
-                    content: video,
-                },
-            });
+            if (emptyCell) {
+                this.$store.commit("multiview/setLayoutContentById", {
+                    id: emptyCell.i,
+                    content: {
+                        type: "video",
+                        content: video,
+                    },
+                });
+            }
+        },
+        disableAutoLayout() {
+            console.log("disablleedd");
+            this.autoLayout = false;
         },
         handlePresetClicked(preset) {
             this.showPresetSelector = false;

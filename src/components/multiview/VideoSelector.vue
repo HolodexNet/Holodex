@@ -66,7 +66,7 @@
             </v-col>
         </v-row>
     </v-card>
-    <div class="d-flex flex-row align-center flex-grow-1 flex-wrap" v-else>
+    <div class="d-flex flex-row align-center flex-grow-1" v-else>
         <v-select
             :items="orgList"
             v-model="selectedOrg"
