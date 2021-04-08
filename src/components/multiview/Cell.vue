@@ -88,14 +88,12 @@
         <!--=== Video/Chat iFrame based on type ===-->
         <template v-if="cellContent">
             <v-sheet rounded="md" color="transparent" class="cell-content" :class="{ 'pa-6 pb-1': pausedMode }">
-                <!-- :key="'vbox'+uniqueId"> -->
                 <div
                     class="mv-frame ma-auto"
                     :class="{ 'elevation-4': pausedMode }"
                     v-if="cellContent.type === 'video' && cellContent.content.id"
                     :key="'v' + uniqueId"
                 >
-                    <!-- :key="'ytplayer-' + item.i + cellContent.content.id" -->
                     <youtube
                         :key="'ytplayer-' + item.i + cellContent.content.id"
                         :video-id="cellContent.content.id"
@@ -157,26 +155,26 @@
 
 <script lang="ts">
 import { mdiMessage, mdiResizeBottomRight, mdiArrowLeftCircle } from "@mdi/js";
-import { getVideoThumbnails } from "@/utils/functions";
+// import { getVideoThumbnails } from "@/utils/functions";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat.vue";
 import { mapState, mapGetters } from "vuex";
-import VideoCardList from "@/components/video/VideoCardList.vue";
-import { dayjs } from "@/utils/time";
+// import VideoCardList from "@/components/video/VideoCardList.vue";
+// import { dayjs } from "@/utils/time";
 import CellControl from "./CellControl.vue";
 
-const HIDE_VIDEO_UNDER = {
-    xs: 26,
-    sm: 20,
-    md: 15,
-    lg: 8,
-    xl: 6,
-};
+// const HIDE_VIDEO_UNDER = {
+//     xs: 26,
+//     sm: 20,
+//     md: 15,
+//     lg: 8,
+//     xl: 6,
+// };
 
 export default {
     name: "Cell",
     components: {
         TabbedLiveChat,
-        VideoCardList,
+        // VideoCardList,
         CellControl,
     },
     props: {
@@ -184,10 +182,6 @@ export default {
             type: Object,
             required: true,
         },
-        // pausedMode: {
-        //     type: Boolean,
-        //     required: true,
-        // },
     },
     data() {
         return {
@@ -210,16 +204,16 @@ export default {
     },
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),
-        ...mapState("multiview", ["layout", "layoutContent"]),
-        ...mapState("favorites", ["live"]),
-        liveSoon() {
-            return this.live.filter((x) => {
-                return x.status === "live" || Math.abs(dayjs().diff(x.available_at, "minutes")) < 10;
-            });
-        },
-        needHideVImg() {
-            return HIDE_VIDEO_UNDER[this.$vuetify.breakpoint.name] > this.item.w;
-        },
+        ...mapState("multiview", ["layoutContent"]),
+        // ...mapState("favorites", ["live"]),
+        // liveSoon() {
+        //     return this.live.filter((x) => {
+        //         return x.status === "live" || Math.abs(dayjs().diff(x.available_at, "minutes")) < 10;
+        //     });
+        // },
+        // needHideVImg() {
+        //     return HIDE_VIDEO_UNDER[this.$vuetify.breakpoint.name] > this.item.w;
+        // },
         cellContent() {
             return this.layoutContent[this.item.i];
         },
@@ -231,7 +225,7 @@ export default {
         },
     },
     methods: {
-        getVideoThumbnails,
+        // getVideoThumbnails,
         setItemAsChat(item) {
             this.$store.commit("multiview/setLayoutContentById", {
                 id: item.i,
@@ -240,29 +234,29 @@ export default {
                 },
             });
         },
-        getBackgroundForItem() {
-            if (this.cellContent) {
-                if (this.cellContent.type === "video" && this.pausedMode) {
-                    return `url(${getVideoThumbnails(this.cellContent.content.id, false).hq720})`;
-                }
-                if (this.cellContent.type === "chat") {
-                    return mdiMessage;
-                }
-            }
-            return "";
-        },
+        // getBackgroundForItem() {
+        //     if (this.cellContent) {
+        //         if (this.cellContent.type === "video" && this.pausedMode) {
+        //             return `url(${getVideoThumbnails(this.cellContent.content.id, false).hq720})`;
+        //         }
+        //         if (this.cellContent.type === "chat") {
+        //             return mdiMessage;
+        //         }
+        //     }
+        //     return "";
+        // },
         deleteCell() {
             this.$store.commit("multiview/removeLayoutItem", this.item.i);
         },
-        handleVideoClicked(video) {
-            this.$store.commit("multiview/setLayoutContentById", {
-                id: this.item.i,
-                content: {
-                    type: "video",
-                    content: video,
-                },
-            });
-        },
+        // handleVideoClicked(video) {
+        //     this.$store.commit("multiview/setLayoutContentById", {
+        //         id: this.item.i,
+        //         content: {
+        //             type: "video",
+        //             content: video,
+        //         },
+        //     });
+        // },
         vidPlaying(evt) {
             this.pausedMode = evt.data === 2;
         },
@@ -312,12 +306,5 @@ export default {
 .mv-handlebars > .v-icon {
     position: absolute;
     color: #f06291;
-}
-
-.mv-rm-card {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    z-index: 40;
 }
 </style>

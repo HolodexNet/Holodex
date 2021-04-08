@@ -11,10 +11,6 @@
                 class="flex-grow-1 justify-end d-flex mv-toolbar-btn align-center"
                 :class="{ 'no-btn-text': $store.state.isMobile || true }"
             >
-                <!-- <v-btn @click="editMode = !editMode" :color="editMode ? 'light-green' : 'blue'">
-                        <v-icon>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
-                        <span class="collapsible-text">{{ editMode ? "Done" : "Edit" }}</span>
-                    </v-btn> -->
                 <v-btn @click="addItem" color="green">
                     <v-icon>{{ mdiViewGridPlus }}</v-icon>
                     <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
@@ -38,14 +34,13 @@
                     z-index="300"
                 >
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on" v-show="!editMode">
+                        <v-btn v-bind="attrs" v-on="on">
                             <v-icon>{{ mdiLinkVariant }}</v-icon>
                             <span class="collapsible-text">{{ $t("views.multiview.permalink") }}</span>
                         </v-btn>
                     </template>
 
                     <v-card rounded="lg">
-                        <!-- <v-card-title> Share </v-card-title> -->
                         <v-card-text>
                             <v-text-field
                                 readonly
@@ -59,10 +54,6 @@
                                 style="ma-1"
                             ></v-text-field>
                         </v-card-text>
-                        <!-- <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="primary" text @click="shareDialog = false"> Close </v-btn>
-                            </v-card-actions> -->
                     </v-card>
                 </v-menu>
                 <v-btn @click="toggleFullScreen" icon>
@@ -190,34 +181,26 @@ export default {
             mdiLinkVariant,
             mdiDelete,
 
-            editMode: false,
             showSelectorForId: -1,
             shareDialog: false,
             collapseToolbar: false,
 
-            overwriteDialog: false,
-            overwriteCancel: null,
-            overwriteConfirm: null,
-            overwriteMerge: false,
+            overwriteDialog: false, // whether to show the overwrite dialog.
+            overwriteCancel: null, // callbacks that will be generated when needed.
+            overwriteConfirm: null, // callbacks to be generated when needed.
+            overwriteMerge: false, // if the layout will be merged.
 
             showPresetSelector: false,
 
             layoutPreview: [],
         };
     },
-    watch: {
-        // editMode(nw) {
-        //     if (nw) {
-        //         this.$store.dispatch("favorites/fetchLive");
-        //     }
-        // },
-    },
+    watch: {},
     mounted() {
         // Check if layout is empty
         if (this.layout.length === 0 && !this.$route.params.layout) {
             this.showPresetSelector = true;
         }
-        // this.$store.dispatch("favorites/fetchLive");
         if (this.$route.params.layout) {
             // TODO: verify layout
             try {
@@ -256,13 +239,6 @@ export default {
     computed: {
         ...mapState("multiview", ["layout", "layoutContent"]),
         ...mapGetters("multiview", ["activeVideos"]),
-        // ...mapState("favorites", ["live"]),
-        // layout() {
-        //     return this.$store.state.multiview.layout;
-        // },
-        // layoutContent() {
-        //     return this.$store.state.multiview.layoutContent;
-        // },
         // Return true if there's an id requesting, setting false is setting id to -1
         showVideoSelector: {
             get() {
