@@ -66,12 +66,13 @@
             </v-col>
         </v-row>
     </v-card>
-    <div class="d-flex flex-row align-center flex-grow-1" v-else>
+    <div class="d-flex flex-row align-center" v-else>
         <v-select
             :items="orgList"
             v-model="selectedOrg"
             mandatory
             hide-details
+            solo
             style="max-width: 150px; margin-right: 10px"
         ></v-select>
         <template v-if="selectedOrg === 1">
@@ -93,9 +94,6 @@
             </v-btn>
         </template>
         <template v-else>
-            <!-- <v-avatar size="50" :key="video.id" v-for="video in live.filter( l => l.status === 'live')">
-                <img :src="video.channel.photo" />
-            </v-avatar> -->
             <div :key="video.id" v-for="video in filteredLive" style="position: relative; margin-right: 3px">
                 <div class="live-badge red">
                     {{ formatDurationLive(video) }}

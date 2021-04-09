@@ -4,7 +4,11 @@
         <!-- <transition name="slide-y-transition" mode="out-in"> -->
         <v-toolbar class="mv-toolbar" style="right: 0" v-show="!collapseToolbar">
             <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
-            <div class="flex-grow-1 justify-start d-flex mv-toolbar-btn align-center">
+            <div
+                class="justify-start d-flex mv-toolbar-btn align-center thin-scroll-bar"
+                style="overflow-x: auto; overflow-y: hidden"
+                v-if="!$vuetify.breakpoint.xs"
+            >
                 <VideoSelector horizontal @videoClicked="handleToolbarClick" />
             </div>
             <div
@@ -12,15 +16,15 @@
                 :class="{ 'no-btn-text': $store.state.isMobile || true }"
             >
                 <v-switch v-model="autoLayout" hide-details></v-switch>
-                <v-btn @click="addItem" color="green">
+                <v-btn @click="addItem" color="green" icon>
                     <v-icon>{{ mdiViewGridPlus }}</v-icon>
                     <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
                 </v-btn>
-                <v-btn @click="clearAllItems" color="red">
+                <v-btn @click="clearAllItems" color="red" icon>
                     <v-icon>{{ icons.mdiRefresh }}</v-icon>
                     <span class="collapsible-text">{{ $t("component.music.clearPlaylist") }}</span>
                 </v-btn>
-                <v-btn color="green darken-1" @click="showPresetSelector = true">
+                <v-btn color="primary" @click="showPresetSelector = true" icon>
                     <v-icon>{{ icons.mdiGridLarge }}</v-icon>
                     <span class="collapsible-text">{{ $t("views.multiview.presets") }}</span>
                 </v-btn>
@@ -35,7 +39,7 @@
                     z-index="300"
                 >
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on">
+                        <v-btn v-bind="attrs" v-on="on" icon>
                             <v-icon>{{ mdiLinkVariant }}</v-icon>
                             <span class="collapsible-text">{{ $t("views.multiview.permalink") }}</span>
                         </v-btn>
@@ -57,13 +61,15 @@
                         </v-card-text>
                     </v-card>
                 </v-menu>
-                <v-btn @click="toggleFullScreen" icon>
-                    <v-icon>{{ icons.mdiFullscreen }}</v-icon>
-                </v-btn>
+                <div class="d-flex flex-column mv-toolbar-stacked-btn">
+                    <v-btn icon @click="collapseToolbar = true">
+                        <v-icon>{{ icons.mdiChevronUp }}</v-icon>
+                    </v-btn>
+                    <v-btn @click="toggleFullScreen" icon>
+                        <v-icon>{{ icons.mdiFullscreen }}</v-icon>
+                    </v-btn>
+                </div>
             </div>
-            <v-btn icon @click="collapseToolbar = true">
-                <v-icon>{{ icons.mdiChevronUp }}</v-icon>
-            </v-btn>
         </v-toolbar>
         <v-btn
             v-if="collapseToolbar"
@@ -425,14 +431,19 @@ export default {
         }
     }
 }
-.mv-toolbar-btn .v-btn {
+.mv-toolbar-btn .v-btn.v-btn--icon.v-size--default {
     margin-right: 4px;
+    height: 36px;
+    width: 36px;
 }
 
 .mv-toolbar-btn.no-btn-text > .v-btn > .v-btn__content > .collapsible-text {
     display: none;
 }
-
+.mv-toolbar-stacked-btn > .v-btn.v-btn--icon.v-size--default {
+    width: 24px;
+    height: 24px;
+}
 .collapsible-text {
     margin-left: 2px;
 }
