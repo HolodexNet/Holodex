@@ -4,6 +4,7 @@
         <!-- <transition name="slide-y-transition" mode="out-in"> -->
         <v-toolbar class="mv-toolbar" style="right: 0" v-show="!collapseToolbar">
             <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
+            <!-- Toolbar Live Video Selector -->
             <div
                 class="justify-start d-flex mv-toolbar-btn align-center thin-scroll-bar"
                 style="overflow-x: auto; overflow-y: hidden"
@@ -11,6 +12,13 @@
             >
                 <VideoSelector horizontal @videoClicked="handleToolbarClick" />
             </div>
+            <!-- Single Button video selector for xs displays -->
+            <div v-else>
+                <v-btn @click="handleToolbarShowSelector" icon>
+                    <v-icon size="30" style="border-radius: 0">{{ mdiCardPlus }}</v-icon>
+                </v-btn>
+            </div>
+            <!-- Right side buttons -->
             <div
                 class="flex-grow-1 justify-end d-flex mv-toolbar-btn align-center"
                 :class="{ 'no-btn-text': $store.state.isMobile || true }"
@@ -61,6 +69,7 @@
                         </v-card-text>
                     </v-card>
                 </v-menu>
+                <!-- Stacked Fullscreen and Chevron -->
                 <div class="d-flex flex-column mv-toolbar-stacked-btn">
                     <v-btn icon @click="collapseToolbar = true">
                         <v-icon>{{ icons.mdiChevronUp }}</v-icon>
@@ -71,6 +80,7 @@
                 </div>
             </div>
         </v-toolbar>
+        <!-- Floating button to open toolbar when collapsed -->
         <v-btn
             v-if="collapseToolbar"
             @click="collapseToolbar = false"
@@ -160,9 +170,11 @@ import {
     mdiLinkVariant,
     mdiClipboardPlusOutline,
     mdiDelete,
+    mdiCardPlus,
 } from "@mdi/js";
 import copyToClipboard from "@/mixins/copyToClipboard";
-import { desktopPresets, encodeLayout, decodeLayout } from "@/utils/mv-layout";
+import { encodeLayout, decodeLayout } from "@/utils/mv-layout";
+import { desktopPresets } from "@/utils/mv-presets";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
 import LayoutPreview from "@/components/multiview/LayoutPreview.vue";
 import Cell from "@/components/multiview/Cell.vue";
@@ -187,6 +199,7 @@ export default {
             mdiClipboardPlusOutline,
             mdiLinkVariant,
             mdiDelete,
+            mdiCardPlus,
 
             showSelectorForId: -1,
             shareDialog: false,
@@ -203,54 +216,22 @@ export default {
 
             // Auto Layout variables
             autoLayout: true,
-            currentPreset: {}, // current layout variable
-            desktopPresets, // presets to work with
-            firstLayoutMount: true, // detect first mount changes, to ignore
-            settingPreset: false, // detect autoLayout preset changes, to ignore
         };
     },
     mounted() {
-        // Check if layout is empty
-        // if (this.layout.length === 0 && !this.$route.params.layout) {
-        //     // this.showPresetSelector = true;
-        //     this.autoLayout = true;
-        // }
+        // Check if permalink layout is empty
         if (this.$route.params.layout) {
             // TODO: verify layout
             try {
                 const parsed = decodeLayout(this.$route.params.layout);
-                console.log(parsed);
                 if (parsed.layout && parsed.content) {
-                    // no layout, overwrite without asking
-                    if (!this.layout || Object.keys(this.layout).length === 0) {
-                        this.setMultiview(parsed);
-                        return;
-                    }
-                    // show dialog with confirm or cancel functions
-                    this.layoutPreview = parsed.layout;
-                    this.overwriteConfirm = () => {
-                        this.overwriteDialog = false;
-                        this.setMultiview({
-                            ...parsed,
-                            mergeContent: this.overwriteMerge,
-                        });
-                    };
-                    this.overwriteCancel = () => {
-                        this.overwriteDialog = false;
-                        // clear out query on cancel
-                        this.$router.replace({ path: "/multiview" });
-                    };
-                    this.overwriteDialog = true;
+                    // prompt overwrite with permalink, remove permalink if cancelled
+                    this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
                 }
             } catch (e) {
                 console.log("invalid layout");
             }
         }
-    },
-    watch: {
-        autoLayout(val) {
-            if (!val) this.currentPreset = {};
-        },
     },
     created() {
         Vue.use(VueYouTubeEmbed);
@@ -278,6 +259,37 @@ export default {
         },
     },
     methods: {
+        // prompt user for layout change
+        promptLayoutChange(layoutWithContent, confirmFunction, cancelFunction) {
+            // a dialog is already active
+            if (this.overwriteDialog) {
+                return;
+            }
+            // no layout, overwrite without asking
+            if (!this.layout || Object.keys(this.layout).length === 0) {
+                this.setMultiview(layoutWithContent);
+                return;
+            }
+            // show dialog with confirm or cancel functions
+            this.layoutPreview = layoutWithContent.layout;
+            this.overwriteConfirm = () => {
+                // hide dialog
+                this.overwriteDialog = false;
+                this.setMultiview({
+                    ...layoutWithContent,
+                    mergeContent: this.overwriteMerge,
+                });
+                // call any extra functions
+                confirmFunction && confirmFunction();
+            };
+            this.overwriteCancel = () => {
+                this.overwriteDialog = false;
+                cancelFunction && cancelFunction();
+            };
+
+            // show the dialog
+            this.overwriteDialog = true;
+        },
         startCopyToClipboard(txt) {
             this.copyToClipboard(txt);
             const thisCopy = this;
@@ -286,6 +298,7 @@ export default {
             }, 200);
         },
         handleVideoClicked(video) {
+            // set video for a specific cell id
             this.$store.commit("multiview/setLayoutContentById", {
                 id: this.showSelectorForId,
                 content: {
@@ -295,32 +308,93 @@ export default {
             });
             this.showSelectorForId = -1;
         },
+        handleToolbarShowSelector() {
+            // find an empty cell and show selector for it
+            const emptyCell = this.findEmptyCell();
+            if (emptyCell) {
+                this.showSelectorForId = emptyCell.i;
+            }
+        },
         handleToolbarClick(video) {
-            const maxCells = this.currentPreset.emptyCells || 0;
+            const hasEmptyCell = this.findEmptyCell();
             // more cells needed, increment to next preset with space
-            if (this.autoLayout && this.activeVideos.length + 1 > maxCells) {
-                const newLayout = this.desktopPresets.find(
-                    (preset) => preset.emptyCells >= this.activeVideos.length + 1,
-                );
+            if (this.autoLayout && !hasEmptyCell) {
+                // find layout with space for one more new video
+                const newLayout = desktopPresets.find((preset) => preset.emptyCells >= this.activeVideos.length + 1);
 
                 // found new layout
                 if (newLayout) {
-                    // set flag so layoutUpdate event doesn't turn off autoLayout thinking it's user changed
-                    this.settingPreset = true;
-                    this.currentPreset = newLayout;
-                    const decodedNewLayout = decodeLayout(newLayout.layout);
-                    this.setMultiview({
-                        ...decodedNewLayout,
-                        mergeContent: true,
-                    });
-                } else {
-                    // no new layout (too many videos), do nothing
-                    return;
+                    // deep clone preset
+                    const clonedLayout = JSON.parse(JSON.stringify(newLayout));
+
+                    // if the current layout is a preset or empty, set next layout without prompting
+                    if (!this.layout.length || this.isPreset(this.layout)) {
+                        this.setMultiview({
+                            ...clonedLayout,
+                            mergeContent: true,
+                        });
+                        this.tryFillVideo(video);
+                        return;
+                    }
+
+                    // User made edits to a preset, prompt them to overwrite
+                    this.overwriteMerge = true;
+                    this.promptLayoutChange(
+                        clonedLayout,
+                        // set new layout, and try to fill with video
+                        () => {
+                            this.tryFillVideo(video);
+                        },
+                        // turn off auto layout if user cancels
+                        () => {
+                            this.overwriteDialog = false;
+                            this.autoLayout = false;
+                        },
+                    );
                 }
+            } else {
+                // autolayout is not on, or there is an empty cell, just try filling
+                this.tryFillVideo(video);
             }
-            const emptyCell = this.layout.find((l) => {
-                return !this.layoutContent[l.i];
+        },
+        isPreset(currentLayout) {
+            // filter out any presets that dont match the amount of cells
+            const toCompare = desktopPresets.filter((preset) => {
+                return preset.emptyCells && preset.layout.length === currentLayout.length;
             });
+
+            // there's no presets with equal cells
+            if (!toCompare) return false;
+
+            let fullMatch = false;
+
+            // go through each preset, and check for full matching layouts
+            toCompare.forEach((preset) => {
+                if (fullMatch) return;
+                for (let i = 0; i < currentLayout.length; i += 1) {
+                    const presetCell = preset.layout[i];
+                    const layoutCell = currentLayout[i];
+
+                    if (
+                        !(
+                            presetCell.x === layoutCell.x &&
+                            presetCell.y === layoutCell.y &&
+                            presetCell.w === layoutCell.w &&
+                            presetCell.h === layoutCell.h &&
+                            presetCell.i === layoutCell.i
+                        )
+                    ) {
+                        return;
+                    }
+                }
+                fullMatch = true;
+            });
+
+            return fullMatch;
+        },
+        tryFillVideo(video) {
+            // try find empty cell
+            const emptyCell = this.findEmptyCell();
             if (emptyCell) {
                 this.$store.commit("multiview/setLayoutContentById", {
                     id: emptyCell.i,
@@ -330,9 +404,14 @@ export default {
                     },
                 });
             }
+            // TODO: snack bar saying no valid empty cells
+        },
+        findEmptyCell() {
+            return this.layout.find((l) => {
+                return !this.layoutContent[l.i];
+            });
         },
         disableAutoLayout() {
-            console.log("disablleedd");
             this.autoLayout = false;
         },
         handlePresetClicked(preset) {
@@ -343,16 +422,6 @@ export default {
             });
         },
         layoutUpdatedEvent(newLayout) {
-            // make sure layout change is initiated by user, not Auto Layout or First Mount load
-            if (!this.firstLayoutMount && !this.settingPreset) {
-                this.autoLayout = false;
-            }
-
-            // reset values
-            this.firstLayoutMount = false;
-            if (this.settingPreset) this.settingPreset = false;
-
-            // active auto layout if there's nothing
             if (newLayout.length === 0) {
                 this.autoLayout = true;
             }

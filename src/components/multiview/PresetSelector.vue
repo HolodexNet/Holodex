@@ -7,8 +7,8 @@
             <v-row>
                 <template v-for="preset in desktopPresets">
                     <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
-                        <div class="layout-btn pa-2" @click="handleSelected(decodeLayout(preset.layout))">
-                            <LayoutPreview :layout="decodeLayout(preset.layout).layout" />
+                        <div class="layout-btn pa-2" @click="handleSelected(preset.layout)">
+                            <LayoutPreview :layout="preset.layout" />
                             <div class="text-body-1 text-center">
                                 {{ preset.name }}
                             </div>
@@ -20,8 +20,8 @@
             <v-row justify="space-around" align="center">
                 <template v-for="preset in mobilePresets">
                     <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
-                        <div class="layout-btn pa-2" @click="handleSelected(decodeLayout(preset.layout))">
-                            <LayoutPreview :layout="decodeLayout(preset.layout).layout" :mobile="!preset.landscape" />
+                        <div class="layout-btn pa-2" @click="handleSelected(preset.layout)">
+                            <LayoutPreview :layout="preset.layout" :mobile="!preset.landscape" />
                             <div class="text-body-1 text-center">
                                 {{ preset.name }}
                             </div>
@@ -36,7 +36,8 @@
 <script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
-import { desktopPresets, mobilePresets, decodeLayout } from "@/utils/mv-layout";
+import { decodeLayout } from "@/utils/mv-layout";
+import { desktopPresets, mobilePresets } from "@/utils/mv-presets";
 import LayoutPreview from "./LayoutPreview.vue";
 
 export default {
