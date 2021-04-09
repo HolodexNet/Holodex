@@ -1,7 +1,7 @@
 <template>
     <v-card
         flat
-        class="mv-video d-flex"
+        class="mv-cell d-flex"
         :class="{
             'edit-mode': pausedMode,
         }"
@@ -271,7 +271,7 @@ export default {
 </script>
 
 <style lang="scss">
-.mv-video {
+.mv-cell {
     background-size: contain;
     background-position: center;
     height: 100%;
@@ -288,8 +288,13 @@ export default {
     }
 }
 
-.mv-video.edit-mode {
+.mv-cell.edit-mode {
     border: 1px solid #f06291 !important;
+}
+
+.vue-grid-item.vue-draggable-dragging .mv-cell,
+.vue-grid-item.resizing .mv-cell {
+    pointer-events: none;
 }
 
 .mv-frame > div > iframe {
