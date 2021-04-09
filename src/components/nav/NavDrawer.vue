@@ -42,13 +42,17 @@
                     :key="channel.id"
                     @click="$router.push(`/channel/${channel.id}`).catch(() => {})"
                 >
-                    <v-list-item-avatar :size="30">
+                    <v-list-item-avatar :size="30" :class="{ outlined: isLive(channel) }">
                         <ChannelImg :channel="channel" :size="30" />
                     </v-list-item-avatar>
                     <ChannelInfo :channel="channel" noSubscriberCount noGroup />
+                    <v-list-item-action-text v-if="isLive(channel) || getChannelLiveAtTime(channel)">
+                        <span class="ch-live" v-if="isLive(channel)">●</span>
+                        <span class="ch-upcoming" v-else>{{ formatDurationLive(getChannelLiveAtTime(channel)) }}</span>
+                    </v-list-item-action-text>
                 </v-list-item>
             </template>
-            <v-list-item link @click="favoritesExpanded = !favoritesExpanded" v-if="favorites.length > 5">
+            <v-list-item link @click="favoritesExpanded = !favoritesExpanded" v-if="favorites.length > 8">
                 <v-list-item-action>
                     <v-icon>{{ favoritesExpanded ? icons.mdiChevronUp : icons.mdiChevronDown }}</v-icon>
                 </v-list-item-action>
@@ -79,7 +83,14 @@
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
-import { mapState } from "vuex";
+import { dayjs } from "@/utils/time";
+
+function getChannelLiveAtTime(ch) {
+    if (ch.videos && ch.videos[0]) {
+        return dayjs(ch.videos[0].start_actual || ch.videos[0].start_scheduled).valueOf();
+    }
+    return null;
+}
 
 export default {
     name: "NavDrawer",
@@ -103,32 +114,53 @@ export default {
     },
     data() {
         return {
-            favoritesExpanded: true,
+            favoritesExpanded: false,
         };
     },
     computed: {
-        ...mapState(["favorites", "cachedChannels", "live"]),
+        // ...mapState("favorites", ["favorites", "live"]),
         language() {
             return langs.find((x) => x.val === this.$store.state.settings.lang).display;
         },
         favorites() {
             const fav = this.$store.state.favorites.favorites.slice(0);
             const nameProp = this.$store.state.settings.nameProperty;
+            const lives = this.$store.state.favorites.live;
+            const favWithVideos = fav.map((x) => {
+                const videos: Array<any> = lives.filter((v) => v.channel.id === x.id);
+                videos.sort(
+                    (a, b) =>
+                        dayjs(a.start_actual || a.start_scheduled).valueOf() -
+                        dayjs(b.start_actual || a.start_scheduled).valueOf(),
+                );
+                return {
+                    ...x,
+                    videos,
+                };
+            });
             // make sure nav works even if sort fails for some reason
             try {
-                fav.sort(
-                    (a, b) =>
-                        // fall back if english name doesn't exist
+                favWithVideos.sort((a, b) => {
+                    const aLive = getChannelLiveAtTime(a);
+                    const bLive = getChannelLiveAtTime(b);
+                    if (aLive && bLive) {
+                        return aLive - bLive;
+                    }
+                    if (aLive) return -1;
+                    if (bLive) return 1;
+                    return (
                         (a[nameProp] && b[nameProp] && a[nameProp].localeCompare(b[nameProp])) ||
-                        a.name.localeCompare(b.name),
-                );
+                        a.name.localeCompare(b.name)
+                    );
+                    // fall back if english name doesn't exist
+                });
             } catch (e) {
                 console.log(e);
             }
-            return fav;
+            return favWithVideos;
         },
         collapsedFavorites() {
-            return !this.favoritesExpanded && this.favorites.length > 5 ? this.favorites.slice(0, 5) : this.favorites;
+            return !this.favoritesExpanded && this.favorites.length > 8 ? this.favorites.slice(0, 8) : this.favorites;
         },
     },
     methods: {
@@ -138,6 +170,16 @@ export default {
                 ? this.$router.go(0)
                 : this.$router.push({ path: page.path });
         },
+        formatDurationLive(ts) {
+            const secs = dayjs(ts).diff(dayjs()) / 1000;
+            const h = Math.floor(secs / (60 * 60));
+            const m = Math.floor((secs % (60 * 60)) / 60);
+            return h ? `${h}h` : `${m}m`;
+        },
+        isLive(channel) {
+            return channel.videos && channel.videos[0] && channel.videos[0].status === "live";
+        },
+        getChannelLiveAtTime,
     },
 };
 </script>
@@ -172,5 +214,18 @@ export default {
 
 .nav-scroll > .v-navigation-drawer__content {
     overflow-y: hidden !important;
+}
+
+.outlined {
+    position: relative;
+    box-shadow: 0 0 0 2px red, 0 0 4px 3px rgba(255, 0, 0, 0.56);
+}
+.ch-live {
+    font-size: large;
+    color: red;
+}
+.ch-upcoming {
+    font-size: small;
+    line-height: 24px;
 }
 </style>

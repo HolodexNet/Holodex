@@ -151,7 +151,7 @@ export default {
         init() {
             if (this.favorites.length > 0 && this.isLoggedIn) {
                 this.$store.commit("favorites/resetState");
-                this.$store.dispatch("favorites/fetchLive");
+                this.$store.dispatch("favorites/fetchLive", { minutes: 2 });
                 this.resetVideos();
             }
         },
