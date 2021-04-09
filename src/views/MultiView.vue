@@ -23,7 +23,7 @@
                 class="flex-grow-1 justify-end d-flex mv-toolbar-btn align-center"
                 :class="{ 'no-btn-text': $store.state.isMobile || true }"
             >
-                <v-switch v-model="autoLayout" hide-details></v-switch>
+                <!-- <v-switch v-model="autoLayout" hide-details></v-switch> -->
                 <v-btn @click="addItem" color="green" icon>
                     <v-icon>{{ mdiViewGridPlus }}</v-icon>
                     <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
@@ -173,8 +173,7 @@ import {
     mdiCardPlus,
 } from "@mdi/js";
 import copyToClipboard from "@/mixins/copyToClipboard";
-import { encodeLayout, decodeLayout } from "@/utils/mv-layout";
-import { desktopPresets } from "@/utils/mv-presets";
+import { encodeLayout, decodeLayout, desktopPresets } from "@/utils/mv-layout";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
 import LayoutPreview from "@/components/multiview/LayoutPreview.vue";
 import Cell from "@/components/multiview/Cell.vue";
@@ -213,9 +212,6 @@ export default {
             showPresetSelector: false,
 
             layoutPreview: [],
-
-            // Auto Layout variables
-            autoLayout: true,
         };
     },
     mounted() {
@@ -256,6 +252,14 @@ export default {
                 }),
             )}`;
             return `${window.origin}/multiview${layoutParam}`;
+        },
+        decodedDesktopPresets() {
+            return desktopPresets.map((preset) => {
+                return {
+                    ...preset,
+                    ...decodeLayout(preset.layout),
+                };
+            });
         },
     },
     methods: {
@@ -318,9 +322,11 @@ export default {
         handleToolbarClick(video) {
             const hasEmptyCell = this.findEmptyCell();
             // more cells needed, increment to next preset with space
-            if (this.autoLayout && !hasEmptyCell) {
+            if (!hasEmptyCell) {
                 // find layout with space for one more new video
-                const newLayout = desktopPresets.find((preset) => preset.emptyCells >= this.activeVideos.length + 1);
+                const newLayout = this.decodedDesktopPresets.find(
+                    (preset) => preset.emptyCells >= this.activeVideos.length + 1,
+                );
 
                 // found new layout
                 if (newLayout) {
@@ -345,11 +351,6 @@ export default {
                         () => {
                             this.tryFillVideo(video);
                         },
-                        // turn off auto layout if user cancels
-                        () => {
-                            this.overwriteDialog = false;
-                            this.autoLayout = false;
-                        },
                     );
                 }
             } else {
@@ -359,7 +360,7 @@ export default {
         },
         isPreset(currentLayout) {
             // filter out any presets that dont match the amount of cells
-            const toCompare = desktopPresets.filter((preset) => {
+            const toCompare = this.decodedDesktopPresets.filter((preset) => {
                 return preset.emptyCells && preset.layout.length === currentLayout.length;
             });
 
@@ -411,9 +412,6 @@ export default {
                 return !this.layoutContent[l.i];
             });
         },
-        disableAutoLayout() {
-            this.autoLayout = false;
-        },
         handlePresetClicked(preset) {
             this.showPresetSelector = false;
             this.setMultiview({
@@ -422,10 +420,6 @@ export default {
             });
         },
         layoutUpdatedEvent(newLayout) {
-            if (newLayout.length === 0) {
-                this.autoLayout = true;
-            }
-
             this.$store.commit("multiview/setLayout", newLayout);
         },
         removeItemById(i) {
