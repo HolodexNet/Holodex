@@ -83,32 +83,33 @@ export function decodeLayout(encodedStr) {
         content: parsedContent,
     };
 }
-export const desktopPresets = Object.freeze([
-    { layout: "AATY,TAFYchat", name: "Side Chat 1", emptyCells: 1 },
-    { layout: "AARM,AMRM,RAHYchat", name: "Side Chat 2", emptyCells: 2 },
-    { layout: "AAMY,MAMM,MMMM", name: "p1s2", emptyCells: 3 },
-    { layout: "AAMM,AMMM,MAMM,MMMM", name: "2 x 2", emptyCells: 4 },
-    { layout: "AAIM,AMIM,IAIM,IMIM,QAIM,QMIM", name: "2 x 3", emptyCells: 6 },
-    { layout: "AAII,AIII,AQII,IAII,IIII,IQII,QAII,QIII,QQII", name: "3 x 3", emptyCells: 9 },
-    { layout: "SAGYchat,AAJM,AMJM,JAJM,JMJM", name: "Side Chat 4" },
-    { layout: "AAQQ,AQII,IQII,QAII,QIII,QQII", name: "p1s5", emptyCells: 6 },
-    { layout: "AAOM,AMOM,OAFYchat,TAFYchat", name: "2 Video, 2 Chat" },
-    { layout: "AAMM,AMMM,MAMM,MMGMchat,SMGMchat", name: "3 Video, 2 Chat" },
-    { layout: "AAML,MAML,ALGH,GLGH,MLGH,SLGH,ASGG,GSGG,MSGG,SSGG", name: "Among Us 1" },
-    { layout: "AAKL,KAKL,UAEYchat,ALFH,FLFH,KLFH,PLFH,ASFG,FSFG,KSFG,PSFG", name: "Among Us 2" },
-    { layout: "AASR,SAGYchat,ARGH,GRGH,MRGH", name: "Sports Fes 1" },
-    {
-        layout: "AAMM,SAGYchat,AMGG,ASGG,GMGG,GSGG,MAGG,MGGG,MMGG,MSGG",
-        name: "Sports Fes 2",
-    },
-    { layout: "GAMM,GMMM,AAGG,AGGG,AMGG,ASGG,SAGG,SGGG,SMGG,SSGG", name: "Sports Fes 3" },
-]);
+// export const desktopPresets = Object.freeze([
+//     { layout: "AATY,TAFYchat", name: "Side Chat 1", emptyCells: 1 },
+//     { layout: "AARM,AMRM,RAHYchat", name: "Side Chat 2", emptyCells: 2 },
+//     { layout: "AAMY,MAMM,MMMM", name: "p1s2", emptyCells: 3 },
+//     { layout: "AAMM,AMMM,MAMM,MMMM", name: "2 x 2", emptyCells: 4 },
+//     { layout: "AAIM,AMIM,IAIM,IMIM,QAIM,QMIM", name: "2 x 3", emptyCells: 6 },
+//     { layout: "AAII,AIII,AQII,IAII,IIII,IQII,QAII,QIII,QQII", name: "3 x 3", emptyCells: 9 },
+//     { layout: "SAGYchat,AAJM,AMJM,JAJM,JMJM", name: "Side Chat 4" },
+//     { layout: "AAQQ,AQII,IQII,QAII,QIII,QQII", name: "p1s5", emptyCells: 6 },
+//     { layout: "AAOM,AMOM,OAFYchat,TAFYchat", name: "2 Video, 2 Chat" },
+//     { layout: "AAMM,AMMM,MAMM,MMGMchat,SMGMchat", name: "3 Video, 2 Chat" },
+//     { layout: "AAML,MAML,ALGH,GLGH,MLGH,SLGH,ASGG,GSGG,MSGG,SSGG", name: "Among Us 1" },
+//     { layout: "AAKL,KAKL,UAEYchat,ALFH,FLFH,KLFH,PLFH,ASFG,FSFG,KSFG,PSFG", name: "Among Us 2" },
+//     { layout: "AASR,SAGYchat,ARGH,GRGH,MRGH", name: "Sports Fes 1" },
+//     {
+//         layout: "AAMM,SAGYchat,AMGG,ASGG,GMGG,GSGG,MAGG,MGGG,MMGG,MSGG",
+//         name: "Sports Fes 2",
+//     },
+//     { layout: "GAMM,GMMM,AAGG,AGGG,AMGG,ASGG,SAGG,SGGG,SMGG,SSGG", name: "Sports Fes 3" },
+// ]);
 
-export const mobilePresets = Object.freeze([
-    { layout: "AAYI,AIYI,AQYI", name: "Mobile 1" },
-    { layout: "AOYKchat,AAYH,AHYH", name: "Mobile 2" },
-    { layout: "MAMY,AAMM,AMMM", name: "Mobile 3", landscape: true },
-]);
+// export const mobilePresets = Object.freeze([
+//     { layout: "AAYI,AIYI,AQYI", name: "Mobile 1" },
+//     { layout: "AOYKchat,AAYH,AHYH", name: "Mobile 2" },
+//     { layout: "MAMY,AAMM,AMMM", name: "Mobile 3", landscape: true },
+// ]);
+
 // Auxilary function for making sure the biggest and left most cells are first
 // export function sortPresets(presets) {
 //     return  presets.map(obj => {

@@ -224,7 +224,6 @@ export default {
                         const dateB = new Date(b.available_at).getTime();
                         return dateA > dateB ? 1 : -1;
                     });
-                    console.log(data);
                     this.live = data;
                 })
                 .catch((e) => {
