@@ -18,6 +18,7 @@ import settings from "./settings.module";
 import favorites from "./favorites.module";
 import music from "./music.module";
 import multiview from "./multiview.module";
+// import socket from "./socket.module";
 
 Vue.use(Vuex);
 
@@ -40,6 +41,8 @@ function defaultState() {
         currentGridSize: 0,
         // navigation history tracking
         routerHistory: [],
+
+        activeSockets: 0,
     };
 }
 
@@ -61,6 +64,7 @@ export default new Vuex.Store({
                 o.music = { ...o.music };
                 // don't want to persist router history across tabs/sessions.
                 o.routerHistory = [];
+                o.activeSockets = 0;
                 // o.music.state = MUSIC_PLAYER_STATE.PLAYING; // don't start new tab playing music.
                 o.music.isOpen = false; // hide it
                 return o;
@@ -130,8 +134,23 @@ export default new Vuex.Store({
         installPromptShown(state) {
             state.lastShownInstallPrompt = new Date().getTime();
         },
+        incrementActiveSockets(state) {
+            state.activeSockets += 1;
+        },
+        decrementActiveSockets(state) {
+            state.activeSockets -= 1;
+        },
     },
     actions: {
+        checkActiveSockets({ state }) {
+            const context = this;
+            setTimeout(() => {
+                if (state.activeSockets === 0) {
+                    // eslint-disable-next-line no-underscore-dangle
+                    context._vm.$socket.client.disconnect();
+                }
+            }, 10000);
+        },
         async navigate({ commit }, { from = undefined }) {
             if (from) commit("historyPush", { from });
             else commit("historyPop");
@@ -177,5 +196,6 @@ export default new Vuex.Store({
         favorites,
         music,
         multiview,
+        // socket,
     },
 });
