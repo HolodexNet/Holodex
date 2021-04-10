@@ -28,6 +28,7 @@ Vue.use(
 //     key: "metaInfo", // custom key for component option
 // });
 
+// Create a manager to use a custom path (due to reverse proxy)
 const manager = new Manager(/* process.env.NODE_ENV === "development" ? "http://localhost:2434" : */ API_BASE_URL, {
     reconnectionAttempts: 10,
     transports: ["websocket"],
@@ -37,7 +38,7 @@ const manager = new Manager(/* process.env.NODE_ENV === "development" ? "http://
     autoConnect: false,
 });
 
-Vue.use(VueSocketIOExt, manager.socket("/"), { store });
+Vue.use(VueSocketIOExt, manager.socket("/"));
 
 Vue.use(VueMeta, {
     refreshOnceOnNavigation: true,
