@@ -8,45 +8,45 @@ component:
     afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Registrate para marcar como favorito
-    unfavoriteAllInGroup: Desmarcar todos como favoritos
+    unfavoriteAllInGroup: Eliminar todo el grupo de favoritos
     favoriteAllInGroup: Añadir todo el grupo a favoritos
   channelInfo:
-    videoCount: '{0} Videos'
-    clipCount: '{n} Clips'
-    subscriberCount: '{n} Subscriptores'
+    videoCount: '{0} vídeos'
+    clipCount: '{n} clips'
+    subscriberCount: '{n} suscriptores'
     subscriberNA: Número de suscriptores no disponible
     totalViews: Visualizaciones totales
   channelSocials:
     addToFavorites: Añadir a favoritos
     removeFromFavorites: Eliminar de favoritos
     unblock: Desbloquear este canal
-    block: Bloquear el contenido de este canal a través de Holodex
+    block: Bloquear este canal en Holodex
   mainNav:
     home: Inicio
     favorites: Favoritos
     channels: Canales
     about: Acerca de
     library: Biblioteca
-    settings: Opciones
-    login: Iniciar Sesión
-    logout: Cerrar Sesión
+    settings: Configuración
+    login: Iniciar sesión
+    logout: Cerrar sesión
     MugenClips: MugenClips<sup>beta</sup>
-    accountSettings: Ajustes de Cuenta
+    accountSettings: Gestionar cuenta
     music: Música
-    multiview: Vista Múltiple
+    multiview: Vista múltiple
   videoCard:
-    clips: '{n} Clips'
+    clips: '{n} clips'
     watching: '{0} espectadores'
-    liveNow: En Vivo
+    liveNow: En directo
     edit: Editar
   videoDescription:
     description: Descripción
   description:
     showLess: Mostrar Menos
-    showMore: Mostrar Mas
+    showMore: Mostrar más
   watch:
-    streamingFor: Transmitiendo por {0}
-    nextUpInMugen: Siguiente
+    streamingFor: En directo durante {0}
+    nextUpInMugen: A continuación
   search:
     searchLabel: Buscar
     type:
@@ -93,7 +93,7 @@ views:
     sortOptions:
       subscribers: Suscriptores
       group: Grupo
-      recentUpload: Cargas recientes
+      recentUpload: Subidas recientes
       videoCount: Número de videos
       clipCount: Número de clips
     tabs:
