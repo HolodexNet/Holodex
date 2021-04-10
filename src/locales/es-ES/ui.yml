@@ -39,6 +39,8 @@ component:
     watching: '{0} espectadores'
     liveNow: En directo
     edit: Editar
+    copiedToClipboard: Link copiado al portapapeles.
+    copyLink: Copiar link de Holodex
   videoDescription:
     description: Descripción
   description:
