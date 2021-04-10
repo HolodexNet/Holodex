@@ -103,7 +103,7 @@ views:
       clipCount: Numero di Clip
     tabs:
       Vtuber: Vtuber
-      Subber: Sottotitolatore
+      Subber: Sottotitolatori
       Favorites: Preferiti
       Blocked: Bloccati
     favoritesAreEmpty: Non hai preferiti!
