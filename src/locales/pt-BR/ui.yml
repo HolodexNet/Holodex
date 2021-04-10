@@ -41,8 +41,6 @@ component:
     edit: Editar
   videoDescription:
     description: Descrição
-  video:
-    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -92,7 +90,6 @@ component:
       beforeExportIcon: Toque
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo

@@ -39,10 +39,10 @@ component:
     watching: '{0} sedang menonton'
     liveNow: Sedang Berlangsung
     edit: Ubah
+    copiedToClipboard: Tautan disalin ke clipboard.
+    copyLink: Salin Tautan Holodex
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -92,7 +92,6 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup

@@ -8,51 +8,51 @@ component:
     afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Registrate para marcar como favorito
-    unfavoriteAllInGroup: Eliminar todo el grupo de favoritos
-    favoriteAllInGroup: Añadir todo el grupo a favoritos
+    unfavoriteAllInGroup: Desmarcar todos como favoritos
+    favoriteAllInGroup: Marcar todo en el grupo como favorito
   channelInfo:
-    videoCount: '{0} vídeos'
-    clipCount: '{n} clips'
-    subscriberCount: '{n} suscriptores'
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} Subscriptores'
     subscriberNA: Número de suscriptores no disponible
     totalViews: Visualizaciones totales
   channelSocials:
     addToFavorites: Añadir a favoritos
     removeFromFavorites: Eliminar de favoritos
     unblock: Desbloquear este canal
-    block: Bloquear este canal en Holodex
+    block: Bloquear el contenido de este canal a través de Holodex
   mainNav:
     home: Inicio
     favorites: Favoritos
     channels: Canales
     about: Acerca de
     library: Biblioteca
-    settings: Configuración
-    login: Iniciar sesión
-    logout: Cerrar sesión
-    MugenClips: MugenClips<sup>beta</sup>
-    accountSettings: Gestionar cuenta
+    settings: Opciones
+    login: Iniciar Sesión
+    logout: Cerrar Sesión
+    MugenClips: MugenClips
+    accountSettings: Ajustes de Cuenta
     music: Música
-    multiview: Vista múltiple
+    multiview: Vista Múltiple
   videoCard:
-    clips: '{n} clips'
-    watching: '{0} espectadores'
-    liveNow: En directo
+    watching: '{0} Mirando'
+    liveNow: En Vivo
     edit: Editar
+    copiedToClipboard: Link copiado al portapapeles.
+    copyLink: Copiar link de Holodex
   videoDescription:
     description: Descripción
   description:
     showLess: Mostrar Menos
-    showMore: Mostrar más
+    showMore: Mostrar Mas
   watch:
-    streamingFor: En directo durante {0}
-    nextUpInMugen: A continuación
+    streamingFor: Transmitiendo por {0}
+    nextUpInMugen: Siguiente
   search:
     searchLabel: Buscar
     type:
       channel: canal
       topic: tema
-      org: org
       titledesc: título y descripción
       comments: comentarios
       videourl: link del vídeo
@@ -93,23 +93,21 @@ views:
     sortOptions:
       subscribers: Suscriptores
       group: Grupo
-      recentUpload: Subidas recientes
+      recentUpload: Cargas recientes
       videoCount: Número de videos
       clipCount: Número de clips
     tabs:
-      Vtuber: Vtuber
       Subber: Subtitulador
       Favorites: Favoritos
       Blocked: Bloqueado
     favoritesAreEmpty: No tienes favoritos!
-    blockedAreEmpty: No has bloqueado ningún canal.
+    blockedAreEmpty: No tienes canales bloqueados.
   home:
-    liveOrUpcomingHeading: En directo / Próximamente
+    liveOrUpcomingHeading: En vivo / Proximamente
     recentVideosHeading: Videos recientes
     recentVideoToggles:
       all: Todos
       official: Oficial
-      subber: Clips
   library:
     savedVideosTitle: Videos Guardados
     createYtPlaylistButton: Crear lista de reproducción de YT ({0})
@@ -139,7 +137,6 @@ views:
     type:
       all: Todos
       official: Oficial
-      clip: Clip
     unsupportedQuery: >-
       Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
     sortByLabel: Ordenar Por
@@ -157,9 +154,9 @@ views:
     hideVideoThumbnailsMsg: >-
       Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos deslizar en mobiles
     pushNotificationLabel: Notificaciones emergentes
-    pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
+    pushNotificationMsg: Activar notificaciónes emergentes para canales favoritos
     autoplayVideoLabel: Reproducir vídeos automáticamente
-    autoplayVideoMsg: Activa la reproducción automática de videos
+    autoplayVideoMsg: Activar la reproducción automática de vídeos
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
@@ -227,7 +224,6 @@ views:
 time:
   soon: Proximamente
   diff_future_date: Inicia {0} ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: Añadir
