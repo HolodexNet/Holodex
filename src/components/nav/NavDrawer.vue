@@ -126,6 +126,10 @@ export default {
             const fav = this.$store.state.favorites.favorites.slice(0);
             const nameProp = this.$store.state.settings.nameProperty;
             const lives = this.$store.state.favorites.live;
+            const updateNotice = this.$store.state.favorites.lastLiveUpdate;
+            console.debug(`Updating favs: ${updateNotice}`);
+            // this console debug is left in to maintain reactivity to `updateNotice`.
+
             const favWithVideos = fav.map((x) => {
                 const videos: Array<any> = lives.filter((v) => v.channel.id === x.id);
                 videos.sort(

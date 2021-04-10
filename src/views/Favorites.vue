@@ -72,10 +72,11 @@ import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import * as icons from "@/utils/icons";
 import { mapState } from "vuex";
 import reloadable from "@/mixins/reloadable";
+import isActive from "@/mixins/isActive";
 
 export default {
     name: "Favorites",
-    mixins: [reloadable],
+    mixins: [reloadable, isActive],
     metaInfo() {
         const vm = this;
         return {
@@ -96,14 +97,17 @@ export default {
         };
     },
     mounted() {
-        this.init();
+        this.init(true);
     },
     watch: {
         recentVideoFilter() {
             this.resetVideos();
         },
-        favorites() {
-            this.init();
+        favorites: {
+            deep: true,
+            handler() {
+                if (isActive) this.init(false);
+            },
         },
     },
     computed: {
@@ -148,11 +152,11 @@ export default {
         },
     },
     methods: {
-        init() {
+        init(updateFavorites) {
             if (this.favorites.length > 0 && this.isLoggedIn) {
-                this.$store.commit("favorites/resetState");
+                if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
                 this.$store.dispatch("favorites/fetchLive", { minutes: 2 });
-                this.resetVideos();
+                this.$nextTick(this.resetVideos);
             }
         },
         reload() {

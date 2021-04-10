@@ -2,6 +2,7 @@
 import api from "@/utils/backend-api";
 import Vue from "vue";
 import { debounce } from "@/utils/functions";
+import fdequal from "fast-deep-equal";
 
 const initialState = {
     live: [],
@@ -33,11 +34,11 @@ const getters = {
 };
 
 const actions = {
-    fetchFavorites({ commit, rootState, dispatch }) {
+    fetchFavorites({ commit, rootState, state, dispatch }) {
         return api
             .favorites(rootState.userdata.jwt)
             .then((res) => {
-                commit("setFavorites", res.data);
+                if (!fdequal(res.data, state.favorites)) commit("setFavorites", res.data);
             })
             .catch((e) => {
                 console.error(e);
@@ -112,7 +113,7 @@ const actions = {
         commit("resetVideos");
         commit("resetState");
         if (rootState.userdata && rootState.userdata.jwt) await dispatch("fetchFavorites");
-        if (rootState.userdata && rootState.userdata.jwt) await dispatch("fetchLive");
+        if (rootState.userdata && rootState.userdata.jwt) await dispatch("fetchLive", { force: true });
         else commit("setFavorites", []);
     },
 };
