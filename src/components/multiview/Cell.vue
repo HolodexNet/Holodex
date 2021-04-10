@@ -111,7 +111,7 @@
                     </youtube>
                 </div>
                 <template v-else-if="cellContent.type === 'chat'">
-                    <TabbedLiveChat :activeVideos="activeVideos" />
+                    <TabbedLiveChat :activeVideos="activeVideos" :toggleTL="toggleTL" :toggleChat="toggleChat" />
                 </template>
             </v-sheet>
 
@@ -139,14 +139,18 @@
             <template v-if="isChat && !pausedMode">
                 <!-- CHAT + UNPAUSED --->
                 <v-sheet class="cell-control">
-                    <v-btn x-small width="70%" @click="pausedMode = !pausedMode"
+                    <v-btn x-small width="60%" @click="pausedMode = !pausedMode"
                         ><v-icon small>{{ icons.mdiMenu }}</v-icon
                         >{{ $t("component.videoCard.edit") }}</v-btn
                     >
-                    <v-btn x-small width="30%"
-                        ><v-icon small>{{ icons.mdiTranslate }}</v-icon
-                        >TL</v-btn
-                    >
+                    <v-btn x-small width="20%" @click="toggleChat = !toggleChat" :color="toggleChat ? 'primary' : ''">
+                        <v-icon small>{{ icons.mdiTranslate }}</v-icon
+                        >Chat
+                    </v-btn>
+                    <v-btn x-small width="20%" @click="toggleTL = !toggleTL" :color="toggleTL ? 'primary' : ''">
+                        <v-icon small>{{ icons.mdiTranslate }}</v-icon
+                        >TL
+                    </v-btn>
                 </v-sheet>
             </template>
         </template>
@@ -191,6 +195,8 @@ export default {
             pausedMode: true,
             uniqueId: Date.now(),
             ytPlayer: null,
+            toggleTL: false,
+            toggleChat: true,
         };
     },
     watch: {
@@ -205,15 +211,6 @@ export default {
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),
         ...mapState("multiview", ["layoutContent"]),
-        // ...mapState("favorites", ["live"]),
-        // liveSoon() {
-        //     return this.live.filter((x) => {
-        //         return x.status === "live" || Math.abs(dayjs().diff(x.available_at, "minutes")) < 10;
-        //     });
-        // },
-        // needHideVImg() {
-        //     return HIDE_VIDEO_UNDER[this.$vuetify.breakpoint.name] > this.item.w;
-        // },
         cellContent() {
             return this.layoutContent[this.item.i];
         },
@@ -234,29 +231,9 @@ export default {
                 },
             });
         },
-        // getBackgroundForItem() {
-        //     if (this.cellContent) {
-        //         if (this.cellContent.type === "video" && this.pausedMode) {
-        //             return `url(${getVideoThumbnails(this.cellContent.content.id, false).hq720})`;
-        //         }
-        //         if (this.cellContent.type === "chat") {
-        //             return mdiMessage;
-        //         }
-        //     }
-        //     return "";
-        // },
         deleteCell() {
             this.$store.commit("multiview/removeLayoutItem", this.item.i);
         },
-        // handleVideoClicked(video) {
-        //     this.$store.commit("multiview/setLayoutContentById", {
-        //         id: this.item.i,
-        //         content: {
-        //             type: "video",
-        //             content: video,
-        //         },
-        //     });
-        // },
         vidPlaying(evt) {
             this.pausedMode = evt.data === 2;
         },

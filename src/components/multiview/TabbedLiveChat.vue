@@ -10,9 +10,11 @@
             :video="activeVideos[currentTab]"
             style="width: 100%; height: calc(100% - 32px)"
             :key="activeVideos[currentTab].id"
+            :showTL="showTL"
+            :showTLFirstTime="showTLFirstTime"
+            :showLiveChat="toggleChat"
             fluid
         />
-        <!--             :controlTL="true" -->
     </div>
 </template>
 
@@ -29,11 +31,38 @@ export default {
             type: Array,
             required: true,
         },
+        toggleTL: {
+            type: Boolean,
+            default: false,
+        },
+        toggleChat: {
+            type: Boolean,
+            default: true,
+        },
     },
     data() {
         return {
             currentTab: 0,
+            showTL: false,
+            showTLFirstTime: false,
+            newTL: 0,
+
+            // showLiveChat: true,
         };
+    },
+    watch: {
+        currentTab() {
+            this.showTLFirstTime = true;
+        },
+        toggleTL() {
+            if (!this.showTLFirstTime) {
+                this.showTLFirstTime = true;
+                this.showTL = true;
+                return;
+            }
+            this.showTL = !this.showTL;
+        },
+        toggleChat() {},
     },
 };
 </script>
