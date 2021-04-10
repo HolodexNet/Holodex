@@ -16,7 +16,7 @@ function GetUserLang() {
 
 const userLanguage = GetUserLang();
 
-const englishNamePrefs = new Set(["en", "es", "esmx", "fr", "id", "pt", "de", "ru", "it"]);
+const englishNamePrefs = new Set(["en", "eses", "es", "fr", "id", "pt", "de", "ru", "it"]);
 
 const initialState = {
     lang: validLangs.has(userLanguage) ? userLanguage : "en",
