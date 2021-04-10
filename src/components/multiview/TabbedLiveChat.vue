@@ -5,16 +5,17 @@
                 {{ video.channel.name.split(" ")[0] }}
             </v-tab>
         </v-tabs>
-        <WatchLiveChat
-            v-if="activeVideos.length"
-            :video="activeVideos[currentTab]"
-            style="width: 100%; height: calc(100% - 32px)"
-            :key="activeVideos[currentTab].id"
-            :showTL="showTL"
-            :showTLFirstTime="showTLFirstTime"
-            :showLiveChat="toggleChat"
-            fluid
-        />
+        <template v-if="activeVideos.length">
+            <WatchLiveChat
+                :video="activeVideos[currentTab]"
+                style="width: 100%; height: calc(100% - 32px)"
+                :key="activeVideos[currentTab].id"
+                :showTL="showTL"
+                :showTLFirstTime="showTLFirstTime"
+                :showLiveChat="toggleChat"
+                fluid
+            />
+        </template>
     </div>
 </template>
 
@@ -62,7 +63,13 @@ export default {
             }
             this.showTL = !this.showTL;
         },
-        toggleChat() {},
+        activeVideos() {
+            if (!this.activeVideos.length) {
+                this.currentTab = 0;
+            } else if (this.currentTab >= this.activeVideos.length) {
+                this.currentTab = this.activeVideos.length - 1;
+            }
+        },
     },
 };
 </script>
