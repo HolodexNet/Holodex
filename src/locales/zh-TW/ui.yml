@@ -20,7 +20,7 @@ component:
     addToFavorites: 加入收藏
     removeFromFavorites: 取消收藏
     unblock: 取消封鎖此頻道
-    block: 在Holodex上封鎖此頻道
+    block: 在 Holodex 上封鎖此頻道
   mainNav:
     home: 首頁
     favorites: 我的收藏
@@ -39,8 +39,12 @@ component:
     watching: '{0} 人正在觀看'
     liveNow: 實況中
     edit: 編輯
+    copiedToClipboard: 連結已複製到剪貼簿。
+    copyLink: 複製 Holodex 連結
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -90,6 +94,7 @@ component:
       beforeExportIcon: 點擊
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
