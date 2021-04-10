@@ -39,10 +39,10 @@ component:
     watching: '{0} смотрят'
     liveNow: LIVE
     edit: Изменить
+    copiedToClipboard: Скопировано в буфер обмена.
+    copyLink: Копировать ссылку
   videoDescription:
     description: Описание
-  video:
-    comment: { }
   description:
     showLess: Свернуть
     showMore: Ещё
@@ -92,7 +92,6 @@ component:
       beforeExportIcon: Нажмите
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Подписчики
       group: Группа
