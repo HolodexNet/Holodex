@@ -50,7 +50,7 @@
                                 <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
                             </v-btn>
                             <v-btn icon lg @click="toggleFullScreen">
-                                <v-icon>{{ mdiFullscreen }}</v-icon>
+                                <v-icon>{{ icons.mdiFullscreen }}</v-icon>
                             </v-btn>
                             <v-tooltip bottom v-if="!$store.state.isMobile">
                                 <template v-slot:activator="{ on, attrs }">
@@ -99,13 +99,14 @@
                         </v-col>
                         <v-col cols="12" :md="theatherMode ? 3 : 12" class="pa-0 pr-lg-3">
                             <WatchLiveChat
-                                v-if="hasLiveChat && showLiveChat"
+                                v-if="showChatWindow"
                                 :video="video"
                                 :mugenId="isMugen && '4ANxvWIM3Bs'"
                                 :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
                                 @videoUpdate="handleVideoUpdate"
                                 :showTL="showTL"
                                 :showTLFirstTime="showTLFirstTime"
+                                :showLiveChat="showLiveChat"
                                 :isMugen="isMugen"
                                 @historyLength="handleHistoryLength"
                             />
@@ -121,7 +122,7 @@
             <div
                 class="d-inline-flex flex-grow-1 flex-column"
                 :style="{
-                    'padding-right': hasLiveChat && showLiveChat && landscape ? '220px' : 0,
+                    'padding-right': showChatWindow && landscape ? '220px' : 0,
                     'min-height': landscape || !showLiveChat ? '0' : '160vh',
                     width: '100%',
                 }"
@@ -176,7 +177,7 @@
             </div>
             <!-- floated/fixed live chat -->
             <WatchLiveChat
-                v-if="hasLiveChat && showLiveChat"
+                v-if="showChatWindow"
                 :video="video"
                 :mugenId="isMugen && '4ANxvWIM3Bs'"
                 class="mobile-live-chat"
@@ -186,6 +187,7 @@
                 :fixedBottom="!landscape"
                 :showTL="showTL"
                 :showTLFirstTime="showTLFirstTime"
+                :showLiveChat="showLiveChat"
                 :isMugen="isMugen"
                 @historyLength="handleHistoryLength"
             />
@@ -330,6 +332,9 @@ export default {
         },
         hasWatched() {
             return this.$store.getters["library/hasWatched"](this.video.id);
+        },
+        showChatWindow() {
+            return this.hasLiveChat && (this.showLiveChat || this.showTL);
         },
         isMugen() {
             return this.$route.name === "mugen-clips";

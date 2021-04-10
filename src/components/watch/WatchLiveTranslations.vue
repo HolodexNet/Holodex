@@ -5,7 +5,7 @@
             <div class="pa-3" v-else>{{ overlayMessage }}</div>
             <v-btn v-if="!isLoading" @click="tlChatConnect()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
         </v-overlay>
-        <v-card-subtitle class="py-2 d-flex justify-space-between">
+        <v-card-subtitle class="py-1 d-flex justify-space-between">
             <div>
                 TLs [{{ liveTlLang }}]
                 <span :class="connected ? 'green--text' : 'red--text'">
@@ -16,7 +16,7 @@
                     }}
                 </span>
             </div>
-            <v-dialog v-model="dialog">
+            <v-dialog v-model="dialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn icon x-small v-bind="attrs" v-on="on">
                         <v-icon>
@@ -145,13 +145,13 @@ export default {
         tlChatConnect: debounce(function () {
             if (!this.manager) {
                 this.manager = new Manager(
-                    process.env.NODE_ENV === "development" ? "http://localhost:2434" : API_BASE_URL,
+                    /* process.env.NODE_ENV === "development" ? "http://localhost:2434" : */ API_BASE_URL,
                     {
                         query: { id: this.video.id },
                         reconnectionAttempts: 10,
                         transports: ["websocket"],
                         upgrade: false,
-                        path: process.env.NODE_ENV !== "development" && "/api/socket.io/",
+                        path: /* process.env.NODE_ENV !== "development" && */ "/api/socket.io/",
                         secure: true,
                     },
                 );
@@ -258,7 +258,7 @@ export default {
 .tl-body {
     overflow-y: auto;
     overscroll-behavior: contain;
-    height: 20vh;
+    height: calc(100% - 32px);
 }
 
 .tl-overlay {

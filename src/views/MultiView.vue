@@ -69,15 +69,12 @@
                         </v-card-text>
                     </v-card>
                 </v-menu>
-                <!-- Stacked Fullscreen and Chevron -->
-                <div class="d-flex flex-column mv-toolbar-stacked-btn">
-                    <v-btn icon @click="collapseToolbar = true">
-                        <v-icon>{{ icons.mdiChevronUp }}</v-icon>
-                    </v-btn>
-                    <v-btn @click="toggleFullScreen" icon>
-                        <v-icon>{{ icons.mdiFullscreen }}</v-icon>
-                    </v-btn>
-                </div>
+                <v-btn @click="toggleFullScreen" icon>
+                    <v-icon>{{ icons.mdiFullscreen }}</v-icon>
+                </v-btn>
+                <v-btn icon @click="collapseToolbar = true">
+                    <v-icon>{{ icons.mdiChevronUp }}</v-icon>
+                </v-btn>
             </div>
         </v-toolbar>
         <!-- Floating button to open toolbar when collapsed -->
@@ -503,10 +500,7 @@ export default {
 .mv-toolbar-btn.no-btn-text > .v-btn > .v-btn__content > .collapsible-text {
     display: none;
 }
-.mv-toolbar-stacked-btn > .v-btn.v-btn--icon.v-size--default {
-    width: 24px;
-    height: 24px;
-}
+
 .collapsible-text {
     margin-left: 2px;
 }
