@@ -15,7 +15,7 @@ import vuetifyIt from "vuetify/es5/locale/it";
 
 import enTL from "@/locales/en/ui.yml";
 import jaTL from "@/locales/ja-JP/ui.yml";
-import esTL from "@/locales/es-ES/ui.yml";
+import esESTL from "@/locales/es-ES/ui.yml";
 import esMXTL from "@/locales/es-MX/ui.yml";
 import msTL from "@/locales/ms-MY/ui.yml";
 import zhTL from "@/locales/zh-TW/ui.yml";
@@ -33,8 +33,8 @@ const messages = {
     en: { $vuetify: vuetifyEn, ...enTL },
     ja: { $vuetify: vuetifyJa, ...jaTL },
     ms: { $vuetify: vuetifyEn, ...msTL },
-    esmx: { $vuetify: vuetifyEs, ...esMXTL },
-    es: { $vuetify: vuetifyEs, ...esTL },
+    es: { $vuetify: vuetifyEs, ...esMXTL },
+    eses: { $vuetify: vuetifyEs, ...esESTL },
     id: { $vuetify: vuetifyId, ...idTL },
     zh: { $vuetify: vuetifyZh, ...zhTL },
     ru: { $vuetify: vuetifyEn, ...ruTL },
@@ -69,10 +69,10 @@ export const dayjsLangs = {
     async zh() {
         await import("dayjs/locale/zh-tw");
     },
-    async esmx() {
+    async es() {
         await import("dayjs/locale/es");
     },
-    async es() {
+    async eses() {
         await import("dayjs/locale/es");
     },
     async ms() {

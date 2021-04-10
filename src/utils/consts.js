@@ -96,11 +96,7 @@ export const TL_LANGS = Object.freeze([
         value: "ja",
     },
     {
-        text: "Español España",
-        value: "eses",
-    },
-    {
-        text: "Español México",
+        text: "Español",
         value: "es",
     },
     {
