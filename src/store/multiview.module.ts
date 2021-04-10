@@ -44,7 +44,7 @@ const mutations = {
         // try to find a good location for it:
         let foundGoodSpot = false;
         for (let y = 0; !foundGoodSpot && y < 24; y += 1) {
-            for (let x = 0; !foundGoodSpot && x < 24; x += 1) {
+            for (let x = 0; !foundGoodSpot && x < 24 - 4; x += 1) {
                 newLayoutItem = {
                     x,
                     y,

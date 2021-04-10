@@ -116,7 +116,8 @@
                     </youtube>
                 </div>
                 <template v-else-if="cellContent.type === 'chat'">
-                    <TabbedLiveChat :activeVideos="activeVideos" :toggleTL="toggleTL" :toggleChat="toggleChat" />
+                    <TabbedLiveChat :activeVideos="activeVideos" :setShowTL="toggleTL" :setShowChat="toggleChat" />
+                    <div></div>
                 </template>
             </v-sheet>
 
@@ -144,19 +145,30 @@
             <template v-if="isChat && !pausedMode">
                 <!-- CHAT + UNPAUSED --->
                 <v-sheet class="cell-control">
-                    <v-btn x-small width="60%" @click="pausedMode = !pausedMode"
+                    <v-btn :x-small="toggleChat || toggleTL" width="50%" @click="pausedMode = !pausedMode"
                         ><v-icon small>{{ icons.mdiMenu }}</v-icon
                         >{{ $t("component.videoCard.edit") }}</v-btn
                     >
-                    <v-btn x-small width="20%" @click="toggleChat = !toggleChat" :color="toggleChat ? 'primary' : ''">
+                    <v-btn
+                        :x-small="toggleChat || toggleTL"
+                        width="25%"
+                        @click="toggleChatHandle"
+                        :color="toggleChat ? 'primary' : ''"
+                    >
                         <v-icon small>{{ icons.mdiTranslate }}</v-icon
                         >Chat
                     </v-btn>
-                    <v-btn x-small width="20%" @click="toggleTL = !toggleTL" :color="toggleTL ? 'primary' : ''">
+                    <v-btn
+                        :x-small="toggleChat || toggleTL"
+                        width="25%"
+                        @click="toggleTLHandle"
+                        :color="toggleTL ? 'primary' : ''"
+                    >
                         <v-icon small>{{ icons.mdiTranslate }}</v-icon
                         >TL
                     </v-btn>
                 </v-sheet>
+                <div style="height: 20%" v-if="!toggleChat && !toggleTL"></div>
             </template>
         </template>
     </v-card>
@@ -248,6 +260,14 @@ export default {
         resetCell() {
             this.$store.commit("multiview/deleteLayoutContent", this.item.i);
         },
+        toggleChatHandle() {
+            this.toggleChat = !this.toggleChat;
+            if (!this.toggleChat && !this.toggleTL) this.toggleTL = true;
+        },
+        toggleTLHandle() {
+            this.toggleTL = !this.toggleTL;
+            if (!this.toggleChat && !this.toggleTL) this.toggleChat = true;
+        },
     },
 };
 </script>
@@ -267,11 +287,12 @@ export default {
         flex-wrap: wrap;
         flex-grow: 1;
         flex-basis: 100%;
+        flex-shrink: 1;
     }
 }
 
-.cell-content.chat-cell {
-    height: calc(100% - 24px);
+.cell-content.chat-cell .show-tl-overlay {
+    // height: calc(100% - 24px);
 }
 
 .mv-cell.edit-mode {

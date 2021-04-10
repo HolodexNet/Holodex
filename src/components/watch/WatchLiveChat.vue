@@ -107,7 +107,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .watch-live-chat {
     position: relative;
 }
@@ -159,11 +159,12 @@ export default {
 
 .watch-live-chat.show-tl-overlay .tl-overlay {
     height: 250px;
-}
 
-.tl-full-height {
-    height: 100% !important;
-    max-height: 100% !important;
+    &.tl-full-height {
+        position: absolute;
+        height: 100%;
+        max-height: 100%;
+    }
 }
 
 /* Fixed Bottom */

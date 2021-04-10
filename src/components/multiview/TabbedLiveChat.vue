@@ -1,18 +1,18 @@
 <template>
     <div style="width: 100%; height: 100%">
         <v-tabs v-model="currentTab" height="32">
-            <v-tab v-for="(video, index) in activeVideos" :key="index">
+            <v-tab v-for="(video, index) in activeVideos" :key="'wctabs' + index">
                 {{ video.channel.name.split(" ")[0] }}
             </v-tab>
         </v-tabs>
-        <template v-if="activeVideos.length">
+        <template v-if="activeVideos.length && currentTab >= 0">
             <WatchLiveChat
-                :video="activeVideos[currentTab]"
+                :video="activeVideos[currentTab || 0]"
                 style="width: 100%; height: calc(100% - 32px)"
-                :key="activeVideos[currentTab].id"
+                :key="'wlc' + activeVideos[currentTab || 0].id"
                 :showTL="showTL"
                 :showTLFirstTime="showTLFirstTime"
-                :showLiveChat="toggleChat"
+                :showLiveChat="setShowChat"
                 fluid
             />
         </template>
@@ -32,13 +32,13 @@ export default {
             type: Array,
             required: true,
         },
-        toggleTL: {
+        setShowTL: {
             type: Boolean,
             default: false,
         },
-        toggleChat: {
+        setShowChat: {
             type: Boolean,
-            default: true,
+            default: false,
         },
     },
     data() {
@@ -55,13 +55,13 @@ export default {
         currentTab() {
             this.showTLFirstTime = true;
         },
-        toggleTL() {
+        setShowTL(nw) {
             if (!this.showTLFirstTime) {
                 this.showTLFirstTime = true;
                 this.showTL = true;
                 return;
             }
-            this.showTL = !this.showTL;
+            this.showTL = nw;
         },
         activeVideos() {
             if (!this.activeVideos.length) {
