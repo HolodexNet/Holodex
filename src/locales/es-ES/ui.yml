@@ -76,7 +76,7 @@ component:
     recentSongsHeader: Canciones Recientes
     weeklyTopPlaysHeader: Mas Reproducciones Semanales
   songList:
-    songTitle: Titulo
+    songTitle: Título
     songCoveredBy: Interpretado por
     songDuration: Duración
     sangOnTime: Cantado en
@@ -98,7 +98,7 @@ views:
     sortOptions:
       subscribers: Suscriptores
       group: Grupo
-      recentUpload: Cargas recientes
+      recentUpload: Subidas recientes
       videoCount: Número de videos
       clipCount: Número de clips
     tabs:
@@ -109,7 +109,7 @@ views:
     favoritesAreEmpty: No tienes favoritos!
     blockedAreEmpty: No tienes canales bloqueados.
   home:
-    liveOrUpcomingHeading: En vivo / Proximamente
+    liveOrUpcomingHeading: En vivo / Próximamente
     recentVideosHeading: Videos recientes
     recentVideoToggles:
       all: Todos
@@ -119,7 +119,7 @@ views:
     savedVideosTitle: Videos Guardados
     createYtPlaylistButton: Crear lista de reproducción de YT ({0})
     deleteFromLibraryButton: Eliminar ({0})
-    deleteConfirmation: Estas seguro de que quieres eliminar {0} videos?
+    deleteConfirmation: '¿Estas seguro de que quieres eliminar {0} videos?'
     deleteConfirmationOK: Eliminar
     deleteConfirmationCancel: Cancelar
     selectionReset: Reiniciar
@@ -130,16 +130,16 @@ views:
     exportCsv: Archivo CSV
     selectionSelect50: Seleccionar 50
     exportYTExplanation: >-
-      La lista de reproducción de youtube creada por esta función esta <b>sin listar</b> y podriaser eliminada por Youtube. <br /> Gracias a la funcionalidad incompleta de Youtube, necesitas hacer lo siguiente para guardar la lista de reproducción de Youtube <b>sin listada</b> en tu cuenta.
-    exportYTHeading: Guardando instrucciones de la lista de reproducción de Youtube
+      Será generada una lista de reproducción <b>temporal</b> y puede que sea eliminada por Youtube. <br /> Ya que esta funcionalidad no está integrada con Youtube, para guarda la lista en tu cuenta deberás hacer lo siguiente:
+    exportYTHeading: Instrucciones para guarda la lista de reproducción
     exportYTInstructions: >-
-      <b class="red--text">Paso 1</b>: Reproduce la lista de reproducción de youtube y cambia la interfaz de usuario del reproductor a mini-reproductor. <br /><br /> <b class="red--text">Paso 2</b>: Elige cualquier video y añádelo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: La lista de reproducción puede ser guardada ahora. Has clic en guardar para guardarla.
+      <b class="red--text">Paso 1</b>: Pulsa en “CREAR LISTA DE REPORDUCCIÓN DE YT”, Una vez hecho esto en los ajustes del reproductor cambia la vista a “minireproductor”.  <br /><br /> <b class="red--text">Paso 2</b>: Elige cualquier video y añádelo a la cola de reproducción. <br /><br /> <b class="red--text">Paso 3</b>: Ahora podrás guardar la lista de reproducción. Pulsa en “GUARDAR” para guardar la lista de reproducción.
   notFound:
     title: Contenido no encontrado
     back: Volver al Inicio
   search:
     sort:
-      newest: Mas nuevo
+      newest: Más nuevo
       oldest: Más antiguo
     type:
       all: Todos
@@ -155,21 +155,21 @@ views:
     darkModeMsg: Cambia el tema entre modo oscuro y modo claro
     redirectModeLabel: Abrir en Youtube
     redirectModeMsg: >-
-      Clickear en cualquier video lo abrirá en Youtube, clicker en el titulo del video lo abrirá en Holodex
+      Al pulsar un video lo abrirá en Youtube y al pulsar el título del video lo mostrara en Holodex
     useEnglishNameLabel: Usar nombre en inglés
-    useEnglishNameMsg: Usa nombres localizados al Inglés para los canales de Vtubers
+    useEnglishNameMsg: Usa los nombres traducidos al Inglés para los canales de Vtubers
     hideVideoThumbnailsLabel: Ocultar miniaturas
     hideVideoThumbnailsMsg: >-
-      Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos deslizar en mobiles
+      Oculta las miniaturas de los videos, agiliza el tiempo de carga y facilita la navegación en dispositivos móviles
     pushNotificationLabel: Notificaciones emergentes
-    pushNotificationMsg: Activar notificaciónes emergentes para canales favoritos
+    pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
     autoplayVideoLabel: Reproducir vídeos automáticamente
-    autoplayVideoMsg: Activar la reproducción automática de vídeos
+    autoplayVideoMsg: Activa la reproducción automática de videos
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
-    resetAllSettings: Reiniciar todas las opciones/datos
+    resetAllSettings: Restablecer por defecto todas las opciones
     clipLanguageSelection: 'Ver clips en estos idiomas'
-    tlLanguageSelection: Ver traducciones en vivo en estos idiomas
+    tlLanguageSelection: Traducir el chat a este idioma
   app:
     update_available: Una actualización está disponible
     update_btn: Actualizar
