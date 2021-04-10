@@ -87,7 +87,12 @@
 
         <!--=== Video/Chat iFrame based on type ===-->
         <template v-if="cellContent">
-            <v-sheet rounded="md" color="transparent" class="cell-content" :class="{ 'pa-6 pb-1': pausedMode }">
+            <v-sheet
+                rounded="md"
+                color="transparent"
+                class="cell-content"
+                :class="{ 'pa-6 pb-1': pausedMode, 'chat-cell': isChat }"
+            >
                 <div
                     class="mv-frame ma-auto"
                     :class="{ 'elevation-4': pausedMode }"
@@ -263,6 +268,10 @@ export default {
         flex-grow: 1;
         flex-basis: 100%;
     }
+}
+
+.cell-content.chat-cell {
+    height: calc(100% - 24px);
 }
 
 .mv-cell.edit-mode {
