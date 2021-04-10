@@ -69,10 +69,13 @@
 </template>
 
 <script lang="ts">
-import api from "@/utils/backend-api";
+import api, { API_BASE_URL } from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
 import { TL_LANGS } from "@/utils/consts";
 import { debounce } from "@/utils/functions";
+import VueSocketIOExt from "vue-socket.io-extended";
+import { Manager } from "socket.io-client";
+import Vue from "vue";
 
 export default {
     name: "WatchLiveTranslations",
@@ -132,6 +135,21 @@ export default {
                 vm.showOverlay = true;
             }
         },
+    },
+    created() {
+        const manager = new Manager(
+            /* process.env.NODE_ENV === "development" ? "http://localhost:2434" : */ API_BASE_URL,
+            {
+                reconnectionAttempts: 10,
+                transports: ["websocket"],
+                upgrade: false,
+                path: /* process.env.NODE_ENV !== "development" && */ "/api/socket.io/",
+                secure: true,
+                autoConnect: false,
+            },
+        );
+
+        Vue.use(VueSocketIOExt, manager.socket("/"));
     },
     mounted() {
         this.tlJoin();
