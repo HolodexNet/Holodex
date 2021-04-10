@@ -102,7 +102,7 @@ views:
       Favorites: Favoritos
       Blocked: Bloqueado
     favoritesAreEmpty: No tienes favoritos!
-    blockedAreEmpty: No tienes canales bloqueados.
+    blockedAreEmpty: No has bloqueado ningún canal.
   home:
     liveOrUpcomingHeading: En directo / Próximamente
     recentVideosHeading: Videos recientes
