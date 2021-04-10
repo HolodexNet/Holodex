@@ -14,6 +14,7 @@ const initialState = {
     lang: validLangs.has(userLanguage) ? userLanguage : "en",
     clipLangs: [validTlLangs.has(userLanguage) ? userLanguage : "en"],
     darkMode: true,
+    defaultOpenFavorites: false,
     redirectMode: false,
     autoplayVideo: true,
     canUseWebP: true,
@@ -77,6 +78,9 @@ const mutations = {
     },
     setLiveTlLang(state, val) {
         state.liveTlLang = val;
+    },
+    setDefaultOpenFavorites(state, val) {
+        state.defaultOpenFavorites = val;
     },
     resetState(state) {
         Object.assign(state, initialState);

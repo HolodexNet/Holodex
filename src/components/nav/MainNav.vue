@@ -223,6 +223,7 @@ export default {
                 return this.$store.state.currentOrg;
             },
             set(val) {
+                if (this.$route.name === "favorites") this.$router.push({ name: "home" });
                 return this.$store.commit("setCurrentOrg", val);
             },
         },
@@ -249,7 +250,7 @@ export default {
             return [
                 {
                     name: this.$t("component.mainNav.home"),
-                    path: "/",
+                    path: "/home",
                     icon: icons.mdiHome,
                 },
                 {

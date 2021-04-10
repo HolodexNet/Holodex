@@ -37,6 +37,11 @@
                     :messages="$t('views.settings.darkModeMsg')"
                 ></v-switch>
                 <v-switch
+                    v-model="defaultOpenFavorites"
+                    :label="$t('views.settings.defaultFavorites')"
+                    :messages="$t('views.settings.defaultFavoritesMsg')"
+                ></v-switch>
+                <v-switch
                     v-model="redirectMode"
                     :label="$t('views.settings.redirectModeLabel')"
                     :messages="$t('views.settings.redirectModeMsg')"
@@ -154,6 +159,14 @@ export default {
             set(val: any[]) {
                 // sort array to increase cache hit rate
                 this.$store.commit("settings/setClipLangs", val.sort());
+            },
+        },
+        defaultOpenFavorites: {
+            get() {
+                return this.$store.state.settings.defaultOpenFavorites;
+            },
+            set(val) {
+                this.$store.commit("settings/setDefaultOpenFavorites", val);
             },
         },
     },
