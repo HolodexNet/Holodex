@@ -95,7 +95,7 @@
         </template>
         <template v-else>
             <div :key="video.id" v-for="video in filteredLive" style="position: relative; margin-right: 3px">
-                <div class="live-badge red">
+                <div class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
                     {{ formatDurationLive(video) }}
                 </div>
                 <v-avatar size="50" @click="handleVideoClick(video)">
@@ -111,7 +111,7 @@ import api from "@/utils/backend-api";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { ORGS, VIDEO_URL_REGEX } from "@/utils/consts";
-import { dayjs, formatDuration } from "@/utils/time";
+import { dayjs } from "@/utils/time";
 import { mapGetters } from "vuex";
 
 export default {
@@ -181,19 +181,23 @@ export default {
         filteredLive() {
             return this.live
                 .filter((l) => {
-                    return l.status === "live";
+                    return l.status === "live" || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "minutes"));
                 })
                 .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
         },
     },
     methods: {
-        formatDuration,
         formatDurationLive(video) {
-            const secs = dayjs(/* this.now */).diff(dayjs(video.start_actual)) / 1000;
+            const now = dayjs();
+            const scheduled = dayjs(video.start_scheduled);
+            // use start_actual or start_scheduled if it has one
+            const secs = now.isAfter(scheduled)
+                ? dayjs(/* this.now */).diff(dayjs(video.start_actual)) / 1000
+                : scheduled.diff(dayjs()) / 1000;
+
             const h = Math.floor(secs / (60 * 60));
             const m = Math.floor((secs % (60 * 60)) / 60);
             return h ? `${h}h` : `${m}m`;
-            // return formatDuration(diff);
         },
         handleVideoClick(video) {
             this.$emit("videoClicked", video);
