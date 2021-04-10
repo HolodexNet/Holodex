@@ -9,7 +9,7 @@
 ## Reporting a Bug/Feature Request
 * For bugs, please make sure to include a picture describing the issue (if applicable)
 * If the bug is urgent, please send us a message in the Discord server
-
+* Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) for known issues/progress 
 ## Setup for Development
 ```
 git clone git@github.com:RiceCakess/Holodex.git
@@ -18,21 +18,15 @@ npm install
 npm run serve
 ```
 
-## Suggested VSCode Extensions
+## Building
 ```
-formulahendry.auto-close-tag
-antfu.i18n-ally
-irongeek.vscode-env
-jpruliere.env-autocomplete
-lukas-tr.materialdesignicons-intellisense
-octref.vetur
-jcbuisson.vue
-dbaeumer.vscode-eslint
-intellsmi.comment-translate
+npm run build
+# Analyzing build bundle size
+npm run analyze-build
 ```
-
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) for things being planned
 
 ## Project Structure
 ```
@@ -44,6 +38,18 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ├── utils                   # Utility functions
 ├── views                   # Page defintions
 └── App.vue                 # Main entry point, sets up router-view
+```
+
+## Suggested VSCode Extensions
+```
+antfu.i18n-ally
+irongeek.vscode-env
+jpruliere.env-autocomplete
+lukas-tr.materialdesignicons-intellisense
+octref.vetur
+jcbuisson.vue
+dbaeumer.vscode-eslint
+intellsmi.comment-translate
 ```
 
 ## Roadmap
@@ -60,5 +66,5 @@ Pull requests are welcome. For major changes, please open an issue first to disc
   - Tag aliasing
   - Tag categories
 - [ ] public API / API key for user account
-- [ ] live chat features / TL transcript 
-- [ ] music player / radio / tagging songs in singing streams
+- [x] live chat features / TL transcript 
+- [x] music player / radio / tagging songs in singing streams
