@@ -3,12 +3,20 @@ import Vue from "vue";
 import { langs } from "@/plugins/vuetify";
 import { TL_LANGS } from "@/utils/consts";
 
-const userLanguage = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
-
 const validLangs = new Set(langs.map((x) => x.val));
 const validTlLangs = new Set(TL_LANGS.map((x) => x.value));
 
-const englishNamePrefs = new Set(["en", "es", "fr", "id", "pt", "de", "ru", "it"]);
+function GetUserLang() {
+    const tmp1 = (navigator.language || navigator.userLanguage || "en").split("-");
+    if (validLangs.has(tmp1.join("").toLowerCase())) {
+        return tmp1.join("").toLowerCase();
+    }
+    return tmp1[0].toLowerCase();
+}
+
+const userLanguage = GetUserLang();
+
+const englishNamePrefs = new Set(["en", "es", "esmx", "fr", "id", "pt", "de", "ru", "it"]);
 
 const initialState = {
     lang: validLangs.has(userLanguage) ? userLanguage : "en",
