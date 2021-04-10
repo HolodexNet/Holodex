@@ -7,7 +7,7 @@ component:
     aboutPage: Página de información
     afterAboutPageHyperlink: .
   channelList:
-    signInToFavorite: Registrate para marcar como favorito
+    signInToFavorite: Regístrate para marcar como favorito
     unfavoriteAllInGroup: Desmarcar todos como favoritos
     favoriteAllInGroup: Marcar todo en el grupo como favorito
   channelInfo:
@@ -39,11 +39,15 @@ component:
     watching: '{0} Mirando'
     liveNow: En Vivo
     edit: Editar
+    copiedToClipboard: Link copiado al portapapeles.
+    copyLink: Copiar link de Holodex
   videoDescription:
     description: Descripción
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
-    showMore: Mostrar Mas
+    showMore: Mostrar Más
   watch:
     streamingFor: Transmitiendo por {0}
     nextUpInMugen: Siguiente
@@ -58,7 +62,7 @@ component:
       videourl: link del vídeo
   relatedVideo:
     clipsLabel: clips
-    simulcastsLabel: transmisiónes simultaneas
+    simulcastsLabel: transmisiones simultaneas
     refersLabel: referencias
     sourcesLabel: fuentes
     songsLabel: canciones
@@ -90,6 +94,7 @@ component:
       beforeExportIcon: Pulse
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Suscriptores
       group: Grupo
