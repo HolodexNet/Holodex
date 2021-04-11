@@ -285,8 +285,8 @@ about:
       Es una pena que te quieras ir. Por favor comunícame si hay algún problema al que te pueda ayudar. Si aun así quieres que tu cuenta se elimine de Holodex envíanos un mensaje a nuestro discord.
   gdpr: GDPR y mis datos
   gdprContent: >-
-    Una cookie de Google Analytics se utiliza para rastrear visitas a la pagina para propósitos analíticos. Después de iniciar sesión asociamos su nombre de usuario y ID de la cuenta de redes sociales con sus favoritos. Estos datos pueden incluir tu correo electrónico (para Google), Discord ID o Twitter respectivamente.
-  gdprDeletion: Para la eliminación de sus datos de usuario, por favor contáctenos en discord!
+    Las cookies de Google Analytics se utilizan para tener un seguimiento de las visitas de la página con motivos de análisis estadístico. Una vez que has iniciado sesión tu correo e ID de tu cuenta quedarán asociados. Estos datos pueden incluir tu dirección de correo electrónico, ID de Discord y tu ID de twiiter.
+  gdprDeletion: Si quieres eliminar tus datos ponte en contacto con nosotros a través de discord.
   feedback: Sugerencias/Reportar incidencias
   feedbackHtml: >-
     Puedes crear una incidencia en <a href="https://github.com/RiceCakess/Holodex/issues">Github</a> o hablar con el equipo de Holodex en Discord. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
