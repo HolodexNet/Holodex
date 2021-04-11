@@ -43,6 +43,8 @@ component:
     copyLink: Salin Tautan Holodex
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -92,6 +94,7 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -190,6 +193,10 @@ views:
       TLSettingsTitle: Pengaturan Terjemahan
       StickBottomSettingLabel: Sematkan dibawah (HP)
       StickBottomSettingsDesc: Kolom Terjemahan akan disematkan dibawah kolom chat (pengaturan awal disematkan diatas pada tampilan HP)
+      showVerifiedMessages: Menampilkan Pesan Pengguna yang Terverifikasi
+      showModeratorMessages: Menampilkan Pesan Moderator
+      tlFontSize: Ukuran Teks
+      tlWindowSize: Ukuran Kotak Terjemahan (%), biarkan 0% untuk otomatis menyesuaikan
       retryBtn: Coba lagi
       status:
         reconnecting: Menghubungkan otomatis...
