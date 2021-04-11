@@ -3,12 +3,15 @@ import VueGTag from "vue-gtag";
 import VueMeta from "vue-meta";
 import VueI18n from "vue-i18n";
 import * as icons from "@/utils/icons";
+// import VueSocketIOExt from "vue-socket.io-extended";
+// import { io, Manager } from "socket.io-client";
 import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import { i18n, vuetify } from "./plugins/vuetify";
 
 import "./registerServiceWorker";
+// import { API_BASE_URL } from "./utils/backend-api";
 
 Vue.config.productionTip = false;
 Vue.config.performance = true;
@@ -24,6 +27,9 @@ Vue.use(
 // Vue.use(VueSimpleHeadful, {
 //     key: "metaInfo", // custom key for component option
 // });
+
+// Create a manager to use a custom path (due to reverse proxy)
+
 Vue.use(VueMeta, {
     refreshOnceOnNavigation: true,
 });

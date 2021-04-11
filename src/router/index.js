@@ -28,6 +28,14 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: "/",
+        redirect(to) {
+            const { hash, params, query } = to;
+            if (store.state.settings.defaultOpenFavorites) return { name: "favorites", hash, params, query };
+            return { name: "home", hash, params, query };
+        },
+    },
+    {
+        path: "/home",
         name: "home",
         component: Home,
     },

@@ -8,7 +8,7 @@
             fluid: fluid,
         }"
     >
-        <span class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
+        <span class="loading-text" v-if="showLiveChat">{{ $t("views.watch.chat.loading") }}</span>
         <WatchLiveTranslations
             :video="video"
             v-if="!isMugen && shouldConnectLiveTL"
@@ -16,28 +16,37 @@
             :class="{
                 'chat-overlay': fixedBottom || fixedRight,
                 'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
+                'tl-full-height': !showLiveChat,
+            }"
+            :style="{
+                height:
+                    showLiveChat && $store.state.settings.liveTlWindowSize > 0
+                        ? $store.state.settings.liveTlWindowSize + '%'
+                        : '',
             }"
             @videoUpdate="handleVideoUpdate"
             @historyLength="handleHistoryLength"
         >
             <template v-slot:button> </template>
         </WatchLiveTranslations>
-        <div class="embedded-chat">
+        <div
+            class="embedded-chat"
+            v-if="showLiveChat"
+            :style="{
+                height:
+                    $store.state.settings.liveTlWindowSize > 0 && shouldShowLiveTL && !fixedBottom && !fixedRight
+                        ? 100 - $store.state.settings.liveTlWindowSize + '%'
+                        : '',
+            }"
+        >
             <iframe :src="liveChatUrl" frameborder="0" />
-            <div class="chat-overlay-btn d-flex align-center" v-if="controlTL">
-                <v-btn icon lg @click="toggleTL" :color="shouldShowLiveTL ? 'primary' : '#999999'">
-                    <div class="notification-sticker" v-if="hasNewTranslations"></div>
-                    <v-icon>{{ mdiTranslate }}</v-icon>
-                </v-btn>
-            </div>
         </div>
     </v-sheet>
 </template>
 
 <script lang="ts">
-import { mdiTranslate } from "@mdi/js";
 import WatchLiveTranslations from "./WatchLiveTranslations.vue";
-
+// Contains Live Chat iframe and Chat TLs, can show either one at both at the same time
 export default {
     name: "WatchLiveChat",
     components: {
@@ -63,15 +72,15 @@ export default {
             type: Boolean,
             default: false,
         },
+        showLiveChat: {
+            type: Boolean,
+            default: true,
+        },
         showTL: {
             type: Boolean,
             default: false,
         },
         showTLFirstTime: {
-            type: Boolean,
-            default: false,
-        },
-        controlTL: {
             type: Boolean,
             default: false,
         },
@@ -81,18 +90,7 @@ export default {
         },
     },
     data() {
-        return {
-            mdiTranslate,
-
-            stickTop: false,
-            // TODO: redesign live chat in multiview so that this jank can be removed
-            // duplicating the props here because TabbedLiveChat does not provide them.
-            tl: {
-                show: !this.$store.state.isMobile,
-                showFirstTime: !this.$store.state.isMobile,
-                new: 0,
-            },
-        };
+        return {};
     },
     computed: {
         liveChatUrl() {
@@ -102,14 +100,14 @@ export default {
             }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
         },
         shouldConnectLiveTL() {
-            return this.controlTL ? this.tl.showFirstTime : this.showTLFirstTime;
+            return this.showTLFirstTime;
         },
         shouldShowLiveTL() {
-            return this.controlTL ? this.tl.show : this.showTL;
+            return this.showTL;
         },
-        hasNewTranslations() {
-            return (this.controlTL ? this.tl.new : this.newTL) > 0;
-        },
+        // hasNewTranslations() {
+        //     return (this.controlTL ? this.tl.new : this.newTL) > 0;
+        // },
     },
     methods: {
         handleVideoUpdate(update) {
@@ -117,32 +115,14 @@ export default {
             this.$emit("videoUpdate", update);
         },
         handleHistoryLength(length) {
-            if (this.controlTL) {
-                if (!this.tl.show) this.tl.new += 1;
-            } else {
-                // in this case, bubble the event
-                this.$emit("historyLength", length);
-            }
-        },
-        toggleTL() {
-            if (this.controlTL) {
-                console.log("toggle TL from live chat overlay");
-                // showTLFirstTime will initiate connection
-                // showTL toggle will show/hide without terminating connection
-                if (!this.tl.showFirstTime) {
-                    this.tl.showFirstTime = true;
-                    this.tl.show = true;
-                    return;
-                }
-                this.tl.show = !this.tl.show;
-                this.tl.new = 0;
-            }
+            // in this case, bubble the event
+            this.$emit("historyLength", length);
         },
     },
 };
 </script>
 
-<style>
+<style lang="scss">
 .watch-live-chat {
     position: relative;
 }
@@ -189,12 +169,17 @@ export default {
 
 /* tl box static size of 200 px */
 .watch-live-chat.show-tl-overlay .embedded-chat {
-    /* body: 200px, header: 38px */
-    height: calc(100% - 200px - 38px);
+    height: calc(100% - 250px);
 }
 
-.watch-live-chat.show-tl-overlay .tl-overlay .tl-body {
-    height: 200px;
+.watch-live-chat.show-tl-overlay .tl-overlay {
+    height: 250px;
+
+    &.tl-full-height {
+        position: absolute;
+        height: 100%;
+        max-height: 100%;
+    }
 }
 
 /* Fixed Bottom */
@@ -214,12 +199,11 @@ export default {
 .watch-live-chat.fixed-bottom > .embedded-chat {
     position: relative;
     height: 100%;
-    /* height: calc(100vh - 36px - 100vw * 0.5625); */
-    /* height: 100vh; */
 }
 
-.watch-live-chat.fixed-bottom > .tl-overlay .tl-body {
-    height: 20vh;
+.watch-live-chat.fixed-right > .tl-overlay,
+.watch-live-chat.fixed-bottom > .tl-overlay {
+    height: 45%;
 }
 
 /* Fixed Right */
@@ -242,19 +226,8 @@ export default {
     width: 133%;
 }
 
-.watch-live-chat.fixed-right > .tl-overlay .tl-body {
-    height: 35vh;
-}
-
-/* reposition Show TL button when chat is scaled */
-.fixed-right .embedded-chat .chat-overlay-btn {
-    height: 36px;
-    /* right: 36px; */
-}
-
 .chat-overlay {
     width: 100%;
-    /* height: 35%; */
     position: absolute;
     z-index: 5;
     top: 0;
@@ -263,22 +236,5 @@ export default {
 .chat-overlay-stickbottom {
     bottom: 0;
     top: initial;
-}
-.chat-overlay-btn {
-    bottom: 4px;
-    left: 64px;
-    height: 48px;
-    position: absolute;
-    z-index: 10;
-}
-
-div.notification-sticker {
-    position: absolute;
-    top: 1px;
-    right: 2px;
-    border-radius: 4px;
-    width: 8px;
-    height: 8px;
-    background-color: rgb(230, 33, 23);
 }
 </style>

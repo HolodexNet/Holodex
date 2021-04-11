@@ -2,6 +2,7 @@
 import api from "@/utils/backend-api";
 import Vue from "vue";
 import { debounce } from "@/utils/functions";
+import fdequal from "fast-deep-equal";
 
 const initialState = {
     live: [],
@@ -33,19 +34,20 @@ const getters = {
 };
 
 const actions = {
-    fetchFavorites({ commit, rootState, dispatch }) {
+    fetchFavorites({ commit, rootState, state, dispatch }) {
         return api
             .favorites(rootState.userdata.jwt)
             .then((res) => {
-                commit("setFavorites", res.data);
+                if (!fdequal(res.data, state.favorites)) commit("setFavorites", res.data);
             })
             .catch((e) => {
                 console.error(e);
                 dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
             });
     },
-    fetchLive({ state, commit }) {
-        if (!state.lastLiveUpdate || Date.now() - state.lastLiveUpdate > 2 * 60 * 1000) {
+    fetchLive({ state, commit, rootState }, { force = false, minutes = 2 }) {
+        if (!(rootState.userdata && rootState.userdata.jwt)) return null; // don't update.
+        if (force || !state.lastLiveUpdate || Date.now() - state.lastLiveUpdate > minutes * 60 * 1000) {
             commit("fetchStart");
             return api
                 .favoritesLive({
@@ -100,6 +102,7 @@ const actions = {
                 if (res.status === 200) {
                     // console.log("success");
                     commit("setFavorites", res.data);
+                    dispatch("fetchLive", { force: true });
                 } else {
                     throw new Error("Error while adding favorite");
                 }
@@ -109,8 +112,8 @@ const actions = {
     async resetFavorites({ dispatch, commit, rootState }) {
         commit("resetVideos");
         commit("resetState");
-        if (rootState.userdata?.jwt) await dispatch("fetchFavorites");
-        if (rootState.userdata?.jwt) await dispatch("fetchLive");
+        if (rootState.userdata && rootState.userdata.jwt) await dispatch("fetchFavorites");
+        if (rootState.userdata && rootState.userdata.jwt) await dispatch("fetchLive", { force: true });
         else commit("setFavorites", []);
     },
 };

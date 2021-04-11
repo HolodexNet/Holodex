@@ -1,92 +1,121 @@
 <template>
-    <div style="width: 100%" ref="fullscreen-content">
+    <div style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }" ref="fullscreen-content">
         <!-- Floating tool bar -->
-        <transition name="slide-y-transition" mode="out-in">
-            <v-toolbar dense class="mv-toolbar" style="right: 0" v-if="!collapseToolbar" absolute>
-                <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
-                <div
-                    class="flex-grow-1 justify-center d-flex mv-toolbar-btn align-center"
-                    :class="{ 'no-btn-text': $store.state.isMobile }"
-                >
-                    <v-btn @click="editMode = !editMode" :color="editMode ? 'light-green' : 'blue'">
-                        <v-icon>{{ editMode ? icons.mdiCheck : icons.mdiPencil }}</v-icon>
-                        <span class="collapsible-text">{{ editMode ? "Done" : "Edit" }}</span>
-                    </v-btn>
-                    <v-btn @click="addItem" v-if="editMode" color="green">
-                        <v-icon>{{ mdiViewGridPlus }}</v-icon>
-                        <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
-                    </v-btn>
-                    <v-btn @click="clearAllItems" v-if="editMode" color="red">
-                        <v-icon>{{ icons.mdiRefresh }}</v-icon>
-                        <span class="collapsible-text">{{ $t("component.music.clearPlaylist") }}</span>
-                    </v-btn>
-                    <v-btn v-if="!editMode" color="green darken-1" @click="showPresetSelector = true">
-                        <v-icon>{{ icons.mdiGridLarge }}</v-icon>
-                        <span class="collapsible-text">{{ $t("views.multiview.presets") }}</span>
-                    </v-btn>
-                    <v-menu
-                        :open-on-click="true"
-                        bottom
-                        nudge-bottom="40px"
-                        :close-on-content-click="false"
-                        :open-on-hover="false"
-                        v-model="shareDialog"
-                        width="400"
-                        z-index="300"
-                    >
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn v-bind="attrs" v-on="on" v-show="!editMode">
-                                <v-icon>{{ mdiLinkVariant }}</v-icon>
-                                <span class="collapsible-text">{{ $t("views.multiview.permalink") }}</span>
-                            </v-btn>
-                        </template>
+        <!-- <transition name="slide-y-transition" mode="out-in"> -->
+        <v-toolbar class="mv-toolbar" style="right: 0" v-show="!collapseToolbar">
+            <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
+            <!-- Toolbar Live Video Selector -->
+            <div
+                class="justify-start d-flex mv-toolbar-btn align-center thin-scroll-bar"
+                style="overflow-x: auto; overflow-y: hidden"
+                v-if="!$vuetify.breakpoint.xs"
+            >
+                <VideoSelector horizontal @videoClicked="handleToolbarClick" />
+            </div>
+            <!-- Single Button video selector for xs displays -->
+            <div v-else>
+                <v-btn @click="handleToolbarShowSelector" icon>
+                    <v-icon size="30" style="border-radius: 0">{{ mdiCardPlus }}</v-icon>
+                </v-btn>
+            </div>
+            <!-- Right side buttons -->
+            <div
+                class="flex-grow-1 justify-end d-flex mv-toolbar-btn align-center"
+                :class="{ 'no-btn-text': $store.state.isMobile || true }"
+            >
+                <!-- <v-switch v-model="autoLayout" hide-details></v-switch> -->
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn @click="addItem" color="green" icon v-bind="attrs" v-on="on">
+                            <v-icon>{{ mdiViewGridPlus }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>{{ $t("views.multiview.addframe") }}</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn @click="clearAllItems" color="red" icon v-bind="attrs" v-on="on">
+                            <v-icon>{{ icons.mdiRefresh }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>{{ $t("component.music.clearPlaylist") }}</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn color="primary" @click="showPresetSelector = true" icon v-bind="attrs" v-on="on">
+                            <v-icon>{{ icons.mdiGridLarge }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>{{ $t("views.multiview.presets") }}</span>
+                </v-tooltip>
 
-                        <v-card rounded="lg">
-                            <!-- <v-card-title> Share </v-card-title> -->
-                            <v-card-text>
-                                <v-text-field
-                                    readonly
-                                    solo-inverted
-                                    dense
-                                    hide-details
-                                    :class="doneCopy ? 'green lighten-2' : ''"
-                                    :value="exportURL"
-                                    :append-icon="mdiClipboardPlusOutline"
-                                    @click:append.stop="startCopyToClipboard(exportURL)"
-                                    style="ma-1"
-                                ></v-text-field>
-                            </v-card-text>
-                            <!-- <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="primary" text @click="shareDialog = false"> Close </v-btn>
-                            </v-card-actions> -->
-                        </v-card>
-                    </v-menu>
-                    <v-btn @click="toggleFullScreen" icon>
-                        <v-icon>{{ icons.mdiFullscreen }}</v-icon>
-                    </v-btn>
-                </div>
+                <v-menu
+                    :open-on-click="true"
+                    bottom
+                    nudge-bottom="40px"
+                    :close-on-content-click="false"
+                    :open-on-hover="false"
+                    v-model="shareDialog"
+                    width="400"
+                    z-index="300"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on" icon>
+                            <v-icon>{{ mdiLinkVariant }}</v-icon>
+                            <span class="collapsible-text">{{ $t("views.multiview.permalink") }}</span>
+                        </v-btn>
+                    </template>
+
+                    <v-card rounded="lg">
+                        <v-card-text>
+                            <v-text-field
+                                readonly
+                                solo-inverted
+                                dense
+                                hide-details
+                                :class="doneCopy ? 'green lighten-2' : ''"
+                                :value="exportURL"
+                                :append-icon="mdiClipboardPlusOutline"
+                                @click:append.stop="startCopyToClipboard(exportURL)"
+                                style="ma-1"
+                            ></v-text-field>
+                        </v-card-text>
+                    </v-card>
+                </v-menu>
+
+                <v-btn @click="toggleFullScreen" icon>
+                    <v-icon>{{ icons.mdiFullscreen }}</v-icon>
+                </v-btn>
                 <v-btn icon @click="collapseToolbar = true">
                     <v-icon>{{ icons.mdiChevronUp }}</v-icon>
                 </v-btn>
-            </v-toolbar>
-            <v-btn v-else @click="collapseToolbar = false" class="open-mv-toolbar-btn" tile small color="secondary">
-                <v-icon>{{ icons.mdiChevronDown }}</v-icon>
-            </v-btn>
-        </transition>
+            </div>
+        </v-toolbar>
+        <!-- Floating button to open toolbar when collapsed -->
+        <v-btn
+            v-if="collapseToolbar"
+            @click="collapseToolbar = false"
+            class="open-mv-toolbar-btn"
+            tile
+            small
+            color="secondary"
+        >
+            <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+        </v-btn>
+        <!-- </transition> -->
         <!-- Grid Layout -->
         <!-- rowHeight = 100vh/colNum, makes layout consistent across different heights -->
         <grid-layout
             :layout.sync="layout"
             :col-num="24"
-            :row-height="($vuetify.breakpoint.height - 26.0) / 24.0"
+            :row-height="($vuetify.breakpoint.height - 26.0 - (collapseToolbar ? 0 : 64)) / 24.0"
             :col-width="30"
-            :is-draggable="editMode"
-            :is-resizable="editMode"
-            :responsive="false"
+            is-draggable
+            is-resizable
             :vertical-compact="false"
             :prevent-collision="true"
             :margin="[1, 1]"
+            responsiveLayouts
             @layout-updated="layoutUpdatedEvent"
         >
             <grid-item
@@ -97,9 +126,11 @@
                 :w="item.w"
                 :h="item.h"
                 :i="item.i"
-                :key="item.i"
+                :is-draggable="item.isDraggable !== false"
+                :is-resizable="item.isResizable !== false"
+                :key="'mvgrid' + item.i"
             >
-                <cell :item="item" :editMode="editMode" @showSelector="(id) => (showSelectorForId = id)"></cell>
+                <cell :item="item" @showSelector="(id) => (showSelectorForId = id)"> </cell>
             </grid-item>
         </grid-layout>
 
@@ -151,9 +182,10 @@ import {
     mdiLinkVariant,
     mdiClipboardPlusOutline,
     mdiDelete,
+    mdiCardPlus,
 } from "@mdi/js";
 import copyToClipboard from "@/mixins/copyToClipboard";
-import { encodeLayout, decodeLayout } from "@/utils/mv-layout";
+import { encodeLayout, decodeLayout, desktopPresets } from "@/utils/mv-layout";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
 import LayoutPreview from "@/components/multiview/LayoutPreview.vue";
 import Cell from "@/components/multiview/Cell.vue";
@@ -178,61 +210,31 @@ export default {
             mdiClipboardPlusOutline,
             mdiLinkVariant,
             mdiDelete,
+            mdiCardPlus,
 
-            editMode: false,
             showSelectorForId: -1,
             shareDialog: false,
             collapseToolbar: false,
 
-            overwriteDialog: false,
-            overwriteCancel: null,
-            overwriteConfirm: null,
-            overwriteMerge: false,
+            overwriteDialog: false, // whether to show the overwrite dialog.
+            overwriteCancel: null, // callbacks that will be generated when needed.
+            overwriteConfirm: null, // callbacks to be generated when needed.
+            overwriteMerge: false, // if the layout will be merged.
 
             showPresetSelector: false,
 
             layoutPreview: [],
         };
     },
-    watch: {
-        editMode(nw) {
-            if (nw) {
-                this.$store.dispatch("favorites/fetchLive");
-            }
-        },
-    },
     mounted() {
-        // Check if layout is empty
-        if (this.layout.length === 0 && !this.$route.params.layout) {
-            this.showPresetSelector = true;
-        }
-        this.$store.dispatch("favorites/fetchLive");
+        // Check if permalink layout is empty
         if (this.$route.params.layout) {
             // TODO: verify layout
             try {
                 const parsed = decodeLayout(this.$route.params.layout);
-                console.log(parsed);
                 if (parsed.layout && parsed.content) {
-                    // no layout, overwrite without asking
-                    if (!this.layout || Object.keys(this.layout).length === 0) {
-                        this.setMultiview(parsed);
-                        return;
-                    }
-                    // show dialog with confirm or cancel functions
-                    this.layoutPreview = parsed.layout;
-                    this.overwriteConfirm = () => {
-                        this.overwriteDialog = false;
-                        this.setMultiview({
-                            ...parsed,
-                            mergeContent: this.overwriteMerge,
-                        });
-                    };
-                    this.overwriteCancel = () => {
-                        this.overwriteDialog = false;
-                        // clear out query on cancel
-                        this.$router.replace({ path: "/multiview" });
-                    };
-                    this.overwriteDialog = true;
+                    // prompt overwrite with permalink, remove permalink if cancelled
+                    this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
                 }
             } catch (e) {
                 console.log("invalid layout");
@@ -245,12 +247,6 @@ export default {
     computed: {
         ...mapState("multiview", ["layout", "layoutContent"]),
         ...mapGetters("multiview", ["activeVideos"]),
-        // layout() {
-        //     return this.$store.state.multiview.layout;
-        // },
-        // layoutContent() {
-        //     return this.$store.state.multiview.layoutContent;
-        // },
         // Return true if there's an id requesting, setting false is setting id to -1
         showVideoSelector: {
             get() {
@@ -269,8 +265,47 @@ export default {
             )}`;
             return `${window.origin}/multiview${layoutParam}`;
         },
+        decodedDesktopPresets() {
+            return desktopPresets.map((preset) => {
+                return {
+                    ...preset,
+                    ...decodeLayout(preset.layout),
+                };
+            });
+        },
     },
     methods: {
+        // prompt user for layout change
+        promptLayoutChange(layoutWithContent, confirmFunction, cancelFunction) {
+            // a dialog is already active
+            if (this.overwriteDialog) {
+                return;
+            }
+            // no layout, overwrite without asking
+            if (!this.layout || Object.keys(this.layout).length === 0) {
+                this.setMultiview(layoutWithContent);
+                return;
+            }
+            // show dialog with confirm or cancel functions
+            this.layoutPreview = layoutWithContent.layout;
+            this.overwriteConfirm = () => {
+                // hide dialog
+                this.overwriteDialog = false;
+                this.setMultiview({
+                    ...layoutWithContent,
+                    mergeContent: this.overwriteMerge,
+                });
+                // call any extra functions
+                confirmFunction && confirmFunction();
+            };
+            this.overwriteCancel = () => {
+                this.overwriteDialog = false;
+                cancelFunction && cancelFunction();
+            };
+
+            // show the dialog
+            this.overwriteDialog = true;
+        },
         startCopyToClipboard(txt) {
             this.copyToClipboard(txt);
             const thisCopy = this;
@@ -279,6 +314,7 @@ export default {
             }, 200);
         },
         handleVideoClicked(video) {
+            // set video for a specific cell id
             this.$store.commit("multiview/setLayoutContentById", {
                 id: this.showSelectorForId,
                 content: {
@@ -287,6 +323,106 @@ export default {
                 },
             });
             this.showSelectorForId = -1;
+        },
+        handleToolbarShowSelector() {
+            // find an empty cell and show selector for it
+            const emptyCell = this.findEmptyCell();
+            if (emptyCell) {
+                this.showSelectorForId = emptyCell.i;
+            }
+        },
+        handleToolbarClick(video) {
+            const hasEmptyCell = this.findEmptyCell();
+            // more cells needed, increment to next preset with space
+            if (!hasEmptyCell) {
+                // find layout with space for one more new video
+                const newLayout = this.decodedDesktopPresets.find(
+                    (preset) => preset.emptyCells >= this.activeVideos.length + 1,
+                );
+
+                // found new layout
+                if (newLayout) {
+                    // deep clone preset
+                    const clonedLayout = JSON.parse(JSON.stringify(newLayout));
+
+                    // if the current layout is a preset or empty, set next layout without prompting
+                    if (!this.layout.length || this.isPreset(this.layout)) {
+                        this.setMultiview({
+                            ...clonedLayout,
+                            mergeContent: true,
+                        });
+                        this.tryFillVideo(video);
+                        return;
+                    }
+
+                    // User made edits to a preset, prompt them to overwrite
+                    this.overwriteMerge = true;
+                    this.promptLayoutChange(
+                        clonedLayout,
+                        // set new layout, and try to fill with video
+                        () => {
+                            this.tryFillVideo(video);
+                        },
+                    );
+                }
+            } else {
+                // autolayout is not on, or there is an empty cell, just try filling
+                this.tryFillVideo(video);
+            }
+        },
+        isPreset(currentLayout) {
+            // filter out any presets that dont match the amount of cells
+            const toCompare = this.decodedDesktopPresets.filter((preset) => {
+                return preset.emptyCells && preset.layout.length === currentLayout.length;
+            });
+
+            // there's no presets with equal cells
+            if (!toCompare) return false;
+
+            let fullMatch = false;
+
+            // go through each preset, and check for full matching layouts
+            toCompare.forEach((preset) => {
+                if (fullMatch) return;
+                for (let i = 0; i < currentLayout.length; i += 1) {
+                    const presetCell = preset.layout[i];
+                    const layoutCell = currentLayout[i];
+
+                    if (
+                        !(
+                            presetCell.x === layoutCell.x &&
+                            presetCell.y === layoutCell.y &&
+                            presetCell.w === layoutCell.w &&
+                            presetCell.h === layoutCell.h &&
+                            presetCell.i === layoutCell.i
+                        )
+                    ) {
+                        return;
+                    }
+                }
+                fullMatch = true;
+            });
+
+            return fullMatch;
+        },
+        tryFillVideo(video) {
+            // try find empty cell
+            const emptyCell = this.findEmptyCell();
+            if (emptyCell) {
+                this.$store.commit("multiview/setLayoutContentById", {
+                    id: emptyCell.i,
+                    content: {
+                        type: "video",
+                        content: video,
+                    },
+                });
+            }
+            // TODO: snack bar saying no valid empty cells
+        },
+        findEmptyCell() {
+            return this.layout.find((l) => {
+                return !this.layoutContent[l.i];
+            });
         },
         handlePresetClicked(preset) {
             this.showPresetSelector = false;
@@ -355,8 +491,25 @@ export default {
 </script>
 
 <style lang="scss">
-.mv-toolbar-btn .v-btn {
+.mobile-helpers {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: env(safe-area-inset-bottom);
+
+    .edit-mode {
+        padding: 5px;
+        .returnbtn {
+            margin-left: -17px !important;
+        }
+    }
+}
+.mv-toolbar-btn .v-btn.v-btn--icon.v-size--default {
     margin-right: 4px;
+    height: 36px;
+    width: 36px;
 }
 
 .mv-toolbar-btn.no-btn-text > .v-btn > .v-btn__content > .collapsible-text {
@@ -381,5 +534,12 @@ export default {
 
 .vue-grid-layout {
     transition: none;
+}
+
+.mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-track {
+    background: rgba(99, 46, 46, 0.5);
+}
+.mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-thumb {
+    background: #f06291a2;
 }
 </style>

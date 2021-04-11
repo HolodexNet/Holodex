@@ -70,6 +70,7 @@ export default {
         return {
             updateExists: false,
             registration: null,
+            favoritesUpdateTask: null,
         };
     },
     created() {
@@ -102,8 +103,17 @@ export default {
             window.location.reload();
         });
 
+        if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
+
+        this.favoritesUpdateTask = setInterval(() => {
+            this.$store.dispatch("favorites/fetchLive", { minutes: 10 });
+        }, 15 * 60 * 1000);
+
         // check current breakpoint and set isMobile
         this.updateIsMobile();
+    },
+    beforeDestroy() {
+        if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
     },
     mounted() {
         const self = this;
@@ -140,7 +150,7 @@ export default {
                     // disable on watch page
                     !self.isWatchPage &&
                     // disable on mobile when navdrawer is pulled out
-                    self.$store.state.isMobile &&
+                    // self.$store.state.isMobile && (removing restriction on mobile)
                     !self.$store.state.navDrawer
                 );
             },
@@ -153,7 +163,7 @@ export default {
             // channel has subviewws that will cause unwanted keep-alive instances
             // Key them all under channel/:id to avoid duplicating
             if (key.match("^/channel/.{16}")) {
-                return key.substring(0, 34);
+                return key.substring(0, 33);
             }
             return key;
         },
@@ -224,6 +234,11 @@ export default {
     text-decoration: none;
     color: inherit !important;
 }
+
+html {
+    overflow-y: auto;
+}
+
 body {
     overscroll-behavior-y: contain;
     background: black;
@@ -292,7 +307,6 @@ body {
         transform: rotate(360deg);
     }
 }
-
 .thin-scroll-bar {
     scrollbar-width: thin;
 }

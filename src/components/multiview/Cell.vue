@@ -1,67 +1,41 @@
 <template>
     <v-card
         flat
-        class="mv-video d-flex"
+        class="mv-cell d-flex"
         :class="{
-            'edit-mode': editMode,
-        }"
-        :style="{
-            backgroundImage: getBackgroundForItem(item),
+            'edit-mode': pausedMode,
         }"
     >
-        <div
-            style="position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%)"
-            v-if="layoutContent[item.i] && layoutContent[item.i].type === 'chat'"
-        >
-            <v-icon x-large>{{ mdiMessage }}</v-icon> Live Chat
-        </div>
-
-        <!-- Show cell is Live Chat regardless of mode -->
-        <!-- Edit mode content -->
-        <template v-if="editMode || !layoutContent[item.i]">
-            <v-btn
-                color="primary darken-3"
-                fab
-                large
-                @click="$store.commit('multiview/deleteLayoutContent', item.i)"
-                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"
-                v-if="layoutContent[item.i]"
-            >
-                <v-icon x-large>{{ icons.mdiClose }}</v-icon>
-            </v-btn>
-
-            <v-btn fab color="error" class="mv-rm-card" @click="removeItemById(item.i)">
-                <v-icon>{{ mdiDelete }}</v-icon>
-            </v-btn>
-
+        <!-- When Cell has no content: show video picker -->
+        <v-sheet style="height: 100%" class="d-flex flex-column pt-4" v-if="!cellContent">
+            <!--================= No Content Mode ================-->
             <v-list
-                class="ma-3 thin-scroll-bar"
-                :max-height="(item.h / 24) * 100 * 0.9 + 'vh'"
-                width="100%"
-                v-if="!layoutContent[item.i]"
+                class="mx-6 thin-scroll-bar flex-grow-1 flex-shrink-1"
+                v-if="!cellContent"
                 style="overflow-y: auto; overflow-x: hidden; position: relative"
             >
-                <v-sheet width="100%" class="px-0 d-flex flex-grow-1 align-stretch mb-1">
+                <v-sheet class="px-0 d-flex flex-grow-1 align-stretch mb-1">
                     <v-btn
-                        large
-                        class="flex-grow-1 mr-2 mt-3"
+                        class="flex-grow-1 mr-2"
                         color="indigo darken-1"
-                        style="max-width: 300px; basis: 2"
+                        style="max-width: 300px; flex-basis: 50%"
                         @click="$emit('showSelector', item.i)"
                     >
-                        <v-icon large>{{ icons.mdiMagnify }}</v-icon>
+                        <v-icon>{{ icons.mdiMagnify }}</v-icon>
                     </v-btn>
                     <v-btn
-                        large
-                        class="flex-grow-1 mt-3"
+                        class="flex-grow-1"
                         color="teal darken-1"
-                        style="max-width: 300px; basis: 0.4"
+                        style="max-width: 300px; flex-basis: 20%"
                         @click="setItemAsChat(item)"
-                        v-if="!(layoutContent[item.i] && layoutContent[item.i].type === 'chat')"
+                        v-if="!(cellContent && cellContent.type === 'chat')"
                     >
-                        <v-icon large>{{ mdiMessage }}</v-icon>
+                        <v-icon>{{ mdiMessage }}</v-icon>
                     </v-btn>
                 </v-sheet>
+                <!-- <div class="pa-0 ma-0">
+                    <span class="text-overline">{{ $t("component.mainNav.favorites") }}</span>
+                </div>
                 <VideoCardList
                     v-if="$store.state.userdata.user && $store.state.favorites.favorites.length > 0"
                     :videos="liveSoon"
@@ -78,84 +52,159 @@
                     <v-btn small text to="/login" v-if="!$store.state.userdata.user"
                         ><v-icon left>{{ icons.mdiLoginVariant }}</v-icon> {{ $t("component.mainNav.login") }}</v-btn
                     >
-                </div>
+                </div> -->
             </v-list>
+            <template>
+                <CellControl :playIcon="icons.mdiPlay" @delete="deleteCell" class="mx-6 mb-6 mt-0 flex-grow-0" />
+            </template>
+        </v-sheet>
 
-            <div class="mv-handlebars" v-if="editMode">
-                <v-icon style="bottom: 5px; right: 5px">
-                    {{ mdiResizeBottomRight }}
-                </v-icon>
-                <v-icon style="bottom: 5px; left: 5px; transform: rotate(90deg)">
-                    {{ mdiResizeBottomRight }}
-                </v-icon>
-                <v-icon style="top: 5px; left: 5px; transform: rotate(180deg)">
-                    {{ mdiResizeBottomRight }}
-                </v-icon>
-                <v-icon style="top: 5px; right: 5px; transform: rotate(270deg)">
-                    {{ mdiResizeBottomRight }}
-                </v-icon>
-                <v-icon style="top: calc(50% - 10px); left: 5px; transform: rotate(135deg)">
-                    {{ mdiResizeBottomRight }}
-                </v-icon>
-                <v-icon style="top: calc(50% - 10px); right: 5px; transform: rotate(315deg)">
-                    {{ mdiResizeBottomRight }}
-                </v-icon>
-                <v-icon style="bottom: 10px; left: calc(50% - 10px); transform: rotate(45deg)">
-                    {{ mdiResizeBottomRight }}
-                </v-icon>
-            </div>
-        </template>
-        <!-- Video/Chat iFrame based on type -->
-        <template v-else-if="layoutContent[item.i]">
-            <div
-                class="mv-frame ma-auto"
-                v-if="layoutContent[item.i].type === 'video' && layoutContent[item.i].content.id"
+        <!-- Dragging handles -->
+        <!-- v-show is required. do not change to v-if, because it breaks the youtube frame. -->
+        <div class="mv-handlebars" v-show="pausedMode">
+            <v-icon style="bottom: 5px; right: 5px">
+                {{ mdiResizeBottomRight }}
+            </v-icon>
+            <v-icon style="bottom: 5px; left: 5px; transform: rotate(90deg)">
+                {{ mdiResizeBottomRight }}
+            </v-icon>
+            <v-icon style="top: 5px; left: 5px; transform: rotate(180deg)">
+                {{ mdiResizeBottomRight }}
+            </v-icon>
+            <v-icon style="top: 5px; right: 5px; transform: rotate(270deg)">
+                {{ mdiResizeBottomRight }}
+            </v-icon>
+            <v-icon style="top: calc(50% - 10px); left: 5px; transform: rotate(135deg)">
+                {{ mdiResizeBottomRight }}
+            </v-icon>
+            <v-icon style="top: calc(50% - 10px); right: 5px; transform: rotate(315deg)">
+                {{ mdiResizeBottomRight }}
+            </v-icon>
+            <v-icon style="bottom: 10px; left: calc(50% - 10px); transform: rotate(45deg)">
+                {{ mdiResizeBottomRight }}
+            </v-icon>
+        </div>
+
+        <!--=== Video/Chat iFrame based on type ===-->
+        <template v-if="cellContent">
+            <v-sheet
+                rounded="md"
+                color="transparent"
+                class="cell-content"
+                :class="{ 'pa-6 pb-1': pausedMode, 'chat-cell': isChat }"
             >
-                <youtube
-                    :key="'ytplayer-' + item.i + layoutContent[item.i].content.id"
-                    :video-id="layoutContent[item.i].content.id"
-                    :playerVars="{
-                        playsinline: 1,
-                    }"
+                <div
+                    class="mv-frame ma-auto"
+                    :class="{ 'elevation-4': pausedMode }"
+                    v-if="cellContent.type === 'video' && cellContent.content.id"
+                    :key="'v' + uniqueId"
                 >
-                </youtube>
-            </div>
-            <template v-else-if="layoutContent[item.i].type === 'chat'">
-                <TabbedLiveChat :activeVideos="activeVideos" />
+                    <youtube
+                        :key="'ytplayer-' + item.i + cellContent.content.id"
+                        :video-id="cellContent.content.id"
+                        :playerVars="{
+                            playsinline: 1,
+                        }"
+                        @ready="vidReady"
+                        @ended="pausedMode = true"
+                        @playing="vidPlaying"
+                        @paused="vidPlaying"
+                        @cued="pausedMode = true"
+                        @error="pausedMode = true"
+                    >
+                        <!--                         @buffering="pausedMode=true" -->
+                    </youtube>
+                </div>
+                <template v-else-if="cellContent.type === 'chat'">
+                    <TabbedLiveChat
+                        :activeVideos="activeVideos"
+                        :setShowTL="toggleTL"
+                        :setShowChat="toggleChat"
+                        :id="item.i"
+                    />
+                </template>
+            </v-sheet>
+
+            <template v-if="isVideo && pausedMode">
+                <!-- VIDEO + PAUSED --->
+                <CellControl
+                    :playIcon="icons.mdiPlay"
+                    @playpause="ytPlayer.playVideo()"
+                    @reset="uniqueId = Date.now()"
+                    @back="resetCell"
+                    @delete="deleteCell"
+                    class="ma-6 mt-0"
+                />
+            </template>
+            <template v-if="isChat && pausedMode">
+                <!-- CHAT + PAUSED --->
+                <CellControl
+                    :playIcon="icons.mdiCheck"
+                    @back="resetCell"
+                    @playpause="pausedMode = !pausedMode"
+                    @delete="deleteCell"
+                    class="ma-6 mt-0"
+                />
+            </template>
+            <template v-if="isChat && !pausedMode">
+                <!-- CHAT + UNPAUSED --->
+                <v-sheet class="cell-control">
+                    <v-btn :x-small="toggleChat || toggleTL" width="50%" @click="pausedMode = !pausedMode"
+                        ><v-icon small>{{ icons.mdiMenu }}</v-icon
+                        >{{ $t("component.videoCard.edit") }}</v-btn
+                    >
+                    <v-btn
+                        :x-small="toggleChat || toggleTL"
+                        width="25%"
+                        @click="toggleChatHandle"
+                        :color="toggleChat ? 'primary' : ''"
+                    >
+                        <v-icon small>{{ icons.mdiTranslate }}</v-icon
+                        >Chat
+                    </v-btn>
+                    <v-btn
+                        :x-small="toggleChat || toggleTL"
+                        width="25%"
+                        @click="toggleTLHandle"
+                        :color="toggleTL ? 'primary' : ''"
+                    >
+                        <v-icon small>{{ icons.mdiTranslate }}</v-icon
+                        >TL
+                    </v-btn>
+                </v-sheet>
+                <div style="height: 20%" v-if="!toggleChat && !toggleTL"></div>
             </template>
         </template>
     </v-card>
 </template>
 
 <script lang="ts">
-import { mdiMessage, mdiResizeBottomRight, mdiDelete } from "@mdi/js";
-import { getVideoThumbnails } from "@/utils/functions";
+import { mdiMessage, mdiResizeBottomRight, mdiArrowLeftCircle } from "@mdi/js";
+// import { getVideoThumbnails } from "@/utils/functions";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat.vue";
 import { mapState, mapGetters } from "vuex";
-import VideoCardList from "@/components/video/VideoCardList.vue";
-import { dayjs } from "@/utils/time";
+// import VideoCardList from "@/components/video/VideoCardList.vue";
+// import { dayjs } from "@/utils/time";
+import CellControl from "./CellControl.vue";
 
-const HIDE_VIDEO_UNDER = {
-    xs: 26,
-    sm: 20,
-    md: 15,
-    lg: 8,
-    xl: 6,
-};
+// const HIDE_VIDEO_UNDER = {
+//     xs: 26,
+//     sm: 20,
+//     md: 15,
+//     lg: 8,
+//     xl: 6,
+// };
 
 export default {
     name: "Cell",
     components: {
         TabbedLiveChat,
-        VideoCardList,
+        // VideoCardList,
+        CellControl,
     },
     props: {
         item: {
             type: Object,
-            required: true,
-        },
-        editMode: {
-            type: Boolean,
             required: true,
         },
     },
@@ -163,24 +212,42 @@ export default {
         return {
             mdiMessage,
             mdiResizeBottomRight,
-            mdiDelete,
+            mdiArrowLeftCircle,
+            pausedMode: true,
+            uniqueId: Date.now(),
+            ytPlayer: null,
+            toggleTL: false,
+            toggleChat: true,
         };
+    },
+    mounted() {
+        if (this.pausedMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
+        else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
+    },
+    watch: {
+        cellContent(nw) {
+            if (nw === null) this.pausedMode = true;
+        },
+        pausedMode(newMode) {
+            if (newMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
+            else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
+        },
     },
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),
-        ...mapState("multiview", ["layout", "layoutContent"]),
-        ...mapState("favorites", ["live"]),
-        liveSoon() {
-            return this.live.filter((x) => {
-                return x.status === "live" || Math.abs(dayjs().diff(x.available_at, "minutes")) < 10;
-            });
+        ...mapState("multiview", ["layoutContent"]),
+        cellContent() {
+            return this.layoutContent[this.item.i];
         },
-        needHideVImg() {
-            return HIDE_VIDEO_UNDER[this.$vuetify.breakpoint.name] > this.item.w;
+        isChat() {
+            return this.cellContent.type === "chat";
+        },
+        isVideo() {
+            return this.cellContent.type === "video";
         },
     },
     methods: {
-        getVideoThumbnails,
+        // getVideoThumbnails,
         setItemAsChat(item) {
             this.$store.commit("multiview/setLayoutContentById", {
                 id: item.i,
@@ -189,43 +256,60 @@ export default {
                 },
             });
         },
-        getBackgroundForItem(item) {
-            if (this.layoutContent[item.i]) {
-                if (this.layoutContent[item.i].type === "video" && this.editMode) {
-                    return `url(${getVideoThumbnails(this.layoutContent[item.i].content.id, false).hq720})`;
-                }
-                if (this.layoutContent[item.i].type === "chat") {
-                    return mdiMessage;
-                }
-            }
-            return "";
+        deleteCell() {
+            this.$store.commit("multiview/removeLayoutItem", this.item.i);
         },
-        removeItemById(i) {
-            this.$store.commit("multiview/removeLayoutItem", i);
+        vidPlaying(evt) {
+            this.pausedMode = evt.data === 2;
         },
-        handleVideoClicked(video) {
-            this.$store.commit("multiview/setLayoutContentById", {
-                id: this.item.i,
-                content: {
-                    type: "video",
-                    content: video,
-                },
-            });
+        vidReady(evt) {
+            this.ytPlayer = evt.target;
+        },
+        resetCell() {
+            this.$store.commit("multiview/deleteLayoutContent", this.item.i);
+        },
+        toggleChatHandle() {
+            this.toggleChat = !this.toggleChat;
+            if (!this.toggleChat && !this.toggleTL) this.toggleTL = true;
+        },
+        toggleTLHandle() {
+            this.toggleTL = !this.toggleTL;
+            if (!this.toggleChat && !this.toggleTL) this.toggleChat = true;
         },
     },
 };
 </script>
 
 <style lang="scss">
-.mv-video {
+.mv-cell {
     background-size: contain;
     background-position: center;
     height: 100%;
     border: 1px solid #f0629118 !important;
+    justify-content: flex-start;
+    align-content: stretch;
+    flex-direction: column;
+
+    .cell-content {
+        display: flex;
+        flex-wrap: wrap;
+        flex-grow: 1;
+        flex-basis: 100%;
+        flex-shrink: 1;
+    }
 }
 
-.mv-video.edit-mode {
+.cell-content.chat-cell .show-tl-overlay {
+    // height: calc(100% - 24px);
+}
+
+.mv-cell.edit-mode {
     border: 1px solid #f06291 !important;
+}
+
+.vue-grid-item.vue-draggable-dragging .mv-cell,
+.vue-grid-item.resizing .mv-cell {
+    pointer-events: none;
 }
 
 .mv-frame > div > iframe {
@@ -242,12 +326,5 @@ export default {
 .mv-handlebars > .v-icon {
     position: absolute;
     color: #f06291;
-}
-
-.mv-rm-card {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    z-index: 40;
 }
 </style>

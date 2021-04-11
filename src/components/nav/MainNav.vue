@@ -108,6 +108,7 @@
                     <v-btn
                         icon
                         @click="$store.commit('music/openBar')"
+                        class="music-bar-open-btn"
                         v-if="!isMobile && $store.state.music.playlist.length > 0 && !$store.state.music.isOpen"
                     >
                         <v-icon>{{ icons.mdiMusic }}</v-icon>
@@ -115,7 +116,7 @@
                 </v-slide-y-transition>
                 <v-menu left offset-y transition="slide-y-transition" v-if="!isMobile">
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon v-bind="attrs" v-on="on">
+                        <v-btn icon v-bind="attrs" v-on="on" class="ml-2">
                             <v-icon v-if="!($store.state.userdata && $store.state.userdata.user)">{{
                                 icons.mdiAccountCircleOutline
                             }}</v-icon>
@@ -223,6 +224,7 @@ export default {
                 return this.$store.state.currentOrg;
             },
             set(val) {
+                if (this.$route.name === "favorites") this.$router.push({ name: "home" });
                 return this.$store.commit("setCurrentOrg", val);
             },
         },
@@ -249,7 +251,7 @@ export default {
             return [
                 {
                     name: this.$t("component.mainNav.home"),
-                    path: "/",
+                    path: "/home",
                     icon: icons.mdiHome,
                 },
                 {
@@ -399,5 +401,22 @@ export default {
 
 .rotate-180 {
     transform: rotate(180deg);
+}
+
+.music-bar-open-btn {
+    animation-timing-function: ease-in-out;
+    animation: fadein 5s;
+    animation-iteration-count: 1;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 1;
+        background-color: #f06291;
+    }
+    100% {
+        opacity: 1;
+        background-color: #f0629100;
+    }
 }
 </style>

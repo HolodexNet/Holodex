@@ -1,6 +1,6 @@
 <template>
     <!-- pad bottom for 100px to allow space for infiniteload -->
-    <v-container class="py-0" style="position: relative" fluid>
+    <v-container class="py-0" style="position: relative" fluid :id="'t' + randomId">
         <!-- Video Card grid rows -->
         <!-- Set min height to account for layout shifting of show more button -->
         <v-row :dense="dense">
@@ -70,6 +70,7 @@
             :pages="paginatePages"
             @paginate="emitLoad"
             :pageLess="pageLess"
+            :scrollElementId="'t' + randomId"
         />
     </v-container>
 </template>
@@ -91,6 +92,7 @@ export default {
     data() {
         return {
             expanded: false,
+            randomId: Date.now(),
             ...{ mdiChevronUp, mdiChevronDown },
         };
     },

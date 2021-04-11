@@ -47,7 +47,8 @@ export default {
     },
     methods: {
         reload() {
-            // this.$router.go(0);
+            // function is overloaded in the component importing this mixin
+            // default is to do nothing when refresh is requested
         },
     },
 };

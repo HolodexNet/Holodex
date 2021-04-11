@@ -98,9 +98,14 @@
                     <ChannelImg :channel="channel" size="55" />
                 </v-list-item-avatar>
                 <ChannelInfo :channel="channel" :includeVideoCount="includeVideoCount">
-                    <ChannelSocials :channel="channel" class="pa-0 justify-start" v-if="isXs" />
+                    <ChannelSocials
+                        :channel="channel"
+                        class="pa-0 justify-start"
+                        v-if="isXs"
+                        :showDelete="showDelete"
+                    />
                 </ChannelInfo>
-                <ChannelSocials :channel="channel" v-if="!isXs" />
+                <ChannelSocials :channel="channel" v-if="!isXs" :showDelete="showDelete" />
             </v-list-item>
         </template>
     </v-list>
@@ -139,6 +144,10 @@ export default {
             default: false,
         },
         grouped: {
+            type: Boolean,
+            default: false,
+        },
+        showDelete: {
             type: Boolean,
             default: false,
         },

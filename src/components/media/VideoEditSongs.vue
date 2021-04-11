@@ -66,6 +66,7 @@
                             @click="
                                 current.start -= 2;
                                 current.end -= 2;
+                                currentStartTime = secondsToHuman(current.start);
                             "
                         >
                             <v-icon small>{{ icons.mdiChevronLeft }}</v-icon> 2s
@@ -111,6 +112,7 @@
                             @click="
                                 current.start += 2;
                                 current.end += 2;
+                                currentStartTime = secondsToHuman(current.start);
                             "
                         >
                             2s<v-icon small>{{ icons.mdiChevronRight }}</v-icon>

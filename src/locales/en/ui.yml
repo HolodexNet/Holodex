@@ -38,6 +38,8 @@ component:
     watching: '{0} Watching'
     liveNow: Live Now
     edit: Edit
+    copiedToClipboard: Link copied to clipboard.
+    copyLink: Copy Holodex Link
   videoDescription:
     description: Description
   video:
@@ -177,6 +179,10 @@ views:
     resetAllSettings: Reset All Settings/Data
     clipLanguageSelection: 'See Clips in these Languages:'
     tlLanguageSelection: See live-chat TL in these languages
+    defaultFavorites: Default open Favorites
+    defaultFavoritesMsg: >-
+      Open Favorites by default when visiting holodex.net, or clicking on the
+      logo top left.
   app:
     update_available: An update is available
     update_btn: Update
@@ -197,6 +203,10 @@ views:
       TLSettingsTitle: TL Settings
       StickBottomSettingLabel: Stick Bottom (mobile)
       StickBottomSettingsDesc: TL box sticks to the bottom of chat (default stick to top on mobile)
+      showVerifiedMessages: Show Verified Messages
+      showModeratorMessages: Show Moderator Messages
+      tlFontSize: Font Size
+      tlWindowSize: TL Box Size (%), leave as 0% for automatic
       retryBtn: Retry
       status:
         reconnecting: Auto Reconnecting...

@@ -2,18 +2,20 @@
 import Vue from "vue";
 import { langs } from "@/plugins/vuetify";
 import { TL_LANGS } from "@/utils/consts";
+import { createSimpleMutation } from "@/utils/functions";
 
 const userLanguage = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
 
 const validLangs = new Set(langs.map((x) => x.val));
 const validTlLangs = new Set(TL_LANGS.map((x) => x.value));
 
-const englishNamePrefs = new Set(["en", "es", "fr", "id", "pt", "de", "ru"]);
+const englishNamePrefs = new Set(["en", "es", "fr", "id", "pt", "de", "ru", "it"]);
 
 const initialState = {
     lang: validLangs.has(userLanguage) ? userLanguage : "en",
     clipLangs: [validTlLangs.has(userLanguage) ? userLanguage : "en"],
     darkMode: true,
+    defaultOpenFavorites: false,
     redirectMode: false,
     autoplayVideo: true,
     canUseWebP: true,
@@ -22,8 +24,13 @@ const initialState = {
     hideThumbnail: false,
     scrollMode: true,
 
+    // Live TL Window Settings
     liveTlStickBottom: false,
     liveTlLang: validTlLangs.has(userLanguage) ? userLanguage : "en",
+    liveTlFontSize: 14,
+    liveTlShowVerified: true, // show verified messages
+    liveTlShowModerator: true, // show moderator messages
+    liveTlWindowSize: 0, // Default size, otherwise percentage height
 
     blockedChannels: [],
 };
@@ -72,12 +79,15 @@ const mutations = {
     setScrollMode(state, val) {
         state.scrollMode = val;
     },
-    setLiveTlStickBottom(state, val) {
-        state.liveTlStickBottom = val;
-    },
-    setLiveTlLang(state, val) {
-        state.liveTlLang = val;
-    },
+    ...createSimpleMutation([
+        "defaultOpenFavorites",
+        "liveTlStickBottom",
+        "liveTlLang",
+        "liveTlFontSize",
+        "liveTlShowVerified",
+        "liveTlShowModerator",
+        "liveTlWindowSize",
+    ]),
     resetState(state) {
         Object.assign(state, initialState);
     },

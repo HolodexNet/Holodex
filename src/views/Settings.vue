@@ -4,7 +4,7 @@
             <v-col>
                 <div class="text-h4">{{ $t("views.settings.title") }}</div>
                 <div class="pt-4">
-                    <v-icon>{{ mdiTranslate }}</v-icon>
+                    <v-icon>{{ icons.mdiTranslate }}</v-icon>
                     Language:
                 </div>
                 <v-radio-group v-model="language" dense fluid>
@@ -35,6 +35,11 @@
                     v-model="darkMode"
                     :label="$t('views.settings.darkModeLabel')"
                     :messages="$t('views.settings.darkModeMsg')"
+                ></v-switch>
+                <v-switch
+                    v-model="defaultOpenFavorites"
+                    :label="$t('views.settings.defaultFavorites')"
+                    :messages="$t('views.settings.defaultFavoritesMsg')"
                 ></v-switch>
                 <v-switch
                     v-model="redirectMode"
@@ -77,8 +82,9 @@
 
 <script lang="ts">
 import { langs } from "@/plugins/vuetify";
-import { mdiTranslate, mdiFilter } from "@mdi/js";
+import { mdiFilter } from "@mdi/js";
 import { TL_LANGS } from "@/utils/consts";
+import { syncState } from "@/utils/functions";
 
 export default {
     name: "Settings",
@@ -91,60 +97,21 @@ export default {
         };
     },
     computed: {
+        ...syncState("settings", [
+            "darkMode",
+            "redirectMode",
+            "autoplayVideo",
+            "useEnName",
+            "scrollMode",
+            "hideThumbnail",
+            "defaultOpenFavorites",
+        ]),
         language: {
             get() {
                 return this.$store.state.settings.lang;
             },
             set(val) {
                 this.$store.commit("settings/setLanguage", val);
-            },
-        },
-        darkMode: {
-            get() {
-                return this.$store.state.settings.darkMode;
-            },
-            set(val) {
-                this.$store.commit("settings/setDarkMode", val);
-            },
-        },
-        redirectMode: {
-            get() {
-                return this.$store.state.settings.redirectMode;
-            },
-            set(val) {
-                this.$store.commit("settings/setRedirectMode", val);
-            },
-        },
-        autoplayVideo: {
-            get() {
-                return this.$store.state.settings.autoplayVideo;
-            },
-            set(val) {
-                this.$store.commit("settings/setAutoplayVideo", val);
-            },
-        },
-        scrollMode: {
-            get() {
-                return this.$store.state.settings.scrollMode;
-            },
-            set(val) {
-                this.$store.commit("settings/setScrollMode", val);
-            },
-        },
-        useEnName: {
-            get() {
-                return this.$store.getters["settings/useEnName"];
-            },
-            set(val) {
-                this.$store.commit("settings/setUseEnName", val);
-            },
-        },
-        hideThumbnail: {
-            get() {
-                return this.$store.state.settings.hideThumbnail;
-            },
-            set(val) {
-                this.$store.commit("settings/setHideThumbnail", val);
             },
         },
         clipLangs: {
@@ -160,7 +127,6 @@ export default {
     data() {
         return {
             langs,
-            mdiTranslate,
             mdiFilter,
             TL_LANGS,
         };

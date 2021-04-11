@@ -8,36 +8,35 @@ component:
     afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Registrate para marcar como favorito
-    unfavoriteAllInGroup: Eliminar todo el grupo de favoritos
-    favoriteAllInGroup: Añadir todo el grupo a favoritos
+    unfavoriteAllInGroup: Desmarcar todos como favoritos
+    favoriteAllInGroup: Marcar todo en el grupo como favorito
   channelInfo:
-    videoCount: '{0} vídeos'
-    clipCount: '{n} clips'
-    subscriberCount: '{n} suscriptores'
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} Subscriptores'
     subscriberNA: Número de suscriptores no disponible
     totalViews: Visualizaciones totales
   channelSocials:
     addToFavorites: Añadir a favoritos
     removeFromFavorites: Eliminar de favoritos
     unblock: Desbloquear este canal
-    block: Bloquear este canal en Holodex
+    block: Bloquear el contenido de este canal a través de Holodex
   mainNav:
     home: Inicio
     favorites: Favoritos
     channels: Canales
     about: Acerca de
     library: Biblioteca
-    settings: Configuración
-    login: Iniciar sesión
-    logout: Cerrar sesión
-    MugenClips: MugenClips<sup>beta</sup>
-    accountSettings: Gestionar cuenta
+    settings: Opciones
+    login: Iniciar Sesión
+    logout: Cerrar Sesión
+    MugenClips: MugenClips
+    accountSettings: Ajustes de Cuenta
     music: Música
-    multiview: Vista múltiple
+    multiview: Vista Múltiple
   videoCard:
-    clips: '{n} clips'
-    watching: '{0} espectadores'
-    liveNow: En directo
+    watching: '{0} Mirando'
+    liveNow: En Vivo
     edit: Editar
     copiedToClipboard: Link copiado al portapapeles.
     copyLink: Copiar link de Holodex
@@ -45,16 +44,15 @@ component:
     description: Descripción
   description:
     showLess: Mostrar Menos
-    showMore: Mostrar más
+    showMore: Mostrar Mas
   watch:
-    streamingFor: En directo durante {0}
-    nextUpInMugen: A continuación
+    streamingFor: Transmitiendo por {0}
+    nextUpInMugen: Siguiente
   search:
     searchLabel: Buscar
     type:
       channel: canal
       topic: tema
-      org: org
       titledesc: título y descripción
       comments: comentarios
       videourl: link del vídeo
@@ -74,7 +72,7 @@ component:
     recentSongsHeader: Canciones Recientes
     weeklyTopPlaysHeader: Mas Reproducciones Semanales
   songList:
-    songTitle: Título
+    songTitle: Titulo
     songCoveredBy: Interpretado por
     songDuration: Duración
     sangOnTime: Cantado en
@@ -95,128 +93,125 @@ views:
     sortOptions:
       subscribers: Suscriptores
       group: Grupo
-      recentUpload: Subidas recientes
-      videoCount: Número de vídeos
+      recentUpload: Cargas recientes
+      videoCount: Número de videos
       clipCount: Número de clips
     tabs:
-      Vtuber: Vtuber
       Subber: Subtitulador
       Favorites: Favoritos
-      Blocked: Bloqueados
-    favoritesAreEmpty: '¡Tu lista de favoritos está vacía!'
-    blockedAreEmpty: No has bloqueado ningún canal.
+      Blocked: Bloqueado
+    favoritesAreEmpty: No tienes favoritos!
+    blockedAreEmpty: No tienes canales bloqueados.
   home:
-    liveOrUpcomingHeading: En directo / Próximamente
+    liveOrUpcomingHeading: En vivo / Proximamente
     recentVideosHeading: Videos recientes
     recentVideoToggles:
       all: Todos
       official: Oficial
-      subber: Clips
   library:
-    savedVideosTitle: Vídeos guardados
+    savedVideosTitle: Videos Guardados
     createYtPlaylistButton: Crear lista de reproducción de YT ({0})
     deleteFromLibraryButton: Eliminar ({0})
-    deleteConfirmation: '¿Seguro que quieres eliminar {0} vídeos?'
+    deleteConfirmation: Estas seguro de que quieres eliminar {0} videos?
     deleteConfirmationOK: Eliminar
     deleteConfirmationCancel: Cancelar
     selectionReset: Reiniciar
     selectionSelectAll: Seleccionar Todos
-    emptyLibrary: '¡No tienes vídeos guardados!'
+    emptyLibrary: '¡No tienes videos guardados!'
     exportSelected: Exportar seleccionados ({0})
     exportYtPlaylist: Lista de reproducción de Youtube
     exportCsv: Archivo CSV
     selectionSelect50: Seleccionar 50
     exportYTExplanation: >-
-      La lista de reproducción de Youtube creada mediante esta función <b>no está listada</b> y no puede ser guardada debido a la funcionalidad incompleta de Youtube. <br /> Para poder guardar una lista de reproducción <b>sin listar</b> en tu cuenta de Youtube debes seguir estos pasos.
-    exportYTHeading: Instrucciones para guardar una lista de reproducción de Youtube
+      La lista de reproducción de youtube creada por esta función esta <b>sin listar</b> y podriaser eliminada por Youtube. <br /> Gracias a la funcionalidad incompleta de Youtube, necesitas hacer lo siguiente para guardar la lista de reproducción de Youtube <b>sin listada</b> en tu cuenta.
+    exportYTHeading: Guardando instrucciones de la lista de reproducción de Youtube
     exportYTInstructions: >-
-      <b class="red--text">Paso 1</b>: Una vez en la lista de reproducción cambia la interfaz del vídeo a minirreproductor. <br /><br /> <b class="red--text">Paso 2</b>: Añade cualquier vídeo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: Ya puedes guardar la lista de reproducción, para ello haz clic en el botón guardar.
+      <b class="red--text">Paso 1</b>: Reproduce la lista de reproducción de youtube y cambia la interfaz de usuario del reproductor a mini-reproductor. <br /><br /> <b class="red--text">Paso 2</b>: Elige cualquier video y añádelo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: La lista de reproducción puede ser guardada ahora. Has clic en guardar para guardarla.
   notFound:
     title: Contenido no encontrado
     back: Volver al Inicio
   search:
     sort:
-      newest: Más recientes
-      oldest: Más antiguos
+      newest: Mas nuevo
+      oldest: Más antiguo
     type:
       all: Todos
       official: Oficial
-      clip: Clip
     unsupportedQuery: >-
-      Por el momento la búsqueda de clips por <kbd>Tema</kbd> y <kbd>Organización</kbd> no está soportada. No se mostrará ningún <b>clip</b>.
-    sortByLabel: Ordenar por
+      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
+    sortByLabel: Ordenar Por
     typeDropdownLabel: Tipo
   settings:
-    title: Configuración
+    title: Opciones
     darkModeLabel: Modo Oscuro
-    darkModeMsg: Alterna el aspecto entre modo oscuro y modo claro
+    darkModeMsg: Cambia el tema entre modo oscuro y modo claro
     redirectModeLabel: Abrir en Youtube
     redirectModeMsg: >-
-      Hacer clic en la portada de un vídeo lo abrirá en Youtube, hacer clic en el título lo abrirá en Holodex
-    useEnglishNameLabel: Mostrar nombres en inglés
-    useEnglishNameMsg: Utiliza los nombres localizados al inglés de los canales de Vtubers
+      Clickear en cualquier video lo abrirá en Youtube, clicker en el titulo del video lo abrirá en Holodex
+    useEnglishNameLabel: Usar nombre en inglés
+    useEnglishNameMsg: Usa nombres localizados al Inglés para los canales de Vtubers
     hideVideoThumbnailsLabel: Ocultar miniaturas
     hideVideoThumbnailsMsg: >-
-      Oculta las miniaturas de los vídeos, acelera tiempos de carga y reduce el espacio utilizado en móviles
+      Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos deslizar en mobiles
     pushNotificationLabel: Notificaciones emergentes
-    pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
-    autoplayVideoLabel: Reproducción automática
-    autoplayVideoMsg: Activa la reproducción automática de videos
+    pushNotificationMsg: Activar notificaciónes emergentes para canales favoritos
+    autoplayVideoLabel: Reproducir vídeos automáticamente
+    autoplayVideoMsg: Activar la reproducción automática de vídeos
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
-    clipLanguageSelection: 'Ver clips en estos idiomas:'
-    tlLanguageSelection: Ver traducciones en directo en estos idiomas
+    clipLanguageSelection: 'Ver clips en estos idiomas'
+    tlLanguageSelection: Ver traducciones en vivo en estos idiomas
   app:
-    update_available: Hay una actualización disponible
+    update_available: Una actualización está disponible
     update_btn: Actualizar
     close_btn: Cerrar
     check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
-    nowSupportsMultiOrg: Holodex ahora soporta múltiples organizaciones.
-    loginCallToAction: '¡Inicia sesión para crear tu propia lista de favoritos!'
+    nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
+    loginCallToAction: '¡Inicia sesión para reunir tus propios favoritos!'
   about:
     add_my_channel: Añadir mi canal a Holodex
   watch:
     theaterMode: Modo Cine
-    saveToLibrary: Guardar en la biblioteca
+    saveToLibrary: Guardar el video en la Biblioteca
     mentionIconLabel: MENCIONES
     chat:
-      loading: Cargando chat...
-      hideTLBtn: Ocultar traducciones
-      showTLBtn: Mostrar traducciones
-      TLSettingsTitle: Ajustes de traducción
-      StickBottomSettingLabel: Colocar abajo (móviles)
-      StickBottomSettingsDesc: El cuadro de traducciones aparece en la parte inferior del chat (por defecto arriba en móviles)
+      loading: Cargando el chat...
+      hideTLBtn: Esconder TLs
+      showTLBtn: Mostrar TLs
+      TLSettingsTitle: Opciones de TL
+      StickBottomSettingLabel: Pegar abajo (Mobiles)
+      StickBottomSettingsDesc: TL box se pega abajo del chat (por defecto se pega arriba en mobiles)
       retryBtn: Reintentar
       status:
-        reconnecting: Reconectando automáticamente...
+        reconnecting: Reconectando automaticamente...
         reconnectFailed: No se pudo reconectar
         notLive: >-
-          El directo todavía no ha empezado, por favor inténtalo de nuevo cuando queden 15 minutos para comenzar
+          La transmisión aún no está activa, por favor inténtalo de nuevo cuando falter 15 minutos para comenzar
         connectedToChat: Conectado
         disconnectedToChat: Sin conexión
   favorites:
     promptForAction: >-
-      Crea una lista de tus vtubers favoritos y mira sus últimos clips y directos en esta página.
-    manageFavorites: Gestionar favoritos
+      Crea una lista de tus vtubers favoritos y mira sus ultimos clips y directos en esta pagina.
+    manageFavorites: Administrar Favoritos
   editor:
-    needlogin: Debes iniciar sesión para poder editar los metadatos de vídeos y canciones de Holodex.
+    needlogin: Necesitarás iniciar sesión para editar los metadatos de vídeos y canciones de Holodex.
   login:
     apikeyMsg: >-
       Puedes usar la clave de API para consultar Holodex API programaticamente. Solo una clave por cuenta. Después de conseguir una nueva clave, la clave antigua expirará entre 0-24 horas.
     apikeyNew: Obtener nueva clave de API
-    ownedYtChannel: Canal de Youtube propio
+    ownedYtChannel: Canal de Youtube poseído
     futureYtcOwnerMessage: >-
-      En el futuro planeamos proveer más servicios a los dueños de canales, como editar los metadatos de sus propios vídeos.
+      En el futuro, planeamos proveer mas servicios a dueños de canales como editar el metadata para sus propios videos.
     linkAcc: Vincular otra cuenta
-    apikeyResetConfirm1: '¿Seguro que quieres reiniciar tu clave de API?'
-    apikeyResetConfirm2: La clave de API antigua tardará 0-24 horas en caducar. ¿Estás seguro?
+    apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu clave de API?'
+    apikeyResetConfirm2: La clave de API tendrá 0-24 horas antes de expirar. ¿En verdad reiniciar?
     apikeyResetNvm: No sucedió nada.
   multiview:
-    confirmOverwrite: '¿Sobrescribir el diseño actual?'
+    confirmOverwrite: '¿Sobreescribir el diseño existente?'
     confirmOverwriteYes: Confirmar
-    permalink: Enlace permanente
-    presets: Plantillas
+    permalink: Enlace Permanente
+    presets: Configuraciones
     addframe: Añadir Celda
     preset:
       shareOnDiscord: >-
@@ -224,31 +219,30 @@ views:
       desktop: Escritorio
       mobile: Móvil
     video:
-      selectLive: Elige un directo
-      addCustomVideo: Añadir vídeo personalizado
+      selectLive: Seleccionar Directo
+      addCustomVideo: Añadir video personalizado
 time:
   soon: Proximamente
-  diff_future_date: Empieza {0} ({1})
-  distance_past_date: '{0}'
+  diff_future_date: Inicia {0} ({1})
 editor:
   music:
     add: Añadir
     update: Actualizar
     permission: >-
-      Necesitas el rol de «editor» o superior para poder actualizar o borrar canciones existentes. Por favor ponte en contacto con nosotros en <a class='white--text' href='/about'>discord</a> si quieres notificar a los editores sobre problemas/abusos o presentarte para conseguir el rol de editor.
+      Necesitas ser un usuario de nivel 'Editor' o mas alto para actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar a los editores de problemas / abusos, o aplica para volverte un editor.
     titles:
-      addSong: 'Metadatos de la canción: Añadir una nueva canción'
-      songList: 'Lista de canciones: {0}'
-      help: Guía
+      addSong: 'Metadatos de la cancion: Añadir una nueva canción'
+      songList: 'Lista de canciones : {0}'
+      help: Guia
     itunesLookupPlaceholder: (Opcional) Buscar en iTunes
-    moveRight2s: Mover 2 segundos hacia adelante
+    moveRight2s: Mover 2s a la derecha
     testEnd: Prueba escuchar a partir de 3 segundos antes del final.
-    setToCurrentTime: Utilizar tiempo actual ({0})
-    moveLeft2s: Mover 2 segundos hacia atrás
+    setToCurrentTime: Establecer a tiempo actual ({0})
+    moveLeft2s: Mover 2s a la izquierda
     trackNameInput: Nombre de la canción
-    originalArtistInput: Artista original
-    testStart: Probar comienzo
-    startInput: Comienzo
+    originalArtistInput: Artista Original
+    testStart: Probar el inicio
+    startInput: Iniciar
     endInput: 'Duración en segundos: (termina en {0})'
   exitMode: Salir del modo de edición
   enterMode: Editar video

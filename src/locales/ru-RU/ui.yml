@@ -19,6 +19,8 @@ component:
   channelSocials:
     addToFavorites: Добавить в избранное
     removeFromFavorites: Убрать из избранного
+    unblock: Разблокировать этот канал
+    block: Блокировать контент этого канала во всех разделах Holodex
   mainNav:
     home: Главная
     favorites: Избранное
@@ -37,6 +39,8 @@ component:
     watching: '{0} смотрят'
     liveNow: LIVE
     edit: Изменить
+    copiedToClipboard: Скопировано в буфер обмена.
+    copyLink: Копировать ссылку
   videoDescription:
     description: Описание
   description:
@@ -98,7 +102,9 @@ views:
       Vtuber: Витуберы
       Subber: Сабберы
       Favorites: Избранное
+      Blocked: Заблокированные
     favoritesAreEmpty: Вы ничего не добавили в избранное!
+    blockedAreEmpty: У вас нет заблокированных каналов.
   home:
     liveOrUpcomingHeading: LIVE / Скоро
     recentVideosHeading: Последние видео

@@ -39,6 +39,8 @@ component:
     watching: '{0} Tontonan Sekarang'
     liveNow: Langsung Sekarang
     edit: Sunting
+    copiedToClipboard: Pautan telah disalin ke papan keratan.
+    copyLink: Salin Pautan Holodex
   videoDescription:
     description: Perihalan
   video:
@@ -105,7 +107,7 @@ views:
       Favorites: Kegemaran
       Blocked: Disekat
     favoritesAreEmpty: Tiada kegemaran lagi!
-    blockedAreEmpty: Anda tidak mempunyai sebarang saluran yg disekat.
+    blockedAreEmpty: Tiada saluran yang disekat.
   home:
     liveOrUpcomingHeading: Langsung / Akan Datang
     recentVideosHeading: Video Terkini
@@ -131,7 +133,7 @@ views:
       Senarai main yang dibuat <b>tidak tersenarai</b> di YouTube serta berkebarangkalian dihapuskan oleh YouTube.<br /> Sekiranya anda mahu menyimpan senarai main <b>tidak tersenarai</b> ini di YouTube, anda harus mengikuti langkah berikut.
     exportYTHeading: Arahan Menyimpan Senarai Main YouTube
     exportYTInstructions: >-
-      <b class="red--text">Langkah 1</b>: Mainkan senarai main YouTube kemudian gunakan antara muka pemain mini. <br /><br /> <b class="red--text">Langkah 2</b>: Pilih mana-mana video kemudian tambahkan pada baris gilir. <br /><br /> <b class="red--text">Langkah 3</b>: Senarai main ini sekarang boleh disimpan. Simpan dengan menekan simpan.
+      <b class="red--text">Langkah 1</b>: Mainkan senarai main YouTube kemudian gunakan antara muka pemain mini. <br /><br /> <b class="red--text">Langkah 2</b>: Pilih mana-mana video kemudian tambahkan pada baris gilir. <br /><br /> <b class="red--text">Langkah 3</b>: Senarai main ini telah boleh disimpan. Simpan dengan menekan simpan.
   notFound:
     title: Kandungan tidak ditemui
     back: Kembali ke Halaman Utama
@@ -145,7 +147,7 @@ views:
       clip: Sedutan
     unsupportedQuery: >-
       Carian sedutan menggunakan <kbd>Topik</kbd> dan <kbd>Kumpulan</kbd> masih belum disokong. <b>Sedutan</b> tidak akan terpapar.
-    sortByLabel: Susun Mengikut
+    sortByLabel: Isih Mengikut
     typeDropdownLabel: Jenis
   settings:
     title: Tetapan
@@ -153,28 +155,31 @@ views:
     darkModeMsg: Tukar antara tema cerah dan tema gelap
     redirectModeLabel: Buka di YouTube
     redirectModeMsg: >-
-      Menekan gambar video akan membuka video tersebut di dalam YouTube, menekan di tajuk video akan membuka video tersebut di Holodex
+      Mana-mana video yang ditekan akan terbuka di laman Youtube
     useEnglishNameLabel: Gunakan Nama Inggeris
-    useEnglishNameMsg: Gunakan nama Inggeris bagi nama saluran VTuber
+    useEnglishNameMsg: Gunakan nama Inggeris bagi nama saluran YouTube
     hideVideoThumbnailsLabel: Sembunyikan Lakaran Kecil (Gambar Kenit) Video
     hideVideoThumbnailsMsg: >-
-      Sembunyikan gambar kenit (gambar kecil), mengurangkan masa pemuatan dan mengurangkan masa menatal pada telefon bimbit
+      Gambar kenit disembunyikan agar mempercepat pemuatan dan mengurangkan tatalan pada peranti bimbit
     pushNotificationLabel: Pemberitahuan Segera (Akan Datang)
-    pushNotificationMsg: Aktifkan pemberitahuan segera untuk saluran kegemaran
+    pushNotificationMsg: Pemberitahuan segera akan diterima bagi saluran kegemaran
     autoplayVideoLabel: Automain Video
-    autoplayVideoMsg: Aktifkan main semula video secara automatik
+    autoplayVideoMsg: Dayakan main semula video secara automatik
     scrollModeLabel: Mod Tatal
     scrollModeMsg: Selak laman dengan menatal atau menekan butang
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
     clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
     tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
+    defaultFavorites: Jadikan laman Kegemaran laman lalai
+    defaultFavoritesMsg: >-
+      Laman kegemaran dijadikan sebagai laman yang dibuka setiap kali melawati holodex.net atau menekan lambang Holodex di sebelah kiri bahagian atas laman.
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
     close_btn: Tutup
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
-    nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong.
-    loginCallToAction: Daftar masuk untuk mengumpul kegemaran anda sendiri!
+    nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong
+    loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
   about:
     add_my_channel: Tambah saluran saya di Holodex
   watch:
@@ -188,6 +193,10 @@ views:
       TLSettingsTitle: Tetapan Terjemahan
       StickBottomSettingLabel: Letakkan di Bawah (peranti mudah alih)
       StickBottomSettingsDesc: Ruangan terjemahan diletakkan di bawah sembang (secara lalainya ruangan ini terletak di bahagian atas bagi peranti mudah alih)
+      showVerifiedMessages: Paparkan Sembang Oleh Pengguna Yang Disahkan
+      showModeratorMessages: Paparkan Sembang Oleh Penyederhana
+      tlFontSize: Saiz Fon
+      tlWindowSize: Peratusan (%) saiz ruangan terjemahan. 0% bagi perubahan saiz secara kendiri
       retryBtn: Cuba Lagi
       status:
         reconnecting: Sedang Menyambung Semula Secara Kendiri...
@@ -198,37 +207,37 @@ views:
         disconnectedToChat: Terputus
   favorites:
     promptForAction: >-
-      Cipta senarai vtuber kegemaran dan lihat sedutan terbaharu mereka dan siaran langsung di laman ini.
+      Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
     manageFavorites: Uruskan Kegemaran
   editor:
-    needlogin: Anda perlu daftar masuk untuk membuat penyuntingan pada video Holodex dan metadata lagu.
+    needlogin: Penyuntingan data meta video dan lagu di Holodex hanya untuk yang telah mengelog masuk.
   login:
     apikeyMsg: >-
       Kekunci API boleh digunakan dalam pengaturcaraan untuk membuat pertanyaan kepada API Holodex. Setiap akaun hanya terbatas dengan serentetan kekunci. Setelah mendapat kekunci baharu, kekunci lama akan tamat tempoh dalam masa 24 jam.
     apikeyNew: Dapatkan Kekunci API baharu
     ownedYtChannel: Saluran YouTube Milik Anda
     futureYtcOwnerMessage: >-
-      Kami berancang untuk menyediakan perkhidmatan tambahan kepada empunya saluran seperti kebolehan menyunting metadata video masing-masing.
+      Kami berancang akan menyediakan perkhidmatan tambahan kepada empunya saluran dengan kebolehan menyunting data meta video masing-masing.
     linkAcc: Pautkan akaun lain
     apikeyResetConfirm1: Adakah anda pasti anda ingin menetapkan semula Kekunci API anda?
-    apikeyResetConfirm2: Kekunci API lama akan tamat tempoh dalam masa 24 jam. Anda pasti mahu tetapkan semula?
-    apikeyResetNvm: Tiada perkara menarik berlaku.
+    apikeyResetConfirm2: Kekunci API lama akan tamat tempoh dalam masa 24 jam. Betul mahu tetapkan semula?
+    apikeyResetNvm: Entahlah apa yang terjadi.
   multiview:
-    confirmOverwrite: Ubah susun atur semasa?
+    confirmOverwrite: Ubah tataletak semasa?
     confirmOverwriteYes: Sahkan
-    permalink: Pautan Kekal
+    permalink: Buat Pautan
     presets: Tataletak Tersedia
     addframe: Tambah Petak
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
-      desktop: Komputer peribadi
-      mobile: Telefon bimbit
+      desktop: Peranti Atas Meja
+      mobile: Peranti Mudah Alih
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Tersuai
 time:
-  soon: tidak lama lagi
+  soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
   distance_past_date: '{0}'
 editor:

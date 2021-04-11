@@ -4,11 +4,25 @@
         <template v-if="status !== STATUSES.LOADING">
             <v-pagination v-model="page" :length="pages" v-if="!pageLess"></v-pagination>
             <div v-else>
-                <v-btn class="ma-2 pr-6" @click="page -= 1" :disabled="page === 1">
+                <v-btn
+                    class="ma-2 pr-6"
+                    @click="
+                        page -= 1;
+                        clicked = true;
+                    "
+                    :disabled="page === 1"
+                >
                     <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
                     {{ $t("component.paginateLoad.newer") }}
                 </v-btn>
-                <v-btn class="ma-2 pl-6" @click="page += 1" :disabled="status === STATUSES.COMPLETED">
+                <v-btn
+                    class="ma-2 pl-6"
+                    @click="
+                        page += 1;
+                        clicked = true;
+                    "
+                    :disabled="status === STATUSES.COMPLETED"
+                >
                     {{ $t("component.paginateLoad.older") }}
                     <v-icon>{{ icons.mdiChevronRight }}</v-icon>
                 </v-btn>
@@ -37,6 +51,7 @@ export default {
             }),
             status: 0,
             lastPage: 1,
+            clicked: false,
         };
     },
     props: {
@@ -69,17 +84,12 @@ export default {
             },
             set(val) {
                 this.lastPage = this.page;
-                this.$router
-                    .push({
-                        query: {
-                            ...this.$router.query,
-                            page: val,
-                        },
-                    })
-                    .then(() => {
-                        this.scrollElementId &&
-                            window.scrollTo(0, document.getElementById(this.scrollElementId).offsetTop - 100);
-                    });
+                this.$router.push({
+                    query: {
+                        ...this.$router.query,
+                        page: val,
+                    },
+                });
             },
         },
     },
@@ -123,6 +133,8 @@ export default {
             });
             const loaded = () => {
                 this.$emit("$PaginateLoad:loaded", { target: this });
+                if (this.clicked && this.scrollElementId)
+                    window.scrollTo(0, document.getElementById(this.scrollElementId).offsetTop - 100);
             };
             const completed = () => {
                 this.$emit("$PaginateLoad:completed", { target: this });

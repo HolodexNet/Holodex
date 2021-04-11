@@ -1,0 +1,282 @@
+---
+component:
+  apiError:
+    title: Gomennasorry!
+    textBeforeTwitter: 'Si è verificato un errore nel recupero del contenuto, per favore, controlla la pagina Twitter di '
+    textAfterTwitter: ' o segnala un errore tramite il'
+    aboutPage: Pagina delle Info
+    afterAboutPageHyperlink: .
+  channelList:
+    signInToFavorite: Accedi per aggiungere i preferiti
+    unfavoriteAllInGroup: Rimuovi tutti i canali dalla lista dei preferiti
+    favoriteAllInGroup: Imposta tutti i canali come preferiti
+  channelInfo:
+    videoCount: '{0} Video'
+    clipCount: '{n} Clip'
+    subscriberCount: '{n} Iscritti'
+    subscriberNA: Contatore degli iscritti non disponibile
+    totalViews: Visualizzazioni totali
+  channelSocials:
+    addToFavorites: Aggiungi ai Preferiti
+    removeFromFavorites: Rimuovi dai Preferiti
+    unblock: Sblocca questo canale
+    block: Blocca il contenuto di questo canale tramite Holodex
+  mainNav:
+    home: Home
+    favorites: Preferiti
+    channels: Canali
+    about: Info
+    library: Raccolta
+    settings: Impostazioni
+    login: Accedi
+    logout: Esci
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Impostazioni dell'account
+    music: Musica
+    multiview: Multi-Stream
+  videoCard:
+    clips: '{n} Clip'
+    watching: '{0} stanno guardando'
+    liveNow: In diretta ora
+    edit: Modifica
+    copiedToClipboard: Link copiato negli appunti.
+    copyLink: Copia il Link di Holodex
+  videoDescription:
+    description: Descrizione
+  description:
+    showLess: Mostra meno
+    showMore: Mostra altro
+  watch:
+    streamingFor: In diretta da {0}
+    nextUpInMugen: Prossimo
+  search:
+    searchLabel: Cerca
+    type:
+      channel: canale
+      topic: argomento
+      org: org
+      titledesc: titolo e descrizione
+      comments: commenti
+      videourl: url del video
+  relatedVideo:
+    clipsLabel: clip
+    simulcastsLabel: simulcast
+    refersLabel: referenze
+    sourcesLabel: fonti
+    songsLabel: canzoni
+    recommendationsLabel: raccomandati
+  paginateLoad:
+    newer: Più recenti
+    older: Più vecchi
+  music:
+    clearPlaylist: Svuota
+  channelMusic:
+    recentSongsHeader: Brani Recenti
+    weeklyTopPlaysHeader: Canzoni Più Ascoltate della Settimana
+  songList:
+    songTitle: Titolo
+    songCoveredBy: Cantata da
+    songDuration: Durata
+    sangOnTime: Cantata su
+  orgMusic:
+    monthlyTopForOrg: Più riprodotte di {0} durante questo mese
+    weeklyTopForOrg: Più riprodotte di {0} durante questa settimana
+  installPrompt:
+    title: Installa Holodex
+    callToAction: Funziona meglio guardare i video su Holodex quando lo aggiungi alla schermata home
+    notNowBtn: Non ora
+    installBtn: Installa
+    iOS:
+      popup: Installa Holodex su iOS
+      afterExportIcon: poi 'Aggiungi alla Schermata Home
+      beforeExportIcon: Clicca
+views:
+  channels:
+    sortOptions:
+      subscribers: Iscritti
+      group: Gruppo
+      recentUpload: Caricamento Recente
+      videoCount: Numero di Video
+      clipCount: Numero di Clip
+    tabs:
+      Vtuber: Vtuber
+      Subber: Sottotitolatori
+      Favorites: Preferiti
+      Blocked: Bloccati
+    favoritesAreEmpty: Non hai preferiti!
+    blockedAreEmpty: Non hai bloccato nessun canale.
+  home:
+    liveOrUpcomingHeading: Dirette / Prossime
+    recentVideosHeading: Video recenti
+    recentVideoToggles:
+      all: Tutti
+      official: Ufficiali
+      subber: Clip
+  library:
+    savedVideosTitle: Video salvati
+    createYtPlaylistButton: Crea una Playlist di YouTube ({0})
+    deleteFromLibraryButton: Elimina ({0})
+    deleteConfirmation: Sei sicuro di voler eliminare {0} video?
+    deleteConfirmationOK: Elimina
+    deleteConfirmationCancel: Annulla
+    selectionReset: Ripristina
+    selectionSelectAll: Seleziona Tutti
+    emptyLibrary: Non hai alcun video salvato!
+    exportSelected: Esporta i selezionati ({0})
+    exportYtPlaylist: Playlist di YouTube
+    exportCsv: File CSV
+    selectionSelect50: Seleziona 50
+    exportYTExplanation: >-
+      La playlist creata tramite questa funzione è <b>non in elenco</b> e potrebbe essere cancellata da YouTube. <br />Dato che la funzione di YouTube è incompleta, dovrai eseguire i seguenti passaggi per salvare la playlist <b>non in elenco</b> nel tuo account.
+    exportYTHeading: Istruzioni per il salvataggio della Playlist di YouTube
+    exportYTInstructions: >-
+      <b class="red--text">Primo passo</b>: riproduci la playlist di YouTube e cambia l'interfaccia utente del player video in mini-player.<br /><br /><b class="red--text">Secondo passo</b>: scegli qualsiasi video e aggiungilo alla coda. <br /><br /><b class="red--text">Terzo passo</b>: ora puoi salvare la Playlist. Clicca su "Salva" per salvarla.
+  notFound:
+    title: Contenuto non trovato
+    back: Ritorna alla Home
+  search:
+    sort:
+      newest: Più recenti
+      oldest: Più vecchi
+    type:
+      all: Tutti
+      official: Ufficiale
+      clip: Clip
+    unsupportedQuery: >-
+      Attualmente non è supportata la ricerca di clip di un determinato <kbd>argomento</kbd> e di una determinata <kbd>Organizzazione</kbd>. Nessuna <b>clip</b> verrà mostrata.
+    sortByLabel: Ordina per
+    typeDropdownLabel: Tipo
+  settings:
+    title: Impostazioni
+    darkModeLabel: Tema scuro
+    darkModeMsg: Scegli il tema tra il "tema chiaro" e il "tema scuro"
+    redirectModeLabel: Apri su YouTube
+    redirectModeMsg: >-
+      Cliccando sulle copertine dei video, questi verranno aperti su YouTube, mentre, cliccando il titolo del video verrà aperto su Holodex
+    useEnglishNameLabel: Utilizza Il Nome Inglese
+    useEnglishNameMsg: Usa i nomi localizzati in inglese per i canali dei VTuber
+    hideVideoThumbnailsLabel: Nascondi le Copertine dei Video
+    hideVideoThumbnailsMsg: >-
+      Nascondere le copertine dei video aiuta a velocizzare i tempi di caricamento e permette di scorrere meno sui dispositivi mobili
+    pushNotificationLabel: Notifiche a comparsa (In arrivo prossimamente)
+    pushNotificationMsg: Abilità le notifiche a comparsa per i canali preferiti
+    autoplayVideoLabel: Riproduzione automatica dei Video
+    autoplayVideoMsg: Abilità la riproduzione automatica dei video
+    scrollModeLabel: Modalità Scorrimento
+    scrollModeMsg: Usa lo scorrimento o un tocco per cambiare pagina
+    resetAllSettings: Reimposta le Impostazioni predefinite
+    clipLanguageSelection: 'Vedi Clip in queste lingue:'
+    tlLanguageSelection: Vedi la traduzione automatica "live-chat TL" in queste lingue
+  app:
+    update_available: È disponibile un aggiornamento
+    update_btn: Aggiorna
+    close_btn: Chiudi
+    check_about_page: Visita la "Pagina delle Info" per vedere i nuovi cambiamenti
+    nowSupportsMultiOrg: Holodex ora supporta più organizzazioni.
+    loginCallToAction: Accedi per ottenere i tuoi preferiti!
+  about:
+    add_my_channel: Aggiungi il mio canale ad Holodex
+  watch:
+    theaterMode: Modalità Cinema
+    saveToLibrary: Salva il video nella Raccolta
+    mentionIconLabel: MENZIONI
+    chat:
+      loading: Caricamento della Chat...
+      hideTLBtn: Nascondi le Traduzioni
+      showTLBtn: Mostra le Traduzioni
+      TLSettingsTitle: Impostazioni delle Traduzioni
+      StickBottomSettingLabel: Fissa in basso (dispositivo mobile)
+      StickBottomSettingsDesc: Fissa sotto la chat il box traduzione (di base è fissato in alto sui dispositivi mobili)
+      retryBtn: Riprova
+      status:
+        reconnecting: Riconnessione automatica...
+        reconnectFailed: Impossibile riconnettersi
+        notLive: >-
+          La diretta non è ancora iniziata, per favore, riprova quando mancheranno meno di 15 minuti al suo inizio
+        connectedToChat: Connesso
+        disconnectedToChat: Disconnesso
+  favorites:
+    promptForAction: >-
+      Crea una lista dei tuoi vtuber preferiti e vedi le loro ultime dirette e clip su questa pagina.
+    manageFavorites: Gestisci i preferiti
+  editor:
+    needlogin: Dovrai effettuare l'accesso per apportare modifiche al video di Holodex e ai metadati dei brani.
+  login:
+    apikeyMsg: >-
+      Puoi usare la chiave di API per automatizzare le richieste all'API di Holodex. Puoi richiedere solo una chiave per account. Dopo aver ottenuto una nuova chiave, quella vecchia scadrà entro 0-24 ore.
+    apikeyNew: Ottieni una nuova chiave API
+    ownedYtChannel: Miei Canali di YouTube
+    futureYtcOwnerMessage: >-
+      In futuro pianifichiamo di fornire più servizi ai proprietari dei canali, come la modifica dei metadati per i propri video.
+    linkAcc: Collega un altro account
+    apikeyResetConfirm1: Sei sicuro di voler resettare la tua chiave API?
+    apikeyResetConfirm2: La vecchia chiave Api avrà dalle 0-24 ore prima di scadere. Sei sicuro di volerla resettare?
+    apikeyResetNvm: Non è successo nulla di interessante.
+  multiview:
+    confirmOverwrite: Sovrascrivere il layout attuale?
+    confirmOverwriteYes: Conferma
+    permalink: Link permanente
+    presets: Preset
+    addframe: Aggiungi cella
+    preset:
+      shareOnDiscord: >-
+        Hai un bel layout da condividerci? Usa il pulsante condividi e facci sapere sul nostro <a href="https://discord.gg/jctkgHBt4b">Server Discord</a>!
+      desktop: Desktop
+      mobile: Dispositivo mobile
+    video:
+      selectLive: Seleziona Diretta
+      addCustomVideo: Aggiungi Video Personalizzato
+time:
+  soon: presto
+  diff_future_date: Inizia {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: Aggiungi
+    update: Aggiorna
+    permission: >-
+      Devi essere un utente di livello "Editor" o più alto per poter aggiornare o eliminare i brani esistenti. Per favore contattaci su <a class='white--text' href='/about'>discord</a> per notificare gli editor dei problemi o degli abusi, oppure proponiti come editor.
+    titles:
+      addSong: 'Metadati della canzone: Aggiungi una nuova canzone'
+      songList: 'Elenco dei brani : {0}'
+      help: Guida
+    itunesLookupPlaceholder: (Facoltativo) Ricerca su iTunes
+    moveRight2s: Vai avanti di due secondi
+    testEnd: Prova ad ascoltare a partire da 3 secondi prima della fine.
+    setToCurrentTime: Imposta all'ora attuale ({0})
+    moveLeft2s: Vai indietro di 2 secondi
+    trackNameInput: Nome della Traccia
+    originalArtistInput: Artista originale
+    testStart: Prova l'avvio
+    startInput: Avvia
+    endInput: 'Durata in secondi: (end @ {0})'
+  exitMode: Esci Dalla Modalità Editor
+  enterMode: Modifica Video
+about:
+  quicklinks: Collegamenti rapidi
+  discordBtn: Server di Discord
+  issueTracker: Issue Tracker / Sorgente
+  faq:
+    title: Domande frequenti (FAQ)
+    ytchatHeader: Il mio canale YouTube non è connesso!
+    ytchatContent: >-
+      Per favore disabilita la funzionalità di sicurezza nota come "Blocca cookie di terze parti" o escludi dal blocco questo sito e youtube.com per acconsentire i cookie di terze parti.
+    ytchatFirefox: Istruzioni di Firefox, gli altri browser potrebbero essere simili.
+    autoplayHeader: La riproduzione automatica non funziona!
+    autoplayContent: Cerca su Google come attivare la riproduzione automatica nel tuo browser.
+    musicPlayer: Il Riproduttore Musicale non funziona bene sui dispositivi mobili!
+    musicPlayerContent: >-
+      Siamo spiacenti, ma non è possibile supportare il Riproduttore Musicale come sito web sui dispositivi mobili. <br/>Per tre motivi: 1. I dispositivi mobili di solito bloccano la riproduzione automatica, di cui abbiamo bisogno; 2. I dispositivi mobili, di solito, non permettono ai siti web di concatenare la musica in background. 3. Non integriamo le tue liste di canzoni nel centro di controllo del volume della musica di sistema.
+    videoLinkage: Come posso assicurarmi che i video siano collegati correttamente ai relativi vtuber?
+    videoLinkageContent: >-
+      Tutte le informazioni sono analizzate dalla descrizione del video. Se stai clippando una diretta, per favore assicurati di linkare la diretta originale. Se stai clippando contenuti fan made (es. da bilibili) assicurati di aver linkato il canale ufficiale dei relativi vtuber. Se non linki alcun canale di un vtuber non mostreremo tale clip su Holodex poiché tutte le clip richiedono il link verso un vtuber conosciuto da Holodex.
+    quitHolodex: "Sono un sottotitolatore e vorrei che il mio canale venisse rimosso da Holodex\\r\n"
+    quitHolodexContent: >-
+      Ci spiace che tu te ne vada (っ °Д °;)っ. Per favore, fammi sapere se c'è qualche problema con cui posso aiutarti. Se vuoi comunque che il tuo canale venga rimosso, per favore, inviaci un messaggio su Discord.
+  gdpr: GDPR ed i miei dati
+  gdprContent: >-
+    Un cookie di Google Analytics è usato per tracciare le visualizzazioni della pagina a fini analitici. Dopo l'accesso associamo il tuo nome utente e l'ID del tuo account social media ai tuoi preferiti. Questi dati potrebbero includere la tua Email (per Google), il tuo ID di Discord o il tuo tag di Twitter.
+  gdprDeletion: Per l'eliminazione dei tuoi dati utente, contattaci su discord!
+  feedback: Inviaci un Feedback / Segnala un Bug
+  feedbackHtml: >-
+    Puoi segnalare un problema sull'<a href="https://github.com/RiceCakess/Holodex/issues"> Issue Tracker di Github </a> o contattare il team di Holodex su Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>

@@ -19,6 +19,8 @@ component:
   channelSocials:
     addToFavorites: 加入收藏
     removeFromFavorites: 取消收藏
+    unblock: 取消封鎖此頻道
+    block: 在 Holodex 上封鎖此頻道
   mainNav:
     home: 首頁
     favorites: 我的收藏
@@ -37,8 +39,12 @@ component:
     watching: '{0} 人正在觀看'
     liveNow: 實況中
     edit: 編輯
+    copiedToClipboard: 連結已複製到剪貼簿。
+    copyLink: 複製 Holodex 連結
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -88,6 +94,7 @@ component:
       beforeExportIcon: 點擊
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -98,7 +105,9 @@ views:
       Vtuber: Vtuber
       Subber: 翻譯剪輯
       Favorites: 我的收藏
+      Blocked: 黑名單
     favoritesAreEmpty: 您目前沒有任何收藏！
+    blockedAreEmpty: 沒有任何頻道在您的黑名單中
   home:
     liveOrUpcomingHeading: 現正／即將開始實況
     recentVideosHeading: 最近新增影片
@@ -162,6 +171,9 @@ views:
     resetAllSettings: 重設所有設定/資料
     clipLanguageSelection: '顯示以下語言的剪輯影片'
     tlLanguageSelection: 在翻譯聊天室中顯示下列語言
+    defaultFavorites: 預設顯示「我的收藏」
+    defaultFavoritesMsg: >-
+      進入 Holodex 時預設顯示「我的收藏」頁面
   app:
     update_available: 已取得更新
     update_btn: 更新
@@ -182,6 +194,10 @@ views:
       TLSettingsTitle: 翻譯設定
       StickBottomSettingLabel: 置底留言（手機專用）
       StickBottomSettingsDesc: 將翻譯留言置底於聊天室下方（預設置頂）
+      showVerifiedMessages: 顯示已認證的使用者訊息
+      showModeratorMessages: 顯示管理員訊息
+      tlFontSize: 字體大小
+      tlWindowSize: 翻譯聊天室大小(%) ，設置0%時會自動調整尺寸
       retryBtn: 重試
       status:
         reconnecting: 嘗試重新連線…
