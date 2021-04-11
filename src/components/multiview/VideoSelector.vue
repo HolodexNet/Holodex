@@ -94,7 +94,11 @@
             </v-btn>
         </template>
         <template v-else>
-            <div :key="video.id" v-for="video in filteredLive" style="position: relative; margin-right: 3px">
+            <div
+                :key="video.id"
+                v-for="video in filteredLive"
+                style="position: relative; margin-right: 3px; cursor: pointer"
+            >
                 <div class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
                     {{ formatDurationLive(video) }}
                 </div>
