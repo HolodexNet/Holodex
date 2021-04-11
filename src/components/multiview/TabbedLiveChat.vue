@@ -58,7 +58,11 @@ export default {
     computed: {
         currentTab: {
             get() {
-                if (!this.$store.state.multiview.layoutContent[this.id].currentTab) return 0;
+                if (
+                    !this.$store.state.multiview.layoutContent[this.id] ||
+                    !this.$store.state.multiview.layoutContent[this.id].currentTab
+                )
+                    return 0;
                 return this.$store.state.multiview.layoutContent[this.id].currentTab;
             },
             set(val) {
