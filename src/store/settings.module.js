@@ -2,6 +2,7 @@
 import Vue from "vue";
 import { langs } from "@/plugins/vuetify";
 import { TL_LANGS } from "@/utils/consts";
+import { createSimpleMutation } from "@/utils/functions";
 
 const userLanguage = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
 
@@ -23,8 +24,14 @@ const initialState = {
     hideThumbnail: false,
     scrollMode: true,
 
+    // Live TL Window Settings
     liveTlStickBottom: false,
     liveTlLang: validTlLangs.has(userLanguage) ? userLanguage : "en",
+    liveTlFontSize: 14,
+    liveTlShowVerified: true, // show verified messages
+    liveTlShowModerator: true, // show moderator messages
+    liveTlWindowSize: 0, // Default size, otherwise percentage height
+    liveTlForceOverlay: false, // force the window to be overlay
 
     blockedChannels: [],
 };
@@ -73,15 +80,16 @@ const mutations = {
     setScrollMode(state, val) {
         state.scrollMode = val;
     },
-    setLiveTlStickBottom(state, val) {
-        state.liveTlStickBottom = val;
-    },
-    setLiveTlLang(state, val) {
-        state.liveTlLang = val;
-    },
-    setDefaultOpenFavorites(state, val) {
-        state.defaultOpenFavorites = val;
-    },
+    ...createSimpleMutation([
+        "defaultOpenFavorites",
+        "liveTlStickBottom",
+        "liveTlLang",
+        "liveTlFontSize",
+        "liveTlShowVerified",
+        "liveTlShowModerator",
+        "liveTlWindowSize",
+        "liveTlForceOverlay",
+    ]),
     resetState(state) {
         Object.assign(state, initialState);
     },

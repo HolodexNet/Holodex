@@ -84,6 +84,7 @@
 import { langs } from "@/plugins/vuetify";
 import { mdiFilter } from "@mdi/js";
 import { TL_LANGS } from "@/utils/consts";
+import { syncState } from "@/utils/functions";
 
 export default {
     name: "Settings",
@@ -96,60 +97,21 @@ export default {
         };
     },
     computed: {
+        ...syncState("settings", [
+            "darkMode",
+            "redirectMode",
+            "autoplayVideo",
+            "useEnName",
+            "scrollMode",
+            "hideThumbnail",
+            "defaultOpenFavorites",
+        ]),
         language: {
             get() {
                 return this.$store.state.settings.lang;
             },
             set(val) {
                 this.$store.commit("settings/setLanguage", val);
-            },
-        },
-        darkMode: {
-            get() {
-                return this.$store.state.settings.darkMode;
-            },
-            set(val) {
-                this.$store.commit("settings/setDarkMode", val);
-            },
-        },
-        redirectMode: {
-            get() {
-                return this.$store.state.settings.redirectMode;
-            },
-            set(val) {
-                this.$store.commit("settings/setRedirectMode", val);
-            },
-        },
-        autoplayVideo: {
-            get() {
-                return this.$store.state.settings.autoplayVideo;
-            },
-            set(val) {
-                this.$store.commit("settings/setAutoplayVideo", val);
-            },
-        },
-        scrollMode: {
-            get() {
-                return this.$store.state.settings.scrollMode;
-            },
-            set(val) {
-                this.$store.commit("settings/setScrollMode", val);
-            },
-        },
-        useEnName: {
-            get() {
-                return this.$store.getters["settings/useEnName"];
-            },
-            set(val) {
-                this.$store.commit("settings/setUseEnName", val);
-            },
-        },
-        hideThumbnail: {
-            get() {
-                return this.$store.state.settings.hideThumbnail;
-            },
-            set(val) {
-                this.$store.commit("settings/setHideThumbnail", val);
             },
         },
         clipLangs: {
@@ -159,14 +121,6 @@ export default {
             set(val: any[]) {
                 // sort array to increase cache hit rate
                 this.$store.commit("settings/setClipLangs", val.sort());
-            },
-        },
-        defaultOpenFavorites: {
-            get() {
-                return this.$store.state.settings.defaultOpenFavorites;
-            },
-            set(val) {
-                this.$store.commit("settings/setDefaultOpenFavorites", val);
             },
         },
     },

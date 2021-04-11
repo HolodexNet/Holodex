@@ -72,10 +72,21 @@
 import api, { API_BASE_URL } from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
 import { TL_LANGS } from "@/utils/consts";
-import { debounce } from "@/utils/functions";
+import { syncState } from "@/utils/functions";
 import VueSocketIOExt from "vue-socket.io-extended";
 import { Manager } from "socket.io-client";
 import Vue from "vue";
+
+const manager = new Manager(/* process.env.NODE_ENV === "development" ? "http://localhost:2434" : */ API_BASE_URL, {
+    reconnectionAttempts: 10,
+    transports: ["websocket"],
+    upgrade: false,
+    path: /* process.env.NODE_ENV !== "development" && */ "/api/socket.io/",
+    secure: true,
+    autoConnect: false,
+});
+
+Vue.use(VueSocketIOExt, manager.socket("/"));
 
 export default {
     name: "WatchLiveTranslations",
@@ -136,21 +147,7 @@ export default {
             }
         },
     },
-    created() {
-        const manager = new Manager(
-            /* process.env.NODE_ENV === "development" ? "http://localhost:2434" : */ API_BASE_URL,
-            {
-                reconnectionAttempts: 10,
-                transports: ["websocket"],
-                upgrade: false,
-                path: /* process.env.NODE_ENV !== "development" && */ "/api/socket.io/",
-                secure: true,
-                autoConnect: false,
-            },
-        );
-
-        Vue.use(VueSocketIOExt, manager.socket("/"));
-    },
+    created() {},
     mounted() {
         this.tlJoin();
     },
@@ -167,22 +164,15 @@ export default {
         lang() {
             return this.$store.state.settings.lang;
         },
-        liveTlStickBottom: {
-            get() {
-                return this.$store.state.settings.liveTLStickBottom;
-            },
-            set(val) {
-                this.$store.commit("settings/setLiveTlStickBottom", val);
-            },
-        },
-        liveTlLang: {
-            get() {
-                return this.$store.state.settings.liveTlLang;
-            },
-            set(val) {
-                this.$store.commit("settings/setLiveTlLang", val);
-            },
-        },
+        ...syncState("settings", [
+            "liveTlStickBottom",
+            "liveTlLang",
+            "liveTlFontSize",
+            "liveTlShowVerified",
+            "liveTlShowModerator",
+            "liveTlWindowSize",
+            "liveTlForceOverlay",
+        ]),
         connected() {
             return this.$socket.connected;
         },
@@ -217,7 +207,7 @@ export default {
             });
         },
         // eslint-disable-next-line func-names
-        tlJoin: debounce(function () {
+        tlJoin() {
             // Disallow users from joining a chat room that doesn't exist yet
             // Backend will create a chatroom when it's 15 minutes before a stream
             if (
@@ -243,7 +233,7 @@ export default {
 
             // Try to join chat room with specified language
             this.$socket.client.emit("subscribe", { video_id: this.video.id, lang: this.liveTlLang });
-        }, 300),
+        },
         tlLeave() {
             const vm = this as any;
             // only disconnect and derement socket if it succeeded
@@ -252,6 +242,8 @@ export default {
                 vm.$socket.client.emit("unsubscribe", { video_id: vm.video.id, lang: vm.liveTlLang });
                 vm.$socket.client.off(`${vm.video.id}/${vm.liveTlLang}`);
                 vm.$store.dispatch("checkActiveSockets");
+                // Reset for immediate reconnects
+                vm.success = false;
             }
         },
         utcToTimestamp(utc) {
