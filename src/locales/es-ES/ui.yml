@@ -167,6 +167,9 @@ views:
     resetAllSettings: Reiniciar todas las opciones/datos
     clipLanguageSelection: 'Ver clips en estos idiomas:'
     tlLanguageSelection: Ver traducciones en directo en estos idiomas
+    defaultFavorites: Establecer "Favoritos" como página de inicio
+    defaultFavoritesMsg: >-
+      Establece “Favoritos” como página de inicio.
   app:
     update_available: Hay una actualización disponible
     update_btn: Actualizar
