@@ -183,7 +183,17 @@ export default {
             queueMenuOpen: false,
 
             titleTransition: "scroll-y-reverse-transition",
+
+            allowPlayOverride: 0, // set to timestamp user clicks on yt frame.
+            // used to check whether or not to allow a user action to override current
+            // playback state.
         };
+    },
+    mounted() {
+        window.addEventListener("blur", this.probableMouseClickInIFrame);
+    },
+    beforeDestroy() {
+        window.removeEventListener("blur", this.probableMouseClickInIFrame);
     },
     watch: {
         isOpen() {
@@ -192,7 +202,7 @@ export default {
             setTimeout(() => {
                 // console.log("fix scroll")
                 if (this.$refs.sheet) {
-                    console.log("fix scroll");
+                    // console.log("fix scroll");
                     this.$refs.sheet.showScroll();
                     // either set :retain-focus="false" above or do this:
                     this.$nextTick(() => this.$refs.sheet.unbind());
@@ -200,17 +210,17 @@ export default {
             }, 100);
         },
         playlist(nw) {
-            console.log("playlist: ", nw.length);
+            // console.log("playlist: ", nw.length);
             if (nw.length === 0) this.$store.commit("music/closeBar");
             if (this.isOpen === false && nw.length === 0) this.$store.commit("music/openBar");
         },
         currentSong(ns, os) {
-            if (os != null && this.progress > 80) {
-                console.log("track song");
+            if (os != null && this.progress > 80 && this.progress < 105) {
+                // console.log("track song");
 
                 backendApi.trackSongPlay(os.channel_id, os.video_id, os.name).catch((err) => console.error(err));
             }
-            console.log("change song");
+            // console.log("change song");
         },
         titleTransition(ns) {
             if (ns !== "scroll-y-reverse-transition") {
@@ -251,7 +261,17 @@ export default {
         },
         songIsPlaying(player) {
             this.player = player.target;
-            if (!this.isOpen || this.state === MUSIC_PLAYER_STATE.PAUSED) {
+            /**-----------------------
+             * *       INFO
+             *  if: the bar is NOT OPEN
+             *
+             *  or
+             *
+             *  The Music Player is supposed to be PAUSED
+             *  AND the play event is not triggered by the user.
+             *
+             *------------------------* */
+            if (!this.isOpen || (this.state === MUSIC_PLAYER_STATE.PAUSED && this.allowPlayOverride === 0)) {
                 this.player.pauseVideo();
                 return;
             }
@@ -306,6 +326,9 @@ export default {
             }
             this.titleTransition = "scroll-y-transition";
             this.$store.commit("music/prevSong");
+        },
+        probableMouseClickInIFrame() {
+            this.allowPlayOverride = Date.now();
         },
     },
 };
