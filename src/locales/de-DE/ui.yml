@@ -43,6 +43,8 @@ component:
     copyLink: Holodex-Link kopieren
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -92,6 +94,7 @@ component:
       beforeExportIcon: Tipp
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -167,6 +170,9 @@ views:
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
     clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
     tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
+    defaultFavorites: Standardmäßig Favoriten öffnen
+    defaultFavoritesMsg: >-
+      Öffne deine Favoriten automatisch wenn du holodex.net besuchst oder das Logo oben links anklickst.
   app:
     update_available: Ein Update ist verfügbar
     update_btn: Update
@@ -187,6 +193,10 @@ views:
       TLSettingsTitle: Übersetzungseinstellungen
       StickBottomSettingLabel: Unten anzeigen (mobil)
       StickBottomSettingsDesc: Übersetzungsbox wird unten am Chat angezeigt (Standard ist oben)
+      showVerifiedMessages: Verifizierte Nachrichten anzeigen
+      showModeratorMessages: Moderator-Nachrichten anzeigen
+      tlFontSize: Schriftgröße
+      tlWindowSize: Box Größe (in %), 0% für automatisch
       retryBtn: Erneut versuchen
       status:
         reconnecting: Automatisch neu verbinden...
