@@ -188,7 +188,8 @@ export default {
         return axiosInstance.post("/songs/latest", { ...condition, offset, limit });
     },
     trackSongPlay(channelId, videoId, name) {
-        return axiosInstance.get(`/songs/record/${channelId}/${videoId}/${name}`);
+        const urlsafe = querystring.stringify({ n: name });
+        return axiosInstance.get(`/songs/record/${channelId}/${videoId}?${urlsafe}`);
     },
     /**
      * Grabs top 20 songs from API.
