@@ -24,18 +24,31 @@
                 :class="{ 'no-btn-text': $store.state.isMobile || true }"
             >
                 <!-- <v-switch v-model="autoLayout" hide-details></v-switch> -->
-                <v-btn @click="addItem" color="green" icon>
-                    <v-icon>{{ mdiViewGridPlus }}</v-icon>
-                    <span class="collapsible-text">{{ $t("views.multiview.addframe") }}</span>
-                </v-btn>
-                <v-btn @click="clearAllItems" color="red" icon>
-                    <v-icon>{{ icons.mdiRefresh }}</v-icon>
-                    <span class="collapsible-text">{{ $t("component.music.clearPlaylist") }}</span>
-                </v-btn>
-                <v-btn color="primary" @click="showPresetSelector = true" icon>
-                    <v-icon>{{ icons.mdiGridLarge }}</v-icon>
-                    <span class="collapsible-text">{{ $t("views.multiview.presets") }}</span>
-                </v-btn>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn @click="addItem" color="green" icon v-bind="attrs" v-on="on">
+                            <v-icon>{{ mdiViewGridPlus }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>{{ $t("views.multiview.addframe") }}</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn @click="clearAllItems" color="red" icon v-bind="attrs" v-on="on">
+                            <v-icon>{{ icons.mdiRefresh }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>{{ $t("component.music.clearPlaylist") }}</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn color="primary" @click="showPresetSelector = true" icon v-bind="attrs" v-on="on">
+                            <v-icon>{{ icons.mdiGridLarge }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>{{ $t("views.multiview.presets") }}</span>
+                </v-tooltip>
+
                 <v-menu
                     :open-on-click="true"
                     bottom
@@ -69,6 +82,7 @@
                         </v-card-text>
                     </v-card>
                 </v-menu>
+
                 <v-btn @click="toggleFullScreen" icon>
                     <v-icon>{{ icons.mdiFullscreen }}</v-icon>
                 </v-btn>
@@ -520,5 +534,12 @@ export default {
 
 .vue-grid-layout {
     transition: none;
+}
+
+.mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-track {
+    background: rgba(99, 46, 46, 0.5);
+}
+.mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-thumb {
+    background: #f06291a2;
 }
 </style>
