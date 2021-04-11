@@ -43,6 +43,8 @@ component:
     copyLink: 複製 Holodex 連結
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -92,6 +94,7 @@ component:
       beforeExportIcon: 點擊
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -168,6 +171,9 @@ views:
     resetAllSettings: 重設所有設定/資料
     clipLanguageSelection: '顯示以下語言的剪輯影片'
     tlLanguageSelection: 在翻譯聊天室中顯示下列語言
+    defaultFavorites: 預設顯示「我的收藏」
+    defaultFavoritesMsg: >-
+      進入 Holodex 時預設顯示「我的收藏」頁面
   app:
     update_available: 已取得更新
     update_btn: 更新
@@ -188,6 +194,10 @@ views:
       TLSettingsTitle: 翻譯設定
       StickBottomSettingLabel: 置底留言（手機專用）
       StickBottomSettingsDesc: 將翻譯留言置底於聊天室下方（預設置頂）
+      showVerifiedMessages: 顯示已認證的使用者訊息
+      showModeratorMessages: 顯示管理員訊息
+      tlFontSize: 字體大小
+      tlWindowSize: 翻譯聊天室大小(%) ，設置0%時會自動調整尺寸
       retryBtn: 重試
       status:
         reconnecting: 嘗試重新連線…
