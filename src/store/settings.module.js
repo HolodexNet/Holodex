@@ -1,32 +1,27 @@
 /* eslint-disable no-shadow */
 import Vue from "vue";
-import { langs } from "@/plugins/vuetify";
-import { TL_LANGS } from "@/utils/consts";
-import { createSimpleMutation } from "@/utils/functions";
+import { createSimpleMutation, getUILang, getLang } from "@/utils/functions";
 
-const userLanguage = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
-
-const validLangs = new Set(langs.map((x) => x.val));
-const validTlLangs = new Set(TL_LANGS.map((x) => x.value));
+const userLanguage = navigator.language || navigator.userLanguage || "en";
 
 const englishNamePrefs = new Set(["en", "es", "fr", "id", "pt", "de", "ru", "it"]);
 
 const initialState = {
-    lang: validLangs.has(userLanguage) ? userLanguage : "en",
-    clipLangs: [validTlLangs.has(userLanguage) ? userLanguage : "en"],
+    lang: getUILang(userLanguage), // UI lang
+    clipLangs: [getLang(userLanguage)],
     darkMode: true,
     defaultOpenFavorites: false,
     redirectMode: false,
     autoplayVideo: true,
     canUseWebP: true,
     testedWebP: false,
-    nameProperty: englishNamePrefs.has(userLanguage) ? "english_name" : "name",
+    nameProperty: englishNamePrefs.has(getLang(userLanguage)) ? "english_name" : "name",
     hideThumbnail: false,
     scrollMode: true,
 
     // Live TL Window Settings
     liveTlStickBottom: false,
-    liveTlLang: validTlLangs.has(userLanguage) ? userLanguage : "en",
+    liveTlLang: getLang(userLanguage),
     liveTlFontSize: 14,
     liveTlShowVerified: true, // show verified messages
     liveTlShowModerator: true, // show moderator messages
