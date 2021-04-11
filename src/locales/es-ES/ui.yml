@@ -7,7 +7,7 @@ component:
     aboutPage: Página de información
     afterAboutPageHyperlink: .
   channelList:
-    signInToFavorite: Registrate para marcar como favorito
+    signInToFavorite: Inicia sesión para añadir a favoritos
     unfavoriteAllInGroup: Eliminar todo el grupo de favoritos
     favoriteAllInGroup: Añadir todo el grupo a favoritos
   channelInfo:
@@ -19,8 +19,8 @@ component:
   channelSocials:
     addToFavorites: Añadir a favoritos
     removeFromFavorites: Eliminar de favoritos
-    unblock: Desbloquear este canal
-    block: Bloquear este canal en Holodex
+    unblock: Desbloquear canal
+    block: Bloquear canal en Holodex
   mainNav:
     home: Inicio
     favorites: Favoritos
@@ -39,8 +39,8 @@ component:
     watching: '{0} espectadores'
     liveNow: En directo
     edit: Editar
-    copiedToClipboard: Link copiado al portapapeles.
-    copyLink: Copiar link de Holodex
+    copiedToClipboard: Enlace copiado al portapapeles.
+    copyLink: Copiar enlace de Holodex
   videoDescription:
     description: Descripción
   description:
@@ -57,7 +57,7 @@ component:
       org: org
       titledesc: título y descripción
       comments: comentarios
-      videourl: link del vídeo
+      videourl: enlace
   relatedVideo:
     clipsLabel: clips
     simulcastsLabel: transmisiónes simultaneas
@@ -249,16 +249,16 @@ editor:
     originalArtistInput: Artista original
     testStart: Probar comienzo
     startInput: Comienzo
-    endInput: 'Duración en segundos: (termina en {0})'
-  exitMode: Salir del modo de edición
-  enterMode: Editar video
+    endInput: 'Duración en segundos: (acaba en {0})'
+  exitMode: Salir del modo edición
+  enterMode: Editar vídeo
 about:
   quicklinks: Acceso rápido
   discordBtn: Discord de Holodex
-  issueTracker: Rastreador de problemas / Fuente
+  issueTracker: Reportar incidencias / Código fuente
   faq:
     title: Preguntas frecuentes (FAQ)
-    ytchatHeader: '¡Mi Chat de Youtube no está conectado!'
+    ytchatHeader: '¡Mi chat de Youtube no está conectado!'
     ytchatContent: >-
       Por favor deshabilite la función de seguridad del navegador conocida como bloqueo de cookies de terceros, o agregue este sitio web y youtube.com a la lista blanca para permitir cookies de terceros.
     ytchatFirefox: Instrucciones para Firefox, otros navegadores pueden ser similares.
@@ -277,6 +277,6 @@ about:
   gdprContent: >-
     Una cookie de Google Analytics se utiliza para rastrear visitas a la pagina para propósitos analíticos. Después de iniciar sesión asociamos su nombre de usuario y ID de la cuenta de redes sociales con sus favoritos. Estos datos pueden incluir tu correo electrónico (para Google), Discord ID o Twitter respectivamente.
   gdprDeletion: Para la eliminación de sus datos de usuario, por favor contáctenos en discord!
-  feedback: Comentarios/Reportes de Bug
+  feedback: Sugerencias/Reportar incidencias
   feedbackHtml: >-
-    Puedes crear un problema en el <a href="https://github.com/RiceCakess/Holodex/issues"> Rastreador de Problemas de Github </a> o encontrar al equipo de Holodex en Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+    Puedes crear una incidencia en <a href="https://github.com/RiceCakess/Holodex/issues">Github</a> o hablar con el equipo de Holodex en Discord. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
