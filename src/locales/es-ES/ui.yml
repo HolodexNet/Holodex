@@ -67,7 +67,7 @@ component:
     recommendationsLabel: recomendado
   paginateLoad:
     newer: Más recientes
-    older: Más antiguas
+    older: Más antiguos
   music:
     clearPlaylist: Limpiar
   channelMusic:
