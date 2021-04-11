@@ -202,7 +202,7 @@ export default {
             setTimeout(() => {
                 // console.log("fix scroll")
                 if (this.$refs.sheet) {
-                    console.log("fix scroll");
+                    // console.log("fix scroll");
                     this.$refs.sheet.showScroll();
                     // either set :retain-focus="false" above or do this:
                     this.$nextTick(() => this.$refs.sheet.unbind());
@@ -210,17 +210,17 @@ export default {
             }, 100);
         },
         playlist(nw) {
-            console.log("playlist: ", nw.length);
+            // console.log("playlist: ", nw.length);
             if (nw.length === 0) this.$store.commit("music/closeBar");
             if (this.isOpen === false && nw.length === 0) this.$store.commit("music/openBar");
         },
         currentSong(ns, os) {
             if (os != null && this.progress > 80 && this.progress < 105) {
-                console.log("track song");
+                // console.log("track song");
 
                 backendApi.trackSongPlay(os.channel_id, os.video_id, os.name).catch((err) => console.error(err));
             }
-            console.log("change song");
+            // console.log("change song");
         },
         titleTransition(ns) {
             if (ns !== "scroll-y-reverse-transition") {
@@ -271,7 +271,6 @@ export default {
              *  AND the play event is not triggered by the user.
              *
              *------------------------* */
-            console.log(this.allowPlayOverride);
             if (!this.isOpen || (this.state === MUSIC_PLAYER_STATE.PAUSED && this.allowPlayOverride === 0)) {
                 this.player.pauseVideo();
                 return;
@@ -287,7 +286,6 @@ export default {
 
             const { start, end } = this.currentSong;
             this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
-            console.log(time, end, start);
             if (time > end + 1) {
                 this.$store.commit("music/nextSong");
             } else if (time < start - 10) {
