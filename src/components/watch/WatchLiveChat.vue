@@ -18,12 +18,24 @@
                 'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
                 'tl-full-height': !showLiveChat,
             }"
+            :style="{
+                height: $store.state.settings.liveTlWindowSize > 0 ? $store.state.settings.liveTlWindowSize + '%' : '',
+            }"
             @videoUpdate="handleVideoUpdate"
             @historyLength="handleHistoryLength"
         >
             <template v-slot:button> </template>
         </WatchLiveTranslations>
-        <div class="embedded-chat" v-if="showLiveChat">
+        <div
+            class="embedded-chat"
+            v-if="showLiveChat"
+            :style="{
+                height:
+                    $store.state.settings.liveTlWindowSize > 0 && shouldShowLiveTL && !fixedBottom && !fixedRight
+                        ? 100 - $store.state.settings.liveTlWindowSize + '%'
+                        : '',
+            }"
+        >
             <iframe :src="liveChatUrl" frameborder="0" />
         </div>
     </v-sheet>

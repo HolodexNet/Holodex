@@ -29,35 +29,63 @@
                     <v-card-title> {{ $t("views.watch.chat.TLSettingsTitle") }} </v-card-title>
 
                     <v-card-text>
-                        <v-switch
-                            v-model="liveTlStickBottom"
-                            :label="$t('views.watch.chat.StickBottomSettingLabel')"
-                            :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
-                        ></v-switch>
                         <v-select
                             v-model="liveTlLang"
                             :items="TL_LANGS"
                             :hint="$t('views.settings.tlLanguageSelection')"
                             persistent-hint
                         />
+                        <v-switch v-model="liveTlShowVerified" label="Show Verified Messages"></v-switch>
+                        <v-switch v-model="liveTlShowModerator" label="Show Moderator Messages"></v-switch>
+                        <v-divider />
+                        <v-switch
+                            v-model="liveTlStickBottom"
+                            :label="$t('views.watch.chat.StickBottomSettingLabel')"
+                            :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
+                            style="margin-bottom: 16px"
+                        ></v-switch>
+                        <v-combobox
+                            v-model="liveTlFontSize"
+                            :items="[10, 11, 12, 14, 18, 24, 30]"
+                            label="Font Size"
+                            outlined
+                        >
+                            <template v-slot:append-outer> px </template>
+                        </v-combobox>
+                        <v-combobox
+                            v-model="liveTlWindowSize"
+                            :items="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+                            label="Window Size (%), leave as 0% for automatic"
+                            outlined
+                        >
+                            <template v-slot:append-outer> % </template>
+                        </v-combobox>
                     </v-card-text>
                 </v-card>
             </v-dialog>
         </v-card-subtitle>
         <v-divider />
-        <v-card-text class="text-body-2 tl-body thin-scroll-bar d-flex flex-column-reverse pa-1 pa-lg-3">
+        <v-card-text
+            class="tl-body thin-scroll-bar d-flex flex-column-reverse pa-1 pa-lg-3"
+            :style="{
+                'font-size': liveTlFontSize + 'px',
+            }"
+        >
             <template v-for="(item, index) in tlHistory">
                 <div :key="index">
                     <div
                         v-if="index === 0 || index === tlHistory.length - 1 || item.name !== tlHistory[index - 1].name"
-                        class="text-caption"
-                        :color="item.isOwner ? 'primary' : ''"
+                        class="tl-caption"
+                        :class="{
+                            'primary--text': item.isOwner,
+                            'secondary--text': item.isVerified || item.isModerator,
+                        }"
                     >
                         <v-divider class="my-1" />
                         {{ item.name }}:
                     </div>
                     <div>
-                        <span class="text-caption mr-1" v-if="item.timestamp">
+                        <span class="tl-caption mr-1" v-if="item.timestamp">
                             {{ utcToTimestamp(item.timestamp) }}
                         </span>
                         <span class="text--primary">{{ item.message }}</span>
@@ -171,7 +199,6 @@ export default {
             "liveTlShowVerified",
             "liveTlShowModerator",
             "liveTlWindowSize",
-            "liveTlForceOverlay",
         ]),
         connected() {
             return this.$socket.connected;
@@ -183,6 +210,15 @@ export default {
             this.$socket.client.on(`${vm.video.id}/${vm.liveTlLang}`, (msg) => {
                 // if no type, process as regular message
                 if (!msg.type) {
+                    // ignore moderator and verified messages if disabled
+                    if ((msg.isModerator && !this.liveTlShowModerator) || (msg.isVerified && !this.liveTlShowVerified))
+                        return;
+
+                    // Append title to author name
+                    if (msg.isModerator) msg.name = `[Mod] ${msg.name}`;
+                    if (msg.isVerified) msg.name = `[Verified] ${msg.name}`;
+                    if (msg.isOwner) msg.name = `[Owner]${msg.name}`;
+
                     vm.tlHistory.unshift(msg);
                     vm.$emit("historyLength", vm.tlHistory.length);
                     return;
@@ -262,10 +298,17 @@ export default {
     overflow-y: auto;
     overscroll-behavior: contain;
     height: calc(100% - 32px);
+    line-height: 1.25em;
+    letter-spacing: 0.0178571429em !important;
 }
 
 .tl-overlay {
     border: 1px solid rgba(65, 65, 65, 0.2) !important;
     box-sizing: border-box;
+}
+
+.tl-body .tl-caption {
+    letter-spacing: 0.0333333333em !important;
+    font-size: 0.85em;
 }
 </style>

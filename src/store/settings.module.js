@@ -31,7 +31,6 @@ const initialState = {
     liveTlShowVerified: true, // show verified messages
     liveTlShowModerator: true, // show moderator messages
     liveTlWindowSize: 0, // Default size, otherwise percentage height
-    liveTlForceOverlay: false, // force the window to be overlay
 
     blockedChannels: [],
 };
@@ -88,7 +87,6 @@ const mutations = {
         "liveTlShowVerified",
         "liveTlShowModerator",
         "liveTlWindowSize",
-        "liveTlForceOverlay",
     ]),
     resetState(state) {
         Object.assign(state, initialState);
