@@ -117,7 +117,6 @@
                 </div>
                 <template v-else-if="cellContent.type === 'chat'">
                     <TabbedLiveChat :activeVideos="activeVideos" :setShowTL="toggleTL" :setShowChat="toggleChat" />
-                    <div></div>
                 </template>
             </v-sheet>
 
