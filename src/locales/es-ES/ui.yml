@@ -166,51 +166,51 @@ views:
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
     clipLanguageSelection: 'Ver clips en estos idiomas:'
-    tlLanguageSelection: Ver traducciones en vivo en estos idiomas
+    tlLanguageSelection: Ver traducciones en directo en estos idiomas
   app:
-    update_available: Una actualización está disponible
+    update_available: Hay una actualización disponible
     update_btn: Actualizar
     close_btn: Cerrar
     check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
-    nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
-    loginCallToAction: '¡Inicia sesión para reunir tus propios favoritos!'
+    nowSupportsMultiOrg: Holodex ahora soporta múltiples organizaciones.
+    loginCallToAction: '¡Inicia sesión para crear tu propia lista de favoritos!'
   about:
     add_my_channel: Añadir mi canal a Holodex
   watch:
     theaterMode: Modo Cine
-    saveToLibrary: Guardar el video en la Biblioteca
+    saveToLibrary: Guardar en la biblioteca
     mentionIconLabel: MENCIONES
     chat:
-      loading: Cargando el chat...
-      hideTLBtn: Esconder TLs
-      showTLBtn: Mostrar TLs
-      TLSettingsTitle: Opciones de TL
-      StickBottomSettingLabel: Pegar abajo (Mobiles)
-      StickBottomSettingsDesc: TL box se pega abajo del chat (por defecto se pega arriba en mobiles)
+      loading: Cargando chat...
+      hideTLBtn: Ocultar traducciones
+      showTLBtn: Mostrar traducciones
+      TLSettingsTitle: Ajustes de traducción
+      StickBottomSettingLabel: Colocar abajo (móviles)
+      StickBottomSettingsDesc: El cuadro de traducciones aparece en la parte inferior del chat (por defecto arriba en móviles)
       retryBtn: Reintentar
       status:
-        reconnecting: Reconectando automaticamente...
+        reconnecting: Reconectando automáticamente...
         reconnectFailed: No se pudo reconectar
         notLive: >-
-          La transmisión aún no está activa, por favor inténtalo de nuevo cuando falter 15 minutos para comenzar
+          El directo todavía no ha empezado, por favor inténtalo de nuevo cuando queden 15 minutos para comenzar
         connectedToChat: Conectado
         disconnectedToChat: Sin conexión
   favorites:
     promptForAction: >-
-      Crea una lista de tus vtubers favoritos y mira sus ultimos clips y directos en esta pagina.
-    manageFavorites: Administrar Favoritos
+      Crea una lista de tus vtubers favoritos y mira sus últimos clips y directos en esta página.
+    manageFavorites: Gestionar favoritos
   editor:
-    needlogin: Necesitarás iniciar sesión para editar los metadatos de vídeos y canciones de Holodex.
+    needlogin: Debes iniciar sesión para poder editar los metadatos de vídeos y canciones de Holodex.
   login:
     apikeyMsg: >-
       Puedes usar la clave de API para consultar Holodex API programaticamente. Solo una clave por cuenta. Después de conseguir una nueva clave, la clave antigua expirará entre 0-24 horas.
     apikeyNew: Obtener nueva clave de API
-    ownedYtChannel: Canal de Youtube poseído
+    ownedYtChannel: Canal de Youtube propio
     futureYtcOwnerMessage: >-
-      En el futuro, planeamos proveer mas servicios a dueños de canales como editar el metadata para sus propios videos.
+      En el futuro planeamos proveer más servicios a dueños de canales, como editar los metadatos de sus propios vídeos.
     linkAcc: Vincular otra cuenta
-    apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu clave de API?'
-    apikeyResetConfirm2: La clave de API tendrá 0-24 horas antes de expirar. ¿En verdad reiniciar?
+    apikeyResetConfirm1: '¿Seguro que quieres reiniciar tu clave de API?'
+    apikeyResetConfirm2: La clave de API antigua tardará 0-24 horas en caducar. ¿Estás seguro?
     apikeyResetNvm: No sucedió nada.
   multiview:
     confirmOverwrite: '¿Sobreescribir el diseño existente?'
