@@ -1,5 +1,5 @@
 <template>
-    <v-card class="text-body-2 tl-overlay" tile flat>
+    <v-card class="text-body-2 tl-overlay" tile flat style="width: 100%">
         <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
             <div v-if="isLoading">{{ $t("views.watch.chat.loading") }}</div>
             <div class="pa-3" v-else>{{ overlayMessage }}</div>
@@ -35,19 +35,20 @@
                             :hint="$t('views.settings.tlLanguageSelection')"
                             persistent-hint
                         />
-                        <v-switch v-model="liveTlShowVerified" label="Show Verified Messages"></v-switch>
-                        <v-switch v-model="liveTlShowModerator" label="Show Moderator Messages"></v-switch>
-                        <v-divider />
                         <v-switch
-                            v-model="liveTlStickBottom"
-                            :label="$t('views.watch.chat.StickBottomSettingLabel')"
-                            :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
-                            style="margin-bottom: 16px"
+                            v-model="liveTlShowVerified"
+                            :label="$t('views.watch.chat.showVerifiedMessages')"
+                            hide-details
                         ></v-switch>
+                        <v-switch
+                            v-model="liveTlShowModerator"
+                            :label="$t('views.watch.chat.showModeratorMessages')"
+                        ></v-switch>
+                        <v-divider class="pb-6" />
                         <v-combobox
                             v-model="liveTlFontSize"
                             :items="[10, 11, 12, 14, 18, 24, 30]"
-                            label="Font Size"
+                            :label="$t('views.watch.chat.tlFontSize')"
                             outlined
                         >
                             <template v-slot:append-outer> px </template>
@@ -55,11 +56,17 @@
                         <v-combobox
                             v-model="liveTlWindowSize"
                             :items="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
-                            label="Window Size (%), leave as 0% for automatic"
+                            :label="$t('views.watch.chat.tlWindowSize')"
                             outlined
+                            hide-details
                         >
                             <template v-slot:append-outer> % </template>
                         </v-combobox>
+                        <v-switch
+                            v-model="liveTlStickBottom"
+                            :label="$t('views.watch.chat.StickBottomSettingLabel')"
+                            :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
+                        ></v-switch>
                     </v-card-text>
                 </v-card>
             </v-dialog>

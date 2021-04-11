@@ -19,7 +19,10 @@
                 'tl-full-height': !showLiveChat,
             }"
             :style="{
-                height: $store.state.settings.liveTlWindowSize > 0 ? $store.state.settings.liveTlWindowSize + '%' : '',
+                height:
+                    showLiveChat && $store.state.settings.liveTlWindowSize > 0
+                        ? $store.state.settings.liveTlWindowSize + '%'
+                        : '',
             }"
             @videoUpdate="handleVideoUpdate"
             @historyLength="handleHistoryLength"
