@@ -127,7 +127,7 @@ views:
     exportCsv: Archivo CSV
     selectionSelect50: Seleccionar 50
     exportYTExplanation: >-
-      La lista de reproducción de youtube creada por esta función esta <b>sin listar</b> y podriaser eliminada por Youtube. <br /> Gracias a la funcionalidad incompleta de Youtube, necesitas hacer lo siguiente para guardar la lista de reproducción de Youtube <b>sin listada</b> en tu cuenta.
+      La lista de reproducción de Youtube creada mediante esta función <b>no está listada</b> y no puede ser guardada debido a la funcionalidad incompleta de Youtube. <br /> Para poder guardar una lista de reproducción <b>sin listar</b> en tu cuenta de Youtube debes seguir estos pasos.
     exportYTHeading: Instrucciones para guardar una lista de reproducción de Youtube
     exportYTInstructions: >-
       <b class="red--text">Paso 1</b>: Una vez en la lista de reproducción cambia la interfaz del vídeo a minirreproductor. <br /><br /> <b class="red--text">Paso 2</b>: Añade cualquier vídeo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: Ya puedes guardar la lista de reproducción, para ello haz clic en el botón guardar.
@@ -136,36 +136,36 @@ views:
     back: Volver al Inicio
   search:
     sort:
-      newest: Mas nuevo
-      oldest: Más antiguo
+      newest: Más recientes
+      oldest: Más antiguos
     type:
       all: Todos
       official: Oficial
       clip: Clip
     unsupportedQuery: >-
-      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
-    sortByLabel: Ordenar Por
+      Por el momento la búsqueda de clips por <kbd>Tema</kbd> y <kbd>Organización</kbd> no está soportada. No se mostrará ningún <b>clip</b>.
+    sortByLabel: Ordenar por
     typeDropdownLabel: Tipo
   settings:
-    title: Opciones
+    title: Configuración
     darkModeLabel: Modo Oscuro
-    darkModeMsg: Cambia el tema entre modo oscuro y modo claro
+    darkModeMsg: Alterna el aspecto entre modo oscuro y modo claro
     redirectModeLabel: Abrir en Youtube
     redirectModeMsg: >-
-      Clickear en cualquier video lo abrirá en Youtube, clicker en el titulo del video lo abrirá en Holodex
-    useEnglishNameLabel: Usar nombre en inglés
-    useEnglishNameMsg: Usa nombres localizados al Inglés para los canales de Vtubers
+      Hacer clic en la portada de un vídeo lo abrirá en Youtube, hacer clic en el título lo abrirá en Holodex
+    useEnglishNameLabel: Mostrar nombres en inglés
+    useEnglishNameMsg: Utiliza los nombres localizados al inglés de los canales de Vtubers
     hideVideoThumbnailsLabel: Ocultar miniaturas
     hideVideoThumbnailsMsg: >-
-      Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos deslizar en mobiles
+      Oculta las miniaturas de los vídeos, acelera tiempos de carga y reduce el espacio utilizado en móviles
     pushNotificationLabel: Notificaciones emergentes
     pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
-    autoplayVideoLabel: Reproducir vídeos automáticamente
+    autoplayVideoLabel: Reproducción automática
     autoplayVideoMsg: Activa la reproducción automática de videos
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
-    clipLanguageSelection: 'Ver clips en estos idiomas'
+    clipLanguageSelection: 'Ver clips en estos idiomas:'
     tlLanguageSelection: Ver traducciones en vivo en estos idiomas
   app:
     update_available: Una actualización está disponible
