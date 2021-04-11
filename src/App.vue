@@ -234,6 +234,11 @@ export default {
     text-decoration: none;
     color: inherit !important;
 }
+
+html {
+    overflow-y: auto;
+}
+
 body {
     overscroll-behavior-y: contain;
     background: black;
@@ -302,7 +307,6 @@ body {
         transform: rotate(360deg);
     }
 }
-
 .thin-scroll-bar {
     scrollbar-width: thin;
 }
