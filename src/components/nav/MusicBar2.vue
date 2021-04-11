@@ -183,7 +183,17 @@ export default {
             queueMenuOpen: false,
 
             titleTransition: "scroll-y-reverse-transition",
+
+            allowPlayOverride: 0, // set to timestamp user clicks on yt frame.
+            // used to check whether or not to allow a user action to override current
+            // playback state.
         };
+    },
+    mounted() {
+        window.addEventListener("blur", this.probableMouseClickInIFrame);
+    },
+    beforeDestroy() {
+        window.removeEventListener("blur", this.probableMouseClickInIFrame);
     },
     watch: {
         isOpen() {
@@ -205,7 +215,7 @@ export default {
             if (this.isOpen === false && nw.length === 0) this.$store.commit("music/openBar");
         },
         currentSong(ns, os) {
-            if (os != null && this.progress > 80) {
+            if (os != null && this.progress > 80 && this.progress < 105) {
                 console.log("track song");
 
                 backendApi.trackSongPlay(os.channel_id, os.video_id, os.name).catch((err) => console.error(err));
@@ -251,7 +261,18 @@ export default {
         },
         songIsPlaying(player) {
             this.player = player.target;
-            if (!this.isOpen || this.state === MUSIC_PLAYER_STATE.PAUSED) {
+            /**-----------------------
+             * *       INFO
+             *  if: the bar is NOT OPEN
+             *
+             *  or
+             *
+             *  The Music Player is supposed to be PAUSED
+             *  AND the play event is not triggered by the user.
+             *
+             *------------------------* */
+            console.log(this.allowPlayOverride);
+            if (!this.isOpen || (this.state === MUSIC_PLAYER_STATE.PAUSED && this.allowPlayOverride === 0)) {
                 this.player.pauseVideo();
                 return;
             }
@@ -266,6 +287,7 @@ export default {
 
             const { start, end } = this.currentSong;
             this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
+            console.log(time, end, start);
             if (time > end + 1) {
                 this.$store.commit("music/nextSong");
             } else if (time < start - 10) {
@@ -306,6 +328,9 @@ export default {
             }
             this.titleTransition = "scroll-y-transition";
             this.$store.commit("music/prevSong");
+        },
+        probableMouseClickInIFrame() {
+            this.allowPlayOverride = Date.now();
         },
     },
 };
