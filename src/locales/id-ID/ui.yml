@@ -43,6 +43,8 @@ component:
     copyLink: Salin Tautan Holodex
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -92,6 +94,7 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -167,6 +170,9 @@ views:
     resetAllSettings: Reset Semua Pengaturan/Data
     clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
     tlLanguageSelection: Melihat Terjemahan dalam bahasa ini
+    defaultFavorites: Membuka Favorit secara default
+    defaultFavoritesMsg: >-
+      Menampilkan menu favorit secara langsung ketika mengunjungi holodex.net, atau dengan menekan logo pojok kiri atas.
   app:
     update_available: Pembaharuan tersedia
     update_btn: Perbarui
