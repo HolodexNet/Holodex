@@ -40,16 +40,33 @@ export default {
             type: Boolean,
             default: false,
         },
+        id: {
+            type: [String, Number],
+            required: true,
+        },
     },
     data() {
         return {
-            currentTab: 0,
+            // currentTab: 0,
             showTL: false,
             showTLFirstTime: false,
             newTL: 0,
 
             // showLiveChat: true,
         };
+    },
+    computed: {
+        currentTab: {
+            get() {
+                if (!this.$store.state.multiview.layoutContent[this.id].currentTab) return 0;
+                return this.$store.state.multiview.layoutContent[this.id].currentTab;
+            },
+            set(val) {
+                const obj = this.$store.state.multiview.layoutContent[this.id];
+                obj.currentTab = val;
+                return this.$store.commit("multiview/setLayoutContentById", obj);
+            },
+        },
     },
     watch: {
         currentTab() {
