@@ -101,6 +101,7 @@
             :vertical-compact="false"
             :prevent-collision="true"
             :margin="[1, 1]"
+            responsiveLayouts
             @layout-updated="layoutUpdatedEvent"
         >
             <grid-item
@@ -111,8 +112,8 @@
                 :w="item.w"
                 :h="item.h"
                 :i="item.i"
-                :is-draggable="item.isDraggable"
-                :is-resizable="item.isResizable"
+                :is-draggable="item.isDraggable !== false"
+                :is-resizable="item.isResizable !== false"
                 :key="'mvgrid' + item.i"
             >
                 <cell :item="item" @showSelector="(id) => (showSelectorForId = id)"> </cell>

@@ -773,7 +773,7 @@ export default {
                 const opts = {
                     // allowFrom: "." + this.resizableHandleClass.trim().replace(" ", "."),
                     edges: {
-                        top: "vue-resizable-handle.h-n",
+                        top: ".vue-resizable-handle.h-n",
                         left: ".vue-resizable-handle.h-w",
                         right: ".vue-resizable-handle.h-e",
                         bottom: ".vue-resizable-handle.h-s",

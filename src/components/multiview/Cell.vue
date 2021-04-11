@@ -215,13 +215,17 @@ export default {
             toggleChat: true,
         };
     },
+    mounted() {
+        if (this.pausedMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
+        else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
+    },
     watch: {
         cellContent(nw) {
             if (nw === null) this.pausedMode = true;
         },
-        pausedMode(ow, nw) {
-            if (nw) this.$store.commit("multiview/freezeLayoutItem", this.item.i);
-            else this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
+        pausedMode(newMode) {
+            if (newMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
+            else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
         },
     },
     computed: {
