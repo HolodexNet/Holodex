@@ -46,7 +46,10 @@
                         <ChannelImg :channel="channel" :size="30" />
                     </v-list-item-avatar>
                     <ChannelInfo :channel="channel" noSubscriberCount noGroup />
-                    <v-list-item-action-text v-if="isLive(channel) || getChannelLiveAtTime(channel)">
+                    <v-list-item-action-text
+                        v-if="isLive(channel) || getChannelLiveAtTime(channel)"
+                        :key="'liveclock' + channel.id + tick"
+                    >
                         <span class="ch-live" v-if="isLive(channel)">●</span>
                         <span class="ch-upcoming" v-else>{{ formatDurationLive(getChannelLiveAtTime(channel)) }}</span>
                     </v-list-item-action-text>
@@ -115,7 +118,17 @@ export default {
     data() {
         return {
             favoritesExpanded: false,
+            tick: Date.now(),
+            ticker: null,
         };
+    },
+    mounted() {
+        this.ticker = setInterval(() => {
+            this.tick = Date.now();
+        }, 60000);
+    },
+    beforeDestroy() {
+        if (this.ticker) clearInterval(this.ticker);
     },
     computed: {
         // ...mapState("favorites", ["favorites", "live"]),
