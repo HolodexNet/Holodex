@@ -39,8 +39,12 @@ component:
     watching: '{0} Tontonan Sekarang'
     liveNow: Langsung Sekarang
     edit: Sunting
+    copiedToClipboard: Pautan telah disalin ke papan keratan.
+    copyLink: Salin Pautan Holodex
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -90,6 +94,7 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -165,6 +170,9 @@ views:
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
     clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
     tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
+    defaultFavorites: Jadikan laman Kegemaran laman lalai
+    defaultFavoritesMsg: >-
+      Laman kegemaran dijadikan sebagai laman yang dibuka setiap kali melawati holodex.net atau menekan lambang Holodex di sebelah kiri bahagian atas laman.
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
@@ -185,6 +193,10 @@ views:
       TLSettingsTitle: Tetapan Terjemahan
       StickBottomSettingLabel: Letakkan di Bawah (peranti mudah alih)
       StickBottomSettingsDesc: Ruangan terjemahan diletakkan di bawah sembang (secara lalainya ruangan ini terletak di bahagian atas bagi peranti mudah alih)
+      showVerifiedMessages: Paparkan Sembang Oleh Pengguna Yang Disahkan
+      showModeratorMessages: Paparkan Sembang Oleh Penyederhana
+      tlFontSize: Saiz Fon
+      tlWindowSize: Peratusan (%) saiz ruangan terjemahan. 0% bagi perubahan saiz secara kendiri
       retryBtn: Cuba Lagi
       status:
         reconnecting: Sedang Menyambung Semula Secara Kendiri...
