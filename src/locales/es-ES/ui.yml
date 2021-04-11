@@ -207,16 +207,16 @@ views:
     apikeyNew: Obtener nueva clave de API
     ownedYtChannel: Canal de Youtube propio
     futureYtcOwnerMessage: >-
-      En el futuro planeamos proveer más servicios a dueños de canales, como editar los metadatos de sus propios vídeos.
+      En el futuro planeamos proveer más servicios a los dueños de canales, como editar los metadatos de sus propios vídeos.
     linkAcc: Vincular otra cuenta
     apikeyResetConfirm1: '¿Seguro que quieres reiniciar tu clave de API?'
     apikeyResetConfirm2: La clave de API antigua tardará 0-24 horas en caducar. ¿Estás seguro?
     apikeyResetNvm: No sucedió nada.
   multiview:
-    confirmOverwrite: '¿Sobreescribir el diseño existente?'
+    confirmOverwrite: '¿Sobrescribir el diseño actual?'
     confirmOverwriteYes: Confirmar
-    permalink: Enlace Permanente
-    presets: Configuraciones
+    permalink: Enlace permanente
+    presets: Plantillas
     addframe: Añadir Celda
     preset:
       shareOnDiscord: >-
@@ -224,31 +224,31 @@ views:
       desktop: Escritorio
       mobile: Móvil
     video:
-      selectLive: Seleccionar Directo
-      addCustomVideo: Añadir video personalizado
+      selectLive: Elige un directo
+      addCustomVideo: Añadir vídeo personalizado
 time:
   soon: Proximamente
-  diff_future_date: Inicia {0} ({1})
+  diff_future_date: Empieza {0} ({1})
   distance_past_date: '{0}'
 editor:
   music:
     add: Añadir
     update: Actualizar
     permission: >-
-      Necesitas ser un usuario de nivel 'Editor' o mas alto para actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar a los editores de problemas / abusos, o aplica para volverte un editor.
+      Necesitas el rol de «editor» o superior para poder actualizar o borrar canciones existentes. Por favor ponte en contacto con nosotros en <a class='white--text' href='/about'>discord</a> si quieres notificar a los editores sobre problemas/abusos o presentarte para conseguir el rol de editor.
     titles:
-      addSong: 'Metadatos de la cancion: Añadir una nueva canción'
-      songList: 'Lista de canciones : {0}'
-      help: Guia
+      addSong: 'Metadatos de la canción: Añadir una nueva canción'
+      songList: 'Lista de canciones: {0}'
+      help: Guía
     itunesLookupPlaceholder: (Opcional) Buscar en iTunes
-    moveRight2s: Mover 2s a la derecha
+    moveRight2s: Mover 2 segundos hacia adelante
     testEnd: Prueba escuchar a partir de 3 segundos antes del final.
-    setToCurrentTime: Establecer a tiempo actual ({0})
-    moveLeft2s: Mover 2s a la izquierda
+    setToCurrentTime: Utilizar tiempo actual ({0})
+    moveLeft2s: Mover 2 segundos hacia atrás
     trackNameInput: Nombre de la canción
-    originalArtistInput: Artista Original
-    testStart: Probar el inicio
-    startInput: Iniciar
+    originalArtistInput: Artista original
+    testStart: Probar comienzo
+    startInput: Comienzo
     endInput: 'Duración en segundos: (termina en {0})'
   exitMode: Salir del modo de edición
   enterMode: Editar video
