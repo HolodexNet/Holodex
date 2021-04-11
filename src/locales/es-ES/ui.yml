@@ -39,6 +39,8 @@ component:
     watching: '{0} espectadores'
     liveNow: En directo
     edit: Editar
+    copiedToClipboard: Link copiado al portapapeles.
+    copyLink: Copiar link de Holodex
   videoDescription:
     description: Descripción
   description:
@@ -72,7 +74,7 @@ component:
     recentSongsHeader: Canciones Recientes
     weeklyTopPlaysHeader: Mas Reproducciones Semanales
   songList:
-    songTitle: Titulo
+    songTitle: Título
     songCoveredBy: Interpretado por
     songDuration: Duración
     sangOnTime: Cantado en
@@ -94,14 +96,14 @@ views:
       subscribers: Suscriptores
       group: Grupo
       recentUpload: Subidas recientes
-      videoCount: Número de videos
+      videoCount: Número de vídeos
       clipCount: Número de clips
     tabs:
       Vtuber: Vtuber
       Subber: Subtitulador
       Favorites: Favoritos
-      Blocked: Bloqueado
-    favoritesAreEmpty: No tienes favoritos!
+      Blocked: Bloqueados
+    favoritesAreEmpty: '¡Tu lista de favoritos está vacía!'
     blockedAreEmpty: No has bloqueado ningún canal.
   home:
     liveOrUpcomingHeading: En directo / Próximamente
@@ -111,104 +113,104 @@ views:
       official: Oficial
       subber: Clips
   library:
-    savedVideosTitle: Videos Guardados
+    savedVideosTitle: Vídeos guardados
     createYtPlaylistButton: Crear lista de reproducción de YT ({0})
     deleteFromLibraryButton: Eliminar ({0})
-    deleteConfirmation: Estas seguro de que quieres eliminar {0} videos?
+    deleteConfirmation: '¿Seguro que quieres eliminar {0} vídeos?'
     deleteConfirmationOK: Eliminar
     deleteConfirmationCancel: Cancelar
     selectionReset: Reiniciar
     selectionSelectAll: Seleccionar Todos
-    emptyLibrary: '¡No tienes videos guardados!'
+    emptyLibrary: '¡No tienes vídeos guardados!'
     exportSelected: Exportar seleccionados ({0})
     exportYtPlaylist: Lista de reproducción de Youtube
     exportCsv: Archivo CSV
     selectionSelect50: Seleccionar 50
     exportYTExplanation: >-
-      La lista de reproducción de youtube creada por esta función esta <b>sin listar</b> y podriaser eliminada por Youtube. <br /> Gracias a la funcionalidad incompleta de Youtube, necesitas hacer lo siguiente para guardar la lista de reproducción de Youtube <b>sin listada</b> en tu cuenta.
-    exportYTHeading: Guardando instrucciones de la lista de reproducción de Youtube
+      La lista de reproducción de Youtube creada mediante esta función <b>no está listada</b> y no puede ser guardada debido a la funcionalidad incompleta de Youtube. <br /> Para poder guardar una lista de reproducción <b>sin listar</b> en tu cuenta de Youtube debes seguir estos pasos.
+    exportYTHeading: Instrucciones para guardar una lista de reproducción de Youtube
     exportYTInstructions: >-
-      <b class="red--text">Paso 1</b>: Reproduce la lista de reproducción de youtube y cambia la interfaz de usuario del reproductor a mini-reproductor. <br /><br /> <b class="red--text">Paso 2</b>: Elige cualquier video y añádelo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: La lista de reproducción puede ser guardada ahora. Has clic en guardar para guardarla.
+      <b class="red--text">Paso 1</b>: Una vez en la lista de reproducción cambia la interfaz del vídeo a minirreproductor. <br /><br /> <b class="red--text">Paso 2</b>: Añade cualquier vídeo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: Ya puedes guardar la lista de reproducción, para ello haz clic en el botón guardar.
   notFound:
     title: Contenido no encontrado
     back: Volver al Inicio
   search:
     sort:
-      newest: Mas nuevo
-      oldest: Más antiguo
+      newest: Más recientes
+      oldest: Más antiguos
     type:
       all: Todos
       official: Oficial
       clip: Clip
     unsupportedQuery: >-
-      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
-    sortByLabel: Ordenar Por
+      Por el momento la búsqueda de clips por <kbd>Tema</kbd> y <kbd>Organización</kbd> no está soportada. No se mostrará ningún <b>clip</b>.
+    sortByLabel: Ordenar por
     typeDropdownLabel: Tipo
   settings:
-    title: Opciones
+    title: Configuración
     darkModeLabel: Modo Oscuro
-    darkModeMsg: Cambia el tema entre modo oscuro y modo claro
+    darkModeMsg: Alterna el aspecto entre modo oscuro y modo claro
     redirectModeLabel: Abrir en Youtube
     redirectModeMsg: >-
-      Clickear en cualquier video lo abrirá en Youtube, clicker en el titulo del video lo abrirá en Holodex
-    useEnglishNameLabel: Usar nombre en inglés
-    useEnglishNameMsg: Usa nombres localizados al Inglés para los canales de Vtubers
+      Hacer clic en la portada de un vídeo lo abrirá en Youtube, hacer clic en el título lo abrirá en Holodex
+    useEnglishNameLabel: Mostrar nombres en inglés
+    useEnglishNameMsg: Utiliza los nombres localizados al inglés de los canales de Vtubers
     hideVideoThumbnailsLabel: Ocultar miniaturas
     hideVideoThumbnailsMsg: >-
-      Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos deslizar en mobiles
+      Oculta las miniaturas de los vídeos, acelera tiempos de carga y reduce el espacio utilizado en móviles
     pushNotificationLabel: Notificaciones emergentes
     pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
-    autoplayVideoLabel: Reproducir vídeos automáticamente
+    autoplayVideoLabel: Reproducción automática
     autoplayVideoMsg: Activa la reproducción automática de videos
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
-    clipLanguageSelection: 'Ver clips en estos idiomas'
-    tlLanguageSelection: Ver traducciones en vivo en estos idiomas
+    clipLanguageSelection: 'Ver clips en estos idiomas:'
+    tlLanguageSelection: Ver traducciones en directo en estos idiomas
   app:
-    update_available: Una actualización está disponible
+    update_available: Hay una actualización disponible
     update_btn: Actualizar
     close_btn: Cerrar
     check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
-    nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
-    loginCallToAction: '¡Inicia sesión para reunir tus propios favoritos!'
+    nowSupportsMultiOrg: Holodex ahora soporta múltiples organizaciones.
+    loginCallToAction: '¡Inicia sesión para crear tu propia lista de favoritos!'
   about:
     add_my_channel: Añadir mi canal a Holodex
   watch:
     theaterMode: Modo Cine
-    saveToLibrary: Guardar el video en la Biblioteca
+    saveToLibrary: Guardar en la biblioteca
     mentionIconLabel: MENCIONES
     chat:
-      loading: Cargando el chat...
-      hideTLBtn: Esconder TLs
-      showTLBtn: Mostrar TLs
-      TLSettingsTitle: Opciones de TL
-      StickBottomSettingLabel: Pegar abajo (Mobiles)
-      StickBottomSettingsDesc: TL box se pega abajo del chat (por defecto se pega arriba en mobiles)
+      loading: Cargando chat...
+      hideTLBtn: Ocultar traducciones
+      showTLBtn: Mostrar traducciones
+      TLSettingsTitle: Ajustes de traducción
+      StickBottomSettingLabel: Colocar abajo (móviles)
+      StickBottomSettingsDesc: El cuadro de traducciones aparece en la parte inferior del chat (por defecto arriba en móviles)
       retryBtn: Reintentar
       status:
-        reconnecting: Reconectando automaticamente...
+        reconnecting: Reconectando automáticamente...
         reconnectFailed: No se pudo reconectar
         notLive: >-
-          La transmisión aún no está activa, por favor inténtalo de nuevo cuando falter 15 minutos para comenzar
+          El directo todavía no ha empezado, por favor inténtalo de nuevo cuando queden 15 minutos para comenzar
         connectedToChat: Conectado
         disconnectedToChat: Sin conexión
   favorites:
     promptForAction: >-
-      Crea una lista de tus vtubers favoritos y mira sus ultimos clips y directos en esta pagina.
-    manageFavorites: Administrar Favoritos
+      Crea una lista de tus vtubers favoritos y mira sus últimos clips y directos en esta página.
+    manageFavorites: Gestionar favoritos
   editor:
-    needlogin: Necesitarás iniciar sesión para editar los metadatos de vídeos y canciones de Holodex.
+    needlogin: Debes iniciar sesión para poder editar los metadatos de vídeos y canciones de Holodex.
   login:
     apikeyMsg: >-
       Puedes usar la clave de API para consultar Holodex API programaticamente. Solo una clave por cuenta. Después de conseguir una nueva clave, la clave antigua expirará entre 0-24 horas.
     apikeyNew: Obtener nueva clave de API
-    ownedYtChannel: Canal de Youtube poseído
+    ownedYtChannel: Canal de Youtube propio
     futureYtcOwnerMessage: >-
-      En el futuro, planeamos proveer mas servicios a dueños de canales como editar el metadata para sus propios videos.
+      En el futuro planeamos proveer más servicios a dueños de canales, como editar los metadatos de sus propios vídeos.
     linkAcc: Vincular otra cuenta
-    apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu clave de API?'
-    apikeyResetConfirm2: La clave de API tendrá 0-24 horas antes de expirar. ¿En verdad reiniciar?
+    apikeyResetConfirm1: '¿Seguro que quieres reiniciar tu clave de API?'
+    apikeyResetConfirm2: La clave de API antigua tardará 0-24 horas en caducar. ¿Estás seguro?
     apikeyResetNvm: No sucedió nada.
   multiview:
     confirmOverwrite: '¿Sobreescribir el diseño existente?'
