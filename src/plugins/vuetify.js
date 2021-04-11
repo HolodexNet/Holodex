@@ -15,7 +15,7 @@ import vuetifyIt from "vuetify/es5/locale/it";
 
 import enTL from "@/locales/en/ui.yml";
 import jaTL from "@/locales/ja-JP/ui.yml";
-import esTL from "@/locales/es-ES/ui.yml";
+import esTL from "@/locales/es-MX/ui.yml";
 import msTL from "@/locales/ms-MY/ui.yml";
 import zhTL from "@/locales/zh-TW/ui.yml";
 import idTL from "@/locales/id-ID/ui.yml";
