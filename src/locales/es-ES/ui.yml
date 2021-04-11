@@ -43,6 +43,8 @@ component:
     copyLink: Copiar enlace de Holodex
   videoDescription:
     description: Descripción
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar más
@@ -60,7 +62,7 @@ component:
       videourl: enlace
   relatedVideo:
     clipsLabel: clips
-    simulcastsLabel: transmisiónes simultaneas
+    simulcastsLabel: transmisiones simultaneas
     refersLabel: referencias
     sourcesLabel: fuentes
     songsLabel: canciones
@@ -72,15 +74,15 @@ component:
     clearPlaylist: Limpiar
   channelMusic:
     recentSongsHeader: Canciones Recientes
-    weeklyTopPlaysHeader: Mas Reproducciones Semanales
+    weeklyTopPlaysHeader: Lo más reproducido de la semana
   songList:
     songTitle: Título
     songCoveredBy: Interpretado por
     songDuration: Duración
-    sangOnTime: Cantado en
+    sangOnTime: Fecha de publicación
   orgMusic:
-    monthlyTopForOrg: Mas Reproducciones Mensuales para {0}
-    weeklyTopForOrg: Mas Reproducciones Semanales para {0}
+    monthlyTopForOrg: Lo más reproducido del mes ({0})
+    weeklyTopForOrg: Lo más reproducido de la semana ({0})
   installPrompt:
     title: Instalar Holodex
     callToAction: Ver vídeos en Holodex funciona mejor cuando se agrega a la pantalla de inicio
@@ -92,6 +94,7 @@ component:
       beforeExportIcon: Pulse
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Suscriptores
       group: Grupo
@@ -100,14 +103,14 @@ views:
       clipCount: Número de clips
     tabs:
       Vtuber: Vtuber
-      Subber: Subtitulador
+      Subber: Traductor
       Favorites: Favoritos
       Blocked: Bloqueados
     favoritesAreEmpty: '¡Tu lista de favoritos está vacía!'
     blockedAreEmpty: No has bloqueado ningún canal.
   home:
     liveOrUpcomingHeading: En directo / Próximamente
-    recentVideosHeading: Videos recientes
+    recentVideosHeading: Vídeos recientes
     recentVideoToggles:
       all: Todos
       official: Oficial
@@ -148,7 +151,7 @@ views:
     typeDropdownLabel: Tipo
   settings:
     title: Configuración
-    darkModeLabel: Modo Oscuro
+    darkModeLabel: Modo oscuro
     darkModeMsg: Alterna el aspecto entre modo oscuro y modo claro
     redirectModeLabel: Abrir en Youtube
     redirectModeMsg: >-
@@ -161,10 +164,10 @@ views:
     pushNotificationLabel: Notificaciones emergentes
     pushNotificationMsg: Activa las notificaciones emergentes para los canales favoritos
     autoplayVideoLabel: Reproducción automática
-    autoplayVideoMsg: Activa la reproducción automática de videos
+    autoplayVideoMsg: Activa la reproducción automática de vídeos
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
-    resetAllSettings: Reiniciar todas las opciones/datos
+    resetAllSettings: Restablecer por defecto todas las opciones
     clipLanguageSelection: 'Ver clips en estos idiomas:'
     tlLanguageSelection: Ver traducciones en directo en estos idiomas
     defaultFavorites: Establecer "Favoritos" como página de inicio
@@ -174,7 +177,7 @@ views:
     update_available: Hay una actualización disponible
     update_btn: Actualizar
     close_btn: Cerrar
-    check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
+    check_about_page: Visita la pagina "Acerca de" para ver los nuevos cambios
     nowSupportsMultiOrg: Holodex ahora soporta múltiples organizaciones.
     loginCallToAction: '¡Inicia sesión para crear tu propia lista de favoritos!'
   about:
@@ -190,6 +193,10 @@ views:
       TLSettingsTitle: Ajustes de traducción
       StickBottomSettingLabel: Colocar abajo (móviles)
       StickBottomSettingsDesc: El cuadro de traducciones aparece en la parte inferior del chat (por defecto arriba en móviles)
+      showVerifiedMessages: Mostar mensajes verificados
+      showModeratorMessages: Mostar mensajes del moderador
+      tlFontSize: Tamaño de la fuente
+      tlWindowSize: Tamaño de la caja (0% se ajustará automáticamente)
       retryBtn: Reintentar
       status:
         reconnecting: Reconectando automáticamente...
@@ -206,7 +213,7 @@ views:
     needlogin: Debes iniciar sesión para poder editar los metadatos de vídeos y canciones de Holodex.
   login:
     apikeyMsg: >-
-      Puedes usar la clave de API para consultar Holodex API programaticamente. Solo una clave por cuenta. Después de conseguir una nueva clave, la clave antigua expirará entre 0-24 horas.
+      Puedes usar la clave para consultar la API de Holodex. Solo puedes tener un clave por cuenta. Si solicitas una nueva clave la antigua caducara en un plazo de 0 a 24 horas.
     apikeyNew: Obtener nueva clave de API
     ownedYtChannel: Canal de Youtube propio
     futureYtcOwnerMessage: >-
@@ -223,14 +230,14 @@ views:
     addframe: Añadir Celda
     preset:
       shareOnDiscord: >-
-        ¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y háznoslo saber en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!
+        ¿Has hecho un diseño perfecto? ¡Usa el botón de compartir y enséñanos tu desiño en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de discord</a>!
       desktop: Escritorio
       mobile: Móvil
     video:
       selectLive: Elige un directo
       addCustomVideo: Añadir vídeo personalizado
 time:
-  soon: Proximamente
+  soon: Próximamente
   diff_future_date: Empieza {0} ({1})
   distance_past_date: '{0}'
 editor:
@@ -263,19 +270,19 @@ about:
     title: Preguntas frecuentes (FAQ)
     ytchatHeader: '¡Mi chat de Youtube no está conectado!'
     ytchatContent: >-
-      Por favor deshabilite la función de seguridad del navegador conocida como bloqueo de cookies de terceros, o agregue este sitio web y youtube.com a la lista blanca para permitir cookies de terceros.
+      Por favor deshabilite la función de seguridad del navegador conocida como "bloqueo de cookies de terceros", o agregue este sitio web y youtube.com a la lista blanca para permitir cookies de terceros.
     ytchatFirefox: Instrucciones para Firefox, otros navegadores pueden ser similares.
     autoplayHeader: '¡La reproducción automática no funciona!'
-    autoplayContent: Por favor usa Google para saber cómo habilitar la reproducción automática para su navegador.
+    autoplayContent: '¡Google es tu amigo! Busca en él como habilitar la reproducción automática de videos en tu navegador.'
     musicPlayer: '¡El reproductor de música no funciona bien en dispositivos móviles!'
     musicPlayerContent: >-
-      Lo sentimos, pero es imposible soportar el reproductor de musica como un sitio web móvil. <br/>Dos factores: 1. Los dispositivos móviles normalmente prohíben la reproducción automática, lo cual requerimos; 2. Generalmente los dispositivos móviles no permiten a los sitios web encadenar música en segundo plano. 3. No integramos tu lista de repodruduccion en los centros de control de música al nivel de sistema.
+      Lo sentimos mucho, pero es imposible dar soporte a esta función en dispositivos móviles. <br/>Por tres simples motivos: <br/>1. Generalmente los navegadores no soportan la reproducción automática en dispositivos móviles y nosotros requerimos de esa función. <br/>2. Los navegadores no suelen reproducir contenido en segundo plano. <br/>3. No podemos integrar tu lista a tu reproductor habitual de tu teléfono.
     videoLinkage: '¿Cómo puedo asegurarme de que los vídeos estén correctamente vinculados a los vtubers?'
     videoLinkageContent: >-
-      Toda la información es analizada de la descripción del vídeo. Si estás haciendo un clip de un directo, por favor asegúrate de enlazar el directo oficial. Si estás haciendo un clip el contenido hecho por un fan (por ejemplo de bilibili), sólo asegúrese de enlazar los canales oficiales de youtube de las vtubers que sean relevantes. Si no vincula el canal de ningun vtuber entonces no mostraremos ese clip en el holodex, ya que todos los clips requieren un enlace a un vtuber que sea conocido para holodex.
-    quitHolodex: "Soy un subtitulador y me gustaría que mi canal fuera eliminado del Holodex\\r\n"
+      Toda la información es obtenida de la descripción de los vídeos. Si estás haciendo un clip de un directo, por favor asegúrate de enlazar el directo oficial. Si estás haciendo un clip por ejemplo de “bilibili” asegúrate de enlazar los canales oficiales de las vtubers que sean relevantes referentes al clip. Si no vinculas ningún Vtuber no se mostrara ese clip en Holodex, ya que todos los clips requiere que esté enlazado a un Vtuber reconocido por Holodex.
+    quitHolodex: "Soy un traductor y me gustaría que mi canal fuera eliminado del Holodex\n"
     quitHolodexContent: >-
-      Es triste verte ir :(, por favor házme saber si hay algún problema con el que puedo ayudarte. Si aún desea que se elimine su cuenta, por favor envíenos un mensaje a Discord.
+      Es una pena que te quieras ir. Por favor comunícame si hay algún problema al que te pueda ayudar. Si aun así quieres que tu cuenta se elimine de Holodex envíanos un mensaje a nuestro discord.
   gdpr: GDPR y mis datos
   gdprContent: >-
     Una cookie de Google Analytics se utiliza para rastrear visitas a la pagina para propósitos analíticos. Después de iniciar sesión asociamos su nombre de usuario y ID de la cuenta de redes sociales con sus favoritos. Estos datos pueden incluir tu correo electrónico (para Google), Discord ID o Twitter respectivamente.
