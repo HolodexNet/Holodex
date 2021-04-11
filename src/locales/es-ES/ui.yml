@@ -67,14 +67,14 @@ component:
     recommendationsLabel: recomendado
   paginateLoad:
     newer: Más recientes
-    older: Más antiguos
+    older: Más antiguas
   music:
     clearPlaylist: Limpiar
   channelMusic:
     recentSongsHeader: Canciones Recientes
     weeklyTopPlaysHeader: Mas Reproducciones Semanales
   songList:
-    songTitle: Titulo
+    songTitle: Título
     songCoveredBy: Interpretado por
     songDuration: Duración
     sangOnTime: Cantado en
@@ -96,14 +96,14 @@ views:
       subscribers: Suscriptores
       group: Grupo
       recentUpload: Subidas recientes
-      videoCount: Número de videos
+      videoCount: Número de vídeos
       clipCount: Número de clips
     tabs:
       Vtuber: Vtuber
       Subber: Subtitulador
       Favorites: Favoritos
-      Blocked: Bloqueado
-    favoritesAreEmpty: No tienes favoritos!
+      Blocked: Bloqueados
+    favoritesAreEmpty: '¡Tu lista de favoritos está vacía!'
     blockedAreEmpty: No has bloqueado ningún canal.
   home:
     liveOrUpcomingHeading: En directo / Próximamente
@@ -113,24 +113,24 @@ views:
       official: Oficial
       subber: Clips
   library:
-    savedVideosTitle: Videos Guardados
+    savedVideosTitle: Vídeos guardados
     createYtPlaylistButton: Crear lista de reproducción de YT ({0})
     deleteFromLibraryButton: Eliminar ({0})
-    deleteConfirmation: Estas seguro de que quieres eliminar {0} videos?
+    deleteConfirmation: '¿Seguro que quieres eliminar {0} vídeos?'
     deleteConfirmationOK: Eliminar
     deleteConfirmationCancel: Cancelar
     selectionReset: Reiniciar
     selectionSelectAll: Seleccionar Todos
-    emptyLibrary: '¡No tienes videos guardados!'
+    emptyLibrary: '¡No tienes vídeos guardados!'
     exportSelected: Exportar seleccionados ({0})
     exportYtPlaylist: Lista de reproducción de Youtube
     exportCsv: Archivo CSV
     selectionSelect50: Seleccionar 50
     exportYTExplanation: >-
       La lista de reproducción de youtube creada por esta función esta <b>sin listar</b> y podriaser eliminada por Youtube. <br /> Gracias a la funcionalidad incompleta de Youtube, necesitas hacer lo siguiente para guardar la lista de reproducción de Youtube <b>sin listada</b> en tu cuenta.
-    exportYTHeading: Guardando instrucciones de la lista de reproducción de Youtube
+    exportYTHeading: Instrucciones para guardar una lista de reproducción de Youtube
     exportYTInstructions: >-
-      <b class="red--text">Paso 1</b>: Reproduce la lista de reproducción de youtube y cambia la interfaz de usuario del reproductor a mini-reproductor. <br /><br /> <b class="red--text">Paso 2</b>: Elige cualquier video y añádelo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: La lista de reproducción puede ser guardada ahora. Has clic en guardar para guardarla.
+      <b class="red--text">Paso 1</b>: Una vez en la lista de reproducción cambia la interfaz del vídeo a minirreproductor. <br /><br /> <b class="red--text">Paso 2</b>: Añade cualquier vídeo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: Ya puedes guardar la lista de reproducción, para ello haz clic en el botón guardar.
   notFound:
     title: Contenido no encontrado
     back: Volver al Inicio
