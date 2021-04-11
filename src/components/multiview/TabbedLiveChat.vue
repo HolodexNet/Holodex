@@ -47,7 +47,7 @@ export default {
     },
     data() {
         return {
-            // currentTab: 0,
+            currentTab: 0,
             showTL: false,
             showTLFirstTime: false,
             newTL: 0,
@@ -55,14 +55,18 @@ export default {
             // showLiveChat: true,
         };
     },
+    mounted() {
+        this.currentTab = this.savedTab;
+    },
     computed: {
-        currentTab: {
+        savedTab: {
             get() {
                 if (
                     !this.$store.state.multiview.layoutContent[this.id] ||
                     !this.$store.state.multiview.layoutContent[this.id].currentTab
-                )
+                ) {
                     return 0;
+                }
                 return this.$store.state.multiview.layoutContent[this.id].currentTab;
             },
             set(val) {
@@ -75,6 +79,7 @@ export default {
     watch: {
         currentTab() {
             this.showTLFirstTime = true;
+            this.savedTab = this.currentTab;
         },
         setShowTL(nw) {
             if (!this.showTLFirstTime) {
