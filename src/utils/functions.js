@@ -1,3 +1,6 @@
+import { TL_LANGS } from "@/utils/consts";
+import { langs } from "@/plugins/vuetify";
+
 export function resizeChannelPhoto(photoUrl, size) {
     const split = photoUrl.split("=s");
     // try to hit cache by using a common size
@@ -23,22 +26,17 @@ export function getVideoThumbnails(ytVideoKey, useWebP) {
         hq720: `${base}/${ytVideoKey}/hq720.${ext}`,
     };
 }
-/* eslint-disable import/first */
-import { langs } from "@/plugins/vuetify";
 
 export function getUILang(weblang) {
-    const Langs = new Set(langs.map((x) => x.val));
-    if (Langs.has(String(weblang))) {
+    const validLangs = new Set(langs.map((x) => x.val));
+    if (validLangs.has(String(weblang))) {
         return String(weblang);
     }
-    if (Langs.has(String(weblang).split("-")[0].toLowerCase())) {
+    if (validLangs.has(String(weblang).split("-")[0].toLowerCase())) {
         return String(weblang).split("-")[0].toLowerCase();
     }
     return "en";
 }
-
-/* eslint-disable import/first */
-import { TL_LANGS } from "@/utils/consts";
 
 export function getLang(weblang) {
     const Langs = new Set(TL_LANGS.map((x) => x.value));

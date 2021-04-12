@@ -5,23 +5,24 @@ import { createSimpleMutation, getUILang, getLang } from "@/utils/functions";
 const userLanguage = navigator.language || navigator.userLanguage || "en";
 
 const englishNamePrefs = new Set(["en", "es", "fr", "id", "pt", "de", "ru", "it"]);
+const lang = getLang(userLanguage);
 
 const initialState = {
     lang: getUILang(userLanguage), // UI lang
-    clipLangs: [getLang(userLanguage)],
+    clipLangs: [lang],
     darkMode: true,
     defaultOpenFavorites: false,
     redirectMode: false,
     autoplayVideo: true,
     canUseWebP: true,
     testedWebP: false,
-    nameProperty: englishNamePrefs.has(getLang(userLanguage)) ? "english_name" : "name",
+    nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
     hideThumbnail: false,
     scrollMode: true,
 
     // Live TL Window Settings
     liveTlStickBottom: false,
-    liveTlLang: getLang(userLanguage),
+    liveTlLang: lang,
     liveTlFontSize: 14,
     liveTlShowVerified: true, // show verified messages
     liveTlShowModerator: true, // show moderator messages

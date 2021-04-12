@@ -72,7 +72,7 @@ export const dayjsLangs = {
     async es() {
         await import("dayjs/locale/es");
     },
-    async esES() {
+    "es-ES": async () => {
         await import("dayjs/locale/es");
     },
     async ms() {
