@@ -15,7 +15,8 @@ import vuetifyIt from "vuetify/es5/locale/it";
 
 import enTL from "@/locales/en/ui.yml";
 import jaTL from "@/locales/ja-JP/ui.yml";
-import esTL from "@/locales/es-MX/ui.yml";
+import esMXTL from "@/locales/es-MX/ui.yml";
+import esESTL from "@/locales/es-ES/ui.yml";
 import msTL from "@/locales/ms-MY/ui.yml";
 import zhTL from "@/locales/zh-TW/ui.yml";
 import idTL from "@/locales/id-ID/ui.yml";
@@ -32,7 +33,8 @@ const messages = {
     en: { $vuetify: vuetifyEn, ...enTL },
     ja: { $vuetify: vuetifyJa, ...jaTL },
     ms: { $vuetify: vuetifyEn, ...msTL },
-    es: { $vuetify: vuetifyEs, ...esTL },
+    es: { $vuetify: vuetifyEs, ...esMXTL },
+    "es-ES": { $vuetify: vuetifyEs, ...esESTL },
     id: { $vuetify: vuetifyId, ...idTL },
     zh: { $vuetify: vuetifyZh, ...zhTL },
     ru: { $vuetify: vuetifyEn, ...ruTL },
@@ -46,7 +48,8 @@ export const langs = [
     { val: "en", display: "English", credit: "@Holodex" },
     { val: "ja", display: "日本語", credit: "Yourein#3960" },
     { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
-    { val: "es", display: "Español", credit: "Aldo#3682" },
+    { val: "es-ES", display: "Español España", credit: "TraduSquare (Darkc0m y D3fau4)" },
+    { val: "es", display: "Español Latino", credit: "Aldo#3682" },
     { val: "ms", display: "Bahasa Melayu", credit: "Admiy#8261" },
     { val: "id", display: "Bahasa Indonesia", credit: "alcyneous#2803" },
     { val: "ru", display: "Русский язык", credit: "kirillbarnaul#8499" },
@@ -67,6 +70,9 @@ export const dayjsLangs = {
         await import("dayjs/locale/zh-tw");
     },
     async es() {
+        await import("dayjs/locale/es");
+    },
+    "es-ES": async () => {
         await import("dayjs/locale/es");
     },
     async ms() {
