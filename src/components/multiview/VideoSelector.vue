@@ -1,4 +1,5 @@
 <template>
+    <!-- Vertical: -->
     <v-card class="pa-3" v-if="!horizontal">
         <v-row>
             <v-col cols="12" sm="4" md="2" style="border-right: 1px solid white">
@@ -66,6 +67,7 @@
             </v-col>
         </v-row>
     </v-card>
+    <!-- Horizontal: -->
     <div class="d-flex flex-row align-center" v-else>
         <v-select
             :items="orgList"
@@ -99,7 +101,7 @@
                 v-for="video in filteredLive"
                 style="position: relative; margin-right: 3px; cursor: pointer"
             >
-                <div class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
+                <div class="live-badge" :key="'lvbg' + ticker" :class="video.status === 'live' ? 'red' : 'grey'">
                     {{ formatDurationLive(video) }}
                 </div>
                 <v-avatar size="50" @click="handleVideoClick(video)">
@@ -140,6 +142,9 @@ export default {
 
             customURL: "",
             customURLError: false,
+
+            tick: Date.now(),
+            ticker: null,
         };
     },
     mounted() {
@@ -148,6 +153,12 @@ export default {
         } else {
             this.selectedOrg = 3;
         }
+        this.ticker = setInterval(() => {
+            this.tick = Date.now();
+        }, 60000);
+    },
+    beforeDestroy() {
+        if (this.ticker) clearInterval(this.ticker);
     },
     watch: {
         selectedOrg() {
@@ -201,6 +212,7 @@ export default {
 
             const h = Math.floor(secs / (60 * 60));
             const m = Math.floor((secs % (60 * 60)) / 60);
+            if (secs < 0) return "0m";
             return h ? `${h}h` : `${m}m`;
         },
         handleVideoClick(video) {
