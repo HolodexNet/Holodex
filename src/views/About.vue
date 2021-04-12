@@ -5,7 +5,7 @@
                 <div class="text-h4">{{ $t("component.mainNav.about") }}</div>
             </v-col>
             <v-col cols="12" md="4" sm="4" lg="3" xl="2" float-right>
-                <div class="text-h5 mb-2">News</div>
+                <div class="text-h5 mb-2">{{ $t("about.news.title") }}</div>
                 <TwitterFeed :key="'twtrTimeline' + timelinekey" />
             </v-col>
 
