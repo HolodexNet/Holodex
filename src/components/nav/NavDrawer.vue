@@ -51,7 +51,9 @@
                         :key="'liveclock' + channel.id + tick"
                     >
                         <span class="ch-live" v-if="isLive(channel)">●</span>
-                        <span class="ch-upcoming" v-else>{{ formatDurationLive(getChannelLiveAtTime(channel)) }}</span>
+                        <span class="ch-upcoming" v-else>
+                            {{ formatDurationUpcoming(getChannelLiveAtTime(channel)) }}
+                        </span>
                     </v-list-item-action-text>
                 </v-list-item>
             </template>
@@ -187,11 +189,14 @@ export default {
                 ? this.$router.go(0)
                 : this.$router.push({ path: page.path });
         },
-        formatDurationLive(ts) {
+        formatDurationUpcoming(ts) {
             const secs = dayjs(ts).diff(dayjs()) / 1000;
-            const h = Math.floor(secs / (60 * 60));
-            const m = Math.floor((secs % (60 * 60)) / 60);
-            return h ? `${h}h` : `${m}m`;
+            if (secs > 0) {
+                const h = Math.floor(secs / (60 * 60));
+                const m = Math.floor((secs % (60 * 60)) / 60);
+                return h ? `${h}h` : `${m}m`;
+            }
+            return "●";
         },
         isLive(channel) {
             return channel.videos && channel.videos[0] && channel.videos[0].status === "live";

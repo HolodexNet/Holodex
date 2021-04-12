@@ -1,4 +1,5 @@
 <template>
+    <!-- Vertical: -->
     <v-card class="pa-3" v-if="!horizontal">
         <v-row>
             <v-col cols="12" sm="4" md="2" style="border-right: 1px solid white">
@@ -66,6 +67,7 @@
             </v-col>
         </v-row>
     </v-card>
+    <!-- Horizontal: -->
     <div class="d-flex flex-row align-center" v-else>
         <v-select
             :items="orgList"
@@ -99,12 +101,19 @@
                 v-for="video in filteredLive"
                 style="position: relative; margin-right: 3px; cursor: pointer"
             >
-                <div class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
+                <div class="live-badge" :key="'lvbg' + ticker" :class="video.status === 'live' ? 'red' : 'grey'">
                     {{ formatDurationLive(video) }}
                 </div>
                 <v-avatar size="50" @click="handleVideoClick(video)">
                     <v-img :src="video.channel.photo"></v-img>
                 </v-avatar>
+            </div>
+
+            <div class="flex d-flex flex-row align-center" v-if="selectedOrg === 0 && !$store.getters.isLoggedIn">
+                <span class="" v-html="$t('views.app.loginCallToAction')"></span>
+                <v-btn text :to="isLoggedIn ? '/channel' : '/login'">
+                    {{ $t("component.mainNav.login") }}
+                </v-btn>
             </div>
         </template>
     </div>
@@ -116,7 +125,7 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { ORGS, VIDEO_URL_REGEX } from "@/utils/consts";
 import { dayjs } from "@/utils/time";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
     name: "VideoSelector",
@@ -140,21 +149,35 @@ export default {
 
             customURL: "",
             customURLError: false,
+
+            tick: Date.now(),
+            ticker: null,
         };
     },
     mounted() {
         if (this.$store.getters.isLoggedIn) {
+            this.$store.dispatch("favorites/fetchLive", { minutes: 2 });
             this.loadFavorites();
         } else {
-            this.selectedOrg = 3;
+            this.selectedOrg = this.orgList.find((x) => x.text === this.$store.state.currentOrg);
         }
+        this.ticker = setInterval(() => {
+            this.tick = Date.now();
+        }, 60000);
+    },
+    beforeDestroy() {
+        if (this.ticker) clearInterval(this.ticker);
     },
     watch: {
+        lastLiveUpdate() {
+            if (this.selectedOrg === 0) this.loadFavorites();
+        },
         selectedOrg() {
             if (this.selectedOrg === 1) {
                 return;
             }
             if (this.selectedOrg === 0) {
+                this.$store.dispatch("favorites/fetchLive", { minutes: 2 });
                 this.loadFavorites();
                 return;
             }
@@ -163,6 +186,7 @@ export default {
     },
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),
+        ...mapState("favorites", ["lastLiveUpdate"]),
         orgList() {
             const arr = [
                 {
@@ -193,7 +217,7 @@ export default {
     methods: {
         formatDurationLive(video) {
             const now = dayjs();
-            const scheduled = dayjs(video.start_scheduled);
+            const scheduled = dayjs(video.start_actual || video.start_scheduled);
             // use start_actual or start_scheduled if it has one
             const secs = now.isAfter(scheduled)
                 ? dayjs(/* this.now */).diff(dayjs(video.start_actual)) / 1000
@@ -201,6 +225,7 @@ export default {
 
             const h = Math.floor(secs / (60 * 60));
             const m = Math.floor((secs % (60 * 60)) / 60);
+            if (secs < 0) return "0m";
             return h ? `${h}h` : `${m}m`;
         },
         handleVideoClick(video) {
@@ -221,26 +246,11 @@ export default {
             }
         },
         loadFavorites() {
-            this.live = [];
-            this.isLoading = true;
-            api.favoritesLive({
-                channels: this.$store.state.favorites.favorites.map((f) => f.id).join(","),
-            })
-                .then((data) => {
-                    data.sort((a, b) => {
-                        const dateA = new Date(a.available_at).getTime();
-                        const dateB = new Date(b.available_at).getTime();
-                        return dateA > dateB ? 1 : -1;
-                    });
-                    this.live = data;
-                })
-                .catch((e) => {
-                    console.error(e);
-                    this.hasError = false;
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                });
+            this.live = this.$store.state.favorites.live;
+            this.live = this.live.sort((a, b) => {
+                if ((a.start_actual || a.start_scheduled) > (b.start_actual || b.start_scheduled)) return 1;
+                return -1;
+            });
         },
         loadOrg(orgName) {
             this.live = [];
