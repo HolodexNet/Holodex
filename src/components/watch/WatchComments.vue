@@ -115,7 +115,7 @@ export default {
             buckets.push({
                 time: -1,
                 count: this.comments.length,
-                display: `${this.$t("component.watch.Comments.Contents.0")}`,
+                display: `${this.$t("component.watch.Comments.all")}`,
             });
 
             let currentBucket = 0;

@@ -37,7 +37,7 @@
                     <v-tabs v-model="currentTab">
                         <v-tab>{{ $t("component.search.type.topic") }}</v-tab>
                         <v-tab>{{ $t("component.mainNav.music") }}</v-tab>
-                        <v-tab disabled>{{ $t("views.editor.Channelmetions.title") }}</v-tab>
+                        <v-tab disabled>{{ $t("views.editor.Channelmentions.title") }}</v-tab>
                         <v-tab disabled>{{ $t("views.editor.sources.title") }}</v-tab>
                     </v-tabs>
                     <v-col cols="12" class="pa-4">
@@ -48,13 +48,13 @@
                             </v-card-title>
                             <v-card-text>
                                 <p>
-                                    {{ $t("views.editor.changetopic.Contents.0") }}
+                                    {{ $t("views.editor.changetopic.info") }}
                                 </p>
                                 <v-select :items="topics" label="Topic (leave empty to unset)" v-model="newTopic" />
                             </v-card-text>
                             <v-card-actions>
                                 <v-btn color="blue darken-1" text @click="saveTopic">
-                                    {{ $t("views.editor.changetopic.Contents.1") }}
+                                    {{ $t("views.editor.changetopic.button") }}
                                 </v-btn>
                             </v-card-actions>
                         </div>

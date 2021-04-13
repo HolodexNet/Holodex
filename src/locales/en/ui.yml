@@ -11,8 +11,6 @@ component:
     favoriteAllInGroup: Favorite all in group
   channelInfo:
     stats: Stats
-    videos: Videos
-    clips: Clips
     videoCount: '{0} Videos'
     clipCount: '{n} Clips'
     subscriberCount: '{n} Subscribers'
@@ -56,8 +54,7 @@ component:
     nextUpInMugen: Next Up
     Comments:
       title: Comments
-      Contents:
-        - All
+      all: All
   search:
     searchLabel: Search
     type:
@@ -245,13 +242,12 @@ views:
   editor:
     needlogin: You'll need to login to make edits to Holodex video and song metadata.
     changetopic:
-      Contents:
-        - >-
-          All users can assign topic to videos, but only editors and admins can
-          remove and change the topic once set.
-        - Save (May take 5 minutes to take effect)
       title: Change stream topic
-    Channelmetions:
+      info: >-
+        All users can assign topic to videos, but only editors and admins
+        can remove and change the topic once set.
+      button: Save (May take 5 minutes to take effect)
+    Channelmentions:
       title: Channel Mentions (in development)
     sources:
       title: Sources/Clips (in development)
