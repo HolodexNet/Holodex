@@ -10,6 +10,7 @@ component:
     unfavoriteAllInGroup: Unfavorite all in group
     favoriteAllInGroup: Favorite all in group
   channelInfo:
+    stats: Stats
     videos: Videos
     clips: Clips
     videoCount: '{0} Videos'
@@ -52,6 +53,10 @@ component:
   watch:
     streamingFor: Streaming for {0}
     nextUpInMugen: Next Up
+    Comments:
+      title: Comments
+      Contents:
+        - All
   search:
     searchLabel: Search
     type:
