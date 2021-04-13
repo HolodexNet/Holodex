@@ -36,6 +36,7 @@ component:
     accountSettings: Account Settings
     music: Music
     multiview: MultiView
+    points: pts
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Watching'
@@ -100,6 +101,9 @@ component:
       beforeExportIcon: Tap
   media:
     remove: Remove
+  Comment:
+    Close: Close
+    Readmore: Read more
 views:
   Channel:
     video: Videos
@@ -236,6 +240,8 @@ views:
       Create a list of favorite vtubers and see their latest clips and lives on
       this page.
     manageFavorites: Manage Favorites
+    close: Close
+    showall: Show All
   editor:
     needlogin: You'll need to login to make edits to Holodex video and song metadata.
     changetopic:

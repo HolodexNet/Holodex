@@ -42,7 +42,7 @@
                     </v-list-item-subtitle>
                     <v-list-item-content class="primary--text d-inline">
                         <v-icon x-small class="d-inline">{{ icons.mdiStarFourPointsOutline }}</v-icon>
-                        {{ user.contribution_count }} pts
+                        {{ user.contribution_count }} {{ $t("component.mainNav.points") }}
                     </v-list-item-content>
                 </v-list-item-content>
             </v-list-item>

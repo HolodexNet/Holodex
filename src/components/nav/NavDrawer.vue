@@ -63,7 +63,7 @@
                 </v-list-item-action>
                 <v-list-item-content>
                     <v-list-item-title>
-                        {{ favoritesExpanded ? "Close" : "Show All" }}
+                        {{ favoritesExpanded ? $t("views.favorites.close") : $t("views.favorites.showall") }}
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
