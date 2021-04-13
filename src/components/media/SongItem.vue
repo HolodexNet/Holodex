@@ -53,7 +53,7 @@
                         v-if="alwaysShowDeletion || (detailed && $listeners.remove && userCanDelete)"
                         @click.stop="$emit('remove', song)"
                     >
-                        Remove
+                        {{ $t("component.media.remove") }}
                     </a>
                     <div v-if="detailed" class="float-right text-caption">
                         [{{ secondsToHuman(song.start) }} - {{ secondsToHuman(song.end) }}]

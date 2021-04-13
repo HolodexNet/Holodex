@@ -10,6 +10,8 @@ component:
     unfavoriteAllInGroup: Unfavorite all in group
     favoriteAllInGroup: Favorite all in group
   channelInfo:
+    videos: Videos
+    clips: Clips
     videoCount: '{0} Videos'
     clipCount: '{n} Clips'
     subscriberCount: '{n} Subscribers'
@@ -91,7 +93,15 @@ component:
       popup: Install Holodex on iOS
       afterExportIcon: then 'Add to Home Screen
       beforeExportIcon: Tap
+  media:
+    remove: Remove
 views:
+  Channel:
+    video: Videos
+    clips: Clips
+    music: Music
+    collabs: Collabs
+    about: About
   channels:
     channelType: {}
     sortOptions:
@@ -223,6 +233,17 @@ views:
     manageFavorites: Manage Favorites
   editor:
     needlogin: You'll need to login to make edits to Holodex video and song metadata.
+    changetopic:
+      Contents:
+        - >-
+          All users can assign topic to videos, but only editors and admins can
+          remove and change the topic once set.
+        - Save (May take 5 minutes to take effect)
+      title: Change stream topic
+    Channelmetions:
+      title: Channel Mentions (in development)
+    sources:
+      title: Sources/Clips (in development)
   login:
     apikeyMsg: >-
       You can use API key to query Holodex API programmatically. Only one key
@@ -238,6 +259,10 @@ views:
     apikeyResetConfirm1: Are you sure you want to reset your API Key?
     apikeyResetConfirm2: The old API key will have 0-24 hours before expiring. Really reset?
     apikeyResetNvm: Nothing interesting happened.
+    with:
+      - Login with Google
+      - Login with Discord
+      - Login with Twitter
   multiview:
     confirmOverwrite: Overwrite current layout?
     confirmOverwriteYes: Confirm
@@ -256,9 +281,9 @@ views:
   Mugen:
     welcome: >-
       Welcome to MugenClips! Everyone on this page is seeing the same randomly
-      selected English Hololive clip. Watch along and chat with
-      Hololive fans from across the world. If you skip ahead and want to be
-      re-sync'd with everyone, please refresh the page.
+      selected English Hololive clip. Watch along and chat with Hololive fans
+      from across the world. If you skip ahead and want to be re-sync'd with
+      everyone, please refresh the page.
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})

@@ -37,25 +37,24 @@
                     <v-tabs v-model="currentTab">
                         <v-tab>{{ $t("component.search.type.topic") }}</v-tab>
                         <v-tab>{{ $t("component.mainNav.music") }}</v-tab>
-                        <v-tab disabled>Channel Mentions (in development)</v-tab>
-                        <v-tab disabled>Sources/Clips (in development)</v-tab>
+                        <v-tab disabled>{{ $t("views.editor.Channelmetions.title") }}</v-tab>
+                        <v-tab disabled>{{ $t("views.editor.sources.title") }}</v-tab>
                     </v-tabs>
                     <v-col cols="12" class="pa-4">
                         <div v-show="currentTab === TABS.TOPIC">
                             <v-card-title>
                                 <v-icon left>{{ icons.mdiAnimationPlay }}</v-icon>
-                                <h5>Change stream topic</h5>
+                                <h5>{{ $t("views.editor.changetopic.title") }}</h5>
                             </v-card-title>
                             <v-card-text>
                                 <p>
-                                    All users can assign topic to videos, but only editors and admins can remove and
-                                    change the topic once set.
+                                    {{ $t("views.editor.changetopic.Contents.0") }}
                                 </p>
                                 <v-select :items="topics" label="Topic (leave empty to unset)" v-model="newTopic" />
                             </v-card-text>
                             <v-card-actions>
                                 <v-btn color="blue darken-1" text @click="saveTopic">
-                                    Save (May take 5 minutes to take effect)
+                                    {{ $t("views.editor.changetopic.Contents.1") }}
                                 </v-btn>
                             </v-card-actions>
                         </div>

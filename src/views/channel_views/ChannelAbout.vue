@@ -4,9 +4,9 @@
             <v-col sm="12" class="col-12 col-md-3">
                 <strong>Stats</strong>
                 <v-divider class="my-3" />
-                {{ channel.video_count }} Videos
+                {{ channel.video_count }} {{ $t("component.channelInfo.video") }}
                 <v-divider class="my-3" />
-                {{ channel.clip_count }} Clips
+                {{ channel.clip_count }} {{ $t("component.channelInfo.clips") }}
                 <v-divider class="my-3" />
                 {{ channel.view_count }} {{ $t("component.channelInfo.totalViews") }}
                 <v-divider class="my-3" />
