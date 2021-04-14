@@ -187,6 +187,7 @@ views:
       TLSettingsTitle: Настройки перевода
       StickBottomSettingLabel: Привязать к низу (для мобильных)
       StickBottomSettingsDesc: TL чат привязывается к низу чата (по умолчанию на мобильных - к верху)
+      tlFontSize: Размер шрифта
       retryBtn: Повторить
       status:
         reconnecting: Переподключение...
