@@ -242,13 +242,13 @@ views:
     showall: Show All
   editor:
     needlogin: You'll need to login to make edits to Holodex video and song metadata.
-    changetopic:
+    changeTopic:
       title: Change stream topic
       info: >-
         All users can assign topic to videos, but only editors and admins
         can remove and change the topic once set.
       button: Save (May take 5 minutes to take effect)
-    Channelmentions:
+    channelMentions:
       title: Channel Mentions (in development)
     sources:
       title: Sources/Clips (in development)
