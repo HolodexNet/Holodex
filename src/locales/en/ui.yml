@@ -99,9 +99,9 @@ component:
       beforeExportIcon: Tap
   media:
     remove: Remove
-  Comment:
-    Close: Close
-    Readmore: Read more
+  comment:
+    close: Close
+    readMore: Read more
 views:
   Channel:
     video: Videos
@@ -365,7 +365,7 @@ about:
           page. Please note that favoriting subbers is currently not supported,
           but you should still consider subscribing and supporting them in other
           ways!
-      dissapear:
+      disappear:
         title: My favorites list disappeared / I cannot favorite
       contents:
         - >-

@@ -3,7 +3,7 @@
         <truncated-text style="white-space: pre-wrap" class="text-body-2" :html="processedMessage" lines="5">
             <template v-slot:button="{ expanded }">
                 <span class="text-subtitle-2" style="color: #aaa">{{
-                    expanded ? $t("component.Comment.Close") : $t("component.Comment.Readmore")
+                    expanded ? $t("component.comment.close") : $t("component.comment.readMore")
                 }}</span>
             </template>
         </truncated-text>

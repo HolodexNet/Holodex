@@ -133,7 +133,7 @@
                     </v-expansion-panel>
                     <v-expansion-panel>
                         <v-expansion-panel-header>
-                            {{ $t("about.faq.favorite.dissapear.title") }}
+                            {{ $t("about.faq.favorite.disappear.title") }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
                             {{ $t("about.faq.favorite.contents.0") }}
