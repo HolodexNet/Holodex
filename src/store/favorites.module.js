@@ -45,7 +45,7 @@ const actions = {
                 dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
             });
     },
-    fetchLive({ state, commit, rootState }, { force = false, minutes = 2 }) {
+    fetchLive({ state, commit, rootState, dispatch }, { force = false, minutes = 2 }) {
         if (!(rootState.userdata && rootState.userdata.jwt)) return null; // don't update.
         if (force || !state.lastLiveUpdate || Date.now() - state.lastLiveUpdate > minutes * 60 * 1000) {
             commit("fetchStart");
@@ -60,6 +60,7 @@ const actions = {
                     commit("fetchEnd");
                 })
                 .catch((e) => {
+                    dispatch("loginCheck", null, { root: true });
                     console.error(e);
                     commit("fetchError");
                 });

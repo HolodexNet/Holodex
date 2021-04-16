@@ -12,6 +12,9 @@
                     {{ $t("component.apiError.aboutPage") }}
                 </router-link>
                 {{ $t("component.apiError.afterAboutPageHyperlink") }}
+
+                <br />
+                <v-btn @click="$store.dispatch('logout')">{{ $t("component.mainNav.logout") }}</v-btn>
             </div>
         </v-col>
     </v-row>
