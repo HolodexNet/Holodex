@@ -101,11 +101,18 @@ export default {
             "darkMode",
             "redirectMode",
             "autoplayVideo",
-            "useEnName",
             "scrollMode",
             "hideThumbnail",
             "defaultOpenFavorites",
         ]),
+        useEnName: {
+            get() {
+                return this.$store.getters["settings/useEnName"];
+            },
+            set(val) {
+                this.$store.commit("settings/setUseEnName", val);
+            },
+        },
         language: {
             get() {
                 return this.$store.state.settings.lang;

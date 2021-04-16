@@ -106,8 +106,8 @@ export default {
         if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
 
         this.favoritesUpdateTask = setInterval(() => {
-            this.$store.dispatch("favorites/fetchLive", { minutes: 10 });
-        }, 15 * 60 * 1000);
+            this.$store.dispatch("favorites/fetchLive", { minutes: 5 });
+        }, 6 * 60 * 1000);
 
         // check current breakpoint and set isMobile
         this.updateIsMobile();
