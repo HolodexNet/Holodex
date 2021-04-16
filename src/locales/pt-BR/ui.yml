@@ -39,8 +39,12 @@ component:
     watching: '{0} assistindo agora'
     liveNow: Ao Vivo
     edit: Editar
+    copiedToClipboard: Link copiado para a área de transferência.
+    copyLink: Copiar link Holodex
   videoDescription:
     description: Descrição
+  video:
+    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
@@ -90,6 +94,7 @@ component:
       beforeExportIcon: Toque
 views:
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -165,6 +170,9 @@ views:
     resetAllSettings: Redefinir todas as configurações/dados
     clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
     tlLanguageSelection: Ver Traduções no Chat nestes idiomas
+    defaultFavorites: Abrir Favoritos por Padrão
+    defaultFavoritesMsg: >-
+      Ir aos Favoritos ao visitar o holodex.net, ou clicando na logo à esquerda.
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
@@ -185,6 +193,10 @@ views:
       TLSettingsTitle: Configurações de tradução
       StickBottomSettingLabel: Manter no Rodapé (Celulares)
       StickBottomSettingsDesc: A caixa tradução ficara na parte inferior do Chat (Fica no topo por padrão)
+      showVerifiedMessages: Mostrar Mensagens Verificadas
+      showModeratorMessages: Mostrar Mensagens de Moderadores
+      tlFontSize: Tamanho da Fonte
+      tlWindowSize: Tamanho da Caixa de tradução, (%), deixar em 0% para automático
       retryBtn: Tentar Novamente
       status:
         reconnecting: Tentando Reconexão
