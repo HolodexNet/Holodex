@@ -167,6 +167,9 @@ views:
     resetAllSettings: Сбросить все настройки/данные
     clipLanguageSelection: 'Посмотрите клипы на этих языках:'
     tlLanguageSelection: Языки для перевода трансляций
+    defaultFavorites: Открывать "Избранное" по умолчанию
+    defaultFavoritesMsg: >-
+      Открывать "Избранное" по умолчанию при открытии holodex.net, или при нажатии на логотип сверху слева.
   app:
     update_available: Доступно обновление
     update_btn: Обновить
@@ -187,6 +190,9 @@ views:
       TLSettingsTitle: Настройки перевода
       StickBottomSettingLabel: Привязать к низу (для мобильных)
       StickBottomSettingsDesc: TL чат привязывается к низу чата (по умолчанию на мобильных - к верху)
+      showModeratorMessages: Показывать сообщения от модераторов
+      tlFontSize: Размер шрифта
+      tlWindowSize: Размер окна с переводами (%), оставьте 0% для автонастройки
       retryBtn: Повторить
       status:
         reconnecting: Переподключение...
