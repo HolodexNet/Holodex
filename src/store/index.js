@@ -172,6 +172,7 @@ export default new Vuex.Store({
             // do nothing.
         },
         async loginVerify({ state, dispatch }) {
+            dispatch("loginCheck");
             if (state.userdata && state.userdata.jwt) {
                 const valid = await backendApi.loginIsValid(state.userdata.jwt);
                 if (valid) {
