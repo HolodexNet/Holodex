@@ -14,7 +14,6 @@
                     <WatchFrame :video="video">
                         <template v-slot:youtube>
                             <youtube
-                                :key="video.id + 'frame'"
                                 v-if="video.id"
                                 :video-id="video.id"
                                 @ready="ready"
@@ -134,7 +133,6 @@
                         <youtube
                             v-if="video.id"
                             :video-id="video.id"
-                            :key="video.id + 'frame'"
                             @ready="ready"
                             :playerVars="{
                                 ...(timeOffset && { start: timeOffset }),
