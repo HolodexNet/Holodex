@@ -279,6 +279,12 @@ about:
     quitHolodex: "Я саббер, и хочу, чтобы мой канал был удален из Holodex.\n"
     quitHolodexContent: >-
       Нам жаль, что вы уходите :(, пожалуйста, сообщите мне, если есть какая либо проблема, с которой я бы мог вам помочь. Если вы все равно хотите, чтобы ваш канал был удален, отправьте нам сообщение в Discord.
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   gdpr: GDPR и мои данные
   gdprContent: >-
     Куки Google Analytics используются для отслеживания просмотров страниц в наших аналитических целях. После входа мы свяжем имя пользователя и ID с избранным. Эти данные могут включать ваш адрес электронной почты (для Google), Discord ID или имя пользователя в Twitter соответственно.
@@ -286,3 +292,11 @@ about:
   feedback: Отзывы/Сообщения об ошибках
   feedbackHtml: >-
     Вы можете создать тикет в <a href="https://github.com/RiceCakess/Holodex/issues"> трекере проблем на Github</a> или найти команду Holodex в Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
