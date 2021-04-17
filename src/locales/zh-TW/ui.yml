@@ -43,8 +43,6 @@ component:
     copyLink: 複製 Holodex 連結
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -94,7 +92,6 @@ component:
       beforeExportIcon: 點擊
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -284,6 +281,12 @@ about:
     quitHolodex: "我是翻譯/剪輯者且我想要將自己的頻道自Holodex資料庫中移除\n"
     quitHolodexContent: >-
       祝您一路順風 :(  如果有任何需要協助的，請讓我們知道。如果您依然想移除自己頻道的相關資料，請至 Holodex 的 Discord伺服器 傳訊息給我們。
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   gdpr: 關於GDPR與我的資料
   gdprContent: >-
     我們僅使用「Google分析」的cookie來追蹤每頁的瀏覽人數並分析資料。當您登入後，我們會將您社群媒體帳號的帳號名稱/ID與網站收藏庫的內容綁定。記錄下的內容可能包括您的電子郵件（Google帳號）、Discord ID，或是Twitter帳號。
@@ -291,3 +294,11 @@ about:
   feedback: 意見回饋/回報錯誤
   feedbackHtml: >-
     您可至 <a href="https://github.com/RiceCakess/Holodex/issues">Github 問題回報頁</a> 創建貼文來回報問題，或是前往我們的Discord伺服器進行回報。<br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
