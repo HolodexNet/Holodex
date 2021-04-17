@@ -244,4 +244,19 @@ editor:
   exitMode: 編集モードを終了
   enterMode: 動画を編集
 about:
+  faq:
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   feedback: フィードバック/バグ報告
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
