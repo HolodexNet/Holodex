@@ -11,6 +11,7 @@ component:
     unfavoriteAllInGroup: Eliminar todo el grupo de favoritos
     favoriteAllInGroup: Añadir todo el grupo a favoritos
   channelInfo:
+    stats: Estadísticas
     videoCount: '{0} vídeos'
     clipCount: '{n} clips'
     subscriberCount: '{n} suscriptores'
@@ -21,6 +22,7 @@ component:
     removeFromFavorites: Eliminar de favoritos
     unblock: Desbloquear canal
     block: Bloquear canal en Holodex
+    blocked: Bloqueado
   mainNav:
     home: Inicio
     favorites: Favoritos
@@ -34,6 +36,7 @@ component:
     accountSettings: Gestionar cuenta
     music: Música
     multiview: Vista múltiple
+    points: ptos
   videoCard:
     clips: '{n} clips'
     watching: '{0} espectadores'
@@ -49,6 +52,9 @@ component:
   watch:
     streamingFor: En directo durante {0}
     nextUpInMugen: A continuación
+    Comments:
+      title: Comentarios
+      all: Todo
   search:
     searchLabel: Buscar
     type:
@@ -90,7 +96,18 @@ component:
       popup: Instalar Holodex en iOS
       afterExportIcon: luego 'Agregar a la pantalla de inicio
       beforeExportIcon: Pulse
+  media:
+    remove: Eliminar
+  comment:
+    close: Cerrar
+    readMore: Leer más
 views:
+  channel:
+    video: Vídeos
+    clips: Clips
+    music: Música
+    collabs: Colaboraciones
+    about: Acerca de
   channels:
     sortOptions:
       subscribers: Suscriptores
@@ -206,6 +223,8 @@ views:
     promptForAction: >-
       Crea una lista de tus vtubers favoritos y mira sus últimos clips y directos en esta página.
     manageFavorites: Gestionar favoritos
+    close: Cerrar
+    showall: Mostrar todo
   editor:
     needlogin: Debes iniciar sesión para poder editar los metadatos de vídeos y canciones de Holodex.
   login:
