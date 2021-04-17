@@ -43,8 +43,6 @@ component:
     copyLink: Salin Tautan Holodex
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -94,7 +92,6 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -283,6 +280,12 @@ about:
     quitHolodex: "Saya subber dan ingin channel saya dihapus dari Holodex\\r\n"
     quitHolodexContent: >-
       Yaaahhh :( , mohon beritahu kami jika terdapat masalah. jika kamu tetap ingin channelnya dihapus, tolong kirim pesan pada kami di Discord.
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   gdpr: GDPR dan data saya
   gdprContent: >-
     Cookie Google Analytics digunakan untuk melacak tampilan halaman untuk tujuan analitis kami. Setelah login, kami mengaitkan nama pengguna dan ID akun media sosial dengan favorit kamu. Data ini mungkin termasuk alamat Email (untuk Google), ID Discord, atau Twitter kamu.
@@ -290,3 +293,11 @@ about:
   feedback: Saran/Lapor Bug
   feedbackHtml: >-
     Kamu dapat membuat isu baru di <a href="https://github.com/RiceCakess/Holodex/issues"> Github Pelacak Masalah </a> atau berbicara dengan tim Holodex di Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
