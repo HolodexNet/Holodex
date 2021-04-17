@@ -14,7 +14,7 @@
                     color="red accent-2"
                 >
                     <v-icon left>{{ icons.mdiGoogle }}</v-icon>
-                    Login with Google
+                    {{ $t("views.login.with.0") }}
                 </v-btn>
                 <v-btn
                     class="my-3"
@@ -24,7 +24,7 @@
                 >
                     <v-icon left>{{ icons.mdiDiscord }}</v-icon>
 
-                    Login with Discord
+                    {{ $t("views.login.with.1") }}
                 </v-btn>
                 <v-btn
                     class="my-3"
@@ -34,7 +34,7 @@
                 >
                     <v-icon left>{{ icons.mdiTwitter }}</v-icon>
 
-                    Login with Twitter
+                    {{ $t("views.login.with.2") }}
                 </v-btn>
             </v-card-text>
             <v-divider></v-divider>

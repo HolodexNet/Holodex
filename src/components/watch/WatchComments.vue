@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-card-title class="text-body-1">Comments</v-card-title>
+        <v-card-title class="text-body-1">{{ $t("component.watch.Comments.title") }}</v-card-title>
         <v-card-text>
             <template v-for="b in buckets">
                 <v-btn
@@ -115,7 +115,7 @@ export default {
             buckets.push({
                 time: -1,
                 count: this.comments.length,
-                display: "All",
+                display: `${this.$t("component.watch.Comments.all")}`,
             });
 
             let currentBucket = 0;

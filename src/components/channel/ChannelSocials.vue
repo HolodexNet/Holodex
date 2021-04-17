@@ -47,7 +47,7 @@
                     <v-icon :left="isBlocked">
                         {{ mdiAccountCancel }}
                     </v-icon>
-                    <span v-if="isBlocked">Blocked</span>
+                    <span v-if="isBlocked">{{ $t("component.channelSocials.blocked") }}</span>
                 </v-btn>
             </template>
             <span>
@@ -99,7 +99,7 @@ export default {
     },
     computed: {
         tooltip() {
-            if (!this.isLoggedIn) return "Sign in to favorite";
+            if (!this.isLoggedIn) return this.$t("component.channelList.signInToFavorite");
 
             return !this.isFavorited
                 ? this.$t("component.channelSocials.addToFavorites")

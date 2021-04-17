@@ -5,7 +5,7 @@
                 <div class="text-h4">{{ $t("component.mainNav.about") }}</div>
             </v-col>
             <v-col cols="12" md="4" sm="4" lg="3" xl="2" float-right>
-                <div class="text-h5 mb-2">News</div>
+                <div class="text-h5 mb-2">{{ $t("about.news.title") }}</div>
                 <TwitterFeed :key="'twtrTimeline' + timelinekey" />
             </v-col>
 
@@ -102,64 +102,57 @@
                     </v-expansion-panel>
 
                     <v-expansion-panel>
-                        <v-expansion-panel-header> Is there an Android/iOS app for Holodex? </v-expansion-panel-header>
+                        <v-expansion-panel-header> {{ $t("about.faq.mobile.title") }} </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            We are working on it! In the mean time, please use the "Add to Home" feature on your
-                            browser. We have tuned it a lot to behave like an app
+                            {{ $t("about.faq.mobile.Content.Resume") }}
                             <ul>
                                 <li>
-                                    Android Chrome: Navigate to the site, click the three dots
+                                    {{ $t("about.faq.mobile.Content.android.0") }}
                                     <v-icon color="primary">
                                         {{ icons.mdiDotsVertical }}
                                     </v-icon>
-                                    on the top right and find "Add to Home Screen".
+                                    {{ $t("about.faq.mobile.Content.android.1") }}
                                 </li>
                                 <li>
-                                    iOS Safari: Navigate to the site on your phone, click the square with arrow pointing
-                                    up
+                                    {{ $t("about.faq.mobile.Content.ios.0") }}
                                     <v-icon color="primary">
                                         {{ mdiExportVariant }}
                                     </v-icon>
-                                    at the bottom of safari, and click "Add to Home Screen"
+                                    {{ $t("about.faq.mobile.Content.ios[1]") }}
                                 </li>
                             </ul>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
-                        <v-expansion-panel-header> What are favorites? </v-expansion-panel-header>
+                        <v-expansion-panel-header> {{ $t("about.faq.favorite.title") }} </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            Favorites are a way to stay on top of your favorite vtubers, you can add your favorite
-                            channels by clicking the heart icon on the
-                            <router-link to="/channel">Channels</router-link>
-                            page. Please note that favoriting subbers is currently not supported, but you should still
-                            consider subscribing and supporting them in other ways!
+                            {{ $t("about.faq.favorite.Contents.0") }}
+                            <router-link to="/channel">{{ $t("component.mainNav.channels") }}</router-link>
+                            {{ $t("about.faq.favorite.Contents[1]") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
                         <v-expansion-panel-header>
-                            My favorites list disappeared / I cannot favorite
+                            {{ $t("about.faq.favorite.disappear.title") }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            Please make sure you are logged in and visit the channels favorites tab to force a refresh.
+                            {{ $t("about.faq.favorite.contents.0") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
-                        <v-expansion-panel-header> What is MugenClips? </v-expansion-panel-header>
+                        <v-expansion-panel-header> {{ $t("about.faq.MugenClips.title") }} </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            MugenClips, or infinite clips, is a watch along party where people on the site can watch a
-                            constantly rotating variety of clips uploaded by the many community translation channels
+                            {{ $t("about.faq.MugenClips.Contents.0") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
                         <v-expansion-panel-header>
-                            I'm a subber and can't find my channel or clips on Holodex
+                            {{ $t("about.faq.subber.title") }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            Please check on the Channels page to see if you are listed as a subber, if not please fill
-                            out
-                            <a href="https://forms.gle/xkN4w8fyPr6YTGfx6"> this form </a>
-                            , and we will add you manually. If you are already on the list, please make sure your video
-                            descriptions have the correct youtube source/channel links.
+                            {{ $t("about.faq.subber.Contents.0") }}
+                            <a href="https://forms.gle/xkN4w8fyPr6YTGfx6"> {{ $t("about.faq.subber.Contents.1") }} </a>
+                            {{ $t("about.faq.subber.Contents.2") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -180,12 +173,10 @@
                     </v-expansion-panel>
                     <v-expansion-panel>
                         <v-expansion-panel-header>
-                            I have feedback/want to contribute to this project
+                            {{ $t("about.faq.feedback.title") }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            All help and ideas are welcome! The UI and Backend are both available for contribution,
-                            although only the UI is open source currently. Please contact us on discord to gain access
-                            to backend source, or simply chat about your ideas.
+                            {{ $t("about.faq.feedback.Contents.0") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -202,23 +193,22 @@
                 <p class="text-body-2" v-html="$t('about.feedbackHtml')"></p>
                 <br />
 
-                <div class="text-h5" id="changelog">Credits</div>
+                <div class="text-h5" id="changelog">{{ $t("about.Credits.title") }}</div>
                 <p class="text-body-2">
-                    I would like to give big thanks to the
-                    <a href="https://hololive.jetri.co/">HoloTools</a> team for their work on
+                    {{ $t("about.Credits.Contents.0") }}
+                    <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.Credits.Contents[1]") }}
                     <a href="https://github.com/holofans/holoapi">holoapi</a>.
                     <br />
-                    Also to all the subbers for helping the overseas bros! Please check them out!
+                    {{ $t("about.Credits.Contents[2]") }}
                 </p>
                 <br />
                 <p class="text-body-2">
-                    This is a fan made website and the content found on this website is owned by Cover corp and its
-                    partners. The site follows the guidelines set forth by Cover corp in their
-                    <a href="https://en.hololive.tv/terms"> Derivative Work License Agreement </a>
+                    {{ $t("about.Credits.Contents[3]") }}
+                    <a href="https://en.hololive.tv/terms"> {{ $t("about.Credits.Contents[4]") }} </a>
                 </p>
                 <br />
 
-                <div class="text-h5">Changelog</div>
+                <div class="text-h5">{{ $t("about.Changelog.title") }}</div>
                 <div class="text-body-2">
                     <span class="text--secondary">March 26th, 2021</span> <br />
                     <span class="text-body-1">Holodex V2.1 Main Features</span>
