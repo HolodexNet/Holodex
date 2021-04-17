@@ -87,25 +87,25 @@ export default {
             return [
                 {
                     path: `/channel/${this.id}/`,
-                    name: `${this.$t("views.Channel.video")}`,
+                    name: `${this.$t("views.channel.video")}`,
                     exact: true,
                 },
                 {
                     path: `/channel/${this.id}/clips`,
-                    name: `${this.$t("views.Channel.clips")}`,
+                    name: `${this.$t("views.channel.clips")}`,
                     hide: this.channel.type === "subber",
                 },
                 {
                     path: `/channel/${this.id}/music`,
-                    name: `${this.$t("views.Channel.music")}`,
+                    name: `${this.$t("views.channel.music")}`,
                     hide: this.channel.type === "subber",
                 },
                 {
                     path: `/channel/${this.id}/collabs`,
-                    name: `${this.$t("views.Channel.collabs")}`,
+                    name: `${this.$t("views.channel.collabs")}`,
                     hide: this.channel.type === "subber",
                 },
-                { path: `/channel/${this.id}/about`, name: `${this.$t("views.Channel.about")}` },
+                { path: `/channel/${this.id}/about`, name: `${this.$t("views.channel.about")}` },
                 // { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
             ];
         },

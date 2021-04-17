@@ -2,7 +2,7 @@
     <div v-if="!isLoading && !hasError" ref="watchFullscreen" style="overflow-y: auto">
         <!-- Mugen info message -->
         <v-alert dense text type="info" dismissible v-model="firstVisitMugen" v-if="isMugen">
-            {{ $t("views.Mugen.welcome") }}
+            {{ $t("views.mugen.welcome") }}
         </v-alert>
         <!-- Desktop (md/lg/xl) Layout -->
         <v-container v-if="!$store.state.isMobile" fluid>

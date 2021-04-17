@@ -104,21 +104,21 @@
                     <v-expansion-panel>
                         <v-expansion-panel-header> {{ $t("about.faq.mobile.title") }} </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            {{ $t("about.faq.mobile.Content.Resume") }}
+                            {{ $t("about.faq.mobile.content.summary") }}
                             <ul>
                                 <li>
-                                    {{ $t("about.faq.mobile.Content.android.0") }}
+                                    {{ $t("about.faq.mobile.content.android.0") }}
                                     <v-icon color="primary">
                                         {{ icons.mdiDotsVertical }}
                                     </v-icon>
-                                    {{ $t("about.faq.mobile.Content.android.1") }}
+                                    {{ $t("about.faq.mobile.content.android.1") }}
                                 </li>
                                 <li>
-                                    {{ $t("about.faq.mobile.Content.ios.0") }}
+                                    {{ $t("about.faq.mobile.content.ios.0") }}
                                     <v-icon color="primary">
                                         {{ mdiExportVariant }}
                                     </v-icon>
-                                    {{ $t("about.faq.mobile.Content.ios[1]") }}
+                                    {{ $t("about.faq.mobile.content.ios[1]") }}
                                 </li>
                             </ul>
                         </v-expansion-panel-content>
@@ -142,7 +142,7 @@
                     <v-expansion-panel>
                         <v-expansion-panel-header> {{ $t("about.faq.MugenClips.title") }} </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            {{ $t("about.faq.MugenClips.Contents.0") }}
+                            {{ $t("about.faq.MugenClips.contents.0") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -150,9 +150,9 @@
                             {{ $t("about.faq.subber.title") }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            {{ $t("about.faq.subber.Contents.0") }}
-                            <a href="https://forms.gle/xkN4w8fyPr6YTGfx6"> {{ $t("about.faq.subber.Contents.1") }} </a>
-                            {{ $t("about.faq.subber.Contents.2") }}
+                            {{ $t("about.faq.subber.contents.0") }}
+                            <a href="https://forms.gle/xkN4w8fyPr6YTGfx6"> {{ $t("about.faq.subber.contents.1") }} </a>
+                            {{ $t("about.faq.subber.contents.2") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -176,7 +176,7 @@
                             {{ $t("about.faq.feedback.title") }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            {{ $t("about.faq.feedback.Contents.0") }}
+                            {{ $t("about.faq.feedback.contents.0") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -193,22 +193,22 @@
                 <p class="text-body-2" v-html="$t('about.feedbackHtml')"></p>
                 <br />
 
-                <div class="text-h5" id="changelog">{{ $t("about.Credits.title") }}</div>
+                <div class="text-h5" id="changelog">{{ $t("about.credits.title") }}</div>
                 <p class="text-body-2">
-                    {{ $t("about.Credits.Contents.0") }}
-                    <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.Credits.Contents[1]") }}
+                    {{ $t("about.credits.contents[0]") }}
+                    <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.credits.contents[1]") }}
                     <a href="https://github.com/holofans/holoapi">holoapi</a>.
                     <br />
-                    {{ $t("about.Credits.Contents[2]") }}
+                    {{ $t("about.credits.contents[2]") }}
                 </p>
                 <br />
                 <p class="text-body-2">
-                    {{ $t("about.Credits.Contents[3]") }}
-                    <a href="https://en.hololive.tv/terms"> {{ $t("about.Credits.Contents[4]") }} </a>
+                    {{ $t("about.credits.contents[3]") }}
+                    <a href="https://en.hololive.tv/terms"> {{ $t("about.credits.contents[4]") }} </a>
                 </p>
                 <br />
 
-                <div class="text-h5">{{ $t("about.Changelog.title") }}</div>
+                <div class="text-h5">{{ $t("about.changelog.title") }}</div>
                 <div class="text-body-2">
                     <span class="text--secondary">March 26th, 2021</span> <br />
                     <span class="text-body-1">Holodex V2.1 Main Features</span>

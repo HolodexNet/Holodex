@@ -103,7 +103,7 @@ component:
     close: Close
     readMore: Read more
 views:
-  Channel:
+  channel:
     video: Videos
     clips: Clips
     music: Music
@@ -286,7 +286,7 @@ views:
     video:
       selectLive: Select Live
       addCustomVideo: Add Custom Video
-  Mugen:
+  mugen:
     welcome: >-
       Welcome to MugenClips! Everyone on this page is seeing the same randomly
       selected English Hololive clip. Watch along and chat with Hololive fans
@@ -373,8 +373,8 @@ about:
           tab to force a refresh.
     mobile:
       title: Is there an Android/iOS app for Holodex?
-      Content:
-        Resume: >-
+      content:
+        summary: >-
           We are working on it! In the mean time, please use the "Add to Home"
           feature on your browser. We have tuned it a lot to behave like an app
         android:
@@ -387,14 +387,14 @@ about:
           - at the bottom of safari, and click "Add to Home Screen"
     MugenClips:
       title: What is MugenClips?
-      Contents:
+      contents:
         - >-
           MugenClips, or infinite clips, is a watch along party where people on
           the site can watch a constantly rotating variety of clips uploaded by
           the many community translation channels
     subber:
       title: I'm a subber and can't find my channel or clips on Holodex
-      Contents:
+      contents:
         - >-
           Please check on the Channels page to see if you are listed as a
           subber, if not please fill out
@@ -405,7 +405,7 @@ about:
           source/channel links.
     feedback:
       title: I have feedback/want to contribute to this project
-      Contents:
+      contents:
         - >-
           All help and ideas are welcome! The UI and Backend are both available
           for contribution, although only the UI is open source currently.
@@ -424,9 +424,9 @@ about:
     href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker
     </a> or find the Holodex team on Discord <br /> <br /> Reddit: <a
     href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
-  Credits:
+  credits:
     title: Credits
-    Contents:
+    contents:
       - I would like to give big thanks to the
       - team for their work on
       - >-
@@ -437,7 +437,7 @@ about:
         owned by Cover corp and its partners. The site follows the guidelines
         set forth by Cover corp in their
       - Derivative Work License Agreement
-  Changelog:
+  changelog:
     title: Changelog
   news:
     title: News
