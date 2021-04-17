@@ -43,8 +43,6 @@ component:
     copyLink: Copiar enlace de Holodex
   videoDescription:
     description: Descripción
-  video:
-    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar más
@@ -94,7 +92,6 @@ component:
       beforeExportIcon: Pulse
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Suscriptores
       group: Grupo
@@ -283,6 +280,12 @@ about:
     quitHolodex: "Soy un traductor y me gustaría que mi canal fuera eliminado del Holodex\n"
     quitHolodexContent: >-
       Es una pena que te quieras ir. Por favor comunícame si hay algún problema al que te pueda ayudar. Si aun así quieres que tu cuenta se elimine de Holodex envíanos un mensaje a nuestro discord.
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   gdpr: GDPR y mis datos
   gdprContent: >-
     Las cookies de Google Analytics se utilizan para tener un seguimiento de las visitas de la página con motivos de análisis estadístico. Una vez que has iniciado sesión tu correo e ID de tu cuenta quedarán asociados. Estos datos pueden incluir tu dirección de correo electrónico, ID de Discord y tu ID de twiiter.
@@ -290,3 +293,11 @@ about:
   feedback: Sugerencias/Reportar incidencias
   feedbackHtml: >-
     Puedes crear una incidencia en <a href="https://github.com/RiceCakess/Holodex/issues">Github</a> o hablar con el equipo de Holodex en Discord. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
