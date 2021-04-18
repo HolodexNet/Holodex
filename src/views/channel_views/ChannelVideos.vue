@@ -1,5 +1,5 @@
 <template>
-    <generic-list-loader paginate :perPage="this.pageLength" :loadFn="getLoadFn()" v-slot="{ data }">
+    <generic-list-loader paginate :perPage="this.pageLength" :loadFn="getLoadFn()" v-slot="{ data }" :key="id + type">
         <VideoCardList
             :videos="data"
             :includeChannel="hasChannelInfo"
@@ -11,7 +11,6 @@
                 xl: 6,
             }"
             :dense="true"
-            :identifier="identifier"
         />
     </generic-list-loader>
 </template>
@@ -51,9 +50,6 @@ export default {
                     return "videos";
             }
         },
-        // pages() {
-        //     return Math.ceil(this.total / this.pageLength);
-        // },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -64,10 +60,10 @@ export default {
     methods: {
         resetVideos() {
             this.identifier = +new Date();
-            // this.$store.commit("channel/resetVideos");
         },
         getLoadFn() {
             const self = this;
+            // eslint-disable-next-line func-names
             return async function (offset, limit) {
                 const res = await backendApi.channelVideos(self.id, {
                     type: self.type,
