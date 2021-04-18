@@ -54,13 +54,10 @@ export default {
     watch: {
         // eslint-disable-next-line func-names
         "$route.name": function () {
-            this.resetVideos();
+            this.identifier = +new Date();
         },
     },
     methods: {
-        resetVideos() {
-            this.identifier = +new Date();
-        },
         getLoadFn() {
             const self = this;
             // eslint-disable-next-line func-names

@@ -83,9 +83,6 @@ export default {
         this.init();
     },
     watch: {
-        recentVideoFilter() {
-            this.resetVideos();
-        },
         // eslint-disable-next-line func-names
         "$store.state.currentOrg": function () {
             this.init();
@@ -126,7 +123,6 @@ export default {
         init() {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
-            this.resetVideos();
             this.identifier = Date.now();
         },
         // called from mixin, simulate reload

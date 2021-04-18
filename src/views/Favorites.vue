@@ -37,18 +37,23 @@
                         </v-btn>
                     </v-btn-toggle>
                 </div>
-                <VideoCardList
-                    :videos="videos"
-                    includeChannel
-                    :cols="colSizes"
-                    :dense="currentGridSize > 0"
-                    :lazy="scrollMode"
-                    :identifier="identifier"
-                    :paginateLoad="!scrollMode"
+
+                <generic-list-loader
                     :infiniteLoad="scrollMode"
-                    @load="loadNext"
-                    pageLess
-                ></VideoCardList>
+                    :paginate="!scrollMode"
+                    :perPage="this.pageLength"
+                    :loadFn="getLoadFn()"
+                    v-slot="{ data }"
+                    :key="'vl-home-' + recentVideoFilter + identifier"
+                >
+                    <VideoCardList
+                        :videos="data"
+                        includeChannel
+                        :cols="colSizes"
+                        :dense="currentGridSize > 0"
+                        :lazy="scrollMode"
+                    ></VideoCardList>
+                </generic-list-loader>
             </div>
         </template>
         <template v-else>
@@ -73,6 +78,8 @@ import * as icons from "@/utils/icons";
 import { mapState } from "vuex";
 import reloadable from "@/mixins/reloadable";
 import isActive from "@/mixins/isActive";
+import backendApi from "@/utils/backend-api";
+import GenericListLoader from "@/components/video/GenericListLoader.vue";
 
 export default {
     name: "Favorites",
@@ -88,6 +95,7 @@ export default {
     components: {
         VideoCardList,
         LoadingOverlay,
+        GenericListLoader,
     },
     data() {
         return {
@@ -100,9 +108,6 @@ export default {
         this.init(true);
     },
     watch: {
-        recentVideoFilter() {
-            this.resetVideos();
-        },
         favorites: {
             deep: true,
             handler() {
@@ -111,7 +116,7 @@ export default {
         },
     },
     computed: {
-        ...mapState("favorites", ["favorites", "live", "videos", "isLoading", "hasError", "currentOffset"]),
+        ...mapState("favorites", ["favorites", "live", "isLoading", "hasError", "currentOffset"]),
         recentVideoFilter: {
             get() {
                 return this.$store.state.favorites.recentVideoFilter;
@@ -156,38 +161,33 @@ export default {
             if (this.favorites.length > 0 && this.isLoggedIn) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
                 this.$store.dispatch("favorites/fetchLive", { minutes: 2 });
-                this.$nextTick(this.resetVideos);
+                this.identifier = Date.now();
             }
         },
         reload() {
             this.init();
         },
-        resetVideos() {
-            this.$store.commit("favorites/resetVideos");
-            this.identifier = +new Date();
-        },
-        loadNext($state) {
-            const lastLength = this.videos.length;
-            if (!this.scrollMode) this.$store.commit("favorites/resetVideos");
-            this.$store
-                .dispatch("favorites/fetchNextVideos", {
-                    limit: this.pageLength,
-                    ...(!this.scrollMode && { offset: this.pageLength * ($state.page - 1) }),
-                })
-                .then(() => {
-                    if (
-                        (this.scrollMode && this.videos.length === lastLength) ||
-                        (!this.scrollMode && this.videos.length !== this.pageLength)
-                    ) {
-                        $state.completed();
-                        return;
-                    }
-                    $state.loaded();
-                })
-                .catch((e) => {
-                    console.error(e);
-                    $state.error();
-                });
+        getLoadFn() {
+            // const self = this;
+            // eslint-disable-next-line func-names
+            return async function (offset, limit) {
+                const res = await backendApi
+                    .favoritesVideos(this.$store.state.userdata.jwt, {
+                        status: "past",
+                        ...(this.recentVideoFilter !== "all" && { type: this.recentVideoFilter }),
+                        include: "clips",
+                        lang: this.$store.state.settings.clipLangs.join(","),
+                        paginated: !this.scrollMode,
+                        limit,
+                        offset,
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        this.$store.dispatch("loginVerify"); // check if the user is actually logged in.
+                        throw err;
+                    });
+                return res.data;
+            };
         },
     },
 };

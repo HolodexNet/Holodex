@@ -124,7 +124,6 @@ export default {
         init() {
             window.scrollTo(0, 0);
             this.$store.commit("channel/resetState");
-            this.$store.commit("channel/resetVideos");
             this.$store.commit("channel/setId", this.$route.params.id);
             this.$store.dispatch("channel/fetchChannel");
         },
