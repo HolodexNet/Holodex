@@ -159,7 +159,7 @@ export default {
             this.$store.dispatch("favorites/fetchLive", { minutes: 2 });
             this.loadFavorites();
         } else {
-            this.selectedOrg = this.orgList.find((x) => x.text === this.$store.state.currentOrg);
+            this.selectedOrg = this.orgList.find((x) => x.text === this.$store.state.currentOrg).value;
         }
         this.ticker = setInterval(() => {
             this.tick = Date.now();
