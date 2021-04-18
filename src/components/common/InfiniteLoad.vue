@@ -22,20 +22,15 @@ export default {
                 COMPLETED: 3,
             }),
             status: 0,
+            nextPage: 1,
         };
     },
     props: {
         identifier: {
             default: +new Date(),
         },
-        // emitFirstLoad: {
-        //     default: false,
-        //     type: Boolean,
-        // },
     },
-    mounted() {
-        // this.emitFirstLoad && this.emitEvent();
-    },
+    mounted() {},
     watch: {
         identifier() {
             this.reset();
@@ -45,39 +40,43 @@ export default {
         reset() {
             this.status = this.STATUSES.READY;
         },
-        // eslint-disable-next-line no-unused-vars
         onIntersect(entries, observer, isIntersecting) {
-            if (!(this.status === this.STATUSES.READY && isIntersecting)) return;
-            this.emitEvent();
+            if (this.status === this.STATUSES.READY && isIntersecting) this.emitEvent();
         },
         emitEvent() {
+            const self = this;
             // event listeners for events defined below
-            this.$on("$InfiniteLoad:loaded", () => {
-                this.reset();
-            });
-            this.$on("$InfiniteLoad:completed", () => {
-                this.status = this.STATUSES.COMPLETED;
-            });
+            // this.$on("$InfiniteLoad:loaded", () => {
+            //     this.reset();
+            // });
+            // this.$on("$InfiniteLoad:completed", () => {
+            //     this.status = this.STATUSES.COMPLETED;
+            // });
 
-            this.$on("$InfiniteLoad:error", () => {
-                this.status = this.STATUSES.ERROR;
-            });
+            // this.$on("$InfiniteLoad:error", () => {
+            //     this.status = this.STATUSES.ERROR;
+            // });
 
             // $state object to emit event to self
             const loaded = () => {
-                this.$emit("$InfiniteLoad:loaded", { target: this });
+                self.nextPage += 1;
+                self.status = this.STATUSES.READY;
+                // this.$emit("$InfiniteLoad:loaded", { target: this });
             };
             const completed = () => {
-                this.$emit("$InfiniteLoad:completed", { target: this });
+                self.status = this.STATUSES.COMPLETED;
+                // this.$emit("$InfiniteLoad:completed", { target: this });
             };
             const error = () => {
-                this.$emit("$InfiniteLoad:error", { target: this });
+                this.status = this.STATUSES.ERROR;
+                // this.$emit("$InfiniteLoad:error", { target: this });
             };
 
             const $state = {
                 loaded,
                 completed,
                 error,
+                page: this.nextPage,
             };
 
             // pass $state to components
