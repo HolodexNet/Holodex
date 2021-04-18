@@ -1,28 +1,19 @@
 <template>
-    <div :key="identifier" class="d-flex justify-center py-4" style="min-height: 100px">
+    <div :key="identifier" class="d-flex justify-center py-4" style="min-height: 100px" @click.capture="clicked = true">
         <LoadingOverlay :isLoading="status === STATUSES.LOADING" :showError="status === STATUSES.ERROR" />
-        <template v-show="status === STATUSES.READY">
-            <v-pagination v-model="page" :length="pages" v-if="!pageLess"></v-pagination>
-            <div v-else>
-                <v-btn
-                    class="ma-2 pr-6"
-                    @click="
-                        page -= 1;
-                        clicked = true;
-                    "
-                    :disabled="page === 1"
-                >
+        <template>
+            <v-pagination
+                v-model="page"
+                :length="pages"
+                v-if="!pageLess"
+                v-show="status === STATUSES.READY"
+            ></v-pagination>
+            <div v-show="status === STATUSES.READY" v-else>
+                <v-btn class="ma-2 pr-6" @click="page -= 1" :disabled="page === 1">
                     <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
                     {{ $t("component.paginateLoad.newer") }}
                 </v-btn>
-                <v-btn
-                    class="ma-2 pl-6"
-                    @click="
-                        page += 1;
-                        clicked = true;
-                    "
-                    :disabled="status === STATUSES.COMPLETED"
-                >
+                <v-btn class="ma-2 pl-6" @click="page += 1" :disabled="status === STATUSES.COMPLETED">
                     {{ $t("component.paginateLoad.older") }}
                     <v-icon>{{ icons.mdiChevronRight }}</v-icon>
                 </v-btn>
@@ -51,7 +42,6 @@ export default {
             }),
             status: 0,
             // lastPage: 1,
-            page: 1,
             clicked: false,
         };
     },
@@ -154,7 +144,7 @@ export default {
                 completed,
                 error,
             };
-            if (this.status === this.STATUSES.READY) this.$emit("paginate", $state);
+            this.$emit("paginate", $state);
             this.status = this.STATUSES.LOADING;
         },
     },

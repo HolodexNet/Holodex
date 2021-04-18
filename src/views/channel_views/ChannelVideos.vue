@@ -1,7 +1,7 @@
 <template>
-    <div style="height: 100%">
+    <generic-list-loader paginate :perPage="this.pageLength" :loadFn="getLoadFn()" v-slot="{ data }">
         <VideoCardList
-            :videos="videos"
+            :videos="data"
             :includeChannel="hasChannelInfo"
             :cols="{
                 xs: 1,
@@ -11,35 +11,32 @@
                 xl: 6,
             }"
             :dense="true"
-            paginateLoad
             :identifier="identifier"
-            :paginatePages="pages"
-            @load="loadNext"
         />
-        <!-- infiniteLoad
-            @infinite="loadNext"
-            :infiniteId="infiniteId" -->
-    </div>
+    </generic-list-loader>
 </template>
 
 <script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
 // import api from "@/utils/backend-api";
 import { mapState } from "vuex";
+import backendApi from "@/utils/backend-api";
+import GenericListLoader from "@/components/video/GenericListLoader.vue";
 
 export default {
     name: "ChannelVideos",
     components: {
         VideoCardList,
+        GenericListLoader,
     },
     data() {
         return {
             identifier: +new Date(),
-            pageLength: 25,
+            pageLength: 24,
         };
     },
     computed: {
-        ...mapState("channel", ["videos", "total"]),
+        ...mapState("channel", ["id", "channel"]),
         hasChannelInfo() {
             // get uploader name for videos not uploaded by current channel
             return this.$route.name === "channel_clips" || this.$route.name === "channel_collabs";
@@ -54,9 +51,9 @@ export default {
                     return "videos";
             }
         },
-        pages() {
-            return Math.ceil(this.total / this.pageLength);
-        },
+        // pages() {
+        //     return Math.ceil(this.total / this.pageLength);
+        // },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -67,31 +64,23 @@ export default {
     methods: {
         resetVideos() {
             this.identifier = +new Date();
-            this.$store.commit("channel/resetVideos");
+            // this.$store.commit("channel/resetVideos");
         },
-        loadNext($state) {
-            // const lastLength = this.videos.length;
-            this.$store.commit("channel/resetVideos");
-            this.$store
-                .dispatch("channel/fetchNextVideos", {
-                    type: this.type,
-                    params: {
-                        limit: this.pageLength,
-                        offset: this.pageLength * ($state.page - 1),
+        getLoadFn() {
+            const self = this;
+            return async function (offset, limit) {
+                const res = await backendApi.channelVideos(self.id, {
+                    type: self.type,
+                    query: {
+                        lang: self.$store.state.settings.clipLangs.join(","),
+                        include: "clips,live_info",
+                        limit,
+                        offset,
                         paginated: true,
                     },
-                })
-                .then(() => {
-                    if ($state.page <= this.pages) {
-                        $state.loaded();
-                    } else {
-                        $state.completed();
-                    }
-                })
-                .catch((e) => {
-                    console.error(e);
-                    $state.error();
                 });
+                return res.data;
+            };
         },
     },
 };
