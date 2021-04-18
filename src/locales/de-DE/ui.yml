@@ -11,6 +11,7 @@ component:
     unfavoriteAllInGroup: Alle in Gruppe entfavorisieren
     favoriteAllInGroup: Alle in Gruppe favorisieren
   channelInfo:
+    stats: Statistik
     videoCount: '{0} Videos'
     clipCount: '{n} Clips'
     subscriberCount: '{n} Abonnenten'
@@ -21,6 +22,7 @@ component:
     removeFromFavorites: Aus Favoriten entfernen
     unblock: Diesen Kanal entblocken
     block: Inhalt dieses Kanals im Holodex blockieren
+    blocked: Blockiert
   mainNav:
     home: Startseite
     favorites: Favoriten
@@ -34,6 +36,7 @@ component:
     accountSettings: Kontoeinstellungen
     music: Musik
     multiview: Mehrfachansicht
+    points: Pkte.
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Zuschauer'
@@ -49,6 +52,9 @@ component:
   watch:
     streamingFor: Live seit {0}
     nextUpInMugen: Es folgt ...
+    Comments:
+      title: Kommentare
+      all: Alle
   search:
     searchLabel: Suchen
     type:
@@ -90,7 +96,18 @@ component:
       popup: Holodex für iOS installieren
       afterExportIcon: dann 'Zum Startbildschirm hinzufügen
       beforeExportIcon: Tipp
+  media:
+    remove: Entfernen
+  comment:
+    close: Schließen
+    readMore: Mehr anzeigen
 views:
+  channel:
+    video: Videos
+    clips: Clips
+    music: Musik
+    collabs: Collabs
+    about: Kanalinfo
   channels:
     sortOptions:
       subscribers: Abonnenten
@@ -206,8 +223,19 @@ views:
     promptForAction: >-
       Erstelle eine Liste mit deinen Lieblings-VTubern und sieh dir dann ihre neusten Clips und Livestreams auf dieser Seite an.
     manageFavorites: Favoriten verwalten
+    close: Schließen
+    showall: Alle anzeigen
   editor:
     needlogin: Du musst dich einloggen, um Änderungen an Holodex Video- und Song-Metadaten vorzunehmen.
+    changeTopic:
+      title: Stream-Thema ändern
+      info: >-
+        Alle Benutzer können Videos einem Thema zuordnen, aber nur Editoren und Administratoren können das Thema entfernen oder ändern, sobald es gesetzt wurde.
+      button: Speichern (kann 5 Minuten dauern)
+    channelMentions:
+      title: Kanal Erwähnungen (in Entwicklung)
+    sources:
+      title: Quellen/Clips (in Entwicklung)
   login:
     apikeyMsg: >-
       Du kannst den API-Schlüssel verwenden, um die Holodex-API automatisiert abzufragen. Nur ein Schlüssel pro Konto. Nachdem du einen neuen Schlüssel erhalten hast, läuft der alte Schlüssel innerhalb von 24 Stunden ab.
@@ -219,6 +247,10 @@ views:
     apikeyResetConfirm1: Bist du sicher, dass du deinen API-Schlüssel zurücksetzen möchtest?
     apikeyResetConfirm2: Es dauert 0-24 Stunden bis der alte API-Schlüssel abläuft. Wirklich zurücksetzen?
     apikeyResetNvm: Nichts Interessantes ist passiert.
+    with:
+      - Mit Google einloggen
+      - Mit Discord einloggen
+      - Mit Twitter einloggen
   multiview:
     confirmOverwrite: Vorhandenes Layout überschreiben?
     confirmOverwriteYes: Bestätigen
