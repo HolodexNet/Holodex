@@ -106,7 +106,11 @@
                         </v-list>
                     </v-menu>
 
-                    <v-list-item-title :class="['video-card-title ', { 'video-watched': hasWatched }]" :title="title">
+                    <v-list-item-title
+                        :class="['video-card-title ', { 'video-watched': hasWatched }]"
+                        :title="title"
+                        style="user-select: text"
+                    >
                         {{ title }}
                     </v-list-item-title>
                     <v-list-item-subtitle v-if="includeChannel" class="channel-name">
