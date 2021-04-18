@@ -11,6 +11,7 @@ component:
     unfavoriteAllInGroup: Remover todos desse grupo dos favoritos
     favoriteAllInGroup: Adicionar todos desse grupo aos favoritos
   channelInfo:
+    stats: Estatísticas
     videoCount: '{0} Vídeos'
     clipCount: '{n} Clipes'
     subscriberCount: '{n} Inscritos'
@@ -21,6 +22,7 @@ component:
     removeFromFavorites: Remover dos favoritos
     unblock: Desbloquear este canal
     block: Bloquear o conteúdo deste canal no Holodex
+    blocked: Bloqueados
   mainNav:
     home: Início
     favorites: Favoritos
@@ -34,6 +36,7 @@ component:
     accountSettings: Configurações da Conta
     music: Música
     multiview: Multi Stream
+    points: pts
   videoCard:
     clips: '{n} Clipes'
     watching: '{0} assistindo agora'
@@ -49,6 +52,9 @@ component:
   watch:
     streamingFor: Transmissão iniciada há {0}
     nextUpInMugen: Próximo
+    Comments:
+      title: Comentários
+      all: Todos
   search:
     searchLabel: Pesquisar
     type:
@@ -90,7 +96,16 @@ component:
       popup: Instalar Holodex no iOS
       afterExportIcon: ', "Adicionar à Tela de Início"'
       beforeExportIcon: Toque
+  media:
+    remove: Remover
+  comment:
+    close: Fechar
 views:
+  channel:
+    video: Vídeos
+    clips: Clipes
+    music: Músicas
+    about: Informações
   channels:
     sortOptions:
       subscribers: Inscritos
@@ -206,8 +221,15 @@ views:
     promptForAction: >-
       Crie uma lista com seus vtubers favoritos para ver clipes e lives mais recentes nesta página.
     manageFavorites: Gerenciar Favoritos
+    close: Fechar
+    showall: Mostrar todos
   editor:
     needlogin: Você precisará fazer login para editar metadados de vídeo e música do Holodex.
+    changeTopic:
+      title: Alterar tópico da transmissão
+      info: >-
+        Todos os usuários podem atribuir tópico a vídeos, mas somente editores e administradores podem remover e alterar o tópico uma vez definido.
+      button: Salvar (Pode levar 5 minutos para ter efeito)
   login:
     apikeyMsg: >-
       Você pode usar a chave de API para consultar a Holodex API programaticamente. Apenas uma  chave por conta. Gerar uma nova chave fará com que as chaves antigas expirem em até 24 horas.
@@ -219,6 +241,10 @@ views:
     apikeyResetConfirm1: Tem certeza de que deseja resetar sua chave de API?
     apikeyResetConfirm2: Isto fará com que as chaves antigas expirem em até 24 horas. Deseja realmente presseguir?
     apikeyResetNvm: Nada de interessante aconteceu
+    with:
+      - Entrar com o Google
+      - Entrar com Discord
+      - Entrar com o Twitter
   multiview:
     confirmOverwrite: Sobrescrever layout atual?
     confirmOverwriteYes: Confirmar
@@ -301,3 +327,7 @@ about:
         Also to all the subbers for helping the overseas bros! Please check them out!
       - >-
 
+  changelog:
+    title: Mudanças
+  news:
+    title: Novidades
