@@ -209,6 +209,8 @@ views:
     manageFavorites: 管理我的收藏
   editor:
     needlogin: 需要登入Holodex才能編輯影片/音樂的相關資料。
+    changeTopic:
+      title: 更改內容標籤
   login:
     apikeyMsg: >-
       您可以透過API金鑰的方式來存取Holodex API。一個帳號最多只能取得一把金鑰。取得新API金鑰後，舊金鑰將會於0~24小時內過期。
@@ -281,6 +283,13 @@ about:
     quitHolodex: "我是翻譯/剪輯者且我想要將自己的頻道自Holodex資料庫中移除\n"
     quitHolodexContent: >-
       祝您一路順風 :(  如果有任何需要協助的，請讓我們知道。如果您依然想移除自己頻道的相關資料，請至 Holodex 的 Discord伺服器 傳訊息給我們。
+    MugenClips:
+      title: MugenClips 是什麼？
+      contents:
+        - >-
+          MugenClips（InfiniteClips）是一個讓各位用戶<br/>
+          在本站上一起隨機觀看由各烤肉MAN製作的翻譯剪輯影片<br/>
+          同時可以一起聊天的功能（※僅支援英文影片）
     subber:
       contents:
         - >-
