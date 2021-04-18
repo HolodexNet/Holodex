@@ -62,16 +62,6 @@
             </v-btn>
         </div>
         <!-- Infiniteloading observer -->
-        <InfiniteLoad v-if="infiniteLoad" @infinite="emitLoad" :identifier="identifier" />
-
-        <PaginateLoad
-            v-if="paginateLoad"
-            :identifier="identifier"
-            :pages="paginatePages"
-            @paginate="emitLoad"
-            :pageLess="pageLess"
-            :scrollElementId="'t' + randomId"
-        />
     </v-container>
 </template>
 
@@ -85,9 +75,6 @@ export default {
     components: {
         VideoCard,
         ApiErrorMessage,
-        // InfiniteLoading: () => import("vue-infinite-loading"),
-        InfiniteLoad: () => import("@/components/common/InfiniteLoad.vue"),
-        PaginateLoad: () => import("@/components/common/PaginateLoad.vue"),
     },
     data() {
         return {
@@ -130,7 +117,7 @@ export default {
         },
         limitRows: {
             required: false,
-            type: [Number, String],
+            type: Number,
             default: 0,
         },
         activeId: {
@@ -150,40 +137,8 @@ export default {
             type: Boolean,
             default: false,
         },
-        // pagination/infinite key prop
-        identifier: {
-            required: false,
-            default: 0,
-        },
-        // infinite load props
-        infiniteLoad: {
-            required: false,
-            type: Boolean,
-            default: false,
-        },
-        // pagination props
-        paginateLoad: {
-            required: false,
-            type: Boolean,
-            default: false,
-        },
-        paginatePages: {
-            type: Number,
-            default: 1,
-        },
-        pageLess: {
-            type: Boolean,
-            default: false,
-        },
-        ignoreBlock: {
-            type: Boolean,
-            default: false,
-        },
     },
     methods: {
-        emitLoad($state) {
-            this.$emit("load", $state);
-        },
         handleVideoClick(video) {
             this.$emit("videoClicked", video);
         },
@@ -219,29 +174,12 @@ export default {
             if (this.horizontal) return 1;
             return this.cols[this.$vuetify.breakpoint.name];
         },
-        page: {
-            get() {
-                return this.currentPage;
-            },
-            set(val) {
-                this.$emit("changePage", val, this.pageSize);
-            },
-        },
         isMobile() {
             return this.$store.state.isMobile;
         },
         shouldHideThumbnail() {
             return this.$store.state.settings.hideThumbnail || this.hideThumbnail;
         },
-        // calcMinHeight() {
-        //     return (
-        //         !this.horizontal &&
-        //         this.hasExpansion &&
-        //         `min-height: calc(${this.limitRows} * (${this.hideThumbnail ? 0 : 1} * (90vw)/${
-        //             this.colSize
-        //         } * .5625 + 88px));`
-        //     );
-        // },
     },
 };
 </script>
