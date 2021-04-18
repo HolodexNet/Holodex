@@ -61,7 +61,6 @@
                 </v-icon>
             </v-btn>
         </div>
-        <!-- Infiniteloading observer -->
     </v-container>
 </template>
 

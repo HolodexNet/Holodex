@@ -4,9 +4,6 @@ import api from "@/utils/backend-api";
 const initialState = {
     id: null,
     channel: {},
-    videos: [],
-    currentOffset: 0,
-    total: 1,
     isLoading: true,
     hasError: false,
 };
@@ -31,22 +28,6 @@ const actions = {
                 commit("fetchError");
             });
     },
-    fetchNextVideos({ state, commit, rootState }, { type, params }) {
-        return api
-            .channelVideos(state.id, {
-                type,
-                query: {
-                    lang: rootState.settings.clipLangs.join(","),
-                    offset: state.currentOffset,
-                    include: "clips,live_info",
-                    ...params,
-                },
-            })
-            .then(({ data }) => {
-                commit("setTotal", Number(data.total));
-                commit("updateVideos", data.items);
-            });
-    },
 };
 
 const mutations = {
@@ -65,19 +46,6 @@ const mutations = {
     },
     setChannel(state, channel) {
         state.channel = channel;
-    },
-    setTotal(state, count) {
-        state.total = count;
-    },
-    updateVideos(state, videos) {
-        // increment offset
-        state.currentOffset += videos.length;
-        state.videos = state.videos.concat(videos);
-    },
-    resetVideos(state) {
-        state.currentOffset = 0;
-        state.videos = [];
-        state.total = 0;
     },
     resetState(state) {
         Object.assign(state, initialState);

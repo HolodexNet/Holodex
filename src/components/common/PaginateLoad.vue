@@ -6,6 +6,7 @@
                 v-model="page"
                 :length="pages"
                 v-if="!pageLess"
+                :total-visible="TOTAL_PAGINATION_COUNT[$vuetify.breakpoint.name]"
                 v-show="status === STATUSES.READY"
             ></v-pagination>
             <div v-show="status === STATUSES.READY" v-else>
@@ -43,6 +44,13 @@ export default {
             status: 0,
             // lastPage: 1,
             clicked: false,
+            TOTAL_PAGINATION_COUNT: Object.freeze({
+                xs: 5,
+                sm: 8,
+                md: 12,
+                lg: 14,
+                xl: 16,
+            }),
         };
     },
     props: {

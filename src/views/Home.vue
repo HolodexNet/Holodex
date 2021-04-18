@@ -36,18 +36,16 @@
                     </v-btn>
                 </v-btn-toggle>
             </div>
-            <VideoCardList
-                :videos="videos"
-                includeChannel
-                :cols="colSizes"
-                :dense="currentGridSize > 0"
-                :lazy="scrollMode"
-                :identifier="identifier"
-                :paginateLoad="!scrollMode"
+            <generic-list-loader
                 :infiniteLoad="scrollMode"
-                @load="loadNext"
-                pageLess
-            ></VideoCardList>
+                :paginate="!scrollMode"
+                :perPage="this.pageLength"
+                :loadFn="getLoadFn()"
+                v-slot="{ data }"
+                :key="'vl-home-' + recentVideoFilter + identifier"
+            >
+                <VideoCardList :videos="data" includeChannel :cols="colSizes" :dense="currentGridSize > 0" />
+            </generic-list-loader>
         </div>
     </v-container>
 </template>
@@ -57,6 +55,8 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { mapState } from "vuex";
 import reloadable from "@/mixins/reloadable";
+import backendApi from "@/utils/backend-api";
+import GenericListLoader from "@/components/video/GenericListLoader.vue";
 
 export default {
     name: "Home",
@@ -71,10 +71,11 @@ export default {
     components: {
         VideoCardList,
         LoadingOverlay,
+        GenericListLoader,
     },
     data() {
         return {
-            identifier: +new Date(),
+            identifier: Date.now(),
             pageLength: 24,
         };
     },
@@ -91,7 +92,7 @@ export default {
         },
     },
     computed: {
-        ...mapState("home", ["live", "videos", "isLoading", "hasError", "currentOffset"]),
+        ...mapState("home", ["live", "isLoading", "hasError"]),
         recentVideoFilter: {
             get() {
                 return this.$store.state.home.recentVideoFilter;
@@ -126,37 +127,28 @@ export default {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
             this.resetVideos();
-        },
-        resetVideos() {
-            this.$store.commit("home/resetVideos");
-            this.identifier = +new Date();
+            this.identifier = Date.now();
         },
         // called from mixin, simulate reload
         reload() {
             this.init();
         },
-        loadNext($state) {
-            const lastLength = this.videos.length;
-            if (!this.scrollMode) this.$store.commit("home/resetVideos");
-            this.$store
-                .dispatch("home/fetchNextVideos", {
-                    limit: this.pageLength,
-                    ...(!this.scrollMode && { offset: this.pageLength * ($state.page - 1) }),
-                })
-                .then(() => {
-                    if (
-                        (this.scrollMode && this.videos.length === lastLength) ||
-                        (!this.scrollMode && this.videos.length !== this.pageLength)
-                    ) {
-                        $state.completed();
-                        return;
-                    }
-                    $state.loaded();
-                })
-                .catch((e) => {
-                    console.error(e);
-                    $state.error();
+        getLoadFn() {
+            // const self = this;
+            // eslint-disable-next-line func-names
+            return async function (offset, limit) {
+                const res = await backendApi.videos({
+                    status: "past",
+                    ...(this.recentVideoFilter !== "all" && { type: this.recentVideoFilter }),
+                    include: "clips",
+                    org: this.$store.state.currentOrg,
+                    lang: this.$store.state.settings.clipLangs.join(","),
+                    paginated: !this.scrollMode,
+                    limit,
+                    offset,
                 });
+                return res.data;
+            };
         },
     },
 };

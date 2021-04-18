@@ -98,12 +98,6 @@ export default {
             return this.total ? Math.ceil(this.total / this.perPage) : 1;
         },
     },
-    watch: {
-        // eslint-disable-next-line func-names
-        "$route.name": function () {
-            this.resetVideos();
-        },
-    },
     methods: {
         async emitLoad($state) {
             const { page } = $state;
@@ -157,9 +151,6 @@ export default {
                     $state.loaded();
                 }
             }
-        },
-        resetVideos() {
-            this.$store.commit("channel/resetVideos");
         },
     },
 };
