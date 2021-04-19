@@ -61,11 +61,11 @@
                     :messages="$t('views.settings.pushNotificationMsg')"
                     disabled
                 ></v-switch> -->
-                <v-switch
+                <!-- <v-switch
                     v-model="autoplayVideo"
                     :label="$t('views.settings.autoplayVideoLabel')"
                     :messages="$t('views.settings.autoplayVideoMsg')"
-                ></v-switch>
+                ></v-switch> -->
                 <v-switch
                     v-model="scrollMode"
                     :label="$t('views.settings.scrollModeLabel')"
@@ -100,7 +100,7 @@ export default {
         ...syncState("settings", [
             "darkMode",
             "redirectMode",
-            "autoplayVideo",
+            // "autoplayVideo",
             "scrollMode",
             "hideThumbnail",
             "defaultOpenFavorites",
