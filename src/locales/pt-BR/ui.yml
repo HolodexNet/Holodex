@@ -100,6 +100,7 @@ component:
     remove: Remover
   comment:
     close: Fechar
+    readMore: Mostrar mais
 views:
   channel:
     video: Vídeos
@@ -230,6 +231,10 @@ views:
       info: >-
         Todos os usuários podem atribuir tópico a vídeos, mas somente editores e administradores podem remover e alterar o tópico uma vez definido.
       button: Salvar (Pode levar 5 minutos para ter efeito)
+    channelMentions:
+      title: Menções de Canal (em Desenvolvimento)
+    sources:
+      title: Fontes/Clipes (em desenvolvimento)
   login:
     apikeyMsg: >-
       Você pode usar a chave de API para consultar a Holodex API programaticamente. Apenas uma  chave por conta. Gerar uma nova chave fará com que as chaves antigas expirem em até 24 horas.
@@ -306,12 +311,23 @@ about:
     quitHolodex: "Sou um subber e gostaria que meu canal fosse removido do Holodex\\r\n"
     quitHolodexContent: >-
       Estou triste em vê-lo ir :(, por favor me avise se houver qualquer problema com que possamos lhe ajudar. Se você ainda deseja ser removido, por favor nos mande uma mensagem no Discord.
+    favorite:
+      title: O que são os favoritos?
+      disappear:
+        title: A minha lista de favoritos desapareceu / eu não consigo favoritar
+    mobile:
+      title: Existe um aplicativo do Holodex para Android/iOS?
+    MugenClips:
+      title: O que é MugenClips?
     subber:
+      title: Sou um subber e não consigo encontrar meu canal ou clipes no Holodex
       contents:
         - >-
 
         - >-
           , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: Eu tenho feedback/quero contribuir com o projeto
   gdpr: GDPR e meus dados
   gdprContent: >-
     Um cookie do Google Analytics é usado para monitorar páginas visualizadas para nossos fins analíticos. Após o login, associamos o seu nome de usuário e ID de mídia social aos seus favoritos. Estes dados podem incluir seu e-mail (Google), ID do Discord ou ID do Twitter, respectivamente.
