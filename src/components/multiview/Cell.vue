@@ -192,30 +192,17 @@
 
 <script lang="ts">
 import { mdiMessage, mdiResizeBottomRight, mdiArrowLeftCircle } from "@mdi/js";
-// import { getVideoThumbnails } from "@/utils/functions";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat.vue";
 import { mapState, mapGetters } from "vuex";
-// import VideoCardList from "@/components/video/VideoCardList.vue";
-// import { dayjs } from "@/utils/time";
 import CellControl from "./CellControl.vue";
 
-// enum CellType {
-//     Video,
-//     TwitchVideo,
-//     Chat
-// }
-
-// interface CellContent {
-//     type: CellType,
-//     content: any,
-// }
 export default {
     name: "Cell",
     components: {
         TabbedLiveChat,
         // VideoCardList,
         CellControl,
-        VueTwitchPlayer: () => import("vue-twitch-player"),
+        VueTwitchPlayer: () => import("./TwitchPlayer.vue"),
     },
     props: {
         item: {
