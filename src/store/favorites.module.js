@@ -6,10 +6,8 @@ import fdequal from "fast-deep-equal";
 
 const initialState = {
     live: [],
-    videos: [],
     isLoading: true,
     hasError: false,
-    currentOffset: 0,
 
     stagedFavorites: {},
     lastLiveUpdate: 0,
@@ -66,26 +64,7 @@ const actions = {
                 });
         }
         return null;
-    },
-    fetchNextVideos({ state, commit, rootState, dispatch }, params) {
-        return api
-            .favoritesVideos(rootState.userdata.jwt, {
-                offset: state.currentOffset,
-                status: "past",
-                ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
-                include: "clips",
-                lang: rootState.settings.clipLangs.join(","),
-                ...params,
-            })
-            .catch((e) => {
-                console.error(e);
-                dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
-            })
-            .then(({ data }) => {
-                commit("updateVideos", data);
-            });
-    },
-    // eslint-disable-next-line no-unused-vars
+    }, // eslint-disable-next-line no-unused-vars
     updateFavorites: debounce(({ state, commit, dispatch, rootState }) => {
         const operations = Object.keys(state.stagedFavorites).map((key) => {
             return {
@@ -111,7 +90,6 @@ const actions = {
             .finally(() => commit("clearStagedFavorites"));
     }, 2000),
     async resetFavorites({ dispatch, commit, rootState }) {
-        commit("resetVideos");
         commit("resetState");
         if (rootState.userdata && rootState.userdata.jwt) await dispatch("fetchFavorites");
         if (rootState.userdata && rootState.userdata.jwt) await dispatch("fetchLive", { force: true });
@@ -138,15 +116,6 @@ const mutations = {
     },
     setFavorites(state, favorites) {
         state.favorites = favorites;
-    },
-    updateVideos(state, videos) {
-        // increment offset
-        state.currentOffset += videos.length;
-        state.videos = state.videos.concat(videos);
-    },
-    resetVideos(state) {
-        state.currentOffset = 0;
-        state.videos = [];
     },
     resetState(state) {
         // state.hasError = false;

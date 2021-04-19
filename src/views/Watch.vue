@@ -2,9 +2,7 @@
     <div v-if="!isLoading && !hasError" ref="watchFullscreen" style="overflow-y: auto">
         <!-- Mugen info message -->
         <v-alert dense text type="info" dismissible v-model="firstVisitMugen" v-if="isMugen">
-            Welcome to MugenClips! Everyone on this page is seeing the same randomly selected English Hololive clip.
-            Watch along and chat with Hololive fans from across the world. If you skip ahead and want to be re-sync'd
-            with everyone, please refresh the page
+            {{ $t("views.mugen.welcome") }}
         </v-alert>
         <!-- Desktop (md/lg/xl) Layout -->
         <v-container v-if="!$store.state.isMobile" fluid>
@@ -207,9 +205,11 @@ import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 
-import { decodeHTMLEntities } from "@/utils/functions";
+import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff } from "@mdi/js";
+
+Vue.use(VueYouTubeEmbed);
 
 export default {
     name: "Watch",
@@ -230,27 +230,28 @@ export default {
     },
     data() {
         return {
-            theatherMode: false,
             startTime: 0,
             mdiOpenInNew,
             mdiRectangleOutline,
             mdiMessage,
             mdiMessageOff,
 
-            showTL: false,
+            // theatherMode: false,
+
+            // showTL: false,
             showTLFirstTime: false,
             newTL: 0,
 
-            showLiveChat: true,
+            // showLiveChat: true,
 
             fullScreen: false,
         };
     },
-    created() {
-        Vue.use(VueYouTubeEmbed);
-    },
     mounted() {
         this.init();
+        if (this.showTL && !this.showTLFirstTime) {
+            this.showTLFirstTime = true;
+        }
     },
     methods: {
         init() {
@@ -299,6 +300,8 @@ export default {
         toggleTL() {
             // showTLFirstTime will initiate connection
             // showTL toggle will show/hide without terminating connection
+            if (!this.hasLiveTL) return;
+
             if (!this.showTLFirstTime) {
                 this.showTLFirstTime = true;
                 this.showTL = true;
@@ -315,6 +318,7 @@ export default {
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
+        ...syncState("watch", ["showTL", "showLiveChat", "theatherMode"]),
         videoId() {
             return this.$route.params.id || this.$route.query.v;
         },

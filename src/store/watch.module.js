@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import api from "@/utils/backend-api";
+import { createSimpleMutation } from "@/utils/functions";
 
 const initialState = {
     id: null,
@@ -14,7 +15,13 @@ const initialState = {
     // comments: [],
 };
 
-export const state = { ...initialState };
+const persistedState = {
+    showTL: false,
+    showLiveChat: true,
+    theatherMode: false,
+};
+
+export const state = { ...initialState, ...persistedState };
 
 const getters = {};
 
@@ -58,6 +65,7 @@ const mutations = {
     setVideo(state, video) {
         state.video = video;
     },
+    ...createSimpleMutation(["showTL", "showLiveChat", "theatherMode"]),
     // setComments(state, comments) {
     //     state.comments = comments;
     // },

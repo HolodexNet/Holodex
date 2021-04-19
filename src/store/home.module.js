@@ -3,10 +3,8 @@ import api from "@/utils/backend-api";
 
 const initialState = {
     live: [],
-    videos: [],
     isLoading: true,
     hasError: false,
-    currentOffset: 0,
 };
 
 const persistState = {
@@ -37,21 +35,6 @@ const actions = {
                 commit("fetchError");
             });
     },
-    fetchNextVideos({ state, commit, rootState }, params) {
-        return api
-            .videos({
-                offset: state.currentOffset,
-                status: "past",
-                ...(state.recentVideoFilter !== "all" && { type: state.recentVideoFilter }),
-                include: "clips",
-                org: rootState.currentOrg,
-                lang: rootState.settings.clipLangs.join(","),
-                ...params,
-            })
-            .then(({ data }) => {
-                commit("updateVideos", data);
-            });
-    },
 };
 
 const mutations = {
@@ -69,15 +52,6 @@ const mutations = {
     },
     setRecentVideoFilter(state, filter) {
         state.recentVideoFilter = filter;
-    },
-    updateVideos(state, videos) {
-        // increment offset
-        state.currentOffset += videos.length;
-        state.videos = state.videos.concat(videos);
-    },
-    resetVideos(state) {
-        state.currentOffset = 0;
-        state.videos = [];
     },
     resetState(state) {
         Object.assign(state, initialState);

@@ -73,32 +73,37 @@
         </v-card-subtitle>
         <v-divider />
         <v-card-text
-            class="tl-body thin-scroll-bar d-flex flex-column-reverse pa-1 pa-lg-3"
+            class="tl-body thin-scroll-bar d-flex flex-column pa-1 pa-lg-3"
+            ref="tlBody"
             :style="{
                 'font-size': liveTlFontSize + 'px',
             }"
         >
-            <template v-for="(item, index) in tlHistory">
-                <div :key="index">
-                    <div
-                        v-if="index === 0 || index === tlHistory.length - 1 || item.name !== tlHistory[index - 1].name"
-                        class="tl-caption"
-                        :class="{
-                            'primary--text': item.isOwner,
-                            'secondary--text': item.isVerified || item.isModerator,
-                        }"
-                    >
-                        <v-divider class="my-1" />
-                        {{ item.name }}:
+            <transition-group name="fade">
+                <template v-for="(item, index) in tlHistory">
+                    <div :key="index">
+                        <div
+                            v-if="
+                                index === 0 || index === tlHistory.length - 1 || item.name !== tlHistory[index - 1].name
+                            "
+                            class="tl-caption"
+                            :class="{
+                                'primary--text': item.isOwner,
+                                'secondary--text': item.isVerified || item.isModerator,
+                            }"
+                        >
+                            <v-divider class="my-1" />
+                            {{ item.name }}:
+                        </div>
+                        <div>
+                            <span class="tl-caption mr-1" v-if="item.timestamp">
+                                {{ utcToTimestamp(item.timestamp) }}
+                            </span>
+                            <span class="text--primary">{{ item.message }}</span>
+                        </div>
                     </div>
-                    <div>
-                        <span class="tl-caption mr-1" v-if="item.timestamp">
-                            {{ utcToTimestamp(item.timestamp) }}
-                        </span>
-                        <span class="text--primary">{{ item.message }}</span>
-                    </div>
-                </div>
-            </template>
+                </template>
+            </transition-group>
         </v-card-text>
     </v-card>
 </template>
@@ -107,7 +112,7 @@
 import api, { API_BASE_URL } from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
 import { TL_LANGS } from "@/utils/consts";
-import { syncState } from "@/utils/functions";
+import { debounce, syncState } from "@/utils/functions";
 import VueSocketIOExt from "vue-socket.io-extended";
 import { Manager } from "socket.io-client";
 import Vue from "vue";
@@ -212,6 +217,15 @@ export default {
         },
     },
     methods: {
+        // eslint-disable-next-line func-names
+        scrollBottom: debounce(function (force = false) {
+            if (!this.$refs.tlBody) return;
+            if (
+                force ||
+                this.$refs.tlBody.scrollHeight - this.$refs.tlBody.clientHeight - this.$refs.tlBody.scrollTop < 100
+            )
+                this.$refs.tlBody.scrollTo({ top: this.$refs.tlBody.scrollHeight, behavior: "smooth" });
+        }, 100),
         registerListener() {
             const vm = this as any;
             this.$socket.client.on(`${vm.video.id}/${vm.liveTlLang}`, (msg) => {
@@ -224,10 +238,11 @@ export default {
                     // Append title to author name
                     if (msg.isModerator) msg.name = `[Mod] ${msg.name}`;
                     if (msg.isVerified) msg.name = `[Verified] ${msg.name}`;
-                    if (msg.isOwner) msg.name = `[Owner]${msg.name}`;
+                    if (msg.isOwner) msg.name = `[Owner] ${msg.name}`;
 
-                    vm.tlHistory.unshift(msg);
+                    vm.tlHistory.push(msg);
                     vm.$emit("historyLength", vm.tlHistory.length);
+                    this.scrollBottom();
                     return;
                 }
                 switch (msg.type) {
@@ -271,7 +286,8 @@ export default {
 
             // Grab chat history
             api.chatHistory(this.video.id, this.liveTlLang).then(({ data }) => {
-                this.tlHistory = data.reverse();
+                this.tlHistory = data;
+                this.scrollBottom(true);
             });
 
             // Try to join chat room with specified language
@@ -317,5 +333,13 @@ export default {
 .tl-body .tl-caption {
     letter-spacing: 0.0333333333em !important;
     font-size: 0.85em;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 0.4s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
 }
 </style>

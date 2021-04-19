@@ -87,25 +87,25 @@ export default {
             return [
                 {
                     path: `/channel/${this.id}/`,
-                    name: "Videos",
+                    name: `${this.$t("views.channel.video")}`,
                     exact: true,
                 },
                 {
                     path: `/channel/${this.id}/clips`,
-                    name: "Clips",
+                    name: `${this.$t("views.channel.clips")}`,
                     hide: this.channel.type === "subber",
                 },
                 {
                     path: `/channel/${this.id}/music`,
-                    name: "Music",
+                    name: `${this.$t("views.channel.music")}`,
                     hide: this.channel.type === "subber",
                 },
                 {
                     path: `/channel/${this.id}/collabs`,
-                    name: "Collabs",
+                    name: `${this.$t("views.channel.collabs")}`,
                     hide: this.channel.type === "subber",
                 },
-                { path: `/channel/${this.id}/about`, name: "About" },
+                { path: `/channel/${this.id}/about`, name: `${this.$t("views.channel.about")}` },
                 // { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
             ];
         },
@@ -124,7 +124,6 @@ export default {
         init() {
             window.scrollTo(0, 0);
             this.$store.commit("channel/resetState");
-            this.$store.commit("channel/resetVideos");
             this.$store.commit("channel/setId", this.$route.params.id);
             this.$store.dispatch("channel/fetchChannel");
         },
