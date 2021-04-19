@@ -96,6 +96,13 @@ export default {
             },
             set(value) {
                 this.$store.commit("home/setRecentVideoFilter", value);
+                this.identifier = Date.now();
+                this.$router.push({
+                    query: {
+                        ...this.$router.query,
+                        page: undefined,
+                    },
+                });
             },
         },
         scrollMode() {
@@ -130,9 +137,7 @@ export default {
             this.init();
         },
         getLoadFn() {
-            // const self = this;
-            // eslint-disable-next-line func-names
-            return async function (offset, limit) {
+            return async (offset, limit) => {
                 const res = await backendApi.videos({
                     status: "past",
                     ...(this.recentVideoFilter !== "all" && { type: this.recentVideoFilter }),

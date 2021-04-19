@@ -123,6 +123,13 @@ export default {
             },
             set(value) {
                 this.$store.commit("favorites/setRecentVideoFilter", value);
+                this.identifier = Date.now();
+                this.$router.push({
+                    query: {
+                        ...this.$router.query,
+                        page: undefined,
+                    },
+                });
             },
         },
         isLoggedIn() {
@@ -168,9 +175,7 @@ export default {
             this.init();
         },
         getLoadFn() {
-            // const self = this;
-            // eslint-disable-next-line func-names
-            return async function (offset, limit) {
+            return async (offset, limit) => {
                 const res = await backendApi
                     .favoritesVideos(this.$store.state.userdata.jwt, {
                         status: "past",
