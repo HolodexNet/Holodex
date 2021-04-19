@@ -1,4 +1,4 @@
-const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.";
 /**
  * Encodes a layout array and contents to a compact URI
  * @param {{layout, contents}} layout and layout contents
