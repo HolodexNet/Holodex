@@ -6,7 +6,14 @@
             </v-tab>
         </v-tabs>
         <template v-if="activeVideos.length && currentTab >= 0">
+            <iframe
+                :src="twitchChatLink"
+                v-if="activeVideos[currentTab || 0].cellVideoType === 'twitch'"
+                style="width: 100%; height: calc(100% - 32px)"
+            >
+            </iframe>
             <WatchLiveChat
+                v-else
                 :video="activeVideos[currentTab || 0]"
                 style="width: 100%; height: calc(100% - 32px)"
                 :key="'wlc' + activeVideos[currentTab || 0].id"
@@ -74,6 +81,11 @@ export default {
                 obj.currentTab = val;
                 return this.$store.commit("multiview/setLayoutContentById", obj);
             },
+        },
+        twitchChatLink() {
+            return `https://www.twitch.tv/embed/${this.activeVideos[this.currentTab || 0].id}/chat?parent=${
+                window.location.hostname
+            }`;
         },
     },
     watch: {

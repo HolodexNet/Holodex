@@ -256,15 +256,6 @@ export default {
                 if (!open) this.showSelectorForId = -1;
             },
         },
-        exportURL() {
-            const layoutParam = `/${encodeURIComponent(
-                encodeLayout({
-                    layout: this.layout,
-                    contents: this.layoutContent,
-                }),
-            )}`;
-            return `${window.origin}/multiview${layoutParam}`;
-        },
         decodedDesktopPresets() {
             return desktopPresets.map((preset) => {
                 return {
@@ -485,6 +476,15 @@ export default {
         },
         toggleMainNav() {
             return this.$store.commit("setNavDrawer", !this.$store.state.navDrawer);
+        },
+        exportURL() {
+            const layoutParam = `/${encodeURIComponent(
+                encodeLayout({
+                    layout: this.layout,
+                    contents: this.layoutContent,
+                }),
+            )}`;
+            return `${window.origin}/multiview${layoutParam}`;
         },
     },
 };

@@ -99,7 +99,19 @@
                     v-if="cellContent.type === 'video' && cellContent.content.id"
                     :key="'v' + uniqueId"
                 >
+                    <VueTwitchPlayer
+                        v-if="cellContent.content.cellVideoType === 'twitch'"
+                        :channel="cellContent.content.id"
+                        :playsInline="true"
+                        @ready="vidReady"
+                        @ended="pausedMode = true"
+                        @play="vidPlaying({ data: 1 })"
+                        @pause="vidPlaying({ data: 2 })"
+                        @error="pausedMode = true"
+                    >
+                    </VueTwitchPlayer>
                     <youtube
+                        v-else
                         :key="'ytplayer-' + item.i + cellContent.content.id"
                         :video-id="cellContent.content.id"
                         :playerVars="{
@@ -187,20 +199,23 @@ import { mapState, mapGetters } from "vuex";
 // import { dayjs } from "@/utils/time";
 import CellControl from "./CellControl.vue";
 
-// const HIDE_VIDEO_UNDER = {
-//     xs: 26,
-//     sm: 20,
-//     md: 15,
-//     lg: 8,
-//     xl: 6,
-// };
+// enum CellType {
+//     Video,
+//     TwitchVideo,
+//     Chat
+// }
 
+// interface CellContent {
+//     type: CellType,
+//     content: any,
+// }
 export default {
     name: "Cell",
     components: {
         TabbedLiveChat,
         // VideoCardList,
         CellControl,
+        VueTwitchPlayer: () => import("vue-twitch-player"),
     },
     props: {
         item: {
@@ -245,6 +260,9 @@ export default {
         isVideo() {
             return this.cellContent.type === "video";
         },
+        isTwitchVideo() {
+            return this.cellContent.type === "twitchVideo";
+        },
     },
     methods: {
         // getVideoThumbnails,
@@ -263,7 +281,7 @@ export default {
             this.pausedMode = evt.data === 2;
         },
         vidReady(evt) {
-            this.ytPlayer = evt.target;
+            if (evt) this.ytPlayer = evt.target;
         },
         resetCell() {
             this.$store.commit("multiview/deleteLayoutContent", this.item.i);
