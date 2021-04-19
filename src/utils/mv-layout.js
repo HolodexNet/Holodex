@@ -18,17 +18,18 @@ export function encodeLayout({ layout, contents }) {
                 }
             });
 
-            if (!invalid) {
-                if (contents[item.i]) {
-                    const { type, content } = contents[item.i];
-                    if (type === "chat") {
-                        encodedBlock += "chat";
-                    } else if (type === "video") {
-                        encodedBlock += content.id + content.channel.name.split(" ")[0].replace(",", "");
-                    }
+            if (invalid || !contents[item.i]) return;
+            const { type, content, currentTab } = contents[item.i];
+            if (type === "chat") {
+                encodedBlock += `chat${currentTab || 0}`;
+            } else if (type === "video") {
+                if (content.cellVideoType === "twitch") {
+                    encodedBlock += `twitch${content.id}`;
+                } else {
+                    encodedBlock += content.id + content.channel.name.split(" ")[0].replace(",", "");
                 }
-                l.push(encodedBlock);
             }
+            l.push(encodedBlock);
         });
         return l.join(",");
     } catch (e) {
@@ -48,6 +49,8 @@ export function decodeLayout(encodedStr) {
     encodedStr.split(",").forEach((str, index) => {
         const xywh = str.substring(0, 4);
         const idOrChat = str.substring(4, 15);
+        const isChat = idOrChat.substring(0, 4) === "chat";
+        const isTwitch = idOrChat.substring(0, 6) === "twitch";
         const channelName = str.substring(15);
 
         const keys = ["x", "y", "w", "h"];
@@ -60,13 +63,25 @@ export function decodeLayout(encodedStr) {
 
         parsedLayout.push(layoutItem);
 
-        if (idOrChat === "chat") {
+        if (isChat) {
+            const currentTab = idOrChat.length === 5 ? Number(idOrChat[4]) : 0;
             parsedContent[index] = {
                 type: "chat",
+                currentTab,
             };
-        }
-
-        if (idOrChat.length === 11) {
+        } else if (isTwitch) {
+            const twitchChannel = str.substring(10);
+            parsedContent[index] = {
+                type: "video",
+                content: {
+                    id: twitchChannel,
+                    cellVideoType: "twitch",
+                    channel: {
+                        name: twitchChannel,
+                    },
+                },
+            };
+        } else if (idOrChat.length === 11) {
             parsedContent[index] = {
                 type: "video",
                 content: {
