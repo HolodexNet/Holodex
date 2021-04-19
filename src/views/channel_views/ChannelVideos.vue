@@ -59,13 +59,12 @@ export default {
     },
     methods: {
         getLoadFn() {
-            const self = this;
             // eslint-disable-next-line func-names
-            return async function (offset, limit) {
-                const res = await backendApi.channelVideos(self.id, {
-                    type: self.type,
+            return async (offset, limit) => {
+                const res = await backendApi.channelVideos(this.id, {
+                    type: this.type,
                     query: {
-                        lang: self.$store.state.settings.clipLangs.join(","),
+                        lang: this.$store.state.settings.clipLangs.join(","),
                         include: "clips,live_info",
                         limit,
                         offset,
