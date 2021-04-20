@@ -7,9 +7,9 @@
                 :length="pages"
                 v-if="!pageLess"
                 :total-visible="TOTAL_PAGINATION_COUNT[$vuetify.breakpoint.name]"
-                v-show="status === STATUSES.READY"
+                v-show="status === STATUSES.READY || status === STATUSES.COMPLETED"
             ></v-pagination>
-            <div v-show="status === STATUSES.READY" v-else>
+            <div v-show="status === STATUSES.READY || status === STATUSES.COMPLETED" v-else>
                 <v-btn class="ma-2 pr-6" @click="page -= 1" :disabled="page === 1">
                     <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
                     {{ $t("component.paginateLoad.newer") }}
