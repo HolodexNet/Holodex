@@ -208,6 +208,7 @@ views:
       showVerifiedMessages: 検証済みメッセージを表示
       showModeratorMessages: モデレータによるメッセージを表示
       tlFontSize: フォントサイズ
+      tlWindowSize: TL ボックスサイズ (%)、自動で0%に設定されます
       retryBtn: リトライ
       status:
         reconnecting: 再接続中...
@@ -220,6 +221,8 @@ views:
     promptForAction: >-
       お気に入りのライバーリストを作るとそのページでお気に入りライバーの最新動画を確認できます。
     manageFavorites: お気に入りを管理
+    close: 閉じる
+    showall: すべて表示
   editor:
     needlogin: Holodex上の動画を編集または曲情報を変更するにはログインが必要です
   login:
