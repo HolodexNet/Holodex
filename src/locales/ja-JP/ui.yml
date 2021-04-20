@@ -229,6 +229,10 @@ views:
       info: >-
         すべてのユーザーはトピックを動画に設定できますが、一度設定するとエディターと管理者のみトピックを削除および変更できます。
       button: 保存(5分ほどで有効になります)
+    channelMentions:
+      title: Channel メンション(開発中)
+    sources:
+      title: 本編/切り抜き(開発中)
   login:
     apikeyMsg: >-
       APIキーを使用することでプログラムからHolodex APIにクエリを送信することができます。 キーはアカウント毎に一つのみ使用可能で、新しくキーを取得すると過去のキーは24時間以内に失効します。
@@ -240,6 +244,10 @@ views:
     apikeyResetConfirm1: 本当にAPIキーをリセットしてもよろしいですか?
     apikeyResetConfirm2: 以前のAPIキーは24時間以内に失効します。本当にリセットしてもよろしいですか?
     apikeyResetNvm: Nothing interesting happend.
+    with:
+      - Googleでログイン
+      - Discordでログイン
+      - Twitterでログイン
   multiview:
     confirmOverwrite: 既存のレイアウトを上書きしてもよろしいですか？
     confirmOverwriteYes: 確認
@@ -254,6 +262,9 @@ views:
     video:
       selectLive: 配信を選択
       addCustomVideo: 任意の動画を追加
+  mugen:
+    welcome: >-
+      MugenClipsへようこそ！このページでは全員がランダムに選択された英語のHololiv切り抜きを見ています。世界中のHololiveファンと一緒に見て、チャットしましょう。 先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'
@@ -281,7 +292,23 @@ editor:
   exitMode: 編集モードを終了
   enterMode: 動画を編集
 about:
+  quicklinks: クイックリンク
+  discordBtn: ホロデックスDiscord
+  issueTracker: ' Issue管理 / ソースコード'
   faq:
+    title: よくある質問
+    ytchatHeader: Youtubeチャットにログインできません！
+    ytchatContent: >-
+      ブラウザのセキュリティ機能のサードパーティクッキーのブロックを無効にするか、holodex.netとyoutube.comをホワイトリストに追加してサードパーティックキーを許可してください。
+    ytchatFirefox: Firefoxでの設定手順はこちら、他のブラウザの手順でも参考になるかもしれません。
+    autoplayHeader: 自動再生されません！
+    autoplayContent: ご利用中のブラウザでの自動再生を有効化方法についてGoogle検索してください。
+    musicPlayer: モバイルデバイスでは音楽プレーヤーがうまく動きません！
+    musicPlayerContent: >-
+      申し訳ありませんが、スマホ等のモバイル機器かつwebブラウザでのご利用の場合はMusic Playerはサポート対象外です。 <br/>3つの要因があります: 1. Holodexdでは自動再生が必要ですが、モバイル機器では多くの場合自動再生が禁止されています。2. モバイル機器では多くの場合ウェブサイトが裏側で音楽を再生したままにすることが許可されていません。3. 音楽再生のご要望を、我々がお客様の音楽コントロールセンターにシステムレベルで管理や処理をすることは憚られます。
+    videoLinkage: どのぐらい正確に動画をVtuberにリンクすればいいですか？
+    videoLinkageContent: >-
+      全ての情報は動画概要欄から解析されます。Live放送を切り抜きする場合は必ず公式のLive放送とリンクしてください。ファンが作ったコンテンツ(例えばbilibiliから) を切り抜きする場合はその動画に関連する公式のVtuberのYoutubeチャンネルとリンクしてください。どのVtuberのチャンネルともリンクしない場合、Holodexでは全ての切り抜きにリンク先としてHolodexの把握しているVtuberチャンネんるが必要です。そのためリンクの無い切り抜きをholodexで表示することができません。
     subber:
       contents:
         - >-
