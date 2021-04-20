@@ -11,6 +11,7 @@ component:
     unfavoriteAllInGroup: グループをすべてお気に入りから削除
     favoriteAllInGroup: グループをすべてお気に入りに追加
   channelInfo:
+    stats: 統計情報
     videoCount: '{0}本の動画'
     clipCount: '{n}本の切り抜き'
     subscriberCount: '{n}登録者'
