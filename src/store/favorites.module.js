@@ -58,8 +58,16 @@ const actions = {
                     channels: state.favorites.map((f) => f.id).join(","),
                 })
                 .then((res) => {
-                    // console.log(res);
-                    commit("setLive", res);
+                    // filter out collab channels if settings is set
+                    if (!rootState.settings.showFavoritesCollab) {
+                        const favoritesSet = new Set(state.favorites.map((f) => f.id));
+                        commit(
+                            "setLive",
+                            res.filter((video) => favoritesSet.has(video.channel.id)),
+                        );
+                    } else {
+                        commit("setLive", res);
+                    }
                     commit("fetchEnd");
                 })
                 .catch((e) => {
@@ -119,6 +127,9 @@ const mutations = {
     setLive(state, live) {
         state.live = live;
         state.lastLiveUpdate = Date.now();
+    },
+    setLastLiveUpdate(state, time) {
+        state.lastLiveUpdate = time;
     },
     setRecentVideoFilter(state, filter) {
         state.recentVideoFilter = filter;

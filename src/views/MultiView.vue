@@ -74,9 +74,9 @@
                                 dense
                                 hide-details
                                 :class="doneCopy ? 'green lighten-2' : ''"
-                                :value="exportURL"
+                                :value="exportURL()"
                                 :append-icon="mdiClipboardPlusOutline"
-                                @click:append.stop="startCopyToClipboard(exportURL)"
+                                @click:append.stop="startCopyToClipboard(exportURL())"
                                 style="ma-1"
                             ></v-text-field>
                         </v-card-text>
