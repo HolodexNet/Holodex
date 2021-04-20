@@ -3,74 +3,92 @@
         <v-row>
             <v-col>
                 <div class="text-h4">{{ $t("views.settings.title") }}</div>
-                <div class="pt-4">
-                    <v-icon>{{ icons.mdiTranslate }}</v-icon>
-                    Language:
-                </div>
-                <v-radio-group v-model="language" dense fluid>
-                    <!-- <template v-slot:label> </template> -->
-                    <v-radio v-for="l in langs" :key="l.val" :value="l.val">
-                        <template v-slot:label>
+                <div class="settings-group">
+                    <div class="py-2 text-h5">
+                        <v-icon>{{ icons.mdiTranslate }}</v-icon>
+                        Language:
+                    </div>
+                    <v-divider />
+                    <v-select :items="langs" item-value="val" v-model="language">
+                        <template v-slot:item="{ item }">
+                            <!-- {{item}} -->
                             <div>
-                                <span class="primary--text" style="font-weight: 500">{{ l.display }}</span>
-                                <span class="px-2 text--secondary text-caption"> ♡ {{ l.credit }}</span>
+                                <span class="primary--text" style="font-weight: 500">{{ item.display }}</span>
+                                <span class="px-2 text--secondary text-caption"> ♡ {{ item.credit }}</span>
                             </div>
                         </template>
-                    </v-radio>
-                </v-radio-group>
-                <div class="pt-4 mb-0">
-                    <v-icon>{{ mdiFilter }}</v-icon>
-                    {{ $t("views.settings.clipLanguageSelection") }}
+                        <template v-slot:selection="{ item }">
+                            <span class="primary--text" style="font-weight: 500">{{ item.display }}</span>
+                        </template>
+                    </v-select>
+                    <div class="pt-2 mb-0">
+                        <v-icon>{{ mdiFilter }}</v-icon>
+                        {{ $t("views.settings.clipLanguageSelection") }}
+                    </div>
+                    <v-select
+                        v-model="clipLangs"
+                        :items="TL_LANGS"
+                        multiple
+                        chips
+                        :hint="$t('views.settings.clipLanguageSelection')"
+                        persistent-hint
+                    >
+                    </v-select>
                 </div>
-                <v-select
-                    v-model="clipLangs"
-                    :items="TL_LANGS"
-                    multiple
-                    chips
-                    :hint="$t('views.settings.clipLanguageSelection')"
-                    persistent-hint
-                >
-                </v-select>
-                <v-switch
-                    v-model="darkMode"
-                    :label="$t('views.settings.darkModeLabel')"
-                    :messages="$t('views.settings.darkModeMsg')"
-                ></v-switch>
-                <v-switch
-                    v-model="defaultOpenFavorites"
-                    :label="$t('views.settings.defaultFavorites')"
-                    :messages="$t('views.settings.defaultFavoritesMsg')"
-                ></v-switch>
-                <v-switch
-                    v-model="redirectMode"
-                    :label="$t('views.settings.redirectModeLabel')"
-                    :messages="$t('views.settings.redirectModeMsg')"
-                ></v-switch>
-                <v-switch
-                    v-model="useEnName"
-                    :label="$t('views.settings.useEnglishNameLabel')"
-                    :messages="$t('views.settings.useEnglishNameMsg')"
-                ></v-switch>
-                <v-switch
-                    v-model="hideThumbnail"
-                    :label="$t('views.settings.hideVideoThumbnailsLabel')"
-                    :messages="$t('views.settings.hideVideoThumbnailsMsg')"
-                ></v-switch>
-                <!-- <v-switch
-                    :label="$t('views.settings.pushNotificationLabel')"
-                    :messages="$t('views.settings.pushNotificationMsg')"
-                    disabled
-                ></v-switch> -->
-                <!-- <v-switch
-                    v-model="autoplayVideo"
-                    :label="$t('views.settings.autoplayVideoLabel')"
-                    :messages="$t('views.settings.autoplayVideoMsg')"
-                ></v-switch> -->
-                <v-switch
-                    v-model="scrollMode"
-                    :label="$t('views.settings.scrollModeLabel')"
-                    :messages="$t('views.settings.scrollModeMsg')"
-                ></v-switch>
+                <div class="settings-group">
+                    <div class="py-2 text-h5">Site/Navigation</div>
+                    <v-divider />
+                    <v-switch
+                        v-model="darkMode"
+                        :label="$t('views.settings.darkModeLabel')"
+                        :messages="$t('views.settings.darkModeMsg')"
+                    ></v-switch>
+                    <v-switch
+                        v-model="defaultOpenFavorites"
+                        :label="$t('views.settings.defaultFavorites')"
+                        :messages="$t('views.settings.defaultFavoritesMsg')"
+                    ></v-switch>
+                    <v-switch
+                        v-model="redirectMode"
+                        :label="$t('views.settings.redirectModeLabel')"
+                        :messages="$t('views.settings.redirectModeMsg')"
+                    ></v-switch>
+                    <v-switch
+                        v-model="scrollMode"
+                        :label="$t('views.settings.scrollModeLabel')"
+                        :messages="$t('views.settings.scrollModeMsg')"
+                    ></v-switch>
+                </div>
+                <div class="settings-group">
+                    <div class="py-2 text-h5">Video List Settings</div>
+                    <v-divider />
+                    <v-select
+                        class="mt-4"
+                        v-model="currentGridSize"
+                        :items="[
+                            { text: 'Default', value: 0 },
+                            { text: 'Medium', value: 1 },
+                            { text: 'Small', value: 2 },
+                        ]"
+                        label="Thumbnail/Video List Grid Size"
+                        messages="Change thumbnail/video size on Home/Favorites page"
+                    ></v-select>
+                    <v-switch
+                        v-model="showFavoritesCollab"
+                        label="Show Favorites Collab Streams"
+                        messages="Show streams that mention one of your favorited channels, most likely a collab stream"
+                    ></v-switch>
+                    <v-switch
+                        v-model="useEnName"
+                        :label="$t('views.settings.useEnglishNameLabel')"
+                        :messages="$t('views.settings.useEnglishNameMsg')"
+                    ></v-switch>
+                    <v-switch
+                        v-model="hideThumbnail"
+                        :label="$t('views.settings.hideVideoThumbnailsLabel')"
+                        :messages="$t('views.settings.hideVideoThumbnailsMsg')"
+                    ></v-switch>
+                </div>
                 <br />
                 <v-btn @click="resetSettings">
                     {{ $t("views.settings.resetAllSettings") }}
@@ -104,7 +122,16 @@ export default {
             "scrollMode",
             "hideThumbnail",
             "defaultOpenFavorites",
+            "showFavoritesCollab",
         ]),
+        currentGridSize: {
+            get() {
+                return this.$store.state.currentGridSize;
+            },
+            set(val) {
+                this.$store.commit("setCurrentGridSize", val);
+            },
+        },
         useEnName: {
             get() {
                 return this.$store.getters["settings/useEnName"];
@@ -118,6 +145,7 @@ export default {
                 return this.$store.state.settings.lang;
             },
             set(val) {
+                console.log(val);
                 this.$store.commit("settings/setLanguage", val);
             },
         },
@@ -129,6 +157,11 @@ export default {
                 // sort array to increase cache hit rate
                 this.$store.commit("settings/setClipLangs", val.sort());
             },
+        },
+    },
+    watch: {
+        showFavoritesCollab() {
+            this.$store.commit("favorites/setLastLiveUpdate", 0);
         },
     },
     data() {
@@ -146,4 +179,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.settings-group {
+    padding: 16px;
+    border: 1px solid #f06292;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+</style>

@@ -8,17 +8,21 @@ const englishNamePrefs = new Set(["en", "es", "fr", "id", "pt", "de", "ru", "it"
 const lang = getLang(userLanguage);
 
 const initialState = {
+    // Language
     lang: getUILang(userLanguage), // UI lang
     clipLangs: [lang],
+
+    // Site
     darkMode: true,
     defaultOpenFavorites: false,
+
+    // Content
     redirectMode: false,
     autoplayVideo: true,
-    canUseWebP: true,
-    testedWebP: false,
-    nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
-    hideThumbnail: false,
     scrollMode: true,
+    hideThumbnail: false,
+    nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
+    showFavoritesCollab: false,
 
     // Live TL Window Settings
     liveTlStickBottom: false,
@@ -29,6 +33,10 @@ const initialState = {
     liveTlWindowSize: 0, // Default size, otherwise percentage height
 
     blockedChannels: [],
+
+    // Deprecated
+    canUseWebP: true,
+    testedWebP: false,
 };
 
 export const state = { ...initialState };
@@ -83,6 +91,7 @@ const mutations = {
         "liveTlShowVerified",
         "liveTlShowModerator",
         "liveTlWindowSize",
+        "showFavoritesCollab",
     ]),
     resetState(state) {
         Object.assign(state, initialState);
