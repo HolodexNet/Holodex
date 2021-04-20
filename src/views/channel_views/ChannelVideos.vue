@@ -10,7 +10,8 @@
                 lg: 5,
                 xl: 6,
             }"
-            :dense="true"
+            dense
+            useSkeleton
         />
     </generic-list-loader>
 </template>

@@ -167,7 +167,7 @@ export default {
         init(updateFavorites) {
             if (this.favorites.length > 0 && this.isLoggedIn) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
-                this.$store.dispatch("favorites/fetchLive", { minutes: 2 });
+                this.$store.dispatch("favorites/fetchLive", { force: true, minutes: 2 });
                 this.identifier = Date.now();
             }
         },
