@@ -309,6 +309,15 @@ about:
     videoLinkage: どのぐらい正確に動画をVtuberにリンクすればいいですか？
     videoLinkageContent: >-
       全ての情報は動画概要欄から解析されます。Live放送を切り抜きする場合は必ず公式のLive放送とリンクしてください。ファンが作ったコンテンツ(例えばbilibiliから) を切り抜きする場合はその動画に関連する公式のVtuberのYoutubeチャンネルとリンクしてください。どのVtuberのチャンネルともリンクしない場合、Holodexでは全ての切り抜きにリンク先としてHolodexの把握しているVtuberチャンネんるが必要です。そのためリンクの無い切り抜きをholodexで表示することができません。
+    quitHolodex: "私は字幕制作者です。Holodexから私のチャンネルを削除したいです。"
+    quitHolodexContent: >-
+      あなたが出て行ってしまうことは本当に悲しいです(T_T) もし何か私ができることがあれば是非教えてください。その上で尚、削除の意志が堅ければDiscordでメッセージをください。
+    favorite:
+      title: お気に入りって何？
+      disappear:
+        title: お気に入りリストが消えてしまいました/お気に入りに追加できません
+    mobile:
+      title: HolodexのAndroid/iOSアプリ版はありますか?
     subber:
       contents:
         - >-
