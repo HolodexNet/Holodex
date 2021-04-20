@@ -45,7 +45,12 @@ const actions = {
     },
     fetchLive({ state, commit, rootState, dispatch }, { force = false, minutes = 2 }) {
         if (!(rootState.userdata && rootState.userdata.jwt)) return null; // don't update.
-        if (force || !state.lastLiveUpdate || Date.now() - state.lastLiveUpdate > minutes * 60 * 1000) {
+        if (
+            state.hasError ||
+            force ||
+            !state.lastLiveUpdate ||
+            Date.now() - state.lastLiveUpdate > minutes * 60 * 1000
+        ) {
             commit("fetchStart");
             return api
                 .favoritesLive({
@@ -63,6 +68,7 @@ const actions = {
                     commit("fetchError");
                 });
         }
+        commit("resetErrors");
         return null;
     }, // eslint-disable-next-line no-unused-vars
     updateFavorites: debounce(({ state, commit, dispatch, rootState }) => {
@@ -100,12 +106,15 @@ const actions = {
 const mutations = {
     fetchStart(state) {
         state.isLoading = true;
+        state.hasError = false;
     },
     fetchEnd(state) {
         state.isLoading = false;
+        state.hasError = false;
     },
     fetchError(state) {
         state.hasError = true;
+        state.isLoading = false;
     },
     setLive(state, live) {
         state.live = live;
@@ -116,6 +125,10 @@ const mutations = {
     },
     setFavorites(state, favorites) {
         state.favorites = favorites;
+    },
+    resetErrors(state) {
+        state.hasError = false;
+        state.isLoading = false;
     },
     resetState(state) {
         // state.hasError = false;

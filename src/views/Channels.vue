@@ -182,7 +182,7 @@ export default {
                 /* eslint-enable indent */
             },
         },
-        ...mapState("channels", ["channels", "isLoading", "hasError", "currentOffset"]),
+        ...mapState("channels", ["channels"]),
         ...mapState("favorites", ["favorites", "live"]),
         ...mapState("settings", ["blockedChannels"]),
         category: {
