@@ -227,6 +227,13 @@ views:
     showall: Mostrar todo
   editor:
     needlogin: Debes iniciar sesión para poder editar los metadatos de vídeos y canciones de Holodex.
+    changeTopic:
+      title: Cambiar el tema del stream
+      info: >-
+        Cualquier usuario puede asignar un al tema del stream pero sólo los editores y administradores pueden eliminar o modificar el tema una vez establecido.
+      button: Guardar (Puede tardar 5 minutos en que aparezca los cambios)
+    channelMentions:
+      title: Menciones a canales (en desarrollo)
   login:
     apikeyMsg: >-
       Puedes usar la clave para consultar la API de Holodex. Solo puedes tener un clave por cuenta. Si solicitas una nueva clave la antigua caducara en un plazo de 0 a 24 horas.
@@ -238,6 +245,10 @@ views:
     apikeyResetConfirm1: '¿Seguro que quieres reiniciar tu clave de API?'
     apikeyResetConfirm2: La clave de API antigua tardará 0-24 horas en caducar. ¿Estás seguro?
     apikeyResetNvm: No sucedió nada.
+    with:
+      - Iniciar sesión con Google
+      - Iniciar sesión con Discord
+      - Iniciar sesión con Twitter
   multiview:
     confirmOverwrite: '¿Sobrescribir el diseño actual?'
     confirmOverwriteYes: Confirmar
