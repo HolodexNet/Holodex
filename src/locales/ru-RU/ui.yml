@@ -279,6 +279,8 @@ about:
     quitHolodex: "Я саббер, и хочу, чтобы мой канал был удален из Holodex.\n"
     quitHolodexContent: >-
       Нам жаль, что вы уходите :(, пожалуйста, сообщите мне, если есть какая либо проблема, с которой я бы мог вам помочь. Если вы все равно хотите, чтобы ваш канал был удален, отправьте нам сообщение в Discord.
+    MugenClips:
+      title: Что такое MugenClips?
     subber:
       contents:
         - >-
@@ -300,3 +302,7 @@ about:
         Also to all the subbers for helping the overseas bros! Please check them out!
       - >-
 
+  changelog:
+    title: Список изменений
+  news:
+    title: Новости
