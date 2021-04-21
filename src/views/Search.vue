@@ -156,7 +156,7 @@ export default {
             if (x.q !== this.executedQuery && x.q) this.searchVideo();
         },
         // eslint-disable-next-line func-names
-        filter_sort: function () {
+        filter_sort() {
             this.$router.push({
                 query: {
                     ...this.query,
@@ -168,7 +168,7 @@ export default {
             if (this.videos.length > 400) this.searchVideo();
         },
         // eslint-disable-next-line func-names
-        filter_type: function () {
+        filter_type() {
             this.$router.push({
                 query: {
                     ...this.query,
