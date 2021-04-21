@@ -148,7 +148,7 @@
             <v-card>
                 <v-card-title> {{ $t("views.multiview.confirmOverwrite") }} </v-card-title>
                 <v-card-text class="d-flex flex-column justify-center align-center">
-                    <LayoutPreview :layout="layoutPreview" />
+                    <LayoutPreview :layout="layoutPreview.layout" :content="layoutPreview.content" />
                     <v-checkbox
                         v-model="overwriteMerge"
                         :label="`Fill empty cells with current videos`"
@@ -222,7 +222,7 @@ export default {
 
             showPresetSelector: false,
 
-            layoutPreview: [],
+            layoutPreview: {},
         };
     },
     mounted() {
@@ -298,7 +298,7 @@ export default {
                 return;
             }
             // show dialog with confirm or cancel functions
-            this.layoutPreview = layoutWithContent.layout;
+            this.layoutPreview = layoutWithContent;
             this.overwriteConfirm = () => {
                 // hide dialog
                 this.overwriteDialog = false;
