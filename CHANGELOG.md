@@ -120,3 +120,34 @@ Bugfixes:
 - Added ScrollMode setting to switch between infinite scroll loading and page by page navigation
 - Frontend is now open source!
 - Fixed lots of bugs and introduced new ones probably
+
+                    
+                    
+                    
+### 2.0 Holodex [*January 20th, 2021*]
+##### Comprehensive Site Upgrade
+ - Massive upgrade to support over 600+ Vtuber channels and 1000+ clipping channels
+ - Added user accounts to sync favorites across devices
+   - Added support for tracking clippers in a variety of languages, head over to the settings to set the langauges you want to see clips in
+ - Added topics to each list and improved search
+ - New and improved watch page with theather mode and top comments
+   - Laid groundwork for more features in the future, including a new user contributed tagging system, song tracking and more!
+                        
+
+### 1.? Holodex [*November 2nd, 2020*]
+                    
+- Hotfix video duration
+- Added more sorting options and card view to Channels page
+- Added Hololive generation/group name to each Vtuber
+- Added filtering by official/clips for favorites page
+- Added loading screen and errors to all the pages
+- Clicking on the same page on desktop now refreshes the page
+- Inactive vtuber channels are now hidden, but you can still view them through the search bar
+- Add hide live chat button
+- General under the hood improvments
+                    
+
+### 1.? Holodex [*October 20th, 2020*]
+- Added instructions on how to use Holodex like an app
+- Added a <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a>
+
