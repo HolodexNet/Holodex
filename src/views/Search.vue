@@ -1,10 +1,14 @@
 <template>
     <v-container style="height: 100%">
-        <v-alert :v-if="containsTopicAndOrg" color="primary" v-html="$t('views.search.unsupportedQuery')"> </v-alert>
+        <v-row v-if="advancedOpen">
+            <v-col class="offset-xl-1 col-xl-10">
+                <search-form></search-form>
+            </v-col>
+        </v-row>
         <v-row class="justify-end" style="margin-bottom: -10px">
             <v-col sm="4" md="2" class="py-1">
                 <v-select
-                    v-model="filter.sort"
+                    v-model="filter_sort"
                     :items="options.sort"
                     dense
                     :label="$t('views.search.sortByLabel')"
@@ -12,7 +16,7 @@
             </v-col>
             <v-col sm="4" md="2" class="py-1">
                 <v-select
-                    v-model="filter.type"
+                    v-model="filter_type"
                     :items="options.type"
                     dense
                     :label="$t('views.search.typeDropdownLabel')"
@@ -47,6 +51,7 @@ import api from "@/utils/backend-api";
 import { forwardTransformSearchToAPIQuery } from "@/utils/functions";
 import { csv2jsonAsync } from "json-2-csv";
 import isActive from "@/mixins/isActive";
+import SearchForm from "@/components/search/SearchForm.vue";
 
 export default {
     name: "Search",
@@ -56,6 +61,7 @@ export default {
     },
     components: {
         VideoCardList,
+        SearchForm,
     },
     data() {
         return {
@@ -63,11 +69,8 @@ export default {
             loading: false,
             horizontal: false,
             executedQuery: null,
-            containsTopicAndOrg: false,
-            filter: {
-                sort: "newest",
-                type: "all",
-            },
+            filter_sort: "newest",
+            filter_type: "all",
             options: {
                 defaults: {
                     sort: "newest",
@@ -123,12 +126,25 @@ export default {
             return Number(this.$route.query.page) || 1;
         },
         filteredVideos() {
-            const acceptable = this.filter.type === "all" ? ["stream", "clip"] : [this.filter.type];
+            const acceptable = this.filter_type === "all" ? ["stream", "clip"] : [this.filter_type];
             const sorter =
-                this.filter.sort === "oldest"
+                this.filter_sort === "oldest"
                     ? (x, y) => new Date(x.available_at).valueOf() - new Date(y.available_at).valueOf()
                     : (x, y) => new Date(y.available_at).valueOf() - new Date(x.available_at).valueOf();
             return this.videos.filter((v) => acceptable.includes(v.type)).sort(sorter);
+        },
+        advancedOpen: {
+            get() {
+                return this.query.advanced === "true";
+            },
+            set(val) {
+                this.$router.push({
+                    query: {
+                        ...this.query,
+                        advanced: val,
+                    },
+                });
+            },
         },
     },
     watch: {
@@ -140,13 +156,28 @@ export default {
             if (x.q !== this.executedQuery && x.q) this.searchVideo();
         },
         // eslint-disable-next-line func-names
-        "filter.sort": function () {
+        filter_sort() {
+            this.$router.push({
+                query: {
+                    ...this.query,
+                    sort: this.filter_sort,
+                },
+            });
             // do search if the videos returned is too many.
+            // this is because sorting in reverse when the list is > 500 videos may require a new pull.
             if (this.videos.length > 400) this.searchVideo();
         },
         // eslint-disable-next-line func-names
-        "filter.type": function () {
+        filter_type() {
+            this.$router.push({
+                query: {
+                    ...this.query,
+                    type: this.filter_type,
+                },
+            });
             // do search if the videos returned is too many.
+            // this is because if i have more videos than 500 there'd be cutoff,
+            // so getting a new batch of videos would be more data complete.
             if (this.videos.length > 400) this.searchVideo();
         },
     },
@@ -161,13 +192,14 @@ export default {
             this.loading = true;
             this.videos = [];
             const { q } = this.$route.query;
+            if (q.length < 5) return;
             this.executedQuery = q; // save to executed query;
             const parsedQuery = await csv2jsonAsync(q);
             // console.log("PARSED", parsedQuery);
             const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
-                sort: this.filter.sort,
+                sort: this.filter_sort,
                 lang: this.$store.state.settings.clipLangs,
-                target: this.filter.type === "all" ? ["stream", "clip"] : [this.filter.type],
+                target: this.filter_type === "all" ? ["stream", "clip"] : [this.filter_type],
                 conditions: [],
                 topic: [],
                 vch: [],
@@ -175,8 +207,6 @@ export default {
                 comment: [],
             });
             // console.log("SEARCHING", searchQuery);
-            this.containsTopicAndOrg =
-                searchQuery.target.includes("clip") && (searchQuery.topic.length > 0 || searchQuery.org.length > 0);
 
             if (searchQuery.comment.length === 0)
                 api.searchVideo(searchQuery)
@@ -217,8 +247,8 @@ export default {
             });
         },
         syncFilters() {
-            this.filter.sort = this.query.sort ? this.query.sort.toLowerCase() : this.options.defaults.sort;
-            this.filter.type = this.query.type ? this.query.type.toLowerCase() : this.options.defaults.type;
+            this.filter_sort = this.query.sort ? this.query.sort.toLowerCase() : this.options.defaults.sort;
+            this.filter_type = this.query.type ? this.query.type.toLowerCase() : this.options.defaults.type;
         },
     },
 };
