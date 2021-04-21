@@ -23,6 +23,7 @@ export default {
             }),
             status: 0,
             nextPage: 1,
+            firstLoad: true,
         };
     },
     props: {
@@ -41,7 +42,8 @@ export default {
             this.status = this.STATUSES.READY;
         },
         onIntersect(entries, observer, isIntersecting) {
-            if (this.status === this.STATUSES.READY && isIntersecting) this.emitEvent();
+            if (this.status === this.STATUSES.READY && (isIntersecting || this.firstLoad)) this.emitEvent();
+            this.firstLoad = false;
         },
         emitEvent() {
             const self = this;

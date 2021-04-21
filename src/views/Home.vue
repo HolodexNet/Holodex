@@ -41,10 +41,11 @@
                 :paginate="!scrollMode"
                 :perPage="this.pageLength"
                 :loadFn="getLoadFn()"
-                v-slot="{ data }"
+                v-slot="{ data, isLoading }"
                 :key="'vl-home-' + recentVideoFilter + identifier"
             >
                 <VideoCardList :videos="data" includeChannel :cols="colSizes" :dense="currentGridSize > 0" />
+                <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
             </generic-list-loader>
         </div>
     </v-container>
@@ -57,6 +58,7 @@ import { mapState } from "vuex";
 import reloadable from "@/mixins/reloadable";
 import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
+import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 
 export default {
     name: "Home",
@@ -72,6 +74,7 @@ export default {
         VideoCardList,
         LoadingOverlay,
         GenericListLoader,
+        SkeletonCardList,
     },
     data() {
         return {
