@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: 'Es ist ein Fehler beim Abrufen von Inhalten aufgetreten, bitte schau of Twitter '
-    textAfterTwitter: ' oder melde den Fehler über die'
+    textBeforeTwitter: "Es ist ein Fehler beim Abrufen von Inhalten aufgetreten, bitte schau of Twitter "
+    textAfterTwitter: " oder melde den Fehler über die"
     aboutPage: Info-Seite
     afterAboutPageHyperlink: .
   channelList:
@@ -12,9 +12,9 @@ component:
     favoriteAllInGroup: Alle in Gruppe favorisieren
   channelInfo:
     stats: Statistik
-    videoCount: '{0} Videos'
-    clipCount: '{n} Clips'
-    subscriberCount: '{n} Abonnenten'
+    videoCount: "{0} Videos"
+    clipCount: "{n} Clips"
+    subscriberCount: "{n} Abonnenten"
     subscriberNA: Abonnentenzahl nicht verfügbar
     totalViews: Aufrufe insgesamt
   channelSocials:
@@ -38,8 +38,8 @@ component:
     multiview: Mehrfachansicht
     points: Pkte.
   videoCard:
-    clips: '{n} Clips'
-    watching: '{0} Zuschauer'
+    clips: "{n} Clips"
+    watching: "{0} Zuschauer"
     liveNow: Jetzt Live
     edit: Bearbeiten
     copiedToClipboard: Link in die Zwischenablage kopiert.
@@ -61,7 +61,6 @@ component:
       channel: Kanal
       topic: Thema
       org: org
-      titledesc: Titel & Beschreibung
       comments: Kommentare
       videourl: Video-URL
   relatedVideo:
@@ -182,7 +181,7 @@ views:
     scrollModeLabel: Scroll-Modus
     scrollModeMsg: Blättern/Tippen zum Umblättern der Seiten verwenden
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
-    clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
+    clipLanguageSelection: "Clips in diesen Sprachen anzeigen:"
     tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
     defaultFavorites: Standardmäßig Favoriten öffnen
     defaultFavoritesMsg: >-
@@ -271,7 +270,7 @@ views:
 time:
   soon: bald
   diff_future_date: Beginnt {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Hinzufügen
@@ -279,8 +278,8 @@ editor:
     permission: >-
       Du musst 'Editor' oder höher sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
     titles:
-      addSong: 'Song-Metadaten: Neuen Song hinzufügen'
-      songList: 'Songliste : {0}'
+      addSong: "Song-Metadaten: Neuen Song hinzufügen"
+      songList: "Songliste : {0}"
       help: Anleitung
     itunesLookupPlaceholder: (Optional) Suche auf iTunes
     moveRight2s: Nach rechts 2s
@@ -291,7 +290,7 @@ editor:
     originalArtistInput: Originaler Künstler
     testStart: Teste den Start
     startInput: Start
-    endInput: 'Dauer in Sekunden: (end @ {0})'
+    endInput: "Dauer in Sekunden: (end @ {0})"
   exitMode: Bearbeitungsmodus verlassen
   enterMode: Video bearbeiten
 about:
