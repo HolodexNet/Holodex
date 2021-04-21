@@ -2,8 +2,8 @@
 component:
   apiError:
     title: ゴメナソーリー!
-    textBeforeTwitter: 'コンテンツの取得中にエラーが発生しました。Twitter '
-    textAfterTwitter: ' をご確認いただくか、'
+    textBeforeTwitter: "コンテンツの取得中にエラーが発生しました。Twitter "
+    textAfterTwitter: " をご確認いただくか、"
     aboutPage: 詳細ページ
     afterAboutPageHyperlink: からエラーを報告してください。
   channelList:
@@ -12,9 +12,9 @@ component:
     favoriteAllInGroup: グループをすべてお気に入りに追加
   channelInfo:
     stats: 統計情報
-    videoCount: '{0}本の動画'
-    clipCount: '{n}本の切り抜き'
-    subscriberCount: '{n}登録者'
+    videoCount: "{0}本の動画"
+    clipCount: "{n}本の切り抜き"
+    subscriberCount: "{n}登録者"
     subscriberNA: 登録者数は現在利用できません
     totalViews: 累計視聴回数
   channelSocials:
@@ -38,8 +38,8 @@ component:
     multiview: マルチビュー
     points: ポイント
   videoCard:
-    clips: '{n}本の切り抜き'
-    watching: '{0}人視聴中'
+    clips: "{n}本の切り抜き"
+    watching: "{0}人視聴中"
     liveNow: 配信中
     edit: 編集
     copiedToClipboard: リンクをクリップボードにコピーしました
@@ -61,7 +61,6 @@ component:
       channel: チャンネル
       topic: トピック
       org: 組織
-      titledesc: タイトル/概要
       comments: コメント
       videourl: ビデオURL
   relatedVideo:
@@ -180,7 +179,7 @@ views:
     scrollModeLabel: スクロールモード
     scrollModeMsg: スクロール/タップしてページをめくる
     resetAllSettings: すべての設定/データをリセット
-    clipLanguageSelection: '以下の言語の切り抜きを表示:'
+    clipLanguageSelection: "以下の言語の切り抜きを表示:"
     tlLanguageSelection: 次の言語でライブチャットTLを表示する
     defaultFavorites: デフォルトでお気に入りに移動する
     defaultFavoritesMsg: >-
@@ -268,7 +267,7 @@ views:
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: 追加
@@ -276,8 +275,8 @@ editor:
     permission: >-
       すでに登録された曲情報を更新もしくは削除するには「Editor」以上の権限が必要です。 「Editor」権限を新たに取得する場合または「Editor」に曲情報の不備を知らせるには <a class='white--text' href='/about'>discord</a>上で私達に連絡してください。
     titles:
-      addSong: '曲情報:曲を追加'
-      songList: 'セットリスト : {0}'
+      addSong: "曲情報:曲を追加"
+      songList: "セットリスト : {0}"
       help: ヘルプ
     itunesLookupPlaceholder: (任意) iTunesで原曲を検索
     moveRight2s: 2秒進む
@@ -288,7 +287,7 @@ editor:
     originalArtistInput: 原曲の歌手
     testStart: 開始位置を確認
     startInput: 開始位置
-    endInput: '再生時間(秒) ({0}に終了)'
+    endInput: "再生時間(秒) ({0}に終了)"
   exitMode: 編集モードを終了
   enterMode: 動画を編集
 about:
