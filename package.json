@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --modern",
     "lint": "vue-cli-service lint",
+    "changelog": "changelog-to-html --outputDirectoryPath docs",
     "analyze-bundle": "vue-cli-service build --modern --report-json && webpack-bundle-analyzer dist/report.json"
   },
   "workspaces": [
@@ -27,7 +28,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx lint-staged"
+      "pre-commit": "npx lint-staged; npm run changelog"
     }
   },
   "dependencies": {
@@ -86,6 +87,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "babel-loader": "^8.2.2",
+    "changelog-to-html": "^0.6.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-alias": "^1.1.2",
