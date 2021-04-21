@@ -1,8 +1,8 @@
 <template>
     <v-container fluid>
         <template v-if="isLoggedIn && favorites.length > 0">
-            <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
-            <div v-show="!isLoading && !hasError">
+            <LoadingOverlay :isLoading="false" :showError="hasError" />
+            <div v-show="!hasError">
                 <div class="d-flex justify-space-between px-0 pb-3 pt-1 px-sm-3">
                     <div class="text-h6">
                         {{ $t("views.home.liveOrUpcomingHeading") }}
@@ -11,6 +11,7 @@
                         <v-icon>{{ $store.getters.gridIcon }}</v-icon>
                     </v-btn>
                 </div>
+                <SkeletonCardList v-if="isLoading" :cols="colSizes" :limitRows="2" :dense="currentGridSize > 0" />
                 <VideoCardList
                     :videos="sortedLive"
                     includeChannel
@@ -18,6 +19,7 @@
                     :limitRows="2"
                     :cols="colSizes"
                     :dense="currentGridSize > 0"
+                    v-else
                 >
                 </VideoCardList>
                 <v-divider class="my-3" />
