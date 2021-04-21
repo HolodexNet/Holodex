@@ -112,7 +112,7 @@ export const desktopPresets = Object.freeze([
     { layout: "AAIM,AMIM,IAIM,IMIM,QAIM,QMIM", name: "2 x 3", emptyCells: 6 },
     { layout: "AAII,AIII,AQII,IAII,IIII,IQII,QAII,QIII,QQII", name: "3 x 3", emptyCells: 9 },
     {
-        layout: "AAGI,GAHI,NAGI,AIGI,GIHI,NIGI,AQGI,GQHI,NQGI,TAFYchat",
+        layout: "AAGI,GAGI,MAGI,AIGI,GIGI,MIGI,AQGI,GQGI,MQGI,SAGYchat",
         name: "3 x 3 Chat",
     },
 
