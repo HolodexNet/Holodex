@@ -141,6 +141,9 @@ export const config = {
         iconfont: "mdiSvg",
     },
     theme: {
+        options: {
+            customProperties: true,
+        },
         themes: {
             dark: {
                 primary: primaryColor,

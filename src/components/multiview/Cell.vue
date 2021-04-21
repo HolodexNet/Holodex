@@ -59,32 +59,6 @@
             </template>
         </v-sheet>
 
-        <!-- Dragging handles -->
-        <!-- v-show is required. do not change to v-if, because it breaks the youtube frame. -->
-        <div class="mv-handlebars" v-show="pausedMode">
-            <v-icon style="bottom: 5px; right: 5px">
-                {{ mdiResizeBottomRight }}
-            </v-icon>
-            <v-icon style="bottom: 5px; left: 5px; transform: rotate(90deg)">
-                {{ mdiResizeBottomRight }}
-            </v-icon>
-            <v-icon style="top: 5px; left: 5px; transform: rotate(180deg)">
-                {{ mdiResizeBottomRight }}
-            </v-icon>
-            <v-icon style="top: 5px; right: 5px; transform: rotate(270deg)">
-                {{ mdiResizeBottomRight }}
-            </v-icon>
-            <v-icon style="top: calc(50% - 10px); left: 5px; transform: rotate(135deg)">
-                {{ mdiResizeBottomRight }}
-            </v-icon>
-            <v-icon style="top: calc(50% - 10px); right: 5px; transform: rotate(315deg)">
-                {{ mdiResizeBottomRight }}
-            </v-icon>
-            <v-icon style="bottom: 10px; left: calc(50% - 10px); transform: rotate(45deg)">
-                {{ mdiResizeBottomRight }}
-            </v-icon>
-        </div>
-
         <!--=== Video/Chat iFrame based on type ===-->
         <template v-if="cellContent">
             <v-sheet
@@ -191,7 +165,7 @@
 </template>
 
 <script lang="ts">
-import { mdiMessage, mdiResizeBottomRight, mdiArrowLeftCircle } from "@mdi/js";
+import { mdiMessage, mdiArrowLeftCircle } from "@mdi/js";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat.vue";
 import { mapState, mapGetters } from "vuex";
 import CellControl from "./CellControl.vue";
@@ -213,7 +187,6 @@ export default {
     data() {
         return {
             mdiMessage,
-            mdiResizeBottomRight,
             mdiArrowLeftCircle,
             pausedMode: true,
             uniqueId: Date.now(),
