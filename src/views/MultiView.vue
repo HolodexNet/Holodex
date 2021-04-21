@@ -134,7 +134,7 @@
         </grid-layout>
 
         <!-- Video Selector -->
-        <v-dialog v-model="showVideoSelector" width="1000">
+        <v-dialog v-model="showVideoSelector" width="75vw">
             <VideoSelector @videoClicked="handleVideoClicked" />
         </v-dialog>
 

@@ -2,7 +2,7 @@
     <!-- Vertical: -->
     <v-card class="pa-3" v-if="!horizontal">
         <v-row>
-            <v-col cols="12" sm="4" md="2" style="border-right: 1px solid white">
+            <v-col cols="12" sm="3" md="2" style="border-right: 1px solid white">
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
                 <v-select
                     :items="orgList"
@@ -30,7 +30,7 @@
                     </template>
                 </v-list-item-group>
             </v-col>
-            <v-col cols="12" sm="8" md="10" style="max-height: 100%; overflow-y: auto">
+            <v-col cols="12" sm="9" md="10" style="max-height: 100%; overflow-y: auto">
                 <template v-if="selectedOrg === 1">
                     <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
                     <v-text-field
@@ -75,10 +75,17 @@
                     <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
                     <VideoCardList
                         :videos="live"
-                        horizontal
                         @videoClicked="handleVideoClick"
                         disableDefaultClick
                         includeChannel
+                        :cols="{
+                            xs: 1,
+                            sm: 1,
+                            md: 2,
+                            lg: 4,
+                            xl: 5,
+                        }"
+                        dense
                     ></VideoCardList>
                 </template>
             </v-col>
