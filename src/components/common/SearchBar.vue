@@ -27,7 +27,7 @@
         :filter="(a, b) => true"
         return-object
         @keydown.enter="onEnterKeyDown"
-        hide-details
+        hide-details="auto"
     >
         <template v-slot:selection="selection">
             <v-card
@@ -81,7 +81,12 @@
             </div>
         </template>
         <template v-slot:append-outer>
-            <v-icon key="searchbtn" large color="info" @click="commitSearch" v-text="icons.mdiMagnify"></v-icon>
+            <v-btn large class="ml-1 append-btn" @click="commitSearch">
+                <v-icon key="searchbtn" large color="info" v-text="icons.mdiMagnify"></v-icon>
+            </v-btn>
+            <v-btn large class="ml-1 append-btn" @click="goToOrToggleAdvanced">
+                <v-icon key="advanced" large color="info" v-text="mdiFilter"></v-icon>
+            </v-btn>
         </template>
     </v-autocomplete>
 </template>
@@ -147,11 +152,13 @@ export default {
         },
     },
     watch: {
-        async $route(to) {
-            // console.log("UPDATED");
-            if (to.query?.q && this.query.length === 0) {
-                this.query = await csv2jsonAsync(to.query?.q);
-            }
+        "$route.query": {
+            deep: true,
+            async handler({ q }) {
+                if (q) {
+                    this.query = await csv2jsonAsync(q);
+                }
+            },
         },
         // eslint-disable-next-line func-names
         search: debounce(function (val) {
@@ -170,14 +177,7 @@ export default {
                             { type: "none", disabled: true, divider: true, value: "div", text: "div" },
                             { type: "comments", value: `${val}comments`, text: val },
                         ];
-                    this.fromApi = [
-                        ...res.data.map((x) => {
-                            if (!x.text) x.text = x.value;
-                            // x.value = x.text + x.type;
-                            return x;
-                        }),
-                        ...textQueries,
-                    ];
+                    this.fromApi = [...res.data, ...textQueries];
                 })
                 .catch((e) => console.log(e));
         }, 500),
@@ -186,6 +186,10 @@ export default {
         async getAutocomplete(query) {
             this.isLoading = true;
             const res = await api.searchAutocomplete(query);
+            res.data = res.data.map((x) => {
+                if (!x.text) x.text = x.value;
+                return x;
+            });
             this.isLoading = false;
             return res;
         },
@@ -207,8 +211,33 @@ export default {
 
             this.$router.push({
                 path: "/search",
-                query: { q: await json2csvAsync(this.query) },
+                query: {
+                    ...this.$route.query,
+                    q: await json2csvAsync(this.query),
+                },
             });
+        },
+        async goToOrToggleAdvanced() {
+            if (this.$route.name === "search") {
+                // toggle
+                this.$router.push({
+                    path: "/search",
+                    query: {
+                        ...this.$route.query,
+                        q: await json2csvAsync(this.query),
+                        advanced: !(this.$route.query.advanced === "true"),
+                    },
+                });
+            } else {
+                // go to
+                this.$router.push({
+                    path: "/search",
+                    query: {
+                        q: await json2csvAsync(this.query),
+                        advanced: true,
+                    },
+                });
+            }
         },
         addItem(item) {
             // console.log(item);
@@ -255,94 +284,81 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .search-bar {
+    // width management.
     max-width: 670px !important;
-    margin-bottom: -5px;
+    // these two properties prevent the bar from moving 'up'
+    height: 56px;
+    padding-top: 4px !important;
+
+    &.search-bar-small {
+        max-width: 90vw !important;
+    }
+
+    .selected-card {
+        margin: 3px;
+        max-width: 100%;
+        min-width: 80px;
+        overflow: hidden;
+    }
+
+    &.v-input > .v-input__control {
+        height: auto !important;
+        min-height: 47px !important;
+    }
+
+    input {
+        padding-left: 10px !important;
+    }
+
+    &.v-input--dense > .v-input__append-outer {
+        min-height: 47px !important;
+        min-width: 38px;
+        height: 100%;
+        margin: 0 !important;
+        background-color: none;
+        border-radius: inherit;
+
+        .append-btn {
+            min-height: 46px;
+            min-width: 49px;
+            max-width: 49px;
+        }
+    }
+
+    .v-messages.theme--dark.error--text {
+        background-color: rgb(30, 30, 30);
+        font-weight: 600;
+        padding: 2px;
+        border-radius: 2px;
+    }
+
+    .selected-card-type {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        background-color: rgba(100, 100, 100, 0.3);
+        line-height: 1rem;
+    }
+
+    &.v-input .v-input__slot {
+        padding-left: 1px !important;
+        padding-top: 1px !important;
+    }
+
+    & > .v-input__append-outer > .v-input__icon > .v-icon.primary--text {
+        color: white !important;
+    }
+
+    & > .v-input__control > .v-input__slot > .v-select__slot > label {
+        left: 10px !important;
+    }
 }
-.search-bar-small {
-    max-width: 90vw !important;
-}
-.search-bar .selected-card {
-    margin: 3px;
-    max-width: 100%;
-    min-width: 80px;
-    overflow: hidden;
+.v-autocomplete__content.v-menu__content {
+    translate: 0 -4px;
 }
 
-.search-bar.v-input > .v-input__control {
-    height: auto !important;
-    min-height: 47px !important;
-}
-
-.search-bar input {
-    padding-left: 10px !important;
-}
-
-.search-bar.v-input--dense > .v-input__append-outer {
-    /* background-color: #424242; */
-    min-width: 48px;
-    min-height: 47px !important;
-    height: 100%;
-    margin: 0 !important;
-    align-items: center;
-    border-radius: inherit;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.search-bar .v-messages.theme--dark.error--text {
-    background-color: rgb(30, 30, 30);
-    font-weight: 600;
-    padding: 2px;
-    border-radius: 2px;
-}
-
-.search-bar.v-input--dense > .v-input__append-outer {
-    min-width: 38px;
-    /* min-height: 38px; */
-    margin: 0 !important;
-}
-
-.search-bar .selected-card-type {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    background-color: rgba(100, 100, 100, 0.3);
-    line-height: 1rem;
-}
-
-.search-bar.v-input > .v-input__control {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.search-bar.v-input .v-input__slot {
-    padding-left: 1px !important;
-    padding-top: 1px !important;
-}
-
-.search-bar > .v-input__append-outer > .v-input__icon > .v-icon.primary--text {
-    color: white !important;
-}
-.search-bar > .v-input__append-outer {
-    padding-left: 5px;
-    padding-right: 8px;
-}
-.search-bar.theme--light > .v-input__append-outer {
-    background-color: rgb(255, 255, 255);
-}
-.search-bar.theme--dark > .v-input__append-outer {
-    background-color: rgb(66, 66, 66);
-}
-
-.search-bar .search-item {
-    /* max-width: 30vw; */
-}
-
-.search-bar > .v-input__control > .v-input__slot > .v-select__slot > label {
-    left: 10px !important;
-}
 /* .search-bar.theme--light > .v-input__append-outer > .v-input__icon > .v-icon {
     color: black !important;
 } */
