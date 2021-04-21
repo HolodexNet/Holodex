@@ -2,8 +2,8 @@
 component:
   apiError:
     title: '¡Gomenasorry!'
-    textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
-    textAfterTwitter: ' O reporta el error a través de la'
+    textBeforeTwitter: "Ha ocurrido un error recuperando el contenido, por favor revisa Twitter "
+    textAfterTwitter: " O reporta el error a través de la"
     aboutPage: Página de información
     afterAboutPageHyperlink: .
   channelList:
@@ -12,9 +12,9 @@ component:
     favoriteAllInGroup: Añadir todo el grupo a favoritos
   channelInfo:
     stats: Estadísticas
-    videoCount: '{0} vídeos'
-    clipCount: '{n} clips'
-    subscriberCount: '{n} suscriptores'
+    videoCount: "{0} vídeos"
+    clipCount: "{n} clips"
+    subscriberCount: "{n} suscriptores"
     subscriberNA: Número de suscriptores no disponible
     totalViews: Visualizaciones totales
   channelSocials:
@@ -38,8 +38,8 @@ component:
     multiview: Vista múltiple
     points: ptos
   videoCard:
-    clips: '{n} clips'
-    watching: '{0} espectadores'
+    clips: "{n} clips"
+    watching: "{0} espectadores"
     liveNow: En directo
     edit: Editar
     copiedToClipboard: Enlace copiado al portapapeles.
@@ -61,7 +61,6 @@ component:
       channel: canal
       topic: tema
       org: org
-      titledesc: título y descripción
       comments: comentarios
       videourl: enlace
   relatedVideo:
@@ -182,7 +181,7 @@ views:
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Restablecer por defecto todas las opciones
-    clipLanguageSelection: 'Ver clips en estos idiomas:'
+    clipLanguageSelection: "Ver clips en estos idiomas:"
     tlLanguageSelection: Ver traducciones en directo en estos idiomas
     defaultFavorites: Establecer "Favoritos" como página de inicio
     defaultFavoritesMsg: >-
@@ -266,7 +265,7 @@ views:
 time:
   soon: Próximamente
   diff_future_date: Empieza {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Añadir
@@ -274,8 +273,8 @@ editor:
     permission: >-
       Necesitas el rol de «editor» o superior para poder actualizar o borrar canciones existentes. Por favor ponte en contacto con nosotros en <a class='white--text' href='/about'>discord</a> si quieres notificar a los editores sobre problemas/abusos o presentarte para conseguir el rol de editor.
     titles:
-      addSong: 'Metadatos de la canción: Añadir una nueva canción'
-      songList: 'Lista de canciones: {0}'
+      addSong: "Metadatos de la canción: Añadir una nueva canción"
+      songList: "Lista de canciones: {0}"
       help: Guía
     itunesLookupPlaceholder: (Opcional) Buscar en iTunes
     moveRight2s: Mover 2 segundos hacia adelante
@@ -286,7 +285,7 @@ editor:
     originalArtistInput: Artista original
     testStart: Probar comienzo
     startInput: Comienzo
-    endInput: 'Duración en segundos: (acaba en {0})'
+    endInput: "Duración en segundos: (acaba en {0})"
   exitMode: Salir del modo edición
   enterMode: Editar vídeo
 about:
