@@ -46,7 +46,7 @@
                         <v-icon>{{ icons.mdiCheck }}</v-icon>
                     </v-btn>
                 </template>
-                <template v-if="selectedOrg === 2">
+                <template v-else-if="selectedOrg === 2">
                     <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
                     <v-text-field
                         label="Twitch Channel Link"
