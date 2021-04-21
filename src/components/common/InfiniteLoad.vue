@@ -30,7 +30,9 @@ export default {
             default: +new Date(),
         },
     },
-    mounted() {},
+    mounted() {
+        this.emitEvent();
+    },
     watch: {
         identifier() {
             this.reset();

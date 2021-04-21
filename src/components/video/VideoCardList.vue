@@ -10,18 +10,8 @@
                 :key="`${index}-${video.id}`"
                 :class="['video-col', `video-${colSize}`]"
             >
-                <!-- Render skeleton items when data hasn't loaded yet -->
-                <div
-                    style="position: relative; width: 100%; padding-bottom: calc(56.25% + 88px)"
-                    v-if="videos.length === 0 && useSkeleton"
-                >
-                    <v-skeleton-loader
-                        type="image, list-item-avatar-three-line"
-                        style="position: absolute; width: 100%; height: 100%"
-                    ></v-skeleton-loader>
-                </div>
                 <!-- Dont lazy load cards immediately seen -->
-                <v-lazy style="width: 100%" v-else-if="lazy && index > colSize * (limitRows + 1)">
+                <!-- <v-lazy style="width: 100%" v-if="lazy && index > colSize * (limitRows + 1)">
                     <VideoCard
                         :video="video"
                         fluid
@@ -33,13 +23,13 @@
                         :disableDefaultClick="disableDefaultClick"
                         @videoClicked="handleVideoClick"
                         :hideThumbnail="shouldHideThumbnail"
-                    >
-                        <!-- pass slot to each individual video card -->
-                        <template v-slot:action>
+                    > -->
+                <!-- pass slot to each individual video card -->
+                <!-- <template v-slot:action>
                             <slot name="action" :video="video"></slot>
                         </template>
                     </VideoCard>
-                </v-lazy>
+                </v-lazy> -->
                 <VideoCard
                     :video="video"
                     fluid
@@ -51,7 +41,6 @@
                     @videoClicked="handleVideoClick"
                     :disableDefaultClick="disableDefaultClick"
                     :hideThumbnail="shouldHideThumbnail"
-                    v-else
                 >
                     <!-- pass slot to each individual video card -->
                     <template v-slot:action>
@@ -135,22 +124,14 @@ export default {
             type: Boolean,
             default: false,
         },
-        lazy: {
-            type: Boolean,
-            default: false,
-        },
+        // lazy: {
+        //     type: Boolean,
+        //     default: false,
+        // },
         // to be used in conjunction with videoClicked event
         disableDefaultClick: {
             type: Boolean,
             default: false,
-        },
-        useSkeleton: {
-            type: Boolean,
-            default: false,
-        },
-        expectedSize: {
-            type: [Number, String],
-            default: 24,
         },
     },
     methods: {
@@ -172,16 +153,6 @@ export default {
             return this.limitRows > 0 && this.videos.length > this.limitRows * this.colSize;
         },
         processedVideos() {
-            // create skeleton array with expected size to reduce CLS
-            if (this.videos.length === 0 && this.useSkeleton) {
-                const currentTime = new Date();
-                const size = this.limitRows ? this.limitRows * this.colSize : this.expectedSize;
-                return [...new Array(size)].map((el, index) => {
-                    return {
-                        id: +currentTime + index,
-                    };
-                });
-            }
             const blockedChannels = this.$store.getters["settings/blockedChannelIDs"];
             if (this.limitRows <= 0 || this.expanded) {
                 return this.videos.filter((x) => {
@@ -209,7 +180,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .video-col {
     display: flex;
     justify-content: center;
@@ -269,12 +240,5 @@ export default {
     width: 8.33%;
     max-width: 8.33%;
     flex-basis: 8.33%;
-}
-
-::v-deep .v-skeleton-loader.v-skeleton-loader--is-loading {
-    .v-skeleton-loader__image {
-        height: 56.25%;
-        width: 100%;
-    }
 }
 </style>

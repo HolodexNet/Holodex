@@ -1,8 +1,8 @@
 <template>
     <v-container fluid>
         <template v-if="isLoggedIn && favorites.length > 0">
-            <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
-            <div v-show="!isLoading && !hasError">
+            <LoadingOverlay :isLoading="false" :showError="hasError" />
+            <div v-show="!hasError">
                 <div class="d-flex justify-space-between px-0 pb-3 pt-1 px-sm-3">
                     <div class="text-h6">
                         {{ $t("views.home.liveOrUpcomingHeading") }}
@@ -11,6 +11,7 @@
                         <v-icon>{{ $store.getters.gridIcon }}</v-icon>
                     </v-btn>
                 </div>
+                <SkeletonCardList v-if="isLoading" :cols="colSizes" :limitRows="2" :dense="currentGridSize > 0" />
                 <VideoCardList
                     :videos="sortedLive"
                     includeChannel
@@ -18,6 +19,7 @@
                     :limitRows="2"
                     :cols="colSizes"
                     :dense="currentGridSize > 0"
+                    v-else
                 >
                 </VideoCardList>
                 <v-divider class="my-3" />
@@ -43,7 +45,7 @@
                     :paginate="!scrollMode"
                     :perPage="this.pageLength"
                     :loadFn="getLoadFn()"
-                    v-slot="{ data }"
+                    v-slot="{ data, isLoading }"
                     :key="'vl-home-' + recentVideoFilter + identifier"
                 >
                     <VideoCardList
@@ -51,8 +53,8 @@
                         includeChannel
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
-                        :lazy="scrollMode"
                     ></VideoCardList>
+                    <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                 </generic-list-loader>
             </div>
         </template>
@@ -80,6 +82,7 @@ import reloadable from "@/mixins/reloadable";
 import isActive from "@/mixins/isActive";
 import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
+import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 
 export default {
     name: "Favorites",
@@ -96,6 +99,7 @@ export default {
         VideoCardList,
         LoadingOverlay,
         GenericListLoader,
+        SkeletonCardList,
     },
     data() {
         return {

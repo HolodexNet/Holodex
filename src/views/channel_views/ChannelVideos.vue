@@ -1,18 +1,14 @@
 <template>
-    <generic-list-loader paginate :perPage="this.pageLength" :loadFn="getLoadFn()" v-slot="{ data }" :key="id + type">
-        <VideoCardList
-            :videos="data"
-            :includeChannel="hasChannelInfo"
-            :cols="{
-                xs: 1,
-                sm: 3,
-                md: 4,
-                lg: 5,
-                xl: 6,
-            }"
-            dense
-            useSkeleton
-        />
+    <generic-list-loader
+        paginate
+        :perPage="this.pageLength"
+        :loadFn="getLoadFn()"
+        v-slot="{ data, isLoading }"
+        :key="id + type"
+    >
+        <VideoCardList :videos="data" :includeChannel="hasChannelInfo" :cols="cols" dense v-show="!isLoading" />
+        <!-- Render skeleton items when data hasn't loaded yet -->
+        <SkeletonCardList :cols="cols" dense v-if="isLoading" />
     </generic-list-loader>
 </template>
 
@@ -22,17 +18,26 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 import { mapState } from "vuex";
 import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
+import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 
 export default {
     name: "ChannelVideos",
     components: {
         VideoCardList,
         GenericListLoader,
+        SkeletonCardList,
     },
     data() {
         return {
             identifier: +new Date(),
             pageLength: 24,
+            cols: Object.freeze({
+                xs: 1,
+                sm: 3,
+                md: 4,
+                lg: 5,
+                xl: 6,
+            }),
         };
     },
     computed: {
