@@ -321,10 +321,9 @@ export default {
 
         // always pop out nav drawer if it's not watch page or collapsed
         if (
-            this.$route.name !== null &&
-            !this.isWatchPage &&
+            !window.location.pathname.match("^/watch|^/multiview|^/infinite") &&
             !this.isMobile &&
-            this.$vuetify.breakpoint.name !== "md"
+            !this.$vuetify.breakpoint.md
         ) {
             this.navDrawer = true;
         }
