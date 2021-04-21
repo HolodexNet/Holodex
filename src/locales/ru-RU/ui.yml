@@ -22,6 +22,7 @@ component:
     removeFromFavorites: Убрать из избранного
     unblock: Разблокировать этот канал
     block: Блокировать контент этого канала во всех разделах Holodex
+    blocked: Заблокированные
   mainNav:
     home: Главная
     favorites: Избранное
@@ -52,12 +53,14 @@ component:
     nextUpInMugen: Следущее в очереди
     Comments:
       title: Комментарии
+      all: Все
   search:
     searchLabel: Поиск
     type:
       channel: канал
       topic: тема
       org: агентство
+      titledesc: название/описание
       comments: комментарии
       videourl: ссылка на видео
   relatedVideo:
@@ -92,6 +95,11 @@ component:
       popup: Установить Holodex на iOS
       afterExportIcon: затем 'Добавить на домашний экран'
       beforeExportIcon: Нажмите
+  media:
+    remove: Удалить
+  comment:
+    close: Закрыть
+    readMore: Узнать больше
 views:
   channel:
     video: Видео
@@ -213,10 +221,15 @@ views:
     promptForAction: >-
       Создайте список любимых витуберов и вы увидите их новые стримы и клипы с ними на этой странице.
     manageFavorites: Управление избранным
+    close: Закрыть
+    showall: Показать все
   editor:
     needlogin: Вы должны войти в аккаунт для редактирования метаданных видео и песен в Holodex.
     changeTopic:
       title: Изменить тему стрима
+      info: >-
+        Все пользователи могут назначать тему для видео, но только редакторы и администраторы могут удалять и изменять тему после установки.
+      button: Сохранить (Для применения может потребоваться 5 минут)
     sources:
       title: Источники/клипы (в разработке)
   login:
@@ -326,6 +339,7 @@ about:
   feedbackHtml: >-
     Вы можете создать тикет в <a href="https://github.com/RiceCakess/Holodex/issues"> трекере проблем на Github</a> или найти команду Holodex в Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
+    title: Благодарности
     contents:
       - I would like to give big thanks to the
       - team for their work on
