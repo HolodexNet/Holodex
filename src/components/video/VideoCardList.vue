@@ -11,7 +11,7 @@
                 :class="['video-col', `video-${colSize}`]"
             >
                 <!-- Dont lazy load cards immediately seen -->
-                <v-lazy style="width: 100%" v-if="lazy && index > colSize * (limitRows + 1)">
+                <!-- <v-lazy style="width: 100%" v-if="lazy && index > colSize * (limitRows + 1)">
                     <VideoCard
                         :video="video"
                         fluid
@@ -23,13 +23,13 @@
                         :disableDefaultClick="disableDefaultClick"
                         @videoClicked="handleVideoClick"
                         :hideThumbnail="shouldHideThumbnail"
-                    >
-                        <!-- pass slot to each individual video card -->
-                        <template v-slot:action>
+                    > -->
+                <!-- pass slot to each individual video card -->
+                <!-- <template v-slot:action>
                             <slot name="action" :video="video"></slot>
                         </template>
                     </VideoCard>
-                </v-lazy>
+                </v-lazy> -->
                 <VideoCard
                     :video="video"
                     fluid
@@ -41,7 +41,6 @@
                     @videoClicked="handleVideoClick"
                     :disableDefaultClick="disableDefaultClick"
                     :hideThumbnail="shouldHideThumbnail"
-                    v-else
                 >
                     <!-- pass slot to each individual video card -->
                     <template v-slot:action>
@@ -125,10 +124,10 @@ export default {
             type: Boolean,
             default: false,
         },
-        lazy: {
-            type: Boolean,
-            default: false,
-        },
+        // lazy: {
+        //     type: Boolean,
+        //     default: false,
+        // },
         // to be used in conjunction with videoClicked event
         disableDefaultClick: {
             type: Boolean,

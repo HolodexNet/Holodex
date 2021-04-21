@@ -51,7 +51,6 @@
                         includeChannel
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
-                        :lazy="scrollMode"
                     ></VideoCardList>
                     <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                 </generic-list-loader>
