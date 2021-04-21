@@ -1,10 +1,96 @@
 # Holodex Changelog
 
-### 2.2 Holodex [*April 19th, 2021*]
-- stuff
+### 2.6 Holodex [*April 22, 2021*]
+##### New Features
+- Added Twitch support in MultiView. You can add a custom twitch URL to add the stream into MultiViewer. (#175)
+- Added skeleton loaders to make you think the site is loading faster. (#177)
+- Advanced Search tool. (#180)
+- Better changelog (#179)
+- Turn off Video Autoplay across the platform (except for Music & MugenClips). Temporary experiment, it may stay if we think this way is more beneficial for clippers and vtubers. or we may default to Autoplay OFF. The experiment will run for at least two weeks.
+
+##### Patches
+- Easier to resize cells with clear drag zones.
+- Fix Pagination not working on last page of channel.
+- New 3x3 video + 1 chat Multiview layout added.
+
+
+
+### 2.5 Holodex [*April 19, 2021*]
+##### New Features
+- [es-ES] locale added! Thanks D3fau4 & Darkc0m
+- Persist watch settings
+- Rewrote pagination on all video lists (hopefully removing all the - previous bugs, and hopefully not creating new ones)
+##### Bugfixes
+- Fixed Live TL bugs
+
+
+### 2.4.2 Holodex [*April 16, 2021*]
+##### Bugfixes
+Fixed a problem with Scroll Mode on the Favorites page
+
+
+### 2.4.1 Holodex [*April 12, 2021*]
+##### Bugfixes
+Favorites autoupdating, and Multiview overhaul wasn't talking to each other. That's fixed now.
+
+
+### 2.4 Holodex [*April 11th, 2021*]
+##### New Features
+- **Multiview rewritten**.
+   - Pause a video to enter edit mode.
+   - Autolayout feature added.
+- **Favorites auto updates** now, log in to use this feature.
+- Customizable TL. Choose which language you'd like to receive TL in.
+- Easier to manage blacklisted clipper channels
+##### Bugfixes
+- Bugfixes to music feature
+
+
+
+### 2.3.1 Holodex [*April 3rd, 2021*]
+##### Patches
+- **Added channel blacklist feature**
+- Minor UI bugfixes / Usability improvements (#131, 2784a2d, c9d1202)
+- Improved start time input for music labelling (hopefully it makes it a better usable experience)
+- Refactor into typescript
+- Fixed channel page video not updating sometimes
+- fixed scrollbar for firefox on the left hand side...
+- fixed pull for refresh
+
+
+### 2.3 Holodex [*March 30th, 2021*]
+##### New Features
+- #113 Moved Live-Chat TL button into the control bar, it looks SUPER NICE now. Thanks Relix
+- German, Brazillian, Malay and Indonesian TL updates
+
+##### Bugfixes
+- fixed notch problems on installed Holodex apps on first launch (might need a reinstall)
+- fixed multiview adding goes down. now it goes to the right
+- brought back picture in picture continuity @Amelianaire~ Holodex’s Head Maid 
+- fixed some TL issues.
+- TL updates!!!! <3
+- Regularly refreshes Home / Favorites when you navigate to them
+
+
+
+### 2.2 Holodex [*March 29th, 2021*]
+##### New Features
+- **New German Locale**
+- **You can now delete / update your own songs / music entries.**
+- Export to csv now have date (as suggested by a user @Vordox)
+- Localization updates from Mar 26 ~ 29 (THANK YOU TRANSLATORS <3)
+- Open on Youtube setting no longer stops you from being able to watch videos on Holodex
+
+##### Bugfixes:
+- #92 fix past dates not being localized
+- #96 fix music editor zeros
+- #98 fix-channel-video not updating
+- #101 iOS watch page safety area
+- Fixed some click-through issues where clicking a music artist punchout is causing playback
+- Frontend code is now typescript compliant #103 (+build fixes)
 
 ### 2.1 Holodex V2.1 Main Features [*March 26th, 2021*]
-
+##### Comprehensive Site Upgrade
 - Added MultiView functionality, with customizable layouts supporting everything a DD wants. Also works on mobile, if your phone is powerful enough (on some mobile devices and platforms, you can only hear one stream's audio, but can play multiple videos.).
 - Isolated Stream-Translations chat built into Mobile and Desktop views, you can also get Live-TL-esque features on Mobile (and desktop).
 - Massive improvements to mobile experience.
