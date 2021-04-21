@@ -11,6 +11,7 @@ component:
     unfavoriteAllInGroup: 取消收藏本群組所有頻道
     favoriteAllInGroup: 收藏本群組所有頻道
   channelInfo:
+    stats: 統計資料
     videoCount: '{0} 部影片'
     clipCount: '{n} 部剪輯'
     subscriberCount: '{n} 位訂閱者'
@@ -21,6 +22,7 @@ component:
     removeFromFavorites: 取消收藏
     unblock: 取消封鎖此頻道
     block: 在 Holodex 上封鎖此頻道
+    blocked: 已封鎖
   mainNav:
     home: 首頁
     favorites: 我的收藏
@@ -34,6 +36,7 @@ component:
     accountSettings: 帳號設定
     music: 音樂播放
     multiview: 多窗工具
+    points: pts
   videoCard:
     clips: '{n} 部剪輯'
     watching: '{0} 人正在觀看'
@@ -51,6 +54,9 @@ component:
   watch:
     streamingFor: 已實況 {0}
     nextUpInMugen: 下一個剪輯
+    Comments:
+      title: 留言
+      all: 全部
   search:
     searchLabel: 搜尋
     type:
@@ -92,7 +98,18 @@ component:
       popup: 於 iOS 裝置上安裝 Holodex
       afterExportIcon: 然後選擇「加入主畫面」
       beforeExportIcon: 點擊
+  media:
+    remove: 移除
+  comment:
+    close: 關閉
+    readMore: 顯示更多
 views:
+  channel:
+    video: 影片
+    clips: 剪輯
+    music: 音樂
+    collabs: 連動
+    about: 簡介
   channels:
     channelType: { }
     sortOptions:
@@ -210,8 +227,20 @@ views:
     promptForAction: >-
       創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
     manageFavorites: 管理我的收藏
+    close: 關閉
+    showall: 顯示全部
   editor:
     needlogin: 需要登入Holodex才能編輯影片/音樂的相關資料。
+    changeTopic:
+      title: 更改內容標籤
+      info: >-
+        所有使用者都能為影片設定內容標籤<br/>
+        但只有擁有「編輯者」權限的用戶能夠更改/刪除已存在的內容標籤。
+      button: 儲存（可能需要５分鐘才會顯示更新後內容）
+    channelMentions:
+      title: 提及頻道（開發中）
+    sources:
+      title: 實況/剪輯來源（開發中）
   login:
     apikeyMsg: >-
       您可以透過API金鑰的方式來存取Holodex API。一個帳號最多只能取得一把金鑰。取得新API金鑰後，舊金鑰將會於0~24小時內過期。
@@ -223,6 +252,10 @@ views:
     apikeyResetConfirm1: 您確定想要重設您的API金鑰嗎？
     apikeyResetConfirm2: 舊金鑰將會於0~24小時內過期，您確定要重設金鑰嗎？
     apikeyResetNvm: 什麼事情都沒有發生。
+    with:
+      - 使用 Google 帳號登入
+      - 使用 Discord 帳號登入
+      - 使用 Twitter 帳號登入
   multiview:
     confirmOverwrite: 確定覆蓋設定？
     confirmOverwriteYes: 確認
@@ -237,6 +270,9 @@ views:
     video:
       selectLive: 選擇實況
       addCustomVideo: 添加指定YouTube影片
+  mugen:
+    welcome: >-
+      歡迎來到 MugenClips！所有使用者在本頁面都在同時隨機觀看同一段Hololive的英文剪輯！和其他Holo粉絲一起觀看一起聊天吧。如果您手動變更了時間軸但想再次與其他人同步進度的話，請重新整理此頁面。
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
@@ -284,6 +320,48 @@ about:
     quitHolodex: "我是翻譯/剪輯者且我想要將自己的頻道自Holodex資料庫中移除\n"
     quitHolodexContent: >-
       祝您一路順風 :(  如果有任何需要協助的，請讓我們知道。如果您依然想移除自己頻道的相關資料，請至 Holodex 的 Discord伺服器 傳訊息給我們。
+    favorite:
+      title: 我的收藏是什麼？
+      Contents:
+        - >-
+          「我的收藏」是個對於您所關注的Vtuber的最新動態整理功能，只要透過點擊
+        - >-
+          的愛心圖示，即可將特定Vtuber加入我的收藏！目前此功能尚不支援收藏剪輯頻道，但您仍能透過訂閱或是其他方法支持他們！
+      disappear:
+        title: 我的收藏列表消失了 / 我無法新增收藏頻道
+      contents:
+        - >-
+          請確認您已經登入並且進入我的收藏頁面，以觸發強制更新機制。
+    mobile:
+      title: 請問有 Android/iOS 版本的 Holodex 應用程式嗎？
+      content:
+        summary: >-
+          移動裝置上的應用程式版本 Holodex 現正開發中！現在暫時可以使用瀏覽器的「加到主畫面」功能來達成類似效果，我們已經對介面進行過優化，讓其和安裝應用程式的體驗相差無幾！
+        android:
+          - 'Android Chrome：在瀏覽器開啟本站，點擊畫面右上角的三點按鈕'
+          - 然後選擇「加到主畫面」。
+        ios:
+          iOS Safari: >-
+                 
+            - 然後選擇「加入主畫面」。
+    MugenClips:
+      title: MugenClips 是什麼？
+      contents:
+        - >-
+          MugenClips（InfiniteClips）是一個讓各位用戶在本站上一起隨機觀看由各烤肉MAN製作的翻譯剪輯影片，同時可以一起聊天的功能（※僅支援英文影片）
+    subber:
+      title: 我是烤肉/剪輯MAN但我在 Holodex 上找不到自己的頻道/剪輯
+      contents:
+        - >-
+               
+          - 此表單
+        - >-
+          ，我們將會手動將您的頻道加入資料庫。如果您的頻道已經在資料庫裡的話，請確認頻道的影片描述包含正確的 Youtube 實況來源 / 頻道連結。
+    feedback:
+      title: 我想對 Holodex 這個計畫盡一份心力/表達回饋
+      contents:
+        - >-
+          無論是什麼形式的協助或發想我們都歡迎！雖然目前僅有前台部分是開源的，但無論是前台還是後台都有各位能夠幫忙的地方。請至我們的 Discord 伺服器聯絡我們以取得存取後台資源的權限，亦或是直接提出您的想法。
   gdpr: 關於GDPR與我的資料
   gdprContent: >-
     我們僅使用「Google分析」的cookie來追蹤每頁的瀏覽人數並分析資料。當您登入後，我們會將您社群媒體帳號的帳號名稱/ID與網站收藏庫的內容綁定。記錄下的內容可能包括您的電子郵件（Google帳號）、Discord ID，或是Twitter帳號。
@@ -291,3 +369,17 @@ about:
   feedback: 意見回饋/回報錯誤
   feedbackHtml: >-
     您可至 <a href="https://github.com/RiceCakess/Holodex/issues">Github 問題回報頁</a> 創建貼文來回報問題，或是前往我們的Discord伺服器進行回報。<br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    title: 鳴謝
+    contents:
+      - 我想要特別感謝
+      - 團隊所開發的
+      - >-
+        還有所有協助海外觀眾更加了解Vtuber的烤肉MAN們！
+      - >-
+             
+        - 二創條款
+  changelog:
+    title: 更新紀錄
+  news:
+    title: 最新消息
