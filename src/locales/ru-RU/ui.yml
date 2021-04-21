@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Извините!
-    textBeforeTwitter: 'Произошла ошибка при получении данных, пожалуйста, проверьте Twitter '
-    textAfterTwitter: ' или сообщите об ошибке через'
+    textBeforeTwitter: "Произошла ошибка при получении данных, пожалуйста, проверьте Twitter "
+    textAfterTwitter: " или сообщите об ошибке через"
     aboutPage: О сайте
     afterAboutPageHyperlink: .
   channelList:
@@ -12,9 +12,9 @@ component:
     favoriteAllInGroup: Добавить всю группу в избранное
   channelInfo:
     stats: Статистика
-    videoCount: '{0} видео'
-    clipCount: '0 клипов | {n} клип | {n} клипа | {n} клипов'
-    subscriberCount: '0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков'
+    videoCount: "{0} видео"
+    clipCount: "0 клипов | {n} клип | {n} клипа | {n} клипов"
+    subscriberCount: "0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков"
     subscriberNA: Количество подписчиков недоступно
     totalViews: 0 просмотров | {n} просмотр | {n} просмотра | {n} просмотров
   channelSocials:
@@ -22,6 +22,7 @@ component:
     removeFromFavorites: Убрать из избранного
     unblock: Разблокировать этот канал
     block: Блокировать контент этого канала во всех разделах Holodex
+    blocked: Заблокированные
   mainNav:
     home: Главная
     favorites: Избранное
@@ -36,8 +37,8 @@ component:
     music: Музыка
     multiview: Мультипросмотр
   videoCard:
-    clips: '0 клипов | {n} клип | {n} клипа | {n} клипов'
-    watching: '{0} смотрят'
+    clips: "0 клипов | {n} клип | {n} клипа | {n} клипов"
+    watching: "{0} смотрят"
     liveNow: LIVE
     edit: Изменить
     copiedToClipboard: Скопировано в буфер обмена.
@@ -52,13 +53,14 @@ component:
     nextUpInMugen: Следущее в очереди
     Comments:
       title: Комментарии
+      all: Все
   search:
     searchLabel: Поиск
     type:
       channel: канал
       topic: тема
       org: агентство
-      titledesc: название и описание
+      titledesc: название/описание
       comments: комментарии
       videourl: ссылка на видео
   relatedVideo:
@@ -93,6 +95,11 @@ component:
       popup: Установить Holodex на iOS
       afterExportIcon: затем 'Добавить на домашний экран'
       beforeExportIcon: Нажмите
+  media:
+    remove: Удалить
+  comment:
+    close: Закрыть
+    readMore: Узнать больше
 views:
   channel:
     video: Видео
@@ -174,7 +181,7 @@ views:
     scrollModeLabel: Режим прокрутки
     scrollModeMsg: Используйте прокрутку для переворачивания страниц
     resetAllSettings: Сбросить все настройки/данные
-    clipLanguageSelection: 'Посмотрите клипы на этих языках:'
+    clipLanguageSelection: "Посмотрите клипы на этих языках:"
     tlLanguageSelection: Языки для перевода трансляций
     defaultFavorites: Открывать "Избранное" по умолчанию
     defaultFavoritesMsg: >-
@@ -214,10 +221,19 @@ views:
     promptForAction: >-
       Создайте список любимых витуберов и вы увидите их новые стримы и клипы с ними на этой странице.
     manageFavorites: Управление избранным
+    close: Закрыть
+    showall: Показать все
   editor:
     needlogin: Вы должны войти в аккаунт для редактирования метаданных видео и песен в Holodex.
     changeTopic:
       title: Изменить тему стрима
+      info: >-
+        Все пользователи могут назначать тему для видео, но только редакторы и администраторы могут удалять и изменять тему после установки.
+      button: Сохранить (Для применения может потребоваться 5 минут)
+    channelMentions:
+      title: Упомянутые каналы (в разработке)
+    sources:
+      title: Источники/клипы (в разработке)
   login:
     apikeyMsg: >-
       Вы можете использовать API ключ для программного доступа к Holodex API. Только один ключ на аккаунт. После получения нового ключа, старый ключ перестанет действовать через 0-24 часа.
@@ -253,7 +269,7 @@ views:
 time:
   soon: Скоро
   diff_future_date: Начнется {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Добавить
@@ -261,8 +277,8 @@ editor:
     permission: >-
       Вы должны быть пользователем уровня 'Редактор' или выше для обновления или удаления имеющихся песен. Пожалуйста, свяжитесь с нами в <a class='white--text' href='/about'>discord</a> чтобы оповестить редакторов о проблемах / злоупотреблениях, или для подачи заявки на статус редактора.
     titles:
-      addSong: 'Метаданные песни: Добавить новую песню'
-      songList: 'Список песен : {0}'
+      addSong: "Метаданные песни: Добавить новую песню"
+      songList: "Список песен : {0}"
       help: Гайд
     itunesLookupPlaceholder: (Опционально) Найти на iTunes
     moveRight2s: Сдвинуть вправо на 2 сек.
@@ -273,7 +289,7 @@ editor:
     originalArtistInput: Оригинальный артист
     testStart: Протестировать начало
     startInput: Начало
-    endInput: 'Длительность в секундах: (конец @ {0})'
+    endInput: "Длительность в секундах: (конец @ {0})"
   exitMode: Выйти из режима редактирования
   enterMode: Редактировать видео
 about:
@@ -297,16 +313,26 @@ about:
     quitHolodex: "Я саббер, и хочу, чтобы мой канал был удален из Holodex.\n"
     quitHolodexContent: >-
       Нам жаль, что вы уходите :(, пожалуйста, сообщите мне, если есть какая либо проблема, с которой я бы мог вам помочь. Если вы все равно хотите, чтобы ваш канал был удален, отправьте нам сообщение в Discord.
+    favorite:
+      title: Что такое Избранное?
+      disappear:
+        title: Мой список избранных исчез / Я не могу добавить в избранное
     mobile:
       title: Есть ли приложение Holodex для Android/iOS?
+      content:
+        summary: >-
+          Мы работаем над этим! Пока, пожалуйста, используйте функцию "Добавить на главный экран" в вашем браузере. Мы многое настраивали, чтобы сайт работал как приложение
     MugenClips:
       title: Что такое MugenClips?
     subber:
+      title: Я саббер и не могу найти мой канал или клипы на Holodex
       contents:
         - >-
 
         - >-
           , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: У меня есть отзыв/желание внести свой вклад в этот проект
   gdpr: GDPR и мои данные
   gdprContent: >-
     Куки Google Analytics используются для отслеживания просмотров страниц в наших аналитических целях. После входа мы свяжем имя пользователя и ID с избранным. Эти данные могут включать ваш адрес электронной почты (для Google), Discord ID или имя пользователя в Twitter соответственно.
@@ -315,6 +341,7 @@ about:
   feedbackHtml: >-
     Вы можете создать тикет в <a href="https://github.com/RiceCakess/Holodex/issues"> трекере проблем на Github</a> или найти команду Holodex в Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
+    title: Благодарности
     contents:
       - I would like to give big thanks to the
       - team for their work on
@@ -323,6 +350,6 @@ about:
       - >-
 
   changelog:
-    title: Список изменений
+    title: Изменения
   news:
     title: Новости

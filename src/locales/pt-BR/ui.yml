@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: 'Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter'
-    textAfterTwitter: ' ou relate o erro por meio da '
+    textBeforeTwitter: "Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter"
+    textAfterTwitter: " ou relate o erro por meio da "
     aboutPage: página de Informações
     afterAboutPageHyperlink: .
   channelList:
@@ -12,9 +12,9 @@ component:
     favoriteAllInGroup: Adicionar todos desse grupo aos favoritos
   channelInfo:
     stats: Estatísticas
-    videoCount: '{0} Vídeos'
-    clipCount: '{n} Clipes'
-    subscriberCount: '{n} Inscritos'
+    videoCount: "{0} Vídeos"
+    clipCount: "{n} Clipes"
+    subscriberCount: "{n} Inscritos"
     subscriberNA: Número de inscritos indisponível
     totalViews: Total de Visualizações
   channelSocials:
@@ -38,8 +38,8 @@ component:
     multiview: Multi Stream
     points: pts
   videoCard:
-    clips: '{n} Clipes'
-    watching: '{0} assistindo agora'
+    clips: "{n} Clipes"
+    watching: "{0} assistindo agora"
     liveNow: Ao Vivo
     edit: Editar
     copiedToClipboard: Link copiado para a área de transferência.
@@ -61,7 +61,6 @@ component:
       channel: Canal
       topic: Tópico
       org: Org
-      titledesc: Título e Desc
       comments: Comentários
       videourl: URL de Vídeo
   relatedVideo:
@@ -181,7 +180,7 @@ views:
     scrollModeLabel: Modo de Rolagem
     scrollModeMsg: Use rolar/tocar para navegar nas páginas
     resetAllSettings: Redefinir todas as configurações/dados
-    clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
+    clipLanguageSelection: "Mostrar clipes nestes idiomas:"
     tlLanguageSelection: Ver Traduções no Chat nestes idiomas
     defaultFavorites: Abrir Favoritos por Padrão
     defaultFavoritesMsg: >-
@@ -267,7 +266,7 @@ views:
 time:
   soon: em breve
   diff_future_date: Ao Vivo {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Adicionar
@@ -275,8 +274,8 @@ editor:
     permission: >-
       Você precisa ser um usuário com título de "Editor" ou superior para atualizar ou excluir  músicas existente. Use nosso <a class='white--text' href='/about'>discord</a> para notificar os editores sobre problemas ou abusos, ou candidate-se para se tornar um editor.
     titles:
-      addSong: 'Metadados de Música: Adicionar uma nova Música'
-      songList: 'Lista de Músicas: {0}'
+      addSong: "Metadados de Música: Adicionar uma nova Música"
+      songList: "Lista de Músicas: {0}"
       help: Guia
     itunesLookupPlaceholder: (Opcional) Procurar no iTunes
     moveRight2s: Avançar 2 segundos
@@ -287,7 +286,7 @@ editor:
     originalArtistInput: Artista Original
     testStart: Testar o inicio
     startInput: Iniciar
-    endInput: 'Duração em segundos: (end @ {0})'
+    endInput: "Duração em segundos: (end @ {0})"
   exitMode: Sair do Modo de Edição
   enterMode: Editar Vídeo
 about:
