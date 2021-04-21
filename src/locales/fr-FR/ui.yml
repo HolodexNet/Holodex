@@ -132,3 +132,19 @@ views:
 time:
   soon: Bientôt
   diff_future_date: Commence {0} ({1})
+about:
+  faq:
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+

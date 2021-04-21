@@ -8,14 +8,13 @@
             <div
                 class="justify-start d-flex mv-toolbar-btn align-center thin-scroll-bar"
                 style="overflow-x: auto; overflow-y: hidden"
-                v-if="!$vuetify.breakpoint.xs"
             >
-                <VideoSelector horizontal @videoClicked="handleToolbarClick" />
-            </div>
-            <!-- Single Button video selector for xs displays -->
-            <div v-else>
-                <v-btn @click="handleToolbarShowSelector" icon>
-                    <v-icon size="30" style="border-radius: 0">{{ mdiCardPlus }}</v-icon>
+                <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
+                <!-- Single Button video selector for xs displays -->
+                <v-btn @click="handleToolbarShowSelector" icon large>
+                    <v-icon style="border-radius: 0 position: relative; margin-right: 3px; cursor: pointer" large>
+                        {{ mdiCardPlus }}
+                    </v-icon>
                 </v-btn>
             </div>
             <!-- Right side buttons -->
@@ -74,9 +73,9 @@
                                 dense
                                 hide-details
                                 :class="doneCopy ? 'green lighten-2' : ''"
-                                :value="exportURL()"
+                                :value="exportURL"
                                 :append-icon="mdiClipboardPlusOutline"
-                                @click:append.stop="startCopyToClipboard(exportURL())"
+                                @click:append.stop="startCopyToClipboard(exportURL)"
                                 style="ma-1"
                             ></v-text-field>
                         </v-card-text>
@@ -135,7 +134,7 @@
         </grid-layout>
 
         <!-- Video Selector -->
-        <v-dialog v-model="showVideoSelector" width="1000">
+        <v-dialog v-model="showVideoSelector" width="75vw">
             <VideoSelector @videoClicked="handleVideoClicked" />
         </v-dialog>
 
@@ -149,7 +148,7 @@
             <v-card>
                 <v-card-title> {{ $t("views.multiview.confirmOverwrite") }} </v-card-title>
                 <v-card-text class="d-flex flex-column justify-center align-center">
-                    <LayoutPreview :layout="layoutPreview" />
+                    <LayoutPreview :layout="layoutPreview.layout" :content="layoutPreview.content" />
                     <v-checkbox
                         v-model="overwriteMerge"
                         :label="`Fill empty cells with current videos`"
@@ -185,7 +184,7 @@ import {
     mdiCardPlus,
 } from "@mdi/js";
 import copyToClipboard from "@/mixins/copyToClipboard";
-import { encodeLayout, decodeLayout, desktopPresets } from "@/utils/mv-layout";
+import { encodeLayout, decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-layout";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
 import LayoutPreview from "@/components/multiview/LayoutPreview.vue";
 import Cell from "@/components/multiview/Cell.vue";
@@ -223,7 +222,7 @@ export default {
 
             showPresetSelector: false,
 
-            layoutPreview: [],
+            layoutPreview: {},
         };
     },
     mounted() {
@@ -264,6 +263,27 @@ export default {
                 };
             });
         },
+        decodedMobilePresets() {
+            return mobilePresets.map((preset) => {
+                return {
+                    ...preset,
+                    ...decodeLayout(preset.layout),
+                };
+            });
+        },
+        exportURL() {
+            if (!this.shareDialog) return "";
+            const layoutParam = `/${encodeURIComponent(
+                encodeLayout({
+                    layout: this.layout,
+                    contents: this.layoutContent,
+                }),
+            )}`;
+            return `${window.origin}/multiview${layoutParam}`;
+        },
+        isMobile() {
+            return this.$store.state.isMobile;
+        },
     },
     methods: {
         // prompt user for layout change
@@ -278,7 +298,7 @@ export default {
                 return;
             }
             // show dialog with confirm or cancel functions
-            this.layoutPreview = layoutWithContent.layout;
+            this.layoutPreview = layoutWithContent;
             this.overwriteConfirm = () => {
                 // hide dialog
                 this.overwriteDialog = false;
@@ -305,6 +325,11 @@ export default {
             }, 200);
         },
         handleVideoClicked(video) {
+            if (this.showSelectorForId < -1) {
+                this.handleToolbarClick(video);
+                this.showSelectorForId = -1;
+                return;
+            }
             // set video for a specific cell id
             this.$store.commit("multiview/setLayoutContentById", {
                 id: this.showSelectorForId,
@@ -316,20 +341,16 @@ export default {
             this.showSelectorForId = -1;
         },
         handleToolbarShowSelector() {
-            // find an empty cell and show selector for it
-            const emptyCell = this.findEmptyCell();
-            if (emptyCell) {
-                this.showSelectorForId = emptyCell.i;
-            }
+            // Show selector and pass video to auto layout handler
+            this.showSelectorForId = -2;
         },
         handleToolbarClick(video) {
             const hasEmptyCell = this.findEmptyCell();
             // more cells needed, increment to next preset with space
             if (!hasEmptyCell) {
                 // find layout with space for one more new video
-                const newLayout = this.decodedDesktopPresets.find(
-                    (preset) => preset.emptyCells >= this.activeVideos.length + 1,
-                );
+                const presets = this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets;
+                const newLayout = presets.find((preset) => preset.emptyCells >= this.activeVideos.length + 1);
 
                 // found new layout
                 if (newLayout) {
@@ -363,7 +384,8 @@ export default {
         },
         isPreset(currentLayout) {
             // filter out any presets that dont match the amount of cells
-            const toCompare = this.decodedDesktopPresets.filter((preset) => {
+            let toCompare = this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets;
+            toCompare = toCompare.filter((preset) => {
                 return preset.emptyCells && preset.layout.length === currentLayout.length;
             });
 
@@ -476,15 +498,6 @@ export default {
         },
         toggleMainNav() {
             return this.$store.commit("setNavDrawer", !this.$store.state.navDrawer);
-        },
-        exportURL() {
-            const layoutParam = `/${encodeURIComponent(
-                encodeLayout({
-                    layout: this.layout,
-                    contents: this.layoutContent,
-                }),
-            )}`;
-            return `${window.origin}/multiview${layoutParam}`;
         },
     },
 };

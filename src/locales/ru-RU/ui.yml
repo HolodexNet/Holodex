@@ -11,6 +11,7 @@ component:
     unfavoriteAllInGroup: Убрать всю группу из избранного
     favoriteAllInGroup: Добавить всю группу в избранное
   channelInfo:
+    stats: Статистика
     videoCount: '{0} видео'
     clipCount: '0 клипов | {n} клип | {n} клипа | {n} клипов'
     subscriberCount: '0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков'
@@ -49,6 +50,8 @@ component:
   watch:
     streamingFor: Стримит {0}
     nextUpInMugen: Следущее в очереди
+    Comments:
+      title: Комментарии
   search:
     searchLabel: Поиск
     type:
@@ -91,6 +94,12 @@ component:
       afterExportIcon: затем 'Добавить на домашний экран'
       beforeExportIcon: Нажмите
 views:
+  channel:
+    video: Видео
+    clips: Клипы
+    music: Музыка
+    collabs: Коллабы
+    about: О проекте
   channels:
     sortOptions:
       subscribers: Подписчики
@@ -207,6 +216,8 @@ views:
     manageFavorites: Управление избранным
   editor:
     needlogin: Вы должны войти в аккаунт для редактирования метаданных видео и песен в Holodex.
+    changeTopic:
+      title: Изменить тему стрима
   login:
     apikeyMsg: >-
       Вы можете использовать API ключ для программного доступа к Holodex API. Только один ключ на аккаунт. После получения нового ключа, старый ключ перестанет действовать через 0-24 часа.
@@ -218,6 +229,10 @@ views:
     apikeyResetConfirm1: Вы уверены, что хотите сбросить свой API ключ?
     apikeyResetConfirm2: Старый API ключ перестанет работать через 0-24 часа. Точно сбросить?
     apikeyResetNvm: Ничего интересного не случилось.
+    with:
+      - Войти через Google
+      - Войти через Discord
+      - Войти через Twitter
   multiview:
     confirmOverwrite: Перезаписать текущий макет?
     confirmOverwriteYes: Подтвердить
@@ -232,6 +247,9 @@ views:
     video:
       selectLive: Выбрать трансляцию
       addCustomVideo: Добавить своё видео
+  mugen:
+    welcome: >-
+      Добро пожаловать в MugenClips! Все на этой странице видят один и тот же случайно отобранный клип Hololive на английском языке. Смотрите и общайтесь с фанатами Hololive со всего мира. Если вы пропустите видео, а затем захотите быть повторно синхронизированы со всеми, пожалуйста, обновите страницу.
 time:
   soon: Скоро
   diff_future_date: Начнется {0} ({1})
@@ -279,6 +297,16 @@ about:
     quitHolodex: "Я саббер, и хочу, чтобы мой канал был удален из Holodex.\n"
     quitHolodexContent: >-
       Нам жаль, что вы уходите :(, пожалуйста, сообщите мне, если есть какая либо проблема, с которой я бы мог вам помочь. Если вы все равно хотите, чтобы ваш канал был удален, отправьте нам сообщение в Discord.
+    mobile:
+      title: Есть ли приложение Holodex для Android/iOS?
+    MugenClips:
+      title: Что такое MugenClips?
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   gdpr: GDPR и мои данные
   gdprContent: >-
     Куки Google Analytics используются для отслеживания просмотров страниц в наших аналитических целях. После входа мы свяжем имя пользователя и ID с избранным. Эти данные могут включать ваш адрес электронной почты (для Google), Discord ID или имя пользователя в Twitter соответственно.
@@ -286,3 +314,15 @@ about:
   feedback: Отзывы/Сообщения об ошибках
   feedbackHtml: >-
     Вы можете создать тикет в <a href="https://github.com/RiceCakess/Holodex/issues"> трекере проблем на Github</a> или найти команду Holodex в Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
+  changelog:
+    title: Список изменений
+  news:
+    title: Новости

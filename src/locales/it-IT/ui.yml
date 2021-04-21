@@ -273,6 +273,12 @@ about:
     quitHolodex: "Sono un sottotitolatore e vorrei che il mio canale venisse rimosso da Holodex\\r\n"
     quitHolodexContent: >-
       Ci spiace che tu te ne vada (っ °Д °;)っ. Per favore, fammi sapere se c'è qualche problema con cui posso aiutarti. Se vuoi comunque che il tuo canale venga rimosso, per favore, inviaci un messaggio su Discord.
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   gdpr: GDPR ed i miei dati
   gdprContent: >-
     Un cookie di Google Analytics è usato per tracciare le visualizzazioni della pagina a fini analitici. Dopo l'accesso associamo il tuo nome utente e l'ID del tuo account social media ai tuoi preferiti. Questi dati potrebbero includere la tua Email (per Google), il tuo ID di Discord o il tuo tag di Twitter.
@@ -280,3 +286,11 @@ about:
   feedback: Inviaci un Feedback / Segnala un Bug
   feedbackHtml: >-
     Puoi segnalare un problema sull'<a href="https://github.com/RiceCakess/Holodex/issues"> Issue Tracker di Github </a> o contattare il team di Holodex su Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
