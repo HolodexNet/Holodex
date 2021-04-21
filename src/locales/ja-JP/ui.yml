@@ -294,7 +294,7 @@ editor:
 about:
   quicklinks: クイックリンク
   discordBtn: ホロデックスDiscord
-  issueTracker: ' Issue管理 / ソースコード'
+  issueTracker: Issue管理 / ソースコード
   faq:
     title: よくある質問
     ytchatHeader: Youtubeチャットにログインできません！
