@@ -1,7 +1,9 @@
 <template>
     <div class="layout-preview" :class="{ mobile: mobile, desktop: !mobile, 'theme--light': !$vuetify.theme.dark }">
         <template v-for="l in layout">
-            <div class="cell" :key="l.i" :style="getStyle(l)" />
+            <div class="cell" :key="l.i" :style="getStyle(l)">
+                <span v-if="content[l.i] && content[l.i].type === 'chat'">Chat</span>
+            </div>
         </template>
     </div>
 </template>
@@ -12,6 +14,10 @@ export default {
     props: {
         layout: {
             type: Array,
+            required: true,
+        },
+        content: {
+            type: Object,
             required: true,
         },
         mobile: {
@@ -50,6 +56,13 @@ export default {
     border: 2px solid #424242;
     background-color: #9e9e9e;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout-preview.theme--light > .cell > span {
+    color: black;
 }
 
 .layout-preview.theme--light {

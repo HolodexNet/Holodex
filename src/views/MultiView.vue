@@ -385,7 +385,7 @@ export default {
         isPreset(currentLayout) {
             // filter out any presets that dont match the amount of cells
             let toCompare = this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets;
-            toCompare = this.decodedMobilePresets.filter((preset) => {
+            toCompare = toCompare.filter((preset) => {
                 return preset.emptyCells && preset.layout.length === currentLayout.length;
             });
 
