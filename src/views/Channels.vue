@@ -89,9 +89,6 @@
 
 <script lang="ts">
 import ChannelList from "@/components/channel/ChannelList.vue";
-// import InfiniteLoading from "vue-infinite-loading";
-import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
-import InfiniteLoad from "@/components/common/InfiniteLoad.vue";
 import api from "@/utils/backend-api";
 import { CHANNEL_TYPES } from "@/utils/consts";
 
@@ -114,9 +111,6 @@ export default {
     },
     components: {
         ChannelList,
-        // InfiniteLoading,
-        ApiErrorMessage,
-        InfiniteLoad,
         GenericListLoader,
     },
     data() {
@@ -248,25 +242,6 @@ export default {
         reload() {
             this.init();
         },
-        // load($state) {
-        //     const lastLength = this.channels.length;
-        //     this.$store
-        //         .dispatch("channels/fetchNextChannels", {
-        //             type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
-        //             ...this.currentSortValue.query_value,
-        //         })
-        //         .then(() => {
-        //             if (this.channels.length !== lastLength) {
-        //                 $state.loaded();
-        //             } else {
-        //                 $state.completed();
-        //             }
-        //         })
-        //         .catch((e) => {
-        //             console.error(e);
-        //             $state.error();
-        //         });
-        // },
         getLoadFn() {
             return async (offset, limit) => {
                 const type = this.category === this.Tabs.SUBBER ? CHANNEL_TYPES.SUBBER : CHANNEL_TYPES.VTUBER;

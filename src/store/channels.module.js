@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
-import api from "@/utils/backend-api";
+// import api from "@/utils/backend-api";
 import Vue from "vue";
-import { CHANNEL_TYPES } from "@/utils/consts";
+// import { CHANNEL_TYPES } from "@/utils/consts";
 
 const initialState = {
     channels: [],
@@ -45,22 +45,22 @@ const getters = {
 };
 
 const actions = {
-    fetchNextChannels({ state, commit, rootState }, params) {
-        // context.commit("fetchStart");
-        return api
-            .channels({
-                limit: 25,
-                offset: state.currentOffset,
-                ...(params?.type === CHANNEL_TYPES.VTUBER && { org: rootState.currentOrg }),
-                ...(params?.type === CHANNEL_TYPES.SUBBER && { lang: rootState.settings.clipLangs.join(",") }),
-                ...params,
-            })
-            .then(({ data }) => {
-                // console.log(data.length);
-                commit("updateChannels", data);
-                // context.commit("fetchEnd");
-            });
-    },
+    // fetchNextChannels({ state, commit, rootState }, params) {
+    //     // context.commit("fetchStart");
+    //     return api
+    //         .channels({
+    //             limit: 25,
+    //             offset: state.currentOffset,
+    //             ...(params?.type === CHANNEL_TYPES.VTUBER && { org: rootState.currentOrg }),
+    //             ...(params?.type === CHANNEL_TYPES.SUBBER && { lang: rootState.settings.clipLangs.join(",") }),
+    //             ...params,
+    //         })
+    //         .then(({ data }) => {
+    //             // console.log(data.length);
+    //             commit("updateChannels", data);
+    //             // context.commit("fetchEnd");
+    //         });
+    // },
 };
 
 const mutations = {
