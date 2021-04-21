@@ -23,7 +23,6 @@ export default {
             }),
             status: 0,
             nextPage: 1,
-            firstLoad: true,
         };
     },
     props: {
@@ -31,7 +30,9 @@ export default {
             default: +new Date(),
         },
     },
-    mounted() {},
+    mounted() {
+        this.emitEvent();
+    },
     watch: {
         identifier() {
             this.reset();
@@ -42,8 +43,7 @@ export default {
             this.status = this.STATUSES.READY;
         },
         onIntersect(entries, observer, isIntersecting) {
-            if (this.status === this.STATUSES.READY && (isIntersecting || this.firstLoad)) this.emitEvent();
-            this.firstLoad = false;
+            if (this.status === this.STATUSES.READY && isIntersecting) this.emitEvent();
         },
         emitEvent() {
             const self = this;

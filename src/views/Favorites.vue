@@ -43,7 +43,7 @@
                     :paginate="!scrollMode"
                     :perPage="this.pageLength"
                     :loadFn="getLoadFn()"
-                    v-slot="{ data }"
+                    v-slot="{ data, isLoading }"
                     :key="'vl-home-' + recentVideoFilter + identifier"
                 >
                     <VideoCardList
@@ -53,6 +53,7 @@
                         :dense="currentGridSize > 0"
                         :lazy="scrollMode"
                     ></VideoCardList>
+                    <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                 </generic-list-loader>
             </div>
         </template>
@@ -80,6 +81,7 @@ import reloadable from "@/mixins/reloadable";
 import isActive from "@/mixins/isActive";
 import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
+import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 
 export default {
     name: "Favorites",
@@ -96,6 +98,7 @@ export default {
         VideoCardList,
         LoadingOverlay,
         GenericListLoader,
+        SkeletonCardList,
     },
     data() {
         return {
