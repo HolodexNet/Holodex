@@ -114,7 +114,6 @@
             :vertical-compact="false"
             :prevent-collision="true"
             :margin="[1, 1]"
-            responsiveLayouts
             @layout-updated="layoutUpdatedEvent"
         >
             <grid-item
@@ -125,8 +124,8 @@
                 :w="item.w"
                 :h="item.h"
                 :i="item.i"
-                :is-draggable="item.isDraggable !== false"
-                :is-resizable="item.isResizable !== false"
+                :isDraggable="item.isDraggable !== false"
+                :isResizable="item.isResizable !== false"
                 :key="'mvgrid' + item.i"
             >
                 <cell :item="item" @showSelector="(id) => (showSelectorForId = id)"> </cell>
@@ -244,8 +243,16 @@ export default {
         Vue.use(VueYouTubeEmbed);
     },
     computed: {
-        ...mapState("multiview", ["layout", "layoutContent"]),
+        ...mapState("multiview", ["layoutContent"]),
         ...mapGetters("multiview", ["activeVideos"]),
+        layout: {
+            get() {
+                return this.$store.state.multiview.layout;
+            },
+            set(newlayout) {
+                this.layoutUpdatedEvent(newlayout);
+            },
+        },
         // Return true if there's an id requesting, setting false is setting id to -1
         showVideoSelector: {
             get() {
