@@ -233,6 +233,8 @@ views:
       button: Guardar (Puede tardar 5 minutos en que aparezca los cambios)
     channelMentions:
       title: Menciones a canales (en desarrollo)
+    sources:
+      title: Clips (en desarrollo)
   login:
     apikeyMsg: >-
       Puedes usar la clave para consultar la API de Holodex. Solo puedes tener un clave por cuenta. Si solicitas una nueva clave la antigua caducara en un plazo de 0 a 24 horas.
@@ -323,6 +325,7 @@ about:
   feedbackHtml: >-
     Puedes crear una incidencia en <a href="https://github.com/RiceCakess/Holodex/issues">Github</a> o hablar con el equipo de Holodex en Discord. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
+    title: Créditos
     contents:
       - I would like to give big thanks to the
       - team for their work on
@@ -330,3 +333,7 @@ about:
         Also to all the subbers for helping the overseas bros! Please check them out!
       - >-
 
+  changelog:
+    title: Lista de cambios
+  news:
+    title: Noticias
