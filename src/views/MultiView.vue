@@ -114,7 +114,6 @@
             :vertical-compact="false"
             :prevent-collision="true"
             :margin="[1, 1]"
-            @layout-updated="layoutUpdatedEvent"
         >
             <grid-item
                 v-for="item in layout"
