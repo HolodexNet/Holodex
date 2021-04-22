@@ -151,6 +151,11 @@ export default {
             return this.$store.state.settings.nameProperty;
         },
     },
+    async mounted() {
+        if (this.$route.query && this.$route.query.q) {
+            this.query = await csv2jsonAsync(this.$route.query.q);
+        }
+    },
     watch: {
         "$route.query": {
             deep: true,
@@ -214,6 +219,7 @@ export default {
                 query: {
                     ...this.$route.query,
                     q: await json2csvAsync(this.query),
+                    page: undefined,
                 },
             });
         },
@@ -226,6 +232,7 @@ export default {
                         ...this.$route.query,
                         q: await json2csvAsync(this.query),
                         advanced: !(this.$route.query.advanced === "true"),
+                        page: undefined,
                     },
                 });
             } else {
@@ -235,6 +242,7 @@ export default {
                     query: {
                         q: await json2csvAsync(this.query),
                         advanced: true,
+                        page: undefined,
                     },
                 });
             }

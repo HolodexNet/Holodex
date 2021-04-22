@@ -86,7 +86,7 @@ export default {
                 // this.lastPage = this.page;
                 this.$router.push({
                     query: {
-                        ...this.$router.query,
+                        ...this.$route.query,
                         page: val,
                     },
                 });

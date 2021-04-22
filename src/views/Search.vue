@@ -23,23 +23,42 @@
                 ></v-select>
             </v-col>
         </v-row>
-        <v-row v-if="loading">
-            <v-progress-circular indeterminate size="32" class="ma-auto"></v-progress-circular>
-        </v-row>
         <v-row>
             <v-col class="offset-xl-1 col-xl-10">
-                <VideoCardList
-                    :videos="filteredVideos"
-                    :horizontal="horizontal"
-                    includeChannel
-                    :cols="{
-                        xs: 1,
-                        sm: 3,
-                        md: 4,
-                        lg: 5,
-                        xl: 6,
-                    }"
-                ></VideoCardList>
+                <generic-list-loader
+                    v-if="searchVideo !== null"
+                    paginate
+                    :perPage="pageLength"
+                    :loadFn="searchVideo"
+                    v-slot="{ data, isLoading }"
+                    :key="filter_type + filter_sort + id + executedQuery"
+                >
+                    <VideoCardList
+                        v-show="!isLoading"
+                        :videos="data"
+                        :horizontal="horizontal"
+                        includeChannel
+                        :cols="{
+                            xs: 1,
+                            sm: 3,
+                            md: 4,
+                            lg: 5,
+                            xl: 6,
+                        }"
+                    ></VideoCardList>
+                    <!-- Render skeleton items when data hasn't loaded yet -->
+                    <skeleton-card-list
+                        :cols="{
+                            xs: 1,
+                            sm: 3,
+                            md: 4,
+                            lg: 5,
+                            xl: 6,
+                        }"
+                        dense
+                        v-if="isLoading"
+                    />
+                </generic-list-loader>
             </v-col>
         </v-row>
     </v-container>
@@ -52,6 +71,8 @@ import { forwardTransformSearchToAPIQuery } from "@/utils/functions";
 import { csv2jsonAsync } from "json-2-csv";
 import isActive from "@/mixins/isActive";
 import SearchForm from "@/components/search/SearchForm.vue";
+import GenericListLoader from "@/components/video/GenericListLoader.vue";
+import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 
 export default {
     name: "Search",
@@ -62,11 +83,13 @@ export default {
     components: {
         VideoCardList,
         SearchForm,
+        GenericListLoader,
+        SkeletonCardList,
     },
     data() {
         return {
-            videos: [],
-            loading: false,
+            id: Date.now(),
+            // videos: [],
             horizontal: false,
             executedQuery: null,
             filter_sort: "newest",
@@ -116,22 +139,13 @@ export default {
                     },
                 ],
             },
+            loadFn: null,
+            pageLength: 30,
         };
     },
     computed: {
         query() {
             return this.$route.query;
-        },
-        currentPage() {
-            return Number(this.$route.query.page) || 1;
-        },
-        filteredVideos() {
-            const acceptable = this.filter_type === "all" ? ["stream", "clip"] : [this.filter_type];
-            const sorter =
-                this.filter_sort === "oldest"
-                    ? (x, y) => new Date(x.available_at).valueOf() - new Date(y.available_at).valueOf()
-                    : (x, y) => new Date(y.available_at).valueOf() - new Date(x.available_at).valueOf();
-            return this.videos.filter((v) => acceptable.includes(v.type)).sort(sorter);
         },
         advancedOpen: {
             get() {
@@ -146,6 +160,51 @@ export default {
                 });
             },
         },
+        searchVideo() {
+            // this.videos = [];
+            const { q } = this.query;
+            if (q.length < 5) return () => {};
+            this.executedQuery = q; // save to executed query;
+            // console.log("PARSED", parsedQuery);
+            // console.log("SEARCHING", searchQuery);
+
+            const self = this;
+            console.log("Generating new search function");
+            return async (offset, limit) => {
+                const parsedQuery = await csv2jsonAsync(q);
+                const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
+                    sort: self.filter_sort,
+                    lang: self.$store.state.settings.clipLangs,
+                    target: self.filter_type === "all" ? ["stream", "clip"] : [self.filter_type],
+                    conditions: [],
+                    topic: [],
+                    vch: [],
+                    org: [],
+                    comment: [],
+                });
+
+                if (searchQuery.comment.length === 0) {
+                    self.horizontal = false;
+                    return api
+                        .searchVideo({
+                            ...searchQuery,
+                            paginated: true,
+                            offset,
+                            limit,
+                        })
+                        .then((x) => x.data);
+                }
+                self.horizontal = true;
+                return api
+                    .searchComments({
+                        ...searchQuery,
+                        paginated: true,
+                        offset,
+                        limit,
+                    })
+                    .then((x) => x.data);
+            };
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -153,7 +212,7 @@ export default {
             if (!this.isActive) return;
             this.syncFilters();
             // console.log(x.q, this.executedQuery);
-            if (x.q !== this.executedQuery && x.q) this.searchVideo();
+            if (x.q !== this.executedQuery && x.q) this.id = Date.now();
         },
         // eslint-disable-next-line func-names
         filter_sort() {
@@ -163,9 +222,9 @@ export default {
                     sort: this.filter_sort,
                 },
             });
+            this.id = Date.now();
             // do search if the videos returned is too many.
             // this is because sorting in reverse when the list is > 500 videos may require a new pull.
-            if (this.videos.length > 400) this.searchVideo();
         },
         // eslint-disable-next-line func-names
         filter_type() {
@@ -175,77 +234,16 @@ export default {
                     type: this.filter_type,
                 },
             });
+            this.id = Date.now();
             // do search if the videos returned is too many.
             // this is because if i have more videos than 500 there'd be cutoff,
             // so getting a new batch of videos would be more data complete.
-            if (this.videos.length > 400) this.searchVideo();
         },
     },
     mounted() {
-        // console.log(this.$route);
         this.syncFilters();
-        if (this.$route.query?.q !== this.executedQuery) this.searchVideo();
     },
     methods: {
-        async searchVideo() {
-            if (this.loading) return;
-            this.loading = true;
-            this.videos = [];
-            const { q } = this.$route.query;
-            if (q.length < 5) return;
-            this.executedQuery = q; // save to executed query;
-            const parsedQuery = await csv2jsonAsync(q);
-            // console.log("PARSED", parsedQuery);
-            const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
-                sort: this.filter_sort,
-                lang: this.$store.state.settings.clipLangs,
-                target: this.filter_type === "all" ? ["stream", "clip"] : [this.filter_type],
-                conditions: [],
-                topic: [],
-                vch: [],
-                org: [],
-                comment: [],
-            });
-            // console.log("SEARCHING", searchQuery);
-
-            if (searchQuery.comment.length === 0)
-                api.searchVideo(searchQuery)
-                    .then((res) => {
-                        // console.log(res.data);
-                        this.horizontal = false;
-                        this.videos = res.data;
-                        return this;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                    });
-            else {
-                api.searchComments(searchQuery)
-                    .then((res) => {
-                        // console.log(res.data);
-                        this.horizontal = true;
-                        this.videos = res.data;
-                        return this;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                    });
-            }
-        },
-        loadPage(page) {
-            this.$router.push({
-                query: {
-                    ...this.$route.query,
-                    page,
-                },
-            });
-        },
         syncFilters() {
             this.filter_sort = this.query.sort ? this.query.sort.toLowerCase() : this.options.defaults.sort;
             this.filter_type = this.query.type ? this.query.type.toLowerCase() : this.options.defaults.type;

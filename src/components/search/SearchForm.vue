@@ -216,6 +216,7 @@ export default {
                 query: {
                     ...this.$route.query,
                     q: await json2csvAsync(reconstruction),
+                    page: undefined,
                 },
             });
         },
