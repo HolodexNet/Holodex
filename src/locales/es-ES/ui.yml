@@ -61,6 +61,7 @@ component:
       channel: canal
       topic: tema
       org: org
+      titledesc: título/descripción
       comments: comentarios
       videourl: enlace
   relatedVideo:
@@ -264,6 +265,9 @@ views:
     video:
       selectLive: Elige un directo
       addCustomVideo: Añadir vídeo personalizado
+  mugen:
+    welcome: >-
+      ¡Bienvenido a MugenClips! Aquí todo el mundo verá el mismo clip seleccionado aleatoriamente en inglés y disfruta y comenta junto a otros fans de Hololive de cualquier parte del mundo. Si te desincronizas de la visualización y quieres volver a sincronizarte con todos solo debes de refrescar la página.
 time:
   soon: Próximamente
   diff_future_date: Empieza {0} ({1})
@@ -311,12 +315,26 @@ about:
     quitHolodex: "Soy un traductor y me gustaría que mi canal fuera eliminado del Holodex\n"
     quitHolodexContent: >-
       Es una pena que te quieras ir. Por favor comunícame si hay algún problema al que te pueda ayudar. Si aun así quieres que tu cuenta se elimine de Holodex envíanos un mensaje a nuestro discord.
+    favorite:
+      title: '¿Qué es favoritos?'
+      disappear:
+        title: Mi lista de favoritos ha desaparecido/o no tengo favoritos
+    mobile:
+      title: '¿Existe alguna aplicación para Android/IOS?'
+      content:
+        summary: >-
+          ¡Estamos trabajando en ello! Pero por entonces puedes usar la opción “Añadir a inicio” de tu navegador.
+    MugenClips:
+      title: '¿Qué es MugenClips?'
     subber:
+      title: Soy un traductor y no encuentro mi canal o clips en Holodex
       contents:
         - >-
 
         - >-
           , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: Tengo una idea/quiero ayudar en el proyecto
   gdpr: GDPR y mis datos
   gdprContent: >-
     Las cookies de Google Analytics se utilizan para tener un seguimiento de las visitas de la página con motivos de análisis estadístico. Una vez que has iniciado sesión tu correo e ID de tu cuenta quedarán asociados. Estos datos pueden incluir tu dirección de correo electrónico, ID de Discord y tu ID de twiiter.
