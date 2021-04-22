@@ -105,7 +105,7 @@
         <!-- Grid Layout -->
         <!-- rowHeight = 100vh/colNum, makes layout consistent across different heights -->
         <grid-layout
-            :layout.sync="layout"
+            :layout="layout"
             :col-num="24"
             :row-height="($vuetify.breakpoint.height - 26.0 - (collapseToolbar ? 0 : 64)) / 24.0"
             :col-width="30"
@@ -243,16 +243,8 @@ export default {
         Vue.use(VueYouTubeEmbed);
     },
     computed: {
-        ...mapState("multiview", ["layoutContent"]),
+        ...mapState("multiview", ["layout", "layoutContent"]),
         ...mapGetters("multiview", ["activeVideos"]),
-        layout: {
-            get() {
-                return this.$store.state.multiview.layout;
-            },
-            set(newlayout) {
-                this.layoutUpdatedEvent(newlayout);
-            },
-        },
         // Return true if there's an id requesting, setting false is setting id to -1
         showVideoSelector: {
             get() {
