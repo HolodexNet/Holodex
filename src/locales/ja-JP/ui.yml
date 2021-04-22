@@ -61,6 +61,7 @@ component:
       channel: チャンネル
       topic: トピック
       org: 組織
+      titledesc: タイトル/動画概要
       comments: コメント
       videourl: ビデオURL
   relatedVideo:
@@ -95,6 +96,8 @@ component:
       popup: iOSにHolodexをインストール
       afterExportIcon: をタップして「ホーム画面に追加」を選択
       beforeExportIcon: '  '
+  media:
+    remove: 消去
   comment:
     close: 閉じる
     readMore: 続きを読む
@@ -225,6 +228,7 @@ views:
   editor:
     needlogin: Holodex上の動画を編集または曲情報を変更するにはログインが必要です
     changeTopic:
+      title: 配信のメイン内容を設定
       info: >-
         すべてのユーザーはトピックを動画に設定できますが、一度設定するとエディターと管理者のみトピックを削除および変更できます。
       button: 保存(5分ほどで有効になります)
@@ -317,14 +321,29 @@ about:
         title: お気に入りリストが消えてしまいました/お気に入りに追加できません
     mobile:
       title: ホロデックスのAndroid/iOSアプリ版はありますか?
+      content:
+        summary: >-
+          現在誠意開発中です! それまではブラウザの「ホーム画面に追加」機能をお使いください。現在のウェブサイトもアプリであるかのように動作するように調整されています。
+    MugenClips:
+      title: MugenClipとはなんですか?
     subber:
+      title: Holodexで私の切り抜き動画が表示されていないのですが？
       contents:
         - >-
 
         - >-
           , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: holodexへのフィードバック/コントリビュートを行いたい
+  gdpr: 私のデータはGDPRに基づいてどう扱われますか?
+  gdprContent: >-
+    Googleアナリティクスのデータは当サイトの解析のためにページの閲覧をトラッキングする目的でのみ使用されます。ログインすると、各ソーシャルメディアのアカウント名とIDがお気に入りと関連付けられます。また、このデータにはあなたのGoogleのメールアドレス、Discord ID、及びTwitterのハンドルネームが含まれる場合があります。
+  gdprDeletion: 収集されたデータの削除が必要な場合は、開発チームにDiscord上でお知らせください
   feedback: フィードバック/バグ報告
+  feedbackHtml: >-
+    Issueを作成したい場合は <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> もしくは、Discord上でHolodex開発チームにお知らせください。 <br /><br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
+    title: クレジット
     contents:
       - I would like to give big thanks to the
       - team for their work on
@@ -334,3 +353,5 @@ about:
 
   changelog:
     title: 更新履歴
+  news:
+    title: ニュース
