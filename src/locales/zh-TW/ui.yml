@@ -46,6 +46,8 @@ component:
     copyLink: 複製 Holodex 連結
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -61,6 +63,7 @@ component:
       channel: 頻道
       topic: 主題
       org: 團體
+      titledesc: 標題/描述
       comments: 留言
       videourl: 影片網址
   relatedVideo:
@@ -108,6 +111,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
