@@ -2,10 +2,11 @@
 
 ### 2.6 Holodex [*April 22, 2021*]
 ##### New Features
-- Added Twitch support in MultiView. You can add a custom twitch URL to add the stream into MultiViewer. (#175)
+- Added **Twitch support** in MultiView. You can add a **custom twitch URL** into MultiViewer. (#175)
 - Added skeleton loaders to make you think the site is loading faster. (#177)
 - Advanced Search tool. (#180)
-- Better changelog (#179)
+- Search now is paginated, and **multi-channel searches are now calibrated to find collabs**: (Inugami Korone, Nekomata Okayu, comment: Rap), or clips from a specific clipper involving vtubers (Sushi, Oozora Subaru).
+- Better changelog (#179) You're reading it right now.
 - Turn off Video Autoplay across the platform (except for Music & MugenClips). Temporary experiment, it may stay if we think this way is more beneficial for clippers and vtubers. or we may default to Autoplay OFF. The experiment will run for at least two weeks.
 
 ##### Patches
