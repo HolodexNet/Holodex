@@ -256,11 +256,22 @@ export default {
             return arr;
         },
         filteredLive() {
-            return this.live
+            let filtered = this.live
                 .filter((l) => {
-                    return l.status === "live" || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "minutes"));
+                    return l.status === "live" || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m"));
                 })
                 .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+
+            // expand search if 30m limit yields less than 5 results
+            if (filtered.length < 5) {
+                filtered = this.live
+                    .filter((l) => {
+                        return l.status === "live" || dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h"));
+                    })
+                    .splice(0, 5)
+                    .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+            }
+            return filtered;
         },
     },
     methods: {

@@ -48,4 +48,6 @@ export {
     mdiChevronRight,
     mdiFullscreen,
     mdiViewDashboard,
+    mdiVolumeHigh,
+    mdiVolumeMute,
 } from "@mdi/js";

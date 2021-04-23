@@ -74,7 +74,7 @@
                     :key="'v' + uniqueId"
                 >
                     <VueTwitchPlayer
-                        v-if="cellContent.content.cellVideoType === 'twitch'"
+                        v-if="isTwitchVideo"
                         :channel="cellContent.content.id"
                         :playsInline="true"
                         @ready="vidReady"
@@ -82,6 +82,7 @@
                         @play="vidPlaying({ data: 1 })"
                         @pause="vidPlaying({ data: 2 })"
                         @error="pausedMode = true"
+                        ref="twitchPlayer"
                     >
                     </VueTwitchPlayer>
                     <youtube
@@ -97,6 +98,7 @@
                         @paused="vidPlaying"
                         @cued="pausedMode = true"
                         @error="pausedMode = true"
+                        :mute="muted"
                     >
                         <!--                         @buffering="pausedMode=true" -->
                     </youtube>
@@ -196,6 +198,8 @@ export default {
         };
     },
     mounted() {
+        // initialize chat cell in non paused mode
+        if (this.cellContent && this.cellContent.type === "chat") this.pausedMode = false;
         if (this.pausedMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
         else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
     },
@@ -205,7 +209,30 @@ export default {
         },
         pausedMode(newMode) {
             if (newMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
-            else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
+            else {
+                this.$store.commit("multiview/freezeLayoutItem", this.item.i);
+                if (
+                    this.iOS() &&
+                    this.$store.state.multiview.layout.find((item) => {
+                        return (
+                            item.i !== this.item.i &&
+                            !item.isDraggable &&
+                            this.layoutContent[item.i] &&
+                            this.layoutContent[item.i].type === "video" &&
+                            !this.layoutContent[item.i].muted
+                        );
+                    })
+                ) {
+                    this.muted = true;
+                } else {
+                    this.muted = false;
+                }
+            }
+        },
+        muted(val) {
+            if (this.isTwitchVideo) {
+                val ? this.$refs.twitchPlayer.mute() : this.$refs.twitchPlayer.unMute();
+            }
         },
     },
     computed: {
@@ -221,7 +248,19 @@ export default {
             return this.cellContent.type === "video";
         },
         isTwitchVideo() {
-            return this.cellContent.type === "twitchVideo";
+            return (
+                this.cellContent &&
+                this.cellContent.type === "video" &&
+                this.cellContent.content.cellVideoType === "twitch"
+            );
+        },
+        muted: {
+            get() {
+                return this.cellContent.muted;
+            },
+            set(value) {
+                this.$store.commit("multiview/muteLayoutContent", { id: this.item.i, value });
+            },
         },
     },
     methods: {
@@ -253,6 +292,15 @@ export default {
         toggleTLHandle() {
             this.toggleTL = !this.toggleTL;
             if (!this.toggleChat && !this.toggleTL) this.toggleChat = true;
+        },
+        iOS() {
+            return (
+                ["iPad Simulator", "iPhone Simulator", "iPod Simulator", "iPad", "iPhone", "iPod"].includes(
+                    navigator.platform,
+                ) ||
+                // iPad on iOS 13 detection
+                (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+            );
         },
     },
 };

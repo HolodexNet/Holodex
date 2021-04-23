@@ -47,7 +47,22 @@
                     </template>
                     <span>{{ $t("views.multiview.presets") }}</span>
                 </v-tooltip>
-
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn @click="setMuteAll(true)" icon v-bind="attrs" v-on="on">
+                            <v-icon>{{ icons.mdiVolumeMute }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>{{ $t("views.multiview.presets") }}</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn @click="setMuteAll(false)" icon v-bind="attrs" v-on="on">
+                            <v-icon>{{ icons.mdiVolumeHigh }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>{{ $t("views.multiview.presets") }}</span>
+                </v-tooltip>
                 <v-menu
                     :open-on-click="true"
                     bottom
@@ -90,6 +105,22 @@
                 </v-btn>
             </div>
         </v-toolbar>
+
+        <div style="opacity: 0.75; position: absolute; width: 100%" v-if="layout.length === 0">
+            <div style="max-width: 50%; display: inline-block">
+                <div style="display: inline-block; margin-right: 20px; margin-left: 10px">
+                    <div style="height: 10vh; border: 1px solid white; width: 1px; margin-left: 50%" />
+                    Click on a channel to start watching using auto layout mode
+                </div>
+            </div>
+            <div style="max-width: 50%; display: inline-block; float: right">
+                <div style="display: inline-block; margin-right: 10px">
+                    <div style="height: 10vh; border: 1px solid white; width: 1px; margin-left: 50%" />
+                    Create your own layout by adding a cell <v-icon> {{ mdiViewGridPlus }}</v-icon
+                    >, or using a preset <v-icon> {{ icons.mdiGridLarge }} </v-icon>
+                </div>
+            </div>
+        </div>
         <!-- Floating button to open toolbar when collapsed -->
         <v-btn
             v-if="collapseToolbar"
@@ -133,7 +164,7 @@
         </grid-layout>
 
         <!-- Video Selector -->
-        <v-dialog v-model="showVideoSelector" width="75vw">
+        <v-dialog v-model="showVideoSelector" min-width="75vw" width="1000">
             <VideoSelector @videoClicked="handleVideoClicked" />
         </v-dialog>
 
@@ -285,6 +316,14 @@ export default {
         },
     },
     methods: {
+        setMuteAll(val) {
+            Object.keys(this.layoutContent).forEach((key) => {
+                const content = this.layoutContent[key];
+                if (content.type === "video") {
+                    this.$store.commit("multiview/muteLayoutContent", { id: key, value: val });
+                }
+            });
+        },
         // prompt user for layout change
         promptLayoutChange(layoutWithContent, confirmFunction, cancelFunction) {
             // a dialog is already active
@@ -471,8 +510,7 @@ export default {
                         }
                         const key = item.i;
                         contentsToMerge[key] = {
-                            type: "video",
-                            content: this.activeVideos[activeVideosIndex],
+                            ...this.layoutContent[key],
                         };
                         activeVideosIndex += 1;
                     });
