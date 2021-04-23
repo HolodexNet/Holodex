@@ -139,7 +139,6 @@ export default {
                     },
                 ],
             },
-            loadFn: null,
             pageLength: 30,
         };
     },
@@ -163,10 +162,8 @@ export default {
         searchVideo() {
             // this.videos = [];
             const { q } = this.query;
-            if (q.length < 5) return () => {};
+            if (q.length < 5) return null;
             this.executedQuery = q; // save to executed query;
-            // console.log("PARSED", parsedQuery);
-            // console.log("SEARCHING", searchQuery);
 
             const self = this;
             console.log("Generating new search function");

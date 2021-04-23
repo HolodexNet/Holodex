@@ -37,6 +37,7 @@
                             :items="channelResultsFinal"
                             :search-input.sync="channelSearch"
                             @input="channelClearAPIResults"
+                            no-filter
                             multiple
                             solo-inverted
                             item-color="secondary"
