@@ -22,7 +22,7 @@ const initialState = {
     scrollMode: true,
     hideThumbnail: false,
     nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
-    showFavoritesCollab: false,
+    hideCollabStreams: false,
 
     // Live TL Window Settings
     liveTlStickBottom: false,
@@ -91,7 +91,7 @@ const mutations = {
         "liveTlShowVerified",
         "liveTlShowModerator",
         "liveTlWindowSize",
-        "showFavoritesCollab",
+        "hideCollabStreams",
     ]),
     resetState(state) {
         Object.assign(state, initialState);

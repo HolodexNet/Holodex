@@ -60,23 +60,23 @@
                     ></v-switch>
                 </div>
                 <div class="settings-group">
-                    <div class="py-2 text-h5">Video List Settings</div>
+                    <div class="py-2 text-h5">{{ $t("views.settings.videoFeedSettings") }}</div>
                     <v-divider />
                     <v-select
                         class="mt-4"
                         v-model="currentGridSize"
                         :items="[
-                            { text: 'Default', value: 0 },
-                            { text: 'Medium', value: 1 },
-                            { text: 'Small', value: 2 },
+                            { text: $t('views.settings.gridSize[0]'), value: 0 },
+                            { text: $t('views.settings.gridSize[1]'), value: 1 },
+                            { text: $t('views.settings.gridSize[2]'), value: 2 },
                         ]"
-                        label="Thumbnail/Video List Grid Size"
-                        messages="Change thumbnail/video size on Home/Favorites page"
+                        :label="$t('views.settings.gridSizeLabel')"
+                        :messages="$t('views.settings.gridSizeMsg')"
                     ></v-select>
                     <v-switch
-                        v-model="showFavoritesCollab"
-                        label="Show Favorites Collab Streams"
-                        messages="Show streams that mention one of your favorited channels, most likely a collab stream"
+                        v-model="hideCollabStreams"
+                        :label="$t('views.settings.hideCollabStreamsLabel')"
+                        :messages="$t('views.settings.hideCollabStreamsMsg')"
                     ></v-switch>
                     <v-switch
                         v-model="useEnName"
@@ -122,7 +122,7 @@ export default {
             "scrollMode",
             "hideThumbnail",
             "defaultOpenFavorites",
-            "showFavoritesCollab",
+            "hideCollabStreams",
         ]),
         currentGridSize: {
             get() {
@@ -160,7 +160,7 @@ export default {
         },
     },
     watch: {
-        showFavoritesCollab() {
+        hideCollabStreams() {
             this.$store.commit("favorites/setLastLiveUpdate", 0);
         },
     },

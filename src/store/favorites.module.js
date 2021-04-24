@@ -59,7 +59,7 @@ const actions = {
                 })
                 .then((res) => {
                     // filter out collab channels if settings is set
-                    if (!rootState.settings.showFavoritesCollab) {
+                    if (rootState.settings.hideCollabStreams) {
                         const favoritesSet = new Set(state.favorites.map((f) => f.id));
                         commit(
                             "setLive",

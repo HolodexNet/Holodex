@@ -53,7 +53,7 @@
                             <v-icon>{{ icons.mdiVolumeMute }}</v-icon>
                         </v-btn>
                     </template>
-                    <span>{{ $t("views.multiview.presets") }}</span>
+                    <span>{{ $t("views.multiview.muteAll") }}</span>
                 </v-tooltip>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -61,7 +61,7 @@
                             <v-icon>{{ icons.mdiVolumeHigh }}</v-icon>
                         </v-btn>
                     </template>
-                    <span>{{ $t("views.multiview.presets") }}</span>
+                    <span>{{ $t("views.multiview.unmuteAll") }}</span>
                 </v-tooltip>
                 <v-menu
                     :open-on-click="true"
@@ -110,14 +110,13 @@
             <div style="max-width: 50%; display: inline-block">
                 <div style="display: inline-block; margin-right: 20px; margin-left: 10px">
                     <div style="height: 10vh; border: 1px solid white; width: 1px; margin-left: 50%" />
-                    Click on a channel to start watching using auto layout mode
+                    {{ $t("views.multiview.autoLayoutTip") }}
                 </div>
             </div>
             <div style="max-width: 50%; display: inline-block; float: right">
                 <div style="display: inline-block; margin-right: 10px">
                     <div style="height: 10vh; border: 1px solid white; width: 1px; margin-left: 50%" />
-                    Create your own layout by adding a cell <v-icon> {{ mdiViewGridPlus }}</v-icon
-                    >, or using a preset <v-icon> {{ icons.mdiGridLarge }} </v-icon>
+                    {{ $t("views.multiview.createLayoutTip") }}
                 </div>
             </div>
         </div>

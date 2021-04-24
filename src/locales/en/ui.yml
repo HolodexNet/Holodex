@@ -200,6 +200,15 @@ views:
     defaultFavoritesMsg: >-
       Open Favorites by default when visiting holodex.net, or clicking on the
       logo top left.
+    videoFeedSettings: Video Feed Settings
+    gridSizeLabel: Thumbnail/Grid Size
+    gridSizeMsg: Change thumbnail/video grid size on Home/Favorites page
+    gridSize:
+      - Large
+      - Medium
+      - Small
+    hideCollabStreamsLabel: Hide Collab Streams
+    hideCollabStreamsMsg: Hide collab streams from your favorites feed
   app:
     update_available: An update is available
     update_btn: Update
@@ -277,6 +286,10 @@ views:
     permalink: Permalink
     presets: Presets
     addframe: Add Cell
+    muteAll: Mute All
+    unmuteAll: Unmute All
+    autoLayoutTip: Click on a channel to start watching using auto layout mode
+    createLayoutTip:  Create your own layout by adding a cell, or using a preset
     preset:
       shareOnDiscord: >-
         Have a cool layout to share? Use the share button and let us know on our
