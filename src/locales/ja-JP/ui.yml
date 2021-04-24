@@ -32,14 +32,14 @@ component:
     settings: 設定
     login: ログイン
     logout: ログアウト
-    MugenClips: MugenClip<sup>beta</sup>
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: アカウント設定
     music: ミュージック
     multiview: マルチビュー
     points: ポイント
   videoCard:
     clips: "{n}本の切り抜き"
-    watching: "{0}人視聴中"
+    watching: "{0}人が視聴中"
     liveNow: 配信中
     edit: 編集
     copiedToClipboard: リンクをクリップボードにコピーしました
@@ -158,7 +158,7 @@ views:
     type:
       all: すべて
       official: 公式
-      clip: クリップ
+      clip: 切り抜き
     unsupportedQuery: >-
       現在 <kbd>トピック</kbd>と<kbd>組織</kbd>での検索はサポートされていません。検索結果の<b>クリップ</b>は表示されません。
     sortByLabel: 並べ替え
@@ -169,7 +169,7 @@ views:
     darkModeMsg: ライトモードとダークモードを変更します
     redirectModeLabel: Youtubeで開く
     redirectModeMsg: >-
-      ビデオをクリックすると、Youtubeの視聴ページに移動します
+      動画のサムネをクリックするとYoutubeに移動します。(タイトルをクリックする通常と変わらずHolodexで見れます。)
     useEnglishNameLabel: 英語名を使用する
     useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
     hideVideoThumbnailsLabel: サムネイルを非表示にする
@@ -181,8 +181,8 @@ views:
     autoplayVideoMsg: 動画を開くときに自動再生する
     scrollModeLabel: スクロールモード
     scrollModeMsg: スクロール/タップしてページをめくる
-    resetAllSettings: すべての設定/データをリセット
-    clipLanguageSelection: "以下の言語の切り抜きを表示:"
+    resetAllSettings: すべての設定やデータをリセット
+    clipLanguageSelection: "次の言語で切り抜きを表示する"
     tlLanguageSelection: 次の言語でライブチャットTLを表示する
     defaultFavorites: デフォルトでお気に入りに移動する
     defaultFavoritesMsg: >-
@@ -201,7 +201,7 @@ views:
     saveToLibrary: ライブラリに保存
     mentionIconLabel: メンション
     chat:
-      loading: チャットを読み込んでいます...
+      loading: チャット\n読み込み中
       hideTLBtn: 翻訳を非表示
       showTLBtn: 翻訳を表示
       TLSettingsTitle: 翻訳設定
