@@ -2,14 +2,14 @@
     <div style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }" ref="fullscreen-content">
         <!-- Floating tool bar -->
         <!-- <transition name="slide-y-transition" mode="out-in"> -->
-        <v-toolbar class="mv-toolbar" style="right: 0" v-show="!collapseToolbar">
+        <v-toolbar class="mv-toolbar" style="right: 0" v-show="!collapseToolbar" height="64">
             <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
             <!-- Toolbar Live Video Selector -->
             <div
                 class="justify-start d-flex mv-toolbar-btn align-center thin-scroll-bar"
                 style="overflow-x: auto; overflow-y: hidden"
             >
-                <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
+                <VideoSelector v-if="!collapseButtons" horizontal @videoClicked="handleToolbarClick" />
                 <!-- Single Button video selector for xs displays -->
                 <v-btn @click="handleToolbarShowSelector" icon large>
                     <v-icon style="border-radius: 0 position: relative; margin-right: 3px; cursor: pointer" large>
@@ -49,7 +49,7 @@
                 </v-tooltip>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn @click="setMuteAll(true)" icon v-bind="attrs" v-on="on">
+                        <v-btn @click="setMuteAll(true)" icon v-bind="attrs" v-on="on" v-show="!collapseButtons">
                             <v-icon>{{ icons.mdiVolumeMute }}</v-icon>
                         </v-btn>
                     </template>
@@ -57,7 +57,7 @@
                 </v-tooltip>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn @click="setMuteAll(false)" icon v-bind="attrs" v-on="on">
+                        <v-btn @click="setMuteAll(false)" icon v-bind="attrs" v-on="on" v-show="!collapseButtons">
                             <v-icon>{{ icons.mdiVolumeHigh }}</v-icon>
                         </v-btn>
                     </template>
@@ -100,6 +100,23 @@
                 <v-btn @click="toggleFullScreen" icon>
                     <v-icon>{{ icons.mdiFullscreen }}</v-icon>
                 </v-btn>
+                <v-menu offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on" icon v-show="collapseButtons">
+                            <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item @click="setMuteAll(false)" block class="mb-2">
+                            <v-icon left>{{ icons.mdiVolumeHigh }}</v-icon>
+                            <span>{{ $t("views.multiview.unmuteAll") }}</span>
+                        </v-list-item>
+                        <v-list-item @click="setMuteAll(true)" block>
+                            <v-icon color="red" left>{{ icons.mdiVolumeMute }}</v-icon>
+                            <span>{{ $t("views.multiview.muteAll") }}</span>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
                 <v-btn icon @click="collapseToolbar = true">
                     <v-icon>{{ icons.mdiChevronUp }}</v-icon>
                 </v-btn>
@@ -312,6 +329,9 @@ export default {
         },
         isMobile() {
             return this.$store.state.isMobile;
+        },
+        collapseButtons() {
+            return this.$vuetify.breakpoint.xs;
         },
     },
     methods: {
@@ -558,7 +578,7 @@ export default {
     }
 }
 .mv-toolbar-btn .v-btn.v-btn--icon.v-size--default {
-    margin-right: 4px;
+    // margin-right: 4px;
     height: 36px;
     width: 36px;
 }

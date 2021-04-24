@@ -82,6 +82,7 @@
                         @play="vidPlaying({ data: 1 })"
                         @pause="vidPlaying({ data: 2 })"
                         @error="pausedMode = true"
+                        :mute="muted"
                         ref="twitchPlayer"
                     >
                     </VueTwitchPlayer>
@@ -212,27 +213,6 @@ export default {
             if (newMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
             else {
                 this.$store.commit("multiview/freezeLayoutItem", this.item.i);
-                if (
-                    this.iOS() &&
-                    this.$store.state.multiview.layout.find((item) => {
-                        return (
-                            item.i !== this.item.i &&
-                            !item.isDraggable &&
-                            this.layoutContent[item.i] &&
-                            this.layoutContent[item.i].type === "video" &&
-                            !this.layoutContent[item.i].muted
-                        );
-                    })
-                ) {
-                    this.muted = true;
-                } else {
-                    this.muted = false;
-                }
-            }
-        },
-        muted(val) {
-            if (this.isTwitchVideo) {
-                val ? this.$refs.twitchPlayer.mute() : this.$refs.twitchPlayer.unMute();
             }
         },
     },
@@ -283,6 +263,22 @@ export default {
         },
         vidReady(evt) {
             if (evt) this.ytPlayer = evt.target;
+            if (
+                this.iOS() &&
+                this.$store.state.multiview.layout.find((item) => {
+                    return (
+                        item.i !== this.item.i &&
+                        !item.isDraggable &&
+                        this.layoutContent[item.i] &&
+                        this.layoutContent[item.i].type === "video" &&
+                        !this.layoutContent[item.i].muted
+                    );
+                })
+            ) {
+                this.muted = true;
+            } else {
+                this.muted = false;
+            }
         },
         resetCell() {
             this.$store.commit("multiview/deleteLayoutContent", this.item.i);

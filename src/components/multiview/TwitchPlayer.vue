@@ -36,6 +36,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        mute: {
+            type: Boolean,
+            default: false,
+        },
         channel: String,
         collection: String,
         video: String,
@@ -118,14 +122,14 @@ export default {
             // Returns true if the player is muted; otherwise, false.
             return player.getMuted();
         },
-        mute() {
-            // Mutes the player.
-            player.setMuted(true);
-        },
-        unmute() {
-            // Unmutes the player.
-            player.setMuted(false);
-        },
+        // mute() {
+        //     // Mutes the player.
+        //     player.setMuted(true);
+        // },
+        // unmute() {
+        //     // Unmutes the player.
+        //     player.setMuted(false);
+        // },
         checkChannel() {
             return this.channel === player.getChannel();
         },
@@ -151,6 +155,9 @@ export default {
             if (player.getQualities().indexOf(newQuality) !== -1) {
                 player.setQuality(newQuality);
             }
+        },
+        mute(value) {
+            player.setMuted(value);
         },
     },
 };
