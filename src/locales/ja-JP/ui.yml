@@ -32,14 +32,14 @@ component:
     settings: 設定
     login: ログイン
     logout: ログアウト
-    MugenClips: MugenClip<sup>beta</sup>
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: アカウント設定
-    music: ミュージック
+    music: 音楽
     multiview: マルチビュー
     points: ポイント
   videoCard:
     clips: "{n}本の切り抜き"
-    watching: "{0}人視聴中"
+    watching: "{0}人が視聴中"
     liveNow: 配信中
     edit: 編集
     copiedToClipboard: リンクをクリップボードにコピーしました
@@ -47,7 +47,7 @@ component:
   videoDescription:
     description: 概要
   description:
-    showLess: 省略表示
+    showLess: 一部を表示
     showMore: もっと見る
   watch:
     streamingFor: '{0}分経過'
@@ -60,7 +60,7 @@ component:
     type:
       channel: チャンネル
       topic: トピック
-      org: 組織
+      org: 所属
       titledesc: タイトル/動画概要
       comments: コメント
       videourl: ビデオURL
@@ -68,7 +68,7 @@ component:
     clipsLabel: 切り抜き
     simulcastsLabel: 裏枠
     refersLabel: 関連配信
-    sourcesLabel: 切り抜き元
+    sourcesLabel: 本編
     songsLabel: 楽曲
     recommendationsLabel: おすすめ
   paginateLoad:
@@ -158,7 +158,7 @@ views:
     type:
       all: すべて
       official: 公式
-      clip: クリップ
+      clip: 切り抜き
     unsupportedQuery: >-
       現在 <kbd>トピック</kbd>と<kbd>組織</kbd>での検索はサポートされていません。検索結果の<b>クリップ</b>は表示されません。
     sortByLabel: 並べ替え
@@ -169,7 +169,7 @@ views:
     darkModeMsg: ライトモードとダークモードを変更します
     redirectModeLabel: Youtubeで開く
     redirectModeMsg: >-
-      ビデオをクリックすると、Youtubeの視聴ページに移動します
+      動画のサムネをクリックするとYoutubeに移動します。(タイトルをクリックする通常と変わらずHolodexで見れます。)
     useEnglishNameLabel: 英語名を使用する
     useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
     hideVideoThumbnailsLabel: サムネイルを非表示にする
@@ -181,12 +181,21 @@ views:
     autoplayVideoMsg: 動画を開くときに自動再生する
     scrollModeLabel: スクロールモード
     scrollModeMsg: スクロール/タップしてページをめくる
-    resetAllSettings: すべての設定/データをリセット
-    clipLanguageSelection: "以下の言語の切り抜きを表示:"
+    resetAllSettings: すべての設定やデータをリセット
+    clipLanguageSelection: "次の言語で切り抜きを表示する"
     tlLanguageSelection: 次の言語でライブチャットTLを表示する
     defaultFavorites: デフォルトでお気に入りに移動する
     defaultFavoritesMsg: >-
       holodex.netにアクセスした際や、ページ上部左のロゴをクリックした際にお気に入りに移動します。
+    videoFeedSettings: 動画フィードの設定
+    gridSizeLabel: サムネイルのサイズを変更
+    gridSizeMsg: ホーム/お気に入り画面で表示されるサムネイルの大きさを変更します
+    gridSize:
+      - 大
+      - 中
+      - 小
+    hideCollabStreamsLabel: コラボ配信を表示しない
+    hideCollabStreamsMsg: お気に入りページでコラボ配信を非表示にします
   app:
     update_available: ページの更新を利用可能です
     update_btn: アップデート
@@ -201,7 +210,7 @@ views:
     saveToLibrary: ライブラリに保存
     mentionIconLabel: メンション
     chat:
-      loading: チャットを読み込んでいます...
+      loading: チャット\n読み込み中
       hideTLBtn: 翻訳を非表示
       showTLBtn: 翻訳を表示
       TLSettingsTitle: 翻訳設定
@@ -257,6 +266,10 @@ views:
     permalink: レイアウトを共有
     presets: プリセット
     addframe: セルを追加
+    muteAll: 全てミュート
+    unmuteAll: 全てミュート解除
+    autoLayoutTip: チャンネルをクリックすると自動でレイアウトされた状態で視聴できます
+    createLayoutTip: セルを追加してオリジナルのレイアウトを作成するか、プリセットを使用してください
     preset:
       shareOnDiscord: >-
         なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
@@ -308,7 +321,7 @@ about:
     autoplayContent: ご利用中のブラウザでの自動再生を有効化方法についてGoogle検索してください。
     musicPlayer: モバイルデバイスでは音楽プレーヤーがうまく動きません！
     musicPlayerContent: >-
-      申し訳ありませんが、スマホ等のモバイル機器かつwebブラウザでのご利用の場合はMusic Playerはサポート対象外です。 <br/>3つの要因があります: 1. Holodexdでは自動再生が必要ですが、モバイル機器では多くの場合自動再生が禁止されています。2. モバイル機器では多くの場合ウェブサイトが裏側で音楽を再生したままにすることが許可されていません。3. 音楽再生のご要望を、我々がお客様の音楽コントロールセンターにシステムレベルで管理や処理をすることは憚られます。
+      申し訳ありませんが、スマホ等のモバイル機器かつwebブラウザでのご利用の場合は音楽プレーヤーはサポート対象外です。 <br/>3つの要因があります: 1. ホロデックスでは自動再生が必要ですが、モバイル機器では多くの場合自動再生が禁止されています。2. モバイル機器では多くの場合ウェブサイトが裏側で音楽を再生したままにすることが許可されていません。3. 音楽再生のご要望を、我々がお客様の音楽コントロールセンターにシステムレベルで管理や処理をすることは憚られます。
     videoLinkage: どのぐらい正確に動画をVtuberにリンクすればいいですか？
     videoLinkageContent: >-
       全ての情報は動画概要欄から解析されます。生放送を切り抜きする場合は必ず元の生放送のURLを貼ってください。ファンが作ったコンテンツ(例えばbilibiliから) を切り抜きする場合はその動画に関連するVtuberの公式YoutubeチャンネルのURLを貼ってください。どのVtuberのチャンネルともリンクしない場合、ホロデックスでは全ての切り抜きにリンク先としてホロデックスの把握しているVtuberチャンネルが必要です。そのためリンクの無い切り抜きをホロデックスで表示することができません。
@@ -320,7 +333,7 @@ about:
       disappear:
         title: お気に入りリストが消えてしまいました/お気に入りに追加できません
     mobile:
-      title: ホロデックスのAndroid/iOSアプリ版はありますか?
+      title: HolodexのAndroid/iOSアプリ版はありますか?
       content:
         summary: >-
           現在誠意開発中です! それまではブラウザの「ホーム画面に追加」機能をお使いください。現在のウェブサイトもアプリであるかのように動作するように調整されています。

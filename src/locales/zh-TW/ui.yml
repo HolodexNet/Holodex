@@ -61,6 +61,7 @@ component:
       channel: 頻道
       topic: 主題
       org: 團體
+      titledesc: 標題/描述
       comments: 留言
       videourl: 影片網址
   relatedVideo:
