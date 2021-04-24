@@ -85,6 +85,7 @@
                             lg: 4,
                             xl: 5,
                         }"
+                        :horizontal="$vuetify.breakpoint.mdAndDown"
                         dense
                     ></VideoCardList>
                 </template>

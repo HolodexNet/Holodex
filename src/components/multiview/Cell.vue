@@ -204,8 +204,9 @@ export default {
         else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
     },
     watch: {
-        cellContent(nw) {
-            if (nw === null) this.pausedMode = true;
+        cellContent(old, nw) {
+            // if cell becomes null or content changes to a different type, set paused mode back to true
+            if (nw === null || (old && nw && nw.type !== old.type)) this.pausedMode = true;
         },
         pausedMode(newMode) {
             if (newMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
@@ -256,6 +257,7 @@ export default {
         },
         muted: {
             get() {
+                if (!this.cellContent) return false;
                 return this.cellContent.muted;
             },
             set(value) {

@@ -164,7 +164,7 @@
         </grid-layout>
 
         <!-- Video Selector -->
-        <v-dialog v-model="showVideoSelector" min-width="75vw" width="1000">
+        <v-dialog v-model="showVideoSelector" min-width="75vw">
             <VideoSelector @videoClicked="handleVideoClicked" />
         </v-dialog>
 
@@ -497,7 +497,8 @@ export default {
         setMultiview({ layout, content, mergeContent = false }) {
             if (mergeContent) {
                 const contentsToMerge = {};
-                let activeVideosIndex = 0;
+                let currentIndex = 0;
+                const currentContent = Object.values(this.layoutContent).filter((o) => (o as any).type === "video");
                 // filter out already set items
                 layout
                     .filter((item) => {
@@ -505,16 +506,17 @@ export default {
                     })
                     .forEach((item) => {
                         // fill until there's no more current videos
-                        if (activeVideosIndex >= this.activeVideos.length) {
+                        if (currentIndex >= this.activeVideos.length) {
                             return;
                         }
-                        const key = item.i;
-                        contentsToMerge[key] = {
-                            ...this.layoutContent[key],
-                        };
-                        activeVideosIndex += 1;
-                    });
 
+                        // get next video to fill this item's cell
+                        const key = item.i;
+                        const c: any = currentContent[currentIndex];
+
+                        contentsToMerge[key] = c;
+                        currentIndex += 1;
+                    });
                 // merge by key, prefer incoming content
                 const merged = {
                     ...contentsToMerge,
