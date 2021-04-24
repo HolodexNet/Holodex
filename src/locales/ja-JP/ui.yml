@@ -187,6 +187,8 @@ views:
     defaultFavorites: デフォルトでお気に入りに移動する
     defaultFavoritesMsg: >-
       holodex.netにアクセスした際や、ページ上部左のロゴをクリックした際にお気に入りに移動します。
+    hideCollabStreamsLabel: コラボ配信を表示しない
+    hideCollabStreamsMsg: お気に入りページでコラボ配信を非表示にします
   app:
     update_available: ページの更新を利用可能です
     update_btn: アップデート
@@ -257,6 +259,8 @@ views:
     permalink: レイアウトを共有
     presets: プリセット
     addframe: セルを追加
+    autoLayoutTip: チャンネルをクリックすると自動でレイアウトされた状態で視聴できます
+    createLayoutTip: セルを追加してオリジナルのレイアウトを作成するか、プリセットを使用してください
     preset:
       shareOnDiscord: >-
         なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
