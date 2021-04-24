@@ -34,7 +34,7 @@ component:
     logout: ログアウト
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: アカウント設定
-    music: ミュージック
+    music: 音楽
     multiview: マルチビュー
     points: ポイント
   videoCard:
@@ -47,7 +47,7 @@ component:
   videoDescription:
     description: 概要
   description:
-    showLess: 省略表示
+    showLess: 一部を表示
     showMore: もっと見る
   watch:
     streamingFor: '{0}分経過'
@@ -333,7 +333,7 @@ about:
       disappear:
         title: お気に入りリストが消えてしまいました/お気に入りに追加できません
     mobile:
-      title: ホロデックスのAndroid/iOSアプリ版はありますか?
+      title: HolodexのAndroid/iOSアプリ版はありますか?
       content:
         summary: >-
           現在誠意開発中です! それまではブラウザの「ホーム画面に追加」機能をお使いください。現在のウェブサイトもアプリであるかのように動作するように調整されています。
