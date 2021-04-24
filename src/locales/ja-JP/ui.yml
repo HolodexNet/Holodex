@@ -68,7 +68,7 @@ component:
     clipsLabel: 切り抜き
     simulcastsLabel: 裏枠
     refersLabel: 関連配信
-    sourcesLabel: 切り抜き元
+    sourcesLabel: 本編
     songsLabel: 楽曲
     recommendationsLabel: おすすめ
   paginateLoad:
