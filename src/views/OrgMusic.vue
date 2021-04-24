@@ -76,37 +76,48 @@
                 </carousel>
             </v-col>
             <v-col cols="12" class="my-0 py-0">
-                <v-card-title>
-                    <span class="text-lg-h5 mr-2">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
-                    <v-btn
-                        fab
-                        color="primary"
-                        @click="
-                            $store.commit('music/addSong', recentSongs);
-                            $store.commit('music/openBar');
-                        "
-                    >
-                        <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
-                    </v-btn>
+                <generic-list-loader
+                    paginate
+                    :key="'ldr' + currentOrg + '+' + debounceSearch"
+                    :perPage="PER_PAGE_ITEMS"
+                    :loadFn="getSongLoader()"
+                    v-slot="{ data, isLoading }"
+                >
+                    <v-card-title>
+                        <span class="text-lg-h5 mr-2">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
+                        <v-btn
+                            fab
+                            color="primary"
+                            @click="
+                                $store.commit('music/addSong', data);
+                                $store.commit('music/openBar');
+                            "
+                        >
+                            <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
+                        </v-btn>
 
-                    <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
 
-                    <v-text-field
-                        v-model="search"
-                        :append-icon="icons.mdiMagnify"
-                        :label="$t('component.search.searchLabel')"
-                        single-line
-                        hide-details
-                    ></v-text-field>
-                </v-card-title>
-
-                <song-table :PER_PAGE_ITEMS="PER_PAGE_ITEMS" :search="search" :songs="recentSongs"></song-table>
-
-                <v-row>
-                    <v-spacer></v-spacer>
-                    <paginate-load @paginate="songsByRecent" pageLess :identifier="currentOrg + search" />
-                    <v-spacer></v-spacer>
-                </v-row>
+                        <v-text-field
+                            v-model="search"
+                            :append-icon="icons.mdiMagnify"
+                            :label="$t('component.search.searchLabel')"
+                            single-line
+                            hide-details
+                        ></v-text-field>
+                    </v-card-title>
+                    <v-row>
+                        <v-col>
+                            <song-table
+                                :PER_PAGE_ITEMS="PER_PAGE_ITEMS"
+                                :search="search"
+                                channelLink
+                                :loading="isLoading"
+                                :songs="data"
+                            ></song-table>
+                        </v-col>
+                    </v-row>
+                </generic-list-loader>
             </v-col>
         </v-row>
     </v-container>
@@ -121,6 +132,7 @@ import PaginateLoad from "@/components/common/PaginateLoad.vue";
 import { mapState } from "vuex";
 import { debounce } from "@/utils/functions";
 import SongTable from "@/components/media/SongTable.vue";
+import GenericListLoader from "@/components/video/GenericListLoader.vue";
 
 const BREAKPOINTS = Object.freeze({
     xs: 1,
@@ -132,11 +144,10 @@ const BREAKPOINTS = Object.freeze({
 const PER_PAGE_ITEMS = 20;
 
 export default {
-    components: { SongItem, SongItemCard, Carousel, PaginateLoad, SongTable },
+    components: { SongItem, SongItemCard, Carousel, PaginateLoad, SongTable, GenericListLoader },
     name: "OrgMusic",
     data() {
         return {
-            recentSongs: [],
             popularMonthlySongs: [],
             popularWeeklySongs: [],
 
@@ -144,6 +155,7 @@ export default {
             PER_PAGE_ITEMS,
 
             search: "",
+            debounceSearch: "",
         };
     },
     mounted() {
@@ -157,31 +169,18 @@ export default {
         currentOrg() {
             this.songsByPopular();
         },
+        // eslint-disable-next-line func-names
+        search: debounce(function (newVal) {
+            this.debounceSearch = newVal;
+            this.$router.push({
+                query: {
+                    ...this.$route.query,
+                    page: undefined,
+                },
+            });
+        }, 500),
     },
     methods: {
-        // eslint-disable-next-line func-names
-        songsByRecent: debounce(async function ({ page, loaded, completed, error }) {
-            console.log("fetching...", page, this.search);
-            try {
-                const { data } = await backendApi.songListByCondition(
-                    { org: this.currentOrg, ...(this.search && { q: this.search }) },
-                    (page - 1) * PER_PAGE_ITEMS,
-                    PER_PAGE_ITEMS,
-                );
-                if (data.length < PER_PAGE_ITEMS) {
-                    completed && completed();
-                } else {
-                    loaded && loaded();
-                }
-
-                this.recentSongs = data.map((x) => ({
-                    ...x,
-                    id: x.video_id + x.name,
-                }));
-            } catch (e) {
-                error();
-            }
-        }, 400),
         async songsByPopular() {
             const res1 = backendApi.topSongs(this.currentOrg, null, "m");
             const res2 = backendApi.topSongs(this.currentOrg, null, "w");
@@ -195,6 +194,25 @@ export default {
             this.$store.commit("music/addSong", song);
             this.$store.commit("music/openBar");
             this.$store.commit("music/skipTo", this.$store.state.music.playlist.length - 1);
+        },
+        getSongLoader() {
+            // eslint-disable-next-line func-names
+            return async (offset, limit) => {
+                const res = await backendApi.songListByCondition(
+                    {
+                        org: this.currentOrg,
+                        paginated: 1,
+                        ...(this.debounceSearch && { q: this.debounceSearch }),
+                    },
+                    offset,
+                    limit,
+                );
+                res.data.items = res.data.items.map((x) => ({
+                    ...x,
+                    id: x.video_id + x.name,
+                }));
+                return res.data;
+            };
         },
     },
 };

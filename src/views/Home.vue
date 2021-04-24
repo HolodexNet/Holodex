@@ -105,7 +105,7 @@ export default {
                 this.identifier = Date.now();
                 this.$router.push({
                     query: {
-                        ...this.$router.query,
+                        ...this.$route.query,
                         page: undefined,
                     },
                 });
