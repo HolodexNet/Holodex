@@ -36,41 +36,48 @@
             </carousel>
         </v-col>
         <v-col sm="12" md="12">
-            <v-card-title>
-                <span class="text-h5 mr-3">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
-                <v-btn
-                    fab
-                    color="primary"
-                    @click="
-                        $store.commit('music/addSong', recentSongs);
-                        $store.commit('music/openBar');
-                    "
-                >
-                    <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
-                </v-btn>
+            <generic-list-loader
+                paginate
+                :key="'ldr' + channel.id + '+' + debounceSearch"
+                :perPage="PER_PAGE_ITEMS"
+                :loadFn="getSongLoader()"
+                v-slot="{ data, isLoading }"
+            >
+                <v-card-title>
+                    <span class="text-h5 mr-3">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
+                    <v-btn
+                        fab
+                        color="primary"
+                        @click="
+                            $store.commit('music/addSong', data);
+                            $store.commit('music/openBar');
+                        "
+                    >
+                        <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
+                    </v-btn>
 
-                <v-spacer></v-spacer>
+                    <v-spacer></v-spacer>
 
-                <v-text-field
-                    v-model="search"
-                    :append-icon="icons.mdiMagnify"
-                    :label="$t('component.search.searchLabel')"
-                    single-line
-                    hide-details
-                ></v-text-field>
-            </v-card-title>
+                    <v-text-field
+                        v-model="search"
+                        :append-icon="icons.mdiMagnify"
+                        :label="$t('component.search.searchLabel')"
+                        single-line
+                        hide-details
+                    ></v-text-field>
+                </v-card-title>
 
-            <song-table :PER_PAGE_ITEMS="PER_PAGE_ITEMS" :search="search" :songs="recentSongs"></song-table>
-            <v-row>
-                <v-spacer></v-spacer>
-                <PaginateLoad
-                    @paginate="songsByRecent"
-                    pageLess
-                    :identifier="channel.id + search + 'songs'"
-                    scrollElementId="songSearchTable"
-                />
-                <v-spacer></v-spacer>
-            </v-row>
+                <v-row>
+                    <v-col>
+                        <song-table
+                            :PER_PAGE_ITEMS="PER_PAGE_ITEMS"
+                            :search="search"
+                            :loading="isLoading"
+                            :songs="data"
+                        ></song-table>
+                    </v-col>
+                </v-row>
+            </generic-list-loader>
         </v-col>
     </v-row>
 </template>
@@ -84,6 +91,7 @@ import PaginateLoad from "@/components/common/PaginateLoad.vue";
 // import { mapState } from "vuex";
 import { debounce } from "@/utils/functions";
 import SongTable from "@/components/media/SongTable.vue";
+import GenericListLoader from "@/components/video/GenericListLoader.vue";
 
 const BREAKPOINTS = Object.freeze({
     xs: 1,
@@ -95,17 +103,17 @@ const BREAKPOINTS = Object.freeze({
 const PER_PAGE_ITEMS = 20;
 
 export default {
-    components: { SongItem, SongItemCard, Carousel, PaginateLoad, SongTable },
+    components: { SongItem, SongItemCard, Carousel, PaginateLoad, SongTable, GenericListLoader },
     name: "ChannelMusic",
     data() {
         return {
-            recentSongs: [],
             popularSongs: [],
 
             BREAKPOINTS,
             PER_PAGE_ITEMS,
 
             search: "",
+            debounceSearch: "",
         };
     },
     mounted() {
@@ -121,36 +129,43 @@ export default {
         channel() {
             this.songsByPopular();
         },
+        // eslint-disable-next-line func-names
+        search: debounce(function (newVal) {
+            this.debounceSearch = newVal;
+            this.$router.push({
+                query: {
+                    ...this.$route.query,
+                    page: undefined,
+                },
+            });
+        }, 500),
     },
     methods: {
-        // eslint-disable-next-line func-names
-        songsByRecent: debounce(async function ({ page, loaded, completed, error }) {
-            console.log("fetching...", page, this.search);
-            try {
-                const { data } = await backendApi.songListByCondition(
-                    { channel_id: this.channel.id, ...(this.search && { q: this.search }) },
-                    (page - 1) * PER_PAGE_ITEMS,
-                    PER_PAGE_ITEMS,
-                );
-                if (data.length < PER_PAGE_ITEMS) {
-                    completed && completed();
-                } else {
-                    loaded && loaded();
-                }
-                this.recentSongs = data.map((x) => ({
-                    ...x,
-                    id: x.video_id + x.name,
-                }));
-            } catch (e) {
-                error();
-            }
-        }, 100),
         async songsByPopular() {
             const { data } = await backendApi.topSongs(null, this.channel.id, "w");
             this.popularSongs = data;
         },
         skipToSong(song) {
             this.$store.dispatch("music/skipToSong", song);
+        },
+        getSongLoader() {
+            // eslint-disable-next-line func-names
+            return async (offset, limit) => {
+                const res = await backendApi.songListByCondition(
+                    {
+                        channel_id: this.channel.id,
+                        paginated: 1,
+                        ...(this.debounceSearch && { q: this.debounceSearch }),
+                    },
+                    offset,
+                    limit,
+                );
+                res.data.items = res.data.items.map((x) => ({
+                    ...x,
+                    id: x.video_id + x.name,
+                }));
+                return res.data;
+            };
         },
     },
 };
