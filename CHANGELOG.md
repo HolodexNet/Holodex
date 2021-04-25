@@ -8,6 +8,11 @@
 - Search now is paginated, and **multi-channel searches are now calibrated to find collabs**: (Inugami Korone, Nekomata Okayu, comment: Rap), or clips from a specific clipper involving vtubers (Sushi, Oozora Subaru).
 - Better changelog (#179) You're reading it right now.
 - Turn off Video Autoplay across the platform (except for Music & MugenClips). Temporary experiment, it may stay if we think this way is more beneficial for clippers and vtubers. or we may default to Autoplay OFF. The experiment will run for at least two weeks.
+- Added setting to hide collab streams from the favorites page. By default your favorites lives contains channels you favorited and channels collaborating with your favorites. Use this setting to hide those streams
+- Added Grid/Thumbnail size setting, choice of large (default), medium, small thumbnail size
+- Fixed left navigation drawer inconsistent behavior
+- Mute/Unmute all streams in mutliview
+- Added more presets, autolayout for mobile, and other small QoL changes to multiview
 
 ##### Patches
 - Easier to resize cells with clear drag zones.
