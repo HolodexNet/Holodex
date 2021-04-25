@@ -6,7 +6,7 @@
                 <div class="settings-group">
                     <div class="py-2 text-h5">
                         <v-icon>{{ icons.mdiTranslate }}</v-icon>
-                        Language:
+                        {{ $t("views.settings.languageSettings") }}
                     </div>
                     <v-divider />
                     <v-select :items="langs" item-value="val" v-model="language">
@@ -36,7 +36,7 @@
                     </v-select>
                 </div>
                 <div class="settings-group">
-                    <div class="py-2 text-h5">Site/Navigation</div>
+                    <div class="py-2 text-h5">{{ $t("views.settings.siteNavigationSettings") }}</div>
                     <v-divider />
                     <v-switch
                         v-model="darkMode"
