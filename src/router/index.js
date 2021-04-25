@@ -157,7 +157,7 @@ const router = new VueRouter({
         if (!store.state.isMobile && !savedPosition) {
             store.dispatch("reloadCurrentPage", { source: "scrollBehavior", consumed: false });
         }
-        return savedPosition;
+        return savedPosition || { x: 0, y: 0 };
     },
 });
 
