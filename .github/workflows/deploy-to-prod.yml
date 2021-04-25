@@ -20,7 +20,7 @@ jobs:
     - name: Purge Cloudflare Cache
       uses: wei/curl@master
       with:
-        args: >-
+        args:
             '-X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" 
             -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_PURGE_KEY }}" 
             -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_AUTH_EMAIL }}" 
