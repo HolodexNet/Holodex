@@ -187,6 +187,15 @@ views:
     defaultFavorites: Membuka Favorit secara default
     defaultFavoritesMsg: >-
       Menampilkan menu favorit secara langsung ketika mengunjungi holodex.net, atau dengan menekan logo pojok kiri atas.
+    videoFeedSettings: Pengaturan Mengenai Video
+    gridSizeLabel: Ukuran Grid/Thumbnail
+    gridSizeMsg: Mengubah ukuran grid/thumbnail video pada halaman Beranda/Favorit
+    gridSize:
+      - Besar
+      - Sedang
+      - Kecil
+    hideCollabStreamsLabel: Sembunyikan Siaran Kolaborasi
+    hideCollabStreamsMsg: Menyembunyikan siaran kolaborasi dari halaman favorit kamu
   app:
     update_available: Pembaharuan tersedia
     update_btn: Perbarui
@@ -257,6 +266,10 @@ views:
     permalink: Buat Tautan
     presets: Preset
     addframe: Tambah Skema
+    muteAll: Matikan Suara Semua Video
+    unmuteAll: Nyalakan Suara Semua Video
+    autoLayoutTip: Tekan channel untuk mulai menonton menggunakan mode tataletak otomatis
+    createLayoutTip: Membuat tataletak kreasimu sendiri dengan menambahkan kolom, atau menggunakan preset
     preset:
       shareOnDiscord: >-
         Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!
