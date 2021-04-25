@@ -79,7 +79,10 @@ export default {
             set(val) {
                 const obj = this.$store.state.multiview.layoutContent[this.id];
                 obj.currentTab = val;
-                return this.$store.commit("multiview/setLayoutContentById", obj);
+                return this.$store.commit("multiview/setLayoutContentById", {
+                    id: this.id,
+                    content: obj,
+                });
             },
         },
         twitchChatLink() {
