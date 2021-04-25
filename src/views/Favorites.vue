@@ -114,8 +114,10 @@ export default {
     watch: {
         favorites: {
             deep: true,
-            handler() {
-                if (isActive) this.init(false);
+            handler(nw, old) {
+                if (isActive && nw.find((c, index) => old[index] && c.id !== old[index].id)) {
+                    this.init(false);
+                }
             },
         },
     },
