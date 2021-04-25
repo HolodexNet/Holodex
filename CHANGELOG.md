@@ -18,6 +18,7 @@
 - Easier to resize cells with clear drag zones.
 - Fix Pagination not working on last page of channel.
 - New 3x3 video + 1 chat Multiview layout added.
+- Added thumbnails to multiview (#188)
 
 
 
