@@ -14,8 +14,8 @@ let installedMap: Map<Function, boolean> = new Map();
 let GlobalVue: VueConstructor = null;
 if (typeof window !== "undefined") {
     GlobalVue = window.Vue;
-} else if (typeof global !== "undefined") {
-    GlobalVue = global.Vue;
+} else if (typeof globalThis !== "undefined") {
+    GlobalVue = globalThis.Vue;
 }
 if (GlobalVue) {
     GlobalVue.use({
