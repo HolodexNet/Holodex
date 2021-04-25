@@ -214,6 +214,7 @@
                 <div class="text-body-2">
                     <iframe
                         width="100%"
+                        height="500px"
                         seamless
                         src="https://ricecakess.github.io/Holodex/"
                         style="border: none; border-radius: 3px; background: #eee"
