@@ -208,6 +208,22 @@ export default {
         cellContent(old, nw) {
             // if cell becomes null or content changes to a different type, set paused mode back to true
             if (nw === null || (old && nw && nw.type !== old.type)) this.pausedMode = true;
+
+            if (
+                nw.type === "video" &&
+                this.iOS() &&
+                this.$store.state.multiview.layout.find((item) => {
+                    return (
+                        item.i !== this.item.i &&
+                        this.layoutContent[item.i] &&
+                        this.layoutContent[item.i].type === "video" // &&
+                    );
+                })
+            ) {
+                this.muted = true;
+            } else {
+                this.muted = false;
+            }
         },
         pausedMode(newMode) {
             if (newMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
@@ -260,25 +276,13 @@ export default {
         },
         vidPlaying(evt) {
             this.pausedMode = evt.data === 2;
+            if (evt.data === 2 && this.iOS() && this.ytPlayer) {
+                this.ytPlayer.mute();
+                this.muted = true;
+            }
         },
         vidReady(evt) {
             if (evt) this.ytPlayer = evt.target;
-            if (
-                this.iOS() &&
-                this.$store.state.multiview.layout.find((item) => {
-                    return (
-                        item.i !== this.item.i &&
-                        !item.isDraggable &&
-                        this.layoutContent[item.i] &&
-                        this.layoutContent[item.i].type === "video" &&
-                        !this.layoutContent[item.i].muted
-                    );
-                })
-            ) {
-                this.muted = true;
-            } else {
-                this.muted = false;
-            }
         },
         resetCell() {
             this.$store.commit("multiview/deleteLayoutContent", this.item.i);
