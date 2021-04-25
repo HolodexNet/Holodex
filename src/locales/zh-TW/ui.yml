@@ -46,6 +46,8 @@ component:
     copyLink: 複製 Holodex 連結
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -109,6 +111,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -189,6 +192,8 @@ views:
     defaultFavoritesMsg: >-
       進入 Holodex 時預設顯示「我的收藏」頁面
     videoFeedSettings: 影片列表設定
+    siteNavigationSettings: 全域設定
+    languageSettings: 語言設定
     gridSizeLabel: 縮圖/網格大小
     gridSizeMsg: 設定首頁和我的收藏頁面的影片縮圖大小
     gridSize:
