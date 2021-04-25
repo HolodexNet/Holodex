@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Sumimaaf!
-    textBeforeTwitter: 'Terdapat ralat ketika mendapatkan kembali kandungan. Sila semak di Twitter'
-    textAfterTwitter: ' atau laporkan ralat melalui'
+    textBeforeTwitter: "Terdapat ralat ketika mendapatkan kembali kandungan. Sila semak di Twitter"
+    textAfterTwitter: " atau laporkan ralat melalui"
     aboutPage: laman Perihal
     afterAboutPageHyperlink: .
   channelList:
@@ -11,9 +11,9 @@ component:
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
   channelInfo:
-    videoCount: '{0} Buah Video'
-    clipCount: '{n} Buah Sedutan'
-    subscriberCount: '{n} Langganan'
+    videoCount: "{0} Buah Video"
+    clipCount: "{n} Buah Sedutan"
+    subscriberCount: "{n} Langganan"
     subscriberNA: Bilangan langganan tidak tersedia
     totalViews: Jumlah Tontonan
   channelSocials:
@@ -35,16 +35,14 @@ component:
     music: Muzik
     multiview: Berbilang Tontonan
   videoCard:
-    clips: '{n} Sedutan'
-    watching: '{0} Tontonan Sekarang'
+    clips: "{n} Sedutan"
+    watching: "{0} Tontonan Sekarang"
     liveNow: Langsung Sekarang
     edit: Sunting
     copiedToClipboard: Pautan telah disalin ke papan keratan.
     copyLink: Salin Pautan Holodex
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -57,7 +55,6 @@ component:
       channel: saluran
       topic: topik
       org: kumpulan
-      titledesc: tajuk dan perihalan
       comments: ulasan
       videourl: url video
   relatedVideo:
@@ -94,7 +91,6 @@ component:
       beforeExportIcon: Tekan
 views:
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -168,7 +164,7 @@ views:
     scrollModeLabel: Mod Tatal
     scrollModeMsg: Selak laman dengan menatal atau menekan butang
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
-    clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
+    clipLanguageSelection: "Paparkan sedutan yang berbahasa:"
     tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
     defaultFavorites: Jadikan laman Kegemaran laman lalai
     defaultFavoritesMsg: >-
@@ -239,7 +235,7 @@ views:
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Tambah
@@ -247,8 +243,8 @@ editor:
     permission: >-
       Kuasa mengemas kini atau menghapuskan lagu hanya diberikan kepada pengguna berpangkat 'Penyunting' atau lebih tinggi. Sila hubungi kami di <a class='white--text' href='/about'>Discord</a> untuk memaklumkan penyunting akan sebarang kesilapan mahupun masalah atau membuat permohonan menjadi seorang penyunting.
     titles:
-      addSong: 'Data Meta Lagu: Tambahkan lagu lain'
-      songList: 'Senarai Lagu: {0}'
+      addSong: "Data Meta Lagu: Tambahkan lagu lain"
+      songList: "Senarai Lagu: {0}"
       help: Panduan
     itunesLookupPlaceholder: (Pilihan) Cari di iTunes
     moveRight2s: Maju sebanyak 2 saat
@@ -259,7 +255,7 @@ editor:
     originalArtistInput: Penyanyi Asal
     testStart: Semak masa mula
     startInput: Masa Mula
-    endInput: 'Tempoh (saat): (tamat pada {0})'
+    endInput: "Tempoh (saat): (tamat pada {0})"
   exitMode: Selesaikan Suntingan
   enterMode: Sunting Video
 about:
@@ -283,6 +279,12 @@ about:
     quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex\\r\n"
     quitHolodexContent: >-
       Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   gdpr: Peraturan Umum Perlindungan Data dan data saya
   gdprContent: >-
     Sebuah kuki Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
@@ -290,3 +292,11 @@ about:
   feedback: Maklum Balas dan Laporan Pepijat
   feedbackHtml: >-
     Isu baharu boleh dibuka di <a href="https://github.com/RiceCakess/Holodex/issues"> Pengesan Isu Github </a> atau dibawa berbincang dengan pasukan Holodex di Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+

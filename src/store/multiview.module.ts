@@ -34,7 +34,7 @@ const mutations = {
         Vue.set(state.layoutContent, id, content);
     },
     setLayoutContent(state, content) {
-        state.layoutContent = content;
+        Vue.set(state, "layoutContent", content);
     },
     addLayoutItem(state) {
         // Increment the counter to ensure key is always unique.
@@ -74,20 +74,23 @@ const mutations = {
             };
         state.layout.push(newLayoutItem);
     },
+    muteLayoutContent(state, { id, value }) {
+        Vue.set(state.layoutContent[id], "muted", value);
+    },
     removeLayoutItem(state, id) {
         const index = state.layout.map((item) => item.i).indexOf(id);
         state.layout.splice(index, 1);
         if (state.layoutContent[id]) Vue.delete(state.layoutContent, id);
     },
     freezeLayoutItem(state, id) {
-        const index = state.layout.map((item) => item.i).indexOf(id);
-        state.layout[index].isResizable = false;
-        state.layout[index].isDraggable = false;
+        const index = (state.layout as Array<any>).findIndex((x) => x.i === id);
+        Vue.set(state.layout[index], "isResizable", false);
+        Vue.set(state.layout[index], "isDraggable", false);
     },
     unfreezeLayoutItem(state, id) {
-        const index = state.layout.map((item) => item.i).indexOf(id);
-        state.layout[index].isResizable = true;
-        state.layout[index].isDraggable = true;
+        const index = (state.layout as Array<any>).findIndex((x) => x.i === id);
+        Vue.set(state.layout[index], "isResizable", true);
+        Vue.set(state.layout[index], "isDraggable", true);
     },
     deleteLayoutContent(state, id) {
         const index = state.layout.map((item) => item.i).indexOf(id);

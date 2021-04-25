@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Maafkeun
-    textBeforeTwitter: 'Ada kesalahan saat memuat konten, silahkan cek twitter '
-    textAfterTwitter: ' atau laporkan hal ini melalui'
+    textBeforeTwitter: "Ada kesalahan saat memuat konten, silahkan cek twitter "
+    textAfterTwitter: " atau laporkan hal ini melalui"
     aboutPage: halaman tentang
     afterAboutPageHyperlink: .
   channelList:
@@ -11,9 +11,10 @@ component:
     unfavoriteAllInGroup: Unfavoritkan semua dalam grup
     favoriteAllInGroup: Favoritkan semua dalam grup
   channelInfo:
-    videoCount: '{0} Video'
-    clipCount: '{n} Klip'
-    subscriberCount: '{n} Subscriber'
+    stats: Statistik
+    videoCount: "{0} Video"
+    clipCount: "{n} Klip"
+    subscriberCount: "{n} Subscriber"
     subscriberNA: Jumlah Subscriber tidak tersedia
     totalViews: Jumlah Ditonton
   channelSocials:
@@ -21,6 +22,7 @@ component:
     removeFromFavorites: Hapus dari Favorit
     unblock: Batalkan blokiran channel ini
     block: Blokir konten channel ini di Holodex
+    blocked: Diblokir
   mainNav:
     home: Beranda
     favorites: Favorit
@@ -34,30 +36,32 @@ component:
     accountSettings: Pengaturan Akun
     music: Musik
     multiview: MultiView
+    points: poin
   videoCard:
-    clips: '{n} Klip'
-    watching: '{0} sedang menonton'
+    clips: "{n} Klip"
+    watching: "{0} sedang menonton"
     liveNow: Sedang Berlangsung
     edit: Ubah
     copiedToClipboard: Tautan disalin ke clipboard.
     copyLink: Salin Tautan Holodex
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
   watch:
     streamingFor: Streaming selama {0}
     nextUpInMugen: Selanjutnya
+    Comments:
+      title: Komentar
+      all: Semua
   search:
     searchLabel: Cari
     type:
       channel: Saluran
       topic: topik
       org: org
-      titledesc: judul & desk
+      titledesc: judul/desk
       comments: Komen
       videourl: url video
   relatedVideo:
@@ -71,7 +75,7 @@ component:
     newer: Terbaru
     older: Terlama
   music:
-    clearPlaylist: Hapus
+    clearPlaylist: Bersihkan
   channelMusic:
     recentSongsHeader: Lagu Terkini
     weeklyTopPlaysHeader: Lagu Populer Mingguan
@@ -92,9 +96,19 @@ component:
       popup: Pasang Holodex pada iOS
       afterExportIcon: lalu "Tambahkan ke Layar Beranda"
       beforeExportIcon: Tekan
+  media:
+    remove: Hapus
+  comment:
+    close: Tutup
+    readMore: Baca selengkapnya
 views:
+  channel:
+    video: Video
+    clips: Klip
+    music: Musik
+    collabs: Kolaborasi
+    about: Tentang
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -168,11 +182,20 @@ views:
     scrollModeLabel: Mode Gulir
     scrollModeMsg: Menggulir halaman menggunakan scroll / menekan tombol.
     resetAllSettings: Reset Semua Pengaturan/Data
-    clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
+    clipLanguageSelection: "Melihat Klip dalam bahasa berikut:"
     tlLanguageSelection: Melihat Terjemahan dalam bahasa ini
     defaultFavorites: Membuka Favorit secara default
     defaultFavoritesMsg: >-
       Menampilkan menu favorit secara langsung ketika mengunjungi holodex.net, atau dengan menekan logo pojok kiri atas.
+    videoFeedSettings: Pengaturan Mengenai Video
+    gridSizeLabel: Ukuran Grid/Thumbnail
+    gridSizeMsg: Mengubah ukuran grid/thumbnail video pada halaman Beranda/Favorit
+    gridSize:
+      - Besar
+      - Sedang
+      - Kecil
+    hideCollabStreamsLabel: Sembunyikan Siaran Kolaborasi
+    hideCollabStreamsMsg: Menyembunyikan siaran kolaborasi dari halaman favorit kamu
   app:
     update_available: Pembaharuan tersedia
     update_btn: Perbarui
@@ -209,8 +232,19 @@ views:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada halaman ini.
     manageFavorites: Kelola Favorit
+    close: Tutup
+    showall: Tampilkan Semua
   editor:
     needlogin: Kamu harus masuk untuk mengubah metadata video dan lagu di Holodex.
+    changeTopic:
+      title: Mengubah topik siaran
+      info: >-
+        Semua pengguna dapat menambahkan topik pada video, tetapi hanya editor dan admin saja yang dapat mengubah dan menghapus topik ketika sudah ditetapkan sebelumnya.
+      button: Simpan (Perlu waktu ±5 menit untuk berpengaruh)
+    channelMentions:
+      title: Mention Channel (dalam pengembangan)
+    sources:
+      title: Sumber/Klip (dalam pengembangan)
   login:
     apikeyMsg: >-
       Kamu dapat menggunakan kunci API untuk Kueri Holodex API secara terprogram. Hanya satu kunci per akun. Setelah mendapat kunci baru, kunci lama akan kedaluwarsa dalam kurun 0-24 jam.'
@@ -222,12 +256,20 @@ views:
     apikeyResetConfirm1: Apa kamu yakin ingin mereset kunci API?
     apikeyResetConfirm2: Kunci API lama akan membutuhkan waktu 0-24 jam sebelum kedaluwarsa. Yakin untuk direset?
     apikeyResetNvm: Tidak terjadi apapun.
+    with:
+      - Masuk dengan Google
+      - Masuk dengan Discord
+      - Masuk dengan Twitter
   multiview:
     confirmOverwrite: Ubah tataletak yang sekarang?
     confirmOverwriteYes: Konfirmasi
     permalink: Buat Tautan
     presets: Preset
     addframe: Tambah Skema
+    muteAll: Matikan Suara Semua Video
+    unmuteAll: Nyalakan Suara Semua Video
+    autoLayoutTip: Tekan channel untuk mulai menonton menggunakan mode tataletak otomatis
+    createLayoutTip: Membuat tataletak kreasimu sendiri dengan menambahkan kolom, atau menggunakan preset
     preset:
       shareOnDiscord: >-
         Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!
@@ -236,10 +278,13 @@ views:
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Lain
+  mugen:
+    welcome: >-
+      Selamat datang di MugenClips! Semua orang yang berada di halaman ini melihat klip hololive bahasa inggris yang sama yang dipilih secara acak. Menonton bareng dan mengobrol sesama fans Hololive dari seluruh penjuru dunia. jika kamu mempercepat klip dan ingin mensinkronkan kembali video dengan semua orang, tekan refresh pada halaman ini.
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Tambah
@@ -247,8 +292,8 @@ editor:
     permission: >-
       Kamu perlu level pengguna 'Editor' atau lebih tinggi untuk memperbarui atau menghapus lagu yang sudah ada. Hubungi kami di <a class='white--text' href='/about'>discord</a> untuk memberitau masalah/penyalahgunaan mengenai editor, atau mengajukan diri menjadi editor.
     titles:
-      addSong: 'Metadata Lagu: Tambahkan lagu baru'
-      songList: 'Daftar Lagu : {0}'
+      addSong: "Metadata Lagu: Tambahkan lagu baru"
+      songList: "Daftar Lagu : {0}"
       help: Bantuan
     itunesLookupPlaceholder: (Opsional) Cari di iTunes
     moveRight2s: Geser kanan 2detik
@@ -259,7 +304,7 @@ editor:
     originalArtistInput: Penyanyi Asli
     testStart: Uji awal mulai
     startInput: Mulai
-    endInput: 'Durasi dalam detik: (berakhir pd {0})'
+    endInput: "Durasi dalam detik: (berakhir pd {0})"
   exitMode: Keluar dari Mode Edit
   enterMode: Edit Video
 about:
@@ -283,6 +328,26 @@ about:
     quitHolodex: "Saya subber dan ingin channel saya dihapus dari Holodex\\r\n"
     quitHolodexContent: >-
       Yaaahhh :( , mohon beritahu kami jika terdapat masalah. jika kamu tetap ingin channelnya dihapus, tolong kirim pesan pada kami di Discord.
+    favorite:
+      title: Apa itu favorit?
+      disappear:
+        title: Daftar favorit saya menghilang / saya tidak bisa melakukan favorit
+    mobile:
+      title: Apakah ada aplikasi Android/iOS untuk Holodex?
+      content:
+        summary: >-
+          Kami masih mengembangkan hal itu! untuk saat ini, mohon gunakan fitur "Tambah ke Layar Utama" pada browser kalian. kami telah menyetelnya agar terlihat seperti aplikasi
+    MugenClips:
+      title: Apa itu MugenClips?
+    subber:
+      title: Saya subber dan tidak menemukan channel atau klip saya pada Holodex
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: Saya punya saran/ingin berkontribusi pada projek ini
   gdpr: GDPR dan data saya
   gdprContent: >-
     Cookie Google Analytics digunakan untuk melacak tampilan halaman untuk tujuan analitis kami. Setelah login, kami mengaitkan nama pengguna dan ID akun media sosial dengan favorit kamu. Data ini mungkin termasuk alamat Email (untuk Google), ID Discord, atau Twitter kamu.
@@ -290,3 +355,16 @@ about:
   feedback: Saran/Lapor Bug
   feedbackHtml: >-
     Kamu dapat membuat isu baru di <a href="https://github.com/RiceCakess/Holodex/issues"> Github Pelacak Masalah </a> atau berbicara dengan tim Holodex di Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    title: Kredit
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
+  changelog:
+    title: Log Perubahan
+  news:
+    title: Berita

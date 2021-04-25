@@ -3,6 +3,8 @@ import VueGTag from "vue-gtag";
 import VueMeta from "vue-meta";
 import VueI18n from "vue-i18n";
 import * as icons from "@/utils/icons";
+import LoadScript from "vue-plugin-load-script";
+
 // import VueSocketIOExt from "vue-socket.io-extended";
 // import { io, Manager } from "socket.io-client";
 import App from "./App.vue";
@@ -34,7 +36,7 @@ Vue.use(VueMeta, {
     refreshOnceOnNavigation: true,
 });
 Vue.use(VueI18n);
-
+Vue.use(LoadScript);
 Vue.prototype.icons = icons;
 
 new Vue({

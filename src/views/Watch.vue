@@ -17,7 +17,7 @@
                                 @ready="ready"
                                 :playerVars="{
                                     ...(timeOffset && { start: timeOffset }),
-                                    autoplay: $store.state.settings.autoplayVideo ? 1 : 0,
+                                    autoplay: isMugen ? 1 : 0,
                                     playsinline: 1,
                                 }"
                             >
@@ -134,7 +134,7 @@
                             @ready="ready"
                             :playerVars="{
                                 ...(timeOffset && { start: timeOffset }),
-                                autoplay: $store.state.settings.autoplayVideo ? 1 : 0,
+                                autoplay: isMugen ? 1 : 0,
                                 playsinline: 1,
                             }"
                         >

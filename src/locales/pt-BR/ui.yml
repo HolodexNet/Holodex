@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: 'Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter'
-    textAfterTwitter: ' ou relate o erro por meio da '
+    textBeforeTwitter: "Ocorreu um erro ao carregar o conteúdo, verifique nosso Twitter"
+    textAfterTwitter: " ou relate o erro por meio da "
     aboutPage: página de Informações
     afterAboutPageHyperlink: .
   channelList:
@@ -11,9 +11,10 @@ component:
     unfavoriteAllInGroup: Remover todos desse grupo dos favoritos
     favoriteAllInGroup: Adicionar todos desse grupo aos favoritos
   channelInfo:
-    videoCount: '{0} Vídeos'
-    clipCount: '{n} Clipes'
-    subscriberCount: '{n} Inscritos'
+    stats: Estatísticas
+    videoCount: "{0} Vídeos"
+    clipCount: "{n} Clipes"
+    subscriberCount: "{n} Inscritos"
     subscriberNA: Número de inscritos indisponível
     totalViews: Total de Visualizações
   channelSocials:
@@ -21,6 +22,7 @@ component:
     removeFromFavorites: Remover dos favoritos
     unblock: Desbloquear este canal
     block: Bloquear o conteúdo deste canal no Holodex
+    blocked: Bloqueados
   mainNav:
     home: Início
     favorites: Favoritos
@@ -34,30 +36,31 @@ component:
     accountSettings: Configurações da Conta
     music: Música
     multiview: Multi Stream
+    points: pts
   videoCard:
-    clips: '{n} Clipes'
-    watching: '{0} assistindo agora'
+    clips: "{n} Clipes"
+    watching: "{0} assistindo agora"
     liveNow: Ao Vivo
     edit: Editar
     copiedToClipboard: Link copiado para a área de transferência.
     copyLink: Copiar link Holodex
   videoDescription:
     description: Descrição
-  video:
-    comment: { }
   description:
     showLess: Mostrar Menos
     showMore: Mostrar Mais
   watch:
     streamingFor: Transmissão iniciada há {0}
     nextUpInMugen: Próximo
+    Comments:
+      title: Comentários
+      all: Todos
   search:
     searchLabel: Pesquisar
     type:
       channel: Canal
       topic: Tópico
       org: Org
-      titledesc: Título e Desc
       comments: Comentários
       videourl: URL de Vídeo
   relatedVideo:
@@ -92,9 +95,18 @@ component:
       popup: Instalar Holodex no iOS
       afterExportIcon: ', "Adicionar à Tela de Início"'
       beforeExportIcon: Toque
+  media:
+    remove: Remover
+  comment:
+    close: Fechar
+    readMore: Mostrar mais
 views:
+  channel:
+    video: Vídeos
+    clips: Clipes
+    music: Músicas
+    about: Informações
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Inscritos
       group: Groupo
@@ -168,7 +180,7 @@ views:
     scrollModeLabel: Modo de Rolagem
     scrollModeMsg: Use rolar/tocar para navegar nas páginas
     resetAllSettings: Redefinir todas as configurações/dados
-    clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
+    clipLanguageSelection: "Mostrar clipes nestes idiomas:"
     tlLanguageSelection: Ver Traduções no Chat nestes idiomas
     defaultFavorites: Abrir Favoritos por Padrão
     defaultFavoritesMsg: >-
@@ -209,8 +221,19 @@ views:
     promptForAction: >-
       Crie uma lista com seus vtubers favoritos para ver clipes e lives mais recentes nesta página.
     manageFavorites: Gerenciar Favoritos
+    close: Fechar
+    showall: Mostrar todos
   editor:
     needlogin: Você precisará fazer login para editar metadados de vídeo e música do Holodex.
+    changeTopic:
+      title: Alterar tópico da transmissão
+      info: >-
+        Todos os usuários podem atribuir tópico a vídeos, mas somente editores e administradores podem remover e alterar o tópico uma vez definido.
+      button: Salvar (Pode levar 5 minutos para ter efeito)
+    channelMentions:
+      title: Menções de Canal (em Desenvolvimento)
+    sources:
+      title: Fontes/Clipes (em desenvolvimento)
   login:
     apikeyMsg: >-
       Você pode usar a chave de API para consultar a Holodex API programaticamente. Apenas uma  chave por conta. Gerar uma nova chave fará com que as chaves antigas expirem em até 24 horas.
@@ -222,6 +245,10 @@ views:
     apikeyResetConfirm1: Tem certeza de que deseja resetar sua chave de API?
     apikeyResetConfirm2: Isto fará com que as chaves antigas expirem em até 24 horas. Deseja realmente presseguir?
     apikeyResetNvm: Nada de interessante aconteceu
+    with:
+      - Entrar com o Google
+      - Entrar com Discord
+      - Entrar com o Twitter
   multiview:
     confirmOverwrite: Sobrescrever layout atual?
     confirmOverwriteYes: Confirmar
@@ -239,7 +266,7 @@ views:
 time:
   soon: em breve
   diff_future_date: Ao Vivo {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Adicionar
@@ -247,8 +274,8 @@ editor:
     permission: >-
       Você precisa ser um usuário com título de "Editor" ou superior para atualizar ou excluir  músicas existente. Use nosso <a class='white--text' href='/about'>discord</a> para notificar os editores sobre problemas ou abusos, ou candidate-se para se tornar um editor.
     titles:
-      addSong: 'Metadados de Música: Adicionar uma nova Música'
-      songList: 'Lista de Músicas: {0}'
+      addSong: "Metadados de Música: Adicionar uma nova Música"
+      songList: "Lista de Músicas: {0}"
       help: Guia
     itunesLookupPlaceholder: (Opcional) Procurar no iTunes
     moveRight2s: Avançar 2 segundos
@@ -259,7 +286,7 @@ editor:
     originalArtistInput: Artista Original
     testStart: Testar o inicio
     startInput: Iniciar
-    endInput: 'Duração em segundos: (end @ {0})'
+    endInput: "Duração em segundos: (end @ {0})"
   exitMode: Sair do Modo de Edição
   enterMode: Editar Vídeo
 about:
@@ -283,6 +310,23 @@ about:
     quitHolodex: "Sou um subber e gostaria que meu canal fosse removido do Holodex\\r\n"
     quitHolodexContent: >-
       Estou triste em vê-lo ir :(, por favor me avise se houver qualquer problema com que possamos lhe ajudar. Se você ainda deseja ser removido, por favor nos mande uma mensagem no Discord.
+    favorite:
+      title: O que são os favoritos?
+      disappear:
+        title: A minha lista de favoritos desapareceu / eu não consigo favoritar
+    mobile:
+      title: Existe um aplicativo do Holodex para Android/iOS?
+    MugenClips:
+      title: O que é MugenClips?
+    subber:
+      title: Sou um subber e não consigo encontrar meu canal ou clipes no Holodex
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: Eu tenho feedback/quero contribuir com o projeto
   gdpr: GDPR e meus dados
   gdprContent: >-
     Um cookie do Google Analytics é usado para monitorar páginas visualizadas para nossos fins analíticos. Após o login, associamos o seu nome de usuário e ID de mídia social aos seus favoritos. Estes dados podem incluir seu e-mail (Google), ID do Discord ou ID do Twitter, respectivamente.
@@ -290,3 +334,15 @@ about:
   feedback: Feedback/Reportar Bug
   feedbackHtml: >-
     Você pode criar uma issue no <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> ou contactar a equipe do Holodex no Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
+  changelog:
+    title: Mudanças
+  news:
+    title: Novidades

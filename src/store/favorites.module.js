@@ -45,7 +45,12 @@ const actions = {
     },
     fetchLive({ state, commit, rootState, dispatch }, { force = false, minutes = 2 }) {
         if (!(rootState.userdata && rootState.userdata.jwt)) return null; // don't update.
-        if (force || !state.lastLiveUpdate || Date.now() - state.lastLiveUpdate > minutes * 60 * 1000) {
+        if (
+            state.hasError ||
+            force ||
+            !state.lastLiveUpdate ||
+            Date.now() - state.lastLiveUpdate > minutes * 60 * 1000
+        ) {
             commit("fetchStart");
             return api
                 .favoritesLive({
@@ -53,8 +58,16 @@ const actions = {
                     channels: state.favorites.map((f) => f.id).join(","),
                 })
                 .then((res) => {
-                    // console.log(res);
-                    commit("setLive", res);
+                    // filter out collab channels if settings is set
+                    if (rootState.settings.hideCollabStreams) {
+                        const favoritesSet = new Set(state.favorites.map((f) => f.id));
+                        commit(
+                            "setLive",
+                            res.filter((video) => favoritesSet.has(video.channel.id)),
+                        );
+                    } else {
+                        commit("setLive", res);
+                    }
                     commit("fetchEnd");
                 })
                 .catch((e) => {
@@ -63,6 +76,7 @@ const actions = {
                     commit("fetchError");
                 });
         }
+        commit("resetErrors");
         return null;
     }, // eslint-disable-next-line no-unused-vars
     updateFavorites: debounce(({ state, commit, dispatch, rootState }) => {
@@ -100,22 +114,32 @@ const actions = {
 const mutations = {
     fetchStart(state) {
         state.isLoading = true;
+        state.hasError = false;
     },
     fetchEnd(state) {
         state.isLoading = false;
+        state.hasError = false;
     },
     fetchError(state) {
         state.hasError = true;
+        state.isLoading = false;
     },
     setLive(state, live) {
         state.live = live;
         state.lastLiveUpdate = Date.now();
+    },
+    setLastLiveUpdate(state, time) {
+        state.lastLiveUpdate = time;
     },
     setRecentVideoFilter(state, filter) {
         state.recentVideoFilter = filter;
     },
     setFavorites(state, favorites) {
         state.favorites = favorites;
+    },
+    resetErrors(state) {
+        state.hasError = false;
+        state.isLoading = false;
     },
     resetState(state) {
         // state.hasError = false;

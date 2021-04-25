@@ -1,8 +1,8 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: 'There was an error retrieving content, please check twitter '
-    textAfterTwitter: ' or report an error through the'
+    textBeforeTwitter: "There was an error retrieving content, please check twitter "
+    textAfterTwitter: " or report an error through the"
     aboutPage: About page
     afterAboutPageHyperlink: .
   channelList:
@@ -11,9 +11,9 @@ component:
     favoriteAllInGroup: Favorite all in group
   channelInfo:
     stats: Stats
-    videoCount: '{0} Videos'
-    clipCount: '{n} Clips'
-    subscriberCount: '{n} Subscribers'
+    videoCount: "{0} Videos"
+    clipCount: "{n} Clips"
+    subscriberCount: "{n} Subscribers"
     subscriberNA: Subscriber count unavailable
     totalViews: Total Views
   channelSocials:
@@ -37,8 +37,8 @@ component:
     multiview: MultiView
     points: pts
   videoCard:
-    clips: '{n} Clips'
-    watching: '{0} Watching'
+    clips: "{n} Clips"
+    watching: "{0} Watching"
     liveNow: Live Now
     edit: Edit
     copiedToClipboard: Link copied to clipboard.
@@ -62,7 +62,7 @@ component:
       channel: channel
       topic: topic
       org: org
-      titledesc: title & desc
+      titledesc: title/desc
       comments: comments
       videourl: video url
   relatedVideo:
@@ -194,12 +194,21 @@ views:
     scrollModeLabel: Scroll Mode
     scrollModeMsg: Use scroll/tap to turn pages
     resetAllSettings: Reset All Settings/Data
-    clipLanguageSelection: 'See Clips in these Languages:'
+    clipLanguageSelection: "See Clips in these Languages:"
     tlLanguageSelection: See live-chat TL in these languages
     defaultFavorites: Default open Favorites
     defaultFavoritesMsg: >-
       Open Favorites by default when visiting holodex.net, or clicking on the
       logo top left.
+    videoFeedSettings: Video Feed Settings
+    gridSizeLabel: Thumbnail/Grid Size
+    gridSizeMsg: Change thumbnail/video grid size on Home/Favorites page
+    gridSize:
+      - Large
+      - Medium
+      - Small
+    hideCollabStreamsLabel: Hide Collab Streams
+    hideCollabStreamsMsg: Hide collab streams from your favorites feed
   app:
     update_available: An update is available
     update_btn: Update
@@ -277,6 +286,10 @@ views:
     permalink: Permalink
     presets: Presets
     addframe: Add Cell
+    muteAll: Mute All
+    unmuteAll: Unmute All
+    autoLayoutTip: Click on a channel to start watching using auto layout mode
+    createLayoutTip:  Create your own layout by adding a cell, or using a preset
     preset:
       shareOnDiscord: >-
         Have a cool layout to share? Use the share button and let us know on our
@@ -295,7 +308,7 @@ views:
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Add
@@ -306,8 +319,8 @@ editor:
       href='/about'>discord</a> to notify editors of issues / abuse, or apply to
       become an editor.
     titles:
-      addSong: 'Song Metadata: Add a new Song'
-      songList: 'Song List : {0}'
+      addSong: "Song Metadata: Add a new Song"
+      songList: "Song List : {0}"
       help: Guide
     itunesLookupPlaceholder: (Optional) Lookup on iTunes
     moveRight2s: Move right 2s
@@ -318,7 +331,7 @@ editor:
     originalArtistInput: Original Artist
     testStart: Test the start
     startInput: Start
-    endInput: 'Duration in seconds: (end @ {0})'
+    endInput: "Duration in seconds: (end @ {0})"
   exitMode: Exit Edit Mode
   enterMode: Edit Video
 about:
@@ -378,7 +391,7 @@ about:
           We are working on it! In the mean time, please use the "Add to Home"
           feature on your browser. We have tuned it a lot to behave like an app
         android:
-          - 'Android Chrome: Navigate to the site, click the three dots'
+          - "Android Chrome: Navigate to the site, click the three dots"
           - on the top right and find "Add to Home Screen".
         ios:
           - >-

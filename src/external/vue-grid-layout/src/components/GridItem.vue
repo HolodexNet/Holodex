@@ -57,37 +57,43 @@
 
 .vue-grid-item > .vue-resizable-handle {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    // bottom: 0;
-    // right: 0;
-    /* background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4="); */
-    // background-position: bottom right;
-    padding: 0 3px 3px 0;
-    // background-repeat: no-repeat;
-    // background-origin: content-box;
+    min-width: 20px;
+    min-height: 20px;
     box-sizing: border-box;
+
+    padding: 4px;
+    background-color: var(--v-primary-base, rgba(150, 93, 137, 0.452));
+    opacity: 0.3;
+    background-clip: content-box !important;
 
     &.h-n {
         top: 0 !important;
-        left: 50%;
+        left: 35%;
         bottom: unset;
+        width: 30%;
+        height: 20px !important;
     }
     &.h-w {
         left: 0 !important;
-        top: 50%;
+        top: 35%;
         left: unset;
+        height: 30%;
+        width: 20px !important;
     }
     &.h-s {
         bottom: 0 !important;
-        left: 50%;
+        left: 35%;
         top: unset !important;
+        width: 30%;
+        height: 20px !important;
     }
     &.h-e {
         right: 0 !important;
-        top: 50%;
+        top: 35%;
         bottom: unset;
         left: unset !important;
+        height: 30%;
+        width: 20px !important;
     }
 }
 

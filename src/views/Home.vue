@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
-        <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
-        <div v-show="!isLoading && !hasError">
+        <LoadingOverlay :isLoading="false" :showError="hasError" />
+        <div v-show="!hasError">
             <div class="d-flex justify-space-between px-0 pb-3 pt-1 px-sm-3">
                 <div class="text-h6">
                     {{ $t("views.home.liveOrUpcomingHeading") }}
@@ -10,6 +10,7 @@
                     <v-icon>{{ $store.getters.gridIcon }}</v-icon>
                 </v-btn>
             </div>
+            <SkeletonCardList v-if="isLoading" :cols="colSizes" :limitRows="2" :dense="currentGridSize > 0" />
             <VideoCardList
                 :videos="live"
                 includeChannel
@@ -17,8 +18,10 @@
                 :limitRows="2"
                 :cols="colSizes"
                 :dense="currentGridSize > 0"
+                v-else
             >
             </VideoCardList>
+
             <v-divider class="my-3" />
             <div class="d-flex justify-space-between px-0 pb-3 pt-1 px-sm-3">
                 <div class="text-h6">
@@ -41,10 +44,11 @@
                 :paginate="!scrollMode"
                 :perPage="this.pageLength"
                 :loadFn="getLoadFn()"
-                v-slot="{ data }"
+                v-slot="{ data, isLoading }"
                 :key="'vl-home-' + recentVideoFilter + identifier"
             >
                 <VideoCardList :videos="data" includeChannel :cols="colSizes" :dense="currentGridSize > 0" />
+                <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
             </generic-list-loader>
         </div>
     </v-container>
@@ -57,6 +61,7 @@ import { mapState } from "vuex";
 import reloadable from "@/mixins/reloadable";
 import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
+import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 
 export default {
     name: "Home",
@@ -72,6 +77,7 @@ export default {
         VideoCardList,
         LoadingOverlay,
         GenericListLoader,
+        SkeletonCardList,
     },
     data() {
         return {
@@ -99,7 +105,7 @@ export default {
                 this.identifier = Date.now();
                 this.$router.push({
                     query: {
-                        ...this.$router.query,
+                        ...this.$route.query,
                         page: undefined,
                     },
                 });

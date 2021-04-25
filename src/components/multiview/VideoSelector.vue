@@ -2,7 +2,7 @@
     <!-- Vertical: -->
     <v-card class="pa-3" v-if="!horizontal">
         <v-row>
-            <v-col cols="12" sm="4" md="2" style="border-right: 1px solid white">
+            <v-col cols="12" sm="3" md="2" style="border-right: 1px solid white">
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
                 <v-select
                     :items="orgList"
@@ -13,22 +13,24 @@
                 ></v-select>
                 <v-list-item-group v-model="selectedOrg" mandatory v-else>
                     <template v-for="org in orgList">
-                        <v-list-item v-if="org.value !== 1" :key="org.value">
+                        <v-list-item v-if="org.value === 1" :key="org.value">
+                            <v-icon class="mr-2">{{ icons.mdiYoutube }}</v-icon>
+                            <v-list-item-title>URL</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item v-else-if="org.value === 2" :key="org.value">
+                            <v-icon class="mr-2">{{ mdiTwitch }}</v-icon>
+                            <v-list-item-title>URL</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item v-else :key="org.value">
                             <v-list-item-content>
                                 <v-list-item-title>{{ org.text }}</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                         <!-- Custom! -->
-                        <v-list-item v-else :key="org.value">
-                            <!-- <v-list-item-content> -->
-                            <v-icon class="mr-2">{{ icons.mdiYoutube }}</v-icon>
-                            <v-list-item-title>URL</v-list-item-title>
-                            <!-- </v-list-item-content> -->
-                        </v-list-item>
                     </template>
                 </v-list-item-group>
             </v-col>
-            <v-col cols="12" sm="8" md="10" style="max-height: 100%; overflow-y: auto">
+            <v-col cols="12" sm="9" md="10" style="max-height: 100%; overflow-y: auto">
                 <template v-if="selectedOrg === 1">
                     <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
                     <v-text-field
@@ -39,6 +41,21 @@
                     ></v-text-field>
                     <v-btn
                         @click="addCustomVideo"
+                        :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
+                    >
+                        <v-icon>{{ icons.mdiCheck }}</v-icon>
+                    </v-btn>
+                </template>
+                <template v-else-if="selectedOrg === 2">
+                    <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
+                    <v-text-field
+                        label="Twitch Channel Link"
+                        hint="https://www.twitch.tv/..."
+                        v-model="customURL"
+                        :error="customURLError"
+                    ></v-text-field>
+                    <v-btn
+                        @click="addCustomTwitchVideo"
                         :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                     >
                         <v-icon>{{ icons.mdiCheck }}</v-icon>
@@ -58,10 +75,18 @@
                     <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
                     <VideoCardList
                         :videos="live"
-                        horizontal
                         @videoClicked="handleVideoClick"
                         disableDefaultClick
                         includeChannel
+                        :cols="{
+                            xs: 1,
+                            sm: 1,
+                            md: 2,
+                            lg: 4,
+                            xl: 5,
+                        }"
+                        :horizontal="$vuetify.breakpoint.mdAndDown"
+                        dense
                     ></VideoCardList>
                 </template>
             </v-col>
@@ -80,7 +105,7 @@
         <template v-if="selectedOrg === 1">
             <v-text-field
                 label="Youtube Video Link"
-                hint="https://www.youtube.com/watch?v=..."
+                placeholder="https://www.youtube.com/watch?v=..."
                 v-model="customURL"
                 :error="customURLError"
                 hide-details
@@ -89,6 +114,24 @@
             ></v-text-field>
             <v-btn
                 @click="addCustomVideo"
+                :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
+                icon
+            >
+                <v-icon>{{ icons.mdiCheck }}</v-icon>
+            </v-btn>
+        </template>
+        <template v-else-if="selectedOrg === 2">
+            <v-text-field
+                label="Twitch Channel Link"
+                placeholder="https://www.twitch.tv/..."
+                v-model="customURL"
+                :error="customURLError"
+                hide-details
+                solo
+                style="width: 100%"
+            ></v-text-field>
+            <v-btn
+                @click="addCustomTwitchVideo"
                 :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                 icon
             >
@@ -126,6 +169,7 @@ import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { ORGS, VIDEO_URL_REGEX } from "@/utils/consts";
 import { dayjs } from "@/utils/time";
 import { mapGetters, mapState } from "vuex";
+import { mdiTwitch } from "@mdi/js";
 
 export default {
     name: "VideoSelector",
@@ -152,6 +196,8 @@ export default {
 
             tick: Date.now(),
             ticker: null,
+
+            mdiTwitch,
         };
     },
     mounted() {
@@ -194,24 +240,39 @@ export default {
                     value: 0,
                 },
                 {
-                    text: "Custom",
+                    text: "Youtube URL",
                     value: 1,
+                },
+                {
+                    text: "Twitch URL",
+                    value: 2,
                 },
                 ...this.ORGS.filter((x) => x !== "All Vtubers").map((orgName, index) => {
                     return {
                         text: orgName,
-                        value: index + 2,
+                        value: index + 3,
                     };
                 }),
             ];
             return arr;
         },
         filteredLive() {
-            return this.live
+            let filtered = this.live
                 .filter((l) => {
-                    return l.status === "live" || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "minutes"));
+                    return l.status === "live" || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m"));
                 })
                 .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+
+            // expand search if 30m limit yields less than 5 results
+            if (filtered.length < 5) {
+                filtered = this.live
+                    .filter((l) => {
+                        return l.status === "live" || dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h"));
+                    })
+                    .splice(0, 5)
+                    .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+            }
+            return filtered;
         },
     },
     methods: {
@@ -237,6 +298,22 @@ export default {
                 this.customURLError = false;
                 this.$emit("videoClicked", {
                     id: match[1],
+                    channel: {
+                        name: match[1],
+                    },
+                });
+            } else {
+                this.customURLError = true;
+            }
+        },
+        addCustomTwitchVideo() {
+            const regex = /(?:https:\/\/)?twitch\.tv\/([\w\-_]*)/i;
+            const match = this.customURL.match(regex);
+            if (match && match[1]) {
+                this.customURLError = false;
+                this.$emit("videoClicked", {
+                    id: match[1],
+                    cellVideoType: "twitch",
                     channel: {
                         name: match[1],
                     },

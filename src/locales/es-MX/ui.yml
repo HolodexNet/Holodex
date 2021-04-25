@@ -2,8 +2,8 @@
 component:
   apiError:
     title: '¡Gomenasorry!'
-    textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
-    textAfterTwitter: ' O reporta el error a través de la'
+    textBeforeTwitter: "Ha ocurrido un error recuperando el contenido, por favor revisa Twitter "
+    textAfterTwitter: " O reporta el error a través de la"
     aboutPage: Página de información
     afterAboutPageHyperlink: .
   channelList:
@@ -11,9 +11,9 @@ component:
     unfavoriteAllInGroup: Desmarcar todos como favoritos
     favoriteAllInGroup: Marcar todo en el grupo como favorito
   channelInfo:
-    videoCount: '{0} Videos'
-    clipCount: '{n} Clips'
-    subscriberCount: '{n} Subscriptores'
+    videoCount: "{0} Videos"
+    clipCount: "{n} Clips"
+    subscriberCount: "{n} Subscriptores"
     subscriberNA: Número de suscriptores no disponible
     totalViews: Visualizaciones totales
   channelSocials:
@@ -35,7 +35,7 @@ component:
     music: Música
     multiview: Vista Múltiple
   videoCard:
-    watching: '{0} Mirando'
+    watching: "{0} Mirando"
     liveNow: En Vivo
     edit: Editar
     copiedToClipboard: Link copiado al portapapeles.
@@ -53,7 +53,6 @@ component:
     type:
       channel: canal
       topic: tema
-      titledesc: título y descripción
       comments: comentarios
       videourl: link del vídeo
   relatedVideo:
@@ -160,7 +159,7 @@ views:
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
-    clipLanguageSelection: 'Ver clips en estos idiomas'
+    clipLanguageSelection: "Ver clips en estos idiomas"
     tlLanguageSelection: Ver traducciones en vivo en estos idiomas
   app:
     update_available: Una actualización está disponible
@@ -231,8 +230,8 @@ editor:
     permission: >-
       Necesitas ser un usuario de nivel 'Editor' o mas alto para actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar a los editores de problemas / abusos, o aplica para volverte un editor.
     titles:
-      addSong: 'Metadatos de la cancion: Añadir una nueva canción'
-      songList: 'Lista de canciones : {0}'
+      addSong: "Metadatos de la cancion: Añadir una nueva canción"
+      songList: "Lista de canciones : {0}"
       help: Guia
     itunesLookupPlaceholder: (Opcional) Buscar en iTunes
     moveRight2s: Mover 2s a la derecha
@@ -243,7 +242,7 @@ editor:
     originalArtistInput: Artista Original
     testStart: Probar el inicio
     startInput: Iniciar
-    endInput: 'Duración en segundos: (termina en {0})'
+    endInput: "Duración en segundos: (termina en {0})"
   exitMode: Salir del modo de edición
   enterMode: Editar video
 about:
@@ -267,6 +266,12 @@ about:
     quitHolodex: "Soy un subtitulador y me gustaría que mi canal fuera eliminado del Holodex\\r\n"
     quitHolodexContent: >-
       Es triste verte ir :(, por favor házme saber si hay algún problema con el que puedo ayudarte. Si aún desea que se elimine su cuenta, por favor envíenos un mensaje a Discord.
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   gdpr: GDPR y mis datos
   gdprContent: >-
     Una cookie de Google Analytics se utiliza para rastrear visitas a la pagina para propósitos analíticos. Después de iniciar sesión asociamos su nombre de usuario y ID de la cuenta de redes sociales con sus favoritos. Estos datos pueden incluir tu correo electrónico (para Google), Discord ID o Twitter respectivamente.
@@ -274,3 +279,11 @@ about:
   feedback: Comentarios/Reportes de Bug
   feedbackHtml: >-
     Puedes crear un problema en el <a href="https://github.com/RiceCakess/Holodex/issues"> Rastreador de Problemas de Github </a> o encontrar al equipo de Holodex en Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+

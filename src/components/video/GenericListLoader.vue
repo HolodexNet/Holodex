@@ -1,7 +1,7 @@
 <template>
     <div>
         <div :id="'tjump' + randomId"></div>
-        <slot v-bind:data="data"> </slot>
+        <slot v-bind:data="data" v-bind:isLoading="isLoading"> </slot>
         <InfiniteLoad v-if="infiniteLoad" @infinite="emitLoad" :identifier="identifier" />
         <PaginateLoad
             v-if="paginate"
@@ -83,6 +83,7 @@ export default {
         },
     },
     data() {
+        console.log("reset");
         return {
             randomId: Date.now(),
 
@@ -91,6 +92,7 @@ export default {
 
             // pagination/infinite key prop
             identifier: Date.now(),
+            isLoading: true,
         };
     },
     computed: {
@@ -101,6 +103,7 @@ export default {
     methods: {
         async emitLoad($state) {
             const { page } = $state;
+            this.isLoading = true;
             const result: Array<Object> | { total?; offset?; items? } = await this.loadFn(
                 (page - 1) * this.perPage,
                 this.perPage,
@@ -126,7 +129,7 @@ export default {
                 offset = result.offset || (page - 1) * this.perPage; // does offset actually matter? oh well.
                 obtainedArray = Object.values(result as Object).find((v) => Array.isArray(v));
             }
-
+            this.isLoading = false;
             // set output for slotted component
             if (this.infiniteLoad) {
                 this.data = this.data.concat(obtainedArray);

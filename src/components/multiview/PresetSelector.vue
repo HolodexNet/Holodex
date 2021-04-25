@@ -8,7 +8,7 @@
                 <template v-for="preset in decodedDesktopPresets">
                     <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
                         <div class="layout-btn pa-2" @click="handleSelected(preset)">
-                            <LayoutPreview :layout="preset.layout" />
+                            <LayoutPreview :layout="preset.layout" :content="preset.content" />
                             <div class="text-body-1 text-center">
                                 {{ preset.name }}
                             </div>
@@ -21,7 +21,11 @@
                 <template v-for="preset in decodedMobilePresets">
                     <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
                         <div class="layout-btn pa-2" @click="handleSelected(preset)">
-                            <LayoutPreview :layout="preset.layout" :mobile="!preset.landscape" />
+                            <LayoutPreview
+                                :layout="preset.layout"
+                                :content="preset.content"
+                                :mobile="!preset.landscape"
+                            />
                             <div class="text-body-1 text-center">
                                 {{ preset.name }}
                             </div>

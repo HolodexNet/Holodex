@@ -2,16 +2,16 @@
 component:
   apiError:
     title: Oups!
-    textBeforeTwitter: 'Il y a eu une erreur lors de la récupération du contenu, veuillez vérifier sur twitter'
-    textAfterTwitter: ' ou signalez une erreur via la page'
+    textBeforeTwitter: "Il y a eu une erreur lors de la récupération du contenu, veuillez vérifier sur twitter"
+    textAfterTwitter: " ou signalez une erreur via la page"
     aboutPage: À propos
   channelList:
     signInToFavorite: Veuillez-vous connecter pour ajouter aux favoris
     unfavoriteAllInGroup: Supprimer tout le groupe des favoris
     favoriteAllInGroup: Ajouter tout le groupe aux favoris
   channelInfo:
-    videoCount: '{0} Vidéos'
-    subscriberCount: '{n} Abonnés'
+    videoCount: "{0} Vidéos"
+    subscriberCount: "{n} Abonnés"
     subscriberNA: Nombre d'abonnés indisponible
     totalViews: Vues Totales
   channelSocials:
@@ -28,7 +28,7 @@ component:
     logout: Se déconnecter
     multiview: Multivue
   videoCard:
-    watching: '{0} Visionnages'
+    watching: "{0} Visionnages"
     liveNow: EN DIRECT
     edit: Modifier
   description:
@@ -42,7 +42,6 @@ component:
     type:
       channel: chaînes
       topic: sujet
-      titledesc: titre et desc.
       comments: commentaires
       videourl: url de la vidéo
   relatedVideo:
@@ -110,7 +109,7 @@ views:
     scrollModeLabel: Mode défilement
     scrollModeMsg: Utilisez défiler ou toucher pour tourner les pages
     resetAllSettings: Réinitialiser tous les paramètres/toutes les données
-    clipLanguageSelection: 'Voir des clips dans ces langues :'
+    clipLanguageSelection: "Voir des clips dans ces langues :"
   app:
     update_available: Une mise à jour est disponible
     update_btn: Mettre à jour
@@ -132,3 +131,19 @@ views:
 time:
   soon: Bientôt
   diff_future_date: Commence {0} ({1})
+about:
+  faq:
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+

@@ -45,20 +45,33 @@
                     </v-icon>
                 </v-btn>
             </v-list>
+            <!-- Static channel list with no loading for locally stored blocked/favorites list -->
             <ChannelList
                 :channels="channelList"
                 includeVideoCount
                 :grouped="sort === 'group'"
                 :cardView="cardView"
-                :key="`channel-list-${category}`"
-                :showDelete="category === Tabs.BLOCKED || category === Tabs.SUBBER"
+                v-if="category === Tabs.BLOCKED || category === Tabs.FAVORITES"
+                :showDelete="category === Tabs.BLOCKED"
             />
+            <!-- API retrieved channels list -->
+            <generic-list-loader
+                v-else
+                infiniteLoad
+                :perPage="25"
+                :loadFn="getLoadFn()"
+                v-slot="{ data }"
+                :key="`channel-list-${category}-${identifier}`"
+            >
+                <ChannelList
+                    :channels="data"
+                    includeVideoCount
+                    :grouped="sort === 'group'"
+                    :cardView="cardView"
+                    :showDelete="category === Tabs.SUBBER"
+                />
+            </generic-list-loader>
         </v-container>
-        <InfiniteLoad
-            @infinite="load"
-            :identifier="infiniteId"
-            v-if="category !== Tabs.FAVORITES && category !== Tabs.BLOCKED"
-        />
         <!-- Favorites specific view items: -->
         <template v-if="category === Tabs.FAVORITES">
             <div v-if="!favorites || favorites.length === 0">
@@ -76,14 +89,14 @@
 
 <script lang="ts">
 import ChannelList from "@/components/channel/ChannelList.vue";
-// import InfiniteLoading from "vue-infinite-loading";
-import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
-import InfiniteLoad from "@/components/common/InfiniteLoad.vue";
+import api from "@/utils/backend-api";
+import { CHANNEL_TYPES } from "@/utils/consts";
 
 import { mdiArrowDown, mdiViewList, mdiViewModule } from "@mdi/js";
 import { mapState } from "vuex";
 import { localSortChannels } from "@/utils/functions";
 import reloadable from "@/mixins/reloadable";
+import GenericListLoader from "@/components/video/GenericListLoader.vue";
 
 export default {
     name: "Channels",
@@ -98,15 +111,13 @@ export default {
     },
     components: {
         ChannelList,
-        // InfiniteLoading,
-        ApiErrorMessage,
-        InfiniteLoad,
+        GenericListLoader,
     },
     data() {
         return {
             ...{ mdiArrowDown, mdiViewList, mdiViewModule },
             // perPage: 25,
-            infiniteId: +new Date(),
+            identifier: +new Date(),
             // freeze object to stop Vue from creating watchers (small optimization)
             Tabs: Object.freeze({
                 VTUBER: 0,
@@ -182,7 +193,7 @@ export default {
                 /* eslint-enable indent */
             },
         },
-        ...mapState("channels", ["channels", "isLoading", "hasError", "currentOffset"]),
+        // ...mapState("channels", ["channels"]),
         ...mapState("favorites", ["favorites", "live"]),
         ...mapState("settings", ["blockedChannels"]),
         category: {
@@ -207,7 +218,7 @@ export default {
         channelList() {
             if (this.category === this.Tabs.FAVORITES) return this.sortedFavorites;
             if (this.category === this.Tabs.BLOCKED) return this.blockedChannels;
-            return this.channels;
+            return [];
         },
         cardView: {
             get() {
@@ -231,49 +242,25 @@ export default {
         reload() {
             this.init();
         },
-        load($state) {
-            const lastLength = this.channels.length;
-            this.$store
-                .dispatch("channels/fetchNextChannels", {
-                    type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
+        getLoadFn() {
+            return async (offset, limit) => {
+                const type = this.category === this.Tabs.SUBBER ? CHANNEL_TYPES.SUBBER : CHANNEL_TYPES.VTUBER;
+                const res = await api.channels({
+                    limit,
+                    offset,
+                    type,
+                    ...(type === CHANNEL_TYPES.VTUBER && { org: this.$store.state.currentOrg }),
+                    ...(type === CHANNEL_TYPES.SUBBER && { lang: this.$store.state.settings.clipLangs.join(",") }),
                     ...this.currentSortValue.query_value,
-                })
-                .then(() => {
-                    if (this.channels.length !== lastLength) {
-                        $state.loaded();
-                    } else {
-                        $state.completed();
-                    }
-                })
-                .catch((e) => {
-                    console.error(e);
-                    $state.error();
                 });
+                return res.data;
+            };
         },
         // changing category also changes sort, which will cause this to trigger twice
         // eslint-disable-next-line func-names
         resetChannels() {
-            this.infiniteId = +new Date();
+            this.identifier = +new Date();
             this.$store.commit("channels/resetChannels");
-        },
-        loadNext($state) {
-            const lastLength = this.channels.length;
-            this.$store
-                .dispatch("channels/fetchNextChannels", {
-                    type: this.category === this.Tabs.SUBBER ? "subber" : "vtuber",
-                    ...this.currentSortValue.query_value,
-                })
-                .then(() => {
-                    if (this.channels.length !== lastLength) {
-                        $state.loaded();
-                    } else {
-                        $state.completed();
-                    }
-                })
-                .catch((e) => {
-                    console.error(e);
-                    $state.error();
-                });
         },
         findSortValue(sort) {
             return this.sortOptions.find((opt) => opt.value === sort);

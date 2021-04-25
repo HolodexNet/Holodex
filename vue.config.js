@@ -71,7 +71,7 @@ module.exports = {
                 },
                 {
                     urlPattern: new RegExp("https://www.youtube.com/player_api"),
-                    handler: "cacheFirst",
+                    handler: "CacheFirst",
                     options: {
                         cacheName: "youtube-player",
                         expiration: {

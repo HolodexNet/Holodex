@@ -10,7 +10,7 @@
                             @ready="ready"
                             :playerVars="{
                                 ...(timeOffset && { start: timeOffset }),
-                                autoplay: $store.state.settings.autoplayVideo ? 1 : 0,
+                                autoplay: 1,
                                 playsinline: 1,
                             }"
                         >

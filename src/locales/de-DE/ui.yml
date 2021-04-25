@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: 'Es ist ein Fehler beim Abrufen von Inhalten aufgetreten, bitte schau of Twitter '
-    textAfterTwitter: ' oder melde den Fehler über die'
+    textBeforeTwitter: "Es ist ein Fehler beim Abrufen von Inhalten aufgetreten, bitte schau of Twitter "
+    textAfterTwitter: " oder melde den Fehler über die"
     aboutPage: Info-Seite
     afterAboutPageHyperlink: .
   channelList:
@@ -11,9 +11,10 @@ component:
     unfavoriteAllInGroup: Alle in Gruppe entfavorisieren
     favoriteAllInGroup: Alle in Gruppe favorisieren
   channelInfo:
-    videoCount: '{0} Videos'
-    clipCount: '{n} Clips'
-    subscriberCount: '{n} Abonnenten'
+    stats: Statistik
+    videoCount: "{0} Videos"
+    clipCount: "{n} Clips"
+    subscriberCount: "{n} Abonnenten"
     subscriberNA: Abonnentenzahl nicht verfügbar
     totalViews: Aufrufe insgesamt
   channelSocials:
@@ -21,6 +22,7 @@ component:
     removeFromFavorites: Aus Favoriten entfernen
     unblock: Diesen Kanal entblocken
     block: Inhalt dieses Kanals im Holodex blockieren
+    blocked: Blockiert
   mainNav:
     home: Startseite
     favorites: Favoriten
@@ -34,30 +36,31 @@ component:
     accountSettings: Kontoeinstellungen
     music: Musik
     multiview: Mehrfachansicht
+    points: Pkte.
   videoCard:
-    clips: '{n} Clips'
-    watching: '{0} Zuschauer'
+    clips: "{n} Clips"
+    watching: "{0} Zuschauer"
     liveNow: Jetzt Live
     edit: Bearbeiten
     copiedToClipboard: Link in die Zwischenablage kopiert.
     copyLink: Holodex-Link kopieren
   videoDescription:
     description: Beschreibung
-  video:
-    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
   watch:
     streamingFor: Live seit {0}
     nextUpInMugen: Es folgt ...
+    Comments:
+      title: Kommentare
+      all: Alle
   search:
     searchLabel: Suchen
     type:
       channel: Kanal
       topic: Thema
       org: org
-      titledesc: Titel & Beschreibung
       comments: Kommentare
       videourl: Video-URL
   relatedVideo:
@@ -92,9 +95,19 @@ component:
       popup: Holodex für iOS installieren
       afterExportIcon: dann 'Zum Startbildschirm hinzufügen
       beforeExportIcon: Tipp
+  media:
+    remove: Entfernen
+  comment:
+    close: Schließen
+    readMore: Mehr anzeigen
 views:
+  channel:
+    video: Videos
+    clips: Clips
+    music: Musik
+    collabs: Collabs
+    about: Kanalinfo
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -168,7 +181,7 @@ views:
     scrollModeLabel: Scroll-Modus
     scrollModeMsg: Blättern/Tippen zum Umblättern der Seiten verwenden
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
-    clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
+    clipLanguageSelection: "Clips in diesen Sprachen anzeigen:"
     tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
     defaultFavorites: Standardmäßig Favoriten öffnen
     defaultFavoritesMsg: >-
@@ -209,8 +222,19 @@ views:
     promptForAction: >-
       Erstelle eine Liste mit deinen Lieblings-VTubern und sieh dir dann ihre neusten Clips und Livestreams auf dieser Seite an.
     manageFavorites: Favoriten verwalten
+    close: Schließen
+    showall: Alle anzeigen
   editor:
     needlogin: Du musst dich einloggen, um Änderungen an Holodex Video- und Song-Metadaten vorzunehmen.
+    changeTopic:
+      title: Stream-Thema ändern
+      info: >-
+        Alle Benutzer können Videos einem Thema zuordnen, aber nur Editoren und Administratoren können das Thema entfernen oder ändern, sobald es gesetzt wurde.
+      button: Speichern (kann 5 Minuten dauern)
+    channelMentions:
+      title: Kanal Erwähnungen (in Entwicklung)
+    sources:
+      title: Quellen/Clips (in Entwicklung)
   login:
     apikeyMsg: >-
       Du kannst den API-Schlüssel verwenden, um die Holodex-API automatisiert abzufragen. Nur ein Schlüssel pro Konto. Nachdem du einen neuen Schlüssel erhalten hast, läuft der alte Schlüssel innerhalb von 24 Stunden ab.
@@ -222,6 +246,10 @@ views:
     apikeyResetConfirm1: Bist du sicher, dass du deinen API-Schlüssel zurücksetzen möchtest?
     apikeyResetConfirm2: Es dauert 0-24 Stunden bis der alte API-Schlüssel abläuft. Wirklich zurücksetzen?
     apikeyResetNvm: Nichts Interessantes ist passiert.
+    with:
+      - Mit Google einloggen
+      - Mit Discord einloggen
+      - Mit Twitter einloggen
   multiview:
     confirmOverwrite: Vorhandenes Layout überschreiben?
     confirmOverwriteYes: Bestätigen
@@ -236,10 +264,13 @@ views:
     video:
       selectLive: Stream auswählen
       addCustomVideo: Benutzerdefiniertes Video hinzufügen
+  mugen:
+    welcome: >-
+      Willkommen bei MugenClips! Jeder auf dieser Seite sieht den gleichen zufällig ausgewählten englischen Hololive-Clip. Schaue mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du nachdem du vorspulst wieder mit allen synchronisiert werden möchtest, dann lade die Seite einmal neu.
 time:
   soon: bald
   diff_future_date: Beginnt {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Hinzufügen
@@ -247,8 +278,8 @@ editor:
     permission: >-
       Du musst 'Editor' oder höher sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
     titles:
-      addSong: 'Song-Metadaten: Neuen Song hinzufügen'
-      songList: 'Songliste : {0}'
+      addSong: "Song-Metadaten: Neuen Song hinzufügen"
+      songList: "Songliste : {0}"
       help: Anleitung
     itunesLookupPlaceholder: (Optional) Suche auf iTunes
     moveRight2s: Nach rechts 2s
@@ -259,7 +290,7 @@ editor:
     originalArtistInput: Originaler Künstler
     testStart: Teste den Start
     startInput: Start
-    endInput: 'Dauer in Sekunden: (end @ {0})'
+    endInput: "Dauer in Sekunden: (end @ {0})"
   exitMode: Bearbeitungsmodus verlassen
   enterMode: Video bearbeiten
 about:
@@ -283,6 +314,26 @@ about:
     quitHolodex: "Ich bin ein Subber (Untertitler) und möchte, dass mein Kanal von Holodex entfernt wird\n"
     quitHolodexContent: >-
       Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir heölfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
+    favorite:
+      title: Was sind Favoriten?
+      disappear:
+        title: Meine Favoritenliste ist verschwunden / Ich kann keine Favoriten setzen
+    mobile:
+      title: Gibt es eine Android/iOS App für Holodex?
+      content:
+        summary: >-
+          Wir arbeiten daran! In der Zwischenzeit nutze bitte die "Add to Home"-Funktion in deinem Browser. Wir haben sie stark optimiert, damit sie sich wie eine App verhält
+    MugenClips:
+      title: Was ist MugenClips?
+    subber:
+      title: Ich bin ein Subber (Untertitler) und finde meinen Kanal oder Clips nicht auf Holodex
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: Ich habe Feedback / möchte zu diesem Projekt beitragen
   gdpr: DSGVO und meine Daten
   gdprContent: >-
     Ein Google-Analytics-Cookie wird verwendet, um Seitenaufrufe für unsere analytischen Zwecke zu verfolgen. Nach dem Login verknüpfen wir den Benutzernamen und die ID deines Social Media Accounts mit deinen Favoriten. Diese Daten können deine E-Mail (für Google), deine Discord ID oder dein Twitter-Handle beinhalten.
@@ -290,3 +341,16 @@ about:
   feedback: Feedback / Fehlerberichte
   feedbackHtml: >-
     Du kannst einen Fehler im <a href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a> melden oder das Holodex Team auf Discord kontaktieren. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    title: Credits
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
+  changelog:
+    title: Änderungsverlauf
+  news:
+    title: Neuigkeiten

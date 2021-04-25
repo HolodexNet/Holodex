@@ -208,149 +208,16 @@
                 </p>
                 <br />
 
-                <div class="text-h5">{{ $t("about.changelog.title") }}</div>
+                <a class="text-h5" href="https://github.com/RiceCakess/Holodex/blob/dev/CHANGELOG.md">{{
+                    $t("about.changelog.title")
+                }}</a>
                 <div class="text-body-2">
-                    <span class="text--secondary">March 26th, 2021</span> <br />
-                    <span class="text-body-1">Holodex V2.1 Main Features</span>
-                    <ul>
-                        <li>
-                            Added <b>MultiView</b> functionality, with customizable layouts supporting everything a DD
-                            wants. <b>Also works on mobile</b>, if your phone is powerful enough (on some mobile devices
-                            and platforms, you can only hear one stream's audio, but can play multiple videos.).
-                        </li>
-                        <li>
-                            Isolated Stream-Translations chat built into Mobile and Desktop views, you can also get
-                            Live-TL-esque features on Mobile (and desktop).
-                        </li>
-                        <li>Massive improvements to mobile experience.</li>
-                        <li>
-                            Removed top status bar from the App version of the website, but may require a reinstall for
-                            some platforms.
-                        </li>
-                        <li>
-                            Added Music Player / Music Curation platform. You can browse, search, and listen to karaoke
-                            streams / covers as if it is Spotify. Best part is, the views go towards the singer (instead
-                            of clippers who split the Karaoke stream into pieces). Everyone can contribute and create
-                            music annotations, so feel free to help out your oshi by tagging their karaoke songs.
-                        </li>
-                        <li>
-                            Normal users are now able to add topics (and music) annotation to videos. If you want us to
-                            add new topics into Holodex, please join our discord and recommend it!
-                        </li>
-                        <li>
-                            Editors are now more powerful on Holodex, being able to change topics and delete/update song
-                            information. Users interested in becoming Holodex editors should talk to us on discord.
-                        </li>
-                        <li>Made light mode pretty</li>
-                        <li>
-                            Logged in users can now request for an API Key on the Account page, we will require API Key
-                            for CORS requests into Holodex backend in the short future.
-                        </li>
-                    </ul>
-                    <span class="text-body-1">New Localizations:</span>
-                    <ul>
-                        <li>Added pt-BR locale.</li>
-                    </ul>
-                    <span class="text-body-1">Bugfixes:</span>
-                    <ul>
-                        <li>Twitter login works again!</li>
-                        <li>Cleaned up video export to Youtube with a guide</li>
-                        <li>We now check when a video use @CHANNEL NAME in description to mention vtubers.</li>
-                        <li>Improved usability across the website.</li>
-                    </ul>
-                    <br />
-                    <br />
-                    <span class="text--secondary">January 29th, 2021</span>
-                    <ul>
-                        <li>
-                            Added ability to change video thumbnail/grid sizes for Home/Favorites (use the icon on the
-                            top right)
-                        </li>
-                        <li>Added setting to enable/disable autoplay videos</li>
-                        <li>Added French localization</li>
-                        <li>
-                            Added ScrollMode setting to switch between infinite scroll loading and page by page
-                            navigation
-                        </li>
-                        <li>Frontend is now open source!</li>
-                        <li>Fixed lots of bugs and introduced new ones probably</li>
-                    </ul>
-                    <br />
-                    <br />
-                    <!-- <span class="text--secondary">January 29th, 2021</span>
-                    <ul>
-                        <li>
-                            Added ability to change video thumbnail/grid sizes for Home/Favorites (use the icon on the
-                            top right)
-                        </li>
-                        <li>Added setting to enable/disable autoplay videos</li>
-                        <li>Added French localization</li>
-                        <li>
-                            Added ScrollMode setting to switch between infinite scroll loading and page by page
-                            navigation
-                        </li>
-                        <li>Frontend is now open source!</li>
-                        <li>Fixed lots of bugs and introduced new ones probably</li>
-                    </ul>
-                    <br />
-                    <br />
-                    <span class="text--secondary">January 20th, 2021</span>
-                    <ul>
-                        <li>Massive upgrade to support over 600+ Vtuber channels and 1000+ clipping channels</li>
-                        <li>Added user accounts to sync favorites across devices</li>
-                        <li>
-                            Added support for tracking clippers in a variety of languages, head over to the settings to
-                            set the langauges you want to see clips in
-                        </li>
-                        <li>Added topics to each list and improved search</li>
-                        <li>New and improved watch page with theather mode and top comments</li>
-                        <li>
-                            Laid groundwork for more features in the future, including a new user contributed tagging
-                            system, song tracking and more!
-                        </li>
-                    </ul>
-                    <br />
-                    <br /> -->
-                    <!-- <span class="text--secondary">November 2, 2020</span>
-                    <ul>
-                        <li>Hotfix video duration</li>
-                        <li>Added more sorting options and card view to Channels page</li>
-                        <li>Added Hololive generation/group name to each Vtuber</li>
-                        <li>Added filtering by official/clips for favorites page</li>
-                        <li>Added loading screen and errors to all the pages</li>
-                        <li>Clicking on the same page on desktop now refreshes the page</li>
-                        <li>
-                            Inactive vtuber channels are now hidden, but you can still view them through the search bar
-                        </li>
-                        <li>Add hide live chat button</li>
-                        <li>General under the hood improvments</li>
-                    </ul>
-                    <br /> -->
-                    <!-- <span class="text--secondary">Oct 20, 2020</span>
-                    <ul>
-                        <li>
-                            Added instructions on how to use Holodex like an app
-                        </li>
-                        <li>
-                            Added a
-                            <a
-                                href="https://github.com/RiceCakess/Holodex/issues"
-                            >
-                                Github Issue Tracker
-                            </a>
-                        </li>
-                    </ul>
-                    <br />
-                    <span class="text--secondary">Oct 19, 2020</span>
-                    <ul>
-                        <li>
-                            Added live chat window for upcoming/live streams.
-                            (Mobile not supported, due to Youtube-kun's rules)
-                        </li>
-                        <li>Hovering over video title shows full title</li>
-                        <li>Fixed collab typo</li>
-                        <li>Hide clips and collabs tab for clippers</li>
-                    </ul> -->
+                    <iframe
+                        width="100%"
+                        seamless
+                        src="https://ricecakess.github.io/Holodex/"
+                        style="border: none; border-radius: 3px; background: #eee"
+                    ></iframe>
                 </div>
             </v-col>
         </v-row>

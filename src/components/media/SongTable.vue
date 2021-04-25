@@ -10,6 +10,7 @@
         hide-default-footer
         :items-per-page="PER_PAGE_ITEMS"
         disable-sort
+        :loading="loading"
         :dense="$vuetify.breakpoint.smAndDown"
         @click:row="
             (item) => {
@@ -89,6 +90,11 @@ export default {
             required: true,
         },
         channelLink: {
+            type: Boolean,
+            default: false,
+            required: false,
+        },
+        loading: {
             type: Boolean,
             default: false,
             required: false,

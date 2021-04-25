@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Gomennasorry!
-    textBeforeTwitter: 'Si è verificato un errore nel recupero del contenuto, per favore, controlla la pagina Twitter di '
-    textAfterTwitter: ' o segnala un errore tramite il'
+    textBeforeTwitter: "Si è verificato un errore nel recupero del contenuto, per favore, controlla la pagina Twitter di "
+    textAfterTwitter: " o segnala un errore tramite il"
     aboutPage: Pagina delle Info
     afterAboutPageHyperlink: .
   channelList:
@@ -11,9 +11,9 @@ component:
     unfavoriteAllInGroup: Rimuovi tutti i canali dalla lista dei preferiti
     favoriteAllInGroup: Imposta tutti i canali come preferiti
   channelInfo:
-    videoCount: '{0} Video'
-    clipCount: '{n} Clip'
-    subscriberCount: '{n} Iscritti'
+    videoCount: "{0} Video"
+    clipCount: "{n} Clip"
+    subscriberCount: "{n} Iscritti"
     subscriberNA: Contatore degli iscritti non disponibile
     totalViews: Visualizzazioni totali
   channelSocials:
@@ -35,8 +35,8 @@ component:
     music: Musica
     multiview: Multi-Stream
   videoCard:
-    clips: '{n} Clip'
-    watching: '{0} stanno guardando'
+    clips: "{n} Clip"
+    watching: "{0} stanno guardando"
     liveNow: In diretta ora
     edit: Modifica
     copiedToClipboard: Link copiato negli appunti.
@@ -55,7 +55,6 @@ component:
       channel: canale
       topic: argomento
       org: org
-      titledesc: titolo e descrizione
       comments: commenti
       videourl: url del video
   relatedVideo:
@@ -165,7 +164,7 @@ views:
     scrollModeLabel: Modalità Scorrimento
     scrollModeMsg: Usa lo scorrimento o un tocco per cambiare pagina
     resetAllSettings: Reimposta le Impostazioni predefinite
-    clipLanguageSelection: 'Vedi Clip in queste lingue:'
+    clipLanguageSelection: "Vedi Clip in queste lingue:"
     tlLanguageSelection: Vedi la traduzione automatica "live-chat TL" in queste lingue
   app:
     update_available: È disponibile un aggiornamento
@@ -229,7 +228,7 @@ views:
 time:
   soon: presto
   diff_future_date: Inizia {0} ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: Aggiungi
@@ -237,8 +236,8 @@ editor:
     permission: >-
       Devi essere un utente di livello "Editor" o più alto per poter aggiornare o eliminare i brani esistenti. Per favore contattaci su <a class='white--text' href='/about'>discord</a> per notificare gli editor dei problemi o degli abusi, oppure proponiti come editor.
     titles:
-      addSong: 'Metadati della canzone: Aggiungi una nuova canzone'
-      songList: 'Elenco dei brani : {0}'
+      addSong: "Metadati della canzone: Aggiungi una nuova canzone"
+      songList: "Elenco dei brani : {0}"
       help: Guida
     itunesLookupPlaceholder: (Facoltativo) Ricerca su iTunes
     moveRight2s: Vai avanti di due secondi
@@ -249,7 +248,7 @@ editor:
     originalArtistInput: Artista originale
     testStart: Prova l'avvio
     startInput: Avvia
-    endInput: 'Durata in secondi: (end @ {0})'
+    endInput: "Durata in secondi: (end @ {0})"
   exitMode: Esci Dalla Modalità Editor
   enterMode: Modifica Video
 about:
@@ -273,6 +272,12 @@ about:
     quitHolodex: "Sono un sottotitolatore e vorrei che il mio canale venisse rimosso da Holodex\\r\n"
     quitHolodexContent: >-
       Ci spiace che tu te ne vada (っ °Д °;)っ. Per favore, fammi sapere se c'è qualche problema con cui posso aiutarti. Se vuoi comunque che il tuo canale venga rimosso, per favore, inviaci un messaggio su Discord.
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   gdpr: GDPR ed i miei dati
   gdprContent: >-
     Un cookie di Google Analytics è usato per tracciare le visualizzazioni della pagina a fini analitici. Dopo l'accesso associamo il tuo nome utente e l'ID del tuo account social media ai tuoi preferiti. Questi dati potrebbero includere la tua Email (per Google), il tuo ID di Discord o il tuo tag di Twitter.
@@ -280,3 +285,11 @@ about:
   feedback: Inviaci un Feedback / Segnala un Bug
   feedbackHtml: >-
     Puoi segnalare un problema sull'<a href="https://github.com/RiceCakess/Holodex/issues"> Issue Tracker di Github </a> o contattare il team di Holodex su Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+

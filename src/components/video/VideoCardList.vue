@@ -6,12 +6,12 @@
         <v-row :dense="dense">
             <!-- Video Cards with custom grid size class based on breakpoint -->
             <v-col
-                v-for="(video, index) in spliced"
+                v-for="(video, index) in processedVideos"
                 :key="`${index}-${video.id}`"
                 :class="['video-col', `video-${colSize}`]"
             >
                 <!-- Dont lazy load cards immediately seen -->
-                <v-lazy style="width: 100%" v-if="lazy && index > colSize * (limitRows + 1)">
+                <!-- <v-lazy style="width: 100%" v-if="lazy && index > colSize * (limitRows + 1)">
                     <VideoCard
                         :video="video"
                         fluid
@@ -20,17 +20,16 @@
                         :includeAvatar="includeAvatar"
                         :colSize="colSize"
                         :active="video.id === activeId"
-                        :style="!horizontal && `padding-bottom: calc(${shouldHideThumbnail ? '56.25%' : ''} + 88px)`"
                         :disableDefaultClick="disableDefaultClick"
                         @videoClicked="handleVideoClick"
                         :hideThumbnail="shouldHideThumbnail"
-                    >
-                        <!-- pass slot to each individual video card -->
-                        <template v-slot:action>
+                    > -->
+                <!-- pass slot to each individual video card -->
+                <!-- <template v-slot:action>
                             <slot name="action" :video="video"></slot>
                         </template>
                     </VideoCard>
-                </v-lazy>
+                </v-lazy> -->
                 <VideoCard
                     :video="video"
                     fluid
@@ -39,11 +38,9 @@
                     :includeAvatar="includeAvatar"
                     :colSize="colSize"
                     :active="video.id === activeId"
-                    :style="!horizontal && `padding-bottom: calc(${shouldHideThumbnail ? '56.25%' : ''} + 88px)`"
                     @videoClicked="handleVideoClick"
                     :disableDefaultClick="disableDefaultClick"
                     :hideThumbnail="shouldHideThumbnail"
-                    v-else
                 >
                     <!-- pass slot to each individual video card -->
                     <template v-slot:action>
@@ -127,10 +124,10 @@ export default {
             type: Boolean,
             default: false,
         },
-        lazy: {
-            type: Boolean,
-            default: false,
-        },
+        // lazy: {
+        //     type: Boolean,
+        //     default: false,
+        // },
         // to be used in conjunction with videoClicked event
         disableDefaultClick: {
             type: Boolean,
@@ -155,7 +152,7 @@ export default {
         hasExpansion() {
             return this.limitRows > 0 && this.videos.length > this.limitRows * this.colSize;
         },
-        spliced() {
+        processedVideos() {
             const blockedChannels = this.$store.getters["settings/blockedChannelIDs"];
             if (this.limitRows <= 0 || this.expanded) {
                 return this.videos.filter((x) => {
@@ -183,7 +180,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
 .video-col {
     display: flex;
     justify-content: center;
