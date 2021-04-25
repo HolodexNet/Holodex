@@ -188,6 +188,14 @@ views:
     defaultFavorites: 預設顯示「我的收藏」
     defaultFavoritesMsg: >-
       進入 Holodex 時預設顯示「我的收藏」頁面
+    gridSizeLabel: 縮圖/網格大小
+    gridSizeMsg: 設定首頁和我的收藏頁面的影片縮圖大小
+    gridSize:
+      - 大
+      - 中
+      - 小
+    hideCollabStreamsLabel: 隱藏連動直播
+    hideCollabStreamsMsg: 我的收藏隱藏相關的連動直播
   app:
     update_available: 已取得更新
     update_btn: 更新
@@ -259,6 +267,10 @@ views:
     permalink: 永久連結
     presets: 預設佈局
     addframe: 增加新分割
+    muteAll: 全部靜音
+    unmuteAll: 全部取消靜音
+    autoLayoutTip: 點擊頻道頭像即可自動排版並開始觀看
+    createLayoutTip: 增加新分割以創造屬於你自己的排版，或者使用預設布局
     preset:
       shareOnDiscord: >-
         想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
