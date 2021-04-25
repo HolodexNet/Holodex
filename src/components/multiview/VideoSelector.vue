@@ -139,7 +139,7 @@
             </v-btn>
         </template>
         <template v-else>
-            <v-tooltip :key="video.id" v-for="video in filteredLive" bottom>
+            <v-tooltip :key="video.id" v-for="video in filteredLive" transition="v-fade-transition" bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <div v-on="on" v-bind="attrs" style="position: relative; margin-right: 3px; cursor: pointer">
                         <div
@@ -154,12 +154,7 @@
                         </v-avatar>
                     </div>
                 </template>
-                <VideoCard :video="video" disableDefaultClick includeChannel style="max-width: 250px">
-                    <!-- pass slot to each individual video card -->
-                    <template v-slot:action>
-                        <slot name="action" :video="video"></slot>
-                    </template>
-                </VideoCard>
+                <VideoCard :video="video" disableDefaultClick includeChannel style="max-width: 250px"></VideoCard>
             </v-tooltip>
 
             <div class="flex d-flex flex-row align-center" v-if="selectedOrg === 0 && !isLoggedIn">
