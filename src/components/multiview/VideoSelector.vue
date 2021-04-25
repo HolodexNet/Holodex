@@ -61,7 +61,7 @@
                         <v-icon>{{ icons.mdiCheck }}</v-icon>
                     </v-btn>
                 </template>
-                <template v-else-if="selectedOrg === 0 && !$store.getters.isLoggedIn">
+                <template v-else-if="selectedOrg === 0 && !isLoggedIn">
                     <div class="pa-3">
                         <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
                         <center>
@@ -139,20 +139,30 @@
             </v-btn>
         </template>
         <template v-else>
-            <div
-                :key="video.id"
-                v-for="video in filteredLive"
-                style="position: relative; margin-right: 3px; cursor: pointer"
-            >
-                <div class="live-badge" :key="'lvbg' + ticker" :class="video.status === 'live' ? 'red' : 'grey'">
-                    {{ formatDurationLive(video) }}
-                </div>
-                <v-avatar size="50" @click="handleVideoClick(video)">
-                    <v-img :src="video.channel.photo"></v-img>
-                </v-avatar>
-            </div>
+            <v-tooltip :key="video.id" v-for="video in filteredLive" bottom>
+                <template v-slot:activator="{ on, attrs }">
+                    <div v-on="on" v-bind="attrs" style="position: relative; margin-right: 3px; cursor: pointer">
+                        <div
+                            class="live-badge"
+                            :key="'lvbg' + ticker"
+                            :class="video.status === 'live' ? 'red' : 'grey'"
+                        >
+                            {{ formatDurationLive(video) }}
+                        </div>
+                        <v-avatar size="50" @click="handleVideoClick(video)">
+                            <v-img :src="video.channel.photo"></v-img>
+                        </v-avatar>
+                    </div>
+                </template>
+                <VideoCard :video="video" disableDefaultClick includeChannel style="max-width: 250px">
+                    <!-- pass slot to each individual video card -->
+                    <template v-slot:action>
+                        <slot name="action" :video="video"></slot>
+                    </template>
+                </VideoCard>
+            </v-tooltip>
 
-            <div class="flex d-flex flex-row align-center" v-if="selectedOrg === 0 && !$store.getters.isLoggedIn">
+            <div class="flex d-flex flex-row align-center" v-if="selectedOrg === 0 && !isLoggedIn">
                 <span class="" v-html="$t('views.app.loginCallToAction')"></span>
                 <v-btn text :to="isLoggedIn ? '/channel' : '/login'">
                     {{ $t("component.mainNav.login") }}
@@ -164,6 +174,7 @@
 
 <script lang="ts">
 import api from "@/utils/backend-api";
+import VideoCard from "@/components/video/VideoCard.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { ORGS, VIDEO_URL_REGEX } from "@/utils/consts";
@@ -174,6 +185,7 @@ import { mdiTwitch } from "@mdi/js";
 export default {
     name: "VideoSelector",
     components: {
+        VideoCard,
         VideoCardList,
         LoadingOverlay,
     },
@@ -273,6 +285,9 @@ export default {
                     .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
             }
             return filtered;
+        },
+        isLoggedIn() {
+            return this.$store.getters.isLoggedIn;
         },
     },
     methods: {
