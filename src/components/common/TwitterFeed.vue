@@ -3,7 +3,7 @@
         <a
             class="twitter-timeline"
             data-dnt="true"
-            :data-height="$store.state.isMobile ? '340' : ''"
+            :data-height="$store.state.isMobile ? '340' : '800'"
             :data-theme="this.$vuetify.theme.dark ? 'dark' : 'light'"
             href="https://twitter.com/holodex?ref_src=twsrc%5Etfw"
         >
