@@ -14,34 +14,34 @@ import vuetifyDe from "vuetify/es5/locale/de";
 import vuetifyIt from "vuetify/es5/locale/it";
 
 import enTL from "@/locales/en/ui.yml";
-import jaTL from "@/locales/ja-JP/ui.yml";
-import esMXTL from "@/locales/es-MX/ui.yml";
-import esESTL from "@/locales/es-ES/ui.yml";
-import msTL from "@/locales/ms-MY/ui.yml";
-import zhTL from "@/locales/zh-TW/ui.yml";
-import idTL from "@/locales/id-ID/ui.yml";
-import ruTL from "@/locales/ru-RU/ui.yml";
-import frTL from "@/locales/fr-FR/ui.yml";
-import ptTL from "@/locales/pt-BR/ui.yml";
-import deTL from "@/locales/de-DE/ui.yml";
-import itTL from "@/locales/it-IT/ui.yml";
+// import jaTL from "@/locales/ja-JP/ui.yml";
+// import esMXTL from "@/locales/es-MX/ui.yml";
+// import esESTL from "@/locales/es-ES/ui.yml";
+// import msTL from "@/locales/ms-MY/ui.yml";
+// import zhTL from "@/locales/zh-TW/ui.yml";
+// import idTL from "@/locales/id-ID/ui.yml";
+// import ruTL from "@/locales/ru-RU/ui.yml";
+// import frTL from "@/locales/fr-FR/ui.yml";
+// import ptTL from "@/locales/pt-BR/ui.yml";
+// import deTL from "@/locales/de-DE/ui.yml";
+// import itTL from "@/locales/it-IT/ui.yml";
 
 // ====== i18n setup ======
 Vue.use(VueI18n);
 
 const messages = {
     en: { $vuetify: vuetifyEn, ...enTL },
-    ja: { $vuetify: vuetifyJa, ...jaTL },
-    ms: { $vuetify: vuetifyEn, ...msTL },
-    es: { $vuetify: vuetifyEs, ...esMXTL },
-    "es-ES": { $vuetify: vuetifyEs, ...esESTL },
-    id: { $vuetify: vuetifyId, ...idTL },
-    zh: { $vuetify: vuetifyZh, ...zhTL },
-    ru: { $vuetify: vuetifyEn, ...ruTL },
-    fr: { $vuetify: vuetifyFr, ...frTL },
-    pt: { $vuetify: vuetifyPt, ...ptTL },
-    de: { $vuetify: vuetifyDe, ...deTL },
-    it: { $vuetify: vuetifyIt, ...itTL },
+    ja: { $vuetify: vuetifyJa },
+    ms: { $vuetify: vuetifyEn },
+    es: { $vuetify: vuetifyEs },
+    "es-ES": { $vuetify: vuetifyEs },
+    id: { $vuetify: vuetifyId },
+    zh: { $vuetify: vuetifyZh },
+    ru: { $vuetify: vuetifyEn },
+    fr: { $vuetify: vuetifyFr },
+    pt: { $vuetify: vuetifyPt },
+    de: { $vuetify: vuetifyDe },
+    it: { $vuetify: vuetifyIt },
 };
 
 export const langs = [
@@ -133,6 +133,7 @@ export const i18n = new VueI18n({
         },
     },
 });
+
 // ====== end i18n setup ======
 
 export const config = {
@@ -165,3 +166,44 @@ export const config = {
 Vue.use(Vuetify);
 
 export const vuetify = new Vuetify(config);
+
+const loadedLanguages = ["en"];
+function setI18nLanguage(lang) {
+    dayjsLangs[lang]();
+    i18n.locale = lang;
+    // vuetify.lang.current = lang;
+}
+
+export function loadLanguageAsync(lang) {
+    console.log("Try ", lang);
+    const langFile = {
+        ja: "ja-JP",
+        es: "es-MX",
+        "es-ES": "es-ES",
+        ms: "ms-MY",
+        zh: "zh-TW",
+        id: "id-ID",
+        ru: "ru-RU",
+        fr: "fr-FR",
+        pt: "pt-BR",
+        de: "de-DE",
+        it: "it-IT",
+    };
+
+    // If the same language
+    if (i18n.locale === lang) {
+        return Promise.resolve(setI18nLanguage(lang));
+    }
+
+    // If the language was already loaded
+    if (loadedLanguages.includes(lang)) {
+        return Promise.resolve(setI18nLanguage(lang));
+    }
+
+    // If the language hasn't been loaded yet
+    return import(/* webpackChunkName: "[request]" */ `@/locales/${langFile[lang]}/ui.yml`).then((msg) => {
+        i18n.setLocaleMessage(lang, { ...messages[lang], ...msg.default });
+        loadedLanguages.push(lang);
+        return setI18nLanguage(lang);
+    });
+}
