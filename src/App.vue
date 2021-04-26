@@ -85,6 +85,10 @@ export default {
                     description: `${error.response.config.method} ${error.response.config.url}->${error.response.status}`,
                     fatal: true,
                 });
+                this.$gtag.event(`xhr:${error.response.status}`, {
+                    event_category: "xhrError",
+                    event_label: `${error.response.config.method} ${error.response.config.url} -> ${error.response.status}`,
+                });
                 console.error(error.response.data);
                 console.error(error.response.status);
                 console.error(error.response.headers);
