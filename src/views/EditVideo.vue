@@ -17,14 +17,17 @@
                         </youtube>
                     </template>
                 </WatchFrame>
-                <WatchComments
-                    :comments="video.comments"
-                    :video="video"
-                    :limit="$store.state.isMobile ? 5 : 0"
-                    @timeJump="seekTo"
-                    key="comments"
-                    v-if="video && video.comments && video.comments.length"
-                />
+                <div class="comment-scroller">
+                    <WatchComments
+                        hideBuckets
+                        :comments="video.comments"
+                        :video="video"
+                        :limit="$store.state.isMobile ? 5 : 0"
+                        @timeJump="seekTo"
+                        key="comments"
+                        v-if="video && video.comments && video.comments.length"
+                    />
+                </div>
             </v-col>
             <v-col class="related-videos pt-0" :md="9" :lg="8">
                 <v-alert
@@ -60,6 +63,8 @@
                         </div>
                         <div v-show="currentTab === TABS.MUSIC">
                             <VideoEditSongs
+                                id="musicEditor"
+                                ref="musicEditor"
                                 :video="video"
                                 :currentTime="currentTime"
                                 @timeJump="seekTo"
@@ -161,6 +166,10 @@ export default {
             if (!this.player) return;
             this.player.seekTo(time);
             if (playNow) this.player.playVideo();
+            if (this.currentTab === this.TABS.MUSIC) {
+                this.$refs.musicEditor && this.$refs.musicEditor.setStartTime(time);
+                document.getElementById("musicEditor").scrollIntoView();
+            }
         },
         fetchVideo() {
             if (!this.id) throw new Error("Invalid id");
@@ -227,15 +236,10 @@ export default {
 </script>
 
 <style>
-.video-editor .embedded-chat {
-    position: relative;
-    min-height: 600px;
-}
-
-.video-editor .embedded-chat > iframe {
-    position: absolute;
-    width: 100%;
-    min-height: 600px;
+.video-editor .comment-scroller {
+    height: 400px;
+    height: 60vh;
+    overflow: hidden auto;
 }
 
 .video-editor .watch-card {
