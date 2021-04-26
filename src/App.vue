@@ -30,7 +30,7 @@
 <script lang="ts">
 import MainNav from "@/components/nav/MainNav.vue";
 import pulltorefresh from "vue-awesome-pulltorefresh";
-import { dayjsLangs } from "./plugins/vuetify";
+import { dayjsLangs, loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
 
 export default {
@@ -231,9 +231,7 @@ export default {
         lang() {
             // watches the computed.lang variable and updates vue I18N
             // import(`dayjs/locale/${this.lang}`) // ES 2015
-            dayjsLangs[this.$store.state.settings.lang]();
-            this.$i18n.locale = this.$store.state.settings.lang;
-            this.$vuetify.lang.current = this.$store.state.settings.lang;
+            loadLanguageAsync(this.$store.state.settings.lang);
         },
         // watches change in breakpoint from vuetify and updates store
         // eslint-disable-next-line func-names

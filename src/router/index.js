@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { loadLanguageAsync } from "@/plugins/vuetify";
 import Home from "../views/Home.vue";
-
 import store from "../store";
 
 const Channel = () => import("../views/Channel.vue");
@@ -162,6 +162,13 @@ const router = new VueRouter({
         }
         return savedPosition || { x: 0, y: 0 };
     },
+});
+
+router.beforeEach((to, from, next) => {
+    const { lang } = store.state.settings;
+    if (lang !== "en") {
+        loadLanguageAsync(lang).then(() => next());
+    } else next();
 });
 
 export default router;
