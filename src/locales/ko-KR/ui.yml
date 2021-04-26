@@ -1,0 +1,159 @@
+---
+component:
+  apiError:
+    afterAboutPageHyperlink: .
+  channelInfo:
+    stats: 통계
+  mainNav:
+    home: 홈
+    about: 정보
+    library: 라이브러리
+    login: 로그인
+    logout: 로그아웃
+    music: 음악
+    points: 포인트
+  videoCard:
+    edit: 수정
+  watch:
+    nextUpInMugen: 다음
+    Comments:
+      all: 모두
+  search:
+    searchLabel: 검색
+    type:
+      channel: 채널
+      topic: 주제
+      org: 소속
+      titledesc: 제목/설명
+  relatedVideo:
+    clipsLabel: 클립
+    songsLabel: 노래
+    recommendationsLabel: 추천
+  paginateLoad:
+    newer: 최신순
+    older: 오래된순
+  music:
+    clearPlaylist: 초기화
+  channelMusic:
+    recentSongsHeader: 최근 노래
+    weeklyTopPlaysHeader: 주간 최고 조회수
+  songList:
+    songTitle: 제목
+  installPrompt:
+    title: Holodex 설치
+    notNowBtn: 나중에
+    installBtn: 설치
+    iOS:
+      popup: iOS에 Holodex 설치하기
+      afterExportIcon: 홈 화면에 추가
+      beforeExportIcon: 탭
+  media:
+    remove: 제거
+  comment:
+    close: 닫기
+views:
+  channel:
+    video: 영상
+    clips: 클립
+    music: 음악
+    about: 정보
+  channels:
+    sortOptions:
+      subscribers: 구독자
+      group: 그룹
+      recentUpload: 최근 업로드
+      videoCount: 영상 수
+      clipCount: 클립 수
+    tabs:
+      Vtuber: 버튜버
+      Favorites: 즐겨찾기
+      Blocked: 차단됨
+    favoritesAreEmpty: 즐겨찾기가 없습니다!
+    blockedAreEmpty: 차단한 채널이 없습니다.
+  home:
+    liveOrUpcomingHeading: 실시간 / 예정
+    recentVideosHeading: 최근 동영상
+    recentVideoToggles:
+      all: 모두
+      official: 공식
+      subber: 클립
+  library:
+    savedVideosTitle: 저장된 영상
+    createYtPlaylistButton: YT 재생목록 생성 ({0})
+    deleteFromLibraryButton: 삭제 ({0})
+    deleteConfirmation: 정말로 {0}개의 영상을 삭제하시겠어요?
+    deleteConfirmationOK: 삭제
+    deleteConfirmationCancel: 취소
+    selectionReset: 초기화
+  search:
+    sort:
+      newest: 최신순
+      oldest: 오래된순
+    type:
+      all: 모두
+      clip: 클립
+    sortByLabel: 정렬 기준
+    typeDropdownLabel: 유형
+  settings:
+    clipLanguageSelection: "다음 언어로 된 클립 보기:"
+    tlLanguageSelection: 해당 언어로 실시간 채팅 번역 보기
+    gridSizeLabel: 썸네일/격자 크기
+    gridSize:
+      - 크게
+      - 중간
+      - 작게
+  app:
+    update_btn: 업데이트
+    close_btn: 닫기
+  watch:
+    theaterMode: 영화관 모드
+    saveToLibrary: 라이브러리에 영상 저장하기
+    chat:
+      loading: 채팅을 불러오는 중...
+      hideTLBtn: 번역 숨기기
+      showTLBtn: 번역 표시
+      TLSettingsTitle: 번역 설정
+      tlFontSize: 글꼴 크기
+      tlWindowSize: 번역 상자 크기 (%), 0%로 하면 자동
+      retryBtn: 재시도
+      status:
+        reconnecting: 자동으로 다시 연결하는 중...
+        reconnectFailed: 다시 연결할 수 없음
+        connectedToChat: 연결됨
+        disconnectedToChat: 연결 끊김
+  favorites:
+    manageFavorites: 즐겨찾기 관리
+    close: 닫기
+    showall: 모두 표시
+  multiview:
+    confirmOverwriteYes: 확인
+    preset:
+      desktop: 데스크톱
+      mobile: 모바일
+time:
+  soon: 예정
+  distance_past_date: "{0}"
+editor:
+  music:
+    add: 추가
+    update: 업데이트
+    titles:
+      help: 가이드
+    startInput: 시작
+about:
+  faq:
+    title: FAQ
+    subber:
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
