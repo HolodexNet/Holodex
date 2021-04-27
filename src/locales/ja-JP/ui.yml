@@ -7,16 +7,16 @@ component:
     aboutPage: 詳細ページ
     afterAboutPageHyperlink: からエラーを報告してください。
   channelList:
-    signInToFavorite: お気に入り登録にはサインインが必要
+    signInToFavorite: お気に入り登録にはログインが必要
     unfavoriteAllInGroup: グループをすべてお気に入りから削除
     favoriteAllInGroup: グループをすべてお気に入りに追加
   channelInfo:
     stats: 統計情報
     videoCount: "{0}本の動画"
     clipCount: "{n}本の切り抜き"
-    subscriberCount: "{n}登録者"
+    subscriberCount: "チャンネル登録者数 {n}万人"
     subscriberNA: 登録者数は現在利用できません
-    totalViews: 累計視聴回数
+    totalViews: 回視聴
   channelSocials:
     addToFavorites: お気に入りに追加
     removeFromFavorites: お気に入りから削除
