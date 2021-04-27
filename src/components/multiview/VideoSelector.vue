@@ -108,7 +108,12 @@
             solo
             style="max-width: 150px; margin-right: 10px"
         ></v-select>
-        <v-icon class="mr-2" @click="loadSelection" :class="{ 'refresh-spin': isLoading }">
+        <v-icon
+            class="mr-2"
+            @click="loadSelection"
+            :class="{ 'refresh-spin': isLoading }"
+            v-if="selectedOrg !== 1 && selectedOrg !== 2"
+        >
             {{ icons.mdiRefresh }}
         </v-icon>
         <!-- Inline text input for custom yt url -->
@@ -376,7 +381,10 @@ export default {
             }
             // Delegate dfferent function for favorites
             if (this.selectedOrg === 0) {
-                this.$store.dispatch("favorites/fetchLive", { minutes: 2 });
+                this.isLoading = true;
+                this.$store.dispatch("favorites/fetchLive", { minutes: 2, force: true }).finally(() => {
+                    this.isLoading = false;
+                });
                 this.loadFavorites();
                 return;
             }
