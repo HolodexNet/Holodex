@@ -75,7 +75,7 @@ const mutations = {
         state.layout.push(newLayoutItem);
     },
     muteLayoutContent(state, { id, value }) {
-        Vue.set(state.layoutContent[id], "muted", value);
+        if (state.layoutContent[id]) Vue.set(state.layoutContent[id], "muted", value);
     },
     removeLayoutItem(state, id) {
         const index = state.layout.map((item) => item.i).indexOf(id);
