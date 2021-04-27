@@ -12,15 +12,16 @@ export const langs = [
     { val: "en", display: "English", credit: "@Holodex" },
     { val: "ja", display: "日本語", credit: "Yourein#3960" },
     { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
+    { val: "ko", display: "한국어", credit: "AlexKoala#0253" },
     { val: "es-ES", display: "Español España", credit: "TraduSquare (Darkc0m y D3fau4)" },
     { val: "es", display: "Español Latino", credit: "Aldo#3682" },
     { val: "ms", display: "Bahasa Melayu", credit: "Admiy#8261" },
     { val: "id", display: "Bahasa Indonesia", credit: "alcyneous#2803" },
     { val: "ru", display: "Русский язык", credit: "kirillbarnaul#8499" },
-    { val: "fr", display: "Français", credit: "pinembour#7770" },
     { val: "pt", display: "Português Brasileiro", credit: "Ash Niartis#5090" },
     { val: "de", display: "Deutsch", credit: "DatJocab#1803" },
     { val: "it", display: "Italiano", credit: "テオさん#0139" },
+    { val: "fr", display: "Français", credit: "pinembour#7770" },
 ];
 
 export const dayjsLangs = {
@@ -59,6 +60,9 @@ export const dayjsLangs = {
     },
     async it() {
         await import("dayjs/locale/it");
+    },
+    async ko() {
+        await import("dayjs/locale/ko");
     },
 };
 
@@ -123,6 +127,7 @@ export function loadLanguageAsync(lang) {
         pt: "pt-BR",
         de: "de-DE",
         it: "it-IT",
+        ko: "ko-KR",
     };
 
     // If the same language
