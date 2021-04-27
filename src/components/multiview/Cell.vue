@@ -207,11 +207,12 @@ export default {
         cellContent(nw, old) {
             // if cell becomes null or content changes to a different type, set paused mode back to true
             if (!nw || (old && nw && nw.type !== old.type)) this.pausedMode = true;
-            if (nw?.type === "chat") this.pausedMode = false;
+            if (nw && nw.type === "chat") this.pausedMode = false;
             this.setLayoutFreeze();
 
             if (
-                nw?.type === "video" &&
+                nw &&
+                nw.type === "video" &&
                 this.iOS() &&
                 this.$store.state.multiview.layout.find((item) => {
                     return (
