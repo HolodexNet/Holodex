@@ -192,6 +192,8 @@ views:
     defaultFavoritesMsg: >-
       進入 Holodex 時預設顯示「我的收藏」頁面
     videoFeedSettings: 影片列表設定
+    siteNavigationSettings: 全域設定
+    languageSettings: 語言設定
     gridSizeLabel: 縮圖/網格大小
     gridSizeMsg: 設定首頁和我的收藏頁面的影片縮圖大小
     gridSize:
