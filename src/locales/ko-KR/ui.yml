@@ -28,7 +28,7 @@ component:
     favorites: 즐겨찾기
     channels: 채널
     about: 정보
-    library: 라이브러리
+    library: 보관함
     settings: 설정
     login: 로그인
     logout: 로그아웃
@@ -39,15 +39,15 @@ component:
     points: 포인트
   videoCard:
     clips: "{n} 클립"
-    watching: "시청자 {0}명"
-    liveNow: 지금 방송 중
+    watching: "{0}명 시청 중"
+    liveNow: 실시간 스트리밍중
     edit: 편집
-    copiedToClipboard: 클립보드로 링크가 복사되었습니다.
+    copiedToClipboard: 링크를 클립보드에 복사했습니다.
     copyLink: Holodex 링크 복사
   videoDescription:
     description: 설명
   description:
-    showLess: 줄이기
+    showLess: 간략히
     showMore: 더보기
   watch:
     streamingFor: '{0} 방송 중'
@@ -67,7 +67,7 @@ component:
   relatedVideo:
     clipsLabel: 클립
     simulcastsLabel: 동시 재생
-    refersLabel: 언급
+    refersLabel: 참고
     sourcesLabel: 출처
     songsLabel: 노래
     recommendationsLabel: 추천
@@ -81,7 +81,7 @@ component:
     weeklyTopPlaysHeader: 주간 최고 조회수
   songList:
     songTitle: 제목
-    songCoveredBy: 커버 가수
+    songCoveredBy: Covered by
     songDuration: 길이
     sangOnTime: 날짜
   orgMusic:
@@ -89,7 +89,7 @@ component:
     weeklyTopForOrg: '{0}의 주간 최고 조회수'
   installPrompt:
     title: Holodex 설치
-    callToAction: Holodex를 홈 화면에 추가하면 동영상을 더 편하게 감상할 수 있어요
+    callToAction: Holodex를 홈 화면에 추가하면 더 편하게 이용할 수 있습니다.
     notNowBtn: 나중에
     installBtn: 설치
     iOS:
@@ -97,10 +97,10 @@ component:
       afterExportIcon: 홈 화면에 추가
       beforeExportIcon: 탭
   media:
-    remove: 제거
+    remove: 삭제
   comment:
     close: 닫기
-    readMore: 더보기
+    readMore: 자세히 보기
 views:
   channel:
     video: 동영상
@@ -131,7 +131,7 @@ views:
       subber: 클립
   library:
     savedVideosTitle: 저장된 동영상
-    createYtPlaylistButton: YT 재생목록 생성 ({0})
+    createYtPlaylistButton: 유튜브 재생목록 생성 ({0})
     deleteFromLibraryButton: 삭제 ({0})
     deleteConfirmation: 정말로 {0}개의 동영상을 삭제하시겠어요?
     deleteConfirmationOK: 삭제
@@ -142,7 +142,7 @@ views:
     exportSelected: 선택 항목 내보내기 ({0})
     exportYtPlaylist: YouTube 재생 목록
     exportCsv: CSV 파일
-    selectionSelect50: 50 선택
+    selectionSelect50: 50개 선택
     exportYTExplanation: >-
       이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 떄문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
     exportYTHeading: YouTube 재생목록을 저장하는 방법
@@ -169,15 +169,15 @@ views:
     darkModeMsg: 라이트 모드와 다크 모드 간에 테마를 변경합니다
     redirectModeLabel: YouTube에서 열기
     redirectModeMsg: >-
-      동영상 미리보기를 누르면 YouTube에서 열리고 동영상 제목을 누르면 Holodex에서 열립니다
-    useEnglishNameLabel: 영어 이름 사용하기
-    useEnglishNameMsg: 영어로 변역된 버튜버 채널명을 사용합니다
-    hideVideoThumbnailsLabel: 동영상 미리보기 숨기기
+      동영상 미리보기 이미지를 누르면 YouTube에서 열리고 동영상 제목을 누르면 Holodex에서 열립니다
+    useEnglishNameLabel: 영어 이름으로 표시하기
+    useEnglishNameMsg: 채널명을 영어로 표시합니다
+    hideVideoThumbnailsLabel: 미리보기 이미지 숨기기
     hideVideoThumbnailsMsg: >-
-      동영상 미리보기를 숨기며, 로딩 시간이 빨라지고 모바일에서 더욱 쉽게 스크롤할 수 있습니다
+      동영상 미리보기 이미지를 숨기며, 로딩 시간이 빨라지고 모바일에서 더욱 쉽게 스크롤할 수 있습니다
     pushNotificationLabel: 푸시 알림 (지원 예정)
     pushNotificationMsg: 즐겨찾기한 채널의 푸시 알림을 활성화합니다
-    autoplayVideoLabel: 동영상 자동 재생
+    autoplayVideoLabel: 동영상 자동재생
     autoplayVideoMsg: 동영상 자동 재생을 활성화합니다
     scrollModeLabel: 스크롤 모드
     scrollModeMsg: 스크롤/탭해서 페이지를 이동할 수 있습니다
