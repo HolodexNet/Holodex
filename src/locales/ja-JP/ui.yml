@@ -4,7 +4,7 @@ component:
     title: ゴメナソーリー!
     textBeforeTwitter: "コンテンツの取得中にエラーが発生しました。Twitter "
     textAfterTwitter: " をご確認いただくか、"
-    aboutPage: 詳細ページ
+    aboutPage: 案内ページ
     afterAboutPageHyperlink: からエラーを報告してください。
   channelList:
     signInToFavorite: お気に入り登録にはログインが必要
@@ -187,7 +187,7 @@ views:
     defaultFavorites: デフォルトでお気に入りに移動する
     defaultFavoritesMsg: >-
       holodex.netにアクセスした際や、ページ上部左のロゴをクリックした際にお気に入りに移動します。
-    videoFeedSettings: 動画フィードの設定
+    videoFeedSettings: 動画一覧
     languageSettings: 言語
     gridSizeLabel: サムネイルのサイズを変更
     gridSizeMsg: ホーム/お気に入り画面で表示されるサムネイルの大きさを変更します
@@ -201,7 +201,7 @@ views:
     update_available: ページの更新を利用可能です
     update_btn: アップデート
     close_btn: 閉じる
-    check_about_page: 詳細"ページで更新内容を確認可能です
+    check_about_page: 案内ページで更新内容を確認できます
     nowSupportsMultiOrg: Holodexで他箱のライバーを視聴可能になりました!
     loginCallToAction: お気に入りを利用するにはログインしてください!
   about:
@@ -226,7 +226,7 @@ views:
         reconnecting: 再接続中...
         reconnectFailed: 再接続に失敗しました
         notLive: >-
-          配信は現在オフラインです。配信がオンラインになってから最大およそ15分後にチャットが使用可能になります。
+          配信はまだ開始されてないです。チャットは配信の予定時刻の15分前から使用可能になります。
         connectedToChat: 接続されました
         disconnectedToChat: 切断しました
   favorites:
@@ -249,14 +249,14 @@ views:
   login:
     apikeyMsg: >-
       APIキーを使用することでプログラムからHolodex APIにクエリを送信することができます。 キーはアカウント毎に一つのみ使用可能で、新しくキーを取得すると過去のキーは24時間以内に失効します。
-    apikeyNew: 新規APIキーを取得する
+    apikeyNew: 新規APIキーを発行する
     ownedYtChannel: あなたのYoutubeチャンネル
     futureYtcOwnerMessage: >-
       今後のアップデートでHolodexに登録した自分のチャンネル上の動画のメタデータを編集可能になります
     linkAcc: 別のアカウントをリンク
     apikeyResetConfirm1: 本当にAPIキーをリセットしてもよろしいですか?
     apikeyResetConfirm2: 以前のAPIキーは24時間以内に失効します。本当にリセットしてもよろしいですか?
-    apikeyResetNvm: Nothing interesting happend.
+    apikeyResetNvm: うん？何も起こってないよ？
     with:
       - Googleでログイン
       - Discordでログイン
