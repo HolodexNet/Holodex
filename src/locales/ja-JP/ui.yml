@@ -27,7 +27,7 @@ component:
     home: ホーム
     favorites: お気に入り
     channels: チャンネル
-    about: 詳細
+    about: 案内
     library: ライブラリ
     settings: 設定
     login: ログイン
@@ -120,31 +120,31 @@ views:
       Subber: 切り抜きチャンネル
       Favorites: お気に入り
       Blocked: ブロック済み
-    favoritesAreEmpty: お気に入りにはまだなにも登録されていません！
+    favoritesAreEmpty: お気に入りチャンネルはまだ登録されていません！
     blockedAreEmpty: ブロックしているチャンネルはありません
   home:
-    liveOrUpcomingHeading: 配信中/配信予定
+    liveOrUpcomingHeading: 配信中・配信予定
     recentVideosHeading: 最近の動画
     recentVideoToggles:
       all: すべて
       official: 公式
       subber: 切り抜き
   library:
-    savedVideosTitle: 保存したビデオ
-    createYtPlaylistButton: Youtubeのプレイリストを作成（{0}）
+    savedVideosTitle: 保存した動画
+    createYtPlaylistButton: Youtubeの再生リストを作成（{0}）
     deleteFromLibraryButton: 削除（{0}）
     deleteConfirmation: '{0}本の動画を削除してもよろしいですか？'
     deleteConfirmationOK: 削除
     deleteConfirmationCancel: キャンセル
     selectionReset: リセット
     selectionSelectAll: すべて選択
-    emptyLibrary: 保存されたビデオはありません！
+    emptyLibrary: 保存された動画はまだありません！
     exportSelected: 選択済みをエクスポート ({0})
     exportYtPlaylist: 再生リスト
-    exportCsv: CSV ファイル
+    exportCsv: CSVファイル
     selectionSelect50: 50個選択
     exportYTExplanation: >-
-      この機能によって作られた再生リストはYoutube側の仕様により<b>非公開</b>になり、その後削除される可能性があります。<br /> <b>非公開</b>のリストをアカウントに保存しておくには次の手順に従ってください。
+      この機能によって作られた再生リストはYoutube側の仕様により<b>限定公開</b>になり、その後削除される可能性があります。<br /><b>限定公開</b>のリストをアカウントに保存しておくには次の手順に従ってください。
     exportYTHeading: Youtubeの再生リストの保存方法
     exportYTInstructions: >-
       <b class="red--text">ステップ 1</b>: Youtubeの再生リストを再生してミニプレイヤーに表示を変更してください。<br /><br /> <b class="red--text">ステップ 2</b>: 何かしらの動画をキューに追加してください。<br /><br /> <b class="red--text">ステップ 3</b>: 再生リストが保存可能になります。画像に従って保存してください。
@@ -188,6 +188,7 @@ views:
     defaultFavoritesMsg: >-
       holodex.netにアクセスした際や、ページ上部左のロゴをクリックした際にお気に入りに移動します。
     videoFeedSettings: 動画フィードの設定
+    languageSettings: 言語
     gridSizeLabel: サムネイルのサイズを変更
     gridSizeMsg: ホーム/お気に入り画面で表示されるサムネイルの大きさを変更します
     gridSize:
@@ -268,7 +269,7 @@ views:
     addframe: セルを追加
     muteAll: 全てミュート
     unmuteAll: 全てミュート解除
-    autoLayoutTip: チャンネルをクリックすると自動でレイアウトされた状態で視聴できます
+    autoLayoutTip: チャンネルをクリックすると自動で配置された状態で視聴できます
     createLayoutTip: セルを追加してオリジナルのレイアウトを作成するか、プリセットを使用してください
     preset:
       shareOnDiscord: >-
