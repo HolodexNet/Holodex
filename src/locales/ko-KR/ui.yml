@@ -3,7 +3,7 @@ component:
   apiError:
     title: Gomenasorry!
     textBeforeTwitter: "콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 "
-    textAfterTwitter: "를 확인하거나"
+    textAfterTwitter: " 을 확인하거나"
     aboutPage: 정보 페이지
     afterAboutPageHyperlink: 에 오류를 제보해주세요.
   channelList:
