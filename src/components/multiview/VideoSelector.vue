@@ -167,7 +167,8 @@
                             {{ formatDurationLive(video) }}
                         </div>
                         <v-avatar size="50" @click="handleVideoClick(video)">
-                            <v-img :src="resizeChannelPhoto(video.channel.photo, 50)"></v-img>
+                            <!-- <v-img :src="resizeChannelPhoto(video.channel.photo, 50)"></v-img> -->
+                            <ChannelImg :channel="video.channel" :size="50" noLink />
                         </v-avatar>
                     </div>
                 </template>
@@ -190,6 +191,7 @@ import api from "@/utils/backend-api";
 import VideoCard from "@/components/video/VideoCard.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
+import ChannelImg from "@/components/channel/ChannelImg.vue";
 import { ORGS, VIDEO_URL_REGEX } from "@/utils/consts";
 import { dayjs } from "@/utils/time";
 import { resizeChannelPhoto } from "@/utils/functions";
@@ -202,6 +204,7 @@ export default {
         VideoCard,
         VideoCardList,
         LoadingOverlay,
+        ChannelImg,
     },
     props: {
         horizontal: {

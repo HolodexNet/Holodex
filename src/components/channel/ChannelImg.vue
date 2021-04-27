@@ -1,6 +1,17 @@
 <template>
     <!-- Render with opaque response for cache if size is lte 40 -->
-    <a :href="`/channel/${channel.id}`" @click.stop>
+    <v-lazy
+        v-if="noLink"
+        tag="img"
+        :src="photo"
+        crossorigin="anonymous"
+        loading="lazy"
+        :alt="`${channel.name}'s profile picture`"
+        :width="size"
+        :height="size"
+        class="d-block"
+    />
+    <a :href="`/channel/${channel.id}`" @click.stop v-else>
         <v-lazy
             tag="img"
             :src="photo"
@@ -12,19 +23,6 @@
             class="d-block"
         />
     </a>
-    <!-- otherwise render using vuetify lazy  -->
-    <!-- <a :href="`/channel/${channel.id}`">
-        <v-img
-            :src="photo"
-            crossorigin="anonymous"
-            :alt="`${channel.name}'s profile picture`"
-            :width="size"
-            :height="size"
-            @click.stop.prevent="goToChannel(channel.id)"
-        />
-    </a> -->
-    <!-- v-else -->
-    <!-- :to="`/channel/${channel.id}`" -->
 </template>
 
 <script lang="ts">
@@ -40,6 +38,10 @@ export default {
         size: {
             type: [String, Number],
             default: 40,
+        },
+        noLink: {
+            type: Boolean,
+            default: false,
         },
     },
     computed: {
