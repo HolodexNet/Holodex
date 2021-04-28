@@ -110,6 +110,7 @@
                         :class="['video-card-title ', { 'video-watched': hasWatched }]"
                         :title="title"
                         style="user-select: text"
+                        :style="{ 'font-size': `${1 - $store.state.currentGridSize / 16}rem` }"
                     >
                         {{ title }}
                     </v-list-item-title>
