@@ -21,7 +21,7 @@ component:
     addToFavorites: お気に入りに追加
     removeFromFavorites: お気に入りから削除
     unblock: このチャンネルのブロックを解除する
-    block: このチャンネルのコンテンツをHolodex内ではブロックする
+    block: このチャンネルのコンテンツをHolodex内では非表示にする
     blocked: ブロック済み
   mainNav:
     home: ホーム
@@ -59,7 +59,7 @@ component:
     searchLabel: 検索
     type:
       channel: チャンネル
-      topic: トピック
+      topic: 配信内容
       org: 所属
       titledesc: タイトル/動画概要
       comments: コメント
@@ -78,11 +78,11 @@ component:
     clearPlaylist: キューを削除
   channelMusic:
     recentSongsHeader: 最新曲
-    weeklyTopPlaysHeader: 週間のトップ曲
+    weeklyTopPlaysHeader: 今週のトッププレイ
   songList:
-    songTitle: タイトル
+    songTitle: 曲名
     songCoveredBy: Covered by
-    songDuration: 再生時間
+    songDuration: 曲の長さ
     sangOnTime: 配信日時
   orgMusic:
     monthlyTopForOrg: '{0}の月間トッププレイ'
@@ -111,7 +111,7 @@ views:
   channels:
     sortOptions:
       subscribers: 登録者数
-      group: グループ
+      group: 所属
       recentUpload: 最近の投稿
       videoCount: 動画数
       clipCount: 切り抜き数
@@ -188,6 +188,7 @@ views:
     defaultFavoritesMsg: >-
       holodex.netにアクセスした際や、ページ上部左のロゴをクリックした際にお気に入りに移動します。
     videoFeedSettings: 動画一覧
+    siteNavigationSettings: サイトナビゲーション
     languageSettings: 言語
     gridSizeLabel: サムネイルのサイズを変更
     gridSizeMsg: ホーム/お気に入り画面で表示されるサムネイルの大きさを変更します
@@ -253,7 +254,7 @@ views:
     ownedYtChannel: あなたのYoutubeチャンネル
     futureYtcOwnerMessage: >-
       今後のアップデートでHolodexに登録した自分のチャンネル上の動画のメタデータを編集可能になります
-    linkAcc: 別のアカウントをリンク
+    linkAcc: 別のアカウントを連携する
     apikeyResetConfirm1: 本当にAPIキーをリセットしてもよろしいですか?
     apikeyResetConfirm2: 以前のAPIキーは24時間以内に失効します。本当にリセットしてもよろしいですか?
     apikeyResetNvm: うん？何も起こってないよ？
@@ -317,7 +318,7 @@ about:
     ytchatHeader: Youtubeチャットにログインできません！
     ytchatContent: >-
       ブラウザのセキュリティ機能のサードパーティクッキーのブロックを無効にするか、holodex.netとyoutube.comをホワイトリストに追加してサードパーティックキーを許可してください。
-    ytchatFirefox: Firefoxでの設定手順はこちら、他のブラウザの手順でも参考になるかもしれません。
+    ytchatFirefox: Firefoxでの設定手順はこちらです。他のブラウザの手順でも参考になるかもしれません。
     autoplayHeader: 自動再生されません！
     autoplayContent: ご利用中のブラウザでの自動再生を有効化方法についてGoogle検索してください。
     musicPlayer: モバイルデバイスでは音楽プレーヤーがうまく動きません！
