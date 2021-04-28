@@ -581,8 +581,8 @@ export default {
     position: absolute;
     width: 100%;
     background-repeat: initial;
-    background-image: linear-gradient(to right, rgba(128, 128, 128, 0.25) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(128, 128, 128, 0.25) 1px, transparent 1px);
+    background-image: linear-gradient(to right, rgba(128, 128, 128, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(128, 128, 128, 0.15) 1px, transparent 1px);
 }
 .mobile-helpers {
     -webkit-user-select: none;

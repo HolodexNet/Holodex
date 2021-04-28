@@ -12,6 +12,7 @@
                     <v-skeleton-loader
                         type="image, list-item-avatar-three-line"
                         style="position: absolute; width: 100%; height: 100%"
+                        boilerplate
                     ></v-skeleton-loader>
                 </div>
             </v-col>
