@@ -40,7 +40,7 @@ component:
   videoCard:
     clips: "{n} 클립"
     watching: "{0}명 시청 중"
-    liveNow: 실시간 스트리밍중
+    liveNow: 실시간 스트리밍 중
     edit: 편집
     copiedToClipboard: 링크를 클립보드에 복사했습니다.
     copyLink: Holodex 링크 복사
