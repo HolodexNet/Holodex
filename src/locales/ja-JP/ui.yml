@@ -21,7 +21,7 @@ component:
     addToFavorites: お気に入りに追加
     removeFromFavorites: お気に入りから削除
     unblock: このチャンネルのブロックを解除する
-    block: このチャンネルのコンテンツをHolodex内ではブロックする
+    block: このチャンネルのコンテンツをHolodex内では非表示にする
     blocked: ブロック済み
   mainNav:
     home: ホーム
@@ -59,11 +59,11 @@ component:
     searchLabel: 検索
     type:
       channel: チャンネル
-      topic: トピック
+      topic: 配信内容
       org: 所属
       titledesc: タイトル/動画概要
       comments: コメント
-      videourl: ビデオURL
+      videourl: 動画のURL
   relatedVideo:
     clipsLabel: 切り抜き
     simulcastsLabel: 裏枠
@@ -78,11 +78,11 @@ component:
     clearPlaylist: キューを削除
   channelMusic:
     recentSongsHeader: 最新曲
-    weeklyTopPlaysHeader: 週間のトップ曲
+    weeklyTopPlaysHeader: 今週のトッププレイ
   songList:
-    songTitle: タイトル
+    songTitle: 曲名
     songCoveredBy: Covered by
-    songDuration: 再生時間
+    songDuration: 曲の長さ
     sangOnTime: 配信日時
   orgMusic:
     monthlyTopForOrg: '{0}の月間トッププレイ'
@@ -111,7 +111,7 @@ views:
   channels:
     sortOptions:
       subscribers: 登録者数
-      group: グループ
+      group: 所属
       recentUpload: 最近の投稿
       videoCount: 動画数
       clipCount: 切り抜き数
@@ -120,7 +120,7 @@ views:
       Subber: 切り抜きチャンネル
       Favorites: お気に入り
       Blocked: ブロック済み
-    favoritesAreEmpty: お気に入りチャンネルはまだ登録されていません！
+    favoritesAreEmpty: お気に入りチャンネルにはまだ何も登録されていません！
     blockedAreEmpty: ブロックしているチャンネルはありません
   home:
     liveOrUpcomingHeading: 配信中・配信予定
@@ -160,18 +160,18 @@ views:
       official: 公式
       clip: 切り抜き
     unsupportedQuery: >-
-      現在 <kbd>トピック</kbd>と<kbd>組織</kbd>での検索はサポートされていません。検索結果の<b>クリップ</b>は表示されません。
+      現在 <kbd>トピック</kbd>と<kbd>所属</kbd>での検索はサポートされていません。<b>切り抜き</b>は検索結果に表示されません。
     sortByLabel: 並べ替え
     typeDropdownLabel: 動画のタイプ
   settings:
     title: 設定
     darkModeLabel: ダークモード
-    darkModeMsg: ライトモードとダークモードを変更します
+    darkModeMsg: ライトモードとダークモードを切り替えます
     redirectModeLabel: Youtubeで開く
     redirectModeMsg: >-
       動画のサムネをクリックするとYoutubeに移動します。(タイトルをクリックする通常と変わらずHolodexで見れます。)
     useEnglishNameLabel: 英語名を使用する
-    useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
+    useEnglishNameMsg: 英語圏版のチャンネル名を表示します(一部のチャンネルは対応していません)
     hideVideoThumbnailsLabel: サムネイルを非表示にする
     hideVideoThumbnailsMsg: >-
       動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
@@ -183,11 +183,12 @@ views:
     scrollModeMsg: スクロール/タップしてページをめくる
     resetAllSettings: すべての設定やデータをリセット
     clipLanguageSelection: "次の言語で切り抜きを表示する"
-    tlLanguageSelection: 次の言語でライブチャットTLを表示する
+    tlLanguageSelection: 次の言語でライブチャット翻訳を表示する
     defaultFavorites: デフォルトでお気に入りに移動する
     defaultFavoritesMsg: >-
       holodex.netにアクセスした際や、ページ上部左のロゴをクリックした際にお気に入りに移動します。
-    videoFeedSettings: 動画一覧
+    videoFeedSettings: 動画フィードの設定
+    siteNavigationSettings: サイトナビゲーション
     languageSettings: 言語
     gridSizeLabel: サムネイルのサイズを変更
     gridSizeMsg: ホーム/お気に入り画面で表示されるサムネイルの大きさを変更します
@@ -217,10 +218,10 @@ views:
       TLSettingsTitle: 翻訳設定
       StickBottomSettingLabel: 下部に固定(モバイルのみ)
       StickBottomSettingsDesc: 翻訳を画面下部に固定して表示します(デフォルトでは画面上部に表示します)
-      showVerifiedMessages: 検証済みメッセージを表示
+      showVerifiedMessages: 確認済みのユーザーのメッセージを表示
       showModeratorMessages: モデレータによるメッセージを表示
       tlFontSize: フォントサイズ
-      tlWindowSize: TL ボックスサイズ (%)、自動で0%に設定されます
+      tlWindowSize: 翻訳済みのボックスサイズ (%)、自動で0%に設定されます
       retryBtn: リトライ
       status:
         reconnecting: 再接続中...
@@ -231,7 +232,7 @@ views:
         disconnectedToChat: 切断しました
   favorites:
     promptForAction: >-
-      お気に入りのライバーリストを作るとそのページでお気に入りライバーの最新動画を確認できます。
+      お気に入りのVtuberリストを作るとそのページでお気に入りしたVtuberの最新動画を確認できます。
     manageFavorites: お気に入りを管理
     close: 閉じる
     showall: すべて表示
@@ -243,7 +244,7 @@ views:
         すべてのユーザーはトピックを動画に設定できますが、一度設定するとエディターと管理者のみトピックを削除および変更できます。
       button: 保存(5分ほどで有効になります)
     channelMentions:
-      title: Channel メンション(開発中)
+      title: チャンネルメンション(開発中)
     sources:
       title: 本編/切り抜き(開発中)
   login:
@@ -253,7 +254,7 @@ views:
     ownedYtChannel: あなたのYoutubeチャンネル
     futureYtcOwnerMessage: >-
       今後のアップデートでHolodexに登録した自分のチャンネル上の動画のメタデータを編集可能になります
-    linkAcc: 別のアカウントをリンク
+    linkAcc: 別のアカウントを連携する
     apikeyResetConfirm1: 本当にAPIキーをリセットしてもよろしいですか?
     apikeyResetConfirm2: 以前のAPIキーは24時間以内に失効します。本当にリセットしてもよろしいですか?
     apikeyResetNvm: うん？何も起こってないよ？
@@ -269,7 +270,7 @@ views:
     addframe: セルを追加
     muteAll: 全てミュート
     unmuteAll: 全てミュート解除
-    autoLayoutTip: チャンネルをクリックすると自動で配置された状態で視聴できます
+    autoLayoutTip: チャンネルをクリックすると自動でレイアウトされた状態で視聴できます
     createLayoutTip: セルを追加してオリジナルのレイアウトを作成するか、プリセットを使用してください
     preset:
       shareOnDiscord: >-
@@ -294,7 +295,7 @@ editor:
       すでに登録された曲情報を更新もしくは削除するには「Editor」以上の権限が必要です。 「Editor」権限を新たに取得する場合または「Editor」に曲情報の不備を知らせるには <a class='white--text' href='/about'>discord</a>上で私達に連絡してください。
     titles:
       addSong: "曲情報:曲を追加"
-      songList: "セットリスト : {0}"
+      songList: "曲リスト : {0}"
       help: ヘルプ
     itunesLookupPlaceholder: (任意) iTunesで原曲を検索
     moveRight2s: 2秒進む
@@ -317,16 +318,16 @@ about:
     ytchatHeader: Youtubeチャットにログインできません！
     ytchatContent: >-
       ブラウザのセキュリティ機能のサードパーティクッキーのブロックを無効にするか、holodex.netとyoutube.comをホワイトリストに追加してサードパーティックキーを許可してください。
-    ytchatFirefox: Firefoxでの設定手順はこちら、他のブラウザの手順でも参考になるかもしれません。
+    ytchatFirefox: Firefoxでの設定手順はこちらです。他のブラウザの手順でも参考になるかもしれません。
     autoplayHeader: 自動再生されません！
-    autoplayContent: ご利用中のブラウザでの自動再生を有効化方法についてGoogle検索してください。
+    autoplayContent: ご利用中のブラウザでの自動再生を有効化方法について検索してください。
     musicPlayer: モバイルデバイスでは音楽プレーヤーがうまく動きません！
     musicPlayerContent: >-
       申し訳ありませんが、スマホ等のモバイル機器かつwebブラウザでのご利用の場合は音楽プレーヤーはサポート対象外です。 <br/>3つの要因があります: 1. ホロデックスでは自動再生が必要ですが、モバイル機器では多くの場合自動再生が禁止されています。2. モバイル機器では多くの場合ウェブサイトが裏側で音楽を再生したままにすることが許可されていません。3. 音楽再生のご要望を、我々がお客様の音楽コントロールセンターにシステムレベルで管理や処理をすることは憚られます。
-    videoLinkage: どのぐらい正確に動画をVtuberにリンクすればいいですか？
+    videoLinkage: ビデオがvtubersに正しくリンクされていることを確認するにはどうすればよいですか?
     videoLinkageContent: >-
-      全ての情報は動画概要欄から解析されます。生放送を切り抜きする場合は必ず元の生放送のURLを貼ってください。ファンが作ったコンテンツ(例えばbilibiliから) を切り抜きする場合はその動画に関連するVtuberの公式YoutubeチャンネルのURLを貼ってください。どのVtuberのチャンネルともリンクしない場合、ホロデックスでは全ての切り抜きにリンク先としてホロデックスの把握しているVtuberチャンネルが必要です。そのためリンクの無い切り抜きをホロデックスで表示することができません。
-    quitHolodex: "私は字幕制作者です。ホロデックスから私のチャンネルを削除したいです。"
+      全ての情報は動画概要欄から解析されます。生放送を切り抜きする場合は必ず元の生放送のURLを貼ってください。二次コンテンツ(例えばbilibiliから) を切り抜きする場合はその動画に関連するVtuberの公式YoutubeチャンネルのURLを貼ってください。どのVtuberのチャンネルともリンクしない場合、ホロデックスでは全ての切り抜きにリンク先としてホロデックスの把握しているVtuberチャンネルが必要です。そのためリンクの無い切り抜きをホロデックスで表示することができません。
+    quitHolodex: "私は字幕制作者です。Holodexから私のチャンネルを削除したいです。"
     quitHolodexContent: >-
       あなたが出て行ってしまうことは本当に悲しいです(T_T) もし何か私ができることがあれば是非教えてください。その上で尚、削除の意志が堅ければDiscordでメッセージをください。
     favorite:
