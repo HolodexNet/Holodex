@@ -120,7 +120,7 @@ views:
       Subber: 切り抜きチャンネル
       Favorites: お気に入り
       Blocked: ブロック済み
-    favoritesAreEmpty: お気に入りチャンネルはまだ登録されていません！
+    favoritesAreEmpty: お気に入りチャンネルにはまだ何も登録されていません！
     blockedAreEmpty: ブロックしているチャンネルはありません
   home:
     liveOrUpcomingHeading: 配信中・配信予定
@@ -160,18 +160,18 @@ views:
       official: 公式
       clip: 切り抜き
     unsupportedQuery: >-
-      現在 <kbd>トピック</kbd>と<kbd>組織</kbd>での検索はサポートされていません。検索結果の<b>クリップ</b>は表示されません。
+      現在 <kbd>トピック</kbd>と<kbd>所属</kbd>での検索はサポートされていません。<b>切り抜き</b>は検索結果に表示されません。
     sortByLabel: 並べ替え
     typeDropdownLabel: 動画のタイプ
   settings:
     title: 設定
     darkModeLabel: ダークモード
-    darkModeMsg: ライトモードとダークモードを変更します
+    darkModeMsg: ライトモードとダークモードを切り替えます
     redirectModeLabel: Youtubeで開く
     redirectModeMsg: >-
       動画のサムネをクリックするとYoutubeに移動します。(タイトルをクリックする通常と変わらずHolodexで見れます。)
     useEnglishNameLabel: 英語名を使用する
-    useEnglishNameMsg: 英語でチャンネル名を表示します(一部のチャンネルは対応していません)
+    useEnglishNameMsg: 英語圏版のチャンネル名を表示します(一部のチャンネルは対応していません)
     hideVideoThumbnailsLabel: サムネイルを非表示にする
     hideVideoThumbnailsMsg: >-
       動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
@@ -183,11 +183,11 @@ views:
     scrollModeMsg: スクロール/タップしてページをめくる
     resetAllSettings: すべての設定やデータをリセット
     clipLanguageSelection: "次の言語で切り抜きを表示する"
-    tlLanguageSelection: 次の言語でライブチャットTLを表示する
+    tlLanguageSelection: 次の言語でライブチャット翻訳を表示する
     defaultFavorites: デフォルトでお気に入りに移動する
     defaultFavoritesMsg: >-
       holodex.netにアクセスした際や、ページ上部左のロゴをクリックした際にお気に入りに移動します。
-    videoFeedSettings: 動画一覧
+    videoFeedSettings: 動画フィードの設定
     siteNavigationSettings: サイトナビゲーション
     languageSettings: 言語
     gridSizeLabel: サムネイルのサイズを変更
@@ -218,10 +218,10 @@ views:
       TLSettingsTitle: 翻訳設定
       StickBottomSettingLabel: 下部に固定(モバイルのみ)
       StickBottomSettingsDesc: 翻訳を画面下部に固定して表示します(デフォルトでは画面上部に表示します)
-      showVerifiedMessages: 検証済みメッセージを表示
+      showVerifiedMessages: 確認済みのユーザーのメッセージを表示
       showModeratorMessages: モデレータによるメッセージを表示
       tlFontSize: フォントサイズ
-      tlWindowSize: TL ボックスサイズ (%)、自動で0%に設定されます
+      tlWindowSize: 翻訳済みのボックスサイズ (%)、自動で0%に設定されます
       retryBtn: リトライ
       status:
         reconnecting: 再接続中...
@@ -232,7 +232,7 @@ views:
         disconnectedToChat: 切断しました
   favorites:
     promptForAction: >-
-      お気に入りのライバーリストを作るとそのページでお気に入りライバーの最新動画を確認できます。
+      お気に入りのVtuberリストを作るとそのページでお気に入りしたVtuberの最新動画を確認できます。
     manageFavorites: お気に入りを管理
     close: 閉じる
     showall: すべて表示
@@ -270,7 +270,7 @@ views:
     addframe: セルを追加
     muteAll: 全てミュート
     unmuteAll: 全てミュート解除
-    autoLayoutTip: チャンネルをクリックすると自動で配置された状態で視聴できます
+    autoLayoutTip: チャンネルをクリックすると自動でレイアウトされた状態で視聴できます
     createLayoutTip: セルを追加してオリジナルのレイアウトを作成するか、プリセットを使用してください
     preset:
       shareOnDiscord: >-
