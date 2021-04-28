@@ -271,7 +271,7 @@ export default {
             });
         },
         deleteCell() {
-            this.$store.commit("multiview/removeLayoutItem", this.item.i);
+            this.$emit("delete", this.item.i);
         },
         vidPlaying(evt) {
             this.pausedMode = evt.data === 2;

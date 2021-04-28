@@ -183,7 +183,7 @@
                 :isResizable="item.isResizable !== false"
                 :key="'mvgrid' + item.i"
             >
-                <cell :item="item" @showSelector="(id) => (showSelectorForId = id)"> </cell>
+                <cell :item="item" @showSelector="(id) => (showSelectorForId = id)" @delete="handleDelete"> </cell>
             </grid-item>
         </grid-layout>
 
@@ -560,6 +560,30 @@ export default {
                 this.$store.commit("multiview/setLayoutContent", content);
             }
             this.$store.commit("multiview/setLayout", layout);
+        },
+        handleDelete(id) {
+            // Check if preset and downgrade layout, if cell being deleted is video
+            if (this.isPreset(this.layout) && this.layoutContent[id].type !== "chat") {
+                // Clear everything if it's 1 video 1 chat
+                if (this.layout.length - 1 <= 1) {
+                    this.clearAllItems();
+                    return;
+                }
+
+                // Find and set to previous preset layout
+                const presets = this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets;
+                const newLayout = presets.find((preset) => preset.emptyCells >= this.activeVideos.length - 1);
+                const clonedLayout = JSON.parse(JSON.stringify(newLayout));
+                this.$store.commit("multiview/deleteLayoutContent", id);
+                this.setMultiview({
+                    ...clonedLayout,
+                    mergeContent: true,
+                });
+            }
+            // Default: delete item
+            else {
+                this.$store.commit("multiview/removeLayoutItem", id);
+            }
         },
         toggleFullScreen() {
             if (!document.fullscreenElement) {
