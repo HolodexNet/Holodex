@@ -2,17 +2,19 @@
     <v-card>
         <v-card-title class="text-body-1">{{ $t("component.watch.Comments.title") }}</v-card-title>
         <v-card-text>
-            <template v-for="b in buckets">
-                <v-btn
-                    class="mr-2 mb-2"
-                    :key="b.time"
-                    label
-                    @click="currentFilter = b.time"
-                    :color="currentFilter === b.time ? 'primary darken-1' : ''"
-                    small
-                >
-                    {{ b.display }} ({{ b.count }})
-                </v-btn>
+            <template v-if="!hideBuckets">
+                <template v-for="b in buckets">
+                    <v-btn
+                        class="mr-2 mb-2"
+                        :key="b.time"
+                        label
+                        @click="currentFilter = b.time"
+                        :color="currentFilter === b.time ? 'primary darken-1' : ''"
+                        small
+                    >
+                        {{ b.display }} ({{ b.count }})
+                    </v-btn>
+                </template>
             </template>
             <v-divider />
             <v-list dense class="pa-0 transparent caption" v-if="comments" @click.native="handleClick">
@@ -58,6 +60,10 @@ export default {
             required: false,
             default: 3,
         },
+        hideBuckets: {
+            type: Boolean,
+            default: false,
+        },
     },
     methods: {
         formatDuration,
@@ -79,7 +85,7 @@ export default {
         },
         filteredComments() {
             if (this.currentFilter < 0) {
-                return this.comments.sort((a, b) => b.times.length - a.times.length);
+                return this.groupedComments.sort((a, b) => b.times.length - a.times.length);
             }
             return this.comments
                 .filter((c) => c.times.find((t) => Math.abs(this.currentFilter - t) <= 10))

@@ -30,7 +30,8 @@
 <script lang="ts">
 import MainNav from "@/components/nav/MainNav.vue";
 import pulltorefresh from "vue-awesome-pulltorefresh";
-import { dayjsLangs } from "./plugins/vuetify";
+import { dayjsLangs, loadLanguageAsync } from "./plugins/vuetify";
+import { axiosInstance } from "./utils/backend-api";
 
 export default {
     name: "App",
@@ -74,6 +75,43 @@ export default {
         };
     },
     created() {
+        axiosInstance.interceptors.response.use(undefined, (error) => {
+            // Any status codes that falls outside the range of 2xx cause this function to trigger
+            // Do something with response error
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                this.$gtag.exception({
+                    description: `${error.response.config.method} ${error.response.config.url}->${error.response.status}`,
+                    fatal: true,
+                });
+                this.$gtag.event(`xhr:${error.response.status}`, {
+                    event_category: "xhrError",
+                    event_label: `${error.response.config.method} ${error.response.config.url} -> ${error.response.status}`,
+                });
+                console.error(error.response.data);
+                console.error(error.response.status);
+                console.error(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                this.$gtag.exception({
+                    description: "No Response Received",
+                    fatal: true,
+                });
+                console.error(error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                this.$gtag.exception({
+                    description: `Generic: ${error.message}`,
+                    fatal: true,
+                });
+                console.error("Error", error.message);
+            }
+            return Promise.reject(error);
+        });
+
         // set theme
         this.$vuetify.theme.dark = this.darkMode;
         // set lang
@@ -193,9 +231,7 @@ export default {
         lang() {
             // watches the computed.lang variable and updates vue I18N
             // import(`dayjs/locale/${this.lang}`) // ES 2015
-            dayjsLangs[this.$store.state.settings.lang]();
-            this.$i18n.locale = this.$store.state.settings.lang;
-            this.$vuetify.lang.current = this.$store.state.settings.lang;
+            loadLanguageAsync(this.$store.state.settings.lang);
         },
         // watches change in breakpoint from vuetify and updates store
         // eslint-disable-next-line func-names

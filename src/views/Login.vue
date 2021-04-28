@@ -129,6 +129,10 @@ export default {
             const resp = await api.login(this.$store.state.userdata.jwt, authCode, "google");
             // console.log(resp);
             this.$store.commit("setUser", resp.data);
+            this.$gtag.event("login", {
+                event_label: "google",
+            });
+
             this.$store.dispatch("favorites/resetFavorites");
         },
         async loginDiscord() {
@@ -145,6 +149,10 @@ export default {
                     const resp = await api.login(this.$store.state.userdata.jwt, out.access_token, "discord");
                     // console.log(resp);
                     this.$store.commit("setUser", resp.data);
+                    this.$gtag.event("login", {
+                        event_label: "discord",
+                    });
+
                     this.$store.dispatch("favorites/resetFavorites");
                 },
             );
@@ -155,6 +163,9 @@ export default {
                 const resp = await api.login(this.$store.state.userdata.jwt, twitterTempJWT, "twitter");
                 // console.log(resp);
                 this.$store.commit("setUser", resp.data);
+                this.$gtag.event("login", {
+                    event_label: "twitter",
+                });
                 this.$store.dispatch("favorites/resetFavorites");
             });
         },

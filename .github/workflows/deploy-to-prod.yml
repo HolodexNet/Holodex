@@ -18,11 +18,10 @@ jobs:
         key: ${{ secrets.KEY }}
         script: /opt/holoclips/deploy.sh
     - name: Purge Cloudflare Cache
-      uses: wei/curl@master
+      uses: indiesdev/curl@v1
       with:
-        args:
-            '-X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" 
-            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_PURGE_KEY }}" 
-            -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_AUTH_EMAIL }}" 
-            -H "Content-Type: application/json" 
-            --data ''{"files":["https://holodex.net/index.html", "https://holodex.net/service-worker.js"]}'''
+        url: 'https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache' 
+        method: 'POST'
+        headers: '{ "X-Auth-Key": "${{ secrets.CLOUDFLARE_PURGE_KEY }}", "X-Auth-Email": "${{ secrets.CLOUDFLARE_AUTH_EMAIL }}", "Content-Type": "application/json" }'
+        body: '{"files":["https://holodex.net/index.html", "https://holodex.net/service-worker.js"]}'
+        timeout: 10000

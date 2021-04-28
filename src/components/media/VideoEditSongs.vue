@@ -395,6 +395,10 @@ export default {
         },
     },
     methods: {
+        setStartTime(seconds) {
+            const self = this as any;
+            self.currentStartTime = secondsToHuman(seconds);
+        },
         processSearch(item) {
             console.log(item);
             const self = this as any;

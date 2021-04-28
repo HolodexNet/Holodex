@@ -3,60 +3,25 @@ import Vuetify from "vuetify/lib";
 import { primaryColor, secondaryColor } from "@/utils/consts";
 import VueI18n from "vue-i18n";
 
-import vuetifyEn from "vuetify/es5/locale/en";
-import vuetifyJa from "vuetify/es5/locale/ja";
-import vuetifyZh from "vuetify/es5/locale/zh-Hant";
-import vuetifyEs from "vuetify/es5/locale/es";
-import vuetifyId from "vuetify/es5/locale/id";
-import vuetifyFr from "vuetify/es5/locale/fr";
-import vuetifyPt from "vuetify/es5/locale/pt";
-import vuetifyDe from "vuetify/es5/locale/de";
-import vuetifyIt from "vuetify/es5/locale/it";
-
 import enTL from "@/locales/en/ui.yml";
-import jaTL from "@/locales/ja-JP/ui.yml";
-import esMXTL from "@/locales/es-MX/ui.yml";
-import esESTL from "@/locales/es-ES/ui.yml";
-import msTL from "@/locales/ms-MY/ui.yml";
-import zhTL from "@/locales/zh-TW/ui.yml";
-import idTL from "@/locales/id-ID/ui.yml";
-import ruTL from "@/locales/ru-RU/ui.yml";
-import frTL from "@/locales/fr-FR/ui.yml";
-import ptTL from "@/locales/pt-BR/ui.yml";
-import deTL from "@/locales/de-DE/ui.yml";
-import itTL from "@/locales/it-IT/ui.yml";
 
 // ====== i18n setup ======
 Vue.use(VueI18n);
-
-const messages = {
-    en: { $vuetify: vuetifyEn, ...enTL },
-    ja: { $vuetify: vuetifyJa, ...jaTL },
-    ms: { $vuetify: vuetifyEn, ...msTL },
-    es: { $vuetify: vuetifyEs, ...esMXTL },
-    "es-ES": { $vuetify: vuetifyEs, ...esESTL },
-    id: { $vuetify: vuetifyId, ...idTL },
-    zh: { $vuetify: vuetifyZh, ...zhTL },
-    ru: { $vuetify: vuetifyEn, ...ruTL },
-    fr: { $vuetify: vuetifyFr, ...frTL },
-    pt: { $vuetify: vuetifyPt, ...ptTL },
-    de: { $vuetify: vuetifyDe, ...deTL },
-    it: { $vuetify: vuetifyIt, ...itTL },
-};
 
 export const langs = [
     { val: "en", display: "English", credit: "@Holodex" },
     { val: "ja", display: "日本語", credit: "Yourein#3960" },
     { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
+    { val: "ko", display: "한국어", credit: "AlexKoala#0253" },
     { val: "es-ES", display: "Español España", credit: "TraduSquare (Darkc0m y D3fau4)" },
     { val: "es", display: "Español Latino", credit: "Aldo#3682" },
     { val: "ms", display: "Bahasa Melayu", credit: "Admiy#8261" },
     { val: "id", display: "Bahasa Indonesia", credit: "alcyneous#2803" },
     { val: "ru", display: "Русский язык", credit: "kirillbarnaul#8499" },
-    { val: "fr", display: "Français", credit: "pinembour#7770" },
     { val: "pt", display: "Português Brasileiro", credit: "Ash Niartis#5090" },
     { val: "de", display: "Deutsch", credit: "DatJocab#1803" },
     { val: "it", display: "Italiano", credit: "テオさん#0139" },
+    { val: "fr", display: "Français", credit: "pinembour#7770" },
 ];
 
 export const dayjsLangs = {
@@ -96,12 +61,18 @@ export const dayjsLangs = {
     async it() {
         await import("dayjs/locale/it");
     },
+    async ko() {
+        await import("dayjs/locale/ko");
+    },
 };
 
 export const i18n = new VueI18n({
     locale: "en", // Set locale
     fallbackLocale: "en",
-    messages, // Set locale messages,
+    // Set default locale messages,
+    messages: {
+        en: enTL,
+    },
     pluralizationRules: {
         /**
          * @param choice {number} a choice index given by the input to $tc: `$tc ('path.to.rule', choiceIndex)`
@@ -133,6 +104,50 @@ export const i18n = new VueI18n({
         },
     },
 });
+
+const loadedLanguages = ["en"];
+
+function setI18nLanguage(lang) {
+    dayjsLangs[lang]();
+    i18n.locale = lang;
+}
+
+// Load language from webpack chunked files
+export function loadLanguageAsync(lang) {
+    // Map short language code to full
+    const langFile = {
+        ja: "ja-JP",
+        es: "es-MX",
+        "es-ES": "es-ES",
+        ms: "ms-MY",
+        zh: "zh-TW",
+        id: "id-ID",
+        ru: "ru-RU",
+        fr: "fr-FR",
+        pt: "pt-BR",
+        de: "de-DE",
+        it: "it-IT",
+        ko: "ko-KR",
+    };
+
+    // If the same language
+    if (i18n.locale === lang) {
+        return Promise.resolve(setI18nLanguage(lang));
+    }
+
+    // If the language was already loaded
+    if (loadedLanguages.includes(lang)) {
+        return Promise.resolve(setI18nLanguage(lang));
+    }
+
+    // If the language hasn't been loaded yet
+    return import(/* webpackChunkName: "[request]" */ `@/locales/${langFile[lang]}/ui.yml`).then((msg) => {
+        i18n.setLocaleMessage(lang, msg.default);
+        loadedLanguages.push(lang);
+        return setI18nLanguage(lang);
+    });
+}
+
 // ====== end i18n setup ======
 
 export const config = {

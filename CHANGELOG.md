@@ -1,5 +1,16 @@
 # Holodex Changelog
 
+### 2.6.1 Holodex [*April 27, 2021*]
+##### New Features:
+- Added Korean language! Thank you AlexKoala#0253
+- Some new multiview presets.
+- Should be slightly easier to add music to long karaoke streams now.
+
+##### Patches
+- Some hotfixes during the week for live chat tabs. 
+- More robust multiview code, less bugs.
+- Changed our browser support list to make the site load slightly faster. Browsers with >1% usage share are completely supported.
+
 ### 2.6 Holodex [*April 22, 2021*]
 ##### New Features
 - Added **Twitch support** in MultiView. You can add a **custom twitch URL** into MultiViewer. (#175)

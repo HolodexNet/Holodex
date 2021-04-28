@@ -188,6 +188,8 @@ views:
     defaultFavoritesMsg: >-
       Menampilkan menu favorit secara langsung ketika mengunjungi holodex.net, atau dengan menekan logo pojok kiri atas.
     videoFeedSettings: Pengaturan Mengenai Video
+    siteNavigationSettings: Navigasi/Situs
+    languageSettings: Bahasa
     gridSizeLabel: Ukuran Grid/Thumbnail
     gridSizeMsg: Mengubah ukuran grid/thumbnail video pada halaman Beranda/Favorit
     gridSize:

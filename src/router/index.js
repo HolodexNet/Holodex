@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { loadLanguageAsync } from "@/plugins/vuetify";
 import Home from "../views/Home.vue";
-
 import store from "../store";
 
 const Channel = () => import("../views/Channel.vue");
@@ -157,8 +157,18 @@ const router = new VueRouter({
         if (!store.state.isMobile && !savedPosition) {
             store.dispatch("reloadCurrentPage", { source: "scrollBehavior", consumed: false });
         }
-        return savedPosition;
+        if (to.path === from.path) {
+            return savedPosition;
+        }
+        return savedPosition || { x: 0, y: 0 };
     },
+});
+
+router.beforeEach((to, from, next) => {
+    const { lang } = store.state.settings;
+    if (lang !== "en") {
+        loadLanguageAsync(lang).then(() => next());
+    } else next();
 });
 
 export default router;

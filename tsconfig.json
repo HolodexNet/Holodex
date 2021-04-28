@@ -16,8 +16,7 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "types": [
-      "webpack-env",
-      "dotenv"
+      "webpack-env"
     ],
     "paths": {
       "@/*": [

@@ -200,16 +200,18 @@ export default {
     },
     mounted() {
         // initialize chat cell in non paused mode
-        if (this.cellContent && this.cellContent.type === "chat") this.pausedMode = false;
-        if (this.pausedMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
-        else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
+        if (this.cellContent?.type === "chat") this.pausedMode = false;
+        this.setLayoutFreeze();
     },
     watch: {
-        cellContent(old, nw) {
+        cellContent(nw, old) {
             // if cell becomes null or content changes to a different type, set paused mode back to true
-            if (nw === null || (old && nw && nw.type !== old.type)) this.pausedMode = true;
+            if (!nw || (old && nw && nw.type !== old.type)) this.pausedMode = true;
+            if (nw && nw.type === "chat") this.pausedMode = false;
+            this.setLayoutFreeze();
 
             if (
+                nw &&
                 nw.type === "video" &&
                 this.iOS() &&
                 this.$store.state.multiview.layout.find((item) => {
@@ -226,10 +228,7 @@ export default {
             }
         },
         pausedMode(newMode) {
-            if (newMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
-            else {
-                this.$store.commit("multiview/freezeLayoutItem", this.item.i);
-            }
+            this.setLayoutFreeze(newMode);
         },
     },
     computed: {
@@ -272,7 +271,7 @@ export default {
             });
         },
         deleteCell() {
-            this.$store.commit("multiview/removeLayoutItem", this.item.i);
+            this.$emit("delete", this.item.i);
         },
         vidPlaying(evt) {
             this.pausedMode = evt.data === 2;
@@ -303,6 +302,10 @@ export default {
                 // iPad on iOS 13 detection
                 (navigator.userAgent.includes("Mac") && "ontouchend" in document)
             );
+        },
+        setLayoutFreeze(newMode = this.pausedMode) {
+            if (newMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
+            else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
         },
     },
 };

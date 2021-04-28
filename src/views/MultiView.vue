@@ -1,7 +1,6 @@
 <template>
     <div style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }" ref="fullscreen-content">
         <!-- Floating tool bar -->
-        <!-- <transition name="slide-y-transition" mode="out-in"> -->
         <v-toolbar class="mv-toolbar" style="right: 0" v-show="!collapseToolbar" height="64">
             <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
             <!-- Toolbar Live Video Selector -->
@@ -123,19 +122,28 @@
             </div>
         </v-toolbar>
 
-        <div style="opacity: 0.75; position: absolute; width: 100%" v-if="layout.length === 0">
-            <div style="max-width: 50%; display: inline-block">
-                <div style="display: inline-block; margin-right: 20px; margin-left: 10px">
-                    <div style="height: 10vh; border: 1px solid white; width: 1px; margin-left: 50%" />
-                    {{ $t("views.multiview.autoLayoutTip") }}
+        <!-- Multiview Cell Area Background -->
+        <div
+            class="mv-background"
+            :style="{
+                'background-size': `${columnWidth}px ${rowHeight}px`,
+                height: `${rowHeight * 24}px`,
+            }"
+        >
+            <template v-if="layout.length === 0">
+                <div style="max-width: 50%; display: inline-block">
+                    <div style="display: inline-block; margin-right: 20px; margin-left: 10px">
+                        <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
+                        {{ $t("views.multiview.autoLayoutTip") }}
+                    </div>
                 </div>
-            </div>
-            <div style="max-width: 50%; display: inline-block; float: right">
-                <div style="display: inline-block; margin-right: 10px">
-                    <div style="height: 10vh; border: 1px solid white; width: 1px; margin-left: 50%" />
-                    {{ $t("views.multiview.createLayoutTip") }}
+                <div style="max-width: 50%; display: inline-block; float: right">
+                    <div style="display: inline-block; margin-right: 10px">
+                        <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
+                        {{ $t("views.multiview.createLayoutTip") }}
+                    </div>
                 </div>
-            </div>
+            </template>
         </div>
         <!-- Floating button to open toolbar when collapsed -->
         <v-btn
@@ -154,7 +162,7 @@
         <grid-layout
             :layout="layout"
             :col-num="24"
-            :row-height="($vuetify.breakpoint.height - 26.0 - (collapseToolbar ? 0 : 64)) / 24.0"
+            :row-height="rowHeight - 26.0 / 24.0"
             :col-width="30"
             is-draggable
             is-resizable
@@ -175,7 +183,7 @@
                 :isResizable="item.isResizable !== false"
                 :key="'mvgrid' + item.i"
             >
-                <cell :item="item" @showSelector="(id) => (showSelectorForId = id)"> </cell>
+                <cell :item="item" @showSelector="(id) => (showSelectorForId = id)" @delete="handleDelete"> </cell>
             </grid-item>
         </grid-layout>
 
@@ -332,6 +340,12 @@ export default {
         },
         collapseButtons() {
             return this.$vuetify.breakpoint.xs;
+        },
+        rowHeight() {
+            return (this.$vuetify.breakpoint.height - (this.collapseToolbar ? 0 : 64)) / 24.0;
+        },
+        columnWidth() {
+            return this.$vuetify.breakpoint.width / 24.0;
         },
     },
     methods: {
@@ -547,6 +561,30 @@ export default {
             }
             this.$store.commit("multiview/setLayout", layout);
         },
+        handleDelete(id) {
+            // Check if preset and downgrade layout, if cell being deleted is video
+            if (this.isPreset(this.layout) && this.layoutContent[id].type !== "chat") {
+                // Clear everything if it's 1 video 1 chat
+                if (this.layout.length - 1 <= 1) {
+                    this.clearAllItems();
+                    return;
+                }
+
+                // Find and set to previous preset layout
+                const presets = this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets;
+                const newLayout = presets.find((preset) => preset.emptyCells >= this.activeVideos.length - 1);
+                const clonedLayout = JSON.parse(JSON.stringify(newLayout));
+                this.$store.commit("multiview/deleteLayoutContent", id);
+                this.setMultiview({
+                    ...clonedLayout,
+                    mergeContent: true,
+                });
+            }
+            // Default: delete item
+            else {
+                this.$store.commit("multiview/removeLayoutItem", id);
+            }
+        },
         toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen();
@@ -562,6 +600,14 @@ export default {
 </script>
 
 <style lang="scss">
+.mv-background {
+    opacity: 0.75;
+    position: absolute;
+    width: 100%;
+    background-repeat: initial;
+    background-image: linear-gradient(to right, rgba(128, 128, 128, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(128, 128, 128, 0.15) 1px, transparent 1px);
+}
 .mobile-helpers {
     -webkit-user-select: none;
     -khtml-user-select: none;
