@@ -63,7 +63,7 @@ component:
       org: 所属
       titledesc: タイトル/動画概要
       comments: コメント
-      videourl: ビデオURL
+      videourl: 動画のURL
   relatedVideo:
     clipsLabel: 切り抜き
     simulcastsLabel: 裏枠
