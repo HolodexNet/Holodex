@@ -160,7 +160,7 @@ views:
       official: 公式
       clip: 切り抜き
     unsupportedQuery: >-
-      現在 <kbd>トピック</kbd>と<kbd>所属</kbd>での検索はサポートされていません。<b>切り抜き</b>は検索結果に表示されません。
+      現在<kbd>配信内容</kbd>と<kbd>所属</kbd>での検索はサポートされていません。<b>切り抜き</b>は検索結果に表示されません。
     sortByLabel: 並べ替え
     typeDropdownLabel: 動画のタイプ
   settings:
