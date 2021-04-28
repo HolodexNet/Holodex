@@ -3,7 +3,7 @@ component:
   apiError:
     title: Gomenasorry!
     textBeforeTwitter: "콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 "
-    textAfterTwitter: " 을 확인하거나"
+    textAfterTwitter: "를 확인하거나"
     aboutPage: 정보 페이지
     afterAboutPageHyperlink: 에 오류를 제보해주세요.
   channelList:
@@ -81,7 +81,7 @@ component:
     weeklyTopPlaysHeader: 주간 최고 조회수
   songList:
     songTitle: 제목
-    songCoveredBy: Covered by
+    songCoveredBy: 커버 가수
     songDuration: 길이
     sangOnTime: 날짜
   orgMusic:
@@ -89,7 +89,7 @@ component:
     weeklyTopForOrg: '{0}의 주간 최고 조회수'
   installPrompt:
     title: Holodex 설치
-    callToAction: Holodex를 홈 화면에 추가하면 더 편하게 이용할 수 있습니다.
+    callToAction: Holodex를 홈 화면에 추가하면 더 편하게 이용할 수 있습니다
     notNowBtn: 나중에
     installBtn: 설치
     iOS:
@@ -131,7 +131,7 @@ views:
       subber: 클립
   library:
     savedVideosTitle: 저장된 동영상
-    createYtPlaylistButton: 유튜브 재생목록 생성 ({0})
+    createYtPlaylistButton: YouTube 재생목록 생성 ({0})
     deleteFromLibraryButton: 삭제 ({0})
     deleteConfirmation: 정말로 {0}개의 동영상을 삭제하시겠어요?
     deleteConfirmationOK: 삭제
@@ -177,7 +177,7 @@ views:
       동영상 미리보기 이미지를 숨기며, 로딩 시간이 빨라지고 모바일에서 더욱 쉽게 스크롤할 수 있습니다
     pushNotificationLabel: 푸시 알림 (지원 예정)
     pushNotificationMsg: 즐겨찾기한 채널의 푸시 알림을 활성화합니다
-    autoplayVideoLabel: 동영상 자동재생
+    autoplayVideoLabel: 동영상 자동 재생
     autoplayVideoMsg: 동영상 자동 재생을 활성화합니다
     scrollModeLabel: 스크롤 모드
     scrollModeMsg: 스크롤/탭하여 페이지를 이동합니다
