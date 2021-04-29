@@ -67,7 +67,7 @@ component:
   relatedVideo:
     clipsLabel: 클립
     simulcastsLabel: 동시 재생
-    refersLabel: 참고
+    refersLabel: 관련영상
     sourcesLabel: 출처
     songsLabel: 노래
     recommendationsLabel: 추천
@@ -298,7 +298,7 @@ editor:
       songList: "노래 목록 : {0}"
       help: 가이드
     itunesLookupPlaceholder: (선택) iTunes에서 찾아보기
-    moveRight2s: 오른쪽을 2초 이동
+    moveRight2s: 오른쪽으로 2초 이동
     testEnd: 테스트 재생은 끝나기 3초 전에 시작됩니다.
     setToCurrentTime: 현재 시간으로 설정 ({0})
     moveLeft2s: 왼쪽으로 2초 이동
@@ -312,7 +312,7 @@ editor:
 about:
   quicklinks: 빠른 연결
   discordBtn: Holodex Discord
-  issueTracker: 이슈 트레커 / 소스
+  issueTracker: 이슈 트래커 / 소스
   faq:
     title: FAQ
     ytchatHeader: YouTube 채팅에 로그인되지 않아요!
@@ -320,7 +320,7 @@ about:
       타사 쿠키 차단으로 알려진 보안 기능을 끄거나 이 웹사이트와 youtube.com을 타사 쿠키 차단에서 제외해주세요.
     ytchatFirefox: Firefox 기준으로 설명드리지만 다른 브라우저들도 비슷합니다.
     autoplayHeader: 자동 재생이 작동하지 않아요!
-    autoplayContent: 브라우저에서 자동 재생을 활성화하는 방법에 대해 검색해보세요.
+    autoplayContent: 자신이 사용하고 있는 브라우저에서 자동 재생을 활성화하는 방법에 대해 검색해보세요.
     musicPlayer: 뮤직 플레이어가 모바일 기기에서 제대로 작동하지 않아요!
     musicPlayerContent: >-
       죄송합니다. 하지만 모바일에서는 웹사이트를 통해 뮤직 플레이어를 지원할 수 없습니다. <br/>세가지 이유가 있습니다: 1. 모바일 기기는 보통 우리가 필요로 하는 자동 재생을 금지하고 있습니다. 2. 모바일 기기는 일반적으로 백그라운드에서 웹사이트가 음악을 재생하도록 허용하지 않습니다. 3. 우리는 시스템 레벨 음악 제어 센터와 대기열을 통합하지 않습니다.
