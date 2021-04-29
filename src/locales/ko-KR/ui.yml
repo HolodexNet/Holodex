@@ -326,8 +326,8 @@ about:
       죄송합니다. 하지만 모바일에서는 웹사이트를 통해 뮤직 플레이어를 지원할 수 없습니다. <br/>세가지 이유가 있습니다: 1. 모바일 기기는 보통 우리가 필요로 하는 자동 재생을 금지하고 있습니다. 2. 모바일 기기는 일반적으로 백그라운드에서 웹사이트가 음악을 재생하도록 허용하지 않습니다. 3. 우리는 시스템 레벨 음악 제어 센터와 대기열을 통합하지 않습니다.
     videoLinkage: 동영상이 버튜버에 제대로 연결되었는지 어떻게 확인하나요?
     videoLinkageContent: >-
-      모든 정보는 비디오 설명에서 불러와집니다. 스트림을 클립하는 경우 공식 방송을 연결해야 합니다. 팬이 만든 콘텐츠 (예: bilibili에서 가져오기)를 클리핑하는 경우 관련 버튜버의 공식 YouTube 채널을 연결해야 합니다. 모든 클립은 Holodex에 알려진 버튜버에 연결되어야하므로 버튜버 채널을 연결하지 않으면 Holodex에 해당 클립이 표시되지 않습니다.
-    quitHolodex: "저는 키리누키이고 Holodex에서 채널을 제거하고 싶습니다\\r"
+      모든 정보는 비디오 설명에서 불러와집니다. 스트림을 클립하는 경우 공식 방송을 연결해야 합니다. 팬이 만든 콘텐츠 (예: bilibili에서 가져온 콘텐츠) 를 클리핑하는 경우 관련 버튜버의 공식 YouTube 채널을 연결해야 합니다. 모든 클립은 Holodex에 알려진 버튜버에 연결되어야하므로 버튜버 채널을 연결하지 않으면 Holodex에 해당 클립이 표시되지 않습니다.
+    quitHolodex: "저는 키리누키 제작자이고 Holodex에서 제 채널을 제거하고 싶습니다\\r\n"
     quitHolodexContent: >-
       떠나신다니 아쉽습니다 :( 문제가 있다면 도와드리겠습니다. 그래도 제거하고 싶으시다면 Discord를 통해서 메시지를 보내주세요.
     favorite:
@@ -342,7 +342,7 @@ about:
     MugenClips:
       title: MugenClips가 뭔가요?
     subber:
-      title: 저는 키리누키이고 제 채널 또는 클립을 Holodex에서 찾을 수 없습니다
+      title: 저는 키리누키 제작자이고 제 채널 또는 클립을 Holodex에서 찾을 수 없습니다
       contents:
         - >-
 
@@ -352,8 +352,8 @@ about:
       title: 이 프로젝트에 대해서 피드백/기여하고 싶습니다
   gdpr: GDPR과 내 데이터
   gdprContent: >-
-    Google Analytics 쿠키는 페이지뷰 추적을 위해 분석 목적으로 사용됩니다. 로그인 이후에 우리는 소셜 미디어 계정 사용자명과 아이디를 즐겨찾기와 연결시킵니다. 이 데이터에는 이메일 (Google용), Discord ID, 또는 Twitter 아이디가 포함될 수 있습니다.
-  gdprDeletion: 사용자 데이터를 제거하려면 Discord에 문의해주세요!
+    Google Analytics 쿠키는 페이지뷰 추적을 위해 분석 목적으로 사용됩니다. 로그인 이후에 우리는 소셜 미디어 계정 사용자명과 아이디를 즐겨찾기와 연결시킵니다. 이 데이터에는 이메일 (Google), Discord ID, 또는 Twitter 아이디가 포함될 수 있습니다.
+  gdprDeletion: 자신의 사용자 데이터를 제거하려면 저희 Discord에 문의해주세요!
   feedback: 피드백/버그 제보
   feedbackHtml: >-
     <a href="https://github.com/RiceCakess/Holodex/issues"> Github 이슈 트레커</a>에서 이슈를 생성하거나 Discord 내의 Holodex 팀을 찾을 수 있습니다 <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
