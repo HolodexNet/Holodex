@@ -594,7 +594,7 @@ export default {
         },
         handleDelete(id) {
             // Check if preset and downgrade layout, if cell being deleted is video
-            if (this.isPreset(this.layout) && this.layoutContent[id].type !== "chat") {
+            if (this.isPreset(this.layout) && this.layoutContent[id] && this.layoutContent[id].type !== "chat") {
                 // Clear everything if it's 1 video 1 chat
                 if (this.layout.length - 1 <= 1) {
                     this.clearAllItems();
