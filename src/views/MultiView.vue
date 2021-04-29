@@ -80,7 +80,7 @@
                     </template>
 
                     <v-card rounded="lg">
-                        <v-card-text>
+                        <v-card-text class="d-flex">
                             <v-text-field
                                 readonly
                                 solo-inverted
@@ -90,8 +90,10 @@
                                 :value="exportURL"
                                 :append-icon="mdiClipboardPlusOutline"
                                 @click:append.stop="startCopyToClipboard(exportURL)"
-                                style="ma-1"
                             ></v-text-field>
+                            <v-btn icon @click="showPresetEditor = true">
+                                <v-icon>{{ mdiContentSave }}</v-icon>
+                            </v-btn>
                         </v-card-text>
                     </v-card>
                 </v-menu>
@@ -197,6 +199,16 @@
             <PresetSelector @selected="handlePresetClicked" />
         </v-dialog>
 
+        <!-- Preset Editor -->
+        <v-dialog v-model="showPresetEditor" width="500">
+            <PresetEditor
+                v-if="showPresetEditor"
+                :layout="layout"
+                :content="layoutContent"
+                @close="showPresetEditor = false"
+            />
+        </v-dialog>
+
         <!-- Confirmation for deleting layout -->
         <v-dialog v-model="overwriteDialog" width="400">
             <v-card>
@@ -236,9 +248,11 @@ import {
     mdiClipboardPlusOutline,
     mdiDelete,
     mdiCardPlus,
+    mdiContentSave,
 } from "@mdi/js";
 import copyToClipboard from "@/mixins/copyToClipboard";
 import { encodeLayout, decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-layout";
+import PresetEditor from "@/components/multiview/PresetEditor.vue";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
 import LayoutPreview from "@/components/multiview/LayoutPreview.vue";
 import Cell from "@/components/multiview/Cell.vue";
@@ -253,6 +267,7 @@ export default {
         PresetSelector,
         LayoutPreview,
         Cell,
+        PresetEditor,
     },
     mixins: [copyToClipboard],
     data() {
@@ -264,6 +279,7 @@ export default {
             mdiLinkVariant,
             mdiDelete,
             mdiCardPlus,
+            mdiContentSave,
 
             showSelectorForId: -1,
             shareDialog: false,
@@ -275,6 +291,7 @@ export default {
             overwriteMerge: false, // if the layout will be merged.
 
             showPresetSelector: false,
+            showPresetEditor: false,
 
             layoutPreview: {},
         };
@@ -298,7 +315,7 @@ export default {
         Vue.use(VueYouTubeEmbed);
     },
     computed: {
-        ...mapState("multiview", ["layout", "layoutContent"]),
+        ...mapState("multiview", ["layout", "layoutContent", "presetLayout"]),
         ...mapGetters("multiview", ["activeVideos"]),
         // Return true if there's an id requesting, setting false is setting id to -1
         showVideoSelector: {
@@ -308,6 +325,14 @@ export default {
             set(open) {
                 if (!open) this.showSelectorForId = -1;
             },
+        },
+        decodedCustomPresets() {
+            return this.presetLayout.map((preset) => {
+                return {
+                    ...preset,
+                    ...decodeLayout(preset.layout),
+                };
+            });
         },
         decodedDesktopPresets() {
             return desktopPresets.map((preset) => {
@@ -331,6 +356,7 @@ export default {
                 encodeLayout({
                     layout: this.layout,
                     contents: this.layoutContent,
+                    includeVideo: true,
                 }),
             )}`;
             return `${window.origin}/multiview${layoutParam}`;
@@ -420,8 +446,12 @@ export default {
             // more cells needed, increment to next preset with space
             if (!hasEmptyCell) {
                 // find layout with space for one more new video
-                const presets = this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets;
-                const newLayout = presets.find((preset) => preset.emptyCells >= this.activeVideos.length + 1);
+                const presets = this.decodedCustomPresets.concat(
+                    this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets,
+                );
+                const newLayout =
+                    presets.find((preset) => preset.emptyCells === this.activeVideos.length + 1) ??
+                    presets.find((preset) => preset.emptyCells >= this.activeVideos.length + 1);
 
                 // found new layout
                 if (newLayout) {
@@ -455,13 +485,14 @@ export default {
         },
         isPreset(currentLayout) {
             // filter out any presets that dont match the amount of cells
-            let toCompare = this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets;
-            toCompare = toCompare.filter((preset) => {
-                return preset.emptyCells && preset.layout.length === currentLayout.length;
-            });
+            const toCompare = this.decodedCustomPresets
+                .concat(this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets)
+                .filter((preset) => {
+                    return preset.emptyCells && preset.layout.length === currentLayout.length;
+                });
 
             // there's no presets with equal cells
-            if (!toCompare) return false;
+            if (toCompare.length === 0) return false;
 
             let fullMatch = false;
 

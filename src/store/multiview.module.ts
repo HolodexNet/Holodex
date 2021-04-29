@@ -1,11 +1,13 @@
 /* eslint-disable no-shadow */
 import { LayoutItem, getFirstCollision } from "@/external/vue-grid-layout/src/helpers/utils";
+import { decodeLayout, getEmptyCells } from "@/utils/mv-layout";
 import Vue from "vue";
 
 const initialState = {
     layout: [],
     index: 1,
     layoutContent: {},
+    presetLayout: [],
 };
 
 export const state = { ...initialState };
@@ -96,8 +98,26 @@ const mutations = {
         const index = state.layout.map((item) => item.i).indexOf(id);
         Vue.delete(state.layoutContent, id);
     },
+    addPresetLayout(state, content) {
+        state.presetLayout.push(content);
+    },
+    removePresetLayout(state, name) {
+        const index = state.presetLayout.findIndex((x) => x.name === name);
+        state.presetLayout.splice(index, 1);
+    },
+    togglePresetAutoLayout(state, name) {
+        const index = state.presetLayout.findIndex((x) => x.name === name);
+        if (state.presetLayout[index].emptyCells > 0) {
+            Vue.set(state.presetLayout[index], "emptyCells", 0);
+        } else {
+            const decodedPreset = decodeLayout(state.presetLayout[index].layout);
+            Vue.set(state.presetLayout[index], "emptyCells", getEmptyCells(decodedPreset));
+        }
+    },
     resetState(state) {
-        Object.assign(state, JSON.parse(JSON.stringify(initialState)));
+        Object.assign(state, JSON.parse(JSON.stringify(initialState)), {
+            presetLayout: state.presetLayout,
+        });
     },
 };
 
