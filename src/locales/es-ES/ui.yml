@@ -187,6 +187,10 @@ views:
     defaultFavorites: Establecer "Favoritos" como página de inicio
     defaultFavoritesMsg: >-
       Establece “Favoritos” como página de inicio.
+    videoFeedSettings: Ajustes de la interfaz de video
+    siteNavigationSettings: Ajustes de la interfaz
+    languageSettings: Idioma
+    gridSizeLabel: Tamaño de las miniaturas
   app:
     update_available: Hay una actualización disponible
     update_btn: Actualizar
