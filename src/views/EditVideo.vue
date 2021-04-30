@@ -162,13 +162,13 @@ export default {
             this.player = event.target;
             this.setTimer();
         },
-        seekTo(time, playNow) {
+        seekTo(time, playNow, updateStartTime) {
             if (!this.player) return;
             this.player.seekTo(time);
             if (playNow) this.player.playVideo();
-            if (this.currentTab === this.TABS.MUSIC) {
+            if (updateStartTime && this.currentTab === this.TABS.MUSIC) {
                 this.$refs.musicEditor && this.$refs.musicEditor.setStartTime(time);
-                document.getElementById("musicEditor").scrollIntoView();
+                // document.getElementById("musicEditor").scrollIntoView();
             }
         },
         fetchVideo() {
