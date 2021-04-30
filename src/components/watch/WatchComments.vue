@@ -69,7 +69,8 @@ export default {
         formatDuration,
         handleClick(e) {
             if (e.target.matches(".comment-chip")) {
-                this.$emit("timeJump", e.target.getAttribute("data-time"));
+                this.$emit("timeJump", e.target.getAttribute("data-time"), true, true);
+                // timeJump, timestamp, playNow = true, updateStartTime = true
                 e.preventDefault();
             }
         },
