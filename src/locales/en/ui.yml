@@ -296,15 +296,15 @@ views:
       shareOnDiscord: >-
         Have a cool layout to share? Use the share button and let us know on our
         <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
-      custom: My Layout
-      toggleAutoLayout: Toggle auto layout
-      remove: Remove
+      custom: My Layouts
+      toggleAutoLayout: Toggle Use as Auto Layout 
+      remove: Delete
       desktop: Desktop
       mobile: Mobile
     presetEditor:
       title: Save Layout
       name: Name
-      autoLayout: For auto layout
+      autoLayout: Use as Auto Layout
     video:
       selectLive: Select Live
       addCustomVideo: Add Custom Video
