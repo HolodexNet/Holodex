@@ -1,5 +1,9 @@
 # Holodex Changelog
 
+### 2.6.2 Holodex [*April 29, 2021*]
+##### Hotfix:
+- Fixed a horrible bug with Music editing, should be even better now. Thanks for the report lilybass ❤️
+
 ### 2.6.1 Holodex [*April 27, 2021*]
 ##### New Features:
 - Added Korean language! Thank you AlexKoala#0253
