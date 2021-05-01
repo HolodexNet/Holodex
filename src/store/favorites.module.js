@@ -59,15 +59,20 @@ const actions = {
                 })
                 .then((res) => {
                     // filter out collab channels if settings is set
+                    let live = res;
                     if (rootState.settings.hideCollabStreams) {
                         const favoritesSet = new Set(state.favorites.map((f) => f.id));
-                        commit(
-                            "setLive",
-                            res.filter((video) => favoritesSet.has(video.channel.id)),
-                        );
-                    } else {
-                        commit("setLive", res);
+                        live = res.filter((video) => favoritesSet.has(video.channel.id));
                     }
+                    live.sort((a, b) => {
+                        if (a.available_at === b.available_at) {
+                            return a.id - b.id;
+                        }
+                        const dateA = new Date(a.available_at).getTime();
+                        const dateB = new Date(b.available_at).getTime();
+                        return dateA - dateB;
+                    });
+                    commit("setLive", live);
                     commit("fetchEnd");
                 })
                 .catch((e) => {

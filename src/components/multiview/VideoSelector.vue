@@ -234,8 +234,7 @@ export default {
     mounted() {
         // Set tab to favorites if logged in or currentOrg otherwise
         if (this.$store.getters.isLoggedIn) {
-            this.$store.dispatch("favorites/fetchLive", { minutes: 2 });
-            this.loadFavorites();
+            this.loadSelection();
         } else {
             this.selectedOrg = this.orgList.find((x) => x.text === this.$store.state.currentOrg).value;
         }
@@ -252,7 +251,7 @@ export default {
     watch: {
         // Watch lastLiveUpdate from favorites module, and fetch new state
         lastLiveUpdate() {
-            if (this.selectedOrg === 0) this.loadFavorites();
+            if (this.selectedOrg === 0) this.live = this.$store.state.favorites.live;
         },
         // Watch dropdown selection change
         selectedOrg() {
@@ -287,21 +286,19 @@ export default {
         },
         filteredLive() {
             // Filter out lives for top bar
-            let filtered = this.live
+            let count = 0;
+            const filtered = this.live
                 .filter((l) => {
-                    return l.status === "live" || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m"));
+                    count += 1;
+                    // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
+                    return (
+                        l.status === "live" ||
+                        dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
+                        (count < 5 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
+                    );
                 })
                 .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
 
-            // expand search if 30m limit yields less than 5 results
-            if (filtered.length < 5) {
-                filtered = this.live
-                    .filter((l) => {
-                        return l.status === "live" || dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h"));
-                    })
-                    .splice(0, 5)
-                    .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
-            }
             return filtered;
         },
         isLoggedIn() {
@@ -357,18 +354,6 @@ export default {
                 this.customURLError = true;
             }
         },
-        loadFavorites() {
-            this.live = this.$store.state.favorites.live;
-            // Sort by upcoming time (backend data does not come sorted for favorites)
-            this.live = this.live.sort((a, b) => {
-                // Keep sort order consistent, but sorting by id when times are equal
-                if ((a.start_actual || a.start_scheduled) === (b.start_actual || b.start_scheduled)) {
-                    return a.channel.id - b.channel.id;
-                }
-                if ((a.start_actual || a.start_scheduled) > (b.start_actual || b.start_scheduled)) return 1;
-                return -1;
-            });
-        },
         // Check if 5 minutes have past since last update
         tryUpdateLives() {
             if (this.selectedOrg > 2 && Date.now() - this.lastUpdate > 1000 * 60 * 5) {
@@ -387,8 +372,8 @@ export default {
                 this.isLoading = true;
                 this.$store.dispatch("favorites/fetchLive", { minutes: 2, force: true }).finally(() => {
                     this.isLoading = false;
+                    this.live = this.$store.state.favorites.live;
                 });
-                this.loadFavorites();
                 return;
             }
             // Call api for specific org
