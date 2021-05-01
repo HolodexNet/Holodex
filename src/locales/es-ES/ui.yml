@@ -187,6 +187,17 @@ views:
     defaultFavorites: Establecer "Favoritos" como página de inicio
     defaultFavoritesMsg: >-
       Establece “Favoritos” como página de inicio.
+    videoFeedSettings: Ajustes de la interfaz de video
+    siteNavigationSettings: Ajustes de la interfaz
+    languageSettings: Idioma
+    gridSizeLabel: Tamaño de las miniaturas
+    gridSizeMsg: Cambia el tamaño de las miniaturas de la pagina Inicio/Favoritos
+    gridSize:
+      - Grande
+      - Mediano
+      - Pequeño
+    hideCollabStreamsLabel: Ocultar colaboraciones
+    hideCollabStreamsMsg: Oculta las colaboraciones de tu pagina de favoritos
   app:
     update_available: Hay una actualización disponible
     update_btn: Actualizar
@@ -257,6 +268,10 @@ views:
     permalink: Enlace permanente
     presets: Plantillas
     addframe: Añadir Celda
+    muteAll: Silenciar a todos
+    unmuteAll: Desilenciar a todos
+    autoLayoutTip: Haz click para empezar a ver streams usando un diseño automático
+    createLayoutTip: Crea tu propio diseño añadiendo una celda o usa una plantilla
     preset:
       shareOnDiscord: >-
         ¿Has hecho un diseño perfecto? ¡Usa el botón de compartir y enséñanos tu desiño en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de discord</a>!
