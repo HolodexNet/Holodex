@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
-import { primaryColor, secondaryColor } from "@/utils/consts";
+import { themeSet } from "@/utils/consts";
 import VueI18n from "vue-i18n";
 
 import enTL from "@/locales/en/ui.yml";
@@ -150,6 +150,9 @@ export function loadLanguageAsync(lang) {
 
 // ====== end i18n setup ======
 
+const initThemeJSON = localStorage.getItem("theme");
+const theme = themeSet[+initThemeJSON || 0];
+
 export const config = {
     treeShake: true,
     icons: {
@@ -159,18 +162,7 @@ export const config = {
         options: {
             customProperties: true,
         },
-        themes: {
-            dark: {
-                primary: primaryColor,
-                secondary: secondaryColor,
-                background: "#121212",
-            },
-            light: {
-                primary: primaryColor,
-                secondary: secondaryColor,
-                background: "#f2f2f2", // Not automatically applied
-            },
-        },
+        themes: theme.themes,
     },
     lang: {
         t: (key, ...params) => i18n.t(key, params),

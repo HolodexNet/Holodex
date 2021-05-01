@@ -369,11 +369,11 @@ export default {
 
 <style scoped>
 .theme--light .video-watched {
-    color: #94659c !important;
+    color: var(--v-secondary-darken2) !important;
 }
 
 .theme--dark .video-watched {
-    color: #ce93d8 !important;
+    color: var(--v-secondary-lighten1) !important;
 }
 
 .video-card {
@@ -485,6 +485,23 @@ export default {
 
 .video-card-active {
     /* primary color with opacity */
-    background-color: #f0629257;
+    /* Used for Mugen Clips where one of the list videos are 'active' */
+    /* background-color: #f0629257; */
+    height: auto;
+    width: auto;
+    position: relative;
+}
+
+.video-card-active::before {
+    content: "";
+    background-color: var(--v-primary-darken2);
+    background-size: cover;
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
+    opacity: 0.15;
+    border-radius: 4px;
 }
 </style>

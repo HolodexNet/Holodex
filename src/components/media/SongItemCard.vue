@@ -154,7 +154,6 @@ export default {
         bottom: 4px;
         border-radius: 50% 50% 50% 3px;
         box-shadow: -1px 1px 1px #000;
-        // clip-path: path('M 2 0 C 2 0 2 0 2 0 C 3 0 4 1 4 2 C 4 3 3 4 2 4 C 1 4 0 3 0 2 C 1 2 2 1 2 0');
     }
     .floating-avatar:hover {
         bottom: 5px;

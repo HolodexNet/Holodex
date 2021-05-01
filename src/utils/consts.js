@@ -3,6 +3,46 @@
 export const primaryColor = "#F06292";
 export const secondaryColor = "#64B5F6";
 
+const aquaIro = {
+    primary: "#F06292",
+    secondary: "#64B5F6",
+};
+const koroneIro = {
+    primary: "#F4DBA2",
+    secondary: "#93D3CE",
+};
+
+export const themeSet = [
+    {
+        name: "Aqua",
+        id: 0,
+        themes: {
+            dark: {
+                background: "#121212",
+                ...aquaIro,
+            },
+            light: {
+                background: "#f2f2f2",
+                ...aquaIro,
+            },
+        },
+    },
+    {
+        name: "Korone",
+        id: 1,
+        themes: {
+            dark: {
+                background: "#121212",
+                ...koroneIro,
+            },
+            light: {
+                background: "#f2f2f2",
+                ...koroneIro,
+            },
+        },
+    },
+];
+
 export const CHANNEL_TYPES = Object.freeze({
     VTUBER: "vtuber",
     SUBBER: "subber",

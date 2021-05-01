@@ -39,7 +39,6 @@
                     top
                     origin="right bottom"
                     transition="slide-y-reverse-transition"
-                    content-class="scrollable-music-queue"
                     min-width="30vw"
                     max-width="50vw"
                     max-height="50vh"
