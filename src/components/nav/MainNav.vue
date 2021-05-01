@@ -19,7 +19,7 @@
         <v-app-bar
             id="top-bar"
             :class="{
-                'secondary darken-3': darkMode,
+                'secondary darken-1': darkMode,
                 'primary lighten-1': !darkMode,
             }"
             :app="!isWatchPage"
