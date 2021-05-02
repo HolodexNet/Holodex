@@ -67,7 +67,7 @@ component:
   relatedVideo:
     clipsLabel: 클립
     simulcastsLabel: 동시 재생
-    refersLabel: 관련영상
+    refersLabel: 관련 영상
     sourcesLabel: 출처
     songsLabel: 노래
     recommendationsLabel: 추천
@@ -275,8 +275,15 @@ views:
     preset:
       shareOnDiscord: >-
         공유할 만한 멋있는 레이아웃이 있나요? 공유 버튼을 누른 후 우리의 <a href="https://discord.gg/jctkgHBt4b">Discord 서버</a>에 공유해주세요!
+      custom: 내 레이아웃
+      toggleAutoLayout: 자동 모드로 레이아웃 사용하기 켜기/끄기
+      remove: 삭제
       desktop: 데스크톱
       mobile: 모바일
+    presetEditor:
+      title: 레이아웃 저장
+      name: 이름
+      autoLayout: 자동 모드로 레이아웃 사용하기
     video:
       selectLive: 방송 선택하기
       addCustomVideo: 사용자 지정 동영상 추가
