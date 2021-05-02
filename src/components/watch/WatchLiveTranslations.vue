@@ -73,7 +73,7 @@
         </v-card-subtitle>
         <v-divider />
         <v-card-text
-            class="tl-body thin-scroll-bar d-flex flex-column pa-1 pa-lg-3"
+            class="tl-body thin-scroll-bar pa-1 pa-lg-3"
             ref="tlBody"
             :style="{
                 'font-size': liveTlFontSize + 'px',
@@ -112,7 +112,7 @@
 import api, { API_BASE_URL } from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
 import { TL_LANGS } from "@/utils/consts";
-import { debounce, syncState } from "@/utils/functions";
+import { syncState } from "@/utils/functions";
 import VueSocketIOExt from "vue-socket.io-extended";
 import { Manager } from "socket.io-client";
 import Vue from "vue";
@@ -190,6 +190,16 @@ export default {
     created() {},
     mounted() {
         this.tlJoin();
+        // setInterval(() => {
+        //     const msg = {
+        //         name: "test 1",
+        //         message: "this is a test mesages",
+        //         timestamp: Date.now()
+        //     };
+        //     this.tlHistory.push(msg);
+        //     this.scrollBottom();
+
+        // }, 1000)
     },
     beforeDestroy() {
         this.tlLeave();
@@ -217,15 +227,6 @@ export default {
         },
     },
     methods: {
-        // eslint-disable-next-line func-names
-        scrollBottom: debounce(function (force = false) {
-            if (!this.$refs.tlBody) return;
-            if (
-                force ||
-                this.$refs.tlBody.scrollHeight - this.$refs.tlBody.clientHeight - this.$refs.tlBody.scrollTop < 100
-            )
-                this.$refs.tlBody.scrollTo({ top: this.$refs.tlBody.scrollHeight, behavior: "smooth" });
-        }, 100),
         registerListener() {
             const vm = this as any;
             this.$socket.client.on(`${vm.video.id}/${vm.liveTlLang}`, (msg) => {
@@ -321,6 +322,8 @@ export default {
     overflow-y: auto;
     overscroll-behavior: contain;
     height: calc(100% - 32px);
+    display: flex;
+    flex-direction: column-reverse;
     line-height: 1.25em;
     letter-spacing: 0.0178571429em !important;
 }
@@ -328,6 +331,8 @@ export default {
 .tl-overlay {
     border: 1px solid rgba(65, 65, 65, 0.2) !important;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .tl-body .tl-caption {
