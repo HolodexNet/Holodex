@@ -205,8 +205,6 @@ export default {
                 })
             ) {
                 this.muted = true;
-            } else {
-                this.muted = false;
             }
         },
         pausedMode(newMode) {
