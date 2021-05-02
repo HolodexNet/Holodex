@@ -50,6 +50,22 @@ export const themeSet = [
             },
         },
     },
+    {
+        name: "Rushia",
+        id: 3,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#22C4AC",
+                secondary: "#5783BF",
+            },
+            light: {
+                background: "#f2f2f2",
+                primary: "#9E65A6",
+                secondary: "#F2C9EB",
+            },
+        },
+    },
 ];
 
 export const CHANNEL_TYPES = Object.freeze({
