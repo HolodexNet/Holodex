@@ -12,7 +12,7 @@
         <v-slider class="music-progress" hide-details :value="progress" height="3" @change="progressChange" />
         <div class="d-flex justify-space-between pa-2" :class="{ 'flex-column': $vuetify.breakpoint.xs }">
             <div class="player-controls d-flex align-center">
-                <v-btn icon class="mx-1" @click="prevButtonHandler">
+                <v-btn icon class="mx-1" @click="prevButtonHandler" color="secondary">
                     <v-icon>{{ mdiSkipPrevious }}</v-icon>
                 </v-btn>
                 <v-btn icon fab @click="playPause" color="primary">
@@ -21,6 +21,7 @@
                 <v-btn
                     icon
                     class="mx-1"
+                    color="secondary"
                     @click="
                         () => {
                             titleTransition = 'scroll-y-reverse-transition';
@@ -30,7 +31,7 @@
                 >
                     <v-icon>{{ mdiSkipNext }}</v-icon>
                 </v-btn>
-                <v-btn icon class="mx-1" @click="$store.commit('music/cycleMode')">
+                <v-btn icon color="secondary" class="mx-1" @click="$store.commit('music/cycleMode')">
                     <v-icon>{{ shuffleButtonIcon }}</v-icon>
                 </v-btn>
                 <ResponsiveMenu
@@ -55,8 +56,10 @@
                             v-on="on"
                             @click="queueMenuOpen = !queueMenuOpen"
                         >
-                            <v-icon>{{ icons.mdiPlaylistMusic }}</v-icon>
-                            <div class="">({{ currentId + 1 }}/{{ playlist.length }})</div>
+                            <v-icon color="secondary">{{ icons.mdiPlaylistMusic }}</v-icon>
+                            <div class="secondary--text text--darken-2">
+                                ({{ currentId + 1 }}/{{ playlist.length }})
+                            </div>
                         </v-btn>
                     </template>
                     <song-playlist :songs="playlist" :currentId="currentId"></song-playlist>
@@ -65,6 +68,7 @@
                     <v-btn
                         small
                         v-if="queueMenuOpen"
+                        style="position: relative; margin-right: -60px"
                         elevation="0"
                         color="warning"
                         @click="
@@ -106,7 +110,7 @@
                             >
                                 {{ currentSong.channel[nameProperty] || currentSong.channel.name }}
                             </router-link>
-                            <span class="text-subtitle-2 text--secondary">({{ currentSong.original_artist }})</span>
+                            <span class="text-subtitle-2 grey--text">({{ currentSong.original_artist }})</span>
                         </div>
                     </div>
                     <div class="music-more-btn">
@@ -162,7 +166,7 @@
 
 <style lang="scss">
 .theme--light .music-player-bar {
-    background: rgba(237, 227, 241, 0.95);
+    background: rgba(254, 253, 255, 0.95);
 }
 .theme--dark .music-player-bar {
     background: rgba(41, 43, 49, 0.99);

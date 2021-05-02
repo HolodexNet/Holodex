@@ -219,7 +219,7 @@ export default {
 </script>
 
 <style>
-.recent-table .selectable {
+/* .recent-table .selectable {
     cursor: pointer;
 }
 .recent-table.theme--dark .selectable .hoverable.v-btn {
@@ -232,14 +232,14 @@ export default {
 }
 
 .recent-table .selectable .hoverable.v-btn:hover {
-    color: rgb(227, 92, 240);
-    border-color: rgb(232, 125, 241);
+    color: var(--v-secondary-base);
+    border-color: var(--v-secondary-base);
     background-color: rgba(134, 134, 134, 0.3);
-}
+} */
 
 .popup.v-btn:hover {
     margin-bottom: 2px;
     margin-top: -2px;
-    color: rgb(167, 50, 106);
+    color: var(--v-secondary-lighten1);
 }
 </style>

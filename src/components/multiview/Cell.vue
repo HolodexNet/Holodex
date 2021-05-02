@@ -33,26 +33,6 @@
                         <v-icon>{{ mdiMessage }}</v-icon>
                     </v-btn>
                 </v-sheet>
-                <!-- <div class="pa-0 ma-0">
-                    <span class="text-overline">{{ $t("component.mainNav.favorites") }}</span>
-                </div>
-                <VideoCardList
-                    v-if="$store.state.userdata.user && $store.state.favorites.favorites.length > 0"
-                    :videos="liveSoon"
-                    :horizontal="true"
-                    dense
-                    @videoClicked="handleVideoClicked"
-                    :hideThumbnail="needHideVImg"
-                    includeAvatar
-                    disableDefaultClick
-                    includeChannel
-                ></VideoCardList>
-                <div v-else class="mt-2">
-                    {{ $t("views.channels.favoritesAreEmpty") }} <br />
-                    <v-btn small text to="/login" v-if="!$store.state.userdata.user"
-                        ><v-icon left>{{ icons.mdiLoginVariant }}</v-icon> {{ $t("component.mainNav.login") }}</v-btn
-                    >
-                </div> -->
             </v-list>
             <template>
                 <CellControl :playIcon="icons.mdiPlay" @delete="deleteCell" class="mx-6 mb-6 mt-0 flex-grow-0" />
@@ -73,6 +53,7 @@
                     v-if="cellContent.type === 'video' && cellContent.content.id"
                     :key="'v' + uniqueId"
                 >
+                    <!-- Twitch Player -->
                     <VueTwitchPlayer
                         v-if="isTwitchVideo"
                         :channel="cellContent.content.id"
@@ -86,6 +67,7 @@
                         ref="twitchPlayer"
                     >
                     </VueTwitchPlayer>
+                    <!-- Youtube Player -->
                     <youtube
                         v-else
                         :key="'ytplayer-' + item.i + cellContent.content.id"
@@ -330,12 +312,8 @@ export default {
     }
 }
 
-.cell-content.chat-cell .show-tl-overlay {
-    // height: calc(100% - 24px);
-}
-
 .mv-cell.edit-mode {
-    border: 1px solid #f06291 !important;
+    border: 1px solid var(--v-secondary-base) !important;
 }
 
 .vue-grid-item.vue-draggable-dragging .mv-cell,
@@ -353,9 +331,5 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-}
-.mv-handlebars > .v-icon {
-    position: absolute;
-    color: #f06291;
 }
 </style>

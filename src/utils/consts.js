@@ -1,15 +1,5 @@
 /* eslint-disable no-useless-escape */
 
-const aquaIro = {
-    primary: "#F06292",
-    secondary: "#64B5F6",
-};
-const koroneIro = {
-    primary: "#F4DBA2",
-    secondary: "#93D3CE",
-};
-// https://coolors.co/a8736d-f4dba2-f4d7cd-93d3ce-e46d8d <-- Korone color swatch
-
 export const themeSet = [
     {
         name: "Aqua",
@@ -17,11 +7,13 @@ export const themeSet = [
         themes: {
             dark: {
                 background: "#121212",
-                ...aquaIro,
+                primary: "#F06292",
+                secondary: "#3b88d5",
             },
             light: {
                 background: "#f2f2f2",
-                ...aquaIro,
+                primary: "#F06292",
+                secondary: "#64B5F6",
             },
         },
     },
@@ -32,12 +24,12 @@ export const themeSet = [
             dark: {
                 background: "#121212",
                 primary: "#FCC281",
-                secondary: "#C4E167",
+                secondary: "#A6C449",
             },
             light: {
                 background: "#f2f2f2",
-                secondary: "#FCC281",
-                primary: "#379CB3",
+                secondary: "#839C35",
+                primary: "#FCC281",
             },
         },
     },
@@ -45,13 +37,16 @@ export const themeSet = [
         name: "Korone",
         id: 2,
         themes: {
+            // https://coolors.co/a8736d-f4dba2-f4d7cd-93d3ce-e46d8d <-- Korone color swatch
             dark: {
-                background: "#121212",
-                ...koroneIro,
+                background: "#0D0707",
+                primary: "#B07975",
+                secondary: "#D57E3D",
             },
             light: {
                 background: "#f2f2f2",
-                ...koroneIro,
+                primary: "#F6D68D",
+                secondary: "#80CDC7",
             },
         },
     },

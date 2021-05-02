@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <div class="text-h4" v-if="!slim">{{ $t("views.settings.title") }}</div>
+                <div class="text-h4 mb-4" v-if="!slim">{{ $t("views.settings.title") }}</div>
                 <div class="settings-group">
                     <div class="py-1 text-h6">
                         <v-icon>{{ icons.mdiTranslate }}</v-icon>
@@ -56,15 +56,15 @@
                         >
                             <template v-slot:item="{ item }">
                                 <div class="theme-preview">
-                                    <span :style="`background:${item.themes.dark.primary}`"></span>
-                                    <span :style="`background:${item.themes.dark.secondary}`"></span>
+                                    <span :style="`background:${item.themes[mode].primary}`"></span>
+                                    <span :style="`background:${item.themes[mode].secondary}`"></span>
                                     {{ item.name }}
                                 </div>
                             </template>
                             <template v-slot:selection="{ item }">
                                 <div class="theme-preview">
-                                    <span :style="`background:${item.themes.dark.primary}`"></span>
-                                    <span :style="`background:${item.themes.dark.secondary}`"></span>
+                                    <span :style="`background:${item.themes[mode].primary}`"></span>
+                                    <span :style="`background:${item.themes[mode].secondary}`"></span>
                                     {{ item.name }}
                                 </div>
                             </template>
@@ -194,6 +194,9 @@ export default {
         },
         theme() {
             return this.$vuetify.theme;
+        },
+        mode() {
+            return this.darkMode ? "dark" : "light";
         },
     },
     watch: {

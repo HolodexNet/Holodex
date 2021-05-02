@@ -175,6 +175,6 @@ export default {
 .popup.v-btn:hover {
     margin-bottom: 2px;
     margin-top: -2px;
-    color: rgb(167, 50, 106);
+    color: var(--v-secondary-lighten1);
 }
 </style>
