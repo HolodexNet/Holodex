@@ -4,6 +4,7 @@ import { themeSet } from "@/utils/consts";
 import VueI18n from "vue-i18n";
 
 import enTL from "@/locales/en/ui.yml";
+import vuetifyEn from "vuetify/es5/locale/en";
 
 // ====== i18n setup ======
 Vue.use(VueI18n);
@@ -65,13 +66,12 @@ export const dayjsLangs = {
         await import("dayjs/locale/ko");
     },
 };
-
 export const i18n = new VueI18n({
     locale: "en", // Set locale
     fallbackLocale: "en",
     // Set default locale messages,
     messages: {
-        en: enTL,
+        en: { $vuetify: vuetifyEn, ...enTL },
     },
     pluralizationRules: {
         /**
