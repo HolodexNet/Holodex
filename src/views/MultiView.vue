@@ -8,7 +8,7 @@
                 class="justify-start d-flex mv-toolbar-btn align-center thin-scroll-bar"
                 style="overflow-x: auto; overflow-y: hidden"
             >
-                <VideoSelector v-if="!collapseButtons" horizontal @videoClicked="handleToolbarClick" />
+                <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
                 <!-- Single Button video selector for xs displays -->
                 <v-btn @click="handleToolbarShowSelector" icon large>
                     <v-icon style="border-radius: 0 position: relative; margin-right: 3px; cursor: pointer" large>
@@ -21,47 +21,25 @@
                 class="flex-grow-1 justify-end d-flex mv-toolbar-btn align-center"
                 :class="{ 'no-btn-text': $store.state.isMobile || true }"
             >
-                <!-- <v-switch v-model="autoLayout" hide-details></v-switch> -->
-                <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn @click="addItem" color="green" icon v-bind="attrs" v-on="on">
-                            <v-icon>{{ mdiViewGridPlus }}</v-icon>
-                        </v-btn>
-                    </template>
-                    <span>{{ $t("views.multiview.addframe") }}</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn @click="clearAllItems" color="red" icon v-bind="attrs" v-on="on">
-                            <v-icon>{{ icons.mdiRefresh }}</v-icon>
-                        </v-btn>
-                    </template>
-                    <span>{{ $t("component.music.clearPlaylist") }}</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="primary" @click="showPresetSelector = true" icon v-bind="attrs" v-on="on">
-                            <v-icon>{{ icons.mdiGridLarge }}</v-icon>
-                        </v-btn>
-                    </template>
-                    <span>{{ $t("views.multiview.presets") }}</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn @click="setMuteAll(true)" icon v-bind="attrs" v-on="on" v-show="!collapseButtons">
-                            <v-icon>{{ icons.mdiVolumeMute }}</v-icon>
-                        </v-btn>
-                    </template>
-                    <span>{{ $t("views.multiview.muteAll") }}</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn @click="setMuteAll(false)" icon v-bind="attrs" v-on="on" v-show="!collapseButtons">
-                            <v-icon>{{ icons.mdiVolumeHigh }}</v-icon>
-                        </v-btn>
-                    </template>
-                    <span>{{ $t("views.multiview.unmuteAll") }}</span>
-                </v-tooltip>
+                <!-- Show toolbar btns that are not collapsible or not in collapsed state -->
+                <template
+                    v-for="(b, index) in buttons.filter((btn) => !btn.collapse || (!collapseButtons && btn.collapse))"
+                >
+                    <!-- Create btn with tooltip -->
+                    <v-tooltip bottom :key="`mv-btn-${index}`" v-if="b.tooltip">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn @click="b.onClick" :color="b.color" icon v-bind="attrs" v-on="on">
+                                <v-icon>{{ b.icon }}</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>{{ b.tooltip }}</span>
+                    </v-tooltip>
+                    <!-- Create normal button with no tooltip -->
+                    <v-btn @click="b.onClick" :color="b.color" icon :key="`mv-btn-${index}`" v-else>
+                        <v-icon>{{ b.icon }}</v-icon>
+                    </v-btn>
+                </template>
+                <!-- Share button and dialog -->
                 <v-menu
                     :open-on-click="true"
                     bottom
@@ -78,7 +56,6 @@
                             <span class="collapsible-text">{{ $t("views.multiview.permalink") }}</span>
                         </v-btn>
                     </template>
-
                     <v-card rounded="lg">
                         <v-card-text class="d-flex">
                             <v-text-field
@@ -91,31 +68,23 @@
                                 :append-icon="mdiClipboardPlusOutline"
                                 @click:append.stop="startCopyToClipboard(exportURL)"
                             ></v-text-field>
-                            <v-btn icon @click="showPresetEditor = true">
-                                <v-icon>{{ mdiContentSave }}</v-icon>
-                            </v-btn>
                         </v-card-text>
                     </v-card>
                 </v-menu>
-
-                <v-btn @click="toggleFullScreen" icon>
-                    <v-icon>{{ icons.mdiFullscreen }}</v-icon>
-                </v-btn>
+                <!-- Show vertical dots menu for collapsible buttons -->
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn v-bind="attrs" v-on="on" icon v-show="collapseButtons">
                             <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                         </v-btn>
                     </template>
-                    <v-list>
-                        <v-list-item @click="setMuteAll(false)" block class="mb-2">
-                            <v-icon left>{{ icons.mdiVolumeHigh }}</v-icon>
-                            <span>{{ $t("views.multiview.unmuteAll") }}</span>
-                        </v-list-item>
-                        <v-list-item @click="setMuteAll(true)" block>
-                            <v-icon color="red" left>{{ icons.mdiVolumeMute }}</v-icon>
-                            <span>{{ $t("views.multiview.muteAll") }}</span>
-                        </v-list-item>
+                    <v-list dense>
+                        <template v-for="(b, index) in buttons.filter((btn) => btn.collapse)">
+                            <v-list-item @click="b.onClick" block class="mb-2" :key="`mv-collapsed-${index}`">
+                                <v-icon left>{{ b.icon }}</v-icon>
+                                <span>{{ b.tooltip }}</span>
+                            </v-list-item>
+                        </template>
                     </v-list>
                 </v-menu>
                 <v-btn icon @click="collapseToolbar = true">
@@ -158,7 +127,6 @@
         >
             <v-icon>{{ icons.mdiChevronDown }}</v-icon>
         </v-btn>
-        <!-- </transition> -->
         <!-- Grid Layout -->
         <!-- rowHeight = 100vh/colNum, makes layout consistent across different heights -->
         <grid-layout
@@ -315,6 +283,59 @@ export default {
         Vue.use(VueYouTubeEmbed);
     },
     computed: {
+        buttons() {
+            return Object.freeze([
+                {
+                    icon: mdiViewGridPlus,
+                    tooltip: this.$t("views.multiview.addframe"),
+                    onClick: this.addItem,
+                    color: "green",
+                },
+                {
+                    icon: this.icons.mdiRefresh,
+                    tooltip: this.$t("component.music.clearPlaylist"),
+                    onClick: this.clearAllItems,
+                    color: "red",
+                },
+                {
+                    icon: this.icons.mdiGridLarge,
+                    tooltip: this.$t("views.multiview.presets"),
+                    onClick: () => {
+                        this.showPresetSelector = true;
+                    },
+                    color: "primary",
+                },
+                {
+                    icon: mdiContentSave,
+                    onClick: () => {
+                        this.showPresetEditor = true;
+                    },
+                    tooltip: this.$t("views.multiview.presetEditor.title"),
+                    color: "secondary",
+                    collapse: true,
+                },
+                {
+                    icon: this.icons.mdiVolumeMute,
+                    tooltip: this.$t("views.multiview.muteAll"),
+                    onClick: () => {
+                        this.setMuteAll(true);
+                    },
+                    collapse: true,
+                },
+                {
+                    icon: this.icons.mdiVolumeHigh,
+                    tooltip: this.$t("views.multiview.unmuteAll"),
+                    onClick: () => {
+                        this.setMuteAll(false);
+                    },
+                    collapse: true,
+                },
+                {
+                    icon: this.icons.mdiFullscreen,
+                    onClick: this.toggleFullScreen,
+                },
+            ]);
+        },
         ...mapState("multiview", ["layout", "layoutContent", "presetLayout"]),
         ...mapGetters("multiview", ["activeVideos"]),
         // Return true if there's an id requesting, setting false is setting id to -1
@@ -365,7 +386,7 @@ export default {
             return this.$store.state.isMobile;
         },
         collapseButtons() {
-            return this.$vuetify.breakpoint.xs;
+            return this.$vuetify.breakpoint.smAndDown;
         },
         rowHeight() {
             return (this.$vuetify.breakpoint.height - (this.collapseToolbar ? 0 : 64)) / 24.0;
