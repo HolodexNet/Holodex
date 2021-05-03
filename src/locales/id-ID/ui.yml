@@ -198,6 +198,7 @@ views:
       - Kecil
     hideCollabStreamsLabel: Sembunyikan Siaran Kolaborasi
     hideCollabStreamsMsg: Menyembunyikan siaran kolaborasi dari halaman favorit kamu
+    theme: Tema
   app:
     update_available: Pembaharuan tersedia
     update_btn: Perbarui
@@ -275,8 +276,15 @@ views:
     preset:
       shareOnDiscord: >-
         Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!
+      custom: Tataletak Saya
+      toggleAutoLayout: Nyalakan/Matikan penggunaan tataletak ini pada otomatis
+      remove: Hapus
       desktop: Desktop
       mobile: Ponsel
+    presetEditor:
+      title: Simpan Tataletak
+      name: Nama
+      autoLayout: Gunakan Tataletak ini pada mode otomatis
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Lain
