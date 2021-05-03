@@ -151,7 +151,9 @@ export function loadLanguageAsync(lang) {
 // ====== end i18n setup ======
 
 const initThemeJSON = localStorage.getItem("theme");
+const initThemeDarkMode = localStorage.getItem("darkMode");
 const theme = themeSet[+initThemeJSON || 0];
+const darkTheme = initThemeDarkMode !== "false"; // true if unset.
 
 export const config = {
     treeShake: true,
@@ -159,6 +161,7 @@ export const config = {
         iconfont: "mdiSvg",
     },
     theme: {
+        dark: darkTheme,
         options: {
             customProperties: true,
         },
