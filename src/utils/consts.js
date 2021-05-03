@@ -1,8 +1,5 @@
 /* eslint-disable no-useless-escape */
 
-export const primaryColor = "#F06292";
-export const secondaryColor = "#64B5F6";
-
 export const CHANNEL_TYPES = Object.freeze({
     VTUBER: "vtuber",
     SUBBER: "subber",

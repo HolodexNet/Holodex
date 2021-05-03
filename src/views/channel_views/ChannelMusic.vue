@@ -62,6 +62,7 @@
                         v-model="search"
                         :append-icon="icons.mdiMagnify"
                         :label="$t('component.search.searchLabel')"
+                        ref="searchbox"
                         single-line
                         hide-details
                     ></v-text-field>
@@ -138,6 +139,10 @@ export default {
                     page: undefined,
                 },
             });
+            // eslint-disable-next-line func-names
+            this.$nextTick(function () {
+                this.$refs.searchbox.focus();
+            });
         }, 500),
     },
     methods: {
@@ -175,6 +180,6 @@ export default {
 .popup.v-btn:hover {
     margin-bottom: 2px;
     margin-top: -2px;
-    color: rgb(167, 50, 106);
+    color: var(--v-secondary-lighten1);
 }
 </style>

@@ -2,9 +2,9 @@
     <v-container>
         <v-row>
             <v-col>
-                <div class="text-h4">{{ $t("views.settings.title") }}</div>
+                <div class="text-h4 mb-4" v-if="!slim">{{ $t("views.settings.title") }}</div>
                 <div class="settings-group">
-                    <div class="py-2 text-h5">
+                    <div class="py-1 text-h6">
                         <v-icon>{{ icons.mdiTranslate }}</v-icon>
                         {{ $t("views.settings.languageSettings") }}
                     </div>
@@ -36,13 +36,40 @@
                     </v-select>
                 </div>
                 <div class="settings-group">
-                    <div class="py-2 text-h5">{{ $t("views.settings.siteNavigationSettings") }}</div>
+                    <div class="py-1 text-h6">{{ $t("views.settings.siteNavigationSettings") }}</div>
                     <v-divider />
-                    <v-switch
-                        v-model="darkMode"
-                        :label="$t('views.settings.darkModeLabel')"
-                        :messages="$t('views.settings.darkModeMsg')"
-                    ></v-switch>
+                    <div class="d-flex justify-center">
+                        <v-switch
+                            class="mt-3"
+                            style="flex-basis: 50%"
+                            v-model="darkMode"
+                            :label="$t('views.settings.darkModeLabel')"
+                            :messages="$t('views.settings.darkModeMsg')"
+                        ></v-switch>
+                        <v-select
+                            class="ml-3 mt-3"
+                            hide-details
+                            :label="$t('views.settings.theme')"
+                            v-model="themeId"
+                            :items="themeSet"
+                            item-value="id"
+                        >
+                            <template v-slot:item="{ item }">
+                                <div class="theme-preview">
+                                    <span :style="`background:${item.themes[mode].primary}`"></span>
+                                    <span :style="`background:${item.themes[mode].secondary}`"></span>
+                                    {{ item.name }}
+                                </div>
+                            </template>
+                            <template v-slot:selection="{ item }">
+                                <div class="theme-preview">
+                                    <span :style="`background:${item.themes[mode].primary}`"></span>
+                                    <span :style="`background:${item.themes[mode].secondary}`"></span>
+                                    {{ item.name }}
+                                </div>
+                            </template>
+                        </v-select>
+                    </div>
                     <v-switch
                         v-model="defaultOpenFavorites"
                         :label="$t('views.settings.defaultFavorites')"
@@ -59,8 +86,8 @@
                         :messages="$t('views.settings.scrollModeMsg')"
                     ></v-switch>
                 </div>
-                <div class="settings-group">
-                    <div class="py-2 text-h5">{{ $t("views.settings.videoFeedSettings") }}</div>
+                <div class="settings-group" v-if="!slim">
+                    <div class="py-1 text-h6">{{ $t("views.settings.videoFeedSettings") }}</div>
                     <v-divider />
                     <v-select
                         class="mt-4"
@@ -89,8 +116,8 @@
                         :messages="$t('views.settings.hideVideoThumbnailsMsg')"
                     ></v-switch>
                 </div>
-                <br />
-                <v-btn @click="resetSettings">
+                <br v-if="!slim" />
+                <v-btn @click="resetSettings" v-if="!slim">
                     {{ $t("views.settings.resetAllSettings") }}
                 </v-btn>
             </v-col>
@@ -102,7 +129,9 @@
 import { langs } from "@/plugins/vuetify";
 import { mdiFilter } from "@mdi/js";
 import { TL_LANGS } from "@/utils/consts";
+import themeSet from "@/utils/themes";
 import { syncState } from "@/utils/functions";
+import Vue from "vue";
 
 export default {
     name: "Settings",
@@ -113,6 +142,12 @@ export default {
                 return `${vm.$t("component.mainNav.settings")} - Holodex`;
             },
         };
+    },
+    props: {
+        slim: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         ...syncState("settings", [
@@ -158,10 +193,27 @@ export default {
                 this.$store.commit("settings/setClipLangs", val.sort());
             },
         },
+        theme() {
+            return this.$vuetify.theme;
+        },
+        mode() {
+            return this.darkMode ? "dark" : "light";
+        },
     },
     watch: {
         hideCollabStreams() {
             this.$store.commit("favorites/setLastLiveUpdate", 0);
+        },
+        themeId(nw) {
+            localStorage.setItem("theme", `${nw}`);
+            Vue.set(this.$vuetify.theme.themes, "dark", {
+                ...this.$vuetify.theme.themes.dark,
+                ...themeSet[nw].themes.dark,
+            });
+            Vue.set(this.$vuetify.theme.themes, "light", {
+                ...this.$vuetify.theme.themes.light,
+                ...themeSet[nw].themes.light,
+            });
         },
     },
     data() {
@@ -169,6 +221,9 @@ export default {
             langs,
             mdiFilter,
             TL_LANGS,
+
+            themeId: +localStorage.getItem("theme") || 0,
+            themeSet,
         };
     },
     methods: {
@@ -181,9 +236,16 @@ export default {
 
 <style>
 .settings-group {
-    padding: 16px;
-    border: 1px solid #f06292;
+    padding: 12px;
+    border: 1px solid var(--v-primary-base);
     border-radius: 8px;
     margin-bottom: 16px;
+}
+.theme-preview span {
+    width: 2rem;
+    height: 1rem;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 2px;
 }
 </style>

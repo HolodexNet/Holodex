@@ -158,8 +158,8 @@ export default {
 }
 
 .recent-table .selectable .hoverable.v-btn:hover {
-    color: rgb(227, 92, 240);
-    border-color: rgb(232, 125, 241);
+    color: var(--v-secondary-base);
+    border-color: var(--v-secondary-base);
     background-color: rgba(134, 134, 134, 0.3);
 }
 

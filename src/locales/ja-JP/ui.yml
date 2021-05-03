@@ -275,8 +275,13 @@ views:
     preset:
       shareOnDiscord: >-
         なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
+      custom: マイレイアウト
+      toggleAutoLayout: 自動的にレイアウトに切り替え
+      remove: 削除
       desktop: デスクトップ
       mobile: モバイル
+    presetEditor:
+      title: レイアウトを保存
     video:
       selectLive: 配信を選択
       addCustomVideo: 任意の動画を追加

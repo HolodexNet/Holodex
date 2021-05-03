@@ -55,6 +55,7 @@ const actions = {};
 const mutations = {
     setDarkMode(state, val) {
         state.darkMode = val;
+        localStorage.setItem("darkMode", val ? "true" : "false");
     },
     setRedirectMode(state, val) {
         state.redirectMode = val;

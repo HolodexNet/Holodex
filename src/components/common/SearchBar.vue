@@ -31,7 +31,7 @@
     >
         <template v-slot:selection="selection">
             <v-card
-                :color="$vuetify.theme.dark ? 'grey darken-3' : 'light-blue accent-4'"
+                :color="$vuetify.theme.dark ? 'grey darken-3' : 'primary accent-4'"
                 :label="selection.item.type !== 'channel'"
                 class="pa-0 selected-card"
                 :dark="$vuetify.theme.dark"
@@ -55,7 +55,7 @@
                     </v-list-item-content>
 
                     <v-list-item-action>
-                        <v-icon small color="red accent-2" @click="deleteChip(selection.item)">{{
+                        <v-icon small color="primary accent-2" @click="deleteChip(selection.item)">{{
                             icons.mdiClose
                         }}</v-icon>
                     </v-list-item-action>
@@ -82,10 +82,10 @@
         </template>
         <template v-slot:append-outer>
             <v-btn large class="ml-1 append-btn" @click="commitSearch">
-                <v-icon key="searchbtn" large color="info" v-text="icons.mdiMagnify"></v-icon>
+                <v-icon key="searchbtn" large color="secondary" v-text="icons.mdiMagnify"></v-icon>
             </v-btn>
             <v-btn large class="ml-1 append-btn" @click="goToOrToggleAdvanced">
-                <v-icon key="advanced" large color="info" v-text="mdiFilter"></v-icon>
+                <v-icon key="advanced" large color="secondary" v-text="mdiFilter"></v-icon>
             </v-btn>
         </template>
     </v-autocomplete>

@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
-import { primaryColor, secondaryColor } from "@/utils/consts";
+import themeSet from "@/utils/themes";
 import VueI18n from "vue-i18n";
 
 import enTL from "@/locales/en/ui.yml";
+import vuetifyEn from "vuetify/es5/locale/en";
 
 // ====== i18n setup ======
 Vue.use(VueI18n);
@@ -65,13 +66,12 @@ export const dayjsLangs = {
         await import("dayjs/locale/ko");
     },
 };
-
 export const i18n = new VueI18n({
     locale: "en", // Set locale
     fallbackLocale: "en",
     // Set default locale messages,
     messages: {
-        en: enTL,
+        en: { $vuetify: vuetifyEn, ...enTL },
     },
     pluralizationRules: {
         /**
@@ -150,27 +150,22 @@ export function loadLanguageAsync(lang) {
 
 // ====== end i18n setup ======
 
+const initThemeJSON = localStorage.getItem("theme");
+const initThemeDarkMode = localStorage.getItem("darkMode");
+const theme = themeSet[+initThemeJSON || 0];
+const darkTheme = initThemeDarkMode !== "false"; // true if unset.
+
 export const config = {
     treeShake: true,
     icons: {
         iconfont: "mdiSvg",
     },
     theme: {
+        dark: darkTheme,
         options: {
             customProperties: true,
         },
-        themes: {
-            dark: {
-                primary: primaryColor,
-                secondary: secondaryColor,
-                background: "#121212",
-            },
-            light: {
-                primary: primaryColor,
-                secondary: secondaryColor,
-                background: "#f2f2f2", // Not automatically applied
-            },
-        },
+        themes: theme.themes,
     },
     lang: {
         t: (key, ...params) => i18n.t(key, params),

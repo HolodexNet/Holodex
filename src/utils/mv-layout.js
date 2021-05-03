@@ -1,10 +1,10 @@
 const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.";
 /**
  * Encodes a layout array and contents to a compact URI
- * @param {{layout, contents}} layout and layout contents
+ * @param {{layout, contents, includeVideo?}} layout and layout contents
  * @returns {string} encoded string
  */
-export function encodeLayout({ layout, contents }) {
+export function encodeLayout({ layout, contents, includeVideo = false }) {
     const l = [];
     try {
         layout.forEach((item) => {
@@ -24,7 +24,7 @@ export function encodeLayout({ layout, contents }) {
                 const { type, content, currentTab } = contents[item.i];
                 if (type === "chat") {
                     encodedBlock += `chat${currentTab || 0}`;
-                } else if (type === "video") {
+                } else if (type === "video" && includeVideo) {
                     if (content.cellVideoType === "twitch") {
                         encodedBlock += `twitch${content.id}`;
                     } else {
@@ -101,6 +101,16 @@ export function decodeLayout(encodedStr) {
         content: parsedContent,
     };
 }
+
+/**
+ * Count the number of empty cells
+ * @param {{layout, content}} layout and layout contents
+ * @returns {number} count of empty cells
+ */
+export function getEmptyCells({ layout, content }) {
+    return layout.length - Object.values(content).filter((o) => o.type === "chat").length;
+}
+
 export const desktopPresets = Object.freeze([
     { layout: "AATY,TAFYchat", name: "Side Chat 1", emptyCells: 1 },
     { layout: "AARM,AMRM,RAHYchat", name: "Side Chat 2" },

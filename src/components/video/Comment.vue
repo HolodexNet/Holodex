@@ -68,7 +68,8 @@ export default {
     /* border: 1px solid; */
 }
 .comment-chip:hover {
-    background-color: rgba(105, 70, 72, 0.8);
+    background-color: var(--v-primary-base);
+    color: var(--v-primary-lighten4);
 }
 .comment {
     border-left: 2px solid rgba(255, 255, 255, 0.5);

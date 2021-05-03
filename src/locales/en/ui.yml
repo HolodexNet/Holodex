@@ -211,6 +211,7 @@ views:
       - Small
     hideCollabStreamsLabel: Hide Collab Streams
     hideCollabStreamsMsg: Hide collab streams from your favorites feed
+    theme: Theme
   app:
     update_available: An update is available
     update_btn: Update
@@ -296,8 +297,15 @@ views:
       shareOnDiscord: >-
         Have a cool layout to share? Use the share button and let us know on our
         <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+      custom: My Layouts
+      toggleAutoLayout: Toggle use layout in auto
+      remove: Delete
       desktop: Desktop
       mobile: Mobile
+    presetEditor:
+      title: Save Layout
+      name: Name
+      autoLayout: Use layout in auto mode
     video:
       selectLive: Select Live
       addCustomVideo: Add Custom Video

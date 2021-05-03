@@ -26,6 +26,17 @@
                     <v-list-item-content>
                         <v-list-item-title v-html="page.name"> </v-list-item-title>
                     </v-list-item-content>
+                    <!-- Quick Settings Popup -->
+                    <v-list-item-icon v-if="page.path === '/settings'">
+                        <v-menu right nudge-right max-height="80vh" :close-on-content-click="false">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-icon v-on="on" v-bind="attrs" @click.stop.prevent>{{ mdiTuneVariant }}</v-icon>
+                            </template>
+                            <v-card rounded="lg" class="py-n2 scrollable">
+                                <settings slim />
+                            </v-card>
+                        </v-menu>
+                    </v-list-item-icon>
                 </v-list-item>
                 <v-divider v-if="page.divider" :key="`${page.path}-divider`" />
             </template>
@@ -33,7 +44,7 @@
         </v-list>
         <v-divider />
         <v-list dense>
-            <v-subheader class="text-overline">
+            <v-subheader class="pl-5 text-overline">
                 {{ this.$t("component.mainNav.favorites") }}
             </v-subheader>
             <template v-for="channel in collapsedFavorites">
@@ -89,6 +100,7 @@ import ChannelImg from "@/components/channel/ChannelImg.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
 import { dayjs } from "@/utils/time";
+import { mdiTuneVariant } from "@mdi/js";
 
 function getChannelLiveAtTime(ch) {
     if (ch.videos && ch.videos[0]) {
@@ -102,6 +114,7 @@ export default {
     components: {
         ChannelImg,
         ChannelInfo,
+        Settings: () => import("@/views/Settings.vue"),
     },
     props: {
         pages: {
@@ -122,6 +135,8 @@ export default {
             favoritesExpanded: false,
             tick: Date.now(),
             ticker: null,
+
+            mdiTuneVariant,
         };
     },
     mounted() {
