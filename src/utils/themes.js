@@ -96,4 +96,20 @@ export default [
             },
         },
     },
+    {
+        name: "Shion",
+        id: 6,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#998AEB",
+                secondary: "#684C7C",
+            },
+            light: {
+                background: "#F2F2F2",
+                primary: "#684C7C",
+                secondary: "#998AEB",
+            },
+        },
+    },
 ];
