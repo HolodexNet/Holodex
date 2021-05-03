@@ -373,7 +373,8 @@ export default {
 }
 
 .theme--dark .video-watched {
-    color: var(--v-secondary-lighten1) !important;
+    color: var(--v-secondary-lighten2) !important;
+    opacity: 0.6;
 }
 
 .video-card {
