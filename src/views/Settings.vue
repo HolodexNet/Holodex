@@ -49,7 +49,7 @@
                         <v-select
                             class="ml-3 mt-3"
                             hide-details
-                            label="Theme"
+                            :label="$t('views.settings.theme')"
                             v-model="themeId"
                             :items="themeSet"
                             item-value="id"

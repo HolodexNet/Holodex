@@ -1,10 +1,14 @@
 # Holodex Changelog
 
-### 2.7 Holodex [*April 29, 2021*]
+### 2.7 Holodex [*May 2nd, 2021*]
 ##### New Features:
 - You can now save layout for Multiview (#205)
 - We added themes support (check it out in the settings), drop by the discord and suggest new themes for us :D
 
+##### Patches
+- Fixes to TL box not sticking to bottom
+- Multiview videos being unmuted when changing layouts
+- Multiview channel icons disappearing randomly
 
 ### 2.6.2 Holodex [*April 29, 2021*]
 ##### Hotfix:
