@@ -128,7 +128,8 @@
 <script lang="ts">
 import { langs } from "@/plugins/vuetify";
 import { mdiFilter } from "@mdi/js";
-import { themeSet, TL_LANGS } from "@/utils/consts";
+import { TL_LANGS } from "@/utils/consts";
+import themeSet from "@/utils/themes";
 import { syncState } from "@/utils/functions";
 import Vue from "vue";
 

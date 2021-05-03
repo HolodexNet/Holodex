@@ -62,6 +62,7 @@
                         v-model="search"
                         :append-icon="icons.mdiMagnify"
                         :label="$t('component.search.searchLabel')"
+                        ref="searchbox"
                         single-line
                         hide-details
                     ></v-text-field>
@@ -137,6 +138,10 @@ export default {
                     ...this.$route.query,
                     page: undefined,
                 },
+            });
+            // eslint-disable-next-line func-names
+            this.$nextTick(function () {
+                this.$refs.searchbox.focus();
             });
         }, 500),
     },

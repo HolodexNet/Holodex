@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
-import { themeSet } from "@/utils/consts";
+import themeSet from "@/utils/themes";
 import VueI18n from "vue-i18n";
 
 import enTL from "@/locales/en/ui.yml";

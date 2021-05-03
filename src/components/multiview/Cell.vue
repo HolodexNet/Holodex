@@ -307,6 +307,8 @@ export default {
         flex-grow: 1;
         flex-basis: 100%;
         flex-shrink: 1;
+        max-height: 100%;
+        height: 100%;
     }
 }
 

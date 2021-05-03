@@ -1,5 +1,11 @@
 # Holodex Changelog
 
+### 2.7 Holodex [*April 29, 2021*]
+##### New Features:
+- You can now save layout for Multiview (#205)
+- We added themes support (check it out in the settings), drop by the discord and suggest new themes for us :D
+
+
 ### 2.6.2 Holodex [*April 29, 2021*]
 ##### Hotfix:
 - Fixed a horrible bug with Music editing, should be even better now. Thanks for the report lilybass ❤️

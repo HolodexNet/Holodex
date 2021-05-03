@@ -197,9 +197,7 @@ export default {
         //         timestamp: Date.now()
         //     };
         //     this.tlHistory.push(msg);
-        //     this.scrollBottom();
-
-        // }, 1000)
+        // }, 200)
     },
     beforeDestroy() {
         this.tlLeave();
@@ -243,7 +241,7 @@ export default {
 
                     vm.tlHistory.push(msg);
                     vm.$emit("historyLength", vm.tlHistory.length);
-                    this.scrollBottom();
+                    // this.scrollBottom();
                     return;
                 }
                 switch (msg.type) {
@@ -288,7 +286,7 @@ export default {
             // Grab chat history
             api.chatHistory(this.video.id, this.liveTlLang).then(({ data }) => {
                 this.tlHistory = data;
-                this.scrollBottom(true);
+                // this.scrollBottom(true);
             });
 
             // Try to join chat room with specified language
