@@ -1,10 +1,20 @@
 <template>
     <div style="width: 100%; height: 100%">
-        <v-tabs v-model="currentTab" height="32">
-            <v-tab v-for="(video, index) in activeVideos" :key="'wctabs' + index">
-                {{ video.channel.name.split(" ")[0] }}
-            </v-tab>
-        </v-tabs>
+        <div class="d-flex flex-row align-center py-1">
+            <v-btn icon small class="mx-2" @click="currentTab -= 1" :disabled="currentTab <= 0">
+                <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
+            </v-btn>
+            <v-select
+                :items="channels"
+                v-model="currentTab"
+                outlined
+                hide-details
+                class="tabbed-chat-select mx-3"
+            ></v-select>
+            <v-btn icon small class="mx-2" @click="currentTab += 1" :disabled="currentTab >= activeVideos.length - 1">
+                <v-icon>{{ icons.mdiChevronRight }}</v-icon>
+            </v-btn>
+        </div>
         <template v-if="activeVideos.length && currentTab >= 0">
             <iframe
                 :src="twitchChatLink"
@@ -90,6 +100,14 @@ export default {
                 window.location.hostname
             }`;
         },
+        channels() {
+            return this.activeVideos.map((video, index) => {
+                return {
+                    text: video.channel.name.split(" ")[0],
+                    value: index,
+                };
+            });
+        },
     },
     watch: {
         currentTab() {
@@ -115,4 +133,23 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+/* Jank shrink select to 28px height */
+.tabbed-chat-select.v-text-field--outlined > .v-input__control > .v-input__slot {
+    min-height: 28px !important;
+}
+.tabbed-chat-select.v-text-field--outlined:not(.v-text-field--single-line) .v-select__selections {
+    padding: 0;
+}
+
+.tabbed-chat-select .v-select__selections input {
+    height: 28px;
+}
+.tabbed-chat-select .v-select__selections .v-select__selection--comma {
+    margin: 0;
+}
+.tabbed-chat-select .v-input__append-inner {
+    margin: 0px;
+    margin-top: 2px;
+}
+</style>
