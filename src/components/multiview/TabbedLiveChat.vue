@@ -20,6 +20,7 @@
                 :src="twitchChatLink"
                 v-if="activeVideos[currentTab || 0].cellVideoType === 'twitch'"
                 style="width: 100%; height: calc(100% - 32px)"
+                frameborder="0"
             >
             </iframe>
             <WatchLiveChat
@@ -98,7 +99,10 @@ export default {
         twitchChatLink() {
             return `https://www.twitch.tv/embed/${this.activeVideos[this.currentTab || 0].id}/chat?parent=${
                 window.location.hostname
-            }`;
+            }${this.darkMode ? "&darkpopout" : ""}`;
+        },
+        darkMode() {
+            return this.$store.state.settings.darkMode;
         },
         channels() {
             return this.activeVideos.map((video, index) => {
