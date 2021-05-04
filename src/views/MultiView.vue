@@ -228,6 +228,14 @@ import { mapState, mapGetters } from "vuex";
 
 export default {
     name: "MultiView",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.multiview")} - Holodex`;
+            },
+        };
+    },
     components: {
         GridLayout,
         GridItem,
