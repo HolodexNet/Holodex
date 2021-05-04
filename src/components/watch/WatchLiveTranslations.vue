@@ -26,47 +26,72 @@
                 </template>
 
                 <v-card>
-                    <v-card-title> {{ $t("views.watch.chat.TLSettingsTitle") }} </v-card-title>
+                    <v-card-title>
+                        <template v-if="showBlockedList">
+                            <v-btn icon @click="showBlockedList = false">
+                                <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
+                            </v-btn>
+                            {{ $t("views.channels.tabs.Blocked") }}
+                        </template>
+                        <template v-else>
+                            {{ $t("views.watch.chat.TLSettingsTitle") }}
+                        </template>
+                    </v-card-title>
 
                     <v-card-text>
-                        <v-select
-                            v-model="liveTlLang"
-                            :items="TL_LANGS"
-                            :hint="$t('views.settings.tlLanguageSelection')"
-                            persistent-hint
-                        />
-                        <v-switch
-                            v-model="liveTlShowVerified"
-                            :label="$t('views.watch.chat.showVerifiedMessages')"
-                            hide-details
-                        ></v-switch>
-                        <v-switch
-                            v-model="liveTlShowModerator"
-                            :label="$t('views.watch.chat.showModeratorMessages')"
-                        ></v-switch>
-                        <v-divider class="pb-6" />
-                        <v-combobox
-                            v-model="liveTlFontSize"
-                            :items="[10, 11, 12, 14, 18, 24, 30]"
-                            :label="$t('views.watch.chat.tlFontSize')"
-                            outlined
-                        >
-                            <template v-slot:append-outer> px </template>
-                        </v-combobox>
-                        <v-combobox
-                            v-model="liveTlWindowSize"
-                            :items="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
-                            :label="$t('views.watch.chat.tlWindowSize')"
-                            outlined
-                            hide-details
-                        >
-                            <template v-slot:append-outer> % </template>
-                        </v-combobox>
-                        <v-switch
-                            v-model="liveTlStickBottom"
-                            :label="$t('views.watch.chat.StickBottomSettingLabel')"
-                            :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
-                        ></v-switch>
+                        <template v-if="!showBlockedList">
+                            <v-select
+                                v-model="liveTlLang"
+                                :items="TL_LANGS"
+                                :hint="$t('views.settings.tlLanguageSelection')"
+                                persistent-hint
+                            />
+                            <v-switch
+                                v-model="liveTlShowVerified"
+                                :label="$t('views.watch.chat.showVerifiedMessages')"
+                                hide-details
+                            ></v-switch>
+                            <v-switch
+                                v-model="liveTlShowModerator"
+                                :label="$t('views.watch.chat.showModeratorMessages')"
+                            ></v-switch>
+                            <v-btn @click="showBlockedList = true"> Edit Blocked List </v-btn>
+                            <v-divider class="my-6" />
+                            <v-combobox
+                                v-model="liveTlFontSize"
+                                :items="[10, 11, 12, 14, 18, 24, 30]"
+                                :label="$t('views.watch.chat.tlFontSize')"
+                                outlined
+                            >
+                                <template v-slot:append-outer> px </template>
+                            </v-combobox>
+                            <v-combobox
+                                v-model="liveTlWindowSize"
+                                :items="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+                                :label="$t('views.watch.chat.tlWindowSize')"
+                                outlined
+                                hide-details
+                            >
+                                <template v-slot:append-outer> % </template>
+                            </v-combobox>
+                            <v-switch
+                                v-model="liveTlStickBottom"
+                                :label="$t('views.watch.chat.StickBottomSettingLabel')"
+                                :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
+                            ></v-switch>
+                        </template>
+                        <template v-else>
+                            <v-list style="max-height: 300px; overflow: auto">
+                                <v-list-item v-for="name in blockedNames.values()" :key="name">
+                                    <v-list-item-content class="text-body-1">
+                                        {{ name }}
+                                    </v-list-item-content>
+                                    <v-list-item-action>
+                                        <v-btn @click="toggleBlockName(name)"> Unblock </v-btn>
+                                    </v-list-item-action>
+                                </v-list-item>
+                            </v-list>
+                        </template>
                     </v-card-text>
                 </v-card>
             </v-dialog>
@@ -93,7 +118,7 @@
                             }"
                         >
                             <v-divider class="my-1" />
-                            {{ item.name }}:
+                            <a @click="selectedChannel = item.name">{{ item.name }}:</a>
                         </div>
                         <div>
                             <span class="tl-caption mr-1" v-if="item.timestamp">
@@ -105,6 +130,17 @@
                 </template>
             </transition-group>
         </v-card-text>
+
+        <v-dialog v-model="showBlockChannelDialog" width="500">
+            <v-card>
+                <v-card-title>{{ selectedChannel }}</v-card-title>
+                <v-card-text>
+                    <v-btn @click="toggleBlockName(selectedChannel)">
+                        {{ !blockedNames.has(selectedChannel) ? "Block Channel" : "Unblock" }}
+                    </v-btn>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </v-card>
 </template>
 
@@ -152,6 +188,9 @@ export default {
             isLoading: true,
             dialog: false,
             success: false,
+
+            selectedChannel: "",
+            showBlockedList: false,
         };
     },
     sockets: {
@@ -207,6 +246,12 @@ export default {
             this.tlLeave();
             this.tlJoin();
         },
+        dialog(nw) {
+            // unshow blocked list when exiting dialog
+            if (!nw) {
+                this.showBlockedList = false;
+            }
+        },
     },
     computed: {
         lang() {
@@ -220,18 +265,36 @@ export default {
             "liveTlShowModerator",
             "liveTlWindowSize",
         ]),
+        blockedNames() {
+            return this.$store.getters["settings/liveTlBlockedNames"];
+        },
         connected() {
             return this.$socket.connected;
         },
+        showBlockChannelDialog: {
+            get() {
+                return this.selectedChannel;
+            },
+            set(val) {
+                if (!val) this.selectedChannel = "";
+            },
+        },
     },
     methods: {
+        toggleBlockName(name) {
+            this.$store.commit("settings/toggleLiveTlBlocked", name);
+        },
         registerListener() {
             const vm = this as any;
             this.$socket.client.on(`${vm.video.id}/${vm.liveTlLang}`, (msg) => {
                 // if no type, process as regular message
                 if (!msg.type) {
-                    // ignore moderator and verified messages if disabled
-                    if ((msg.isModerator && !this.liveTlShowModerator) || (msg.isVerified && !this.liveTlShowVerified))
+                    // ignore blocked channels, moderator and verified messages if disabled
+                    if (
+                        this.blockedNames.has(msg.name) ||
+                        (msg.isModerator && !this.liveTlShowModerator) ||
+                        (msg.isVerified && !this.liveTlShowVerified)
+                    )
                         return;
 
                     // Append title to author name
@@ -285,8 +348,7 @@ export default {
 
             // Grab chat history
             api.chatHistory(this.video.id, this.liveTlLang).then(({ data }) => {
-                this.tlHistory = data;
-                // this.scrollBottom(true);
+                this.tlHistory = data.filter((msg) => !this.blockedNames.has(msg.name));
             });
 
             // Try to join chat room with specified language
