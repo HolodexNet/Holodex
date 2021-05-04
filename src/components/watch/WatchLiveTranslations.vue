@@ -118,7 +118,10 @@
                             }"
                         >
                             <v-divider class="my-1" />
-                            <a @click="selectedChannel = item.name">{{ item.name }}:</a>
+                            <span style="cursor: pointer" @click="selectedChannel = item.name">
+                                <v-icon x-small>{{ icons.mdiCog }}</v-icon>
+                                {{ item.name }}:
+                            </span>
                         </div>
                         <div>
                             <span class="tl-caption mr-1" v-if="item.timestamp">
