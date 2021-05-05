@@ -198,6 +198,7 @@ views:
       - 작게
     hideCollabStreamsLabel: 콜라보 방송 숨기기
     hideCollabStreamsMsg: 즐겨찾기 피드에서 콜라보 방송을 숨깁니다
+    theme: 테마
   app:
     update_available: 업데이트 가능
     update_btn: 업데이트
