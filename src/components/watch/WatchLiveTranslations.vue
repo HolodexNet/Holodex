@@ -120,14 +120,14 @@
                             <v-divider class="my-1" />
                             <span style="cursor: pointer" @click="selectedChannel = item.name">
                                 <v-icon x-small>{{ icons.mdiCog }}</v-icon>
-                                {{ item.name }}:
+                                {{ `${item.prefix} ${item.name}` }}:
                             </span>
                         </div>
                         <div>
                             <span class="tl-caption mr-1" v-if="item.timestamp">
                                 {{ utcToTimestamp(item.timestamp) }}
                             </span>
-                            <span class="text--primary">{{ item.message }}</span>
+                            <span class="text--primary" v-html="item.message"></span>
                         </div>
                     </div>
                 </template>
@@ -232,14 +232,15 @@ export default {
     created() {},
     mounted() {
         this.tlJoin();
-        // setInterval(() => {
+        // Test string
+        // setTimeout(() => {
         //     const msg = {
         //         name: "test 1",
-        //         message: "this is a test mesages",
+        //         message: "But it’s no Pokemon, it’s just a very hyped Tako. :_MMT:https://yt3.ggpht.com/vjsrafxnve6TZhRGbmoVEGpn8VWUAYoT_uin2tBO6R4hoFfAakNTE9V9TD8fq3cAp0ZO4jM03pI=w48-h48-c-k-nd It seems to be very hyped for tomorrow’s fashINA show… almost too hyped that it has barely sleep :_MMT:https://yt3.ggpht.com/vjsrafxnve6TZhRGbmoVEGpn8VWUAYoT_uin2tBO6R4hoFfAakNTE9V9TD8fq3cAp0ZO4jM03pI=w48-h48-c-k-nd ",
         //         timestamp: Date.now()
         //     };
-        //     this.tlHistory.push(msg);
-        // }, 200)
+        //     this.tlHistory.push(this.parseMessage(msg));
+        // }, 1000)
     },
     beforeDestroy() {
         this.tlLeave();
@@ -253,6 +254,11 @@ export default {
             // unshow blocked list when exiting dialog
             if (!nw) {
                 this.showBlockedList = false;
+            }
+        },
+        connected(nw) {
+            if (nw) {
+                this.isLoading = false;
             }
         },
     },
@@ -299,15 +305,8 @@ export default {
                         (msg.isVerified && !this.liveTlShowVerified)
                     )
                         return;
-
-                    // Append title to author name
-                    if (msg.isModerator) msg.name = `[Mod] ${msg.name}`;
-                    if (msg.isVerified) msg.name = `[Verified] ${msg.name}`;
-                    if (msg.isOwner) msg.name = `[Owner] ${msg.name}`;
-
-                    vm.tlHistory.push(msg);
+                    vm.tlHistory.push(this.parseMessage(msg));
                     vm.$emit("historyLength", vm.tlHistory.length);
-                    // this.scrollBottom();
                     return;
                 }
                 switch (msg.type) {
@@ -316,7 +315,6 @@ export default {
                         break;
                     case vm.MESSAGE_TYPES.END:
                         vm.overlayMessage = msg.message;
-                        // this.showOverlay = true;
                         vm.tlLeave();
                         break;
                     case vm.MESSAGE_TYPES.ERROR:
@@ -328,6 +326,38 @@ export default {
                         break;
                 }
             });
+        },
+        parseMessage(msg) {
+            // Append title to author name
+            msg.prefix = "";
+            if (msg.isModerator) msg.prefix += "[Mod]";
+            if (msg.isVerified) msg.prefix += "[Verified]";
+            if (msg.isOwner) msg.prefix += "[Owner]";
+
+            // Check if there's any emojis represented as URLs formatted by backend
+            if (msg.message.includes("https://")) {
+                // match a :HUMU:https://<url>
+                const regex = /(:\S+:)(https:\/\/\S*-c-k-nd)/gi;
+                const str = msg.message;
+                // find first match
+                let match = regex.exec(str);
+                let processed = "";
+                let curIndex = 0;
+                // iterate until no matches remain
+                while (match != null) {
+                    const { index } = match;
+                    // replace all strings between indexes with img src
+                    processed += str.substring(curIndex, index);
+                    processed += `<img src="${match[2].replace("=w48-h48-c-k-nd", "=w24-h24-c-k-nd")}" alt="${
+                        match[1]
+                    }"/>`;
+                    curIndex = index + match[0].length;
+                    match = regex.exec(str);
+                }
+                processed += str.substring(curIndex, str.length);
+                msg.message = processed;
+            }
+            return msg;
         },
         // eslint-disable-next-line func-names
         tlJoin() {
@@ -350,8 +380,31 @@ export default {
             }
 
             // Grab chat history
-            api.chatHistory(this.video.id, this.liveTlLang).then(({ data }) => {
-                this.tlHistory = data.filter((msg) => !this.blockedNames.has(msg.name));
+            api.chatHistory(this.video.id, {
+                lang: this.liveTlLang,
+                verified: this.liveTlShowVerified,
+                moderator: this.liveTlShowModerator,
+            }).then(({ data }) => {
+                // Backwards compatible incase backend needs to revert
+                if (Array.isArray(data)) {
+                    this.tlHistory = data
+                        .filter((msg) => !this.blockedNames.has(msg.name)) // filter out blocked users
+                        .map((msg) => this.parseMessage(msg)); // replace all emoji urls with tags
+                    return;
+                }
+
+                this.tlHistory = data.tls
+                    .concat(data.moderator ? data.moderator : [])
+                    .concat(data.verified ? data.verified : [])
+                    .filter((msg) => {
+                        if (!this.blockedNames.has(msg.name)) {
+                            console.log(msg.name);
+                            return true;
+                        }
+                        return false;
+                    })
+                    .sort((a, b) => a.timestamp - b.timestamp)
+                    .map((msg) => this.parseMessage(msg));
             });
 
             // Try to join chat room with specified language
