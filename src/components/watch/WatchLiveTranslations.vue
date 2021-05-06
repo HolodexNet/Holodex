@@ -393,16 +393,10 @@ export default {
                     return;
                 }
 
-                this.tlHistory = data.tls
+                this.tlHistory = data.translations
                     .concat(data.moderator ? data.moderator : [])
                     .concat(data.verified ? data.verified : [])
-                    .filter((msg) => {
-                        if (!this.blockedNames.has(msg.name)) {
-                            console.log(msg.name);
-                            return true;
-                        }
-                        return false;
-                    })
+                    .filter((msg) => !this.blockedNames.has(msg.name))
                     .sort((a, b) => a.timestamp - b.timestamp)
                     .map((msg) => this.parseMessage(msg));
             });
