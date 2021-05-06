@@ -6,6 +6,8 @@
 ![Twitter Follow](https://img.shields.io/twitter/follow/holodex?style=social)
 
 
+![holodex](https://github.com/RiceCakess/Holodex/blob/dev/public/img/intro-promo.jpg)
+
 ## Reporting a Bug/Feature Request
 * For bugs, please make sure to include a picture describing the issue (if applicable)
 * If the bug is urgent, please send us a message in the Discord server
