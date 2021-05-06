@@ -9,6 +9,8 @@
             :target="redirectMode ? '_blank' : ''"
             :href="!redirectMode ? `/watch/${video.id}` : `https://youtu.be/${video.id}`"
             rel="noopener"
+            :ripple="false"
+            rounded="md"
         >
             <!-- Video Image with Duration -->
             <v-img
@@ -62,22 +64,28 @@
                 @click.exact.stop.prevent="goToVideo(video.id)"
                 :href="`/watch/${video.id}`"
                 rel="noopener"
+                :ripple="false"
             >
                 <v-list-item-avatar v-if="includeChannel && includeAvatar && !horizontal && video.channel">
                     <ChannelImg :channel="video.channel" />
                 </v-list-item-avatar>
 
                 <v-list-item-content class="pa-0">
-                    <v-menu bottom nudge-top="20px">
+                    <v-menu bottom nudge-top="20px" z-index="45">
                         <template v-slot:activator="{ on }">
-                            <v-icon
+                            <v-btn
+                                icon
+                                small
                                 v-on="on"
                                 @click.stop.prevent
+                                :ripple="false"
                                 :class="{ 'hover-show': !hasSaved && !isMobile }"
                                 class="video-card-more"
                             >
-                                {{ icons.mdiDotsVertical }}
-                            </v-icon>
+                                <v-icon>
+                                    {{ icons.mdiDotsVertical }}
+                                </v-icon>
+                            </v-btn>
                         </template>
                         <v-list dense>
                             <v-list-item @click.stop="copyLink"
@@ -467,6 +475,7 @@ export default {
     right: 0px;
     display: inline-block;
     top: 5px;
+    z-index: 40;
 }
 
 .video-card-horizontal {

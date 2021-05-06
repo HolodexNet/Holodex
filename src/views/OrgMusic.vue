@@ -147,6 +147,14 @@ const PER_PAGE_ITEMS = 20;
 export default {
     components: { SongItem, SongItemCard, Carousel, PaginateLoad, SongTable, GenericListLoader },
     name: "OrgMusic",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.music")} - Holodex`;
+            },
+        };
+    },
     data() {
         return {
             popularMonthlySongs: [],

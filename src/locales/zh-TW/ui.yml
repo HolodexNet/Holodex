@@ -46,6 +46,8 @@ component:
     copyLink: 複製 Holodex 連結
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -109,6 +111,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -199,6 +202,7 @@ views:
       - 小
     hideCollabStreamsLabel: 隱藏連動實況
     hideCollabStreamsMsg: 於「我的收藏」頁面隱藏相關的連動實況
+    theme: 佈景主題
   app:
     update_available: 已取得更新
     update_btn: 更新
@@ -277,8 +281,15 @@ views:
     preset:
       shareOnDiscord: >-
         想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
+      custom: 自訂佈局
+      toggleAutoLayout: 是否納入自動調整模式
+      remove: 刪除此佈局
       desktop: 桌上型電腦佈局
       mobile: 手機專用佈局
+    presetEditor:
+      title: 儲存目前佈局
+      name: 佈局名稱
+      autoLayout: 在自動調整模式中啟用此佈局
     video:
       selectLive: 選擇實況
       addCustomVideo: 添加指定YouTube影片

@@ -1,5 +1,18 @@
 # Holodex Changelog
 
+### 2.8 Holodex [*May 6th, 2021*]
+##### New Features:
+- Improved backend TL listener, it should miss less messages now
+- Added block user to tl box
+- Added history for mod/verified messages
+- Added Shion theme
+- Changed multilive chat tabs to a dropdown
+- Added emoji support for tl box
+
+##### Patches
+- Fix multiview Twitch chat dark mode
+- Fix page title
+
 ### 2.7 Holodex [*May 2nd, 2021*]
 ##### New Features:
 - You can now save layout for Multiview (#205)

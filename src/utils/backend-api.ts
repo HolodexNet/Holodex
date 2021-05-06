@@ -175,8 +175,9 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    chatHistory(id, lang) {
-        return axiosInstance.get(`/chat/${id}/history?lang=${lang}`);
+    chatHistory(id, query) {
+        const q = querystring.stringify(query);
+        return axiosInstance.get(`/chat/${id}/history?${q}`);
     },
     /**
      * Fetches song lists up to LIMIT count with offset. Always ordered by available_at date.

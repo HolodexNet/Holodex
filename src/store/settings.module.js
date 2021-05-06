@@ -31,6 +31,7 @@ const initialState = {
     liveTlShowVerified: true, // show verified messages
     liveTlShowModerator: true, // show moderator messages
     liveTlWindowSize: 0, // Default size, otherwise percentage height
+    liveTlBlocked: [],
 
     blockedChannels: [],
 
@@ -47,6 +48,9 @@ const getters = {
     },
     blockedChannelIDs(state) {
         return new Set(state.blockedChannels.map((x) => x.id));
+    },
+    liveTlBlockedNames(state) {
+        return new Set(state.liveTlBlocked);
     },
 };
 
@@ -109,6 +113,15 @@ const mutations = {
             );
         } else {
             state.blockedChannels.push(channel);
+        }
+    },
+    toggleLiveTlBlocked(state, name) {
+        if (!state.liveTlBlocked) Vue.set(state, "blockedChannels", []);
+        const index = state.liveTlBlocked.indexOf(name);
+        if (index !== -1) {
+            Vue.delete(state.liveTlBlocked, index);
+        } else {
+            state.liveTlBlocked.push(name);
         }
     },
 };

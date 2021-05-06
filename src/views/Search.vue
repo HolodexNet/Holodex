@@ -77,8 +77,13 @@ import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 export default {
     name: "Search",
     mixins: [isActive],
-    metaInfo: {
-        title: "Search - Holodex",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.search.searchLabel")} - Holodex`;
+            },
+        };
     },
     components: {
         VideoCardList,
