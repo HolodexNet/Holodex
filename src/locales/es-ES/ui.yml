@@ -198,6 +198,7 @@ views:
       - Pequeño
     hideCollabStreamsLabel: Ocultar colaboraciones
     hideCollabStreamsMsg: Oculta las colaboraciones de tu pagina de favoritos
+    theme: Temas
   app:
     update_available: Hay una actualización disponible
     update_btn: Actualizar
@@ -275,6 +276,7 @@ views:
     preset:
       shareOnDiscord: >-
         ¿Has hecho un diseño perfecto? ¡Usa el botón de compartir y enséñanos tu desiño en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de discord</a>!
+      custom: Mis plantillas
       desktop: Escritorio
       mobile: Móvil
     video:
