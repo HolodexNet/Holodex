@@ -5,8 +5,10 @@
 <script>
  if (window.parent) {
     if (/thirdparty=yes/.test(document.cookie)) {
+        console.log("3p supported!")
         window.parent.postMessage('MM:3PCsupported', '*');
     } else {
+        console.error("3p cookie not supported!")
         window.parent.postMessage('MM:3PCunsupported', '*');
     }
  }
