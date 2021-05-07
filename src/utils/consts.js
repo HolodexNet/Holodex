@@ -132,3 +132,11 @@ export const TL_LANGS = Object.freeze([
 //     PAST: "past",
 //     MISSING: "missing",
 // };
+
+export const companionExtensionId =
+    process.env.NODE_ENV === "production" ? "jkdnofimdhpbhdjbcdlgnccfjjkidlgp" : "alljnmkoffeaaapepofpnamdhcnhonoc";
+
+export const MESSAGE_TYPES = Object.freeze({
+    TOKEN: "token",
+    FAVORITES: "favorites",
+});

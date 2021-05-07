@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import api from "@/utils/backend-api";
+import { sendFavoritesToExtension, sendTokenToExtension } from "@/utils/messaging";
 import Vue from "vue";
 import { debounce } from "@/utils/functions";
 import fdequal from "fast-deep-equal";
@@ -102,6 +103,7 @@ const actions = {
                     // console.log("success");
                     commit("setFavorites", res.data);
                     dispatch("fetchLive", { force: true });
+                    sendFavoritesToExtension(res.data);
                 } else {
                     throw new Error("Error while adding favorite");
                 }
@@ -110,9 +112,16 @@ const actions = {
     }, 2000),
     async resetFavorites({ dispatch, commit, rootState }) {
         commit("resetState");
-        if (rootState.userdata && rootState.userdata.jwt) await dispatch("fetchFavorites");
-        if (rootState.userdata && rootState.userdata.jwt) await dispatch("fetchLive", { force: true });
-        else commit("setFavorites", []);
+        if (rootState.userdata && rootState.userdata.jwt) {
+            await dispatch("fetchFavorites");
+            sendTokenToExtension(rootState.userdata.jwt);
+        }
+        if (rootState.userdata && rootState.userdata.jwt) {
+            await dispatch("fetchLive", { force: true });
+        } else {
+            commit("setFavorites", []);
+            sendTokenToExtension(null);
+        }
     },
 };
 
