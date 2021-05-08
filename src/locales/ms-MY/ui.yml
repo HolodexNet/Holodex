@@ -11,6 +11,7 @@ component:
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
   channelInfo:
+    stats: Perangkaan
     videoCount: "{0} Buah Video"
     clipCount: "{n} Buah Sedutan"
     subscriberCount: "{n} Langganan"
@@ -21,6 +22,7 @@ component:
     removeFromFavorites: Alih keluar daripada Kegemaran
     unblock: Nyahsekat saluran ini
     block: Sekat kandungan saluran ini di seluruh Holodex
+    blocked: Disekat
   mainNav:
     home: Laman Utama
     favorites: Kegemaran
@@ -34,6 +36,7 @@ component:
     accountSettings: Tetapan Akaun
     music: Muzik
     multiview: Berbilang Tontonan
+    points: mata
   videoCard:
     clips: "{n} Sedutan"
     watching: "{0} Tontonan Sekarang"
@@ -49,12 +52,16 @@ component:
   watch:
     streamingFor: Telah berlangsung selama {0}
     nextUpInMugen: Seterusnya
+    Comments:
+      title: Ulasan
+      all: Semua
   search:
     searchLabel: Cari
     type:
       channel: saluran
       topic: topik
       org: kumpulan
+      titledesc: tajuk/perihalan
       comments: ulasan
       videourl: url video
   relatedVideo:
@@ -89,7 +96,18 @@ component:
       popup: Pasang Holodex di iOS
       afterExportIcon: lalu "Tambahkan di Layar Utama"
       beforeExportIcon: Tekan
+  media:
+    remove: Alih keluar
+  comment:
+    close: Tutup
+    readMore: Lihat selanjutnya
 views:
+  channel:
+    video: Video
+    clips: Sedutan
+    music: Muzik
+    collabs: Kerjasama
+    about: Perihal
   channels:
     sortOptions:
       subscribers: Langganan
@@ -169,6 +187,18 @@ views:
     defaultFavorites: Jadikan laman Kegemaran laman lalai
     defaultFavoritesMsg: >-
       Laman kegemaran dijadikan sebagai laman yang dibuka setiap kali melawati holodex.net atau menekan lambang Holodex di sebelah kiri bahagian atas laman.
+    videoFeedSettings: Tetapan Suapan Video
+    siteNavigationSettings: Pandu Arah dan Rupa Laman
+    languageSettings: Bahasa
+    gridSizeLabel: Ukuran Gambar Kenit Video
+    gridSizeMsg: Ubah ukuran gambar kenit video di Laman Utama dan Kegemaran
+    gridSize:
+      - Besar
+      - Sederhana
+      - Kecil
+    hideCollabStreamsLabel: Sembunyikan Siaran Sama
+    hideCollabStreamsMsg: Sembunyikan siaran sama di laman Kegemaran
+    theme: Warna tema
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
@@ -205,8 +235,19 @@ views:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
     manageFavorites: Uruskan Kegemaran
+    close: Tutup
+    showall: Paparkan Semua
   editor:
     needlogin: Penyuntingan data meta video dan lagu di Holodex hanya untuk yang telah mengelog masuk.
+    changeTopic:
+      title: Ubah topik siaran
+      info: >-
+        Topik video boleh ditetapkan oleh semua pengguna namun hanya penyunting dan pentadbir yang dapat mengubah dan mengalih keluar sebuah topik setelah ditetapkan.
+      button: Simpan (Memakan masa kira-kira 5 minit sebelum menunjukkan kesan)
+    channelMentions:
+      title: Sebutan Saluran (sedang dibangunkan)
+    sources:
+      title: Sumber dan Sedutan (sedang dibangunkan)
   login:
     apikeyMsg: >-
       Kekunci API boleh digunakan dalam pengaturcaraan untuk membuat pertanyaan kepada API Holodex. Setiap akaun hanya terbatas dengan serentetan kekunci. Setelah mendapat kekunci baharu, kekunci lama akan tamat tempoh dalam masa 24 jam.
@@ -218,17 +259,30 @@ views:
     apikeyResetConfirm1: Adakah anda pasti anda ingin menetapkan semula Kekunci API anda?
     apikeyResetConfirm2: Kekunci API lama akan tamat tempoh dalam masa 24 jam. Betul mahu tetapkan semula?
     apikeyResetNvm: Entahlah apa yang terjadi.
+    with:
+      - Log masuk dengan Google
+      - Log masuk dengan Discord
+      - Log masuk dengan Twitter
   multiview:
     confirmOverwrite: Ubah tataletak semasa?
     confirmOverwriteYes: Sahkan
     permalink: Buat Pautan
     presets: Tataletak Tersedia
     addframe: Tambah Petak
+    muteAll: Senyapkan Semua
+    unmuteAll: Nyahsenyap Semua
+    autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak kendiri
+    createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
+      custom: Tataletak Saya
+      remove: Hapuskan
       desktop: Peranti Atas Meja
       mobile: Peranti Mudah Alih
+    presetEditor:
+      title: Simpan Tataletak
+      name: Nama
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Tersuai
@@ -279,12 +333,17 @@ about:
     quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex\\r\n"
     quitHolodexContent: >-
       Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.
+    MugenClips:
+      title: Apa itu MugenClips?
     subber:
+      title: Saya seorang penyari kata namun saluran atau sedutan saya tidak tersenarai di Holodex
       contents:
         - >-
 
         - >-
           , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: Saya mahu memberikan maklum balas/sumbangan kepada projek ini
   gdpr: Peraturan Umum Perlindungan Data dan data saya
   gdprContent: >-
     Sebuah kuki Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
