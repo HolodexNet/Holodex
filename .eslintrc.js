@@ -7,7 +7,7 @@ module.exports = {
         es6: true,
     },
 
-    extends: ["airbnb-base", "eslint:recommended", "prettier", "prettier/vue"],
+    extends: ["airbnb-base", "eslint:recommended", "prettier", "prettier/vue", "@vue/typescript"],
     parser: "vue-eslint-parser",
 
     parserOptions: {
@@ -59,6 +59,4 @@ module.exports = {
             },
         },
     },
-
-    extends: ["airbnb-base", "eslint:recommended", "prettier", "prettier/vue", "@vue/typescript"],
 };

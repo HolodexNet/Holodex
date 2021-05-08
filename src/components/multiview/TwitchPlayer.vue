@@ -87,7 +87,8 @@ export default {
             player.pause();
         },
         seek(timestamp) {
-            // Seeks to the specified timestamp (in seconds) in the video and resumes playing if paused. Does not work for live streams.
+            // Seeks to the specified timestamp (in seconds) in the video and resumes playing if paused.
+            // Does not work for live streams.
             player.seek(timestamp);
         },
         getCurrentTime() {
