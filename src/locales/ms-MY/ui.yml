@@ -293,6 +293,7 @@ about:
   feedbackHtml: >-
     Isu baharu boleh dibuka di <a href="https://github.com/RiceCakess/Holodex/issues"> Pengesan Isu Github </a> atau dibawa berbincang dengan pasukan Holodex di Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
+    title: Penghargaan
     contents:
       - I would like to give big thanks to the
       - team for their work on
@@ -300,3 +301,7 @@ about:
         Also to all the subbers for helping the overseas bros! Please check them out!
       - >-
 
+  changelog:
+    title: Catatan perubahan
+  news:
+    title: Berita
