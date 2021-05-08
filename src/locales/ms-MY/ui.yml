@@ -40,7 +40,7 @@ component:
   videoCard:
     clips: "{n} Sedutan"
     watching: "{0} Tontonan Sekarang"
-    liveNow: Langsung Sekarang
+    liveNow: Sedang Bersiaran
     edit: Sunting
     copiedToClipboard: Pautan telah disalin ke papan keratan.
     copyLink: Salin Pautan Holodex
