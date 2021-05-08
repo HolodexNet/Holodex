@@ -61,6 +61,7 @@ component:
       channel: Kanal
       topic: Thema
       org: org
+      titledesc: Titel/Beschreibung
       comments: Kommentare
       videourl: Video-URL
   relatedVideo:
@@ -186,6 +187,18 @@ views:
     defaultFavorites: Standardmäßig Favoriten öffnen
     defaultFavoritesMsg: >-
       Öffne deine Favoriten automatisch wenn du holodex.net besuchst oder das Logo oben links anklickst.
+    videoFeedSettings: Video-Feed Einstellungen
+    siteNavigationSettings: Seite/Navigation
+    languageSettings: Sprache
+    gridSizeLabel: Thumbnail/Rastergröße
+    gridSizeMsg: Ändert Thumbnail / Videoraster Größe auf der Start- und Favoritenseite
+    gridSize:
+      - Groß
+      - Mittel
+      - Klein
+    hideCollabStreamsLabel: Collab Streams ausblenden
+    hideCollabStreamsMsg: Collab Streams in deinem Favoriten Feed ausblenden
+    theme: Design
   app:
     update_available: Ein Update ist verfügbar
     update_btn: Update
@@ -256,11 +269,22 @@ views:
     permalink: Permalink
     presets: Vorlagen
     addframe: Zelle hinzufügen
+    muteAll: Alles stumm
+    unmuteAll: Alle entstummen
+    autoLayoutTip: Klicke auf einen Kanal, um im automatischen Layout-Modus zu schauen
+    createLayoutTip: Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine Vorlage verwendest
     preset:
       shareOnDiscord: >-
         Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+      custom: Meine Layouts
+      toggleAutoLayout: Layout Automodus umschalten
+      remove: Entfernen
       desktop: Desktop
       mobile: Mobil
+    presetEditor:
+      title: Layout speichern
+      name: Name
+      autoLayout: Layout im Auto-Modus verwenden
     video:
       selectLive: Stream auswählen
       addCustomVideo: Benutzerdefiniertes Video hinzufügen
