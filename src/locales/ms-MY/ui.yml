@@ -277,15 +277,20 @@ views:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
       custom: Tataletak Saya
+      toggleAutoLayout: Togolkan penggunaan tataletak ini secara kendiri
       remove: Hapuskan
       desktop: Peranti Atas Meja
       mobile: Peranti Mudah Alih
     presetEditor:
       title: Simpan Tataletak
       name: Nama
+      autoLayout: Gunakan tataletak ini pada ragam kendiri
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Tersuai
+  mugen:
+    welcome: >-
+      Selamat datang ke MugenClips! Laman ini mempertontonkan kepada semua orang sedutan Hololive berbahasa Inggeris yang sama secara rambang. Mari tonton bersama-sama sambil bersembang dengan peminat Hololive dari serata dunia. Sekiranya anda mahu kembali menonton bahagian yang sama dengan semua orang setelah melangkau sedutan terlebih dahulu, sila muatkan semula laman ini.
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
@@ -333,6 +338,15 @@ about:
     quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex\\r\n"
     quitHolodexContent: >-
       Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.
+    favorite:
+      title: Apa itu kegemaran?
+      disappear:
+        title: Senarai kegemaran saya telah hilang / Saya tidak boleh menambah video kegemaran
+    mobile:
+      title: Adakah ada aplikasi Android/iOS untuk Holodex?
+      content:
+        summary: >-
+          Kami masih mengusahakannya! Buat sementara waktu, sila gunakan ciri "Tambahkan di Layar Utama" di penyemak imbas masing-masing. Kami telah menyelaraskan Holodex agar berfungsi seakan-akan sebuah aplikasi mudah alih
     MugenClips:
       title: Apa itu MugenClips?
     subber:
