@@ -44,7 +44,7 @@ function defaultState() {
 
         activeSockets: 0,
         // reportDialog: false,
-        setReportVideo: null,
+        reportVideo: null,
     };
 }
 
