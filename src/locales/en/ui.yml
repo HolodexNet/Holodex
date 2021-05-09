@@ -105,6 +105,7 @@ component:
   reportDialog:
     title: Report
     comments: Comments (Optional)
+    success: Report sent, thank you! 
     reasons:
       - Video tagged incorrectly
       - Low Quality/Misleading Content

@@ -83,7 +83,6 @@ export default {
         },
     },
     data() {
-        console.log("reset");
         return {
             randomId: Date.now(),
 

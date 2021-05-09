@@ -23,7 +23,7 @@
                         <v-textarea
                             filled
                             :label="$t('component.reportDialog.comments')"
-                            :value="comments"
+                            v-model="comments"
                             persistent-hint
                             hint="English / 日本語 / 繁體中文 OK"
                         />
@@ -43,7 +43,12 @@
                 </template>
             </v-card>
         </v-dialog>
-        <v-snackbar v-model="showSnackbar" :timeout="3000" color="success"> Report sent, thank you! </v-snackbar>
+        <v-snackbar v-model="showSnackbar" :timeout="3000" color="success">
+            {{ $t("component.reportDialog.success") }}
+            <template v-slot:action>
+                <v-btn text @click="showSnackbar = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
+            </template>
+        </v-snackbar>
     </div>
 </template>
 
@@ -146,7 +151,6 @@ export default {
         },
         showReportDialog: {
             get() {
-                console.log(this.$store.state.reportVideo);
                 return this.$store.state.reportVideo;
             },
             set(val) {
