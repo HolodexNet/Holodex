@@ -69,8 +69,8 @@ export default [
         id: 4,
         themes: {
             dark: {
-                background: "#161723",
-                primary: "#FDFDFD",
+                background: "#0C111A",
+                primary: "#9E8461",
                 secondary: "#83B0BD",
             },
             light: {
