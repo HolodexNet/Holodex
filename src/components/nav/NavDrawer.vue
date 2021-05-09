@@ -7,7 +7,7 @@
         clipped
         class="nav-scroll thin-scroll-bar"
         :temporary="temporary"
-        style="padding-top: env(safe-area-inset-top)"
+        style="padding-top: env(safe-area-inset-top); padding-left: calc(env(safe-area-inset-left) / 1.3)"
     >
         <slot />
         <v-list dense class="pb-0">
