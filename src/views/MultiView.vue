@@ -26,16 +26,30 @@
                     v-for="(b, index) in buttons.filter((btn) => !btn.collapse || (!collapseButtons && btn.collapse))"
                 >
                     <!-- Create btn with tooltip -->
-                    <v-tooltip bottom :key="`mv-btn-${index}`" v-if="b.tooltip">
+                    <v-tooltip bottom :key="`mv-btn-${index}`" v-if="b.tooltip" :color="b.color">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn @click="b.onClick" :color="b.color" icon v-bind="attrs" v-on="on">
+                            <v-btn
+                                @click="b.onClick"
+                                :color="b.color"
+                                icon
+                                v-bind="attrs"
+                                v-on="on"
+                                :class="{ 'mx-1': $vuetify.breakpoint.lgAndUp }"
+                            >
                                 <v-icon>{{ b.icon }}</v-icon>
                             </v-btn>
                         </template>
                         <span>{{ b.tooltip }}</span>
                     </v-tooltip>
                     <!-- Create normal button with no tooltip -->
-                    <v-btn @click="b.onClick" :color="b.color" icon :key="`mv-btn-${index}`" v-else>
+                    <v-btn
+                        @click="b.onClick"
+                        :color="b.color"
+                        icon
+                        :key="`mv-btn-${index}`"
+                        :class="{ 'mx-1': $vuetify.breakpoint.lgAndUp }"
+                        v-else
+                    >
                         <v-icon>{{ b.icon }}</v-icon>
                     </v-btn>
                 </template>
@@ -209,8 +223,6 @@ import Vue from "vue";
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
 import {
-    mdiMessage,
-    mdiResizeBottomRight,
     mdiViewGridPlus,
     mdiLinkVariant,
     mdiClipboardPlusOutline,
@@ -248,14 +260,9 @@ export default {
     mixins: [copyToClipboard],
     data() {
         return {
-            mdiMessage,
-            mdiResizeBottomRight,
-            mdiViewGridPlus,
             mdiClipboardPlusOutline,
             mdiLinkVariant,
-            mdiDelete,
             mdiCardPlus,
-            mdiContentSave,
 
             showSelectorForId: -1,
             shareDialog: false,
@@ -300,10 +307,11 @@ export default {
                     color: "green",
                 },
                 {
-                    icon: this.icons.mdiRefresh,
+                    icon: mdiDelete,
                     tooltip: this.$t("component.music.clearPlaylist"),
                     onClick: this.clearAllItems,
                     color: "red",
+                    collapse: true,
                 },
                 {
                     icon: this.icons.mdiGridLarge,
@@ -341,6 +349,8 @@ export default {
                 {
                     icon: this.icons.mdiFullscreen,
                     onClick: this.toggleFullScreen,
+                    tooltip: this.$t("views.multiview.fullScreen"),
+                    collapse: true,
                 },
             ]);
         },
