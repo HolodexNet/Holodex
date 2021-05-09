@@ -101,6 +101,10 @@ component:
   comment:
     close: Tutup
     readMore: Lihat selanjutnya
+  reportDialog:
+    title: Laporkan
+    comments: Catatan tambahan (Tidak wajib)
+    success: Terima kasih! Laporan telah dikirim.
 views:
   channel:
     video: Video
