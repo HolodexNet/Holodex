@@ -105,6 +105,11 @@ component:
     title: Laporkan
     comments: Catatan tambahan (Tidak wajib)
     success: Terima kasih! Laporan telah dikirim.
+    reasons:
+      - Video tidak ditandai dengan betul
+      - Kandungan video tidak bermutu atau mengelirukan
+      - Melanggar garis panduan pertubuhan terbabit atau memaparkan kandungan yang tidak bersesuaian
+      - Lain-lain
 views:
   channel:
     video: Video
@@ -292,6 +297,7 @@ views:
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Tersuai
+    fullScreen: Skrin penuh
   mugen:
     welcome: >-
       Selamat datang ke MugenClips! Laman ini mempertontonkan kepada semua orang sedutan Hololive berbahasa Inggeris yang sama secara rambang. Mari tonton bersama-sama sambil bersembang dengan peminat Hololive dari serata dunia. Sekiranya anda mahu kembali menonton bahagian yang sama dengan semua orang setelah melangkau sedutan terlebih dahulu, sila muatkan semula laman ini.
@@ -331,7 +337,7 @@ about:
     ytchatContent: >-
       Anda harus melumpuhkan sekatan kuki pihak ketiga di penyemak imbas anda atau menyenaraikan tapak sesawang ini dan youtube.com dalam senarai putih bagi membenarkan kuki pihak ketiga.
     ytchatFirefox: Arahan melumpuhkan kuki oleh Firefox. Penyemak imbas lain mungkin menggunakan kaedah yang sama.
-    autoplayHeader: AutoPlay tidak berfungsi!
+    autoplayHeader: Automain tidak berfungsi!
     autoplayContent: Gelintar di internet cara menghidupkan automain bagi penyemak imbas masing-masing.
     musicPlayer: Peranti mudah alih tidak boleh menggunakan Pemain Muzik dengan baik!
     musicPlayerContent: >-
