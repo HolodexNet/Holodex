@@ -111,6 +111,10 @@
                                 }}</v-icon>
                                 {{ $t("component.videoCard.edit") }}
                             </v-list-item>
+                            <v-list-item @click="$store.commit('setReportVideo', video)">
+                                <v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{ icons.mdiFlag }} </v-icon>
+                                {{ $t("component.reportDialog.title") }}
+                            </v-list-item>
                         </v-list>
                     </v-menu>
 

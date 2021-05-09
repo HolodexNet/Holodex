@@ -50,4 +50,5 @@ export {
     mdiViewDashboard,
     mdiVolumeHigh,
     mdiVolumeMute,
+    mdiFlag,
 } from "@mdi/js";

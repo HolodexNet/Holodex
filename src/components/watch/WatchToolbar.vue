@@ -16,19 +16,35 @@
                         v-bind="attrs"
                         v-on="on"
                     >
-                        <v-icon>{{ mdiOpenInNew }}</v-icon>
+                        <v-icon>{{ icons.mdiYoutube }}</v-icon>
                     </v-btn>
                 </template>
                 <span>{{ $t("views.settings.redirectModeLabel") }}</span>
             </v-tooltip>
-            <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon lg @click="toggleSaved" :color="hasSaved ? 'primary' : ''" v-bind="attrs" v-on="on">
-                        <v-icon>{{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}</v-icon>
+            <v-menu bottom nudge-top="20px">
+                <template v-slot:activator="{ on }">
+                    <v-btn icon lg v-on="on" :ripple="false">
+                        <v-icon>
+                            {{ icons.mdiDotsVertical }}
+                        </v-icon>
                     </v-btn>
                 </template>
-                <span>{{ $t("views.watch.saveToLibrary") }}</span>
-            </v-tooltip>
+                <v-list dense>
+                    <v-list-item
+                        :disabled="video.type === 'clip'"
+                        :to="`/multiview/AAUY${video.id}${video.channel.name}%2CUAEYchat`"
+                    >
+                        <v-icon left :color="video.type === 'clip' ? 'grey' : ''">
+                            {{ icons.mdiViewDashboard }}
+                        </v-icon>
+                        {{ $t("component.mainNav.multiview") }}
+                    </v-list-item>
+                    <v-list-item @click="$store.commit('setReportVideo', video)">
+                        <v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{ icons.mdiFlag }} </v-icon>
+                        {{ $t("component.reportDialog.title") }}
+                    </v-list-item>
+                </v-list>
+            </v-menu>
         </div>
     </v-card>
 </template>

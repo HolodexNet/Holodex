@@ -102,6 +102,14 @@ component:
   comment:
     close: Close
     readMore: Read more
+  reportDialog:
+    title: Report
+    comments: Comments (Optional)
+    reasons:
+      - Video tagged incorrectly
+      - Low Quality/Misleading Content
+      - Violates the org's derivative work guidelines or inappropriate
+      - Other
 views:
   channel:
     video: Videos
