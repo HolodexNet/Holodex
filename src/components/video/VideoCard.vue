@@ -71,7 +71,7 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content class="pa-0">
-                    <v-menu bottom nudge-top="20px" z-index="45">
+                    <v-menu bottom nudge-top="20px">
                         <template v-slot:activator="{ on }">
                             <v-btn
                                 icon
@@ -475,7 +475,7 @@ export default {
     right: 0px;
     display: inline-block;
     top: 5px;
-    z-index: 40;
+    z-index: 1;
 }
 
 .video-card-horizontal {
