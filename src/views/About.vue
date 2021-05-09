@@ -15,19 +15,7 @@
                 <v-row dense class="mx-1">
                     <v-col cols="12" md="auto">
                         <v-btn
-                            color="indigo"
-                            block
-                            class="text-left justify-start"
-                            large
-                            href="https://discord.gg/jctkgHBt4b"
-                        >
-                            <v-icon large left>{{ icons.mdiDiscord }}</v-icon>
-                            {{ $t("about.discordBtn") }}
-                        </v-btn>
-                    </v-col>
-                    <v-col cols="12" md="auto">
-                        <v-btn
-                            color="info"
+                            color="info white--text"
                             block
                             class="text-left justify-start"
                             large
@@ -39,7 +27,19 @@
                     </v-col>
                     <v-col cols="12" md="auto">
                         <v-btn
-                            color="teal"
+                            color="indigo white--text"
+                            block
+                            class="text-left justify-start"
+                            large
+                            href="https://discord.gg/jctkgHBt4b"
+                        >
+                            <v-icon large left>{{ icons.mdiDiscord }}</v-icon>
+                            {{ $t("about.discordBtn") }}
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="12" md="auto">
+                        <v-btn
+                            color="teal white--text"
                             block
                             class="text-left justify-start"
                             large
@@ -50,8 +50,13 @@
                         </v-btn>
                     </v-col>
                     <v-col cols="12" md="auto">
-                        <v-btn class="text-left justify-start" block large href="https://github.com/RiceCakess/Holodex">
-                            <v-icon large left>{{ mdiGithub }}</v-icon>
+                        <v-btn
+                            class="text-left justify-start white--text deep-purple"
+                            block
+                            large
+                            href="https://github.com/RiceCakess/Holodex"
+                        >
+                            <v-icon large left color="black">{{ mdiGithub }}</v-icon>
                             {{ $t("about.issueTracker") }}
                         </v-btn>
                     </v-col>
