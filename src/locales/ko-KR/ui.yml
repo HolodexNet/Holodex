@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: "콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 "
-    textAfterTwitter: "를 확인하거나"
+    textBeforeTwitter: '콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 '
+    textAfterTwitter: '를 확인하거나'
     aboutPage: 정보 페이지
     afterAboutPageHyperlink: 에 오류를 제보해주세요.
   channelList:
@@ -12,9 +12,9 @@ component:
     favoriteAllInGroup: 소속된 모두를 즐겨찾기
   channelInfo:
     stats: 통계
-    videoCount: "{0} 동영상"
-    clipCount: "{n} 클립"
-    subscriberCount: "{n} 구독자"
+    videoCount: '{0} 동영상'
+    clipCount: '{n} 클립'
+    subscriberCount: '{n} 구독자'
     subscriberNA: 구독자 수를 확인할 수 없음
     totalViews: 총 조회수
   channelSocials:
@@ -38,8 +38,8 @@ component:
     multiview: 멀티뷰
     points: 포인트
   videoCard:
-    clips: "{n} 클립"
-    watching: "{0}명 시청 중"
+    clips: '{n} 클립'
+    watching: '{0}명 시청 중'
     liveNow: 실시간 스트리밍 중
     edit: 편집
     copiedToClipboard: 링크를 클립보드에 복사했습니다.
@@ -182,7 +182,7 @@ views:
     scrollModeLabel: 스크롤 모드
     scrollModeMsg: 스크롤/탭하여 페이지를 이동합니다
     resetAllSettings: 모든 설정/데이터 초기화
-    clipLanguageSelection: "다음 언어로 된 클립 보기:"
+    clipLanguageSelection: '다음 언어로 된 클립 보기:'
     tlLanguageSelection: 해당 언어로 실시간 채팅 번역 보기
     defaultFavorites: 즐겨찾기를 기본 페이지로 설정
     defaultFavoritesMsg: >-
@@ -294,7 +294,7 @@ views:
 time:
   soon: 예정
   diff_future_date: '{0} 시작 ({1})'
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
 editor:
   music:
     add: 추가
@@ -302,8 +302,8 @@ editor:
     permission: >-
       이미 있는 노래를 수정하거나 삭제하려면 '편집자' 사용자 권한이 필요합니다. <a class='white--text' href='/about'>Discord</a>에서 이슈 / 악용 사항을 편집자에게 알리거나 편집자에 지원하세요.
     titles:
-      addSong: "노래 메타데이터: 새 노래 추가"
-      songList: "노래 목록 : {0}"
+      addSong: '노래 메타데이터: 새 노래 추가'
+      songList: '노래 목록 : {0}'
       help: 가이드
     itunesLookupPlaceholder: (선택) iTunes에서 찾아보기
     moveRight2s: 오른쪽으로 2초 이동
@@ -314,7 +314,7 @@ editor:
     originalArtistInput: 원곡 가수
     testStart: 시작 위치 확인
     startInput: 시작
-    endInput: "총 재생시간: ({0}에 종료됨)"
+    endInput: '총 재생시간: ({0}에 종료됨)'
   exitMode: 편집 모드 나가기
   enterMode: 동영상 편집
 about:

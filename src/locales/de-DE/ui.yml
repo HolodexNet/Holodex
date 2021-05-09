@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: "Es ist ein Fehler beim Abrufen von Inhalten aufgetreten, bitte schau of Twitter "
-    textAfterTwitter: " oder melde den Fehler über die"
+    textBeforeTwitter: 'Es ist ein Fehler beim Abrufen von Inhalten aufgetreten, bitte schau of Twitter '
+    textAfterTwitter: ' oder melde den Fehler über die'
     aboutPage: Info-Seite
     afterAboutPageHyperlink: .
   channelList:
@@ -12,9 +12,9 @@ component:
     favoriteAllInGroup: Alle in Gruppe favorisieren
   channelInfo:
     stats: Statistik
-    videoCount: "{0} Videos"
-    clipCount: "{n} Clips"
-    subscriberCount: "{n} Abonnenten"
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} Abonnenten'
     subscriberNA: Abonnentenzahl nicht verfügbar
     totalViews: Aufrufe insgesamt
   channelSocials:
@@ -38,8 +38,8 @@ component:
     multiview: Mehrfachansicht
     points: Pkte.
   videoCard:
-    clips: "{n} Clips"
-    watching: "{0} Zuschauer"
+    clips: '{n} Clips'
+    watching: '{0} Zuschauer'
     liveNow: Jetzt Live
     edit: Bearbeiten
     copiedToClipboard: Link in die Zwischenablage kopiert.
@@ -61,6 +61,7 @@ component:
       channel: Kanal
       topic: Thema
       org: org
+      titledesc: Titel/Beschreibung
       comments: Kommentare
       videourl: Video-URL
   relatedVideo:
@@ -181,11 +182,23 @@ views:
     scrollModeLabel: Scroll-Modus
     scrollModeMsg: Blättern/Tippen zum Umblättern der Seiten verwenden
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
-    clipLanguageSelection: "Clips in diesen Sprachen anzeigen:"
+    clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
     tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
     defaultFavorites: Standardmäßig Favoriten öffnen
     defaultFavoritesMsg: >-
       Öffne deine Favoriten automatisch wenn du holodex.net besuchst oder das Logo oben links anklickst.
+    videoFeedSettings: Video-Feed Einstellungen
+    siteNavigationSettings: Seite/Navigation
+    languageSettings: Sprache
+    gridSizeLabel: Thumbnail/Rastergröße
+    gridSizeMsg: Ändert Thumbnail / Videoraster Größe auf der Start- und Favoritenseite
+    gridSize:
+      - Groß
+      - Mittel
+      - Klein
+    hideCollabStreamsLabel: Collab Streams ausblenden
+    hideCollabStreamsMsg: Collab Streams in deinem Favoriten Feed ausblenden
+    theme: Design
   app:
     update_available: Ein Update ist verfügbar
     update_btn: Update
@@ -256,11 +269,22 @@ views:
     permalink: Permalink
     presets: Vorlagen
     addframe: Zelle hinzufügen
+    muteAll: Alles stumm
+    unmuteAll: Alle entstummen
+    autoLayoutTip: Klicke auf einen Kanal, um im automatischen Layout-Modus zu schauen
+    createLayoutTip: Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine Vorlage verwendest
     preset:
       shareOnDiscord: >-
         Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+      custom: Meine Layouts
+      toggleAutoLayout: Layout Automodus umschalten
+      remove: Entfernen
       desktop: Desktop
       mobile: Mobil
+    presetEditor:
+      title: Layout speichern
+      name: Name
+      autoLayout: Layout im Auto-Modus verwenden
     video:
       selectLive: Stream auswählen
       addCustomVideo: Benutzerdefiniertes Video hinzufügen
@@ -270,7 +294,7 @@ views:
 time:
   soon: bald
   diff_future_date: Beginnt {0} ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
 editor:
   music:
     add: Hinzufügen
@@ -278,8 +302,8 @@ editor:
     permission: >-
       Du musst 'Editor' oder höher sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
     titles:
-      addSong: "Song-Metadaten: Neuen Song hinzufügen"
-      songList: "Songliste : {0}"
+      addSong: 'Song-Metadaten: Neuen Song hinzufügen'
+      songList: 'Songliste : {0}'
       help: Anleitung
     itunesLookupPlaceholder: (Optional) Suche auf iTunes
     moveRight2s: Nach rechts 2s
@@ -290,7 +314,7 @@ editor:
     originalArtistInput: Originaler Künstler
     testStart: Teste den Start
     startInput: Start
-    endInput: "Dauer in Sekunden: (end @ {0})"
+    endInput: 'Dauer in Sekunden: (end @ {0})'
   exitMode: Bearbeitungsmodus verlassen
   enterMode: Video bearbeiten
 about:

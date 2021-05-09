@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Maafkeun
-    textBeforeTwitter: "Ada kesalahan saat memuat konten, silahkan cek twitter "
-    textAfterTwitter: " atau laporkan hal ini melalui"
+    textBeforeTwitter: 'Ada kesalahan saat memuat konten, silahkan cek twitter '
+    textAfterTwitter: ' atau laporkan hal ini melalui'
     aboutPage: halaman tentang
     afterAboutPageHyperlink: .
   channelList:
@@ -12,9 +12,9 @@ component:
     favoriteAllInGroup: Favoritkan semua dalam grup
   channelInfo:
     stats: Statistik
-    videoCount: "{0} Video"
-    clipCount: "{n} Klip"
-    subscriberCount: "{n} Subscriber"
+    videoCount: '{0} Video'
+    clipCount: '{n} Klip'
+    subscriberCount: '{n} Subscriber'
     subscriberNA: Jumlah Subscriber tidak tersedia
     totalViews: Jumlah Ditonton
   channelSocials:
@@ -38,8 +38,8 @@ component:
     multiview: MultiView
     points: poin
   videoCard:
-    clips: "{n} Klip"
-    watching: "{0} sedang menonton"
+    clips: '{n} Klip'
+    watching: '{0} sedang menonton'
     liveNow: Sedang Berlangsung
     edit: Ubah
     copiedToClipboard: Tautan disalin ke clipboard.
@@ -182,7 +182,7 @@ views:
     scrollModeLabel: Mode Gulir
     scrollModeMsg: Menggulir halaman menggunakan scroll / menekan tombol.
     resetAllSettings: Reset Semua Pengaturan/Data
-    clipLanguageSelection: "Melihat Klip dalam bahasa berikut:"
+    clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
     tlLanguageSelection: Melihat Terjemahan dalam bahasa ini
     defaultFavorites: Membuka Favorit secara default
     defaultFavoritesMsg: >-
@@ -294,7 +294,7 @@ views:
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
 editor:
   music:
     add: Tambah
@@ -302,8 +302,8 @@ editor:
     permission: >-
       Kamu perlu level pengguna 'Editor' atau lebih tinggi untuk memperbarui atau menghapus lagu yang sudah ada. Hubungi kami di <a class='white--text' href='/about'>discord</a> untuk memberitau masalah/penyalahgunaan mengenai editor, atau mengajukan diri menjadi editor.
     titles:
-      addSong: "Metadata Lagu: Tambahkan lagu baru"
-      songList: "Daftar Lagu : {0}"
+      addSong: 'Metadata Lagu: Tambahkan lagu baru'
+      songList: 'Daftar Lagu : {0}'
       help: Bantuan
     itunesLookupPlaceholder: (Opsional) Cari di iTunes
     moveRight2s: Geser kanan 2detik
@@ -314,7 +314,7 @@ editor:
     originalArtistInput: Penyanyi Asli
     testStart: Uji awal mulai
     startInput: Mulai
-    endInput: "Durasi dalam detik: (berakhir pd {0})"
+    endInput: 'Durasi dalam detik: (berakhir pd {0})'
   exitMode: Keluar dari Mode Edit
   enterMode: Edit Video
 about:
