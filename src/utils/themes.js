@@ -21,13 +21,13 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#FCC281",
+                primary: "#F2AD46",
                 secondary: "#A6C449",
             },
             light: {
                 background: "#f2f2f2",
                 secondary: "#839C35",
-                primary: "#FCC281",
+                primary: "#F2AD46",
             },
         },
     },
