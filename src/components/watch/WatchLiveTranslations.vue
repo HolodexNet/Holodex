@@ -246,9 +246,8 @@ export default {
         this.tlLeave();
     },
     watch: {
-        liveTlLang() {
-            this.tlLeave();
-            this.tlJoin();
+        liveTlLang(nw, old) {
+            this.switchLanguage(nw, old);
         },
         dialog(nw) {
             // unshow blocked list when exiting dialog
@@ -299,14 +298,18 @@ export default {
                 // if no type, process as regular message
                 if (!msg.type) {
                     // ignore blocked channels, moderator and verified messages if disabled
+                    if (this.blockedNames.has(msg.name)) return;
+
                     if (
-                        this.blockedNames.has(msg.name) ||
-                        (msg.isModerator && !this.liveTlShowModerator) ||
-                        (msg.isVerified && !this.liveTlShowVerified)
-                    )
-                        return;
-                    vm.tlHistory.push(this.parseMessage(msg));
-                    vm.$emit("historyLength", vm.tlHistory.length);
+                        msg.isTL ||
+                        msg.isVtuber ||
+                        msg.isOwner ||
+                        (msg.isModerator && this.liveTlShowModerator) ||
+                        (msg.isVerified && this.liveTlShowVerified)
+                    ) {
+                        vm.tlHistory.push(this.parseMessage(msg));
+                        vm.$emit("historyLength", vm.tlHistory.length);
+                    }
                     return;
                 }
                 switch (msg.type) {
@@ -333,6 +336,7 @@ export default {
             if (msg.isModerator) msg.prefix += "[Mod]";
             if (msg.isVerified) msg.prefix += "[Verified]";
             if (msg.isOwner) msg.prefix += "[Owner]";
+            if (msg.isVtuber) msg.prefix += "[Vtuber]";
 
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://")) {
@@ -382,8 +386,8 @@ export default {
             // Grab chat history
             api.chatHistory(this.video.id, {
                 lang: this.liveTlLang,
-                verified: this.liveTlShowVerified,
-                moderator: this.liveTlShowModerator,
+                ...(this.liveTlShowVerified && { verified: 1 }),
+                ...(this.liveTlShowModerator && { moderator: 1 }),
             }).then(({ data }) => {
                 // Backwards compatible incase backend needs to revert
                 if (Array.isArray(data)) {
@@ -415,6 +419,12 @@ export default {
                 // Reset for immediate reconnects
                 vm.success = false;
             }
+        },
+        switchLanguage(newLang, oldLang) {
+            // unsub from old langauge
+            this.$socket.client.emit("unsubscribe", { video_id: this.video.id, lang: oldLang });
+            this.$socket.client.off(`${this.video.id}/${oldLang}`);
+            this.tlJoin();
         },
         utcToTimestamp(utc) {
             return formatDuration(dayjs.utc(utc).subtract(Number(dayjs(this.video.start_actual))));

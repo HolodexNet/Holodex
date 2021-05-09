@@ -1,11 +1,19 @@
 <template>
-    <div v-if="!isLoading && !hasError" ref="watchFullscreen" style="overflow-y: auto">
+    <div
+        v-if="!isLoading && !hasError"
+        ref="watchFullscreen"
+        style="overflow-y: auto"
+        :style="{
+            'overflow-y': showChatWindow && isMobile && !landscape ? 'hidden' : 'auto',
+            'max-height': showChatWindow && isMobile && !landscape ? '100vh' : '',
+        }"
+    >
         <!-- Mugen info message -->
         <v-alert dense text type="info" dismissible v-model="firstVisitMugen" v-if="isMugen">
             {{ $t("views.mugen.welcome") }}
         </v-alert>
         <!-- Desktop (md/lg/xl) Layout -->
-        <v-container v-if="!$store.state.isMobile" fluid>
+        <v-container v-if="!isMobile" fluid>
             <v-row :class="{ 'flex-nowrap': !theatherMode }">
                 <!-- Left side -->
                 <v-col :md="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3 flex-shrink-1">
@@ -26,7 +34,7 @@
                     </WatchFrame>
                     <WatchToolBar :video="video" noBackButton>
                         <template v-slot:buttons>
-                            <v-tooltip bottom v-if="hasLiveTL && hasLiveChat && !$store.state.isMobile">
+                            <v-tooltip bottom v-if="hasLiveTL && hasLiveChat && !isMobile">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-btn
                                         icon
@@ -50,7 +58,7 @@
                             <v-btn icon lg @click="toggleFullScreen">
                                 <v-icon>{{ icons.mdiFullscreen }}</v-icon>
                             </v-btn>
-                            <v-tooltip bottom v-if="!$store.state.isMobile">
+                            <v-tooltip bottom v-if="!isMobile">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-btn
                                         icon
@@ -73,7 +81,7 @@
                         <WatchComments
                             :comments="comments"
                             :video="video"
-                            :limit="$store.state.isMobile ? 5 : 0"
+                            :limit="isMobile ? 5 : 0"
                             @timeJump="seekTo"
                             key="comments"
                             v-if="comments.length"
@@ -89,7 +97,7 @@
                             <WatchComments
                                 :comments="comments"
                                 :video="video"
-                                :limit="$store.state.isMobile ? 5 : 0"
+                                :limit="isMobile ? 5 : 0"
                                 @timeJump="seekTo"
                                 key="comments"
                                 v-if="comments.length"
@@ -166,7 +174,7 @@
                 <WatchComments
                     :comments="comments"
                     :video="video"
-                    :limit="$store.state.isMobile ? 5 : 0"
+                    :limit="isMobile ? 5 : 0"
                     @timeJump="seekTo"
                     key="comments"
                     v-if="comments.length"
@@ -342,6 +350,9 @@ export default {
         },
         isMugen() {
             return this.$route.name === "mugen-clips";
+        },
+        isMobile() {
+            return this.$store.state.isMobile;
         },
         landscape() {
             return this.$vuetify.breakpoint.width >= 568;

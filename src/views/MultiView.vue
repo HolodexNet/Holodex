@@ -533,11 +533,8 @@ export default {
             // there's no presets with equal cells
             if (toCompare.length === 0) return false;
 
-            let fullMatch = false;
-
             // go through each preset, and check for full matching layouts
-            toCompare.forEach((preset) => {
-                if (fullMatch) return;
+            return toCompare.some((preset) => {
                 for (let i = 0; i < currentLayout.length; i += 1) {
                     const presetCell = preset.layout[i];
                     const layoutCell = currentLayout[i];
@@ -551,13 +548,11 @@ export default {
                             presetCell.i === layoutCell.i
                         )
                     ) {
-                        return;
+                        return true;
                     }
                 }
-                fullMatch = true;
+                return false;
             });
-
-            return fullMatch;
         },
         tryFillVideo(video) {
             // try find empty cell
