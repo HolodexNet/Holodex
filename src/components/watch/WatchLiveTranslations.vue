@@ -427,7 +427,7 @@ export default {
             this.tlJoin();
         },
         utcToTimestamp(utc) {
-            return formatDuration(dayjs.utc(utc).subtract(Number(dayjs(this.video.start_actual))));
+            return formatDuration(dayjs.utc(utc).diff(Number(dayjs(this.video.start_actual))));
         },
     },
 };
