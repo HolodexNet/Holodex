@@ -46,6 +46,8 @@ component:
     copyLink: 複製 Holodex 連結
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -102,11 +104,13 @@ component:
     close: 關閉
     readMore: 顯示更多
   reportDialog:
-    title: 回報問題
+    title: 檢舉
+    comments: 詳細描述（可選）
+    success: 檢舉已送出，謝謝您
     reasons:
-      - Video tagged incorrectly
-      - Low Quality/Misleading Content
-      - Violates the org's derivative work guidelines or inappropriate
+      - 影片標籤錯誤
+      - 影片品質過於低劣 / 含有誤導性內容
+      - 違反了VTuber公司的二創條款或是不當內容
       - 其他原因
 views:
   channel:
@@ -116,6 +120,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
