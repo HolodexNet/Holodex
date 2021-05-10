@@ -191,7 +191,6 @@ export default {
             isLoading: true,
             dialog: false,
             success: false,
-
             selectedChannel: "",
             showBlockedList: false,
         };
@@ -293,42 +292,45 @@ export default {
             this.$store.commit("settings/toggleLiveTlBlocked", name);
         },
         registerListener() {
-            const vm = this as any;
-            this.$socket.client.on(`${vm.video.id}/${vm.liveTlLang}`, (msg) => {
-                // if no type, process as regular message
-                if (!msg.type) {
-                    // ignore blocked channels, moderator and verified messages if disabled
-                    if (this.blockedNames.has(msg.name)) return;
+            this.$socket.client.on(`${this.video.id}/${this.liveTlLang}`, this.handleMessage);
+        },
+        unregisterListener() {
+            this.$socket.client.off(`${this.video.id}/${this.liveTlLang}`, this.handleMessage);
+        },
+        handleMessage(msg) {
+            // if no type, process as regular message
+            if (!msg.type) {
+                // ignore blocked channels, moderator and verified messages if disabled
+                if (this.blockedNames.has(msg.name)) return;
 
-                    if (
-                        msg.isTL ||
-                        msg.isVtuber ||
-                        msg.isOwner ||
-                        (msg.isModerator && this.liveTlShowModerator) ||
-                        (msg.isVerified && this.liveTlShowVerified)
-                    ) {
-                        vm.tlHistory.push(this.parseMessage(msg));
-                        vm.$emit("historyLength", vm.tlHistory.length);
-                    }
-                    return;
+                if (
+                    msg.isTL ||
+                    msg.isVtuber ||
+                    msg.isOwner ||
+                    (msg.isModerator && this.liveTlShowModerator) ||
+                    (msg.isVerified && this.liveTlShowVerified)
+                ) {
+                    this.tlHistory.push(this.parseMessage(msg));
+                    this.$emit("historyLength", this.tlHistory.length);
                 }
-                switch (msg.type) {
-                    case vm.MESSAGE_TYPES.UPDATE:
-                        vm.$emit("videoUpdate", msg);
-                        break;
-                    case vm.MESSAGE_TYPES.END:
-                        vm.overlayMessage = msg.message;
-                        vm.tlLeave();
-                        break;
-                    case vm.MESSAGE_TYPES.ERROR:
-                        vm.overlayMessage = "An unexpected error occured";
-                        // this.showOverlay = true;
-                        vm.tlLeave();
-                        break;
-                    default:
-                        break;
-                }
-            });
+                return;
+            }
+            switch (msg.type) {
+                case this.MESSAGE_TYPES.UPDATE:
+                    this.$emit("videoUpdate", msg);
+                    break;
+                case this.MESSAGE_TYPES.END:
+                    this.overlayMessage = msg.message;
+                    this.tlLeave();
+                    break;
+                case this.MESSAGE_TYPES.ERROR:
+                    this.overlayMessage = "An unexpected error occured";
+                    // this.showOverlay = true;
+                    this.tlLeave();
+                    break;
+                default:
+                    break;
+            }
         },
         parseMessage(msg) {
             // Append title to author name
@@ -405,16 +407,26 @@ export default {
                     .map((msg) => this.parseMessage(msg));
             });
 
-            // Try to join chat room with specified language
-            this.$socket.client.emit("subscribe", { video_id: this.video.id, lang: this.liveTlLang });
+            // Another instance has already subscribed to this chat, just register listener
+            if (this.$socket.client.listeners(`${this.video.id}/${this.liveTlLang}`).length > 0) {
+                this.registerListener();
+                this.success = true;
+                this.$store.commit("incrementActiveSockets");
+            } else {
+                // Try to join chat room with specified language
+                this.$socket.client.emit("subscribe", { video_id: this.video.id, lang: this.liveTlLang });
+            }
         },
         tlLeave() {
             const vm = this as any;
             // only disconnect and derement socket if it succeeded
             if (vm.success) {
                 vm.$store.commit("decrementActiveSockets");
-                vm.$socket.client.emit("unsubscribe", { video_id: vm.video.id, lang: vm.liveTlLang });
-                vm.$socket.client.off(`${vm.video.id}/${vm.liveTlLang}`);
+                // Check if there's another listener depending on this subscription, unsub if not
+                if (vm.$socket.client.listeners(`${this.video.id}/${this.liveTlLang}`).length <= 1) {
+                    vm.$socket.client.emit("unsubscribe", { video_id: vm.video.id, lang: vm.liveTlLang });
+                }
+                vm.unregisterListener();
                 vm.$store.dispatch("checkActiveSockets");
                 // Reset for immediate reconnects
                 vm.success = false;
@@ -423,7 +435,7 @@ export default {
         switchLanguage(newLang, oldLang) {
             // unsub from old langauge
             this.$socket.client.emit("unsubscribe", { video_id: this.video.id, lang: oldLang });
-            this.$socket.client.off(`${this.video.id}/${oldLang}`);
+            this.$socket.client.off(`${this.video.id}/${oldLang}`, this.handleMessage);
             this.tlJoin();
         },
         utcToTimestamp(utc) {
