@@ -24,11 +24,13 @@
                 <v-btn text @click="showUpdateDetails = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
             </template>
         </v-snackbar>
+        <ReportDialog />
     </v-app>
 </template>
 
 <script lang="ts">
 import MainNav from "@/components/nav/MainNav.vue";
+import ReportDialog from "@/components/common/ReportDialog.vue";
 import pulltorefresh from "vue-awesome-pulltorefresh";
 import { dayjsLangs, loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
@@ -38,34 +40,10 @@ export default {
     // default meta info
     metaInfo: {
         title: "Holodex",
-        // titleTemplate: "%s - Holodex",
-        // meta: [
-        //     {
-        //         vmid: "description",
-        //         name: "description",
-        //         property: "og:description",
-        //         content:
-        //             "Holodex is a collection of official and
-        // translated Hololive vtuber videos and clips made by the community",
-        //     },
-        //     {
-        //         property: "og:type",
-        //         content: "website",
-        //     },
-        //     {
-        //         vmid: "url",
-        //         property: "og:url",
-        //         content: "https://holodex.net",
-        //     },
-        //     {
-        //         vmid: "image",
-        //         property: "og:image",
-        //         content: "https://holodex.net/img/icons/logo.png",
-        //     },
-        // ],
     },
     components: {
         MainNav,
+        ReportDialog,
     },
     data() {
         return {
@@ -243,18 +221,6 @@ export default {
         updateIsMobile() {
             this.$store.commit("setIsMobile", ["xs", "sm"].includes(this.$vuetify.breakpoint.name));
         },
-        /* Youtube thumbnails has inconsistent webp support */
-        // async supportsWebp() {
-        //     // eslint-disable-next-line no-restricted-globals
-        //     if (!self.createImageBitmap) return false;
-
-        //     const webpData = "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
-        //     const blob = await fetch(webpData).then((r) => r.blob());
-        //     return createImageBitmap(blob).then(
-        //         () => true,
-        //         () => false,
-        //     );
-        // },
         refreshApp() {
             this.updateExists = false;
             // Make sure we only send a 'skip waiting' message if the SW is waiting

@@ -24,8 +24,11 @@
 
             {{ formattedTime }}
             <template v-if="video.status === 'live'">
-                • {{ $t("component.videoCard.watching", [liveViewers]) }}</template
-            >
+                • {{ $t("component.videoCard.watching", [liveViewers]) }}
+                <span v-if="liveViewerChange" :class="liveViewerChange > 0 ? 'green--text' : 'red--text'">
+                    ({{ (liveViewerChange > 0 ? "+ " : "") + liveViewerChange }})
+                </span>
+            </template>
             <span class="mx-1" v-show="video.topic_id">
                 • <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
                 {{ video.topic_id }}
@@ -108,6 +111,7 @@ export default {
             elapsedTime: 0,
             editMode: false,
             showAllMentions: false,
+            lastViewerCount: -1,
         };
     },
     methods: {
@@ -145,6 +149,10 @@ export default {
         "video.status": function () {
             this.setTimer();
         },
+        // eslint-disable-next-line func-names
+        "video.live_viewers": function (nw, old) {
+            this.lastViewerCount = old;
+        },
     },
     computed: {
         lang() {
@@ -165,6 +173,11 @@ export default {
         },
         liveViewers() {
             return (+this.video.live_viewers).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        liveViewerChange() {
+            // if lastViewerCount is unset, then there is no change
+            if (this.lastViewerCount < 0) return 0;
+            return this.video.live_viewers - this.lastViewerCount;
         },
         mentions() {
             return this.video.mentions || [];

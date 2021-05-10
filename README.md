@@ -3,13 +3,16 @@
 [![Discord Chat](https://img.shields.io/discord/796190073271353385.svg)](https://discord.gg/)
 [![Deploy to Prod](https://github.com/RiceCakess/holoclips/workflows/Deploy%20to%20production/badge.svg)](https://github.com/RiceCakess/holoclips/actions?query=workflow%3A%22Deploy+to+production%22)
 [![Crowdin](https://badges.crowdin.net/holodex/localized.svg)](https://crowdin.com/project/holodex)
+![Twitter Follow](https://img.shields.io/twitter/follow/holodex?style=social)
 
 
+![holodex](https://github.com/RiceCakess/Holodex/blob/dev/public/img/intro-promo.jpg)
 
 ## Reporting a Bug/Feature Request
 * For bugs, please make sure to include a picture describing the issue (if applicable)
 * If the bug is urgent, please send us a message in the Discord server
-* Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) for known issues/progress 
+* Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) for what we're working on!
+ 
 ## Setup for Development
 ```
 git clone git@github.com:RiceCakess/Holodex.git
@@ -30,13 +33,18 @@ Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) fo
 
 ## Project Structure
 ```
+docs    # Changelog, hosted Github Pages, modify CHANGELOG.md and run '$ npm run changelog' task to update.
+public  # Static resources
+src     
 ├── components              # Vue components
 ├── locales                 # UI text translations for each languages
 ├── plugins                 # Vuetify, i18n and other plugin definitions
+├── mixins                  # Vue mixins commonly used across components
+├── external                # External components we imported into the project for maintenance / updating
 ├── router                  # Router definitions for path and views
-├── store                   # Vuex store modules, each file loosley corresponds to each page. All api calls go through here
-├── utils                   # Utility functions
-├── views                   # Page defintions
+├── store                   # Vuex store modules, each file loosley corresponds to each page.
+├── utils                   # Utility declarations
+├── views                   # Vue Page defintions
 └── App.vue                 # Main entry point, sets up router-view
 ```
 

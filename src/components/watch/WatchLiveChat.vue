@@ -179,6 +179,7 @@ export default {
         position: absolute;
         height: 100%;
         max-height: 100%;
+        padding-bottom: calc(env(safe-area-inset-bottom) / 1.75);
     }
 }
 

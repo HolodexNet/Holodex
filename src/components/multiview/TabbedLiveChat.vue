@@ -115,7 +115,7 @@ export default {
     },
     watch: {
         currentTab() {
-            this.showTLFirstTime = false;
+            // this.showTLFirstTime = false;
             this.savedTab = this.currentTab;
         },
         setShowTL(nw) {

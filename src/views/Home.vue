@@ -6,7 +6,7 @@
                 <div class="text-h6">
                     {{ $t("views.home.liveOrUpcomingHeading") }}
                 </div>
-                <v-btn icon @click="currentGridSize = (currentGridSize + 1) % 3" v-if="!$store.state.isMobile">
+                <v-btn icon @click="currentGridSize = (currentGridSize + 1) % ($vuetify.breakpoint.xs ? 2 : 3)">
                     <v-icon>{{ $store.getters.gridIcon }}</v-icon>
                 </v-btn>
             </div>
@@ -14,7 +14,7 @@
             <VideoCardList
                 :videos="live"
                 includeChannel
-                includeAvatar
+                :includeAvatar="shouldIncludeAvatar"
                 :limitRows="2"
                 :cols="colSizes"
                 :dense="currentGridSize > 0"
@@ -124,12 +124,18 @@ export default {
         },
         colSizes() {
             return {
-                xs: 1,
-                sm: 2,
+                xs: 1 + this.currentGridSize,
+                sm: 2 + this.currentGridSize,
                 md: 3 + this.currentGridSize,
                 lg: 4 + this.currentGridSize,
                 xl: 5 + this.currentGridSize,
             };
+        },
+        shouldIncludeAvatar() {
+            if (this.$vuetify.breakpoint.md && this.currentGridSize > 1) return false;
+            if (this.$vuetify.breakpoint.sm && this.currentGridSize > 0) return false;
+            if (this.$vuetify.breakpoint.xs && this.currentGridSize > 0) return false;
+            return true;
         },
     },
     methods: {

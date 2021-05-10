@@ -161,7 +161,7 @@ export default {
     },
     songListByVideo(channelId, videoId, allowCache) {
         const dt = allowCache ? "_" : Date.now();
-        return axiosInstance.post(`/songs/latest?c=${dt}`, { channel_id: channelId, video_id: videoId });
+        return axiosInstance.post(`/songs/latest?c=${dt}`, { channel_id: channelId, video_id: videoId, limit: 999 });
     },
     tryCreateSong(songObj, jwt) {
         return axiosInstance.put("/songs", songObj, {

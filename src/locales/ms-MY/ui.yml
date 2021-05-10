@@ -2,8 +2,8 @@
 component:
   apiError:
     title: Sumimaaf!
-    textBeforeTwitter: "Terdapat ralat ketika mendapatkan kembali kandungan. Sila semak di Twitter"
-    textAfterTwitter: " atau laporkan ralat melalui"
+    textBeforeTwitter: 'Terdapat ralat ketika mendapatkan kembali kandungan. Sila semak di Twitter'
+    textAfterTwitter: ' atau laporkan ralat melalui'
     aboutPage: laman Perihal
     afterAboutPageHyperlink: .
   channelList:
@@ -11,9 +11,10 @@ component:
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
   channelInfo:
-    videoCount: "{0} Buah Video"
-    clipCount: "{n} Buah Sedutan"
-    subscriberCount: "{n} Langganan"
+    stats: Perangkaan
+    videoCount: '{0} Buah Video'
+    clipCount: '{n} Buah Sedutan'
+    subscriberCount: '{n} Langganan'
     subscriberNA: Bilangan langganan tidak tersedia
     totalViews: Jumlah Tontonan
   channelSocials:
@@ -21,6 +22,7 @@ component:
     removeFromFavorites: Alih keluar daripada Kegemaran
     unblock: Nyahsekat saluran ini
     block: Sekat kandungan saluran ini di seluruh Holodex
+    blocked: Disekat
   mainNav:
     home: Laman Utama
     favorites: Kegemaran
@@ -34,10 +36,11 @@ component:
     accountSettings: Tetapan Akaun
     music: Muzik
     multiview: Berbilang Tontonan
+    points: mata
   videoCard:
-    clips: "{n} Sedutan"
-    watching: "{0} Tontonan Sekarang"
-    liveNow: Langsung Sekarang
+    clips: '{n} Sedutan'
+    watching: '{0} Tontonan Sekarang'
+    liveNow: Sedang Bersiaran
     edit: Sunting
     copiedToClipboard: Pautan telah disalin ke papan keratan.
     copyLink: Salin Pautan Holodex
@@ -49,12 +52,16 @@ component:
   watch:
     streamingFor: Telah berlangsung selama {0}
     nextUpInMugen: Seterusnya
+    Comments:
+      title: Ulasan
+      all: Semua
   search:
     searchLabel: Cari
     type:
       channel: saluran
       topic: topik
       org: kumpulan
+      titledesc: tajuk/perihalan
       comments: ulasan
       videourl: url video
   relatedVideo:
@@ -89,7 +96,27 @@ component:
       popup: Pasang Holodex di iOS
       afterExportIcon: lalu "Tambahkan di Layar Utama"
       beforeExportIcon: Tekan
+  media:
+    remove: Alih keluar
+  comment:
+    close: Tutup
+    readMore: Lihat selanjutnya
+  reportDialog:
+    title: Laporkan
+    comments: Catatan tambahan (Tidak wajib)
+    success: Terima kasih! Laporan telah dikirim.
+    reasons:
+      - Video tidak ditandai dengan betul
+      - Kandungan video tidak bermutu atau mengelirukan
+      - Melanggar garis panduan pertubuhan terbabit atau memaparkan kandungan yang tidak bersesuaian
+      - Lain-lain
 views:
+  channel:
+    video: Video
+    clips: Sedutan
+    music: Muzik
+    collabs: Kerjasama
+    about: Perihal
   channels:
     sortOptions:
       subscribers: Langganan
@@ -164,11 +191,23 @@ views:
     scrollModeLabel: Mod Tatal
     scrollModeMsg: Selak laman dengan menatal atau menekan butang
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
-    clipLanguageSelection: "Paparkan sedutan yang berbahasa:"
+    clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
     tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
     defaultFavorites: Jadikan laman Kegemaran laman lalai
     defaultFavoritesMsg: >-
       Laman kegemaran dijadikan sebagai laman yang dibuka setiap kali melawati holodex.net atau menekan lambang Holodex di sebelah kiri bahagian atas laman.
+    videoFeedSettings: Tetapan Suapan Video
+    siteNavigationSettings: Pandu Arah dan Rupa Laman
+    languageSettings: Bahasa
+    gridSizeLabel: Ukuran Gambar Kenit Video
+    gridSizeMsg: Ubah ukuran gambar kenit video di Laman Utama dan Kegemaran
+    gridSize:
+      - Besar
+      - Sederhana
+      - Kecil
+    hideCollabStreamsLabel: Sembunyikan Siaran Sama
+    hideCollabStreamsMsg: Sembunyikan siaran sama di laman Kegemaran
+    theme: Warna tema
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
@@ -205,8 +244,19 @@ views:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
     manageFavorites: Uruskan Kegemaran
+    close: Tutup
+    showall: Paparkan Semua
   editor:
     needlogin: Penyuntingan data meta video dan lagu di Holodex hanya untuk yang telah mengelog masuk.
+    changeTopic:
+      title: Ubah topik siaran
+      info: >-
+        Topik video boleh ditetapkan oleh semua pengguna namun hanya penyunting dan pentadbir yang dapat mengubah dan mengalih keluar sebuah topik setelah ditetapkan.
+      button: Simpan (Memakan masa kira-kira 5 minit sebelum menunjukkan kesan)
+    channelMentions:
+      title: Sebutan Saluran (sedang dibangunkan)
+    sources:
+      title: Sumber dan Sedutan (sedang dibangunkan)
   login:
     apikeyMsg: >-
       Kekunci API boleh digunakan dalam pengaturcaraan untuk membuat pertanyaan kepada API Holodex. Setiap akaun hanya terbatas dengan serentetan kekunci. Setelah mendapat kekunci baharu, kekunci lama akan tamat tempoh dalam masa 24 jam.
@@ -218,24 +268,43 @@ views:
     apikeyResetConfirm1: Adakah anda pasti anda ingin menetapkan semula Kekunci API anda?
     apikeyResetConfirm2: Kekunci API lama akan tamat tempoh dalam masa 24 jam. Betul mahu tetapkan semula?
     apikeyResetNvm: Entahlah apa yang terjadi.
+    with:
+      - Log masuk dengan Google
+      - Log masuk dengan Discord
+      - Log masuk dengan Twitter
   multiview:
     confirmOverwrite: Ubah tataletak semasa?
     confirmOverwriteYes: Sahkan
     permalink: Buat Pautan
     presets: Tataletak Tersedia
     addframe: Tambah Petak
+    muteAll: Senyapkan Semua
+    unmuteAll: Nyahsenyap Semua
+    autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak kendiri
+    createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
+      custom: Tataletak Saya
+      toggleAutoLayout: Togolkan penggunaan tataletak ini secara kendiri
+      remove: Hapuskan
       desktop: Peranti Atas Meja
       mobile: Peranti Mudah Alih
+    presetEditor:
+      title: Simpan Tataletak
+      name: Nama
+      autoLayout: Gunakan tataletak ini pada ragam kendiri
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Tersuai
+    fullScreen: Skrin penuh
+  mugen:
+    welcome: >-
+      Selamat datang ke MugenClips! Laman ini mempertontonkan kepada semua orang sedutan Hololive berbahasa Inggeris yang sama secara rambang. Mari tonton bersama-sama sambil bersembang dengan peminat Hololive dari serata dunia. Sekiranya anda mahu kembali menonton bahagian yang sama dengan semua orang setelah melangkau sedutan terlebih dahulu, sila muatkan semula laman ini.
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
-  distance_past_date: "{0}"
+  distance_past_date: '{0}'
 editor:
   music:
     add: Tambah
@@ -243,8 +312,8 @@ editor:
     permission: >-
       Kuasa mengemas kini atau menghapuskan lagu hanya diberikan kepada pengguna berpangkat 'Penyunting' atau lebih tinggi. Sila hubungi kami di <a class='white--text' href='/about'>Discord</a> untuk memaklumkan penyunting akan sebarang kesilapan mahupun masalah atau membuat permohonan menjadi seorang penyunting.
     titles:
-      addSong: "Data Meta Lagu: Tambahkan lagu lain"
-      songList: "Senarai Lagu: {0}"
+      addSong: 'Data Meta Lagu: Tambahkan lagu lain'
+      songList: 'Senarai Lagu: {0}'
       help: Panduan
     itunesLookupPlaceholder: (Pilihan) Cari di iTunes
     moveRight2s: Maju sebanyak 2 saat
@@ -255,7 +324,7 @@ editor:
     originalArtistInput: Penyanyi Asal
     testStart: Semak masa mula
     startInput: Masa Mula
-    endInput: "Tempoh (saat): (tamat pada {0})"
+    endInput: 'Tempoh (saat): (tamat pada {0})'
   exitMode: Selesaikan Suntingan
   enterMode: Sunting Video
 about:
@@ -268,7 +337,7 @@ about:
     ytchatContent: >-
       Anda harus melumpuhkan sekatan kuki pihak ketiga di penyemak imbas anda atau menyenaraikan tapak sesawang ini dan youtube.com dalam senarai putih bagi membenarkan kuki pihak ketiga.
     ytchatFirefox: Arahan melumpuhkan kuki oleh Firefox. Penyemak imbas lain mungkin menggunakan kaedah yang sama.
-    autoplayHeader: AutoPlay tidak berfungsi!
+    autoplayHeader: Automain tidak berfungsi!
     autoplayContent: Gelintar di internet cara menghidupkan automain bagi penyemak imbas masing-masing.
     musicPlayer: Peranti mudah alih tidak boleh menggunakan Pemain Muzik dengan baik!
     musicPlayerContent: >-
@@ -279,12 +348,26 @@ about:
     quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex\\r\n"
     quitHolodexContent: >-
       Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.
+    favorite:
+      title: Apa itu kegemaran?
+      disappear:
+        title: Senarai kegemaran saya telah hilang / Saya tidak boleh menambah video kegemaran
+    mobile:
+      title: Adakah ada aplikasi Android/iOS untuk Holodex?
+      content:
+        summary: >-
+          Kami masih mengusahakannya! Buat sementara waktu, sila gunakan ciri "Tambahkan di Layar Utama" di penyemak imbas masing-masing. Kami telah menyelaraskan Holodex agar berfungsi seakan-akan sebuah aplikasi mudah alih
+    MugenClips:
+      title: Apa itu MugenClips?
     subber:
+      title: Saya seorang penyari kata namun saluran atau sedutan saya tidak tersenarai di Holodex
       contents:
         - >-
 
         - >-
           , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: Saya mahu memberikan maklum balas/sumbangan kepada projek ini
   gdpr: Peraturan Umum Perlindungan Data dan data saya
   gdprContent: >-
     Sebuah kuki Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
@@ -293,6 +376,7 @@ about:
   feedbackHtml: >-
     Isu baharu boleh dibuka di <a href="https://github.com/RiceCakess/Holodex/issues"> Pengesan Isu Github </a> atau dibawa berbincang dengan pasukan Holodex di Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
+    title: Penghargaan
     contents:
       - I would like to give big thanks to the
       - team for their work on
@@ -300,3 +384,7 @@ about:
         Also to all the subbers for helping the overseas bros! Please check them out!
       - >-
 
+  changelog:
+    title: Catatan perubahan
+  news:
+    title: Berita

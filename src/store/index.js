@@ -43,6 +43,8 @@ function defaultState() {
         routerHistory: [],
 
         activeSockets: 0,
+        // reportDialog: false,
+        reportVideo: null,
     };
 }
 
@@ -67,6 +69,7 @@ export default new Vuex.Store({
                 o.activeSockets = 0;
                 // o.music.state = MUSIC_PLAYER_STATE.PLAYING; // don't start new tab playing music.
                 o.music.isOpen = false; // hide it
+                o.reportVideo = null;
                 return o;
             },
         }),
@@ -110,6 +113,9 @@ export default new Vuex.Store({
         },
         setNavDrawer(state, val) {
             state.navDrawer = val;
+        },
+        setReportVideo(state, val) {
+            state.reportVideo = val;
         },
         // login
         setUser(state, { user, jwt }) {
