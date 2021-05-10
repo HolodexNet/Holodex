@@ -101,6 +101,13 @@ component:
   comment:
     close: 關閉
     readMore: 顯示更多
+  reportDialog:
+    title: 回報問題
+    reasons:
+      - Video tagged incorrectly
+      - Low Quality/Misleading Content
+      - Violates the org's derivative work guidelines or inappropriate
+      - 其他原因
 views:
   channel:
     video: 影片
@@ -290,6 +297,7 @@ views:
     video:
       selectLive: 選擇實況
       addCustomVideo: 添加指定YouTube影片
+    fullScreen: 全螢幕顯示
   mugen:
     welcome: >-
       歡迎來到 MugenClips！所有使用者在本頁面都在同時隨機觀看同一段Hololive的英文剪輯！和其他Holo粉絲一起觀看一起聊天吧。如果您手動變更了時間軸但想再次與其他人同步進度的話，請重新整理此頁面。
