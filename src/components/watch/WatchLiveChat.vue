@@ -185,8 +185,8 @@ export default {
         ...mapState(["TPCookieEnabled", "TPCookieAlertDismissed"]),
         shouldTestTPCookie() {
             return (
-                (!this.TPCookieEnabled || this.TPCookieEnabled < Date.now() - 60 * 1000) /* (24*7*60*60*1000) */ &&
-                !this.TPCookieAlertDismissed
+                (!this.TPCookieEnabled || this.TPCookieEnabled < Date.now() - 24 * 7 * 60 * 60 * 1000) &&
+                /* every week, check */ !this.TPCookieAlertDismissed
             );
         },
     },
