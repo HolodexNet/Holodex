@@ -32,7 +32,7 @@ export const ORGS = Object.freeze([
     "VShojo",
     "774inc",
     "Eilene Family",
-    "Idol-bu",
+    /* "Idol-bu", removed, folded into .LIVE */
     "Nori Pro",
     "ReACT",
     ".LIVE",
@@ -59,7 +59,6 @@ export const ORGS_PREFIX = Object.freeze({
     "Hanayori Joshiryo": "Hana",
     Hololive: "Holo",
     // "HoneyStrap",
-    // "Idol-bu",
     Independents: "Indie",
     // "Iridori",
     "Kizuna Ai Inc.": "Kizuna",
