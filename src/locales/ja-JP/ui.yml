@@ -101,6 +101,14 @@ component:
   comment:
     close: 閉じる
     readMore: 続きを読む
+  reportDialog:
+    title: 報告
+    comments: 備考 (任意)
+    reasons:
+      - タグが間違っています
+      - Low Quality/Misleading Content
+      - Violates the org's derivative work guidelines or inappropriate
+      - Other
 views:
   channel:
     video: 動画
@@ -198,6 +206,7 @@ views:
       - 小
     hideCollabStreamsLabel: コラボ配信を表示しない
     hideCollabStreamsMsg: お気に入りページでコラボ配信を非表示にします
+    theme: テーマ
   app:
     update_available: ページの更新を利用可能です
     update_btn: アップデート
@@ -285,6 +294,7 @@ views:
     video:
       selectLive: 配信を選択
       addCustomVideo: 任意の動画を追加
+    fullScreen: フルスクリーン
   mugen:
     welcome: >-
       MugenClipsへようこそ！このページでは全員がランダムに選択されたホロライブの英訳切り抜きを見ています。世界中のホロライブのファンと一緒に見て、チャットしましょう。 先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
