@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "chrome"
     ],
     "paths": {
       "@/*": [

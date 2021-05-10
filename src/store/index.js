@@ -5,6 +5,7 @@ import createMutationsSharer from "vuex-shared-mutations";
 import jwtDecode from "jwt-decode";
 import { ORGS } from "@/utils/consts";
 import * as icons from "@/utils/icons";
+import { sendTokenToExtension } from "@/utils/messaging";
 
 // import { dayjs } from "@/utils/time";
 
@@ -158,8 +159,11 @@ export default new Vuex.Store({
             }, 10000);
         },
         async navigate({ commit }, { from = undefined }) {
-            if (from) commit("historyPush", { from });
-            else commit("historyPop");
+            if (from) {
+                commit("historyPush", { from });
+            } else {
+                commit("historyPop");
+            }
         },
         async logout({ dispatch, commit }) {
             commit("setUser", { user: null, jwt: null });
@@ -173,6 +177,8 @@ export default new Vuex.Store({
                 if (dist < 0) {
                     // already expired
                     await dispatch("logout");
+                } else {
+                    sendTokenToExtension(state.userdata.jwt);
                 }
             }
             // do nothing.
