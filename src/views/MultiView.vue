@@ -538,7 +538,6 @@ export default {
                 for (let i = 0; i < currentLayout.length; i += 1) {
                     const presetCell = preset.layout[i];
                     const layoutCell = currentLayout[i];
-
                     if (
                         !(
                             presetCell.x === layoutCell.x &&
@@ -548,10 +547,12 @@ export default {
                             presetCell.i === layoutCell.i
                         )
                     ) {
-                        return true;
+                        // at least one cell doesn't match, invalid layout
+                        return false;
                     }
                 }
-                return false;
+                // all cells match, layout is a preset
+                return true;
             });
         },
         tryFillVideo(video) {
