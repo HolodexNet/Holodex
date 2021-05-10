@@ -101,6 +101,15 @@ component:
   comment:
     close: Cerrar
     readMore: Leer más
+  reportDialog:
+    title: Reportar
+    comments: Comentario (opcional)
+    success: Reporte enviado. ¡Gracias!
+    reasons:
+      - Vídeo etiquetado incorrectamente
+      - Low Quality/Misleading Content
+      - Violates the org's derivative work guidelines or inappropriate
+      - Other
 views:
   channel:
     video: Vídeos
