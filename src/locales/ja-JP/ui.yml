@@ -14,7 +14,7 @@ component:
     stats: 統計情報
     videoCount: '{0}本の動画'
     clipCount: '{n}本の切り抜き'
-    subscriberCount: 'チャンネル登録者数 {n}万人'
+    subscriberCount: 'チャンネル登録者数 {n} 人'
     subscriberNA: 登録者数は現在利用できません
     totalViews: 回視聴
   channelSocials:
@@ -102,13 +102,14 @@ component:
     close: 閉じる
     readMore: 続きを読む
   reportDialog:
-    title: 報告
+    title: 問題を報告する
     comments: 備考 (任意)
+    success: ご報告ありがとうございます。
     reasons:
       - タグが間違っています
-      - Low Quality/Misleading Content
-      - Violates the org's derivative work guidelines or inappropriate
-      - Other
+      - 低品質・誤解を招くコンテンツ
+      - 公式の二次創作ガイドラインに違反が含めていますまたは不適切コンテンツ
+      - その他
 views:
   channel:
     video: 動画
