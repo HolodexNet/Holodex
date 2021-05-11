@@ -215,6 +215,7 @@ export default {
 .watch-live-chat.fixed-right {
     position: fixed;
     right: 0px;
+    top: 0px;
     width: 220px;
     height: 100%;
 }
