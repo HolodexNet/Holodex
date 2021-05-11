@@ -101,6 +101,15 @@ component:
   comment:
     close: Tutup
     readMore: Baca selengkapnya
+  reportDialog:
+    title: Laporkan
+    comments: Detail Tambahan (Opsional)
+    success: Laporan telah dikirim, Terima Kasih!
+    reasons:
+      - Tag Video salah
+      - Kualitas Rendah / Konten Menyesatkan
+      - Melanggar Pedoman Kebijakan Karya yang ditetapkan organisasi atau tidak pantas
+      - Lainnya
 views:
   channel:
     video: Video
@@ -288,6 +297,7 @@ views:
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Lain
+    fullScreen: Layar Penuh
   mugen:
     welcome: >-
       Selamat datang di MugenClips! Semua orang yang berada di halaman ini melihat klip hololive bahasa inggris yang sama yang dipilih secara acak. Menonton bareng dan mengobrol sesama fans Hololive dari seluruh penjuru dunia. jika kamu mempercepat klip dan ingin mensinkronkan kembali video dengan semua orang, tekan refresh pada halaman ini.
