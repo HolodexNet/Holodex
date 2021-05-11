@@ -288,9 +288,12 @@ views:
       custom: Mis plantillas
       desktop: Escritorio
       mobile: Móvil
+    presetEditor:
+      autoLayout: Usar plantilla en modo automático
     video:
       selectLive: Elige un directo
       addCustomVideo: Añadir vídeo personalizado
+    fullScreen: Pantalla completa
   mugen:
     welcome: >-
       ¡Bienvenido a MugenClips! Aquí todo el mundo verá el mismo clip seleccionado aleatoriamente en inglés y disfruta y comenta junto a otros fans de Hololive de cualquier parte del mundo. Si te desincronizas de la visualización y quieres volver a sincronizarte con todos solo debes de refrescar la página.
