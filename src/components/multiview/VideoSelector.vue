@@ -272,14 +272,14 @@ export default {
                     text: this.$t("component.mainNav.favorites"),
                     value: 0,
                 },
-                ...(!this.horizontal
-                    ? [
+                ...(!this.horizontal ?
+                    [
                         {
                             text: this.$t("component.mainNav.library"),
                             value: 1,
                         },
-                    ]
-                    : []),
+                    ] :
+                    []),
                 {
                     text: "Youtube URL",
                     value: 2,
@@ -325,6 +325,9 @@ export default {
                     return dateA > dateB ? 1 : -1;
                 })
                 .reverse();
+        },
+        selectedOrgName() {
+            return this.orgList.find((item) => item.value === this.selectedOrg).text;
         },
     },
     methods: {
@@ -380,11 +383,13 @@ export default {
         tryUpdateLives() {
             if (this.selectedOrg > 3 && Date.now() - this.lastUpdate > 1000 * 60 * 5) {
                 this.lastUpdate = Date.now();
-                this.loadOrg(this.orgList.find((item) => item.value === this.selectedOrg).text);
+                this.loadOrg(this.selectedOrgName);
             }
         },
         // Load selected option
         loadSelection() {
+            this.isLoading = false;
+            this.hasError = false;
             // Do nothing for custom URLs
             if (this.selectedOrg === 2 || this.selectedOrg === 3) {
                 return;
@@ -394,8 +399,10 @@ export default {
                 this.live = [];
                 this.isLoading = true;
                 this.$store.dispatch("favorites/fetchLive", { minutes: 2, force: true }).finally(() => {
-                    this.isLoading = false;
-                    this.live = this.$store.state.favorites.live;
+                    if (this.selectedOrg === 0) {
+                        this.isLoading = false;
+                        this.live = this.$store.state.favorites.live;
+                    }
                 });
                 return;
             }
@@ -405,23 +412,27 @@ export default {
                 return;
             }
             // Call api for specific org
-            this.loadOrg(this.orgList.find((item) => item.value === this.selectedOrg).text);
+            this.loadOrg(this.selectedOrgName);
         },
         loadOrg(orgName) {
             this.live = [];
             this.isLoading = true;
+            this.hasError = false;
             api.live({
                 org: orgName,
             })
                 .then((res) => {
-                    this.live = res;
+                    if (this.selectedOrgName === orgName) {
+                        this.isLoading = false;
+                        this.live = res;
+                    }
                 })
                 .catch((e) => {
                     console.error(e);
-                    this.hasError = false;
-                })
-                .finally(() => {
-                    this.isLoading = false;
+                    if (this.selectedOrgName === orgName) {
+                        this.isLoading = false;
+                        this.hasError = true;
+                    }
                 });
         },
     },
