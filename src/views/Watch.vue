@@ -98,8 +98,7 @@
                     v-if="comments.length"
                 />
             </div>
-            <div class="related-videos pt-0" :class="{ 'sidebar-width': !isMobile }">
-                <!-- <div> -->
+            <div class="related-videos pt-0 row ma-0" :class="{ 'sidebar-width': !isMobile && !theatherMode }">
                 <v-col v-if="theatherMode" md="9" class="pa-0">
                     <WatchInfo :video="video" key="info" @timeJump="seekTo" />
                     <v-divider />
@@ -112,7 +111,7 @@
                         v-if="comments.length"
                     />
                 </v-col>
-                <v-col cols="12" :md="theatherMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
+                <v-col :md="theatherMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
                     <WatchLiveChat
                         v-if="showChatWindow"
                         :video="video"
@@ -132,7 +131,6 @@
                         <WatchMugen @playNext="playNext" v-if="isMugen" />
                     </template>
                 </v-col>
-                <!-- </div> -->
             </div>
         </div>
     </div>
