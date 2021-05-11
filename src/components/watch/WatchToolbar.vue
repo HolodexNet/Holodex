@@ -11,7 +11,7 @@
                         <v-icon>{{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}</v-icon>
                     </v-btn>
                 </template>
-                <span v-if="hasSaved">{{ $t("views.watch.saveToLibrary") }}</span>
+                <span v-if="!hasSaved">{{ $t("views.watch.saveToLibrary") }}</span>
                 <span v-else>{{ $t("component.mainNav.library") }} </span>
             </v-tooltip>
             <v-menu bottom nudge-top="20px">
