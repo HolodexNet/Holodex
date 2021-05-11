@@ -110,6 +110,8 @@ component:
       - Kandungan video tidak bermutu atau mengelirukan
       - Melanggar garis panduan pertubuhan terbabit atau memaparkan kandungan yang tidak bersesuaian
       - Lain-lain
+  thirdpartycookie:
+    neverShowAgain: Jangan Dipaparkan Amaran Lagi
 views:
   channel:
     video: Video
