@@ -12,128 +12,22 @@
         <v-alert dense text type="info" dismissible v-model="firstVisitMugen" v-if="isMugen">
             {{ $t("views.mugen.welcome") }}
         </v-alert>
-        <!-- Desktop (md/lg/xl) Layout -->
-        <v-container v-if="!isMobile" fluid>
-            <v-row :class="{ 'flex-nowrap': !theatherMode }">
-                <!-- Left side -->
-                <v-col :md="theatherMode ? 12 : 9" cols="12" class="px-0 pt-0 px-md-3 flex-shrink-1">
-                    <WatchFrame :video="video">
-                        <template v-slot:youtube>
-                            <youtube
-                                v-if="video.id"
-                                :video-id="video.id"
-                                @ready="ready"
-                                :playerVars="{
-                                    ...(timeOffset && { start: timeOffset }),
-                                    autoplay: isMugen ? 1 : 0,
-                                    playsinline: 1,
-                                }"
-                            >
-                            </youtube>
-                        </template>
-                    </WatchFrame>
-                    <WatchToolBar :video="video" noBackButton>
-                        <template v-slot:buttons>
-                            <v-tooltip bottom v-if="hasLiveTL && hasLiveChat && !isMobile">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                        icon
-                                        lg
-                                        @click="toggleTL"
-                                        :color="showTL ? 'primary' : ''"
-                                        v-bind="attrs"
-                                        v-on="on"
-                                    >
-                                        <div class="notification-sticker" v-if="newTL > 0"></div>
-                                        <v-icon>{{ icons.mdiTranslate }}</v-icon>
-                                    </v-btn>
-                                </template>
-                                <span>{{
-                                    showTL ? $t("views.watch.chat.hideTLBtn") : $t("views.watch.chat.showTLBtn")
-                                }}</span>
-                            </v-tooltip>
-                            <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
-                                <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
-                            </v-btn>
-                            <v-btn icon lg @click="toggleFullScreen">
-                                <v-icon>{{ icons.mdiFullscreen }}</v-icon>
-                            </v-btn>
-                            <v-tooltip bottom v-if="!isMobile">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                        icon
-                                        lg
-                                        @click="theatherMode = !theatherMode"
-                                        :color="theatherMode ? 'primary' : ''"
-                                        v-bind="attrs"
-                                        v-on="on"
-                                    >
-                                        <v-icon>{{ mdiRectangleOutline }}</v-icon>
-                                    </v-btn>
-                                </template>
-                                <span>{{ $t("views.watch.theaterMode") }}</span>
-                            </v-tooltip>
-                        </template>
-                    </WatchToolBar>
-                    <template v-if="!theatherMode">
-                        <WatchInfo :video="video" key="info" @timeJump="seekTo" />
-                        <v-divider />
-                        <WatchComments
-                            :comments="comments"
-                            :video="video"
-                            :limit="isMobile ? 5 : 0"
-                            @timeJump="seekTo"
-                            key="comments"
-                            v-if="comments.length"
-                        />
-                    </template>
-                </v-col>
-                <!-- Right side -->
-                <v-col class="related-videos pt-0" :md="theatherMode ? 12 : 3" style="min-width: 324px">
-                    <v-row fluid>
-                        <v-col v-if="theatherMode" md="9" class="pt-0">
-                            <WatchInfo :video="video" key="info" @timeJump="seekTo" />
-                            <v-divider />
-                            <WatchComments
-                                :comments="comments"
-                                :video="video"
-                                :limit="isMobile ? 5 : 0"
-                                @timeJump="seekTo"
-                                key="comments"
-                                v-if="comments.length"
-                            />
-                        </v-col>
-                        <v-col cols="12" :md="theatherMode ? 3 : 12" class="pa-0 pr-lg-3">
-                            <WatchLiveChat
-                                v-if="showChatWindow"
-                                :video="video"
-                                :mugenId="isMugen && '4ANxvWIM3Bs'"
-                                :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
-                                @videoUpdate="handleVideoUpdate"
-                                :showTL="showTL"
-                                :showTLFirstTime="showTLFirstTime"
-                                :showLiveChat="showLiveChat"
-                                :isMugen="isMugen"
-                                @historyLength="handleHistoryLength"
-                            />
-                            <WatchMugen @playNext="playNext" v-if="isMugen" />
-                            <WatchSideBar :video="video" @timeJump="seekTo" />
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
-        </v-container>
-        <!-- Mobile Layout (sm/xs) Layout -->
-        <div class="d-flex flex-column flex-sm-row layout-mobile" v-else>
+
+        <div
+            class="d-flex flex-column pa-md-3"
+            :class="{
+                'flex-nowrap': !theatherMode,
+                'flex-sm-row': !theatherMode,
+            }"
+        >
             <div
-                class="d-inline-flex flex-grow-1 flex-column"
+                class="d-inline-flex flex-shrink-1 flex-column py-0 pl-0"
+                :md="theatherMode ? 12 : 9"
                 :style="{
-                    'padding-right': showChatWindow && landscape ? '220px' : 0,
-                    'min-height': landscape || !showLiveChat ? '0' : '160vh',
+                    'padding-right': isMobile && showChatWindow && landscape ? '220px' : 0,
                     width: '100%',
                 }"
             >
-                <!-- Video/Video meta -->
                 <WatchFrame :video="video" fluid>
                     <template v-slot:youtube>
                         <youtube
@@ -149,28 +43,52 @@
                         </youtube>
                     </template>
                 </WatchFrame>
-                <WatchToolBar :video="video">
+                <WatchToolBar :video="video" :noBackButton="!isMobile">
                     <template v-slot:buttons>
-                        <v-btn
-                            icon
-                            lg
-                            @click="toggleTL"
-                            :color="showTL ? 'primary' : ''"
-                            v-if="hasLiveTL && hasLiveChat"
-                        >
-                            <div class="notification-sticker" v-if="newTL > 0"></div>
-                            <v-icon>{{ icons.mdiTranslate }}</v-icon>
-                        </v-btn>
+                        <v-tooltip bottom v-if="hasLiveTL && hasLiveChat">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    icon
+                                    lg
+                                    @click="toggleTL"
+                                    :color="showTL ? 'primary' : ''"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    <div class="notification-sticker" v-if="newTL > 0"></div>
+                                    <v-icon>{{ icons.mdiTranslate }}</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>{{
+                                showTL ? $t("views.watch.chat.hideTLBtn") : $t("views.watch.chat.showTLBtn")
+                            }}</span>
+                        </v-tooltip>
                         <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
                             <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
                         </v-btn>
                         <v-btn icon lg @click="toggleFullScreen">
                             <v-icon>{{ icons.mdiFullscreen }}</v-icon>
                         </v-btn>
+                        <v-tooltip bottom v-if="!isMobile">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    icon
+                                    lg
+                                    @click="theatherMode = !theatherMode"
+                                    :color="theatherMode ? 'primary' : ''"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    <v-icon>{{ mdiRectangleOutline }}</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>{{ $t("views.watch.theaterMode") }}</span>
+                        </v-tooltip>
                     </template>
                 </WatchToolBar>
-                <WatchInfo :video="video" key="info" @timeJump="seekTo" />
-                <WatchMugen @playNext="playNext" v-if="isMugen" />
+                <WatchInfo :video="video" key="info" @timeJump="seekTo" v-if="!theatherMode" />
+                <WatchSideBar :video="video" @timeJump="seekTo" v-if="isMobile" />
+                <WatchMugen @playNext="playNext" v-if="isMugen && isMobile" />
                 <WatchComments
                     :comments="comments"
                     :video="video"
@@ -179,24 +97,43 @@
                     key="comments"
                     v-if="comments.length"
                 />
-                <WatchSideBar :video="video" @timeJump="seekTo" />
             </div>
-            <!-- floated/fixed live chat -->
-            <WatchLiveChat
-                v-if="showChatWindow"
-                :video="video"
-                :mugenId="isMugen && '4ANxvWIM3Bs'"
-                class="mobile-live-chat"
-                :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
-                @videoUpdate="handleVideoUpdate"
-                :fixedRight="landscape"
-                :fixedBottom="!landscape"
-                :showTL="showTL"
-                :showTLFirstTime="showTLFirstTime"
-                :showLiveChat="showLiveChat"
-                :isMugen="isMugen"
-                @historyLength="handleHistoryLength"
-            />
+            <div class="related-videos pt-0" :class="{ 'sidebar-width': !isMobile }">
+                <!-- <div> -->
+                <v-col v-if="theatherMode" md="9" class="pa-0">
+                    <WatchInfo :video="video" key="info" @timeJump="seekTo" />
+                    <v-divider />
+                    <WatchComments
+                        :comments="comments"
+                        :video="video"
+                        :limit="isMobile ? 5 : 0"
+                        @timeJump="seekTo"
+                        key="comments"
+                        v-if="comments.length"
+                    />
+                </v-col>
+                <v-col cols="12" :md="theatherMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
+                    <WatchLiveChat
+                        v-if="showChatWindow"
+                        :video="video"
+                        :mugenId="isMugen && '4ANxvWIM3Bs'"
+                        :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
+                        @videoUpdate="handleVideoUpdate"
+                        :fixedRight="isMobile && landscape"
+                        :fixedBottom="isMobile && !landscape"
+                        :showTL="showTL"
+                        :showTLFirstTime="showTLFirstTime"
+                        :showLiveChat="showLiveChat"
+                        :isMugen="isMugen"
+                        @historyLength="handleHistoryLength"
+                    />
+                    <template v-if="!isMobile">
+                        <WatchSideBar :video="video" @timeJump="seekTo" />
+                        <WatchMugen @playNext="playNext" v-if="isMugen" />
+                    </template>
+                </v-col>
+                <!-- </div> -->
+            </div>
         </div>
     </div>
     <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
@@ -326,7 +263,7 @@ export default {
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
-        ...syncState("watch", ["showTL", "showLiveChat", "theatherMode"]),
+        ...syncState("watch", ["showTL", "showLiveChat"]),
         videoId() {
             return this.$route.params.id || this.$route.query.v;
         },
@@ -356,6 +293,14 @@ export default {
         },
         landscape() {
             return this.$vuetify.breakpoint.width >= 568;
+        },
+        theatherMode: {
+            get() {
+                return this.$store.state.watch.theatherMode && !this.isMobile;
+            },
+            set(val) {
+                return this.$store.commit("watch/setTheatherMode", val);
+            },
         },
         firstVisitMugen: {
             get() {
@@ -391,5 +336,11 @@ div.notification-sticker {
     width: 8px;
     height: 8px;
     background-color: rgb(230, 33, 23);
+}
+
+.sidebar-width {
+    flex: 0 0 25%;
+    max-width: 25%;
+    min-width: 324px;
 }
 </style>
