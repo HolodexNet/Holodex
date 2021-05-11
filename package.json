@@ -7,7 +7,7 @@
     "build": "vue-cli-service build --modern",
     "lint": "vue-cli-service lint",
     "changelog": "changelog-to-html --outputDirectoryPath docs",
-    "analyze-bundle": "vue-cli-service build --modern --report-json && webpack-bundle-analyzer dist/report.json"
+    "analyze-bundle": "vue-cli-service build --report-json && webpack-bundle-analyzer dist/report.json"
   },
   "workspaces": [
     "src/external/vue-grid-layout"
@@ -86,7 +86,7 @@
     "@vue/cli-plugin-router": "^4.5.11",
     "@vue/cli-plugin-typescript": "^4.5.12",
     "@vue/cli-plugin-vuex": "^4.5.11",
-    "@vue/cli-service": "^4.5.11",
+    "@vue/cli-service": "^4.5.12",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "babel-loader": "^8.2.2",

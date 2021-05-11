@@ -7,19 +7,12 @@
             <slot name="buttons"></slot>
             <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                        icon
-                        lg
-                        :href="`https://youtu.be/${video.id}`"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        v-bind="attrs"
-                        v-on="on"
-                    >
-                        <v-icon>{{ icons.mdiYoutube }}</v-icon>
+                    <v-btn icon lg @click="toggleSaved" :color="hasSaved ? 'primary' : ''" v-bind="attrs" v-on="on">
+                        <v-icon>{{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}</v-icon>
                     </v-btn>
                 </template>
-                <span>{{ $t("views.settings.redirectModeLabel") }}</span>
+                <span v-if="hasSaved">{{ $t("views.watch.saveToLibrary") }}</span>
+                <span v-else>{{ $t("component.mainNav.library") }} </span>
             </v-tooltip>
             <v-menu bottom nudge-top="20px">
                 <template v-slot:activator="{ on }">
@@ -30,6 +23,12 @@
                     </v-btn>
                 </template>
                 <v-list dense>
+                    <v-list-item :href="`https://youtu.be/${video.id}`" target="_blank">
+                        <v-icon left color="red">
+                            {{ icons.mdiYoutube }}
+                        </v-icon>
+                        {{ $t("views.settings.redirectModeLabel") }}
+                    </v-list-item>
                     <v-list-item
                         :disabled="video.type === 'clip'"
                         :to="`/multiview/AAUY${video.id}${video.channel.name}%2CUAEYchat`"
