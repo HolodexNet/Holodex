@@ -5,6 +5,7 @@ import createMutationsSharer from "vuex-shared-mutations";
 import jwtDecode from "jwt-decode";
 import { ORGS } from "@/utils/consts";
 import * as icons from "@/utils/icons";
+import { sendTokenToExtension } from "@/utils/messaging";
 
 // import { dayjs } from "@/utils/time";
 
@@ -29,6 +30,9 @@ function defaultState() {
         showUpdateDetails: false,
         firstVisitMugen: true,
         lastShownInstallPrompt: 0,
+
+        TPCookieEnabled: false,
+        TPCookieAlertDismissed: false,
 
         // authorization
         userdata: {
@@ -146,6 +150,12 @@ export default new Vuex.Store({
         decrementActiveSockets(state) {
             state.activeSockets -= 1;
         },
+        setTPCookieEnabled(state, enabled) {
+            state.TPCookieEnabled = enabled;
+        },
+        setTPCookieAlertDismissed(state, dismissed) {
+            state.TPCookieAlertDismissed = dismissed;
+        },
     },
     actions: {
         checkActiveSockets({ state }) {
@@ -158,8 +168,11 @@ export default new Vuex.Store({
             }, 10000);
         },
         async navigate({ commit }, { from = undefined }) {
-            if (from) commit("historyPush", { from });
-            else commit("historyPop");
+            if (from) {
+                commit("historyPush", { from });
+            } else {
+                commit("historyPop");
+            }
         },
         async logout({ dispatch, commit }) {
             commit("setUser", { user: null, jwt: null });
@@ -173,6 +186,8 @@ export default new Vuex.Store({
                 if (dist < 0) {
                     // already expired
                     await dispatch("logout");
+                } else {
+                    sendTokenToExtension(state.userdata.jwt);
                 }
             }
             // do nothing.

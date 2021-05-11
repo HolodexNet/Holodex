@@ -170,12 +170,12 @@ export default {
             if (!val) return;
             this.fromApi = [];
             const entropy = encodeURIComponent(val).length;
-            if (entropy <= 2) return;
+            if (entropy <= 1) return;
             const formatted = val.replace("#", "");
             this.getAutocomplete(formatted)
                 .then((res) => {
                     let textQueries = [];
-                    if (encodeURIComponent(val).length > 2)
+                    if (encodeURIComponent(val).length > 1)
                         textQueries = [
                             { type: "none", disabled: true, divider: true, value: "div", text: "div" },
                             { type: "title & desc", value: `${val}title & desc`, text: val },

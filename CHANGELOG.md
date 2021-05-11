@@ -1,5 +1,17 @@
 # Holodex Changelog
 
+### 2.9 & 2.9.1 Holodex [*May 10, 2021*]
+##### New Features:
+- Added a report button
+- Now detects if your browser cannot support third party cookies and notifies you.
+
+##### Site Changes
+- Removed **Idol-bu** as an org and folded it into **.LIVE**
+- Added **Aogiri High School** org
+
+##### Patches
+- Polished the site here and there
+
 ### 2.8 Holodex [*May 6th, 2021*]
 ##### New Features:
 - Improved backend TL listener, it should miss less messages now

@@ -31,13 +31,15 @@ export const ORGS = Object.freeze([
     "VSpo",
     "VShojo",
     "774inc",
-    "Eilene Family",
-    "Idol-bu",
+    /* "Idol-bu", removed, folded into .LIVE */
+    ".LIVE",
     "Nori Pro",
     "ReACT",
-    ".LIVE",
     "VOMS",
+    "Virtual Witch Phenomenon",
+    "Eilene Family",
     "Riot Music",
+    "Aogiri Highschool",
     "Masquerade",
     "Tsunderia",
     "Yuni Create",
@@ -59,7 +61,6 @@ export const ORGS_PREFIX = Object.freeze({
     "Hanayori Joshiryo": "Hana",
     Hololive: "Holo",
     // "HoneyStrap",
-    // "Idol-bu",
     Independents: "Indie",
     // "Iridori",
     "Kizuna Ai Inc.": "Kizuna",
@@ -68,6 +69,8 @@ export const ORGS_PREFIX = Object.freeze({
     Masquerade: "Masq",
     "Riot Music": "Riot",
     "Nori Pro": "Nori",
+    "Aogiri Highschool": "Aogiri",
+    "Virtual Witch Phenomenon": "V.W.P",
     // "ReACT",
     // "SugarLyric",
     // "upd8",
@@ -133,8 +136,7 @@ export const TL_LANGS = Object.freeze([
 //     MISSING: "missing",
 // };
 
-export const companionExtensionId =
-    process.env.NODE_ENV === "production" ? "jkdnofimdhpbhdjbcdlgnccfjjkidlgp" : "alljnmkoffeaaapepofpnamdhcnhonoc";
+export const companionExtensionId = "jkdnofimdhpbhdjbcdlgnccfjjkidlgp";
 
 export const MESSAGE_TYPES = Object.freeze({
     TOKEN: "token",
