@@ -109,7 +109,9 @@ component:
       - Vídeo etiquetado incorrectamente
       - Low Quality/Misleading Content
       - Violates the org's derivative work guidelines or inappropriate
-      - Other
+      - Otros
+  thirdpartycookie:
+    neverShowAgain: No volver a mostrar la alerta
 views:
   channel:
     video: Vídeos
@@ -286,9 +288,13 @@ views:
       shareOnDiscord: >-
         ¿Has hecho un diseño perfecto? ¡Usa el botón de compartir y enséñanos tu desiño en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de discord</a>!
       custom: Mis plantillas
+      toggleAutoLayout: Usar plantilla en modo automático
+      remove: Eliminar
       desktop: Escritorio
       mobile: Móvil
     presetEditor:
+      title: Guardar plantilla
+      name: Nombre
       autoLayout: Usar plantilla en modo automático
     video:
       selectLive: Elige un directo
