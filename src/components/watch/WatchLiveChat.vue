@@ -41,12 +41,12 @@
         >
             <iframe :src="liveChatUrl" frameborder="0" />
         </div>
-        <cookie-detect />
+        <!-- <cookie-detect /> -->
     </v-sheet>
 </template>
 
 <script lang="ts">
-import CookieDetect from "@/components/common/3PCookieDetect.vue";
+// import CookieDetect from "@/components/common/3PCookieDetect.vue";
 import WatchLiveTranslations from "./WatchLiveTranslations.vue";
 
 // Contains Live Chat iframe and Chat TLs, can show either one at both at the same time
@@ -54,7 +54,7 @@ export default {
     name: "WatchLiveChat",
     components: {
         WatchLiveTranslations,
-        CookieDetect,
+        // CookieDetect,
     },
     props: {
         video: {
