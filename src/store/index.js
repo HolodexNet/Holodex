@@ -31,6 +31,9 @@ function defaultState() {
         firstVisitMugen: true,
         lastShownInstallPrompt: 0,
 
+        TPCookieEnabled: false,
+        TPCookieAlertDismissed: false,
+
         // authorization
         userdata: {
             user: null,
@@ -146,6 +149,12 @@ export default new Vuex.Store({
         },
         decrementActiveSockets(state) {
             state.activeSockets -= 1;
+        },
+        setTPCookieEnabled(state, enabled) {
+            state.TPCookieEnabled = enabled;
+        },
+        setTPCookieAlertDismissed(state, dismissed) {
+            state.TPCookieAlertDismissed = dismissed;
         },
     },
     actions: {
