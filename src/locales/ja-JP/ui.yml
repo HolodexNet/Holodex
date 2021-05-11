@@ -110,6 +110,13 @@ component:
       - 低品質・誤解を招くコンテンツ
       - 公式の二次創作ガイドラインに違反が含めていますまたは不適切コンテンツ
       - その他
+  thirdpartycookie:
+    explanation: >-
+      ブラウザの<b>サードパーティー Cookie</b>ポリシーによる場合や<kbd>Youtube.com</kbd>でのCookieをブロックしている場合にはYoutubeライブチャットへのログインが難しい、もしくは不可能な場合があります。 <br /><br />これはサードパーティーCookieのホワイトリストに<kbd>Youtube.com</kbd>を追加するか、ブラウザの設定から<kbd>Holodex.net</kbd>でのプライバシー設定を低レベルのものに設定することにより解決可能な場合があります。<br /><br />それに関する詳しい情報を提供しているサイトをいくつか紹介しています。
+    dialogTitle: Holodex上でライブチャットを使う
+    alertText: >-
+      ブラウザのプライバシー設定により、Youtubeチャットへのログインができませんでした。詳しくはこちらを参照してください。
+    neverShowAgain: 今後警告を表示しない
 views:
   channel:
     video: 動画
@@ -292,6 +299,8 @@ views:
       mobile: モバイル
     presetEditor:
       title: レイアウトを保存
+      name: 名前
+      autoLayout: このレイアウトを自動レイアウトでも使う
     video:
       selectLive: 配信を選択
       addCustomVideo: 任意の動画を追加
