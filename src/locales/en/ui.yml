@@ -152,7 +152,7 @@ views:
     recentVideosHeading: Recent Videos
     recentVideoToggles:
       all: All
-      official: Official
+      official: Archive
       subber: Clips
   library:
     savedVideosTitle: Saved Videos
