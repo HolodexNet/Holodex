@@ -28,7 +28,7 @@
                     width: '100%',
                 }"
             >
-                <WatchFrame :video="video" :fluid="!isMobile">
+                <WatchFrame :video="video" :fluid="isMobile">
                     <template v-slot:youtube>
                         <youtube
                             v-if="video.id"
