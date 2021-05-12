@@ -136,7 +136,6 @@ views:
     recentVideosHeading: Video Terkini
     recentVideoToggles:
       all: Semua
-      official: Resmi
       subber: Klip
   library:
     savedVideosTitle: Video Tersimpan
