@@ -67,7 +67,6 @@ views:
     recentVideosHeading: Vidéos Récentes
     recentVideoToggles:
       all: Tout
-      official: Officiel
   library:
     savedVideosTitle: Vidéos Sauvegardées
     createYtPlaylistButton: Créer une playlist YT ({0})
