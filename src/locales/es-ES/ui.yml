@@ -138,7 +138,6 @@ views:
     recentVideosHeading: Vídeos recientes
     recentVideoToggles:
       all: Todos
-      official: Oficial
       subber: Clips
   library:
     savedVideosTitle: Vídeos guardados
