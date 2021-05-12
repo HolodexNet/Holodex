@@ -11,7 +11,7 @@ component:
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
   channelInfo:
-    stats: Perangkaan
+    stats: Statistik
     videoCount: '{0} Buah Video'
     clipCount: '{n} Buah Sedutan'
     subscriberCount: '{n} Langganan'
@@ -111,6 +111,11 @@ component:
       - Melanggar garis panduan pertubuhan terbabit atau memaparkan kandungan yang tidak bersesuaian
       - Lain-lain
   thirdpartycookie:
+    explanation: >-
+      Sesetengah penyemak imbas dengan dasar <b>kuki pihak ketiga</b> yang ketat ataupun yang menyekat kuki <kbd>YouTube.com</kbd> berkebarangkalian menghadapi kesukaran mengelog masuk mahupun menggunakan sembang langsung Youtube. <br /><br /> Masalah ini boleh diselesaikan dengan memasukkan <kbd>Youtube.com</kbd> ke dalam senarai putih penyekat kuki pihak ketiga ataupun menggunakan tahap tetapan keselamatan kuki yang rendah bagi <kbd>Holodex.net</kbd>. <br /><br /> Berikut disertakan sekali beberapa tapak sesawang yang boleh memberikan maklumat lanjut berkenaan langkah-langkah yang harus dilakukan.
+    dialogTitle: Penggunaan Sembang YouTube di Holodex
+    alertText: >-
+      Log masuk ke ruangan sembang YouTube tidak boleh dilakukan disebabkan oleh tetapan kerahsiaan penyemak imbas anda. Sila rujuk di sini bagi mendapatkan maklumat lanjut
     neverShowAgain: Jangan Dipaparkan Amaran Lagi
 views:
   channel:
@@ -347,7 +352,7 @@ about:
     videoLinkage: Bagaimana caranya agar penggiat YouTube maya yang berkenaan dipautkan dengan tepat?
     videoLinkageContent: >-
       Keseluruhan maklumat dihuraikan berdasarkan isi perihalan video. Jika anda membuat sedutan mana-mana siaran rasmi, pastikan pautannya disertakan sekali. Jika sedutan anda daripada hasil ciptaan peminat (contohnya di bilibili), pastikan penggiat YouTube maya (penggiyut maya) yang berkaitan dipautkan saluran YouTube-nya. Sedutan yang tidak memautkan saluran penggiyut maya yang berkenaan tidak akan dipaparkan di Holodex kerana sedutan di tapak ini harus ada pautan kepada penggiyut maya yang disenaraikan di Holodex.
-    quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex\\r\n"
+    quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex\n"
     quitHolodexContent: >-
       Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.
     favorite:
