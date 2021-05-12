@@ -143,7 +143,6 @@ views:
     recentVideosHeading: 最近の動画
     recentVideoToggles:
       all: すべて
-      official: 公式
       subber: 切り抜き
   library:
     savedVideosTitle: 保存した動画
