@@ -106,7 +106,6 @@ views:
     recentVideosHeading: Videos recientes
     recentVideoToggles:
       all: Todos
-      official: Oficial
   library:
     savedVideosTitle: Videos Guardados
     createYtPlaylistButton: Crear lista de reproducción de YT ({0})
