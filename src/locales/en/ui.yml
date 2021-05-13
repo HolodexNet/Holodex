@@ -43,6 +43,7 @@ component:
     edit: Edit
     copiedToClipboard: Link copied to clipboard.
     copyLink: Copy Holodex Link
+    premiere: PREMIERE
   videoDescription:
     description: Description
   video:

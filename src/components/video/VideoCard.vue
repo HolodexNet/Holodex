@@ -298,12 +298,13 @@ export default {
             }
         },
         formattedDuration() {
-            const duration =
-                this.video.start_actual && this.video.status === "live"
-                    ? dayjs(this.now).diff(dayjs(this.video.start_actual))
-                    : this.video.duration * 1000;
-
-            return duration ? this.formatDuration(duration) : "";
+            if (this.video.start_actual && this.video.status === "live") {
+                return this.formatDuration(dayjs(this.now).diff(dayjs(this.video.start_actual)));
+            }
+            if (this.video.status === "upcoming" && this.video.duration) {
+                return this.$t("component.videoCard.premiere");
+            }
+            return this.video.duration && this.formatDuration(this.video.duration * 1000);
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
