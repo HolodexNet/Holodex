@@ -103,7 +103,7 @@
     "lint-staged": "^10.5.3",
     "prettier": "^2.3.0",
     "sass": "^1.32.13",
-    "sass-loader": "^11.1.0",
+    "sass-loader": "^10.1.0",
     "typescript": "~4.2.4",
     "vue-cli-plugin-vuetify": "^2.4.0",
     "vue-cli-plugin-yaml": "^1.0.2",
