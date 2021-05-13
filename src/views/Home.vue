@@ -30,16 +30,16 @@
                 <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                 <template v-else>
                     <VideoCardList
-                        :videos="live.filter((v) => v.status === 'live')"
+                        :videos="lives"
                         includeChannel
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
                     >
                     </VideoCardList>
-                    <v-divider class="my-3 secondary" />
+                    <v-divider class="my-3 secondary" v-if="lives.length" />
                     <VideoCardList
-                        :videos="live.filter((v) => v.status !== 'live')"
+                        :videos="upcoming"
                         includeChannel
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
@@ -111,7 +111,7 @@ export default {
     data() {
         return {
             identifier: Date.now(),
-            pageLength: 24,
+            pageLength: 30,
             tab: 0,
             Tabs: Object.freeze({
                 LIVE_UPCOMING: 0,
@@ -172,6 +172,12 @@ export default {
             if (this.$vuetify.breakpoint.sm && this.currentGridSize > 0) return false;
             if (this.$vuetify.breakpoint.xs && this.currentGridSize > 0) return false;
             return true;
+        },
+        lives() {
+            return this.live.filter((v) => v.status === "live");
+        },
+        upcoming() {
+            return this.live.filter((v) => v.status === "upcoming");
         },
     },
     methods: {
