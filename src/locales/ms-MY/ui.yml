@@ -44,6 +44,7 @@ component:
     edit: Sunting
     copiedToClipboard: Pautan telah disalin ke papan keratan.
     copyLink: Salin Pautan Holodex
+    premiere: TAYANGAN PERDANA
   videoDescription:
     description: Perihalan
   description:
@@ -375,7 +376,7 @@ about:
           , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
     feedback:
       title: Saya mahu memberikan maklum balas/sumbangan kepada projek ini
-  gdpr: Peraturan Umum Perlindungan Data dan data saya
+  gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
     Sebuah kuki Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
   gdprDeletion: Hubungi kami di Discord sekiranya anda ingin menghapuskan data pengguna anda!
