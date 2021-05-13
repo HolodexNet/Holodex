@@ -143,6 +143,7 @@ views:
     recentVideosHeading: Video Terkini
     recentVideoToggles:
       all: Semua
+      official: Arkib
       subber: Sedutan
   library:
     savedVideosTitle: Video yang Disimpan
