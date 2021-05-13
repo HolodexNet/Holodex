@@ -290,7 +290,8 @@ export default {
                         this.video.start_scheduled || this.video.available_at,
                         this.lang,
                         this.$t.bind(this),
-                    );
+                        false, // allowNegative = false
+                    ); // upcoming videos don't get to be ("5 minutes ago")
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:
