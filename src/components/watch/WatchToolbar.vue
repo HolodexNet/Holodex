@@ -68,7 +68,6 @@ export default {
             darkMode: true,
             mdiOpenInNew,
             mdiArrowLeft,
-            prevRoute: null,
         };
     },
     methods: {
@@ -78,7 +77,9 @@ export default {
                 : this.$store.commit("library/addSavedVideo", this.video);
         },
         goBack() {
-            this.$router.replace(this.$route.meta.prevRoute.path);
+            if (this.$route.meta.prevRoute && this.$route.meta.prevRoute.path)
+                this.$router.replace(this.$route.meta.prevRoute.path);
+            else this.$router.replace("/");
         },
     },
     computed: {

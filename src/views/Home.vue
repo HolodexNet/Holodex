@@ -111,7 +111,7 @@ export default {
     data() {
         return {
             identifier: Date.now(),
-            pageLength: 30,
+            pageLength: 24,
             tab: 0,
             Tabs: Object.freeze({
                 LIVE_UPCOMING: 0,

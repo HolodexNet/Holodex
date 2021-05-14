@@ -165,6 +165,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    to.meta.prevRoute = from;
     const { lang } = store.state.settings;
     if (lang !== "en") {
         loadLanguageAsync(lang).then(() => next());
