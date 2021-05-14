@@ -107,7 +107,7 @@ component:
     success: 檢舉已送出，謝謝您
     reasons:
       - 影片標籤錯誤
-      - 影片品質過於低劣 / 含有誤導性內容
+      - Dangerously Low Quality/Misleading Content
       - 違反了VTuber公司的二創條款或是不當內容
       - 其他原因
   thirdpartycookie:
