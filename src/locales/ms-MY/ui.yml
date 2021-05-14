@@ -108,7 +108,7 @@ component:
     success: Terima kasih! Laporan telah dikirim.
     reasons:
       - Video tidak ditandai dengan betul
-      - Kandungan video tidak bermutu atau mengelirukan
+      - Dangerously Low Quality/Misleading Content
       - Melanggar garis panduan pertubuhan terbabit atau memaparkan kandungan yang tidak bersesuaian
       - Lain-lain
   thirdpartycookie:
