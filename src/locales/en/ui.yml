@@ -43,6 +43,7 @@ component:
     edit: Edit
     copiedToClipboard: Link copied to clipboard.
     copyLink: Copy Holodex Link
+    premiere: PREMIERE
   videoDescription:
     description: Description
   video:
@@ -108,7 +109,7 @@ component:
     success: Report sent, thank you!
     reasons:
       - Video tagged incorrectly
-      - Low Quality/Misleading Content
+      - Dangerously Low Quality/Misleading Content
       - Violates the org's derivative work guidelines or inappropriate
       - Other
   thirdpartycookie:

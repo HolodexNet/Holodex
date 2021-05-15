@@ -7,6 +7,7 @@ import LoadScript from "vue-plugin-load-script";
 
 // import VueSocketIOExt from "vue-socket.io-extended";
 // import { io, Manager } from "socket.io-client";
+import PortalVue from "portal-vue";
 import App from "./App.vue";
 import store from "./store";
 import router from "./router";
@@ -37,6 +38,8 @@ Vue.use(VueMeta, {
 });
 Vue.use(VueI18n);
 Vue.use(LoadScript);
+
+Vue.use(PortalVue);
 Vue.prototype.icons = icons;
 
 new Vue({

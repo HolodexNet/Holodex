@@ -1,17 +1,26 @@
 <template>
-    <v-container fluid>
-        <v-tabs v-model="tab">
-            <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
-            <!-- <v-tab>
-                {{ $t("views.home.recentVideoToggles.all") }}
-            </v-tab> -->
-            <v-tab>
-                {{ $t("views.home.recentVideoToggles.official") }}
-            </v-tab>
-            <v-tab>
-                {{ $t("views.home.recentVideoToggles.subber") }}
-            </v-tab>
-        </v-tabs>
+    <v-container
+        fluid
+        v-touch="{
+            right: () => (tab = Math.max(tab - 1, 0)),
+            left: () => (tab = Math.min(tab + 1, 2)),
+        }"
+    >
+        <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs">
+            <v-tabs v-model="tab" :centered="$vuetify.breakpoint.xs">
+                <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
+                <!-- <v-tab>
+                    {{ $t("views.home.recentVideoToggles.all") }}
+                </v-tab> -->
+                <v-tab>
+                    {{ $t("views.home.recentVideoToggles.official") }}
+                </v-tab>
+                <v-tab>
+                    {{ $t("views.home.recentVideoToggles.subber") }}
+                </v-tab>
+            </v-tabs>
+        </portal>
+
         <LoadingOverlay :isLoading="false" :showError="hasError" />
         <div class="d-flex">
             <v-spacer />
@@ -20,26 +29,20 @@
             </v-btn>
         </div>
         <div v-show="!hasError">
-            <!-- <div class="d-flex justify-space-between px-0 pb-3 pt-1 px-sm-3">
-                <div class="text-h6">
-                    {{ $t("views.home.liveOrUpcomingHeading") }}
-                </div>
-                
-            </div> -->
             <template v-if="tab === Tabs.LIVE_UPCOMING">
                 <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                 <template v-else>
                     <VideoCardList
-                        :videos="live.filter((v) => v.status === 'live')"
+                        :videos="lives"
                         includeChannel
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
                     >
                     </VideoCardList>
-                    <v-divider class="my-3 secondary" />
+                    <v-divider class="my-3 secondary" v-if="lives.length" />
                     <VideoCardList
-                        :videos="live.filter((v) => v.status !== 'live')"
+                        :videos="upcoming"
                         includeChannel
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
@@ -48,36 +51,20 @@
                     </VideoCardList>
                 </template>
             </template>
-
-            <!-- <v-divider class="my-3" />
-            <div class="d-flex justify-space-between px-0 pb-3 pt-1 px-sm-3">
-                <div class="text-h6">
-                    {{ $t("views.home.recentVideosHeading") }}
-                </div>
-                <v-btn-toggle v-model="recentVideoFilter" mandatory dense color="secondary">
-                    <v-btn value="all">
-                        {{ $t("views.home.recentVideoToggles.all") }}
-                    </v-btn>
-                    <v-btn value="stream">
-                        {{ $t("views.home.recentVideoToggles.official") }}
-                    </v-btn>
-                    <v-btn value="clip">
-                        {{ $t("views.home.recentVideoToggles.subber") }}
-                    </v-btn>
-                </v-btn-toggle>
-            </div> -->
             <template v-else>
-                <generic-list-loader
-                    :infiniteLoad="scrollMode"
-                    :paginate="!scrollMode"
-                    :perPage="this.pageLength"
-                    :loadFn="getLoadFn()"
-                    v-slot="{ data, isLoading }"
-                    :key="'vl-home-' + tab + identifier"
-                >
-                    <VideoCardList :videos="data" includeChannel :cols="colSizes" :dense="currentGridSize > 0" />
-                    <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
-                </generic-list-loader>
+                <keep-alive>
+                    <generic-list-loader
+                        :infiniteLoad="scrollMode"
+                        :paginate="!scrollMode"
+                        :perPage="this.pageLength"
+                        :loadFn="getLoadFn()"
+                        v-slot="{ data, isLoading }"
+                        :key="'vl-home-' + tab + identifier"
+                    >
+                        <VideoCardList :videos="data" includeChannel :cols="colSizes" :dense="currentGridSize > 0" />
+                        <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
+                    </generic-list-loader>
+                </keep-alive>
             </template>
         </div>
     </v-container>
@@ -173,8 +160,22 @@ export default {
             if (this.$vuetify.breakpoint.xs && this.currentGridSize > 0) return false;
             return true;
         },
+        lives() {
+            return this.live.filter((v) => v.status === "live");
+        },
+        upcoming() {
+            return this.live.filter((v) => v.status === "upcoming");
+        },
     },
     methods: {
+        swipe(right) {
+            console.log(right ? "Right" : "LEft");
+            if (right) {
+                this.tab = Math.max(this.tab - 1, 0);
+            } else {
+                this.tab = Math.min(this.tab + 1, 2);
+            }
+        },
         init() {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
@@ -202,3 +203,8 @@ export default {
     },
 };
 </script>
+<style>
+.v-slide-group__prev--disabled {
+    display: none !important;
+}
+</style>

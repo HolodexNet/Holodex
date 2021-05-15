@@ -77,7 +77,9 @@ export default {
                 : this.$store.commit("library/addSavedVideo", this.video);
         },
         goBack() {
-            this.$router.go(-1);
+            if (this.$route.meta.prevRoute && this.$route.meta.prevRoute.path)
+                this.$router.replace(this.$route.meta.prevRoute.path);
+            else this.$router.replace("/");
         },
     },
     computed: {
