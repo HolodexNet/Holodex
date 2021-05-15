@@ -11,9 +11,9 @@ component:
     favoriteAllInGroup: 收藏本群組所有頻道
   channelInfo:
     stats: 統計資料
-    videoCount: '{0} 部影片'
-    clipCount: '{n} 部剪輯'
-    subscriberCount: '{n} 位訂閱者'
+    videoCount: "{0} 部影片"
+    clipCount: "{n} 部剪輯"
+    subscriberCount: "{n} 位訂閱者"
     subscriberNA: 無法取得訂閱者數據
     totalViews: 總觀看次數
   channelSocials:
@@ -37,16 +37,14 @@ component:
     multiview: 多窗工具
     points: pts
   videoCard:
-    clips: '{n} 部剪輯'
-    watching: '{0} 人正在觀看'
+    clips: "{n} 部剪輯"
+    watching: "{0} 人正在觀看"
     liveNow: 實況中
     edit: 編輯
     copiedToClipboard: 連結已複製到剪貼簿。
     copyLink: 複製 Holodex 連結
   videoDescription:
     description: 影片資訊
-  video:
-    comment: {}
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -86,8 +84,8 @@ component:
     songDuration: 歌曲長度
     sangOnTime: 演唱時間
   orgMusic:
-    monthlyTopForOrg: '{0} 本月熱門歌曲'
-    weeklyTopForOrg: '{0} 本週熱門歌曲'
+    monthlyTopForOrg: "{0} 本月熱門歌曲"
+    weeklyTopForOrg: "{0} 本週熱門歌曲"
   installPrompt:
     title: 安裝 Holodex
     callToAction: 將 Holodex 安裝至手機以獲得最佳使用體驗！
@@ -108,7 +106,7 @@ component:
     success: 檢舉已送出，謝謝您
     reasons:
       - 影片標籤錯誤
-      - 影片品質過於低劣 / 含有誤導性內容
+      - Dangerously Low Quality/Misleading Content
       - 違反了VTuber公司的二創條款或是不當內容
       - 其他原因
   thirdpartycookie:
@@ -128,7 +126,6 @@ views:
     collabs: 連動
     about: 簡介
   channels:
-    channelType: {}
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -148,7 +145,6 @@ views:
     recentVideosHeading: 最近新增影片
     recentVideoToggles:
       all: 全部
-      official: 官方
       subber: 剪輯
   library:
     savedVideosTitle: 儲存的影片
@@ -312,7 +308,7 @@ views:
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
-  distance_past_date: '{0}'
+  distance_past_date: "{0}"
 editor:
   music:
     add: 加入歌曲
@@ -390,7 +386,7 @@ about:
     subber:
       title: 我是烤肉/剪輯MAN但我在 Holodex 上找不到自己的頻道/剪輯
       contents:
-        - '- 此表單'
+        - "- 此表單"
         - ，我們將會手動將您的頻道加入資料庫。如果您的頻道已經在資料庫裡的話，請確認頻道的影片描述包含正確的 Youtube 實況來源 / 頻道連結。
     feedback:
       title: 我想對 Holodex 這個計畫盡一份心力/表達回饋

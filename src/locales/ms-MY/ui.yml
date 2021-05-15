@@ -156,7 +156,7 @@ views:
     recentVideosHeading: Video Terkini
     recentVideoToggles:
       all: Semua
-      official: Rasmi
+      official: Arkib
       subber: Sedutan
   library:
     savedVideosTitle: Video yang Disimpan
@@ -459,7 +459,7 @@ about:
           source/channel links.
     feedback:
       title: Saya mahu memberikan maklum balas/sumbangan kepada projek ini
-  gdpr: Peraturan Umum Perlindungan Data dan data saya
+  gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
     Sebuah kuki Google Analytics digunakan bagi mengesan bilangan kunjungan
     laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun

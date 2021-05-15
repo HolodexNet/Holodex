@@ -129,7 +129,6 @@ views:
     recentVideosHeading: Последние видео
     recentVideoToggles:
       all: Все
-      official: Официальные
       subber: Клипы
   library:
     savedVideosTitle: Сохраненные видео

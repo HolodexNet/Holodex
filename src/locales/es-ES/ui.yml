@@ -109,7 +109,7 @@ component:
     success: Reporte enviado. ¡Gracias!
     reasons:
       - Vídeo etiquetado incorrectamente
-      - Low Quality/Misleading Content
+      - Dangerously Low Quality/Misleading Content
       - Violates the org's derivative work guidelines or inappropriate
       - Otros
   thirdpartycookie:
@@ -141,7 +141,6 @@ views:
     recentVideosHeading: Vídeos recientes
     recentVideoToggles:
       all: Todos
-      official: Oficial
       subber: Clips
   library:
     savedVideosTitle: Vídeos guardados

@@ -127,7 +127,6 @@ views:
     recentVideosHeading: 최근 동영상
     recentVideoToggles:
       all: 모두
-      official: 공식
       subber: 클립
   library:
     savedVideosTitle: 저장된 동영상

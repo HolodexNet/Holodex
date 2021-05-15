@@ -107,7 +107,7 @@ component:
     success: ご報告ありがとうございます。
     reasons:
       - タグが間違っています
-      - 低品質・誤解を招くコンテンツ
+      - Dangerously Low Quality/Misleading Content
       - 公式の二次創作ガイドラインに違反が含めていますまたは不適切コンテンツ
       - その他
   thirdpartycookie:
@@ -147,7 +147,6 @@ views:
     recentVideosHeading: 最近の動画
     recentVideoToggles:
       all: すべて
-      official: 公式
       subber: 切り抜き
   library:
     savedVideosTitle: 保存した動画
