@@ -1,11 +1,5 @@
 <template>
-    <v-container
-        fluid
-        v-touch="{
-            right: () => (tab = Math.max(tab - 1, 0)),
-            left: () => (tab = Math.min(tab + 1, 2)),
-        }"
-    >
+    <v-container fluid>
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs">
             <v-tabs v-model="tab" :centered="$vuetify.breakpoint.xs">
                 <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
@@ -29,43 +23,60 @@
             </v-btn>
         </div>
         <div v-show="!hasError">
-            <template v-if="tab === Tabs.LIVE_UPCOMING">
-                <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
-                <template v-else>
-                    <VideoCardList
-                        :videos="lives"
-                        includeChannel
-                        :includeAvatar="shouldIncludeAvatar"
-                        :cols="colSizes"
-                        :dense="currentGridSize > 0"
-                    >
-                    </VideoCardList>
-                    <v-divider class="my-3 secondary" v-if="lives.length" />
-                    <VideoCardList
-                        :videos="upcoming"
-                        includeChannel
-                        :includeAvatar="shouldIncludeAvatar"
-                        :cols="colSizes"
-                        :dense="currentGridSize > 0"
-                    >
-                    </VideoCardList>
-                </template>
-            </template>
-            <template v-else>
-                <keep-alive>
+            <v-tabs-items v-model="tab" style="background: none">
+                <v-tab-item>
+                    <!-- <template v-if="n === Tabs.LIVE_UPCOMING"> -->
+                    <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
+                    <template v-else>
+                        <VideoCardList
+                            :videos="lives"
+                            includeChannel
+                            :includeAvatar="shouldIncludeAvatar"
+                            :cols="colSizes"
+                            :dense="currentGridSize > 0"
+                        >
+                        </VideoCardList>
+                        <v-divider class="my-3 secondary" v-if="lives.length" />
+                        <VideoCardList
+                            :videos="upcoming"
+                            includeChannel
+                            :includeAvatar="shouldIncludeAvatar"
+                            :cols="colSizes"
+                            :dense="currentGridSize > 0"
+                        >
+                        </VideoCardList>
+                    </template>
+                </v-tab-item>
+                <!-- </template> -->
+                <!-- <template v-else> -->
+
+                <v-tab-item>
                     <generic-list-loader
                         :infiniteLoad="scrollMode"
                         :paginate="!scrollMode"
-                        :perPage="this.pageLength"
-                        :loadFn="getLoadFn()"
+                        :perPage="pageLength"
+                        :loadFn="getLoadFn(1)"
                         v-slot="{ data, isLoading }"
-                        :key="'vl-home-' + tab + identifier"
+                        :key="identifier + 1"
                     >
                         <VideoCardList :videos="data" includeChannel :cols="colSizes" :dense="currentGridSize > 0" />
                         <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                     </generic-list-loader>
-                </keep-alive>
-            </template>
+                </v-tab-item>
+                <v-tab-item>
+                    <generic-list-loader
+                        :infiniteLoad="scrollMode"
+                        :paginate="!scrollMode"
+                        :perPage="pageLength"
+                        :loadFn="getLoadFn(2)"
+                        v-slot="{ data, isLoading }"
+                        :key="identifier + 2"
+                    >
+                        <VideoCardList :videos="data" includeChannel :cols="colSizes" :dense="currentGridSize > 0" />
+                        <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
+                    </generic-list-loader>
+                </v-tab-item>
+            </v-tabs-items>
         </div>
     </v-container>
 </template>
@@ -185,11 +196,11 @@ export default {
         reload() {
             this.init();
         },
-        getLoadFn() {
+        getLoadFn(tab) {
             return async (offset, limit) => {
                 const res = await backendApi.videos({
                     status: "past",
-                    ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
+                    ...{ type: tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
                     include: "clips",
                     org: this.$store.state.currentOrg,
                     lang: this.$store.state.settings.clipLangs.join(","),
