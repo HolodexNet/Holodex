@@ -99,7 +99,7 @@
 
                             <v-list-item
                                 :disabled="video.type === 'clip'"
-                                :to="`/multiview/AAUY${video.id}${video.channel.name}%2CUAEYchat`"
+                                :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`"
                                 ><v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{
                                     icons.mdiViewDashboard
                                 }}</v-icon>
@@ -376,6 +376,9 @@ export default {
         copyLink() {
             const link = `${window.origin}/watch/${this.video.id}`;
             this.copyToClipboard(link);
+        },
+        getChannelShortname(ch) {
+            return ch.english_name.replaceAll(/[/\s]/g, "_") || ch.name.split(/[/\s]/)[0].replace(",", "");
         },
     },
 };
