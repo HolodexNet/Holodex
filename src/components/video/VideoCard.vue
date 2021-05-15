@@ -378,7 +378,10 @@ export default {
             this.copyToClipboard(link);
         },
         getChannelShortname(ch) {
-            return ch.english_name.replaceAll(/[/\s]/g, "_") || ch.name.split(/[/\s]/)[0].replace(",", "");
+            return (
+                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_")) ||
+                ch.name.split(/[/\s]/)[0].replace(",", "")
+            );
         },
     },
 };

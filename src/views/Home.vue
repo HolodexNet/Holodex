@@ -168,14 +168,6 @@ export default {
         },
     },
     methods: {
-        swipe(right) {
-            console.log(right ? "Right" : "LEft");
-            if (right) {
-                this.tab = Math.max(this.tab - 1, 0);
-            } else {
-                this.tab = Math.min(this.tab + 1, 2);
-            }
-        },
         init() {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
