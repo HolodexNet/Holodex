@@ -170,6 +170,9 @@
             >
                 <!-- this is just the element that covers up the notch. don't worry about it. -->
             </div>
+            <template v-slot:extension v-if="$store.state.isMobile">
+                <portal-target name="mainNavExt" slim> </portal-target>
+            </template>
         </v-app-bar>
     </div>
 </template>

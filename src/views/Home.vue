@@ -1,17 +1,40 @@
 <template>
-    <v-container fluid>
-        <v-tabs v-model="tab">
-            <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
-            <!-- <v-tab>
-                {{ $t("views.home.recentVideoToggles.all") }}
-            </v-tab> -->
-            <v-tab>
-                {{ $t("views.home.recentVideoToggles.official") }}
-            </v-tab>
-            <v-tab>
-                {{ $t("views.home.recentVideoToggles.subber") }}
-            </v-tab>
-        </v-tabs>
+    <v-container
+        fluid
+        v-touch="{
+            right: () => swipe(true),
+            left: () => swipe(),
+        }"
+    >
+        <portal to="mainNavExt" v-if="$store.state.isMobile">
+            <v-tabs v-model="tab" centered>
+                <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
+                <!-- <v-tab>
+                    {{ $t("views.home.recentVideoToggles.all") }}
+                </v-tab> -->
+                <v-tab>
+                    {{ $t("views.home.recentVideoToggles.official") }}
+                </v-tab>
+                <v-tab>
+                    {{ $t("views.home.recentVideoToggles.subber") }}
+                </v-tab>
+            </v-tabs>
+        </portal>
+        <template v-else>
+            <v-tabs v-model="tab">
+                <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
+                <!-- <v-tab>
+                    {{ $t("views.home.recentVideoToggles.all") }}
+                </v-tab> -->
+                <v-tab>
+                    {{ $t("views.home.recentVideoToggles.official") }}
+                </v-tab>
+                <v-tab>
+                    {{ $t("views.home.recentVideoToggles.subber") }}
+                </v-tab>
+            </v-tabs>
+        </template>
+
         <LoadingOverlay :isLoading="false" :showError="hasError" />
         <div class="d-flex">
             <v-spacer />
@@ -181,6 +204,14 @@ export default {
         },
     },
     methods: {
+        swipe(right) {
+            console.log(right ? "Right" : "LEft");
+            if (right) {
+                this.tab = Math.max(this.tab - 1, 0);
+            } else {
+                this.tab = Math.min(this.tab + 1, 2);
+            }
+        },
         init() {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
