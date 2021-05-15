@@ -119,6 +119,7 @@ views:
       recentUpload: Letzter Upload
       videoCount: Videoanzahl
       clipCount: Clip-Anzahl
+      org: Organisation
     tabs:
       Vtuber: Vtuber
       Subber: Subber

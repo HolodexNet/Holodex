@@ -128,6 +128,7 @@ views:
       recentUpload: Subidas recientes
       videoCount: Número de vídeos
       clipCount: Número de clips
+      org: Organización
     tabs:
       Vtuber: Vtuber
       Subber: Traductor

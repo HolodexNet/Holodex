@@ -65,7 +65,7 @@
             <generic-list-loader
                 v-else
                 infiniteLoad
-                :perPage="25"
+                :perPage="category === Tabs.VTUBER ? 100 : 25"
                 :loadFn="getLoadFn()"
                 v-slot="{ data }"
                 :key="`channel-list-${category}-${identifier}`"
@@ -73,7 +73,8 @@
                 <ChannelList
                     :channels="data"
                     includeVideoCount
-                    :grouped="sort === 'group'"
+                    :grouped="currentSortValue.value === 'group' || currentSortValue.value === 'org'"
+                    :groupKey="$store.state.currentOrg === 'All Vtubers' ? 'org' : 'group'"
                     :cardView="cardView"
                     :showDelete="category === Tabs.SUBBER"
                 />
@@ -164,13 +165,26 @@ export default {
                             order: "desc",
                         },
                     },
-                    ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
+                    ...((this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES) &&
+                    this.$store.state.currentOrg !== "All Vtubers"
                         ? [
                               {
                                   text: this.$t("views.channels.sortOptions.group"),
                                   value: "group",
                                   query_value: {
                                       sort: "suborg",
+                                      order: "asc",
+                                  },
+                              },
+                          ]
+                        : []),
+                    ...(this.$store.state.currentOrg === "All Vtubers"
+                        ? [
+                              {
+                                  text: this.$t("views.channels.sortOptions.org"),
+                                  value: "org",
+                                  query_value: {
+                                      sort: "org",
                                       order: "asc",
                                   },
                               },
@@ -267,7 +281,7 @@ export default {
         // eslint-disable-next-line func-names
         resetChannels() {
             this.identifier = +new Date();
-            this.$store.commit("channels/resetChannels");
+            // this.$store.commit("channels/resetChannels");
         },
         findSortValue(sort) {
             return this.sortOptions.find((opt) => opt.value === sort);

@@ -134,6 +134,7 @@ views:
       recentUpload: 最近の投稿
       videoCount: 動画数
       clipCount: 切り抜き数
+      org: 所属
     tabs:
       Vtuber: Vtuber
       Subber: 切り抜きチャンネル

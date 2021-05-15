@@ -116,6 +116,7 @@ views:
       recentUpload: Последняя загрузка
       videoCount: Количество видео
       clipCount: Количество клипов
+      org: агентствам
     tabs:
       Vtuber: Витуберы
       Subber: Сабберы

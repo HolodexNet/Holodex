@@ -101,6 +101,7 @@ views:
       recentUpload: Caricamento Recente
       videoCount: Numero di Video
       clipCount: Numero di Clip
+      org: Organizzazione
     tabs:
       Vtuber: Vtuber
       Subber: Sottotitolatori

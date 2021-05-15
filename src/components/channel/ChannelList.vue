@@ -147,6 +147,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        groupKey: {
+            type: String,
+            default: "group",
+        },
         showDelete: {
             type: Boolean,
             default: false,
@@ -160,7 +164,7 @@ export default {
             const groupedChannels = [];
             let lastGroup = "";
             this.channels.forEach((c) => {
-                const group = c.group || "Other";
+                const group = c[this.groupKey] || "Other";
                 if (group !== lastGroup) {
                     groupedChannels.push({
                         title: group,

@@ -4,7 +4,6 @@ import Vue from "vue";
 // import { CHANNEL_TYPES } from "@/utils/consts";
 
 const initialState = {
-    channels: [],
     isLoading: true,
     hasError: false,
     currentOffset: 0,
@@ -30,9 +29,6 @@ export const state = {
 };
 
 const getters = {
-    channels(state) {
-        return state.channels;
-    },
     isLoading(state) {
         return state.isLoading;
     },
@@ -64,11 +60,11 @@ const actions = {
 };
 
 const mutations = {
-    updateChannels(state, channels) {
-        state.currentOffset += channels.length;
-        state.channels = state.channels.concat(channels);
-        state.isLoading = false;
-    },
+    // updateChannels(state, channels) {
+    //     state.currentOffset += channels.length;
+    //     state.channels = state.channels.concat(channels);
+    //     state.isLoading = false;
+    // },
     setCategory(state, category) {
         state.category = category;
     },
@@ -78,11 +74,11 @@ const mutations = {
     setCardView(state, val) {
         Vue.set(state.cardView, state.category, val);
     },
-    resetChannels(state) {
-        state.currentOffset = 0;
-        state.channels = [];
-        state.isLoading = true;
-    },
+    // resetChannels(state) {
+    //     state.currentOffset = 0;
+    //     state.channels = [];
+    //     state.isLoading = true;
+    // },
     resetState(state) {
         Object.assign(state, initialState);
     },

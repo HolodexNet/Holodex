@@ -1,7 +1,7 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: '콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 '
+    textBeforeTwitter: "콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 "
     textAfterTwitter: 를 확인하거나
     aboutPage: 정보 페이지
     afterAboutPageHyperlink: 에 오류를 제보해주세요.
@@ -11,9 +11,9 @@ component:
     favoriteAllInGroup: 소속된 모두를 즐겨찾기
   channelInfo:
     stats: 통계
-    videoCount: '{0} 동영상'
-    clipCount: '{n} 클립'
-    subscriberCount: '{n} 구독자'
+    videoCount: "{0} 동영상"
+    clipCount: "{n} 클립"
+    subscriberCount: "{n} 구독자"
     subscriberNA: 구독자 수를 확인할 수 없음
     totalViews: 총 조회수
   channelSocials:
@@ -37,8 +37,8 @@ component:
     multiview: 멀티뷰
     points: 포인트
   videoCard:
-    clips: '{n} 클립'
-    watching: '{0}명 시청 중'
+    clips: "{n} 클립"
+    watching: "{0}명 시청 중"
     liveNow: 실시간 스트리밍 중
     edit: 편집
     copiedToClipboard: 링크를 클립보드에 복사했습니다.
@@ -50,7 +50,7 @@ component:
     showLess: 간략히
     showMore: 더보기
   watch:
-    streamingFor: '{0} 방송 중'
+    streamingFor: "{0} 방송 중"
     nextUpInMugen: 다음
     Comments:
       title: 댓글
@@ -85,8 +85,8 @@ component:
     songDuration: 길이
     sangOnTime: 날짜
   orgMusic:
-    monthlyTopForOrg: '{0}의 월간 최고 조회수'
-    weeklyTopForOrg: '{0}의 주간 최고 조회수'
+    monthlyTopForOrg: "{0}의 월간 최고 조회수"
+    weeklyTopForOrg: "{0}의 주간 최고 조회수"
   installPrompt:
     title: Holodex 설치
     callToAction: Holodex를 홈 화면에 추가하면 더 편하게 이용할 수 있습니다
@@ -184,7 +184,7 @@ views:
     scrollModeLabel: 스크롤 모드
     scrollModeMsg: 스크롤/탭하여 페이지를 이동합니다
     resetAllSettings: 모든 설정/데이터 초기화
-    clipLanguageSelection: '다음 언어로 된 클립 보기:'
+    clipLanguageSelection: "다음 언어로 된 클립 보기:"
     tlLanguageSelection: 해당 언어로 실시간 채팅 번역 보기
     defaultFavorites: 즐겨찾기를 기본 페이지로 설정
     defaultFavoritesMsg: holodex.net에 처음 접속할 때와 좌측 상단 로고를 클릭할 때 즐겨찾기 페이지를 엽니다.
@@ -293,8 +293,8 @@ views:
       있습니다. 전세계의 Hololive 팬들과 함께 시청하고 채팅하세요. 건너뛰고 모든 사람과 다시 동기화하려면 페이지를 새로고침하세요.
 time:
   soon: 예정
-  diff_future_date: '{0} 시작 ({1})'
-  distance_past_date: '{0}'
+  diff_future_date: "{0} 시작 ({1})"
+  distance_past_date: "{0}"
 editor:
   music:
     add: 추가
@@ -303,8 +303,8 @@ editor:
       이미 있는 노래를 수정하거나 삭제하려면 '편집자' 사용자 권한이 필요합니다. <a class='white--text'
       href='/about'>Discord</a>에서 이슈 / 악용 사항을 편집자에게 알리거나 편집자에 지원하세요.
     titles:
-      addSong: '노래 메타데이터: 새 노래 추가'
-      songList: '노래 목록 : {0}'
+      addSong: "노래 메타데이터: 새 노래 추가"
+      songList: "노래 목록 : {0}"
       help: 가이드
     itunesLookupPlaceholder: (선택) iTunes에서 찾아보기
     moveRight2s: 오른쪽으로 2초 이동
@@ -315,7 +315,7 @@ editor:
     originalArtistInput: 원곡 가수
     testStart: 시작 위치 확인
     startInput: 시작
-    endInput: '총 재생시간: ({0}에 종료됨)'
+    endInput: "총 재생시간: ({0}에 종료됨)"
   exitMode: 편집 모드 나가기
   enterMode: 동영상 편집
 about:
@@ -357,7 +357,7 @@ about:
     subber:
       title: 저는 키리누키 제작자이고 제 채널 또는 클립을 Holodex에서 찾을 수 없습니다
       contents:
-        - ''
+        - ""
         - >-
           , and we will add you manually. If you are already on the list, please
           make sure your video descriptions have the correct youtube
@@ -383,7 +383,7 @@ about:
       - >-
         Also to all the subbers for helping the overseas bros! Please check them
         out!
-      - ''
+      - ""
   changelog:
     title: 변경 사항
   news:

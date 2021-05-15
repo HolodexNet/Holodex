@@ -97,6 +97,7 @@ views:
       recentUpload: Cargas recientes
       videoCount: Número de videos
       clipCount: Número de clips
+      org: Organización
     tabs:
       Subber: Subtitulador
       Favorites: Favoritos

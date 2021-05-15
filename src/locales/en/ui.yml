@@ -141,6 +141,7 @@ views:
       recentUpload: Recent Upload
       videoCount: Video Count
       clipCount: Clip Count
+      org: Organization
     tabs:
       Vtuber: Vtuber
       Subber: Subber

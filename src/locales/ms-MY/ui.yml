@@ -143,6 +143,7 @@ views:
       recentUpload: Muat Naik Terkini
       videoCount: Bilangan Video
       clipCount: Bilangan Sedutan
+      org: Kumpulan
     tabs:
       Vtuber: Penggiat YouTube maya
       Subber: Penyari Kata

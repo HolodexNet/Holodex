@@ -60,6 +60,7 @@ views:
       recentUpload: Mise en ligne récente
       videoCount: Nombre de vidéos
       clipCount: Nombre de Clips
+      org: Organisation
     tabs:
       Subber: Sous-Titreur
       Favorites: Favoris
