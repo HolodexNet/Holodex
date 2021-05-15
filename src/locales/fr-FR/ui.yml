@@ -1,9 +1,8 @@
+---
 component:
   apiError:
     title: Oups!
-    textBeforeTwitter: >-
-      Il y a eu une erreur lors de la récupération du contenu, veuillez vérifier
-      sur twitter
+    textBeforeTwitter: 'Il y a eu une erreur lors de la récupération du contenu, veuillez vérifier sur twitter'
     textAfterTwitter: ' ou signalez une erreur via la page'
     aboutPage: À propos
   channelList:
@@ -91,24 +90,19 @@ views:
       all: Tout
       official: Officiel
     unsupportedQuery: >-
-      Actuellement, la recherche de clips par <kbd>Sujet</kbd> et
-      <kbd>Organisation</kbd> n'est pas supportée. Aucun <b>clips</b>
-      n'apparaîtra.
+      Actuellement, la recherche de clips par <kbd>Sujet</kbd> et <kbd>Organisation</kbd> n'est pas supportée. Aucun <b>clips</b> n'apparaîtra.
   settings:
     title: Paramètres
     darkModeLabel: Thème Sombre
     darkModeMsg: Basculer entre le thème sombre et le thème clair
     redirectModeLabel: Ouvrir sur Youtube
     redirectModeMsg: >-
-      Cliquer sur une vidéo l'ouvrira sur Youtube. Cliquer sur les clips sous la
-      vignette d'une vidéo officielle continuera d'afficher les clips liés sur
-      Holodex.
+      Cliquer sur une vidéo l'ouvrira sur Youtube. Cliquer sur les clips sous la vignette d'une vidéo officielle continuera d'afficher les clips liés sur Holodex.
     useEnglishNameLabel: Utiliser les noms romanisés
     useEnglishNameMsg: Utiliser les noms romanisés pour les chaînes des VTubers
     hideVideoThumbnailsLabel: Cacher les vignettes des vidéos
     hideVideoThumbnailsMsg: >-
-      Cacher les vignettes des vidéos aide au temps de chargement et demande
-      moins de défilement sur mobile
+      Cacher les vignettes des vidéos aide au temps de chargement et demande moins de défilement sur mobile
     pushNotificationLabel: Notifications Push ( Bientôt disponible )
     pushNotificationMsg: Activer les notifications push pour vos chaînes favorites
     autoplayVideoLabel: Lecture Automatique
@@ -131,8 +125,7 @@ views:
     saveToLibrary: Ajouter à la librairie
   favorites:
     promptForAction: >-
-      Créez une liste de vtubers favoris et retrouvez leurs derniers clips et
-      leurs dernières diffusions sur cette page
+      Créez une liste de vtubers favoris et retrouvez leurs derniers clips et leurs dernières diffusions sur cette page
   multiview:
     confirmOverwriteYes: Confirmer
     permalink: Permalien
@@ -143,16 +136,15 @@ about:
   faq:
     subber:
       contents:
-        - ''
         - >-
-          , and we will add you manually. If you are already on the list, please
-          make sure your video descriptions have the correct youtube
-          source/channel links.
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   credits:
     contents:
       - I would like to give big thanks to the
       - team for their work on
       - >-
-        Also to all the subbers for helping the overseas bros! Please check them
-        out!
-      - ''
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
