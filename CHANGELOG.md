@@ -1,5 +1,12 @@
 # Holodex Changelog
 
+### 2.10 Holodex [*May 15, 2021*]
+##### New Features
+- **New Home Page**. Leave us feedback in discord!
+
+##### Patches
+- Music page for All Vtubers org now work, will display music ordered by date they were sang. Searches is limited to Track Name.
+
 ### 2.9 & 2.9.1 Holodex [*May 10, 2021*]
 ##### New Features:
 - Added a report button

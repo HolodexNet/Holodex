@@ -28,7 +28,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx lint-staged; npm run changelog"
+      "pre-commit": "npm run changelog; npx lint-staged;"
     }
   },
   "dependencies": {

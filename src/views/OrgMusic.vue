@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="12" class="mb-0 pa-0" style="min-height: 404px">
+            <v-col cols="12" class="mb-0 pa-0" style="min-height: 404px" v-if="!this.isAllVTubers">
                 <v-card-title>
                     <span class="text-lg-h5 mr-2">{{ $t("component.orgMusic.monthlyTopForOrg", [currentOrg]) }}</span>
                     <v-btn
@@ -38,7 +38,7 @@
                     <v-icon disabled v-if="popularMonthlySongs.length === 0">{{ icons.mdiDatabaseOff }}</v-icon>
                 </carousel>
             </v-col>
-            <v-col cols="12" class="my-0 pa-0" style="min-height: 404px">
+            <v-col cols="12" class="my-0 pa-0" style="min-height: 404px" v-if="!this.isAllVTubers">
                 <v-card-title>
                     <span class="text-lg-h5 mr-2">{{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg]) }}</span>
                     <v-btn
@@ -173,6 +173,9 @@ export default {
     },
     computed: {
         ...mapState(["currentOrg"]),
+        isAllVTubers() {
+            return this.currentOrg === "All Vtubers";
+        },
     },
     watch: {
         currentOrg() {
@@ -213,7 +216,7 @@ export default {
             return async (offset, limit) => {
                 const res = await backendApi.songListByCondition(
                     {
-                        org: this.currentOrg,
+                        ...(!this.isAllVTubers && { org: this.currentOrg }),
                         paginated: 1,
                         ...(this.debounceSearch && { q: this.debounceSearch }),
                     },
