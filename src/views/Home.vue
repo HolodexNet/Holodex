@@ -2,12 +2,12 @@
     <v-container
         fluid
         v-touch="{
-            right: () => swipe(true),
-            left: () => swipe(),
+            right: () => (tab = Math.max(tab - 1, 0)),
+            left: () => (tab = Math.min(tab + 1, 2)),
         }"
     >
-        <portal to="mainNavExt" v-if="$store.state.isMobile">
-            <v-tabs v-model="tab" centered>
+        <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs">
+            <v-tabs v-model="tab" :centered="$vuetify.breakpoint.xs">
                 <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
                 <!-- <v-tab>
                     {{ $t("views.home.recentVideoToggles.all") }}
@@ -20,20 +20,6 @@
                 </v-tab>
             </v-tabs>
         </portal>
-        <template v-else>
-            <v-tabs v-model="tab">
-                <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
-                <!-- <v-tab>
-                    {{ $t("views.home.recentVideoToggles.all") }}
-                </v-tab> -->
-                <v-tab>
-                    {{ $t("views.home.recentVideoToggles.official") }}
-                </v-tab>
-                <v-tab>
-                    {{ $t("views.home.recentVideoToggles.subber") }}
-                </v-tab>
-            </v-tabs>
-        </template>
 
         <LoadingOverlay :isLoading="false" :showError="hasError" />
         <div class="d-flex">
@@ -43,12 +29,6 @@
             </v-btn>
         </div>
         <div v-show="!hasError">
-            <!-- <div class="d-flex justify-space-between px-0 pb-3 pt-1 px-sm-3">
-                <div class="text-h6">
-                    {{ $t("views.home.liveOrUpcomingHeading") }}
-                </div>
-                
-            </div> -->
             <template v-if="tab === Tabs.LIVE_UPCOMING">
                 <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                 <template v-else>
@@ -71,36 +51,20 @@
                     </VideoCardList>
                 </template>
             </template>
-
-            <!-- <v-divider class="my-3" />
-            <div class="d-flex justify-space-between px-0 pb-3 pt-1 px-sm-3">
-                <div class="text-h6">
-                    {{ $t("views.home.recentVideosHeading") }}
-                </div>
-                <v-btn-toggle v-model="recentVideoFilter" mandatory dense color="secondary">
-                    <v-btn value="all">
-                        {{ $t("views.home.recentVideoToggles.all") }}
-                    </v-btn>
-                    <v-btn value="stream">
-                        {{ $t("views.home.recentVideoToggles.official") }}
-                    </v-btn>
-                    <v-btn value="clip">
-                        {{ $t("views.home.recentVideoToggles.subber") }}
-                    </v-btn>
-                </v-btn-toggle>
-            </div> -->
             <template v-else>
-                <generic-list-loader
-                    :infiniteLoad="scrollMode"
-                    :paginate="!scrollMode"
-                    :perPage="this.pageLength"
-                    :loadFn="getLoadFn()"
-                    v-slot="{ data, isLoading }"
-                    :key="'vl-home-' + tab + identifier"
-                >
-                    <VideoCardList :videos="data" includeChannel :cols="colSizes" :dense="currentGridSize > 0" />
-                    <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
-                </generic-list-loader>
+                <keep-alive>
+                    <generic-list-loader
+                        :infiniteLoad="scrollMode"
+                        :paginate="!scrollMode"
+                        :perPage="this.pageLength"
+                        :loadFn="getLoadFn()"
+                        v-slot="{ data, isLoading }"
+                        :key="'vl-home-' + tab + identifier"
+                    >
+                        <VideoCardList :videos="data" includeChannel :cols="colSizes" :dense="currentGridSize > 0" />
+                        <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
+                    </generic-list-loader>
+                </keep-alive>
             </template>
         </div>
     </v-container>
@@ -239,3 +203,8 @@ export default {
     },
 };
 </script>
+<style>
+.v-slide-group__prev--disabled {
+    display: none !important;
+}
+</style>

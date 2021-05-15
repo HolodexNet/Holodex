@@ -38,7 +38,7 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 // import api from "@/utils/backend-api";
 
 export default {
-    name: "ChannelVideos",
+    name: "GenericListLoader",
     components: {
         VideoCardList,
         InfiniteLoad: () => import("@/components/common/InfiniteLoad.vue"),

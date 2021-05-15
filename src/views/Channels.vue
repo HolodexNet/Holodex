@@ -1,11 +1,18 @@
 <template>
-    <v-container>
-        <v-tabs v-model="category" class="channels-tabs">
-            <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
-            <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
-            <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
-            <v-tab>{{ $t("views.channels.tabs.Blocked") }}</v-tab>
-        </v-tabs>
+    <v-container
+        v-touch="{
+            right: () => (category = Math.max(category - 1, 0)),
+            left: () => (category = Math.min(category + 1, 3)),
+        }"
+    >
+        <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs">
+            <v-tabs v-model="category" class="channels-tabs" v-if="isActive">
+                <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
+                <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
+                <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
+                <v-tab>{{ $t("views.channels.tabs.Blocked") }}</v-tab>
+            </v-tabs>
+        </portal>
         <v-divider />
         <v-container fluid class="pa-0">
             <v-list class="d-flex justify-space-between" style="background: none" v-if="category !== Tabs.BLOCKED">
