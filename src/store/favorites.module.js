@@ -54,10 +54,7 @@ const actions = {
         ) {
             commit("fetchStart");
             return api
-                .favoritesLive({
-                    // last_update: "2021-01-07T18:31:22-08:00",
-                    channels: state.favorites.map((f) => f.id).join(","),
-                })
+                .favoritesLive(rootState.userdata.jwt)
                 .then((res) => {
                     // filter out collab channels if settings is set
                     let live = res;
