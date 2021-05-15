@@ -107,7 +107,7 @@ component:
     success: Laporan telah dikirim, Terima Kasih!
     reasons:
       - Tag Video salah
-      - Kualitas Rendah / Konten Menyesatkan
+      - Dangerously Low Quality/Misleading Content
       - Melanggar Pedoman Kebijakan Karya yang ditetapkan organisasi atau tidak pantas
       - Lainnya
 views:
@@ -136,7 +136,6 @@ views:
     recentVideosHeading: Video Terkini
     recentVideoToggles:
       all: Semua
-      official: Resmi
       subber: Klip
   library:
     savedVideosTitle: Video Tersimpan

@@ -46,8 +46,6 @@ component:
     copyLink: 複製 Holodex 連結
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -109,7 +107,7 @@ component:
     success: 檢舉已送出，謝謝您
     reasons:
       - 影片標籤錯誤
-      - 影片品質過於低劣 / 含有誤導性內容
+      - Dangerously Low Quality/Misleading Content
       - 違反了VTuber公司的二創條款或是不當內容
       - 其他原因
   thirdpartycookie:
@@ -127,7 +125,6 @@ views:
     collabs: 連動
     about: 簡介
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -146,7 +143,6 @@ views:
     recentVideosHeading: 最近新增影片
     recentVideoToggles:
       all: 全部
-      official: 官方
       subber: 剪輯
   library:
     savedVideosTitle: 儲存的影片
