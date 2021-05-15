@@ -18,6 +18,7 @@
                     <v-col cols="12">
                         <v-select
                             v-model="topic"
+                            clearable
                             :items="topics"
                             hide-details="auto"
                             :label="$t('component.search.type.topic')"
@@ -29,6 +30,7 @@
                     <v-col cols="12">
                         <v-autocomplete
                             chips
+                            clearable
                             hide-details="auto"
                             v-model="channels"
                             :label="$t('component.search.type.channel')"
@@ -49,6 +51,7 @@
                     <v-col cols="12" md="6">
                         <v-text-field
                             v-model="title"
+                            clearable
                             hide-details="auto"
                             :label="$t('component.search.type.titledesc')"
                             :prepend-icon="mdiTextSearch"
@@ -57,10 +60,11 @@
                             :disabled="commentIsFilled"
                         ></v-text-field>
                     </v-col>
-                    <v-divider vertical></v-divider>
+                    <v-divider v-if="!$vuetify.breakpoint.smAndDown" vertical></v-divider>
                     <v-col cols="12" md="6">
                         <v-text-field
                             v-model="comment"
+                            clearable
                             hide-details="auto"
                             :label="$t('component.search.type.comments')"
                             :prepend-icon="mdiCommentSearch"
