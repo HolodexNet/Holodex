@@ -18,16 +18,23 @@
                 <v-tab>
                     {{ $t("views.home.recentVideoToggles.subber") }}
                 </v-tab>
+                <v-btn
+                    class="align-self-center ml-auto mr-2"
+                    icon
+                    @click.stop="currentGridSize = (currentGridSize + 1) % ($vuetify.breakpoint.xs ? 2 : 3)"
+                >
+                    <v-icon>{{ $store.getters.gridIcon }}</v-icon>
+                </v-btn>
             </v-tabs>
         </portal>
 
         <LoadingOverlay :isLoading="false" :showError="hasError" />
-        <div class="d-flex">
+        <!-- <div class="d-flex">
             <v-spacer />
             <v-btn icon @click="currentGridSize = (currentGridSize + 1) % ($vuetify.breakpoint.xs ? 2 : 3)">
                 <v-icon>{{ $store.getters.gridIcon }}</v-icon>
             </v-btn>
-        </div>
+        </div> -->
         <div v-show="!hasError">
             <template v-if="tab === Tabs.LIVE_UPCOMING">
                 <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -61,7 +68,15 @@
                         v-slot="{ data, isLoading }"
                         :key="'vl-home-' + tab + identifier"
                     >
-                        <VideoCardList :videos="data" includeChannel :cols="colSizes" :dense="currentGridSize > 0" />
+                        <!-- only keep VideoCardList rendered if scrollMode OR it's not loading. -->
+                        <VideoCardList
+                            v-show="scrollMode || !isLoading"
+                            :videos="data"
+                            includeChannel
+                            :cols="colSizes"
+                            :dense="currentGridSize > 0"
+                        />
+                        <!-- only show SkeletonCardList if it's loading -->
                         <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                     </generic-list-loader>
                 </keep-alive>
