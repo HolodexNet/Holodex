@@ -196,9 +196,6 @@ views:
     resetAllSettings: Restablecer por defecto todas las opciones
     clipLanguageSelection: 'Ver clips en estos idiomas:'
     tlLanguageSelection: Ver traducciones en directo en estos idiomas
-    defaultFavorites: Establecer "Favoritos" como página de inicio
-    defaultFavoritesMsg: >-
-      Establece “Favoritos” como página de inicio.
     videoFeedSettings: Ajustes de la interfaz de vídeo
     siteNavigationSettings: Ajustes de la interfaz
     languageSettings: Idioma
