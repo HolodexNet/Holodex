@@ -4,7 +4,8 @@
         :class="{ 'bump-bottom': $store.state.music.isOpen }"
     >
         <MainNav />
-        <v-main class="pull-to-refresh" style="transition: none">
+        <v-main style="transition: none">
+            <PullToRefresh />
             <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel">
                 <router-view :key="viewKey" />
             </keep-alive>
@@ -31,7 +32,7 @@
 <script lang="ts">
 import MainNav from "@/components/nav/MainNav.vue";
 import ReportDialog from "@/components/common/ReportDialog.vue";
-import pulltorefresh from "vue-awesome-pulltorefresh";
+import PullToRefresh from "@/components/common/PullToRefresh.vue";
 import { dayjsLangs, loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
 import { ORGS } from "./utils/consts";
@@ -45,6 +46,7 @@ export default {
     components: {
         MainNav,
         ReportDialog,
+        PullToRefresh,
     },
     data() {
         return {
@@ -137,51 +139,9 @@ export default {
     beforeDestroy() {
         if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
     },
-    mounted() {
-        const self = this;
-        pulltorefresh.init({
-            mainElement: ".pull-to-refresh",
-            onRefresh: async () => {
-                // check if there's a handler on the sequence
-                const handledRefresh = await self.$store.dispatch("reloadCurrentPage", {
-                    source: "ptr",
-                    consumed: false,
-                });
-                // do default refresh if none
-                if (!handledRefresh.consumed) {
-                    this.$router.go(0);
-                }
-            },
-            passive: true,
-            iconArrow: `<svg viewBox="0 0 24 24"><path fill="${self.darkMode ? "white" : "black"}" d="${
-                self.icons.mdiArrowLeft
-            }" /></svg>`,
-            distIgnore: 10,
-            distReload: 120,
-            distMax: 180,
-            distThreshold: 120,
-            refreshTimeout: 200,
-            instructionsPullToRefresh: " ",
-            instructionsReleaseToRefresh: " ",
-            instructionsRefreshing: `<svg viewBox="0 0 24 24"><path fill="${self.darkMode ? "white" : "black"}" d="${
-                self.icons.mdiRefresh
-            }" /></svg>`,
-            shouldPullToRefresh: () => {
-                return (
-                    !window.scrollY &&
-                    // disable on watch page
-                    !self.isWatchPage &&
-                    // disable on mobile when navdrawer is pulled out
-                    // self.$store.state.isMobile && (removing restriction on mobile)
-                    !self.$store.state.navDrawer
-                );
-            },
-        });
-    },
     computed: {
         viewKey() {
             const key = this.$route.path;
-
             // channel has subviewws that will cause unwanted keep-alive instances
             // Key them all under channel/:id to avoid duplicating
             if (key.match("^/channel/.{16}")) {
