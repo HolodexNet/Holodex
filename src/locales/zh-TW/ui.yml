@@ -44,8 +44,11 @@ component:
     edit: 編輯
     copiedToClipboard: 連結已複製到剪貼簿。
     copyLink: 複製 Holodex 連結
+    premiere: 首播
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -125,6 +128,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -144,6 +148,7 @@ views:
     recentVideosHeading: 最近新增影片
     recentVideoToggles:
       all: 全部
+      official: 存檔
       subber: 剪輯
   library:
     savedVideosTitle: 儲存的影片
