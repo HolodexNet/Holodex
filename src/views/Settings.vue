@@ -81,15 +81,6 @@
                         :label="$t('views.settings.redirectModeLabel')"
                         :messages="$t('views.settings.redirectModeMsg')"
                     ></v-switch>
-                    <v-switch
-                        v-model="scrollMode"
-                        :label="$t('views.settings.scrollModeLabel')"
-                        :messages="$t('views.settings.scrollModeMsg')"
-                    ></v-switch>
-                </div>
-                <div class="settings-group" v-if="!slim">
-                    <div class="py-1 text-h6">{{ $t("views.settings.videoFeedSettings") }}</div>
-                    <v-divider />
                     <v-select
                         class="mt-4"
                         v-model="currentGridSize"
@@ -101,6 +92,15 @@
                         :label="$t('views.settings.gridSizeLabel')"
                         :messages="$t('views.settings.gridSizeMsg')"
                     ></v-select>
+                    <v-switch
+                        v-model="scrollMode"
+                        :label="$t('views.settings.scrollModeLabel')"
+                        :messages="$t('views.settings.scrollModeMsg')"
+                    ></v-switch>
+                </div>
+                <div class="settings-group" v-if="!slim">
+                    <div class="py-1 text-h6">{{ $t("views.settings.videoFeedSettings") }}</div>
+                    <v-divider />
                     <v-switch
                         v-model="hideCollabStreams"
                         :label="$t('views.settings.hideCollabStreamsLabel')"
