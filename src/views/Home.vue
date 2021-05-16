@@ -5,15 +5,10 @@
             right: () => (tab = Math.max(tab - 1, 0)),
             left: () => (tab = Math.min(tab + 1, 2)),
         }"
-        v-scroll="onScroll"
-        ref="Home"
     >
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
             <v-tabs v-model="tab" :centered="$vuetify.breakpoint.xs">
                 <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
-                <!-- <v-tab>
-                    {{ $t("views.home.recentVideoToggles.all") }}
-                </v-tab> -->
                 <v-tab>
                     {{ $t("views.home.recentVideoToggles.official") }}
                 </v-tab>
@@ -22,14 +17,7 @@
                 </v-tab>
             </v-tabs>
         </portal>
-
         <LoadingOverlay :isLoading="false" :showError="hasError" />
-        <!-- <div class="d-flex">
-            <v-spacer />
-            <v-btn icon @click="currentGridSize = (currentGridSize + 1) % ($vuetify.breakpoint.xs ? 2 : 3)">
-                <v-icon>{{ $store.getters.gridIcon }}</v-icon>
-            </v-btn>
-        </div> -->
         <div v-show="!hasError">
             <template v-if="tab === Tabs.LIVE_UPCOMING">
                 <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -117,34 +105,17 @@ export default {
                 ARCHIVE: 1,
                 CLIPS: 2,
             }),
-            previousScroll: 0,
-            isScrollingUp: false,
-            currentScroll: 0,
-            savedScroll: 0,
-            computedScrollThreshold: 100,
-            showExt: null,
         };
     },
     mounted() {
         this.init();
-        this.$store.commit("setShowExtension", true);
     },
     watch: {
         // eslint-disable-next-line func-names
         "$store.state.currentOrg": function () {
             this.init();
         },
-        isScrollingUp() {
-            this.savedScroll = this.savedScroll || this.currentScroll;
-        },
-        showExt(nw) {
-            this.savedScroll = 0;
-            console.log(nw);
-            this.$store.commit("setShowExtension", this.showExt);
-        },
         tab() {
-            // this.showExt = null;
-            this.showExt = true;
             this.$nextTick(() => {
                 window.scrollTo(0, 0);
             });
@@ -224,20 +195,6 @@ export default {
                 });
                 return res.data;
             };
-        },
-        onScroll() {
-            this.previousScroll = this.currentScroll;
-            this.currentScroll = this.target ? this.target.scrollTop : window.pageYOffset;
-
-            this.isScrollingUp = this.currentScroll < this.previousScroll;
-            this.currentThreshold = Math.abs(this.currentScroll - this.computedScrollThreshold);
-
-            this.$nextTick(() => {
-                if (Math.abs(this.currentScroll - this.savedScroll) > this.computedScrollThreshold) this.thresholdMet();
-            });
-        },
-        thresholdMet() {
-            this.showExt = this.isScrollingUp || this.currentScroll < this.computedScrollThreshold;
         },
     },
 };

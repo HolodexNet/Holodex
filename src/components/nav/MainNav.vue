@@ -26,6 +26,7 @@
             clipped-left
             flat
             v-show="!(isMobile && isWatchPage) && !isMultiView"
+            v-scroll="onScroll"
         >
             <!--=============================== Top Bar (Regular View) =============================-->
 
@@ -170,7 +171,7 @@
             >
                 <!-- this is just the element that covers up the notch. don't worry about it. -->
             </div>
-            <template v-slot:extension v-if="$store.state.showExtension">
+            <template v-slot:extension v-if="showExt">
                 <portal-target name="mainNavExt" slim> </portal-target>
             </template>
         </v-app-bar>
@@ -187,6 +188,7 @@ import { ORGS, ORGS_PREFIX } from "@/utils/consts";
 import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
 import InstallPrompt from "@/components/common/InstallPrompt.vue";
+import hideExtensionOnScroll from "@/mixins/hideExtensionOnScroll";
 import NavDrawer from "./NavDrawer.vue";
 import BottomNav from "./BottomNav.vue";
 
@@ -200,6 +202,7 @@ export default {
         InstallPrompt,
         MusicBar2: () => import("./MusicBar2.vue"),
     },
+    mixins: [hideExtensionOnScroll],
     data() {
         return {
             icons,
