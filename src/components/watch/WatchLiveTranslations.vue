@@ -213,6 +213,7 @@ export default {
             const vm = this as any;
             // make sure to not listen to duplicate events of the same id (i.e. same chat room open in mv)
             if (obj.id === vm.video.id && !vm.success) {
+                console.log("Subbed to", vm.liveTlLang, obj.id);
                 vm.success = true;
                 vm.registerListener();
                 vm.$store.commit("incrementActiveSockets");
@@ -436,6 +437,7 @@ export default {
             // unsub from old langauge
             this.$socket.client.emit("unsubscribe", { video_id: this.video.id, lang: oldLang });
             this.$socket.client.off(`${this.video.id}/${oldLang}`, this.handleMessage);
+            this.sucesss = false;
             this.tlJoin();
         },
         utcToTimestamp(utc) {
