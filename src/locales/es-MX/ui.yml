@@ -1,6 +1,7 @@
+---
 component:
   apiError:
-    title: ¡Gomenasorry!
+    title: '¡Gomenasorry!'
     textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
     textAfterTwitter: ' O reporta el error a través de la'
     aboutPage: Página de información
@@ -80,9 +81,7 @@ component:
     weeklyTopForOrg: Mas Reproducciones Semanales para {0}
   installPrompt:
     title: Instalar Holodex
-    callToAction: >-
-      Ver vídeos en Holodex funciona mejor cuando se agrega a la pantalla de
-      inicio
+    callToAction: Ver vídeos en Holodex funciona mejor cuando se agrega a la pantalla de inicio
     notNowBtn: Ahora no
     installBtn: Instalar
     iOS:
@@ -118,25 +117,16 @@ views:
     deleteConfirmationCancel: Cancelar
     selectionReset: Reiniciar
     selectionSelectAll: Seleccionar Todos
-    emptyLibrary: ¡No tienes videos guardados!
+    emptyLibrary: '¡No tienes videos guardados!'
     exportSelected: Exportar seleccionados ({0})
     exportYtPlaylist: Lista de reproducción de Youtube
     exportCsv: Archivo CSV
     selectionSelect50: Seleccionar 50
     exportYTExplanation: >-
-      La lista de reproducción de youtube creada por esta función esta <b>sin
-      listar</b> y podriaser eliminada por Youtube. <br /> Gracias a la
-      funcionalidad incompleta de Youtube, necesitas hacer lo siguiente para
-      guardar la lista de reproducción de Youtube <b>sin listada</b> en tu
-      cuenta.
+      La lista de reproducción de youtube creada por esta función esta <b>sin listar</b> y podriaser eliminada por Youtube. <br /> Gracias a la funcionalidad incompleta de Youtube, necesitas hacer lo siguiente para guardar la lista de reproducción de Youtube <b>sin listada</b> en tu cuenta.
     exportYTHeading: Guardando instrucciones de la lista de reproducción de Youtube
     exportYTInstructions: >-
-      <b class="red--text">Paso 1</b>: Reproduce la lista de reproducción de
-      youtube y cambia la interfaz de usuario del reproductor a
-      mini-reproductor. <br /><br /> <b class="red--text">Paso 2</b>: Elige
-      cualquier video y añádelo a la cola. <br /><br /> <b
-      class="red--text">Paso 3</b>: La lista de reproducción puede ser guardada
-      ahora. Has clic en guardar para guardarla.
+      <b class="red--text">Paso 1</b>: Reproduce la lista de reproducción de youtube y cambia la interfaz de usuario del reproductor a mini-reproductor. <br /><br /> <b class="red--text">Paso 2</b>: Elige cualquier video y añádelo a la cola. <br /><br /> <b class="red--text">Paso 3</b>: La lista de reproducción puede ser guardada ahora. Has clic en guardar para guardarla.
   notFound:
     title: Contenido no encontrado
     back: Volver al Inicio
@@ -148,8 +138,7 @@ views:
       all: Todos
       official: Oficial
     unsupportedQuery: >-
-      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y
-      <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
+      Actualmente, no se admite la búsqueda de clips por <kbd> Tema </kbd> y <kbd> Organización </kbd>. No se mostrarán <b> clips </b>.
     sortByLabel: Ordenar Por
     typeDropdownLabel: Tipo
   settings:
@@ -158,14 +147,12 @@ views:
     darkModeMsg: Cambia el tema entre modo oscuro y modo claro
     redirectModeLabel: Abrir en Youtube
     redirectModeMsg: >-
-      Clickear en cualquier video lo abrirá en Youtube, clicker en el titulo del
-      video lo abrirá en Holodex
+      Clickear en cualquier video lo abrirá en Youtube, clicker en el titulo del video lo abrirá en Holodex
     useEnglishNameLabel: Usar nombre en inglés
     useEnglishNameMsg: Usa nombres localizados al Inglés para los canales de Vtubers
     hideVideoThumbnailsLabel: Ocultar miniaturas
     hideVideoThumbnailsMsg: >-
-      Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos
-      deslizar en mobiles
+      Esconder miniaturas de videos, ayuda a acelerar el tiempo de carga y menos deslizar en mobiles
     pushNotificationLabel: Notificaciones emergentes
     pushNotificationMsg: Activar notificaciónes emergentes para canales favoritos
     autoplayVideoLabel: Reproducir vídeos automáticamente
@@ -173,7 +160,7 @@ views:
     scrollModeLabel: Modo de desplazamiento
     scrollModeMsg: Use el desplazamiento/toque para pasar las páginas
     resetAllSettings: Reiniciar todas las opciones/datos
-    clipLanguageSelection: Ver clips en estos idiomas
+    clipLanguageSelection: 'Ver clips en estos idiomas'
     tlLanguageSelection: Ver traducciones en vivo en estos idiomas
   app:
     update_available: Una actualización está disponible
@@ -181,7 +168,7 @@ views:
     close_btn: Cerrar
     check_about_page: Visita la pagina Acerca de para ver los nuevos cambios
     nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
-    loginCallToAction: ¡Inicia sesión para reunir tus propios favoritos!
+    loginCallToAction: '¡Inicia sesión para reunir tus propios favoritos!'
   about:
     add_my_channel: Añadir mi canal a Holodex
   watch:
@@ -200,44 +187,35 @@ views:
         reconnecting: Reconectando automaticamente...
         reconnectFailed: No se pudo reconectar
         notLive: >-
-          La transmisión aún no está activa, por favor inténtalo de nuevo cuando
-          falter 15 minutos para comenzar
+          La transmisión aún no está activa, por favor inténtalo de nuevo cuando falter 15 minutos para comenzar
         connectedToChat: Conectado
         disconnectedToChat: Sin conexión
   favorites:
     promptForAction: >-
-      Crea una lista de tus vtubers favoritos y mira sus ultimos clips y
-      directos en esta pagina.
+      Crea una lista de tus vtubers favoritos y mira sus ultimos clips y directos en esta pagina.
     manageFavorites: Administrar Favoritos
   editor:
-    needlogin: >-
-      Necesitarás iniciar sesión para editar los metadatos de vídeos y canciones
-      de Holodex.
+    needlogin: Necesitarás iniciar sesión para editar los metadatos de vídeos y canciones de Holodex.
   login:
     apikeyMsg: >-
-      Puedes usar la clave de API para consultar Holodex API programaticamente.
-      Solo una clave por cuenta. Después de conseguir una nueva clave, la clave
-      antigua expirará entre 0-24 horas.
+      Puedes usar la clave de API para consultar Holodex API programaticamente. Solo una clave por cuenta. Después de conseguir una nueva clave, la clave antigua expirará entre 0-24 horas.
     apikeyNew: Obtener nueva clave de API
     ownedYtChannel: Canal de Youtube poseído
     futureYtcOwnerMessage: >-
-      En el futuro, planeamos proveer mas servicios a dueños de canales como
-      editar el metadata para sus propios videos.
+      En el futuro, planeamos proveer mas servicios a dueños de canales como editar el metadata para sus propios videos.
     linkAcc: Vincular otra cuenta
-    apikeyResetConfirm1: ¿Estas seguro de que quieres reiniciar tu clave de API?
+    apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu clave de API?'
     apikeyResetConfirm2: La clave de API tendrá 0-24 horas antes de expirar. ¿En verdad reiniciar?
     apikeyResetNvm: No sucedió nada.
   multiview:
-    confirmOverwrite: ¿Sobreescribir el diseño existente?
+    confirmOverwrite: '¿Sobreescribir el diseño existente?'
     confirmOverwriteYes: Confirmar
     permalink: Enlace Permanente
     presets: Configuraciones
     addframe: Añadir Celda
     preset:
       shareOnDiscord: >-
-        ¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y
-        háznoslo saber en nuestro <a
-        href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!
+        ¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y háznoslo saber en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!
       desktop: Escritorio
       mobile: Móvil
     video:
@@ -251,10 +229,7 @@ editor:
     add: Añadir
     update: Actualizar
     permission: >-
-      Necesitas ser un usuario de nivel 'Editor' o mas alto para actualizar o
-      borrar canciones existentes. Por favor contactanos en <a
-      class='white--text' href='/about'>discord</a> para notificar a los
-      editores de problemas / abusos, o aplica para volverte un editor.
+      Necesitas ser un usuario de nivel 'Editor' o mas alto para actualizar o borrar canciones existentes. Por favor contactanos en <a class='white--text' href='/about'>discord</a> para notificar a los editores de problemas / abusos, o aplica para volverte un editor.
     titles:
       addSong: 'Metadatos de la cancion: Añadir una nueva canción'
       songList: 'Lista de canciones : {0}'
@@ -277,71 +252,39 @@ about:
   issueTracker: Rastreador de problemas / Fuente
   faq:
     title: Preguntas frecuentes (FAQ)
-    ytchatHeader: ¡Mi Chat de Youtube no está conectado!
+    ytchatHeader: '¡Mi Chat de Youtube no está conectado!'
     ytchatContent: >-
-      Por favor deshabilite la función de seguridad del navegador conocida como
-      bloqueo de cookies de terceros, o agregue este sitio web y youtube.com a
-      la lista blanca para permitir cookies de terceros.
+      Por favor deshabilite la función de seguridad del navegador conocida como bloqueo de cookies de terceros, o agregue este sitio web y youtube.com a la lista blanca para permitir cookies de terceros.
     ytchatFirefox: Instrucciones para Firefox, otros navegadores pueden ser similares.
-    autoplayHeader: ¡La reproducción automática no funciona!
-    autoplayContent: >-
-      Por favor usa Google para saber cómo habilitar la reproducción automática
-      para su navegador.
-    musicPlayer: ¡El reproductor de música no funciona bien en dispositivos móviles!
+    autoplayHeader: '¡La reproducción automática no funciona!'
+    autoplayContent: Por favor usa Google para saber cómo habilitar la reproducción automática para su navegador.
+    musicPlayer: '¡El reproductor de música no funciona bien en dispositivos móviles!'
     musicPlayerContent: >-
-      Lo sentimos, pero es imposible soportar el reproductor de musica como un
-      sitio web móvil. <br/>Dos factores: 1. Los dispositivos móviles
-      normalmente prohíben la reproducción automática, lo cual requerimos; 2.
-      Generalmente los dispositivos móviles no permiten a los sitios web
-      encadenar música en segundo plano. 3. No integramos tu lista de
-      repodruduccion en los centros de control de música al nivel de sistema.
-    videoLinkage: >-
-      ¿Cómo puedo asegurarme de que los vídeos estén correctamente vinculados a
-      los vtubers?
+      Lo sentimos, pero es imposible soportar el reproductor de musica como un sitio web móvil. <br/>Dos factores: 1. Los dispositivos móviles normalmente prohíben la reproducción automática, lo cual requerimos; 2. Generalmente los dispositivos móviles no permiten a los sitios web encadenar música en segundo plano. 3. No integramos tu lista de repodruduccion en los centros de control de música al nivel de sistema.
+    videoLinkage: '¿Cómo puedo asegurarme de que los vídeos estén correctamente vinculados a los vtubers?'
     videoLinkageContent: >-
-      Toda la información es analizada de la descripción del vídeo. Si estás
-      haciendo un clip de un directo, por favor asegúrate de enlazar el directo
-      oficial. Si estás haciendo un clip el contenido hecho por un fan (por
-      ejemplo de bilibili), sólo asegúrese de enlazar los canales oficiales de
-      youtube de las vtubers que sean relevantes. Si no vincula el canal de
-      ningun vtuber entonces no mostraremos ese clip en el holodex, ya que todos
-      los clips requieren un enlace a un vtuber que sea conocido para holodex.
-    quitHolodex: >
-      Soy un subtitulador y me gustaría que mi canal fuera eliminado del
-      Holodex\r
+      Toda la información es analizada de la descripción del vídeo. Si estás haciendo un clip de un directo, por favor asegúrate de enlazar el directo oficial. Si estás haciendo un clip el contenido hecho por un fan (por ejemplo de bilibili), sólo asegúrese de enlazar los canales oficiales de youtube de las vtubers que sean relevantes. Si no vincula el canal de ningun vtuber entonces no mostraremos ese clip en el holodex, ya que todos los clips requieren un enlace a un vtuber que sea conocido para holodex.
+    quitHolodex: "Soy un subtitulador y me gustaría que mi canal fuera eliminado del Holodex\\r"
     quitHolodexContent: >-
-      Es triste verte ir :(, por favor házme saber si hay algún problema con el
-      que puedo ayudarte. Si aún desea que se elimine su cuenta, por favor
-      envíenos un mensaje a Discord.
+      Es triste verte ir :(, por favor házme saber si hay algún problema con el que puedo ayudarte. Si aún desea que se elimine su cuenta, por favor envíenos un mensaje a Discord.
     subber:
       contents:
-        - ''
         - >-
-          , and we will add you manually. If you are already on the list, please
-          make sure your video descriptions have the correct youtube
-          source/channel links.
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
   gdpr: GDPR y mis datos
   gdprContent: >-
-    Una cookie de Google Analytics se utiliza para rastrear visitas a la pagina
-    para propósitos analíticos. Después de iniciar sesión asociamos su nombre de
-    usuario y ID de la cuenta de redes sociales con sus favoritos. Estos datos
-    pueden incluir tu correo electrónico (para Google), Discord ID o Twitter
-    respectivamente.
-  gdprDeletion: >-
-    Para la eliminación de sus datos de usuario, por favor contáctenos en
-    discord!
+    Una cookie de Google Analytics se utiliza para rastrear visitas a la pagina para propósitos analíticos. Después de iniciar sesión asociamos su nombre de usuario y ID de la cuenta de redes sociales con sus favoritos. Estos datos pueden incluir tu correo electrónico (para Google), Discord ID o Twitter respectivamente.
+  gdprDeletion: Para la eliminación de sus datos de usuario, por favor contáctenos en discord!
   feedback: Comentarios/Reportes de Bug
   feedbackHtml: >-
-    Puedes crear un problema en el <a
-    href="https://github.com/RiceCakess/Holodex/issues"> Rastreador de Problemas
-    de Github </a> o encontrar al equipo de Holodex en Discord <br /> <br />
-    Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess
-    </a>
+    Puedes crear un problema en el <a href="https://github.com/RiceCakess/Holodex/issues"> Rastreador de Problemas de Github </a> o encontrar al equipo de Holodex en Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     contents:
       - I would like to give big thanks to the
       - team for their work on
       - >-
-        Also to all the subbers for helping the overseas bros! Please check them
-        out!
-      - ''
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
