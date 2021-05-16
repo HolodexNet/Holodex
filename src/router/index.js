@@ -30,9 +30,8 @@ const routes = [
         path: "/",
         redirect(to) {
             const { hash, params, query } = to;
-            if (store.state.settings.defaultOpenFavorites && store.state.userdata.jwt)
-                return { name: "favorites", hash, params, query };
-            return { name: "home", hash, params, query };
+            return { name: store.state.settings.defaultOpen, hash, params, query };
+            // return { name: "home", hash, params, query };
         },
     },
     {

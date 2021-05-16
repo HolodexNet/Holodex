@@ -8,7 +8,14 @@
     >
         <!-- Teleport tabs to nav extension slot -->
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
-            <v-tabs v-model="tab" :centered="$vuetify.breakpoint.xs" class="secondary darken-1">
+            <v-tabs
+                v-model="tab"
+                :centered="$vuetify.breakpoint.xs"
+                :class="$store.state.settings.darkMode ? 'secondary darken-1' : 'primary lighten-1'"
+                :active-class="
+                    $store.state.settings.darkMode ? 'primary--text text--lighten-3' : 'primary--text text--darken-2'
+                "
+            >
                 <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
                 <v-tab>
                     {{ $t("views.home.recentVideoToggles.official") }}

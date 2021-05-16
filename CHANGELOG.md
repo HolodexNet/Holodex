@@ -3,6 +3,7 @@
 ### 2.10 Holodex [*May 15, 2021*]
 ##### New Features
 - **New Home Page**. Leave us feedback in discord!
+- It's now possible to set MultiView as the home page too in the settings.
 
 ##### Patches
 - Music page for All Vtubers org now work, will display music ordered by date they were sang. Searches is limited to Track Name.

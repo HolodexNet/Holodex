@@ -14,7 +14,7 @@ const initialState = {
 
     // Site
     darkMode: true,
-    defaultOpenFavorites: false,
+    defaultOpen: "home",
 
     // Content
     redirectMode: false,
@@ -89,7 +89,7 @@ const mutations = {
         state.scrollMode = val;
     },
     ...createSimpleMutation([
-        "defaultOpenFavorites",
+        "defaultOpen",
         "liveTlStickBottom",
         "liveTlLang",
         "liveTlFontSize",
