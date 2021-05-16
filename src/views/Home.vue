@@ -6,6 +6,7 @@
             left: () => (tab = Math.min(tab + 1, 2)),
         }"
     >
+        <!-- Teleport tabs to nav extension slot -->
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
             <v-tabs v-model="tab" :centered="$vuetify.breakpoint.xs" class="secondary darken-1">
                 <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>

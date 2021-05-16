@@ -33,6 +33,8 @@ export default {
     },
     methods: {
         onScroll() {
+            if (this.disableExt) return;
+
             if (window.scrollY === 0) {
                 this.showExt = true;
             }

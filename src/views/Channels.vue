@@ -4,6 +4,7 @@
             right: () => (category = Math.max(category - 1, 0)),
             left: () => (category = Math.min(category + 1, 3)),
         }"
+        style="min-height: 70vh"
     >
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
             <v-tabs v-model="category" class="channels-tabs secondary darken-1" v-if="isActive">
@@ -13,7 +14,7 @@
                 <v-tab>{{ $t("views.channels.tabs.Blocked") }}</v-tab>
             </v-tabs>
         </portal>
-        <v-divider />
+
         <v-container fluid class="pa-0">
             <v-list class="d-flex justify-space-between" style="background: none" v-if="category !== Tabs.BLOCKED">
                 <!-- Dropdown to pick sort-by into 'sort' data attr -->

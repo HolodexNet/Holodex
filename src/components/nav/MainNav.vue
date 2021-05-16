@@ -26,7 +26,6 @@
             clipped-left
             flat
             v-show="!(isMobile && isWatchPage) && !isMultiView"
-            v-scroll="onScroll"
             extension-height="36"
         >
             <!--=============================== Top Bar (Regular View) =============================-->
@@ -172,8 +171,13 @@
             >
                 <!-- this is just the element that covers up the notch. don't worry about it. -->
             </div>
+
+            <!-- Extension Slot for mobile v-tabs -->
+            <!-- Disable onScroll when ext is disabled. onScroll hooks on to window, so it can live anywhere -->
+            <span v-if="!disableExt" v-scroll="onScroll" />
             <template v-slot:extension v-if="!disableExt">
                 <v-slide-y-transition>
+                    <!-- v-tabs are teleported here from their respective view -->
                     <portal-target name="mainNavExt" slim v-if="showExt"> </portal-target>
                 </v-slide-y-transition>
             </template>
