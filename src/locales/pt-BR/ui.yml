@@ -183,9 +183,6 @@ views:
     resetAllSettings: Redefinir todas as configurações/dados
     clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
     tlLanguageSelection: Ver Traduções no Chat nestes idiomas
-    defaultFavorites: Abrir Favoritos por Padrão
-    defaultFavoritesMsg: >-
-      Ir aos Favoritos ao visitar o holodex.net, ou clicando na logo à esquerda.
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
