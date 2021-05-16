@@ -49,6 +49,8 @@ function defaultState() {
         activeSockets: 0,
         // reportDialog: false,
         reportVideo: null,
+
+        showExtension: false,
     };
 }
 
@@ -58,7 +60,8 @@ function defaultState() {
 
 const syncedModules = /^(?:library|settings)/;
 // eslint-disable-next-line max-len
-const syncedMutations = /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist))/;
+const syncedMutations =
+    /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist))/;
 
 export default new Vuex.Store({
     plugins: [
@@ -155,6 +158,9 @@ export default new Vuex.Store({
         },
         setTPCookieAlertDismissed(state, dismissed) {
             state.TPCookieAlertDismissed = dismissed;
+        },
+        setShowExtension(state, show) {
+            state.showExtension = show;
         },
     },
     actions: {

@@ -5,7 +5,7 @@
             left: () => (category = Math.min(category + 1, 3)),
         }"
     >
-        <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs">
+        <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
             <v-tabs v-model="category" class="channels-tabs" v-if="isActive">
                 <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
                 <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
@@ -105,10 +105,11 @@ import { mapState } from "vuex";
 import { localSortChannels } from "@/utils/functions";
 import reloadable from "@/mixins/reloadable";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
+import isActive from "@/mixins/isActive";
 
 export default {
     name: "Channels",
-    mixins: [reloadable],
+    mixins: [reloadable, isActive],
     metaInfo() {
         const vm = this;
         return {

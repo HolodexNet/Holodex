@@ -5,8 +5,9 @@
             right: () => (tab = Math.max(tab - 1, 0)),
             left: () => (tab = Math.min(tab + 1, 2)),
         }"
+        v-scroll="onScroll"
     >
-        <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs">
+        <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
             <v-tabs v-model="tab" :centered="$vuetify.breakpoint.xs">
                 <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
                 <!-- <v-tab>
@@ -18,13 +19,6 @@
                 <v-tab>
                     {{ $t("views.home.recentVideoToggles.subber") }}
                 </v-tab>
-                <v-btn
-                    class="align-self-center ml-auto mr-2"
-                    icon
-                    @click.stop="currentGridSize = (currentGridSize + 1) % ($vuetify.breakpoint.xs ? 2 : 3)"
-                >
-                    <v-icon>{{ $store.getters.gridIcon }}</v-icon>
-                </v-btn>
             </v-tabs>
         </portal>
 
@@ -93,6 +87,7 @@ import reloadable from "@/mixins/reloadable";
 import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
+import isActive from "@/mixins/isActive";
 
 export default {
     name: "Home",
@@ -103,7 +98,7 @@ export default {
             },
         };
     },
-    mixins: [reloadable],
+    mixins: [reloadable, isActive],
     components: {
         VideoCardList,
         LoadingOverlay,
@@ -121,15 +116,33 @@ export default {
                 ARCHIVE: 1,
                 CLIPS: 2,
             }),
+            previousScroll: 0,
+            isScrollingUp: false,
+            currentScroll: 0,
+            savedScroll: 0,
+            computedScrollThreshold: 100,
+            showExt: null,
         };
     },
     mounted() {
         this.init();
+        this.$store.commit("setShowExtension", true);
     },
     watch: {
         // eslint-disable-next-line func-names
         "$store.state.currentOrg": function () {
             this.init();
+        },
+        isScrollingUp() {
+            this.savedScroll = this.savedScroll || this.currentScroll;
+        },
+        showExt(nw) {
+            this.savedScroll = 0;
+            console.log(nw);
+            this.$store.commit("setShowExtension", this.showExt);
+        },
+        tab() {
+            this.$store.commit("setShowExtension", true);
         },
     },
     computed: {
@@ -206,6 +219,20 @@ export default {
                 });
                 return res.data;
             };
+        },
+        onScroll() {
+            this.previousScroll = this.currentScroll;
+            this.currentScroll = this.target ? this.target.scrollTop : window.pageYOffset;
+
+            this.isScrollingUp = this.currentScroll < this.previousScroll;
+            this.currentThreshold = Math.abs(this.currentScroll - this.computedScrollThreshold);
+
+            this.$nextTick(() => {
+                if (Math.abs(this.currentScroll - this.savedScroll) > this.computedScrollThreshold) this.thresholdMet();
+            });
+        },
+        thresholdMet() {
+            this.showExt = this.isScrollingUp || this.currentScroll < this.computedScrollThreshold;
         },
     },
 };
