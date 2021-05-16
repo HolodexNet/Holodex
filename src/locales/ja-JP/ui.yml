@@ -143,8 +143,10 @@ views:
   home:
     liveOrUpcomingHeading: 配信中・配信予定
     recentVideosHeading: 最近の動画
+    noStreams: 現在配信中/配信予定の動画はありません。
     recentVideoToggles:
       all: すべて
+      official: アーカイブ
       subber: 切り抜き
   library:
     savedVideosTitle: 保存した動画
@@ -201,6 +203,9 @@ views:
     resetAllSettings: すべての設定やデータをリセット
     clipLanguageSelection: '次の言語で切り抜きを表示する'
     tlLanguageSelection: 次の言語でライブチャット翻訳を表示する
+    defaultPage: デフォルトページ
+    defaultPageMsg: >-
+      Holodexを開いたときもしくは、ページ左上のロゴをクリックしたときに開かれるページを設定します
     videoFeedSettings: 動画フィードの設定
     siteNavigationSettings: サイトナビゲーション
     languageSettings: 言語
