@@ -184,9 +184,6 @@ views:
     resetAllSettings: 모든 설정/데이터 초기화
     clipLanguageSelection: '다음 언어로 된 클립 보기:'
     tlLanguageSelection: 해당 언어로 실시간 채팅 번역 보기
-    defaultFavorites: 즐겨찾기를 기본 페이지로 설정
-    defaultFavoritesMsg: >-
-      holodex.net에 처음 접속할 때와 좌측 상단 로고를 클릭할 때 즐겨찾기 페이지를 엽니다.
     videoFeedSettings: 동영상 피드 설정
     siteNavigationSettings: 사이트/메뉴
     languageSettings: 언어
