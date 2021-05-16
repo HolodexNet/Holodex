@@ -185,9 +185,6 @@ views:
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
     clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
     tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
-    defaultFavorites: Standardmäßig Favoriten öffnen
-    defaultFavoritesMsg: >-
-      Öffne deine Favoriten automatisch wenn du holodex.net besuchst oder das Logo oben links anklickst.
     videoFeedSettings: Video-Feed Einstellungen
     siteNavigationSettings: Seite/Navigation
     languageSettings: Sprache
