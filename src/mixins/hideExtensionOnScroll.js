@@ -19,7 +19,7 @@ export default {
             },
         },
         disableExt() {
-            return !(this.$vuetify.breakpoint.xs && ["home", "channels"].includes(this.$route.name));
+            return !(this.$vuetify.breakpoint.xs && ["home", "channels", "favorites"].includes(this.$route.name));
         },
     },
     watch: {

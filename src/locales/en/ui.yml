@@ -152,6 +152,7 @@ views:
   home:
     liveOrUpcomingHeading: Live / Upcoming
     recentVideosHeading: Recent Videos
+    noStreams: No live or upcoming streams at the moment
     recentVideoToggles:
       all: All
       official: Archive

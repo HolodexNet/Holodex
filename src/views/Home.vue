@@ -5,6 +5,8 @@
             right: () => (tab = Math.max(tab - 1, 0)),
             left: () => (tab = Math.min(tab + 1, 2)),
         }"
+        style="min-height: 100%"
+        class="d-flex flex-column"
     >
         <!-- Teleport tabs to nav extension slot -->
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
@@ -16,7 +18,10 @@
                     $store.state.settings.darkMode ? 'primary--text text--lighten-3' : 'primary--text text--darken-2'
                 "
             >
-                <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
+                <v-tab>
+                    {{ $t("views.home.liveOrUpcomingHeading") }}
+                    <!-- <v-chip small class="ml-1" color="primary">{{ (lives.length + upcoming.length) }}</v-chip> -->
+                </v-tab>
                 <v-tab>
                     {{ $t("views.home.recentVideoToggles.official") }}
                 </v-tab>
@@ -26,10 +31,10 @@
             </v-tabs>
         </portal>
         <LoadingOverlay :isLoading="false" :showError="hasError" />
-        <div v-show="!hasError">
+        <template v-show="!hasError">
             <template v-if="tab === Tabs.LIVE_UPCOMING">
                 <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
-                <template v-else>
+                <template v-else-if="lives.length || upcoming.length">
                     <VideoCardList
                         :videos="lives"
                         includeChannel
@@ -47,6 +52,11 @@
                         :dense="currentGridSize > 0"
                     >
                     </VideoCardList>
+                </template>
+                <template v-else>
+                    <div class="ma-auto pa-5 text-center">
+                        {{ $t("views.home.noStreams") }}
+                    </div>
                 </template>
             </template>
             <template v-else>
@@ -72,7 +82,7 @@
                     </generic-list-loader>
                 </keep-alive>
             </template>
-        </div>
+        </template>
     </v-container>
 </template>
 
