@@ -6,6 +6,7 @@
             left: () => (tab = Math.min(tab + 1, 2)),
         }"
         v-scroll="onScroll"
+        ref="Home"
     >
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
             <v-tabs v-model="tab" :centered="$vuetify.breakpoint.xs">
@@ -142,7 +143,11 @@ export default {
             this.$store.commit("setShowExtension", this.showExt);
         },
         tab() {
-            this.$store.commit("setShowExtension", true);
+            // this.showExt = null;
+            this.showExt = true;
+            this.$nextTick(() => {
+                window.scrollTo(0, 0);
+            });
         },
     },
     computed: {
