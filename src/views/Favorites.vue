@@ -21,7 +21,10 @@
                             : 'primary--text text--darken-2'
                     "
                 >
-                    <v-tab>{{ $t("views.home.liveOrUpcomingHeading") }}</v-tab>
+                    <v-tab>
+                        {{ $t("views.home.liveOrUpcomingHeading") }}
+                        <v-chip small class="ml-1 px-2" color="primary">{{ lives.length + upcoming.length }}</v-chip>
+                    </v-tab>
                     <v-tab>
                         {{ $t("views.home.recentVideoToggles.official") }}
                     </v-tab>
