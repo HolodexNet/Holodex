@@ -201,9 +201,6 @@ views:
     resetAllSettings: すべての設定やデータをリセット
     clipLanguageSelection: '次の言語で切り抜きを表示する'
     tlLanguageSelection: 次の言語でライブチャット翻訳を表示する
-    defaultFavorites: デフォルトでお気に入りに移動する
-    defaultFavoritesMsg: >-
-      holodex.netにアクセスした際や、ページ上部左のロゴをクリックした際にお気に入りに移動します。
     videoFeedSettings: 動画フィードの設定
     siteNavigationSettings: サイトナビゲーション
     languageSettings: 言語
