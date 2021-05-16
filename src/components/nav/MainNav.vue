@@ -27,6 +27,7 @@
             flat
             v-show="!(isMobile && isWatchPage) && !isMultiView"
             v-scroll="onScroll"
+            extension-height="36"
         >
             <!--=============================== Top Bar (Regular View) =============================-->
 
@@ -368,6 +369,8 @@ export default {
     /* height: calc(env(safe-area-inset-top,0px) + 30px); */
     padding-top: 0px;
     margin-top: env(safe-area-inset-top, 0px) !important;
+}
+#top-bar.v-toolbar--extended {
     height: 56px !important;
 }
 
