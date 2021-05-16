@@ -184,9 +184,6 @@ views:
     resetAllSettings: Сбросить все настройки/данные
     clipLanguageSelection: 'Посмотрите клипы на этих языках:'
     tlLanguageSelection: Языки для перевода трансляций
-    defaultFavorites: Открывать "Избранное" по умолчанию
-    defaultFavoritesMsg: >-
-      Открывать "Избранное" по умолчанию при открытии holodex.net, или при нажатии на логотип сверху слева.
   app:
     update_available: Доступно обновление
     update_btn: Обновить
