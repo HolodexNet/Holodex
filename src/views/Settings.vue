@@ -154,7 +154,7 @@ export default {
         ...syncState("settings", [
             "darkMode",
             "redirectMode",
-            // "autoplayVideo",
+            "autoplayVideo",
             "scrollMode",
             "hideThumbnail",
             "defaultOpen",

@@ -5,7 +5,7 @@
                 <div class="text-h6 mb-2">
                     {{ $t("views.library.savedVideosTitle") }}
                 </div>
-                <div class="d-flex flex-row">
+                <div class="d-flex flex-row flex-wrap">
                     <v-btn class="mr-1 mb-1" @click="showReset ? reset() : selectAll()" color="blue-grey">
                         {{ showReset ? $t("views.library.selectionReset") : $t("views.library.selectionSelectAll") }}
                     </v-btn>

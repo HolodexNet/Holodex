@@ -18,7 +18,7 @@ const initialState = {
 
     // Content
     redirectMode: false,
-    autoplayVideo: true,
+    autoplayVideo: false,
     scrollMode: true,
     hideThumbnail: false,
     nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
