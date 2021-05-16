@@ -193,9 +193,6 @@ views:
     resetAllSettings: Reset Semua Pengaturan/Data
     clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
     tlLanguageSelection: Melihat Terjemahan dalam bahasa ini
-    defaultFavorites: Membuka Favorit secara default
-    defaultFavoritesMsg: >-
-      Menampilkan menu favorit secara langsung ketika mengunjungi holodex.net, atau dengan menekan logo pojok kiri atas.
     videoFeedSettings: Pengaturan Mengenai Video
     siteNavigationSettings: Navigasi/Situs
     languageSettings: Bahasa
