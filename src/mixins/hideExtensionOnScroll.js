@@ -9,9 +9,6 @@ export default {
             showExt: true,
         };
     },
-    // mounted() {
-    //     this.$store.commit("setShowExtension", true);
-    // },
     computed: {
         modeled: {
             get() {
@@ -20,6 +17,9 @@ export default {
             set(val) {
                 this.$emit("input", val);
             },
+        },
+        disableExt() {
+            return !(this.$vuetify.breakpoint.xs && ["home", "channels"].includes(this.$route.name));
         },
     },
     watch: {
