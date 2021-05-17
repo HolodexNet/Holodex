@@ -437,7 +437,7 @@ export default {
             // unsub from old langauge
             this.$socket.client.emit("unsubscribe", { video_id: this.video.id, lang: oldLang });
             this.$socket.client.off(`${this.video.id}/${oldLang}`, this.handleMessage);
-            this.sucesss = false;
+            this.success = false;
             this.tlJoin();
         },
         utcToTimestamp(utc) {
