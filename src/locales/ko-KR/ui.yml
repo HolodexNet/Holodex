@@ -109,10 +109,15 @@ component:
     reasons:
       - 잘못된 동영상 태그
       - 매우 낮은 화질/오해의 소지가 있는 콘텐츠
-      - Violates the org's derivative work guidelines or inappropriate
+      - 소속의 2차 장작 가이드라인을 위반하거나 부적절함
       - 기타
   thirdpartycookie:
+    explanation: >-
+      인터넷 브라우저의 작동 방식으로 인해 엄격한 <b>타사 쿠키</b> 정책을 사용하는 일부 브라우저 또는 <kbd>YouTube.com</kbd> 쿠키를 차단하는 브라우저는 Youtube 채팅에 로그인하거나 사용하기 어려울 수 있습니다. <br /><br /> 타사 쿠키 차단에서 <kbd>Youtube.com</kbd>을 제외하거나 <kbd>Holodex.net</kbd>의 쿠키 보안 / 개인정보 수준을 낮추면 이 문제를 해결할 수 있습니다. <br /><br /> 이를 수행하는 방법에 대한 자세한 정보를 제공하는 일부 웹 사이트를 포함했습니다.
     dialogTitle: Holodex에서 YouTube 채팅을 사용함
+    alertText: >-
+      브라우저 개인정보 설정으로 인해 Youtube 채팅에 로그인할 수 없습니다. 자세한 정보를 원하시면 여기를 클릭하세요
+    neverShowAgain: 다시 보지 않기
 views:
   channel:
     video: 동영상
