@@ -102,6 +102,17 @@ component:
   comment:
     close: 닫기
     readMore: 자세히 보기
+  reportDialog:
+    title: 신고
+    comments: 세부정보 (선택)
+    success: 신고되었습니다. 감사합니다!
+    reasons:
+      - 잘못된 동영상 태그
+      - 매우 낮은 화질/오해의 소지가 있는 콘텐츠
+      - Violates the org's derivative work guidelines or inappropriate
+      - 기타
+  thirdpartycookie:
+    dialogTitle: Holodex에서 YouTube 채팅을 사용함
 views:
   channel:
     video: 동영상
@@ -116,6 +127,7 @@ views:
       recentUpload: 최근 업로드
       videoCount: 동영상 수
       clipCount: 클립 수
+      org: 조직
     tabs:
       Vtuber: 버튜버
       Subber: 키리누키
@@ -126,8 +138,10 @@ views:
   home:
     liveOrUpcomingHeading: 실시간 / 예정
     recentVideosHeading: 최근 동영상
+    noStreams: 현재 실시간이거나 예정된 방송 없음
     recentVideoToggles:
       all: 모두
+      official: 아카이브
       subber: 클립
   library:
     savedVideosTitle: 저장된 동영상
@@ -184,6 +198,9 @@ views:
     resetAllSettings: 모든 설정/데이터 초기화
     clipLanguageSelection: '다음 언어로 된 클립 보기:'
     tlLanguageSelection: 해당 언어로 실시간 채팅 번역 보기
+    defaultPage: 기본 페이지
+    defaultPageMsg: >-
+      holodex.net에 처음 접속할 때와 좌측 상단 로고를 클릭할 때 이 페이지를 엽니다.
     videoFeedSettings: 동영상 피드 설정
     siteNavigationSettings: 사이트/메뉴
     languageSettings: 언어
@@ -285,6 +302,7 @@ views:
     video:
       selectLive: 방송 선택하기
       addCustomVideo: 사용자 지정 동영상 추가
+    fullScreen: 전체 화면
   mugen:
     welcome: >-
       MugenClips에 오신 것을 환영합니다! 이 페이지의 모든 사람은 무작위로 선택된 English Hololive 클립을 보고 있습니다. 전세계의 Hololive 팬들과 함께 시청하고 채팅하세요. 건너뛰고 모든 사람과 다시 동기화하려면 페이지를 새로고침하세요.
