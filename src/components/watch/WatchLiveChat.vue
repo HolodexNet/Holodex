@@ -192,7 +192,7 @@ export default {
     position: fixed;
     bottom: 0px;
     width: 100%;
-    z-index: 10;
+    z-index: 2;
     /* pre-iOS 11.2 */
     height: calc((100% - 36px - 100vw * 0.5625) - constant(safe-area-inset-top));
     padding-bottom: calc(constant(safe-area-inset-bottom) / 1.75);
@@ -235,24 +235,12 @@ export default {
 .chat-overlay {
     width: 100%;
     position: absolute;
-    z-index: 5;
+    z-index: 3;
     top: 0;
 }
 
 .chat-overlay-stickbottom {
     bottom: 0;
     top: initial;
-}
-
-.alert-overlay {
-    position: absolute;
-    z-index: 6;
-    top: 40px;
-    left: 10px;
-    right: 10px;
-    cursor: pointer;
-}
-.alert-overlay:hover {
-    top: 37px;
 }
 </style>

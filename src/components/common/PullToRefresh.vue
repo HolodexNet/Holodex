@@ -31,6 +31,11 @@ export default {
             destroyCb: null,
         };
     },
+    computed: {
+        shouldRefresh() {
+            return ["watch_id", "watch", "mugen-clips", "edit_video", "multiview"].includes(this.$route.name);
+        },
+    },
     mounted() {
         const self = this;
         // eslint-disable-next-line no-unused-vars
@@ -43,7 +48,7 @@ export default {
                 return (
                     !window.scrollY &&
                     // disable on watch page
-                    !self.isWatchPage &&
+                    !self.shouldRefresh &&
                     // disable on mobile when navdrawer is pulled out
                     // self.$store.state.isMobile && (removing restriction on mobile)
                     !self.$store.state.navDrawer
@@ -58,7 +63,7 @@ export default {
                 });
                 // do default refresh if none
                 if (!handledRefresh.consumed) {
-                    this.$router.go(0);
+                    self.$router.go(0);
                 }
                 // Stops the refresh icon from hiding instantly, little bit of placebo XD
                 await new Promise((resolve) => setTimeout(resolve, 300));
