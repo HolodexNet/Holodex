@@ -44,6 +44,7 @@ component:
     edit: Ubah
     copiedToClipboard: Tautan disalin ke clipboard.
     copyLink: Salin Tautan Holodex
+    premiere: PREMIER
   videoDescription:
     description: Deskripsi
   description:
@@ -110,6 +111,13 @@ component:
       - Kualitas Rendah / Konten Menyesatkan
       - Melanggar Pedoman Kebijakan Karya yang ditetapkan organisasi atau tidak pantas
       - Lainnya
+  thirdpartycookie:
+    explanation: >-
+      Karena cara kerja browser internetmu, beberapa browser dengan kebijakan ketat <b>Cookie Pihak Ketiga</b> atau pemblokiran cookies dari <kbd>YouTube.com</kbd> akan membuat sulit untuk masuk / menggunakan chat Youtube. <br /><br /> Kamu bisa memperbaiki hal ini dengan cara whitelist <kbd>Youtube.com</kbd> dalam pemblokiran Cookie Pihak Ketiga, atau menurunkan tingkatan keamanan / privasi cookie untuk situs <kbd>Holodex.net</kbd>. <br /><br /> Kami akan mencantumkan beberapa situs yang akan memberikan informasi lebih lanjut mengenai hal ini.
+    dialogTitle: Menggunakan Chat Youtube di Holodex
+    alertText: >-
+      Pengaturan pada privasi browser kamu membuat sulit untuk masuk pada chat Youtube. Klik disini untuk info lebih lanjut
+    neverShowAgain: Jangan Pernah Tampilkan Peringatan ini Lagi
 views:
   channel:
     video: Video
@@ -135,8 +143,10 @@ views:
   home:
     liveOrUpcomingHeading: Sedang Berlangsung / Akan Tayang
     recentVideosHeading: Video Terkini
+    noStreams: Saat ini tidak ada siaran yang sedang berlangsung atau akan tayang
     recentVideoToggles:
       all: Semua
+      official: Arsip
       subber: Klip
   library:
     savedVideosTitle: Video Tersimpan
@@ -193,6 +203,9 @@ views:
     resetAllSettings: Reset Semua Pengaturan/Data
     clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
     tlLanguageSelection: Melihat Terjemahan dalam bahasa ini
+    defaultPage: Halaman Awal
+    defaultPageMsg: >-
+      Membuka halaman ini ketika kamu mengunjungi holodex.net, atau dengan menekan logo pada pojok kiri atas.
     videoFeedSettings: Pengaturan Mengenai Video
     siteNavigationSettings: Navigasi/Situs
     languageSettings: Bahasa
