@@ -164,9 +164,6 @@ export default {
             // connected to the watch.lang hook below.
             return this.$store.state.settings.lang;
         },
-        isWatchPage() {
-            return ["watch_id", "watch", "mugen-clips", "edit_video", "multiview"].includes(this.$route.name);
-        },
     },
     watch: {
         darkMode() {

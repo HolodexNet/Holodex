@@ -4,9 +4,16 @@
 ##### New Features
 - **New Home Page**. Leave us feedback in discord!
 - It's now possible to set MultiView as the home page too in the settings.
+- Added library tab to multiview
+- Library is pagianted and can be sorted by Date added and upload date
+- 
 
 ##### Patches
 - Music page for All Vtubers org now work, will display music ordered by date they were sang. Searches is limited to Track Name.
+- Fixed watch page refreshing when being resized
+- Premieres will no longer spoil video length
+- Fixed TLs not working when changing languages
+
 
 ### 2.9 & 2.9.1 Holodex [*May 10, 2021*]
 ##### New Features:
