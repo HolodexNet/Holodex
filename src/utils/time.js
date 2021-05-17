@@ -43,10 +43,12 @@ export function localizedDayjs(time, lang) {
     return dayjs(time).locale(lang);
 }
 
-export function formatDistance(time, lang = "en", $t) {
+export function formatDistance(time, lang = "en", $t, allowNegative = true) {
     let diff;
     if (!time) return "?";
-    if (Math.abs(dayjs().diff(time, "minutes")) < 1) return $t("time.soon");
+    const minutesdiff = dayjs().diff(time, "minutes");
+    if (Math.abs(minutesdiff) < 1) return $t("time.soon");
+    if (!allowNegative && minutesdiff > 0) return $t("time.soon");
     if (Math.abs(dayjs().diff(time, "days")) > 60) return localizedDayjs(time, lang).format("ll");
     if (Math.abs(dayjs().diff(time, "hour")) > 23)
         return `${localizedDayjs(time, lang).format("l")} (${localizedDayjs(time, lang).format("LT")})`;

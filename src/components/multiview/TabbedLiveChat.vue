@@ -1,7 +1,7 @@
 <template>
     <div style="width: 100%; height: 100%">
         <div class="d-flex flex-row align-center py-1">
-            <v-btn icon small class="mx-2" @click="currentTab -= 1" :disabled="currentTab <= 0">
+            <v-btn icon small class="mx-1" @click="currentTab -= 1" :disabled="currentTab <= 0" v-if="setShowChat">
                 <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
             </v-btn>
             <v-select
@@ -9,9 +9,16 @@
                 v-model="currentTab"
                 outlined
                 hide-details
-                class="tabbed-chat-select mx-3"
+                class="tabbed-chat-select mx-1"
             ></v-select>
-            <v-btn icon small class="mx-2" @click="currentTab += 1" :disabled="currentTab >= activeVideos.length - 1">
+            <v-btn
+                icon
+                small
+                class="mx-1"
+                @click="currentTab += 1"
+                :disabled="currentTab >= activeVideos.length - 1"
+                v-if="setShowChat"
+            >
                 <v-icon>{{ icons.mdiChevronRight }}</v-icon>
             </v-btn>
         </div>

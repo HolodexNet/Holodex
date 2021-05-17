@@ -132,7 +132,7 @@ export default {
         },
         // eslint-disable-next-line func-names
         search: debounce(function (newVal) {
-            this.debounceSearch = newVal;
+            this.debounceSearch = newVal.trim();
             this.$router.push({
                 query: {
                     ...this.$route.query,

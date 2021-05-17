@@ -14,11 +14,11 @@ const initialState = {
 
     // Site
     darkMode: true,
-    defaultOpenFavorites: false,
+    defaultOpen: "home",
 
     // Content
     redirectMode: false,
-    autoplayVideo: true,
+    autoplayVideo: false,
     scrollMode: true,
     hideThumbnail: false,
     nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
@@ -89,7 +89,7 @@ const mutations = {
         state.scrollMode = val;
     },
     ...createSimpleMutation([
-        "defaultOpenFavorites",
+        "defaultOpen",
         "liveTlStickBottom",
         "liveTlLang",
         "liveTlFontSize",

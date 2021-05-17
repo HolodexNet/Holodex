@@ -99,7 +99,7 @@
 
                             <v-list-item
                                 :disabled="video.type === 'clip'"
-                                :to="`/multiview/AAUY${video.id}${video.channel.name}%2CUAEYchat`"
+                                :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`"
                                 ><v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{
                                     icons.mdiViewDashboard
                                 }}</v-icon>
@@ -290,7 +290,8 @@ export default {
                         this.video.start_scheduled || this.video.available_at,
                         this.lang,
                         this.$t.bind(this),
-                    );
+                        false, // allowNegative = false
+                    ); // upcoming videos don't get to be ("5 minutes ago")
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:
@@ -298,12 +299,13 @@ export default {
             }
         },
         formattedDuration() {
-            const duration =
-                this.video.start_actual && this.video.status === "live"
-                    ? dayjs(this.now).diff(dayjs(this.video.start_actual))
-                    : this.video.duration * 1000;
-
-            return duration ? this.formatDuration(duration) : "";
+            if (this.video.start_actual && this.video.status === "live") {
+                return this.formatDuration(dayjs(this.now).diff(dayjs(this.video.start_actual)));
+            }
+            if (this.video.status === "upcoming" && this.video.duration) {
+                return this.$t("component.videoCard.premiere");
+            }
+            return this.video.duration && this.formatDuration(this.video.duration * 1000);
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
@@ -374,6 +376,12 @@ export default {
         copyLink() {
             const link = `${window.origin}/watch/${this.video.id}`;
             this.copyToClipboard(link);
+        },
+        getChannelShortname(ch) {
+            return (
+                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_")) ||
+                ch.name.split(/[/\s]/)[0].replace(",", "")
+            );
         },
     },
 };

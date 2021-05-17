@@ -28,7 +28,9 @@ export function encodeLayout({ layout, contents, includeVideo = false }) {
                     if (content.cellVideoType === "twitch") {
                         encodedBlock += `twitch${content.id}`;
                     } else {
-                        encodedBlock += content.id + content.channel.name.split(" ")[0].replace(",", "");
+                        encodedBlock +=
+                            content.id +
+                            (content.channel.english_name || content.channel.name.split(/[/\s]/)[0].replace(",", ""));
                     }
                 }
             }

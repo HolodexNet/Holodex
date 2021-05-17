@@ -2,10 +2,10 @@
     <v-container>
         <v-row class="d-flex justify-space-between">
             <v-col>
-                <div class="text-h6">
+                <div class="text-h6 mb-2">
                     {{ $t("views.library.savedVideosTitle") }}
                 </div>
-                <div>
+                <div class="d-flex flex-row flex-wrap">
                     <v-btn class="mr-1 mb-1" @click="showReset ? reset() : selectAll()" color="blue-grey">
                         {{ showReset ? $t("views.library.selectionReset") : $t("views.library.selectionSelectAll") }}
                     </v-btn>
@@ -38,12 +38,13 @@
                             </v-list-item-group>
                         </v-list>
                     </v-menu>
+
                     <!-- <v-btn class="mr-1 mb-1" color="green" @click="exportSelected">
                         {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
                     </v-btn> -->
                     <v-dialog v-model="deleteDialog" max-width="290">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn color="red" class="mr-1 mb-1" v-bind="attrs" v-on="on">
+                            <v-btn color="red" class="mr-2 mb-1" v-bind="attrs" v-on="on">
                                 {{ $t("views.library.deleteFromLibraryButton", [selected.length]) }}
                             </v-btn>
                         </template>
@@ -70,45 +71,45 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
+
+                    <!-- <div class="d-inline-block"> -->
+                    <v-select
+                        class="d-inline-flex align-self-center mt-n1"
+                        :prepend-inner-icon="mdiSort"
+                        :items="sortby"
+                        v-model="sortModel"
+                        dense
+                        filled
+                        hide-details
+                    >
+                    </v-select>
+                    <!-- </div> -->
                 </div>
             </v-col>
         </v-row>
-        <VideoCardList :videos="savedVideosList" horizontal includeChannel v-if="savedVideosList.length > 0" dense>
-            <template v-slot:action="prop">
-                <v-checkbox
-                    v-model="selected"
-                    :ripple="false"
-                    :value="prop.video.id"
-                    hide-details
-                    @click.prevent.stop
-                />
-            </template>
-        </VideoCardList>
+        <generic-list-loader
+            v-if="savedVideosList.length > 0"
+            :paginate="true"
+            :perPage="50"
+            :loadFn="getLoadFn()"
+            v-slot="{ data }"
+            :key="'vl-home-' + sortModel + '=' + savedVideosList.length"
+        >
+            <VideoCardList :videos="data" horizontal includeChannel dense>
+                <template v-slot:action="prop">
+                    <v-checkbox
+                        v-model="selected"
+                        :ripple="false"
+                        :value="prop.video.id"
+                        hide-details
+                        @click.prevent.stop
+                    />
+                </template>
+            </VideoCardList>
+        </generic-list-loader>
         <div v-else class="text-center">
             {{ $t("views.library.emptyLibrary") }}
         </div>
-        <!-- <v-card v-if="recoveredVideos.length > 0" class="mt-2">
-            <v-card-title>Where's my saved videos!?</v-card-title>
-            <v-card-text>
-                The new library is incompatible with the old library data. The links below will take you to the same
-                video on Holodex, where you can click the save button again. We have also created a youtube playlist, if
-                you want to save it on youtube.
-            </v-card-text>
-            <v-btn :href="recoveredUrl" color="green" class="ma-2" target="_blank" rel="noreferrer">
-                Open all as Youtube Playlist
-            </v-btn>
-            <v-btn @click="clearOldStorage" class="ma-2">Clear Old Storage And Remove Message</v-btn>
-            <v-list>
-                <v-list-item v-for="video in recoveredVideos" :key="video.id">
-                    <v-list-item-action>
-                        <v-btn text color="primary" :href="`/watch/${video.yt_video_key}`" target="_blank">
-                            Open on Holodex
-                        </v-btn>
-                    </v-list-item-action>
-                    {{ video.title }}
-                </v-list-item>
-            </v-list>
-        </v-card> -->
         <v-dialog v-model="instructionsDialog" :width="$store.state.isMobile ? '90%' : '60vw'">
             <v-card>
                 <v-card-title>{{ $t("views.library.exportYTHeading") }}</v-card-title>
@@ -140,8 +141,16 @@
 
 <script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
-import { mdiFileTable } from "@mdi/js";
+import { mdiFileTable, mdiSort } from "@mdi/js";
 import { json2csvAsync } from "json-2-csv";
+import GenericListLoader from "@/components/video/GenericListLoader.vue";
+
+const SORT_OPTIONS = [
+    { cat: "added_at", asc: -1 },
+    { cat: "added_at", asc: 1 },
+    { cat: "available_at", asc: -1 },
+    { cat: "available_at", asc: 1 },
+];
 
 export default {
     name: "Library",
@@ -155,44 +164,49 @@ export default {
     },
     components: {
         VideoCardList,
+        GenericListLoader,
     },
     data() {
         return {
             mdiFileTable,
             selected: [],
             deleteDialog: false,
-            recoveredVideos: [],
-            recoveredUrl: "",
             instructionsDialog: false,
+
+            mdiSort,
+            sortby: [
+                {
+                    text: "Date Added to Library, latest first",
+                    value: 0,
+                },
+                {
+                    text: "Date Added to Library, earliest first",
+                    value: 1,
+                },
+                {
+                    text: "Upload date, latest first",
+                    value: 2,
+                },
+                {
+                    text: "Upload date, earliest first",
+                    value: 3,
+                },
+            ],
+            sortModel: 0,
         };
     },
-    created() {
-        // if (localStorage.getItem("holodex") !== null) {
-        //     const oldStore = JSON.parse(localStorage.getItem("holodex"));
-        //     const oldSavedVideos = oldStore.savedVideos;
-        //     if (oldSavedVideos) {
-        //         const videos = Object.values(oldSavedVideos);
-        //         // this.recoveryUrl =
-        //         this.recoveredVideos = videos;
-        //         this.recoveredUrl = `https://www.youtube.com/watch_videos?video_ids=${videos
-        //             .map((v) => v.yt_video_key)
-        //             .join(",")}`;
-        //     }
-        //     // localStorage.removeItem("holodex");
-        // }
-    },
+    created() {},
     computed: {
         savedVideos() {
             return this.$store.state.library.savedVideos;
         },
         savedVideosList() {
-            return Object.values(this.savedVideos)
-                .sort((a: any, b: any) => {
-                    const dateA = new Date(a.added_at).getTime();
-                    const dateB = new Date(b.added_at).getTime();
-                    return dateA > dateB ? 1 : -1;
-                })
-                .reverse();
+            const sortStyle = SORT_OPTIONS[this.sortModel];
+            return Object.values(this.savedVideos).sort((a: any, b: any) => {
+                const dateA = new Date(a[sortStyle.cat]).getTime();
+                const dateB = new Date(b[sortStyle.cat]).getTime();
+                return dateA > dateB ? 1 * sortStyle.asc : -1 * sortStyle.asc;
+            });
         },
         showReset() {
             return this.selected.length !== 0;
@@ -221,10 +235,6 @@ export default {
             window.open(url, "_blank", "noopener");
             this.reset();
         },
-        // clearOldStorage() {
-        //     localStorage.removeItem("holodex");
-        //     this.$router.go(0);
-        // },
         async downloadAsCSV() {
             const selectedSet = new Set(this.selected);
             const csvString = await json2csvAsync(this.savedVideosList.filter((v) => selectedSet.has(v.id)));
@@ -236,6 +246,15 @@ export default {
 
             document.body.appendChild(a);
             a.click();
+        },
+        getLoadFn() {
+            return async (offset, limit) => {
+                const res = {
+                    total: this.savedVideosList.length,
+                    items: this.savedVideosList.slice(offset, offset + limit),
+                };
+                return res;
+            };
         },
     },
 };

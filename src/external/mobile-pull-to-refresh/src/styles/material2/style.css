@@ -1,0 +1,88 @@
+.pull-to-refresh-material2 {
+  position: relative;
+}
+
+.pull-to-refresh-material2__control {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 6px rgba(0,0,0,.117647), 0 1px 4px rgba(0,0,0,.117647);
+  display: none;
+}
+
+.pull-to-refresh--pulling .pull-to-refresh-material2__control,
+.pull-to-refresh--aborting .pull-to-refresh-material2__control,
+.pull-to-refresh--reached .pull-to-refresh-material2__control,
+.pull-to-refresh--refreshing .pull-to-refresh-material2__control,
+.pull-to-refresh--restoring .pull-to-refresh-material2__control {
+  display: flex;
+}
+
+.pull-to-refresh--pulling .pull-to-refresh-material2__spinner,
+.pull-to-refresh--aborting .pull-to-refresh-material2__spinner,
+.pull-to-refresh--reached .pull-to-refresh-material2__spinner,
+.pull-to-refresh--refreshing .pull-to-refresh-material2__icon,
+.pull-to-refresh--restoring .pull-to-refresh-material2__icon {
+  display: none;
+}
+
+.pull-to-refresh-material2__spinner {
+  transform-origin: center center;
+  animation: pull-to-refresh-material2-rotate 2s linear infinite;
+}
+
+.pull-to-refresh-material2__path {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  animation: pull-to-refresh-material2-dash 1.5s ease-in-out infinite;
+}
+
+.pull-to-refresh-material2__path--colorful {
+  animation: pull-to-refresh-material2-dash 1.5s ease-in-out infinite, pull-to-refresh-material2-colorful 6s ease-in-out infinite;
+}
+
+@keyframes pull-to-refresh-material2-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pull-to-refresh-material2-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
+@keyframes pull-to-refresh-material2-colorful {
+  100%,
+  0% {
+    stroke: #4285f4;
+  }
+  40% {
+    stroke: #ea4335;
+  }
+  66% {
+    stroke: #fbbc05;
+  }
+  80%,
+  90% {
+    stroke: #34a853;
+  }
+}

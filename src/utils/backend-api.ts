@@ -6,7 +6,7 @@ import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 
 export const API_BASE_URL =
     process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api" : `${window.location.origin}/api`;
-// export const API_BASE_URL = "https://staging.holodex.net/api/";
+// export const API_BASE_URL = "http://localhost:2434";
 
 export const axiosInstance = (() => {
     const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
@@ -127,16 +127,20 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    favoritesLive(query) {
-        const q = querystring.stringify(query);
-        return axiosInstance.get(`/users/live?${q}`).then((res) =>
-            res.data
-                // .concat(res.data.upcoming)
-                // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
-                .filter((live) => !(!live.start_actual && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))))
-                // get currently live and upcoming lives within the next 3 weeks
-                .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))),
-        );
+    favoritesLive(jwt) {
+        // const q = querystring.stringify(query);
+        return axiosInstance
+            .get("/users/live", {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            })
+            .then((res) =>
+                res.data
+                    // .concat(res.data.upcoming)
+                    // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
+                    .filter((live) => !(!live.start_actual && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))))
+                    // get currently live and upcoming lives within the next 3 weeks
+                    .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))),
+            );
     },
     patchFavorites(jwt, operations) {
         return axiosInstance.patch("/users/favorites", operations, {

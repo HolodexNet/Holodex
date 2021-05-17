@@ -44,6 +44,7 @@ component:
     edit: Editar
     copiedToClipboard: Link copiado para a área de transferência.
     copyLink: Copiar link Holodex
+    premiere: ESTREIA
   videoDescription:
     description: Descrição
   description:
@@ -113,6 +114,7 @@ views:
       recentUpload: Uploads Recentes
       videoCount: Número de Vídeos
       clipCount: Número de Clipes
+      org: Organização
     tabs:
       Vtuber: VTuber
       Subber: Tradutores
@@ -125,7 +127,6 @@ views:
     recentVideosHeading: Vídeos Recentes
     recentVideoToggles:
       all: Todos
-      official: Oficiais
       subber: Clipes
   library:
     savedVideosTitle: Vídeos Salvos
@@ -182,9 +183,6 @@ views:
     resetAllSettings: Redefinir todas as configurações/dados
     clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
     tlLanguageSelection: Ver Traduções no Chat nestes idiomas
-    defaultFavorites: Abrir Favoritos por Padrão
-    defaultFavoritesMsg: >-
-      Ir aos Favoritos ao visitar o holodex.net, ou clicando na logo à esquerda.
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
@@ -307,7 +305,7 @@ about:
     videoLinkage: Como posso me certificar de que os vídeos estão ligados aos vtubers apropriadamente?
     videoLinkageContent: >-
       Todas as informações são analisadas na descrição dos vídeos. Se você está clipando uma transmissão, por favor certifique-se de mencionar a transmissão oficial. Se você está clipando conteúdo feito por fãs (por exemplo, um vídeo do bilibili), apenas certifique-se de mencionar os canais oficiais do youtube de vtubers relevantes. Se você não mencionar nenhum canal de vtuber, então não mostraremos esse clipe no holodex, como todos os clipes requerem uma menção a um vtuber existente no holodex.
-    quitHolodex: "Sou um subber e gostaria que meu canal fosse removido do Holodex\\r\n"
+    quitHolodex: "Sou um subber e gostaria que meu canal fosse removido do Holodex\\r"
     quitHolodexContent: >-
       Estou triste em vê-lo ir :(, por favor me avise se houver qualquer problema com que possamos lhe ajudar. Se você ainda deseja ser removido, por favor nos mande uma mensagem no Discord.
     favorite:

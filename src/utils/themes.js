@@ -21,8 +21,8 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#F2AD46",
-                secondary: "#A6C449",
+                primary: "#F4B056",
+                secondary: "#82D251",
             },
             light: {
                 background: "#f2f2f2",

@@ -30,9 +30,8 @@ const routes = [
         path: "/",
         redirect(to) {
             const { hash, params, query } = to;
-            if (store.state.settings.defaultOpenFavorites && store.state.userdata.jwt)
-                return { name: "favorites", hash, params, query };
-            return { name: "home", hash, params, query };
+            return { name: store.state.settings.defaultOpen, hash, params, query };
+            // return { name: "home", hash, params, query };
         },
     },
     {
@@ -165,6 +164,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    to.meta.prevRoute = from;
     const { lang } = store.state.settings;
     if (lang !== "en") {
         loadLanguageAsync(lang).then(() => next());

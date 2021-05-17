@@ -169,18 +169,18 @@ export default {
         search: debounce(function (val) {
             if (!val) return;
             this.fromApi = [];
-            const entropy = encodeURIComponent(val).length;
+            const entropy = encodeURIComponent(val.trim()).length;
             if (entropy <= 1) return;
-            const formatted = val.replace("#", "");
+            const formatted = val.trim().replace("#", "");
             this.getAutocomplete(formatted)
                 .then((res) => {
                     let textQueries = [];
                     if (encodeURIComponent(val).length > 1)
                         textQueries = [
                             { type: "none", disabled: true, divider: true, value: "div", text: "div" },
-                            { type: "title & desc", value: `${val}title & desc`, text: val },
+                            { type: "title & desc", value: `${val}title & desc`, text: val.trim() },
                             { type: "none", disabled: true, divider: true, value: "div", text: "div" },
-                            { type: "comments", value: `${val}comments`, text: val },
+                            { type: "comments", value: `${val}comments`, text: val.trim() },
                         ];
                     this.fromApi = [...res.data, ...textQueries];
                 })
@@ -296,9 +296,6 @@ export default {
 .search-bar {
     // width management.
     max-width: 670px !important;
-    // these two properties prevent the bar from moving 'up'
-    height: 56px;
-    padding-top: 4px !important;
 
     &.search-bar-small {
         max-width: 90vw !important;
@@ -353,6 +350,11 @@ export default {
     &.v-input .v-input__slot {
         padding-left: 1px !important;
         padding-top: 1px !important;
+    }
+
+    & > .v-input__append-outer {
+        flex-shrink: 0;
+        align-items: center;
     }
 
     & > .v-input__append-outer > .v-input__icon > .v-icon.primary--text {

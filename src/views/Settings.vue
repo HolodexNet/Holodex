@@ -44,8 +44,8 @@
                             style="flex-basis: 50%"
                             v-model="darkMode"
                             :label="$t('views.settings.darkModeLabel')"
-                            :messages="$t('views.settings.darkModeMsg')"
                         ></v-switch>
+                        <!-- :messages="$t('views.settings.darkModeMsg')" -->
                         <v-select
                             class="ml-3 mt-3"
                             hide-details
@@ -70,25 +70,17 @@
                             </template>
                         </v-select>
                     </div>
-                    <v-switch
-                        v-model="defaultOpenFavorites"
-                        :label="$t('views.settings.defaultFavorites')"
-                        :messages="$t('views.settings.defaultFavoritesMsg')"
-                    ></v-switch>
+                    <v-select
+                        v-model="defaultOpen"
+                        :items="defaultOpenChoices"
+                        :label="$t('views.settings.defaultPage')"
+                        :messages="$t('views.settings.defaultPageMsg')"
+                    ></v-select>
                     <v-switch
                         v-model="redirectMode"
                         :label="$t('views.settings.redirectModeLabel')"
                         :messages="$t('views.settings.redirectModeMsg')"
                     ></v-switch>
-                    <v-switch
-                        v-model="scrollMode"
-                        :label="$t('views.settings.scrollModeLabel')"
-                        :messages="$t('views.settings.scrollModeMsg')"
-                    ></v-switch>
-                </div>
-                <div class="settings-group" v-if="!slim">
-                    <div class="py-1 text-h6">{{ $t("views.settings.videoFeedSettings") }}</div>
-                    <v-divider />
                     <v-select
                         class="mt-4"
                         v-model="currentGridSize"
@@ -100,6 +92,15 @@
                         :label="$t('views.settings.gridSizeLabel')"
                         :messages="$t('views.settings.gridSizeMsg')"
                     ></v-select>
+                    <v-switch
+                        v-model="scrollMode"
+                        :label="$t('views.settings.scrollModeLabel')"
+                        :messages="$t('views.settings.scrollModeMsg')"
+                    ></v-switch>
+                </div>
+                <div class="settings-group" v-if="!slim">
+                    <div class="py-1 text-h6">{{ $t("views.settings.videoFeedSettings") }}</div>
+                    <v-divider />
                     <v-switch
                         v-model="hideCollabStreams"
                         :label="$t('views.settings.hideCollabStreamsLabel')"
@@ -153,10 +154,10 @@ export default {
         ...syncState("settings", [
             "darkMode",
             "redirectMode",
-            // "autoplayVideo",
+            "autoplayVideo",
             "scrollMode",
             "hideThumbnail",
-            "defaultOpenFavorites",
+            "defaultOpen",
             "hideCollabStreams",
         ]),
         currentGridSize: {
@@ -224,6 +225,20 @@ export default {
 
             themeId: +localStorage.getItem("theme") || 0,
             themeSet,
+            defaultOpenChoices: Object.freeze([
+                {
+                    text: this.$t("component.mainNav.home"),
+                    value: "home",
+                },
+                {
+                    text: this.$t("component.mainNav.favorites"),
+                    value: "favorites",
+                },
+                {
+                    text: this.$t("component.mainNav.multiview"),
+                    value: "multiview",
+                },
+            ]),
         };
     },
     methods: {

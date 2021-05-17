@@ -21,6 +21,7 @@ component:
     removeFromFavorites: Rimuovi dai Preferiti
     unblock: Sblocca questo canale
     block: Blocca il contenuto di questo canale tramite Holodex
+    blocked: Bloccati
   mainNav:
     home: Home
     favorites: Preferiti
@@ -41,6 +42,7 @@ component:
     edit: Modifica
     copiedToClipboard: Link copiato negli appunti.
     copyLink: Copia il Link di Holodex
+    premiere: PREMIЀRE
   videoDescription:
     description: Descrizione
   description:
@@ -97,6 +99,7 @@ views:
       recentUpload: Caricamento Recente
       videoCount: Numero di Video
       clipCount: Numero di Clip
+      org: Organizzazione
     tabs:
       Vtuber: Vtuber
       Subber: Sottotitolatori
@@ -109,7 +112,6 @@ views:
     recentVideosHeading: Video recenti
     recentVideoToggles:
       all: Tutti
-      official: Ufficiali
       subber: Clip
   library:
     savedVideosTitle: Video salvati
@@ -269,7 +271,7 @@ about:
     videoLinkage: Come posso assicurarmi che i video siano collegati correttamente ai relativi vtuber?
     videoLinkageContent: >-
       Tutte le informazioni sono analizzate dalla descrizione del video. Se stai clippando una diretta, per favore assicurati di linkare la diretta originale. Se stai clippando contenuti fan made (es. da bilibili) assicurati di aver linkato il canale ufficiale dei relativi vtuber. Se non linki alcun canale di un vtuber non mostreremo tale clip su Holodex poiché tutte le clip richiedono il link verso un vtuber conosciuto da Holodex.
-    quitHolodex: "Sono un sottotitolatore e vorrei che il mio canale venisse rimosso da Holodex\\r\n"
+    quitHolodex: "Sono un sottotitolatore e vorrei che il mio canale venisse rimosso da Holodex\\r"
     quitHolodexContent: >-
       Ci spiace che tu te ne vada (っ °Д °;)っ. Per favore, fammi sapere se c'è qualche problema con cui posso aiutarti. Se vuoi comunque che il tuo canale venga rimosso, per favore, inviaci un messaggio su Discord.
     subber:

@@ -29,6 +29,10 @@
                         </v-icon>
                         {{ $t("views.settings.redirectModeLabel") }}
                     </v-list-item>
+                    <v-list-item @click.stop="copyLink"
+                        ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
+                        {{ $t("component.videoCard.copyLink") }}
+                    </v-list-item>
                     <v-list-item
                         :disabled="video.type === 'clip'"
                         :to="`/multiview/AAUY${video.id}${video.channel.name}%2CUAEYchat`"
@@ -45,15 +49,25 @@
                 </v-list>
             </v-menu>
         </div>
+        <v-snackbar app v-model="doneCopy" :timeout="3000" color="success">
+            {{ $t("component.videoCard.copiedToClipboard") }}
+            <template v-slot:action="{ attrs }">
+                <v-btn text v-bind="attrs" @click="doneCopy = false">
+                    {{ $t("views.app.close_btn") }}
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-card>
 </template>
 
 <script lang="ts">
 import { mdiOpenInNew, mdiArrowLeft } from "@mdi/js";
+import copyToClipboard from "@/mixins/copyToClipboard";
 
 export default {
     name: "WatchToolbar",
     components: {},
+    mixins: [copyToClipboard],
     props: {
         video: {
             required: true,
@@ -77,7 +91,13 @@ export default {
                 : this.$store.commit("library/addSavedVideo", this.video);
         },
         goBack() {
-            this.$router.go(-1);
+            if (this.$route.meta.prevRoute && this.$route.meta.prevRoute.path)
+                this.$router.replace(this.$route.meta.prevRoute.path);
+            else this.$router.replace("/");
+        },
+        copyLink() {
+            const link = `${window.origin}/watch/${this.video.id}`;
+            this.copyToClipboard(link);
         },
     },
     computed: {

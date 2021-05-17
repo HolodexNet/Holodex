@@ -1,12 +1,20 @@
 <template>
-    <v-container>
-        <v-tabs v-model="category" class="channels-tabs">
-            <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
-            <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
-            <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
-            <v-tab>{{ $t("views.channels.tabs.Blocked") }}</v-tab>
-        </v-tabs>
-        <v-divider />
+    <v-container
+        v-touch="{
+            right: () => (category = Math.max(category - 1, 0)),
+            left: () => (category = Math.min(category + 1, 3)),
+        }"
+        style="min-height: 70vh"
+    >
+        <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
+            <v-tabs v-model="category" class="channels-tabs secondary darken-1" v-if="isActive">
+                <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
+                <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
+                <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
+                <v-tab>{{ $t("views.channels.tabs.Blocked") }}</v-tab>
+            </v-tabs>
+        </portal>
+
         <v-container fluid class="pa-0">
             <v-list class="d-flex justify-space-between" style="background: none" v-if="category !== Tabs.BLOCKED">
                 <!-- Dropdown to pick sort-by into 'sort' data attr -->
@@ -58,7 +66,7 @@
             <generic-list-loader
                 v-else
                 infiniteLoad
-                :perPage="25"
+                :perPage="category === Tabs.VTUBER ? 100 : 25"
                 :loadFn="getLoadFn()"
                 v-slot="{ data }"
                 :key="`channel-list-${category}-${identifier}`"
@@ -66,7 +74,8 @@
                 <ChannelList
                     :channels="data"
                     includeVideoCount
-                    :grouped="sort === 'group'"
+                    :grouped="currentSortValue.value === 'group' || currentSortValue.value === 'org'"
+                    :groupKey="$store.state.currentOrg === 'All Vtubers' ? 'org' : 'group'"
                     :cardView="cardView"
                     :showDelete="category === Tabs.SUBBER"
                 />
@@ -97,10 +106,11 @@ import { mapState } from "vuex";
 import { localSortChannels } from "@/utils/functions";
 import reloadable from "@/mixins/reloadable";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
+import isActive from "@/mixins/isActive";
 
 export default {
     name: "Channels",
-    mixins: [reloadable],
+    mixins: [reloadable, isActive],
     metaInfo() {
         const vm = this;
         return {
@@ -157,13 +167,26 @@ export default {
                             order: "desc",
                         },
                     },
-                    ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
+                    ...((this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES) &&
+                    this.$store.state.currentOrg !== "All Vtubers"
                         ? [
                               {
                                   text: this.$t("views.channels.sortOptions.group"),
                                   value: "group",
                                   query_value: {
                                       sort: "suborg",
+                                      order: "asc",
+                                  },
+                              },
+                          ]
+                        : []),
+                    ...(this.$store.state.currentOrg === "All Vtubers"
+                        ? [
+                              {
+                                  text: this.$t("views.channels.sortOptions.org"),
+                                  value: "org",
+                                  query_value: {
+                                      sort: "org",
                                       order: "asc",
                                   },
                               },
@@ -260,7 +283,7 @@ export default {
         // eslint-disable-next-line func-names
         resetChannels() {
             this.identifier = +new Date();
-            this.$store.commit("channels/resetChannels");
+            // this.$store.commit("channels/resetChannels");
         },
         findSortValue(sort) {
             return this.sortOptions.find((opt) => opt.value === sort);

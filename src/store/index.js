@@ -1,7 +1,9 @@
+/* eslint-disable max-len */
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
+import createMigrate from "vuex-persistedstate-migrate";
 import jwtDecode from "jwt-decode";
 import { ORGS } from "@/utils/consts";
 import * as icons from "@/utils/icons";
@@ -22,6 +24,10 @@ import multiview from "./multiview.module";
 // import socket from "./socket.module";
 
 Vue.use(Vuex);
+
+/**--------------------------------------------
+ *               Initial State
+ *---------------------------------------------* */
 
 function defaultState() {
     return {
@@ -49,6 +55,8 @@ function defaultState() {
         activeSockets: 0,
         // reportDialog: false,
         reportVideo: null,
+
+        showExtension: false,
     };
 }
 
@@ -56,9 +64,31 @@ function defaultState() {
  *               Put Migrations Here
  *---------------------------------------------* */
 
+const migrations = [
+    {
+        version: 2,
+        up: (state) => {
+            const defaultOpen =
+                state.settings.defaultOpen || state.settings.defaultOpenFavorites ? "favorites" : "home";
+
+            return {
+                ...state,
+                settings: {
+                    ...state.settings,
+                    defaultOpen,
+                    autoplayVideo: false,
+                },
+            };
+        },
+    },
+];
+
+/**-----------------------
+ *     Configure Synchronized Modules & Mutations across tabs
+ *------------------------* */
 const syncedModules = /^(?:library|settings)/;
-// eslint-disable-next-line max-len
-const syncedMutations = /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist))/;
+const syncedMutations =
+    /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist))/;
 
 export default new Vuex.Store({
     plugins: [
@@ -76,6 +106,7 @@ export default new Vuex.Store({
                 o.reportVideo = null;
                 return o;
             },
+            getState: createMigrate(migrations, "migration.version"),
         }),
         createMutationsSharer({
             predicate: (mutation /* state */) => {
@@ -155,6 +186,9 @@ export default new Vuex.Store({
         },
         setTPCookieAlertDismissed(state, dismissed) {
             state.TPCookieAlertDismissed = dismissed;
+        },
+        setShowExtension(state, show) {
+            state.showExtension = show;
         },
     },
     actions: {

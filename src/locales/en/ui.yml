@@ -43,6 +43,7 @@ component:
     edit: Edit
     copiedToClipboard: Link copied to clipboard.
     copyLink: Copy Holodex Link
+    premiere: PREMIERE
   videoDescription:
     description: Description
   video:
@@ -108,7 +109,7 @@ component:
     success: Report sent, thank you!
     reasons:
       - Video tagged incorrectly
-      - Low Quality/Misleading Content
+      - Dangerously Low Quality/Misleading Content
       - Violates the org's derivative work guidelines or inappropriate
       - Other
   thirdpartycookie:
@@ -140,6 +141,7 @@ views:
       recentUpload: Recent Upload
       videoCount: Video Count
       clipCount: Clip Count
+      org: Organization
     tabs:
       Vtuber: Vtuber
       Subber: Subber
@@ -150,9 +152,10 @@ views:
   home:
     liveOrUpcomingHeading: Live / Upcoming
     recentVideosHeading: Recent Videos
+    noStreams: No live or upcoming streams at the moment
     recentVideoToggles:
       all: All
-      official: Official
+      official: Archive
       subber: Clips
   library:
     savedVideosTitle: Saved Videos
@@ -219,9 +222,9 @@ views:
     resetAllSettings: Reset All Settings/Data
     clipLanguageSelection: 'See Clips in these Languages:'
     tlLanguageSelection: See live-chat TL in these languages
-    defaultFavorites: Default open Favorites
-    defaultFavoritesMsg: >-
-      Open Favorites by default when visiting holodex.net, or clicking on the
+    defaultPage: Default Page
+    defaultPageMsg: >-
+      Open this page by default when visiting holodex.net, or clicking on the
       logo top left.
     videoFeedSettings: Video Feed Settings
     siteNavigationSettings: Site/Navigation

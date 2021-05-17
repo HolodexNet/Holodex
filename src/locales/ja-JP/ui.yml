@@ -44,6 +44,7 @@ component:
     edit: 編集
     copiedToClipboard: リンクをクリップボードにコピーしました
     copyLink: Holodexでのリンクをコピー
+    premiere: プレミア公開
   videoDescription:
     description: 概要
   description:
@@ -107,9 +108,16 @@ component:
     success: ご報告ありがとうございます。
     reasons:
       - タグが間違っています
-      - 低品質・誤解を招くコンテンツ
+      - Dangerously Low Quality/Misleading Content
       - 公式の二次創作ガイドラインに違反が含めていますまたは不適切コンテンツ
       - その他
+  thirdpartycookie:
+    explanation: >-
+      ブラウザの<b>サードパーティー Cookie</b>ポリシーによる場合や<kbd>Youtube.com</kbd>でのCookieをブロックしている場合にはYoutubeライブチャットへのログインが難しい、もしくは不可能な場合があります。 <br /><br />これはサードパーティーCookieのホワイトリストに<kbd>Youtube.com</kbd>を追加するか、ブラウザの設定から<kbd>Holodex.net</kbd>でのプライバシー設定を低レベルのものに設定することにより解決可能な場合があります。<br /><br />それに関する詳しい情報を提供しているサイトをいくつか紹介しています。
+    dialogTitle: Holodex上でライブチャットを使う
+    alertText: >-
+      ブラウザのプライバシー設定により、Youtubeチャットへのログインができませんでした。詳しくはこちらを参照してください。
+    neverShowAgain: 今後警告を表示しない
 views:
   channel:
     video: 動画
@@ -124,6 +132,7 @@ views:
       recentUpload: 最近の投稿
       videoCount: 動画数
       clipCount: 切り抜き数
+      org: 所属
     tabs:
       Vtuber: Vtuber
       Subber: 切り抜きチャンネル
@@ -134,9 +143,10 @@ views:
   home:
     liveOrUpcomingHeading: 配信中・配信予定
     recentVideosHeading: 最近の動画
+    noStreams: 現在配信中/配信予定の動画はありません。
     recentVideoToggles:
       all: すべて
-      official: 公式
+      official: アーカイブ
       subber: 切り抜き
   library:
     savedVideosTitle: 保存した動画
@@ -193,9 +203,9 @@ views:
     resetAllSettings: すべての設定やデータをリセット
     clipLanguageSelection: '次の言語で切り抜きを表示する'
     tlLanguageSelection: 次の言語でライブチャット翻訳を表示する
-    defaultFavorites: デフォルトでお気に入りに移動する
-    defaultFavoritesMsg: >-
-      holodex.netにアクセスした際や、ページ上部左のロゴをクリックした際にお気に入りに移動します。
+    defaultPage: デフォルトページ
+    defaultPageMsg: >-
+      Holodexを開いたときもしくは、ページ左上のロゴをクリックしたときに開かれるページを設定します
     videoFeedSettings: 動画フィードの設定
     siteNavigationSettings: サイトナビゲーション
     languageSettings: 言語
@@ -292,6 +302,8 @@ views:
       mobile: モバイル
     presetEditor:
       title: レイアウトを保存
+      name: 名前
+      autoLayout: このレイアウトを自動レイアウトでも使う
     video:
       selectLive: 配信を選択
       addCustomVideo: 任意の動画を追加

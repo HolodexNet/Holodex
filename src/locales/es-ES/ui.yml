@@ -44,6 +44,7 @@ component:
     edit: Editar
     copiedToClipboard: Enlace copiado al portapapeles.
     copyLink: Copiar enlace de Holodex
+    premiere: ESTRENO
   videoDescription:
     description: Descripción
   description:
@@ -107,9 +108,11 @@ component:
     success: Reporte enviado. ¡Gracias!
     reasons:
       - Vídeo etiquetado incorrectamente
-      - Low Quality/Misleading Content
+      - Dangerously Low Quality/Misleading Content
       - Violates the org's derivative work guidelines or inappropriate
-      - Other
+      - Otros
+  thirdpartycookie:
+    neverShowAgain: No volver a mostrar la alerta
 views:
   channel:
     video: Vídeos
@@ -124,6 +127,7 @@ views:
       recentUpload: Subidas recientes
       videoCount: Número de vídeos
       clipCount: Número de clips
+      org: Organización
     tabs:
       Vtuber: Vtuber
       Subber: Traductor
@@ -136,7 +140,6 @@ views:
     recentVideosHeading: Vídeos recientes
     recentVideoToggles:
       all: Todos
-      official: Oficial
       subber: Clips
   library:
     savedVideosTitle: Vídeos guardados
@@ -193,9 +196,6 @@ views:
     resetAllSettings: Restablecer por defecto todas las opciones
     clipLanguageSelection: 'Ver clips en estos idiomas:'
     tlLanguageSelection: Ver traducciones en directo en estos idiomas
-    defaultFavorites: Establecer "Favoritos" como página de inicio
-    defaultFavoritesMsg: >-
-      Establece “Favoritos” como página de inicio.
     videoFeedSettings: Ajustes de la interfaz de vídeo
     siteNavigationSettings: Ajustes de la interfaz
     languageSettings: Idioma
@@ -286,11 +286,18 @@ views:
       shareOnDiscord: >-
         ¿Has hecho un diseño perfecto? ¡Usa el botón de compartir y enséñanos tu desiño en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de discord</a>!
       custom: Mis plantillas
+      toggleAutoLayout: Usar plantilla en modo automático
+      remove: Eliminar
       desktop: Escritorio
       mobile: Móvil
+    presetEditor:
+      title: Guardar plantilla
+      name: Nombre
+      autoLayout: Usar plantilla en modo automático
     video:
       selectLive: Elige un directo
       addCustomVideo: Añadir vídeo personalizado
+    fullScreen: Pantalla completa
   mugen:
     welcome: >-
       ¡Bienvenido a MugenClips! Aquí todo el mundo verá el mismo clip seleccionado aleatoriamente en inglés y disfruta y comenta junto a otros fans de Hololive de cualquier parte del mundo. Si te desincronizas de la visualización y quieres volver a sincronizarte con todos solo debes de refrescar la página.
@@ -338,7 +345,7 @@ about:
     videoLinkage: '¿Cómo puedo asegurarme de que los vídeos estén correctamente vinculados a los vtubers?'
     videoLinkageContent: >-
       Toda la información es obtenida de la descripción de los vídeos. Si estás haciendo un clip de un directo, por favor asegúrate de enlazar el directo oficial. Si estás haciendo un clip por ejemplo de “bilibili” asegúrate de enlazar los canales oficiales de las vtubers que sean relevantes referentes al clip. Si no vinculas ningún Vtuber no se mostrara ese clip en Holodex, ya que todos los clips requiere que esté enlazado a un Vtuber reconocido por Holodex.
-    quitHolodex: "Soy un traductor y me gustaría que mi canal fuera eliminado del Holodex\n"
+    quitHolodex: "Soy un traductor y me gustaría que mi canal fuera eliminado del Holodex"
     quitHolodexContent: >-
       Es una pena que te quieras ir. Por favor comunícame si hay algún problema al que te pueda ayudar. Si aun así quieres que tu cuenta se elimine de Holodex envíanos un mensaje a nuestro discord.
     favorite:

@@ -11,7 +11,7 @@ component:
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
     favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
   channelInfo:
-    stats: Perangkaan
+    stats: Statistik
     videoCount: '{0} Buah Video'
     clipCount: '{n} Buah Sedutan'
     subscriberCount: '{n} Langganan'
@@ -44,6 +44,7 @@ component:
     edit: Sunting
     copiedToClipboard: Pautan telah disalin ke papan keratan.
     copyLink: Salin Pautan Holodex
+    premiere: TAYANGAN PERDANA
   videoDescription:
     description: Perihalan
   description:
@@ -110,6 +111,13 @@ component:
       - Kandungan video tidak bermutu atau mengelirukan
       - Melanggar garis panduan pertubuhan terbabit atau memaparkan kandungan yang tidak bersesuaian
       - Lain-lain
+  thirdpartycookie:
+    explanation: >-
+      Sesetengah penyemak imbas dengan dasar <b>kuki pihak ketiga</b> yang ketat ataupun yang menyekat kuki <kbd>YouTube.com</kbd> berkebarangkalian menghadapi kesukaran mengelog masuk mahupun menggunakan sembang langsung Youtube. <br /><br /> Masalah ini boleh diselesaikan dengan memasukkan <kbd>Youtube.com</kbd> ke dalam senarai putih penyekat kuki pihak ketiga ataupun menggunakan tahap tetapan keselamatan kuki yang rendah bagi <kbd>Holodex.net</kbd>. <br /><br /> Berikut disertakan sekali beberapa tapak sesawang yang boleh memberikan maklumat lanjut berkenaan langkah-langkah yang harus dilakukan.
+    dialogTitle: Penggunaan Sembang YouTube di Holodex
+    alertText: >-
+      Log masuk ke ruangan sembang YouTube tidak boleh dilakukan disebabkan oleh tetapan kerahsiaan penyemak imbas anda. Sila rujuk di sini bagi mendapatkan maklumat lanjut
+    neverShowAgain: Jangan Dipaparkan Amaran Lagi
 views:
   channel:
     video: Video
@@ -124,6 +132,7 @@ views:
       recentUpload: Muat Naik Terkini
       videoCount: Bilangan Video
       clipCount: Bilangan Sedutan
+      org: Kumpulan
     tabs:
       Vtuber: Penggiat YouTube maya
       Subber: Penyari Kata
@@ -136,7 +145,7 @@ views:
     recentVideosHeading: Video Terkini
     recentVideoToggles:
       all: Semua
-      official: Rasmi
+      official: Arkib
       subber: Sedutan
   library:
     savedVideosTitle: Video yang Disimpan
@@ -193,9 +202,6 @@ views:
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
     clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
     tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
-    defaultFavorites: Jadikan laman Kegemaran laman lalai
-    defaultFavoritesMsg: >-
-      Laman kegemaran dijadikan sebagai laman yang dibuka setiap kali melawati holodex.net atau menekan lambang Holodex di sebelah kiri bahagian atas laman.
     videoFeedSettings: Tetapan Suapan Video
     siteNavigationSettings: Pandu Arah dan Rupa Laman
     languageSettings: Bahasa
@@ -345,7 +351,7 @@ about:
     videoLinkage: Bagaimana caranya agar penggiat YouTube maya yang berkenaan dipautkan dengan tepat?
     videoLinkageContent: >-
       Keseluruhan maklumat dihuraikan berdasarkan isi perihalan video. Jika anda membuat sedutan mana-mana siaran rasmi, pastikan pautannya disertakan sekali. Jika sedutan anda daripada hasil ciptaan peminat (contohnya di bilibili), pastikan penggiat YouTube maya (penggiyut maya) yang berkaitan dipautkan saluran YouTube-nya. Sedutan yang tidak memautkan saluran penggiyut maya yang berkenaan tidak akan dipaparkan di Holodex kerana sedutan di tapak ini harus ada pautan kepada penggiyut maya yang disenaraikan di Holodex.
-    quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex\\r\n"
+    quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex"
     quitHolodexContent: >-
       Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.
     favorite:
@@ -368,7 +374,7 @@ about:
           , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
     feedback:
       title: Saya mahu memberikan maklum balas/sumbangan kepada projek ini
-  gdpr: Peraturan Umum Perlindungan Data dan data saya
+  gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
     Sebuah kuki Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
   gdprDeletion: Hubungi kami di Discord sekiranya anda ingin menghapuskan data pengguna anda!

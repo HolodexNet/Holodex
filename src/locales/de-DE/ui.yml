@@ -44,6 +44,7 @@ component:
     edit: Bearbeiten
     copiedToClipboard: Link in die Zwischenablage kopiert.
     copyLink: Holodex-Link kopieren
+    premiere: PREMIERE
   videoDescription:
     description: Beschreibung
   description:
@@ -115,6 +116,7 @@ views:
       recentUpload: Letzter Upload
       videoCount: Videoanzahl
       clipCount: Clip-Anzahl
+      org: Organisation
     tabs:
       Vtuber: Vtuber
       Subber: Subber
@@ -127,7 +129,6 @@ views:
     recentVideosHeading: Aktuelle Videos
     recentVideoToggles:
       all: Alle
-      official: Offiziell
       subber: Clips
   library:
     savedVideosTitle: Gespeicherte Videos
@@ -184,9 +185,6 @@ views:
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
     clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
     tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
-    defaultFavorites: Standardmäßig Favoriten öffnen
-    defaultFavoritesMsg: >-
-      Öffne deine Favoriten automatisch wenn du holodex.net besuchst oder das Logo oben links anklickst.
     videoFeedSettings: Video-Feed Einstellungen
     siteNavigationSettings: Seite/Navigation
     languageSettings: Sprache
@@ -335,7 +333,7 @@ about:
     videoLinkage: Wie stelle ich sicher, dass Videos richtig mit Vtubern verlinkt werden?
     videoLinkageContent: >-
       Alle Informationen werden automatisch aus der Videoberschreibung gesammelt. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden Vtuber. Wenn du keine Vtuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem Vtuber benötigen, der Holodex bekannt ist.
-    quitHolodex: "Ich bin ein Subber (Untertitler) und möchte, dass mein Kanal von Holodex entfernt wird\n"
+    quitHolodex: "Ich bin ein Subber (Untertitler) und möchte, dass mein Kanal von Holodex entfernt wird"
     quitHolodexContent: >-
       Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir heölfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
     favorite:

@@ -14,7 +14,6 @@
 
 <script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
-// import api from "@/utils/backend-api";
 import { mapState } from "vuex";
 import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
@@ -70,7 +69,9 @@ export default {
                 const res = await backendApi.channelVideos(this.id, {
                     type: this.type,
                     query: {
-                        lang: this.$store.state.settings.clipLangs.join(","),
+                        ...(this.channel.type !== "subber" && {
+                            lang: this.$store.state.settings.clipLangs.join(","),
+                        }),
                         include: "clips,live_info",
                         limit,
                         offset,

@@ -44,6 +44,7 @@ component:
     edit: 편집
     copiedToClipboard: 링크를 클립보드에 복사했습니다.
     copyLink: Holodex 링크 복사
+    premiere: 최초 공개
   videoDescription:
     description: 설명
   description:
@@ -127,7 +128,6 @@ views:
     recentVideosHeading: 최근 동영상
     recentVideoToggles:
       all: 모두
-      official: 공식
       subber: 클립
   library:
     savedVideosTitle: 저장된 동영상
@@ -184,9 +184,6 @@ views:
     resetAllSettings: 모든 설정/데이터 초기화
     clipLanguageSelection: '다음 언어로 된 클립 보기:'
     tlLanguageSelection: 해당 언어로 실시간 채팅 번역 보기
-    defaultFavorites: 즐겨찾기를 기본 페이지로 설정
-    defaultFavoritesMsg: >-
-      holodex.net에 처음 접속할 때와 좌측 상단 로고를 클릭할 때 즐겨찾기 페이지를 엽니다.
     videoFeedSettings: 동영상 피드 설정
     siteNavigationSettings: 사이트/메뉴
     languageSettings: 언어
@@ -335,7 +332,7 @@ about:
     videoLinkage: 동영상이 버튜버에 제대로 연결되었는지 어떻게 확인하나요?
     videoLinkageContent: >-
       모든 정보는 비디오 설명에서 불러와집니다. 스트림을 클립하는 경우 공식 방송을 연결해야 합니다. 팬이 만든 콘텐츠 (예: bilibili에서 가져온 콘텐츠) 를 클리핑하는 경우 관련 버튜버의 공식 YouTube 채널을 연결해야 합니다. 모든 클립은 Holodex에 알려진 버튜버에 연결되어야하므로 버튜버 채널을 연결하지 않으면 Holodex에 해당 클립이 표시되지 않습니다.
-    quitHolodex: "저는 키리누키 제작자이고 Holodex에서 제 채널을 제거하고 싶습니다\\r\n"
+    quitHolodex: "저는 키리누키 제작자이고 Holodex에서 제 채널을 제거하고 싶습니다\\r"
     quitHolodexContent: >-
       떠나신다니 아쉽습니다 :( 문제가 있다면 도와드리겠습니다. 그래도 제거하고 싶으시다면 Discord를 통해서 메시지를 보내주세요.
     favorite:

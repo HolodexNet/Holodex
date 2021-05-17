@@ -44,6 +44,7 @@ component:
     edit: Ubah
     copiedToClipboard: Tautan disalin ke clipboard.
     copyLink: Salin Tautan Holodex
+    premiere: PREMIER
   videoDescription:
     description: Deskripsi
   description:
@@ -110,6 +111,13 @@ component:
       - Kualitas Rendah / Konten Menyesatkan
       - Melanggar Pedoman Kebijakan Karya yang ditetapkan organisasi atau tidak pantas
       - Lainnya
+  thirdpartycookie:
+    explanation: >-
+      Karena cara kerja browser internetmu, beberapa browser dengan kebijakan ketat <b>Cookie Pihak Ketiga</b> atau pemblokiran cookies dari <kbd>YouTube.com</kbd> akan membuat sulit untuk masuk / menggunakan chat Youtube. <br /><br /> Kamu bisa memperbaiki hal ini dengan cara whitelist <kbd>Youtube.com</kbd> dalam pemblokiran Cookie Pihak Ketiga, atau menurunkan tingkatan keamanan / privasi cookie untuk situs <kbd>Holodex.net</kbd>. <br /><br /> Kami akan mencantumkan beberapa situs yang akan memberikan informasi lebih lanjut mengenai hal ini.
+    dialogTitle: Menggunakan Chat Youtube di Holodex
+    alertText: >-
+      Pengaturan pada privasi browser kamu membuat sulit untuk masuk pada chat Youtube. Klik disini untuk info lebih lanjut
+    neverShowAgain: Jangan Pernah Tampilkan Peringatan ini Lagi
 views:
   channel:
     video: Video
@@ -124,6 +132,7 @@ views:
       recentUpload: Unggahan Terkini
       videoCount: Jumlah Video
       clipCount: Jumlah Klip
+      org: Organisasi
     tabs:
       Vtuber: Vtuber
       Subber: Subber
@@ -134,9 +143,10 @@ views:
   home:
     liveOrUpcomingHeading: Sedang Berlangsung / Akan Tayang
     recentVideosHeading: Video Terkini
+    noStreams: Saat ini tidak ada siaran yang sedang berlangsung atau akan tayang
     recentVideoToggles:
       all: Semua
-      official: Resmi
+      official: Arsip
       subber: Klip
   library:
     savedVideosTitle: Video Tersimpan
@@ -193,9 +203,9 @@ views:
     resetAllSettings: Reset Semua Pengaturan/Data
     clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
     tlLanguageSelection: Melihat Terjemahan dalam bahasa ini
-    defaultFavorites: Membuka Favorit secara default
-    defaultFavoritesMsg: >-
-      Menampilkan menu favorit secara langsung ketika mengunjungi holodex.net, atau dengan menekan logo pojok kiri atas.
+    defaultPage: Halaman Awal
+    defaultPageMsg: >-
+      Membuka halaman ini ketika kamu mengunjungi holodex.net, atau dengan menekan logo pada pojok kiri atas.
     videoFeedSettings: Pengaturan Mengenai Video
     siteNavigationSettings: Navigasi/Situs
     languageSettings: Bahasa
@@ -345,7 +355,7 @@ about:
     videoLinkage: Bagaimana cara saya memastikan video yang diunggah terhubung dengan vtuber yang berkaitan?
     videoLinkageContent: >-
       Semua informasi video diuraikan dalam deskripsi video tersebut. jika kamu mengklip siaran, pastikan untuk mencantumkan tautan video resminya. Jika kamu mengklip konten buatan fans (contohnya dari bilibili), pastikan juga untuk mencantumkan tautan channel youtube resmi vtuber yang berkaitan. Jika kamu tidak mencantumkan channelnya, maka klip tidak akan muncul di holodex, karena semua klip membutuhkan keterkaitan tautan pada vtuber yang berkaitan untuk muncul di holodex.
-    quitHolodex: "Saya subber dan ingin channel saya dihapus dari Holodex\\r\n"
+    quitHolodex: "Saya subber dan ingin channel saya dihapus dari Holodex\\r"
     quitHolodexContent: >-
       Yaaahhh :( , mohon beritahu kami jika terdapat masalah. jika kamu tetap ingin channelnya dihapus, tolong kirim pesan pada kami di Discord.
     favorite:

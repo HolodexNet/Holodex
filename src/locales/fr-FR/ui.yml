@@ -31,6 +31,7 @@ component:
     watching: '{0} Visionnages'
     liveNow: EN DIRECT
     edit: Modifier
+    premiere: PREMIÈRE
   description:
     showLess: Afficher Moins
     showMore: Afficher Plus
@@ -58,6 +59,7 @@ views:
       recentUpload: Mise en ligne récente
       videoCount: Nombre de vidéos
       clipCount: Nombre de Clips
+      org: Organisation
     tabs:
       Subber: Sous-Titreur
       Favorites: Favoris
@@ -67,7 +69,6 @@ views:
     recentVideosHeading: Vidéos Récentes
     recentVideoToggles:
       all: Tout
-      official: Officiel
   library:
     savedVideosTitle: Vidéos Sauvegardées
     createYtPlaylistButton: Créer une playlist YT ({0})
