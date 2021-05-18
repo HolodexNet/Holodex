@@ -1,11 +1,10 @@
 ---
 component:
   apiError:
-    title: 'Gomennüzgünüz!'
+    title: Gomennüzgünüz!
     textBeforeTwitter: 'İçerik alınırken bir sıkıntı oluştu, lütfen twitter''ı kontrol edin '
-    textAfterTwitter: ya da hatayı şikayet edin
+    textAfterTwitter: 'ya da hatayı şikayet edin'
     aboutPage: Hakkında Sayfası
-    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Favorilere eklemek için giriş yapın
     unfavoriteAllInGroup: Tüm grubu favorilerden çıkar
@@ -32,7 +31,6 @@ component:
     settings: Ayarlar
     login: Giriş
     logout: Çıkış
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Hesap ayarları
     music: Müzik
     multiview: Çoklu İzleme
@@ -47,14 +45,12 @@ component:
     premiere: İLK GÖSTERİM
   videoDescription:
     description: Açıklama
-  video:
-    comment: {}
   description:
     showLess: Daha az
     showMore: Daha çok
   watch:
     streamingFor: '{0} süredir yayında'
-    nextUpInMugen: Sonraki 
+    nextUpInMugen: Sonraki
     Comments:
       title: Yorumlar
       all: Tümü
@@ -85,7 +81,6 @@ component:
   songList:
     songTitle: Başlık
     songCoveredBy: Söyleyen
-    songDuration: Duration
     sangOnTime: Söylenme zamanı
   orgMusic:
     monthlyTopForOrg: '{0} Ayın En Çok Dinlenenleri'
@@ -115,17 +110,10 @@ component:
       - Diğer
   thirdpartycookie:
     explanation: >-
-      Tarayıcınızın çalışma şeklinden dolayı, katı
-      <b>Üçüncü Taraf Çerezleri</b> politikalarına sahip veya
-      <kbd>YouTube.com</kbd> çerezlerini engelleyen tarayıcılar
-      Youtube sohbetinin erişimini/kullanımını zor bulabilirler. <br /><br /> Bu durumu
-      <kbd>Youtube.com</kbd>''u Üçüncü Taraf Çerezi Engelleyicilerden kaldırarak veya 
-       <kbd>Holodex.net</kbd> için çerez güvenliği/ gizlilik seviyesini düşürerek düzeltebilirsiniz. 
-      <br /><br />Bunu nasıl yapacağınızı açıklayan bazı siteleri ekledik.
-    dialogTitle: 'Holodex''te Youtube Sohbetini Kullanma'
+      Tarayıcınızın çalışma şeklinden dolayı, katı <b>Üçüncü Taraf Çerezleri</b> politikalarına sahip veya <kbd>YouTube.com</kbd> çerezlerini engelleyen tarayıcılar Youtube sohbetinin erişimini/kullanımını zor bulabilirler. <br /><br /> Bu durumu <kbd>Youtube.com</kbd>''u Üçüncü Taraf Çerezi Engelleyicilerden kaldırarak veya <kbd>Holodex.net</kbd> için çerez güvenliği/ gizlilik seviyesini düşürerek düzeltebilirsiniz. <br /><br />Bunu nasıl yapacağınızı açıklayan bazı siteleri ekledik.
+    dialogTitle: Holodex'te Youtube Sohbetini Kullanma
     alertText: >-
-      Tarayıcı gizlilik ayarlarınız, Youtube Sohbetine girişi imkansız 
-      yapmakta. Daha çok bilgi için tıklayınız
+      Tarayıcı gizlilik ayarlarınız, Youtube Sohbetine girişi imkansız yapmakta. Daha çok bilgi için tıklayınız
     neverShowAgain: Bir daha uyarıyı gösterme
 views:
   channel:
@@ -135,7 +123,6 @@ views:
     collabs: Collablar
     about: Hakkında
   channels:
-    channelType: {}
     sortOptions:
       subscribers: Aboneler
       group: Grup
@@ -144,8 +131,7 @@ views:
       clipCount: Klip Sayısı
       org: Organizayson
     tabs:
-      Vtuber: Vtuber
-      Subber: Altyazıcı #maybe should have left it as Subber?
+      Subber: Altyazıcı
       Favorites: Favoriler
       Blocked: Engellenenler
     favoritesAreEmpty: Hiç favoriniz yok!
@@ -171,17 +157,12 @@ views:
     exportSelected: SEÇİLENLERİ DIŞARI AKTAR ({0})
     exportYtPlaylist: Youtube Oynatma Listesi
     exportCsv: CSV Dosyası
-    selectionSelect50: '50 tane seç'
+    selectionSelect50: 50 tane seç
     exportYTExplanation: >-
-      Bu özellik ile oluşturulan oynatma listesi <b>liste dışıdır</b> ve
-      Youtube tarafından silinebilir. <br /> Youtube'un özellik eksiklerinden dolayı, liste dışı
-      olan oynatma listesini hesabınıza kaydetmek için aşağıdaki adımları uygulamanız gerekmektedir.
+      Bu özellik ile oluşturulan oynatma listesi <b>liste dışıdır</b> ve Youtube tarafından silinebilir. <br /> Youtube'un özellik eksiklerinden dolayı, liste dışı olan oynatma listesini hesabınıza kaydetmek için aşağıdaki adımları uygulamanız gerekmektedir.
     exportYTHeading: Youtube Oynatma Listesi Kaydetme Talimatları
     exportYTInstructions: >-
-      <b class="red--text">Adım 1</b>: Youtube oynatma listesini oynatıp "Mini oynatıcı"
-      moduna geçin.<br /><br /> <b class="red--text">Adım 2</b>:
-      Herhangi bir videoyu oynatma sırasına ekleyin <br /><br /> <b
-      class="red--text">Adım 3</b>: Oynatma listesi artık Kaydedilebilir. Kaydetmek için kaydete basın.
+      <b class="red--text">Adım 1</b>: Youtube oynatma listesini oynatıp "Mini oynatıcı" moduna geçin.<br /><br /> <b class="red--text">Adım 2</b>: Herhangi bir videoyu oynatma sırasına ekleyin <br /><br /> <b class="red--text">Adım 3</b>: Oynatma listesi artık Kaydedilebilir. Kaydetmek için kaydete basın.
   notFound:
     title: İçerik bulunamadı
     back: Ana sayfaya dön
@@ -194,8 +175,7 @@ views:
       official: Resmi
       clip: Klip
     unsupportedQuery: >-
-      <kbd>Konu</kbd> ve <kbd>Organizasyon</kbd> ile arama şu an
-      desteklenmemektedir. Hiçbir <b>clip</b> gösterilmeyecek.
+      <kbd>Konu</kbd> ve <kbd>Organizasyon</kbd> ile arama şu an desteklenmemektedir. Hiçbir <b>clip</b> gösterilmeyecek.
     sortByLabel: Sıralama türü
     typeDropdownLabel: İçerik türü
   settings:
@@ -204,8 +184,7 @@ views:
     darkModeMsg: Temayı açık mod ve karanlık mod arasında değiştirir
     redirectModeLabel: Youtube'da aç
     redirectModeMsg: >-
-      Video küçük resimlerine tıklamak videoyu Youtube'da açar, video başlıklarına tıklamak
-      videoyu Holodex'te açar
+      Video küçük resimlerine tıklamak videoyu Youtube'da açar, video başlıklarına tıklamak videoyu Holodex'te açar
     useEnglishNameLabel: İngilizce isimleri kullan
     useEnglishNameMsg: VTuber kanalları için İngilizce yerelleştirilmiş isimleri kullanır
     hideVideoThumbnailsLabel: Video Küçük Resimlerini Sakla
@@ -269,8 +248,7 @@ views:
         disconnectedToChat: Bağlantı kesildi
   favorites:
     promptForAction: >-
-      Favori VTuberlarının bir listesini oluştur ve en son kliplerini ve yayınlarını
-      bu sayfada görüntüle
+      Favori VTuberlarının bir listesini oluştur ve en son kliplerini ve yayınlarını bu sayfada görüntüle
     manageFavorites: Favorileri Yönet
     close: Kapat
     showall: Tümünü Göster
@@ -279,8 +257,7 @@ views:
     changeTopic:
       title: Yayın konusunu değiştir
       info: >-
-        Tüm kullanıcılar video konularını ayarlayabilir, ancak Sadece Editörler ve Adminler
-        ayarlanmış bir konuyu değiştirebilir veya silebilir.
+        Tüm kullanıcılar video konularını ayarlayabilir, ancak Sadece Editörler ve Adminler ayarlanmış bir konuyu değiştirebilir veya silebilir.
       button: Kaydet (Etkili olması 5 dakika kadar süre alabilir)
     channelMentions:
       title: Kanal bahsetmeleri (geliştirme aşamasında)
@@ -288,14 +265,11 @@ views:
       title: Kaynaklar/Klipler (geliştirme aşamasında)
   login:
     apikeyMsg: >-
-      API anahtarını Holodex API'ını programsal olarak sorgulamak için kullanabilirsiniz. Her hesap
-      sadece bir anahtara sahip olabilir. Yeni bir anahtar alındıktan sonra, eski anahtar 0-24 saat
-      içinde geçersiz olacaktır.
+      API anahtarını Holodex API'ını programsal olarak sorgulamak için kullanabilirsiniz. Her hesap sadece bir anahtara sahip olabilir. Yeni bir anahtar alındıktan sonra, eski anahtar 0-24 saat içinde geçersiz olacaktır.
     apikeyNew: Yeni API anahtarı al
     ownedYtChannel: Sahip olunan Youtube kanalı
     futureYtcOwnerMessage: >-
-      Gelecekte, kanal sahiplerine kendi videolarının üst verilerini düzenleme gibi daha fazla
-      hizmet eklemeyi planlıyoruz.
+      Gelecekte, kanal sahiplerine kendi videolarının üst verilerini düzenleme gibi daha fazla hizmet eklemeyi planlıyoruz.
     linkAcc: Başka bir hesap bağla
     apikeyResetConfirm1: API Anahtarınızı sıfırlamak istediğinizden emin misiniz?
     apikeyResetConfirm2: Eski API Anahtarınız'ın süresi dolmadan önce 0-24 saati olacaktır. Gerçekten sıfırlansın mı?
@@ -316,8 +290,7 @@ views:
     createLayoutTip: Hücre ekleyerek veya önceden ayarlanmış düzen kullanarak kendi düzeninizi oluşturun
     preset:
       shareOnDiscord: >-
-        Paylaşmak istediğin harika bir düzenin mi var? Paylaş butonunu kullanıp
-        <a href="https://discord.gg/jctkgHBt4b">Discord sunucumuzda</a> bizimle paylaş!
+        Paylaşmak istediğin harika bir düzenin mi var? Paylaş butonunu kullanıp <a href="https://discord.gg/jctkgHBt4b">Discord sunucumuzda</a> bizimle paylaş!
       custom: Düzenlerim
       toggleAutoLayout: Düzeni otomatik modda kullanmayı aç/kapat
       remove: Sil
@@ -332,25 +305,17 @@ views:
       addCustomVideo: Özel Video Ekle
     fullScreen: Tam Ekran
   mugen:
-    welcome: >- #################
-      MugenClips'e Hoşgeldiniz! Bu sayfadaki herkes sizinle aynı
-      rastgele seçilmiş klipleri görür. Dünya çapındaki Hololive hayranlarıyla
-      birlikte izleyin ve sohbet edin. İleriye atlar ve herkesle tekrardan eşitlenmek
-      isterseniz, lütfen sayfayı yenileyin.
-      
+    welcome: >-
+      MugenClips'e Hoşgeldiniz! Bu sayfadaki herkes sizinle aynı rastgele seçilmiş klipleri görür. Dünya çapındaki Hololive hayranlarıyla birlikte izleyin ve sohbet edin. İleriye atlar ve herkesle tekrardan eşitlenmek isterseniz, lütfen sayfayı yenileyin.
 time:
   soon: yakında
   diff_future_date: ' {0} ({1}) başlıyor'
-  distance_past_date: '{0}'
 editor:
   music:
     add: Ekle
     update: Güncelle
     permission: >-
-      Var olan müzikleri güncellemek veya silmek için "Editör" ya da daha üst bir seviye olmalısınız.
-      Editörlere hataları/kötüye kullanmaları bildirmek veya editör olmaya
-      başvurmak için lütfen <a class='white--text' href='/about'>discord</a>
-      üzerinden bizimle iletişime geçin.
+      Var olan müzikleri güncellemek veya silmek için "Editör" ya da daha üst bir seviye olmalısınız. Editörlere hataları/kötüye kullanmaları bildirmek veya editör olmaya başvurmak için lütfen <a class='white--text' href='/about'>discord</a> üzerinden bizimle iletişime geçin.
     titles:
       addSong: 'Müzik Üst Verisi: Yeni bir Şarkı ekle'
       songList: 'Şarkı Listesi : {0}'
@@ -369,100 +334,51 @@ editor:
   enterMode: Düzenle
 about:
   quicklinks: Hızlı Bağlantılar
-  discordBtn: Holodex Discord
   issueTracker: Sorun İzleyici / Kaynak
   faq:
-    title: SSS #Sıkça Sorulan Sorular
+    title: SSS
     ytchatHeader: Youtube Sohbetime giriş yapılmadı!
     ytchatContent: >-
-      Lütfen Üçüncü Taraf Çerez engelleme adındaki Tarayıcı güvenlik özelliğini
-      devre dışı bırakın veya bu siteyi ve youtube.com'u izin verilenler listesine ekleyin.
+      Lütfen Üçüncü Taraf Çerez engelleme adındaki Tarayıcı güvenlik özelliğini devre dışı bırakın veya bu siteyi ve youtube.com'u izin verilenler listesine ekleyin.
     ytchatFirefox: Firefox talimatları, diğer tarayıcılar benzer olabilir.
     autoplayHeader: Otomatik Oynatma çalışmıyor!
     autoplayContent: Lütfen tarayıcınızda otomatik oynatmayı nasıl etkinleştireceğinizi google'da aratın.
     musicPlayer: Müzik Oynatıcısı mobil cihazlarda iyi çalışmıyor!
     musicPlayerContent: >-
-      Üzgünüz ama Müzik Oynatıcısını mobilde bir site olarak desteklemek imkansız.
-      </br>Üç faktör: 1. Mobil cihazlar genellikle, ihtiyacımız olan otomatik oynatmayı yasaklar.
-      2. Mobil cihazlar genelde, sitelerin arka planda müzik zincirlemesine izin vermez.
-      3. Müzik sıranızı sistem seviyesindeki müzik kontrol merkezlerine bağlamıyoruz.
+      Üzgünüz ama Müzik Oynatıcısını mobilde bir site olarak desteklemek imkansız. </br>Üç faktör: 1. Mobil cihazlar genellikle, ihtiyacımız olan otomatik oynatmayı yasaklar. 2. Mobil cihazlar genelde, sitelerin arka planda müzik zincirlemesine izin vermez. 3. Müzik sıranızı sistem seviyesindeki müzik kontrol merkezlerine bağlamıyoruz.
     videoLinkage: Videolarımın VTuberlara uygun olarak bağlantılı olduğundan nasıl emin olurum?
     videoLinkageContent: >-
-      Tüm bilgiler açıklama kısmından ayrıştırılır. Eğer bir yayının klipliyorsanız,
-      lütfen asıl yayının bağlantısını eklediğinizden emin olun. Eğer fan yapımı içeriği
-      klipliyorsanız (ör. bilibili), ilgili VTuberların kanallarını eklediğinizden emin olun.
-      Eğer hiç bir kanalı eklemezseniz, tüm kliplerin Holodexe bilinen bir VTubera bağlı
-      olması gerektiğinden, klipi Holodexte göstermeyiz.
+      Tüm bilgiler açıklama kısmından ayrıştırılır. Eğer bir yayının klipliyorsanız, lütfen asıl yayının bağlantısını eklediğinizden emin olun. Eğer fan yapımı içeriği klipliyorsanız (ör. bilibili), ilgili VTuberların kanallarını eklediğinizden emin olun. Eğer hiç bir kanalı eklemezseniz, tüm kliplerin Holodexe bilinen bir VTubera bağlı olması gerektiğinden, klipi Holodexte göstermeyiz.
     quitHolodex: "Ben bir altyazıcıyım ve Kanalımın Holodexten kaldırılmasını istiyorum"
     quitHolodexContent: >-
-      Gitmeni gördüğüme üzüldüm :(, lütfen yardım edebileceğim bir sorun varsa bilmeme
-      izin ver. Eğer hala kanalının kaldırılmasını istiyorsan, lütfen Discord üzerinden
-      bize bir mesaj gönder.
+      Gitmeni gördüğüme üzüldüm :(, lütfen yardım edebileceğim bir sorun varsa bilmeme izin ver. Eğer hala kanalının kaldırılmasını istiyorsan, lütfen Discord üzerinden bize bir mesaj gönder.
     favorite:
       title: Favoriler nelerdir?
-      Contents:
-        - >-
-          Favoriter, en sevdiğiniz VTuberlarla güncel kalmanızı sağlar, 
-          favori kanallarınızı
-        - >-
-          sayfasındaki kalp ikonuna tıklayarak ekleyebilirsiniz.
-          Lütfen altyazıcıları favorilere eklemenin şimdilik mümkün olmadığını bilin ama yine de
-          onlara diğer yollarla destek çıkmayı göz önünde bulundurun!
       disappear:
         title: Favori listem kayboldu / Favori ekleyemiyorum
-      contents:
-        - >-
-          Lütfen giriş yaptığınızdan emin olun ve kanallar favoriler sekmesini ziyaret ederek
-          bir yenileme zorlayın.
     mobile:
       title: Holodex'in bir Android/iOS uygulaması var mı?
       content:
         summary: >-
-          Üzerinde çalışıyoruz! Biz bu özelliği eklerken, tarayıcınızdaki "Ana Ekrana Ekle"
-          özelliğini kullanabilirsiniz. Bu özelliğin bir uygulama gibi davranması için
-          bir çok değişiklik yaptık.
-        android:
-          - 'Android Chrome: Siteye girip, sağ üstteki'
-          - üç noktaya tıklayın ve "Ana Ekrana Ekle"'yi seçin.
-        ios:
-          - >-
-            iOS Safari: Siteye telefonunuzda girip, safarinin en altındaki yukarı oklu kareye basın
-          - ve "Ana Ekrana Ekle"'yi seçin'
+          Üzerinde çalışıyoruz! Biz bu özelliği eklerken, tarayıcınızdaki "Ana Ekrana Ekle" özelliğini kullanabilirsiniz. Bu özelliğin bir uygulama gibi davranması için bir çok değişiklik yaptık.
     MugenClips:
       title: MugenClips nedir?
-      contents:
-        - >-
-          MugenClips ya da "sonsuz klipler", sitedeki herkesin bir çok topluluk çevriri kanalları
-          tarafından yüklenen sürekli değişen türde klipler izleyebildiği bir Birlikte İzleme Partisidir.
     subber:
       title: Ben bir altyazıcıyım ama kanalımı Holodex'te bulamıyorum.
       contents:
         - >-
-          Lütfen kanallar sayfasını ziyaret edip bir altayzıcı olarak listede görünüp
-          görünmediğinizi kontrol edin, eğer listede yoksanız lütfen
-        - bu formu
+
         - >-
-          doldurun ki sizi manüel olarak ekleyelim. Eğer zaten listedeyseniz, lütfen
-          video açıklamanızın doğru youtube kaynak/kanal linklerine sahip olduğunu kontrol edin.
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
     feedback:
       title: Bu projeye geri bildirimde/katkıda bulunmak istiyorum.
-      contents:
-        - >-
-          Tüm yardım ve fikirlere açığız! Hem Arayüz hem de Arkayüz katkılara açık
-          ancak şu anda sadece Arayüz açık kaynaklı. Arkayüz kaynağına erişmek veya fikirlerinizle
-          ilgili sohbet etmek için lütfen bizimle discord üzerinden iletişime geçin.
   gdpr: GVKY ve verilerim
   gdprContent: >-
-    Analitik amaçlarımız için sayfa görüntülemelerini takip etmek için bir Google Analitics çerezi 
-    kullanıyoruz. Girişten sonra, sosyal medya hesabı kullanıcı adınızı ve ID'nizi
-    favorilerinizle ilişkilendiriyoruz. Bu verilere her biri ayrı olarak Email adresiniz 
-    (Google için), Discord ID'niz veya Twitter kullanıcı adınız dahil olabilir.
+    Analitik amaçlarımız için sayfa görüntülemelerini takip etmek için bir Google Analitics çerezi kullanıyoruz. Girişten sonra, sosyal medya hesabı kullanıcı adınızı ve ID'nizi favorilerinizle ilişkilendiriyoruz. Bu verilere her biri ayrı olarak Email adresiniz (Google için), Discord ID'niz veya Twitter kullanıcı adınız dahil olabilir.
   gdprDeletion: Kullanıcı verilerinizin silinmesi için, lütfen bizimle discord üzerinden iletişime geçin!
   feedback: Geri Bildirim/Hata raporu
   feedbackHtml: >-
-    <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker
-    </a> üzerinde bir Issue oluşturabilir veya Holodex takımını Discord üzerinden bulabilirsiniz.
-    <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+    <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> üzerinde bir Issue oluşturabilir veya Holodex takımını Discord üzerinden bulabilirsiniz. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Teşekkürler
     contents:
@@ -471,9 +387,7 @@ about:
       - >-
         Also to all the subbers for helping the overseas bros! Please check them out!
       - >-
-        Bu, fan yapımı bir sitedir ve bu sitede bulunan içerik Cover corp ve partnerlerine
-        aittir. Bu site Cover corp'un ortaya koyduğu
-      - Türemiş Çalışma Lisans Sözleşmesine uyar
+
   changelog:
     title: Değişiklikler
   news:
