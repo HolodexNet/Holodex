@@ -183,6 +183,11 @@ views:
       Pick any video and add it to the Queue. <br /><br /> <b
       class="red--text">Step 3</b>: The Playlist is now save-able. Click save to
       save it.
+    sort:
+      dateaddedEarliestFirst: Date Added to Library, earliest first
+      dateaddedLatestFirst: Date Added to Library, latest first
+      dateuploadedLatestFirst: Upload date, latest first
+      dateuploadedEarliestFirst: Upload date, earliest first
   notFound:
     title: Content not found
     back: Return Home

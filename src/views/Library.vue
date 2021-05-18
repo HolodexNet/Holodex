@@ -176,19 +176,19 @@ export default {
             mdiSort,
             sortby: [
                 {
-                    text: "Date Added to Library, latest first",
+                    text: this.$t("views.library.sort.dateaddedLatestFirst"),
                     value: 0,
                 },
                 {
-                    text: "Date Added to Library, earliest first",
+                    text: this.$t("views.library.sort.dateaddedEarliestFirst"),
                     value: 1,
                 },
                 {
-                    text: "Upload date, latest first",
+                    text: this.$t("views.library.sort.dateuploadedLatestFirst"),
                     value: 2,
                 },
                 {
-                    text: "Upload date, earliest first",
+                    text: this.$t("views.library.sort.dateuploadedEarliestFirst"),
                     value: 3,
                 },
             ],
