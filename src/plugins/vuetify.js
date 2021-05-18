@@ -23,6 +23,7 @@ export const langs = [
     { val: "de", display: "Deutsch", credit: "DatJocab#1803" },
     { val: "it", display: "Italiano", credit: "テオさん#0139" },
     { val: "fr", display: "Français", credit: "pinembour#7770" },
+    { val: "tr", display: "Türkçe", credit: "creeperkafasipw#1861" },
 ];
 
 export const dayjsLangs = {
@@ -64,6 +65,9 @@ export const dayjsLangs = {
     },
     async ko() {
         await import("dayjs/locale/ko");
+    },
+    async tr() {
+        await import("dayjs/locale/tr");
     },
 };
 export const i18n = new VueI18n({
@@ -128,6 +132,7 @@ export function loadLanguageAsync(lang) {
         de: "de-DE",
         it: "it-IT",
         ko: "ko-KR",
+        tr: "tr-TR",
     };
 
     // If the same language
