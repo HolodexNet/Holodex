@@ -637,8 +637,13 @@ export default {
                 }
 
                 // Find and set to previous preset layout
-                const presets = this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets;
-                const newLayout = presets.find((preset) => preset.emptyCells >= this.activeVideos.length - 1);
+                const presets = this.decodedCustomPresets.concat(
+                    this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets,
+                );
+                const newLayout =
+                    presets.find((preset) => preset.emptyCells === this.activeVideos.length - 1) ??
+                    presets.find((preset) => preset.emptyCells >= this.activeVideos.length - 1);
+
                 const clonedLayout = JSON.parse(JSON.stringify(newLayout));
                 this.$store.commit("multiview/deleteLayoutContent", id);
                 this.setMultiview({
