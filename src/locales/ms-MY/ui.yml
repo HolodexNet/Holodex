@@ -143,6 +143,7 @@ views:
   home:
     liveOrUpcomingHeading: Langsung / Akan Datang
     recentVideosHeading: Video Terkini
+    noStreams: Tiada siaran langsung buat masa ini dan masa akan datang
     recentVideoToggles:
       all: Semua
       official: Arkib
@@ -202,6 +203,9 @@ views:
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
     clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
     tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
+    defaultPage: Laman Lalai
+    defaultPageMsg: >-
+      Laman ini dijadikan sebagai laman yang dibuka setiap kali melawati holodex.net atau menekan lambang Holodex di sebelah kiri bahagian atas.
     videoFeedSettings: Tetapan Suapan Video
     siteNavigationSettings: Pandu Arah dan Rupa Laman
     languageSettings: Bahasa
