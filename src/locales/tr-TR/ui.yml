@@ -81,6 +81,7 @@ component:
   songList:
     songTitle: Başlık
     songCoveredBy: Söyleyen
+    songDuration: Süre
     sangOnTime: Söylenme zamanı
   orgMusic:
     monthlyTopForOrg: '{0} Ayın En Çok Dinlenenleri'
@@ -163,6 +164,11 @@ views:
     exportYTHeading: Youtube Oynatma Listesi Kaydetme Talimatları
     exportYTInstructions: >-
       <b class="red--text">Adım 1</b>: Youtube oynatma listesini oynatıp "Mini oynatıcı" moduna geçin.<br /><br /> <b class="red--text">Adım 2</b>: Herhangi bir videoyu oynatma sırasına ekleyin <br /><br /> <b class="red--text">Adım 3</b>: Oynatma listesi artık Kaydedilebilir. Kaydetmek için kaydete basın.
+    sort:
+      dateaddedEarliestFirst: Kütüphaneye ekleme tarihi, önce en eski
+      dateaddedLatestFirst: Kütüphaneye ekleme tarihi, önce en yeni
+      dateuploadedLatestFirst: Yükleme tarihi, önce en yeni
+      dateuploadedEarliestFirst: Yükleme tarihi, önce en eski
   notFound:
     title: İçerik bulunamadı
     back: Ana sayfaya dön
