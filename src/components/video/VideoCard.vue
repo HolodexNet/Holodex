@@ -149,6 +149,8 @@ export default {
         return {
             forceJPG: true,
             icons,
+            now: Date.now(),
+            updatecycle: null,
         };
     },
     props: {
@@ -196,6 +198,24 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    mounted() {
+        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+    },
+    activated() {
+        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+    },
+    deactivated() {
+        if (this.updatecycle) {
+            clearInterval(this.updatecycle);
+            this.updatecycle = null;
+        }
+    },
+    beforeDestroy() {
+        if (this.updatecycle) {
+            clearInterval(this.updatecycle);
+            this.updatecycle = null;
+        }
     },
     computed: {
         title() {
@@ -293,6 +313,9 @@ export default {
             if (this.disableDefaultClick) return;
             const url = `https://www.youtube.com/watch?v=${this.video.id}`;
             window.open(url, "_blank", "noopener");
+        },
+        updateNow() {
+            this.now = Date.now();
         },
         // All video cards share one menu that gets controlled through the store
         showMenu(e) {
