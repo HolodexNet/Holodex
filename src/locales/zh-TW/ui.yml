@@ -110,7 +110,7 @@ component:
     success: 檢舉已送出，謝謝您
     reasons:
       - 影片標籤錯誤
-      - Dangerously Low Quality/Misleading Content
+      - 影片品質過於低劣 / 含有誤導性內容
       - 違反了VTuber公司的二創條款或是不當內容
       - 其他原因
   thirdpartycookie:
@@ -171,6 +171,11 @@ views:
     exportYTHeading: YouTube播放清單保存教學
     exportYTInstructions: >-
       <b class="red--text">第一步</b>：播放YouTube播放清單，並且將介面變更為迷你播放器模式。<br /><br /><b class="red--text">第二步</b>：選擇任意影片，將其加入待播清單。<br /><br /><b class="red--text">第三步</b>：播放清單已可透過點擊「儲存」按鈕儲存。
+    sort:
+      dateaddedEarliestFirst: 依加入日期排序（最舊）
+      dateaddedLatestFirst: 依加入日期排序（最新）
+      dateuploadedLatestFirst: 依上傳日期排序（最舊）
+      dateuploadedEarliestFirst: 依上傳日期排序（最新）
   notFound:
     title: 查無此內容
     back: 返回首頁
