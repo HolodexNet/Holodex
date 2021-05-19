@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="showVideoCardMenu">
         <v-menu
             bottom
             nudge-top="20px"
@@ -7,6 +7,8 @@
             :position-y="videoCardMenu && videoCardMenu.y"
             v-model="showVideoCardMenu"
             absolute
+            :close-on-click="false"
+            v-click-outside="onClickOutside"
         >
             <v-list dense v-if="video">
                 <v-list-item @click.stop="copyLink"
@@ -53,8 +55,6 @@ export default {
     data() {
         return {
             doneCopy: false,
-            lastVideoId: null,
-            changed: false,
         };
     },
     watch: {
@@ -88,6 +88,18 @@ export default {
         copyLink() {
             const link = `${window.origin}/watch/${this.video.id}`;
             this.copyToClipboard(link);
+            this.showVideoCardMenu = false;
+        },
+        // Override Vuetify's v-menu click outside with our own
+        onClickOutside(e) {
+            // Fixes bug where clicking on another video card's menu would cause it to close
+            // path: svg <- v-icon  <- btn_content <- video-card-menu
+            for (let i = 0; i < e.path.length; i += 1) {
+                if (i > 4) break;
+                const el = e.path[i];
+                // Element clickced is another menu activator, don't close menu
+                if (el.classList.contains("video-card-menu")) return;
+            }
             this.showVideoCardMenu = false;
         },
     },
