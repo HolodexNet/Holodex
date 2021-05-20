@@ -20,6 +20,12 @@
                     {{ $t("views.settings.redirectModeLabel") }}
                 </v-list-item>
 
+                <v-list-item :disabled="!(video.status === 'upcoming')" @click.prevent.stop="openGoogleCalendar">
+                    <v-icon left :color="video.type === 'clip' || !(video.status === 'upcoming') ? 'grey' : ''">
+                        {{ icons.mdiCalendar }}
+                    </v-icon>
+                    {{ $t("component.videoCard.googleCalendar") }}
+                </v-list-item>
                 <v-list-item
                     :disabled="video.type === 'clip'"
                     :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`"
@@ -49,6 +55,7 @@
 
 <script>
 import copyToClipboard from "@/mixins/copyToClipboard";
+import { dayjs } from "@/utils/time";
 
 export default {
     mixins: [copyToClipboard],
@@ -77,6 +84,7 @@ export default {
                 this.$store.commit("setShowVideoCardMenu", val);
             },
         },
+        window: () => window,
     },
     methods: {
         getChannelShortname(ch) {
@@ -101,6 +109,17 @@ export default {
                 if (el.classList.contains("video-card-menu")) return;
             }
             this.showVideoCardMenu = false;
+        },
+        // Open google calendar to add the time specified in the element
+        openGoogleCalendar() {
+            const startdate = this.video.start_scheduled;
+            const url1 = "https://www.google.com/calendar/render?action=TEMPLATE&text=";
+            const videoTitle = encodeURIComponent(this.video.title);
+            const url2 = "&dates=";
+            const googleCalendarFormat = "YYYYMMDD[T]HHmmss";
+            const eventStart = dayjs(startdate).format(googleCalendarFormat);
+            const eventEnd = dayjs(startdate).add(1, "hour").format(googleCalendarFormat);
+            window.open(url1.concat(videoTitle, url2, eventStart, "/", eventEnd), "_blank");
         },
     },
 };

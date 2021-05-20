@@ -44,6 +44,7 @@ component:
     copiedToClipboard: Link copied to clipboard.
     copyLink: Copy Holodex Link
     premiere: PREMIERE
+    googleCalendar: Add to Google Calendar
   videoDescription:
     description: Description
   video:
