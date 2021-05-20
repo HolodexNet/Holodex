@@ -1,12 +1,20 @@
 # Holodex Changelog
 
+### 2.11 Holodex [*May 20, 2021*]
+##### New Orgs
+- PRISM project has been added
+- Nijisanji has been fully organized, there's so many channels to go through?!
+
+##### Patches
+- Added link to our public API documentation.
+- Optimized Video Cards to improve draw latency, maybe the site will be a bit smoother?
+
 ### 2.10 Holodex [*May 15, 2021*]
 ##### New Features
 - **New Home Page**. Leave us feedback in discord!
 - It's now possible to set MultiView as the home page too in the settings.
 - Added library tab to multiview
 - Library is pagianted and can be sorted by Date added and upload date
-- 
 
 ##### Patches
 - Music page for All Vtubers org now work, will display music ordered by date they were sang. Searches is limited to Track Name.
