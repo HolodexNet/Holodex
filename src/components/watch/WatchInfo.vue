@@ -29,7 +29,7 @@
                     ({{ (liveViewerChange > 0 ? "+ " : "") + liveViewerChange }})
                 </span>
             </template>
-            <span class="mx-1" v-show="video.topic_id">
+            <span class="mx-1" style="text-transform: capitalize" v-show="video.topic_id">
                 • <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
                 {{ video.topic_id }}
             </span>

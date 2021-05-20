@@ -55,7 +55,7 @@
             <v-card min-height="50vh">
                 <v-card-title>Add/Edit Org</v-card-title>
                 <v-card-text>
-                    <v-text-field label="Search" v-model="search"></v-text-field>
+                    <v-text-field label="Search" v-model="search" class="px-4"></v-text-field>
                     <v-list>
                         <v-list-item
                             v-for="org in sortedOrgs"
