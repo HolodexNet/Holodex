@@ -40,66 +40,7 @@
                     <router-link to="/">
                         <Logo width="24" height="24" style="margin-bottom: -4px" v-if="!isMobile" />
                     </router-link>
-                    <v-menu bottom offset-y>
-                        <template v-slot:activator="{ on, attrs }">
-                            <div
-                                v-bind="attrs"
-                                v-on="on"
-                                class="d-inline nav-title"
-                                :class="isMobile ? 'nav-title-slim' : ''"
-                                style="position: relative"
-                            >
-                                <transition name="fade" mode="out-in">
-                                    <span
-                                        :key="currentOrg"
-                                        style="text-decoration: underline"
-                                        :class="{
-                                            'grey--text text--darken-4': !darkMode,
-                                            'grey-text text--lighten-2': darkMode,
-                                        }"
-                                        >{{ ORGS_PREFIX[currentOrg] || currentOrg }}</span
-                                    >
-                                </transition>
-                                <span
-                                    class="primary--text"
-                                    :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
-                                    ref="dexBtn"
-                                    >dex</span
-                                >
-                                <v-tooltip
-                                    v-model="firstVisitComputed"
-                                    right
-                                    bottom
-                                    z-index="120"
-                                    content-class="first-visit-tooltip"
-                                >
-                                    <template v-slot:activator="{}">
-                                        <v-icon
-                                            size="30"
-                                            class="change-org-icon"
-                                            :class="{ 'rotate-180': attrs['aria-expanded'] === 'true' }"
-                                            v-on="on"
-                                        >
-                                            {{ icons.mdiMenuDown }}
-                                        </v-icon>
-                                    </template>
-                                    <div>{{ $t("views.app.nowSupportsMultiOrg") }}</div>
-                                    <div>{{ $t("views.app.loginCallToAction") }}</div>
-                                </v-tooltip>
-                            </div>
-                        </template>
-
-                        <v-list style="max-height: 300px; overscroll-behavior: contain" class="overflow-y-auto">
-                            <v-list-item
-                                v-for="org in ORGS"
-                                :key="org"
-                                @click="currentOrg = org"
-                                :input-value="currentOrg === org"
-                            >
-                                <v-list-item-title>{{ org }}</v-list-item-title>
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
+                    <OrgSelector />
                 </v-toolbar-title>
                 <SearchBar v-if="!isMobile" key="main-search-bar" />
 
@@ -186,12 +127,10 @@
 </template>
 
 <script lang="ts">
-import * as icons from "@/utils/icons";
 import SearchBar from "@/components/common/SearchBar.vue";
-// import SearchBar from "@/components/nav/SearchBarSimple.vue";
 import Logo from "@/components/common/Logo.vue";
+import OrgSelector from "@/components/common/OrgSelector.vue";
 import UserCard from "@/components/user/UserCard.vue";
-import { ORGS, ORGS_PREFIX } from "@/utils/consts";
 import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
 import InstallPrompt from "@/components/common/InstallPrompt.vue";
@@ -208,15 +147,13 @@ export default {
         Logo,
         InstallPrompt,
         MusicBar2: () => import("./MusicBar2.vue"),
+        OrgSelector,
     },
     mixins: [hideExtensionOnScroll],
     data() {
         return {
-            icons,
             favoritesExpanded: false,
             searchBarExpanded: false,
-            ORGS,
-            ORGS_PREFIX,
         };
     },
     computed: {
@@ -231,15 +168,6 @@ export default {
         },
         isMultiView() {
             return this.$route.name === "multiview";
-        },
-        currentOrg: {
-            get() {
-                return this.$store.state.currentOrg;
-            },
-            set(val) {
-                if (this.$route.name === "favorites") this.$router.push({ name: "home" });
-                return this.$store.commit("setCurrentOrg", val);
-            },
         },
         isFirstPage() {
             return this.$store.state.routerHistory.length > 1;
@@ -265,34 +193,34 @@ export default {
                 {
                     name: this.$t("component.mainNav.home"),
                     path: "/home",
-                    icon: icons.mdiHome,
+                    icon: this.icons.mdiHome,
                 },
                 {
                     name: this.$t("component.mainNav.favorites"),
                     path: "/favorites",
-                    icon: icons.mdiHeart,
+                    icon: this.icons.mdiHeart,
                 },
                 {
                     name: this.$t("component.mainNav.channels"),
                     path: "/channel",
-                    icon: icons.mdiAccountBoxMultiple,
+                    icon: this.icons.mdiAccountBoxMultiple,
                 },
                 {
                     name: this.$t("component.mainNav.library"),
                     path: "/library",
-                    icon: icons.mdiAnimationPlay,
+                    icon: this.icons.mdiAnimationPlay,
                     divider: true,
                 },
                 {
                     name: this.$t("component.mainNav.multiview"),
                     path: "/multiview",
-                    icon: icons.mdiViewDashboard,
+                    icon: this.icons.mdiViewDashboard,
                     collapsible: true,
                 },
                 {
                     name: this.$t("component.mainNav.music"),
                     path: "/music",
-                    icon: icons.mdiMusic,
+                    icon: this.icons.mdiMusic,
                     collapsible: true,
                 },
                 {
@@ -305,13 +233,13 @@ export default {
                 {
                     name: this.$t("component.mainNav.about"),
                     path: "/about",
-                    icon: icons.mdiHelpCircle,
+                    icon: this.icons.mdiHelpCircle,
                     collapsible: true,
                 },
                 {
                     name: this.$t("component.mainNav.settings"),
                     path: "/settings",
-                    icon: icons.mdiCog,
+                    icon: this.icons.mdiCog,
                     collapsible: true,
                 },
             ];
@@ -408,30 +336,10 @@ export default {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
 }
-.nav-title {
-    text-decoration: none;
-    font-size: 24px;
-    line-height: 1.2px;
-}
-
-.rotate-180 {
-    transform: rotate(180deg);
-}
 
 .music-bar-open-btn {
     animation-timing-function: ease-in-out;
     animation: fadein 5s;
     animation-iteration-count: 1;
-}
-
-@keyframes fadein {
-    0% {
-        opacity: 1;
-        background-color: #f06291;
-    }
-    100% {
-        opacity: 1;
-        background-color: #f0629100;
-    }
 }
 </style>
