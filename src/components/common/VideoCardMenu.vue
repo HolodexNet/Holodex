@@ -11,57 +11,49 @@
             v-click-outside="onClickOutside"
         >
             <v-list dense v-if="video">
-                <v-list-item @click.stop="copyLink"
+                <!-- <v-list-item @click.stop="copyLink"
                     ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
                     {{ $t("component.videoCard.copyLink") }}
-                </v-list-item>
+                </v-list-item> -->
                 <v-list-item @click.stop target="_blank" :href="`https://youtu.be/${video.id}`"
                     ><v-icon left>{{ icons.mdiYoutube }}</v-icon>
                     {{ $t("views.settings.redirectModeLabel") }}
                 </v-list-item>
 
-                <v-list-item :disabled="!(video.status === 'upcoming')" @click.prevent.stop="openGoogleCalendar">
-                    <v-icon left :color="video.type === 'clip' || !(video.status === 'upcoming') ? 'grey' : ''">
+                <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar">
+                    <v-icon left>
                         {{ icons.mdiCalendar }}
                     </v-icon>
                     {{ $t("component.videoCard.googleCalendar") }}
                 </v-list-item>
-                <v-list-item
-                    :disabled="video.type === 'clip'"
-                    :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`"
-                    ><v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{ icons.mdiViewDashboard }}</v-icon>
-                    {{ $t("component.mainNav.multiview") }}
-                </v-list-item>
-                <v-list-item :disabled="video.type === 'clip'" :to="`/edit/video/${video.id}`"
-                    ><v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{ icons.mdiPencil }}</v-icon>
-                    {{ $t("component.videoCard.edit") }}
-                </v-list-item>
+                <template v-if="video.type !== 'clip'">
+                    <v-list-item :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`">
+                        <v-icon left>{{ icons.mdiViewDashboard }}</v-icon>
+                        {{ $t("component.mainNav.multiview") }}
+                    </v-list-item>
+                    <v-list-item :to="`/edit/video/${video.id}`">
+                        <v-icon left>{{ icons.mdiPencil }}</v-icon>
+                        {{ $t("component.videoCard.edit") }}
+                    </v-list-item>
+                </template>
                 <v-list-item @click="$store.commit('setReportVideo', video)">
-                    <v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{ icons.mdiFlag }} </v-icon>
+                    <v-icon left>{{ icons.mdiFlag }} </v-icon>
                     {{ $t("component.reportDialog.title") }}
                 </v-list-item>
             </v-list>
         </v-menu>
-        <v-snackbar app v-model="doneCopy" :timeout="3000" color="success">
-            {{ $t("component.videoCard.copiedToClipboard") }}
-            <template v-slot:action="{ attrs }">
-                <v-btn text v-bind="attrs" @click="doneCopy = false">
-                    {{ $t("views.app.close_btn") }}
-                </v-btn>
-            </template>
-        </v-snackbar>
     </div>
 </template>
 
 <script>
-import copyToClipboard from "@/mixins/copyToClipboard";
+// import copyToClipboard from "@/mixins/copyToClipboard";
 import { dayjs } from "@/utils/time";
 
 export default {
-    mixins: [copyToClipboard],
+    // mixins: [copyToClipboard],
     data() {
         return {
-            doneCopy: false,
+            // doneCopy: false,
         };
     },
     watch: {
@@ -93,11 +85,11 @@ export default {
                 ch.name.split(/[/\s]/)[0].replace(",", "")
             );
         },
-        copyLink() {
-            const link = `${window.origin}/watch/${this.video.id}`;
-            this.copyToClipboard(link);
-            this.showVideoCardMenu = false;
-        },
+        // copyLink() {
+        //     const link = `${window.origin}/watch/${this.video.id}`;
+        //     this.copyToClipboard(link);
+        //     this.showVideoCardMenu = false;
+        // },
         // Override Vuetify's v-menu click outside with our own
         onClickOutside(e) {
             // Fixes bug where clicking on another video card's menu would cause it to close
