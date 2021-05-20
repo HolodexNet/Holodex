@@ -19,6 +19,7 @@
                             block
                             class="text-left justify-start"
                             large
+                            target="_blank"
                             href="https://forms.gle/xkN4w8fyPr6YTGfx6"
                         >
                             <v-icon large left>{{ icons.mdiPencil }}</v-icon>
@@ -31,6 +32,7 @@
                             block
                             class="text-left justify-start"
                             large
+                            target="_blank"
                             href="https://discord.gg/jctkgHBt4b"
                         >
                             <v-icon large left>{{ icons.mdiDiscord }}</v-icon>
@@ -43,6 +45,7 @@
                             block
                             class="text-left justify-start"
                             large
+                            target="_blank"
                             href="https://discord.gg/xJd9Der"
                         >
                             <v-icon large left>{{ icons.mdiDiscord }}</v-icon>
@@ -54,10 +57,23 @@
                             class="text-left justify-start white--text deep-purple"
                             block
                             large
+                            target="_blank"
                             href="https://github.com/RiceCakess/Holodex"
                         >
                             <v-icon large left color="black">{{ mdiGithub }}</v-icon>
                             {{ $t("about.issueTracker") }}
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="12" md="auto">
+                        <v-btn
+                            class="text-left justify-start white--text orange"
+                            block
+                            large
+                            href="https://holodex.stoplight.io/"
+                            target="_blank"
+                        >
+                            <v-icon large left>{{ mdiConsole }}</v-icon>
+                            API documentation
                         </v-btn>
                     </v-col>
                 </v-row>
@@ -231,7 +247,7 @@
 </template>
 
 <script lang="ts">
-import { mdiExportVariant, mdiGithub } from "@mdi/js";
+import { mdiExportVariant, mdiGithub, mdiConsole } from "@mdi/js";
 import * as icons from "@/utils/icons";
 import TwitterFeed from "@/components/common/TwitterFeed.vue";
 
@@ -256,6 +272,7 @@ export default {
             icons,
             mdiExportVariant,
             mdiGithub,
+            mdiConsole,
             timelinekey: 12,
         };
     },

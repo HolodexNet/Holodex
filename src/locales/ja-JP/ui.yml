@@ -108,8 +108,8 @@ component:
     success: ご報告ありがとうございます。
     reasons:
       - タグが間違っています
-      - Dangerously Low Quality/Misleading Content
-      - 公式の二次創作ガイドラインに違反が含めていますまたは不適切コンテンツ
+      - これはミスリードを引き起こす、または低クオリティなコンテンツです。
+      - これは二次創作ガイドラインに違反している、もしくは不適切なコンテンツです
       - その他
   thirdpartycookie:
     explanation: >-
@@ -167,6 +167,11 @@ views:
     exportYTHeading: Youtubeの再生リストの保存方法
     exportYTInstructions: >-
       <b class="red--text">ステップ 1</b>: Youtubeの再生リストを再生してミニプレイヤーに表示を変更してください。<br /><br /> <b class="red--text">ステップ 2</b>: 何かしらの動画をキューに追加してください。<br /><br /> <b class="red--text">ステップ 3</b>: 再生リストが保存可能になります。画像に従って保存してください。
+    sort:
+      dateaddedEarliestFirst: 'ライブラリ追加日時 : 古い順'
+      dateaddedLatestFirst: 'ライブラリ追加日時 : 新しい順'
+      dateuploadedLatestFirst: '投稿日時 : 新しい順'
+      dateuploadedEarliestFirst: '投稿日時 : 古い順'
   notFound:
     title: コンテンツが見つかりません
     back: 戻る

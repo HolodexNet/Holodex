@@ -70,6 +70,10 @@
                 <span class="text-caption">
                     {{ $t("views.login.apikeyMsg") }}
                 </span>
+                <v-btn small block color="info" href="https://holodex.stoplight.io/" target="_blank">
+                    API Documentation
+                    <v-icon small right>{{ icons.mdiOpenInNew }}</v-icon>
+                </v-btn>
             </v-card-text>
         </v-card>
     </v-container>
