@@ -46,20 +46,24 @@ function defaultState() {
             jwt: null,
         },
         isMobile: true,
-        navDrawer: false,
-        currentOrg: "Hololive",
         currentGridSize: 0,
-        // navigation history tracking
-        routerHistory: [],
 
+        currentOrg: "Hololive",
+        orgFavorites: ["All Vtubers", "Hololive", "Nijisanji", "Independents"],
+
+        // Socket counter, if it is zero, then close the shared WebSocket
         activeSockets: 0,
-        // reportDialog: false,
-        reportVideo: null,
 
+        // MainNav Extension slot for tabs on mobile
         showExtension: false,
+        // Open/Close Nav drawer
+        navDrawer: false,
 
+        // Shared video card dots menu, teleports around
         videoCardMenu: null,
         showVideoCardMenu: false,
+        // Global report video dialog
+        reportVideo: null,
     };
 }
 
@@ -101,8 +105,6 @@ export default new Vuex.Store({
             reducer: (state, paths) => {
                 const o = { ...state };
                 o.music = { ...o.music };
-                // don't want to persist router history across tabs/sessions.
-                o.routerHistory = [];
                 o.activeSockets = 0;
                 // o.music.state = MUSIC_PLAYER_STATE.PLAYING; // don't start new tab playing music.
                 o.music.isOpen = false; // hide it
@@ -161,12 +163,6 @@ export default new Vuex.Store({
             Vue.set(state.userdata, "user", user);
             state.userdata.jwt = jwt;
         },
-        historyPop(state) {
-            state.routerHistory.splice(-1, 1);
-        },
-        historyPush(state, { from }) {
-            state.routerHistory.push(from);
-        },
         setVisited(state) {
             state.firstVisit = false;
         },
@@ -199,6 +195,23 @@ export default new Vuex.Store({
         },
         setShowVideoCardMenu(state, show) {
             state.showVideoCardMenu = show;
+        },
+        toggleFavoriteOrg(state, org) {
+            const favIndex = state.orgFavorites.indexOf(org);
+            if (favIndex >= 0) {
+                state.orgFavorites.splice(favIndex, 1);
+            } else {
+                state.orgFavorites.push(org);
+            }
+        },
+        shiftOrgFavorites(state, { org, up = true }) {
+            const favIndex = state.orgFavorites.indexOf(org);
+            if (up && favIndex === 0) return;
+            if (!up && favIndex === state.orgFavorites.length - 1) return;
+            const replaceIndex = up ? favIndex - 1 : favIndex + 1;
+            const temp = state.orgFavorites[replaceIndex];
+            state.orgFavorites.splice(replaceIndex, 1, org);
+            state.orgFavorites.splice(favIndex, 1, temp);
         },
     },
     actions: {

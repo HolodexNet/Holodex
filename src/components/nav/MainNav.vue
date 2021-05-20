@@ -169,17 +169,6 @@ export default {
         isMultiView() {
             return this.$route.name === "multiview";
         },
-        isFirstPage() {
-            return this.$store.state.routerHistory.length > 1;
-        },
-        firstVisitComputed: {
-            get() {
-                return this.$store.state.firstVisit;
-            },
-            set() {
-                return this.$store.commit("setVisited");
-            },
-        },
         navDrawer: {
             get() {
                 return this.$store.state.navDrawer;
