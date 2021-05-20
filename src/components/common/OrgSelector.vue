@@ -105,7 +105,7 @@ export default {
         return {
             ORGS,
             ORGS_PREFIX,
-            showOrgDialog: true,
+            showOrgDialog: false,
             search: "",
         };
     },
