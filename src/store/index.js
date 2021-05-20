@@ -57,6 +57,9 @@ function defaultState() {
         reportVideo: null,
 
         showExtension: false,
+
+        videoCardMenu: null,
+        showVideoCardMenu: false,
     };
 }
 
@@ -88,7 +91,7 @@ const migrations = [
  *------------------------* */
 const syncedModules = /^(?:library|settings)/;
 const syncedMutations =
-    /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist))/;
+    /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout))/;
 
 export default new Vuex.Store({
     plugins: [
@@ -104,6 +107,7 @@ export default new Vuex.Store({
                 // o.music.state = MUSIC_PLAYER_STATE.PLAYING; // don't start new tab playing music.
                 o.music.isOpen = false; // hide it
                 o.reportVideo = null;
+                o.videoCardMenu = null;
                 return o;
             },
             getState: createMigrate(migrations, "migration.version"),
@@ -189,6 +193,12 @@ export default new Vuex.Store({
         },
         setShowExtension(state, show) {
             state.showExtension = show;
+        },
+        setVideoCardMenu(state, obj) {
+            state.videoCardMenu = obj;
+        },
+        setShowVideoCardMenu(state, show) {
+            state.showVideoCardMenu = show;
         },
     },
     actions: {

@@ -112,7 +112,8 @@
             class="mv-background"
             :style="{
                 'background-size': `${columnWidth}px ${rowHeight}px`,
-                height: `${rowHeight * 24}px`,
+                height: `calc(100% - 64px)`,
+                top: `64px`,
             }"
         >
             <template v-if="layout.length === 0">
@@ -637,8 +638,13 @@ export default {
                 }
 
                 // Find and set to previous preset layout
-                const presets = this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets;
-                const newLayout = presets.find((preset) => preset.emptyCells >= this.activeVideos.length - 1);
+                const presets = this.decodedCustomPresets.concat(
+                    this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets,
+                );
+                const newLayout =
+                    presets.find((preset) => preset.emptyCells === this.activeVideos.length - 1) ??
+                    presets.find((preset) => preset.emptyCells >= this.activeVideos.length - 1);
+
                 const clonedLayout = JSON.parse(JSON.stringify(newLayout));
                 this.$store.commit("multiview/deleteLayoutContent", id);
                 this.setMultiview({
@@ -724,5 +730,8 @@ export default {
 }
 .mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-thumb {
     background: #f06291a2;
+}
+.mv-toolbar{
+    z-index: 1;
 }
 </style>

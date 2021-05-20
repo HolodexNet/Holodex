@@ -44,6 +44,7 @@ export const ORGS = Object.freeze([
     "Tsunderia",
     "Yuni Create",
     "Atelier Live",
+    "PRISM",
     "Hanayori Joshiryo",
     "ViViD",
     "Chukorara",
@@ -88,7 +89,8 @@ export const ORGS_PREFIX = Object.freeze({
 export const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?:channel|c)\/([\w\-\_]*)/i;
 
 // eslint-disable-next-line max-len
-export const VIDEO_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(?:.*\&|\?)?(?:t?=?)?(\d+[\dhms]*)?/i;
+export const VIDEO_URL_REGEX =
+    /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(?:.*\&|\?)?(?:t?=?)?(\d+[\dhms]*)?/i;
 
 export const TL_LANGS = Object.freeze([
     {

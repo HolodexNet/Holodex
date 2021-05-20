@@ -21,6 +21,7 @@
             :width="size"
             :height="size"
             class="d-block"
+            :class="rounded && 'rounded-circle'"
         />
     </a>
 </template>
@@ -40,6 +41,10 @@ export default {
             default: 40,
         },
         noLink: {
+            type: Boolean,
+            default: false,
+        },
+        rounded: {
             type: Boolean,
             default: false,
         },

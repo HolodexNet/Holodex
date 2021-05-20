@@ -1,196 +1,141 @@
 <template>
-    <div :class="{ 'video-card-fluid': fluid, 'video-card-active': active }">
-        <v-card
-            tag="a"
-            outlined
-            :class="[{ 'video-card-fluid': fluid, 'video-card-horizontal': horizontal }, 'video-card', 'transparent']"
-            link
-            @click.exact.prevent="(e) => (!redirectMode ? goToVideo(video.id) : goToYoutube(video.id))"
-            :target="redirectMode ? '_blank' : ''"
-            :href="!redirectMode ? `/watch/${video.id}` : `https://youtu.be/${video.id}`"
-            rel="noopener"
-            :ripple="false"
-            rounded="md"
+    <a
+        class="video-card no-decoration d-flex flex-column"
+        :class="{
+            'video-card-fluid': fluid,
+            'video-card-active': active,
+            'video-card-horizontal': horizontal,
+        }"
+        @click.exact.prevent="(e) => (!redirectMode ? goToVideo(video.id) : goToYoutube(video.id))"
+        :target="redirectMode ? '_blank' : ''"
+        :href="!redirectMode ? `/watch/${video.id}` : `https://youtu.be/${video.id}`"
+        rel="noopener"
+    >
+        <!-- Video Image with Duration -->
+        <v-img
+            class="white--text rounded flex-grow-0"
+            :class="horizontal && ''"
+            :src="imageSrc"
+            :aspect-ratio="16 / 9"
+            width="100%"
+            v-if="!shouldHideThumbnail"
         >
-            <!-- Video Image with Duration -->
-            <v-img
-                class="white--text rounded"
-                :src="imageSrc"
-                :aspect-ratio="16 / 9"
-                :width="horizontal ? '150px' : '100%'"
-                v-if="!shouldHideThumbnail"
-            >
-                <!-- Image Overlay -->
-                <div class="video-card-overlay d-flex justify-space-between flex-column" style="height: 100%">
-                    <div class="d-flex justify-space-between align-start">
-                        <!-- Topic Id display -->
-                        <div
-                            class="video-topic rounded-tl-sm"
-                            :style="{ visibility: video.topic_id ? 'visible' : 'hidden' }"
-                        >
-                            {{ video.topic_id }}
-                        </div>
-
-                        <!-- Check box for saved video -->
-                        <v-icon
-                            :color="hasSaved ? 'primary' : 'white'"
-                            class="video-card-action rounded-tr-sm"
-                            :class="{ 'hover-show': !hasSaved && !isMobile }"
-                            @click.prevent.stop="toggleSaved($event)"
-                        >
-                            {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
-                        </v-icon>
+            <!-- Image Overlay -->
+            <div class="video-card-overlay d-flex justify-space-between flex-column" style="height: 100%">
+                <div class="d-flex justify-space-between align-start">
+                    <!-- Topic Id display -->
+                    <div
+                        class="video-topic rounded-tl-sm"
+                        :style="{ visibility: video.topic_id ? 'visible' : 'hidden' }"
+                    >
+                        {{ video.topic_id }}
                     </div>
 
-                    <!-- Video duration -->
-                    <div class="d-flex flex-column align-end">
-                        <div class="video-duration" v-if="video.songcount">
-                            <v-icon small>{{ icons.mdiMusic }}</v-icon>
-                        </div>
-                        <div
-                            v-if="video.duration > 0 || video.start_actual"
-                            class="video-duration rounded-br-sm"
-                            :class="video.status === 'live' && 'video-duration-live'"
-                        >
-                            {{ formattedDuration }}
-                        </div>
+                    <!-- Check box for saved video -->
+                    <v-icon
+                        :color="hasSaved ? 'primary' : 'white'"
+                        class="video-card-action rounded-tr-sm"
+                        :class="{ 'hover-show': !hasSaved && !isMobile }"
+                        @click.prevent.stop="toggleSaved($event)"
+                    >
+                        {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
+                    </v-icon>
+                </div>
+
+                <!-- Video duration/music indicator -->
+                <div class="d-flex flex-column align-end">
+                    <!-- Show music icon if songs exist -->
+                    <div class="video-duration" v-if="video.songcount">
+                        <v-icon small>{{ icons.mdiMusic }}</v-icon>
+                    </div>
+                    <!-- Duration/Current live stream time -->
+                    <div
+                        v-if="video.duration > 0 || video.start_actual"
+                        class="video-duration rounded-br-sm"
+                        :class="video.status === 'live' && 'video-duration-live'"
+                    >
+                        {{ formattedDuration }}
                     </div>
                 </div>
-            </v-img>
-
-            <v-list-item
-                three-line
-                class="pa-0"
-                @click.exact.stop.prevent="goToVideo(video.id)"
-                :href="`/watch/${video.id}`"
-                rel="noopener"
-                :ripple="false"
+            </div>
+        </v-img>
+        <div class="d-flex flex-row flex-grow-1" style="height: 88px; position: relative">
+            <!-- Channel icon -->
+            <div
+                class="d-flex align-self-center mr-3"
+                v-if="includeChannel && includeAvatar && !horizontal && video.channel"
             >
-                <v-list-item-avatar v-if="includeChannel && includeAvatar && !horizontal && video.channel">
-                    <ChannelImg :channel="video.channel" />
-                </v-list-item-avatar>
-
-                <v-list-item-content class="pa-0">
-                    <v-menu bottom nudge-top="20px">
-                        <template v-slot:activator="{ on }">
-                            <v-btn
-                                icon
-                                small
-                                v-on="on"
-                                @click.stop.prevent
-                                :ripple="false"
-                                :class="{ 'hover-show': !hasSaved && !isMobile }"
-                                class="video-card-more"
-                            >
-                                <v-icon>
-                                    {{ icons.mdiDotsVertical }}
-                                </v-icon>
-                            </v-btn>
-                        </template>
-                        <v-list dense>
-                            <v-list-item @click.stop="copyLink"
-                                ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
-                                {{ $t("component.videoCard.copyLink") }}
-                            </v-list-item>
-                            <v-list-item @click.stop target="_blank" :href="`https://youtu.be/${video.id}`"
-                                ><v-icon left>{{ icons.mdiYoutube }}</v-icon>
-                                {{ $t("views.settings.redirectModeLabel") }}
-                            </v-list-item>
-
-                            <v-list-item
-                                :disabled="video.type === 'clip'"
-                                :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`"
-                                ><v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{
-                                    icons.mdiViewDashboard
-                                }}</v-icon>
-                                {{ $t("component.mainNav.multiview") }}
-                            </v-list-item>
-                            <v-list-item :disabled="video.type === 'clip'" :to="`/edit/video/${video.id}`"
-                                ><v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{
-                                    icons.mdiPencil
-                                }}</v-icon>
-                                {{ $t("component.videoCard.edit") }}
-                            </v-list-item>
-                            <v-list-item @click="$store.commit('setReportVideo', video)">
-                                <v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{ icons.mdiFlag }} </v-icon>
-                                {{ $t("component.reportDialog.title") }}
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
-
-                    <v-list-item-title
-                        :class="['video-card-title ', { 'video-watched': hasWatched }]"
-                        :title="title"
-                        style="user-select: text"
-                        :style="{ 'font-size': `${1 - $store.state.currentGridSize / 16}rem` }"
+                <ChannelImg :channel="video.channel" rounded />
+            </div>
+            <!-- Three lines for title, channel, available time -->
+            <div class="d-flex justify-space-between flex-column my-1">
+                <!-- Video title -->
+                <div
+                    :class="['video-card-title ', { 'video-watched': hasWatched }]"
+                    :title="title"
+                    style="user-select: text"
+                    :style="{ 'font-size': `${1 - $store.state.currentGridSize / 16}rem` }"
+                >
+                    {{ title }}
+                </div>
+                <!-- Channel -->
+                <div v-if="includeChannel" class="channel-name video-card-subtitle">
+                    <a
+                        class="no-decoration"
+                        :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
+                        :href="`/channel/${video.channel.id}`"
+                        @click.exact.stop.prevent="goToChannel(video.channel.id)"
                     >
-                        {{ title }}
-                    </v-list-item-title>
-                    <v-list-item-subtitle v-if="includeChannel" class="channel-name">
-                        <a
-                            class="no-decoration"
-                            :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
-                            :href="`/channel/${video.channel.id}`"
-                            @click.exact.stop.prevent="goToChannel(video.channel.id)"
-                        >
-                            {{ channelName }}
-                        </a>
-                    </v-list-item-subtitle>
-                    <v-list-item-subtitle>
-                        <span :class="'text-' + this.video.status">
-                            {{ formattedTime }}
-                        </span>
-                        <span v-if="video.clips && video.clips.length > 0">
-                            •
-                            <span class="primary--text">
-                                {{
-                                    $tc(
-                                        "component.videoCard.clips",
-                                        typeof video.clips === "object" ? video.clips.length : +video.clips,
-                                    )
-                                }}
-                            </span>
-                        </span>
-                        <span v-else-if="video.status === 'live' && video.live_viewers > 0">
-                            •
+                        {{ channelName }}
+                    </a>
+                </div>
+                <!-- Time/Viewer Info -->
+                <div class="video-card-subtitle">
+                    <span :class="'text-' + this.video.status">
+                        {{ formattedTime }}
+                    </span>
+                    <template v-if="video.clips && video.clips.length > 0">
+                        •
+                        <span class="primary--text">
                             {{
-                                $tc("component.videoCard.watching", formatCount(video.live_viewers, lang), [
-                                    formatCount(video.live_viewers, lang),
-                                ])
+                                $tc(
+                                    "component.videoCard.clips",
+                                    typeof video.clips === "object" ? video.clips.length : +video.clips,
+                                )
                             }}
                         </span>
-                    </v-list-item-subtitle>
-                </v-list-item-content>
-                <v-list-item-action v-if="!!this.$slots.action" :style="horizontal && 'margin-top:30px'">
-                    <slot name="action"></slot>
-                </v-list-item-action>
-            </v-list-item>
-        </v-card>
-        <!-- comments are shown for search results when you search comments -->
-        <v-list style="max-height: 400px" dense class="pa-0 transparent overflow-y-auto caption" v-if="video.comments">
-            <v-divider class="mx-4" style="flex-basis: 100%; height: 0"></v-divider>
-            <!-- Render Channel Avatar if necessary -->
-            <v-list-item class="pa-0" v-for="comment in video.comments" :key="comment.comment_key">
-                <comment :comment="comment" :videoId="video.id"></comment>
-            </v-list-item>
-        </v-list>
-
-        <v-snackbar app v-model="doneCopy" :timeout="3000" color="success">
-            {{ $t("component.videoCard.copiedToClipboard") }}
-            <template v-slot:action="{ attrs }">
-                <v-btn text v-bind="attrs" @click="doneCopy = false">
-                    {{ $t("views.app.close_btn") }}
-                </v-btn>
-            </template>
-        </v-snackbar>
-    </div>
+                    </template>
+                    <template v-else-if="video.status === 'live' && video.live_viewers > 0">
+                        •
+                        {{
+                            $tc("component.videoCard.watching", formatCount(video.live_viewers, lang), [
+                                formatCount(video.live_viewers, lang),
+                            ])
+                        }}
+                    </template>
+                </div>
+            </div>
+            <!-- Vertical dots menu -->
+            <v-btn
+                icon
+                small
+                @click.stop.prevent="showMenu"
+                :ripple="false"
+                :class="{ 'hover-show': !hasSaved && !isMobile }"
+                class="video-card-menu"
+            >
+                <v-icon>
+                    {{ icons.mdiDotsVertical }}
+                </v-icon>
+            </v-btn>
+        </div>
+    </a>
 </template>
 
 <script lang="ts">
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
-import copyToClipboard from "@/mixins/copyToClipboard";
 /* eslint-disable no-unused-vars */
 
 export default {
@@ -199,33 +144,14 @@ export default {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
         Comment: () => import("./Comment.vue"),
     },
-    mixins: [copyToClipboard],
+
     data() {
         return {
             forceJPG: true,
             icons,
             now: Date.now(),
             updatecycle: null,
-            doneCopy: false,
         };
-    },
-    mounted() {
-        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
-    },
-    activated() {
-        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
-    },
-    deactivated() {
-        if (this.updatecycle) {
-            clearInterval(this.updatecycle);
-            this.updatecycle = null;
-        }
-    },
-    beforeDestroy() {
-        if (this.updatecycle) {
-            clearInterval(this.updatecycle);
-            this.updatecycle = null;
-        }
     },
     props: {
         video: {
@@ -272,6 +198,24 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    mounted() {
+        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+    },
+    activated() {
+        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+    },
+    deactivated() {
+        if (this.updatecycle) {
+            clearInterval(this.updatecycle);
+            this.updatecycle = null;
+        }
+    },
+    beforeDestroy() {
+        if (this.updatecycle) {
+            clearInterval(this.updatecycle);
+            this.updatecycle = null;
+        }
     },
     computed: {
         title() {
@@ -373,15 +317,19 @@ export default {
         updateNow() {
             this.now = Date.now();
         },
-        copyLink() {
-            const link = `${window.origin}/watch/${this.video.id}`;
-            this.copyToClipboard(link);
-        },
-        getChannelShortname(ch) {
-            return (
-                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_")) ||
-                ch.name.split(/[/\s]/)[0].replace(",", "")
-            );
+        // All video cards share one menu that gets controlled through the store
+        showMenu(e) {
+            // this.$store.commit("setShowVideoCardMenu", false);
+            // Send video object and x, y coords for mouse click
+            this.$store.commit("setVideoCardMenu", {
+                video: this.video,
+                x: e.clientX,
+                y: e.clientY,
+            });
+            // this.$nextTick(() => {
+            //     console.log("sdses");
+            this.$store.commit("setShowVideoCardMenu", true);
+            // });
         },
     },
 };
@@ -397,11 +345,6 @@ export default {
     opacity: 0.6;
 }
 
-.video-card {
-    border-radius: 0 !important;
-    border: none !important;
-}
-
 .video-card-fluid {
     width: 100%;
 }
@@ -411,6 +354,7 @@ export default {
 }
 
 .video-card-title {
+    line-height: 1.2;
     white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -441,7 +385,7 @@ export default {
 .channel-name > a:hover {
     color: black !important;
 }
-.theme--dark.v-list-item .channel-name > a:hover {
+.theme--dark .channel-name > a:hover {
     color: white !important;
 }
 
@@ -482,29 +426,26 @@ export default {
     margin: 2px;
 }
 
-.video-card-more {
+.video-card-horizontal {
+    flex-direction: row !important;
+}
+
+.video-card-horizontal > .v-image {
+    margin-right: 5px;
+    width: 150px !important;
+}
+
+.name-vtuber {
+    color: #42a5f5 !important;
+}
+
+.video-card-menu {
     position: absolute;
     right: 0px;
     display: inline-block;
     top: 5px;
     z-index: 1;
 }
-
-.video-card-horizontal {
-    display: flex !important;
-}
-
-.video-card-horizontal > .v-image {
-    margin-right: 5px;
-}
-
-.name-vtuber {
-    color: #42a5f5 !important;
-}
-/* .name-subber {
-    color: #ffffffB3 !important;
-} */
-
 .video-card-active {
     /* primary color with opacity */
     /* Used for Mugen Clips where one of the list videos are 'active' */
@@ -525,5 +466,15 @@ export default {
     left: -1px;
     opacity: 0.15;
     border-radius: 4px;
+}
+
+.video-card-subtitle {
+    line-height: 1.2;
+    font-size: 0.875rem;
+    color: hsla(0, 0%, 100%, 0.7);
+}
+
+.theme--light .video-card-subtitle {
+    color: rgba(0, 0, 0, 0.6);
 }
 </style>
