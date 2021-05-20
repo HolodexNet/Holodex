@@ -108,8 +108,8 @@ component:
     success: ご報告ありがとうございます。
     reasons:
       - タグが間違っています
-      - Dangerously Low Quality/Misleading Content
-      - 公式の二次創作ガイドラインに違反が含めていますまたは不適切コンテンツ
+      - これはミスリードを引き起こす、または低クオリティなコンテンツです。
+      - これは二次創作ガイドラインに違反している、もしくは不適切なコンテンツです
       - その他
   thirdpartycookie:
     explanation: >-
