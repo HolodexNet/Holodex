@@ -167,6 +167,11 @@ views:
     exportYTHeading: Panduan Menyimpan Playlist YouTube
     exportYTInstructions: >-
       <b class="red--text">Langkah 1</b>: Mainkan playlist youtube, dan ubah pemutar UI menjadi mini-player. <br /><br /> <b class="red--text">Langkah 2</b>: Cari video yang ingin kamu simpan lalu Tambahkan ke antrean. <br /><br /> <b class="red--text">Langkah 3</b>: Playlist kini dapat disimpan. Tekan simpan untuk menyimpannya.
+    sort:
+      dateaddedEarliestFirst: Tanggal Ditambahkan ke Koleksi, dari yang paling awal
+      dateaddedLatestFirst: Tanggal Ditambahkan ke Koleksi, dari yang terbaru
+      dateuploadedLatestFirst: Tanggal unggah, dari yang terbaru
+      dateuploadedEarliestFirst: Tanggal unggah, dari yang paling awal
   notFound:
     title: Konten tidak ditemukan
     back: Kembali ke Beranda
