@@ -112,7 +112,8 @@
             class="mv-background"
             :style="{
                 'background-size': `${columnWidth}px ${rowHeight}px`,
-                height: `${rowHeight * 24}px`,
+                height: `calc(100% - 64px)`,
+                top: `64px`,
             }"
         >
             <template v-if="layout.length === 0">
@@ -729,5 +730,8 @@ export default {
 }
 .mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-thumb {
     background: #f06291a2;
+}
+.mv-toolbar{
+    z-index: 1;
 }
 </style>
