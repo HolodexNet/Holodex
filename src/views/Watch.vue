@@ -95,7 +95,7 @@
                     :limit="isMobile ? 5 : 0"
                     @timeJump="seekTo"
                     key="comments"
-                    v-if="comments.length"
+                    v-if="comments.length && !theatherMode"
                 />
             </div>
             <div class="related-videos pt-0 row ma-0" :class="{ 'sidebar-width': !isMobile && !theatherMode }">
