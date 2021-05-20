@@ -3,11 +3,14 @@
 ### 2.11 Holodex [*May 20, 2021*]
 ##### New Orgs
 - PRISM project has been added
-- Nijisanji has been fully organized, there's so many channels to go through?!
+- Nijisanji has been fully organized.
 
 ##### Patches
 - Added link to our public API documentation.
 - Optimized Video Cards to improve draw latency, maybe the site will be a bit smoother?
+- Patched multiview background not drawing correctly (Thanks for PR creeperkafasi!)
+- Removing streams now use Custom Layout (Thank you Shiaupiau!)
+- Improved localizations (Thank you to our translation team!)
 
 ### 2.10 Holodex [*May 15, 2021*]
 ##### New Features
