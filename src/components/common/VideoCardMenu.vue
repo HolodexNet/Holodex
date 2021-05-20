@@ -76,7 +76,6 @@ export default {
                 this.$store.commit("setShowVideoCardMenu", val);
             },
         },
-        window: () => window,
     },
     methods: {
         getChannelShortname(ch) {
