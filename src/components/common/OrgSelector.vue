@@ -190,4 +190,22 @@ export default {
 .change-org-icon:focus::after {
     opacity: 0 !important;
 }
+
+.first-visit-tooltip {
+    width: 80%;
+    max-width: 480px;
+    background: rgb(91, 157, 211);
+    font-weight: 500;
+    box-shadow: 2px 2px 4px black;
+}
+.first-visit-tooltip:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 105px;
+    width: 0;
+    border-bottom: 10px solid rgb(91, 157, 211);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
 </style>
