@@ -304,10 +304,6 @@ export default {
     opacity: 0;
 }
 
-.change-org-icon:focus::after {
-    opacity: 0 !important;
-}
-
 .first-visit-tooltip {
     width: 80%;
     max-width: 480px;
