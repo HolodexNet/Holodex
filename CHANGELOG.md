@@ -1,6 +1,6 @@
 # Holodex Changelog
 
-### 2.11.1 Holodex [*May 20, 2021*]
+### 2.11.1 Holodex [*May 21, 2021*]
 ##### New Features
 - Added a feature to add streams to Google calendar, thanks @creeperkafasipw for the implementation, and @Kuro#5384 for writing the original Userscript!
 - Added a feature to customize orgs in the Org selector.
