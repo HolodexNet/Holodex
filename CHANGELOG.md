@@ -1,5 +1,11 @@
 # Holodex Changelog
 
+### 2.11.2, 2.11.3, 2.11.4 Holodex [*May 21, 2021*]
+##### Patches
+- Added a dialog specifically for reporting a certain controversial channel.
+- Released it three times coz the dev is coding while distracted.
+- Significant figures rounding to 3-sig-figs on Channels list.
+
 ### 2.11.1 Holodex [*May 21, 2021*]
 ##### New Features
 - Added a feature to add streams to Google calendar, thanks @creeperkafasipw for the implementation, and @Kuro#5384 for writing the original Userscript!
