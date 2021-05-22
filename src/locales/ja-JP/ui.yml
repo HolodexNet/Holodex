@@ -45,6 +45,7 @@ component:
     copiedToClipboard: リンクをクリップボードにコピーしました
     copyLink: Holodexでのリンクをコピー
     premiere: プレミア公開
+    googleCalendar: Googleカレンダーに追加
   videoDescription:
     description: 概要
   description:
