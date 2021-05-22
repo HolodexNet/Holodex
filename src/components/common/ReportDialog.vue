@@ -20,6 +20,26 @@
                                 :value="reason.value"
                             ></v-radio>
                         </v-radio-group>
+                        <v-card-text class="red--text" v-if="(this.video.channel_id = 'UCF4-I8ZQL6Aa-iHfdz-B9KQ')">
+                            <b>Note: Please don't report just because you disagree / dislike this subber.</b>
+                            <div v-if="readMore">
+                                <p>
+                                    Holodex platform doesn't arbitrate between sub-par and good TLs. For minor issues,
+                                    you should feedback changes to the subber on youtube via comments, or else reporting
+                                    them to whoever they're clipping (Cover or Nijisanji etc.).
+                                </p>
+                                <p>
+                                    However, if the video in question is indeed dangerously translated to cause
+                                    misunderstandings, we will definitely either delete the video or deplatform the
+                                    channel, in addition to escalating to relevant organizations.
+                                </p>
+                                <p>
+                                    If you'd like to not see this channel ever again, there's a
+                                    <b>Block Channel</b> button below, and on the channel page.
+                                </p>
+                            </div>
+                            <a v-else @click.stop="readMore = true"> Read more...</a>
+                        </v-card-text>
                         <v-textarea
                             filled
                             :label="$t('component.reportDialog.comments')"
@@ -30,7 +50,10 @@
                     </v-card-text>
 
                     <v-divider></v-divider>
-
+                    <channel-socials :channel="video.channel" showDelete hideYt vertical class="d-inline-block ml-4" />
+                    <v-icon small class="ml-1">{{ icons.mdiArrowLeft }}</v-icon>
+                    {{ $t("component.channelSocials.block") }}
+                    <v-divider></v-divider>
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn text :disabled="isLoading" @click="showReportDialog = false">
@@ -54,8 +77,10 @@
 
 <script>
 import { axiosInstance } from "@/utils/backend-api";
+import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 
 export default {
+    components: { ChannelSocials },
     name: "ReportDialog",
     data() {
         return {
@@ -64,6 +89,7 @@ export default {
             isLoading: false,
             showSnackbar: false,
             error: false,
+            readMore: false,
         };
     },
     methods: {
