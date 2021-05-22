@@ -20,7 +20,7 @@
                                 :value="reason.value"
                             ></v-radio>
                         </v-radio-group>
-                        <v-card-text class="red--text" v-if="this.video.channel_id === 'UCF4-I8ZQL6Aa-iHfdz-B9KQ'">
+                        <v-card-text class="red--text" v-if="video.channel.id === 'UCF4-I8ZQL6Aa-iHfdz-B9KQ'">
                             <b>Note: Please don't report just because you disagree / dislike this subber.</b>
                             <div v-if="readMore">
                                 <p>
