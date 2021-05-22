@@ -38,7 +38,7 @@
         <v-col sm="12" md="12">
             <generic-list-loader
                 paginate
-                :key="'ldr' + channel.id + '+' + debounceSearch"
+                :key="'ldr' + channel.id + '+' + committedSearch"
                 :perPage="PER_PAGE_ITEMS"
                 :loadFn="getSongLoader()"
                 v-slot="{ data, isLoading }"
@@ -65,17 +65,15 @@
                         ref="searchbox"
                         single-line
                         hide-details
+                        @submit="doSearch(search)"
+                        @click:append="doSearch(search)"
+                        @keydown.enter="doSearch(search)"
                     ></v-text-field>
                 </v-card-title>
 
                 <v-row>
                     <v-col>
-                        <song-table
-                            :PER_PAGE_ITEMS="PER_PAGE_ITEMS"
-                            :search="search"
-                            :loading="isLoading"
-                            :songs="data"
-                        ></song-table>
+                        <song-table :PER_PAGE_ITEMS="PER_PAGE_ITEMS" :loading="isLoading" :songs="data"></song-table>
                     </v-col>
                 </v-row>
             </generic-list-loader>
@@ -90,7 +88,6 @@ import SongItem from "@/components/media/SongItem.vue";
 import Carousel from "@/components/common/Carousel.vue";
 import PaginateLoad from "@/components/common/PaginateLoad.vue";
 // import { mapState } from "vuex";
-import { debounce } from "@/utils/functions";
 import SongTable from "@/components/media/SongTable.vue";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 
@@ -114,7 +111,7 @@ export default {
             PER_PAGE_ITEMS,
 
             search: "",
-            debounceSearch: "",
+            committedSearch: "",
         };
     },
     mounted() {
@@ -130,20 +127,6 @@ export default {
         channel() {
             this.songsByPopular();
         },
-        // eslint-disable-next-line func-names
-        search: debounce(function (newVal) {
-            this.debounceSearch = newVal.trim();
-            this.$router.push({
-                query: {
-                    ...this.$route.query,
-                    page: undefined,
-                },
-            });
-            // eslint-disable-next-line func-names
-            this.$nextTick(function () {
-                this.$refs.searchbox.focus();
-            });
-        }, 500),
     },
     methods: {
         async songsByPopular() {
@@ -160,7 +143,7 @@ export default {
                     {
                         channel_id: this.channel.id,
                         paginated: 1,
-                        ...(this.debounceSearch && { q: this.debounceSearch }),
+                        ...(this.committedSearch && { q: this.committedSearch }),
                     },
                     offset,
                     limit,
@@ -171,6 +154,19 @@ export default {
                 }));
                 return res.data;
             };
+        },
+        doSearch(newVal) {
+            this.committedSearch = newVal.trim();
+            this.$router.push({
+                query: {
+                    ...this.$route.query,
+                    page: undefined,
+                },
+            });
+            // eslint-disable-next-line func-names
+            this.$nextTick(function () {
+                this.$refs.searchbox.focus();
+            });
         },
     },
 };
