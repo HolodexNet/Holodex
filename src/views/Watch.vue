@@ -87,7 +87,9 @@
                     </template>
                 </WatchToolBar>
                 <WatchInfo :video="video" key="info" @timeJump="seekTo" v-if="!theatherMode" />
+                <!-- Mobile mode only sidebar -->
                 <WatchSideBar :video="video" @timeJump="seekTo" v-if="isMobile" />
+                <!-- Mobile mode Mugen -->
                 <WatchMugen @playNext="playNext" v-if="isMugen && isMobile" />
                 <WatchComments
                     :comments="comments"
@@ -95,11 +97,11 @@
                     :limit="isMobile ? 5 : 0"
                     @timeJump="seekTo"
                     key="comments"
-                    v-if="comments.length"
+                    v-if="comments.length && !theatherMode"
                 />
             </div>
             <div class="related-videos pt-0 row ma-0" :class="{ 'sidebar-width': !isMobile && !theatherMode }">
-                <v-col v-if="theatherMode" md="9" class="pa-0">
+                <v-col v-if="theatherMode" md="8" lg="9" class="pa-0">
                     <WatchInfo :video="video" key="info" @timeJump="seekTo" />
                     <v-divider />
                     <WatchComments
@@ -111,7 +113,7 @@
                         v-if="comments.length"
                     />
                 </v-col>
-                <v-col :md="theatherMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
+                <v-col :md="theatherMode ? 4 : 12" :lg="theatherMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
                     <WatchLiveChat
                         v-if="showChatWindow"
                         :video="video"
@@ -340,5 +342,9 @@ div.notification-sticker {
     flex: 0 0 25%;
     max-width: 25%;
     min-width: 324px;
+}
+
+.min-sidebar-width {
+    min-width: 320px;
 }
 </style>

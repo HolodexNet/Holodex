@@ -53,7 +53,11 @@
                                 <p>
                                     {{ $t("views.editor.changeTopic.info") }}
                                 </p>
-                                <v-select :items="topics" label="Topic (leave empty to unset)" v-model="newTopic" />
+                                <v-autocomplete
+                                    :items="topics"
+                                    label="Topic (leave empty to unset)"
+                                    v-model="newTopic"
+                                />
                             </v-card-text>
                             <v-card-actions>
                                 <v-btn color="blue darken-1" text @click="saveTopic">

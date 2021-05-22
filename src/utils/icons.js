@@ -51,4 +51,6 @@ export {
     mdiVolumeHigh,
     mdiVolumeMute,
     mdiFlag,
+    mdiStar,
+    mdiCalendar,
 } from "@mdi/js";

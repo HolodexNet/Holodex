@@ -27,6 +27,8 @@
                 <v-list-item-content>
                     <v-list-item-title>{{ user.username }}</v-list-item-title>
                     <v-list-item-subtitle>
+                        <span v-if="user.role !== 'user'" style="text-transform: capitalize">{{ user.role }}</span>
+                        &nbsp;
                         <v-icon small :color="user.discord_id ? 'green lighten-2' : 'grey'">{{
                             icons.mdiDiscord
                         }}</v-icon>

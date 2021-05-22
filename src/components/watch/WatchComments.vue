@@ -5,7 +5,7 @@
             <template v-if="!hideBuckets">
                 <template v-for="b in buckets">
                     <v-btn
-                        class="mr-2 mb-2"
+                        class="mr-2 mb-2 ts-btn"
                         :key="b.time"
                         label
                         @click="currentFilter = b.time"
@@ -28,6 +28,14 @@
         </v-card-text>
     </v-card>
 </template>
+
+<style>
+button.ts-btn.v-btn {
+    font-size: 11px;
+    padding: 0px 5px !important;
+    height: 25px !important;
+}
+</style>
 
 <script lang="ts">
 import Comment from "@/components/video/Comment.vue";
@@ -156,5 +164,3 @@ export default {
     },
 };
 </script>
-
-<style></style>

@@ -59,7 +59,11 @@
                 </div>
             </div>
         </v-img>
-        <div class="d-flex flex-row flex-grow-1" style="height: 88px; position: relative">
+        <div
+            class="d-flex flex-row flex-grow-1"
+            style="height: 88px; position: relative"
+            @click.exact.stop.prevent="goToVideo(video.id)"
+        >
             <!-- Channel icon -->
             <div
                 class="d-flex align-self-center mr-3"
