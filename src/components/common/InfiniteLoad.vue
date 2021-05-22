@@ -33,15 +33,22 @@ export default {
             }),
             status: 0,
             nextPage: 1,
+            isVisible: this.initVisible, // always visible at start
         };
     },
     props: {
         identifier: {
             default: +new Date(),
         },
+        initVisible: {
+            // initial visibility, set to FALSE to prevent page loading at start. Usually you want TRUE
+            // unless you're *absolutely* sure the object is not going to be visible.
+            default: true,
+            type: Boolean,
+        },
     },
     mounted() {
-        this.emitEvent();
+        if (this.isVisible) this.emitEvent();
     },
     watch: {
         identifier() {
@@ -53,35 +60,26 @@ export default {
             this.status = this.STATUSES.READY;
         },
         onIntersect(entries, observer, isIntersecting) {
+            console.log(isIntersecting);
+            this.isVisible = isIntersecting;
             if (this.status === this.STATUSES.READY && isIntersecting) this.emitEvent();
         },
         emitEvent() {
             const self = this;
-            // event listeners for events defined below
-            // this.$on("$InfiniteLoad:loaded", () => {
-            //     this.reset();
-            // });
-            // this.$on("$InfiniteLoad:completed", () => {
-            //     this.status = this.STATUSES.COMPLETED;
-            // });
 
-            // this.$on("$InfiniteLoad:error", () => {
-            //     this.status = this.STATUSES.ERROR;
-            // });
+            if (this.status !== this.STATUSES.READY || !this.isVisible) return;
+            // if it's not ready to load, don't load.
 
-            // $state object to emit event to self
             const loaded = () => {
                 self.nextPage += 1;
                 self.status = this.STATUSES.READY;
-                // this.$emit("$InfiniteLoad:loaded", { target: this });
+                setTimeout(self.emitEvent, 100);
             };
             const completed = () => {
                 self.status = this.STATUSES.COMPLETED;
-                // this.$emit("$InfiniteLoad:completed", { target: this });
             };
             const error = () => {
                 this.status = this.STATUSES.ERROR;
-                // this.$emit("$InfiniteLoad:error", { target: this });
             };
 
             const $state = {

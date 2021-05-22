@@ -1,5 +1,17 @@
 # Holodex Changelog
 
+### 2.11.1 Holodex [*May 21, 2021*]
+##### New Features
+- Added a feature to add streams to Google calendar, thanks @creeperkafasipw for the implementation, and @Kuro#5384 for writing the original Userscript!
+- Added a feature to customize orgs in the Org selector.
+
+##### Patches
+- Patched a regression to the Open on Youtube setting where clicking cards were always opening youtube instead of as described.
+- Added role to usercard for editors
+- Fixed double comments on ipad-sized screens.
+- Fixed clips page sometimes not loading on very large screens with small grid.
+- When reporting now you have the option to also block the channel across Holodex.
+
 ### 2.11 Holodex [*May 20, 2021*]
 ##### New Orgs
 - PRISM project has been added
