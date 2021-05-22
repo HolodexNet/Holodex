@@ -46,16 +46,9 @@
 </template>
 
 <script>
-// import copyToClipboard from "@/mixins/copyToClipboard";
 import { dayjs } from "@/utils/time";
 
 export default {
-    // mixins: [copyToClipboard],
-    data() {
-        return {
-            // doneCopy: false,
-        };
-    },
     watch: {
         video() {
             this.$store.commit("setShowVideoCardMenu", true);
@@ -84,21 +77,11 @@ export default {
                 ch.name.split(/[/\s]/)[0].replace(",", "")
             );
         },
-        // copyLink() {
-        //     const link = `${window.origin}/watch/${this.video.id}`;
-        //     this.copyToClipboard(link);
-        //     this.showVideoCardMenu = false;
-        // },
         // Override Vuetify's v-menu click outside with our own
         onClickOutside(e) {
             // Fixes bug where clicking on another video card's menu would cause it to close
-            // path: svg <- v-icon  <- btn_content <- video-card-menu
-            for (let i = 0; i < e.path.length; i += 1) {
-                if (i > 4) break;
-                const el = e.path[i];
-                // Element clickced is another menu activator, don't close menu
-                if (el.classList.contains("video-card-menu")) return;
-            }
+            // Check if the target is another video-card-menu or it's desecendant
+            if (e.target.matches(".video-card-menu, .video-card-menu *")) return;
             this.showVideoCardMenu = false;
         },
         // Open google calendar to add the time specified in the element
