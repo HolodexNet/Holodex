@@ -10,6 +10,7 @@
 - Added role to usercard for editors
 - Fixed double comments on ipad-sized screens.
 - Fixed clips page sometimes not loading on very large screens with small grid.
+- When reporting now you have the option to also block the channel across Holodex.
 
 ### 2.11 Holodex [*May 20, 2021*]
 ##### New Orgs
