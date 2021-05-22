@@ -53,10 +53,10 @@
         </v-menu>
         <v-dialog v-model="showOrgDialog" max-width="1000px">
             <v-card>
-                <v-card-title>Add/Edit Org</v-card-title>
+                <v-card-title>{{ $t("views.channels.sortOptions.org") }}</v-card-title>
 
                 <v-card-text class="px-1">
-                    <v-text-field label="Search" v-model="search" class="px-4"></v-text-field>
+                    <v-text-field :label="$t('component.search.searchLabel')" v-model="search" class="px-4" />
                     <v-list style="overflow-y: auto; height: calc(75vh - 176px)">
                         <v-list-item
                             v-for="org in sortedOrgs"
@@ -119,9 +119,6 @@ export default {
             showOrgDialog: false,
             search: "",
         };
-    },
-    watch: {
-        search() {},
     },
     computed: {
         firstVisit: {
