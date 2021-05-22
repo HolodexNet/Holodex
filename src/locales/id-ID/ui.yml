@@ -45,6 +45,7 @@ component:
     copiedToClipboard: Tautan disalin ke clipboard.
     copyLink: Salin Tautan Holodex
     premiere: PREMIER
+    googleCalendar: Tambahkan ke Kalender Google
   videoDescription:
     description: Deskripsi
   description:
