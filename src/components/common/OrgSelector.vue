@@ -47,21 +47,27 @@
                     <v-list-item-title>{{ org }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="showOrgDialog = true">
-                    <v-list-item-title class="primary--text">Show More</v-list-item-title>
+                    <v-list-item-title class="primary--text">{{ $t("views.favorites.showall") }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>
         <v-dialog v-model="showOrgDialog" max-width="1000px">
-            <v-card min-height="50vh">
+            <v-card>
                 <v-card-title>Add/Edit Org</v-card-title>
-                <v-card-text>
+
+                <v-card-text class="px-1">
                     <v-text-field label="Search" v-model="search" class="px-4"></v-text-field>
-                    <v-list>
+                    <v-list style="overflow-y: auto; height: calc(75vh - 176px)">
                         <v-list-item
                             v-for="org in sortedOrgs"
                             :key="org"
                             dense
-                            @click="currentOrg = org"
+                            @click="
+                                () => {
+                                    currentOrg = org;
+                                    showOrgDialog = false;
+                                }
+                            "
                             :ripple="false"
                         >
                             <v-list-item-action height="32px">
@@ -73,7 +79,7 @@
                                     <v-icon>{{ icons.mdiStar }}</v-icon>
                                 </v-btn>
                             </v-list-item-action>
-                            <v-list-item-content @click="currentOrg = org">{{ org }}</v-list-item-content>
+                            <v-list-item-content>{{ org }}</v-list-item-content>
 
                             <v-list-item-action
                                 style="flex-direction: row !important"
@@ -90,6 +96,11 @@
                         </v-list-item>
                     </v-list>
                 </v-card-text>
+                <v-divider />
+                <v-card-actions>
+                    <v-spacer />
+                    <v-btn text @click="showOrgDialog = false" color="red">{{ $t("views.app.close_btn") }}</v-btn>
+                </v-card-actions>
             </v-card>
         </v-dialog>
     </span>
@@ -174,5 +185,27 @@ export default {
 
 .rotate-180 {
     transform: rotate(180deg);
+}
+
+.change-org-icon:focus::after {
+    opacity: 0 !important;
+}
+
+.first-visit-tooltip {
+    width: 80%;
+    max-width: 480px;
+    background: rgb(91, 157, 211);
+    font-weight: 500;
+    box-shadow: 2px 2px 4px black;
+}
+.first-visit-tooltip:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 105px;
+    width: 0;
+    border-bottom: 10px solid rgb(91, 157, 211);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
 }
 </style>
