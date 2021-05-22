@@ -45,8 +45,11 @@ component:
     copiedToClipboard: 連結已複製到剪貼簿。
     copyLink: 複製 Holodex 連結
     premiere: 首播
+    googleCalendar: 新增至 Google 日曆
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -126,6 +129,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
