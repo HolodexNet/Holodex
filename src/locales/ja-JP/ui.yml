@@ -238,7 +238,7 @@ views:
     saveToLibrary: ライブラリに保存
     mentionIconLabel: メンション
     chat:
-      loading: チャット\n読み込み中
+      loading: チャットを読み込み中
       hideTLBtn: 翻訳を非表示
       showTLBtn: 翻訳を表示
       TLSettingsTitle: 翻訳設定
