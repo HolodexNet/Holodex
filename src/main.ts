@@ -32,10 +32,11 @@ Vue.use(
 // });
 
 // Create a manager to use a custom path (due to reverse proxy)
-
-Vue.use(VueMeta, {
-    refreshOnceOnNavigation: true,
-});
+if (!(window as any).hideMeta) {
+    Vue.use(VueMeta, {
+        refreshOnceOnNavigation: true,
+    });
+}
 Vue.use(VueI18n);
 Vue.use(LoadScript);
 
