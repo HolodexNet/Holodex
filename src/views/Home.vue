@@ -194,6 +194,19 @@ export default {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
             this.identifier = Date.now();
+            switch (window.location.hash) {
+                case "#live":
+                    this.tab = this.Tabs.LIVE_UPCOMING;
+                    break;
+                case "#archive":
+                    this.tab = this.Tabs.ARCHIVE;
+                    break;
+                case "#clips":
+                    this.tab = this.Tabs.CLIPS;
+                    break;
+                default:
+                    break;
+            }
         },
         // called from mixin, simulate reload
         reload() {

@@ -213,6 +213,19 @@ export default {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
                 this.$store.dispatch("favorites/fetchLive", { force: true, minutes: 2 });
                 this.identifier = Date.now();
+                switch (window.location.hash) {
+                    case "#live":
+                        this.tab = this.Tabs.LIVE_UPCOMING;
+                        break;
+                    case "#archive":
+                        this.tab = this.Tabs.ARCHIVE;
+                        break;
+                    case "#clips":
+                        this.tab = this.Tabs.CLIPS;
+                        break;
+                    default:
+                        break;
+                }
             }
         },
         reload() {
