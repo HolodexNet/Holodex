@@ -198,7 +198,7 @@ views:
     darkModeMsg: 設定本站要以淺色模式或是深色模式呈現。
     redirectModeLabel: 於YouTube開啟影片
     redirectModeMsg: >-
-      點擊影片時自動開啟其YouTube頁面。
+      點擊影片縮圖時開啟其 YouTube 頁面，點擊影片標題時於 Holodex 內開啟。
     useEnglishNameLabel: 使用英文名稱
     useEnglishNameMsg: 使用Vtuber英文名字呈現其頻道名稱。
     hideVideoThumbnailsLabel: 隱藏影片縮圖

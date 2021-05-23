@@ -45,6 +45,7 @@ component:
     copiedToClipboard: 링크를 클립보드에 복사했습니다.
     copyLink: Holodex 링크 복사
     premiere: 최초 공개
+    googleCalendar: Google Calendar에 추가
   videoDescription:
     description: 설명
   description:
@@ -167,6 +168,11 @@ views:
     exportYTHeading: YouTube 재생목록을 저장하는 방법
     exportYTInstructions: >-
       <b class="red--text">1단계</b>: YouTube 재생목록을 재생한 다음 미니 플레이어로 플레이어 UI를 변경하세요. <br /><br /> <b class="red--text">2단계</b>: 아무 동영상이나 고른 다음 대기열에 추가하세요. <br /><br /> <b class="red--text">3단계</b>: 이제 재생목록을 저장할 수 있습니다. 저장하려면 저장을 눌러주세요.
+    sort:
+      dateaddedEarliestFirst: 라이브러리에 추가된 날짜, 최신순
+      dateaddedLatestFirst: 라이브러리에 추가된 날짜, 오래된순
+      dateuploadedLatestFirst: 업로드 날짜, 최신순
+      dateuploadedEarliestFirst: 업로드 날짜, 오래된순
   notFound:
     title: 컨텐츠를 찾을 수 없음
     back: 홈으로 돌아가기

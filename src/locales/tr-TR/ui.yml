@@ -2,9 +2,10 @@
 component:
   apiError:
     title: Gomennüzgünüz!
-    textBeforeTwitter: 'İçerik alınırken bir sıkıntı oluştu, lütfen twitter''ı kontrol edin '
-    textAfterTwitter: 'ya da hatayı şikayet edin'
+    textBeforeTwitter: 'İçerik alınırken bir sorun oluştu, lütfen Twitter''ı kontrol edin '
+    textAfterTwitter: 'veya hatayı '
     aboutPage: Hakkında Sayfası
+    afterAboutPageHyperlink: ' üzerinden şikayet edin.'
   channelList:
     signInToFavorite: Favorilere eklemek için giriş yapın
     unfavoriteAllInGroup: Tüm grubu favorilerden çıkar
@@ -31,6 +32,7 @@ component:
     settings: Ayarlar
     login: Giriş
     logout: Çıkış
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Hesap ayarları
     music: Müzik
     multiview: Çoklu İzleme
@@ -43,6 +45,7 @@ component:
     copiedToClipboard: Bağlantı panoya kopyalandı.
     copyLink: Holodex Bağlantısını Kopyala
     premiere: İLK GÖSTERİM
+    googleCalendar: Google Takvim'e Ekle
   videoDescription:
     description: Açıklama
   description:
@@ -317,6 +320,7 @@ views:
 time:
   soon: yakında
   diff_future_date: ' {0} ({1}) başlıyor'
+  distance_past_date: '{0}'
 editor:
   music:
     add: Ekle
@@ -341,6 +345,7 @@ editor:
   enterMode: Düzenle
 about:
   quicklinks: Hızlı Bağlantılar
+  discordBtn: Holodex Discord'u
   issueTracker: Sorun İzleyici / Kaynak
   faq:
     title: SSS

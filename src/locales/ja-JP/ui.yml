@@ -211,7 +211,7 @@ views:
     tlLanguageSelection: 次の言語でライブチャット翻訳を表示する
     defaultPage: デフォルトページ
     defaultPageMsg: >-
-      holodex.net にアクセスしたときやページ左上のロゴをクリックしたとき、デフォルトででこのページを開きます。
+      holodex.net にアクセスしたときやページ左上のロゴをクリックしたとき、デフォルトでこのページを開きます。
     videoFeedSettings: 動画フィードの設定
     siteNavigationSettings: サイトナビゲーション
     languageSettings: 言語
@@ -238,7 +238,7 @@ views:
     saveToLibrary: ライブラリに保存
     mentionIconLabel: メンション
     chat:
-      loading: チャット\n読み込み中
+      loading: チャットを読み込み中
       hideTLBtn: 翻訳を非表示
       showTLBtn: 翻訳を表示
       TLSettingsTitle: 翻訳設定
