@@ -27,6 +27,11 @@ module.exports = {
             entry: "src/main.ts",
             title: "Holodex",
         },
+        seo: {
+            entry: "src/main.ts",
+            title: "Holodex",
+            template: "public/seo.html",
+        },
     },
     pwa: {
         name: "Holodex",
