@@ -112,11 +112,17 @@ component:
       - Conteúdo Perigososamente de Baixa Qualidade ou Enganoso
       - Inapropriado ou Viola as diretrizes de trabalho derivado
       - Outros
+  thirdpartycookie:
+    dialogTitle: Usando o Chat do Youtube no Holodex
+    alertText: >-
+      As configurações de privacidade do seu navegador está impossibilitando o Chat do Youtube de se conectar. Clique aqui para mais informações
+    neverShowAgain: Não Mostrar Este Alerta Novamente
 views:
   channel:
     video: Vídeos
     clips: Clipes
     music: Músicas
+    collabs: Collabs
     about: Informações
   channels:
     sortOptions:
@@ -138,6 +144,7 @@ views:
     recentVideosHeading: Vídeos Recentes
     recentVideoToggles:
       all: Todos
+      official: VODs
       subber: Clipes
   library:
     savedVideosTitle: Vídeos Salvos
@@ -194,6 +201,18 @@ views:
     resetAllSettings: Redefinir todas as configurações/dados
     clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
     tlLanguageSelection: Ver Traduções no Chat nestes idiomas
+    defaultPage: Página Padrão
+    defaultPageMsg: >-
+      Abra esta página por padrão quando visitar holodex.net, ou clicar no logotipo no canto superior esquerdo.
+    gridSizeLabel: Miniatura/Tamanho da Grade
+    gridSizeMsg: Alterar tamanho da grade de miniaturas/vídeo na página Início/Favoritos
+    gridSize:
+      - Grande
+      - Médio
+      - Pequeno
+    hideCollabStreamsLabel: Ocultar Collab Streams 
+    hideCollabStreamsMsg: Ocultar Streams que são Collab do seus Favoritos
+    theme: Tema
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
@@ -264,6 +283,8 @@ views:
     permalink: Link Permanente
     presets: Predefinidas
     addframe: Adicionar Célula
+    muteAll: Silenciar Tudo
+    unmuteAll: Desmutar Tudo
     preset:
       shareOnDiscord: >-
         Tem um layout legal para compartilhar? Use o botão compartilhar e nos informe no nosso <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
@@ -344,6 +365,7 @@ about:
   feedbackHtml: >-
     Você pode criar uma issue no <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> ou contactar a equipe do Holodex no Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
+    title: Creditos
     contents:
       - I would like to give big thanks to the
       - team for their work on
