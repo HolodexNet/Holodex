@@ -136,6 +136,19 @@ export default {
         tab() {
             this.$nextTick(() => {
                 window.scrollTo(0, 0);
+                switch (this.tab) {
+                    case 0:
+                        this.$router.replace("#vtuber");
+                        break;
+                    case 1:
+                        this.$router.replace("#archive");
+                        break;
+                    case 2:
+                        this.$router.replace("#clips");
+                        break;
+                    default:
+                        break;
+                }
             });
         },
     },
@@ -194,7 +207,7 @@ export default {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
             this.identifier = Date.now();
-            switch (window.location.hash) {
+            switch (this.$route.hash) {
                 case "#live":
                     this.tab = this.Tabs.LIVE_UPCOMING;
                     break;
