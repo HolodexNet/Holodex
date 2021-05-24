@@ -3,7 +3,7 @@
         <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
             <div v-if="isLoading">{{ $t("views.watch.chat.loading") }}</div>
             <div class="pa-3" v-else>{{ overlayMessage }}</div>
-            <v-btn v-if="!isLoading" @click="tlJoin()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
+            <v-btn v-if="$socket.disconnected" @click="tlJoin()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
         </v-overlay>
         <v-card-subtitle class="py-1 d-flex justify-space-between">
             <div>
@@ -208,6 +208,14 @@ export default {
             const vm = this as any;
             vm.overlayMessage = this.$t("views.watch.chat.status.reconnectFailed");
         },
+        connect() {
+            const vm = this as any;
+            vm.tlJoin();
+        },
+        disconnect() {
+            const vm = this as any;
+            vm.tlLeave();
+        },
         // Sucessfully connected to live stream chat
         subscribeSuccess(obj) {
             const vm = this as any;
@@ -231,7 +239,8 @@ export default {
     },
     created() {},
     mounted() {
-        this.tlJoin();
+        // this.tlJoin();
+        this.initSocket();
         // Test string
         // setTimeout(() => {
         //     const msg = {
@@ -368,23 +377,7 @@ export default {
         },
         // eslint-disable-next-line func-names
         tlJoin() {
-            // Disallow users from joining a chat room that doesn't exist yet
-            // Backend will create a chatroom when it's 15 minutes before a stream
-            if (
-                this.video.status !== "live" &&
-                !dayjs().isAfter(dayjs(this.video.start_scheduled).subtract(15, "minutes"))
-            ) {
-                this.overlayMessage = this.$t("views.watch.chat.status.notLive");
-                this.isLoading = false;
-                this.showOverlay = true;
-                return;
-            }
-            this.isLoading = true;
-
-            // Start the unified socket if it isn't already
-            if (this.$socket.disconnected) {
-                this.$socket.client.connect();
-            }
+            if (!this.initSocket()) return;
 
             // Grab chat history
             api.chatHistory(this.video.id, {
@@ -444,6 +437,26 @@ export default {
             return formatDuration(
                 dayjs.utc(utc).diff(Number(dayjs(this.video.start_actual || this.video.start_scheduled))),
             );
+        },
+        initSocket() {
+            // Disallow users from joining a chat room that doesn't exist yet
+            // Backend will create a chatroom when it's 15 minutes before a stream
+            if (
+                this.video.status !== "live" &&
+                !dayjs().isAfter(dayjs(this.video.start_scheduled).subtract(15, "minutes"))
+            ) {
+                this.overlayMessage = this.$t("views.watch.chat.status.notLive");
+                this.isLoading = false;
+                this.showOverlay = true;
+                return false;
+            }
+            this.isLoading = true;
+
+            // Start the unified socket if it isn't already
+            if (this.$socket.disconnected) {
+                this.$socket.client.connect();
+            }
+            return true;
         },
     },
 };
