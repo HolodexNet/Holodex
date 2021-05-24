@@ -49,9 +49,8 @@
                 </v-list>
             </v-col>
             <v-col cols="auto">
-                <v-avatar rounded left size="60" v-if="channelChips && channelChips.length > 0">
-                    <v-icon size="25" color="grey darken-3">{{ icons.mdiAccountBoxMultiple }}</v-icon>
-                    <span class="icon-subtext text--grey text--darken-3">{{ $t("views.watch.mentionIconLabel") }}</span>
+                <v-avatar rounded left size="40" v-if="channelChips && channelChips.length > 0">
+                    <v-icon size="25" color="grey darken-2">{{ mdiAt }}</v-icon>
                 </v-avatar>
                 <template v-for="mention in channelChips">
                     <ChannelChip :channel="mention" :key="mention.id" :size="60" />
@@ -81,6 +80,7 @@ import ChannelImg from "@/components/channel/ChannelImg.vue";
 import { getVideoThumbnails } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
 import TruncatedText from "@/components/common/TruncatedText.vue";
+import { mdiAt } from "@mdi/js";
 // import VideoSongs from "@/components/media/VideoEditSongs.vue";
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
@@ -112,6 +112,8 @@ export default {
             editMode: false,
             showAllMentions: false,
             lastViewerCount: -1,
+
+            mdiAt,
         };
     },
     methods: {
@@ -209,18 +211,6 @@ export default {
     flex-direction: column;
     align-items: stretch;
     margin-right: 12px;
-}
-.icon-subtext {
-    display: block;
-    position: absolute;
-    font-size: 9px;
-    font-weight: 600;
-    color: rgb(138, 138, 138);
-    bottom: 6px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-smooth: never;
-    -webkit-font-smoothing: antialiased;
-    -webkit-text-size-adjust: none;
 }
 #video-edit-btn {
     font-size: 12px;
