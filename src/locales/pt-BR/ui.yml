@@ -45,6 +45,7 @@ component:
     copiedToClipboard: Link copiado para a área de transferência.
     copyLink: Copiar link Holodex
     premiere: ESTREIA
+    googleCalendar: Adicionar ao Google Agenda
   videoDescription:
     description: Descrição
   description:
@@ -62,6 +63,7 @@ component:
       channel: Canal
       topic: Tópico
       org: Org
+      titledesc: título/desc
       comments: Comentários
       videourl: URL de Vídeo
   relatedVideo:
@@ -101,6 +103,15 @@ component:
   comment:
     close: Fechar
     readMore: Mostrar mais
+  reportDialog:
+    title: Reportar
+    comments: Comentário (Opcional)
+    success: Denuncia enviada, Obrigado!
+    reasons:
+      - Video tagged incorrectly
+      - Conteúdo Perigososamente de Baixa Qualidade ou Enganoso
+      - Inapropriado ou Viola as diretrizes de trabalho derivado
+      - Outros
 views:
   channel:
     video: Vídeos
