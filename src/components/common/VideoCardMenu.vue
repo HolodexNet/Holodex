@@ -26,14 +26,14 @@
                     </v-icon>
                     {{ $t("component.videoCard.googleCalendar") }}
                 </v-list-item>
+                <v-list-item :to="`/edit/video/${video.id}${video.type !== 'stream' ? '/mentions' : '/'}`">
+                    <v-icon left>{{ icons.mdiPencil }}</v-icon>
+                    {{ $t("component.videoCard.edit") }}
+                </v-list-item>
                 <template v-if="video.type !== 'clip'">
                     <v-list-item :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`">
                         <v-icon left>{{ icons.mdiViewDashboard }}</v-icon>
                         {{ $t("component.mainNav.multiview") }}
-                    </v-list-item>
-                    <v-list-item :to="`/edit/video/${video.id}`">
-                        <v-icon left>{{ icons.mdiPencil }}</v-icon>
-                        {{ $t("component.videoCard.edit") }}
                     </v-list-item>
                 </template>
                 <v-list-item @click="$store.commit('setReportVideo', video)">

@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="text-h6">
+            <v-icon>{{ mdiAt }}</v-icon> Channel Mentions/Tags
+        </div>
         <v-alert type="success" v-if="successMessage" v-model="showSuccessAlert" dismissible>
             {{ successMessage }}
         </v-alert>
@@ -30,7 +33,7 @@
 </template>
 
 <script>
-import { mdiDelete } from "@mdi/js";
+import { mdiDelete, mdiAt } from "@mdi/js";
 import backendApi from "@/utils/backend-api";
 import { CHANNEL_TYPES } from "@/utils/consts";
 import { debounce } from "@/utils/functions";
@@ -56,6 +59,7 @@ export default {
             errorMessage: "",
             successMessage: "",
             mdiDelete,
+            mdiAt,
 
             selectedChannel: null,
             search: "",
