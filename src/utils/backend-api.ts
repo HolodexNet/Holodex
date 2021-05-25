@@ -4,9 +4,9 @@ import { dayjs } from "@/utils/time";
 import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 
-export const API_BASE_URL =
-    process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api" : `${window.location.origin}/api`;
-// export const API_BASE_URL = "http://localhost:2434";
+// export const API_BASE_URL =
+//     process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api" : `${window.location.origin}/api`;
+export const API_BASE_URL = "http://localhost:2434";
 
 export const axiosInstance = (() => {
     const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
@@ -84,7 +84,9 @@ export default {
     searchComments(queryObject) {
         return axiosInstance.post("/search/commentSearch", queryObject);
     },
-
+    searchChannel(queryObject) {
+        return axiosInstance.post("/search/channelSearch", queryObject);
+    },
     channelVideos(channelId, { type = "videos", query }) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/channels/${channelId}/${type}?${q}`);
@@ -182,6 +184,29 @@ export default {
     chatHistory(id, query) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/chat/${id}/history?${q}`);
+    },
+    getMentions(videoId) {
+        return axiosInstance.get(`videos/${videoId}/mentions`);
+    },
+    deleteMentions(videoId, channelIds, jwt) {
+        return axiosInstance.delete(`videos/${videoId}/mentions`, {
+            data: {
+                channel_ids: channelIds,
+            },
+
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    addMention(videoId, channelId, jwt) {
+        return axiosInstance.post(
+            `videos/${videoId}/mentions`,
+            {
+                channel_id: channelId,
+            },
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
+        );
     },
     /**
      * Fetches song lists up to LIMIT count with offset. Always ordered by available_at date.

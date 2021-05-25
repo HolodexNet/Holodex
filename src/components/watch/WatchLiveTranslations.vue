@@ -385,14 +385,6 @@ export default {
                 ...(this.liveTlShowVerified && { verified: 1 }),
                 ...(this.liveTlShowModerator && { moderator: 1 }),
             }).then(({ data }) => {
-                // Backwards compatible incase backend needs to revert
-                if (Array.isArray(data)) {
-                    this.tlHistory = data
-                        .filter((msg) => !this.blockedNames.has(msg.name)) // filter out blocked users
-                        .map((msg) => this.parseMessage(msg)); // replace all emoji urls with tags
-                    return;
-                }
-
                 this.tlHistory = data.translations
                     .concat(data.moderator ? data.moderator : [])
                     .concat(data.verified ? data.verified : [])
