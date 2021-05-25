@@ -269,8 +269,6 @@ views:
       info: >-
         Semua pengguna dapat menambahkan topik pada video, tetapi hanya editor dan admin saja yang dapat mengubah dan menghapus topik ketika sudah ditetapkan sebelumnya.
       button: Simpan (Perlu waktu ±5 menit untuk berpengaruh)
-    channelMentions:
-      title: Mention Channel (dalam pengembangan)
     sources:
       title: Sumber/Klip (dalam pengembangan)
   login:
