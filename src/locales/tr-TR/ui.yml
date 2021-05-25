@@ -269,8 +269,6 @@ views:
       info: >-
         Tüm kullanıcılar video konularını ayarlayabilir, ancak Sadece Editörler ve Adminler ayarlanmış bir konuyu değiştirebilir veya silebilir.
       button: Kaydet (Etkili olması 5 dakika kadar süre alabilir)
-    channelMentions:
-      title: Kanal bahsetmeleri (geliştirme aşamasında)
     sources:
       title: Kaynaklar/Klipler (geliştirme aşamasında)
   login:
