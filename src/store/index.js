@@ -88,6 +88,16 @@ const migrations = [
             };
         },
     },
+    {
+        version: 3,
+        up: (state) => {
+            const orgFavorites = state.orgFavorites.filter((v) => v !== "Virtual Witch Phenomenon");
+            return {
+                ...state,
+                orgFavorites,
+            };
+        },
+    },
 ];
 
 /**-----------------------
