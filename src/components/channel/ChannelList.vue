@@ -98,14 +98,13 @@
                     <ChannelImg :channel="channel" size="55" />
                 </v-list-item-avatar>
                 <ChannelInfo :channel="channel" :includeVideoCount="includeVideoCount">
-                    <ChannelSocials
-                        :channel="channel"
-                        class="pa-0 justify-start"
-                        v-if="isXs"
-                        :showDelete="showDelete"
-                    />
+                    <slot name="action" v-if="isXs" v-bind:channel="channel">
+                        <ChannelSocials :channel="channel" class="pa-0 justify-start" :showDelete="showDelete" />
+                    </slot>
                 </ChannelInfo>
-                <ChannelSocials :channel="channel" v-if="!isXs" :showDelete="showDelete" />
+                <slot name="action" v-if="!isXs" v-bind:channel="channel">
+                    <ChannelSocials :channel="channel" />
+                </slot>
             </v-list-item>
         </template>
     </v-list>

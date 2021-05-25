@@ -293,7 +293,7 @@ views:
         remove and change the topic once set.
       button: Save (May take 5 minutes to take effect)
     channelMentions:
-      title: Channel Mentions (in development)
+      title: Channel Mentions
     sources:
       title: Sources/Clips (in development)
   login:

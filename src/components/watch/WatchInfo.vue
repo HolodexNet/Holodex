@@ -15,8 +15,11 @@
                 x-small
                 color="primary"
                 class="float-right"
-                v-if="video.type === 'stream'"
-                :to="$route.path.includes('edit') ? `/watch/${video.id}` : `/edit/video/${video.id}`"
+                :to="
+                    $route.path.includes('edit')
+                        ? `/watch/${video.id}`
+                        : `/edit/video/${video.id}${video.type !== 'stream' ? '/mentions' : '/'}`
+                "
                 id="video-edit-btn"
             >
                 {{ $route.path.includes("edit") ? $t("editor.exitMode") : $t("editor.enterMode") }}
