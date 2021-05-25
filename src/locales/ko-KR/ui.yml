@@ -269,8 +269,6 @@ views:
       info: >-
         모든 사용자가 동영상에 주제를 지정할 수 있지만 일단 지정되면 편집자와 관리자만 주제를 제거하고 변경할 수 있습니다.
       button: 저장 (적용까지 5분 정도 소요될 수 있음)
-    channelMentions:
-      title: 채널 멘션 (개발 중)
     sources:
       title: 출처/클립 (개발 중)
   login:
