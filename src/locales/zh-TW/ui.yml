@@ -48,8 +48,6 @@ component:
     googleCalendar: 新增至 Google 日曆
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -129,7 +127,6 @@ views:
     collabs: 連動
     about: 簡介
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -273,8 +270,6 @@ views:
       info: >-
         所有使用者都能為影片設定內容標籤<br/> 但只有擁有「編輯者」權限的用戶能夠更改/刪除已存在的內容標籤。
       button: 儲存（可能需要５分鐘才會顯示更新後內容）
-    channelMentions:
-      title: 提及頻道（開發中）
     sources:
       title: 實況/剪輯來源（開發中）
   login:
