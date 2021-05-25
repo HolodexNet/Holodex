@@ -258,8 +258,6 @@ views:
       info: >-
         Todos os usuários podem atribuir tópico a vídeos, mas somente editores e administradores podem remover e alterar o tópico uma vez definido.
       button: Salvar (Pode levar 5 minutos para ter efeito)
-    channelMentions:
-      title: Menções de Canal (em Desenvolvimento)
     sources:
       title: Fontes/Clipes (em desenvolvimento)
   login:
