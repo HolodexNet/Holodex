@@ -254,7 +254,7 @@ views:
         Cualquier usuario puede asignar un al tema del stream pero sólo los editores y administradores pueden eliminar o modificar el tema una vez establecido.
       button: Guardar (Puede tardar 5 minutos en que aparezca los cambios)
     channelMentions:
-      title: Menciones a canales (en desarrollo)
+      title: Menciones a canales
     sources:
       title: Clips (en desarrollo)
   login:

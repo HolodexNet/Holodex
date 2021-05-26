@@ -45,6 +45,7 @@ component:
     copiedToClipboard: Pautan telah disalin ke papan keratan.
     copyLink: Salin Pautan Holodex
     premiere: TAYANGAN PERDANA
+    googleCalendar: Tambahkan ke Kalendar Google
   videoDescription:
     description: Perihalan
   description:
@@ -167,6 +168,11 @@ views:
     exportYTHeading: Arahan Menyimpan Senarai Main YouTube
     exportYTInstructions: >-
       <b class="red--text">Langkah 1</b>: Mainkan senarai main YouTube kemudian gunakan antara muka pemain mini. <br /><br /> <b class="red--text">Langkah 2</b>: Pilih mana-mana video kemudian tambahkan pada baris gilir. <br /><br /> <b class="red--text">Langkah 3</b>: Senarai main ini telah boleh disimpan. Simpan dengan menekan simpan.
+    sort:
+      dateaddedEarliestFirst: Tarikh Ditambahkan ke Pustaka mengikut urutan terdahulu
+      dateaddedLatestFirst: Tarikh Ditambahkan ke Pustaka mengikut urutan terkemudian
+      dateuploadedLatestFirst: Tarikh dimuat naik mengikut yang terbaharu
+      dateuploadedEarliestFirst: Tarikh dimuat naik mengikut yang terlama
   notFound:
     title: Kandungan tidak ditemui
     back: Kembali ke Halaman Utama
@@ -264,7 +270,7 @@ views:
         Topik video boleh ditetapkan oleh semua pengguna namun hanya penyunting dan pentadbir yang dapat mengubah dan mengalih keluar sebuah topik setelah ditetapkan.
       button: Simpan (Memakan masa kira-kira 5 minit sebelum menunjukkan kesan)
     channelMentions:
-      title: Sebutan Saluran (sedang dibangunkan)
+      title: Sebutan Saluran
     sources:
       title: Sumber dan Sedutan (sedang dibangunkan)
   login:
