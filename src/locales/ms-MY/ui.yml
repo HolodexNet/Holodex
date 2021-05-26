@@ -269,6 +269,8 @@ views:
       info: >-
         Topik video boleh ditetapkan oleh semua pengguna namun hanya penyunting dan pentadbir yang dapat mengubah dan mengalih keluar sebuah topik setelah ditetapkan.
       button: Simpan (Memakan masa kira-kira 5 minit sebelum menunjukkan kesan)
+    channelMentions:
+      title: Sebutan Saluran
     sources:
       title: Sumber dan Sedutan (sedang dibangunkan)
   login:
