@@ -154,35 +154,24 @@ export default {
             },
         },
         tab() {
+            // Sync the hash to current tab
+            const toHash = {
+                0: "",
+                1: "archive",
+                2: "clips",
+            };
+            this.$router
+                .replace({
+                    // set page to 0 if on scroll mode
+                    query: null,
+                    hash: toHash[this.tab] || "",
+                })
+                .catch(() => {
+                    // Navigation duplication error expected, catch it and move on
+                });
+            // Scroll to top
             this.$nextTick(() => {
                 window.scrollTo(0, 0);
-                switch (this.tab) {
-                    case this.Tabs.LIVE_UPCOMING:
-                        this.$router.replace({
-                            query: {
-                                ...this.$route.query,
-                            },
-                        });
-                        break;
-                    case this.Tabs.ARCHIVE:
-                        this.$router.replace({
-                            query: {
-                                ...this.$route.query,
-                            },
-                            hash: "archive",
-                        });
-                        break;
-                    case this.Tabs.CLIPS:
-                        this.$router.replace({
-                            query: {
-                                ...this.$route.query,
-                            },
-                            hash: "clips",
-                        });
-                        break;
-                    default:
-                        break;
-                }
             });
         },
     },
