@@ -11,7 +11,7 @@
         <!-- Teleport tabs to nav extension slot -->
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
             <v-tabs
-                @change="$router.replace({ query: { page: null } })"
+                @change="$router.replace({ query: null })"
                 v-model="tab"
                 :centered="$vuetify.breakpoint.xs"
                 :class="$store.state.settings.darkMode ? 'secondary darken-1' : 'primary lighten-1'"
