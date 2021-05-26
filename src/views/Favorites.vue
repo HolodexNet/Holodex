@@ -157,14 +157,28 @@ export default {
             this.$nextTick(() => {
                 window.scrollTo(0, 0);
                 switch (this.tab) {
-                    case 0:
-                        this.$router.replace("#vtuber");
+                    case this.Tabs.LIVE_UPCOMING:
+                        this.$router.replace({
+                            query: {
+                                ...this.$route.query,
+                            },
+                        });
                         break;
-                    case 1:
-                        this.$router.replace("#archive");
+                    case this.Tabs.ARCHIVE:
+                        this.$router.replace({
+                            query: {
+                                ...this.$route.query,
+                            },
+                            hash: "archive",
+                        });
                         break;
-                    case 2:
-                        this.$router.replace("#clips");
+                    case this.Tabs.CLIPS:
+                        this.$router.replace({
+                            query: {
+                                ...this.$route.query,
+                            },
+                            hash: "clips",
+                        });
                         break;
                     default:
                         break;
@@ -232,9 +246,6 @@ export default {
                 this.$store.dispatch("favorites/fetchLive", { force: true, minutes: 2 });
                 this.identifier = Date.now();
                 switch (this.$route.hash) {
-                    case "#live":
-                        this.tab = this.Tabs.LIVE_UPCOMING;
-                        break;
                     case "#archive":
                         this.tab = this.Tabs.ARCHIVE;
                         break;
@@ -242,6 +253,7 @@ export default {
                         this.tab = this.Tabs.CLIPS;
                         break;
                     default:
+                        this.tab = this.Tabs.LIVE_UPCOMING;
                         break;
                 }
             }

@@ -138,15 +138,14 @@ export default {
             this.$nextTick(() => {
                 window.scrollTo(0, 0);
                 switch (this.tab) {
-                    case 0:
+                    case this.Tabs.LIVE_UPCOMING:
                         this.$router.replace({
                             query: {
                                 ...this.$route.query,
                             },
-                            hash: "vtuber",
                         });
                         break;
-                    case 1:
+                    case this.Tabs.ARCHIVE:
                         this.$router.replace({
                             query: {
                                 ...this.$route.query,
@@ -154,7 +153,7 @@ export default {
                             hash: "archive",
                         });
                         break;
-                    case 2:
+                    case this.Tabs.CLIPS:
                         this.$router.replace({
                             query: {
                                 ...this.$route.query,
@@ -224,9 +223,6 @@ export default {
             this.$store.dispatch("home/fetchLive");
             this.identifier = Date.now();
             switch (this.$route.hash) {
-                case "#live":
-                    this.tab = this.Tabs.LIVE_UPCOMING;
-                    break;
                 case "#archive":
                     this.tab = this.Tabs.ARCHIVE;
                     break;
@@ -234,6 +230,7 @@ export default {
                     this.tab = this.Tabs.CLIPS;
                     break;
                 default:
+                    this.tab = this.Tabs.LIVE_UPCOMING;
                     break;
             }
         },
