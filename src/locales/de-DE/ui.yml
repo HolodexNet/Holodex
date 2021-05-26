@@ -242,6 +242,8 @@ views:
       info: >-
         Alle Benutzer können Videos einem Thema zuordnen, aber nur Editoren und Administratoren können das Thema entfernen oder ändern, sobald es gesetzt wurde.
       button: Speichern (kann 5 Minuten dauern)
+    channelMentions:
+      title: Kanal Erwähnungen
     sources:
       title: Quellen/Clips (in Entwicklung)
   login:
