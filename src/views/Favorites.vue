@@ -153,6 +153,27 @@ export default {
                 }
             },
         },
+        tab() {
+            // Sync the hash to current tab
+            const toHash = {
+                0: "",
+                1: "archive",
+                2: "clips",
+            };
+            this.$router
+                .replace({
+                    // set page to 0 if on scroll mode
+                    query: null,
+                    hash: toHash[this.tab] || "",
+                })
+                .catch(() => {
+                    // Navigation duplication error expected, catch it and move on
+                });
+            // Scroll to top
+            this.$nextTick(() => {
+                window.scrollTo(0, 0);
+            });
+        },
     },
     computed: {
         ...mapState("favorites", ["favorites", "live", "isLoading", "hasError", "currentOffset"]),
@@ -213,6 +234,17 @@ export default {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
                 this.$store.dispatch("favorites/fetchLive", { force: true, minutes: 2 });
                 this.identifier = Date.now();
+                switch (this.$route.hash) {
+                    case "#archive":
+                        this.tab = this.Tabs.ARCHIVE;
+                        break;
+                    case "#clips":
+                        this.tab = this.Tabs.CLIPS;
+                        break;
+                    default:
+                        this.tab = this.Tabs.LIVE_UPCOMING;
+                        break;
+                }
             }
         },
         reload() {

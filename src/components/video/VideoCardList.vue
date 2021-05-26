@@ -1,35 +1,13 @@
 <template>
-    <!-- pad bottom for 100px to allow space for infiniteload -->
     <v-container class="py-0" style="position: relative" fluid :id="'t' + randomId">
         <!-- Video Card grid rows -->
-        <!-- Set min height to account for layout shifting of show more button -->
         <v-row :dense="dense">
             <!-- Video Cards with custom grid size class based on breakpoint -->
             <v-col
                 v-for="(video, index) in processedVideos"
                 :key="`${index}-${video.id}`"
-                :class="['video-col', `video-${colSize}`]"
+                :class="['video-col', `video-${colSize}`, 'flex-column']"
             >
-                <!-- Dont lazy load cards immediately seen -->
-                <!-- <v-lazy style="width: 100%" v-if="lazy && index > colSize * (limitRows + 1)">
-                    <VideoCard
-                        :video="video"
-                        fluid
-                        :includeChannel="includeChannel"
-                        :horizontal="horizontal"
-                        :includeAvatar="includeAvatar"
-                        :colSize="colSize"
-                        :active="video.id === activeId"
-                        :disableDefaultClick="disableDefaultClick"
-                        @videoClicked="handleVideoClick"
-                        :hideThumbnail="shouldHideThumbnail"
-                    > -->
-                <!-- pass slot to each individual video card -->
-                <!-- <template v-slot:action>
-                            <slot name="action" :video="video"></slot>
-                        </template>
-                    </VideoCard>
-                </v-lazy> -->
                 <VideoCard
                     :video="video"
                     fluid
@@ -47,6 +25,19 @@
                         <slot name="action" :video="video"></slot>
                     </template>
                 </VideoCard>
+                <!-- Append comment item for Comment Search -->
+                <v-list
+                    style="max-height: 400px"
+                    dense
+                    class="pa-0 transparent overflow-y-auto caption overflow-x-hidden"
+                    v-if="video.comments"
+                >
+                    <v-divider class="mx-4" style="flex-basis: 100%; height: 0"></v-divider>
+                    <!-- Render Channel Avatar if necessary -->
+                    <v-list-item class="pa-0" v-for="comment in video.comments" :key="comment.comment_key">
+                        <comment :comment="comment" :videoId="video.id"></comment>
+                    </v-list-item>
+                </v-list>
             </v-col>
         </v-row>
         <!-- Expand button/show more -->
@@ -71,6 +62,7 @@ export default {
     components: {
         VideoCard,
         ApiErrorMessage,
+        Comment: () => import("./Comment.vue"),
     },
     data() {
         return {

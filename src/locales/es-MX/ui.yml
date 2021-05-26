@@ -196,6 +196,8 @@ views:
     manageFavorites: Administrar Favoritos
   editor:
     needlogin: Necesitarás iniciar sesión para editar los metadatos de vídeos y canciones de Holodex.
+    channelMentions:
+      title: Menciones a canales
   login:
     apikeyMsg: >-
       Puedes usar la clave de API para consultar Holodex API programaticamente. Solo una clave por cuenta. Después de conseguir una nueva clave, la clave antigua expirará entre 0-24 horas.

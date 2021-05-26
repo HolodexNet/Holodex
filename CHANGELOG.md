@@ -1,5 +1,19 @@
 # Holodex Changelog
 
+### 2.11.5 Holodex [*May 26, 2021*]
+##### Org changes
+- Virtual Witch Phenomenon -> Kamitsubaki
+- (+) Hoshimeguri Gakuen
+- (+) ProPro
+- (+) VOICE-ORE
+- (+) Unreal Night Girls
+- (-) Hanayori Joshiryoku
+- Some changes may take a while to fully deploy across the website, please wait while our database self heals.
+
+##### Patches
+- We've been upgrading our backend all week! You should be noticing more immediate channel going live or ending.
+- Again, we've released our API documentation in the About page. 
+
 ### 2.11.2, 2.11.3, 2.11.4 Holodex [*May 21, 2021*]
 ##### Patches
 - Added a dialog specifically for reporting a certain controversial channel.

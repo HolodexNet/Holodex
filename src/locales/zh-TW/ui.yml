@@ -274,7 +274,7 @@ views:
         所有使用者都能為影片設定內容標籤<br/> 但只有擁有「編輯者」權限的用戶能夠更改/刪除已存在的內容標籤。
       button: 儲存（可能需要５分鐘才會顯示更新後內容）
     channelMentions:
-      title: 提及頻道（開發中）
+      title: 提及頻道
     sources:
       title: 實況/剪輯來源（開發中）
   login:

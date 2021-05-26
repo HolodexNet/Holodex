@@ -17,7 +17,7 @@
                         </youtube>
                     </template>
                 </WatchFrame>
-                <div class="comment-scroller">
+                <div class="comment-scroller" v-if="video.comments.length">
                     <WatchComments
                         hideBuckets
                         :comments="video.comments"
@@ -38,9 +38,9 @@
                 </v-alert>
                 <v-row fluid>
                     <v-tabs v-model="currentTab">
-                        <v-tab>{{ $t("component.search.type.topic") }}</v-tab>
-                        <v-tab>{{ $t("component.mainNav.music") }}</v-tab>
-                        <v-tab disabled>{{ $t("views.editor.channelMentions.title") }}</v-tab>
+                        <v-tab :disabled="video.type !== 'stream'">{{ $t("component.search.type.topic") }}</v-tab>
+                        <v-tab :disabled="video.type !== 'stream'">{{ $t("component.mainNav.music") }}</v-tab>
+                        <v-tab>{{ $t("views.editor.channelMentions.title") }}</v-tab>
                         <v-tab disabled>{{ $t("views.editor.sources.title") }}</v-tab>
                     </v-tabs>
                     <v-col cols="12" class="pa-4">
@@ -74,6 +74,9 @@
                                 @timeJump="seekTo"
                             ></VideoEditSongs>
                         </div>
+                        <div v-if="currentTab === TABS.MENTIONS">
+                            <VideoEditMentions :video="video" />
+                        </div>
                     </v-col>
                     <v-col cols="12">
                         <WatchInfo :video="video" key="info" />
@@ -93,7 +96,8 @@ import WatchInfo from "@/components/watch/WatchInfo.vue";
 import WatchFrame from "@/components/watch/WatchFrame.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import WatchSideBar from "@/components/watch/WatchSideBar.vue";
-import VideoEditSongs from "@/components/media/VideoEditSongs.vue";
+import VideoEditSongs from "@/components/edit/VideoEditSongs.vue";
+import VideoEditMentions from "@/components/edit/VideoEditMentions.vue";
 import { decodeHTMLEntities } from "@/utils/functions";
 // import { dayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
@@ -113,6 +117,7 @@ export default {
         WatchSideBar,
         VideoEditSongs,
         WatchComments,
+        VideoEditMentions,
         WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
     },
     data() {

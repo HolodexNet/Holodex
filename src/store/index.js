@@ -88,6 +88,18 @@ const migrations = [
             };
         },
     },
+    {
+        version: 4,
+        up: (state) => {
+            const orgFavorites = state.orgFavorites.filter(
+                (v) => v !== "Virtual Witch Phenomenon" && v !== "Hanayori Joshiryo",
+            );
+            return {
+                ...state,
+                orgFavorites,
+            };
+        },
+    },
 ];
 
 /**-----------------------

@@ -251,8 +251,8 @@ import Vue from "vue";
 
 import backendApi from "@/utils/backend-api";
 import { secondsToHuman } from "@/utils/time";
-import SongSearch from "./SongSearch.vue";
-import SongItem from "./SongItem.vue";
+import SongSearch from "../media/SongSearch.vue";
+import SongItem from "../media/SongItem.vue";
 
 function humanToSeconds(str) {
     const p = str.split(":");
