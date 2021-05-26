@@ -136,6 +136,19 @@ export default {
         tab() {
             this.$nextTick(() => {
                 window.scrollTo(0, 0);
+                switch (this.tab) {
+                    case 0:
+                        this.$router.replace("#vtuber");
+                        break;
+                    case 1:
+                        this.$router.replace("#archive");
+                        break;
+                    case 2:
+                        this.$router.replace("#clips");
+                        break;
+                    default:
+                        break;
+                }
             });
         },
     },
@@ -194,6 +207,19 @@ export default {
             this.$store.commit("home/resetState");
             this.$store.dispatch("home/fetchLive");
             this.identifier = Date.now();
+            switch (this.$route.hash) {
+                case "#live":
+                    this.tab = this.Tabs.LIVE_UPCOMING;
+                    break;
+                case "#archive":
+                    this.tab = this.Tabs.ARCHIVE;
+                    break;
+                case "#clips":
+                    this.tab = this.Tabs.CLIPS;
+                    break;
+                default:
+                    break;
+            }
         },
         // called from mixin, simulate reload
         reload() {
