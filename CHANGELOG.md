@@ -7,6 +7,7 @@
 - (+) ProPro
 - (+) VOICE-ORE
 - (+) Unreal Night Girls
+- (-) Hanayori Joshiryoku
 - Some changes may take a while to fully deploy across the website, please wait while our database self heals.
 
 ##### Patches

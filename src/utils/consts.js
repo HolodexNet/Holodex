@@ -48,7 +48,6 @@ export const ORGS = Object.freeze([
     "Atelier Live",
     "PRISM",
     "VOICE-ORE",
-    "Hanayori Joshiryo",
     "ViViD",
     "Chukorara",
     "X enc'ount",
