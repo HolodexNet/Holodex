@@ -11,6 +11,7 @@
         <!-- Teleport tabs to nav extension slot -->
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
             <v-tabs
+                @change="$router.replace({ query: { page: null } })"
                 v-model="tab"
                 :centered="$vuetify.breakpoint.xs"
                 :class="$store.state.settings.darkMode ? 'secondary darken-1' : 'primary lighten-1'"
@@ -138,13 +139,28 @@ export default {
                 window.scrollTo(0, 0);
                 switch (this.tab) {
                     case 0:
-                        this.$router.replace("#vtuber");
+                        this.$router.replace({
+                            query: {
+                                ...this.$route.query,
+                            },
+                            hash: "vtuber",
+                        });
                         break;
                     case 1:
-                        this.$router.replace("#archive");
+                        this.$router.replace({
+                            query: {
+                                ...this.$route.query,
+                            },
+                            hash: "archive",
+                        });
                         break;
                     case 2:
-                        this.$router.replace("#clips");
+                        this.$router.replace({
+                            query: {
+                                ...this.$route.query,
+                            },
+                            hash: "clips",
+                        });
                         break;
                     default:
                         break;
