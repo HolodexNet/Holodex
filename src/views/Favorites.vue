@@ -232,11 +232,9 @@ export default {
             this.$router
                 .replace({
                     // set page to 0 if on scroll mode
-                    query: preservePage
-                        ? {
-                              ...this.$route.query,
-                          }
-                        : null,
+                    query: preservePage && {
+                        ...this.$route.query,
+                    },
                     hash: toHash[this.tab] || "",
                 })
                 .catch(() => {
