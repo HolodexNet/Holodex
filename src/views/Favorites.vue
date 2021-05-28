@@ -12,6 +12,7 @@
             <!-- Teleport tabs to nav extension slot -->
             <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
                 <v-tabs
+                    @change="changeTab(false)"
                     v-model="tab"
                     :centered="$vuetify.breakpoint.xs"
                     :class="$store.state.settings.darkMode ? 'secondary darken-1' : 'primary lighten-1'"
@@ -154,21 +155,7 @@ export default {
             },
         },
         tab() {
-            // Sync the hash to current tab
-            const toHash = {
-                0: "",
-                1: "archive",
-                2: "clips",
-            };
-            this.$router
-                .replace({
-                    // set page to 0 if on scroll mode
-                    query: null,
-                    hash: toHash[this.tab] || "",
-                })
-                .catch(() => {
-                    // Navigation duplication error expected, catch it and move on
-                });
+            this.changeTab();
             // Scroll to top
             this.$nextTick(() => {
                 window.scrollTo(0, 0);
@@ -177,21 +164,6 @@ export default {
     },
     computed: {
         ...mapState("favorites", ["favorites", "live", "isLoading", "hasError", "currentOffset"]),
-        recentVideoFilter: {
-            get() {
-                return this.$store.state.favorites.recentVideoFilter;
-            },
-            set(value) {
-                this.$store.commit("favorites/setRecentVideoFilter", value);
-                this.identifier = Date.now();
-                this.$router.push({
-                    query: {
-                        ...this.$route.query,
-                        page: undefined,
-                    },
-                });
-            },
-        },
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
         },
@@ -249,6 +221,25 @@ export default {
         },
         reload() {
             this.init();
+        },
+        changeTab(preservePage = true) {
+            // Sync the hash to current tab
+            const toHash = {
+                0: "",
+                1: "archive",
+                2: "clips",
+            };
+            this.$router
+                .replace({
+                    // set page to 0 if on scroll mode
+                    query: preservePage && {
+                        ...this.$route.query,
+                    },
+                    hash: toHash[this.tab] || "",
+                })
+                .catch(() => {
+                    // Navigation duplication error expected, catch it and move on
+                });
         },
         getLoadFn() {
             return async (offset, limit) => {
