@@ -1,5 +1,11 @@
 # Holodex Changelog
 
+### 2.11.6 Holodex [*May 28, 2021*]
+
+##### Patches
+- Fix entering page numbers in the url
+- Fix DexTL not connecting to more than one stream on multiview
+
 ### 2.11.5 Holodex [*May 26, 2021*]
 ##### Org changes
 - Virtual Witch Phenomenon -> Kamitsubaki
