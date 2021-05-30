@@ -36,6 +36,7 @@ component:
     accountSettings: Настройки аккаунта
     music: Музыка
     multiview: Мультипросмотр
+    points: pts
   videoCard:
     clips: '0 клипов | {n} клип | {n} клипа | {n} клипов'
     watching: '{0} смотрят'
@@ -44,6 +45,7 @@ component:
     copiedToClipboard: Скопировано в буфер обмена.
     copyLink: Копировать ссылку
     premiere: ПРЕМЬЕРА
+    googleCalendar: Добавить в календарь Google
   videoDescription:
     description: Описание
   description:
@@ -101,6 +103,19 @@ component:
   comment:
     close: Закрыть
     readMore: Узнать больше
+  reportDialog:
+    title: Пожаловаться
+    comments: Комментарии (опционально)
+    success: Жалоба отправлена, спасибо!
+    reasons:
+      - Теги к видео неправильные
+      - Опасно низкое качество/Ложный контент
+      - Нарушает соглашение организации на деривативные работы или неуместно
+      - Другое
+  thirdpartycookie:
+    dialogTitle: Использование чата YouTube на Holodex
+    alertText: >-
+      Настройки конфиденциальности вашего браузера делают невозможным вход в чат YouTube. Нажмите здесь для получения дополнительной информации
 views:
   channel:
     video: Видео
