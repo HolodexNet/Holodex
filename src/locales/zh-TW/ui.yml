@@ -316,7 +316,7 @@ views:
       autoLayout: 在自動調整模式中啟用此佈局
     video:
       selectLive: 選擇實況
-      addCustomVideo: 添加指定YouTube影片
+      addCustomVideo: 添加指定影片
     fullScreen: 全螢幕顯示
   mugen:
     welcome: >-
@@ -390,7 +390,7 @@ about:
           - 然後選擇「加到主畫面」。
         ios:
           iOS Safari: >-
-                 
+            
             - 然後選擇「加入主畫面」。
     MugenClips:
       title: MugenClips 是什麼？
@@ -401,7 +401,7 @@ about:
       title: 我是烤肉/剪輯MAN但我在 Holodex 上找不到自己的頻道/剪輯
       contents:
         - >-
-               
+          
           - 此表單
         - >-
           ，我們將會手動將您的頻道加入資料庫。如果您的頻道已經在資料庫裡的話，請確認頻道的影片描述包含正確的 Youtube 實況來源 / 頻道連結。
@@ -425,7 +425,7 @@ about:
       - >-
         還有所有協助海外觀眾更加了解Vtuber的烤肉MAN們！
       - >-
-             
+        
         - 二創條款
   changelog:
     title: 更新紀錄
