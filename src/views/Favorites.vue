@@ -2,8 +2,14 @@
     <v-container
         fluid
         v-touch="{
-            right: () => (tab = Math.max(tab - 1, 0)),
-            left: () => (tab = Math.min(tab + 1, 2)),
+            right: () => {
+                tab = Math.max(tab - 1, 0);
+                changeTab(false);
+            },
+            left: () => {
+                tab = Math.min(tab + 1, 2);
+                changeTab(false);
+            },
         }"
         style="min-height: 100%"
         class="d-flex flex-column"
@@ -144,6 +150,9 @@ export default {
     },
     mounted() {
         this.init(true);
+    },
+    activated() {
+        this.changeTab(false);
     },
     watch: {
         favorites: {
