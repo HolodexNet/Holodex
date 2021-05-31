@@ -152,7 +152,7 @@ export default {
         this.init(true);
     },
     activated() {
-        this.changeTab(false);
+        this.changeTab(true);
     },
     watch: {
         favorites: {

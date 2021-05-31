@@ -136,7 +136,7 @@ export default {
         this.init();
     },
     activated() {
-        this.changeTab(false);
+        this.changeTab(true);
     },
     watch: {
         // eslint-disable-next-line func-names
