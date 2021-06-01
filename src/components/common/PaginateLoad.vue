@@ -89,6 +89,7 @@ export default {
                         ...this.$route.query,
                         page: val,
                     },
+                    hash: `${this.$route.hash}`,
                 });
             },
         },

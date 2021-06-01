@@ -2,8 +2,14 @@
     <v-container
         fluid
         v-touch="{
-            right: () => (tab = Math.max(tab - 1, 0)),
-            left: () => (tab = Math.min(tab + 1, 2)),
+            right: () => {
+                tab = Math.max(tab - 1, 0);
+                changeTab(false);
+            },
+            left: () => {
+                tab = Math.min(tab + 1, 2);
+                changeTab(false);
+            },
         }"
         style="min-height: 100%"
         class="d-flex flex-column"
@@ -12,6 +18,7 @@
             <!-- Teleport tabs to nav extension slot -->
             <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
                 <v-tabs
+                    @change="changeTab(false)"
                     v-model="tab"
                     :centered="$vuetify.breakpoint.xs"
                     :class="$store.state.settings.darkMode ? 'secondary darken-1' : 'primary lighten-1'"
@@ -144,6 +151,9 @@ export default {
     mounted() {
         this.init(true);
     },
+    activated() {
+        this.changeTab(true);
+    },
     watch: {
         favorites: {
             deep: true,
@@ -153,24 +163,16 @@ export default {
                 }
             },
         },
+        tab() {
+            this.changeTab();
+            // Scroll to top
+            this.$nextTick(() => {
+                window.scrollTo(0, 0);
+            });
+        },
     },
     computed: {
         ...mapState("favorites", ["favorites", "live", "isLoading", "hasError", "currentOffset"]),
-        recentVideoFilter: {
-            get() {
-                return this.$store.state.favorites.recentVideoFilter;
-            },
-            set(value) {
-                this.$store.commit("favorites/setRecentVideoFilter", value);
-                this.identifier = Date.now();
-                this.$router.push({
-                    query: {
-                        ...this.$route.query,
-                        page: undefined,
-                    },
-                });
-            },
-        },
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
         },
@@ -213,10 +215,40 @@ export default {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
                 this.$store.dispatch("favorites/fetchLive", { force: true, minutes: 2 });
                 this.identifier = Date.now();
+                switch (this.$route.hash) {
+                    case "#archive":
+                        this.tab = this.Tabs.ARCHIVE;
+                        break;
+                    case "#clips":
+                        this.tab = this.Tabs.CLIPS;
+                        break;
+                    default:
+                        this.tab = this.Tabs.LIVE_UPCOMING;
+                        break;
+                }
             }
         },
         reload() {
             this.init();
+        },
+        changeTab(preservePage = true) {
+            // Sync the hash to current tab
+            const toHash = {
+                0: "",
+                1: "archive",
+                2: "clips",
+            };
+            this.$router
+                .replace({
+                    // set page to 0 if on scroll mode
+                    query: preservePage && {
+                        ...this.$route.query,
+                    },
+                    hash: toHash[this.tab] || "",
+                })
+                .catch(() => {
+                    // Navigation duplication error expected, catch it and move on
+                });
         },
         getLoadFn() {
             return async (offset, limit) => {

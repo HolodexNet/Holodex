@@ -1,6 +1,6 @@
 # Holodex Changelog
 
-### 2.11.6 Holodex [*June 1, 2021*]
+### 2.11.7 Holodex [*June 1, 2021*]
 
 > Devs are on break! (Well one of them is just too busy playing factorio) 😁 However, we're still accepting pull requests from the community!
 
@@ -11,6 +11,11 @@
 ##### QOL
 - [Add recommended extensions of vscode](https://github.com/RiceCakess/Holodex/pull/275)
 
+### 2.11.6 Holodex [*May 28, 2021*]
+
+##### Patches
+- Fix entering page numbers in the url
+- Fix DexTL not connecting to more than one stream on multiview
 
 ### 2.11.5 Holodex [*May 26, 2021*]
 ##### Org changes

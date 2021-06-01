@@ -240,7 +240,11 @@ export default {
     created() {},
     mounted() {
         // this.tlJoin();
-        this.initSocket();
+        if (this.$socket.connected) {
+            this.tlJoin();
+        } else {
+            this.initSocket();
+        }
         // Test string
         // setTimeout(() => {
         //     const msg = {

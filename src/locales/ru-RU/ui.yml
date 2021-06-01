@@ -36,6 +36,7 @@ component:
     accountSettings: Настройки аккаунта
     music: Музыка
     multiview: Мультипросмотр
+    points: pts
   videoCard:
     clips: '0 клипов | {n} клип | {n} клипа | {n} клипов'
     watching: '{0} смотрят'
@@ -44,6 +45,7 @@ component:
     copiedToClipboard: Скопировано в буфер обмена.
     copyLink: Копировать ссылку
     premiere: ПРЕМЬЕРА
+    googleCalendar: Добавить в календарь Google
   videoDescription:
     description: Описание
   description:
@@ -101,6 +103,20 @@ component:
   comment:
     close: Закрыть
     readMore: Узнать больше
+  reportDialog:
+    title: Пожаловаться
+    comments: Комментарии (опционально)
+    success: Жалоба отправлена, спасибо!
+    reasons:
+      - Теги к видео неправильные
+      - Опасно низкое качество/Ложный контент
+      - Нарушает соглашение организации на деривативные работы или неуместно
+      - Другое
+  thirdpartycookie:
+    dialogTitle: Использование чата YouTube на Holodex
+    alertText: >-
+      Настройки конфиденциальности вашего браузера делают невозможным вход в чат YouTube. Нажмите здесь для получения дополнительной информации
+    neverShowAgain: Больше не показывать предупреждение
 views:
   channel:
     video: Видео
@@ -148,6 +164,11 @@ views:
     exportYTHeading: Инструкция по сохранению плейлиста на YouTube
     exportYTInstructions: >-
       <b class="red--text">Шаг 1</b>: Начните проигрывать YouTube плейлист, и измените режим плеера на "Мини-проигрыватель". <br /><br /> <b class="red--text">Шаг 2</b>: Выберите любое видео и добавьте его в очередь. <br /><br /> <b class="red--text">Шаг 3</b>: Теперь плейлист доступен для сохранения. Нажмите кнопку "Сохранить".
+    sort:
+      dateaddedEarliestFirst: Дата добавления в библиотеку, сначала старые
+      dateaddedLatestFirst: Дата добавления в библиотеку, сначала новое
+      dateuploadedLatestFirst: Дата загрузки, сначала последнее
+      dateuploadedEarliestFirst: Дата загрузки, сначала старое
   notFound:
     title: Контент не найден
     back: Вернуться на главную
@@ -184,6 +205,11 @@ views:
     resetAllSettings: Сбросить все настройки/данные
     clipLanguageSelection: 'Посмотрите клипы на этих языках:'
     tlLanguageSelection: Языки для перевода трансляций
+    defaultPage: Страница по умолчанию
+    defaultPageMsg: >-
+      Открывать эту страницу по умолчанию при открытии holodex.net, или при нажатии на логотип сверху слева.
+    videoFeedSettings: Настройки видеопотока
+    languageSettings: Язык
   app:
     update_available: Доступно обновление
     update_btn: Обновить
@@ -229,7 +255,7 @@ views:
         Все пользователи могут назначать тему для видео, но только редакторы и администраторы могут удалять и изменять тему после установки.
       button: Сохранить (Для применения может потребоваться 5 минут)
     channelMentions:
-      title: Упомянутые каналы (в разработке)
+      title: Упомянутые каналы
     sources:
       title: Источники/клипы (в разработке)
   login:

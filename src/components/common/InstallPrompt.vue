@@ -64,13 +64,14 @@ export default {
             e.preventDefault();
             // Stash the event so it can be triggered later.
             this.deferredPrompt = e;
-
-            // Optionally, send analytics event that PWA install promo was shown.
-            console.log("'beforeinstallprompt' event was fired.");
         });
 
         window.addEventListener("appinstalled", () => {
             this.deferredPrompt = null;
+        });
+
+        this.$gtag.event("pwa:source", {
+            event_label: this.isStandAlone() ? "pwa" : "browser",
         });
     },
     computed: {
@@ -96,6 +97,9 @@ export default {
             } else {
                 this.iOSInstallDialog = true;
             }
+            this.$gtag.event("pwa:prompt", {
+                event_label: "interacted",
+            });
         },
         hideInstallPrompt() {
             this.$store.commit("installPromptShown");

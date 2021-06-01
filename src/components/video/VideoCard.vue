@@ -59,10 +59,12 @@
                 </div>
             </div>
         </v-img>
-        <div
-            class="d-flex flex-row flex-grow-1"
+        <a
+            class="d-flex flex-row flex-grow-1 no-decoration"
             style="height: 88px; position: relative"
             @click.exact.stop.prevent="goToVideo(video.id)"
+            :href="`/watch/${video.id}`"
+            rel="noopener"
         >
             <!-- Channel icon -->
             <div
@@ -132,7 +134,7 @@
                     {{ icons.mdiDotsVertical }}
                 </v-icon>
             </v-btn>
-        </div>
+        </a>
     </a>
 </template>
 
