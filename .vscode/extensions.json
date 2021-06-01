@@ -1,0 +1,12 @@
+{
+	"recommendations": [
+        "antfu.i18n-ally",
+        "irongeek.vscode-env",
+        "jpruliere.env-autocomplete",
+        "lukas-tr.materialdesignicons-intellisense",
+        "octref.vetur",
+        "jcbuisson.vue",
+        "dbaeumer.vscode-eslint",
+        "intellsmi.comment-translate",
+	]
+}
