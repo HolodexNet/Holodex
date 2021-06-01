@@ -1,5 +1,17 @@
 # Holodex Changelog
 
+### 2.11.6 Holodex [*June 1, 2021*]
+
+> Devs are on break! (Well one of them is just too busy playing factorio) 😁 However, we're still accepting pull requests from the community!
+
+##### Patches
+- [Fix tab swiping hash/page query, use hash/page query when Home/Favorite view is activated](https://github.com/RiceCakess/Holodex/pull/274)
+- [Fix MultiView button in Watch for certain vtubers](https://github.com/RiceCakess/Holodex/pull/277)
+
+##### QOL
+- [Add recommended extensions of vscode](https://github.com/RiceCakess/Holodex/pull/275)
+
+
 ### 2.11.5 Holodex [*May 26, 2021*]
 ##### Org changes
 - Virtual Witch Phenomenon -> Kamitsubaki
