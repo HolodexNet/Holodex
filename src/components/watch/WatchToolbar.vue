@@ -35,7 +35,7 @@
                     </v-list-item>
                     <v-list-item
                         :disabled="video.type === 'clip'"
-                        :to="`/multiview/AAUY${video.id}${video.channel.name}%2CUAEYchat`"
+                        :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`"
                     >
                         <v-icon left :color="video.type === 'clip' ? 'grey' : ''">
                             {{ icons.mdiViewDashboard }}
@@ -85,6 +85,12 @@ export default {
         };
     },
     methods: {
+        getChannelShortname(ch) {
+            return (
+                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_")) ||
+                ch.name.split(/[/\s]/)[0].replace(",", "")
+            );
+        },
         toggleSaved() {
             this.hasSaved
                 ? this.$store.commit("library/removeSavedVideo", this.video.id)
