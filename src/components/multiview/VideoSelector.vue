@@ -4,12 +4,12 @@
         <v-row>
             <v-col cols="12" sm="4" md="3" lg="2">
                 <!-- Dropdown for breakpoint xs -->
-                <v-container class="org-dropdown" mandatory v-if="$vuetify.breakpoint.xs">
+                <div class="org-dropdown" mandatory v-if="$vuetify.breakpoint.xs">
                     <v-card-title class="text-subtitle-2">{{ $t("views.multiview.video.selectLive") }}</v-card-title>
                     <v-select :items="orgList" filled v-model="selectedOrg"></v-select>
-                </v-container>
+                </div>
                 <!-- Full list for greater than xs -->
-                <v-container class="org-list" mandatory v-else>
+                <div class="org-list" mandatory v-else>
                     <v-card-title class="text-sm-subtitle-1 text-md-h6">{{
                         $t("views.multiview.video.selectLive")
                     }}</v-card-title>
@@ -30,7 +30,7 @@
                             </v-list-item>
                         </template>
                     </v-list-item-group>
-                </v-container>
+                </div>
             </v-col>
             <v-col class="video-list" cols="12" sm="8" md="9" lg="10">
                 <!-- Custom YT Url should render different content -->
