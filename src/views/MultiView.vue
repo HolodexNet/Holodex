@@ -112,8 +112,8 @@
             class="mv-background"
             :style="{
                 'background-size': `${columnWidth}px ${rowHeight}px`,
-                height: `calc(100% - 64px)`,
-                top: `64px`,
+                height: `calc(100% - ${collapseToolbar ? 0:64}px)`,
+                top: `${collapseToolbar ? 0:64}px`,
             }"
         >
             <template v-if="layout.length === 0">
