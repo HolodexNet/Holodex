@@ -5,6 +5,8 @@
         :class="{
             'edit-mode': pausedMode,
         }"
+        v-on:drop="drop"
+        v-on:dragover="allowDrop"
     >
         <!-- When Cell has no content: show video picker -->
         <v-sheet style="height: 100%" class="d-flex flex-column pt-4" v-if="!cellContent">
@@ -286,6 +288,35 @@ export default {
         setLayoutFreeze(newMode = this.pausedMode) {
             if (newMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
             else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
+        },
+        allowDrop(ev) {
+            ev.preventDefault();
+        },
+        drop(ev) {
+            
+            ev.preventDefault();
+            const data:string = ev.dataTransfer.getData("text");
+            let videoid:string;
+            let videotype:string;
+            if (/(youtube.com\/watch\?v=|youtu.be\/|holodex.net\/watch\/).{11}$/.test(data)) {
+                videoid = data.slice(-11);
+            } else if (/twitch.tv\/*/.test(data)) {
+                videotype = "twitch";
+                // I AM NOT GOING TO USE THE WEIRD ARRAY DESTRUCTURING SYNTAX
+                // eslint-disable-next-line
+                videoid = data.split(/twitch.tv\//)[1];
+            }
+            else return;
+            this.$store.commit("multiview/setLayoutContentById", {
+                id: this.item.i,
+                content: {
+                    type: "video",
+                    content: {
+                        cellVideoType: videotype,
+                        id: videoid,
+                    },
+                },
+            });
         },
     },
 };
