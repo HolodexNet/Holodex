@@ -282,17 +282,16 @@ export default {
         ...mapState("favorites", ["lastLiveUpdate"]),
         ...mapState("library", ["savedVideos"]),
         orgList() {
+            const self = this;
             const arr = [
                 {
                     text: this.$t("component.mainNav.favorites"),
                     value: 0,
                 },
-                ...insertIf(!this.horizontal, [
-                    {
-                        text: this.$t("component.mainNav.library"),
-                        value: 1,
-                    },
-                ]),
+                ...insertIf(!this.horizontal, {
+                    text: self.$t("component.mainNav.library"),
+                    value: 1,
+                }),
                 {
                     text: "Youtube URL",
                     value: 2,
