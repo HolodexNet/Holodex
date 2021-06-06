@@ -362,9 +362,9 @@ export default {
             if (match && match[5] && match[5].length === 11) {
                 this.customURLError = false;
                 this.$emit("videoClicked", {
-                    id: match[1],
+                    id: match[5],
                     channel: {
-                        name: match[1],
+                        name: match[5],
                     },
                 });
             } else {
