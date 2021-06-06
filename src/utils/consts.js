@@ -96,7 +96,7 @@ export const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?
 
 // eslint-disable-next-line max-len
 export const VIDEO_URL_REGEX =
-    /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(?:.*\&|\?)?(?:t?=?)?(\d+[\dhms]*)?/i;
+    /((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be|holodex.net))(\/(?:[\w\-]+\?v=|embed\/|v\/|watch\/)?)([\w\-]+)(\S+)?/i;
 
 export const TL_LANGS = Object.freeze([
     {

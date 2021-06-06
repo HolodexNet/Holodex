@@ -168,7 +168,17 @@
         <template v-else>
             <v-tooltip :key="video.id" v-for="video in filteredLive" transition="v-fade-transition" bottom>
                 <template v-slot:activator="{ on, attrs }">
-                    <div v-on="on" v-bind="attrs" style="position: relative; margin-right: 3px; cursor: pointer">
+                    <div
+                        v-on="on"
+                        v-bind="attrs"
+                        style="position: relative; margin-right: 3px; cursor: pointer"
+                        draggable="true"
+                        v-on:dragstart="
+                            (ev) => {
+                                ev.dataTransfer.setData('text', `holodex.net/watch/${video.id}`);
+                            }
+                        "
+                    >
                         <div
                             class="live-badge"
                             :key="'lvbg' + ticker"
@@ -273,14 +283,14 @@ export default {
                     text: this.$t("component.mainNav.favorites"),
                     value: 0,
                 },
-                ...(!this.horizontal ?
-                    [
-                        {
-                            text: this.$t("component.mainNav.library"),
-                            value: 1,
-                        },
-                    ] :
-                    []),
+                ...(!this.horizontal
+                    ? [
+                          {
+                              text: this.$t("component.mainNav.library"),
+                              value: 1,
+                          },
+                      ]
+                    : []),
                 {
                     text: "Youtube URL",
                     value: 2,
@@ -352,12 +362,12 @@ export default {
         },
         addCustomVideo() {
             const match = this.customURL.match(VIDEO_URL_REGEX);
-            if (match && match[1] && match[1].length === 11) {
+            if (match && match[5] && match[5].length === 11) {
                 this.customURLError = false;
                 this.$emit("videoClicked", {
-                    id: match[1],
+                    id: match[5],
                     channel: {
-                        name: match[1],
+                        name: match[5],
                     },
                 });
             } else {
