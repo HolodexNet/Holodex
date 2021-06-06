@@ -1,7 +1,7 @@
 <template>
     <!-- Vertical: -->
     <v-card class="pa-3" v-if="!horizontal">
-        <v-row class="flex-column" :class="{ 'flex-nowrap': $vuetify.breakpoint.xs }" style="height: 80vh">
+        <v-row class="flex-column flex-nowrap flex-sm-wrap" style="height: 80vh">
             <v-col class="org-dropdown" cols="12" sm="4" md="3" lg="2" mandatory v-if="$vuetify.breakpoint.xs">
                 <!-- Dropdown for breakpoint xs -->
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
