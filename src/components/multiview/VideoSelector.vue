@@ -210,6 +210,10 @@ import { resizeChannelPhoto } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
 import { mdiTwitch } from "@mdi/js";
 
+function insertIf(condition, ...elements) {
+    return condition ? elements : [];
+}
+
 export default {
     name: "VideoSelector",
     components: {
@@ -283,14 +287,12 @@ export default {
                     text: this.$t("component.mainNav.favorites"),
                     value: 0,
                 },
-                ...(!this.horizontal
-                    ? [
-                          {
-                              text: this.$t("component.mainNav.library"),
-                              value: 1,
-                          },
-                      ]
-                    : []),
+                ...insertIf(!this.horizontal, [
+                    {
+                        text: this.$t("component.mainNav.library"),
+                        value: 1,
+                    },
+                ]),
                 {
                     text: "Youtube URL",
                     value: 2,
