@@ -1,36 +1,32 @@
 <template>
     <!-- Vertical: -->
-    <v-card class="pa-3 vertical-video-selector" v-if="!horizontal">
-        <v-row>
-            <v-col cols="12" sm="4" md="3" lg="2">
+    <v-card class="pa-3" v-if="!horizontal">
+        <v-row class="flex-column flex-nowrap flex-sm-wrap" style="height: 80vh">
+            <v-col class="org-dropdown" cols="12" sm="4" md="3" lg="2" mandatory v-if="$vuetify.breakpoint.xs">
                 <!-- Dropdown for breakpoint xs -->
-                <div class="org-dropdown" mandatory v-if="$vuetify.breakpoint.xs">
-                    <v-card-title class="text-subtitle-2">{{ $t("views.multiview.video.selectLive") }}</v-card-title>
-                    <v-select :items="orgList" filled v-model="selectedOrg"></v-select>
-                </div>
-                <!-- Full list for greater than xs -->
-                <div class="org-list" mandatory v-else>
-                    <v-card-title class="text-sm-subtitle-1 text-md-h6">{{
-                        $t("views.multiview.video.selectLive")
-                    }}</v-card-title>
-                    <v-list-item-group v-model="selectedOrg">
-                        <template v-for="org in orgList">
-                            <v-list-item v-if="org.value === 2" :key="org.value">
-                                <v-icon class="mr-2">{{ icons.mdiYoutube }}</v-icon>
-                                <v-list-item-title>URL</v-list-item-title>
-                            </v-list-item>
-                            <v-list-item v-else-if="org.value === 3" :key="org.value">
-                                <v-icon class="mr-2">{{ mdiTwitch }}</v-icon>
-                                <v-list-item-title>URL</v-list-item-title>
-                            </v-list-item>
-                            <v-list-item v-else :key="org.value">
-                                <v-list-item-content>
-                                    <v-list-item-title>{{ org.text }}</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </template>
-                    </v-list-item-group>
-                </div>
+                <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
+                <v-select :items="orgList" filled v-model="selectedOrg"></v-select>
+            </v-col>
+            <!-- Full list for greater than xs -->
+            <v-col class="org-list" cols="12" sm="4" md="3" lg="2" mandatory v-else>
+                <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
+                <v-list-item-group v-model="selectedOrg">
+                    <template v-for="org in orgList">
+                        <v-list-item v-if="org.value === 2" :key="org.value">
+                            <v-icon class="mr-2">{{ icons.mdiYoutube }}</v-icon>
+                            <v-list-item-title>URL</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item v-else-if="org.value === 3" :key="org.value">
+                            <v-icon class="mr-2">{{ mdiTwitch }}</v-icon>
+                            <v-list-item-title>URL</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item v-else :key="org.value">
+                            <v-list-item-content>
+                                <v-list-item-title>{{ org.text }}</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </template>
+                </v-list-item-group>
             </v-col>
             <v-col class="video-list" cols="12" sm="8" md="9" lg="10">
                 <!-- Custom YT Url should render different content -->
@@ -452,22 +448,20 @@ export default {
 </script>
 
 <style>
-.vertical-video-selector {
-    height: 100%;
-}
-
 .org-dropdown {
-    height: 18vh;
+    flex: 0 0;
 }
 
 .org-list {
-    max-height: 65vh;
+    flex: 1 1 auto;
+    min-height: 0px;
     overflow-y: auto;
     border-right: 1px solid white;
 }
 
 .video-list {
-    height: 65vh;
+    flex: 1 1 auto;
+    min-height: 0px;
     overflow-y: auto;
 }
 
