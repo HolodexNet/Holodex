@@ -28,14 +28,26 @@
                             : 'primary--text text--darken-2'
                     "
                 >
-                    <v-tab>
+                    <v-tab class="pa-2">
                         {{ $t("views.home.liveOrUpcomingHeading") }}
-                        <v-chip small class="ml-1 px-2" color="primary">{{ lives.length + upcoming.length }}</v-chip>
+                        <span class="ml-1 rounded-md primary rounded-lg pa-1" color="primary">
+                            <span
+                                class="primary px-1 rounded"
+                                :class="
+                                    $store.state.settings.darkMode
+                                        ? 'darken-2 text--lighten-3'
+                                        : 'lighten-2 text--darken-3'
+                                "
+                            >
+                                {{ lives.length }}</span
+                            >
+                            | {{ upcoming.length }}
+                        </span>
                     </v-tab>
-                    <v-tab>
+                    <v-tab class="pa-2">
                         {{ $t("views.home.recentVideoToggles.official") }}
                     </v-tab>
-                    <v-tab>
+                    <v-tab class="pa-2">
                         {{ $t("views.home.recentVideoToggles.subber") }}
                     </v-tab>
                 </v-tabs>
