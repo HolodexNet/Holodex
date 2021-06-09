@@ -1,5 +1,11 @@
 # Holodex Changelog
 
+### 2.11.8 Holodex [*June 9, 2021*]
+
+- In honor of Coco-chan, we added a **Coco theme** to Holodex!
+- [You can now drag and drop videos to MultiView cells from youtube and holodex](https://github.com/RiceCakess/Holodex/pull/281)
+- [Scrollbar and Gutter adjustment for MultiView](https://github.com/RiceCakess/Holodex/pull/280)
+
 ### 2.11.7 Holodex [*June 1, 2021*]
 
 > Devs are on break! (Well one of them is just too busy playing factorio) 😁 However, we're still accepting pull requests from the community!
