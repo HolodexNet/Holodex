@@ -118,7 +118,7 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#D5D50B",
+                primary: "#D3B633",
                 secondary: "#FF9A63",
                 success: "#B333C9",
             },
