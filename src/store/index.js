@@ -76,7 +76,7 @@ const migrations = [
         version: 2,
         up: (state) => {
             const defaultOpen =
-                state.settings.defaultOpen || state.settings.defaultOpenFavorites ? "favorites" : "home";
+                state.settings.defaultOpen || (state.settings.defaultOpenFavorites ? "favorites" : "home");
 
             return {
                 ...state,
