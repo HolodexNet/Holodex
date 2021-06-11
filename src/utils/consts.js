@@ -41,6 +41,7 @@ export const ORGS = Object.freeze([
     "Hoshimeguri Gakuen",
     "Riot Music",
     "ProPro",
+    "WACTOR",
     "Aogiri Highschool",
     "Masquerade",
     "Tsunderia",
