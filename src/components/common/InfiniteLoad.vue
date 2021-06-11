@@ -60,7 +60,6 @@ export default {
             this.status = this.STATUSES.READY;
         },
         onIntersect(entries, observer, isIntersecting) {
-            console.log(isIntersecting);
             this.isVisible = isIntersecting;
             if (this.status === this.STATUSES.READY && isIntersecting) this.emitEvent();
         },

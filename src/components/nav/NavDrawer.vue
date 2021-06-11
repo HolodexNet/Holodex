@@ -187,7 +187,6 @@ export default {
         },
         formatDurationUpcoming(ts) {
             const secs = dayjs(ts).diff(dayjs()) / 1000;
-            console.log(secs);
             if (secs > 0) {
                 const h = Math.floor(secs / (60 * 60));
                 const m = Math.floor((secs % (60 * 60)) / 60);

@@ -402,7 +402,7 @@ export default {
             self.currentStartTime = secondsToHuman(seconds);
         },
         processSearch(item) {
-            console.log(item);
+            // console.log(item);
             const self = this as any;
             self.current.song = item;
             if (item) {
