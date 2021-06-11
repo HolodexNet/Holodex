@@ -51,6 +51,9 @@ function defaultState() {
         currentOrg: "Hololive",
         orgFavorites: ["All Vtubers", "Hololive", "Nijisanji", "Independents"],
 
+        // Migration: prevent migrating initial state.
+        migration: { version: 4 },
+
         // Socket counter, if it is zero, then close the shared WebSocket
         activeSockets: 0,
 
