@@ -26,17 +26,14 @@
                 "
             >
                 <v-tab class="pa-2">
-                    {{ $t("views.home.liveOrUpcomingHeading") }}
-                    <span class="ml-1 rounded-md primary rounded-lg pa-1" color="primary">
-                        <span
-                            class="primary px-1 rounded"
-                            :class="
-                                $store.state.settings.darkMode ? 'darken-2 text--lighten-3' : 'lighten-2 text--darken-3'
-                            "
-                        >
-                            {{ lives.length }}</span
-                        >
-                        | {{ upcoming.length }}
+                    {{ $t("views.home.liveOrUpcomingHeading").split(/[\/・]/)[0].trim() }}
+                    <span class="stream-count-chip mx-1 rounded-md primary white--text rounded-lg pa-1">
+                        {{ lives.length }}
+                    </span>
+                    /
+                    {{ $t("views.home.liveOrUpcomingHeading").split(/[\/・]/)[1].trim() }}
+                    <span class="stream-count-chip ml-1 rounded-md primary white--text rounded-lg pa-1">
+                        {{ upcoming.length }}
                     </span>
                 </v-tab>
                 <v-tab class="pa-2">
@@ -48,7 +45,7 @@
             </v-tabs>
         </portal>
         <LoadingOverlay :isLoading="false" :showError="hasError" />
-        <template v-show="!hasError">
+        <div v-show="!hasError">
             <template v-if="tab === Tabs.LIVE_UPCOMING">
                 <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                 <template v-else-if="lives.length || upcoming.length">
@@ -99,7 +96,7 @@
                     </generic-list-loader>
                 </keep-alive>
             </template>
-        </template>
+        </div>
     </v-container>
 </template>
 
@@ -257,5 +254,10 @@ export default {
 <style>
 .v-slide-group__prev--disabled {
     display: none !important;
+}
+/* shared with favorites.vue */
+.stream-count-chip {
+    letter-spacing: normal;
+    min-width: 24px;
 }
 </style>
