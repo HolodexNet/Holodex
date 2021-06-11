@@ -19,6 +19,7 @@ const persistedState = {
     showTL: false,
     showLiveChat: true,
     theatherMode: false,
+    playlist: {},
 };
 
 export const state = { ...initialState, ...persistedState };
