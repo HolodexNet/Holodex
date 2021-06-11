@@ -112,8 +112,8 @@
             class="mv-background"
             :style="{
                 'background-size': `${columnWidth}px ${rowHeight}px`,
-                height: `calc(100% - ${collapseToolbar ? 0:64}px)`,
-                top: `${collapseToolbar ? 0:64}px`,
+                height: `calc(100% - ${collapseToolbar ? 0 : 64}px)`,
+                top: `${collapseToolbar ? 0 : 64}px`,
             }"
         >
             <template v-if="layout.length === 0">
@@ -632,7 +632,7 @@ export default {
             // Check if preset and downgrade layout, if cell being deleted is video
             if (this.isPreset(this.layout) && this.layoutContent[id] && this.layoutContent[id].type !== "chat") {
                 // Clear everything if it's 1 video 1 chat
-                if (this.layout.length - 1 <= 1) {
+                if (this.activeVideos.length === 1) {
                     this.clearAllItems();
                     return;
                 }
@@ -731,7 +731,7 @@ export default {
 .mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-thumb {
     background: #f06291a2;
 }
-.mv-toolbar{
+.mv-toolbar {
     z-index: 1;
 }
 </style>
