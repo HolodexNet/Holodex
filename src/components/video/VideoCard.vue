@@ -334,16 +334,10 @@ export default {
                 x: e.clientX,
                 y: e.clientY,
             });
-            // this.$nextTick(() => {
-            //     console.log("sdses");
             this.$store.commit("setShowVideoCardMenu", true);
-            // });
         },
         drag(ev) {
-            ev.dataTransfer.setData(
-                "text",
-                `holodex.net/watch/${this.video.id}`
-            );
+            ev.dataTransfer.setData("text", `holodex.net/watch/${this.video.id}`);
         },
     },
 };
