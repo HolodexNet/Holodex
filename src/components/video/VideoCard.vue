@@ -10,6 +10,8 @@
         :target="redirectMode ? '_blank' : ''"
         :href="!redirectMode ? `/watch/${video.id}` : `https://youtu.be/${video.id}`"
         rel="noopener"
+        draggable="true"
+        v-on:dragstart="drag"
     >
         <!-- Video Image with Duration -->
         <v-img
@@ -332,10 +334,10 @@ export default {
                 x: e.clientX,
                 y: e.clientY,
             });
-            // this.$nextTick(() => {
-            //     console.log("sdses");
             this.$store.commit("setShowVideoCardMenu", true);
-            // });
+        },
+        drag(ev) {
+            ev.dataTransfer.setData("text", `holodex.net/watch/${this.video.id}`);
         },
     },
 };

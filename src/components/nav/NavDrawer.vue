@@ -47,23 +47,20 @@
             <v-subheader class="pl-5 text-overline">
                 {{ this.$t("component.mainNav.favorites") }}
             </v-subheader>
-            <template v-for="channel in collapsedFavorites">
+            <template v-for="vid in collapsedFavorites">
                 <v-list-item
-                    v-if="channel"
-                    :key="channel.id"
-                    @click="$router.push(`/channel/${channel.id}`).catch(() => {})"
+                    v-if="vid"
+                    :key="vid.id"
+                    @click="$router.push(`/channel/${vid.channel.id}`).catch(() => {})"
                 >
-                    <v-list-item-avatar :size="30" :class="{ outlined: isLive(channel) }">
-                        <ChannelImg :channel="channel" :size="30" />
+                    <v-list-item-avatar :size="30" :class="{ outlined: isLive(vid) }">
+                        <ChannelImg :channel="vid.channel" :size="30" />
                     </v-list-item-avatar>
-                    <ChannelInfo :channel="channel" noSubscriberCount noGroup />
-                    <v-list-item-action-text
-                        v-if="isLive(channel) || getChannelLiveAtTime(channel)"
-                        :key="'liveclock' + channel.id + tick"
-                    >
-                        <span class="ch-live" v-if="isLive(channel)">●</span>
+                    <ChannelInfo :channel="vid.channel" noSubscriberCount noGroup />
+                    <v-list-item-action-text :key="'liveclock' + vid.id + tick" v-if="vid.id">
+                        <span class="ch-live" v-if="isLive(vid)">●</span>
                         <span class="ch-upcoming" v-else>
-                            {{ formatDurationUpcoming(getChannelLiveAtTime(channel)) }}
+                            {{ formatDurationUpcoming(vid.available_at) }}
                         </span>
                     </v-list-item-action-text>
                 </v-list-item>
@@ -102,12 +99,12 @@ import { langs } from "@/plugins/vuetify";
 import { dayjs } from "@/utils/time";
 import { mdiTuneVariant } from "@mdi/js";
 
-function getChannelLiveAtTime(ch) {
-    if (ch.videos && ch.videos[0]) {
-        return dayjs(ch.videos[0].start_actual || ch.videos[0].start_scheduled).valueOf();
-    }
-    return null;
-}
+// function getChannelLiveAtTime(ch) {
+//     if (ch.videos && ch.videos[0]) {
+//         return dayjs(ch.videos[0].start_actual || ch.videos[0].start_scheduled).valueOf();
+//     }
+//     return null;
+// }
 
 export default {
     name: "NavDrawer",
@@ -153,45 +150,29 @@ export default {
             return langs.find((x) => x.val === this.$store.state.settings.lang).display;
         },
         favorites() {
-            const fav = this.$store.state.favorites.favorites.slice(0);
-            const nameProp = this.$store.state.settings.nameProperty;
-            const lives = this.$store.state.favorites.live;
+            const fav = this.$store.state.favorites.favorites;
+            // const nameProp = this.$store.state.settings.nameProperty;
+            const lives: Array<any> = this.$store.state.favorites.live;
             const updateNotice = this.$store.state.favorites.lastLiveUpdate;
             console.debug(`Updating favs: ${updateNotice}`);
-            // this console debug is left in to maintain reactivity to `updateNotice`.
 
-            const favWithVideos = fav.map((x) => {
-                const videos: Array<any> = lives.filter((v) => v.channel.id === x.id);
-                videos.sort(
-                    (a, b) =>
-                        dayjs(a.start_actual || a.start_scheduled).valueOf() -
-                        dayjs(b.start_actual || a.start_scheduled).valueOf(),
-                );
-                return {
-                    ...x,
-                    videos,
-                };
-            });
-            // make sure nav works even if sort fails for some reason
-            try {
-                favWithVideos.sort((a, b) => {
-                    const aLive = getChannelLiveAtTime(a);
-                    const bLive = getChannelLiveAtTime(b);
-                    if (aLive && bLive) {
-                        return aLive - bLive;
-                    }
-                    if (aLive) return -1;
-                    if (bLive) return 1;
-                    return (
-                        (a[nameProp] && b[nameProp] && a[nameProp].localeCompare(b[nameProp])) ||
-                        a.name.localeCompare(b.name)
-                    );
-                    // fall back if english name doesn't exist
-                });
-            } catch (e) {
-                console.log(e);
-            }
-            return favWithVideos;
+            // const videos: Array<any> = [...lives];
+            // const favWithVideos = videos.sort(
+            //     (a, b) =>
+            //         dayjs(a.start_actual || a.start_scheduled).valueOf() -
+            //             dayjs(b.start_actual || a.start_scheduled).valueOf(),
+            // );
+
+            const existingChs = new Set(lives.map((x) => x.channel.id));
+
+            // remainder:
+            const extras = fav
+                .filter((x) => !existingChs.has(x.id))
+                .map((ch) => ({
+                    channel: ch,
+                }));
+
+            return [...lives, ...extras];
         },
         collapsedFavorites() {
             return !this.favoritesExpanded && this.favorites.length > 8 ? this.favorites.slice(0, 8) : this.favorites;
@@ -213,10 +194,10 @@ export default {
             }
             return "●";
         },
-        isLive(channel) {
-            return channel.videos && channel.videos[0] && channel.videos[0].status === "live";
+        isLive(video) {
+            return video.status === "live";
         },
-        getChannelLiveAtTime,
+        // getChannelLiveAtTime,
     },
 };
 </script>

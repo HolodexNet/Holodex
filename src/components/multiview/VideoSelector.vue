@@ -1,19 +1,16 @@
 <template>
     <!-- Vertical: -->
     <v-card class="pa-3" v-if="!horizontal">
-        <v-row>
-            <v-col cols="12" sm="3" md="2" style="border-right: 1px solid white">
-                <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
+        <v-row class="flex-column flex-nowrap flex-sm-wrap" style="height: 80vh">
+            <v-col class="org-dropdown" cols="12" sm="4" md="3" lg="2" mandatory v-if="$vuetify.breakpoint.xs">
                 <!-- Dropdown for breakpoint xs -->
-                <v-select
-                    :items="orgList"
-                    filled
-                    v-model="selectedOrg"
-                    mandatory
-                    v-if="$vuetify.breakpoint.xs"
-                ></v-select>
-                <!-- Full list for greater than xs -->
-                <v-list-item-group v-model="selectedOrg" mandatory v-else>
+                <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
+                <v-select :items="orgList" filled v-model="selectedOrg"></v-select>
+            </v-col>
+            <!-- Full list for greater than xs -->
+            <v-col class="org-list" cols="12" sm="4" md="3" lg="2" mandatory v-else>
+                <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
+                <v-list-item-group v-model="selectedOrg">
                     <template v-for="org in orgList">
                         <v-list-item v-if="org.value === 2" :key="org.value">
                             <v-icon class="mr-2">{{ icons.mdiYoutube }}</v-icon>
@@ -31,7 +28,7 @@
                     </template>
                 </v-list-item-group>
             </v-col>
-            <v-col cols="12" sm="9" md="10" style="max-height: 100%; overflow-y: auto">
+            <v-col class="video-list" cols="12" sm="8" md="9" lg="10">
                 <!-- Custom YT Url should render different content -->
                 <template v-if="selectedOrg === 2">
                     <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
@@ -167,7 +164,17 @@
         <template v-else>
             <v-tooltip :key="video.id" v-for="video in filteredLive" transition="v-fade-transition" bottom>
                 <template v-slot:activator="{ on, attrs }">
-                    <div v-on="on" v-bind="attrs" style="position: relative; margin-right: 3px; cursor: pointer">
+                    <div
+                        v-on="on"
+                        v-bind="attrs"
+                        style="position: relative; margin-right: 3px; cursor: pointer"
+                        draggable="true"
+                        v-on:dragstart="
+                            (ev) => {
+                                ev.dataTransfer.setData('text', `holodex.net/watch/${video.id}`);
+                            }
+                        "
+                    >
                         <div
                             class="live-badge"
                             :key="'lvbg' + ticker"
@@ -198,6 +205,10 @@ import { dayjs } from "@/utils/time";
 import { resizeChannelPhoto } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
 import { mdiTwitch } from "@mdi/js";
+
+function insertIf(condition, ...elements) {
+    return condition ? elements : [];
+}
 
 export default {
     name: "VideoSelector",
@@ -267,19 +278,16 @@ export default {
         ...mapState("favorites", ["lastLiveUpdate"]),
         ...mapState("library", ["savedVideos"]),
         orgList() {
+            const self = this;
             const arr = [
                 {
                     text: this.$t("component.mainNav.favorites"),
                     value: 0,
                 },
-                ...(!this.horizontal ?
-                    [
-                        {
-                            text: this.$t("component.mainNav.library"),
-                            value: 1,
-                        },
-                    ] :
-                    []),
+                ...insertIf(!this.horizontal, {
+                    text: self.$t("component.mainNav.library"),
+                    value: 1,
+                }),
                 {
                     text: "Youtube URL",
                     value: 2,
@@ -351,12 +359,12 @@ export default {
         },
         addCustomVideo() {
             const match = this.customURL.match(VIDEO_URL_REGEX);
-            if (match && match[1] && match[1].length === 11) {
+            if (match && match[5] && match[5].length === 11) {
                 this.customURLError = false;
                 this.$emit("videoClicked", {
-                    id: match[1],
+                    id: match[5],
                     channel: {
-                        name: match[1],
+                        name: match[5],
                     },
                 });
             } else {
@@ -440,6 +448,23 @@ export default {
 </script>
 
 <style>
+.org-dropdown {
+    flex: 0 0;
+}
+
+.org-list {
+    flex: 1 1 auto;
+    min-height: 0px;
+    overflow-y: auto;
+    border-right: 1px solid white;
+}
+
+.video-list {
+    flex: 1 1 auto;
+    min-height: 0px;
+    overflow-y: auto;
+}
+
 .live-badge {
     position: absolute;
     bottom: 0;

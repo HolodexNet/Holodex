@@ -51,6 +51,9 @@ function defaultState() {
         currentOrg: "Hololive",
         orgFavorites: ["All Vtubers", "Hololive", "Nijisanji", "Independents"],
 
+        // Migration: prevent migrating initial state.
+        migration: { version: 4 },
+
         // Socket counter, if it is zero, then close the shared WebSocket
         activeSockets: 0,
 
@@ -76,7 +79,7 @@ const migrations = [
         version: 2,
         up: (state) => {
             const defaultOpen =
-                state.settings.defaultOpen || state.settings.defaultOpenFavorites ? "favorites" : "home";
+                state.settings.defaultOpen || (state.settings.defaultOpenFavorites ? "favorites" : "home");
 
             return {
                 ...state,

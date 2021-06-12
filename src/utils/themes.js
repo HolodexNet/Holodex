@@ -112,4 +112,21 @@ export default [
             },
         },
     },
+    {
+        name: "Coco",
+        id: 7,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#D3B633",
+                secondary: "#FF9A63",
+                success: "#B333C9",
+            },
+            light: {
+                background: "#f2f2f2",
+                secondary: "#B333C9",
+                primary: "#FF9257",
+            },
+        },
+    },
 ];

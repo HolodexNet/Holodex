@@ -136,6 +136,13 @@ export default {
             this.$store.dispatch("favorites/fetchLive", { minutes: 5 });
         }, 6 * 60 * 1000);
 
+        // queue up a favorite updating task to run in 5 seconds.
+        // rationale: if I'm reloading the page i expect to have recent Favorites data in my side bar and stuff.
+        // why 5 seconds? 1. it's to give the illusion of the page updating quickly.
+        // 2. it's so if you're landing on the /favorites page this request occurs AFTER that one's to save bandwidth.
+        setTimeout(() => {
+            this.$store.dispatch("favorites/fetchLive", { force: false, minutes: 2 });
+        }, 5000);
         // check current breakpoint and set isMobile
         this.updateIsMobile();
     },

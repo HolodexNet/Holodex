@@ -74,7 +74,7 @@ export default {
         if (channelId && !channelId[0].includes("/c/"))
             return axiosInstance.get(`/search/autocomplete?q=${channelId[1]}`);
 
-        if (videoId) return { data: [{ type: "video url", value: `${videoId[1]}` }] };
+        if (videoId) return { data: [{ type: "video url", value: `${videoId[5]}` }] };
 
         return axiosInstance.get(`/search/autocomplete?q=${query}`);
     },
