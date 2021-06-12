@@ -117,7 +117,6 @@ export default {
                 .catch(() => alert("something went wrong creating your key..."))
         );
     },
-
     favorites(jwt) {
         return axiosInstance.get("/users/favorites", {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
@@ -230,5 +229,20 @@ export default {
     topSongs(org, channelId, type) {
         const q = querystring.stringify(org ? { org, type } : { channel_id: channelId, type });
         return axiosInstance.get(`/songs/top20?${q}`);
+    },
+    getPlaylistList(jwt: string) {
+        if (!jwt) throw new Error("Not authorized");
+        return axiosInstance.get("/users/playlists", {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    getPlaylist(id: string | number) {
+        if (!id) throw new Error("Arg bad");
+        return axiosInstance.get(`/playlist/${id}`);
+    },
+    savePlaylist(obj: Object, jwt: string) {
+        return axiosInstance.post("/playlist/", obj, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
     },
 };
