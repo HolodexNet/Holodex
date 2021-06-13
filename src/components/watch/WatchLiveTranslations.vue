@@ -324,6 +324,7 @@ export default {
                     (msg.isModerator && this.liveTlShowModerator) ||
                     (msg.isVerified && this.liveTlShowVerified)
                 ) {
+                    if (this.$refs.tlBody.scrollTop === 1) this.$refs.tlBody.scrollTo(0, 0);
                     this.tlHistory.push(this.parseMessage(msg));
                     this.$emit("historyLength", this.tlHistory.length);
                 }
