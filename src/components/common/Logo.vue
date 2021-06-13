@@ -6,6 +6,7 @@
         viewBox="0 0 49.531 46.719"
         xmlns="http://www.w3.org/2000/svg"
         style="margin-right: 3px"
+        class="logo"
     >
         <g transform="translate(-71.24 -130.01)">
             <path
@@ -29,10 +30,10 @@ export default {
 </script>
 
 <style scoped>
-.shadow {
-    /* -webkit-filter: drop-shadow(1px 1px 3px rgba(255, 255, 255, 0.7));
-    filter: drop-shadow(1px 1px 3px rgba(255, 255, 255, 0.7)); */
-    margin: 0 1px;
-    /* Similar syntax to box-shadow */
+.logo > g > path:first-child {
+    fill: var(--v-primary-base);
+}
+.logo > g > path:last-child {
+    fill: var(--v-secondary-lighten1);
 }
 </style>
