@@ -292,10 +292,10 @@ body {
 }
 
 .thin-scroll-bar::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .thin-scroll-bar::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(182, 182, 182, 0.4);
 }
 </style>

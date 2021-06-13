@@ -29,12 +29,11 @@
                     "
                 >
                     <v-tab class="pa-2">
-                        {{ $t("views.home.liveOrUpcomingHeading").split(/[\/・]/)[0].trim() }}
+                        {{ liveUpcomingHeaderSplit[1] }}
                         <span class="stream-count-chip mx-1 rounded-md primary white--text rounded-lg pa-1">
                             {{ lives.length }}
                         </span>
-                        /
-                        {{ $t("views.home.liveOrUpcomingHeading").split(/[\/・]/)[1].trim() }}
+                        {{ liveUpcomingHeaderSplit[2] }}
                         <span class="stream-count-chip ml-1 rounded-md primary white--text rounded-lg pa-1">
                             {{ upcoming.length }}
                         </span>
@@ -214,6 +213,9 @@ export default {
         },
         upcoming() {
             return this.live.filter((v) => v.status === "upcoming");
+        },
+        liveUpcomingHeaderSplit() {
+            return this.$t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/);
         },
     },
     methods: {
