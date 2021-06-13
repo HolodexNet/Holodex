@@ -4,46 +4,51 @@
             <v-btn icon small @click="showDetailed = !showDetailed" class="float-right mr-2"
                 ><v-icon small> {{ mdiTimerOutline }} </v-icon></v-btn
             >
-            <div class="text-overline ma-2">
-                {{ relationI18N("songs") }}
-            </div>
+            <a class="d-block text-overline ma-2" @click="toggleExpansion('songs')">
+                {{ hidden.songs ? "＋" : "－" }} {{ relationI18N("songs") }}
+            </a>
             <!-- Match the same structure as VideoCardList -->
-            <v-container class="py-0">
-                <v-row>
-                    <v-list dense>
-                        <song-item
-                            :detailed="showDetailed"
-                            v-for="(song, idx) in songList"
-                            :song="song"
-                            :key="song.name + song.video_id + idx"
-                            @play="$emit('timeJump', song.start)"
-                            @playNow="$store.commit('music/skipTo', idx)"
-                            :hoverIcon="icons.mdiPlay"
-                            style="width: 100%"
-                        ></song-item>
-                    </v-list>
-                </v-row>
-            </v-container>
+            <v-expand-transition>
+                <v-container class="py-0" v-show="!hidden.songs">
+                    <v-row>
+                        <v-list dense>
+                            <song-item
+                                :detailed="showDetailed"
+                                v-for="(song, idx) in songList"
+                                :song="song"
+                                :key="song.name + song.video_id + idx"
+                                @play="$emit('timeJump', song.start)"
+                                @playNow="$store.commit('music/skipTo', idx)"
+                                :hoverIcon="icons.mdiPlay"
+                                style="width: 100%"
+                            ></song-item>
+                        </v-list>
+                    </v-row>
+                </v-container>
+            </v-expand-transition>
         </template>
         <template v-for="relation in Object.keys(related)">
             <template v-if="related[relation].length">
-                <div class="text-overline ma-2" :key="`${relation}-title`">
-                    {{ relationI18N(relation) }}
-                </div>
-                <VideoCardList
-                    :key="`${relation}-videos`"
-                    :videos="related[relation]"
-                    horizontal
-                    includeChannel
-                    :cols="{
-                        lg: 12,
-                        md: 4,
-                        cols: 12,
-                        sm: 6,
-                    }"
-                    dense
-                >
-                </VideoCardList>
+                <a class="d-block text-overline ma-2" :key="`${relation}-title`" @click="toggleExpansion(relation)">
+                    {{ hidden[relation] ? "＋" : "－" }} {{ relationI18N(relation) }}
+                </a>
+                <v-expand-transition :key="`${relation}-anim`">
+                    <VideoCardList
+                        v-show="!hidden[relation]"
+                        :key="`${relation}-videos`"
+                        :videos="related[relation]"
+                        horizontal
+                        includeChannel
+                        :cols="{
+                            lg: 12,
+                            md: 4,
+                            cols: 12,
+                            sm: 6,
+                        }"
+                        dense
+                    >
+                    </VideoCardList>
+                </v-expand-transition>
             </template>
         </template>
         <!-- <template v-if="totalRelations === 0">
@@ -72,6 +77,14 @@ export default {
         return {
             showDetailed: false,
             mdiTimerOutline,
+            hidden: {
+                clips: false,
+                simulcasts: false,
+                refers: false,
+                sources: false,
+                recommendations: false,
+                songs: false,
+            },
         };
     },
     computed: {
@@ -127,6 +140,9 @@ export default {
                 default:
                     return "";
             }
+        },
+        toggleExpansion(relation) {
+            this.hidden[relation] = !this.hidden[relation];
         },
     },
 };
