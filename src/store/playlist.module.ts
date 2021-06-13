@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { Playlist } from "@/utils/types";
 
 const initialState = {
@@ -6,17 +7,19 @@ const initialState = {
         name: "Unnamed Playlist",
         videos: [],
     },
-    saved: false,
+    isSaved: false,
 };
+
+export const state = { ...initialState };
 
 const mutations = {
     saved(state) {
         // after you save the playlist
-        state.saved = true;
+        state.isSaved = true;
     },
     modified(state) {
         // after each modification of the playlist.
-        state.saved = false;
+        state.isSaved = false;
     },
     reorder(state, oldIndex: number, newIndex: number) {},
     removeVideoByIndex(state, index: number) {},
@@ -39,4 +42,12 @@ const actions = {
         // can only be done if the active playlist has an ID
         // if not, just clear the current playlist.
     },
+};
+
+export default {
+    namespaced: true,
+    state,
+    // getters,
+    actions,
+    mutations,
 };
