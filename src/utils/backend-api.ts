@@ -246,4 +246,10 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
+    deletePlaylist(id: string | number, jwt: string) {
+        if (!id || !jwt) throw new Error("Arg bad");
+        return axiosInstance.delete(`/playlist/${id}`, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
 };
