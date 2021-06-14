@@ -27,7 +27,12 @@
                     </template>
 
                     <v-card>
-                        <portal-target name="expandedMessage" class="d-flex"> </portal-target>
+                        <portal-target name="expandedMessage" class="d-flex tl-expanded"> </portal-target>
+                        <v-divider />
+                        <v-card-actions>
+                            <v-spacer />
+                            <v-btn text @click="expanded = false" color="red">{{ $t("views.app.close_btn") }}</v-btn>
+                        </v-card-actions>
                     </v-card>
                 </v-dialog>
                 <WatchLiveTranslationsSetting />
@@ -37,7 +42,6 @@
         <portal to="expandedMessage" :disabled="!expanded" slim>
             <v-card-text
                 class="tl-body thin-scroll-bar pa-1 pa-lg-3"
-                :class="{ 'tl-expanded': expanded }"
                 ref="tlBody"
                 :style="{
                     'font-size': liveTlFontSize + 'px',
@@ -140,7 +144,7 @@ export default {
             showOverlay: false,
             isLoading: true,
             success: false,
-            expanded: true,
+            expanded: false,
             selectedChannel: "",
 
             historyLoading: false,
@@ -451,6 +455,10 @@ export default {
 
 .tl-expanded {
     overscroll-behavior: auto !important;
+}
+
+.tl-expanded > .tl-body {
+    height: 75vh;
 }
 
 .tl-overlay {
