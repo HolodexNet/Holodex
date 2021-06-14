@@ -79,7 +79,15 @@
                     </template>
                 </transition-group>
                 <v-btn text color="primary" @click="loadMessages()" :disabled="completed" v-if="!historyLoading">
-                    {{ completed ? "Start of history" : "Load More" }}
+                    {{ completed ? "Start of Messages" : "Load More" }}
+                </v-btn>
+                <v-btn
+                    text
+                    color="primary"
+                    @click="loadMessages(false, true)"
+                    v-if="!completed && !historyLoading && expanded"
+                >
+                    Load All
                 </v-btn>
             </v-card-text>
         </portal>
@@ -259,18 +267,18 @@ export default {
         },
     },
     methods: {
-        loadMessages(firstLoad = false) {
+        loadMessages(firstLoad = false, loadAll = false) {
             this.historyLoading = true;
             const lastTimestamp = !firstLoad && this.tlHistory[0].timestamp;
             api.chatHistory(this.video.id, {
                 lang: this.liveTlLang,
                 ...(this.liveTlShowVerified && { verified: 1 }),
                 moderator: this.liveTlShowModerator ? 1 : 0,
-                limit: this.limit,
+                limit: loadAll ? 10000 : this.limit,
                 ...(lastTimestamp && { before: lastTimestamp }),
             })
                 .then(({ data }) => {
-                    this.completed = data.length !== this.limit;
+                    this.completed = data.length !== this.limit || loadAll;
                     if (firstLoad) this.tlHistory = data.map(this.parseMessage);
                     else this.tlHistory.unshift(...data.map(this.parseMessage));
 
