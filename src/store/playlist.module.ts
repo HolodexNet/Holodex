@@ -26,6 +26,10 @@ const mutations = {
     },
     setPlaylist(state, playlist: Playlist) {
         Vue.set(state, "active", playlist);
+        state.isSaved = false;
+    },
+    addVideo(state, video) {
+        state.active.videos.unshift(video);
     },
     reorder(state, from: number, to: number) {
         // https://stackoverflow.com/a/39271175
