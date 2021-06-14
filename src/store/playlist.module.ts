@@ -37,10 +37,23 @@ const mutations = {
 };
 
 const actions = {
-    saveActivePlaylist({ state, commit }) {
+    async saveActivePlaylist({ state, rootState, commit }) {
         // save the playlist
         // remember the ID returned by the server inside active.id
         // optionally: refetch via ID just to make sure.
+        if (!state.active.id) {
+            const res = await backendApi.savePlaylist(state.active, rootState.userdata.jwt);
+            const returnedId = res.data;
+            if (returnedId) {
+                commit("setPlaylist", { ...state.active, id: returnedId });
+                commit("saved");
+            }
+        } else {
+            const res = await backendApi.savePlaylist(state.active, rootState.userdata.jwt);
+            if (res.data) {
+                commit("saved");
+            }
+        }
     },
     async setActivePlaylistByID({ state, commit }, playlistId: number | string) {
         const res = await backendApi.getPlaylist(playlistId);
@@ -50,9 +63,10 @@ const actions = {
     },
     async deleteActivePlaylist({ state, rootState, commit }) {
         if (state.active.id && rootState.userdata.jwt && +state.active.user_id === +rootState.userdata.user.id) {
+            // can only be done if the active playlist has an ID
             await backendApi.deletePlaylist(state.active.id, rootState.userdata.jwt);
         }
-        // can only be done if the active playlist has an ID
+        commit("resetPlaylist");
         // if not, just clear the current playlist.
     },
 };
