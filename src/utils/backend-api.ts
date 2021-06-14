@@ -55,14 +55,6 @@ export default {
     comments(videoId) {
         return axiosInstance.get(`/videos/${videoId}/comments`);
     },
-    // eslint-disable-next-line camelcase
-    videoLiveChat(id, type, time_start) {
-        const q = querystring.stringify({ type, time_start });
-        return axiosInstance.get(`/videos/${id}/live_chat?${q}`);
-    },
-    videoLiveChatSummary(id) {
-        return axiosInstance.get(`/videos/${id}/live_chat/summary`);
-    },
     clips(query) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/clips?${q}`);
@@ -181,9 +173,9 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    chatHistory(id, query) {
+    chatHistory(videoId, query) {
         const q = querystring.stringify(query);
-        return axiosInstance.get(`/chat/${id}/history?${q}`);
+        return axiosInstance.get(`videos/${videoId}/chats?${q}`);
     },
     getMentions(videoId) {
         return axiosInstance.get(`videos/${videoId}/mentions`);

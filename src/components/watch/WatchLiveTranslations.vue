@@ -106,15 +106,18 @@
         >
             <transition-group name="fade">
                 <template v-for="(item, index) in tlHistory">
-                    <div :key="index">
+                    <div :key="index" :ref="item.breakpoint && 'messageBreakpoint'">
                         <div
                             v-if="
-                                index === 0 || index === tlHistory.length - 1 || item.name !== tlHistory[index - 1].name
+                                index === 0 ||
+                                index === tlHistory.length - 1 ||
+                                item.name !== tlHistory[index - 1].name ||
+                                item.breakpoint
                             "
                             class="tl-caption"
                             :class="{
                                 'primary--text': item.isOwner,
-                                'secondary--text': item.isVerified || item.isModerator,
+                                'secondary--text': item.is_verified || item.is_moderator,
                             }"
                         >
                             <v-divider class="my-1" />
@@ -132,6 +135,9 @@
                     </div>
                 </template>
             </transition-group>
+            <v-btn text color="primary" @click="loadMessages()" :disabled="completed" v-if="!historyLoading">
+                {{ completed ? "Start of history" : "Load More" }}
+            </v-btn>
         </v-card-text>
 
         <v-dialog v-model="showBlockChannelDialog" width="500">
@@ -193,6 +199,10 @@ export default {
             success: false,
             selectedChannel: "",
             showBlockedList: false,
+
+            historyLoading: false,
+            completed: false,
+            limit: 20,
         };
     },
     sockets: {
@@ -273,6 +283,12 @@ export default {
                 this.isLoading = false;
             }
         },
+        liveTlShowVerified() {
+            this.loadMessages(true);
+        },
+        liveTlShowModerator() {
+            this.loadMessages(true);
+        },
     },
     computed: {
         lang() {
@@ -302,6 +318,39 @@ export default {
         },
     },
     methods: {
+        loadMessages(firstLoad = false) {
+            this.historyLoading = true;
+            const lastTimestamp = !firstLoad && this.tlHistory[0].timestamp;
+            api.chatHistory(this.video.id, {
+                lang: this.liveTlLang,
+                ...(this.liveTlShowVerified && { verified: 1 }),
+                moderator: this.liveTlShowModerator ? 1 : 0,
+                limit: this.limit,
+                ...(lastTimestamp && { before: lastTimestamp }),
+            })
+                .then(({ data }) => {
+                    this.completed = data.length !== this.limit;
+                    if (firstLoad) this.tlHistory = data.map(this.parseMessage);
+                    else this.tlHistory.unshift(...data.map(this.parseMessage));
+
+                    // Set last message as breakpoint, used for maintaing scrolling and styling
+                    this.tlHistory[0].breakpoint = true;
+                    this.$nextTick(() => {
+                        // Maintain scroll position when loading new messages
+                        if (this.$refs.messageBreakpoint && this.$refs.messageBreakpoint[1]) {
+                            // 52px is to offset loadmore button
+                            this.$refs.tlBody.scrollTop =
+                                (this.$refs.messageBreakpoint[1] && this.$refs.messageBreakpoint[1].offsetTop) - 52;
+                        }
+                    });
+                })
+                .catch((e) => {
+                    console.error(e);
+                })
+                .finally(() => {
+                    this.historyLoading = false;
+                });
+        },
         toggleBlockName(name) {
             this.$store.commit("settings/toggleLiveTlBlocked", name);
         },
@@ -318,11 +367,11 @@ export default {
                 if (this.blockedNames.has(msg.name)) return;
 
                 if (
-                    msg.isTL ||
-                    msg.isVtuber ||
-                    msg.isOwner ||
-                    (msg.isModerator && this.liveTlShowModerator) ||
-                    (msg.isVerified && this.liveTlShowVerified)
+                    msg.is_tl ||
+                    msg.is_vtuber ||
+                    msg.is_owner ||
+                    (msg.is_moderator && this.liveTlShowModerator) ||
+                    (msg.is_verified && this.liveTlShowVerified)
                 ) {
                     if (this.$refs.tlBody.scrollTop === 1) this.$refs.tlBody.scrollTo(0, 0);
                     this.tlHistory.push(this.parseMessage(msg));
@@ -350,10 +399,10 @@ export default {
         parseMessage(msg) {
             // Append title to author name
             msg.prefix = "";
-            if (msg.isModerator) msg.prefix += "[Mod]";
-            if (msg.isVerified) msg.prefix += "[Verified]";
-            if (msg.isOwner) msg.prefix += "[Owner]";
-            if (msg.isVtuber) msg.prefix += "[Vtuber]";
+            if (msg.is_moderator) msg.prefix += "[Mod]";
+            if (msg.is_verified) msg.prefix += "[Verified]";
+            if (msg.is_owner) msg.prefix += "[Owner]";
+            if (msg.is_vtuber) msg.prefix += "[Vtuber]";
 
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://")) {
@@ -384,19 +433,8 @@ export default {
         tlJoin() {
             if (!this.initSocket()) return;
 
-            // Grab chat history
-            api.chatHistory(this.video.id, {
-                lang: this.liveTlLang,
-                ...(this.liveTlShowVerified && { verified: 1 }),
-                ...(this.liveTlShowModerator && { moderator: 1 }),
-            }).then(({ data }) => {
-                this.tlHistory = data.translations
-                    .concat(data.moderator ? data.moderator : [])
-                    .concat(data.verified ? data.verified : [])
-                    .filter((msg) => !this.blockedNames.has(msg.name))
-                    .sort((a, b) => a.timestamp - b.timestamp)
-                    .map((msg) => this.parseMessage(msg));
-            });
+            // Grab first load chat history
+            this.loadMessages(true);
 
             // Another instance has already subscribed to this chat, just register listener
             if (this.$socket.client.listeners(`${this.video.id}/${this.liveTlLang}`).length > 0) {
