@@ -10,10 +10,11 @@
                 <v-divider />
             </template>
         </NavDrawer>
+        <PlaylistDrawer></PlaylistDrawer>
+
         <!--* nav drawer is for the left --->
         <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile" :active="!isWatchPage" />
         <!--* bottom bar --->
-        <PlaylistDrawer></PlaylistDrawer>
         <!-- <music-bar></music-bar> -->
         <MusicBar2 v-if="$store.state.music.isOpen" />
 
@@ -25,6 +26,7 @@
             }"
             :app="!isWatchPage"
             clipped-left
+            clipped-right
             flat
             v-show="!(isMobile && isWatchPage) && !isMultiView"
             extension-height="36"
