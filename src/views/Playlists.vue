@@ -1,7 +1,12 @@
 <template></template>
+<style></style>
 
 <script>
-export default {};
+export default {
+    components: {},
+    data() {
+        return {};
+    },
+    methods: {},
+};
 </script>
-
-<style></style>
