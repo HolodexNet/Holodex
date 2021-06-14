@@ -1,9 +1,12 @@
 /* eslint-disable no-shadow */
+import Vue from "vue";
+import backendApi from "@/utils/backend-api";
 import { Playlist } from "@/utils/types";
 
 const initialState = {
     active: {
         id: undefined,
+        user_id: undefined,
         name: "Unnamed Playlist",
         videos: [],
     },
@@ -21,6 +24,9 @@ const mutations = {
         // after each modification of the playlist.
         state.isSaved = false;
     },
+    setPlaylist(state, playlist: Playlist) {
+        Vue.set(state, "active", playlist);
+    },
     reorder(state, oldIndex: number, newIndex: number) {},
     removeVideoByIndex(state, index: number) {},
     removeVideoByID(state, videoId: string) {},
@@ -36,9 +42,16 @@ const actions = {
         // remember the ID returned by the server inside active.id
         // optionally: refetch via ID just to make sure.
     },
-    setActivePlaylistByID({ state, commit }, playlistId: number) {},
-    setActivePlaylist({ state, commit }, playlist: Playlist) {},
-    deleteActivePlaylist({ state, rootState, commit }) {
+    async setActivePlaylistByID({ state, commit }, playlistId: number | string) {
+        const res = await backendApi.getPlaylist(playlistId);
+        const playlist = res.data;
+        commit("setPlaylist", playlist);
+        commit("saved");
+    },
+    async deleteActivePlaylist({ state, rootState, commit }) {
+        if (state.active.id && rootState.userdata.jwt && +state.active.user_id === +rootState.userdata.user.id) {
+            await backendApi.deletePlaylist(state.active.id, rootState.userdata.jwt);
+        }
         // can only be done if the active playlist has an ID
         // if not, just clear the current playlist.
     },
