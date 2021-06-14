@@ -27,13 +27,45 @@ const mutations = {
     setPlaylist(state, playlist: Playlist) {
         Vue.set(state, "active", playlist);
     },
-    reorder(state, oldIndex: number, newIndex: number) {},
+    reorder(state, from: number, to: number) {
+        // https://stackoverflow.com/a/39271175
+        Vue.set(
+            state.active,
+            "videos",
+            state.active.videos.reduce((prev, current, idx, self) => {
+                if (from === to) {
+                    prev.push(current);
+                }
+                if (idx === from) {
+                    return prev;
+                }
+                if (from < to) {
+                    prev.push(current);
+                }
+                if (idx === to) {
+                    prev.push(self[from]);
+                }
+                if (from > to) {
+                    prev.push(current);
+                }
+                return prev;
+            }, []),
+        );
+        state.isSaved = false;
+    },
     removeVideoByIndex(state, index: number) {},
     removeVideoByID(state, videoId: string) {},
     /**
      * resets the playlist to a clean slate.
      */
-    resetPlaylist(state) {},
+    resetPlaylist(state) {
+        Vue.set(state, "active", {
+            id: undefined,
+            user_id: undefined,
+            name: "Unnamed Playlist",
+            videos: [],
+        });
+    },
 };
 
 const actions = {
@@ -41,6 +73,9 @@ const actions = {
         // save the playlist
         // remember the ID returned by the server inside active.id
         // optionally: refetch via ID just to make sure.
+        const playlist = { ...state.active, user_id: rootState.userdata.user.id };
+        commit("setPlaylist", playlist);
+
         if (!state.active.id) {
             const res = await backendApi.savePlaylist(state.active, rootState.userdata.jwt);
             const returnedId = res.data;
