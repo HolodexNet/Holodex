@@ -403,7 +403,7 @@ export default {
             if (msg.is_verified) msg.prefix += "[Verified]";
             if (msg.is_owner) msg.prefix += "[Owner]";
             if (msg.is_vtuber) msg.prefix += "[Vtuber]";
-
+            msg.timestamp = +msg.timestamp;
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://")) {
                 // match a :HUMU:https://<url>
