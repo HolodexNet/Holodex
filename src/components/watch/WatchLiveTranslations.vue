@@ -6,16 +6,7 @@
             <v-btn v-if="$socket.disconnected" @click="tlJoin()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
         </v-overlay>
         <v-card-subtitle class="py-1 d-flex justify-space-between">
-            <div>
-                TLDex [{{ liveTlLang }}]
-                <span :class="connected ? 'green--text' : 'red--text'">
-                    {{
-                        connected
-                            ? $t("views.watch.chat.status.connectedToChat")
-                            : $t("views.watch.chat.status.disconnectedToChat")
-                    }}
-                </span>
-            </div>
+            <div :class="connected ? 'green--text' : 'red--text'">TLDex [{{ liveTlLang }}]</div>
             <span>
                 <v-dialog v-model="expanded" width="800">
                     <template v-slot:activator="{ on, attrs }">
@@ -49,7 +40,7 @@
             >
                 <transition-group name="fade">
                     <template v-for="(item, index) in tlHistory">
-                        <div :key="index" :ref="item.breakpoint && 'messageBreakpoint'">
+                        <div :key="item.key" :id="item.key" :ref="item.breakpoint && 'messageBreakpoint'">
                             <div
                                 v-if="
                                     index === 0 ||
@@ -71,7 +62,7 @@
                             </div>
                             <div>
                                 <span class="tl-caption mr-1" v-if="item.timestamp">
-                                    {{ utcToTimestamp(item.timestamp) }}
+                                    {{ item.displayTime }}
                                 </span>
                                 <span class="text--primary" v-html="item.message"></span>
                             </div>
@@ -191,6 +182,7 @@ export default {
                 vm.registerListener();
                 vm.$store.commit("incrementActiveSockets");
             }
+            this.$emit("videoUpdate", obj);
         },
         // Failed to join the chat room
         subscribeError(obj) {
@@ -283,15 +275,7 @@ export default {
                     else this.tlHistory.unshift(...data.map(this.parseMessage));
 
                     // Set last message as breakpoint, used for maintaing scrolling and styling
-                    this.tlHistory[0].breakpoint = true;
-                    this.$nextTick(() => {
-                        // Maintain scroll position when loading new messages
-                        if (this.$refs.messageBreakpoint && this.$refs.messageBreakpoint[1]) {
-                            // 52px is to offset loadmore button
-                            this.$refs.tlBody.scrollTop =
-                                (this.$refs.messageBreakpoint[1] && this.$refs.messageBreakpoint[1].offsetTop) - 52;
-                        }
-                    });
+                    if (this.tlHistory.length) this.tlHistory[0].breakpoint = true;
                 })
                 .catch((e) => {
                     console.error(e);
@@ -353,6 +337,8 @@ export default {
             if (msg.is_owner) msg.prefix += "[Owner]";
             if (msg.is_vtuber) msg.prefix += "[Vtuber]";
             msg.timestamp = +msg.timestamp;
+            msg.displayTime = this.utcToTimestamp(msg.timestamp);
+            msg.key = msg.name + msg.timestamp + msg.message;
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://")) {
                 // match a :HUMU:https://<url>
