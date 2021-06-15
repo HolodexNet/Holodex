@@ -24,7 +24,7 @@
         <channel-list :channels="mentions" :includeVideoCount="false">
             <template v-slot:action="{ channel }">
                 <v-btn icon color="red" @click.stop.prevent="deleteMention(channel.id)">
-                    <v-icon>{{ mdiDelete }}</v-icon>
+                    <v-icon>{{ icons.mdiDelete }}</v-icon>
                 </v-btn>
             </template>
         </channel-list>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mdiDelete, mdiAt } from "@mdi/js";
+import { mdiAt } from "@mdi/js";
 import backendApi from "@/utils/backend-api";
 import { CHANNEL_TYPES } from "@/utils/consts";
 import { debounce } from "@/utils/functions";
@@ -58,7 +58,6 @@ export default {
             showErrorAlert: false,
             errorMessage: "",
             successMessage: "",
-            mdiDelete,
             mdiAt,
 
             selectedChannel: null,

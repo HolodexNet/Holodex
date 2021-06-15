@@ -223,14 +223,8 @@ import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
-import {
-    mdiViewGridPlus,
-    mdiLinkVariant,
-    mdiClipboardPlusOutline,
-    mdiDelete,
-    mdiCardPlus,
-    mdiContentSave,
-} from "@mdi/js";
+import { mdiViewGridPlus, mdiLinkVariant, mdiClipboardPlusOutline, mdiCardPlus, mdiContentSave } from "@mdi/js";
+import { mdiDelete } from "@/utils/icons";
 import copyToClipboard from "@/mixins/copyToClipboard";
 import { encodeLayout, decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-layout";
 import PresetEditor from "@/components/multiview/PresetEditor.vue";
