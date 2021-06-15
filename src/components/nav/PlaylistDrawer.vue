@@ -7,14 +7,15 @@
         clipped
         right
         color="grey darken-4"
-        class="nav-scroll thin-scroll-bar"
+        class="nav-scroll thin-scroll-bar pl-2"
         :temporary="false"
         style="padding-top: env(safe-area-inset-top); padding-right: calc(env(safe-area-inset-right) / 1.3)"
     >
         <slot />
-        <v-list dense class="pb-0"> </v-list>
-        Hello world
-        <playlist :playlist="active" isEditable></playlist>
+        <div class="pa-2">
+            <span class="text-overline secondary--text">Current Playlist</span>
+            <playlist :playlist="active" isEditable :isSaved="isSaved" horizontal></playlist>
+        </div>
     </v-navigation-drawer>
 </template>
 
@@ -22,7 +23,7 @@
 // import { dayjs } from "@/utils/time";
 // import { mdiTuneVariant } from "@mdi/js";
 import { mapState } from "vuex";
-import Playlist from "../playlist/Playlist.vue";
+import Playlist from "@/components/playlist/Playlist.vue";
 
 export default {
     name: "PlaylistDrawer",
