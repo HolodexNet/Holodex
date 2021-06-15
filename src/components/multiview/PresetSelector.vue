@@ -26,7 +26,7 @@
                                             {{ $t("views.multiview.preset.toggleAutoLayout") }}
                                         </v-list-item>
                                         <v-list-item @click.stop="removePresetLayout(preset)"
-                                            ><v-icon left>{{ mdiDelete }}</v-icon>
+                                            ><v-icon left>{{ icons.mdiDelete }}</v-icon>
                                             {{ $t("views.multiview.preset.remove") }}
                                         </v-list-item>
                                     </v-list>
@@ -71,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import { mdiDelete, mdiDotsVertical, mdiToggleSwitch } from "@mdi/js";
+import { mdiDotsVertical, mdiToggleSwitch } from "@mdi/js";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-layout";
@@ -90,7 +90,7 @@ export default {
         // this.mobilePresets = sortPresets(this.mobilePresets);
     },
     data() {
-        return { mdiDelete, mdiDotsVertical, mdiToggleSwitch };
+        return { mdiDotsVertical, mdiToggleSwitch };
     },
     computed: {
         ...mapState("multiview", ["presetLayout"]),

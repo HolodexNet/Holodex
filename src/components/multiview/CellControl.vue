@@ -40,7 +40,7 @@
                     color="deep-orange darken-1"
                     class="float-right ml-auto mr-3"
                 >
-                    <v-icon>{{ hover ? mdiDeleteEmpty : mdiDelete }}</v-icon>
+                    <v-icon>{{ hover ? mdiDeleteEmpty : icons.mdiDelete }}</v-icon>
                 </v-btn>
             </v-hover>
         </v-row>
@@ -48,12 +48,12 @@
 </template>
 
 <script lang="ts">
-import { mdiDelete, mdiArrowLeftCircle, mdiDeleteEmpty } from "@mdi/js";
+import { mdiArrowLeftCircle, mdiDeleteEmpty } from "@mdi/js";
 
 export default {
     props: ["playIcon"],
     data() {
-        return { mdiDelete, mdiDeleteEmpty, mdiArrowLeftCircle };
+        return { mdiDeleteEmpty, mdiArrowLeftCircle };
     },
 };
 </script>

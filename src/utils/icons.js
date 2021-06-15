@@ -11,6 +11,7 @@ export {
     mdiClipboardPlusOutline,
     mdiClose,
     mdiCog,
+    mdiDelete,
     mdiDiscord,
     mdiDotsVertical,
     mdiEarth, // for language
