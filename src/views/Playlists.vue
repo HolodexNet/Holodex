@@ -7,8 +7,29 @@
             <v-card class="my-4" v-for="playlist in playlists" :key="'plst' + playlist.id + playlist.name">
                 <v-list-item two-line>
                     <v-icon left x-large color="secondary" class="mr-6">{{ mdiFormatListText }}</v-icon>
-                    <v-list-item-title
-                        ><span class="font-weight-medium">{{ playlist.name }}</span> <br />
+                    <v-list-item-title>
+                        <span class="font-weight-medium text-subtitle-1">
+                            {{ playlist.name }}
+                        </span>
+                        <v-icon
+                            small
+                            v-if="playlist.id === active.id"
+                            color="success"
+                            class="mr-1"
+                            style="padding-bottom: 2px"
+                        >
+                            {{ icons.mdiStarFourPointsOutline }}
+                        </v-icon>
+                        <v-chip
+                            small
+                            v-if="playlist.id === active.id && !$store.state.playlist.isSaved"
+                            color="warning"
+                            label
+                            class="py-0 ml-1"
+                        >
+                            Not saved
+                        </v-chip>
+                        <br />
                         <span class="text-caption">Last Updated: {{ toTime(playlist.updated_at) }}</span>
                     </v-list-item-title>
                     <v-list-item-action>
@@ -37,7 +58,10 @@ export default {
     name: "Playlists",
     components: {},
     async mounted() {
-        this.playlists = (await backendApi.getPlaylistList(this.$store.state.userdata.jwt)).data;
+        const serverside = (await backendApi.getPlaylistList(this.$store.state.userdata.jwt)).data;
+        const local = this.$store.state.playlist.active;
+        if (!local.id) serverside.push(local);
+        this.playlists = serverside;
     },
     data() {
         return {
@@ -46,7 +70,11 @@ export default {
             loading: true,
         };
     },
-    computed: {},
+    computed: {
+        active() {
+            return this.$store.state.playlist.active;
+        },
+    },
     methods: {
         toTime(ts) {
             return localizedDayjs(ts, this.$store.state.settings.lang).format("LLL");
