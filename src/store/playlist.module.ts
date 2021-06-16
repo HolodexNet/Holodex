@@ -97,7 +97,7 @@ const actions = {
     async setActivePlaylistByID({ state, commit }, playlistId: number | string) {
         const res = await backendApi.getPlaylist(playlistId);
         const playlist = res.data;
-        commit("setPlaylist", playlist);
+        commit("setPlaylist", playlist[0]);
         commit("saved");
     },
     async deleteActivePlaylist({ state, rootState, commit }) {

@@ -9,6 +9,7 @@
                 v-for="playlist in playlists"
                 :key="'plst' + playlist.id + playlist.name"
                 :class="playlist.id === active.id ? 'active-playlist' : ''"
+                @click.stop="setNewPlaylist(playlist)"
             >
                 <v-list-item two-line>
                     <v-icon left x-large color="secondary" class="mr-6">{{ mdiFormatListText }}</v-icon>
@@ -31,7 +32,14 @@
                     <v-list-item-action>
                         <v-img
                             width="150px"
-                            v-for="id in playlist.video_ids"
+                            v-for="id in playlist.video_ids || []"
+                            :src="imageSrc(id)"
+                            :key="`vid${id}thumb`"
+                        ></v-img>
+                        <!-- local playlist support -->
+                        <v-img
+                            width="150px"
+                            v-for="{ id } in playlist.videos || []"
                             :src="imageSrc(id)"
                             :key="`vid${id}thumb`"
                         ></v-img>
@@ -53,26 +61,26 @@ import backendApi from "@/utils/backend-api";
 import { localizedDayjs } from "@/utils/time";
 import { mdiFormatListText } from "@mdi/js";
 import { getVideoThumbnails } from "@/utils/functions";
+import { mapState } from "vuex";
 
 export default {
     name: "Playlists",
     components: {},
     async mounted() {
-        const serverside = (await backendApi.getPlaylistList(this.$store.state.userdata.jwt)).data;
-        const local = this.$store.state.playlist.active;
-        if (!local.id) serverside.push(local);
-        this.playlists = serverside;
+        this.serverside = (await backendApi.getPlaylistList(this.$store.state.userdata.jwt)).data;
     },
     data() {
         return {
             mdiFormatListText,
-            playlists: [],
+            serverside: [],
             loading: true,
         };
     },
     computed: {
-        active() {
-            return this.$store.state.playlist.active;
+        ...mapState("playlist", ["active", "isSaved"]),
+        playlists() {
+            if (!this.active.id) return [this.active, ...this.serverside];
+            return this.serverside;
         },
     },
     methods: {
@@ -83,6 +91,18 @@ export default {
             // load different images based on current column size, which correspond to breakpoints
             const srcs = getVideoThumbnails(id, false);
             return srcs.medium;
+        },
+        setNewPlaylist(playlist) {
+            if (this.active.id !== playlist.id) {
+                if (this.isSaved) {
+                    this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
+                    // eslint-disable-next-line no-alert,no-restricted-globals
+                } else if (
+                    confirm("Activating this playlist this will overwrite currently unsaved changes. Continue?")
+                ) {
+                    this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
+                }
+            }
         },
     },
 };

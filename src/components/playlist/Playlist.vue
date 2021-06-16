@@ -71,7 +71,7 @@
             >
         </div>
         <VideoCardList
-            :videos="playlist.videos"
+            :videos="playlist.videos || []"
             includeChannel
             :horizontal="horizontal"
             :cols="{
@@ -82,10 +82,10 @@
                 xl: 6,
             }"
         >
-            <template v-slot:action="prop" v-if="isEditable">
+            <template v-slot:action="{ video }" v-if="isEditable">
                 <div>
                     <v-btn icon>
-                        <v-icon> {{ icons.mdiChevronDoubleUp }} </v-icon>
+                        <v-icon> {{ mdiChevronDoubleUp }} </v-icon>
                     </v-btn>
                     <v-btn icon>
                         <v-icon> {{ icons.mdiChevronUp }} </v-icon>
@@ -97,7 +97,7 @@
                         <v-icon> {{ icons.mdiChevronDown }} </v-icon>
                     </v-btn>
                     <v-btn icon>
-                        <v-icon> {{ icons.mdiChevronDoubleDown }} </v-icon>
+                        <v-icon> {{ mdiChevronDoubleDown }} </v-icon>
                     </v-btn>
                 </div>
             </template>
@@ -115,7 +115,7 @@
                             <br />
                             <p v-html="$t('views.library.exportYTInstructions')"></p>
                             <v-btn class="mt-2 mx-2" color="green" @click="() => {}">
-                                {{ $t("views.library.createYtPlaylistButton", [playlist.videos.length]) }}
+                                {{ $t("views.library.createYtPlaylistButton", [(playlist.videos || []).length]) }}
                             </v-btn>
                             <v-btn class="mt-2 mx-2" @click="instructionsDialog = false">{{
                                 $t("views.library.deleteConfirmationCancel")
@@ -135,10 +135,10 @@
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import { Playlist } from "@/utils/types";
 import { PropType } from "vue";
-import { mdiContentSave, mdiFileDelimited } from "@mdi/js";
+import { mdiContentSave, mdiFileDelimited, mdiChevronDoubleUp, mdiChevronDoubleDown } from "@mdi/js";
 
 export default {
-    name: "FavoritesVideoList",
+    name: "Playlist",
     components: {
         VideoCardList,
     },
@@ -167,6 +167,8 @@ export default {
         return {
             mdiContentSave,
             mdiFileDelimited,
+            mdiChevronDoubleUp,
+            mdiChevronDoubleDown,
             editNameMode: false,
             instructionsDialog: false,
         };
