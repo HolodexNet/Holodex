@@ -4,22 +4,18 @@
             <span class="text-h5">Your Playlists:</span><br />
             <span class="text-subtitle-2">Click a playlist to set it as active.</span>
             <!-- <v-list class="mt-4" color="transparent"> -->
-            <v-card class="my-4" v-for="playlist in playlists" :key="'plst' + playlist.id + playlist.name">
+            <v-card
+                class="my-4"
+                v-for="playlist in playlists"
+                :key="'plst' + playlist.id + playlist.name"
+                :class="playlist.id === active.id ? 'active-playlist' : ''"
+            >
                 <v-list-item two-line>
                     <v-icon left x-large color="secondary" class="mr-6">{{ mdiFormatListText }}</v-icon>
                     <v-list-item-title>
                         <span class="font-weight-medium text-subtitle-1">
                             {{ playlist.name }}
                         </span>
-                        <v-icon
-                            small
-                            v-if="playlist.id === active.id"
-                            color="success"
-                            class="mr-1"
-                            style="padding-bottom: 2px"
-                        >
-                            {{ icons.mdiStarFourPointsOutline }}
-                        </v-icon>
                         <v-chip
                             small
                             v-if="playlist.id === active.id && !$store.state.playlist.isSaved"
@@ -46,7 +42,11 @@
         </v-col>
     </v-container>
 </template>
-<style></style>
+<style>
+.active-playlist {
+    border-top: 2px solid var(--v-primary-base) !important;
+}
+</style>
 
 <script>
 import backendApi from "@/utils/backend-api";
