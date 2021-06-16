@@ -1,6 +1,6 @@
 <template>
     <!-- Purpose of Component: to contain a youtube video, load it and handle several actions -->
-    <div class="song-player-container">
+    <div class="song-player-container" :class="{'song-player-container-hidden':$store.state.music.isMinimized}">
         <div class="song-player">
             <youtube
                 :key="'ytplayer' + videoId"

@@ -81,6 +81,10 @@
                     >
                 </v-slide-x-transition>
                 <div v-if="$vuetify.breakpoint.xs">
+                    <v-btn icon @click="$store.commit('music/minimizePlayer')">
+                        <v-icon v-if="!$store.state.music.isMinimized">{{ icons.mdiChevronDown }}</v-icon>
+                        <v-icon v-else>{{ icons.mdiChevronUp }}</v-icon>
+                    </v-btn>
                     <v-btn icon @click="closePlayer">
                         <v-icon>{{ icons.mdiClose }}</v-icon>
                     </v-btn>
@@ -145,6 +149,10 @@
             </transition>
             <!-- </> -->
             <div class="playlist-buttons align-self-center" v-if="$vuetify.breakpoint.smAndUp">
+                <v-btn icon large @click="$store.commit('music/minimizePlayer')">
+                    <v-icon v-if="!$store.state.music.isMinimized">{{ icons.mdiChevronDown }}</v-icon>
+                    <v-icon v-else>{{ icons.mdiChevronUp }}</v-icon>
+                </v-btn>
                 <v-btn icon large @click="closePlayer">
                     <v-icon>{{ icons.mdiClose }}</v-icon>
                 </v-btn>
@@ -184,6 +192,12 @@
         padding: 2px;
         bottom: 100%;
         right: 0;
+        opacity: 100%;
+        transition-duration: 500ms;
+    }
+    .song-player-container-hidden {
+        bottom: -350%;
+        opacity: 0%;
     }
 }
 
@@ -257,6 +271,8 @@ import {
     mdiRepeatOnce,
     mdiMicrophoneVariant,
     mdiPlaylistRemove,
+    mdiChevronDown,
+    mdiChevronUp,
 } from "@mdi/js";
 
 import SongFrame from "../media/SongFrame.vue";
@@ -287,6 +303,8 @@ export default {
             mdiMicrophoneVariant,
             mdiSkipPrevious,
             mdiPlaylistRemove,
+            mdiChevronDown,
+            mdiChevronUp,
 
             progress: 0,
             player: null,

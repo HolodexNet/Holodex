@@ -9,6 +9,7 @@ const initialState = {
     state: MUSIC_PLAYER_STATE.PAUSED,
     mode: MUSIC_PLAYBACK_MODE.LOOP,
 
+    isMinimized: false,
     isOpen: false,
     addedAnimation: false, // state keeping for bouncing the icon.
 };
@@ -184,6 +185,9 @@ const mutations = {
         state.state = MUSIC_PLAYER_STATE.PAUSED;
         state.isOpen = false;
         state.playId += 1;
+    },
+    minimizePlayer(state){
+        state.isMinimized = !state.isMinimized;
     },
 };
 
