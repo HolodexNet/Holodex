@@ -102,6 +102,32 @@
                 </div>
             </template>
         </VideoCardList>
+        <!-- Saving video instructions for Youtube... -->
+        <v-dialog v-model="instructionsDialog" :width="$store.state.isMobile ? '90%' : '60vw'">
+            <v-card>
+                <v-card-title>{{ $t("views.library.exportYTHeading") }}</v-card-title>
+                <v-card-text>
+                    <v-row>
+                        <v-col cols="">
+                            <p v-html="$t('views.library.exportYTExplanation')"></p>
+                            <br />
+
+                            <br />
+                            <p v-html="$t('views.library.exportYTInstructions')"></p>
+                            <v-btn class="mt-2 mx-2" color="green" @click="() => {}">
+                                {{ $t("views.library.createYtPlaylistButton", [playlist.videos.length]) }}
+                            </v-btn>
+                            <v-btn class="mt-2 mx-2" @click="instructionsDialog = false">{{
+                                $t("views.library.deleteConfirmationCancel")
+                            }}</v-btn>
+                        </v-col>
+                        <v-col cols="12" md="auto">
+                            <img src="/img/playlist-instruction.jpg" />
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 
@@ -142,6 +168,7 @@ export default {
             mdiContentSave,
             mdiFileDelimited,
             editNameMode: false,
+            instructionsDialog: false,
         };
     },
 };

@@ -22,6 +22,7 @@ const EditVideo = () => import("../views/EditVideo.vue");
 const OrgMusic = () => import("../views/OrgMusic.vue");
 // const MugenClips = () => import("../views/MugenClips.vue");
 const MultiView = () => import("../views/MultiView.vue");
+const Playlists = () => import("../views/Playlists.vue");
 
 Vue.use(VueRouter);
 
@@ -110,6 +111,11 @@ const routes = [
         name: "multiview",
         path: "/multiview/:layout?",
         component: MultiView,
+    },
+    {
+        name: "playlists",
+        path: "/playlists",
+        component: Playlists,
     },
     {
         name: "library",
