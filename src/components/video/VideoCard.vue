@@ -137,6 +137,9 @@
                 </v-icon>
             </v-btn>
         </a>
+        <v-list-item-action v-if="!!this.$slots.action">
+            <slot name="action"></slot>
+        </v-list-item-action>
     </a>
 </template>
 

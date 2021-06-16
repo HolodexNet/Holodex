@@ -4,11 +4,12 @@
             <v-hover v-slot="{ hover }">
                 <v-text-field
                     :value="playlist.name"
-                    @input.prevent="
+                    @blur.prevent="
                         (x) => {
-                            emit('new-name', x);
+                            $emit('new-name', x);
                         }
                     "
+                    autofocus
                     single-line
                     hide-details
                     :append-icon="icons.mdiPencil"
@@ -25,20 +26,47 @@
                     {{ playlist.name }}
                 </span>
             </v-hover>
-            <v-menu bottom offset-y>
+            <v-menu bottom offset-y nudge-width="500">
                 <template v-slot:activator="{ on }">
                     <v-btn v-on="on" icon small class="float-right">
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                     </v-btn>
                 </template>
-                <v-list-item
-                    ><v-icon left color="success">{{ icons.mdiPlusBox }}</v-icon> New Playlist</v-list-item
-                >
-                <v-list-item
-                    ><v-icon left color="error">{{ icons.mdiDelete }}</v-icon> Delete</v-list-item
-                >
+                <v-list nav>
+                    <v-list-item @click="$emit('new-playlist')"
+                        ><v-icon left color="success">{{ icons.mdiPlusBox }}</v-icon> New Playlist
+                    </v-list-item>
+                    <!-- feed back a green ripple on click... theoretically -->
+                    <v-list-item @click="editNameMode = true"
+                        ><v-icon left>{{ icons.mdiPencil }}</v-icon> Rename Playlist
+                    </v-list-item>
+                    <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
+                        ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
+                        {{ playlist.id ? "Copy sharable Playlist link" : "Save the playlist to enable link-sharing." }}
+                    </v-list-item>
+                    <v-divider />
+                    <!-- Exporting options -->
+                    <v-list-item disabled class="mt-1 mb-1" dense>
+                        <v-icon left disabled>{{ icons.mdiOpenInNew }}</v-icon
+                        ><span>Export Playlist</span>
+                    </v-list-item>
+                    <v-list-item dense @click.stop="instructionsDialog = true" class="ml-5">
+                        <v-icon left>{{ icons.mdiYoutube }}</v-icon>
+                        {{ $t("views.library.exportYtPlaylist") }}
+                    </v-list-item>
+                    <v-list-item dense @click.stop="downloadAsCSV" class="ml-5 mb-2">
+                        <v-icon left>{{ mdiFileDelimited }}</v-icon>
+                        {{ $t("views.library.exportCsv") }}
+                    </v-list-item>
+                    <!-- End Exporting options -->
+                    <v-divider class="mb-2" />
+                    <v-list-item @click="$emit('delete-playlist')"
+                        ><v-icon left color="error">{{ icons.mdiDelete }}</v-icon>
+                        {{ playlist.id ? "Delete Playlist" : "Clear playlist" }}
+                    </v-list-item>
+                </v-list>
             </v-menu>
-            <v-btn icon small class="float-right"
+            <v-btn icon small class="float-right" v-show="!isSaved" color="success"
                 ><v-icon>{{ mdiContentSave }}</v-icon></v-btn
             >
         </div>
@@ -53,7 +81,27 @@
                 lg: 5,
                 xl: 6,
             }"
-        ></VideoCardList>
+        >
+            <template v-slot:action="prop" v-if="isEditable">
+                <div>
+                    <v-btn icon>
+                        <v-icon> {{ icons.mdiChevronDoubleUp }} </v-icon>
+                    </v-btn>
+                    <v-btn icon>
+                        <v-icon> {{ icons.mdiChevronUp }} </v-icon>
+                    </v-btn>
+                    <v-btn icon>
+                        <v-icon> {{ icons.mdiDelete }} </v-icon>
+                    </v-btn>
+                    <v-btn icon>
+                        <v-icon> {{ icons.mdiChevronDown }} </v-icon>
+                    </v-btn>
+                    <v-btn icon>
+                        <v-icon> {{ icons.mdiChevronDoubleDown }} </v-icon>
+                    </v-btn>
+                </div>
+            </template>
+        </VideoCardList>
     </v-container>
 </template>
 
@@ -61,7 +109,7 @@
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import { Playlist } from "@/utils/types";
 import { PropType } from "vue";
-import { mdiContentSave } from "@mdi/js";
+import { mdiContentSave, mdiFileDelimited } from "@mdi/js";
 
 export default {
     name: "FavoritesVideoList",
@@ -92,6 +140,7 @@ export default {
     data() {
         return {
             mdiContentSave,
+            mdiFileDelimited,
             editNameMode: false,
         };
     },
