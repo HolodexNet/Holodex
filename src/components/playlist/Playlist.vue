@@ -6,7 +6,7 @@
                     :value="playlist.name"
                     @blur.prevent="
                         (x) => {
-                            $emit('new-name', x);
+                            $store.commit('playlist/setPlaylist', { ...playlist, name: x });
                         }
                     "
                     autofocus
@@ -33,15 +33,18 @@
                     </v-btn>
                 </template>
                 <v-list nav>
-                    <v-list-item @click="$emit('new-playlist')"
+                    <v-list-item v-if="isEditable" @click="$emit('new-playlist')"
                         ><v-icon left color="success">{{ icons.mdiPlusBox }}</v-icon> New Playlist
                     </v-list-item>
                     <!-- feed back a green ripple on click... theoretically -->
-                    <v-list-item @click="editNameMode = true"
+                    <v-list-item v-if="isEditable" @click="editNameMode = true"
                         ><v-icon left>{{ icons.mdiPencil }}</v-icon> Rename Playlist
                     </v-list-item>
                     <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
-                    <v-list-item @click="$emit('unset-changes', playlist.id)" :disabled="isSaved || !playlist.id"
+                    <v-list-item
+                        v-if="isEditable"
+                        @click="$store.dispatch('playlist/setActivePlaylistByID', playlist.id)"
+                        :disabled="isSaved || !playlist.id"
                         ><v-icon left>{{ icons.mdiRefresh }}</v-icon> Reset Unsaved Changes
                     </v-list-item>
                     <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
@@ -64,8 +67,8 @@
                     </v-list-item>
                     <!-- End Exporting options -->
                     <v-divider class="mb-2" />
-                    <v-list-item @click="$emit('delete-playlist')"
-                        ><v-icon left color="error">{{ icons.mdiDelete }}</v-icon>
+                    <v-list-item @click="$emit('delete-playlist')" v-if="isEditable">
+                        <v-icon left color="error"> {{ icons.mdiDelete }} </v-icon>
                         {{ playlist.id ? "Delete Playlist" : "Clear playlist" }}
                     </v-list-item>
                 </v-list>
