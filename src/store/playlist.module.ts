@@ -31,7 +31,7 @@ const mutations = {
     addVideo(state, video) {
         state.active.videos.unshift(video);
     },
-    reorder(state, from: number, to: number) {
+    reorder(state, { from, to }: { from: number; to: number }) {
         // https://stackoverflow.com/a/39271175
         Vue.set(
             state.active,

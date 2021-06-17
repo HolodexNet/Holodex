@@ -40,6 +40,10 @@
                     <v-list-item @click="editNameMode = true"
                         ><v-icon left>{{ icons.mdiPencil }}</v-icon> Rename Playlist
                     </v-list-item>
+                    <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
+                    <v-list-item @click="$emit('unset-changes', playlist.id)" :disabled="isSaved || !playlist.id"
+                        ><v-icon left>{{ icons.mdiRefresh }}</v-icon> Reset Unsaved Changes
+                    </v-list-item>
                     <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
                         ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
                         {{ playlist.id ? "Copy sharable Playlist link" : "Save the playlist to enable link-sharing." }}
@@ -74,6 +78,7 @@
             :videos="playlist.videos || []"
             includeChannel
             :horizontal="horizontal"
+            class="playlist-video-list"
             :cols="{
                 xs: 1,
                 sm: 3,
@@ -83,26 +88,27 @@
             }"
         >
             <template v-slot:action="{ video }" v-if="isEditable">
-                <div>
-                    <v-btn icon>
-                        <v-icon> {{ mdiChevronDoubleUp }} </v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                        <v-icon> {{ icons.mdiChevronUp }} </v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                        <v-icon> {{ icons.mdiDelete }} </v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                        <v-icon> {{ icons.mdiChevronDown }} </v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                        <v-icon> {{ mdiChevronDoubleDown }} </v-icon>
-                    </v-btn>
+                <div class="d-flex flex-shrink flex-column">
+                    <!-- <button>
+                        <v-icon small> {{ mdiChevronDoubleUp }} </v-icon>
+                    </button> -->
+                    <button @click.stop.prevent="move(video.id, 'up')">
+                        <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
+                    </button>
+                    <button @click.stop.prevent="$store.dispatch('playlist/removeVideoByID', video.id)">
+                        <v-icon small> {{ icons.mdiDelete }} </v-icon>
+                    </button>
+                    <button @click.stop.prevent="move(video.id, 'down')">
+                        <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
+                    </button>
+                    <!-- <button>
+                        <v-icon small> {{ mdiChevronDoubleDown }} </v-icon>
+                    </button> -->
                 </div>
             </template>
         </VideoCardList>
-        <!-- Saving video instructions for Youtube... -->
+
+        <!--* INSTRUCTIONS DIALOG FOR YOUTUBE --->
         <v-dialog v-model="instructionsDialog" :width="$store.state.isMobile ? '90%' : '60vw'">
             <v-card>
                 <v-card-title>{{ $t("views.library.exportYTHeading") }}</v-card-title>
@@ -173,7 +179,51 @@ export default {
             instructionsDialog: false,
         };
     },
+    methods: {
+        move(id, direction) {
+            const curIdx = this.playlist.videos.findIndex((elem) => elem.id === id);
+            if (curIdx < 0) throw new Error("huh");
+            let toIdx;
+            switch (direction) {
+                case "up":
+                    toIdx = curIdx - 1;
+                    break;
+                case "down":
+                    toIdx = curIdx + 1;
+                    break;
+                default:
+                    break;
+            }
+            if (toIdx < 0) throw new Error("can't move stuff before 0");
+            if (toIdx >= this.playlist.videos.length) throw new Error("can't move stuff to beyond the end");
+            this.$store.commit("playlist/reorder", { from: curIdx, to: toIdx });
+        },
+    },
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.playlist-video-list .video-card-item-actions {
+    padding: 0 !important;
+    margin: 0px !important;
+}
+
+.playlist-video-list .video-card:hover .video-card-item-actions {
+    opacity: 1;
+}
+.playlist-video-list .video-card .video-card-item-actions {
+    opacity: 0.2;
+}
+
+.playlist-video-list .video-card-item-actions button {
+    padding: 1px 0 !important;
+    margin: 0px !important;
+    height: 22px !important;
+    width: 22px !important;
+    line-height: 20px;
+
+    &:hover {
+        background-color: var(--v-primary-darken1);
+    }
+}
+</style>

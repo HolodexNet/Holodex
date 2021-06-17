@@ -6,7 +6,6 @@
         width="400"
         clipped
         right
-        color="grey darken-4"
         class="nav-scroll thin-scroll-bar pl-2"
         :temporary="false"
         style="padding-top: env(safe-area-inset-top); padding-right: calc(env(safe-area-inset-right) / 1.3)"

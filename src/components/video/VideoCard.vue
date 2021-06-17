@@ -137,7 +137,8 @@
                 </v-icon>
             </v-btn>
         </a>
-        <v-list-item-action v-if="!!this.$slots.action">
+        <!-- optional breaker object to row-break into a new row. -->
+        <v-list-item-action v-if="!!this.$slots.action" class="video-card-item-actions">
             <slot name="action"></slot>
         </v-list-item-action>
     </a>

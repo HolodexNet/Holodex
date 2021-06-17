@@ -96,8 +96,8 @@ export default {
             if (this.active.id !== playlist.id) {
                 if (this.isSaved) {
                     this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
-                    // eslint-disable-next-line no-alert,no-restricted-globals
                 } else if (
+                    // eslint-disable-next-line no-alert,no-restricted-globals
                     confirm("Activating this playlist this will overwrite currently unsaved changes. Continue?")
                 ) {
                     this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
