@@ -25,6 +25,7 @@ const actions = {
             .live({
                 org: rootState.currentOrg,
                 ...params,
+                include: "mentions",
             })
             .then((res) => {
                 commit("setLive", res);

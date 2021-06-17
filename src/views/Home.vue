@@ -54,6 +54,7 @@
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
+                        :showCollabBorderFunc="showCollabBorder"
                     >
                     </VideoCardList>
                     <v-divider class="my-3 secondary" v-if="lives.length" />
@@ -63,6 +64,7 @@
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
+                        :showCollabBorderFunc="showCollabBorder"
                     >
                     </VideoCardList>
                 </template>
@@ -196,6 +198,14 @@ export default {
         },
     },
     methods: {
+        showCollabBorder(video) {
+            return (
+                this.$store.state.currentOrg !== "All Vtubers" &&
+                video.channel.org !== this.$store.state.currentOrg &&
+                video.mentions &&
+                video.mentions.length > 0
+            );
+        },
         changeTab(preservePage = true) {
             // Sync the hash to current tab
             const toHash = {

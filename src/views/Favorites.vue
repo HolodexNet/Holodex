@@ -57,6 +57,7 @@
                             :includeAvatar="shouldIncludeAvatar"
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
+                            :showCollabBorderFunc="showCollabBorder"
                         >
                         </VideoCardList>
                         <v-divider class="my-3 secondary" v-if="lives.length" />
@@ -66,6 +67,7 @@
                             :includeAvatar="shouldIncludeAvatar"
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
+                            :showCollabBorderFunc="showCollabBorder"
                         >
                         </VideoCardList>
                     </template>
@@ -217,8 +219,14 @@ export default {
         liveUpcomingHeaderSplit() {
             return this.$t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/);
         },
+        favoritesSet() {
+            return new Set(this.favorites.map((x) => x.id));
+        },
     },
     methods: {
+        showCollabBorder(video) {
+            return !this.favoritesSet.has(video.channel.id) && video.mentions && video.mentions.length > 0;
+        },
         init(updateFavorites) {
             if (this.favorites.length > 0 && this.isLoggedIn) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");

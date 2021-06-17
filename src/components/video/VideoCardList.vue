@@ -19,6 +19,7 @@
                     @videoClicked="handleVideoClick"
                     :disableDefaultClick="disableDefaultClick"
                     :hideThumbnail="shouldHideThumbnail"
+                    :showCollabBorder="showCollabBorderFunc && showCollabBorderFunc(video)"
                 >
                     <!-- pass slot to each individual video card -->
                     <template v-slot:action>
@@ -124,6 +125,9 @@ export default {
         disableDefaultClick: {
             type: Boolean,
             default: false,
+        },
+        showCollabBorderFunc: {
+            type: Function,
         },
     },
     methods: {
