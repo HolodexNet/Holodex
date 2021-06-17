@@ -145,7 +145,7 @@ views:
     favoritesAreEmpty: 您目前沒有任何收藏！
     blockedAreEmpty: 沒有任何頻道在您的黑名單中
   home:
-    liveOrUpcomingHeading: 現正／即將開始實況
+    liveOrUpcomingHeading: 實況中／即將開始
     recentVideosHeading: 最近新增影片
     noStreams: 目前沒有任何正在實況／預定實況的頻道
     recentVideoToggles:
