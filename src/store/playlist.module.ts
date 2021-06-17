@@ -77,7 +77,13 @@ const actions = {
         // save the playlist
         // remember the ID returned by the server inside active.id
         // optionally: refetch via ID just to make sure.
-        const playlist = { ...state.active, user_id: rootState.userdata.user.id };
+        const playlist = { ...state.active };
+        if (!state.active.user_id || !state.active.id) {
+            playlist.user_id = rootState.userdata.user.id;
+        } else if (state.active.user_id !== rootState.userdata.user.id) {
+            delete playlist.id;
+            playlist.user_id = rootState.userdata.user.id;
+        }
         commit("setPlaylist", playlist);
 
         if (!state.active.id) {

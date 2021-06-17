@@ -67,13 +67,19 @@
                     </v-list-item>
                     <!-- End Exporting options -->
                     <v-divider class="mb-2" />
-                    <v-list-item @click="$emit('delete-playlist')" v-if="isEditable">
+                    <v-list-item @click="$store.dispatch('playlist/deleteActivePlaylist')" v-if="isEditable">
                         <v-icon left color="error"> {{ icons.mdiDelete }} </v-icon>
                         {{ playlist.id ? "Delete Playlist" : "Clear playlist" }}
                     </v-list-item>
                 </v-list>
             </v-menu>
-            <v-btn icon small class="float-right" v-show="!isSaved" color="success"
+            <v-btn
+                icon
+                small
+                class="float-right"
+                v-show="!isSaved"
+                color="success"
+                @click="$store.dispatch('playlist/saveActivePlaylist')"
                 ><v-icon>{{ mdiContentSave }}</v-icon></v-btn
             >
         </div>
@@ -200,6 +206,12 @@ export default {
             if (toIdx < 0) throw new Error("can't move stuff before 0");
             if (toIdx >= this.playlist.videos.length) throw new Error("can't move stuff to beyond the end");
             this.$store.commit("playlist/reorder", { from: curIdx, to: toIdx });
+        },
+        newPlaylist() {
+            // eslint-disable-next-line no-restricted-globals,no-alert
+            if (this.isSaved || confirm("You will lose unsaved changes. Continue?")) {
+                this.$store.commit("playlist/resetPlaylist");
+            }
         },
     },
 };
