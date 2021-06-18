@@ -97,9 +97,7 @@ export default {
                 : this.$store.commit("library/addSavedVideo", this.video);
         },
         goBack() {
-            if (this.$route.meta.prevRoute && this.$route.meta.prevRoute.path)
-                this.$router.replace(this.$route.meta.prevRoute.path);
-            else this.$router.replace("/");
+            this.$router.replace(this.$route.meta.prevPath || "/");
         },
         copyLink() {
             const link = `${window.origin}/watch/${this.video.id}`;
