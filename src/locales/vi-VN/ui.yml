@@ -1,6 +1,7 @@
 ---
 component:
   apiError:
+    title: Gomenasorry!
     textBeforeTwitter: 'Đã xảy ra lỗi khi truy xuất nội dung, vui lòng kiểm tra thông báo tại Twitter '
     textAfterTwitter: ' hoặc báo cáo lỗi qua'
     aboutPage: trang Giới thiệu
@@ -11,6 +12,10 @@ component:
     favoriteAllInGroup: Thêm tất cả vào mục Yêu thích
   channelInfo:
     stats: Số liệu thống kê
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} người đăng kí'
+    subscriberNA: Số lượng người đăng kí không khả dụng
     totalViews: Tổng lượt xem
   channelSocials:
     addToFavorites: Thêm vào mục Yêu thích
@@ -28,10 +33,11 @@ component:
     login: Đăng nhập
     logout: Đăng xuất
     accountSettings: Cài đặt tài khoản
+    music: Nhạc
     multiview: MultiView
     points: điểm
   videoCard:
-    clips: '{n} Clips'
+    clips: '{n} Clip'
     watching: '{0} người đang xem'
     liveNow: Đang trực tiếp
     edit: Chỉnh sửa
@@ -45,11 +51,17 @@ component:
     showLess: Thu gọn
     showMore: Xem thêm
   watch:
+    nextUpInMugen: Tiếp theo
     Comments:
       title: Bình luận
       all: Tất cả
   search:
     searchLabel: Tìm kiếm
+    type:
+      topic: chủ đề
+      comments: bình luận
+  relatedVideo:
+    recommendationsLabel: đề xuất
   paginateLoad:
     newer: Mới hơn
     older: Cũ hơn
@@ -63,15 +75,34 @@ component:
     songDuration: Thời lượng
   installPrompt:
     title: Cài đặt Holodex
+    callToAction: Xem video trên Holodex sẽ hoạt động tốt nhất khi được thêm vào màn hình chính
     notNowBtn: Không phải lúc này
     installBtn: Cài đặt
     iOS:
       popup: Cài đặt Holodex trên iOS
+      afterExportIcon: sau đó 'Thêm vào màn hình chính
+      beforeExportIcon: Nhấn
+  media:
+    remove: Xoá
   comment:
     close: Đóng
+    readMore: Xem thêm
   reportDialog:
     title: Báo cáo
+    comments: Bình luận (không bắt buộc)
     success: Đã gửi báo cáo, cảm ơn bạn!
+    reasons:
+      - Video bị gắn thẻ sai
+      - Chất lượng video quá kém/Nội dung dễ gây hiểu lầm
+      - Vi phạm các nguyên tắc thực hiện tác phẩm phái sinh (Derivative Work Guidelines) của tổ chức hoặc nội dung không phù hợp
+      - Khác
+  thirdpartycookie:
+    explanation: >-
+      Dựa trên cách trình duyệt hoạt động, một số trình duyệt với khả năng giới hạn/chặn <b>Cookies của bên thứ ba</b>, hoặc chặn cookies của <kbd>YouTube</kbd> sẽ gặp một chút khó khăn khi đăng nhập / sử dụng YouTube chat. <br /><br /> Vấn đề này có thể được giải quyết bằng cách cho phép cookies của <kbd>YouTube</kbd> hoạt động trong trình duyệt, hoặc giảm giới hạn cookies / quyền riêng tư cho <kbd>Holodex.net</kbd>. <br /><br /> Chúng tôi có một số trang web giúp bạn có thêm thông tin và hướng dẫn chi tiết cho vấn đề này.
+    dialogTitle: Sử dụng Youtube Chat trên Holodex
+    alertText: >-
+      Cài đặt quyền riêng tư của trình duyệt bạn đang sử dụng khiến bạn không thể đăng nhập vào Youtube Chat. Nhấn vào đây để tìm hiểu thêm
+    neverShowAgain: Ngừng hiển thị các cảnh báo này
 views:
   channel:
     video: Video
@@ -81,11 +112,27 @@ views:
     about: Giới thiệu
   channels:
     sortOptions:
+      subscribers: Người đăng kí
       group: Nhóm
       recentUpload: Gần đây
+      videoCount: Số lượng video
+      clipCount: Số lượng clip
+      org: Tổ chức
+    tabs:
+      Vtuber: Vtuber
+      Favorites: Yêu thích
+      Blocked: Đã chặn
   home:
     recentVideoToggles:
       all: Tất cả
+  library:
+    savedVideosTitle: Video đã lưu
+    deleteFromLibraryButton: Xoá ({0})
+    deleteConfirmation: Bạn có chắc chắn muốn xoá {0} video này không?
+    deleteConfirmationOK: Xóa
+    deleteConfirmationCancel: Hủy bỏ
+  notFound:
+    title: Không tìm thấy nội dung này
   search:
     sort:
       newest: Mới nhất
@@ -95,20 +142,43 @@ views:
     sortByLabel: Sắp xếp theo
   settings:
     title: Cài đặt
+    darkModeLabel: Chế độ Tối
     redirectModeLabel: Mở trên Youtube
+    useEnglishNameLabel: Sử dụng tên tiếng Anh
+    hideVideoThumbnailsLabel: Ẩn hình thu nhỏ của video
+    autoplayVideoLabel: Tự động phát video
+    autoplayVideoMsg: Bật tự động phát lại các video
+    defaultPageMsg: >-
+      Mặc định mở trang này khi truy cập holodex.net hoặc khi nhấn vào biểu tượng ở góc trái trên cùng.
     languageSettings: Ngôn ngữ
     gridSize:
       - Lớn
       - Vừa
       - Nhỏ
+    hideCollabStreamsLabel: Ẩn Stream Collab
   app:
+    update_available: Đã có bản cập nhật mới
     update_btn: Cập nhật
+    close_btn: Đóng
+    loginCallToAction: Hãy đăng nhập để lưu các kênh bạn yêu thích!
+  about:
+    add_my_channel: Thêm kênh của tôi vào Holodex
   watch:
+    theaterMode: Chế độ Rạp chiếu phim
+    saveToLibrary: Lưu video vào Thư viện
     chat:
+      showVerifiedMessages: Hiển thị tin nhắn từ các kênh Verified
+      showModeratorMessages: Hiển thị tin nhắn từ Moderator
+      tlFontSize: Cỡ chữ
       retryBtn: Thử lại
+editor:
+  music:
+    startInput: Bắt đầu
 about:
   discordBtn: Holodex Discord
   faq:
+    title: FAQ
+    ytchatHeader: Tôi không đăng nhập được YouTube Chat!
     subber:
       contents:
         - >-
