@@ -1,4 +1,19 @@
 ---
+component:
+  mainNav:
+    home: Trang chủ
+    library: Thư viện
+    settings: Cài đặt
+    login: Đăng nhập
+    logout: Đăng xuất
+  videoCard:
+    edit: Chỉnh sửa
+  watch:
+    Comments:
+      title: Bình luận
+      all: Tất cả
+  search:
+    searchLabel: Tìm kiếm
 about:
   faq:
     subber:
