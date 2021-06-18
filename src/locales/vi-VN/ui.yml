@@ -53,10 +53,12 @@ component:
   channelMusic:
     recentSongsHeader: Bài hát gần đây
   songList:
+    songTitle: Tiêu đề
     songCoveredBy: Cover bởi
     songDuration: Thời lượng
   installPrompt:
     title: Cài đặt Holodex
+    notNowBtn: Không phải lúc này
     installBtn: Cài đặt
     iOS:
       popup: Cài đặt Holodex trên iOS
@@ -75,6 +77,7 @@ views:
   channels:
     sortOptions:
       group: Nhóm
+      recentUpload: Gần đây
   home:
     recentVideoToggles:
       all: Tất cả
