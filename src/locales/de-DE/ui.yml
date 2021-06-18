@@ -2,7 +2,7 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: 'Es ist ein Fehler beim Abrufen von Inhalten aufgetreten, bitte schau of Twitter '
+    textBeforeTwitter: 'Es ist ein Fehler beim Abrufen der Inhalte aufgetreten, bitte check Twitter '
     textAfterTwitter: ' oder melde den Fehler über die'
     aboutPage: Info-Seite
     afterAboutPageHyperlink: .
@@ -103,6 +103,22 @@ component:
   comment:
     close: Schließen
     readMore: Mehr anzeigen
+  reportDialog:
+    title: Melden
+    comments: Kommentar (optional)
+    success: Bericht gesendet, vielen Dank!
+    reasons:
+      - Video falsch getaggt
+      - Gefährlich niedrige Qualität/irreführende Inhalte
+      - Verstößt gegen das Urheberrecht der Organisation oder ist unangemessen
+      - Sonstiges
+  thirdpartycookie:
+    explanation: >-
+      Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>YouTube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Einloggen in / Verwenden von Youtube Chat auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>Youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>Holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.
+    dialogTitle: Youtube Chat auf Holodex benutzen
+    alertText: >-
+      Deine Privatsphäre-Einstellungen machen es unmöglich, dich im Youtube Chat anzumelden. Klick hier für weitere Informationen
+    neverShowAgain: Nicht nochmal anzeigen
 views:
   channel:
     video: Videos
@@ -128,8 +144,10 @@ views:
   home:
     liveOrUpcomingHeading: Jetzt Live / Demnächst Live
     recentVideosHeading: Aktuelle Videos
+    noStreams: Momentan keine Live- oder anstehenden Streams
     recentVideoToggles:
       all: Alle
+      official: Archiv
       subber: Clips
   library:
     savedVideosTitle: Gespeicherte Videos
@@ -150,6 +168,11 @@ views:
     exportYTHeading: Anleitung YouTube Playlist speichern
     exportYTInstructions: >-
       <b class="red--text">Schritt 1</b>: Spiel die YouTube-Playlist ab, und änder die Player-Benutzeroberfläche in den Miniplayer-Modus. <br /><br /> <b class="red--text">Schritt 2</b>: Wähle ein beliebiges Video und füge es zur Warteschleife hinzu. <br /><br /> <b class="red--text">Schritt 3</b>: Die Playlist ist nun speicherbar. Klicke um sie zu speichern.
+    sort:
+      dateaddedEarliestFirst: Zur Bibliothek hinzugefügt am, Neuestes zuerst
+      dateaddedLatestFirst: Zur Bibliothek hinzugefügt am, Frühestes zuerst
+      dateuploadedLatestFirst: Uploaddatum, Neuestes zuerst
+      dateuploadedEarliestFirst: Uploaddatum, Frühestes zuerst
   notFound:
     title: Inhalt nicht gefunden
     back: Zurück zur Startseite
@@ -187,6 +210,8 @@ views:
     clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
     tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
     defaultPage: Standardseite
+    defaultPageMsg: >-
+      Öffne diese Seite standardmäßig, wenn du holodex.net besuchst oder auf das Logo oben links klickst.
     videoFeedSettings: Video-Feed Einstellungen
     siteNavigationSettings: Seite/Navigation
     languageSettings: Sprache
