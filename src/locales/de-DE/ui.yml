@@ -114,7 +114,7 @@ component:
       - Sonstiges
   thirdpartycookie:
     explanation: >-
-      Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>YouTube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Einloggen in / Verwenden von Youtube Chat auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>Youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>Holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.
+      Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>youtube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Einloggen in / Verwenden von Youtube Chat auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.
     dialogTitle: Youtube Chat auf Holodex benutzen
     alertText: >-
       Deine Privatsphäre-Einstellungen machen es unmöglich, dich im Youtube Chat anzumelden. Klick hier für weitere Informationen
@@ -216,7 +216,7 @@ views:
     siteNavigationSettings: Seite/Navigation
     languageSettings: Sprache
     gridSizeLabel: Thumbnail/Rastergröße
-    gridSizeMsg: Ändert Thumbnail / Videoraster Größe auf der Start- und Favoritenseite
+    gridSizeMsg: Ändert Thumbnail / Videoraster Größe auf Start-/Favoritenseite
     gridSize:
       - Groß
       - Mittel
@@ -351,7 +351,7 @@ about:
     title: Häufig gestellte Fragen
     ytchatHeader: Mein Youtube Chat ist nicht eingeloggt!
     ytchatContent: >-
-      Bitte deaktiviere die Browser-Sicherheitsfunktion, "Blockieren von Cookies von Drittanbietern" oder füge diese Website und youtube.com als Ausnahme für diese hinzu.
+      Bitte deaktiviere die Browser-Sicherheitsfunktion, "Blockieren von Cookies von Drittanbietern" oder nimm diese Website und youtube.com mit in die Whitelist auf.
     ytchatFirefox: Firefox-Anleitung, andere Browser sollten ähnlich sein.
     autoplayHeader: Automatische Wiedergabe funktioniert nicht!
     autoplayContent: Bitte google, wie du automatische Wiedergabe / AutoPlay für deinen Browser aktivieren kannst.
