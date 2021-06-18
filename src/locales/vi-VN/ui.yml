@@ -122,32 +122,48 @@ views:
       Vtuber: Vtuber
       Favorites: Yêu thích
       Blocked: Đã chặn
+    blockedAreEmpty: Bạn không có kênh đã chặn nào.
   home:
+    recentVideosHeading: Video gần đây
+    noStreams: Không có luồng phát sóng trực tiếp hoặc luồng phát sóng sắp tới vào lúc này
     recentVideoToggles:
       all: Tất cả
+      subber: Clip
   library:
     savedVideosTitle: Video đã lưu
     deleteFromLibraryButton: Xoá ({0})
     deleteConfirmation: Bạn có chắc chắn muốn xoá {0} video này không?
     deleteConfirmationOK: Xóa
     deleteConfirmationCancel: Hủy bỏ
+    selectionReset: Thiết lập lại
+    selectionSelectAll: Chọn tất cả
+    emptyLibrary: Bạn không có video đã lưu nào!
+    exportYtPlaylist: YouTube Playlist
   notFound:
     title: Không tìm thấy nội dung này
+    back: Về trang chủ
   search:
     sort:
       newest: Mới nhất
       oldest: Cũ nhất
     type:
       all: Tất cả
+      official: Chính thức
     sortByLabel: Sắp xếp theo
   settings:
     title: Cài đặt
     darkModeLabel: Chế độ Tối
+    darkModeMsg: Chuyển đổi giao diện sáng và tối
     redirectModeLabel: Mở trên Youtube
+    redirectModeMsg: >-
+      Nhấn vào hình thu nhỏ của video sẽ mở video trên YouTube, nhấn vào tiêu đề sẽ mở video trên Holodex
     useEnglishNameLabel: Sử dụng tên tiếng Anh
     hideVideoThumbnailsLabel: Ẩn hình thu nhỏ của video
+    pushNotificationLabel: Thông báo (Sắp có)
+    pushNotificationMsg: Bật thông báo cho những kênh yêu thích của bạn
     autoplayVideoLabel: Tự động phát video
     autoplayVideoMsg: Bật tự động phát lại các video
+    defaultPage: Trang mặc định
     defaultPageMsg: >-
       Mặc định mở trang này khi truy cập holodex.net hoặc khi nhấn vào biểu tượng ở góc trái trên cùng.
     languageSettings: Ngôn ngữ
@@ -156,6 +172,7 @@ views:
       - Vừa
       - Nhỏ
     hideCollabStreamsLabel: Ẩn Stream Collab
+    theme: Giao diện
   app:
     update_available: Đã có bản cập nhật mới
     update_btn: Cập nhật
@@ -176,6 +193,7 @@ views:
       showVerifiedMessages: Hiển thị tin nhắn từ các kênh Verified
       showModeratorMessages: Hiển thị tin nhắn từ Moderator
       tlFontSize: Cỡ chữ
+      tlWindowSize: Kích thước khung dịch (%), đặt 0% để tự động điều chỉnh
       retryBtn: Thử lại
       status:
         reconnecting: Tự động Kết nối lại...
