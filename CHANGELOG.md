@@ -4,7 +4,7 @@
 
 [Find out more here](https://twitter.com/holodex/status/1405637847831302144)
 
-![img](http://somewhere.com/stuff.jpg)
+![img](https://github.com/RiceCakess/Holodex/raw/dev/docs/holodex%20roles.png)
 
 ### 2.12 Holodex [*June 18, 2021*]
 
