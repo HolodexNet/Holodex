@@ -160,6 +160,7 @@ views:
     update_available: Đã có bản cập nhật mới
     update_btn: Cập nhật
     close_btn: Đóng
+    check_about_page: Truy cập trang Giới thiệu để đọc về các thay đổi mới
     loginCallToAction: Hãy đăng nhập để lưu các kênh bạn yêu thích!
   about:
     add_my_channel: Thêm kênh của tôi vào Holodex
@@ -167,10 +168,47 @@ views:
     theaterMode: Chế độ Rạp chiếu phim
     saveToLibrary: Lưu video vào Thư viện
     chat:
+      loading: Đang tải Chat...
+      hideTLBtn: Ẩn dịch trực tiếp
+      showTLBtn: Hiện dịch trực tiếp
+      TLSettingsTitle: Cài đặt dịch trực tiếp
+      StickBottomSettingsDesc: Di chuyển hộp thoại dịch trực tiếp xuống phía dưới chat (mặc định hiển thị ở phía trên cho các thiết bị điện thoại di động)
       showVerifiedMessages: Hiển thị tin nhắn từ các kênh Verified
       showModeratorMessages: Hiển thị tin nhắn từ Moderator
       tlFontSize: Cỡ chữ
       retryBtn: Thử lại
+      status:
+        reconnecting: Tự động Kết nối lại...
+        reconnectFailed: Không thể kết nối lại
+        connectedToChat: Đã kết nối
+        disconnectedToChat: Đã ngắt kết nối
+  favorites:
+    promptForAction: >-
+      Tạo một danh sách các Vtuber yêu thích để xem các clip và livestream mới nhất của họ tại trang này.
+    manageFavorites: Quản lý mục Yêu thích
+    close: Đóng
+    showall: Hiển thị tất cả
+  editor:
+    needlogin: Bạn cần phải đăng nhập để chỉnh sửa dữ liệu của các video và bài hát trên Holodex.
+  login:
+    with:
+      - Đăng nhập bằng Google
+      - Đăng nhập bằng Discord
+      - Đăng nhập bằng Twitter
+  multiview:
+    confirmOverwrite: Ghi đè bố cục hiện tại?
+    confirmOverwriteYes: Xác nhận
+    permalink: Liên kết tĩnh
+    presets: Mẫu có sẵn
+    addframe: Thêm ô
+    muteAll: Tắt âm tất cả
+    unmuteAll: Bật âm tất cả
+    autoLayoutTip: Nhấn vào một kênh để bắt đầu xem bằng chế độ bố cục tự động
+    createLayoutTip: Tự tạo bố cục của riêng mình bằng cách thêm các ô hoặc sử dụng mẫu có sẵn
+    preset:
+      shareOnDiscord: >-
+        Muốn chia sẻ bố cục của mình? Hãy sử dụng nút chia sẻ và liên hệ với chúng tôi trên <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
+      custom: Bố cục của tôi
 editor:
   music:
     startInput: Bắt đầu
@@ -179,13 +217,33 @@ about:
   faq:
     title: FAQ
     ytchatHeader: Tôi không đăng nhập được YouTube Chat!
+    ytchatContent: >-
+      Vui lòng tắt tính năng chặn cookies bên thứ 3 trong trình duyệt, hoặc cho phép cookies của Holodex.net và YouTube.com được hoạt động vào mục Cho phép / Whitelist.
+    ytchatFirefox: Đây là hướng dẫn cho trình duyệt Firefox, những trình duyệt khác có thể tương tự.
+    autoplayHeader: AutoPlay / Tự động phát không hoạt động!
+    autoplayContent: 'Vui lòng tra cứu cách bật AutoPlay / Tự động phát cho trình duyệt của bạn như: Chrome, Firefox, Edge, Opera.'
+    mobile:
+      title: Có ứng dụng Holodex trên hệ điều hành Android/iOS không?
+    MugenClips:
+      title: MugenClips là gì?
     subber:
+      title: Tôi là subber/clipper nhưng lại không tìm thấy kênh hay clip của mình trên Holodex
       contents:
         - >-
 
         - >-
           , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: Tôi có ý kiến/muốn đóng góp cho dự án này
+  gdpr: GDPR và dữ liệu của tôi
+  gdprContent: >-
+    Một cookie Google Analytics sẽ được sử dụng cho việc theo dõi số lượng truy cập trang nhằm mục đích phân tích của chúng tôi. Danh sách mục Yêu thích của bạn sẽ được liên kết với tên người dùng hoặc ID tài khoản mạng xã hội mà bạn dùng để đăng nhập. Dữ liệu này có thể bao gồm email của bạn (nếu đăng nhập bằng Google), Discord ID, hoặc tên đăng nhập Twitter tuỳ thuộc vào cách thức đăng nhập của bạn.
+  gdprDeletion: Để xoá mọi dữ liệu người dùng của bạn, xin hãy liên hệ với chúng tôi trên Discord!
+  feedback: Phản hồi / Báo cáo lỗi
+  feedbackHtml: >-
+    Bạn có thể tạo một issue mới tại <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> hoặc liên hệ với Holodex trên Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
+    title: Lời cảm ơn
     contents:
       - I would like to give big thanks to the
       - team for their work on
@@ -193,3 +251,7 @@ about:
         Also to all the subbers for helping the overseas bros! Please check them out!
       - >-
 
+  changelog:
+    title: Các thay đổi
+  news:
+    title: Tin tức
