@@ -337,7 +337,7 @@ editor:
     setToCurrentTime: Geçerli zamana ayarla ({0})
     moveLeft2s: Sola 2sn hareket ettir
     trackNameInput: Parça ismi
-    originalArtistInput: Orjinal Artist
+    originalArtistInput: Orijinal Sanatçı
     testStart: Başı test et
     startInput: Başlangıc
     endInput: 'Saniye olarak süre: (bitiş {0})'
