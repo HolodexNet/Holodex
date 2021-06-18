@@ -1,19 +1,73 @@
 ---
 component:
+  apiError:
+    textBeforeTwitter: 'Đã xảy ra lỗi khi truy xuất nội dung, vui lòng kiểm tra thông báo tại Twitter '
+    textAfterTwitter: ' hoặc báo cáo lỗi qua'
+    aboutPage: trang Giới thiệu
+    afterAboutPageHyperlink: .
+  channelList:
+    signInToFavorite: Đăng nhập để thêm vào mục Yêu thích
+    unfavoriteAllInGroup: Xoá tất cả khỏi mục Yêu thích
+    favoriteAllInGroup: Thêm tất cả vào mục Yêu thích
+  channelInfo:
+    totalViews: Tổng lượt xem
+  channelSocials:
+    addToFavorites: Thêm vào mục Yêu thích
+    removeFromFavorites: Xoá khỏi mục Yêu thích
+    unblock: Bỏ chặn kênh này
+    block: Chặn hiển thị nội dung của kênh này trên Holodex
+    blocked: Đã chặn
   mainNav:
     home: Trang chủ
+    favorites: Yêu thích
+    channels: Kênh
+    about: Giới thiệu
     library: Thư viện
     settings: Cài đặt
     login: Đăng nhập
     logout: Đăng xuất
+    multiview: MultiView
+    points: điểm
   videoCard:
+    clips: '{n} Clips'
+    watching: '{0} người đang xem'
     edit: Chỉnh sửa
+    copiedToClipboard: Đã sao chép liên kết vào clipboard.
+    copyLink: Sao chép liên kết Holodex
+    premiere: Công chiếu
+    googleCalendar: Thêm vào Google Calendar
+  description:
+    showLess: Thu gọn
+    showMore: Xem thêm
   watch:
     Comments:
       title: Bình luận
       all: Tất cả
   search:
     searchLabel: Tìm kiếm
+  paginateLoad:
+    newer: Mới hơn
+    older: Cũ hơn
+  music:
+    clearPlaylist: Xoá tất cả
+  channelMusic:
+    recentSongsHeader: Bài hát gần đây
+  songList:
+    songCoveredBy: Cover bởi
+    songDuration: Thời lượng
+  installPrompt:
+    title: Cài đặt Holodex
+    installBtn: Cài đặt
+    iOS:
+      popup: Cài đặt Holodex trên iOS
+views:
+  channel:
+    video: Video
+    clips: Clip
+    collabs: Collab
+    about: Giới thiệu
+  settings:
+    redirectModeLabel: Mở trên Youtube
 about:
   faq:
     subber:
