@@ -10,6 +10,7 @@ component:
     unfavoriteAllInGroup: Xoá tất cả khỏi mục Yêu thích
     favoriteAllInGroup: Thêm tất cả vào mục Yêu thích
   channelInfo:
+    stats: Số liệu thống kê
     totalViews: Tổng lượt xem
   channelSocials:
     addToFavorites: Thêm vào mục Yêu thích
@@ -26,16 +27,20 @@ component:
     settings: Cài đặt
     login: Đăng nhập
     logout: Đăng xuất
+    accountSettings: Cài đặt tài khoản
     multiview: MultiView
     points: điểm
   videoCard:
     clips: '{n} Clips'
     watching: '{0} người đang xem'
+    liveNow: Đang trực tiếp
     edit: Chỉnh sửa
     copiedToClipboard: Đã sao chép liên kết vào clipboard.
     copyLink: Sao chép liên kết Holodex
     premiere: Công chiếu
     googleCalendar: Thêm vào Google Calendar
+  videoDescription:
+    description: Mô tả
   description:
     showLess: Thu gọn
     showMore: Xem thêm
