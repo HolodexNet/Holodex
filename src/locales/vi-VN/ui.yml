@@ -32,6 +32,7 @@ component:
     settings: Cài đặt
     login: Đăng nhập
     logout: Đăng xuất
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Cài đặt tài khoản
     music: Nhạc
     multiview: MultiView
@@ -51,6 +52,7 @@ component:
     showLess: Thu gọn
     showMore: Xem thêm
   watch:
+    streamingFor: Đã stream trong vòng {0}
     nextUpInMugen: Tiếp theo
     Comments:
       title: Bình luận
@@ -58,9 +60,18 @@ component:
   search:
     searchLabel: Tìm kiếm
     type:
+      channel: kênh
       topic: chủ đề
+      org: tổ chức
+      titledesc: tiêu đề/mô tả
       comments: bình luận
+      videourl: video url
   relatedVideo:
+    clipsLabel: clip
+    simulcastsLabel: phát sóng cùng thời điểm
+    refersLabel: đề cập đến
+    sourcesLabel: nguồn
+    songsLabel: các bài hát
     recommendationsLabel: đề xuất
   paginateLoad:
     newer: Mới hơn
@@ -69,10 +80,15 @@ component:
     clearPlaylist: Xoá tất cả
   channelMusic:
     recentSongsHeader: Bài hát gần đây
+    weeklyTopPlaysHeader: Top lượt nghe trong tuần
   songList:
     songTitle: Tiêu đề
     songCoveredBy: Cover bởi
     songDuration: Thời lượng
+    sangOnTime: Ngày hát
+  orgMusic:
+    monthlyTopForOrg: Top lượt nghe trong tháng của {0}
+    weeklyTopForOrg: Top lượt nghe trong tuần của {0}
   installPrompt:
     title: Cài đặt Holodex
     callToAction: Xem video trên Holodex sẽ hoạt động tốt nhất khi được thêm vào màn hình chính
@@ -120,17 +136,21 @@ views:
       org: Tổ chức
     tabs:
       Vtuber: Vtuber
+      Subber: Subber
       Favorites: Yêu thích
       Blocked: Đã chặn
+    favoritesAreEmpty: Bạn chưa yêu thích kênh nào cả!
     blockedAreEmpty: Bạn không có kênh đã chặn nào.
   home:
     recentVideosHeading: Video gần đây
     noStreams: Không có luồng phát sóng trực tiếp hoặc luồng phát sóng sắp tới vào lúc này
     recentVideoToggles:
       all: Tất cả
+      official: Lưu trữ
       subber: Clip
   library:
     savedVideosTitle: Video đã lưu
+    createYtPlaylistButton: Tạo Youtube Playlist ({0})
     deleteFromLibraryButton: Xoá ({0})
     deleteConfirmation: Bạn có chắc chắn muốn xoá {0} video này không?
     deleteConfirmationOK: Xóa
@@ -149,7 +169,9 @@ views:
     type:
       all: Tất cả
       official: Chính thức
+      clip: Clip
     sortByLabel: Sắp xếp theo
+    typeDropdownLabel: Thể loại
   settings:
     title: Cài đặt
     darkModeLabel: Chế độ Tối
@@ -159,6 +181,8 @@ views:
       Nhấn vào hình thu nhỏ của video sẽ mở video trên YouTube, nhấn vào tiêu đề sẽ mở video trên Holodex
     useEnglishNameLabel: Sử dụng tên tiếng Anh
     hideVideoThumbnailsLabel: Ẩn hình thu nhỏ của video
+    hideVideoThumbnailsMsg: >-
+      Ẩn hình thu nhỏ của video để tăng tốc độ tải trang và lướt nhanh hơn trên điện thoại
     pushNotificationLabel: Thông báo (Sắp có)
     pushNotificationMsg: Bật thông báo cho những kênh yêu thích của bạn
     autoplayVideoLabel: Tự động phát video
@@ -198,6 +222,8 @@ views:
       status:
         reconnecting: Tự động Kết nối lại...
         reconnectFailed: Không thể kết nối lại
+        notLive: >-
+          Luồng phát sóng chưa bắt đầu, hãy thử lại khi đã phát trực tiếp được khoảng 15 phút
         connectedToChat: Đã kết nối
         disconnectedToChat: Đã ngắt kết nối
   favorites:
@@ -208,7 +234,19 @@ views:
     showall: Hiển thị tất cả
   editor:
     needlogin: Bạn cần phải đăng nhập để chỉnh sửa dữ liệu của các video và bài hát trên Holodex.
+    changeTopic:
+      title: Thay đổi chủ đề của stream
+      info: >-
+        Mọi người dùng đều có thể gắn thẻ chủ đề cho video, nhưng chỉ có Editor và Admin mới có thể xoá và thay đổi chủ đề có sẵn.
+      button: Lưu (có thể mất 5 phút mới có hiệu lực)
+    channelMentions:
+      title: Các kênh được nhắc đến
+    sources:
+      title: Nguồn/Clip (tính năng đang được phát triển)
   login:
+    apikeyNew: Lấy khoá API mới
+    apikeyResetConfirm2: Khoá API cũ sẽ hết hạn sau khoảng 0 - 24 giờ, bạn chắc chắn muốn đặt lại chứ?
+    apikeyResetNvm: Không có gì thú vị xảy ra.
     with:
       - Đăng nhập bằng Google
       - Đăng nhập bằng Discord
@@ -227,10 +265,30 @@ views:
       shareOnDiscord: >-
         Muốn chia sẻ bố cục của mình? Hãy sử dụng nút chia sẻ và liên hệ với chúng tôi trên <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
       custom: Bố cục của tôi
+      toggleAutoLayout: Bật/tắt sử dụng bố cục này trong chế độ tự động
+      remove: Xoá
+      desktop: Desktop
+      mobile: Mobile
+    presetEditor:
+      title: Lưu bố cục
+      name: Tên
+      autoLayout: Sử dụng bố cục này trong chế độ tự động
+    video:
+      selectLive: Chọn livestream
+      addCustomVideo: Thêm video tuỳ chọn
+    fullScreen: Toàn màn hình
+time:
+  distance_past_date: '{0}'
 editor:
   music:
+    add: Thêm
+    update: Cập nhật
+    titles:
+      help: Hướng dẫn
     startInput: Bắt đầu
+  enterMode: Chỉnh sửa Video
 about:
+  quicklinks: Liên kết
   discordBtn: Holodex Discord
   faq:
     title: FAQ
