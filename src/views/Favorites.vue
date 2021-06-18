@@ -94,6 +94,7 @@
                                 includeChannel
                                 :cols="colSizes"
                                 :dense="currentGridSize > 0"
+                                :showCollabBorderFunc="tab === Tabs.ARCHIVE && showCollabBorder"
                             />
                             <!-- only show SkeletonCardList if it's loading -->
                             <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -225,7 +226,7 @@ export default {
     },
     methods: {
         showCollabBorder(video) {
-            return !this.favoritesSet.has(video.channel.id) && video.mentions && video.mentions.length > 0;
+            return video.mentions && video.mentions.length > 0 && !this.favoritesSet.has(video.channel.id);
         },
         init(updateFavorites) {
             if (this.favorites.length > 0 && this.isLoggedIn) {
@@ -273,7 +274,7 @@ export default {
                     .favoritesVideos(this.$store.state.userdata.jwt, {
                         status: "past",
                         ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                        include: "clips",
+                        include: "clips,mentions",
                         lang: this.$store.state.settings.clipLangs.join(","),
                         paginated: !this.scrollMode,
                         limit,

@@ -16,7 +16,7 @@
         style="position: relative"
     >
         <div v-if="showCollabBorder" class="d-flex flex-row px-1 align-center collab-border-text">
-            <div class="primary--text mr-1">Collab</div>
+            <div class="primary--text">@</div>
             <ChannelMentions :mentions="video.mentions" class="align-self-center" />
         </div>
         <!-- Video Image with Duration -->

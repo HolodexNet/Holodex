@@ -91,6 +91,7 @@
                             includeChannel
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
+                            :showCollabBorderFunc="tab === Tabs.ARCHIVE && showCollabBorder"
                         />
                         <!-- only show SkeletonCardList if it's loading -->
                         <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -250,7 +251,7 @@ export default {
                 const res = await backendApi.videos({
                     status: "past",
                     ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                    include: "clips",
+                    include: "clips,mentions",
                     org: this.$store.state.currentOrg,
                     lang: this.$store.state.settings.clipLangs.join(","),
                     paginated: !this.scrollMode,

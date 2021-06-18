@@ -1,7 +1,7 @@
 <template>
     <v-container class="py-0" style="position: relative" fluid :id="'t' + randomId">
         <!-- Video Card grid rows -->
-        <v-row :dense="dense">
+        <v-row :dense="dense" class="video-row">
             <!-- Video Cards with custom grid size class based on breakpoint -->
             <v-col
                 v-for="(video, index) in processedVideos"
@@ -236,5 +236,10 @@ export default {
     width: 8.33%;
     max-width: 8.33%;
     flex-basis: 8.33%;
+}
+// Increase vertical padding to accomadate collab border
+.video-row.row--dense > .col,
+.row--dense > [class*="col-"] {
+    padding: 6px 4px;
 }
 </style>
