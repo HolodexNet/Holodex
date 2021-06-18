@@ -6,7 +6,7 @@
             <v-btn v-if="$socket.disconnected" @click="tlJoin()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
         </v-overlay>
         <v-card-subtitle class="py-1 d-flex justify-space-between">
-            <div :class="connected ? 'green--text' : 'red--text'">TLDex [{{ liveTlLang }}]</div>
+            <div :class="connected ? 'green--text' : 'red--text'">TLdex [{{ liveTlLang }}]</div>
             <span>
                 <v-dialog v-model="expanded" width="800">
                     <template v-slot:activator="{ on, attrs }">
