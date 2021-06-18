@@ -1,0 +1,275 @@
+---
+component:
+  apiError:
+    title: Gomenasorry!
+    textBeforeTwitter: 'Đã xảy ra lỗi khi truy xuất nội dung, vui lòng kiểm tra thông báo tại Twitter '
+    textAfterTwitter: ' hoặc báo cáo lỗi qua'
+    aboutPage: trang Giới thiệu
+    afterAboutPageHyperlink: .
+  channelList:
+    signInToFavorite: Đăng nhập để thêm vào mục Yêu thích
+    unfavoriteAllInGroup: Xoá tất cả khỏi mục Yêu thích
+    favoriteAllInGroup: Thêm tất cả vào mục Yêu thích
+  channelInfo:
+    stats: Số liệu thống kê
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
+    subscriberCount: '{n} người đăng kí'
+    subscriberNA: Số lượng người đăng kí không khả dụng
+    totalViews: Tổng lượt xem
+  channelSocials:
+    addToFavorites: Thêm vào mục Yêu thích
+    removeFromFavorites: Xoá khỏi mục Yêu thích
+    unblock: Bỏ chặn kênh này
+    block: Chặn hiển thị nội dung của kênh này trên Holodex
+    blocked: Đã chặn
+  mainNav:
+    home: Trang chủ
+    favorites: Yêu thích
+    channels: Kênh
+    about: Giới thiệu
+    library: Thư viện
+    settings: Cài đặt
+    login: Đăng nhập
+    logout: Đăng xuất
+    accountSettings: Cài đặt tài khoản
+    music: Nhạc
+    multiview: MultiView
+    points: điểm
+  videoCard:
+    clips: '{n} Clip'
+    watching: '{0} người đang xem'
+    liveNow: Đang trực tiếp
+    edit: Chỉnh sửa
+    copiedToClipboard: Đã sao chép liên kết vào clipboard.
+    copyLink: Sao chép liên kết Holodex
+    premiere: Công chiếu
+    googleCalendar: Thêm vào Google Calendar
+  videoDescription:
+    description: Mô tả
+  description:
+    showLess: Thu gọn
+    showMore: Xem thêm
+  watch:
+    nextUpInMugen: Tiếp theo
+    Comments:
+      title: Bình luận
+      all: Tất cả
+  search:
+    searchLabel: Tìm kiếm
+    type:
+      topic: chủ đề
+      comments: bình luận
+  relatedVideo:
+    recommendationsLabel: đề xuất
+  paginateLoad:
+    newer: Mới hơn
+    older: Cũ hơn
+  music:
+    clearPlaylist: Xoá tất cả
+  channelMusic:
+    recentSongsHeader: Bài hát gần đây
+  songList:
+    songTitle: Tiêu đề
+    songCoveredBy: Cover bởi
+    songDuration: Thời lượng
+  installPrompt:
+    title: Cài đặt Holodex
+    callToAction: Xem video trên Holodex sẽ hoạt động tốt nhất khi được thêm vào màn hình chính
+    notNowBtn: Không phải lúc này
+    installBtn: Cài đặt
+    iOS:
+      popup: Cài đặt Holodex trên iOS
+      afterExportIcon: sau đó 'Thêm vào màn hình chính
+      beforeExportIcon: Nhấn
+  media:
+    remove: Xoá
+  comment:
+    close: Đóng
+    readMore: Xem thêm
+  reportDialog:
+    title: Báo cáo
+    comments: Bình luận (không bắt buộc)
+    success: Đã gửi báo cáo, cảm ơn bạn!
+    reasons:
+      - Video bị gắn thẻ sai
+      - Chất lượng video quá kém/Nội dung dễ gây hiểu lầm
+      - Vi phạm các nguyên tắc thực hiện tác phẩm phái sinh (Derivative Work Guidelines) của tổ chức hoặc nội dung không phù hợp
+      - Khác
+  thirdpartycookie:
+    explanation: >-
+      Dựa trên cách trình duyệt hoạt động, một số trình duyệt với khả năng giới hạn/chặn <b>Cookies của bên thứ ba</b>, hoặc chặn cookies của <kbd>YouTube</kbd> sẽ gặp một chút khó khăn khi đăng nhập / sử dụng YouTube chat. <br /><br /> Vấn đề này có thể được giải quyết bằng cách cho phép cookies của <kbd>YouTube</kbd> hoạt động trong trình duyệt, hoặc giảm giới hạn cookies / quyền riêng tư cho <kbd>Holodex.net</kbd>. <br /><br /> Chúng tôi có một số trang web giúp bạn có thêm thông tin và hướng dẫn chi tiết cho vấn đề này.
+    dialogTitle: Sử dụng Youtube Chat trên Holodex
+    alertText: >-
+      Cài đặt quyền riêng tư của trình duyệt bạn đang sử dụng khiến bạn không thể đăng nhập vào Youtube Chat. Nhấn vào đây để tìm hiểu thêm
+    neverShowAgain: Ngừng hiển thị các cảnh báo này
+views:
+  channel:
+    video: Video
+    clips: Clip
+    music: Âm nhạc
+    collabs: Collab
+    about: Giới thiệu
+  channels:
+    sortOptions:
+      subscribers: Người đăng kí
+      group: Nhóm
+      recentUpload: Gần đây
+      videoCount: Số lượng video
+      clipCount: Số lượng clip
+      org: Tổ chức
+    tabs:
+      Vtuber: Vtuber
+      Favorites: Yêu thích
+      Blocked: Đã chặn
+    blockedAreEmpty: Bạn không có kênh đã chặn nào.
+  home:
+    recentVideosHeading: Video gần đây
+    noStreams: Không có luồng phát sóng trực tiếp hoặc luồng phát sóng sắp tới vào lúc này
+    recentVideoToggles:
+      all: Tất cả
+      subber: Clip
+  library:
+    savedVideosTitle: Video đã lưu
+    deleteFromLibraryButton: Xoá ({0})
+    deleteConfirmation: Bạn có chắc chắn muốn xoá {0} video này không?
+    deleteConfirmationOK: Xóa
+    deleteConfirmationCancel: Hủy bỏ
+    selectionReset: Thiết lập lại
+    selectionSelectAll: Chọn tất cả
+    emptyLibrary: Bạn không có video đã lưu nào!
+    exportYtPlaylist: YouTube Playlist
+  notFound:
+    title: Không tìm thấy nội dung này
+    back: Về trang chủ
+  search:
+    sort:
+      newest: Mới nhất
+      oldest: Cũ nhất
+    type:
+      all: Tất cả
+      official: Chính thức
+    sortByLabel: Sắp xếp theo
+  settings:
+    title: Cài đặt
+    darkModeLabel: Chế độ Tối
+    darkModeMsg: Chuyển đổi giao diện sáng và tối
+    redirectModeLabel: Mở trên Youtube
+    redirectModeMsg: >-
+      Nhấn vào hình thu nhỏ của video sẽ mở video trên YouTube, nhấn vào tiêu đề sẽ mở video trên Holodex
+    useEnglishNameLabel: Sử dụng tên tiếng Anh
+    hideVideoThumbnailsLabel: Ẩn hình thu nhỏ của video
+    pushNotificationLabel: Thông báo (Sắp có)
+    pushNotificationMsg: Bật thông báo cho những kênh yêu thích của bạn
+    autoplayVideoLabel: Tự động phát video
+    autoplayVideoMsg: Bật tự động phát lại các video
+    defaultPage: Trang mặc định
+    defaultPageMsg: >-
+      Mặc định mở trang này khi truy cập holodex.net hoặc khi nhấn vào biểu tượng ở góc trái trên cùng.
+    languageSettings: Ngôn ngữ
+    gridSize:
+      - Lớn
+      - Vừa
+      - Nhỏ
+    hideCollabStreamsLabel: Ẩn Stream Collab
+    theme: Giao diện
+  app:
+    update_available: Đã có bản cập nhật mới
+    update_btn: Cập nhật
+    close_btn: Đóng
+    check_about_page: Truy cập trang Giới thiệu để đọc về các thay đổi mới
+    loginCallToAction: Hãy đăng nhập để lưu các kênh bạn yêu thích!
+  about:
+    add_my_channel: Thêm kênh của tôi vào Holodex
+  watch:
+    theaterMode: Chế độ Rạp chiếu phim
+    saveToLibrary: Lưu video vào Thư viện
+    chat:
+      loading: Đang tải Chat...
+      hideTLBtn: Ẩn dịch trực tiếp
+      showTLBtn: Hiện dịch trực tiếp
+      TLSettingsTitle: Cài đặt dịch trực tiếp
+      StickBottomSettingsDesc: Di chuyển hộp thoại dịch trực tiếp xuống phía dưới chat (mặc định hiển thị ở phía trên cho các thiết bị điện thoại di động)
+      showVerifiedMessages: Hiển thị tin nhắn từ các kênh Verified
+      showModeratorMessages: Hiển thị tin nhắn từ Moderator
+      tlFontSize: Cỡ chữ
+      tlWindowSize: Kích thước khung dịch (%), đặt 0% để tự động điều chỉnh
+      retryBtn: Thử lại
+      status:
+        reconnecting: Tự động Kết nối lại...
+        reconnectFailed: Không thể kết nối lại
+        connectedToChat: Đã kết nối
+        disconnectedToChat: Đã ngắt kết nối
+  favorites:
+    promptForAction: >-
+      Tạo một danh sách các Vtuber yêu thích để xem các clip và livestream mới nhất của họ tại trang này.
+    manageFavorites: Quản lý mục Yêu thích
+    close: Đóng
+    showall: Hiển thị tất cả
+  editor:
+    needlogin: Bạn cần phải đăng nhập để chỉnh sửa dữ liệu của các video và bài hát trên Holodex.
+  login:
+    with:
+      - Đăng nhập bằng Google
+      - Đăng nhập bằng Discord
+      - Đăng nhập bằng Twitter
+  multiview:
+    confirmOverwrite: Ghi đè bố cục hiện tại?
+    confirmOverwriteYes: Xác nhận
+    permalink: Liên kết tĩnh
+    presets: Mẫu có sẵn
+    addframe: Thêm ô
+    muteAll: Tắt âm tất cả
+    unmuteAll: Bật âm tất cả
+    autoLayoutTip: Nhấn vào một kênh để bắt đầu xem bằng chế độ bố cục tự động
+    createLayoutTip: Tự tạo bố cục của riêng mình bằng cách thêm các ô hoặc sử dụng mẫu có sẵn
+    preset:
+      shareOnDiscord: >-
+        Muốn chia sẻ bố cục của mình? Hãy sử dụng nút chia sẻ và liên hệ với chúng tôi trên <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
+      custom: Bố cục của tôi
+editor:
+  music:
+    startInput: Bắt đầu
+about:
+  discordBtn: Holodex Discord
+  faq:
+    title: FAQ
+    ytchatHeader: Tôi không đăng nhập được YouTube Chat!
+    ytchatContent: >-
+      Vui lòng tắt tính năng chặn cookies bên thứ 3 trong trình duyệt, hoặc cho phép cookies của Holodex.net và YouTube.com được hoạt động vào mục Cho phép / Whitelist.
+    ytchatFirefox: Đây là hướng dẫn cho trình duyệt Firefox, những trình duyệt khác có thể tương tự.
+    autoplayHeader: AutoPlay / Tự động phát không hoạt động!
+    autoplayContent: 'Vui lòng tra cứu cách bật AutoPlay / Tự động phát cho trình duyệt của bạn như: Chrome, Firefox, Edge, Opera.'
+    mobile:
+      title: Có ứng dụng Holodex trên hệ điều hành Android/iOS không?
+    MugenClips:
+      title: MugenClips là gì?
+    subber:
+      title: Tôi là subber/clipper nhưng lại không tìm thấy kênh hay clip của mình trên Holodex
+      contents:
+        - >-
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
+    feedback:
+      title: Tôi có ý kiến/muốn đóng góp cho dự án này
+  gdpr: GDPR và dữ liệu của tôi
+  gdprContent: >-
+    Một cookie Google Analytics sẽ được sử dụng cho việc theo dõi số lượng truy cập trang nhằm mục đích phân tích của chúng tôi. Danh sách mục Yêu thích của bạn sẽ được liên kết với tên người dùng hoặc ID tài khoản mạng xã hội mà bạn dùng để đăng nhập. Dữ liệu này có thể bao gồm email của bạn (nếu đăng nhập bằng Google), Discord ID, hoặc tên đăng nhập Twitter tuỳ thuộc vào cách thức đăng nhập của bạn.
+  gdprDeletion: Để xoá mọi dữ liệu người dùng của bạn, xin hãy liên hệ với chúng tôi trên Discord!
+  feedback: Phản hồi / Báo cáo lỗi
+  feedbackHtml: >-
+    Bạn có thể tạo một issue mới tại <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> hoặc liên hệ với Holodex trên Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    title: Lời cảm ơn
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
+  changelog:
+    title: Các thay đổi
+  news:
+    title: Tin tức

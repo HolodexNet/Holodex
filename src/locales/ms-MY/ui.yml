@@ -114,7 +114,7 @@ component:
       - Lain-lain
   thirdpartycookie:
     explanation: >-
-      Sesetengah penyemak imbas dengan dasar <b>kuki pihak ketiga</b> yang ketat ataupun yang menyekat kuki <kbd>YouTube.com</kbd> berkebarangkalian menghadapi kesukaran mengelog masuk mahupun menggunakan sembang langsung Youtube. <br /><br /> Masalah ini boleh diselesaikan dengan memasukkan <kbd>Youtube.com</kbd> ke dalam senarai putih penyekat kuki pihak ketiga ataupun menggunakan tahap tetapan keselamatan kuki yang rendah bagi <kbd>Holodex.net</kbd>. <br /><br /> Berikut disertakan sekali beberapa tapak sesawang yang boleh memberikan maklumat lanjut berkenaan langkah-langkah yang harus dilakukan.
+      Sesetengah penyemak imbas dengan dasar <b>kuki pihak ketiga</b> yang ketat ataupun yang menyekat cecikut <kbd>YouTube.com</kbd> berkebarangkalian menghadapi kesukaran mengelog masuk mahupun menggunakan sembang langsung Youtube. <br /><br /> Masalah ini boleh diselesaikan dengan memasukkan <kbd>Youtube.com</kbd> ke dalam senarai putih penyekat cecikut pihak ketiga ataupun menggunakan tahap tetapan keselamatan cecikut yang rendah bagi <kbd>Holodex.net</kbd>. <br /><br /> Berikut disertakan sekali beberapa tapak sesawang yang boleh memberikan maklumat lanjut berkenaan langkah-langkah yang harus dilakukan.
     dialogTitle: Penggunaan Sembang YouTube di Holodex
     alertText: >-
       Log masuk ke ruangan sembang YouTube tidak boleh dilakukan disebabkan oleh tetapan kerahsiaan penyemak imbas anda. Sila rujuk di sini bagi mendapatkan maklumat lanjut
@@ -351,7 +351,7 @@ about:
     title: Soalan Lazim
     ytchatHeader: Akaun saya tidak log masuk di ruangan sembang YouTube!
     ytchatContent: >-
-      Anda harus melumpuhkan sekatan kuki pihak ketiga di penyemak imbas anda atau menyenaraikan tapak sesawang ini dan youtube.com dalam senarai putih bagi membenarkan kuki pihak ketiga.
+      Anda harus melumpuhkan sekatan cecikut pihak ketiga di penyemak imbas anda atau menyenaraikan tapak sesawang ini dan youtube.com dalam senarai putih bagi membenarkan cecikut pihak ketiga.
     ytchatFirefox: Arahan melumpuhkan kuki oleh Firefox. Penyemak imbas lain mungkin menggunakan kaedah yang sama.
     autoplayHeader: Automain tidak berfungsi!
     autoplayContent: Gelintar di internet cara menghidupkan automain bagi penyemak imbas masing-masing.
@@ -386,7 +386,7 @@ about:
       title: Saya mahu memberikan maklum balas/sumbangan kepada projek ini
   gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
-    Sebuah kuki Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
+    Sebuah cecikut Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
   gdprDeletion: Hubungi kami di Discord sekiranya anda ingin menghapuskan data pengguna anda!
   feedback: Maklum Balas dan Laporan Pepijat
   feedbackHtml: >-
