@@ -11,6 +11,7 @@
 ##### New Features
 - Collabs are now highlighted on holodex home and favorites screens.
 - Can collapse sidebar for watch pages to avoid spoilers from clips, or remove a really long song list.
+- You can now load the Chat TL history of a whole stream instead of only seeing the last 20 lines. **We're working on bringing it to offline/historical streams as well**, please wait for future updates!
 
 ##### Patches
 - German language improvements, thanks Doubleturtle!

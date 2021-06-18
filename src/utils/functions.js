@@ -5,8 +5,8 @@ export function resizeChannelPhoto(photoUrl, size) {
     const split = photoUrl.split("=s");
     // try to hit cache by using a common size
     let adjSize = 48;
-    if (size < 88 && size > 50) adjSize = 88;
-    else if (size <= 50) adjSize = 48;
+    if (size < 88 && size > 55) adjSize = 88;
+    else if (size <= 55) adjSize = 48;
     else adjSize = 176;
     return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
 }
