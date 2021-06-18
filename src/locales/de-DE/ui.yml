@@ -45,6 +45,7 @@ component:
     copiedToClipboard: Link in die Zwischenablage kopiert.
     copyLink: Holodex-Link kopieren
     premiere: PREMIERE
+    googleCalendar: Zu Google Kalender hinzufügen
   videoDescription:
     description: Beschreibung
   description:
@@ -185,6 +186,7 @@ views:
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
     clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
     tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
+    defaultPage: Standardseite
     videoFeedSettings: Video-Feed Einstellungen
     siteNavigationSettings: Seite/Navigation
     languageSettings: Sprache
@@ -286,6 +288,7 @@ views:
     video:
       selectLive: Stream auswählen
       addCustomVideo: Benutzerdefiniertes Video hinzufügen
+    fullScreen: Vollbild
   mugen:
     welcome: >-
       Willkommen bei MugenClips! Jeder auf dieser Seite sieht den gleichen zufällig ausgewählten englischen Hololive-Clip. Schaue mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du nachdem du vorspulst wieder mit allen synchronisiert werden möchtest, dann lade die Seite einmal neu.
