@@ -142,6 +142,7 @@ views:
     favoritesAreEmpty: Bạn chưa yêu thích kênh nào cả!
     blockedAreEmpty: Bạn không có kênh đã chặn nào.
   home:
+    liveOrUpcomingHeading: Trực tiếp / Sắp tới
     recentVideosHeading: Video gần đây
     noStreams: Không có luồng phát sóng trực tiếp hoặc luồng phát sóng sắp tới vào lúc này
     recentVideoToggles:
@@ -235,6 +236,7 @@ views:
   watch:
     theaterMode: Chế độ Rạp chiếu phim
     saveToLibrary: Lưu video vào Thư viện
+    mentionIconLabel: ĐỀ CẬP
     chat:
       loading: Đang tải Chat...
       hideTLBtn: Ẩn dịch trực tiếp
@@ -326,12 +328,25 @@ editor:
     permission: >-
       Bạn cần phải có quyền "Editor" hoặc cao hơn để cập nhật hoặc xoá những bài hát đã tồn tại. Xin hãy liên hệ với chúng tôi qua <a class='white--text' href='/about'>discord</a> để thông báo cho các Editor khác về vấn đề này, hoặc đăng kí để trở thành một Editor.
     titles:
+      addSong: 'Song Metadata: Thêm bài hát mới'
+      songList: 'Danh sách bài hát : {0}'
       help: Hướng dẫn
+    itunesLookupPlaceholder: (Tuỳ chọn) Tìm trên iTunes
+    moveRight2s: Qua phải 2 giây
+    testEnd: Nghe thử bắt đầu từ 3 giây trước khi nhạc kết thúc.
+    setToCurrentTime: Chọn thời gian hiện tại ({0})
+    moveLeft2s: Qua trái 2 giây
+    trackNameInput: Tên bài hát
+    originalArtistInput: Nghệ sĩ gốc
+    testStart: Nghe thử đoạn đầu
     startInput: Bắt đầu
+    endInput: 'Thời lượng tính bằng giây: (kết thúc tại @ {0})'
+  exitMode: Thoát khỏi Chế độ Chỉnh sửa
   enterMode: Chỉnh sửa Video
 about:
   quicklinks: Liên kết
   discordBtn: Holodex Discord
+  issueTracker: Danh sách Issue / Mã nguồn
   faq:
     title: FAQ
     ytchatHeader: Tôi không đăng nhập được YouTube Chat!
@@ -340,11 +355,24 @@ about:
     ytchatFirefox: Đây là hướng dẫn cho trình duyệt Firefox, những trình duyệt khác có thể tương tự.
     autoplayHeader: AutoPlay / Tự động phát không hoạt động!
     autoplayContent: 'Vui lòng tra cứu cách bật AutoPlay / Tự động phát cho trình duyệt của bạn như: Chrome, Firefox, Edge, Opera.'
+    musicPlayer: Trình phát nhạc không hoạt động tốt trên thiết bị di động!
+    musicPlayerContent: >-
+      Xin lỗi, nhưng hiện tại chúng tôi không thể hỗ trợ Trình phát nhạc dưới dạng trang Web trên các thiết bị di động. <br/>Có ba yếu tố sau: 1. Thiết bị di động thường cấm tự động phát - chúng tôi cần nó; 2. Thiết bị di động thường không cho phép các trang web liên kết nhạc khi chạy nền. 3. Chúng tôi không tích hợp được hàng chờ nhạc của bạn vào trung tâm điều khiển âm nhạc cấp hệ thống.
+    videoLinkage: Làm cách nào để tôi có thể đảm bảo rằng các video được liên kết đúng cách với các Vtuber?
+    videoLinkageContent: >-
+      Tất cả mọi thông tin đều được trích từ mô tả của video. Nếu bạn clip từ một stream, xin hãy chắc chắn rằng bạn đã trích dẫn liên kết đến stream gốc. Nếu như bạn clip từ một video của fan (vd: từ bilibili), hãy chắc chắn rằng bạn có trích dẫn liên kết đến kênh Youtube chính thức của những Vtuber liên quan. Nếu như bạn không đặt bất cứ liên kết nào đến Vtuber trong phần mô tả video của mình, clip đó sẽ không được hiển thị trên Holodex, vì mọi clip đều được yêu cầu phải liên kết đến một Vtuber cụ thể trong hệ thống.
     quitHolodex: "Tôi là một subber/clipper và tôi muốn gỡ bỏ kênh của mình khỏi Holodex\\r\n"
+    quitHolodexContent: >-
+      Buồn thật đấy :(, xin hãy cho tôi biết nếu bạn cần tôi giúp đỡ bất cứ thứ gì về chuyện này. Nếu bạn vẫn muốn gỡ bỏ kênh của mình, xin hãy nhắn tin cho chúng tôi trên Discord.
     favorite:
       title: Mục Yêu thích là gì?
+      disappear:
+        title: Danh sách yêu thích của tôi biến mất rồi / Tôi không sử dụng được tính năng Yêu thích
     mobile:
       title: Có ứng dụng Holodex trên hệ điều hành Android/iOS không?
+      content:
+        summary: >-
+          Chúng tôi vẫn đang phát triển nó! Trong thời gian này, xin hãy sử dụng tính năng "Thêm vào màn hình chính" trên trình duyệt của bạn. Chúng tôi đã điều chỉnh nó rất nhiều để khiến nó hoạt động như một ứng dụng
     MugenClips:
       title: MugenClips là gì?
     subber:
