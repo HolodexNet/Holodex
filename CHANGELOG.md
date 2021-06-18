@@ -1,5 +1,22 @@
 # Holodex Changelog
 
+### Holodex is recruiting📣!
+
+[Find out more here](https://twitter.com/holodex/status/1405637847831302144)
+
+![img](http://somewhere.com/stuff.jpg)
+
+### 2.12 Holodex [*June 18, 2021*]
+
+##### New Features
+- Collabs are now highlighted on holodex home and favorites screens.
+- Can collapse sidebar for watch pages to avoid spoilers from clips, or remove a really long song list.
+
+##### Patches
+- German language improvements, thanks Doubleturtle!
+- Trying to decrease the times channel icons don't load on the website
+
+
 ### 2.11.8 Holodex [*June 9, 2021*]
 
 ##### Patches
