@@ -60,15 +60,46 @@ component:
     installBtn: Cài đặt
     iOS:
       popup: Cài đặt Holodex trên iOS
+  comment:
+    close: Đóng
+  reportDialog:
+    title: Báo cáo
+    success: Đã gửi báo cáo, cảm ơn bạn!
 views:
   channel:
     video: Video
     clips: Clip
+    music: Âm nhạc
     collabs: Collab
     about: Giới thiệu
+  channels:
+    sortOptions:
+      group: Nhóm
+  home:
+    recentVideoToggles:
+      all: Tất cả
+  search:
+    sort:
+      newest: Mới nhất
+      oldest: Cũ nhất
+    type:
+      all: Tất cả
+    sortByLabel: Sắp xếp theo
   settings:
+    title: Cài đặt
     redirectModeLabel: Mở trên Youtube
+    languageSettings: Ngôn ngữ
+    gridSize:
+      - Lớn
+      - Vừa
+      - Nhỏ
+  app:
+    update_btn: Cập nhật
+  watch:
+    chat:
+      retryBtn: Thử lại
 about:
+  discordBtn: Holodex Discord
   faq:
     subber:
       contents:
