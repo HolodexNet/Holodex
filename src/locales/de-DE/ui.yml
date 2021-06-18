@@ -258,7 +258,7 @@ views:
         disconnectedToChat: Verbindung getrennt
   favorites:
     promptForAction: >-
-      Erstell eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
+      Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
     manageFavorites: Favoriten verwalten
     close: Schließen
     showall: Alle anzeigen
@@ -316,7 +316,7 @@ views:
     fullScreen: Vollbild
   mugen:
     welcome: >-
-      Willkommen bei MugenClips! Auf dieser Seite sehen sich alle den gleichen zufällig ausgewählten englischen Hololive-Clip an. Schau mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du vorgespult hast, aber wieder mit allen synchronisiert werden möchtest, lade die Seite bitte neu.
+      Willkommen bei MugenClips! Auf dieser Seite sehen sich alle den gleichen zufällig ausgewählten englischen Hololive-Clip an. Schaue mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du vorgespult hast, aber wieder mit allen synchronisiert werden möchtest, lade die Seite bitte neu.
 time:
   soon: bald
   diff_future_date: Beginnt {0} ({1})
@@ -360,7 +360,7 @@ about:
       Es tut uns leid, aber es ist zurzeit unmöglich die Musikwiedergabe auf dem Handy zu unterstützen. <br/>Drei Faktoren: 1. Mobile Geräte verbieten in der Regel automatische Wiedergabe / AutoPlay, was wir benötigen; 2. Mobile Geräte erlauben in der Regel nicht, dass Webseiten im Hintergrund Musik aneinanderreihen; 3. Wir integrieren deine Warteschlange nicht in Musiksteuerungszentralen auf Systemebene.
     videoLinkage: Wie stelle ich sicher, dass Videos richtig mit Vtubern verlinkt werden?
     videoLinkageContent: >-
-      Alle Informationen werden automatisch aus der Videobeschreibung gesammelt. Wenn du einen Stream clippst, stell bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlink bitte auch die offiziellen YouTube-Kanäle der entsprechenden Vtuber. Wenn du keine Vtuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem Vtuber benötigen, der Holodex bekannt ist.
+      Alle Informationen werden automatisch aus der Videobeschreibung gesammelt. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden Vtuber. Wenn du keine Vtuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem Vtuber benötigen, der Holodex bekannt ist.
     quitHolodex: "Ich bin ein Subber (Untertitler) und möchte, dass mein Kanal von Holodex entfernt wird"
     quitHolodexContent: >-
       Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir heölfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
