@@ -26,20 +26,11 @@
                 "
             >
                 <v-tab class="pa-2">
-                    {{
-                        $t("views.home.liveOrUpcomingHeading")
-                            .split(/[\/／・]/)[0]
-                            .trim()
-                    }}
+                    {{ liveUpcomingHeaderSplit[1] }}
                     <span class="stream-count-chip mx-1 rounded-md primary white--text rounded-lg pa-1">
                         {{ lives.length }}
                     </span>
-                    /
-                    {{
-                        $t("views.home.liveOrUpcomingHeading")
-                            .split(/[\/／・]/)[1]
-                            .trim()
-                    }}
+                    {{ liveUpcomingHeaderSplit[2] }}
                     <span class="stream-count-chip ml-1 rounded-md primary white--text rounded-lg pa-1">
                         {{ upcoming.length }}
                     </span>
@@ -63,6 +54,7 @@
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
+                        :showCollabBorderFunc="showCollabBorder"
                     >
                     </VideoCardList>
                     <v-divider class="my-3 secondary" v-if="lives.length" />
@@ -72,6 +64,7 @@
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
+                        :showCollabBorderFunc="showCollabBorder"
                     >
                     </VideoCardList>
                 </template>
@@ -98,6 +91,7 @@
                             includeChannel
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
+                            :showCollabBorderFunc="tab === Tabs.ARCHIVE && showCollabBorder"
                         />
                         <!-- only show SkeletonCardList if it's loading -->
                         <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -200,8 +194,19 @@ export default {
         upcoming() {
             return this.live.filter((v) => v.status === "upcoming");
         },
+        liveUpcomingHeaderSplit() {
+            return this.$t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/);
+        },
     },
     methods: {
+        showCollabBorder(video) {
+            return (
+                this.$store.state.currentOrg !== "All Vtubers" &&
+                video.channel.org !== this.$store.state.currentOrg &&
+                video.mentions &&
+                video.mentions.length > 0
+            );
+        },
         changeTab(preservePage = true) {
             // Sync the hash to current tab
             const toHash = {
@@ -246,7 +251,7 @@ export default {
                 const res = await backendApi.videos({
                     status: "past",
                     ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                    include: "clips",
+                    include: "clips,mentions",
                     org: this.$store.state.currentOrg,
                     lang: this.$store.state.settings.clipLangs.join(","),
                     paginated: !this.scrollMode,

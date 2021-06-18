@@ -164,7 +164,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    to.meta.prevRoute = from;
+    if (!from.path.match("^/watch")) to.meta.prevPath = from.fullPath;
+
     const { lang } = store.state.settings;
     if (lang !== "en") {
         loadLanguageAsync(lang).then(() => next());

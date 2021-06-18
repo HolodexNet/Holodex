@@ -6,133 +6,82 @@
             <v-btn v-if="$socket.disconnected" @click="tlJoin()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
         </v-overlay>
         <v-card-subtitle class="py-1 d-flex justify-space-between">
-            <div>
-                TLs [{{ liveTlLang }}]
-                <span :class="connected ? 'green--text' : 'red--text'">
-                    {{
-                        connected
-                            ? $t("views.watch.chat.status.connectedToChat")
-                            : $t("views.watch.chat.status.disconnectedToChat")
-                    }}
-                </span>
-            </div>
-            <v-dialog v-model="dialog" width="500">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon x-small v-bind="attrs" v-on="on">
-                        <v-icon>
-                            {{ icons.mdiCog }}
-                        </v-icon>
-                    </v-btn>
-                </template>
+            <div :class="connected ? 'green--text' : 'red--text'">TLdex [{{ liveTlLang }}]</div>
+            <span>
+                <v-dialog v-model="expanded" width="800">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon x-small v-bind="attrs" v-on="on">
+                            <v-icon>
+                                {{ mdiArrowExpand }}
+                            </v-icon>
+                        </v-btn>
+                    </template>
 
-                <v-card>
-                    <v-card-title>
-                        <template v-if="showBlockedList">
-                            <v-btn icon @click="showBlockedList = false">
-                                <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
-                            </v-btn>
-                            {{ $t("views.channels.tabs.Blocked") }}
-                        </template>
-                        <template v-else>
-                            {{ $t("views.watch.chat.TLSettingsTitle") }}
-                        </template>
-                    </v-card-title>
-
-                    <v-card-text>
-                        <template v-if="!showBlockedList">
-                            <v-select
-                                v-model="liveTlLang"
-                                :items="TL_LANGS"
-                                :hint="$t('views.settings.tlLanguageSelection')"
-                                persistent-hint
-                            />
-                            <v-switch
-                                v-model="liveTlShowVerified"
-                                :label="$t('views.watch.chat.showVerifiedMessages')"
-                                hide-details
-                            ></v-switch>
-                            <v-switch
-                                v-model="liveTlShowModerator"
-                                :label="$t('views.watch.chat.showModeratorMessages')"
-                            ></v-switch>
-                            <v-btn @click="showBlockedList = true"> Edit Blocked List </v-btn>
-                            <v-divider class="my-6" />
-                            <v-combobox
-                                v-model="liveTlFontSize"
-                                :items="[10, 11, 12, 14, 18, 24, 30]"
-                                :label="$t('views.watch.chat.tlFontSize')"
-                                outlined
-                            >
-                                <template v-slot:append-outer> px </template>
-                            </v-combobox>
-                            <v-combobox
-                                v-model="liveTlWindowSize"
-                                :items="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
-                                :label="$t('views.watch.chat.tlWindowSize')"
-                                outlined
-                                hide-details
-                            >
-                                <template v-slot:append-outer> % </template>
-                            </v-combobox>
-                            <v-switch
-                                v-model="liveTlStickBottom"
-                                :label="$t('views.watch.chat.StickBottomSettingLabel')"
-                                :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
-                            ></v-switch>
-                        </template>
-                        <template v-else>
-                            <v-list style="max-height: 300px; overflow: auto">
-                                <v-list-item v-for="name in blockedNames.values()" :key="name">
-                                    <v-list-item-content class="text-body-1">
-                                        {{ name }}
-                                    </v-list-item-content>
-                                    <v-list-item-action>
-                                        <v-btn @click="toggleBlockName(name)"> Unblock </v-btn>
-                                    </v-list-item-action>
-                                </v-list-item>
-                            </v-list>
-                        </template>
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
+                    <v-card>
+                        <portal-target name="expandedMessage" class="d-flex tl-expanded"> </portal-target>
+                        <v-divider />
+                        <v-card-actions>
+                            <v-spacer />
+                            <v-btn text @click="expanded = false" color="red">{{ $t("views.app.close_btn") }}</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+                <WatchLiveTranslationsSetting />
+            </span>
         </v-card-subtitle>
         <v-divider />
-        <v-card-text
-            class="tl-body thin-scroll-bar pa-1 pa-lg-3"
-            ref="tlBody"
-            :style="{
-                'font-size': liveTlFontSize + 'px',
-            }"
-        >
-            <transition-group name="fade">
-                <template v-for="(item, index) in tlHistory">
-                    <div :key="index">
-                        <div
-                            v-if="
-                                index === 0 || index === tlHistory.length - 1 || item.name !== tlHistory[index - 1].name
-                            "
-                            class="tl-caption"
-                            :class="{
-                                'primary--text': item.isOwner,
-                                'secondary--text': item.isVerified || item.isModerator,
-                            }"
-                        >
-                            <v-divider class="my-1" />
-                            <span style="cursor: pointer" @click="selectedChannel = item.name">
-                                <v-icon x-small>{{ icons.mdiCog }}</v-icon>
-                                {{ `${item.prefix} ${item.name}` }}:
-                            </span>
+        <portal to="expandedMessage" :disabled="!expanded" slim>
+            <v-card-text
+                class="tl-body thin-scroll-bar pa-1 pa-lg-3"
+                ref="tlBody"
+                :style="{
+                    'font-size': liveTlFontSize + 'px',
+                }"
+            >
+                <transition-group name="fade">
+                    <template v-for="(item, index) in tlHistory">
+                        <div :key="item.key" :id="item.key" :ref="item.breakpoint && 'messageBreakpoint'">
+                            <div
+                                v-if="
+                                    index === 0 ||
+                                    index === tlHistory.length - 1 ||
+                                    item.name !== tlHistory[index - 1].name ||
+                                    item.breakpoint
+                                "
+                                class="tl-caption"
+                                :class="{
+                                    'primary--text': item.isOwner,
+                                    'secondary--text': item.is_verified || item.is_moderator,
+                                }"
+                            >
+                                <v-divider class="my-1" />
+                                <span style="cursor: pointer" @click="selectedChannel = item.name">
+                                    <v-icon x-small>{{ icons.mdiCog }}</v-icon>
+                                    {{ `${item.prefix} ${item.name}` }}:
+                                </span>
+                            </div>
+                            <div>
+                                <span class="tl-caption mr-1" v-if="item.timestamp">
+                                    {{ item.displayTime }}
+                                </span>
+                                <span class="text--primary" v-html="item.message"></span>
+                            </div>
                         </div>
-                        <div>
-                            <span class="tl-caption mr-1" v-if="item.timestamp">
-                                {{ utcToTimestamp(item.timestamp) }}
-                            </span>
-                            <span class="text--primary" v-html="item.message"></span>
-                        </div>
-                    </div>
-                </template>
-            </transition-group>
-        </v-card-text>
+                    </template>
+                </transition-group>
+                <v-btn text color="primary" @click="loadMessages()" :disabled="completed" v-if="!historyLoading">
+                    {{ completed ? "Start of Messages" : "Load More" }}
+                </v-btn>
+                <v-btn
+                    text
+                    color="primary"
+                    @click="loadMessages(false, true)"
+                    v-if="!completed && !historyLoading && expanded"
+                >
+                    Load All
+                </v-btn>
+            </v-card-text>
+        </portal>
 
         <v-dialog v-model="showBlockChannelDialog" width="500">
             <v-card>
@@ -150,11 +99,12 @@
 <script lang="ts">
 import api, { API_BASE_URL } from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
-import { TL_LANGS } from "@/utils/consts";
 import { syncState } from "@/utils/functions";
 import VueSocketIOExt from "vue-socket.io-extended";
 import { Manager } from "socket.io-client";
 import Vue from "vue";
+import { mdiArrowExpand } from "@mdi/js";
+import WatchLiveTranslationsSetting from "./WatchLiveTranslationsSetting.vue";
 
 const manager = new Manager(/* process.env.NODE_ENV === "development" ? "http://localhost:2434" : */ API_BASE_URL, {
     reconnectionAttempts: 10,
@@ -169,6 +119,9 @@ Vue.use(VueSocketIOExt, manager.socket("/"));
 
 export default {
     name: "WatchLiveTranslations",
+    components: {
+        WatchLiveTranslationsSetting,
+    },
     props: {
         video: {
             type: Object,
@@ -177,6 +130,7 @@ export default {
     },
     data() {
         return {
+            mdiArrowExpand,
             tlHistory: [],
             MESSAGE_TYPES: Object.freeze({
                 END: "end",
@@ -185,14 +139,16 @@ export default {
                 MESSAGE: "message",
                 UPDATE: "update",
             }),
-            TL_LANGS,
             overlayMessage: this.$t("views.watch.chat.loading"),
             showOverlay: false,
             isLoading: true,
-            dialog: false,
             success: false,
+            expanded: false,
             selectedChannel: "",
-            showBlockedList: false,
+
+            historyLoading: false,
+            completed: false,
+            limit: 20,
         };
     },
     sockets: {
@@ -226,6 +182,7 @@ export default {
                 vm.registerListener();
                 vm.$store.commit("incrementActiveSockets");
             }
+            this.$emit("videoUpdate", obj);
         },
         // Failed to join the chat room
         subscribeError(obj) {
@@ -262,16 +219,16 @@ export default {
         liveTlLang(nw, old) {
             this.switchLanguage(nw, old);
         },
-        dialog(nw) {
-            // unshow blocked list when exiting dialog
-            if (!nw) {
-                this.showBlockedList = false;
-            }
-        },
         connected(nw) {
             if (nw) {
                 this.isLoading = false;
             }
+        },
+        liveTlShowVerified() {
+            this.loadMessages(true);
+        },
+        liveTlShowModerator() {
+            this.loadMessages(true);
         },
     },
     computed: {
@@ -302,6 +259,31 @@ export default {
         },
     },
     methods: {
+        loadMessages(firstLoad = false, loadAll = false) {
+            this.historyLoading = true;
+            const lastTimestamp = !firstLoad && this.tlHistory[0].timestamp;
+            api.chatHistory(this.video.id, {
+                lang: this.liveTlLang,
+                ...(this.liveTlShowVerified && { verified: 1 }),
+                moderator: this.liveTlShowModerator ? 1 : 0,
+                limit: loadAll ? 10000 : this.limit,
+                ...(lastTimestamp && { before: lastTimestamp }),
+            })
+                .then(({ data }) => {
+                    this.completed = data.length !== this.limit || loadAll;
+                    if (firstLoad) this.tlHistory = data.map(this.parseMessage);
+                    else this.tlHistory.unshift(...data.map(this.parseMessage));
+
+                    // Set last message as breakpoint, used for maintaing scrolling and styling
+                    if (this.tlHistory.length) this.tlHistory[0].breakpoint = true;
+                })
+                .catch((e) => {
+                    console.error(e);
+                })
+                .finally(() => {
+                    this.historyLoading = false;
+                });
+        },
         toggleBlockName(name) {
             this.$store.commit("settings/toggleLiveTlBlocked", name);
         },
@@ -318,12 +300,13 @@ export default {
                 if (this.blockedNames.has(msg.name)) return;
 
                 if (
-                    msg.isTL ||
-                    msg.isVtuber ||
-                    msg.isOwner ||
-                    (msg.isModerator && this.liveTlShowModerator) ||
-                    (msg.isVerified && this.liveTlShowVerified)
+                    msg.is_tl ||
+                    msg.is_vtuber ||
+                    msg.is_owner ||
+                    (msg.is_moderator && this.liveTlShowModerator) ||
+                    (msg.is_verified && this.liveTlShowVerified)
                 ) {
+                    if (this.$refs.tlBody.scrollTop === 1) this.$refs.tlBody.scrollTo(0, 0);
                     this.tlHistory.push(this.parseMessage(msg));
                     this.$emit("historyLength", this.tlHistory.length);
                 }
@@ -349,11 +332,13 @@ export default {
         parseMessage(msg) {
             // Append title to author name
             msg.prefix = "";
-            if (msg.isModerator) msg.prefix += "[Mod]";
-            if (msg.isVerified) msg.prefix += "[Verified]";
-            if (msg.isOwner) msg.prefix += "[Owner]";
-            if (msg.isVtuber) msg.prefix += "[Vtuber]";
-
+            if (msg.is_moderator) msg.prefix += "[Mod]";
+            if (msg.is_verified) msg.prefix += "[Verified]";
+            if (msg.is_owner) msg.prefix += "[Owner]";
+            if (msg.is_vtuber) msg.prefix += "[Vtuber]";
+            msg.timestamp = +msg.timestamp;
+            msg.displayTime = this.utcToTimestamp(msg.timestamp);
+            msg.key = msg.name + msg.timestamp + msg.message;
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://")) {
                 // match a :HUMU:https://<url>
@@ -383,19 +368,8 @@ export default {
         tlJoin() {
             if (!this.initSocket()) return;
 
-            // Grab chat history
-            api.chatHistory(this.video.id, {
-                lang: this.liveTlLang,
-                ...(this.liveTlShowVerified && { verified: 1 }),
-                ...(this.liveTlShowModerator && { moderator: 1 }),
-            }).then(({ data }) => {
-                this.tlHistory = data.translations
-                    .concat(data.moderator ? data.moderator : [])
-                    .concat(data.verified ? data.verified : [])
-                    .filter((msg) => !this.blockedNames.has(msg.name))
-                    .sort((a, b) => a.timestamp - b.timestamp)
-                    .map((msg) => this.parseMessage(msg));
-            });
+            // Grab first load chat history
+            this.loadMessages(true);
 
             // Another instance has already subscribed to this chat, just register listener
             if (this.$socket.client.listeners(`${this.video.id}/${this.liveTlLang}`).length > 0) {
@@ -471,6 +445,14 @@ export default {
     flex-direction: column-reverse;
     line-height: 1.25em;
     letter-spacing: 0.0178571429em !important;
+}
+
+.tl-expanded {
+    overscroll-behavior: auto !important;
+}
+
+.tl-expanded > .tl-body {
+    height: 75vh;
 }
 
 .tl-overlay {

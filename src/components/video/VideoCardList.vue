@@ -1,7 +1,7 @@
 <template>
     <v-container class="py-0" style="position: relative" fluid :id="'t' + randomId">
         <!-- Video Card grid rows -->
-        <v-row :dense="dense">
+        <v-row :dense="dense" class="video-row">
             <!-- Video Cards with custom grid size class based on breakpoint -->
             <v-col
                 v-for="(video, index) in processedVideos"
@@ -19,6 +19,7 @@
                     @videoClicked="handleVideoClick"
                     :disableDefaultClick="disableDefaultClick"
                     :hideThumbnail="shouldHideThumbnail"
+                    :showCollabBorder="showCollabBorderFunc && showCollabBorderFunc(video)"
                 >
                     <!-- pass slot to each individual video card -->
                     <template v-slot:action>
@@ -124,6 +125,9 @@ export default {
         disableDefaultClick: {
             type: Boolean,
             default: false,
+        },
+        showCollabBorderFunc: {
+            type: Function,
         },
     },
     methods: {
@@ -232,5 +236,10 @@ export default {
     width: 8.33%;
     max-width: 8.33%;
     flex-basis: 8.33%;
+}
+// Increase vertical padding to accomadate collab border
+.video-row.row--dense > .col,
+.row--dense > [class*="col-"] {
+    padding: 6px 4px;
 }
 </style>

@@ -4,10 +4,10 @@ import { langs } from "@/plugins/vuetify";
 export function resizeChannelPhoto(photoUrl, size) {
     const split = photoUrl.split("=s");
     // try to hit cache by using a common size
-    let adjSize = 40;
-    if (size < 88 && size > 40) adjSize = 88;
-    else if (size < 40) adjSize = 40;
-    else adjSize = size;
+    let adjSize = 48;
+    if (size < 88 && size > 55) adjSize = 88;
+    else if (size <= 55) adjSize = 48;
+    else adjSize = 176;
     return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
 }
 

@@ -1,4 +1,4 @@
-/* eslint-disable no-useless-escape */
+/* eslint-disable no-useless-escape,max-len */
 
 export const CHANNEL_TYPES = Object.freeze({
     VTUBER: "vtuber",
@@ -95,7 +95,6 @@ export const ORGS_PREFIX = Object.freeze({
 
 export const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?:channel|c)\/([\w\-\_]*)/i;
 
-// eslint-disable-next-line max-len
 export const VIDEO_URL_REGEX =
     /((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be|holodex.net))(\/(?:[\w\-]+\?v=|embed\/|v\/|watch\/)?)([\w\-]+)(\S+)?/i;
 

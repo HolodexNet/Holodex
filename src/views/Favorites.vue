@@ -29,20 +29,11 @@
                     "
                 >
                     <v-tab class="pa-2">
-                        {{
-                            $t("views.home.liveOrUpcomingHeading")
-                                .split(/[\/／・]/)[0]
-                                .trim()
-                        }}
+                        {{ liveUpcomingHeaderSplit[1] }}
                         <span class="stream-count-chip mx-1 rounded-md primary white--text rounded-lg pa-1">
                             {{ lives.length }}
                         </span>
-                        /
-                        {{
-                            $t("views.home.liveOrUpcomingHeading")
-                                .split(/[\/／・]/)[1]
-                                .trim()
-                        }}
+                        {{ liveUpcomingHeaderSplit[2] }}
                         <span class="stream-count-chip ml-1 rounded-md primary white--text rounded-lg pa-1">
                             {{ upcoming.length }}
                         </span>
@@ -66,6 +57,7 @@
                             :includeAvatar="shouldIncludeAvatar"
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
+                            :showCollabBorderFunc="showCollabBorder"
                         >
                         </VideoCardList>
                         <v-divider class="my-3 secondary" v-if="lives.length" />
@@ -75,6 +67,7 @@
                             :includeAvatar="shouldIncludeAvatar"
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
+                            :showCollabBorderFunc="showCollabBorder"
                         >
                         </VideoCardList>
                     </template>
@@ -101,6 +94,7 @@
                                 includeChannel
                                 :cols="colSizes"
                                 :dense="currentGridSize > 0"
+                                :showCollabBorderFunc="tab === Tabs.ARCHIVE && showCollabBorder"
                             />
                             <!-- only show SkeletonCardList if it's loading -->
                             <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -223,8 +217,17 @@ export default {
         upcoming() {
             return this.live.filter((v) => v.status === "upcoming");
         },
+        liveUpcomingHeaderSplit() {
+            return this.$t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/);
+        },
+        favoritesSet() {
+            return new Set(this.favorites.map((x) => x.id));
+        },
     },
     methods: {
+        showCollabBorder(video) {
+            return video.mentions && video.mentions.length > 0 && !this.favoritesSet.has(video.channel.id);
+        },
         init(updateFavorites) {
             if (this.favorites.length > 0 && this.isLoggedIn) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
@@ -271,7 +274,7 @@ export default {
                     .favoritesVideos(this.$store.state.userdata.jwt, {
                         status: "past",
                         ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                        include: "clips",
+                        include: "clips,mentions",
                         lang: this.$store.state.settings.clipLangs.join(","),
                         paginated: !this.scrollMode,
                         limit,

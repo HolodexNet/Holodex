@@ -56,15 +56,29 @@
                                     v-on="on"
                                 >
                                     <div class="notification-sticker" v-if="newTL > 0"></div>
-                                    <v-icon>{{ icons.mdiTranslate }}</v-icon>
+                                    <v-icon
+                                        >M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z
+                                        M4,10h4v2H4V10z M14,16H4v-2h10V16z M20,16h-4v-2 h4V16z
+                                        M20,12H10v-2h10V12z</v-icon
+                                    >
                                 </v-btn>
                             </template>
                             <span>{{
                                 showTL ? $t("views.watch.chat.hideTLBtn") : $t("views.watch.chat.showTLBtn")
                             }}</span>
                         </v-tooltip>
-                        <v-btn icon lg @click="showLiveChat = !showLiveChat" v-if="hasLiveChat">
-                            <v-icon>{{ showLiveChat ? mdiMessageOff : mdiMessage }}</v-icon>
+                        <v-btn
+                            icon
+                            lg
+                            @click="showLiveChat = !showLiveChat"
+                            v-if="hasLiveChat"
+                            :color="showLiveChat ? 'primary' : ''"
+                        >
+                            <v-icon
+                                >M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z
+                                M9.9,10.8v3.8h-2v-3.8L5.1,6.6h2.4l1.4,2.2 l1.4-2.2h2.4L9.9,10.8z
+                                M18.9,8.6h-2v6h-2v-6h-2v-2h6V8.6z</v-icon
+                            >
                         </v-btn>
                         <v-btn icon lg @click="toggleFullScreen">
                             <v-icon>{{ icons.mdiFullscreen }}</v-icon>
@@ -232,6 +246,7 @@ export default {
         handleVideoUpdate(update) {
             this.video.live_viewers = update.live_viewers;
             this.video.status = update.status;
+            this.video.start_actual = update.start_actual;
         },
         toggleFullScreen() {
             if (!document.fullscreenElement) {

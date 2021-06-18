@@ -12,7 +12,13 @@
         rel="noopener"
         draggable="true"
         v-on:dragstart="drag"
+        :style="showCollabBorder && 'border: 1px solid var(--v-primary-base); border-radius: 0.25rem'"
+        style="position: relative"
     >
+        <div v-if="showCollabBorder" class="d-flex flex-row px-1 align-center collab-border-text">
+            <div class="primary--text">@</div>
+            <ChannelMentions :mentions="video.mentions" class="align-self-center" />
+        </div>
         <!-- Video Image with Duration -->
         <v-img
             class="white--text rounded flex-grow-0"
@@ -70,13 +76,13 @@
         >
             <!-- Channel icon -->
             <div
-                class="d-flex align-self-center mr-3"
+                class="d-flex align-self-center mx-2 flex-column d-flex"
                 v-if="includeChannel && includeAvatar && !horizontal && video.channel"
             >
-                <ChannelImg :channel="video.channel" rounded />
+                <ChannelImg :channel="video.channel" rounded class="align-self-center" />
             </div>
             <!-- Three lines for title, channel, available time -->
-            <div class="d-flex justify-space-between flex-column my-1">
+            <div class="d-flex flex-column my-1" :class="{ 'justify-space-between': !showCollabBorder }">
                 <!-- Video title -->
                 <div
                     :class="['video-card-title ', { 'video-watched': hasWatched }]"
@@ -94,7 +100,7 @@
                         :href="`/channel/${video.channel.id}`"
                         @click.exact.stop.prevent="goToChannel(video.channel.id)"
                     >
-                        {{ channelName }}
+                        {{ channelName }} {{ showCollabBorder ? `(${video.channel.org})` : "" }}
                     </a>
                 </div>
                 <!-- Time/Viewer Info -->
@@ -141,6 +147,7 @@
 </template>
 
 <script lang="ts">
+import ChannelMentions from "@/components/channel/ChannelMentions.vue";
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
@@ -151,6 +158,7 @@ export default {
     components: {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
         Comment: () => import("./Comment.vue"),
+        ChannelMentions,
     },
 
     data() {
@@ -205,6 +213,10 @@ export default {
             required: false,
             type: Boolean,
             default: false,
+        },
+        showCollabBorder: {
+            default: false,
+            type: Boolean,
         },
     },
     mounted() {
@@ -484,5 +496,13 @@ export default {
 
 .theme--light .video-card-subtitle {
     color: rgba(0, 0, 0, 0.6);
+}
+
+.collab-border-text {
+    position: absolute;
+    bottom: -12px;
+    right: 50%;
+    transform: translateX(50%);
+    background: var(--v-background-base);
 }
 </style>
