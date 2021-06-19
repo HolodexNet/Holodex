@@ -114,7 +114,7 @@ component:
       - Khác
   thirdpartycookie:
     explanation: >-
-      Dựa trên cách trình duyệt hoạt động, một số trình duyệt với khả năng giới hạn/chặn <b>Cookies của bên thứ ba</b>, hoặc chặn cookies của <kbd>YouTube</kbd> sẽ gặp một chút khó khăn khi đăng nhập / sử dụng YouTube chat. <br /><br /> Vấn đề này có thể được giải quyết bằng cách cho phép cookies của <kbd>YouTube</kbd> hoạt động trong trình duyệt, hoặc giảm giới hạn cookies / quyền riêng tư cho <kbd>Holodex.net</kbd>. <br /><br /> Chúng tôi có một số trang web giúp bạn có thêm thông tin và hướng dẫn chi tiết cho vấn đề này.
+      Dựa trên cách trình duyệt hoạt động, một số trình duyệt với khả năng giới hạn/chặn <b>Cookies của bên thứ ba</b>, hoặc chặn cookies của <kbd>YouTube</kbd> sẽ gặp một chút khó khăn khi đăng nhập / sử dụng YouTube Chat. <br /><br /> Vấn đề này có thể được giải quyết bằng cách cho phép cookies của <kbd>YouTube</kbd> hoạt động trong trình duyệt, hoặc giảm giới hạn cookies / quyền riêng tư cho <kbd>Holodex.net</kbd>. <br /><br /> Chúng tôi có một số trang web giúp bạn có thêm thông tin và hướng dẫn chi tiết cho vấn đề này.
     dialogTitle: Sử dụng Youtube Chat trên Holodex
     alertText: >-
       Cài đặt quyền riêng tư của trình duyệt bạn đang sử dụng khiến bạn không thể đăng nhập vào Youtube Chat. Nhấn vào đây để tìm hiểu thêm
