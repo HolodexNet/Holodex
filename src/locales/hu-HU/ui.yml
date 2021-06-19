@@ -192,9 +192,9 @@ views:
       A videó fedőképernyőjére kattintva a Youtube-on nyitva meg, a videó címére kattintva a Holodex-en nyitja meg.
     useEnglishNameLabel: Angol nevek használata
     useEnglishNameMsg: A vtuberek csatornáinak nevei angolul lesznek
-    hideVideoThumbnailsLabel: Videó fedőképernyők elrejtése
+    hideVideoThumbnailsLabel: Videó indexképek elrejtése
     hideVideoThumbnailsMsg: >-
-      Elrejti a fedőképernyőket, gyorsabb betöltést eredményez és kevesebb tekerést mobilon.
+      Elrejti a indexképeket, gyorsabb betöltést eredményez és kevesebb tekerést mobilon.
     pushNotificationLabel: Értesítések (Hamarosan)
     pushNotificationMsg: Értesítések engedélyezése a kedvence csatornáidtól
     autoplayVideoLabel: Videók automatikus lejátszása
@@ -207,7 +207,122 @@ views:
     defaultPage: Alapértelmezett oldal
     defaultPageMsg: >-
       Ennek az oldalnak megnyitása alapértelmezettként a Holodex.net meglátogatásakor, vagy a bal fenti logóra kattintáskor.
+    siteNavigationSettings: Oldal navigáció
     languageSettings: Nyelv
+    gridSizeLabel: Indexkép mérete
+    gridSizeMsg: Az indexkép méretének változtatása a Főoldalon/Kedvenceknél
+    gridSize:
+      - Nagy
+      - Közepes
+      - Kicsi
+    hideCollabStreamsLabel: Együttműködés streamek elrejtése
+    hideCollabStreamsMsg: Együttműködés streamek elrejtése a kedvencek közül
+    theme: Téma
+  app:
+    update_available: Frissítés elérhető
+    update_btn: Frissítés
+    close_btn: Bezárás
+    check_about_page: Látogasd meg az Információ oldalt, hogy lásd a változásokat
+    nowSupportsMultiOrg: Holodex már több szervezetet is támogat.
+    loginCallToAction: Jelentkezz be, hogy kedvenceket válassz!
+  about:
+    add_my_channel: Csatornám hozzáadása Holodexhez
+  watch:
+    theaterMode: Mozi mód
+    saveToLibrary: Videó mentése a könyvtárba
+    mentionIconLabel: EMLÍTÉSEK
+    chat:
+      loading: Chat betöltése...
+      hideTLBtn: Fordítások elrejtése
+      showTLBtn: Fordítások megjelenítése
+      TLSettingsTitle: Fordítás beállítások
+      StickBottomSettingsDesc: Fordító a chat aljához rögzítve (mobilon felül alapértelmezett)
+      showVerifiedMessages: Igazolt felhasználók üzeneteinek megjelenítése
+      showModeratorMessages: Moderátor üzenetek megjelenítése
+      tlFontSize: Betű méret
+      tlWindowSize: Fordító mérete (%), hagyd 0%-on automatához
+      retryBtn: Újra
+      status:
+        reconnecting: Újracsatlakozás...
+        reconnectFailed: Nem tudtunk visszacsatlakozni
+        notLive: >-
+          Még nem indult el az adás, kérlek próbáld újra amikor a stream 15 percre van indulástól
+        connectedToChat: Csatlakozva
+        disconnectedToChat: Lecsatlakozva
+  favorites:
+    promptForAction: >-
+      Készíts egy listát a kedvenc vtuberjeidről és láthatod az legújabb klipjeiket és adásaikat ezen az oldalon.
+    manageFavorites: Kedvencek kezelése
+    close: Bezárás
+    showall: Összes megjelenítése
+  editor:
+    needlogin: Be kell jelentkezned, hogy Holodex videókat és dal metaadatokat szerkessz.
+    changeTopic:
+      title: Stream téma megváltoztatása
+      info: >-
+        Minden felhasználó hozzáadhat témát a videókhoz, de csak a szerkesztők és adminok tudják eltávolítani és megváltoztatni utána.
+      button: Mentés (Igénybe vehet 5 percet)
+    channelMentions:
+      title: Csatorna óemlítések
+    sources:
+      title: Források/Klipek (készülőben)
+  login:
+    apikeyMsg: >-
+      Az API kulcsot a Holodex API programozott lekérdezéséhez használhatod. Csak egy kulcs felhasználónként. Miután új kulcsot kaptál, a régi lejár 0-24 órán belül.
+    apikeyNew: Új API kulcs kérése
+    ownedYtChannel: Birtokolt Youtube csatorna
+    futureYtcOwnerMessage: >-
+      A jövőben tervezünk több funkciót biztosítani csatorna tulajdonosoknak, mint például metaadatok szerkesztése a saját videóikhoz.
+    linkAcc: Másik fiók hozzáadása
+    apikeyResetConfirm1: Biztos vissza szeretnéd állítani az API kulcsot?
+    apikeyResetConfirm2: A régi API kulcs lejár 0-24 órán belül. Biztos visszaállítod?
+    apikeyResetNvm: Semmi érdekes nem történt.
+    with:
+      - Bejelentkezés Google fiókkal
+      - Bejelentkezés Discorddal
+      - Bejelentkezés a Twitter fiókkal
+  multiview:
+    confirmOverwrite: Felülírja a meglévő elrendezést?
+    confirmOverwriteYes: Megerősítés
+    permalink: Permalink
+    presets: Előrendezések
+    addframe: Cella hozzáadása
+    muteAll: Minden némítása
+    unmuteAll: Minden némítás visszavonása
+    autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
+    createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
+    preset:
+      shareOnDiscord: >-
+        Van egy jópofa elrendezésed? Használd a megosztás gombot és mutasd meg a <a href="https://discord.gg/jctkgHBt4b"> Discord szerverünkön</a>!
+      custom: Elrendezéseim
+      toggleAutoLayout: Auto-rendezés bekapcsolása
+      remove: Törlés
+      desktop: Asztali
+      mobile: Mobil
+    presetEditor:
+      title: Elrendezés mentése
+      name: Név
+      autoLayout: Elrendezés használata auto módban
+    video:
+      selectLive: Élő adás kiválasztása
+      addCustomVideo: Testreszabott videó hozzáadása
+    fullScreen: Teljes képernyő
+  mugen:
+    welcome: >-
+      Üdvözöllek a MugenClipsnél! Ezen az oldalon mindenki ugyan azt a véletlenszerűen kiválasztott angol Hololive klipet nézi. Együtt nézheted és chatelhetsz más Hololive rajongókkal az egész világon. Ha előretekersz és szeretnél újra egyidejűleg lenni a többiekkel, kérlek frissítsd az oldalt.
+time:
+  soon: hamarosan
+  diff_future_date: Indul {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: Hozzáadás
+    update: Frissítés
+    permission: >-
+      'Editor' vagy magasabb felhasználó szintűnek kell lenned, hogy törölj vagy frissíts meglévő dalokat. Kérlek vedd fel velünk a kapcsolatot <a class='white--text' href='/about'>discordon,</a> hogy jelezd a problémát a szerkesztőinknek, vagy jelentkezz szerkesztőnek.
+    titles:
+      addSong: 'Dal metaadat: Új dal hozzáadása'
+      songList: 'Dalok listája: {0}'
 about:
   faq:
     subber:
