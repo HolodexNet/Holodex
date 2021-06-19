@@ -7,7 +7,7 @@ component:
     aboutPage: À propos
     afterAboutPageHyperlink: .
   channelList:
-    signInToFavorite: Veuillez-vous connecter pour ajouter aux favoris
+    signInToFavorite: Veuillez-vous connecter pour ajouter à vos favoris
     unfavoriteAllInGroup: Supprimer tout les favoris du groupe
     favoriteAllInGroup: Ajouter tout le groupe aux favoris
   channelInfo:
@@ -16,7 +16,7 @@ component:
     clipCount: '{n} Clips'
     subscriberCount: '{n} Abonnés'
     subscriberNA: Nombre d'abonnés indisponible
-    totalViews: Vues Totales
+    totalViews: Vues
   channelSocials:
     addToFavorites: Ajouter aux favoris
     removeFromFavorites: Supprimer des favoris
@@ -26,9 +26,9 @@ component:
   mainNav:
     home: Accueil
     favorites: Favoris
-    channels: Chaînes
+    channels: Chaines
     about: À Propos
-    library: Librairie
+    library: Bibliothèque
     settings: Paramètres
     login: Se connecter
     logout: Se déconnecter
@@ -40,7 +40,7 @@ component:
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Visionnages'
-    liveNow: EN DIRECT
+    liveNow: En Direct
     edit: Modifier
     copiedToClipboard: Lien copié dans le presse-papiers.
     copyLink: Copier le lien Holodex
@@ -53,14 +53,14 @@ component:
     showMore: Afficher Plus
   watch:
     streamingFor: En direct depuis {0}
-    nextUpInMugen: Prochain
+    nextUpInMugen: À suivre
     Comments:
       title: Commentaires
       all: Tout les commentaires
   search:
     searchLabel: Rechercher
     type:
-      channel: chaînes
+      channel: chaine
       topic: sujet
       org: org
       titledesc: titre/description
@@ -242,6 +242,7 @@ views:
       hideTLBtn: Cacher les traductions
       showTLBtn: Afficher les traductions
       TLSettingsTitle: Paramètres des traductions
+      StickBottomSettingLabel: Voir ci-dessous (mobile)
       StickBottomSettingsDesc: La fenêtre de traduction est en bas du chat (par défaut en haut sur mobile)
       showVerifiedMessages: Afficher les messages vérifiés
       showModeratorMessages: Afficher les messages des modérateurs
@@ -273,6 +274,8 @@ views:
     sources:
       title: Sources/Clips (en développement)
   login:
+    apikeyMsg: >-
+      Vous pouvez utiliser la clé API pour faire une requête sur l'API d'Holodex par programme. Une seule clé par compte, après l'acquisition d'une nouvelle clé, l'ancienne expire sous 24 heures.
     apikeyNew: Obtenir une nouvelle clé API
     ownedYtChannel: Chaine Youtube possédée
     futureYtcOwnerMessage: >-
@@ -322,6 +325,8 @@ editor:
   music:
     add: Ajouter
     update: Mis à jour
+    permission: >-
+      Vous avez besoin d'être un utilisateur de niveau "éditeur" ou supérieur pour mettre à jour ou supprimer des chansons. Contactez-nous sur <a class='white--text' href='/about'>Discord</a> pour candidater en tant qu'éditeur, ou signaler un abus/problème.
     titles:
       addSong: 'Métadonnées de la chanson : Ajouter une nouvelle chanson'
       songList: 'Liste des chansons : {0}'
@@ -329,6 +334,7 @@ editor:
     itunesLookupPlaceholder: (Facultatif) Rechercher sur iTunes
     moveRight2s: Avancer de 2 sec
     testEnd: Tester l'écoute à partir de 3 secondes de la fin.
+    setToCurrentTime: Définit le temps actuel à ({0})
     moveLeft2s: Reculer de 2 sec
     trackNameInput: Nom
     originalArtistInput: Artiste original
@@ -355,8 +361,13 @@ about:
     videoLinkage: Comment puis-je être sûr que mes vidéos sont bien affichés pour ce Vtuber ?
     videoLinkageContent: >-
       Toutes les informations sont analysées depuis la description de la vidéo. Si vous faites un clip d'un stream, n'oubliez pas de donner le lien du stream. Si vous faites un clip provenant d'une vidéo faites par un autre clipper, donnez le lien des chaines de Vtuber en question. Si vous ne donnez aucun lien, le clip ne pourra pas s'afficher sur Holodex, tout les clips ont besoin d'un lien vers la chaine du Vtuber en question.
+    quitHolodex: "Je fais des clips et je voudrais que ma chaine soit supprimé d'Holodex\n"
+    quitHolodexContent: >-
+      C'est triste de vous voir partir :c, laissez nous savoir si nous pouvons vous aider face aux problèmes que vous rencontrez. Si vous voulez quand même le supprimer, envoyez-nous un message sur Discord.
     favorite:
       title: Que sont les favoris ?
+      disappear:
+        title: Mes favoris ont disparu / Je ne peux pas ajouter de favori
     mobile:
       title: Y a-t-il une application Android/iOS pour Holodex?
       content:
