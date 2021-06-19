@@ -129,7 +129,7 @@
 
                             <br />
                             <p v-html="$t('views.library.exportYTInstructions')"></p>
-                            <v-btn class="mt-2 mx-2" color="green" @click="() => {}">
+                            <v-btn class="mt-2 mx-2" color="green" @click="exportToYT">
                                 {{ $t("views.library.createYtPlaylistButton", [(playlist.videos || []).length]) }}
                             </v-btn>
                             <v-btn class="mt-2 mx-2" @click="instructionsDialog = false">{{
@@ -150,6 +150,7 @@
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import { Playlist } from "@/utils/types";
 import { PropType } from "vue";
+import { json2csvAsync } from "json-2-csv";
 import { mdiContentSave, mdiFileDelimited, mdiChevronDoubleUp, mdiChevronDoubleDown } from "@mdi/js";
 
 export default {
@@ -212,6 +213,29 @@ export default {
             if (this.isSaved || confirm("You will lose unsaved changes. Continue?")) {
                 this.$store.commit("playlist/resetPlaylist");
             }
+        },
+        /** ==============================================
+         *                Export Methods.
+         *
+         *=============================================* */
+        async downloadAsCSV() {
+            const csvString = await json2csvAsync(this.playlist.videos);
+            const a = document.createElement("a");
+            const timestamp = new Date().toISOString().replace("T", "_").substr(0, 19);
+            a.href = `data:attachment/csv,${encodeURIComponent(csvString)}`;
+            a.target = "_blank";
+            a.download = `holodexPlaylist_${this.playlist.name}_${timestamp}.csv`;
+
+            document.body.appendChild(a);
+            a.click();
+        },
+        exportToYT() {
+            if (!this.playlist.videos || this.playlist.videos.length === 0) return;
+            const url = `https://www.youtube.com/watch_videos?video_ids=${this.playlist.videos
+                .map((x) => x.id)
+                .join(",")}`;
+
+            window.open(url, "_blank", "noopener");
         },
     },
 };
