@@ -3,6 +3,7 @@ import axiosRetry from "axios-retry";
 import { dayjs } from "@/utils/time";
 import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
+import { Playlist, PlaylistList } from "./types";
 
 export const API_BASE_URL =
     process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api" : `${window.location.origin}/api`;
@@ -109,7 +110,6 @@ export default {
                 .catch(() => alert("something went wrong creating your key..."))
         );
     },
-
     favorites(jwt) {
         return axiosInstance.get("/users/favorites", {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
@@ -222,5 +222,26 @@ export default {
     topSongs(org, channelId, type) {
         const q = querystring.stringify(org ? { org, type } : { channel_id: channelId, type });
         return axiosInstance.get(`/songs/top20?${q}`);
+    },
+    getPlaylistList(jwt: string) {
+        if (!jwt) throw new Error("Not authorized");
+        return axiosInstance.get<PlaylistList>("/users/playlists", {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    getPlaylist(id: string | number) {
+        if (!id) throw new Error("Arg bad");
+        return axiosInstance.get<Playlist>(`/playlist/${id}`);
+    },
+    savePlaylist(obj: Playlist, jwt: string) {
+        return axiosInstance.post("/playlist/", obj, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    deletePlaylist(id: string | number, jwt: string) {
+        if (!id || !jwt) throw new Error("Arg bad");
+        return axiosInstance.delete(`/playlist/${id}`, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
     },
 };

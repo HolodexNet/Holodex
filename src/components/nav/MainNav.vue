@@ -10,11 +10,13 @@
                 <v-divider />
             </template>
         </NavDrawer>
+        <PlaylistDrawer></PlaylistDrawer>
+
         <!--* nav drawer is for the left --->
         <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile" :active="!isWatchPage" />
+        <!--* bottom bar --->
         <!-- <music-bar></music-bar> -->
         <MusicBar2 v-if="$store.state.music.isOpen" />
-        <!--* bottom bar --->
 
         <v-app-bar
             id="top-bar"
@@ -24,6 +26,7 @@
             }"
             :app="!isWatchPage"
             clipped-left
+            clipped-right
             flat
             v-show="!(isMobile && isWatchPage) && !isMultiView"
             extension-height="36"
@@ -137,6 +140,7 @@ import InstallPrompt from "@/components/common/InstallPrompt.vue";
 import hideExtensionOnScroll from "@/mixins/hideExtensionOnScroll";
 import NavDrawer from "./NavDrawer.vue";
 import BottomNav from "./BottomNav.vue";
+import PlaylistDrawer from "./PlaylistDrawer.vue";
 
 export default {
     components: {
@@ -148,6 +152,7 @@ export default {
         InstallPrompt,
         MusicBar2: () => import("./MusicBar2.vue"),
         OrgSelector,
+        PlaylistDrawer,
     },
     mixins: [hideExtensionOnScroll],
     data() {

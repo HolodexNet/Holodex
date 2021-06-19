@@ -21,6 +21,8 @@ import settings from "./settings.module";
 import favorites from "./favorites.module";
 import music from "./music.module";
 import multiview from "./multiview.module";
+import playlist from "./playlist.module";
+
 // import socket from "./socket.module";
 
 Vue.use(Vuex);
@@ -290,6 +292,7 @@ export default new Vuex.Store({
         favorites,
         music,
         multiview,
+        playlist,
         // socket,
     },
 });
