@@ -5,18 +5,24 @@ component:
     textBeforeTwitter: 'Il y a eu une erreur lors de la récupération du contenu, veuillez vérifier sur twitter'
     textAfterTwitter: ' ou signalez une erreur via la page'
     aboutPage: À propos
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Veuillez-vous connecter pour ajouter aux favoris
     unfavoriteAllInGroup: Supprimer tout le groupe des favoris
     favoriteAllInGroup: Ajouter tout le groupe aux favoris
   channelInfo:
+    stats: Statistiques
     videoCount: '{0} Vidéos'
+    clipCount: '{n} Clips'
     subscriberCount: '{n} Abonnés'
     subscriberNA: Nombre d'abonnés indisponible
     totalViews: Vues Totales
   channelSocials:
     addToFavorites: Ajouter aux favoris
     removeFromFavorites: Supprimer des favoris
+    unblock: Débloquer cette chaine
+    block: Bloquer le contenu de cette chaine dans Holodex
+    blocked: Bloqué
   mainNav:
     home: Accueil
     favorites: Favoris
@@ -26,31 +32,60 @@ component:
     settings: Paramètres
     login: Se connecter
     logout: Se déconnecter
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Paramètres du compte
+    music: Musique
     multiview: Multivue
+    points: points
   videoCard:
+    clips: '{n} Clips'
     watching: '{0} Visionnages'
     liveNow: EN DIRECT
     edit: Modifier
+    copiedToClipboard: Lien copié dans le presse-papiers.
+    copyLink: Copier le lien Holodex
     premiere: PREMIÈRE
+    googleCalendar: Ajouter à Google Agenda
+  videoDescription:
+    description: Description
   description:
     showLess: Afficher Moins
     showMore: Afficher Plus
   watch:
     streamingFor: En direct depuis {0}
     nextUpInMugen: Prochain
+    Comments:
+      title: Commentaires
+      all: Tout les commentaires
   search:
     searchLabel: Rechercher
     type:
       channel: chaînes
       topic: sujet
+      org: org
+      titledesc: titre/description
       comments: commentaires
       videourl: url de la vidéo
   relatedVideo:
+    clipsLabel: Clips
     simulcastsLabel: diffusions simultanées
     refersLabel: références
+    sourcesLabel: Sources
+    songsLabel: Chansons
+    recommendationsLabel: Recommandation
   paginateLoad:
     newer: Plus récente
     older: Plus ancienne
+  music:
+    clearPlaylist: Réinitialiser
+  channelMusic:
+    recentSongsHeader: Titres récents
+    weeklyTopPlaysHeader: Les plus écoutés de cette semaine
+  songList:
+    songTitle: Titre
+    songCoveredBy: Cover fait par
+    songDuration: Durée
+    sangOnTime: Sortie le
 views:
   channels:
     sortOptions:
