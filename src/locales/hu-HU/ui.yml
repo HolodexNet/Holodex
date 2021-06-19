@@ -13,7 +13,7 @@ component:
   channelInfo:
     stats: Statisztikák
     videoCount: 'Videók'
-    clipCount: 'Klippek'
+    clipCount: '{n} Klipek'
     subscriberCount: 'Feliratkozók'
     subscriberNA: Feliratkozók száma nem elérhető
     totalViews: Megtekintések
@@ -82,6 +82,7 @@ component:
     songTitle: Cím
     songCoveredBy: Előadó
     songDuration: Hossz
+    sangOnTime: Énekelve
   orgMusic:
     monthlyTopForOrg: Heti legjátszottabbak {0}-tól/től
     weeklyTopForOrg: Heti legjátszottabbak {0}-tól/től
@@ -105,14 +106,108 @@ component:
     reasons:
       - Rosszul cimkézett videó
       - Veszélyesen alacsony minőség/Félrevezető tartalom
-      - Violates the org's derivative work guidelines or inappropriate
-      - Other
+      - Megsérti az oldal irányelveit vagy nem ide illő
+      - Más
   thirdpartycookie:
+    explanation: >-
+      A böngészők működése miatt, néhány böngésző, amelynek működése szigorú a <b>Harmadik féltől származó cookiekkal</b>, vagy amelyek tiltják a <kbd>YouTube.com</kbd> cookiekat, nehézségeket okozhatnak a bejelentkezéssel / Youtube chat használatával. <br /><br /> Ez ellen tehetsz ha fehérlistára teszed a <kbd>Youtube.com</kbd>-ot a harmadik fél cookie blokkolókban, vagy lejjebb véve a cookie védelmet / biztonsági szintet a <kbd>Holodex.net</kbd>-nek. <br /><br /> Hagytunk pár oldalt, amely több információt nyújt arról, hogy hogyan csinálhatod ezt.
+    dialogTitle: Youtube chat használata Holodex-en
+    alertText: >-
+      A böngésződ biztonsági beállításai lehetetlenné teszik a bejelentkezést Youtube chathez. Kattints ide több infóért
     neverShowAgain: Ne mutassa többet
 views:
   channel:
     video: Videók
     clips: Klipek
+    music: Zene
+    collabs: Együttműködések
+    about: Leírás
+  channels:
+    sortOptions:
+      subscribers: Feliratkozó
+      group: Csoport
+      recentUpload: Új feltöltések
+      videoCount: Videók száma
+      clipCount: Klipek száma
+      org: Szervezet
+    tabs:
+      Vtuber: Vtuber
+      Favorites: Kedvencek
+      Blocked: Letiltva
+    favoritesAreEmpty: Még nincsenek kedvenceid!
+    blockedAreEmpty: Még egy csatornát sem blokkoltál.
+  home:
+    liveOrUpcomingHeading: Élő / Hamarosan
+    recentVideosHeading: Legújabb videók
+    noStreams: Nincs élő vagy bejelentett stream jelenleg
+    recentVideoToggles:
+      all: Összes
+      official: Archívum
+      subber: Klipek
+  library:
+    savedVideosTitle: Mentett videók
+    createYtPlaylistButton: Youtube lejátszási lista létrehozása ({0})
+    deleteFromLibraryButton: Törlés ({0})
+    deleteConfirmation: Biztos szeretnéd törölni ezt a {0} videót?
+    deleteConfirmationOK: Törlés
+    deleteConfirmationCancel: Mégse
+    selectionReset: Visszaállítás
+    selectionSelectAll: Összes kijelölése
+    emptyLibrary: Még nincsenek mentett videóid!
+    exportSelected: Választottak exportálása ({0})
+    exportYtPlaylist: Youtube lejátszási lista
+    exportCsv: CSV fájl
+    selectionSelect50: 50 kijelölése
+    exportYTExplanation: >-
+      A youtube lejátszási lista amit ezzel a funkcióval hoztad létre <b>listázatlan</b> és törölve lehetett a Youtube által. <br/>A youtube funkciójának megfeleletlensége miatt az alábbiakat kell megcsinálnod, hogy elmentsd a <b>listázatlan</b> Youtube lejátszási listát a profilodon.
+    exportYTHeading: Youtube lejátszási lista mentés útmutató
+    exportYTInstructions: >-
+      <b class="red--text">1. lépés</b>: Indítsd el a lejátszási listát és tedd minilejátszóba a méretét. <br /><br /> <b class="red--text">2. lépés</b>: Válassz bármilyen videót és tedd várólistába. <br /><br /> <b class="red--text">3. lépés</b>: A lejátszási lista most már menthető. Nyomj mentést, hogy elmentsd.
+    sort:
+      dateaddedEarliestFirst: Könyvtárhoz adás dátuma, korábbiak előbb
+      dateaddedLatestFirst: Könyvtárhoz adás dátuma, későbbiek előbb
+      dateuploadedLatestFirst: Feltöltés dátuma, későbbiek előbb
+      dateuploadedEarliestFirst: Feltöltés dátuma, korábbiak előbb
+  notFound:
+    title: Tartalom nem található
+    back: Vissza a főoldalra
+  search:
+    sort:
+      newest: Legújabb
+      oldest: Legrégibb
+    type:
+      all: Összes
+      official: Hivatalos
+      clip: Klip
+    unsupportedQuery: >-
+      Klipek keresése <kbd>Téma</kbd> és <kbd>Szervezet</kbd> által nem támogatott. Nem lesznek <b>klipek</b> előhozva.
+    sortByLabel: Rendezés
+    typeDropdownLabel: Típus
+  settings:
+    title: Beállítások
+    darkModeLabel: Sötét mód
+    darkModeMsg: Átváltja az oldal témáját világos módról sötét módra.
+    redirectModeLabel: Megnyitás a YouTube-on
+    redirectModeMsg: >-
+      A videó fedőképernyőjére kattintva a Youtube-on nyitva meg, a videó címére kattintva a Holodex-en nyitja meg.
+    useEnglishNameLabel: Angol nevek használata
+    useEnglishNameMsg: A vtuberek csatornáinak nevei angolul lesznek
+    hideVideoThumbnailsLabel: Videó fedőképernyők elrejtése
+    hideVideoThumbnailsMsg: >-
+      Elrejti a fedőképernyőket, gyorsabb betöltést eredményez és kevesebb tekerést mobilon.
+    pushNotificationLabel: Értesítések (Hamarosan)
+    pushNotificationMsg: Értesítések engedélyezése a kedvence csatornáidtól
+    autoplayVideoLabel: Videók automatikus lejátszása
+    autoplayVideoMsg: Videók automatikus visszajátszása
+    scrollModeLabel: Görgő mód
+    scrollModeMsg: Görgetés/érintés használata lapozáshoz
+    resetAllSettings: Minden beállítás/adat alaphelyzetbe állítása
+    clipLanguageSelection: 'Klipek megjelenítése az alábbi nyelveken:'
+    tlLanguageSelection: Élő chatek fordítása az alábbi nyelveken
+    defaultPage: Alapértelmezett oldal
+    defaultPageMsg: >-
+      Ennek az oldalnak megnyitása alapértelmezettként a Holodex.net meglátogatásakor, vagy a bal fenti logóra kattintáskor.
+    languageSettings: Nyelv
 about:
   faq:
     subber:
