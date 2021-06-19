@@ -10,7 +10,6 @@
                 <v-divider />
             </template>
         </NavDrawer>
-        <PlaylistDrawer></PlaylistDrawer>
 
         <!--* nav drawer is for the left --->
         <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile" :active="!isWatchPage" />
@@ -59,6 +58,14 @@
                         <v-icon>{{ icons.mdiMusic }}</v-icon>
                     </v-btn>
                 </v-slide-y-transition>
+                <v-menu :close-on-content-click="false" offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on" icon>
+                            <v-icon>{{ icons.mdiPlaylistPlay }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <edit-playlist></edit-playlist>
+                </v-menu>
                 <v-menu left offset-y transition="slide-y-transition" v-if="!isMobile">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on" class="ml-2">
@@ -140,7 +147,7 @@ import InstallPrompt from "@/components/common/InstallPrompt.vue";
 import hideExtensionOnScroll from "@/mixins/hideExtensionOnScroll";
 import NavDrawer from "./NavDrawer.vue";
 import BottomNav from "./BottomNav.vue";
-import PlaylistDrawer from "./PlaylistDrawer.vue";
+import EditPlaylist from "../playlist/EditPlaylist.vue";
 
 export default {
     components: {
@@ -152,7 +159,7 @@ export default {
         InstallPrompt,
         MusicBar2: () => import("./MusicBar2.vue"),
         OrgSelector,
-        PlaylistDrawer,
+        EditPlaylist,
     },
     mixins: [hideExtensionOnScroll],
     data() {

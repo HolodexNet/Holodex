@@ -50,8 +50,8 @@
                                 "
                                 class="tl-caption"
                                 :class="{
-                                    'primary--text': item.isOwner,
-                                    'secondary--text': item.is_verified || item.is_moderator,
+                                    'primary--text': item.is_owner,
+                                    'secondary--text': item.is_verified || item.is_moderator || item.is_vtuber,
                                 }"
                             >
                                 <v-divider class="my-1" />
