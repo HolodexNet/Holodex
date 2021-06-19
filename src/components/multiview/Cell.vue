@@ -7,8 +7,8 @@
         }"
         v-on:drop="drop"
         v-on:dragover="allowDrop"
-        v-on:dragleave="showDropOverlay = false"
-        v-on:dragenter="showDropOverlay = true"
+        v-on:dragleave="dragLeave"
+        v-on:dragenter="dragEnter"
     >
         <!-- When Cell has no content: show video picker -->
         <v-sheet style="height: 100%" class="d-flex flex-column pt-4" v-if="!cellContent">
@@ -162,30 +162,8 @@
 import { mdiMessage, mdiArrowLeftCircle, mdiSelectionEllipseArrowInside } from "@mdi/js";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat.vue";
 import { mapState, mapGetters } from "vuex";
-import { VIDEO_URL_REGEX } from "@/utils/consts";
+import { getVideoIDFromUrl } from "@/utils/functions";
 import CellControl from "./CellControl.vue";
-
-function getVideoIDFromDragged(ev: DragEvent) {
-    const data: string = ev.dataTransfer.getData("text");
-    console.log(data);
-    if (VIDEO_URL_REGEX.test(data)) {
-        const match: RegExpMatchArray = data.match(VIDEO_URL_REGEX);
-        if (match && match[5] && match[5].length === 11)
-            return {
-                id: match[5],
-            };
-        return undefined;
-    }
-    if (/twitch.tv\/*/.test(data)) {
-        // I AM NOT GOING TO USE THE WEIRD ARRAY DESTRUCTURING SYNTAX
-        // eslint-disable-next-line
-        return {
-            cellVideoType: "twitch",
-            id: data.split(/twitch.tv\//)[1],
-        };
-    }
-    return undefined;
-}
 
 export default {
     name: "Cell",
@@ -212,6 +190,7 @@ export default {
             toggleChat: true,
 
             showDropOverlay: false,
+            enterTarget: null,
             mdiSelectionEllipseArrowInside,
         };
     },
@@ -322,15 +301,45 @@ export default {
             if (newMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
             else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
         },
+        dragEnter(ev) {
+            this.enterTarget = ev.target;
+            this.showDropOverlay = true;
+        },
+        dragLeave(ev) {
+            if (this.enterTarget === ev.target) {
+                this.showDropOverlay = false;
+            }
+        },
         allowDrop(ev) {
             ev.preventDefault();
-            this.showDropOverlay = true;
         },
         drop(ev) {
             ev.preventDefault();
             this.showDropOverlay = false;
-            const content = getVideoIDFromDragged(ev);
 
+            const json: string = ev.dataTransfer.getData("application/json");
+            if (json) {
+                const video = JSON.parse(json);
+
+                if (video.id.length === 11 && video.channel.name) {
+                    this.$store.commit("multiview/setLayoutContentById", {
+                        id: this.item.i,
+                        content: {
+                            type: "video",
+                            content: {
+                                id: video.id,
+                                channel: {
+                                    name: video.channel.name,
+                                },
+                            },
+                        },
+                    });
+                }
+                return;
+            }
+
+            const text: string = ev.dataTransfer.getData("text");
+            const content = getVideoIDFromUrl(text);
             if (!content || !content.id) return;
 
             this.$store.commit("multiview/setLayoutContentById", {
