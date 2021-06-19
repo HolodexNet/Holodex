@@ -54,4 +54,5 @@ export {
     mdiFlag,
     mdiStar,
     mdiCalendar,
+    mdiPlaylistPlay,
 } from "@mdi/js";

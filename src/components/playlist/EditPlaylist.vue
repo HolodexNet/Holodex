@@ -1,46 +1,22 @@
 <template>
-    <v-navigation-drawer
-        v-bind:value="value"
-        v-on:input="$emit('input', $event)"
-        app
-        width="400"
-        clipped
-        right
-        class="nav-scroll thin-scroll-bar pl-2"
-        :temporary="false"
-        style="padding-top: env(safe-area-inset-top); padding-right: calc(env(safe-area-inset-right) / 1.3)"
-    >
+    <v-card width="400" class="nav-scroll thin-scroll-bar pl-2">
         <slot />
         <div class="pa-2">
             <span class="text-overline secondary--text">Current Playlist</span>
             <playlist :playlist="active" isEditable :isSaved="isSaved" horizontal></playlist>
         </div>
-    </v-navigation-drawer>
+    </v-card>
 </template>
 
 <script lang="ts">
-// import { dayjs } from "@/utils/time";
-// import { mdiTuneVariant } from "@mdi/js";
 import { mapState } from "vuex";
 import Playlist from "@/components/playlist/Playlist.vue";
 
 export default {
-    name: "PlaylistDrawer",
+    name: "EditPlaylist",
     components: { Playlist },
-    props: {
-        value: {
-            type: Boolean,
-            default: true,
-        },
-        // temporary: {
-        //     type: Boolean,
-        //     default: true,
-        // },
-    },
     data() {
-        return {
-            favoritesExpanded: false,
-        };
+        return {};
     },
     mounted() {},
     beforeDestroy() {},
