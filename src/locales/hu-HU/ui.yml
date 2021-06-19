@@ -1,4 +1,12 @@
 ---
+component:
+  apiError:
+    aboutPage: Az oldalról
+  channelList:
+    unfavoriteAllInGroup: Minden csoport eltávolítása kedvencek közül
+    favoriteAllInGroup: Minden csoport kedvencek közé helyezése
+  channelInfo:
+    stats: Statisztikák
 about:
   faq:
     subber:
