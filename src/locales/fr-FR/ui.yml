@@ -86,7 +86,46 @@ component:
     songCoveredBy: Cover fait par
     songDuration: Durée
     sangOnTime: Sortie le
+  orgMusic:
+    monthlyTopForOrg: 'Top du mois: {0}'
+    weeklyTopForOrg: 'Top de la semaine: {0}'
+  installPrompt:
+    title: Installer Holodex
+    callToAction: Regarder des vidéos sur Holodex fonctionne mieux lorsqu'il est ajouté à l'écran d'accueil
+    notNowBtn: Pas maintenant
+    installBtn: Installer
+    iOS:
+      popup: Installer Holodex sur iOS
+      afterExportIcon: puis "Ajouter à l'écran d'accueil"
+      beforeExportIcon: Appuyer
+  media:
+    remove: Supprimer
+  comment:
+    close: Fermer
+    readMore: En savoir plus
+  reportDialog:
+    title: Signaler
+    comments: Commentaires (facultatif)
+    success: Signalement envoyé, merci !
+    reasons:
+      - Vidéo taguée incorrectement
+      - Contenu dangereux de faible qualité/trompeur
+      - Viole les directives de travail de l'organisation ou inapproprié
+      - Autre
+  thirdpartycookie:
+    explanation: >-
+      En raison du fonctionnement de votre navigateur Internet, certains navigateurs avec des politiques strictes de <b>Cookie tiers</b> ou ceux qui bloquent les cookies de <kbd>YouTube.com</kbd> peuvent avoir du mal à se connecter / utiliser le chat YouTube. <br /><br /> Vous pouvez corriger cela en mettant sur la liste blanche <kbd>YouTube.com</kbd> dans les bloqueurs de cookies tiers, ou diminuant votre niveau de sécurité / confidentialité des cookies pour <kbd>Holodex.net</kbd>. <br /><br /> Nous avons inclus certains sites Web qui fournissent plus d'informations sur la façon de procéder.
+    dialogTitle: Utilisation du chat Youtube sur Holodex
+    alertText: >-
+      Les paramètres de confidentialité de votre navigateur rendent impossible la connexion au chat Youtube. Cliquez ici pour plus d'informations
+    neverShowAgain: Ne plus afficher l'alerte
 views:
+  channel:
+    video: Vidéos
+    clips: Clips
+    music: Musique
+    collabs: Collaborations
+    about: À Propos
   channels:
     sortOptions:
       subscribers: Abonnés
@@ -96,6 +135,7 @@ views:
       clipCount: Nombre de Clips
       org: Organisation
     tabs:
+      Vtuber: Vtuber
       Subber: Sous-Titreur
       Favorites: Favoris
     favoritesAreEmpty: Vous n'avez aucun favoris
