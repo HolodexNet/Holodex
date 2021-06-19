@@ -1,12 +1,118 @@
 ---
 component:
   apiError:
+    title: Gomenasorry!
+    textBeforeTwitter: 'Hiba történt a tartalmak visszakeresése során, kérlek nézd a Twittert '
+    textAfterTwitter: ' vagy jelents a'
     aboutPage: Az oldalról
+    afterAboutPageHyperlink: .
   channelList:
+    signInToFavorite: Jelentkezz be, hogy hozzáadj kedvenceket
     unfavoriteAllInGroup: Minden csoport eltávolítása kedvencek közül
     favoriteAllInGroup: Minden csoport kedvencek közé helyezése
   channelInfo:
     stats: Statisztikák
+    videoCount: 'Videók'
+    clipCount: 'Klippek'
+    subscriberCount: 'Feliratkozók'
+    subscriberNA: Feliratkozók száma nem elérhető
+    totalViews: Megtekintések
+  channelSocials:
+    addToFavorites: Hozzáadás kedvencekhez
+    removeFromFavorites: Eltávolítás kedvencek közül
+    unblock: Csatorna tiltásának feloldása
+    block: Csatorna tiltása Holodexen
+    blocked: Letiltva
+  mainNav:
+    home: Főlap
+    favorites: Kedvencek
+    channels: Csatornák
+    about: Információ
+    library: Könyvtár
+    settings: Beállítások
+    login: Bejelentkezés
+    logout: Kijelentkezés
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Fiók beállításai
+    music: Zene
+    points: pont
+  videoCard:
+    clips: 'Klippek'
+    watching: 'néző'
+    liveNow: Élőben
+    edit: Szerkesztés
+    copiedToClipboard: Vágólapra másolva.
+    copyLink: Holodex link másolása
+    premiere: Bemutató
+    googleCalendar: Hozzáadás a Google naptárhoz
+  videoDescription:
+    description: Leírás
+  description:
+    showLess: Kevesebb mutatása
+    showMore: Továbbiak megjelenítése
+  watch:
+    streamingFor: '{0} óta streamelve'
+    nextUpInMugen: Következik
+    Comments:
+      title: Hozzászólások
+      all: Összes
+  search:
+    searchLabel: Keresés
+    type:
+      channel: csatorna
+      topic: téma
+      titledesc: cím/leírás
+      comments: hozzászólások
+      videourl: videó URL-címe
+  relatedVideo:
+    clipsLabel: klipek
+    refersLabel: utalás
+    sourcesLabel: források
+    songsLabel: dalok
+    recommendationsLabel: ajánlott
+  paginateLoad:
+    newer: Újabbak
+    older: Régebbiek
+  music:
+    clearPlaylist: Törlés
+  channelMusic:
+    recentSongsHeader: Legújabb dalok
+    weeklyTopPlaysHeader: Heti legjátszottabbak
+  songList:
+    songTitle: Cím
+    songCoveredBy: Előadó
+    songDuration: Hossz
+  orgMusic:
+    monthlyTopForOrg: Heti legjátszottabbak {0}-tól/től
+    weeklyTopForOrg: Heti legjátszottabbak {0}-tól/től
+  installPrompt:
+    title: Holodex telepítése
+    callToAction: Videók nézése Holodexen akkor a legjobb ha a főoldalhoz vannak adva
+    notNowBtn: Most nem
+    installBtn: Telepítés
+    iOS:
+      popup: Holodex telepítése iOS-re
+      afterExportIcon: majd 'Hozzáadás a kezdőképernyőhöz
+  media:
+    remove: Eltávolítás
+  comment:
+    close: Bezárás
+    readMore: Bővebben
+  reportDialog:
+    title: Bejelentés
+    comments: Megjegyzés (nem kötelező)
+    success: Visszajelzés elküldve. Köszönjük!
+    reasons:
+      - Rosszul cimkézett videó
+      - Veszélyesen alacsony minőség/Félrevezető tartalom
+      - Violates the org's derivative work guidelines or inappropriate
+      - Other
+  thirdpartycookie:
+    neverShowAgain: Ne mutassa többet
+views:
+  channel:
+    video: Videók
+    clips: Klipek
 about:
   faq:
     subber:
