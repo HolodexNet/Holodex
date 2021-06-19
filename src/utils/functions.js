@@ -1,4 +1,4 @@
-import { TL_LANGS } from "@/utils/consts";
+import { TL_LANGS, VIDEO_URL_REGEX, TWITCH_VIDEO_URL_REGEX } from "@/utils/consts";
 import { langs } from "@/plugins/vuetify";
 
 export function resizeChannelPhoto(photoUrl, size) {
@@ -206,4 +206,36 @@ export function createSimpleMutation(variables) {
         };
     });
     return newMutations;
+}
+
+/**
+ * Returns a layout content object by parsing URL
+ * @param {String} url - A video url
+ * @returns {Object}
+ */
+export function getVideoIDFromUrl(url) {
+    if (VIDEO_URL_REGEX.test(url)) {
+        const match = url.match(VIDEO_URL_REGEX);
+        if (match && match[5] && match[5].length === 11) {
+            return {
+                id: match[5],
+                channel: {
+                    name: match[5],
+                },
+            };
+        }
+    }
+    if (TWITCH_VIDEO_URL_REGEX.test(url)) {
+        const match = url.match(TWITCH_VIDEO_URL_REGEX);
+        if (match && match[1]) {
+            return {
+                id: match[1],
+                cellVideoType: "twitch",
+                channel: {
+                    name: match[1],
+                },
+            };
+        }
+    }
+    return undefined;
 }

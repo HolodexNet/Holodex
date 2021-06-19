@@ -353,7 +353,8 @@ export default {
             this.$store.commit("setShowVideoCardMenu", true);
         },
         drag(ev) {
-            ev.dataTransfer.setData("text", `holodex.net/watch/${this.video.id}`);
+            ev.dataTransfer.setData("text", `https://holodex.net/watch/${this.video.id}`);
+            ev.dataTransfer.setData("application/json", JSON.stringify(this.video));
         },
     },
 };
