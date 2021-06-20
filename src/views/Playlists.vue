@@ -27,21 +27,19 @@
                             Not saved
                         </v-chip>
                         <br />
-                        <span class="text-caption">Last Updated: {{ toTime(playlist.updated_at) }}</span>
+                        <span class="text-caption" v-show="playlist.updated_at">
+                            Last Updated: {{ toTime(playlist.updated_at) }}
+                        </span>
                     </v-list-item-title>
-                    <v-list-item-action class="flex-row">
-                        <v-img
-                            v-for="id in (playlist.video_ids || []).splice(0, 4)"
-                            :src="imageSrc(id)"
-                            :key="`vid${id}thumb`"
-                            class="preview-img"
-                        ></v-img>
+                    <v-list-item-action class="flex-row-reverse">
                         <!-- local playlist support -->
                         <v-img
-                            v-for="{ id } in (playlist.videos || []).splice(0, 4)"
+                            v-for="id in getTopFour(playlist)"
                             :src="imageSrc(id)"
                             :key="`vid${id}thumb`"
                             class="preview-img"
+                            width="150px"
+                            height="85px"
                         ></v-img>
                     </v-list-item-action>
                 </v-list-item>
@@ -72,7 +70,13 @@ export default {
     name: "Playlists",
     components: {},
     async mounted() {
-        this.serverside = (await backendApi.getPlaylistList(this.$store.state.userdata.jwt)).data;
+        try {
+            if (this.$store.state.userdata.jwt) {
+                this.serverside = (await backendApi.getPlaylistList(this.$store.state.userdata.jwt)).data;
+            }
+        } catch {
+            this.serverside = [];
+        }
     },
     data() {
         return {
@@ -108,6 +112,11 @@ export default {
                     this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
                 }
             }
+        },
+        getTopFour(playlist) {
+            if (playlist.video_ids) return playlist.video_ids.slice(0, 4);
+            if (playlist.videos) return playlist.videos.slice(0, 4).map(({ id }) => id);
+            return [];
         },
     },
 };

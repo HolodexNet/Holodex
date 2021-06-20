@@ -69,7 +69,14 @@
                             <v-icon>{{ icons.mdiPlaylistPlay }}</v-icon>
                         </v-btn>
                     </template>
-                    <edit-playlist></edit-playlist>
+                    <edit-playlist>
+                        <div class="pt-2 pl-2">
+                            <span class="text-overline secondary--text">Current Playlist</span>&emsp;
+                            <a href="/playlist" class="text-caption" @click.prevent="$router.push('/playlists')">
+                                (more)
+                            </a>
+                        </div>
+                    </edit-playlist>
                 </ResponsiveMenu>
                 <v-menu left offset-y transition="slide-y-transition" v-if="!isMobile">
                     <template v-slot:activator="{ on, attrs }">

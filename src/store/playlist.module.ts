@@ -9,6 +9,7 @@ const initialState = {
         user_id: undefined,
         name: "Unnamed Playlist",
         videos: [],
+        updated_at: undefined,
     },
     isSaved: false,
 };
