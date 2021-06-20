@@ -255,7 +255,6 @@ views:
     add_my_channel: Add my channel to Holodex
   watch:
     theaterMode: Theater Mode
-    saveToLibrary: Save video to Library
     mentionIconLabel: MENTIONS
     chat:
       loading: Loading Chat...
@@ -277,6 +276,8 @@ views:
           minutes of being live
         connectedToChat: Connected
         disconnectedToChat: Disconnected
+    removeFromPlaylist: Remove video from current playlist
+    saveToPlaylist: Save video to current playlist
   favorites:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on

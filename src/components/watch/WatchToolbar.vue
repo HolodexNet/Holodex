@@ -11,8 +11,8 @@
                         <v-icon>{{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}</v-icon>
                     </v-btn>
                 </template>
-                <span v-if="!hasSaved">{{ $t("views.watch.saveToLibrary") }}</span>
-                <span v-else>{{ $t("component.mainNav.library") }} </span>
+                <span v-if="!hasSaved">{{ $t("views.watch.saveToPlaylist") }}</span>
+                <span v-else>{{ {{ $t('views.watch.removeFromPlaylist') }} }} </span>
             </v-tooltip>
             <v-menu bottom nudge-top="20px">
                 <template v-slot:activator="{ on }">
@@ -93,8 +93,8 @@ export default {
         },
         toggleSaved() {
             this.hasSaved
-                ? this.$store.commit("library/removeSavedVideo", this.video.id)
-                : this.$store.commit("library/addSavedVideo", this.video);
+                ? this.$store.commit("playlist/removeVideoByID", this.video.id)
+                : this.$store.commit("playlist/addVideo", this.video);
         },
         goBack() {
             this.$router.replace(this.$route.meta.prevPath || "/");
@@ -109,7 +109,7 @@ export default {
             return this.$store.state.settings.redirectMode;
         },
         hasSaved() {
-            return this.$store.getters["library/hasSaved"](this.video.id);
+            return this.$store.getters["playlist/contains"](this.video.id);
         },
     },
 };

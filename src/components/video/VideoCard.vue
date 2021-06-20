@@ -171,6 +171,7 @@ export default {
             icons,
             now: Date.now(),
             updatecycle: null,
+            hasWatched: false,
         };
     },
     props: {
@@ -224,6 +225,13 @@ export default {
         },
     },
     mounted() {
+        this.$store.getters["history/hasWatched"](this.video.id)
+            .then((x) => {
+                if (x) this.hasWatched = true;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
         if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
     },
     activated() {
@@ -294,9 +302,6 @@ export default {
         channelName() {
             const prop = this.$store.state.settings.nameProperty;
             return this.video.channel[prop] || this.video.channel.name;
-        },
-        hasWatched() {
-            return this.$store.getters["library/hasWatched"](this.video.id);
         },
         hasSaved() {
             return this.$store.getters["playlist/contains"](this.video.id);

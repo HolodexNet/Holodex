@@ -22,6 +22,7 @@ import favorites from "./favorites.module";
 import music from "./music.module";
 import multiview from "./multiview.module";
 import playlist from "./playlist.module";
+import history from "./history.module";
 
 // import socket from "./socket.module";
 
@@ -128,6 +129,8 @@ const migrations = [
                     });
             }
 
+            delete state.library;
+
             return {
                 ...state,
                 playlist: {
@@ -145,7 +148,7 @@ const migrations = [
 /**-----------------------
  *     Configure Synchronized Modules & Mutations across tabs
  *------------------------* */
-const syncedModules = /^(?:library|settings)/;
+const syncedModules = /^(?:playlist|settings)/;
 const syncedMutations =
     /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout))/;
 
@@ -327,6 +330,7 @@ export default new Vuex.Store({
         music,
         multiview,
         playlist,
+        history,
         // socket,
     },
 });

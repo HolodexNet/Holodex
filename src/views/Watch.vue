@@ -224,7 +224,7 @@ export default {
             this.$store.commit("watch/resetState");
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
-                if (!this.hasWatched && this.videoId) this.$store.commit("library/addWatchedVideo", this.video);
+                this.$store.dispatch("history/addWatchedVideo", this.video);
             });
         },
         initMugen() {
@@ -295,9 +295,6 @@ export default {
         hasLiveTL() {
             // mugen doesn't have it, but all streams do.
             return !this.isMugen && this.video.type === "stream";
-        },
-        hasWatched() {
-            return this.$store.getters["library/hasWatched"](this.video.id);
         },
         showChatWindow() {
             return (this.hasLiveChat || this.hasLiveTL) && (this.showLiveChat || this.showTL);
