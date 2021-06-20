@@ -62,6 +62,7 @@
                     :close-on-content-click="false"
                     offset-y
                     :itemCount="$store.state.playlist.active.videos.length || 0"
+                    contentClass="main-playlist-border"
                 >
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn v-bind="attrs" v-on="on" icon>
@@ -326,5 +327,16 @@ export default {
     animation-timing-function: ease-in-out;
     animation: fadein 5s;
     animation-iteration-count: 1;
+}
+
+.main-playlist-border {
+    border: 2px solid var(--v-primary-base);
+    border-radius: 8px;
+}
+.theme--dark .main-playlist-border {
+    box-shadow: 0px 6px 12px -7px var(--v-primary-darken2);
+}
+.theme--light .main-playlist-border {
+    box-shadow: 0px 6px 12px -7px var(--v-primary-lighten2);
 }
 </style>
