@@ -235,7 +235,6 @@ views:
     add_my_channel: Thêm kênh của tôi vào Holodex
   watch:
     theaterMode: Chế độ Rạp chiếu phim
-    saveToLibrary: Lưu video vào Thư viện
     mentionIconLabel: ĐỀ CẬP
     chat:
       loading: Đang tải Chat...
