@@ -235,7 +235,6 @@ views:
     add_my_channel: Kanalımı Holodex'e ekle
   watch:
     theaterMode: Tiyatro Modu
-    saveToLibrary: Videoyu Kütüphaneye kaydet
     mentionIconLabel: Söz edilenler
     chat:
       loading: Sohbet yükleniyor...
