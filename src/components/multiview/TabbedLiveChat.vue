@@ -36,7 +36,7 @@
                 style="width: 100%; height: calc(100% - 32px)"
                 :key="'wlc' + activeVideos[currentTab || 0].id"
                 :showTL="showTL"
-                :showTLFirstTime="showTLFirstTime"
+                :hintConnectLiveTL="hintConnectLiveTL"
                 :showLiveChat="setShowChat"
                 fluid
             />
@@ -74,7 +74,7 @@ export default {
         return {
             currentTab: 0,
             showTL: false,
-            showTLFirstTime: false,
+            hintConnectLiveTL: false,
             newTL: 0,
 
             // showLiveChat: true,
@@ -122,12 +122,12 @@ export default {
     },
     watch: {
         currentTab() {
-            // this.showTLFirstTime = false;
+            // this.hintConnectLiveTL = false;
             this.savedTab = this.currentTab;
         },
         setShowTL(nw) {
-            if (!this.showTLFirstTime) {
-                this.showTLFirstTime = true;
+            if (!this.hintConnectLiveTL) {
+                this.hintConnectLiveTL = true;
                 this.showTL = true;
                 return;
             }

@@ -137,7 +137,7 @@
                         :fixedRight="isMobile && landscape"
                         :fixedBottom="isMobile && !landscape"
                         :showTL="showTL"
-                        :showTLFirstTime="showTLFirstTime"
+                        :hintConnectLiveTL="hintConnectLiveTL"
                         :showLiveChat="showLiveChat"
                         :isMugen="isMugen"
                         @historyLength="handleHistoryLength"
@@ -199,7 +199,7 @@ export default {
             // theatherMode: false,
 
             // showTL: false,
-            showTLFirstTime: false,
+            hintConnectLiveTL: false,
             newTL: 0,
 
             // showLiveChat: true,
@@ -209,8 +209,8 @@ export default {
     },
     mounted() {
         this.init();
-        if (this.showTL && !this.showTLFirstTime) {
-            this.showTLFirstTime = true;
+        if (this.showTL && !this.hintConnectLiveTL) {
+            this.hintConnectLiveTL = true;
         }
     },
     methods: {
@@ -259,12 +259,12 @@ export default {
             }
         },
         toggleTL() {
-            // showTLFirstTime will initiate connection
+            // hintConnectLiveTL will initiate connection
             // showTL toggle will show/hide without terminating connection
             if (!this.hasLiveTL) return;
 
-            if (!this.showTLFirstTime) {
-                this.showTLFirstTime = true;
+            if (!this.hintConnectLiveTL) {
+                this.hintConnectLiveTL = true;
                 this.showTL = true;
                 return;
             }
