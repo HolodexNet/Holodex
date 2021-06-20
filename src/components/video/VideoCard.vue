@@ -299,7 +299,7 @@ export default {
             return this.$store.getters["library/hasWatched"](this.video.id);
         },
         hasSaved() {
-            return this.$store.getters["library/hasSaved"](this.video.id);
+            return this.$store.getters["playlist/contains"](this.video.id);
         },
         isMobile() {
             return this.$store.state.isMobile;
@@ -313,8 +313,8 @@ export default {
         toggleSaved(event) {
             event.preventDefault();
             this.hasSaved
-                ? this.$store.commit("library/removeSavedVideo", this.video.id)
-                : this.$store.commit("library/addSavedVideo", this.video);
+                ? this.$store.commit("playlist/removeVideoByID", this.video.id)
+                : this.$store.commit("playlist/addVideo", this.video);
         },
         goToVideo() {
             this.$emit("videoClicked", this.video);

@@ -15,6 +15,12 @@ const initialState = {
 
 export const state = { ...initialState };
 
+const getters = {
+    contains: (state) => (id) => {
+        return state.active.videos.findIndex((v) => v.id === id) >= 0;
+    },
+};
+
 const mutations = {
     saved(state) {
         // after you save the playlist
@@ -57,8 +63,21 @@ const mutations = {
         );
         state.isSaved = false;
     },
-    removeVideoByIndex(state, index: number) {},
-    removeVideoByID(state, videoId: string) {},
+    removeVideoByIndex(state, index: number) {
+        Vue.set(
+            state.active,
+            "videos",
+            state.active.videos.filter((_, idx) => idx !== index),
+        );
+    },
+    removeVideoByID(state, videoId: string) {
+        Vue.set(
+            state.active,
+            "videos",
+            state.active.videos.filter((x) => x.id !== videoId),
+        );
+        state.isSaved = false;
+    },
     /**
      * resets the playlist to a clean slate.
      */
@@ -125,7 +144,7 @@ const actions = {
 export default {
     namespaced: true,
     state,
-    // getters,
+    getters,
     actions,
     mutations,
 };
