@@ -58,14 +58,18 @@
                         <v-icon>{{ icons.mdiMusic }}</v-icon>
                     </v-btn>
                 </v-slide-y-transition>
-                <v-menu :close-on-content-click="false" offset-y>
+                <ResponsiveMenu
+                    :close-on-content-click="false"
+                    offset-y
+                    :itemCount="$store.state.playlist.active.videos.length || 0"
+                >
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn v-bind="attrs" v-on="on" icon>
                             <v-icon>{{ icons.mdiPlaylistPlay }}</v-icon>
                         </v-btn>
                     </template>
                     <edit-playlist></edit-playlist>
-                </v-menu>
+                </ResponsiveMenu>
                 <v-menu left offset-y transition="slide-y-transition" v-if="!isMobile">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on" class="ml-2">
@@ -145,9 +149,10 @@ import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
 import InstallPrompt from "@/components/common/InstallPrompt.vue";
 import hideExtensionOnScroll from "@/mixins/hideExtensionOnScroll";
+import EditPlaylist from "@/components/playlist/EditPlaylist.vue";
+import ResponsiveMenu from "@/components/common/ResponsiveMenu.vue";
 import NavDrawer from "./NavDrawer.vue";
 import BottomNav from "./BottomNav.vue";
-import EditPlaylist from "../playlist/EditPlaylist.vue";
 
 export default {
     components: {
@@ -160,6 +165,7 @@ export default {
         MusicBar2: () => import("./MusicBar2.vue"),
         OrgSelector,
         EditPlaylist,
+        ResponsiveMenu,
     },
     mixins: [hideExtensionOnScroll],
     data() {
