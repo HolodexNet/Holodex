@@ -1,31 +1,35 @@
 <template>
     <v-container fluid class="pa-0">
-        <div style="font-size: 1rem !important; font-weight: 500" class="mb-2 ml-0">
-            <v-hover v-slot="{ hover }">
-                <v-text-field
-                    :value="playlist.name"
-                    @blur.prevent="
-                        (x) => {
-                            $store.commit('playlist/setPlaylist', { ...playlist, name: x });
-                        }
-                    "
-                    autofocus
-                    single-line
-                    hide-details
-                    :append-icon="icons.mdiPencil"
-                    v-if="editNameMode"
-                    @keydown.enter="editNameMode = false"
-                    @click:append="editNameMode = false"
-                    :rules="[(v) => v.length > 0 || 'Should not be empty']"
-                >
-                </v-text-field>
-                <span class="text-h5" v-else>
-                    <v-btn icon small class="float-left" v-show="hover && isEditable" @click="editNameMode = true">
-                        <v-icon> {{ icons.mdiPencil }} </v-icon>
-                    </v-btn>
-                    {{ playlist.name }}
-                </span>
-            </v-hover>
+        <div style="font-size: 1rem !important; font-weight: 500" class="mb-2 ml-0 d-flex">
+            <v-text-field
+                v-model="playlistName"
+                autofocus
+                single-line
+                hide-details
+                style="flex-basis: 80"
+                class="flex-shrink flex-grow pt-0 mt-0"
+                :append-icon="icons.mdiPencil"
+                v-if="editNameMode"
+                @keydown.enter="editNameMode = false"
+                @click:append="editNameMode = false"
+                :rules="[(v) => v.length > 0 || 'Should not be empty']"
+            >
+            </v-text-field>
+            <span class="text-h5 flex-grow flex-shrink" style="flex-basis: 100%" v-else>
+                <v-btn icon small class="float-right" v-show="isEditable" @click="editNameMode = true">
+                    <v-icon> {{ icons.mdiPencil }} </v-icon>
+                </v-btn>
+                {{ playlist.name }}
+            </span>
+            <v-btn
+                icon
+                small
+                class="float-right"
+                v-show="!isSaved"
+                color="success"
+                @click="$store.dispatch('playlist/saveActivePlaylist')"
+                ><v-icon>{{ mdiContentSave }}</v-icon></v-btn
+            >
             <v-menu bottom offset-y nudge-width="500">
                 <template v-slot:activator="{ on }">
                     <v-btn v-on="on" icon small class="float-right">
@@ -73,15 +77,6 @@
                     </v-list-item>
                 </v-list>
             </v-menu>
-            <v-btn
-                icon
-                small
-                class="float-right"
-                v-show="!isSaved"
-                color="success"
-                @click="$store.dispatch('playlist/saveActivePlaylist')"
-                ><v-icon>{{ mdiContentSave }}</v-icon></v-btn
-            >
         </div>
         <VideoCardList
             :videos="playlist.videos || []"
@@ -188,6 +183,16 @@ export default {
             editNameMode: false,
             instructionsDialog: false,
         };
+    },
+    computed: {
+        playlistName: {
+            get() {
+                return this.playlist.name;
+            },
+            set(v: string) {
+                if (v && v.length > 0) this.$store.commit("playlist/setPlaylist", { ...this.playlist, name: v });
+            },
+        },
     },
     methods: {
         move(id, direction) {

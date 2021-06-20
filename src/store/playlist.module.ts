@@ -87,14 +87,20 @@ const actions = {
         commit("setPlaylist", playlist);
 
         if (!state.active.id) {
-            const res = await backendApi.savePlaylist(state.active, rootState.userdata.jwt);
+            const res = await backendApi.savePlaylist(
+                { ...state.active, videos: [], video_ids: playlist.videos.map((x) => x.id) },
+                rootState.userdata.jwt,
+            );
             const returnedId = res.data;
             if (returnedId) {
-                commit("setPlaylist", { ...state.active, id: returnedId });
+                commit("setPlaylist", { ...playlist, id: returnedId });
                 commit("saved");
             }
         } else {
-            const res = await backendApi.savePlaylist(state.active, rootState.userdata.jwt);
+            const res = await backendApi.savePlaylist(
+                { ...state.active, videos: [], video_ids: playlist.videos.map((x) => x.id) },
+                rootState.userdata.jwt,
+            );
             if (res.data) {
                 commit("saved");
             }
