@@ -21,13 +21,7 @@
                 </v-btn>
                 {{ playlist.name }}
             </span>
-            <v-btn
-                icon
-                small
-                class="float-right"
-                v-show="!isSaved"
-                color="success"
-                @click="$store.dispatch('playlist/saveActivePlaylist')"
+            <v-btn icon small class="float-right" v-show="!isSaved" color="success" @click="trySaving"
                 ><v-icon>{{ mdiContentSave }}</v-icon></v-btn
             >
             <v-menu bottom offset-y nudge-width="500">
@@ -78,6 +72,23 @@
                 </v-list>
             </v-menu>
         </div>
+        <v-snackbar v-model="loginWarning" :timeout="5000" color="warning">
+            You need to be logged in to save playlists
+
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    color="red darken-2"
+                    text
+                    v-bind="attrs"
+                    @click="
+                        $router.push('/login');
+                        loginWarning = false;
+                    "
+                >
+                    {{ $t("component.mainNav.login") }}
+                </v-btn>
+            </template>
+        </v-snackbar>
         <VideoCardList
             :videos="playlist.videos || []"
             includeChannel
@@ -182,6 +193,7 @@ export default {
             mdiChevronDoubleDown,
             editNameMode: false,
             instructionsDialog: false,
+            loginWarning: false,
         };
     },
     computed: {
@@ -241,6 +253,14 @@ export default {
                 .join(",")}`;
 
             window.open(url, "_blank", "noopener");
+        },
+        trySaving() {
+            if (this.$store.state.userdata.jwt) {
+                this.$store.dispatch("playlist/saveActivePlaylist");
+                this.editNameMode = false;
+            } else {
+                this.loginWarning = true;
+            }
         },
     },
 };
