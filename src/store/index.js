@@ -148,7 +148,7 @@ const migrations = [
 /**-----------------------
  *     Configure Synchronized Modules & Mutations across tabs
  *------------------------* */
-const syncedModules = /^(?:playlist|settings)/;
+const syncedModules = /^(?:playlist|settings|history)/;
 const syncedMutations =
     /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout))/;
 
