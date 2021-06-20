@@ -235,7 +235,6 @@ views:
     add_my_channel: Csatornám hozzáadása Holodex-hez
   watch:
     theaterMode: Mozi mód
-    saveToLibrary: Videó mentése a könyvtárba
     mentionIconLabel: EMLÍTÉSEK
     chat:
       loading: Chat betöltése...
