@@ -196,6 +196,9 @@ views:
     resetAllSettings: Restablecer por defecto todas las opciones
     clipLanguageSelection: 'Ver clips en estos idiomas:'
     tlLanguageSelection: Ver traducciones en directo en estos idiomas
+    defaultPage: Página de inicio
+    defaultPageMsg: >-
+      Establece la página de inicio.
     videoFeedSettings: Ajustes de la interfaz de vídeo
     siteNavigationSettings: Ajustes de la interfaz
     languageSettings: Idioma
