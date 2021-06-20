@@ -235,7 +235,6 @@ views:
     add_my_channel: Meinen Kanal zu Holodex hinzufügen
   watch:
     theaterMode: Theatermodus
-    saveToLibrary: Video in Bibliothek speichern
     mentionIconLabel: VTUBER
     chat:
       loading: Chat wird geladen...
