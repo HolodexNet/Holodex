@@ -235,7 +235,6 @@ views:
     add_my_channel: Holodex에 내 채널 추가
   watch:
     theaterMode: 영화관 모드
-    saveToLibrary: 라이브러리에 동영상 저장
     mentionIconLabel: 언급
     chat:
       loading: 채팅을 불러오는 중...
