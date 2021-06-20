@@ -235,7 +235,6 @@ views:
     add_my_channel: チャンネルをHolodexに登録
   watch:
     theaterMode: シアターモード
-    saveToLibrary: ライブラリに保存
     mentionIconLabel: メンション
     chat:
       loading: チャットを読み込み中
