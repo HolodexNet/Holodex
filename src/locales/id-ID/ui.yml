@@ -235,7 +235,6 @@ views:
     add_my_channel: Tambah channel saya ke Holodex
   watch:
     theaterMode: Mode Teater
-    saveToLibrary: Simpan video ke koleksi
     mentionIconLabel: MENTION
     chat:
       loading: Memuat Chat...
