@@ -386,7 +386,7 @@ about:
       title: 이 프로젝트에 대해서 피드백/기여하고 싶습니다
   gdpr: GDPR과 내 데이터
   gdprContent: >-
-    Google Analytics 쿠키는 페이지뷰 추적을 위해 분석 목적으로 사용됩니다. 로그인 이후에 우리는 소셜 미디어 계정 사용자명과 아이디를 즐겨찾기와 연결시킵니다. 이 데이터에는 이메일 (Google), Discord ID, 또는 Twitter 아이디가 포함될 수 있습니다.
+    Google Analytics 쿠키는 페이지뷰 추적을 위해 분석 목적으로 사용됩니다. 로그인 이후에 우리는 소셜 미디어 계정 사용자명과 아이디를 즐겨찾기와 연결시킵니다. 이 데이터에는 (Google) 이메일, Discord ID, 또는 Twitter 아이디가 포함될 수 있습니다.
   gdprDeletion: 자신의 사용자 데이터를 제거하려면 저희 Discord에 문의해주세요!
   feedback: 피드백/버그 제보
   feedbackHtml: >-
