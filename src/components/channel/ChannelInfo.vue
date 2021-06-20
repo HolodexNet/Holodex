@@ -11,6 +11,9 @@
         <v-list-item-subtitle>
             <template v-if="!noSubscriberCount">
                 {{ subscriberCount }}
+                <div class="font-weight-medium">
+                    {{ channel.org }}
+                </div>
             </template>
             <template v-if="includeVideoCount">
                 <br />

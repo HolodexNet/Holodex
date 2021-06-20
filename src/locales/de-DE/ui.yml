@@ -53,7 +53,7 @@ component:
     showMore: Mehr anzeigen
   watch:
     streamingFor: Live seit {0}
-    nextUpInMugen: Es folgt ...
+    nextUpInMugen: Nächstes Video
     Comments:
       title: Kommentare
       all: Alle
@@ -62,7 +62,7 @@ component:
     type:
       channel: Kanal
       topic: Thema
-      org: org
+      org: Organisation
       titledesc: Titel/Beschreibung
       comments: Kommentare
       videourl: Video-URL
@@ -216,13 +216,13 @@ views:
     siteNavigationSettings: Seite/Navigation
     languageSettings: Sprache
     gridSizeLabel: Thumbnail/Rastergröße
-    gridSizeMsg: Ändert Thumbnail / Videoraster Größe auf Start-/Favoritenseite
+    gridSizeMsg: Ändert Thumbnail / Videoraster Größe auf Start- / Favoritenseite
     gridSize:
       - Groß
       - Mittel
       - Klein
-    hideCollabStreamsLabel: Collab Streams ausblenden
-    hideCollabStreamsMsg: Collab Streams in deinem Favoriten Feed ausblenden
+    hideCollabStreamsLabel: Collab-Streams ausblenden
+    hideCollabStreamsMsg: Collab-Streams in deinem Favoriten-Feed ausblenden
     theme: Design
   app:
     update_available: Ein Update ist verfügbar
@@ -294,8 +294,8 @@ views:
     permalink: Permalink
     presets: Vorlagen
     addframe: Zelle hinzufügen
-    muteAll: Alles stumm
-    unmuteAll: Alle entstummen
+    muteAll: Alles stummschalten
+    unmuteAll: Alle Stummschaltungen aufheben
     autoLayoutTip: Klicke auf einen Kanal, um im automatischen Layout-Modus zu schauen
     createLayoutTip: Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine Vorlage verwendest
     preset:
@@ -311,7 +311,7 @@ views:
       name: Name
       autoLayout: Layout im Auto-Modus verwenden
     video:
-      selectLive: Stream auswählen
+      selectLive: Livestream auswählen
       addCustomVideo: Benutzerdefiniertes Video hinzufügen
     fullScreen: Vollbild
   mugen:
@@ -326,7 +326,7 @@ editor:
     add: Hinzufügen
     update: Aktualisieren
     permission: >-
-      Du musst 'Editor' oder höher sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
+      Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
     titles:
       addSong: 'Song-Metadaten: Neuen Song hinzufügen'
       songList: 'Songliste : {0}'
@@ -351,19 +351,19 @@ about:
     title: Häufig gestellte Fragen
     ytchatHeader: Mein Youtube Chat ist nicht eingeloggt!
     ytchatContent: >-
-      Bitte deaktiviere die Browser-Sicherheitsfunktion, "Blockieren von Cookies von Drittanbietern" oder nimm diese Website und youtube.com mit in die Whitelist auf.
+      Bitte deaktiviere die Browser-Sicherheitsfunktion "Blockieren von Cookies von Drittanbietern" oder nimm diese Website und youtube.com mit in die Whitelist auf.
     ytchatFirefox: Firefox-Anleitung, andere Browser sollten ähnlich sein.
     autoplayHeader: Automatische Wiedergabe funktioniert nicht!
     autoplayContent: Bitte google, wie du automatische Wiedergabe / AutoPlay für deinen Browser aktivieren kannst.
     musicPlayer: Die Musikwiedergabe funktioniert auf mobilen Geräten nicht gut!
     musicPlayerContent: >-
       Es tut uns leid, aber es ist zurzeit unmöglich die Musikwiedergabe auf dem Handy zu unterstützen. <br/>Drei Faktoren: 1. Mobile Geräte verbieten in der Regel automatische Wiedergabe / AutoPlay, was wir benötigen; 2. Mobile Geräte erlauben in der Regel nicht, dass Webseiten im Hintergrund Musik aneinanderreihen; 3. Wir integrieren deine Warteschlange nicht in Musiksteuerungszentralen auf Systemebene.
-    videoLinkage: Wie stelle ich sicher, dass Videos richtig mit Vtubern verlinkt werden?
+    videoLinkage: Wie stelle ich sicher, dass Videos richtig mit VTubern verlinkt werden?
     videoLinkageContent: >-
-      Alle Informationen werden automatisch aus der Videobeschreibung gesammelt. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden Vtuber. Wenn du keine Vtuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem Vtuber benötigen, der Holodex bekannt ist.
+      Alle Informationen werden automatisch aus der Videobeschreibung gesammelt. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden VTuber. Wenn du keine VTuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem VTuber benötigen, der Holodex bekannt ist.
     quitHolodex: "Ich bin ein Subber (Untertitler) und möchte, dass mein Kanal von Holodex entfernt wird"
     quitHolodexContent: >-
-      Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir heölfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
+      Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir helfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
     favorite:
       title: Was sind Favoriten?
       disappear:

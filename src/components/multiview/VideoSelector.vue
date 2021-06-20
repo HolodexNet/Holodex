@@ -55,7 +55,7 @@
                         :error="customURLError"
                     ></v-text-field>
                     <v-btn
-                        @click="addCustomTwitchVideo"
+                        @click="addCustomVideo"
                         :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                     >
                         <v-icon>{{ icons.mdiCheck }}</v-icon>
@@ -144,7 +144,7 @@
                 style="width: 100%"
             ></v-text-field>
             <v-btn
-                @click="addCustomTwitchVideo"
+                @click="addCustomVideo"
                 :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                 icon
             >
@@ -169,11 +169,7 @@
                         v-bind="attrs"
                         style="position: relative; margin-right: 3px; cursor: pointer"
                         draggable="true"
-                        v-on:dragstart="
-                            (ev) => {
-                                ev.dataTransfer.setData('text', `holodex.net/watch/${video.id}`);
-                            }
-                        "
+                        v-on:dragstart="(ev) => dragVideo(ev, video)"
                     >
                         <div
                             class="live-badge"
@@ -200,9 +196,9 @@ import VideoCard from "@/components/video/VideoCard.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
-import { ORGS, VIDEO_URL_REGEX } from "@/utils/consts";
+import { ORGS } from "@/utils/consts";
 import { dayjs } from "@/utils/time";
-import { resizeChannelPhoto } from "@/utils/functions";
+import { getVideoIDFromUrl, resizeChannelPhoto } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
 import { mdiTwitch } from "@mdi/js";
 
@@ -358,31 +354,10 @@ export default {
             this.$emit("videoClicked", video);
         },
         addCustomVideo() {
-            const match = this.customURL.match(VIDEO_URL_REGEX);
-            if (match && match[5] && match[5].length === 11) {
+            const content = getVideoIDFromUrl(this.customURL);
+            if (content && content.id) {
                 this.customURLError = false;
-                this.$emit("videoClicked", {
-                    id: match[5],
-                    channel: {
-                        name: match[5],
-                    },
-                });
-            } else {
-                this.customURLError = true;
-            }
-        },
-        addCustomTwitchVideo() {
-            const regex = /(?:https:\/\/)?twitch\.tv\/([\w\-_]*)/i;
-            const match = this.customURL.match(regex);
-            if (match && match[1]) {
-                this.customURLError = false;
-                this.$emit("videoClicked", {
-                    id: match[1],
-                    cellVideoType: "twitch",
-                    channel: {
-                        name: match[1],
-                    },
-                });
+                this.$emit("videoClicked", content);
             } else {
                 this.customURLError = true;
             }
@@ -442,6 +417,10 @@ export default {
                         this.hasError = true;
                     }
                 });
+        },
+        dragVideo(ev, video) {
+            ev.dataTransfer.setData("text", `https://holodex.net/watch/${video.id}`);
+            ev.dataTransfer.setData("application/json", JSON.stringify(video));
         },
     },
 };
