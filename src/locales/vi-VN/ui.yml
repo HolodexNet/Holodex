@@ -174,7 +174,7 @@ views:
       dateuploadedLatestFirst: Ngày tải lên, mới nhất trên cùng
       dateuploadedEarliestFirst: Ngày tải lên, cũ nhất trên cùng
   notFound:
-    title: Không tìm thấy nội dung này
+    title: Không tìm thấy nội dung
     back: Về trang chủ
   search:
     sort:
