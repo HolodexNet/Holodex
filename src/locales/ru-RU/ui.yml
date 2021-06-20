@@ -221,7 +221,6 @@ views:
     add_my_channel: Добавить мой канал в Holodex
   watch:
     theaterMode: Широкий экран
-    saveToLibrary: Сохранить видео в библиотеку
     mentionIconLabel: УПОМИНАНИЯ
     chat:
       loading: Загрузка чата...
