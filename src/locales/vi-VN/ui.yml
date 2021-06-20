@@ -12,8 +12,8 @@ component:
     favoriteAllInGroup: Thêm tất cả vào mục Yêu thích
   channelInfo:
     stats: Số liệu thống kê
-    videoCount: '{0} Videos'
-    clipCount: '{n} Clips'
+    videoCount: '{0} Video'
+    clipCount: '{n} Clip'
     subscriberCount: '{n} người đăng kí'
     subscriberNA: Số lượng người đăng kí không khả dụng
     totalViews: Tổng lượt xem
@@ -130,7 +130,7 @@ views:
     sortOptions:
       subscribers: Người đăng kí
       group: Nhóm
-      recentUpload: Gần đây
+      recentUpload: Tải lên gần đây
       videoCount: Số lượng video
       clipCount: Số lượng clip
       org: Tổ chức
