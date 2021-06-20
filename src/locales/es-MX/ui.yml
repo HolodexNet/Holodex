@@ -173,7 +173,6 @@ views:
     add_my_channel: Añadir mi canal a Holodex
   watch:
     theaterMode: Modo Cine
-    saveToLibrary: Guardar el video en la Biblioteca
     mentionIconLabel: MENCIONES
     chat:
       loading: Cargando el chat...
