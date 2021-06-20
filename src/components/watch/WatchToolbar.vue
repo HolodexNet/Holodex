@@ -12,7 +12,7 @@
                     </v-btn>
                 </template>
                 <span v-if="!hasSaved">{{ $t("views.watch.saveToPlaylist") }}</span>
-                <span v-else>{{ {{ $t('views.watch.removeFromPlaylist') }} }} </span>
+                <span v-else>{{ $t("views.watch.removeFromPlaylist") }}</span>
             </v-tooltip>
             <v-menu bottom nudge-top="20px">
                 <template v-slot:activator="{ on }">
