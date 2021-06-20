@@ -29,19 +29,19 @@
                         <br />
                         <span class="text-caption">Last Updated: {{ toTime(playlist.updated_at) }}</span>
                     </v-list-item-title>
-                    <v-list-item-action>
+                    <v-list-item-action class="flex-row">
                         <v-img
-                            width="150px"
-                            v-for="id in playlist.video_ids || []"
+                            v-for="id in (playlist.video_ids || []).splice(0, 4)"
                             :src="imageSrc(id)"
                             :key="`vid${id}thumb`"
+                            class="preview-img"
                         ></v-img>
                         <!-- local playlist support -->
                         <v-img
-                            width="150px"
-                            v-for="{ id } in playlist.videos || []"
+                            v-for="{ id } in (playlist.videos || []).splice(0, 4)"
                             :src="imageSrc(id)"
                             :key="`vid${id}thumb`"
+                            class="preview-img"
                         ></v-img>
                     </v-list-item-action>
                 </v-list-item>
@@ -53,6 +53,11 @@
 <style>
 .active-playlist {
     border-top: 2px solid var(--v-primary-base) !important;
+}
+.preview-img {
+    display: inline-block;
+    margin-left: -50%;
+    height: 90px;
 }
 </style>
 

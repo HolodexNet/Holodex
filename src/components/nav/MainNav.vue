@@ -214,9 +214,9 @@ export default {
                     icon: this.icons.mdiAccountBoxMultiple,
                 },
                 {
-                    name: this.$t("component.mainNav.library"),
-                    path: "/library",
-                    icon: this.icons.mdiAnimationPlay,
+                    name: this.$t("component.mainNav.playlist"),
+                    path: "/playlists",
+                    icon: this.icons.mdiPlaylistPlay,
                     divider: true,
                 },
                 {
