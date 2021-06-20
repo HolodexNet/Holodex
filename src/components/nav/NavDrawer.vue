@@ -151,28 +151,24 @@ export default {
         },
         favorites() {
             const fav = this.$store.state.favorites.favorites;
-            // const nameProp = this.$store.state.settings.nameProperty;
+            const favoritesSet = new Set(fav.map((x) => x.id));
             const lives: Array<any> = this.$store.state.favorites.live;
             const updateNotice = this.$store.state.favorites.lastLiveUpdate;
             console.debug(`Updating favs: ${updateNotice}`);
 
-            // const videos: Array<any> = [...lives];
-            // const favWithVideos = videos.sort(
-            //     (a, b) =>
-            //         dayjs(a.start_actual || a.start_scheduled).valueOf() -
-            //             dayjs(b.start_actual || a.start_scheduled).valueOf(),
-            // );
-
-            const existingChs = new Set(lives.map((x) => x.channel.id));
-
+            const existingChs = {};
+            lives.forEach((x) => {
+                if (favoritesSet.has(x.channel.id) && !existingChs[x.channel.id]) {
+                    existingChs[x.channel.id] = x;
+                }
+            });
             // remainder:
             const extras = fav
-                .filter((x) => !existingChs.has(x.id))
+                .filter((x) => !existingChs[x.id])
                 .map((ch) => ({
                     channel: ch,
                 }));
-
-            return [...lives, ...extras];
+            return [...Object.values(existingChs), ...extras];
         },
         collapsedFavorites() {
             return !this.favoritesExpanded && this.favorites.length > 8 ? this.favorites.slice(0, 8) : this.favorites;
