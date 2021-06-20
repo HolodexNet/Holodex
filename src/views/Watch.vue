@@ -45,7 +45,7 @@
                 </WatchFrame>
                 <WatchToolBar :video="video" :noBackButton="!isMobile">
                     <template v-slot:buttons>
-                        <v-tooltip bottom v-if="hasLiveTL">
+                        <v-tooltip bottom v-if="hasLiveTL && hasLiveChat">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn
                                     icon
@@ -142,7 +142,6 @@
                         :isMugen="isMugen"
                         @historyLength="handleHistoryLength"
                     />
-                    <!-- Non-mobile mode sidebar -->
                     <template v-if="!isMobile">
                         <WatchSideBar :video="video" @timeJump="seekTo" />
                         <WatchMugen @playNext="playNext" v-if="isMugen" />
@@ -293,11 +292,10 @@ export default {
             return this.isMugen || this.video.status === "live" || this.video.status === "upcoming";
         },
         hasLiveTL() {
-            // mugen doesn't have it, but all streams do.
-            return !this.isMugen && this.video.type === "stream";
+            return this.video.status === "live" || this.video.status === "upcoming";
         },
         showChatWindow() {
-            return (this.hasLiveChat || this.hasLiveTL) && (this.showLiveChat || this.showTL);
+            return this.hasLiveChat && (this.showLiveChat || this.showTL);
         },
         isMugen() {
             return this.$route.name === "mugen-clips";
