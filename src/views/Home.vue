@@ -54,7 +54,6 @@
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
-                        :showCollabBorderFunc="showCollabBorder"
                     >
                     </VideoCardList>
                     <v-divider class="my-3 secondary" v-if="lives.length" />
@@ -64,7 +63,6 @@
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
-                        :showCollabBorderFunc="showCollabBorder"
                     >
                     </VideoCardList>
                 </template>
@@ -91,7 +89,6 @@
                             includeChannel
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
-                            :showCollabBorderFunc="tab === Tabs.ARCHIVE && showCollabBorder"
                         />
                         <!-- only show SkeletonCardList if it's loading -->
                         <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -212,14 +209,6 @@ export default {
                 this.identifier = Date.now();
             }, 3 * 60 * 1000);
         },
-        showCollabBorder(video) {
-            return (
-                this.$store.state.currentOrg !== "All Vtubers" &&
-                video.channel.org !== this.$store.state.currentOrg &&
-                video.mentions &&
-                video.mentions.length > 0
-            );
-        },
         changeTab(preservePage = true) {
             // Sync the hash to current tab
             const toHash = {
@@ -264,7 +253,7 @@ export default {
                 const res = await backendApi.videos({
                     status: "past",
                     ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                    include: "clips,mentions",
+                    include: "clips",
                     org: this.$store.state.currentOrg,
                     lang: this.$store.state.settings.clipLangs.join(","),
                     paginated: !this.scrollMode,

@@ -57,7 +57,6 @@
                             :includeAvatar="shouldIncludeAvatar"
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
-                            :showCollabBorderFunc="showCollabBorder"
                         >
                         </VideoCardList>
                         <v-divider class="my-3 secondary" v-if="lives.length" />
@@ -67,7 +66,6 @@
                             :includeAvatar="shouldIncludeAvatar"
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
-                            :showCollabBorderFunc="showCollabBorder"
                         >
                         </VideoCardList>
                     </template>
@@ -94,7 +92,6 @@
                                 includeChannel
                                 :cols="colSizes"
                                 :dense="currentGridSize > 0"
-                                :showCollabBorderFunc="tab === Tabs.ARCHIVE && showCollabBorder"
                             />
                             <!-- only show SkeletonCardList if it's loading -->
                             <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -225,9 +222,6 @@ export default {
         },
     },
     methods: {
-        showCollabBorder(video) {
-            return video.mentions && video.mentions.length > 0 && !this.favoritesSet.has(video.channel.id);
-        },
         init(updateFavorites) {
             if (this.favorites.length > 0 && this.isLoggedIn) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
@@ -274,7 +268,7 @@ export default {
                     .favoritesVideos(this.$store.state.userdata.jwt, {
                         status: "past",
                         ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                        include: "clips,mentions",
+                        include: "clips",
                         lang: this.$store.state.settings.clipLangs.join(","),
                         paginated: !this.scrollMode,
                         limit,
