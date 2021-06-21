@@ -33,14 +33,14 @@
                     </v-list-item-title>
                     <v-list-item-action class="flex-row-reverse">
                         <!-- local playlist support -->
-                        <v-img
-                            v-for="id in getTopFour(playlist)"
-                            :src="imageSrc(id)"
-                            :key="`vid${id}thumb`"
-                            class="preview-img"
-                            width="150px"
-                            height="85px"
-                        ></v-img>
+                        <div class="group">
+                            <img
+                                v-for="id in getTopFour(playlist)"
+                                :src="imageSrc(id)"
+                                :key="`vid${id}thumb`"
+                                class="preview-img stack"
+                            />
+                        </div>
                     </v-list-item-action>
                 </v-list-item>
             </v-card>
@@ -52,10 +52,42 @@
 .active-playlist {
     border-top: 2px solid var(--v-primary-base) !important;
 }
-.preview-img {
-    display: inline-block;
-    margin-left: -50%;
+/* Layout */
+.group {
+    position: relative;
+    width: 240px;
     height: 90px;
+}
+
+.stack {
+    display: block;
+    width: 150px;
+    height: 90px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+    position: absolute;
+    transition: top 0.5s ease-out;
+    top: 0px;
+}
+
+.stack:nth-child(2) {
+    left: 25px;
+}
+.stack:nth-child(3) {
+    left: 50px;
+}
+.stack:nth-child(4) {
+    left: 75px;
+}
+
+.stack:hover {
+    z-index: 2;
+    top: -4px !important;
+}
+
+.group:hover .stack {
+    top: 10px;
 }
 </style>
 
