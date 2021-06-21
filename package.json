@@ -62,6 +62,7 @@
     "vue-router": "^3.5.1",
     "vue-simple-headful": "^2.2.6",
     "vue-socket.io-extended": "^4.2.0",
+    "vue-virtual-scroll-list": "^2.3.2",
     "vue-youtube-embed": "^2.2.2",
     "vuetify": "^2.5.0",
     "vuex": "^3.6.2",
