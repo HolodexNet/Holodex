@@ -139,13 +139,19 @@ export default {
                 ARCHIVE: 1,
                 CLIPS: 2,
             }),
+            refreshTimer: null,
         };
     },
     mounted() {
         this.init();
+        this.setAutoRefresh();
     },
     activated() {
         this.changeTab(true);
+        this.setAutoRefresh();
+    },
+    deactivated() {
+        clearInterval(this.refreshTimer);
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -199,6 +205,13 @@ export default {
         },
     },
     methods: {
+        setAutoRefresh() {
+            if (this.refreshTimer) clearInterval(this.refreshTimer);
+            this.refreshTimer = setInterval(() => {
+                this.$store.dispatch("home/fetchLive");
+                this.identifier = Date.now();
+            }, 3 * 60 * 1000);
+        },
         showCollabBorder(video) {
             return (
                 this.$store.state.currentOrg !== "All Vtubers" &&
