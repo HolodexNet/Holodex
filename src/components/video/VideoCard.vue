@@ -17,7 +17,7 @@
         <!-- Video Image with Duration -->
         <div
             style="position: relative; width: 100%"
-            class="video-thumbnail white--text rounded flex-grow-0 d-flex"
+            class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
             :style="horizontal && `background: url(${imageSrc}) center/cover;`"
         >
             <!-- Image Overlay -->
@@ -61,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            <v-img :src="imageSrc" :aspect-ratio="16 / 9" width="100%" v-if="!shouldHideThumbnail && !horizontal" />
+            <v-img :src="imageSrc" :aspect-ratio="16 / 9" width="100%" v-if="!horizontal" class="rounded" />
         </div>
         <a
             class="d-flex flex-row flex-grow-1 no-decoration"
