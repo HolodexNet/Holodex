@@ -26,14 +26,12 @@
             </template>
         </v-snackbar>
         <ReportDialog />
-        <VideoCardMenu />
     </v-app>
 </template>
 
 <script lang="ts">
 import MainNav from "@/components/nav/MainNav.vue";
 import ReportDialog from "@/components/common/ReportDialog.vue";
-import VideoCardMenu from "@/components/common/VideoCardMenu.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
 import { dayjsLangs, loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
@@ -49,7 +47,6 @@ export default {
         MainNav,
         ReportDialog,
         PullToRefresh,
-        VideoCardMenu,
     },
     data() {
         return {

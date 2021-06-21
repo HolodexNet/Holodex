@@ -126,19 +126,22 @@
                 </div>
             </div>
             <!-- Vertical dots menu -->
-            <!-- <v-btn
-                icon
-                small
-                @click.stop.prevent="showMenu"
-                :ripple="false"
-                :class="{ 'hover-show': !hasSaved && !isMobile }"
-                class="video-card-menu"
-            >
-                <v-icon>
-                    {{ icons.mdiDotsVertical }}
-                </v-icon>
-            </v-btn> -->
-            <video-card-menu :video="data" :class="{ 'hover-show': !hasSaved && !isMobile }" />
+            <v-menu bottom nudge-top="20px">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        @click.stop.prevent
+                        :ripple="false"
+                        class="video-card-menu"
+                        :class="{ 'hover-show': !hasSaved && !isMobile }"
+                    >
+                        <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
+                    </v-btn>
+                </template>
+                <video-card-menu :video="data" />
+            </v-menu>
         </a>
         <!-- optional breaker object to row-break into a new row. -->
         <v-list-item-action v-if="!!this.$slots.action" class="video-card-item-actions">
@@ -498,5 +501,12 @@ export default {
 
 .theme--light .video-card-subtitle {
     color: rgba(0, 0, 0, 0.6);
+}
+.video-card-menu {
+    position: absolute;
+    right: 0px;
+    display: inline-block;
+    top: 5px;
+    z-index: 1;
 }
 </style>
