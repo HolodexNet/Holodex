@@ -12,7 +12,7 @@
             },
         }"
         style="min-height: 100%"
-        class="d-flex flex-column"
+        class="d-flex flex-column pt-0"
     >
         <!-- Teleport tabs to nav extension slot -->
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
