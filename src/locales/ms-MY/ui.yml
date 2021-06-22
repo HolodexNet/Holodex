@@ -37,6 +37,7 @@ component:
     music: Muzik
     multiview: Berbilang Tontonan
     points: mata
+    playlist: Senarai main
   videoCard:
     clips: '{n} Sedutan'
     watching: '{0} Tontonan Sekarang'
@@ -255,6 +256,8 @@ views:
           Siaran langsung masih belum berlangsung. Cuba lagi apabila siaran berlangsung dalam masa 15 minit
         connectedToChat: Bersambung
         disconnectedToChat: Terputus
+    removeFromPlaylist: Alih keluar video daripada senarai main semasa
+    saveToPlaylist: Simpan video pada senarai main semasa
   favorites:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
