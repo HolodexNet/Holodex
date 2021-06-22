@@ -4,11 +4,23 @@
             <span class="text-h5">Your Playlists:</span><br />
             <span class="text-subtitle-2">Click a playlist to set it as active.</span>
             <!-- <v-list class="mt-4" color="transparent"> -->
+            <v-card class="my-4" id="new-playlist-btn" @click.stop="createNewPlaylist">
+                <v-list-item two-line>
+                    <v-icon left x-large class="mr-6">{{ icons.mdiPlaylistPlus }}</v-icon>
+                    <v-list-item-title class="font-weight-medium text-subtitle-2">
+                        Create a new Playlist
+                        <br />
+                        <div v-if="!jwt" class="text-caption">
+                            Login to save playlists and have more than one playlist
+                        </div>
+                    </v-list-item-title>
+                </v-list-item>
+            </v-card>
             <v-card
                 class="my-4"
                 v-for="playlist in playlists"
                 :key="'plst' + playlist.id + playlist.name"
-                :class="playlist.id === active.id ? 'active-playlist' : ''"
+                :class="playlist.id === active.id ? 'active-playlist' : 'inactive-playlist'"
                 @click.stop="setNewPlaylist(playlist)"
             >
                 <v-list-item two-line>
@@ -50,7 +62,16 @@
 </template>
 <style>
 .active-playlist {
-    border-top: 2px solid var(--v-primary-base) !important;
+    position: relative;
+    left: -1px;
+    top: -1px;
+    border: 2px solid var(--v-primary-base) !important;
+}
+.inactive-playlist:hover {
+    position: relative;
+    left: -0.5px;
+    top: -0.5px;
+    border: 1px solid var(--v-primary-base) !important;
 }
 /* Layout */
 .group {
@@ -89,6 +110,11 @@
 .group:hover .stack {
     top: 10px;
 }
+
+#new-playlist-btn {
+    border: 2px dashed var(--v-primary-darken1);
+    opacity: 80%;
+}
 </style>
 
 <script>
@@ -103,8 +129,8 @@ export default {
     components: {},
     async mounted() {
         try {
-            if (this.$store.state.userdata.jwt) {
-                this.serverside = (await backendApi.getPlaylistList(this.$store.state.userdata.jwt)).data;
+            if (this.jwt) {
+                this.serverside = (await backendApi.getPlaylistList(this.jwt)).data;
             }
         } catch {
             this.serverside = [];
@@ -123,6 +149,9 @@ export default {
             if (!this.active.id) return [this.active, ...this.serverside];
             return this.serverside;
         },
+        jwt() {
+            return this.$store.state.userdata.jwt;
+        },
     },
     methods: {
         toTime(ts) {
@@ -134,21 +163,28 @@ export default {
             return srcs.medium;
         },
         setNewPlaylist(playlist) {
-            if (this.active.id !== playlist.id) {
-                if (this.isSaved) {
-                    this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
-                } else if (
-                    // eslint-disable-next-line no-alert,no-restricted-globals
-                    confirm("You will lose unsaved changes. Continue?")
-                ) {
-                    this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
-                }
+            if (this.confirmIfNotSaved()) {
+                this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
             }
+        },
+        confirmIfNotSaved() {
+            // eslint-disable-next-line no-restricted-globals,no-alert
+            return this.isSaved || confirm("You will lose unsaved changes. Continue?");
         },
         getTopFour(playlist) {
             if (playlist.video_ids) return playlist.video_ids.slice(0, 4);
             if (playlist.videos) return playlist.videos.slice(0, 4).map(({ id }) => id);
             return [];
+        },
+        createNewPlaylist() {
+            if (!this.jwt) {
+                this.$router.push("/login");
+                return;
+            }
+            if (this.confirmIfNotSaved()) {
+                this.$store.commit("playlist/resetPlaylist");
+                // resetting is basically the same as creating a new one
+            }
         },
     },
 };
