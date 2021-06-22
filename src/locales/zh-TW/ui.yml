@@ -37,6 +37,7 @@ component:
     music: 音樂播放
     multiview: 多窗工具
     points: pts
+    playlist: 播放清單
   videoCard:
     clips: '{n} 部剪輯'
     watching: '{0} 人正在觀看'
@@ -48,6 +49,8 @@ component:
     googleCalendar: 新增至 Google 日曆
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -127,6 +130,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -256,6 +260,8 @@ views:
           實況尚未開始，請於實況開始15分鐘後再行嘗試連線。
         connectedToChat: 已連線
         disconnectedToChat: 已失去連線
+    removeFromPlaylist: 將影片自當前播放清單移除
+    saveToPlaylist: 將影片儲存至當前播放清單
   favorites:
     promptForAction: >-
       創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
