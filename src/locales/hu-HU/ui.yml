@@ -37,6 +37,7 @@ component:
     music: Zene
     multiview: Több képernyős
     points: pont
+    playlist: Lejátszási lista
   videoCard:
     clips: '{n} Klip'
     watching: '{0} néző'
@@ -255,6 +256,8 @@ views:
           Még nem indult el az adás, kérlek próbáld újra amikor a stream 15 percre van indulástól
         connectedToChat: Csatlakozva
         disconnectedToChat: Lecsatlakozva
+    removeFromPlaylist: Videó eltávolítása a lejátszási listából
+    saveToPlaylist: Videó mentése a lejátszási listába
   favorites:
     promptForAction: >-
       Készíts egy listát a kedvenc vtuberjeidről és láthatod az legújabb klipjeiket és adásaikat ezen az oldalon.
