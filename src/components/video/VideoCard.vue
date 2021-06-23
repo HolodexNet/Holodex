@@ -144,7 +144,18 @@
             </v-menu>
         </a>
         <!-- optional breaker object to row-break into a new row. -->
-        <v-list-item-action v-if="!!this.$slots.action" class="video-card-item-actions">
+        <v-list-item-action v-if="!!this.$slots.action || activePlaylistItem" class="video-card-item-actions">
+            <template v-if="activePlaylistItem">
+                <button @click.stop.prevent="move(data.id, 'up')">
+                    <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
+                </button>
+                <button @click.stop.prevent="$store.dispatch('playlist/removeVideoByID', data.id)">
+                    <v-icon small> {{ icons.mdiDelete }} </v-icon>
+                </button>
+                <button @click.stop.prevent="move(data.id, 'down')">
+                    <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
+                </button>
+            </template>
             <slot name="action"></slot>
         </v-list-item-action>
     </a>
@@ -219,6 +230,10 @@ export default {
         },
         disableDefaultClick: {
             required: false,
+            type: Boolean,
+            default: false,
+        },
+        activePlaylistItem: {
             type: Boolean,
             default: false,
         },
@@ -362,6 +377,26 @@ export default {
         drag(ev) {
             ev.dataTransfer.setData("text", `https://holodex.net/watch/${this.data.id}`);
             ev.dataTransfer.setData("application/json", JSON.stringify(this.video));
+        },
+        move(id, direction) {
+            const playlist = this.$store.state.playlist.active;
+            console.log(playlist);
+            const curIdx = playlist.videos.findIndex((elem) => elem.id === id);
+            if (curIdx < 0) throw new Error("huh");
+            let toIdx;
+            switch (direction) {
+                case "up":
+                    toIdx = curIdx - 1;
+                    break;
+                case "down":
+                    toIdx = curIdx + 1;
+                    break;
+                default:
+                    break;
+            }
+            if (toIdx < 0) throw new Error("can't move stuff before 0");
+            if (toIdx >= playlist.videos.length) throw new Error("can't move stuff to beyond the end");
+            this.$store.commit("playlist/reorder", { from: curIdx, to: toIdx });
         },
     },
 };
