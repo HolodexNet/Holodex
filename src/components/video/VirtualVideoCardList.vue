@@ -2,7 +2,8 @@
     <!-- <v-container class="py-0" style="position: relative" fluid :id="'t' + randomId"> -->
     <!-- Video Card grid rows -->
     <virtual-list
-        style="overflow-y: auto; overflow-x: hidden"
+        style="overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain"
+        class="thin-scroll-bar"
         :style="{ height: computedHeight }"
         :data-key="'id'"
         :data-sources="videos"
@@ -11,7 +12,9 @@
         :estimate-size="88"
         :keeps="keeps"
         :page-mode="pageMode"
-        :item-class="'virtual-video-list'"
+        :item-class="'virtual-video-list-item'"
+        ref="test"
+        :item-class-add="checkActive"
     />
     <!-- </v-container> -->
 </template>
@@ -85,9 +88,21 @@ export default {
             type: Boolean,
             default: false,
         },
+        activeIndex: {
+            type: Number,
+            default: 0,
+        },
         height: {
             type: String,
             default: "500px",
+        },
+    },
+    mounted() {},
+    methods: {
+        checkActive(index) {
+            console.log(this.activeIndex);
+            if (index === this.activeIndex) return "video-card-active";
+            return "";
         },
     },
     computed: {
@@ -98,11 +113,37 @@ export default {
             return this.pageMode ? "" : this.height;
         },
     },
+    watch: {
+        activeIndex(idx) {
+            this.$refs.test.scrollToIndex(idx);
+        },
+    },
 };
 </script>
 
 <style lang="scss">
-.virtual-video-list {
+.virtual-video-list-item {
     padding: 6px 4px;
+}
+.video-card-active {
+    /* primary color with opacity */
+    /* Used for Mugen Clips where one of the list videos are 'active' */
+    /* background-color: #f0629257; */
+    height: auto;
+    width: auto;
+    position: relative;
+}
+
+.video-card-active::before {
+    content: "";
+    background-color: var(--v-primary-darken2);
+    background-size: cover;
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
+    opacity: 0.15;
+    border-radius: 4px;
 }
 </style>
