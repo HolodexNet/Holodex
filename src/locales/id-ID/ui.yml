@@ -37,6 +37,7 @@ component:
     music: Musik
     multiview: MultiView
     points: poin
+    playlist: Playlist
   videoCard:
     clips: '{n} Klip'
     watching: '{0} sedang menonton'
@@ -255,6 +256,8 @@ views:
           Saat ini Streaming belum dimulai, coba lagi nanti setelah stream 15 menit dimulai
         connectedToChat: Terhubung
         disconnectedToChat: Terputus
+    removeFromPlaylist: Hapus video dari playlist ini
+    saveToPlaylist: Simpan video ke playlist ini
   favorites:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada halaman ini.
