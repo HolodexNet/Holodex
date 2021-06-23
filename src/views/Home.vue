@@ -48,7 +48,7 @@
             <template v-if="tab === Tabs.LIVE_UPCOMING">
                 <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                 <template v-else-if="lives.length || upcoming.length">
-                    <virtual-video-card-list :videos="upcoming" />
+                    <virtual-video-card-list :videos="upcoming" pageMode :keeps="15" includeChannel />
                     <!-- <VideoCardList
                         :videos="lives"
                         includeChannel

@@ -76,7 +76,7 @@
                 <template v-else>
                     <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
                     <VideoCardList
-                        :videos="live"
+                        :videos="modalFilteredLive"
                         @videoClicked="handleVideoClick"
                         disableDefaultClick
                         includeChannel
@@ -162,7 +162,7 @@
         </template>
         <!-- Channel icons -->
         <template v-else>
-            <v-tooltip :key="video.id" v-for="video in filteredLive" transition="v-fade-transition" bottom>
+            <v-tooltip :key="video.id" v-for="video in topFilteredLive" transition="v-fade-transition" bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <div
                         v-on="on"
@@ -301,7 +301,10 @@ export default {
             ];
             return arr;
         },
-        filteredLive() {
+        modalFilteredLive() {
+            return this.live.filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+        },
+        topFilteredLive() {
             // Filter out lives for top bar
             let count = 0;
             const filtered = this.live

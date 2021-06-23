@@ -89,39 +89,14 @@
                 </v-btn>
             </template>
         </v-snackbar>
-        <VideoCardList
+        <VirtualVideoCardList
             :videos="playlist.videos || []"
             includeChannel
             :horizontal="horizontal"
+            activePlaylistItem
             class="playlist-video-list"
-            :cols="{
-                xs: 1,
-                sm: 3,
-                md: 4,
-                lg: 5,
-                xl: 6,
-            }"
         >
-            <template v-slot:action="{ video }" v-if="isEditable">
-                <div class="d-flex flex-shrink flex-column">
-                    <!-- <button>
-                        <v-icon small> {{ mdiChevronDoubleUp }} </v-icon>
-                    </button> -->
-                    <button @click.stop.prevent="move(video.id, 'up')">
-                        <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
-                    </button>
-                    <button @click.stop.prevent="$store.dispatch('playlist/removeVideoByID', video.id)">
-                        <v-icon small> {{ icons.mdiDelete }} </v-icon>
-                    </button>
-                    <button @click.stop.prevent="move(video.id, 'down')">
-                        <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
-                    </button>
-                    <!-- <button>
-                        <v-icon small> {{ mdiChevronDoubleDown }} </v-icon>
-                    </button> -->
-                </div>
-            </template>
-        </VideoCardList>
+        </VirtualVideoCardList>
 
         <!--* INSTRUCTIONS DIALOG FOR YOUTUBE --->
         <v-dialog v-model="instructionsDialog" :width="$store.state.isMobile ? '90%' : '60vw'">
@@ -153,7 +128,7 @@
 </template>
 
 <script lang="ts">
-import VideoCardList from "@/components/video/VideoCardList.vue";
+import VirtualVideoCardList from "@/components/video/VirtualVideoCardList.vue";
 import { Playlist } from "@/utils/types";
 import { PropType } from "vue";
 import { json2csvAsync } from "json-2-csv";
@@ -162,7 +137,7 @@ import { mdiContentSave, mdiFileDelimited, mdiChevronDoubleUp, mdiChevronDoubleD
 export default {
     name: "Playlist",
     components: {
-        VideoCardList,
+        VirtualVideoCardList,
     },
     props: {
         playlist: {

@@ -39,6 +39,7 @@
                                 autoplay: isMugen ? 1 : 0,
                                 playsinline: 1,
                             }"
+                            @ended="ended"
                         >
                         </youtube>
                     </template>
@@ -143,8 +144,9 @@
                         @historyLength="handleHistoryLength"
                     />
                     <template v-if="!isMobile">
-                        <WatchSideBar :video="video" @timeJump="seekTo" />
+                        <!-- <WatchSideBar :video="video" @timeJump="seekTo" /> -->
                         <WatchMugen @playNext="playNext" v-if="isMugen" />
+                        <WatchPlaylist @playNext="playNext" v-model="currentIndex" />
                     </template>
                 </v-col>
             </div>
@@ -186,6 +188,7 @@ export default {
         WatchComments,
         WatchToolBar,
         WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
+        WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
     },
     data() {
         return {
@@ -204,6 +207,8 @@ export default {
             // showLiveChat: true,
 
             fullScreen: false,
+
+            currentIndex: 0,
         };
     },
     mounted() {
@@ -239,7 +244,7 @@ export default {
             this.player.seekTo(time);
             this.player.playVideo();
         },
-        playNext({ video, timeOffset }) {
+        playNext({ video, timeOffset = 0 }) {
             this.$store.commit("watch/setVideo", video);
             this.startTime = timeOffset;
         },
@@ -274,6 +279,9 @@ export default {
             if (!this.showTL) {
                 this.newTL += 1;
             }
+        },
+        ended() {
+            this.currentIndex += 1;
         },
     },
     computed: {
