@@ -1,6 +1,7 @@
 <template>
+    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-if="isLoading || hasError" />
     <div
-        v-if="!isLoading && !hasError"
+        v-else
         ref="watchFullscreen"
         style="overflow-y: auto"
         :style="{
@@ -36,7 +37,7 @@
                             @ready="ready"
                             :playerVars="{
                                 ...(timeOffset && { start: timeOffset }),
-                                autoplay: isMugen ? 1 : 0,
+                                autoplay: isMugen || isPlaylist ? 1 : 0,
                                 playsinline: 1,
                             }"
                             @ended="ended"
@@ -105,7 +106,7 @@
                 <!-- Mobile mode only sidebar -->
                 <WatchSideBar :video="video" @timeJump="seekTo" v-if="isMobile" />
                 <!-- Mobile mode Mugen -->
-                <WatchMugen @playNext="playNext" v-if="isMugen && isMobile" />
+                <WatchMugen @playNext="playNextMugen" v-if="isMugen && isMobile" />
                 <WatchComments
                     :comments="comments"
                     :video="video"
@@ -144,15 +145,14 @@
                         @historyLength="handleHistoryLength"
                     />
                     <template v-if="!isMobile">
-                        <!-- <WatchSideBar :video="video" @timeJump="seekTo" /> -->
-                        <WatchMugen @playNext="playNext" v-if="isMugen" />
-                        <WatchPlaylist @playNext="playNext" v-model="currentIndex" />
+                        <WatchPlaylist @playNext="playNextPlaylist" v-model="playlistIndex" />
+                        <WatchMugen @playNext="playNextMugen" v-if="isMugen" />
+                        <WatchSideBar :video="video" @timeJump="seekTo" />
                     </template>
                 </v-col>
             </div>
         </div>
     </div>
-    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
 </template>
 
 <script lang="ts">
@@ -191,6 +191,9 @@ export default {
         WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
     },
     data() {
+        const playlistIndex = this.$store.state.playlist.active.videos.findIndex(
+            ({ id }) => id === this.$route.params.id,
+        );
         return {
             startTime: 0,
             mdiOpenInNew,
@@ -208,7 +211,8 @@ export default {
 
             fullScreen: false,
 
-            currentIndex: 0,
+            playlistIndex,
+            isPlaylist: false,
         };
     },
     mounted() {
@@ -244,9 +248,13 @@ export default {
             this.player.seekTo(time);
             this.player.playVideo();
         },
-        playNext({ video, timeOffset = 0 }) {
+        playNextMugen({ video, timeOffset = 0 }) {
             this.$store.commit("watch/setVideo", video);
             this.startTime = timeOffset;
+        },
+        playNextPlaylist({ video }) {
+            this.isPlaylist = true;
+            this.$router.push(`/watch/${video.id}`);
         },
         handleVideoUpdate(update) {
             this.video.live_viewers = update.live_viewers;
@@ -281,7 +289,10 @@ export default {
             }
         },
         ended() {
-            this.currentIndex += 1;
+            // if playlistIndex is set to -1 we aren't playing playlists.
+            if (this.playlistIndex >= 0) {
+                this.playlistIndex += 1;
+            }
         },
     },
     computed: {
