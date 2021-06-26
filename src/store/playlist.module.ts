@@ -17,8 +17,11 @@ const initialState = {
 export const state = { ...initialState };
 
 const getters = {
-    contains: (state) => (id) => {
-        return state.active.videos.findIndex((v) => v.id === id) >= 0;
+    videoIds: (state) => {
+        return new Set(state.active.videos.map((x) => x.id));
+    },
+    contains: (state, getters) => (id) => {
+        return getters.videoIds.has(id);
     },
 };
 

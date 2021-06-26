@@ -6,7 +6,7 @@
             <!-- <v-list class="mt-4" color="transparent"> -->
             <v-card class="my-4" id="new-playlist-btn" @click.stop="createNewPlaylist">
                 <v-list-item two-line>
-                    <v-icon left x-large class="mr-6">{{ icons.mdiPlaylistPlus }}</v-icon>
+                    <v-icon left x-large class="mr-3">{{ icons.mdiPlaylistPlus }}</v-icon>
                     <v-list-item-title class="font-weight-medium text-subtitle-2">
                         Create a new Playlist
                         <br />
@@ -24,7 +24,7 @@
                 @click.stop="setNewPlaylist(playlist)"
             >
                 <v-list-item two-line>
-                    <v-icon left x-large color="secondary" class="mr-6">{{ mdiFormatListText }}</v-icon>
+                    <v-icon left x-large color="secondary" class="mr-3 hidden-xs-only">{{ mdiFormatListText }}</v-icon>
                     <v-list-item-title>
                         <span class="font-weight-medium text-subtitle-1">
                             {{ playlist.name }}
@@ -40,7 +40,7 @@
                         </v-chip>
                         <br />
                         <span class="text-caption" v-show="playlist.updated_at">
-                            Last Updated: {{ toTime(playlist.updated_at) }}
+                            <span class="hidden-xs-only">Last Updated:</span> {{ toTime(playlist.updated_at) }}
                         </span>
                     </v-list-item-title>
                     <v-list-item-action class="flex-row-reverse">
@@ -153,6 +153,13 @@ export default {
             return this.$store.state.userdata.jwt;
         },
     },
+    watch: {
+        async isSaved(newval) {
+            if (newval)
+                // is now saved
+                this.serverside = (await backendApi.getPlaylistList(this.jwt)).data;
+        },
+    },
     methods: {
         toTime(ts) {
             return localizedDayjs(ts, this.$store.state.settings.lang).format("LLL");
@@ -183,6 +190,7 @@ export default {
             }
             if (this.confirmIfNotSaved()) {
                 this.$store.commit("playlist/resetPlaylist");
+                this.$store.commit("playlist/modified");
                 // resetting is basically the same as creating a new one
             }
         },

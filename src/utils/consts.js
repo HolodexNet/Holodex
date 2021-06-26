@@ -152,3 +152,5 @@ export const MESSAGE_TYPES = Object.freeze({
     TOKEN: "token",
     FAVORITES: "favorites",
 });
+
+export const MAX_PLAYLIST_LENGTH = 500;

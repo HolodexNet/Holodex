@@ -1,6 +1,6 @@
 <template>
     <v-container fluid class="pa-0">
-        <div style="font-size: 1rem !important; font-weight: 500" class="mb-2 ml-0 d-flex">
+        <div style="font-size: 1rem !important; font-weight: 500" class="ml-0 mb-1 d-flex">
             <v-text-field
                 v-model="playlistName"
                 autofocus
@@ -89,6 +89,9 @@
                 </v-btn>
             </template>
         </v-snackbar>
+        <span class="text-caption grey--text mt-n2 pa-0 d-block text-right">
+            {{ playlist.videos.length }} / {{ maxPlaylistCount }}
+        </span>
         <VirtualVideoCardList
             :videos="playlist.videos || []"
             includeChannel
@@ -133,6 +136,7 @@ import { Playlist } from "@/utils/types";
 import { PropType } from "vue";
 import { json2csvAsync } from "json-2-csv";
 import { mdiContentSave, mdiFileDelimited, mdiChevronDoubleUp, mdiChevronDoubleDown } from "@mdi/js";
+import { MAX_PLAYLIST_LENGTH } from "@/utils/consts";
 
 export default {
     name: "Playlist",
@@ -169,6 +173,7 @@ export default {
             editNameMode: false,
             instructionsDialog: false,
             loginWarning: false,
+            maxPlaylistCount: MAX_PLAYLIST_LENGTH,
         };
     },
     computed: {
