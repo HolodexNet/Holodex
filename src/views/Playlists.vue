@@ -170,6 +170,9 @@ export default {
             return srcs.medium;
         },
         setNewPlaylist(playlist) {
+            // Ignore clicks on same playlist
+            if (playlist.id === this.active.id) return;
+
             if (this.confirmIfNotSaved()) {
                 this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
             }
