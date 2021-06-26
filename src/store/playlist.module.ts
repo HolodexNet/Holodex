@@ -35,7 +35,8 @@ const mutations = {
         state.isSaved = false;
     },
     setPlaylist(state, playlist: Playlist) {
-        Vue.set(state, "active", playlist);
+        // Videos can be undefined, make sure it's at least []
+        Vue.set(state, "active", { videos: [], ...playlist });
         state.isSaved = false;
     },
     addVideo(state, video) {

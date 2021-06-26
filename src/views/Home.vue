@@ -48,8 +48,7 @@
             <template v-if="tab === Tabs.LIVE_UPCOMING">
                 <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
                 <template v-else-if="lives.length || upcoming.length">
-                    <virtual-video-card-list :videos="upcoming" pageMode :keeps="15" includeChannel />
-                    <!-- <VideoCardList
+                    <VideoCardList
                         :videos="lives"
                         includeChannel
                         :includeAvatar="shouldIncludeAvatar"
@@ -65,7 +64,7 @@
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
                     >
-                    </VideoCardList> -->
+                    </VideoCardList>
                 </template>
                 <template v-else>
                     <div class="ma-auto pa-5 text-center">
@@ -109,7 +108,6 @@ import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 import isActive from "@/mixins/isActive";
-import VirtualVideoCardList from "@/components/video/VirtualVideoCardList.vue";
 
 export default {
     name: "Home",
@@ -126,7 +124,6 @@ export default {
         LoadingOverlay,
         GenericListLoader,
         SkeletonCardList,
-        VirtualVideoCardList,
     },
     data() {
         return {

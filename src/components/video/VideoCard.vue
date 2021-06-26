@@ -336,10 +336,10 @@ export default {
             event.preventDefault();
             this.hasSaved
                 ? this.$store.commit("playlist/removeVideoByID", this.data.id)
-                : this.$store.commit("playlist/addVideo", this.video);
+                : this.$store.commit("playlist/addVideo", this.data);
         },
         goToVideo() {
-            this.$emit("videoClicked", this.video);
+            this.$emit("videoClicked", this.data);
             if (this.disableDefaultClick) return;
             // On mobile, clicking on watch links should not increment browser history
             // Back button will always return to the originating video list in one click
@@ -350,12 +350,12 @@ export default {
             }
         },
         goToChannel() {
-            this.$emit("videoClicked", this.video);
+            this.$emit("videoClicked", this.data);
             if (this.disableDefaultClick) return;
             this.$router.push({ path: `/channel/${this.data.channel.id}` });
         },
         goToYoutube() {
-            this.$emit("videoClicked", this.video);
+            this.$emit("videoClicked", this.data);
             if (this.disableDefaultClick) return;
             const url = `https://www.youtube.com/watch?v=${this.data.id}`;
             window.open(url, "_blank", "noopener");
@@ -363,20 +363,9 @@ export default {
         updateNow() {
             this.now = Date.now();
         },
-        // All video cards share one menu that gets controlled through the store
-        showMenu(e) {
-            // this.$store.commit("setShowVideoCardMenu", false);
-            // Send video object and x, y coords for mouse click
-            this.$store.commit("setVideoCardMenu", {
-                video: this.video,
-                x: e.clientX,
-                y: e.clientY,
-            });
-            this.$store.commit("setShowVideoCardMenu", true);
-        },
         drag(ev) {
             ev.dataTransfer.setData("text", `https://holodex.net/watch/${this.data.id}`);
-            ev.dataTransfer.setData("application/json", JSON.stringify(this.video));
+            ev.dataTransfer.setData("application/json", JSON.stringify(this.data));
         },
         move(id, direction) {
             const playlist = this.$store.state.playlist.active;
