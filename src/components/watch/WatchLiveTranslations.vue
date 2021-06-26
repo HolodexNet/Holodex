@@ -272,8 +272,9 @@ export default {
             })
                 .then(({ data }) => {
                     this.completed = data.length !== this.limit || loadAll;
-                    if (firstLoad) this.tlHistory = data.map(this.parseMessage);
-                    else this.tlHistory.unshift(...data.map(this.parseMessage));
+                    const filtered = data.filter((m) => !this.blockedNames.has(m.name));
+                    if (firstLoad) this.tlHistory = filtered.map(this.parseMessage);
+                    else this.tlHistory.unshift(...filtered.map(this.parseMessage));
 
                     // Set last message as breakpoint, used for maintaing scrolling and styling
                     if (this.tlHistory.length) this.tlHistory[0].breakpoint = true;
