@@ -307,7 +307,7 @@ export default {
                     (msg.is_moderator && this.liveTlShowModerator) ||
                     (msg.is_verified && this.liveTlShowVerified)
                 ) {
-                    if (Math.abs(this.$refs.tlBody.scrollTop) <= 1) this.$refs.tlBody.scrollTo(0, 0);
+                    if (Math.abs(this.$refs.tlBody.scrollTop) <= 15) this.$refs.tlBody.scrollTo(0, 0);
                     this.tlHistory.push(this.parseMessage(msg));
                     this.$emit("historyLength", this.tlHistory.length);
                 }
