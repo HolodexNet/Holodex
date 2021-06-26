@@ -37,6 +37,7 @@ component:
     music: Musik
     multiview: Mehrfachansicht
     points: Pkte.
+    playlist: Wiedergabeliste
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Zuschauer'
@@ -255,6 +256,8 @@ views:
           Der Stream ist noch nicht live - Bitte versuch es erneut, 15 Minuten bevor der Stream live gehen soll
         connectedToChat: Verbunden
         disconnectedToChat: Verbindung getrennt
+    removeFromPlaylist: Video von aktueller Wiedergabeliste entfernen
+    saveToPlaylist: Video zu aktueller Wiedergabeliste hinzufügen
   favorites:
     promptForAction: >-
       Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
@@ -316,6 +319,12 @@ views:
   mugen:
     welcome: >-
       Willkommen bei MugenClips! Auf dieser Seite sehen sich alle den gleichen zufällig ausgewählten englischen Hololive-Clip an. Schaue mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du vorgespult hast, aber wieder mit allen synchronisiert werden möchtest, lade die Seite bitte neu.
+  playlist:
+    playlist-is-modified: Nicht gespeichert
+    item-last-updated: 'Zuletzt aktualisiert:'
+    login-prompt: Melde dich an, um Wiedergabelisten zu speichern und mehr als eine Wiedergabeliste zu haben
+    new-playlist-btn-label: Neue Wiedergabeliste erstellen
+    change-loss-warning: Ungespeicherte Änderungen gehen verloren. Fortfahren?
 time:
   soon: bald
   diff_future_date: Beginnt {0} ({1})
