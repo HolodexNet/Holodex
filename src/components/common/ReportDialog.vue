@@ -46,6 +46,7 @@
                             v-model="comments"
                             persistent-hint
                             hint="English / 日本語 / 繁體中文 OK"
+                            :error="selectedReason === 'Other' && !comments.length"
                         />
                     </v-card-text>
 
@@ -94,6 +95,10 @@ export default {
     },
     methods: {
         sendReport() {
+            if (this.selectedReason === "Other" && !this.comments.length) {
+                this.error = true;
+                return;
+            }
             this.isLoading = true;
             axiosInstance
                 .post(
@@ -138,6 +143,7 @@ export default {
                 .then(() => {
                     this.showReportDialog = false;
                     this.showSnackbar = true;
+                    this.erorr = false;
                 })
                 .catch((e) => {
                     console.error(e);
