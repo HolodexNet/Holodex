@@ -11,6 +11,7 @@ Vue.use(VueI18n);
 
 export const langs = [
     { val: "en", display: "English", credit: "@Holodex" },
+    { val: "en-CA", display: "English (Canadian)", credit: "@Holodex" },
     { val: "ja", display: "日本語", credit: "Yourein#3960" },
     { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
     { val: "ko", display: "한국어", credit: "AlexKoala#0253" },
@@ -29,6 +30,9 @@ export const langs = [
 export const dayjsLangs = {
     async en() {
         await import("dayjs/locale/en");
+    },
+    "en-CA": async () => {
+        await import("dayjs/locale/en-ca");
     },
     async ja() {
         await import("dayjs/locale/ja");
@@ -121,6 +125,8 @@ export function loadLanguageAsync(lang) {
     // Map short language code to full
     const langFile = {
         ja: "ja-JP",
+        "en-CA": "en",
+        "en-GB": "en",
         es: "es-MX",
         "es-ES": "es-ES",
         ms: "ms-MY",

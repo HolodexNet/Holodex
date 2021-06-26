@@ -173,7 +173,7 @@ export default {
                 case "live":
                     return this.$t("component.watch.streamingFor", [this.elapsedTime]);
                 default:
-                    return localizedDayjs(this.video.available_at, this.lang).format("MMM DD, YYYY");
+                    return localizedDayjs(this.video.available_at, this.lang).format("LLL");
             }
         },
         liveViewers() {
