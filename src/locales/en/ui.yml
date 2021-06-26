@@ -350,6 +350,14 @@ views:
       selected English Hololive clip. Watch along and chat with Hololive fans
       from across the world. If you skip ahead and want to be re-sync'd with
       everyone, please refresh the page.
+  playlist:
+    playlist-is-modified: Not saved
+    item-last-updated: 'Last Updated:'
+    login-prompt: Login to save playlists and have more than one playlist
+    new-playlist-btn-label: Create a new Playlist
+    page-heading: 'Your Playlists:'
+    page-instruction: Click a playlist to set it as active.
+    change-loss-warning: You will lose unsaved changes. Continue?
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})

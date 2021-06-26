@@ -1,17 +1,18 @@
 <template>
     <v-container>
         <v-col>
-            <span class="text-h5">Your Playlists:</span><br />
-            <span class="text-subtitle-2">Click a playlist to set it as active.</span>
+            <span class="text-h5">{{ $t("views.playlist.page-heading") }}</span
+            ><br />
+            <span class="text-subtitle-2">{{ $t("views.playlist.page-instruction") }}</span>
             <!-- <v-list class="mt-4" color="transparent"> -->
             <v-card class="my-4" id="new-playlist-btn" @click.stop="createNewPlaylist">
                 <v-list-item two-line>
                     <v-icon left x-large class="mr-3">{{ icons.mdiPlaylistPlus }}</v-icon>
                     <v-list-item-title class="font-weight-medium text-subtitle-2">
-                        Create a new Playlist
+                        {{ $t("views.playlist.new-playlist-btn-label") }}
                         <br />
                         <div v-if="!jwt" class="text-caption">
-                            Login to save playlists and have more than one playlist
+                            {{ $t("views.playlist.login-prompt") }}
                         </div>
                     </v-list-item-title>
                 </v-list-item>
@@ -36,11 +37,12 @@
                             label
                             class="py-0 ml-1"
                         >
-                            Not saved
+                            {{ $t("views.playlist.playlist-is-modified") }}
                         </v-chip>
                         <br />
                         <span class="text-caption" v-show="playlist.updated_at">
-                            <span class="hidden-xs-only">Last Updated:</span> {{ toTime(playlist.updated_at) }}
+                            <span class="hidden-xs-only">{{ $t("views.playlist.item-last-updated") }}</span>
+                            {{ toTime(playlist.updated_at) }}
                         </span>
                     </v-list-item-title>
                     <v-list-item-action class="flex-row-reverse">
@@ -60,7 +62,7 @@
         </v-col>
     </v-container>
 </template>
-<style>
+<style scoped>
 .active-playlist {
     position: relative;
     left: -1px;
@@ -176,7 +178,7 @@ export default {
         },
         confirmIfNotSaved() {
             // eslint-disable-next-line no-restricted-globals,no-alert
-            return this.isSaved || confirm("You will lose unsaved changes. Continue?");
+            return this.isSaved || confirm(this.$t("views.playlist.change-loss-warning"));
         },
         getTopFour(playlist) {
             if (playlist.video_ids) return playlist.video_ids.slice(0, 4);
