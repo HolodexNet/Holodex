@@ -37,6 +37,7 @@ component:
     music: 音楽
     multiview: マルチビュー
     points: ポイント
+    playlist: プレイリスト
   videoCard:
     clips: '{n}本の切り抜き'
     watching: '{0}人が視聴中'
@@ -255,6 +256,8 @@ views:
           配信はまだ開始されてないです。チャットは配信の予定時刻の15分前から使用可能になります。
         connectedToChat: 接続されました
         disconnectedToChat: 切断しました
+    removeFromPlaylist: 現在のプレイリストから動画を削除
+    saveToPlaylist: 現在のプレイリストに動画を保存
   favorites:
     promptForAction: >-
       お気に入りのVtuberリストを作るとそのページでお気に入りしたVtuberの最新動画を確認できます。
@@ -316,6 +319,14 @@ views:
   mugen:
     welcome: >-
       MugenClipsへようこそ！このページでは全員がランダムに選択されたホロライブの英訳切り抜きを見ています。世界中のホロライブのファンと一緒に見て、チャットしましょう。 先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
+  playlist:
+    playlist-is-modified: 保存されていません
+    item-last-updated: '最終更新日時'
+    login-prompt: プレイリストの保存、複数のプレイリストの保持にはログインが必要です。
+    new-playlist-btn-label: 新しいプレイリストを作成
+    page-heading: 'プレイリスト:'
+    page-instruction: プレイリストをクリックすると、アクティブに設定されます。
+    change-loss-warning: 保存されていない変更は失われます。続行しますか？
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'
