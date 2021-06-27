@@ -37,6 +37,7 @@ component:
     music: Müzik
     multiview: Çoklu İzleme
     points: puan
+    playlist: Oynatma Listesi
   videoCard:
     clips: '{n} Klip'
     watching: '{0} İzleyici'
@@ -255,6 +256,8 @@ views:
           Yayın daha canlı değil, lütfen yayın başladıktan 15 dakika sonra tekrar deneyin.
         connectedToChat: Bağlandı
         disconnectedToChat: Bağlantı kesildi
+    removeFromPlaylist: Videoyu mevcut oynatma listesinden çıkar
+    saveToPlaylist: Videoyu mevcut oynatma listesine ekle
   favorites:
     promptForAction: >-
       Favori VTuberlarının bir listesini oluştur ve en son kliplerini ve yayınlarını bu sayfada görüntüle
@@ -316,6 +319,14 @@ views:
   mugen:
     welcome: >-
       MugenClips'e Hoşgeldiniz! Bu sayfadaki herkes sizinle aynı rastgele seçilmiş klipleri görür. Dünya çapındaki Hololive hayranlarıyla birlikte izleyin ve sohbet edin. İleriye atlar ve herkesle tekrardan eşitlenmek isterseniz, lütfen sayfayı yenileyin.
+  playlist:
+    playlist-is-modified: Kaydedilmedi
+    item-last-updated: 'Son Güncellenme:'
+    login-prompt: Birden fazla oynatma listesine sahip olabilmek ve listeleri kaydedebilmek için Giriş Yapın
+    new-playlist-btn-label: Yeni Oynatma Listesi oluştur
+    page-heading: 'Oynatma Listeleriniz:'
+    page-instruction: Etkin olarak seçmek istediğiniz oynatma listesine tıklayın.
+    change-loss-warning: Kaydedilmemiş değişiklikleri kaybedeceksiniz. Devam edilsin mi?
 time:
   soon: yakında
   diff_future_date: ' {0} ({1}) başlıyor'
