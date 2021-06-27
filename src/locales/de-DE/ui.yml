@@ -37,7 +37,7 @@ component:
     music: Musik
     multiview: Mehrfachansicht
     points: Pkte.
-    playlist: Wiedergabeliste
+    playlist: Playlist
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Zuschauer'
@@ -97,8 +97,8 @@ component:
     installBtn: Installieren
     iOS:
       popup: Holodex für iOS installieren
-      afterExportIcon: dann 'Zum Startbildschirm hinzufügen
-      beforeExportIcon: Tipp
+      afterExportIcon: dann "Zum Startbildschirm hinzufügen"
+      beforeExportIcon: Tippe auf
   media:
     remove: Entfernen
   comment:
@@ -115,11 +115,11 @@ component:
       - Sonstiges
   thirdpartycookie:
     explanation: >-
-      Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>youtube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Einloggen in / Verwenden von Youtube Chat auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.
-    dialogTitle: Youtube Chat auf Holodex benutzen
+      Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>youtube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Einloggen in / Verwenden des Youtube-Chats auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.
+    dialogTitle: Nutzung des Youtube-Chats auf Holodex
     alertText: >-
-      Deine Privatsphäre-Einstellungen machen es unmöglich, dich im Youtube Chat anzumelden. Klick hier für weitere Informationen
-    neverShowAgain: Nicht nochmal anzeigen
+      Deine Privatsphäre-Einstellungen machen es unmöglich, dich im Youtube-Chat anzumelden. Klick hier für weitere Informationen
+    neverShowAgain: Nicht erneut anzeigen
 views:
   channel:
     video: Videos
@@ -152,7 +152,7 @@ views:
       subber: Clips
   library:
     savedVideosTitle: Gespeicherte Videos
-    createYtPlaylistButton: YT Playlist erstellen ({0})
+    createYtPlaylistButton: YT-Playlist erstellen ({0})
     deleteFromLibraryButton: ({0}) löschen
     deleteConfirmation: Bist du sicher, dass du {0} Videos löschen möchtest?
     deleteConfirmationOK: Löschen
@@ -165,10 +165,10 @@ views:
     exportCsv: CSV-Datei
     selectionSelect50: 50 auswählen
     exportYTExplanation: >-
-      Die mit dieser Funktion erstellte YouTube-Playlist ist <b>ungelistet</b> und könnte von YouTube gelöscht werden. <br /> Da die Funktion von YouTube unvollständig ist, musst du Folgendes tun, um die <b>ungelistete</b> YouTube-Playlist in deinem Konto zu speichern.
-    exportYTHeading: Anleitung YouTube Playlist speichern
+      Die mit dieser Funktion erstellte YouTube-Playlist ist <b>ungelistet</b> und könnte von YouTube gelöscht werden. <br /> Da diese YouTube- Funktion unvollständig ist, musst du Folgendes tun, um die <b>ungelistete</b> YouTube-Playlist in deinem Account zu speichern.
+    exportYTHeading: Anleitung zum Speichern von YouTube-Playlisten
     exportYTInstructions: >-
-      <b class="red--text">Schritt 1</b>: Spiel die YouTube-Playlist ab, und änder die Player-Benutzeroberfläche in den Miniplayer-Modus. <br /><br /> <b class="red--text">Schritt 2</b>: Wähle ein beliebiges Video und füge es zur Warteschleife hinzu. <br /><br /> <b class="red--text">Schritt 3</b>: Die Playlist ist nun speicherbar. Klicke um sie zu speichern.
+      <b class="red--text">Schritt 1</b>: Spiele die YouTube-Playlist ab, und ändere die Player-Benutzeroberfläche in den Miniplayer-Modus. <br /><br /> <b class="red--text">Schritt 2</b>: Wähle ein beliebiges Video und füge es zur Warteschleife hinzu. <br /><br /> <b class="red--text">Schritt 3</b>: Die Playlist ist nun speicherbar. Klicke, um sie zu speichern.
     sort:
       dateaddedEarliestFirst: Zur Bibliothek hinzugefügt am, Neuestes zuerst
       dateaddedLatestFirst: Zur Bibliothek hinzugefügt am, Frühestes zuerst
@@ -256,8 +256,8 @@ views:
           Der Stream ist noch nicht live - Bitte versuch es erneut, 15 Minuten bevor der Stream live gehen soll
         connectedToChat: Verbunden
         disconnectedToChat: Verbindung getrennt
-    removeFromPlaylist: Video von aktueller Wiedergabeliste entfernen
-    saveToPlaylist: Video zu aktueller Wiedergabeliste hinzufügen
+    removeFromPlaylist: Video von aktueller Playlist entfernen
+    saveToPlaylist: Video zu aktueller Playlist hinzufügen
   favorites:
     promptForAction: >-
       Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
@@ -277,12 +277,12 @@ views:
       title: Quellen/Clips (in Entwicklung)
   login:
     apikeyMsg: >-
-      Du kannst den API-Schlüssel verwenden, um die Holodex-API automatisiert abzufragen. Nur ein Schlüssel pro Konto. Nachdem du einen neuen Schlüssel erhalten hast, läuft der alte Schlüssel innerhalb von 24 Stunden ab.
+      Du kannst den API-Schlüssel verwenden, um die Holodex-API automatisiert abzufragen. Nur ein Schlüssel pro Account. Nachdem du einen neuen Schlüssel erhalten hast, läuft der alte Schlüssel innerhalb von 24 Stunden ab.
     apikeyNew: Neuen API-Schlüssel erstellen
     ownedYtChannel: Dein YouTube-Kanal
     futureYtcOwnerMessage: >-
       In Zukunft planen wir, Channel-Besitzern mehr Dienste wie z.B. die Bearbeitung von Metadaten für ihre eigenen Videos anzubieten.
-    linkAcc: Ein anderes Konto verknüpfen
+    linkAcc: Einen anderen Account verknüpfen
     apikeyResetConfirm1: Bist du sicher, dass du deinen API-Schlüssel zurücksetzen möchtest?
     apikeyResetConfirm2: Es dauert 0-24 Stunden bis der alte API-Schlüssel abläuft. Wirklich zurücksetzen?
     apikeyResetNvm: Nichts Interessantes ist passiert.
@@ -318,12 +318,14 @@ views:
     fullScreen: Vollbild
   mugen:
     welcome: >-
-      Willkommen bei MugenClips! Auf dieser Seite sehen sich alle den gleichen zufällig ausgewählten englischen Hololive-Clip an. Schaue mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du vorgespult hast, aber wieder mit allen synchronisiert werden möchtest, lade die Seite bitte neu.
+      Willkommen bei MugenClips! Auf dieser Seite sehen alle den gleichen zufällig ausgewählten englischen Hololive-Clip. Schaue mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du vorgespult hast, aber wieder mit allen synchronisiert werden möchtest, lade die Seite bitte neu.
   playlist:
     playlist-is-modified: Nicht gespeichert
     item-last-updated: 'Zuletzt aktualisiert:'
-    login-prompt: Melde dich an, um Wiedergabelisten zu speichern und mehr als eine Wiedergabeliste zu haben
-    new-playlist-btn-label: Neue Wiedergabeliste erstellen
+    login-prompt: Melde dich an, um Playlisten zu speichern und um mehr als eine Playlist zu haben
+    new-playlist-btn-label: Neue Playlist erstellen
+    page-heading: 'Deine Playlisten:'
+    page-instruction: Klicke auf eine Playlist, um sie zu aktivieren.
     change-loss-warning: Ungespeicherte Änderungen gehen verloren. Fortfahren?
 time:
   soon: bald
@@ -357,7 +359,7 @@ about:
   issueTracker: Fehlerverfolgung / Quelle
   faq:
     title: Häufig gestellte Fragen
-    ytchatHeader: Mein Youtube Chat ist nicht eingeloggt!
+    ytchatHeader: Mein Youtube-Chat ist nicht eingeloggt!
     ytchatContent: >-
       Bitte deaktiviere die Browser-Sicherheitsfunktion "Blockieren von Cookies von Drittanbietern" oder nimm diese Website und youtube.com mit in die Whitelist auf.
     ytchatFirefox: Firefox-Anleitung, andere Browser sollten ähnlich sein.
