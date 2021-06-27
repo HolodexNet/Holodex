@@ -97,7 +97,7 @@ component:
     installBtn: Telepítés
     iOS:
       popup: Holodex telepítése iOS-re
-      afterExportIcon: majd 'Hozzáadás a kezdőképernyőhöz
+      afterExportIcon: majd 'Hozzáadás a kezdőképernyőhöz'
       beforeExportIcon: Érintés
   media:
     remove: Eltávolítás
@@ -319,6 +319,14 @@ views:
   mugen:
     welcome: >-
       Üdvözöllek a MugenClips-nél! Ezen az oldalon mindenki ugyan azt a véletlenszerűen kiválasztott angol Hololive klipet nézi. Együtt nézheted és chatelhetsz más Hololive rajongókkal az egész világon. Ha előretekersz és szeretnél újra egyidejűleg lenni a többiekkel, kérlek frissítsd az oldalt.
+  playlist:
+    playlist-is-modified: Nincs mentve
+    item-last-updated: 'Legutóbb frissítve:'
+    login-prompt: Jelentkezz be, hogy egynél több lejátszási listád lehessen
+    new-playlist-btn-label: Új lejátszási lista létrehozása
+    page-heading: 'A lejátszási listád:'
+    page-instruction: Kattints egy lejátszási listára, hogy aktiváld
+    change-loss-warning: A mentetlen változtatások el fognak veszni. Folytatod?
 time:
   soon: hamarosan
   diff_future_date: Indul {0} ({1})
