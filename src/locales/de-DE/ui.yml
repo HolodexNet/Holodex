@@ -236,7 +236,7 @@ views:
     add_my_channel: Meinen Kanal zu Holodex hinzufügen
   watch:
     theaterMode: Theatermodus
-    mentionIconLabel: VTUBER
+    mentionIconLabel: Erwähnungen
     chat:
       loading: Chat wird geladen...
       hideTLBtn: Übersetzungen ausblenden
@@ -247,13 +247,13 @@ views:
       showVerifiedMessages: Verifizierte Nachrichten anzeigen
       showModeratorMessages: Moderator-Nachrichten anzeigen
       tlFontSize: Schriftgröße
-      tlWindowSize: Box Größe (in %), 0% für automatisch
+      tlWindowSize: Box Größe (in %), bei 0% belassen für automatisch
       retryBtn: Erneut versuchen
       status:
         reconnecting: Automatisch neu verbinden...
         reconnectFailed: Verbindung fehlgeschlagen
         notLive: >-
-          Der Stream ist noch nicht live - Bitte versuch es erneut, 15 Minuten bevor der Stream live gehen soll
+          Der Stream ist noch nicht live. Bitte versuche es 15 Minuten vor Stream-Beginn erneut
         connectedToChat: Verbunden
         disconnectedToChat: Verbindung getrennt
     removeFromPlaylist: Video von aktueller Playlist entfernen
@@ -270,7 +270,7 @@ views:
       title: Stream-Thema ändern
       info: >-
         Alle Benutzer können Videos einem Thema zuordnen, aber nur Editoren und Administratoren können das Thema entfernen oder ändern, nachdem es gesetzt wurde.
-      button: Speichern (kann 5 Minuten dauern)
+      button: Speichern (Es kann bis zu 5 Minuten dauern, bevor die Änderung sichtbar wird)
     channelMentions:
       title: Kanalerwähnungen
     sources:
