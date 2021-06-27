@@ -49,6 +49,8 @@ component:
     googleCalendar: 新增至 Google 日曆
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -128,6 +130,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -320,6 +323,14 @@ views:
   mugen:
     welcome: >-
       歡迎來到 MugenClips！所有使用者在本頁面都在同時隨機觀看同一段Hololive的英文剪輯！和其他Holo粉絲一起觀看一起聊天吧。如果您手動變更了時間軸但想再次與其他人同步進度的話，請重新整理此頁面。
+  playlist:
+    playlist-is-modified: 尚未儲存
+    item-last-updated: '最後更新：'
+    login-prompt: 登入以儲存並建立多份播放清單
+    new-playlist-btn-label: 建立新的播放清單
+    page-heading: '您的播放清單：'
+    page-instruction: 點擊任一播放清單將其啟用
+    change-loss-warning: 未儲存的變更將會遺失，確定要繼續嗎？
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
