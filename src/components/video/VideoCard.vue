@@ -149,7 +149,7 @@
                 <button @click.stop.prevent="move(data.id, 'up')">
                     <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
                 </button>
-                <button @click.stop.prevent="$store.dispatch('playlist/removeVideoByID', data.id)">
+                <button @click.stop.prevent="$store.commit('playlist/removeVideoByID', data.id)">
                     <v-icon small> {{ icons.mdiDelete }} </v-icon>
                 </button>
                 <button @click.stop.prevent="move(data.id, 'down')">
