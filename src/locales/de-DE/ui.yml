@@ -118,7 +118,7 @@ component:
       Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>youtube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Einloggen in / Verwenden des Youtube-Chats auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.
     dialogTitle: Nutzung des Youtube-Chats auf Holodex
     alertText: >-
-      Deine Privatsphäre-Einstellungen machen es unmöglich, dich im Youtube-Chat anzumelden. Klick hier für weitere Informationen
+      Die Privatsphäre-Einstellungen deines Browsers machen es unmöglich, dich im Youtube-Chat anzumelden. Klicke hier für weitere Informationen
     neverShowAgain: Nicht erneut anzeigen
 views:
   channel:
@@ -133,11 +133,11 @@ views:
       group: Gruppe
       recentUpload: Letzter Upload
       videoCount: Videoanzahl
-      clipCount: Clipanzahl
+      clipCount: Clip-Anzahl
       org: Organisation
     tabs:
       Vtuber: Vtuber
-      Subber: Subber
+      Subber: Clipper
       Favorites: Favoriten
       Blocked: Blockiert
     favoritesAreEmpty: Du hast keine Favoriten!
@@ -145,7 +145,7 @@ views:
   home:
     liveOrUpcomingHeading: Jetzt Live / Demnächst Live
     recentVideosHeading: Aktuelle Videos
-    noStreams: Momentan keine Live- oder anstehenden Streams
+    noStreams: Im Moment gibt es keine Live- oder anstehenden Streams
     recentVideoToggles:
       all: Alle
       official: Archiv
@@ -170,8 +170,8 @@ views:
     exportYTInstructions: >-
       <b class="red--text">Schritt 1</b>: Spiele die YouTube-Playlist ab, und ändere die Player-Benutzeroberfläche in den Miniplayer-Modus. <br /><br /> <b class="red--text">Schritt 2</b>: Wähle ein beliebiges Video und füge es zur Warteschleife hinzu. <br /><br /> <b class="red--text">Schritt 3</b>: Die Playlist ist nun speicherbar. Klicke, um sie zu speichern.
     sort:
-      dateaddedEarliestFirst: Zur Bibliothek hinzugefügt am, Neuestes zuerst
-      dateaddedLatestFirst: Zur Bibliothek hinzugefügt am, Frühestes zuerst
+      dateaddedEarliestFirst: Zur Bibliothek hinzugefügt am, Frühestes zuerst
+      dateaddedLatestFirst: Zur Bibliothek hinzugefügt am, Neuestes zuerst
       dateuploadedLatestFirst: Uploaddatum, Neuestes zuerst
       dateuploadedEarliestFirst: Uploaddatum, Frühestes zuerst
   notFound:
@@ -217,7 +217,7 @@ views:
     siteNavigationSettings: Seite/Navigation
     languageSettings: Sprache
     gridSizeLabel: Thumbnail/Rastergröße
-    gridSizeMsg: Ändert Thumbnail / Videoraster Größe auf Start- / Favoritenseite
+    gridSizeMsg: Ändere Thumbnail-/Videorastergröße auf Start- und Favoritenseite
     gridSize:
       - Groß
       - Mittel
@@ -265,14 +265,14 @@ views:
     close: Schließen
     showall: Alle anzeigen
   editor:
-    needlogin: Du musst dich einloggen, um Änderungen an Holodex Video- und Song-Metadaten vorzunehmen.
+    needlogin: Du musst dich einloggen, um Änderungen an Video-/Song-Metadaten in Holodex vorzunehmen.
     changeTopic:
       title: Stream-Thema ändern
       info: >-
-        Alle Benutzer können Videos einem Thema zuordnen, aber nur Editoren und Administratoren können das Thema entfernen oder ändern, sobald es gesetzt wurde.
+        Alle Benutzer können Videos einem Thema zuordnen, aber nur Editoren und Administratoren können das Thema entfernen oder ändern, nachdem es gesetzt wurde.
       button: Speichern (kann 5 Minuten dauern)
     channelMentions:
-      title: Kanal Erwähnungen
+      title: Kanalerwähnungen
     sources:
       title: Quellen/Clips (in Entwicklung)
   login:
@@ -281,11 +281,11 @@ views:
     apikeyNew: Neuen API-Schlüssel erstellen
     ownedYtChannel: Dein YouTube-Kanal
     futureYtcOwnerMessage: >-
-      In Zukunft planen wir, Channel-Besitzern mehr Dienste wie z.B. die Bearbeitung von Metadaten für ihre eigenen Videos anzubieten.
-    linkAcc: Einen anderen Account verknüpfen
+      In Zukunft planen wir, Kanalbesitzern mehr Dienste, wie z.B. die Bearbeitung von Metadaten für ihre eigenen Videos, anzubieten.
+    linkAcc: Weiteren Account verknüpfen
     apikeyResetConfirm1: Bist du sicher, dass du deinen API-Schlüssel zurücksetzen möchtest?
     apikeyResetConfirm2: Es dauert 0-24 Stunden bis der alte API-Schlüssel abläuft. Wirklich zurücksetzen?
-    apikeyResetNvm: Nichts Interessantes ist passiert.
+    apikeyResetNvm: Es ist nichts Interessantes passiert.
     with:
       - Mit Google einloggen
       - Mit Discord einloggen
@@ -350,7 +350,7 @@ editor:
     originalArtistInput: Originaler Künstler
     testStart: Teste den Start
     startInput: Start
-    endInput: 'Dauer in Sekunden: (end @ {0})'
+    endInput: 'Dauer in Sekunden: (Ende @ {0})'
   exitMode: Bearbeitungsmodus verlassen
   enterMode: Video bearbeiten
 about:
@@ -367,11 +367,11 @@ about:
     autoplayContent: Bitte google, wie du automatische Wiedergabe / AutoPlay für deinen Browser aktivieren kannst.
     musicPlayer: Die Musikwiedergabe funktioniert auf mobilen Geräten nicht gut!
     musicPlayerContent: >-
-      Es tut uns leid, aber es ist zurzeit unmöglich die Musikwiedergabe auf dem Handy zu unterstützen. <br/>Drei Faktoren: 1. Mobile Geräte verbieten in der Regel automatische Wiedergabe / AutoPlay, was wir benötigen; 2. Mobile Geräte erlauben in der Regel nicht, dass Webseiten im Hintergrund Musik aneinanderreihen; 3. Wir integrieren deine Warteschlange nicht in Musiksteuerungszentralen auf Systemebene.
+      Es tut uns leid, aber es ist uns zurzeit nicht möglich, die mobile Musikwiedergabe zu unterstützen. <br/>Das hat mehrere Gründe: Erstens verbieten mobile Geräte meistens die automatische Wiedergabe, welche wir hierfür benötigen würden; und zweitens verbieten sie Webseiten meistens, dass sie im Hintergrund Songs aneinanderreihen. Außerdem integrieren wir deine Warteschlange nicht in Musiksteuerungszentralen auf Systemebene.
     videoLinkage: Wie stelle ich sicher, dass Videos richtig mit VTubern verlinkt werden?
     videoLinkageContent: >-
-      Alle Informationen werden automatisch aus der Videobeschreibung gesammelt. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden VTuber. Wenn du keine VTuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem VTuber benötigen, der Holodex bekannt ist.
-    quitHolodex: "Ich bin ein Subber (Untertitler) und möchte, dass mein Kanal von Holodex entfernt wird"
+      Alle Informationen werden automatisch aus der Videobeschreibung ausgelesen. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden VTuber. Wenn du keine VTuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem VTuber benötigen, welcher Holodex bekannt ist.
+    quitHolodex: "Ich bin ein Clipper und möchte, dass mein Kanal von Holodex entfernt wird\\r\n"
     quitHolodexContent: >-
       Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir helfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
     favorite:
@@ -386,7 +386,7 @@ about:
     MugenClips:
       title: Was ist MugenClips?
     subber:
-      title: Ich bin ein Subber (Untertitler) und finde meinen Kanal oder Clips nicht auf Holodex
+      title: Ich bin ein Clipper und finde meinen Kanal oder meine Clips nicht auf Holodex
       contents:
         - >-
 
