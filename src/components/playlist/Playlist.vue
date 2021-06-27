@@ -93,7 +93,7 @@
             {{ playlist.videos.length }} / {{ maxPlaylistCount }}
         </span>
         <VirtualVideoCardList
-            :videos="playlist.videos || []"
+            :playlist="playlist"
             includeChannel
             :horizontal="horizontal"
             activePlaylistItem

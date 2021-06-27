@@ -8,7 +8,7 @@
         }"
         @click.exact.prevent="(e) => (!redirectMode ? goToVideo(data.id) : goToYoutube(data.id))"
         :target="redirectMode ? '_blank' : ''"
-        :href="!redirectMode ? `/watch/${data.id}` : `https://youtu.be/${data.id}`"
+        :href="!redirectMode ? watchLink : `https://youtu.be/${data.id}`"
         rel="noopener"
         draggable="true"
         v-on:dragstart="drag"
@@ -67,7 +67,7 @@
             class="d-flex flex-row flex-grow-1 no-decoration"
             style="height: 88px; position: relative"
             @click.exact.stop.prevent="goToVideo(data.id)"
-            :href="`/watch/${data.id}`"
+            :href="watchLink"
             rel="noopener"
         >
             <!-- Channel icon -->
@@ -237,6 +237,9 @@ export default {
             type: Boolean,
             default: false,
         },
+        parentPlaylistId: {
+            type: [Number, String],
+        },
     },
     // created() {
     //     this.data = this.video || this.source;
@@ -326,6 +329,10 @@ export default {
         isMobile() {
             return this.$store.state.isMobile;
         },
+        watchLink() {
+            const q = this.parentPlaylistId ? `?playlist=${this.parentPlaylistId}` : "";
+            return `/watch/${this.data.id}${q}`;
+        },
     },
     methods: {
         formatDuration,
@@ -344,9 +351,9 @@ export default {
             // On mobile, clicking on watch links should not increment browser history
             // Back button will always return to the originating video list in one click
             if (this.$route.path.match("^/watch") && this.isMobile) {
-                this.$router.replace({ path: `/watch/${this.data.id}` });
+                this.$router.replace({ path: this.watchLink });
             } else {
-                this.$router.push({ path: `/watch/${this.data.id}` });
+                this.$router.push({ path: this.watchLink });
             }
         },
         goToChannel() {

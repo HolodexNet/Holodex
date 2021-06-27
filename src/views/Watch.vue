@@ -191,9 +191,6 @@ export default {
         WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
     },
     data() {
-        const playlistIndex = this.$store.state.playlist.active.videos.findIndex(
-            ({ id }) => id === this.$route.params.id,
-        );
         return {
             startTime: 0,
             mdiOpenInNew,
@@ -211,8 +208,7 @@ export default {
 
             fullScreen: false,
 
-            playlistIndex,
-            isPlaylist: false,
+            playlistIndex: -1,
         };
     },
     mounted() {
@@ -253,8 +249,12 @@ export default {
             this.startTime = timeOffset;
         },
         playNextPlaylist({ video }) {
-            this.isPlaylist = true;
-            this.$router.push(`/watch/${video.id}`);
+            this.$router.push({
+                path: `/watch/${video.id}`,
+                query: {
+                    playlist: this.$route.query.playlist,
+                },
+            });
         },
         handleVideoUpdate(update) {
             this.video.live_viewers = update.live_viewers;
@@ -343,6 +343,9 @@ export default {
         },
         comments() {
             return this.video.comments || [];
+        },
+        isPlaylist() {
+            return this.$route.query.playlist;
         },
     },
     watch: {

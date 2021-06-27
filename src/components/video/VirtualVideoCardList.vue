@@ -8,13 +8,13 @@
         :data-key="'id'"
         :data-sources="videos"
         :data-component="VideoCard"
-        :extra-props="$props"
+        :extra-props="{ ...$props, parentPlaylistId: (playlist && playlist.id) || 'local' }"
         :estimate-size="88"
         :keeps="keeps"
         :page-mode="pageMode"
         :item-class="'virtual-video-list-item'"
-        ref="test"
         :item-class-add="checkActive"
+        ref="virtualVideoList"
     />
     <!-- </v-container> -->
 </template>
@@ -41,9 +41,13 @@ export default {
         };
     },
     props: {
-        videos: {
+        // videos: {
+        //     required: true,
+        //     type: Array,
+        // },
+        playlist: {
             required: true,
-            type: Array,
+            type: Object,
         },
         includeChannel: {
             required: false,
@@ -100,12 +104,14 @@ export default {
     mounted() {},
     methods: {
         checkActive(index) {
-            console.log(this.activeIndex);
             if (index === this.activeIndex) return "video-card-active";
             return "";
         },
     },
     computed: {
+        videos() {
+            return this.playlist.videos || [];
+        },
         isMobile() {
             return this.$store.state.isMobile;
         },
@@ -115,7 +121,7 @@ export default {
     },
     watch: {
         activeIndex(idx) {
-            this.$refs.test.scrollToIndex(idx);
+            this.$refs.virtualVideoList.scrollToIndex(idx);
         },
     },
 };
