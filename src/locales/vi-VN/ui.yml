@@ -325,6 +325,7 @@ views:
     login-prompt: Đăng nhập để lưu playlist và sở hữu nhiều hơn một playlist
     new-playlist-btn-label: Tạo một playlist mới
     page-heading: 'Playlist của bạn:'
+    page-instruction: Nhấp vào một playlist để chuyển nó thành trạng thái đang hoạt động.
     change-loss-warning: Các thay đổi chưa được lưu sẽ bị mất. Tiếp tục?
 time:
   soon: sớm
