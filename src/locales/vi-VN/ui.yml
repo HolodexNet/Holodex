@@ -37,6 +37,7 @@ component:
     music: Nhạc
     multiview: MultiView
     points: điểm
+    playlist: Playlist
   videoCard:
     clips: '{n} Clip'
     watching: '{0} người đang xem'
@@ -255,6 +256,8 @@ views:
           Luồng phát sóng chưa bắt đầu, hãy thử lại khi đã phát trực tiếp được khoảng 15 phút
         connectedToChat: Đã kết nối
         disconnectedToChat: Đã ngắt kết nối
+    removeFromPlaylist: Xoá video khỏi playlist hiện tại
+    saveToPlaylist: Lưu video vào playlist hiện tại
   favorites:
     promptForAction: >-
       Tạo một danh sách các Vtuber yêu thích để xem các clip và livestream mới nhất của họ tại trang này.
@@ -316,6 +319,13 @@ views:
   mugen:
     welcome: >-
       Chào mừng bạn đã đến với MugenClips! Tất cả mọi người trên trang này đều đang xem cùng một clip Hololive tiếng Anh được lựa chọn ngẫu nhiên. Hãy cùng xem và trò chuyện với các fan Hololive khác trên toàn thế giới. Nếu bạn lỡ tua nhanh và muốn đồng bộ hoá lại với mọi người, xin hãy tải lại trang.
+  playlist:
+    playlist-is-modified: Chưa được lưu
+    item-last-updated: 'Cập nhật lần cuối:'
+    login-prompt: Đăng nhập để lưu playlist và sở hữu nhiều hơn một playlist
+    new-playlist-btn-label: Tạo một playlist mới
+    page-heading: 'Playlist của bạn:'
+    change-loss-warning: Các thay đổi chưa được lưu sẽ bị mất. Tiếp tục?
 time:
   soon: sớm
   diff_future_date: Bắt đầu {0} ({1})
