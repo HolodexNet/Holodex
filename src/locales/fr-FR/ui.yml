@@ -37,6 +37,7 @@ component:
     music: Musique
     multiview: Multivue
     points: points
+    playlist: Playlist
   videoCard:
     clips: '{n} Clips'
     watching: '{0} Visionnages'
@@ -119,6 +120,15 @@ component:
     alertText: >-
       Les paramètres de confidentialité de votre navigateur rendent impossible la connexion au chat Youtube. Cliquez ici pour plus d'informations
     neverShowAgain: Ne plus afficher l'alerte
+  playlist:
+    menu:
+      export-playlist: Exporter la playlist
+      new-playlist: Nouvelle Playlist
+      rename-playlist: Rennomer la Playlist
+      reset-unsaved: Réinitialiser les modifications non sauvegardées
+      delete-playlist: Supprimer la Playlist
+      clear-playlist: Vider la Playlist
+    save-error-not-logged-in: Vous devez être connecté pour enregistrer les playlists
 views:
   channel:
     video: Vidéos
@@ -255,6 +265,8 @@ views:
           Le stream n'est pas encore lancé, veuillez réessayez lorsqu'il ne reste que 15 minutes avant le début
         connectedToChat: Connecté
         disconnectedToChat: Déconnecté
+    removeFromPlaylist: Retirer la vidéo de la playlist actuelle
+    saveToPlaylist: Enregistrer la vidéo dans la playlist actuelle
   favorites:
     promptForAction: >-
       Créez une liste de vtubers favoris et retrouvez leurs derniers clips et leurs dernières diffusions sur cette page
@@ -316,6 +328,14 @@ views:
   mugen:
     welcome: >-
       Bienvenue sur MugenClips! Tout le monde sur cette page est en train de regarder une vidéo d'Hololive en même temps. Regardez et discutez avec les fans d'Hololive du monde entier. Si vous avancez dans la vidéo et voulez être re-synchronisé avec tout le monde, veuillez rafraîchir la page.
+  playlist:
+    playlist-is-modified: Non enregistré
+    item-last-updated: 'Dernière modification:'
+    login-prompt: Connectez-vous pour enregistrer les playlists et en avoir plusieurs
+    new-playlist-btn-label: Créer une Playlist
+    page-heading: 'Vos Playlists:'
+    page-instruction: Cliquez sur une playlist pour la définir comme active.
+    change-loss-warning: Vous perdrez les modifications non enregistrées. Continuer ?
 time:
   soon: Bientôt
   diff_future_date: Commence {0} ({1})
