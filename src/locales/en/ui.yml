@@ -128,6 +128,15 @@ component:
       Your browser privacy setting is making it impossible to log-in to Youtube
       chat. Click here for more info
     neverShowAgain: Never Show Alert Again
+  playlist:
+    menu:
+      export-playlist: Export Playlist
+      new-playlist: New Playlist
+      rename-playlist: Rename Playlist
+      reset-unsaved: Reset Unsaved Changes
+      delete-playlist: Delete Playlist
+      clear-playlist: Clear playlist
+    save-error-not-logged-in: You need to be logged in to save playlists
 views:
   channel:
     video: Videos

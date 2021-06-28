@@ -32,28 +32,29 @@
                 </template>
                 <v-list nav>
                     <v-list-item v-if="isEditable" @click="$emit('new-playlist')"
-                        ><v-icon left color="success">{{ icons.mdiPlusBox }}</v-icon> New Playlist
+                        ><v-icon left color="success">{{ icons.mdiPlusBox }}</v-icon>
+                        {{ $t("component.playlist.menu.new-playlist") }}
                     </v-list-item>
                     <!-- feed back a green ripple on click... theoretically -->
                     <v-list-item v-if="isEditable" @click="editNameMode = true"
-                        ><v-icon left>{{ icons.mdiPencil }}</v-icon> Rename Playlist
+                        ><v-icon left>{{ icons.mdiPencil }}</v-icon> {{ $t("component.playlist.menu.rename-playlist") }}
                     </v-list-item>
                     <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
                     <v-list-item
                         v-if="isEditable"
                         @click="$store.dispatch('playlist/setActivePlaylistByID', playlist.id)"
                         :disabled="isSaved || !playlist.id"
-                        ><v-icon left>{{ icons.mdiRefresh }}</v-icon> Reset Unsaved Changes
+                        ><v-icon left>{{ icons.mdiRefresh }}</v-icon> {{ $t("component.playlist.menu.reset-unsaved") }}
                     </v-list-item>
-                    <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
+                    <!-- <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
                         ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
                         {{ playlist.id ? "Copy sharable Playlist link" : "Save the playlist to enable link-sharing." }}
-                    </v-list-item>
+                    </v-list-item> -->
                     <v-divider />
                     <!-- Exporting options -->
                     <v-list-item disabled class="mt-1 mb-1" dense>
                         <v-icon left disabled>{{ icons.mdiOpenInNew }}</v-icon
-                        ><span>Export Playlist</span>
+                        ><span>{{ $t("component.playlist.menu.export-playlist") }}</span>
                     </v-list-item>
                     <v-list-item dense @click.stop="instructionsDialog = true" class="ml-5">
                         <v-icon left>{{ icons.mdiYoutube }}</v-icon>
@@ -67,13 +68,17 @@
                     <v-divider class="mb-2" />
                     <v-list-item @click="$store.dispatch('playlist/deleteActivePlaylist')" v-if="isEditable">
                         <v-icon left color="error"> {{ icons.mdiDelete }} </v-icon>
-                        {{ playlist.id ? "Delete Playlist" : "Clear playlist" }}
+                        {{
+                            playlist.id
+                                ? $t("component.playlist.menu.delete-playlist")
+                                : $t("component.playlist.menu.clear-playlist")
+                        }}
                     </v-list-item>
                 </v-list>
             </v-menu>
         </div>
         <v-snackbar v-model="loginWarning" :timeout="5000" color="warning">
-            You need to be logged in to save playlists
+            {{ $t("component.playlist.save-error-not-logged-in") }}
 
             <template v-slot:action="{ attrs }">
                 <v-btn
@@ -207,7 +212,7 @@ export default {
         },
         newPlaylist() {
             // eslint-disable-next-line no-restricted-globals,no-alert
-            if (this.isSaved || confirm("You will lose unsaved changes. Continue?")) {
+            if (this.isSaved || confirm(this.$t("views.playlist.change-loss-warning"))) {
                 this.$store.commit("playlist/resetPlaylist");
             }
         },
