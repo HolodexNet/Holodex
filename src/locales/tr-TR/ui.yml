@@ -120,6 +120,15 @@ component:
     alertText: >-
       Tarayıcı gizlilik ayarlarınız, Youtube Sohbetine girişi imkansız yapmakta. Daha çok bilgi için tıklayınız
     neverShowAgain: Bir daha uyarıyı gösterme
+  playlist:
+    menu:
+      export-playlist: Oynatma Listesini Dışa Aktar
+      new-playlist: Yeni Oynatma Listesi
+      rename-playlist: Oynatma Listesini Yeniden Adlandır
+      reset-unsaved: Kaydedilmemiş Değişiklikleri Sıfırla
+      delete-playlist: Oynatma Listesini Sil
+      clear-playlist: Oynatma Listesini Temizle
+    save-error-not-logged-in: Oynatma listelerini kaydetmek için oturum açmanız gerekir
 views:
   channel:
     video: Videolar
