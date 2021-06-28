@@ -120,6 +120,15 @@ component:
     alertText: >-
       Die Privatsphäre-Einstellungen deines Browsers machen es unmöglich, dich im Youtube-Chat anzumelden. Klicke hier für weitere Informationen
     neverShowAgain: Nicht erneut anzeigen
+  playlist:
+    menu:
+      export-playlist: Playlist exportieren
+      new-playlist: Neue Playlist
+      rename-playlist: Playlist umbenennen
+      reset-unsaved: Ungespeicherte Änderungen verwerfen
+      delete-playlist: Playlist löschen
+      clear-playlist: Playlist leeren
+    save-error-not-logged-in: Du musst eingeloggt sein, um Playlisten zu speichern
 views:
   channel:
     video: Videos
