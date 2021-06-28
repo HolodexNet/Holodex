@@ -49,6 +49,8 @@ component:
     googleCalendar: 新增至 Google 日曆
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -120,6 +122,15 @@ component:
     alertText: >-
       您的瀏覽器設定導致無法連線至YouTube聊天室。點擊此處了解更多
     neverShowAgain: 不再顯示此警告
+  playlist:
+    menu:
+      export-playlist: 匯出播放清單
+      new-playlist: 新增播放清單
+      rename-playlist: 重新命名播放清單
+      reset-unsaved: 重設未儲存的變更
+      delete-playlist: 刪除播放清單
+      clear-playlist: 清空播放清單
+    save-error-not-logged-in: 您需要登入後才能儲存播放清單
 views:
   channel:
     video: 影片
@@ -128,6 +139,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
