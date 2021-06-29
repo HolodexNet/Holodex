@@ -120,6 +120,15 @@ component:
     alertText: >-
       A böngésződ biztonsági beállításai lehetetlenné teszik a bejelentkezést Youtube chathez. Kattints ide több infóért
     neverShowAgain: Ne mutassa többet
+  playlist:
+    menu:
+      export-playlist: Lejátszási lista exportálása
+      new-playlist: Új lejátszási lista
+      rename-playlist: Lejátszási lista átnevezése
+      reset-unsaved: Mentetlen változtatások visszaállítása
+      delete-playlist: Lejátszási lista törlése
+      clear-playlist: Lejátszási lista kiürítése
+    save-error-not-logged-in: A lejátszási lista mentéséhez be kell lépned a fiókodba
 views:
   channel:
     video: Videók
