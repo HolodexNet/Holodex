@@ -11,6 +11,7 @@ export {
     mdiClipboardPlusOutline,
     mdiClose,
     mdiCog,
+    mdiDatabaseOff,
     mdiDelete,
     mdiDiscord,
     mdiDotsVertical,
@@ -30,8 +31,8 @@ export {
     mdiPencil, // for changing language
     mdiPlay,
     mdiPlaylistMusic,
+    mdiPlaylistPlay,
     mdiPlaylistPlus,
-    mdiDatabaseOff,
     mdiRefresh,
     mdiStarFourPointsOutline,
     mdiTranslate,
@@ -54,5 +55,4 @@ export {
     mdiFlag,
     mdiStar,
     mdiCalendar,
-    mdiPlaylistPlay,
 } from "@mdi/js";

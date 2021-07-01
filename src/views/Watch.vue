@@ -1,6 +1,7 @@
 <template>
+    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-if="isLoading || hasError" />
     <div
-        v-if="!isLoading && !hasError"
+        v-else
         ref="watchFullscreen"
         style="overflow-y: auto"
         :style="{
@@ -36,9 +37,10 @@
                             @ready="ready"
                             :playerVars="{
                                 ...(timeOffset && { start: timeOffset }),
-                                autoplay: isMugen ? 1 : 0,
+                                autoplay: isMugen || isPlaylist ? 1 : 0,
                                 playsinline: 1,
                             }"
+                            @ended="ended"
                         >
                         </youtube>
                     </template>
@@ -104,7 +106,7 @@
                 <!-- Mobile mode only sidebar -->
                 <WatchSideBar :video="video" @timeJump="seekTo" v-if="isMobile" />
                 <!-- Mobile mode Mugen -->
-                <WatchMugen @playNext="playNext" v-if="isMugen && isMobile" />
+                <WatchMugen @playNext="playNextMugen" v-if="isMugen && isMobile" />
                 <WatchComments
                     :comments="comments"
                     :video="video"
@@ -137,20 +139,20 @@
                         :fixedRight="isMobile && landscape"
                         :fixedBottom="isMobile && !landscape"
                         :showTL="showTL"
-                        :showTLFirstTime="showTLFirstTime"
+                        :hintConnectLiveTL="hintConnectLiveTL"
                         :showLiveChat="showLiveChat"
                         :isMugen="isMugen"
                         @historyLength="handleHistoryLength"
                     />
                     <template v-if="!isMobile">
+                        <WatchPlaylist @playNext="playNextPlaylist" v-model="playlistIndex" />
+                        <WatchMugen @playNext="playNextMugen" v-if="isMugen" />
                         <WatchSideBar :video="video" @timeJump="seekTo" />
-                        <WatchMugen @playNext="playNext" v-if="isMugen" />
                     </template>
                 </v-col>
             </div>
         </div>
     </div>
-    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
 </template>
 
 <script lang="ts">
@@ -186,6 +188,7 @@ export default {
         WatchComments,
         WatchToolBar,
         WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
+        WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
     },
     data() {
         return {
@@ -198,18 +201,20 @@ export default {
             // theatherMode: false,
 
             // showTL: false,
-            showTLFirstTime: false,
+            hintConnectLiveTL: false,
             newTL: 0,
 
             // showLiveChat: true,
 
             fullScreen: false,
+
+            playlistIndex: -1,
         };
     },
     mounted() {
         this.init();
-        if (this.showTL && !this.showTLFirstTime) {
-            this.showTLFirstTime = true;
+        if (this.showTL && !this.hintConnectLiveTL) {
+            this.hintConnectLiveTL = true;
         }
     },
     methods: {
@@ -223,7 +228,7 @@ export default {
             this.$store.commit("watch/resetState");
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
-                if (!this.hasWatched && this.videoId) this.$store.commit("library/addWatchedVideo", this.video);
+                this.$store.dispatch("history/addWatchedVideo", this.video);
             });
         },
         initMugen() {
@@ -239,9 +244,17 @@ export default {
             this.player.seekTo(time);
             this.player.playVideo();
         },
-        playNext({ video, timeOffset }) {
+        playNextMugen({ video, timeOffset = 0 }) {
             this.$store.commit("watch/setVideo", video);
             this.startTime = timeOffset;
+        },
+        playNextPlaylist({ video }) {
+            this.$router.push({
+                path: `/watch/${video.id}`,
+                query: {
+                    playlist: this.$route.query.playlist,
+                },
+            });
         },
         handleVideoUpdate(update) {
             this.video.live_viewers = update.live_viewers;
@@ -258,12 +271,12 @@ export default {
             }
         },
         toggleTL() {
-            // showTLFirstTime will initiate connection
+            // hintConnectLiveTL will initiate connection
             // showTL toggle will show/hide without terminating connection
             if (!this.hasLiveTL) return;
 
-            if (!this.showTLFirstTime) {
-                this.showTLFirstTime = true;
+            if (!this.hintConnectLiveTL) {
+                this.hintConnectLiveTL = true;
                 this.showTL = true;
                 return;
             }
@@ -273,6 +286,12 @@ export default {
         handleHistoryLength() {
             if (!this.showTL) {
                 this.newTL += 1;
+            }
+        },
+        ended() {
+            // if playlistIndex is set to -1 we aren't playing playlists.
+            if (this.playlistIndex >= 0) {
+                this.playlistIndex += 1;
             }
         },
     },
@@ -293,9 +312,6 @@ export default {
         },
         hasLiveTL() {
             return this.video.status === "live" || this.video.status === "upcoming";
-        },
-        hasWatched() {
-            return this.$store.getters["library/hasWatched"](this.video.id);
         },
         showChatWindow() {
             return this.hasLiveChat && (this.showLiveChat || this.showTL);
@@ -327,6 +343,9 @@ export default {
         },
         comments() {
             return this.video.comments || [];
+        },
+        isPlaylist() {
+            return this.$route.query.playlist;
         },
     },
     watch: {

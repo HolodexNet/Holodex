@@ -8,6 +8,7 @@ import jwtDecode from "jwt-decode";
 import { ORGS } from "@/utils/consts";
 import * as icons from "@/utils/icons";
 import { sendTokenToExtension } from "@/utils/messaging";
+import kvidb from "kv-idb";
 
 // import { dayjs } from "@/utils/time";
 
@@ -15,13 +16,13 @@ import backendApi from "@/utils/backend-api";
 import home from "./home.module";
 import channel from "./channel.module";
 import channels from "./channels.module";
-import library from "./library.module";
 import watch from "./watch.module";
 import settings from "./settings.module";
 import favorites from "./favorites.module";
 import music from "./music.module";
 import multiview from "./multiview.module";
 import playlist from "./playlist.module";
+import history from "./history.module";
 
 // import socket from "./socket.module";
 
@@ -54,7 +55,7 @@ function defaultState() {
         orgFavorites: ["All Vtubers", "Hololive", "Nijisanji", "Independents"],
 
         // Migration: prevent migrating initial state.
-        migration: { version: 4 },
+        migration: { version: 5 },
 
         // Socket counter, if it is zero, then close the shared WebSocket
         activeSockets: 0,
@@ -79,6 +80,7 @@ function defaultState() {
 const migrations = [
     {
         version: 2,
+        // migrate old defaultOpenFavorites boolean => defaultOpen enum value.
         up: (state) => {
             const defaultOpen =
                 state.settings.defaultOpen || (state.settings.defaultOpenFavorites ? "favorites" : "home");
@@ -94,6 +96,7 @@ const migrations = [
         },
     },
     {
+        // deletion of VWP and Hanayori org.
         version: 4,
         up: (state) => {
             const orgFavorites = state.orgFavorites.filter(
@@ -105,12 +108,47 @@ const migrations = [
             };
         },
     },
+    {
+        version: 5,
+        // migrates library -->
+        up: (state) => {
+            const mergedPlaylist = state.playlist && state.playlist.active ? state.playlist.active.videos || [] : [];
+
+            for (const property in state.library.savedVideos) {
+                if (property.length === 11)
+                    // yt video
+                    mergedPlaylist.push(state.library.savedVideos[property]);
+            }
+
+            const db = kvidb("watch-history");
+            for (const property in state.library.watchedVideos) {
+                if (property.length === 11)
+                    // yt video
+                    db.put(property, 1, (x, err) => {
+                        console.log(x, err);
+                    });
+            }
+
+            delete state.library;
+
+            return {
+                ...state,
+                playlist: {
+                    ...state.playlist,
+                    active: {
+                        ...state.playlist.active,
+                        videos: mergedPlaylist,
+                    },
+                },
+            };
+        },
+    },
 ];
 
 /**-----------------------
  *     Configure Synchronized Modules & Mutations across tabs
  *------------------------* */
-const syncedModules = /^(?:library|settings)/;
+const syncedModules = /^(?:playlist|settings|history)/;
 const syncedMutations =
     /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout))/;
 
@@ -286,13 +324,13 @@ export default new Vuex.Store({
         home,
         channel,
         channels,
-        library,
         watch,
         settings,
         favorites,
         music,
         multiview,
         playlist,
+        history,
         // socket,
     },
 });

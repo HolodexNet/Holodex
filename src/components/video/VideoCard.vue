@@ -6,37 +6,32 @@
             'video-card-active': active,
             'video-card-horizontal': horizontal,
         }"
-        @click.exact.prevent="(e) => (!redirectMode ? goToVideo(video.id) : goToYoutube(video.id))"
+        @click.exact.prevent="(e) => (!redirectMode ? goToVideo(data.id) : goToYoutube(data.id))"
         :target="redirectMode ? '_blank' : ''"
-        :href="!redirectMode ? `/watch/${video.id}` : `https://youtu.be/${video.id}`"
+        :href="!redirectMode ? watchLink : `https://youtu.be/${data.id}`"
         rel="noopener"
         draggable="true"
         v-on:dragstart="drag"
-        :style="showCollabBorder && 'border: 1px solid var(--v-primary-base); border-radius: 0.25rem'"
         style="position: relative"
     >
-        <div v-if="showCollabBorder" class="d-flex flex-row px-1 align-center collab-border-text">
-            <div class="primary--text">@</div>
-            <ChannelMentions :mentions="video.mentions" class="align-self-center" />
-        </div>
         <!-- Video Image with Duration -->
-        <v-img
-            class="white--text rounded flex-grow-0"
-            :class="horizontal && ''"
-            :src="imageSrc"
-            :aspect-ratio="16 / 9"
-            width="100%"
-            v-if="!shouldHideThumbnail"
+        <div
+            style="position: relative; width: 100%"
+            class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
+            :style="horizontal && `background: url(${imageSrc}) center/cover;`"
         >
             <!-- Image Overlay -->
-            <div class="video-card-overlay d-flex justify-space-between flex-column" style="height: 100%">
+            <div
+                class="video-card-overlay d-flex justify-space-between flex-column"
+                style="height: 100%; position: absolute; width: 100%; z-index: 1"
+            >
                 <div class="d-flex justify-space-between align-start">
                     <!-- Topic Id display -->
                     <div
                         class="video-topic rounded-tl-sm"
-                        :style="{ visibility: video.topic_id ? 'visible' : 'hidden' }"
+                        :style="{ visibility: data.topic_id ? 'visible' : 'hidden' }"
                     >
-                        {{ video.topic_id }}
+                        {{ data.topic_id }}
                     </div>
 
                     <!-- Check box for saved video -->
@@ -53,36 +48,37 @@
                 <!-- Video duration/music indicator -->
                 <div class="d-flex flex-column align-end">
                     <!-- Show music icon if songs exist -->
-                    <div class="video-duration" v-if="video.songcount">
+                    <div class="video-duration" v-if="data.songcount">
                         <v-icon small>{{ icons.mdiMusic }}</v-icon>
                     </div>
                     <!-- Duration/Current live stream time -->
                     <div
-                        v-if="video.duration > 0 || video.start_actual"
+                        v-if="data.duration > 0 || data.start_actual"
                         class="video-duration rounded-br-sm"
-                        :class="video.status === 'live' && 'video-duration-live'"
+                        :class="data.status === 'live' && 'video-duration-live'"
                     >
                         {{ formattedDuration }}
                     </div>
                 </div>
             </div>
-        </v-img>
+            <v-img :src="imageSrc" :aspect-ratio="16 / 9" width="100%" v-if="!horizontal" class="rounded" />
+        </div>
         <a
             class="d-flex flex-row flex-grow-1 no-decoration"
             style="height: 88px; position: relative"
-            @click.exact.stop.prevent="goToVideo(video.id)"
-            :href="`/watch/${video.id}`"
+            @click.exact.stop.prevent="goToVideo(data.id)"
+            :href="watchLink"
             rel="noopener"
         >
             <!-- Channel icon -->
             <div
                 class="d-flex align-self-center mx-2 flex-column d-flex"
-                v-if="includeChannel && includeAvatar && !horizontal && video.channel"
+                v-if="includeChannel && includeAvatar && !horizontal && data.channel"
             >
-                <ChannelImg :channel="video.channel" rounded class="align-self-center" />
+                <ChannelImg :channel="data.channel" rounded class="align-self-center" />
             </div>
             <!-- Three lines for title, channel, available time -->
-            <div class="d-flex flex-column my-1" :class="{ 'justify-space-between': !showCollabBorder }">
+            <div class="d-flex flex-column my-1 justify-space-between">
                 <!-- Video title -->
                 <div
                     :class="['video-card-title ', { 'video-watched': hasWatched }]"
@@ -96,65 +92,80 @@
                 <div v-if="includeChannel" class="channel-name video-card-subtitle">
                     <a
                         class="no-decoration"
-                        :class="{ 'name-vtuber': video.type === 'stream' || video.channel.type === 'vtuber' }"
-                        :href="`/channel/${video.channel.id}`"
-                        @click.exact.stop.prevent="goToChannel(video.channel.id)"
+                        :class="{ 'name-vtuber': data.type === 'stream' || data.channel.type === 'vtuber' }"
+                        :href="`/channel/${data.channel.id}`"
+                        @click.exact.stop.prevent="goToChannel(data.channel.id)"
                     >
-                        {{ channelName }} {{ showCollabBorder ? `(${video.channel.org})` : "" }}
+                        {{ channelName }}
                     </a>
                 </div>
                 <!-- Time/Viewer Info -->
                 <div class="video-card-subtitle">
-                    <span :class="'text-' + this.video.status">
+                    <span :class="'text-' + this.data.status">
                         {{ formattedTime }}
                     </span>
-                    <template v-if="video.clips && video.clips.length > 0">
+                    <template v-if="data.clips && data.clips.length > 0">
                         •
                         <span class="primary--text">
                             {{
                                 $tc(
                                     "component.videoCard.clips",
-                                    typeof video.clips === "object" ? video.clips.length : +video.clips,
+                                    typeof data.clips === "object" ? data.clips.length : +data.clips,
                                 )
                             }}
                         </span>
                     </template>
-                    <template v-else-if="video.status === 'live' && video.live_viewers > 0">
+                    <template v-else-if="data.status === 'live' && data.live_viewers > 0">
                         •
                         {{
-                            $tc("component.videoCard.watching", formatCount(video.live_viewers, lang), [
-                                formatCount(video.live_viewers, lang),
+                            $tc("component.videoCard.watching", formatCount(data.live_viewers, lang), [
+                                formatCount(data.live_viewers, lang),
                             ])
                         }}
                     </template>
                 </div>
             </div>
             <!-- Vertical dots menu -->
-            <v-btn
-                icon
-                small
-                @click.stop.prevent="showMenu"
-                :ripple="false"
-                :class="{ 'hover-show': !hasSaved && !isMobile }"
-                class="video-card-menu"
-            >
-                <v-icon>
-                    {{ icons.mdiDotsVertical }}
-                </v-icon>
-            </v-btn>
+            <v-menu bottom nudge-top="20px">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        @click.stop.prevent
+                        :ripple="false"
+                        class="video-card-menu"
+                        :class="{ 'hover-show': !hasSaved && !isMobile }"
+                    >
+                        <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
+                    </v-btn>
+                </template>
+                <video-card-menu :video="data" />
+            </v-menu>
         </a>
         <!-- optional breaker object to row-break into a new row. -->
-        <v-list-item-action v-if="!!this.$slots.action" class="video-card-item-actions">
+        <v-list-item-action v-if="!!this.$slots.action || activePlaylistItem" class="video-card-item-actions">
+            <template v-if="activePlaylistItem">
+                <button @click.stop.prevent="move(data.id, 'up')">
+                    <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
+                </button>
+                <button @click.stop.prevent="$store.commit('playlist/removeVideoByID', data.id)">
+                    <v-icon small> {{ icons.mdiDelete }} </v-icon>
+                </button>
+                <button @click.stop.prevent="move(data.id, 'down')">
+                    <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
+                </button>
+            </template>
             <slot name="action"></slot>
         </v-list-item-action>
     </a>
 </template>
 
 <script lang="ts">
-import ChannelMentions from "@/components/channel/ChannelMentions.vue";
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import { formatDuration, formatDistance, dayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
+import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */
 
 export default {
@@ -162,20 +173,24 @@ export default {
     components: {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
         Comment: () => import("./Comment.vue"),
-        ChannelMentions,
+        VideoCardMenu,
     },
-
     data() {
         return {
+            data: this.source || this.video,
             forceJPG: true,
             icons,
             now: Date.now(),
             updatecycle: null,
+            hasWatched: false,
         };
     },
     props: {
         video: {
-            required: true,
+            // required: true,
+            type: Object,
+        },
+        source: {
             type: Object,
         },
         fluid: {
@@ -218,16 +233,29 @@ export default {
             type: Boolean,
             default: false,
         },
-        showCollabBorder: {
-            default: false,
+        activePlaylistItem: {
             type: Boolean,
+            default: false,
+        },
+        parentPlaylistId: {
+            type: [Number, String],
         },
     },
+    // created() {
+    //     this.data = this.video || this.source;
+    // },
     mounted() {
-        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+        this.$store.getters["history/hasWatched"](this.data.id)
+            .then((x) => {
+                if (x) this.hasWatched = true;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        if (!this.updatecycle && this.data.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
     },
     activated() {
-        if (!this.updatecycle && this.video.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+        if (!this.updatecycle && this.data.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
     },
     deactivated() {
         if (this.updatecycle) {
@@ -243,19 +271,19 @@ export default {
     },
     computed: {
         title() {
-            if (!this.video.title) return "";
-            return decodeHTMLEntities(this.video.title);
+            if (!this.data.title) return "";
+            return decodeHTMLEntities(this.data.title);
         },
         lang() {
             return this.$store.state.settings.lang;
         },
         formattedTime() {
-            switch (this.video.status) {
+            switch (this.data.status) {
                 case "upcoming":
                     // print relative time in hours if less than 24 hours,
                     // print full date if greater than 24 hours
                     return formatDistance(
-                        this.video.start_scheduled || this.video.available_at,
+                        this.data.start_scheduled || this.data.available_at,
                         this.lang,
                         this.$t.bind(this),
                         false, // allowNegative = false
@@ -263,22 +291,22 @@ export default {
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:
-                    return formatDistance(this.video.available_at, this.lang, this.$t.bind(this));
+                    return formatDistance(this.data.available_at, this.lang, this.$t.bind(this));
             }
         },
         formattedDuration() {
-            if (this.video.start_actual && this.video.status === "live") {
-                return this.formatDuration(dayjs(this.now).diff(dayjs(this.video.start_actual)));
+            if (this.data.start_actual && this.data.status === "live") {
+                return this.formatDuration(dayjs(this.now).diff(dayjs(this.data.start_actual)));
             }
-            if (this.video.status === "upcoming" && this.video.duration) {
+            if (this.data.status === "upcoming" && this.data.duration) {
                 return this.$t("component.videoCard.premiere");
             }
-            return this.video.duration && this.formatDuration(this.video.duration * 1000);
+            return this.data.duration && this.formatDuration(this.data.duration * 1000);
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
             const useWebP = this.$store.state.settings.canUseWebP && !this.forceJPG;
-            const srcs = getVideoThumbnails(this.video.id, useWebP);
+            const srcs = getVideoThumbnails(this.data.id, useWebP);
             if (this.horizontal) return srcs.medium;
             if (this.colSize > 2 && this.colSize <= 8) {
                 return srcs.medium;
@@ -293,16 +321,17 @@ export default {
         },
         channelName() {
             const prop = this.$store.state.settings.nameProperty;
-            return this.video.channel[prop] || this.video.channel.name;
-        },
-        hasWatched() {
-            return this.$store.getters["library/hasWatched"](this.video.id);
+            return this.data.channel[prop] || this.data.channel.name;
         },
         hasSaved() {
-            return this.$store.getters["library/hasSaved"](this.video.id);
+            return this.$store.getters["playlist/contains"](this.data.id);
         },
         isMobile() {
             return this.$store.state.isMobile;
+        },
+        watchLink() {
+            const q = this.parentPlaylistId ? `?playlist=${this.parentPlaylistId}` : "";
+            return `/watch/${this.data.id}${q}`;
         },
     },
     methods: {
@@ -313,48 +342,57 @@ export default {
         toggleSaved(event) {
             event.preventDefault();
             this.hasSaved
-                ? this.$store.commit("library/removeSavedVideo", this.video.id)
-                : this.$store.commit("library/addSavedVideo", this.video);
+                ? this.$store.commit("playlist/removeVideoByID", this.data.id)
+                : this.$store.commit("playlist/addVideo", this.data);
         },
         goToVideo() {
-            this.$emit("videoClicked", this.video);
+            this.$emit("videoClicked", this.data);
             if (this.disableDefaultClick) return;
             // On mobile, clicking on watch links should not increment browser history
             // Back button will always return to the originating video list in one click
             if (this.$route.path.match("^/watch") && this.isMobile) {
-                this.$router.replace({ path: `/watch/${this.video.id}` });
+                this.$router.replace({ path: this.watchLink });
             } else {
-                this.$router.push({ path: `/watch/${this.video.id}` });
+                this.$router.push({ path: this.watchLink });
             }
         },
         goToChannel() {
-            this.$emit("videoClicked", this.video);
+            this.$emit("videoClicked", this.data);
             if (this.disableDefaultClick) return;
-            this.$router.push({ path: `/channel/${this.video.channel.id}` });
+            this.$router.push({ path: `/channel/${this.data.channel.id}` });
         },
         goToYoutube() {
-            this.$emit("videoClicked", this.video);
+            this.$emit("videoClicked", this.data);
             if (this.disableDefaultClick) return;
-            const url = `https://www.youtube.com/watch?v=${this.video.id}`;
+            const url = `https://www.youtube.com/watch?v=${this.data.id}`;
             window.open(url, "_blank", "noopener");
         },
         updateNow() {
             this.now = Date.now();
         },
-        // All video cards share one menu that gets controlled through the store
-        showMenu(e) {
-            // this.$store.commit("setShowVideoCardMenu", false);
-            // Send video object and x, y coords for mouse click
-            this.$store.commit("setVideoCardMenu", {
-                video: this.video,
-                x: e.clientX,
-                y: e.clientY,
-            });
-            this.$store.commit("setShowVideoCardMenu", true);
-        },
         drag(ev) {
-            ev.dataTransfer.setData("text", `https://holodex.net/watch/${this.video.id}`);
-            ev.dataTransfer.setData("application/json", JSON.stringify(this.video));
+            ev.dataTransfer.setData("text", `https://holodex.net/watch/${this.data.id}`);
+            ev.dataTransfer.setData("application/json", JSON.stringify(this.data));
+        },
+        move(id, direction) {
+            const playlist = this.$store.state.playlist.active;
+            console.log(playlist);
+            const curIdx = playlist.videos.findIndex((elem) => elem.id === id);
+            if (curIdx < 0) throw new Error("huh");
+            let toIdx;
+            switch (direction) {
+                case "up":
+                    toIdx = curIdx - 1;
+                    break;
+                case "down":
+                    toIdx = curIdx + 1;
+                    break;
+                default:
+                    break;
+            }
+            if (toIdx < 0) throw new Error("can't move stuff before 0");
+            if (toIdx >= playlist.videos.length) throw new Error("can't move stuff to beyond the end");
+            this.$store.commit("playlist/reorder", { from: curIdx, to: toIdx });
         },
     },
 };
@@ -455,7 +493,7 @@ export default {
     flex-direction: row !important;
 }
 
-.video-card-horizontal > .v-image {
+.video-card-horizontal > .video-thumbnail {
     margin-right: 5px;
     width: 150px !important;
 }
@@ -464,13 +502,6 @@ export default {
     color: #42a5f5 !important;
 }
 
-.video-card-menu {
-    position: absolute;
-    right: 0px;
-    display: inline-block;
-    top: 5px;
-    z-index: 1;
-}
 .video-card-active {
     /* primary color with opacity */
     /* Used for Mugen Clips where one of the list videos are 'active' */
@@ -502,12 +533,11 @@ export default {
 .theme--light .video-card-subtitle {
     color: rgba(0, 0, 0, 0.6);
 }
-
-.collab-border-text {
+.video-card-menu {
     position: absolute;
-    bottom: -12px;
-    right: 50%;
-    transform: translateX(50%);
-    background: var(--v-background-base);
+    right: 0px;
+    display: inline-block;
+    top: 5px;
+    z-index: 1;
 }
 </style>

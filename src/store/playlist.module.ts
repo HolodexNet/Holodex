@@ -9,11 +9,21 @@ const initialState = {
         user_id: undefined,
         name: "Unnamed Playlist",
         videos: [],
+        updated_at: undefined,
     },
     isSaved: false,
 };
 
 export const state = { ...initialState };
+
+const getters = {
+    videoIds: (state) => {
+        return new Set(state.active.videos.map((x) => x.id));
+    },
+    contains: (state, getters) => (id) => {
+        return getters.videoIds.has(id);
+    },
+};
 
 const mutations = {
     saved(state) {
@@ -25,7 +35,8 @@ const mutations = {
         state.isSaved = false;
     },
     setPlaylist(state, playlist: Playlist) {
-        Vue.set(state, "active", playlist);
+        // Videos can be undefined, make sure it's at least []
+        Vue.set(state, "active", { videos: [], ...playlist });
         state.isSaved = false;
     },
     addVideo(state, video) {
@@ -57,8 +68,21 @@ const mutations = {
         );
         state.isSaved = false;
     },
-    removeVideoByIndex(state, index: number) {},
-    removeVideoByID(state, videoId: string) {},
+    removeVideoByIndex(state, index: number) {
+        Vue.set(
+            state.active,
+            "videos",
+            state.active.videos.filter((_, idx) => idx !== index),
+        );
+    },
+    removeVideoByID(state, videoId: string) {
+        Vue.set(
+            state.active,
+            "videos",
+            state.active.videos.filter((x) => x.id !== videoId),
+        );
+        state.isSaved = false;
+    },
     /**
      * resets the playlist to a clean slate.
      */
@@ -109,7 +133,7 @@ const actions = {
     async setActivePlaylistByID({ state, commit }, playlistId: number | string) {
         const res = await backendApi.getPlaylist(playlistId);
         const playlist = res.data;
-        commit("setPlaylist", playlist[0]);
+        commit("setPlaylist", playlist);
         commit("saved");
     },
     async deleteActivePlaylist({ state, rootState, commit }) {
@@ -125,7 +149,7 @@ const actions = {
 export default {
     namespaced: true,
     state,
-    // getters,
+    getters,
     actions,
     mutations,
 };

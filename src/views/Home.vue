@@ -12,7 +12,7 @@
             },
         }"
         style="min-height: 100%"
-        class="d-flex flex-column"
+        class="d-flex flex-column pt-0"
     >
         <!-- Teleport tabs to nav extension slot -->
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
@@ -54,7 +54,6 @@
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
-                        :showCollabBorderFunc="showCollabBorder"
                     >
                     </VideoCardList>
                     <v-divider class="my-3 secondary" v-if="lives.length" />
@@ -64,7 +63,6 @@
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
-                        :showCollabBorderFunc="showCollabBorder"
                     >
                     </VideoCardList>
                 </template>
@@ -91,7 +89,6 @@
                             includeChannel
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
-                            :showCollabBorderFunc="tab === Tabs.ARCHIVE && showCollabBorder"
                         />
                         <!-- only show SkeletonCardList if it's loading -->
                         <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -139,13 +136,19 @@ export default {
                 ARCHIVE: 1,
                 CLIPS: 2,
             }),
+            refreshTimer: null,
         };
     },
     mounted() {
         this.init();
+        this.setAutoRefresh();
     },
     activated() {
         this.changeTab(true);
+        this.setAutoRefresh();
+    },
+    deactivated() {
+        clearInterval(this.refreshTimer);
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -199,13 +202,11 @@ export default {
         },
     },
     methods: {
-        showCollabBorder(video) {
-            return (
-                this.$store.state.currentOrg !== "All Vtubers" &&
-                video.channel.org !== this.$store.state.currentOrg &&
-                video.mentions &&
-                video.mentions.length > 0
-            );
+        setAutoRefresh() {
+            if (this.refreshTimer) clearInterval(this.refreshTimer);
+            this.refreshTimer = setInterval(() => {
+                this.$store.dispatch("home/fetchLive");
+            }, 3 * 60 * 1000);
         },
         changeTab(preservePage = true) {
             // Sync the hash to current tab
@@ -251,7 +252,7 @@ export default {
                 const res = await backendApi.videos({
                     status: "past",
                     ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                    include: "clips,mentions",
+                    include: "clips",
                     org: this.$store.state.currentOrg,
                     lang: this.$store.state.settings.clipLangs.join(","),
                     paginated: !this.scrollMode,

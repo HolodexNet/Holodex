@@ -84,7 +84,7 @@ export default {
             type: Boolean,
             default: false,
         },
-        showTLFirstTime: {
+        hintConnectLiveTL: {
             type: Boolean,
             default: false,
         },
@@ -104,7 +104,7 @@ export default {
             }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
         },
         shouldConnectLiveTL() {
-            return this.showTLFirstTime;
+            return this.hintConnectLiveTL;
         },
         shouldShowLiveTL() {
             return this.showTL;

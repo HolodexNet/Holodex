@@ -6,7 +6,7 @@
         <MainNav />
         <v-main style="transition: none">
             <PullToRefresh />
-            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel">
+            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists">
                 <router-view :key="viewKey" />
             </keep-alive>
         </v-main>
@@ -18,7 +18,7 @@
                 <v-btn text @click="updateExists = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
             </template>
         </v-snackbar>
-        <v-snackbar bottom center :value="showUpdateDetails" color="primary" :timeout="-1">
+        <v-snackbar bottom center :value="showUpdateDetails" color="primary" :timeout="-1" v-if="showUpdateDetails">
             {{ $t("views.app.check_about_page") }}
             <template v-slot:action>
                 <v-btn text @click="showUpdateDetails = false" class="ml-auto" to="/about#changelog"> Changelog </v-btn>
@@ -26,14 +26,12 @@
             </template>
         </v-snackbar>
         <ReportDialog />
-        <VideoCardMenu />
     </v-app>
 </template>
 
 <script lang="ts">
 import MainNav from "@/components/nav/MainNav.vue";
 import ReportDialog from "@/components/common/ReportDialog.vue";
-import VideoCardMenu from "@/components/common/VideoCardMenu.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
 import { dayjsLangs, loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
@@ -49,7 +47,6 @@ export default {
         MainNav,
         ReportDialog,
         PullToRefresh,
-        VideoCardMenu,
     },
     data() {
         return {

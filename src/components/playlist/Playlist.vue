@@ -1,6 +1,6 @@
 <template>
     <v-container fluid class="pa-0">
-        <div style="font-size: 1rem !important; font-weight: 500" class="mb-2 ml-0 d-flex">
+        <div style="font-size: 1rem !important; font-weight: 500" class="ml-0 mb-1 d-flex">
             <v-text-field
                 v-model="playlistName"
                 autofocus
@@ -21,13 +21,7 @@
                 </v-btn>
                 {{ playlist.name }}
             </span>
-            <v-btn
-                icon
-                small
-                class="float-right"
-                v-show="!isSaved"
-                color="success"
-                @click="$store.dispatch('playlist/saveActivePlaylist')"
+            <v-btn icon small class="float-right" v-show="!isSaved" color="success" @click="trySaving"
                 ><v-icon>{{ mdiContentSave }}</v-icon></v-btn
             >
             <v-menu bottom offset-y nudge-width="500">
@@ -38,28 +32,29 @@
                 </template>
                 <v-list nav>
                     <v-list-item v-if="isEditable" @click="$emit('new-playlist')"
-                        ><v-icon left color="success">{{ icons.mdiPlusBox }}</v-icon> New Playlist
+                        ><v-icon left color="success">{{ icons.mdiPlusBox }}</v-icon>
+                        {{ $t("component.playlist.menu.new-playlist") }}
                     </v-list-item>
                     <!-- feed back a green ripple on click... theoretically -->
                     <v-list-item v-if="isEditable" @click="editNameMode = true"
-                        ><v-icon left>{{ icons.mdiPencil }}</v-icon> Rename Playlist
+                        ><v-icon left>{{ icons.mdiPencil }}</v-icon> {{ $t("component.playlist.menu.rename-playlist") }}
                     </v-list-item>
                     <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
                     <v-list-item
                         v-if="isEditable"
                         @click="$store.dispatch('playlist/setActivePlaylistByID', playlist.id)"
                         :disabled="isSaved || !playlist.id"
-                        ><v-icon left>{{ icons.mdiRefresh }}</v-icon> Reset Unsaved Changes
+                        ><v-icon left>{{ icons.mdiRefresh }}</v-icon> {{ $t("component.playlist.menu.reset-unsaved") }}
                     </v-list-item>
-                    <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
+                    <!-- <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
                         ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
                         {{ playlist.id ? "Copy sharable Playlist link" : "Save the playlist to enable link-sharing." }}
-                    </v-list-item>
+                    </v-list-item> -->
                     <v-divider />
                     <!-- Exporting options -->
                     <v-list-item disabled class="mt-1 mb-1" dense>
                         <v-icon left disabled>{{ icons.mdiOpenInNew }}</v-icon
-                        ><span>Export Playlist</span>
+                        ><span>{{ $t("component.playlist.menu.export-playlist") }}</span>
                     </v-list-item>
                     <v-list-item dense @click.stop="instructionsDialog = true" class="ml-5">
                         <v-icon left>{{ icons.mdiYoutube }}</v-icon>
@@ -73,44 +68,43 @@
                     <v-divider class="mb-2" />
                     <v-list-item @click="$store.dispatch('playlist/deleteActivePlaylist')" v-if="isEditable">
                         <v-icon left color="error"> {{ icons.mdiDelete }} </v-icon>
-                        {{ playlist.id ? "Delete Playlist" : "Clear playlist" }}
+                        {{
+                            playlist.id
+                                ? $t("component.playlist.menu.delete-playlist")
+                                : $t("component.playlist.menu.clear-playlist")
+                        }}
                     </v-list-item>
                 </v-list>
             </v-menu>
         </div>
-        <VideoCardList
-            :videos="playlist.videos || []"
+        <v-snackbar v-model="loginWarning" :timeout="5000" color="warning">
+            {{ $t("component.playlist.save-error-not-logged-in") }}
+
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    color="red darken-2"
+                    text
+                    v-bind="attrs"
+                    @click="
+                        $router.push('/login');
+                        loginWarning = false;
+                    "
+                >
+                    {{ $t("component.mainNav.login") }}
+                </v-btn>
+            </template>
+        </v-snackbar>
+        <span class="text-caption grey--text mt-n2 pa-0 d-block text-right">
+            {{ playlist.videos.length }} / {{ maxPlaylistCount }}
+        </span>
+        <VirtualVideoCardList
+            :playlist="playlist"
             includeChannel
             :horizontal="horizontal"
+            activePlaylistItem
             class="playlist-video-list"
-            :cols="{
-                xs: 1,
-                sm: 3,
-                md: 4,
-                lg: 5,
-                xl: 6,
-            }"
         >
-            <template v-slot:action="{ video }" v-if="isEditable">
-                <div class="d-flex flex-shrink flex-column">
-                    <!-- <button>
-                        <v-icon small> {{ mdiChevronDoubleUp }} </v-icon>
-                    </button> -->
-                    <button @click.stop.prevent="move(video.id, 'up')">
-                        <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
-                    </button>
-                    <button @click.stop.prevent="$store.dispatch('playlist/removeVideoByID', video.id)">
-                        <v-icon small> {{ icons.mdiDelete }} </v-icon>
-                    </button>
-                    <button @click.stop.prevent="move(video.id, 'down')">
-                        <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
-                    </button>
-                    <!-- <button>
-                        <v-icon small> {{ mdiChevronDoubleDown }} </v-icon>
-                    </button> -->
-                </div>
-            </template>
-        </VideoCardList>
+        </VirtualVideoCardList>
 
         <!--* INSTRUCTIONS DIALOG FOR YOUTUBE --->
         <v-dialog v-model="instructionsDialog" :width="$store.state.isMobile ? '90%' : '60vw'">
@@ -142,16 +136,17 @@
 </template>
 
 <script lang="ts">
-import VideoCardList from "@/components/video/VideoCardList.vue";
+import VirtualVideoCardList from "@/components/video/VirtualVideoCardList.vue";
 import { Playlist } from "@/utils/types";
 import { PropType } from "vue";
 import { json2csvAsync } from "json-2-csv";
 import { mdiContentSave, mdiFileDelimited, mdiChevronDoubleUp, mdiChevronDoubleDown } from "@mdi/js";
+import { MAX_PLAYLIST_LENGTH } from "@/utils/consts";
 
 export default {
     name: "Playlist",
     components: {
-        VideoCardList,
+        VirtualVideoCardList,
     },
     props: {
         playlist: {
@@ -182,6 +177,8 @@ export default {
             mdiChevronDoubleDown,
             editNameMode: false,
             instructionsDialog: false,
+            loginWarning: false,
+            maxPlaylistCount: MAX_PLAYLIST_LENGTH,
         };
     },
     computed: {
@@ -215,7 +212,7 @@ export default {
         },
         newPlaylist() {
             // eslint-disable-next-line no-restricted-globals,no-alert
-            if (this.isSaved || confirm("You will lose unsaved changes. Continue?")) {
+            if (this.isSaved || confirm(this.$t("views.playlist.change-loss-warning"))) {
                 this.$store.commit("playlist/resetPlaylist");
             }
         },
@@ -241,6 +238,14 @@ export default {
                 .join(",")}`;
 
             window.open(url, "_blank", "noopener");
+        },
+        trySaving() {
+            if (this.$store.state.userdata.jwt) {
+                this.$store.dispatch("playlist/saveActivePlaylist");
+                this.editNameMode = false;
+            } else {
+                this.loginWarning = true;
+            }
         },
     },
 };

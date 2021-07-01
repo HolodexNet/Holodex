@@ -2,7 +2,6 @@
     <v-card width="400" class="nav-scroll thin-scroll-bar pl-2">
         <slot />
         <div class="pa-2">
-            <span class="text-overline secondary--text">Current Playlist</span>
             <playlist :playlist="active" isEditable :isSaved="isSaved" horizontal></playlist>
         </div>
     </v-card>
