@@ -1,9 +1,8 @@
+---
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: >-
-      Es ist ein Fehler beim Abrufen der Inhalte aufgetreten, bitte check
-      Twitter 
+    textBeforeTwitter: 'Es ist ein Fehler beim Abrufen der Inhalte aufgetreten, bitte check Twitter '
     textAfterTwitter: ' oder melde den Fehler über die'
     aboutPage: Info-Seite
     afterAboutPageHyperlink: .
@@ -93,9 +92,7 @@ component:
     weeklyTopForOrg: Top-Songs der Woche von {0}
   installPrompt:
     title: Holodex installieren
-    callToAction: >-
-      Das Anschauen von Videos auf Holodex funktioniert am besten, wenn du es zu
-      deinem Startbildschirm hinzugefügst
+    callToAction: Das Anschauen von Videos auf Holodex funktioniert am besten, wenn du es zu deinem Startbildschirm hinzugefügst
     notNowBtn: Nicht jetzt
     installBtn: Installieren
     iOS:
@@ -198,9 +195,7 @@ views:
       official: Offiziell
       clip: Clip
     unsupportedQuery: >-
-      Derzeit wird das Suchen von Clips nach <kbd>Thema</kbd> und
-      <kbd>Organisation</kbd> nicht unterstützt. Es werden keine <b>Clips</b>
-      angezeigt.
+      Derzeit wird das Suchen von Clips nach <kbd>Thema</kbd> und <kbd>Organisation</kbd> nicht unterstützt. Es werden keine <b>Clips</b> angezeigt.
     sortByLabel: Sortieren nach
     typeDropdownLabel: Art
   settings:
@@ -209,14 +204,12 @@ views:
     darkModeMsg: Ändert das Design zwischen dem hellen und dem dunklen Modus
     redirectModeLabel: In YouTube öffnen
     redirectModeMsg: >-
-      Ein Klick auf das Video-Thumbnail öffnet es in YouTube, ein Klick auf den
-      Videotitel öffnet es in Holodex
+      Ein Klick auf das Video-Thumbnail öffnet es in YouTube, ein Klick auf den Videotitel öffnet es in Holodex
     useEnglishNameLabel: Englische Namen verwenden
     useEnglishNameMsg: Verwendet englisch lokalisierte Namen für VTuber-Kanäle
     hideVideoThumbnailsLabel: Thumbnails ausblenden
     hideVideoThumbnailsMsg: >-
-      Video-Thumbnails ausblenden, beschleunigt die Ladezeit und verringert das
-      Scrollen auf dem Handy
+      Video-Thumbnails ausblenden, beschleunigt die Ladezeit und verringert das Scrollen auf dem Handy
     pushNotificationLabel: Push-Benachrichtigungen (Bald verfügbar)
     pushNotificationMsg: Push-Benachrichtigung für favorisierte Kanäle aktivieren
     autoplayVideoLabel: Automatische Wiedergabe
@@ -228,8 +221,7 @@ views:
     tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
     defaultPage: Standardseite
     defaultPageMsg: >-
-      Öffne diese Seite standardmäßig, wenn du holodex.net besuchst oder auf das
-      Logo oben links klickst.
+      Öffne diese Seite standardmäßig, wenn du holodex.net besuchst oder auf das Logo oben links klickst.
     videoFeedSettings: Video-Feed Einstellungen
     siteNavigationSettings: Seite/Navigation
     languageSettings: Sprache
@@ -277,8 +269,7 @@ views:
     saveToPlaylist: Video zu aktueller Playlist hinzufügen
   favorites:
     promptForAction: >-
-      Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten
-      Clips und Livestreams auf dieser Seite an.
+      Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
     manageFavorites: Favoriten verwalten
     close: Schließen
     showall: Alle anzeigen
@@ -317,14 +308,10 @@ views:
     muteAll: Alles stummschalten
     unmuteAll: Alle Stummschaltungen aufheben
     autoLayoutTip: Klicke auf einen Kanal, um im automatischen Layout-Modus zu schauen
-    createLayoutTip: >-
-      Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine
-      Vorlage verwendest
+    createLayoutTip: Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine Vorlage verwendest
     preset:
       shareOnDiscord: >-
-        Hast du ein cooles Layout, das du teilen möchtest? Benutze den
-        Teilen-Button und lass es uns wissen auf unserem <a
-        href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+        Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
       custom: Meine Layouts
       toggleAutoLayout: Layout Automodus umschalten
       remove: Entfernen
@@ -358,10 +345,7 @@ editor:
     add: Hinzufügen
     update: Aktualisieren
     permission: >-
-      Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Songs zu
-      aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a
-      class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme /
-      Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
+      Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
     titles:
       addSong: 'Song-Metadaten: Neuen Song hinzufügen'
       songList: 'Songliste : {0}'
@@ -386,14 +370,10 @@ about:
     title: Häufig gestellte Fragen
     ytchatHeader: Mein Youtube-Chat ist nicht eingeloggt!
     ytchatContent: >-
-      Bitte deaktiviere die Browser-Sicherheitsfunktion "Blockieren von Cookies
-      von Drittanbietern" oder nimm diese Website und youtube.com mit in die
-      Whitelist auf.
+      Bitte deaktiviere die Browser-Sicherheitsfunktion "Blockieren von Cookies von Drittanbietern" oder nimm diese Website und youtube.com mit in die Whitelist auf.
     ytchatFirefox: Firefox-Anleitung, andere Browser sollten ähnlich sein.
     autoplayHeader: Automatische Wiedergabe funktioniert nicht!
-    autoplayContent: >-
-      Bitte google, wie du automatische Wiedergabe / AutoPlay für deinen Browser
-      aktivieren kannst.
+    autoplayContent: Bitte google, wie du automatische Wiedergabe / AutoPlay für deinen Browser aktivieren kannst.
     musicPlayer: Die Musikwiedergabe funktioniert auf mobilen Geräten nicht gut!
     musicPlayerContent: >-
       Es tut uns leid, aber es ist uns zurzeit nicht möglich, die mobile Musikwiedergabe zu unterstützen. <br/>Das hat mehrere Gründe: Erstens verbieten mobile Geräte meistens die automatische Wiedergabe, welche wir hierfür benötigen würden; und zweitens verbieten sie Webseiten meistens, dass sie im Hintergrund Songs aneinanderreihen. Außerdem integrieren wir deine Warteschlange nicht in Musiksteuerungszentralen auf Systemebene.
@@ -402,32 +382,25 @@ about:
       Alle Informationen werden automatisch aus der Videobeschreibung ausgelesen. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden VTuber. Wenn du keine VTuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem VTuber benötigen, welcher Holodex bekannt ist.
     quitHolodex: "Ich bin ein Clipper und möchte, dass mein Kanal von Holodex entfernt wird\\r\n"
     quitHolodexContent: >-
-      Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein
-      Problem gibt, bei dem wir dir helfen können. Wenn du dich trotzdem
-      entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
+      Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir helfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
     favorite:
       title: Was sind Favoriten?
       disappear:
-        title: >-
-          Meine Favoritenliste ist verschwunden / Ich kann keine Favoriten
-          setzen
+        title: Meine Favoritenliste ist verschwunden / Ich kann keine Favoriten setzen
     mobile:
       title: Gibt es eine Android/iOS App für Holodex?
       content:
         summary: >-
-          Wir arbeiten daran! In der Zwischenzeit nutze bitte die "Add to
-          Home"-Funktion in deinem Browser. Wir haben sie stark optimiert, damit
-          sie sich wie eine App verhält
+          Wir arbeiten daran! In der Zwischenzeit nutze bitte die "Add to Home"-Funktion in deinem Browser. Wir haben sie stark optimiert, damit sie sich wie eine App verhält
     MugenClips:
       title: Was ist MugenClips?
     subber:
       title: Ich bin ein Clipper und finde meinen Kanal oder meine Clips nicht auf Holodex
       contents:
-        - ''
         - >-
-          , and we will add you manually. If you are already on the list, please
-          make sure your video descriptions have the correct youtube
-          source/channel links.
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
     feedback:
       title: Ich habe Feedback / möchte zu diesem Projekt beitragen
   gdpr: DSGVO und meine Daten
@@ -436,19 +409,16 @@ about:
   gdprDeletion: Um deine Benutzerdaten löschen zu lassen, kontaktiere uns bitte auf Discord!
   feedback: Feedback / Fehlerberichte
   feedbackHtml: >-
-    Du kannst einen Fehler im <a
-    href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a>
-    melden oder das Holodex Team auf Discord kontaktieren. <br /> <br /> Reddit:
-    <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+    Du kannst einen Fehler im <a href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a> melden oder das Holodex Team auf Discord kontaktieren. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Credits
     contents:
       - I would like to give big thanks to the
       - team for their work on
       - >-
-        Also to all the subbers for helping the overseas bros! Please check them
-        out!
-      - ''
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
   changelog:
     title: Änderungsverlauf
   news:
