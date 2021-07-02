@@ -1,18 +1,22 @@
 # Holodex Changelog
 
 
-### 2.13 Holodex [*June 18, 2021*]
+### 2.13 Holodex [*July 4th, 2021*]
 
 (\**Holodex is still recruiting! See our twitter, or scroll down!*)
 
 ##### New Features
 - Massive Playlist feature pushed in, share your playlists with everyone
-- Library function has become Playlists instead. Please login to save playlists to the cloud.
+- Library function has become Playlists instead. Please login to save playlists for your account.
 - Release will slow down in preparation for the large music feature, please keep tagging your favorite karaokes and songs!
 
 ##### Patches
 - Searching for multiple orgs on the search bar now looks for collabs between orgs. Try {org: Hololive} + {org: Nijisanji}
 - Unrelated clips and uploads are now hidden from All Vtubers' (Vtuberdex) clips page.
+
+##### New Locales
+- Added **Turkish** and **Hungarian** locales! Thank you so much translators.
+- **French** is finally back up to 100%!
 
 
 ### Holodex is recruiting📣!
