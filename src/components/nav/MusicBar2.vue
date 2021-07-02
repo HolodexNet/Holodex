@@ -215,6 +215,22 @@
 .music-more-btn {
 }
 
+.music-progress {
+    .v-slider {
+        cursor: pointer !important;
+    }
+
+    .v-slider__track-container {
+        transition: height 0.2s ease-out;
+    }
+
+    .v-slider:hover {
+        .v-slider__track-container {
+            height: 6px;
+        }
+    }
+}
+
 @keyframes shake {
     10%,
     90% {
