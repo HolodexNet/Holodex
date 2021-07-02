@@ -12,7 +12,7 @@ Vue.use(VueI18n);
 export const langs = [
     { val: "en", display: "English", credit: "@Holodex" },
     { val: "en-CA", display: "English (Canadian)", credit: "@Holodex" },
-    { val: "ja", display: "日本語", credit: "Yourein#3960" },
+    { val: "ja", display: "日本語", credit: "Yourein#3960,Saginomiya#2353" },
     { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
     { val: "ko", display: "한국어", credit: "AlexKoala#0253" },
     { val: "es-ES", display: "Español España", credit: "TraduSquare (Darkc0m y D3fau4)" },
@@ -21,10 +21,12 @@ export const langs = [
     { val: "id", display: "Bahasa Indonesia", credit: "alcyneous#2803" },
     { val: "ru", display: "Русский язык", credit: "kirillbarnaul#8499" },
     { val: "pt", display: "Português Brasileiro", credit: "Ash Niartis#5090" },
-    { val: "de", display: "Deutsch", credit: "DatJocab#1803" },
+    { val: "de", display: "Deutsch", credit: "DatJocab#1803, Doubleturtle#3660" },
     { val: "it", display: "Italiano", credit: "テオさん#0139" },
-    { val: "fr", display: "Français", credit: "pinembour#7770" },
+    { val: "fr", display: "Français", credit: "pinembour#7770,Derasiel △#0002" },
     { val: "tr", display: "Türkçe", credit: "creeperkafasipw#1861" },
+    { val: "vi", display: "Tiếng Việt", credit: "Pooh#6666,Dead xda member#4848" },
+    { val: "hu", display: "Magyar", credit: "kuroihikikomori#3519" },
 ];
 
 export const dayjsLangs = {
