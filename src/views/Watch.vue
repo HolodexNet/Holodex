@@ -131,7 +131,6 @@
                 </v-col>
                 <v-col :md="theatherMode ? 4 : 12" :lg="theatherMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
                     <WatchLiveChat
-                        v-if="showChatWindow"
                         :video="video"
                         :mugenId="isMugen && '4ANxvWIM3Bs'"
                         :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
@@ -217,6 +216,9 @@ export default {
             this.hintConnectLiveTL = true;
         }
     },
+    destroyed() {
+        this.$store.commit("deleteActiveVideo", this.video.id);
+    },
     methods: {
         init() {
             window.scrollTo(0, 0);
@@ -237,6 +239,10 @@ export default {
         },
         ready(event) {
             this.player = event.target;
+            this.$store.commit("setActiveVideo", {
+                videoId: this.video.id,
+                playerObj: this.player,
+            });
         },
         seekTo(time) {
             if (!this.player) return;

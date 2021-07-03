@@ -9,10 +9,11 @@
         }"
     >
         <span class="loading-text" v-if="showLiveChat">{{ $t("views.watch.chat.loading") }}</span>
-        <WatchLiveTranslations
+        <LiveTranslations
             :video="video"
             v-if="!isMugen && shouldConnectLiveTL"
             v-show="shouldShowLiveTL"
+            :currentTime="currentTime"
             :class="{
                 'chat-overlay': fixedBottom || fixedRight,
                 'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
@@ -28,7 +29,7 @@
             @historyLength="handleHistoryLength"
         >
             <template v-slot:button> </template>
-        </WatchLiveTranslations>
+        </LiveTranslations>
         <div
             class="embedded-chat"
             v-if="showLiveChat"
@@ -47,13 +48,13 @@
 
 <script lang="ts">
 // import CookieDetect from "@/components/common/3PCookieDetect.vue";
-import WatchLiveTranslations from "./WatchLiveTranslations.vue";
+import LiveTranslations from "@/components/chat/ArchiveTranslations.vue";
 
 // Contains Live Chat iframe and Chat TLs, can show either one at both at the same time
 export default {
     name: "WatchLiveChat",
     components: {
-        WatchLiveTranslations,
+        LiveTranslations,
         // CookieDetect,
     },
     props: {
@@ -91,6 +92,9 @@ export default {
         isMugen: {
             type: Boolean,
             default: false,
+        },
+        currentTime: {
+            type: Number,
         },
     },
     data() {

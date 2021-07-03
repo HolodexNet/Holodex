@@ -104,7 +104,7 @@ import VueSocketIOExt from "vue-socket.io-extended";
 import { Manager } from "socket.io-client";
 import Vue from "vue";
 import { mdiArrowExpand } from "@mdi/js";
-import WatchLiveTranslationsSetting from "./WatchLiveTranslationsSetting.vue";
+import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 
 const manager = new Manager(/* process.env.NODE_ENV === "development" ? "http://localhost:2434" : */ API_BASE_URL, {
     reconnectionAttempts: 10,
@@ -118,7 +118,7 @@ const manager = new Manager(/* process.env.NODE_ENV === "development" ? "http://
 Vue.use(VueSocketIOExt, manager.socket("/"));
 
 export default {
-    name: "WatchLiveTranslations",
+    name: "LiveTranslations",
     components: {
         WatchLiveTranslationsSetting,
     },
