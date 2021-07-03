@@ -363,6 +363,10 @@ export default {
     flex-direction: column;
 }
 
+.tl-caption {
+    color: hsla(0, 0%, 100%, 0.7);
+}
+
 .tl-body .tl-caption {
     letter-spacing: 0.0333333333em !important;
     font-size: 0.85em;

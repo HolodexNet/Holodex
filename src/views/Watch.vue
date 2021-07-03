@@ -204,7 +204,7 @@ export default {
             hintConnectLiveTL: false,
             newTL: 0,
 
-            // showLiveChat: true,
+            // when live/upcoming = true, when archive = false
             showLiveChatOverride: true,
             fullScreen: false,
 
@@ -216,8 +216,6 @@ export default {
         if (this.showTL && !this.hintConnectLiveTL) {
             this.hintConnectLiveTL = true;
         }
-        if (!["upcoming", "live"].includes(this.video.status) && !(window as any).extensionSupport)
-            this.showLiveChatOverride = false;
     },
     destroyed() {
         this.$store.commit("deleteActiveVideo", this.video.id);
@@ -373,6 +371,11 @@ export default {
         // eslint-disable-next-line func-names
         "$route.query.v": function () {
             this.init();
+        },
+        video() {
+            this.showLiveChatOverride =
+                this.video.type === "stream" &&
+                (["upcoming", "live"].includes(this.video.status) || !!(window as any).extensionSupport);
         },
     },
 };
