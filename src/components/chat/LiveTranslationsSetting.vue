@@ -85,6 +85,7 @@ import { syncState } from "@/utils/functions";
 import { TL_LANGS } from "@/utils/consts";
 
 export default {
+    name: "LiveTranslationsSettings",
     data() {
         return {
             showBlockedList: false,

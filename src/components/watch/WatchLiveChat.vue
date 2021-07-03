@@ -9,9 +9,9 @@
         }"
     >
         <span class="loading-text" v-if="showLiveChat">{{ $t("views.watch.chat.loading") }}</span>
-        <WatchLiveTranslations
+        <LiveTranslations
             :video="video"
-            v-if="!isMugen && shouldConnectLiveTL"
+            v-if="['upcoming', 'live'].includes(video.status) && !isMugen && shouldConnectLiveTL"
             v-show="shouldShowLiveTL"
             :class="{
                 'chat-overlay': fixedBottom || fixedRight,
@@ -27,8 +27,24 @@
             @videoUpdate="handleVideoUpdate"
             @historyLength="handleHistoryLength"
         >
-            <template v-slot:button> </template>
-        </WatchLiveTranslations>
+        </LiveTranslations>
+        <ArchiveTranslations
+            v-show="shouldShowLiveTL"
+            :video="video"
+            v-if="video.status === 'past'"
+            :class="{
+                'chat-overlay': fixedBottom || fixedRight,
+                'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
+                'tl-full-height': !showLiveChat,
+            }"
+            :style="{
+                height:
+                    showLiveChat && $store.state.settings.liveTlWindowSize > 0
+                        ? $store.state.settings.liveTlWindowSize + '%'
+                        : '',
+            }"
+        />
+
         <div
             class="embedded-chat"
             v-if="showLiveChat"
@@ -47,13 +63,14 @@
 
 <script lang="ts">
 // import CookieDetect from "@/components/common/3PCookieDetect.vue";
-import WatchLiveTranslations from "./WatchLiveTranslations.vue";
-
+import LiveTranslations from "@/components/chat/LiveTranslations.vue";
+import ArchiveTranslations from "@/components/chat/ArchiveTranslations.vue";
 // Contains Live Chat iframe and Chat TLs, can show either one at both at the same time
 export default {
     name: "WatchLiveChat",
     components: {
-        WatchLiveTranslations,
+        LiveTranslations,
+        ArchiveTranslations,
         // CookieDetect,
     },
     props: {
@@ -91,6 +108,9 @@ export default {
         isMugen: {
             type: Boolean,
             default: false,
+        },
+        currentTime: {
+            type: Number,
         },
     },
     data() {
