@@ -122,12 +122,6 @@ export default {
     components: {
         WatchLiveTranslationsSetting,
     },
-    props: {
-        video: {
-            type: Object,
-            required: false,
-        },
-    },
     data() {
         return {
             overlayMessage: this.$t("views.watch.chat.loading"),

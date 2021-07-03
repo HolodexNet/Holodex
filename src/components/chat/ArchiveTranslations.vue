@@ -27,7 +27,7 @@
         <v-divider />
         <portal to="expandedMessage" :disabled="!expanded" slim>
             <virtual-list
-                class="tl-body thin-scroll-bar pa-1 pa-lg-3"
+                class="archive tl-body thin-scroll-bar pa-1 pa-lg-3"
                 ref="tlBody"
                 :style="{
                     'font-size': liveTlFontSize + 'px',
@@ -51,32 +51,31 @@ import ChatMessage from "./ChatMessage.vue";
 import chatMixin from "./chatMixin";
 
 export default {
-    name: "LiveTranslations",
+    name: "ArchiveTranslations",
     mixins: [chatMixin],
     components: {
         WatchLiveTranslationsSetting,
         ChatMessage,
         VirtualList,
     },
-    props: {
-        video: {
-            type: Object,
-            required: false,
-        },
-    },
     data() {
         return {
             ChatMessage,
             currentTime: 0,
             curIndex: 0,
+            timer: null,
         };
     },
     created() {},
     mounted() {
         this.loadMessages(true, true);
-        setInterval(() => {
+        this.timer = setInterval(() => {
+            if (!this.$store.state.activeVideos[this.video.id]) return;
             this.currentTime = this.$store.state.activeVideos[this.video.id].getCurrentTime();
         }, 1000);
+    },
+    destroyed() {
+        if (this.timer) clearInterval(this.timer);
     },
     watch: {
         liveTlLang() {
@@ -129,7 +128,7 @@ export default {
 </script>
 
 <style>
-.tl-body {
+.tl-body.archive {
     overflow-y: auto;
     position: relative;
     overscroll-behavior: contain;

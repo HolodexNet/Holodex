@@ -47,7 +47,7 @@
                 </WatchFrame>
                 <WatchToolBar :video="video" :noBackButton="!isMobile">
                     <template v-slot:buttons>
-                        <v-tooltip bottom v-if="hasLiveTL && hasLiveChat">
+                        <v-tooltip bottom v-if="hasLiveTL">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn
                                     icon
@@ -73,7 +73,7 @@
                             icon
                             lg
                             @click="showLiveChat = !showLiveChat"
-                            v-if="hasLiveChat"
+                            v-if="hasLiveChat && showLiveChatOverride"
                             :color="showLiveChat ? 'primary' : ''"
                         >
                             <v-icon
@@ -131,6 +131,7 @@
                 </v-col>
                 <v-col :md="theatherMode ? 4 : 12" :lg="theatherMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
                     <WatchLiveChat
+                        v-if="showChatWindow"
                         :video="video"
                         :mugenId="isMugen && '4ANxvWIM3Bs'"
                         :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
@@ -204,7 +205,7 @@ export default {
             newTL: 0,
 
             // showLiveChat: true,
-
+            showLiveChatOverride: true,
             fullScreen: false,
 
             playlistIndex: -1,
@@ -215,6 +216,9 @@ export default {
         if (this.showTL && !this.hintConnectLiveTL) {
             this.hintConnectLiveTL = true;
         }
+        console.log((window as any).extensionSupport);
+        if (!["upcoming", "live"].includes(this.video.status) && !(window as any).extensionSupport)
+            this.showLiveChatOverride = false;
     },
     destroyed() {
         this.$store.commit("deleteActiveVideo", this.video.id);
@@ -303,7 +307,15 @@ export default {
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
-        ...syncState("watch", ["showTL", "showLiveChat"]),
+        ...syncState("watch", ["showTL"]),
+        showLiveChat: {
+            get() {
+                return this.$store.state.watch.showLiveChat && this.showLiveChatOverride;
+            },
+            set(val) {
+                this.$store.commit("watch/setShowLiveChat", val);
+            },
+        },
         videoId() {
             return this.$route.params.id || this.$route.query.v;
         },
@@ -314,10 +326,10 @@ export default {
             return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
         },
         hasLiveChat() {
-            return this.isMugen || this.video.status === "live" || this.video.status === "upcoming";
+            return this.isMugen || this.video.type === "stream";
         },
         hasLiveTL() {
-            return this.video.status === "live" || this.video.status === "upcoming";
+            return this.video.type === "stream";
         },
         showChatWindow() {
             return this.hasLiveChat && (this.showLiveChat || this.showTL);

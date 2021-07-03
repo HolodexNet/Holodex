@@ -23,6 +23,12 @@ export default {
             limit: 20,
         };
     },
+    props: {
+        video: {
+            type: Object,
+            required: false,
+        },
+    },
     computed: {
         lang() {
             return this.$store.state.settings.lang;
