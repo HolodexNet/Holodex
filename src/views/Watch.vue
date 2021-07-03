@@ -216,7 +216,6 @@ export default {
         if (this.showTL && !this.hintConnectLiveTL) {
             this.hintConnectLiveTL = true;
         }
-        console.log((window as any).extensionSupport);
         if (!["upcoming", "live"].includes(this.video.status) && !(window as any).extensionSupport)
             this.showLiveChatOverride = false;
     },
