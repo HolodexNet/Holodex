@@ -48,7 +48,7 @@
 
 <script lang="ts">
 // import CookieDetect from "@/components/common/3PCookieDetect.vue";
-import LiveTranslations from "@/components/chat/ArchiveTranslations.vue";
+import LiveTranslations from "@/components/chat/LiveTranslations.vue";
 
 // Contains Live Chat iframe and Chat TLs, can show either one at both at the same time
 export default {
