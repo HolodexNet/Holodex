@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import axiosRetry from "axios-retry";
+// import axiosRetry from "axios-retry";
 import { dayjs } from "@/utils/time";
 import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
@@ -11,12 +11,13 @@ export const API_BASE_URL =
 
 export const axiosInstance = (() => {
     const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
-    axiosRetry(instance, {
-        retries: 3,
-        retryDelay: axiosRetry.exponentialDelay,
-        retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
-        shouldResetTimeout: true,
-    });
+    // axiosRetry(instance, {
+    //     retries: 3,
+    //     retryDelay: axiosRetry.exponentialDelay,
+    //     retryCondition: (error) =>
+    //        axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
+    //     shouldResetTimeout: true,
+    // });
     return instance;
 })();
 
