@@ -45,7 +45,8 @@ const actions = {
             });
     },
     fetchLive({ state, commit, rootState, dispatch }, { force = false, minutes = 2 }) {
-        if (!(rootState.userdata && rootState.userdata.jwt)) return null; // don't update.
+        if (!(rootState.userdata && rootState.userdata.jwt) || (rootState.visibilityState === "hidden" && !force))
+            return null; // don't update.
         if (
             state.hasError ||
             force ||
@@ -138,9 +139,6 @@ const mutations = {
     setLive(state, live) {
         state.live = live;
         state.lastLiveUpdate = Date.now();
-    },
-    setLastLiveUpdate(state, time) {
-        state.lastLiveUpdate = time;
     },
     setRecentVideoFilter(state, filter) {
         state.recentVideoFilter = filter;

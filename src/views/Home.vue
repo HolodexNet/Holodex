@@ -155,6 +155,11 @@ export default {
         "$store.state.currentOrg": function () {
             this.init();
         },
+        // eslint-disable-next-line func-names
+        "$store.state.visibilityState": function () {
+            if (this.isActive && this.$store.state.visibilityState === "active")
+                this.$store.dispatch("home/fetchLive", { force: false });
+        },
         tab() {
             // Scroll to top
             this.$nextTick(() => {
@@ -205,8 +210,8 @@ export default {
         setAutoRefresh() {
             if (this.refreshTimer) clearInterval(this.refreshTimer);
             this.refreshTimer = setInterval(() => {
-                this.$store.dispatch("home/fetchLive");
-            }, 3 * 60 * 1000);
+                this.$store.dispatch("home/fetchLive", { force: false });
+            }, 60 * 1000);
         },
         changeTab(preservePage = true) {
             // Sync the hash to current tab
@@ -229,7 +234,7 @@ export default {
         },
         init() {
             this.$store.commit("home/resetState");
-            this.$store.dispatch("home/fetchLive");
+            this.$store.dispatch("home/fetchLive", { force: true });
             this.identifier = Date.now();
             switch (this.$route.hash) {
                 case "#archive":

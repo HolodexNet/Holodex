@@ -56,6 +56,10 @@ export default {
         };
     },
     created() {
+        this.$store.commit("setVisiblityState", document.visibilityState);
+        document.addEventListener("visibilitychange", () => {
+            this.$store.commit("setVisiblityState", document.visibilityState);
+        });
         axiosInstance.interceptors.response.use(undefined, (error) => {
             // Any status codes that falls outside the range of 2xx cause this function to trigger
             // Do something with response error
@@ -185,6 +189,11 @@ export default {
         // eslint-disable-next-line func-names
         "$vuetify.breakpoint.name": function () {
             this.updateIsMobile();
+        },
+        // eslint-disable-next-line func-names
+        "$store.state.visibilityState": function () {
+            if (this.$store.state.visibilityState === "active")
+                this.$store.dispatch("favorites/fetchLive", { force: false, minutes: 5 });
         },
     },
     methods: {

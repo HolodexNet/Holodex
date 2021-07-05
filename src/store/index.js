@@ -73,6 +73,9 @@ function defaultState() {
 
         // Active Video Frames
         activeVideos: {},
+
+        // Document.visiblityState (eg. backgrounded)
+        visibilityState: null,
     };
 }
 
@@ -278,6 +281,9 @@ export default new Vuex.Store({
         },
         deleteActiveVideo(state, videoId) {
             Vue.delete(state.activeVideos, videoId);
+        },
+        setVisiblityState(state, val) {
+            state.visibilityState = val;
         },
     },
     actions: {
