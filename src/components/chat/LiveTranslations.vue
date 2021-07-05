@@ -350,10 +350,12 @@ export default {
 
 .tl-expanded {
     overscroll-behavior: auto !important;
+    height: 75vh;
 }
 
 .tl-expanded > .tl-body {
     height: 75vh;
+    width: 100%;
 }
 
 .tl-overlay {

@@ -151,24 +151,33 @@ export default {
         },
         favorites() {
             const fav = this.$store.state.favorites.favorites;
-            const favoritesSet = new Set(fav.map((x) => x.id));
-            const lives: Array<any> = this.$store.state.favorites.live;
-            const updateNotice = this.$store.state.favorites.lastLiveUpdate;
-            console.debug(`Updating favs: ${updateNotice}`);
+            try {
+                const favoritesSet = new Set(fav.map((x) => x.id));
+                const lives: Array<any> = this.$store.state.favorites.live;
+                const updateNotice = this.$store.state.favorites.lastLiveUpdate;
+                console.debug(`Updating favs: ${updateNotice}`);
 
-            const existingChs = {};
-            lives.forEach((x) => {
-                if (favoritesSet.has(x.channel.id) && !existingChs[x.channel.id]) {
-                    existingChs[x.channel.id] = x;
-                }
-            });
-            // remainder:
-            const extras = fav
-                .filter((x) => !existingChs[x.id])
-                .map((ch) => ({
-                    channel: ch,
-                }));
-            return [...Object.values(existingChs), ...extras];
+                const existingChs = {};
+                lives.forEach((x) => {
+                    if (favoritesSet.has(x.channel.id) && !existingChs[x.channel.id]) {
+                        existingChs[x.channel.id] = x;
+                    }
+                });
+                // remainder:
+                const extras = fav
+                    .filter((x) => !existingChs[x.id])
+                    .map((ch) => ({
+                        channel: ch,
+                    }));
+                return [...Object.values(existingChs), ...extras];
+            } catch (e) {
+                console.error(e);
+            }
+
+            // fall back in case something fails above
+            return fav.map((ch) => ({
+                channel: ch,
+            }));
         },
         collapsedFavorites() {
             return !this.favoritesExpanded && this.favorites.length > 8 ? this.favorites.slice(0, 8) : this.favorites;

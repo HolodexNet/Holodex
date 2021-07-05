@@ -12,10 +12,10 @@ export const API_BASE_URL =
 export const axiosInstance = (() => {
     const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
     axiosRetry(instance, {
-        retries: 3,
+        retries: 2,
         retryDelay: axiosRetry.exponentialDelay,
         retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
-        shouldResetTimeout: true,
+        shouldResetTimeout: false,
     });
     return instance;
 })();
