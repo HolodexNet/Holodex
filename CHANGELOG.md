@@ -5,10 +5,16 @@
 
 (\**Holodex is still recruiting! See our twitter, or scroll down!*)
 
+💬 From the developers:
+> Sorry for the long gap between updates, we weren't too sure about the direction behind our playlist design, so please tell us if you have any design experience and want to improve the site UX flow.
+> 
+> Release will continue to be slow while we split attention into the large music feature (maybe playlists, sharables, recommendations, artist-radio and more), please keep tagging your favorite karaokes and songs!
+
 ##### New Features
-- Massive Playlist feature pushed in, share your playlists with everyone
+- **Massive Playlist feature updated**! Share your playlists with everyone.
 - Library function has become Playlists instead. Please login to save playlists for your account.
-- Release will slow down in preparation for the large music feature, please keep tagging your favorite karaokes and songs!
+- **VOD TLdex Replay** has been added, tell us what you think!
+- **Home page live data now auto update**.
 
 ##### Patches
 - Searching for multiple orgs on the search bar now looks for collabs between orgs. Try {org: Hololive} + {org: Nijisanji}
