@@ -148,7 +148,16 @@ export default {
         this.setAutoRefresh();
     },
     deactivated() {
-        clearInterval(this.refreshTimer);
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
+    },
+    beforeDestroy() {
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
     },
     watch: {
         // eslint-disable-next-line func-names
