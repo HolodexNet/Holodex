@@ -23,7 +23,7 @@
         </v-btn>
         <v-tooltip bottom v-if="channel.type === 'vtuber' && !hideFav">
             <template v-slot:activator="{ on, attrs }">
-                <v-btn icon sm elevation="0" @click.stop="toggleFavorite($event)" v-on="on" v-bind="attrs">
+                <v-btn icon sm @click.stop="toggleFavorite($event)" v-on="on" v-bind="attrs">
                     <v-icon :color="isFavorited && isLoggedIn ? 'red' : 'gray'">
                         {{ isFavorited ? icons.mdiHeart : mdiHeartOutline }}
                     </v-icon>

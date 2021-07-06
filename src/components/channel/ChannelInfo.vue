@@ -3,8 +3,8 @@
         <v-list-item-title style="align-self: flex-start">
             <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
                 {{ channelName }}
-                <div class="text-body-2 text--secondary" v-if="!noGroup && channel.group">
-                    {{ channel.group }}
+                <div class="text-body-2 text--secondary">
+                    {{ channel.org }} <span v-if="!noGroup && channel.group">• {{ channel.group }}</span>
                 </div>
             </router-link>
         </v-list-item-title>

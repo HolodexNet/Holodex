@@ -98,6 +98,8 @@ export const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?
 export const VIDEO_URL_REGEX =
     /((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be|holodex.net))(\/(?:[\w\-]+\?v=|embed\/|v\/|watch\/)?)([\w\-]+)(\S+)?/i;
 
+export const TWITCH_VIDEO_URL_REGEX = /(?:https:\/\/)?twitch\.tv\/([\w\-_]*)/i;
+
 export const TL_LANGS = Object.freeze([
     {
         text: "English",
@@ -150,3 +152,5 @@ export const MESSAGE_TYPES = Object.freeze({
     TOKEN: "token",
     FAVORITES: "favorites",
 });
+
+export const MAX_PLAYLIST_LENGTH = 500;

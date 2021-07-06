@@ -50,8 +50,8 @@
                                 "
                                 class="tl-caption"
                                 :class="{
-                                    'primary--text': item.isOwner,
-                                    'secondary--text': item.is_verified || item.is_moderator,
+                                    'primary--text': item.is_owner,
+                                    'secondary--text': item.is_verified || item.is_moderator || item.is_vtuber,
                                 }"
                             >
                                 <v-divider class="my-1" />
@@ -97,14 +97,13 @@
 </template>
 
 <script lang="ts">
-import api, { API_BASE_URL } from "@/utils/backend-api";
-import { formatDuration, dayjs } from "@/utils/time";
-import { syncState } from "@/utils/functions";
+import { API_BASE_URL } from "@/utils/backend-api";
+import { dayjs } from "@/utils/time";
 import VueSocketIOExt from "vue-socket.io-extended";
 import { Manager } from "socket.io-client";
 import Vue from "vue";
-import { mdiArrowExpand } from "@mdi/js";
-import WatchLiveTranslationsSetting from "./WatchLiveTranslationsSetting.vue";
+import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
+import chatMixin from "./chatMixin";
 
 const manager = new Manager(/* process.env.NODE_ENV === "development" ? "http://localhost:2434" : */ API_BASE_URL, {
     reconnectionAttempts: 10,
@@ -118,37 +117,18 @@ const manager = new Manager(/* process.env.NODE_ENV === "development" ? "http://
 Vue.use(VueSocketIOExt, manager.socket("/"));
 
 export default {
-    name: "WatchLiveTranslations",
+    name: "LiveTranslations",
+    mixins: [chatMixin],
     components: {
         WatchLiveTranslationsSetting,
     },
-    props: {
-        video: {
-            type: Object,
-            required: false,
-        },
-    },
     data() {
         return {
-            mdiArrowExpand,
-            tlHistory: [],
-            MESSAGE_TYPES: Object.freeze({
-                END: "end",
-                ERROR: "error",
-                INFO: "info",
-                MESSAGE: "message",
-                UPDATE: "update",
-            }),
             overlayMessage: this.$t("views.watch.chat.loading"),
             showOverlay: false,
             isLoading: true,
             success: false,
-            expanded: false,
             selectedChannel: "",
-
-            historyLoading: false,
-            completed: false,
-            limit: 20,
         };
     },
     sockets: {
@@ -203,12 +183,13 @@ export default {
             this.initSocket();
         }
         // Test string
-        // setTimeout(() => {
+        // setInterval(() => {
         //     const msg = {
         //         name: "test 1",
         //         message: "But it’s no Pokemon, it’s just a very hyped Tako. :_MMT:https://yt3.ggpht.com/vjsrafxnve6TZhRGbmoVEGpn8VWUAYoT_uin2tBO6R4hoFfAakNTE9V9TD8fq3cAp0ZO4jM03pI=w48-h48-c-k-nd It seems to be very hyped for tomorrow’s fashINA show… almost too hyped that it has barely sleep :_MMT:https://yt3.ggpht.com/vjsrafxnve6TZhRGbmoVEGpn8VWUAYoT_uin2tBO6R4hoFfAakNTE9V9TD8fq3cAp0ZO4jM03pI=w48-h48-c-k-nd ",
         //         timestamp: Date.now()
         //     };
+        //     if (Math.abs(this.$refs.tlBody.scrollTop) <= 1) this.$refs.tlBody.scrollTo(0, 0);
         //     this.tlHistory.push(this.parseMessage(msg));
         // }, 1000)
     },
@@ -232,20 +213,6 @@ export default {
         },
     },
     computed: {
-        lang() {
-            return this.$store.state.settings.lang;
-        },
-        ...syncState("settings", [
-            "liveTlStickBottom",
-            "liveTlLang",
-            "liveTlFontSize",
-            "liveTlShowVerified",
-            "liveTlShowModerator",
-            "liveTlWindowSize",
-        ]),
-        blockedNames() {
-            return this.$store.getters["settings/liveTlBlockedNames"];
-        },
         connected() {
             return this.$socket.connected;
         },
@@ -259,31 +226,6 @@ export default {
         },
     },
     methods: {
-        loadMessages(firstLoad = false, loadAll = false) {
-            this.historyLoading = true;
-            const lastTimestamp = !firstLoad && this.tlHistory[0].timestamp;
-            api.chatHistory(this.video.id, {
-                lang: this.liveTlLang,
-                ...(this.liveTlShowVerified && { verified: 1 }),
-                moderator: this.liveTlShowModerator ? 1 : 0,
-                limit: loadAll ? 10000 : this.limit,
-                ...(lastTimestamp && { before: lastTimestamp }),
-            })
-                .then(({ data }) => {
-                    this.completed = data.length !== this.limit || loadAll;
-                    if (firstLoad) this.tlHistory = data.map(this.parseMessage);
-                    else this.tlHistory.unshift(...data.map(this.parseMessage));
-
-                    // Set last message as breakpoint, used for maintaing scrolling and styling
-                    if (this.tlHistory.length) this.tlHistory[0].breakpoint = true;
-                })
-                .catch((e) => {
-                    console.error(e);
-                })
-                .finally(() => {
-                    this.historyLoading = false;
-                });
-        },
         toggleBlockName(name) {
             this.$store.commit("settings/toggleLiveTlBlocked", name);
         },
@@ -306,7 +248,7 @@ export default {
                     (msg.is_moderator && this.liveTlShowModerator) ||
                     (msg.is_verified && this.liveTlShowVerified)
                 ) {
-                    if (this.$refs.tlBody.scrollTop === 1) this.$refs.tlBody.scrollTo(0, 0);
+                    if (Math.abs(this.$refs.tlBody.scrollTop) <= 15) this.$refs.tlBody.scrollTo(0, 0);
                     this.tlHistory.push(this.parseMessage(msg));
                     this.$emit("historyLength", this.tlHistory.length);
                 }
@@ -329,42 +271,6 @@ export default {
                     break;
             }
         },
-        parseMessage(msg) {
-            // Append title to author name
-            msg.prefix = "";
-            if (msg.is_moderator) msg.prefix += "[Mod]";
-            if (msg.is_verified) msg.prefix += "[Verified]";
-            if (msg.is_owner) msg.prefix += "[Owner]";
-            if (msg.is_vtuber) msg.prefix += "[Vtuber]";
-            msg.timestamp = +msg.timestamp;
-            msg.displayTime = this.utcToTimestamp(msg.timestamp);
-            msg.key = msg.name + msg.timestamp + msg.message;
-            // Check if there's any emojis represented as URLs formatted by backend
-            if (msg.message.includes("https://")) {
-                // match a :HUMU:https://<url>
-                const regex = /(:\S+:)(https:\/\/\S*-c-k-nd)/gi;
-                const str = msg.message;
-                // find first match
-                let match = regex.exec(str);
-                let processed = "";
-                let curIndex = 0;
-                // iterate until no matches remain
-                while (match != null) {
-                    const { index } = match;
-                    // replace all strings between indexes with img src
-                    processed += str.substring(curIndex, index);
-                    processed += `<img src="${match[2].replace("=w48-h48-c-k-nd", "=w24-h24-c-k-nd")}" alt="${
-                        match[1]
-                    }"/>`;
-                    curIndex = index + match[0].length;
-                    match = regex.exec(str);
-                }
-                processed += str.substring(curIndex, str.length);
-                msg.message = processed;
-            }
-            return msg;
-        },
-        // eslint-disable-next-line func-names
         tlJoin() {
             if (!this.initSocket()) return;
 
@@ -402,11 +308,6 @@ export default {
             this.$socket.client.off(`${this.video.id}/${oldLang}`, this.handleMessage);
             this.success = false;
             this.tlJoin();
-        },
-        utcToTimestamp(utc) {
-            return formatDuration(
-                dayjs.utc(utc).diff(Number(dayjs(this.video.start_actual || this.video.start_scheduled))),
-            );
         },
         initSocket() {
             // Disallow users from joining a chat room that doesn't exist yet
@@ -449,10 +350,12 @@ export default {
 
 .tl-expanded {
     overscroll-behavior: auto !important;
+    height: 75vh;
 }
 
 .tl-expanded > .tl-body {
     height: 75vh;
+    width: 100%;
 }
 
 .tl-overlay {
@@ -460,6 +363,10 @@ export default {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+}
+
+.tl-caption {
+    color: hsla(0, 0%, 100%, 0.7);
 }
 
 .tl-body .tl-caption {

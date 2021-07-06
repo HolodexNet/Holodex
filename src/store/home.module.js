@@ -5,6 +5,7 @@ const initialState = {
     live: [],
     isLoading: true,
     hasError: false,
+    lastLiveUpdate: 0,
 };
 
 const persistState = {
@@ -19,22 +20,30 @@ export const state = {
 const getters = {};
 
 const actions = {
-    fetchLive({ commit, rootState }, params) {
-        commit("fetchStart");
-        return api
-            .live({
-                org: rootState.currentOrg,
-                ...params,
-                include: "mentions",
-            })
-            .then((res) => {
-                commit("setLive", res);
-                commit("fetchEnd");
-            })
-            .catch((e) => {
-                console.error(e);
-                commit("fetchError");
-            });
+    fetchLive({ state, commit, rootState }, { force = false, minutes = 5 }) {
+        if (rootState.visibilityState === "hidden" && !force) return null;
+        if (
+            state.hasError ||
+            force ||
+            !state.lastLiveUpdate ||
+            Date.now() - state.lastLiveUpdate > minutes * 60 * 1000
+        ) {
+            commit("fetchStart");
+            return api
+                .live({
+                    org: rootState.currentOrg,
+                    include: "mentions",
+                })
+                .then((res) => {
+                    commit("setLive", res);
+                    commit("fetchEnd");
+                })
+                .catch((e) => {
+                    console.error(e);
+                    commit("fetchError");
+                });
+        }
+        return null;
     },
 };
 
@@ -50,6 +59,7 @@ const mutations = {
     },
     setLive(state, live) {
         state.live = live;
+        state.lastLiveUpdate = Date.now();
     },
     setRecentVideoFilter(state, filter) {
         state.recentVideoFilter = filter;

@@ -38,17 +38,18 @@
                 <div class="settings-group">
                     <div class="py-1 text-h6">{{ $t("views.settings.siteNavigationSettings") }}</div>
                     <v-divider />
-                    <div class="d-flex justify-center">
+                    <div class="d-flex justify-center flex-wrap">
                         <v-switch
-                            class="mt-3"
-                            style="flex-basis: 50%"
+                            class=""
+                            style="flex-basis: 50%; min-width: 200px"
                             v-model="darkMode"
                             :label="$t('views.settings.darkModeLabel')"
                         ></v-switch>
                         <!-- :messages="$t('views.settings.darkModeMsg')" -->
                         <v-select
-                            class="ml-3 mt-3"
+                            class="mb-4"
                             hide-details
+                            style="min-width: 200px"
                             :label="$t('views.settings.theme')"
                             v-model="themeId"
                             :items="themeSet"
@@ -70,19 +71,22 @@
                             </template>
                         </v-select>
                     </div>
+                    <v-divider class="my-2" />
                     <v-select
                         v-model="defaultOpen"
                         :items="defaultOpenChoices"
                         :label="$t('views.settings.defaultPage')"
                         :messages="$t('views.settings.defaultPageMsg')"
                     ></v-select>
+                    <v-divider class="my-2" />
                     <v-switch
                         v-model="redirectMode"
                         :label="$t('views.settings.redirectModeLabel')"
                         :messages="$t('views.settings.redirectModeMsg')"
                     ></v-switch>
+                    <v-divider class="my-2" />
                     <v-select
-                        class="mt-4"
+                        class=""
                         v-model="currentGridSize"
                         :items="[
                             { text: $t('views.settings.gridSize[0]'), value: 0 },
@@ -92,6 +96,7 @@
                         :label="$t('views.settings.gridSizeLabel')"
                         :messages="$t('views.settings.gridSizeMsg')"
                     ></v-select>
+                    <v-divider class="my-2" />
                     <v-switch
                         v-model="scrollMode"
                         :label="$t('views.settings.scrollModeLabel')"

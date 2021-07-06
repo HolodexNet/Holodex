@@ -55,7 +55,7 @@
                         :error="customURLError"
                     ></v-text-field>
                     <v-btn
-                        @click="addCustomTwitchVideo"
+                        @click="addCustomVideo"
                         :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                     >
                         <v-icon>{{ icons.mdiCheck }}</v-icon>
@@ -76,7 +76,7 @@
                 <template v-else>
                     <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
                     <VideoCardList
-                        :videos="live"
+                        :videos="modalFilteredLive"
                         @videoClicked="handleVideoClick"
                         disableDefaultClick
                         includeChannel
@@ -144,7 +144,7 @@
                 style="width: 100%"
             ></v-text-field>
             <v-btn
-                @click="addCustomTwitchVideo"
+                @click="addCustomVideo"
                 :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                 icon
             >
@@ -162,18 +162,14 @@
         </template>
         <!-- Channel icons -->
         <template v-else>
-            <v-tooltip :key="video.id" v-for="video in filteredLive" transition="v-fade-transition" bottom>
+            <v-tooltip :key="video.id" v-for="video in topFilteredLive" transition="v-fade-transition" bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <div
                         v-on="on"
                         v-bind="attrs"
                         style="position: relative; margin-right: 3px; cursor: pointer"
                         draggable="true"
-                        v-on:dragstart="
-                            (ev) => {
-                                ev.dataTransfer.setData('text', `holodex.net/watch/${video.id}`);
-                            }
-                        "
+                        v-on:dragstart="(ev) => dragVideo(ev, video)"
                     >
                         <div
                             class="live-badge"
@@ -200,9 +196,9 @@ import VideoCard from "@/components/video/VideoCard.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
-import { ORGS, VIDEO_URL_REGEX } from "@/utils/consts";
+import { ORGS } from "@/utils/consts";
 import { dayjs } from "@/utils/time";
-import { resizeChannelPhoto } from "@/utils/functions";
+import { getVideoIDFromUrl, resizeChannelPhoto } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
 import { mdiTwitch } from "@mdi/js";
 
@@ -266,7 +262,7 @@ export default {
             if (this.selectedOrg === 0) this.live = this.$store.state.favorites.live;
         },
         savedVideos() {
-            if (this.selectedOrg === 1) this.live = this.savedVideosList;
+            if (this.selectedOrg === 1) this.live = this.active.videos;
         },
         // Watch dropdown selection change
         selectedOrg() {
@@ -276,7 +272,7 @@ export default {
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),
         ...mapState("favorites", ["lastLiveUpdate"]),
-        ...mapState("library", ["savedVideos"]),
+        ...mapState("playlist", ["active"]),
         orgList() {
             const self = this;
             const arr = [
@@ -285,7 +281,7 @@ export default {
                     value: 0,
                 },
                 ...insertIf(!this.horizontal, {
-                    text: self.$t("component.mainNav.library"),
+                    text: self.$t("component.mainNav.playlist"),
                     value: 1,
                 }),
                 {
@@ -305,7 +301,10 @@ export default {
             ];
             return arr;
         },
-        filteredLive() {
+        modalFilteredLive() {
+            return this.live.filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+        },
+        topFilteredLive() {
             // Filter out lives for top bar
             let count = 0;
             const filtered = this.live
@@ -326,13 +325,7 @@ export default {
             return this.$store.getters.isLoggedIn;
         },
         savedVideosList() {
-            return Object.values(this.savedVideos)
-                .sort((a: any, b: any) => {
-                    const dateA = new Date(a.added_at).getTime();
-                    const dateB = new Date(b.added_at).getTime();
-                    return dateA > dateB ? 1 : -1;
-                })
-                .reverse();
+            return this.active.videos;
         },
         selectedOrgName() {
             return this.orgList.find((item) => item.value === this.selectedOrg).text;
@@ -358,31 +351,10 @@ export default {
             this.$emit("videoClicked", video);
         },
         addCustomVideo() {
-            const match = this.customURL.match(VIDEO_URL_REGEX);
-            if (match && match[5] && match[5].length === 11) {
+            const content = getVideoIDFromUrl(this.customURL);
+            if (content && content.id) {
                 this.customURLError = false;
-                this.$emit("videoClicked", {
-                    id: match[5],
-                    channel: {
-                        name: match[5],
-                    },
-                });
-            } else {
-                this.customURLError = true;
-            }
-        },
-        addCustomTwitchVideo() {
-            const regex = /(?:https:\/\/)?twitch\.tv\/([\w\-_]*)/i;
-            const match = this.customURL.match(regex);
-            if (match && match[1]) {
-                this.customURLError = false;
-                this.$emit("videoClicked", {
-                    id: match[1],
-                    cellVideoType: "twitch",
-                    channel: {
-                        name: match[1],
-                    },
-                });
+                this.$emit("videoClicked", content);
             } else {
                 this.customURLError = true;
             }
@@ -442,6 +414,10 @@ export default {
                         this.hasError = true;
                     }
                 });
+        },
+        dragVideo(ev, video) {
+            ev.dataTransfer.setData("text", `https://holodex.net/watch/${video.id}`);
+            ev.dataTransfer.setData("application/json", JSON.stringify(video));
         },
     },
 };

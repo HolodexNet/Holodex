@@ -10,11 +10,12 @@
                 <v-divider />
             </template>
         </NavDrawer>
+
         <!--* nav drawer is for the left --->
         <BottomNav :pages="pages.filter((page) => !page.collapsible)" v-if="isMobile" :active="!isWatchPage" />
+        <!--* bottom bar --->
         <!-- <music-bar></music-bar> -->
         <MusicBar2 v-if="$store.state.music.isOpen" />
-        <!--* bottom bar --->
 
         <v-app-bar
             id="top-bar"
@@ -24,6 +25,7 @@
             }"
             :app="!isWatchPage"
             clipped-left
+            clipped-right
             flat
             v-show="!(isMobile && isWatchPage) && !isMultiView"
             extension-height="36"
@@ -56,6 +58,26 @@
                         <v-icon>{{ icons.mdiMusic }}</v-icon>
                     </v-btn>
                 </v-slide-y-transition>
+                <ResponsiveMenu
+                    :close-on-content-click="false"
+                    offset-y
+                    :itemCount="$store.state.playlist.active.videos.length || 0"
+                    contentClass="main-playlist-border"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on" icon :class="{ 'ml-auto': isMobile }">
+                            <v-icon>{{ icons.mdiPlaylistPlay }}</v-icon>
+                        </v-btn>
+                    </template>
+                    <edit-playlist>
+                        <div class="pt-2 pl-2">
+                            <span class="text-overline secondary--text">Current Playlist</span>&emsp;
+                            <a href="/playlist" class="text-caption" @click.prevent="$router.push('/playlists')">
+                                (more)
+                            </a>
+                        </div>
+                    </edit-playlist>
+                </ResponsiveMenu>
                 <v-menu left offset-y transition="slide-y-transition" v-if="!isMobile">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on" class="ml-2">
@@ -78,7 +100,7 @@
 
                 <!--================= Search [🔍] Button (Mobile Only) ================-->
 
-                <v-btn icon v-if="isMobile" @click="searchBarExpanded = true" class="ml-auto">
+                <v-btn icon v-if="isMobile" @click="searchBarExpanded = true">
                     <v-icon>{{ icons.mdiMagnify }}</v-icon>
                 </v-btn>
             </template>
@@ -135,6 +157,8 @@ import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
 import InstallPrompt from "@/components/common/InstallPrompt.vue";
 import hideExtensionOnScroll from "@/mixins/hideExtensionOnScroll";
+import EditPlaylist from "@/components/playlist/EditPlaylist.vue";
+import ResponsiveMenu from "@/components/common/ResponsiveMenu.vue";
 import NavDrawer from "./NavDrawer.vue";
 import BottomNav from "./BottomNav.vue";
 
@@ -148,6 +172,8 @@ export default {
         InstallPrompt,
         MusicBar2: () => import("./MusicBar2.vue"),
         OrgSelector,
+        EditPlaylist,
+        ResponsiveMenu,
     },
     mixins: [hideExtensionOnScroll],
     data() {
@@ -195,9 +221,9 @@ export default {
                     icon: this.icons.mdiAccountBoxMultiple,
                 },
                 {
-                    name: this.$t("component.mainNav.library"),
-                    path: "/library",
-                    icon: this.icons.mdiAnimationPlay,
+                    name: this.$t("component.mainNav.playlist"),
+                    path: "/playlists",
+                    icon: this.icons.mdiPlaylistPlay,
                     divider: true,
                 },
                 {
@@ -308,5 +334,16 @@ export default {
     animation-timing-function: ease-in-out;
     animation: fadein 5s;
     animation-iteration-count: 1;
+}
+
+.main-playlist-border {
+    border: 2px solid var(--v-primary-base);
+    border-radius: 8px;
+}
+.theme--dark .main-playlist-border {
+    box-shadow: 0px 6px 12px -7px var(--v-primary-darken2);
+}
+.theme--light .main-playlist-border {
+    box-shadow: 0px 6px 12px -7px var(--v-primary-lighten2);
 }
 </style>
