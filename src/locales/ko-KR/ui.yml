@@ -1,8 +1,9 @@
+---
 component:
   apiError:
     title: Gomenasorry!
     textBeforeTwitter: '콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 '
-    textAfterTwitter: 를 확인하거나
+    textAfterTwitter: '를 확인하거나'
     aboutPage: 정보 페이지
     afterAboutPageHyperlink: 에 오류를 제보해주세요.
   channelList:
@@ -36,6 +37,7 @@ component:
     music: 음악
     multiview: 멀티뷰
     points: 포인트
+    playlist: 재생목록
   videoCard:
     clips: '{n} 클립'
     watching: '{0}명 시청 중'
@@ -113,14 +115,20 @@ component:
       - 기타
   thirdpartycookie:
     explanation: >-
-      인터넷 브라우저의 작동 방식으로 인해 엄격한 <b>타사 쿠키</b> 정책을 사용하는 일부 브라우저 또는
-      <kbd>YouTube.com</kbd> 쿠키를 차단하는 브라우저는 Youtube 채팅에 로그인하거나 사용하기 어려울 수 있습니다.
-      <br /><br /> 타사 쿠키 차단에서 <kbd>Youtube.com</kbd>을 제외하거나
-      <kbd>Holodex.net</kbd>의 쿠키 보안 / 개인정보 수준을 낮추면 이 문제를 해결할 수 있습니다. <br /><br
-      /> 이를 수행하는 방법에 대한 자세한 정보를 제공하는 일부 웹 사이트를 포함했습니다.
+      인터넷 브라우저의 작동 방식으로 인해 엄격한 <b>타사 쿠키</b> 정책을 사용하는 일부 브라우저 또는 <kbd>YouTube.com</kbd> 쿠키를 차단하는 브라우저는 Youtube 채팅에 로그인하거나 사용하기 어려울 수 있습니다. <br /><br /> 타사 쿠키 차단에서 <kbd>Youtube.com</kbd>을 제외하거나 <kbd>Holodex.net</kbd>의 쿠키 보안 / 개인정보 수준을 낮추면 이 문제를 해결할 수 있습니다. <br /><br /> 이를 수행하는 방법에 대한 자세한 정보를 제공하는 일부 웹 사이트를 포함했습니다.
     dialogTitle: Holodex에서 YouTube 채팅을 사용함
-    alertText: 브라우저 개인정보 설정으로 인해 Youtube 채팅에 로그인할 수 없습니다. 자세한 정보를 원하시면 여기를 클릭하세요
+    alertText: >-
+      브라우저 개인정보 설정으로 인해 Youtube 채팅에 로그인할 수 없습니다. 자세한 정보를 원하시면 여기를 클릭하세요
     neverShowAgain: 다시 보지 않기
+  playlist:
+    menu:
+      export-playlist: 재생목록 내보내기
+      new-playlist: 새 재생목록
+      rename-playlist: 재생목록 제목 수정
+      reset-unsaved: 저장되지 않은 변경사항 초기화
+      delete-playlist: 재생목록 삭제
+      clear-playlist: 재생목록 지우기
+    save-error-not-logged-in: 재생목록을 저장하려면 로그인해야 합니다
 views:
   channel:
     video: 동영상
@@ -166,18 +174,13 @@ views:
     exportCsv: CSV 파일
     selectionSelect50: 50개 선택
     exportYTExplanation: >-
-      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br />
-      YouTube의 기능이 불완전하기 떄문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야
-      합니다.
+      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 떄문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
     exportYTHeading: YouTube 재생목록을 저장하는 방법
     exportYTInstructions: >-
-      <b class="red--text">1단계</b>: YouTube 재생목록을 재생한 다음 미니 플레이어로 플레이어 UI를
-      변경하세요. <br /><br /> <b class="red--text">2단계</b>: 아무 동영상이나 고른 다음 대기열에
-      추가하세요. <br /><br /> <b class="red--text">3단계</b>: 이제 재생목록을 저장할 수 있습니다.
-      저장하려면 저장을 눌러주세요.
+      <b class="red--text">1단계</b>: YouTube 재생목록을 재생한 다음 미니 플레이어로 플레이어 UI를 변경하세요. <br /><br /> <b class="red--text">2단계</b>: 아무 동영상이나 고른 다음 대기열에 추가하세요. <br /><br /> <b class="red--text">3단계</b>: 이제 재생목록을 저장할 수 있습니다. 저장하려면 저장을 눌러주세요.
     sort:
-      dateaddedEarliestFirst: 라이브러리에 추가된 날짜, 최신순
-      dateaddedLatestFirst: 라이브러리에 추가된 날짜, 오래된순
+      dateaddedEarliestFirst: 보관함에 추가된 날짜, 최신순
+      dateaddedLatestFirst: 보관함에 추가된 날짜, 오래된순
       dateuploadedLatestFirst: 업로드 날짜, 최신순
       dateuploadedEarliestFirst: 업로드 날짜, 오래된순
   notFound:
@@ -191,7 +194,8 @@ views:
       all: 모두
       official: 공식
       clip: 클립
-    unsupportedQuery: 아직 <kbd>주제</kbd>와 <kbd>소속</kbd>으로 클립을 검색할 수 없습니다. <b>클립</b>이 표시되지 않습니다.
+    unsupportedQuery: >-
+      아직 <kbd>주제</kbd>와 <kbd>소속</kbd>으로 클립을 검색할 수 없습니다. <b>클립</b>이 표시되지 않습니다.
     sortByLabel: 정렬 기준
     typeDropdownLabel: 유형
   settings:
@@ -199,11 +203,13 @@ views:
     darkModeLabel: 다크 모드
     darkModeMsg: 라이트 모드와 다크 모드 간에 테마를 변경합니다
     redirectModeLabel: YouTube에서 열기
-    redirectModeMsg: 동영상 미리보기 이미지를 누르면 YouTube에서 열리고 동영상 제목을 누르면 Holodex에서 열립니다
+    redirectModeMsg: >-
+      동영상 미리보기 이미지를 누르면 YouTube에서 열리고 동영상 제목을 누르면 Holodex에서 열립니다
     useEnglishNameLabel: 영어 이름으로 표시하기
     useEnglishNameMsg: 채널명을 영어로 표시합니다
     hideVideoThumbnailsLabel: 미리보기 이미지 숨기기
-    hideVideoThumbnailsMsg: 동영상 미리보기 이미지를 숨기며, 로딩 시간이 빨라지고 모바일에서 더욱 쉽게 스크롤할 수 있습니다
+    hideVideoThumbnailsMsg: >-
+      동영상 미리보기 이미지를 숨기며, 로딩 시간이 빨라지고 모바일에서 더욱 쉽게 스크롤할 수 있습니다
     pushNotificationLabel: 푸시 알림 (지원 예정)
     pushNotificationMsg: 즐겨찾기한 채널의 푸시 알림을 활성화합니다
     autoplayVideoLabel: 동영상 자동 재생
@@ -214,7 +220,8 @@ views:
     clipLanguageSelection: '다음 언어로 된 클립 보기:'
     tlLanguageSelection: 해당 언어로 실시간 채팅 번역 보기
     defaultPage: 기본 페이지
-    defaultPageMsg: holodex.net에 처음 접속할 때와 좌측 상단 로고를 클릭할 때 이 페이지를 엽니다.
+    defaultPageMsg: >-
+      holodex.net에 처음 접속할 때와 좌측 상단 로고를 클릭할 때 이 페이지를 엽니다.
     videoFeedSettings: 동영상 피드 설정
     siteNavigationSettings: 사이트/메뉴
     languageSettings: 언어
@@ -254,12 +261,15 @@ views:
       status:
         reconnecting: 자동으로 다시 연결하는 중...
         reconnectFailed: 다시 연결할 수 없음
-        notLive: 아직 방송이 시작되지 않았습니다. 방송이 시작된 후 15분 이내에 다시 시도해보세요
+        notLive: >-
+          아직 방송이 시작되지 않았습니다. 방송이 시작된 후 15분 이내에 다시 시도해보세요
         connectedToChat: 연결됨
         disconnectedToChat: 연결 끊김
-    saveToPlaylist: ''
+    removeFromPlaylist: 현재 재생목록에서 동영상 제거
+    saveToPlaylist: 현재 재생목록에 동영상 저장
   favorites:
-    promptForAction: 이 페이지에서 좋아하는 버튜버 목록을 만들고 최신 클립과 삶을 확인해보세요.
+    promptForAction: >-
+      이 페이지에서 좋아하는 버튜버 목록을 만들고 최신 클립과 삶을 확인해보세요.
     manageFavorites: 즐겨찾기 관리
     close: 닫기
     showall: 모두 표시
@@ -267,7 +277,8 @@ views:
     needlogin: Holodex 동영상 및 노래 메타데이터를 편집하려면 로그인해야 합니다.
     changeTopic:
       title: 방송 주제 변경
-      info: 모든 사용자가 동영상에 주제를 지정할 수 있지만 일단 지정되면 편집자와 관리자만 주제를 제거하고 변경할 수 있습니다.
+      info: >-
+        모든 사용자가 동영상에 주제를 지정할 수 있지만 일단 지정되면 편집자와 관리자만 주제를 제거하고 변경할 수 있습니다.
       button: 저장 (적용까지 5분 정도 소요될 수 있음)
     channelMentions:
       title: 채널 멘션
@@ -275,11 +286,11 @@ views:
       title: 출처/클립 (개발 중)
   login:
     apikeyMsg: >-
-      API 키를 사용해서 Holodex API를 프로그래머블하게 쿼리할 수 있습니다. 계정 하나 당 하나의 키만 허용됩니다. 새 키를
-      생성하면 이전 키는 24시간 이내에 만료됩니다.
+      API 키를 사용해서 Holodex API를 프로그래머블하게 쿼리할 수 있습니다. 계정 하나 당 하나의 키만 허용됩니다. 새 키를 생성하면 이전 키는 24시간 이내에 만료됩니다.
     apikeyNew: 새 API 키 얻기
     ownedYtChannel: 소유하고 있는 YouTube 채널
-    futureYtcOwnerMessage: 앞으로는 채널 소유자에게 자신의 동영상에 대한 메타데이터를 편집하는 등의 더 많은 서비스를 제공할 계획입니다.
+    futureYtcOwnerMessage: >-
+      앞으로는 채널 소유자에게 자신의 동영상에 대한 메타데이터를 편집하는 등의 더 많은 서비스를 제공할 계획입니다.
     linkAcc: 다른 계정 연결
     apikeyResetConfirm1: 정말로 API 키를 초기화하시겠어요?
     apikeyResetConfirm2: 이전 API 키는 24시간 이내에 만료됩니다. 정말로 초기화하시겠어요?
@@ -300,8 +311,7 @@ views:
     createLayoutTip: 셀 또는 프리셋을 활용해서 자신만의 레이아웃을 만들어보세요
     preset:
       shareOnDiscord: >-
-        공유할 만한 멋있는 레이아웃이 있나요? 공유 버튼을 누른 후 우리의 <a
-        href="https://discord.gg/jctkgHBt4b">Discord 서버</a>에 공유해주세요!
+        공유할 만한 멋있는 레이아웃이 있나요? 공유 버튼을 누른 후 우리의 <a href="https://discord.gg/jctkgHBt4b">Discord 서버</a>에 공유해주세요!
       custom: 내 레이아웃
       toggleAutoLayout: 자동 모드로 레이아웃 사용하기 켜기/끄기
       remove: 삭제
@@ -317,8 +327,15 @@ views:
     fullScreen: 전체 화면
   mugen:
     welcome: >-
-      MugenClips에 오신 것을 환영합니다! 이 페이지의 모든 사람은 무작위로 선택된 English Hololive 클립을 보고
-      있습니다. 전세계의 Hololive 팬들과 함께 시청하고 채팅하세요. 건너뛰고 모든 사람과 다시 동기화하려면 페이지를 새로고침하세요.
+      MugenClips에 오신 것을 환영합니다! 이 페이지의 모든 사람은 무작위로 선택된 English Hololive 클립을 보고 있습니다. 전세계의 Hololive 팬들과 함께 시청하고 채팅하세요. 건너뛰고 모든 사람과 다시 동기화하려면 페이지를 새로고침하세요.
+  playlist:
+    playlist-is-modified: 저장되지 않음
+    item-last-updated: '최종 업데이트:'
+    login-prompt: 재생목록을 저장하고 여러 재생목록을 만들려면 로그인해주세요
+    new-playlist-btn-label: 새 재생목록 만들기
+    page-heading: '내 재생목록:'
+    page-instruction: 재생목록을 활성화하려면 클릭해주세요.
+    change-loss-warning: 변경사항이 저장되지 않습니다. 계속하시겠습니까?
 time:
   soon: 예정
   diff_future_date: '{0} 시작 ({1})'
@@ -328,8 +345,7 @@ editor:
     add: 추가
     update: 업데이트
     permission: >-
-      이미 있는 노래를 수정하거나 삭제하려면 '편집자' 사용자 권한이 필요합니다. <a class='white--text'
-      href='/about'>Discord</a>에서 이슈 / 악용 사항을 편집자에게 알리거나 편집자에 지원하세요.
+      이미 있는 노래를 수정하거나 삭제하려면 '편집자' 사용자 권한이 필요합니다. <a class='white--text' href='/about'>Discord</a>에서 이슈 / 악용 사항을 편집자에게 알리거나 편집자에 지원하세요.
     titles:
       addSong: '노래 메타데이터: 새 노래 추가'
       songList: '노래 목록 : {0}'
@@ -353,15 +369,14 @@ about:
   faq:
     title: FAQ
     ytchatHeader: YouTube 채팅에 로그인되지 않아요!
-    ytchatContent: 타사 쿠키 차단으로 알려진 보안 기능을 끄거나 이 웹사이트와 youtube.com을 타사 쿠키 차단에서 제외해주세요.
+    ytchatContent: >-
+      타사 쿠키 차단으로 알려진 보안 기능을 끄거나 이 웹사이트와 youtube.com을 타사 쿠키 차단에서 제외해주세요.
     ytchatFirefox: Firefox 기준으로 설명드리지만 다른 브라우저들도 비슷합니다.
     autoplayHeader: 자동 재생이 작동하지 않아요!
     autoplayContent: 자신이 사용하고 있는 브라우저에서 자동 재생을 활성화하는 방법에 대해 검색해보세요.
     musicPlayer: 뮤직 플레이어가 모바일 기기에서 제대로 작동하지 않아요!
     musicPlayerContent: >-
-      죄송합니다. 하지만 모바일에서는 웹사이트를 통해 뮤직 플레이어를 지원할 수 없습니다. <br/>세가지 이유가 있습니다: 1. 모바일
-      기기는 보통 우리가 필요로 하는 자동 재생을 금지하고 있습니다. 2. 모바일 기기는 일반적으로 백그라운드에서 웹사이트가 음악을
-      재생하도록 허용하지 않습니다. 3. 우리는 시스템 레벨 음악 제어 센터와 대기열을 통합하지 않습니다.
+      죄송합니다. 하지만 모바일에서는 웹사이트를 통해 뮤직 플레이어를 지원할 수 없습니다. <br/>세가지 이유가 있습니다: 1. 모바일 기기는 보통 우리가 필요로 하는 자동 재생을 금지하고 있습니다. 2. 모바일 기기는 일반적으로 백그라운드에서 웹사이트가 음악을 재생하도록 허용하지 않습니다. 3. 우리는 시스템 레벨 음악 제어 센터와 대기열을 통합하지 않습니다.
     videoLinkage: 동영상이 버튜버에 제대로 연결되었는지 어떻게 확인하나요?
     videoLinkageContent: >-
       모든 정보는 비디오 설명에서 불러와집니다. 스트림을 클립하는 경우 공식 방송을 연결해야 합니다. 팬이 만든 콘텐츠 (예: bilibili에서 가져온 콘텐츠) 를 클리핑하는 경우 관련 버튜버의 공식 YouTube 채널을 연결해야 합니다. 모든 클립은 Holodex에 알려진 버튜버에 연결되어야하므로 버튜버 채널을 연결하지 않으면 Holodex에 해당 클립이 표시되지 않습니다.
@@ -376,18 +391,16 @@ about:
       title: Android/iOS용 Holodex 앱이 있나요?
       content:
         summary: >-
-          아직 작업 중입니다! 그동안 브라우저의 "홈 화면에 추가" 기능을 사용해주세요. 우리는 사이트가 앱처럼 작동할 수 있도록 많은
-          부분을 변경했습니다
+          아직 작업 중입니다! 그동안 브라우저의 "홈 화면에 추가" 기능을 사용해주세요. 우리는 사이트가 앱처럼 작동할 수 있도록 많은 부분을 변경했습니다
     MugenClips:
       title: MugenClips가 뭔가요?
     subber:
       title: 저는 키리누키 제작자이고 제 채널 또는 클립을 Holodex에서 찾을 수 없습니다
       contents:
-        - ''
         - >-
-          , and we will add you manually. If you are already on the list, please
-          make sure your video descriptions have the correct youtube
-          source/channel links.
+
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
     feedback:
       title: 이 프로젝트에 대해서 피드백/기여하고 싶습니다
   gdpr: GDPR과 내 데이터
@@ -396,18 +409,16 @@ about:
   gdprDeletion: 자신의 사용자 데이터를 제거하려면 저희 Discord에 문의해주세요!
   feedback: 피드백/버그 제보
   feedbackHtml: >-
-    <a href="https://github.com/RiceCakess/Holodex/issues"> Github 이슈 트레커</a>에서
-    이슈를 생성하거나 Discord 내의 Holodex 팀을 찾을 수 있습니다 <br /> <br /> Reddit: <a
-    href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+    <a href="https://github.com/RiceCakess/Holodex/issues"> Github 이슈 트레커</a>에서 이슈를 생성하거나 Discord 내의 Holodex 팀을 찾을 수 있습니다 <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: 개발진
     contents:
       - I would like to give big thanks to the
       - team for their work on
       - >-
-        Also to all the subbers for helping the overseas bros! Please check them
-        out!
-      - ''
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+
   changelog:
     title: 변경 사항
   news:
