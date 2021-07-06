@@ -65,7 +65,7 @@
                     contentClass="main-playlist-border"
                 >
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on" icon>
+                        <v-btn v-bind="attrs" v-on="on" icon :class="{ 'ml-auto': isMobile }">
                             <v-icon>{{ icons.mdiPlaylistPlay }}</v-icon>
                         </v-btn>
                     </template>
@@ -100,7 +100,7 @@
 
                 <!--================= Search [🔍] Button (Mobile Only) ================-->
 
-                <v-btn icon v-if="isMobile" @click="searchBarExpanded = true" class="ml-auto">
+                <v-btn icon v-if="isMobile" @click="searchBarExpanded = true">
                     <v-icon>{{ icons.mdiMagnify }}</v-icon>
                 </v-btn>
             </template>
