@@ -126,13 +126,17 @@ const migrations = [
                     mergedPlaylist.push(state.library.savedVideos[property]);
             }
 
-            const db = kvidb("watch-history");
-            for (const property in state.library.watchedVideos) {
-                if (property.length === 11)
-                    // yt video
-                    db.put(property, 1, (x, err) => {
-                        console.log(x, err);
-                    });
+            try {
+                const db = kvidb("watch-history");
+                for (const property in state.library.watchedVideos) {
+                    if (property.length === 11)
+                        // yt video
+                        db.put(property, 1, (x, err) => {
+                            console.log(x, err);
+                        });
+                }
+            } catch (err) {
+                console.error(err);
             }
 
             // delete state.library;
