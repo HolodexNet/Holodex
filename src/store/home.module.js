@@ -20,7 +20,7 @@ export const state = {
 const getters = {};
 
 const actions = {
-    fetchLive({ commit, rootState }, { force = false, minutes = 3 }) {
+    fetchLive({ state, commit, rootState }, { force = false, minutes = 5 }) {
         if (rootState.visibilityState === "hidden" && !force) return null;
         if (
             state.hasError ||

@@ -220,7 +220,7 @@ export default {
             if (this.refreshTimer) clearInterval(this.refreshTimer);
             this.refreshTimer = setInterval(() => {
                 this.$store.dispatch("home/fetchLive", { force: false });
-            }, 60 * 1000);
+            }, 2 * 60 * 1000);
         },
         changeTab(preservePage = true) {
             // Sync the hash to current tab
