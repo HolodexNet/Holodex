@@ -118,35 +118,45 @@ const migrations = [
         version: 5,
         // migrates library -->
         up: (state) => {
-            const mergedPlaylist = state.playlist && state.playlist.active ? state.playlist.active.videos || [] : [];
+            try {
+                const mergedPlaylist =
+                    state.playlist && state.playlist.active ? state.playlist.active.videos || [] : [];
 
-            for (const property in state.library.savedVideos) {
-                if (property.length === 11)
-                    // yt video
-                    mergedPlaylist.push(state.library.savedVideos[property]);
-            }
+                for (const property in state.library.savedVideos) {
+                    if (property.length === 11)
+                        // yt video
+                        mergedPlaylist.push(state.library.savedVideos[property]);
+                }
 
-            const db = kvidb("watch-history");
-            for (const property in state.library.watchedVideos) {
-                if (property.length === 11)
-                    // yt video
-                    db.put(property, 1, (x, err) => {
-                        console.log(x, err);
-                    });
-            }
+                try {
+                    const db = kvidb("watch-history");
+                    for (const property in state.library.watchedVideos) {
+                        if (property.length === 11)
+                            // yt video
+                            db.put(property, 1, (x, err) => {
+                                console.log(x, err);
+                            });
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
 
-            // delete state.library;
+                // delete state.library;
 
-            return {
-                ...state,
-                playlist: {
-                    ...state.playlist,
-                    active: {
-                        ...state.playlist.active,
-                        videos: mergedPlaylist,
+                return {
+                    ...state,
+                    playlist: {
+                        ...(state.playlist && state.playlist),
+                        active: {
+                            ...(state.playlist && state.playlist.active),
+                            videos: mergedPlaylist,
+                        },
                     },
-                },
-            };
+                };
+            } catch (err) {
+                console.error(err);
+            }
+            return state;
         },
     },
 ];
