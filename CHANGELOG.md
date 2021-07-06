@@ -31,6 +31,9 @@
 
 ![img](https://raw.githubusercontent.com/RiceCakess/Holodex/dev/docs/holodex%20roles.png)
 
+
+==============
+
 ### 2.12 Holodex [*June 18, 2021*]
 
 ##### New Features

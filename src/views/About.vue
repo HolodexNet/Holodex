@@ -235,10 +235,9 @@
                 <div class="text-body-2">
                     <iframe
                         width="100%"
-                        height="500px"
                         seamless
                         src="https://holodexnet.github.io/Holodex/"
-                        style="border: none; border-radius: 3px; background: #eee"
+                        style="height: 80vh; border: none; border-radius: 3px; background: #eee"
                     ></iframe>
                 </div>
             </v-col>
