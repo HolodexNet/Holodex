@@ -135,7 +135,7 @@ const migrations = [
                     });
             }
 
-            delete state.library;
+            // delete state.library;
 
             return {
                 ...state,
