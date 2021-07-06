@@ -262,7 +262,7 @@ export default {
             if (this.selectedOrg === 0) this.live = this.$store.state.favorites.live;
         },
         savedVideos() {
-            if (this.selectedOrg === 1) this.live = this.savedVideosList;
+            if (this.selectedOrg === 1) this.live = this.active.videos;
         },
         // Watch dropdown selection change
         selectedOrg() {
@@ -272,7 +272,7 @@ export default {
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),
         ...mapState("favorites", ["lastLiveUpdate"]),
-        ...mapState("library", ["savedVideos"]),
+        ...mapState("playlist", ["active"]),
         orgList() {
             const self = this;
             const arr = [
@@ -281,7 +281,7 @@ export default {
                     value: 0,
                 },
                 ...insertIf(!this.horizontal, {
-                    text: self.$t("component.mainNav.library"),
+                    text: self.$t("component.mainNav.playlist"),
                     value: 1,
                 }),
                 {
@@ -325,13 +325,7 @@ export default {
             return this.$store.getters.isLoggedIn;
         },
         savedVideosList() {
-            return Object.values(this.savedVideos)
-                .sort((a: any, b: any) => {
-                    const dateA = new Date(a.added_at).getTime();
-                    const dateB = new Date(b.added_at).getTime();
-                    return dateA > dateB ? 1 : -1;
-                })
-                .reverse();
+            return this.active.videos;
         },
         selectedOrgName() {
             return this.orgList.find((item) => item.value === this.selectedOrg).text;

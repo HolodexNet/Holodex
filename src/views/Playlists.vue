@@ -115,7 +115,7 @@
 
 #new-playlist-btn {
     border: 2px dashed var(--v-primary-darken1);
-    opacity: 80%;
+    opacity: 0.8;
 }
 </style>
 
