@@ -41,6 +41,7 @@ const mutations = {
     },
     addVideo(state, video) {
         state.active.videos.unshift(video);
+        state.isSaved = false;
     },
     reorder(state, { from, to }: { from: number; to: number }) {
         // https://stackoverflow.com/a/39271175
