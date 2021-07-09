@@ -1,13 +1,9 @@
 <template>
     <div style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }" ref="fullscreen-content">
         <!-- Floating tool bar -->
-        <v-toolbar class="mv-toolbar" style="right: 0" v-show="!collapseToolbar" height="64">
-            <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
-            <!-- Toolbar Live Video Selector -->
-            <div
-                class="justify-start d-flex mv-toolbar-btn align-center thin-scroll-bar"
-                style="overflow-x: auto; overflow-y: hidden"
-            >
+        <!--  -->
+        <MultiviewToolbar :buttons="buttons" v-show="!collapseToolbar" v-model="collapseToolbar">
+            <template v-slot:left>
                 <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
                 <!-- Single Button video selector for xs displays -->
                 <v-btn @click="handleToolbarShowSelector" icon large>
@@ -15,97 +11,8 @@
                         {{ mdiCardPlus }}
                     </v-icon>
                 </v-btn>
-            </div>
-            <!-- Right side buttons -->
-            <div
-                class="flex-grow-1 justify-end d-flex mv-toolbar-btn align-center"
-                :class="{ 'no-btn-text': $store.state.isMobile || true }"
-            >
-                <!-- Show toolbar btns that are not collapsible or not in collapsed state -->
-                <template
-                    v-for="(b, index) in buttons.filter((btn) => !btn.collapse || (!collapseButtons && btn.collapse))"
-                >
-                    <!-- Create btn with tooltip -->
-                    <v-tooltip bottom :key="`mv-btn-${index}`" v-if="b.tooltip" :color="b.color">
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn
-                                @click="b.onClick"
-                                :color="b.color"
-                                icon
-                                v-bind="attrs"
-                                v-on="on"
-                                :class="{ 'mx-1': $vuetify.breakpoint.lgAndUp }"
-                            >
-                                <v-icon>{{ b.icon }}</v-icon>
-                            </v-btn>
-                        </template>
-                        <span>{{ b.tooltip }}</span>
-                    </v-tooltip>
-                    <!-- Create normal button with no tooltip -->
-                    <v-btn
-                        @click="b.onClick"
-                        :color="b.color"
-                        icon
-                        :key="`mv-btn-${index}`"
-                        :class="{ 'mx-1': $vuetify.breakpoint.lgAndUp }"
-                        v-else
-                    >
-                        <v-icon>{{ b.icon }}</v-icon>
-                    </v-btn>
-                </template>
-                <!-- Share button and dialog -->
-                <v-menu
-                    :open-on-click="true"
-                    bottom
-                    nudge-bottom="40px"
-                    :close-on-content-click="false"
-                    :open-on-hover="false"
-                    v-model="shareDialog"
-                    width="400"
-                    z-index="300"
-                >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on" icon>
-                            <v-icon>{{ mdiLinkVariant }}</v-icon>
-                            <span class="collapsible-text">{{ $t("views.multiview.permalink") }}</span>
-                        </v-btn>
-                    </template>
-                    <v-card rounded="lg">
-                        <v-card-text class="d-flex">
-                            <v-text-field
-                                readonly
-                                solo-inverted
-                                dense
-                                hide-details
-                                :class="doneCopy ? 'green lighten-2' : ''"
-                                :value="exportURL"
-                                :append-icon="mdiClipboardPlusOutline"
-                                @click:append.stop="startCopyToClipboard(exportURL)"
-                            ></v-text-field>
-                        </v-card-text>
-                    </v-card>
-                </v-menu>
-                <!-- Show vertical dots menu for collapsible buttons -->
-                <v-menu offset-y>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on" icon v-show="collapseButtons">
-                            <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
-                        </v-btn>
-                    </template>
-                    <v-list dense>
-                        <template v-for="(b, index) in buttons.filter((btn) => btn.collapse)">
-                            <v-list-item @click="b.onClick" block class="mb-2" :key="`mv-collapsed-${index}`">
-                                <v-icon left>{{ b.icon }}</v-icon>
-                                <span>{{ b.tooltip }}</span>
-                            </v-list-item>
-                        </template>
-                    </v-list>
-                </v-menu>
-                <v-btn icon @click="collapseToolbar = true">
-                    <v-icon>{{ icons.mdiChevronUp }}</v-icon>
-                </v-btn>
-            </div>
-        </v-toolbar>
+            </template>
+        </MultiviewToolbar>
 
         <!-- Multiview Cell Area Background -->
         <div
@@ -223,13 +130,13 @@ import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
-import { mdiViewGridPlus, mdiLinkVariant, mdiClipboardPlusOutline, mdiCardPlus, mdiContentSave } from "@mdi/js";
+import { mdiViewGridPlus, mdiCardPlus, mdiContentSave } from "@mdi/js";
 import { mdiDelete } from "@/utils/icons";
-import copyToClipboard from "@/mixins/copyToClipboard";
-import { encodeLayout, decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-layout";
+import { decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-layout";
 import PresetEditor from "@/components/multiview/PresetEditor.vue";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
 import LayoutPreview from "@/components/multiview/LayoutPreview.vue";
+import MultiviewToolbar from "@/components/multiview/MultiviewToolbar.vue";
 import Cell from "@/components/multiview/Cell.vue";
 import { mapState, mapGetters } from "vuex";
 
@@ -251,16 +158,15 @@ export default {
         LayoutPreview,
         Cell,
         PresetEditor,
+        MultiviewToolbar,
     },
-    mixins: [copyToClipboard],
+
     data() {
         return {
-            mdiClipboardPlusOutline,
-            mdiLinkVariant,
             mdiCardPlus,
 
             showSelectorForId: -1,
-            shareDialog: false,
+
             collapseToolbar: false,
 
             overwriteDialog: false, // whether to show the overwrite dialog.
@@ -384,22 +290,9 @@ export default {
                 };
             });
         },
-        exportURL() {
-            if (!this.shareDialog) return "";
-            const layoutParam = `/${encodeURIComponent(
-                encodeLayout({
-                    layout: this.layout,
-                    contents: this.layoutContent,
-                    includeVideo: true,
-                }),
-            )}`;
-            return `${window.origin}/multiview${layoutParam}`;
-        },
+
         isMobile() {
             return this.$store.state.isMobile;
-        },
-        collapseButtons() {
-            return this.$vuetify.breakpoint.smAndDown;
         },
         rowHeight() {
             return (this.$vuetify.breakpoint.height - (this.collapseToolbar ? 0 : 64)) / 24.0;
@@ -448,13 +341,7 @@ export default {
             // show the dialog
             this.overwriteDialog = true;
         },
-        startCopyToClipboard(txt) {
-            this.copyToClipboard(txt);
-            const thisCopy = this;
-            setTimeout(() => {
-                thisCopy.shareDialog = false;
-            }, 200);
-        },
+
         handleVideoClicked(video) {
             if (this.showSelectorForId < -1) {
                 this.handleToolbarClick(video);
@@ -658,9 +545,6 @@ export default {
                 document.exitFullscreen();
             }
         },
-        toggleMainNav() {
-            return this.$store.commit("setNavDrawer", !this.$store.state.navDrawer);
-        },
     },
 };
 </script>
@@ -689,20 +573,6 @@ export default {
         }
     }
 }
-.mv-toolbar-btn .v-btn.v-btn--icon.v-size--default {
-    // margin-right: 4px;
-    height: 36px;
-    width: 36px;
-}
-
-.mv-toolbar-btn.no-btn-text > .v-btn > .v-btn__content > .collapsible-text {
-    display: none;
-}
-
-.collapsible-text {
-    margin-left: 2px;
-}
-
 .open-mv-toolbar-btn {
     position: absolute;
     top: 0;
@@ -710,22 +580,11 @@ export default {
     z-index: 10;
     opacity: 0.5;
 }
-
 .vue-grid-item {
     transition: none;
 }
 
 .vue-grid-layout {
     transition: none;
-}
-
-.mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-track {
-    background: rgba(99, 46, 46, 0.5);
-}
-.mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-thumb {
-    background: #f06291a2;
-}
-.mv-toolbar {
-    z-index: 1;
 }
 </style>
