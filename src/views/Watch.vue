@@ -35,6 +35,7 @@
                             v-if="video.id"
                             :video-id="video.id"
                             @ready="ready"
+                            @playing="playing"
                             :playerVars="{
                                 ...(timeOffset && { start: timeOffset }),
                                 autoplay: isMugen || isPlaylist ? 1 : 0,
@@ -249,6 +250,12 @@ export default {
                 playerObj: this.player,
             });
         },
+        playing() {
+            this.$gtag.event("start/resume", {
+                event_category: "video",
+                event_label: this.video.type,
+            });
+        },
         seekTo(time) {
             if (!this.player) return;
             window.scrollTo(0, 0);
@@ -256,10 +263,17 @@ export default {
             this.player.playVideo();
         },
         playNextMugen({ video, timeOffset = 0 }) {
+            this.$gtag.event("mugen-next", {
+                event_category: "video",
+            });
             this.$store.commit("watch/setVideo", video);
             this.startTime = timeOffset;
         },
         playNextPlaylist({ video }) {
+            this.$gtag.event("playlist-next", {
+                event_category: "video",
+                event_label: video.type || "untyped",
+            });
             this.$router.push({
                 path: `/watch/${video.id}`,
                 query: {

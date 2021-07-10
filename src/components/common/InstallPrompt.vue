@@ -70,9 +70,9 @@ export default {
             this.deferredPrompt = null;
         });
 
-        this.$gtag.event("pwa:source", {
-            event_label: this.isStandAlone() ? "pwa" : "browser",
-        });
+        // this.$gtag.event("pwa:source", {
+        //     event_label: this.isStandAlone() ? "pwa" : "browser",
+        // });
     },
     computed: {
         showInstallPrompt() {
@@ -97,9 +97,9 @@ export default {
             } else {
                 this.iOSInstallDialog = true;
             }
-            this.$gtag.event("pwa:prompt", {
-                event_label: "interacted",
-            });
+            // this.$gtag.event("pwa:prompt", {
+            //     event_label: "interacted",
+            // });
         },
         hideInstallPrompt() {
             this.$store.commit("installPromptShown");
