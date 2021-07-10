@@ -54,6 +54,7 @@
                 </div>
                 <v-expand-transition :key="`${relation}-anim`">
                     <VideoCardList
+                        @videoClicked="logRelationClick(relation)"
                         v-show="!hidden[relation]"
                         :key="`${relation}-videos`"
                         :videos="related[relation]"
@@ -171,6 +172,13 @@ export default {
             const reversed = [...videos];
             reversed.reverse();
             this.$store.commit("playlist/addVideos", reversed);
+        },
+        logRelationClick(relation) {
+            console.log("log relation click");
+            this.$gtag.event("sidebar-click", {
+                event_category: "video",
+                event_label: relation,
+            });
         },
     },
 };
