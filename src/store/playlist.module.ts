@@ -40,8 +40,18 @@ const mutations = {
         state.isSaved = false;
     },
     addVideo(state, video) {
+        if (state.active.videos.findIndex((x) => x.id === video.id) >= 0) return;
         state.active.videos.unshift(video);
         state.isSaved = false;
+    },
+    addVideos(state, videos) {
+        const ids = new Set(state.active.videos.map((x) => x.id));
+        videos.forEach((video) => {
+            if (ids.has(video.id)) return;
+            ids.add(video.id);
+            state.active.videos.unshift(video);
+            state.isSaved = false;
+        });
     },
     reorder(state, { from, to }: { from: number; to: number }) {
         // https://stackoverflow.com/a/39271175
