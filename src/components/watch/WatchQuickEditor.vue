@@ -216,7 +216,7 @@ export default {
             }));
         },
         saveTopic() {
-            backendApi.topicSet(this.newTopic, this.videoId, this.$store.state.userdata.jwt);
+            backendApi.topicSet(this.newTopic, this.video.id, this.$store.state.userdata.jwt);
             this.topic = this.newTopic;
         },
     },
