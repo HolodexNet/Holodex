@@ -103,6 +103,7 @@
                     </template>
                 </WatchToolBar>
                 <WatchInfo :video="video" key="info" @timeJump="seekTo" v-if="!theatherMode" />
+                <WatchQuickEditor v-if="role === 'admin' || role === 'editor'" :video="video" />
                 <!-- Mobile mode only sidebar -->
                 <WatchSideBar :video="video" @timeJump="seekTo" v-if="isMobile" />
                 <!-- Mobile mode Mugen -->
@@ -119,6 +120,7 @@
             <div class="related-videos pt-0 row ma-0" :class="{ 'sidebar-width': !isMobile && !theatherMode }">
                 <v-col v-if="theatherMode" md="8" lg="9" class="pa-0">
                     <WatchInfo :video="video" key="info" @timeJump="seekTo" />
+                    <WatchQuickEditor v-if="role === 'admin' || role === 'editor'" :video="video" />
                     <v-divider />
                     <WatchComments
                         :comments="comments"
@@ -165,6 +167,7 @@ import WatchSideBar from "@/components/watch/WatchSideBar.vue";
 import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
+import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
@@ -187,6 +190,7 @@ export default {
         WatchSideBar,
         WatchComments,
         WatchToolBar,
+        WatchQuickEditor,
         WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
         WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
     },
@@ -361,6 +365,9 @@ export default {
         },
         isPlaylist() {
             return this.$route.query.playlist;
+        },
+        role() {
+            return this.$store.state.userdata?.user?.role;
         },
     },
     watch: {
