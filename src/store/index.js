@@ -5,7 +5,7 @@ import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import createMigrate from "vuex-persistedstate-migrate";
 import jwtDecode from "jwt-decode";
-import { ORGS } from "@/utils/consts";
+import { ORGS_PREFIX } from "@/utils/consts";
 import * as icons from "@/utils/icons";
 import { sendTokenToExtension } from "@/utils/messaging";
 import kvidb from "kv-idb";
@@ -51,8 +51,13 @@ function defaultState() {
         isMobile: true,
         currentGridSize: 0,
 
-        currentOrg: "Hololive",
-        orgFavorites: ["All Vtubers", "Hololive", "Nijisanji", "Independents"],
+        currentOrg: { name: "Hololive", short: "Holo" },
+        orgFavorites: [
+            { name: "All Vtubers", short: "Vtuber" },
+            { name: "Hololive", short: "Holo" },
+            { name: "Nijisanji", short: "Niji" },
+            { name: "Independents", short: "Indie" },
+        ],
 
         // Migration: prevent migrating initial state.
         migration: { version: 5 },
@@ -159,6 +164,23 @@ const migrations = [
             return state;
         },
     },
+    {
+        version: 6,
+        up: (state) => {
+            const newCurrentOrg = {
+                name: state.currentOrg,
+                short: ORGS_PREFIX[state.currentOrg] ? ORGS_PREFIX[state.currentOrg] : null,
+            };
+            const newOrgFavorites = state.orgFavorites.map((org) => {
+                return { name: org, short: ORGS_PREFIX[org] ? ORGS_PREFIX[org] : null };
+            });
+            return {
+                ...state,
+                currentOrg: newCurrentOrg,
+                orgFavorites: newOrgFavorites,
+            };
+        },
+    },
 ];
 
 /**-----------------------
@@ -218,7 +240,7 @@ export default new Vuex.Store({
             Object.assign(state, defaultState());
         },
         setCurrentOrg(state, val) {
-            if (!ORGS.find((org) => org === val)) return;
+            // if (!ORGS.find((org) => org === val)) return;
             state.currentOrg = val;
         },
         setIsMobile(state, val) {
@@ -277,7 +299,7 @@ export default new Vuex.Store({
             }
         },
         shiftOrgFavorites(state, { org, up = true }) {
-            const favIndex = state.orgFavorites.indexOf(org);
+            const favIndex = state.orgFavorites.findIndex((x) => x.name === org.name);
             if (up && favIndex === 0) return;
             if (!up && favIndex === state.orgFavorites.length - 1) return;
             const replaceIndex = up ? favIndex - 1 : favIndex + 1;

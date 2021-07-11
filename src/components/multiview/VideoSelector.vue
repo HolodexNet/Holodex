@@ -196,7 +196,6 @@ import VideoCard from "@/components/video/VideoCard.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
-import { ORGS } from "@/utils/consts";
 import { dayjs } from "@/utils/time";
 import { getVideoIDFromUrl, resizeChannelPhoto } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
@@ -224,7 +223,6 @@ export default {
         return {
             live: [],
             selectedOrg: 0,
-            ORGS,
             isLoading: false,
             hasError: false,
 
@@ -244,7 +242,7 @@ export default {
         if (this.$store.getters.isLoggedIn) {
             this.loadSelection();
         } else {
-            this.selectedOrg = this.orgList.find((x) => x.text === this.$store.state.currentOrg).value;
+            this.selectedOrg = this.orgList.find((x) => x.text === this.$store.state.currentOrg.name).value;
         }
 
         // Start timer to update live time stamps
@@ -292,12 +290,9 @@ export default {
                     text: "Twitch URL",
                     value: 3,
                 },
-                ...this.ORGS.filter((x) => x !== "All Vtubers").map((orgName, index) => {
-                    return {
-                        text: orgName,
-                        value: index + 4,
-                    };
-                }),
+                ...this.$store.state.orgFavorites
+                    .filter((x) => x.name !== "All Vtubers")
+                    .map(({ name }, idx) => ({ text: name, value: idx + 4 })),
             ];
             return arr;
         },

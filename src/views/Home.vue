@@ -267,7 +267,7 @@ export default {
                     status: "past",
                     ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
                     include: "clips",
-                    org: this.$store.state.currentOrg,
+                    org: this.$store.state.currentOrg.name,
                     lang: this.$store.state.settings.clipLangs.join(","),
                     paginated: !this.scrollMode,
                     limit,

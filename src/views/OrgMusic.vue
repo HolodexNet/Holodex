@@ -3,7 +3,9 @@
         <v-row>
             <v-col cols="12" class="mb-0 pa-0" style="min-height: 404px" v-if="!this.isAllVTubers">
                 <v-card-title>
-                    <span class="text-lg-h5 mr-2">{{ $t("component.orgMusic.monthlyTopForOrg", [currentOrg]) }}</span>
+                    <span class="text-lg-h5 mr-2">{{
+                        $t("component.orgMusic.monthlyTopForOrg", [currentOrg.name])
+                    }}</span>
                     <v-btn
                         fab
                         color="primary"
@@ -40,7 +42,9 @@
             </v-col>
             <v-col cols="12" class="my-0 pa-0" style="min-height: 404px" v-if="!this.isAllVTubers">
                 <v-card-title>
-                    <span class="text-lg-h5 mr-2">{{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg]) }}</span>
+                    <span class="text-lg-h5 mr-2">
+                        {{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg.name]) }}
+                    </span>
                     <v-btn
                         fab
                         color="primary"
@@ -78,7 +82,7 @@
             <v-col cols="12" class="my-0 py-0">
                 <generic-list-loader
                     paginate
-                    :key="'ldr' + currentOrg + '+' + committedSearch"
+                    :key="'ldr' + currentOrg.name + '+' + committedSearch"
                     :perPage="PER_PAGE_ITEMS"
                     :loadFn="getSongLoader()"
                     v-slot="{ data, isLoading }"
@@ -174,7 +178,7 @@ export default {
     computed: {
         ...mapState(["currentOrg"]),
         isAllVTubers() {
-            return this.currentOrg === "All Vtubers";
+            return this.currentOrg.name === "All Vtubers";
         },
     },
     watch: {
@@ -184,8 +188,8 @@ export default {
     },
     methods: {
         async songsByPopular() {
-            const res1 = backendApi.topSongs(this.currentOrg, null, "m");
-            const res2 = backendApi.topSongs(this.currentOrg, null, "w");
+            const res1 = backendApi.topSongs(this.currentOrg.name, null, "m");
+            const res2 = backendApi.topSongs(this.currentOrg.name, null, "w");
 
             this.popularMonthlySongs = (await res1).data;
             this.popularWeeklySongs = (await res2).data;
@@ -202,7 +206,7 @@ export default {
             return async (offset, limit) => {
                 const res = await backendApi.songListByCondition(
                     {
-                        ...(!this.isAllVTubers && { org: this.currentOrg }),
+                        ...(!this.isAllVTubers && { org: this.currentOrg.name }),
                         paginated: 1,
                         ...(this.committedSearch && { q: this.committedSearch }),
                     },

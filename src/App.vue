@@ -35,7 +35,6 @@ import ReportDialog from "@/components/common/ReportDialog.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
 import { dayjsLangs, loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
-import { ORGS } from "./utils/consts";
 
 export default {
     name: "App",
@@ -117,11 +116,6 @@ export default {
 
         // relog if necessary:
         this.$store.dispatch("loginCheck");
-
-        // validate current org existence:
-        if (!ORGS.includes(this.$store.state.currentOrg)) {
-            this.$store.commit("setCurrentOrg", ORGS[0]);
-        }
 
         // on update, reresh page and set update notification flag
         navigator.serviceWorker.addEventListener("controllerchange", () => {

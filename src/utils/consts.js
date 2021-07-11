@@ -22,42 +22,6 @@ export const MUSIC_PLAYBACK_MODE = Object.freeze({
     NATURAL: 4,
 });
 
-export const ORGS = Object.freeze([
-    "All Vtubers",
-    "Hololive",
-    "Nijisanji",
-    "Kizuna Ai Inc.",
-    "Independents",
-    "VSpo",
-    "VShojo",
-    "774inc",
-    /* "Idol-bu", removed, folded into .LIVE */
-    ".LIVE",
-    "Nori Pro",
-    "ReACT",
-    "VOMS",
-    "KAMITSUBAKI",
-    "Eilene Family",
-    "Hoshimeguri Gakuen",
-    "Riot Music",
-    "ProPro",
-    "WACTOR",
-    "Aogiri Highschool",
-    "Masquerade",
-    "Tsunderia",
-    "Yuni Create",
-    "Atelier Live",
-    "PRISM",
-    "VOICE-ORE",
-    "ViViD",
-    "Chukorara",
-    "X enc'ount",
-    "Marbl_s",
-    "Iridori",
-    "Unreal Night Girls",
-    "V Dimension.Creators",
-]);
-
 export const ORGS_PREFIX = Object.freeze({
     // "AniMare",
     "Atelier Live": "Atelier",

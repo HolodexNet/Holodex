@@ -3,15 +3,15 @@
         <v-menu bottom offset-y>
             <template v-slot:activator="{ on, attrs }">
                 <div v-bind="attrs" v-on="on" class="d-inline nav-title" style="position: relative">
-                    <v-fade-transition mode="out-in">
+                    <v-fade-transition hide-on-leave>
                         <span
-                            :key="currentOrg"
+                            :key="currentOrg.name + 'header'"
                             style="text-decoration: underline"
                             :class="{
                                 'grey--text text--darken-4': !darkMode,
                                 'grey-text text--lighten-2': darkMode,
                             }"
-                            >{{ ORGS_PREFIX[currentOrg] || currentOrg }}</span
+                            >{{ currentOrg.short || currentOrg.name }}</span
                         >
                     </v-fade-transition>
                     <span
@@ -40,11 +40,11 @@
             <v-list style="max-height: 300px; overscroll-behavior: contain" class="overflow-y-auto">
                 <v-list-item
                     v-for="org in orgFavorites"
-                    :key="org"
+                    :key="org.name + 'select'"
                     @click="currentOrg = org"
                     :input-value="currentOrg === org"
                 >
-                    <v-list-item-title>{{ org }}</v-list-item-title>
+                    <v-list-item-title>{{ org.name }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="showOrgDialog = true">
                     <v-list-item-title class="primary--text">{{ $t("views.favorites.showall") }}</v-list-item-title>
@@ -60,7 +60,7 @@
                     <v-list style="overflow-y: auto; height: calc(75vh - 176px)">
                         <v-list-item
                             v-for="org in sortedOrgs"
-                            :key="org"
+                            :key="org.name + 'list'"
                             dense
                             @click="
                                 () => {
@@ -74,16 +74,19 @@
                                 <v-btn
                                     icon
                                     @click.stop="toggleFavoriteOrg(org)"
-                                    :color="orgFavorites.includes(org) ? 'yellow' : 'grey'"
+                                    :color="orgFavoritesNameSet.has(org.name) ? 'yellow' : 'grey'"
                                 >
                                     <v-icon>{{ icons.mdiStar }}</v-icon>
                                 </v-btn>
                             </v-list-item-action>
-                            <v-list-item-content>{{ org }}</v-list-item-content>
+
+                            <v-list-item-content>
+                                {{ org.name }} {{ org.name_jp ? `(${org.name_jp})` : "" }}
+                            </v-list-item-content>
 
                             <v-list-item-action
                                 style="flex-direction: row !important"
-                                v-if="orgFavorites.includes(org)"
+                                v-if="orgFavoritesNameSet.has(org.name)"
                                 @click.stop.prevent
                             >
                                 <v-btn @click.stop="shiftOrgFavorites({ org, up: true })" icon :ripple="false">
@@ -107,18 +110,20 @@
 </template>
 
 <script>
-import { ORGS, ORGS_PREFIX } from "@/utils/consts";
+import backendApi from "@/utils/backend-api";
 import { mapMutations } from "vuex";
 
 export default {
     name: "OrgSelector",
     data() {
         return {
-            ORGS,
-            ORGS_PREFIX,
             showOrgDialog: false,
             search: "",
+            ORGS: [],
         };
+    },
+    async mounted() {
+        this.ORGS = [{ name: "All Vtubers", short: "Vtuber", name_jp: null }, ...(await backendApi.orgs()).data];
     },
     computed: {
         firstVisit: {
@@ -135,8 +140,8 @@ export default {
                 list = list.filter((x) => x.toLowerCase().includes(this.search.toLowerCase()));
             }
             list.sort((a, b) => {
-                const index1 = this.orgFavorites.indexOf(a);
-                const index2 = this.orgFavorites.indexOf(b);
+                const index1 = this.orgFavorites.findIndex((x) => x.name === a.name);
+                const index2 = this.orgFavorites.findIndex((x) => x.name === b.name);
                 if (index1 < 0 && index2 < 0) return 0;
                 if (index1 < 0 && index2 >= 0) return 1;
                 if (index2 < 0 && index1 >= 0) return -1;
@@ -156,6 +161,9 @@ export default {
         },
         orgFavorites() {
             return this.$store.state.orgFavorites;
+        },
+        orgFavoritesNameSet() {
+            return new Set(this.orgFavorites.map(({ name }) => name));
         },
         darkMode() {
             return this.$store.state.settings.darkMode;

@@ -31,7 +31,7 @@ const actions = {
             commit("fetchStart");
             return api
                 .live({
-                    org: rootState.currentOrg,
+                    org: rootState.currentOrg.name,
                     include: "mentions",
                 })
                 .then((res) => {

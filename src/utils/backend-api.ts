@@ -7,6 +7,9 @@ import { Playlist, PlaylistList } from "./types";
 
 export const API_BASE_URL =
     process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api" : `${window.location.origin}/api`;
+export const SITE_BASE_URL =
+    process.env.NODE_ENV === "development" ? "https://staging.holodex.net/" : `${window.location.origin}/`;
+
 // export const API_BASE_URL = "http://localhost:2434";
 
 export const axiosInstance = (() => {
@@ -21,6 +24,9 @@ export const axiosInstance = (() => {
 })();
 
 export default {
+    orgs() {
+        return axiosInstance({ url: "orgs.json", baseURL: SITE_BASE_URL });
+    },
     channels(query) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/channels?${q}`);
