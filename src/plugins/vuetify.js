@@ -75,6 +75,12 @@ export const dayjsLangs = {
     async tr() {
         await import("dayjs/locale/tr");
     },
+    async vi() {
+        await import("dayjs/locale/vi");
+    },
+    async hu() {
+        await import("dayjs/locale/hu");
+    },
 };
 export const i18n = new VueI18n({
     locale: "en", // Set locale
@@ -141,6 +147,8 @@ export function loadLanguageAsync(lang) {
         it: "it-IT",
         ko: "ko-KR",
         tr: "tr-TR",
+        vi: "vi-VN",
+        hu: "hu-HU",
     };
 
     // If the same language
