@@ -1,56 +1,72 @@
 <template>
     <span>
-        <v-menu bottom offset-y>
-            <template v-slot:activator="{ on, attrs }">
-                <div v-bind="attrs" v-on="on" class="d-inline nav-title" style="position: relative">
-                    <v-fade-transition hide-on-leave>
-                        <span
-                            :key="currentOrg.name + 'header'"
-                            style="text-decoration: underline"
-                            :class="{
-                                'grey--text text--darken-4': !darkMode,
-                                'grey-text text--lighten-2': darkMode,
-                            }"
-                            >{{ currentOrg.short || currentOrg.name }}</span
+        <slot name="menu" v-bind:currentOrg="currentOrg" v-bind:showOrgDialog="showOrgDialog">
+            <v-menu bottom offset-y>
+                <template v-slot:activator="activator">
+                    <slot name="visible" v-bind:currentOrg="currentOrg" v-bind:activator="activator">
+                        <div
+                            v-bind="activator.attrs"
+                            v-on="activator.on"
+                            class="d-inline nav-title"
+                            style="position: relative"
                         >
-                    </v-fade-transition>
-                    <span
-                        class="primary--text"
-                        :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
-                        ref="dexBtn"
-                        >dex</span
-                    >
-                    <v-tooltip v-model="firstVisit" right bottom z-index="120" content-class="first-visit-tooltip">
-                        <template v-slot:activator="{}">
-                            <v-icon
-                                size="30"
-                                class="change-org-icon"
-                                :class="{ 'rotate-180': attrs['aria-expanded'] === 'true' }"
-                                v-on="on"
+                            <v-fade-transition hide-on-leave>
+                                <span
+                                    :key="currentOrg.name + 'header'"
+                                    style="text-decoration: underline"
+                                    :class="{
+                                        'grey--text text--darken-4': !darkMode,
+                                        'grey-text text--lighten-2': darkMode,
+                                    }"
+                                    >{{ currentOrg.short || currentOrg.name }}</span
+                                >
+                            </v-fade-transition>
+                            <span
+                                class="primary--text"
+                                :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
+                                ref="dexBtn"
+                                >dex</span
                             >
-                                {{ icons.mdiMenuDown }}
-                            </v-icon>
-                        </template>
-                        <div>{{ $t("views.app.nowSupportsMultiOrg") }}</div>
-                        <div>{{ $t("views.app.loginCallToAction") }}</div>
-                    </v-tooltip>
-                </div>
-            </template>
+                            <v-tooltip
+                                v-model="firstVisit"
+                                right
+                                bottom
+                                z-index="120"
+                                content-class="first-visit-tooltip"
+                            >
+                                <template v-slot:activator="{}">
+                                    <v-icon
+                                        size="30"
+                                        class="change-org-icon"
+                                        :class="{ 'rotate-180': activator.attrs['aria-expanded'] === 'true' }"
+                                        v-on="activator.on"
+                                    >
+                                        {{ icons.mdiMenuDown }}
+                                    </v-icon>
+                                </template>
+                                <div>{{ $t("views.app.nowSupportsMultiOrg") }}</div>
+                                <div>{{ $t("views.app.loginCallToAction") }}</div>
+                            </v-tooltip>
+                        </div>
+                    </slot>
+                </template>
 
-            <v-list style="max-height: 300px; overscroll-behavior: contain" class="overflow-y-auto">
-                <v-list-item
-                    v-for="org in orgFavorites"
-                    :key="org.name + 'select'"
-                    @click="currentOrg = org"
-                    :input-value="currentOrg === org"
-                >
-                    <v-list-item-title>{{ org.name }}</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="showOrgDialog = true">
-                    <v-list-item-title class="primary--text">{{ $t("views.favorites.showall") }}</v-list-item-title>
-                </v-list-item>
-            </v-list>
-        </v-menu>
+                <v-list style="max-height: 300px; overscroll-behavior: contain" class="overflow-y-auto">
+                    <slot name="prepend-dropdown"></slot>
+                    <v-list-item
+                        v-for="org in orgFavorites"
+                        :key="org.name + 'select'"
+                        @click="currentOrg = org"
+                        :input-value="org === (currentSelection || currentOrg)"
+                    >
+                        <v-list-item-title>{{ org.name }}</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="showOrgDialog = true">
+                        <v-list-item-title class="primary--text">{{ $t("views.favorites.showall") }}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+        </slot>
         <v-dialog v-model="showOrgDialog" max-width="1000px">
             <v-card>
                 <v-card-title>{{ $t("views.channels.sortOptions.org") }}</v-card-title>
@@ -113,6 +129,20 @@
 import backendApi from "@/utils/backend-api";
 import { mapMutations } from "vuex";
 
+/**----------------------------------------------
+ * *                   Org Selector
+ *   Picks an organization from the available org listing.
+ *
+ *   Contains slots to expand functionality by:
+ * adding additonal clickables to the menu via prepend-dropdown slot
+ * change the display logic entirely by using 'visible' slot (this control the 'Holodex' on front page)
+ * or supplement your own menu system by using 'menu' slot (this controls the whole menu dropdown,
+ * should not be used together with 'visible')
+ *
+ *   Regardless, setting showOrgDialog = true inside 'menu' slot binding will cause the Favorite Orgs management
+ * dialog to pop up.
+ *---------------------------------------------* */
+
 export default {
     name: "OrgSelector",
     data() {
@@ -121,6 +151,12 @@ export default {
             search: "",
             ORGS: [],
         };
+    },
+    props: {
+        currentSelection: {
+            type: Object,
+            optional: true,
+        },
     },
     async mounted() {
         this.ORGS = [{ name: "All Vtubers", short: "Vtuber", name_jp: null }, ...(await backendApi.orgs()).data];
@@ -155,6 +191,7 @@ export default {
                 return this.$store.state.currentOrg;
             },
             set(val) {
+                this.$emit("changed", val);
                 if (this.$route.name === "favorites") this.$router.push({ name: "home" });
                 return this.$store.commit("setCurrentOrg", val);
             },

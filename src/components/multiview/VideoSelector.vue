@@ -5,7 +5,7 @@
             <v-col class="org-dropdown" cols="12" sm="4" md="3" lg="2" mandatory v-if="$vuetify.breakpoint.xs">
                 <!-- Dropdown for breakpoint xs -->
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
-                <v-select :items="orgList" filled v-model="selectedOrg"></v-select>
+                <org-panel-picker />
             </v-col>
             <!-- Full list for greater than xs -->
             <v-col class="org-list" cols="12" sm="4" md="3" lg="2" mandatory v-else>
@@ -97,14 +97,15 @@
     <!-- Horizontal view for tool bar -->
     <div class="d-flex flex-row align-center" v-else>
         <!-- Drop down -->
-        <v-select
+        <!-- <v-select
             :items="orgList"
             v-model="selectedOrg"
             mandatory
             hide-details
             solo
             style="max-width: 150px; margin-right: 10px"
-        ></v-select>
+        ></v-select> -->
+        <org-panel-picker @change="newChoice"></org-panel-picker>
         <v-icon
             class="mr-2"
             @click="loadSelection"
@@ -200,6 +201,7 @@ import { dayjs } from "@/utils/time";
 import { getVideoIDFromUrl, resizeChannelPhoto } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
 import { mdiTwitch } from "@mdi/js";
+import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
 
 function insertIf(condition, ...elements) {
     return condition ? elements : [];
@@ -212,6 +214,7 @@ export default {
         VideoCardList,
         LoadingOverlay,
         ChannelImg,
+        OrgPanelPicker,
     },
     props: {
         horizontal: {
@@ -271,6 +274,7 @@ export default {
         ...mapGetters("multiview", ["activeVideos"]),
         ...mapState("favorites", ["lastLiveUpdate"]),
         ...mapState("playlist", ["active"]),
+        ...mapState(["orgFavorites"]),
         orgList() {
             const self = this;
             const arr = [
@@ -290,7 +294,7 @@ export default {
                     text: "Twitch URL",
                     value: 3,
                 },
-                ...this.$store.state.orgFavorites
+                ...this.orgFavorites
                     .filter((x) => x.name !== "All Vtubers")
                     .map(({ name }, idx) => ({ text: name, value: idx + 4 })),
             ];
