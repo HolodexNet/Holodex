@@ -90,7 +90,7 @@
             class="mr-2"
             @click="loadSelection"
             :class="{ 'refresh-spin': isLoading }"
-            v-if="selectedOrg !== 2 && selectedOrg !== 3"
+            v-if="selectedOrg.name !== 'YouTubeURL' && selectedOrg.name !== 'TwitchURL'"
         >
             {{ icons.mdiRefresh }}
         </v-icon>
@@ -156,7 +156,6 @@
                             {{ formatDurationLive(video) }}
                         </div>
                         <v-avatar size="50" @click="handleVideoClick(video)">
-                            <!-- <v-img :src="resizeChannelPhoto(video.channel.photo, 50)"></v-img> -->
                             <ChannelImg :channel="video.channel" :size="50" noLink />
                         </v-avatar>
                     </div>
@@ -173,9 +172,8 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import { dayjs } from "@/utils/time";
-import { getVideoIDFromUrl, resizeChannelPhoto } from "@/utils/functions";
+import { getVideoIDFromUrl } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
-import { mdiTwitch } from "@mdi/js";
 import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
 
 export default {
@@ -206,8 +204,6 @@ export default {
             tick: Date.now(),
             ticker: null,
 
-            mdiTwitch,
-
             lastUpdate: Date.now(),
         };
     },
@@ -230,7 +226,7 @@ export default {
             if (name !== "Favorites" && name !== "Playlist" && !this.selectedOrg.inputType)
                 this.live = this.$store.state.home.live;
         },
-        savedVideos() {
+        savedVideosList() {
             if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;
         },
     },
@@ -239,7 +235,6 @@ export default {
         ...mapState("favorites", { favUpdateTick: "lastLiveUpdate" }),
         ...mapState("home", { homeUpdateTick: "lastLiveUpdate" }),
         ...mapState("playlist", ["active"]),
-        ...mapState(["orgFavorites"]),
         modalFilteredLive() {
             return this.live.filter((l) => !this.activeVideos.find((v) => v.id === l.id));
         },
@@ -268,7 +263,6 @@ export default {
         },
     },
     methods: {
-        resizeChannelPhoto,
         // Returns a short hand form of time (ie. 33m, 2h)
         formatDurationLive(video) {
             const now = dayjs();
