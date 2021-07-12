@@ -92,7 +92,7 @@ export default {
                 this.currentTime = this.currentContent?.playerControls?.getCurrentTime();
         }, 1000);
     },
-    destroyed() {
+    beforeDestroy() {
         if (this.timer) clearInterval(this.timer);
     },
     computed: {
