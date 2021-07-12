@@ -5,7 +5,7 @@ import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import createMigrate from "vuex-persistedstate-migrate";
 import jwtDecode from "jwt-decode";
-import { ORGS } from "@/utils/consts";
+import { ORGS_PREFIX } from "@/utils/consts";
 import * as icons from "@/utils/icons";
 import { sendTokenToExtension } from "@/utils/messaging";
 import kvidb from "kv-idb";
@@ -51,8 +51,13 @@ function defaultState() {
         isMobile: true,
         currentGridSize: 0,
 
-        currentOrg: "Hololive",
-        orgFavorites: ["All Vtubers", "Hololive", "Nijisanji", "Independents"],
+        currentOrg: { name: "Hololive", short: "Holo" },
+        orgFavorites: [
+            { name: "All Vtubers", short: "Vtuber" },
+            { name: "Hololive", short: "Holo" },
+            { name: "Nijisanji", short: "Niji" },
+            { name: "Independents", short: "Indie" },
+        ],
 
         // Migration: prevent migrating initial state.
         migration: { version: 5 },
@@ -70,9 +75,6 @@ function defaultState() {
         showVideoCardMenu: false,
         // Global report video dialog
         reportVideo: null,
-
-        // Active Video Frames
-        activeVideos: {},
 
         // Document.visiblityState (eg. backgrounded)
         visibilityState: null,
@@ -159,6 +161,23 @@ const migrations = [
             return state;
         },
     },
+    {
+        version: 6,
+        up: (state) => {
+            const newCurrentOrg = {
+                name: state.currentOrg,
+                short: ORGS_PREFIX[state.currentOrg] ? ORGS_PREFIX[state.currentOrg] : null,
+            };
+            const newOrgFavorites = state.orgFavorites.map((org) => {
+                return { name: org, short: ORGS_PREFIX[org] ? ORGS_PREFIX[org] : null };
+            });
+            return {
+                ...state,
+                currentOrg: newCurrentOrg,
+                orgFavorites: newOrgFavorites,
+            };
+        },
+    },
 ];
 
 /**-----------------------
@@ -181,7 +200,6 @@ export default new Vuex.Store({
                 o.music.isOpen = false; // hide it
                 o.reportVideo = null;
                 o.videoCardMenu = null;
-                o.activeVideos = {};
                 return o;
             },
             getState: createMigrate(migrations, "migration.version"),
@@ -218,8 +236,9 @@ export default new Vuex.Store({
             Object.assign(state, defaultState());
         },
         setCurrentOrg(state, val) {
-            if (!ORGS.find((org) => org === val)) return;
+            // if (!ORGS.find((org) => org === val)) return;
             state.currentOrg = val;
+            state.home.lastLiveUpdate = 0;
         },
         setIsMobile(state, val) {
             state.isMobile = val;
@@ -269,7 +288,7 @@ export default new Vuex.Store({
             state.showVideoCardMenu = show;
         },
         toggleFavoriteOrg(state, org) {
-            const favIndex = state.orgFavorites.indexOf(org);
+            const favIndex = state.orgFavorites.findIndex((x) => x.name === org.name);
             if (favIndex >= 0) {
                 state.orgFavorites.splice(favIndex, 1);
             } else {
@@ -277,20 +296,13 @@ export default new Vuex.Store({
             }
         },
         shiftOrgFavorites(state, { org, up = true }) {
-            const favIndex = state.orgFavorites.indexOf(org);
+            const favIndex = state.orgFavorites.findIndex((x) => x.name === org.name);
             if (up && favIndex === 0) return;
             if (!up && favIndex === state.orgFavorites.length - 1) return;
             const replaceIndex = up ? favIndex - 1 : favIndex + 1;
             const temp = state.orgFavorites[replaceIndex];
             state.orgFavorites.splice(replaceIndex, 1, org);
             state.orgFavorites.splice(favIndex, 1, temp);
-        },
-        // eslint-disable-next-line no-unused-vars
-        setActiveVideo(state, { videoId, playerObj }) {
-            Vue.set(state.activeVideos, videoId, playerObj);
-        },
-        deleteActiveVideo(state, videoId) {
-            Vue.delete(state.activeVideos, videoId);
         },
         setVisiblityState(state, val) {
             state.visibilityState = val;

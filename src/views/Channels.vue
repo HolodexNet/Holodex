@@ -75,7 +75,7 @@
                     :channels="data"
                     includeVideoCount
                     :grouped="currentSortValue.value === 'group' || currentSortValue.value === 'org'"
-                    :groupKey="$store.state.currentOrg === 'All Vtubers' ? 'org' : 'group'"
+                    :groupKey="$store.state.currentOrg.name === 'All Vtubers' ? 'org' : 'group'"
                     :cardView="cardView"
                     :showDelete="category === Tabs.SUBBER"
                 />
@@ -168,7 +168,7 @@ export default {
                         },
                     },
                     ...((this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES) &&
-                    this.$store.state.currentOrg !== "All Vtubers"
+                    this.$store.state.currentOrg.name !== "All Vtubers"
                         ? [
                               {
                                   text: this.$t("views.channels.sortOptions.group"),
@@ -180,7 +180,7 @@ export default {
                               },
                           ]
                         : []),
-                    ...(this.$store.state.currentOrg === "All Vtubers"
+                    ...(this.$store.state.currentOrg.name === "All Vtubers"
                         ? [
                               {
                                   text: this.$t("views.channels.sortOptions.org"),
@@ -272,7 +272,7 @@ export default {
                     limit,
                     offset,
                     type,
-                    ...(type === CHANNEL_TYPES.VTUBER && { org: this.$store.state.currentOrg }),
+                    ...(type === CHANNEL_TYPES.VTUBER && { org: this.$store.state.currentOrg.name }),
                     ...(type === CHANNEL_TYPES.SUBBER && { lang: this.$store.state.settings.clipLangs.join(",") }),
                     ...this.currentSortValue.query_value,
                 });

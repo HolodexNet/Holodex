@@ -5,11 +5,15 @@
                 <v-row class="px-3">
                     <v-col cols="12">
                         <v-select
-                            v-model="org"
+                            v-model="selectedOrgs"
                             clearable
                             solo-inverted
                             hide-details="auto"
-                            :items="ORGS"
+                            multiple
+                            chips
+                            deletable-chips
+                            @click="loadOrgs"
+                            :items="orgs"
                             :label="$t('component.search.type.org')"
                             :prepend-icon="mdiAccountMultiple"
                         ></v-select>
@@ -101,7 +105,6 @@ import {
     mdiCommentSearch,
 } from "@mdi/js";
 
-import { ORGS } from "@/utils/consts";
 import { debounce } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { csv2jsonAsync, json2csvAsync } from "json-2-csv";
@@ -116,9 +119,9 @@ export default {
             mdiCommentSearch,
             mdiFilter,
 
-            ORGS,
+            orgs: [],
 
-            org: undefined,
+            selectedOrgs: undefined,
             topic: undefined,
             comment: undefined,
             title: undefined,
@@ -174,6 +177,10 @@ export default {
             this.channelSearch = undefined;
             this.channelResults = [];
         },
+        async loadOrgs() {
+            if (this.orgs && this.orgs.length > 0) return;
+            this.orgs = (await backendApi.orgs()).data.map(({ name }) => name);
+        },
         processQuery(queryArray) {
             /* [
                 {
@@ -204,11 +211,15 @@ export default {
             this.comment = (commentOpt && commentOpt.text) || undefined;
 
             const orgOpt = queryArray.find((v) => v.type === "org");
-            this.org = (orgOpt && orgOpt.value) || undefined;
+            this.selectedOrgs = (orgOpt && orgOpt.value && [orgOpt.value]) || [];
         },
         async submitSearch() {
             const reconstruction = [];
-            if (this.org) reconstruction.push({ type: "org", value: `${this.org}`, text: this.org });
+            if (this.selectedOrgs) {
+                this.selectedOrgs.forEach((org) => {
+                    reconstruction.push({ type: "org", value: `${org}`, text: org });
+                });
+            }
             if (this.topic) reconstruction.push({ type: "topic", value: `${this.topic}`, text: this.topic });
             if (this.channels) reconstruction.push(...this.channels);
             if (this.title)

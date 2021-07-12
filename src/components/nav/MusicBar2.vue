@@ -344,8 +344,16 @@ export default {
         currentSong(ns, os) {
             if (os != null && this.progress > 80 && this.progress < 105) {
                 // console.log("track song");
-
                 backendApi.trackSongPlay(os.channel_id, os.video_id, os.name).catch((err) => console.error(err));
+                this.$gtag.event("fully-listen", {
+                    event_category: "music",
+                    event_label: this.currentSong.channel.name,
+                });
+            } else {
+                this.$gtag.event("quick-skip", {
+                    event_category: "music",
+                    event_label: this.currentSong.channel.name,
+                });
             }
             // console.log("change song");
         },
@@ -403,10 +411,18 @@ export default {
                 return;
             }
             this.$store.commit("music/play");
+            this.$gtag.event("play", {
+                event_category: "music",
+                event_label: this.currentSong.channel.name,
+            });
         },
         // eslint-disable-next-line no-unused-vars
         songIsPaused(_player) {
             this.$store.commit("music/pause");
+            this.$gtag.event("pause", {
+                event_category: "music",
+                event_label: this.currentSong.channel.name,
+            });
         },
         songProgress(time) {
             if (!this.currentSong) this.progress = 0;
@@ -436,6 +452,10 @@ export default {
             this.$store.commit("music/closeBar");
             if (this.player) this.player.pauseVideo();
             this.$store.commit("music/pause");
+            this.$gtag.event("close", {
+                event_category: "music",
+                event_label: this.currentSong.channel.name,
+            });
         },
         progressChange(progress) {
             if (!this.currentSong || !this.player) return;

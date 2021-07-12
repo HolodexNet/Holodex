@@ -166,7 +166,7 @@ export default {
         },
         // eslint-disable-next-line func-names
         "$store.state.visibilityState": function () {
-            if (this.isActive && this.$store.state.visibilityState === "active")
+            if (this.isActive && this.$store.state.visibilityState === "visible")
                 this.$store.dispatch("home/fetchLive", { force: false });
         },
         tab() {
@@ -267,7 +267,7 @@ export default {
                     status: "past",
                     ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
                     include: "clips",
-                    org: this.$store.state.currentOrg,
+                    org: this.$store.state.currentOrg.name,
                     lang: this.$store.state.settings.clipLangs.join(","),
                     paginated: !this.scrollMode,
                     limit,

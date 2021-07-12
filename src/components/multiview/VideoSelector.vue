@@ -5,32 +5,18 @@
             <v-col class="org-dropdown" cols="12" sm="4" md="3" lg="2" mandatory v-if="$vuetify.breakpoint.xs">
                 <!-- Dropdown for breakpoint xs -->
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
-                <v-select :items="orgList" filled v-model="selectedOrg"></v-select>
+
+                <org-panel-picker horizontal @changed="handlePicker" />
             </v-col>
             <!-- Full list for greater than xs -->
-            <v-col class="org-list" cols="12" sm="4" md="3" lg="2" mandatory v-else>
+            <v-col class="org-list" cols="12" sm="4" md="3" lg="2" mandatory style="min-height: 100%" v-else>
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
-                <v-list-item-group v-model="selectedOrg">
-                    <template v-for="org in orgList">
-                        <v-list-item v-if="org.value === 2" :key="org.value">
-                            <v-icon class="mr-2">{{ icons.mdiYoutube }}</v-icon>
-                            <v-list-item-title>URL</v-list-item-title>
-                        </v-list-item>
-                        <v-list-item v-else-if="org.value === 3" :key="org.value">
-                            <v-icon class="mr-2">{{ mdiTwitch }}</v-icon>
-                            <v-list-item-title>URL</v-list-item-title>
-                        </v-list-item>
-                        <v-list-item v-else :key="org.value">
-                            <v-list-item-content>
-                                <v-list-item-title>{{ org.text }}</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </template>
-                </v-list-item-group>
+
+                <org-panel-picker @changed="handlePicker" />
             </v-col>
             <v-col class="video-list" cols="12" sm="8" md="9" lg="10">
                 <!-- Custom YT Url should render different content -->
-                <template v-if="selectedOrg === 2">
+                <template v-if="selectedOrg.name === 'YouTubeURL'">
                     <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
                     <v-text-field
                         label="Youtube Video Link"
@@ -46,7 +32,7 @@
                     </v-btn>
                 </template>
                 <!-- Custom Twitch URL -->
-                <template v-else-if="selectedOrg === 3">
+                <template v-else-if="selectedOrg.name === 'TwitchURL'">
                     <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
                     <v-text-field
                         label="Twitch Channel Link"
@@ -62,7 +48,7 @@
                     </v-btn>
                 </template>
                 <!-- Favorites when not logged in -->
-                <template v-else-if="selectedOrg === 0 && !isLoggedIn">
+                <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
                     <div class="pa-3">
                         <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
                         <center>
@@ -74,6 +60,7 @@
                 </template>
                 <!-- Video Card List for normal content -->
                 <template v-else>
+                    <h4 class="pa-1">{{ selectedOrg.name }}</h4>
                     <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
                     <VideoCardList
                         :videos="modalFilteredLive"
@@ -90,6 +77,7 @@
                         :horizontal="$vuetify.breakpoint.mdAndDown"
                         dense
                     ></VideoCardList>
+                    <div class="d-block" style="height: 120px"></div>
                 </template>
             </v-col>
         </v-row>
@@ -97,24 +85,17 @@
     <!-- Horizontal view for tool bar -->
     <div class="d-flex flex-row align-center" v-else>
         <!-- Drop down -->
-        <v-select
-            :items="orgList"
-            v-model="selectedOrg"
-            mandatory
-            hide-details
-            solo
-            style="max-width: 150px; margin-right: 10px"
-        ></v-select>
+        <org-panel-picker horizontal @changed="handlePicker"></org-panel-picker>
         <v-icon
             class="mr-2"
             @click="loadSelection"
             :class="{ 'refresh-spin': isLoading }"
-            v-if="selectedOrg !== 2 && selectedOrg !== 3"
+            v-if="selectedOrg.name !== 'YouTubeURL' && selectedOrg.name !== 'TwitchURL'"
         >
             {{ icons.mdiRefresh }}
         </v-icon>
         <!-- Inline text input for custom yt url -->
-        <template v-if="selectedOrg === 2">
+        <template v-if="selectedOrg.name === 'YouTubeURL'">
             <v-text-field
                 label="Youtube Video Link"
                 placeholder="https://www.youtube.com/watch?v=..."
@@ -133,7 +114,7 @@
             </v-btn>
         </template>
         <!-- Inline text input for custom twitch url -->
-        <template v-else-if="selectedOrg === 3">
+        <template v-else-if="selectedOrg.name === 'TwitchURL'">
             <v-text-field
                 label="Twitch Channel Link"
                 placeholder="https://www.twitch.tv/..."
@@ -171,15 +152,10 @@
                         draggable="true"
                         v-on:dragstart="(ev) => dragVideo(ev, video)"
                     >
-                        <div
-                            class="live-badge"
-                            :key="'lvbg' + ticker"
-                            :class="video.status === 'live' ? 'red' : 'grey'"
-                        >
+                        <div class="live-badge" :key="'lvbg' + tick" :class="video.status === 'live' ? 'red' : 'grey'">
                             {{ formatDurationLive(video) }}
                         </div>
                         <v-avatar size="50" @click="handleVideoClick(video)">
-                            <!-- <v-img :src="resizeChannelPhoto(video.channel.photo, 50)"></v-img> -->
                             <ChannelImg :channel="video.channel" :size="50" noLink />
                         </v-avatar>
                     </div>
@@ -191,20 +167,14 @@
 </template>
 
 <script lang="ts">
-import api from "@/utils/backend-api";
 import VideoCard from "@/components/video/VideoCard.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
-import { ORGS } from "@/utils/consts";
 import { dayjs } from "@/utils/time";
-import { getVideoIDFromUrl, resizeChannelPhoto } from "@/utils/functions";
+import { getVideoIDFromUrl } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
-import { mdiTwitch } from "@mdi/js";
-
-function insertIf(condition, ...elements) {
-    return condition ? elements : [];
-}
+import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
 
 export default {
     name: "VideoSelector",
@@ -213,6 +183,7 @@ export default {
         VideoCardList,
         LoadingOverlay,
         ChannelImg,
+        OrgPanelPicker,
     },
     props: {
         horizontal: {
@@ -223,8 +194,7 @@ export default {
     data() {
         return {
             live: [],
-            selectedOrg: 0,
-            ORGS,
+            selectedOrg: {},
             isLoading: false,
             hasError: false,
 
@@ -234,23 +204,13 @@ export default {
             tick: Date.now(),
             ticker: null,
 
-            mdiTwitch,
-
             lastUpdate: Date.now(),
         };
     },
     mounted() {
-        // Set tab to favorites if logged in or currentOrg otherwise
-        if (this.$store.getters.isLoggedIn) {
-            this.loadSelection();
-        } else {
-            this.selectedOrg = this.orgList.find((x) => x.text === this.$store.state.currentOrg).value;
-        }
-
         // Start timer to update live time stamps
         this.ticker = setInterval(() => {
             this.tick = Date.now();
-            this.tryUpdateLives();
         }, 60000);
     },
     beforeDestroy() {
@@ -258,49 +218,23 @@ export default {
     },
     watch: {
         // Watch lastLiveUpdate from favorites module, and fetch new state
-        lastLiveUpdate() {
-            if (this.selectedOrg === 0) this.live = this.$store.state.favorites.live;
+        favUpdateTick() {
+            if (this.selectedOrg.name === "Favorites") this.live = this.$store.state.favorites.live;
         },
-        savedVideos() {
-            if (this.selectedOrg === 1) this.live = this.active.videos;
+        homeUpdateTick() {
+            const { name } = this.selectedOrg;
+            if (name !== "Favorites" && name !== "Playlist" && !this.selectedOrg.inputType)
+                this.live = this.$store.state.home.live;
         },
-        // Watch dropdown selection change
-        selectedOrg() {
-            this.loadSelection();
+        savedVideosList() {
+            if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;
         },
     },
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),
-        ...mapState("favorites", ["lastLiveUpdate"]),
+        ...mapState("favorites", { favUpdateTick: "lastLiveUpdate" }),
+        ...mapState("home", { homeUpdateTick: "lastLiveUpdate" }),
         ...mapState("playlist", ["active"]),
-        orgList() {
-            const self = this;
-            const arr = [
-                {
-                    text: this.$t("component.mainNav.favorites"),
-                    value: 0,
-                },
-                ...insertIf(!this.horizontal, {
-                    text: self.$t("component.mainNav.playlist"),
-                    value: 1,
-                }),
-                {
-                    text: "Youtube URL",
-                    value: 2,
-                },
-                {
-                    text: "Twitch URL",
-                    value: 3,
-                },
-                ...this.ORGS.filter((x) => x !== "All Vtubers").map((orgName, index) => {
-                    return {
-                        text: orgName,
-                        value: index + 4,
-                    };
-                }),
-            ];
-            return arr;
-        },
         modalFilteredLive() {
             return this.live.filter((l) => !this.activeVideos.find((v) => v.id === l.id));
         },
@@ -327,12 +261,8 @@ export default {
         savedVideosList() {
             return this.active.videos;
         },
-        selectedOrgName() {
-            return this.orgList.find((item) => item.value === this.selectedOrg).text;
-        },
     },
     methods: {
-        resizeChannelPhoto,
         // Returns a short hand form of time (ie. 33m, 2h)
         formatDurationLive(video) {
             const now = dayjs();
@@ -359,27 +289,20 @@ export default {
                 this.customURLError = true;
             }
         },
-        // Check if 5 minutes have past since last update
-        tryUpdateLives() {
-            if (this.selectedOrg > 3 && Date.now() - this.lastUpdate > 1000 * 60 * 5) {
-                this.lastUpdate = Date.now();
-                this.loadOrg(this.selectedOrgName);
-            }
-        },
         // Load selected option
         loadSelection() {
             this.isLoading = false;
             this.hasError = false;
             // Do nothing for custom URLs
-            if (this.selectedOrg === 2 || this.selectedOrg === 3) {
+            if (this.selectedOrg.name === "YouTubeURL" || this.selectedOrg.name === "TwitchURL") {
                 return;
             }
             // Delegate dfferent function for favorites
-            if (this.selectedOrg === 0) {
+            if (this.selectedOrg.name === "Favorites") {
                 this.live = [];
                 this.isLoading = true;
                 this.$store.dispatch("favorites/fetchLive", { minutes: 2, force: true }).finally(() => {
-                    if (this.selectedOrg === 0) {
+                    if (this.selectedOrg.name === "Favorites") {
                         this.isLoading = false;
                         this.live = this.$store.state.favorites.live;
                     }
@@ -387,37 +310,26 @@ export default {
                 return;
             }
             // Delegate for library
-            if (this.selectedOrg === 1) {
-                this.live = this.savedVideosList;
+            if (this.selectedOrg.name === "Playlist") {
+                this.live = this.active.videos;
                 return;
             }
-            // Call api for specific org
-            this.loadOrg(this.selectedOrgName);
-        },
-        loadOrg(orgName) {
+
             this.live = [];
             this.isLoading = true;
-            this.hasError = false;
-            api.live({
-                org: orgName,
-            })
-                .then((res) => {
-                    if (this.selectedOrgName === orgName) {
-                        this.isLoading = false;
-                        this.live = res;
-                    }
-                })
-                .catch((e) => {
-                    console.error(e);
-                    if (this.selectedOrgName === orgName) {
-                        this.isLoading = false;
-                        this.hasError = true;
-                    }
-                });
+            this.$store.dispatch("home/fetchLive", { force: false }).finally(() => {
+                this.isLoading = false;
+                this.live = this.$store.state.home.live;
+            });
         },
         dragVideo(ev, video) {
             ev.dataTransfer.setData("text", `https://holodex.net/watch/${video.id}`);
             ev.dataTransfer.setData("application/json", JSON.stringify(video));
+        },
+        handlePicker(panel) {
+            // console.log(panel);
+            this.selectedOrg = panel;
+            this.loadSelection();
         },
     },
 };

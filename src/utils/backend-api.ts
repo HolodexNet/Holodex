@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-// import axiosRetry from "axios-retry";
 import { dayjs } from "@/utils/time";
 import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
@@ -7,20 +6,20 @@ import { Playlist, PlaylistList } from "./types";
 
 export const API_BASE_URL =
     process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api" : `${window.location.origin}/api`;
+export const SITE_BASE_URL =
+    process.env.NODE_ENV === "development" ? "https://staging.holodex.net/" : `${window.location.origin}/`;
+
 // export const API_BASE_URL = "http://localhost:2434";
 
 export const axiosInstance = (() => {
     const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
-    // axiosRetry(instance, {
-    //     retries: 2,
-    //     retryDelay: axiosRetry.exponentialDelay,
-    //     retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.code === "ECONNABORTED",
-    //     shouldResetTimeout: false,
-    // });
     return instance;
 })();
 
 export default {
+    orgs() {
+        return axiosInstance({ url: "orgs.json", baseURL: SITE_BASE_URL });
+    },
     channels(query) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/channels?${q}`);

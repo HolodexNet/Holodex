@@ -1,5 +1,16 @@
 # Holodex Changelog
 
+### 2.13.1 Holodex [*July 13th, 2021*]
+##### Patches
+- Stabilization of playlists feature. Rarely you might've had trouble saving playlists, should be all fixed now.
+- Added some more Google Analytics events so we can get better idea of how users are using our site! (e.g. which features are popular?) Since we don't even have ads on this website, please whitelist us on your adblocker.
+- Refactored MultiView Toolbar, components, more code sharing
+- Better editor tooling
+- Adding new orgs can now happen without a UI release.
+
+##### Bugfixes
+- Light mode white text problems
+- Miscellaneous fixes
 
 ### 2.13 Holodex [*July 4th, 2021*]
 

@@ -20,14 +20,16 @@
                     :width="size"
                     :height="size"
                 />
-                <v-fade-transition>
-                    <v-overlay v-show="isHover" absolute class="chip-overlay">
-                        <!-- <span class="channel-name-overlay">{{ channelName }}</span> -->
-                        <v-btn icon :to="`/channel/${channel.id}`">
-                            <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
-                        </v-btn>
-                    </v-overlay>
-                </v-fade-transition>
+                <!-- <span class="channel-name-overlay">{{ channelName }}</span> -->
+                <slot v-bind:isHover="isHover">
+                    <v-fade-transition>
+                        <v-overlay v-show="isHover" absolute class="chip-overlay">
+                            <v-btn icon :to="`/channel/${channel.id}`">
+                                <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
+                            </v-btn>
+                        </v-overlay>
+                    </v-fade-transition>
+                </slot>
             </v-avatar>
         </template>
         <div class="channel-hover-tooltip">

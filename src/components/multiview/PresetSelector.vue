@@ -74,7 +74,7 @@
 import { mdiDotsVertical, mdiToggleSwitch } from "@mdi/js";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
-import { decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-layout";
+import { decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-utils";
 import { mapState } from "vuex";
 import LayoutPreview from "./LayoutPreview.vue";
 

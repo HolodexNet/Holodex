@@ -365,8 +365,11 @@ export default {
     flex-direction: column;
 }
 
-.tl-caption {
-    color: hsla(0, 0%, 100%, 0.7);
+.theme--light .tl-caption {
+    color: hsla(0, 0%, 30%, 0.7);
+}
+.theme--dark .tl-caption {
+    color: hsla(0, 0%, 70%, 0.7);
 }
 
 .tl-body .tl-caption {

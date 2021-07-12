@@ -219,6 +219,7 @@ export function getVideoIDFromUrl(url) {
         if (match && match[5] && match[5].length === 11) {
             return {
                 id: match[5],
+                custom: true,
                 channel: {
                     name: match[5],
                 },
@@ -230,7 +231,8 @@ export function getVideoIDFromUrl(url) {
         if (match && match[1]) {
             return {
                 id: match[1],
-                cellVideoType: "twitch",
+                type: "twitch",
+                custom: true,
                 channel: {
                     name: match[1],
                 },
