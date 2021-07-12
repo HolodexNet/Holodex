@@ -265,7 +265,10 @@ export default {
 #video-edit-btn {
     font-size: 12px;
 }
-.striped {
+.theme--dark .striped {
     background: repeating-linear-gradient(45deg, #1111, #1111 10px, #1114 10px, #1114 20px);
+}
+.theme--light .striped {
+    background: repeating-linear-gradient(45deg, #fffe, #fffe 10px, #fff1 10px, #fff1 20px);
 }
 </style>
