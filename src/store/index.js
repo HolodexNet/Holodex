@@ -60,7 +60,7 @@ function defaultState() {
         ],
 
         // Migration: prevent migrating initial state.
-        migration: { version: 5 },
+        migration: { version: 7 },
 
         // Socket counter, if it is zero, then close the shared WebSocket
         activeSockets: 0,
@@ -175,6 +175,21 @@ const migrations = [
                 ...state,
                 currentOrg: newCurrentOrg,
                 orgFavorites: newOrgFavorites,
+            };
+        },
+    },
+    {
+        version: 7,
+        up: (state) => {
+            return {
+                ...state,
+                currentOrg: { name: "Hololive", short: "Holo" },
+                orgFavorites: [
+                    { name: "All Vtubers", short: "Vtuber" },
+                    { name: "Hololive", short: "Holo" },
+                    { name: "Nijisanji", short: "Niji" },
+                    { name: "Independents", short: "Indie" },
+                ],
             };
         },
     },
