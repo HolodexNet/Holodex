@@ -166,7 +166,8 @@ export default {
         },
         // eslint-disable-next-line func-names
         "$store.state.visibilityState": function () {
-            if (this.isActive && this.$store.state.visibilityState === "active")
+            console.log("visibility changed", this.$store.state.visibilityState);
+            if (this.isActive && this.$store.state.visibilityState === "visible")
                 this.$store.dispatch("home/fetchLive", { force: false });
         },
         tab() {
