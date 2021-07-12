@@ -9,7 +9,7 @@
                 <org-panel-picker horizontal @changed="handlePicker" />
             </v-col>
             <!-- Full list for greater than xs -->
-            <v-col class="org-list" cols="12" sm="4" md="3" lg="2" mandatory v-else>
+            <v-col class="org-list" cols="12" sm="4" md="3" lg="2" mandatory style="min-height: 100%" v-else>
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
 
                 <org-panel-picker @changed="handlePicker" />
