@@ -25,7 +25,7 @@
         <template v-if="activeVideos.length && currentTab >= 0">
             <iframe
                 :src="twitchChatLink"
-                v-if="activeVideos[currentTab || 0].cellVideoType === 'twitch'"
+                v-if="activeVideos[currentTab || 0].type === 'twitch'"
                 style="width: 100%; height: calc(100% - 32px)"
                 frameborder="0"
             >
@@ -39,6 +39,7 @@
                 :hintConnectLiveTL="hintConnectLiveTL"
                 :showLiveChat="setShowChat"
                 fluid
+                :currentTime="currentTime"
             />
         </template>
     </div>
@@ -46,6 +47,7 @@
 
 <script lang="ts">
 import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
+import { Content } from "@/utils/mv-utils";
 
 export default {
     name: "TabbedLiveChat",
@@ -77,13 +79,29 @@ export default {
             hintConnectLiveTL: false,
             newTL: 0,
 
+            currentTime: 0,
+            timer: null,
             // showLiveChat: true,
         };
     },
     mounted() {
         this.currentTab = this.savedTab;
+        this.timer = setInterval(() => {
+            // check if timer is needed for current video
+            if (this.currentContent?.video?.status === "past")
+                this.currentTime = this.currentContent?.playerControls?.getCurrentTime();
+        }, 1000);
+    },
+    destroyed() {
+        if (this.timer) clearInterval(this.timer);
     },
     computed: {
+        currentContent() {
+            if (!this.activeVideos[this.currentTab]) return null;
+            return Object.values(this.$store.state.multiview.layoutContent).find(
+                (x: Content) => x.id === this.activeVideos[this.currentTab].id,
+            );
+        },
         savedTab: {
             get() {
                 if (
@@ -136,8 +154,6 @@ export default {
         activeVideos() {
             if (!this.activeVideos.length) {
                 this.currentTab = 0;
-            } else if (this.currentTab >= this.activeVideos.length) {
-                this.currentTab = this.activeVideos.length - 1;
             }
         },
     },

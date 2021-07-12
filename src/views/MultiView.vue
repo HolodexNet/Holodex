@@ -132,13 +132,14 @@ import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
 import { mdiViewGridPlus, mdiCardPlus, mdiContentSave } from "@mdi/js";
 import { mdiDelete } from "@/utils/icons";
-import { decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-layout";
+import { Content, decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-utils";
 import PresetEditor from "@/components/multiview/PresetEditor.vue";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
 import LayoutPreview from "@/components/multiview/LayoutPreview.vue";
 import MultiviewToolbar from "@/components/multiview/MultiviewToolbar.vue";
 import Cell from "@/components/multiview/Cell.vue";
 import { mapState, mapGetters } from "vuex";
+import api from "@/utils/backend-api";
 
 export default {
     name: "MultiView",
@@ -180,17 +181,33 @@ export default {
             layoutPreview: {},
         };
     },
-    mounted() {
+    async mounted() {
         // Check if permalink layout is empty
         if (this.$route.params.layout) {
             // TODO: verify layout
             try {
                 const parsed = decodeLayout(this.$route.params.layout);
+                console.log(parsed);
                 if (parsed.layout && parsed.content) {
+                    // Load missing video data from backend
+                    const { data } = await api.videos({
+                        include: "live_info",
+                        id: Object.values(parsed.content)
+                            .filter((x: Content) => x.type === "video" && (x.video as any).type !== "twitch")
+                            .map((x: Content) => x.id)
+                            .join(","),
+                    });
+                    if (data.length) {
+                        data.forEach((video) => {
+                            if (parsed.content[video.id]) parsed.content[video.id].video = video;
+                        });
+                    }
+                    console.log(parsed);
                     // prompt overwrite with permalink, remove permalink if cancelled
                     this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
                 }
             } catch (e) {
+                console.error(e);
                 console.log("invalid layout");
             }
         }
@@ -306,7 +323,7 @@ export default {
             Object.keys(this.layoutContent).forEach((key) => {
                 const content = this.layoutContent[key];
                 if (content.type === "video") {
-                    this.$store.commit("multiview/muteLayoutContent", { id: key, value: val });
+                    this.$store.commit("multiview/setLayoutContentWithKey", { id: key, key: "muted", value: val });
                 }
             });
         },
@@ -351,10 +368,7 @@ export default {
             // set video for a specific cell id
             this.$store.commit("multiview/setLayoutContentById", {
                 id: this.showSelectorForId,
-                content: {
-                    type: "video",
-                    content: video,
-                },
+                content: video,
             });
             this.showSelectorForId = -1;
         },
@@ -425,8 +439,7 @@ export default {
                             presetCell.x === layoutCell.x &&
                             presetCell.y === layoutCell.y &&
                             presetCell.w === layoutCell.w &&
-                            presetCell.h === layoutCell.h &&
-                            presetCell.i === layoutCell.i
+                            presetCell.h === layoutCell.h
                         )
                     ) {
                         // at least one cell doesn't match, invalid layout
@@ -444,8 +457,9 @@ export default {
                 this.$store.commit("multiview/setLayoutContentById", {
                     id: emptyCell.i,
                     content: {
+                        id: video.id,
                         type: "video",
-                        content: video,
+                        video,
                     },
                 });
             }

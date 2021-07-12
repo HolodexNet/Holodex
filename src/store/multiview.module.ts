@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import { LayoutItem, getFirstCollision } from "@/external/vue-grid-layout/src/helpers/utils";
-import { decodeLayout, getEmptyCells } from "@/utils/mv-layout";
+import { decodeLayout, getEmptyCells } from "@/utils/mv-utils";
 import Vue from "vue";
 
 const initialState = {
@@ -15,13 +15,8 @@ export const state = { ...initialState };
 const getters = {
     activeVideos(state) {
         return state.layout
-            .filter((item) => {
-                if (state.layoutContent[item.i] && state.layoutContent[item.i].type === "video") {
-                    return true;
-                }
-                return false;
-            })
-            .map((item) => state.layoutContent[item.i].content);
+            .filter((item) => state.layoutContent[item.i] && state.layoutContent[item.i].type === "video")
+            .map((item) => state.layoutContent[item.i].video);
     },
 };
 
@@ -76,8 +71,8 @@ const mutations = {
             };
         state.layout.push(newLayoutItem);
     },
-    muteLayoutContent(state, { id, value }) {
-        if (state.layoutContent[id]) Vue.set(state.layoutContent[id], "muted", value);
+    setLayoutContentWithKey(state, { id, key, value }) {
+        if (state.layoutContent[id]) Vue.set(state.layoutContent[id], key, value);
     },
     removeLayoutItem(state, id) {
         const index = state.layout.map((item) => item.i).indexOf(id);
@@ -95,7 +90,6 @@ const mutations = {
         Vue.set(state.layout[index], "isDraggable", true);
     },
     deleteLayoutContent(state, id) {
-        const index = state.layout.map((item) => item.i).indexOf(id);
         Vue.delete(state.layoutContent, id);
     },
     addPresetLayout(state, content) {

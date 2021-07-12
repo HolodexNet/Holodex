@@ -76,9 +76,6 @@ function defaultState() {
         // Global report video dialog
         reportVideo: null,
 
-        // Active Video Frames
-        activeVideos: {},
-
         // Document.visiblityState (eg. backgrounded)
         visibilityState: null,
     };
@@ -203,7 +200,6 @@ export default new Vuex.Store({
                 o.music.isOpen = false; // hide it
                 o.reportVideo = null;
                 o.videoCardMenu = null;
-                o.activeVideos = {};
                 return o;
             },
             getState: createMigrate(migrations, "migration.version"),
@@ -307,13 +303,6 @@ export default new Vuex.Store({
             const temp = state.orgFavorites[replaceIndex];
             state.orgFavorites.splice(replaceIndex, 1, org);
             state.orgFavorites.splice(favIndex, 1, temp);
-        },
-        // eslint-disable-next-line no-unused-vars
-        setActiveVideo(state, { videoId, playerObj }) {
-            Vue.set(state.activeVideos, videoId, playerObj);
-        },
-        deleteActiveVideo(state, videoId) {
-            Vue.delete(state.activeVideos, videoId);
         },
         setVisiblityState(state, val) {
             state.visibilityState = val;

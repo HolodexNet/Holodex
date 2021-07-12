@@ -59,13 +59,12 @@
                 <div
                     class="mv-frame ma-auto"
                     :class="{ 'elevation-4': pausedMode }"
-                    v-if="cellContent.type === 'video' && cellContent.content.id"
-                    :key="'v' + uniqueId"
+                    v-if="cellContent.type === 'video' && cellContent.id"
                 >
                     <!-- Twitch Player -->
                     <VueTwitchPlayer
                         v-if="isTwitchVideo"
-                        :channel="cellContent.content.id"
+                        :channel="cellContent.id"
                         :playsInline="true"
                         @ready="vidReady"
                         @ended="pausedMode = true"
@@ -79,8 +78,7 @@
                     <!-- Youtube Player -->
                     <youtube
                         v-else
-                        :key="'ytplayer-' + item.i + cellContent.content.id"
-                        :video-id="cellContent.content.id"
+                        :video-id="cellContent.id"
                         :playerVars="{
                             playsinline: 1,
                         }"
@@ -92,7 +90,6 @@
                         @error="pausedMode = true"
                         :mute="muted"
                     >
-                        <!--                         @buffering="pausedMode=true" -->
                     </youtube>
                 </div>
                 <template v-else-if="cellContent.type === 'chat'">
@@ -142,8 +139,9 @@
                         <v-icon small class="mr-1">
                             M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z
                             M9.9,10.8v3.8h-2v-3.8L5.1,6.6h2.4l1.4,2.2 l1.4-2.2h2.4L9.9,10.8z
-                            M18.9,8.6h-2v6h-2v-6h-2v-2h6V8.6z </v-icon
-                        >Chat
+                            M18.9,8.6h-2v6h-2v-6h-2v-2h6V8.6z
+                        </v-icon>
+                        Chat
                     </v-btn>
                     <v-btn
                         :x-small="toggleChat || toggleTL"
@@ -244,11 +242,7 @@ export default {
             return this.cellContent.type === "video";
         },
         isTwitchVideo() {
-            return (
-                this.cellContent &&
-                this.cellContent.type === "video" &&
-                this.cellContent.content.cellVideoType === "twitch"
-            );
+            return this.cellContent && this.cellContent.type === "video" && this.cellContent.video.type === "twitch";
         },
         muted: {
             get() {
@@ -256,7 +250,29 @@ export default {
                 return this.cellContent.muted;
             },
             set(value) {
-                this.$store.commit("multiview/muteLayoutContent", { id: this.item.i, value });
+                this.$store.commit("multiview/setLayoutContentWithKey", { id: this.item.i, key: "muted", value });
+            },
+        },
+        playerControls: {
+            get() {
+                if (!this.cellContent) return null;
+                return this.cellContent.player;
+            },
+            set(value) {
+                this.$store.commit("multiview/setLayoutContentWithKey", {
+                    id: this.item.i,
+                    key: "playerControls",
+                    value,
+                });
+            },
+        },
+        video: {
+            get() {
+                if (!this.cellContent) return null;
+                return this.cellContent.video;
+            },
+            set(value) {
+                this.$store.commit("multiview/setLayoutContentWithKey", { id: this.item.i, key: "video", value });
             },
         },
     },
@@ -281,7 +297,13 @@ export default {
             }
         },
         vidReady(evt) {
-            if (evt) this.ytPlayer = evt.target;
+            if (evt) {
+                this.player = evt.target;
+                this.playerControls = evt.target;
+                // console.log("reacehed");
+            } else if (this.isTwitchVideo) {
+                this.playerControls = this.$refs.twitchPlayer;
+            }
         },
         resetCell() {
             this.$store.commit("multiview/deleteLayoutContent", this.item.i);
@@ -332,7 +354,8 @@ export default {
                         id: this.item.i,
                         content: {
                             type: "video",
-                            content: {
+                            id: video.id,
+                            video: {
                                 id: video.id,
                                 channel: {
                                     name: video.channel.name,
@@ -345,14 +368,15 @@ export default {
             }
 
             const text: string = ev.dataTransfer.getData("text");
-            const content = getVideoIDFromUrl(text);
-            if (!content || !content.id) return;
+            const video = getVideoIDFromUrl(text);
+            if (!video || !video.id) return;
 
             this.$store.commit("multiview/setLayoutContentById", {
                 id: this.item.i,
                 content: {
+                    id: video.id,
                     type: "video",
-                    content,
+                    video,
                 },
             });
         },
