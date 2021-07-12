@@ -16,7 +16,7 @@
             </v-col>
             <v-col class="video-list" cols="12" sm="8" md="9" lg="10">
                 <!-- Custom YT Url should render different content -->
-                <template v-if="selectedOrg === 2">
+                <template v-if="selectedOrg.name === 'YouTubeURL'">
                     <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
                     <v-text-field
                         label="Youtube Video Link"
@@ -32,7 +32,7 @@
                     </v-btn>
                 </template>
                 <!-- Custom Twitch URL -->
-                <template v-else-if="selectedOrg === 3">
+                <template v-else-if="selectedOrg.name === 'TwitchURL'">
                     <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
                     <v-text-field
                         label="Twitch Channel Link"
@@ -48,7 +48,7 @@
                     </v-btn>
                 </template>
                 <!-- Favorites when not logged in -->
-                <template v-else-if="selectedOrg === 0 && !isLoggedIn">
+                <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
                     <div class="pa-3">
                         <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
                         <center>
@@ -60,6 +60,7 @@
                 </template>
                 <!-- Video Card List for normal content -->
                 <template v-else>
+                    <h4 class="pa-1">{{ selectedOrg.name }}</h4>
                     <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
                     <VideoCardList
                         :videos="modalFilteredLive"
@@ -76,6 +77,7 @@
                         :horizontal="$vuetify.breakpoint.mdAndDown"
                         dense
                     ></VideoCardList>
+                    <div class="d-block" style="height: 120px"></div>
                 </template>
             </v-col>
         </v-row>
@@ -194,7 +196,7 @@ export default {
     data() {
         return {
             live: [],
-            selectedOrg: null,
+            selectedOrg: {},
             isLoading: false,
             hasError: false,
 
@@ -264,9 +266,6 @@ export default {
         savedVideosList() {
             return this.active.videos;
         },
-        selectedOrgName() {
-            return this.orgList.find((item) => item.value === this.selectedOrg).text;
-        },
     },
     methods: {
         resizeChannelPhoto,
@@ -334,7 +333,7 @@ export default {
             ev.dataTransfer.setData("application/json", JSON.stringify(video));
         },
         handlePicker(panel) {
-            console.log(panel);
+            // console.log(panel);
             this.selectedOrg = panel;
             this.loadSelection();
         },

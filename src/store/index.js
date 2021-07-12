@@ -292,7 +292,7 @@ export default new Vuex.Store({
             state.showVideoCardMenu = show;
         },
         toggleFavoriteOrg(state, org) {
-            const favIndex = state.orgFavorites.indexOf(org);
+            const favIndex = state.orgFavorites.findIndex((x) => x.name === org.name);
             if (favIndex >= 0) {
                 state.orgFavorites.splice(favIndex, 1);
             } else {

@@ -1,6 +1,14 @@
 <template>
     <span>
-        <slot name="menu" v-bind:currentOrg="currentOrg" v-bind:showOrgDialog="showOrgDialog">
+        <slot
+            name="menu"
+            v-bind:currentOrg="currentOrg"
+            v-bind:showOrgDialog="
+                () => {
+                    showOrgDialog = true;
+                }
+            "
+        >
             <v-menu bottom offset-y>
                 <template v-slot:activator="activator">
                     <slot name="visible" v-bind:currentOrg="currentOrg" v-bind:activator="activator">
@@ -157,9 +165,16 @@ export default {
             type: Object,
             optional: true,
         },
+        hideAllVTubers: {
+            type: Boolean,
+            optional: true,
+        },
     },
     async mounted() {
-        this.ORGS = [{ name: "All Vtubers", short: "Vtuber", name_jp: null }, ...(await backendApi.orgs()).data];
+        this.ORGS = [
+            ...(this.hideAllVTubers ? [] : [{ name: "All Vtubers", short: "Vtuber", name_jp: null }]),
+            ...(await backendApi.orgs()).data,
+        ];
     },
     computed: {
         firstVisit: {
@@ -197,6 +212,9 @@ export default {
             },
         },
         orgFavorites() {
+            if (this.hideAllVTubers) {
+                return this.$store.state.orgFavorites.filter((x) => x.name !== "All Vtubers");
+            }
             return this.$store.state.orgFavorites;
         },
         orgFavoritesNameSet() {

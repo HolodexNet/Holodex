@@ -4,10 +4,10 @@
         @changed="
             (neworg) => {
                 currentTab = neworg;
-                $emit('changed', neworg);
             }
         "
         :currentSelection="currentTab"
+        :hideAllVTubers="true"
     >
         <template v-slot:visible="{ activator }">
             <v-btn v-on="activator.on" v-bind="activator.attrs" depressed>
@@ -50,6 +50,7 @@
                 $emit('changed', neworg);
             }
         "
+        :hideAllVTubers="true"
     >
         <template v-slot:menu="{ showOrgDialog }">
             <v-list-item @click="currentTab = favTab" :input-value="currentTab === favTab">
@@ -76,9 +77,14 @@
                 </v-list-item-title>
             </v-list-item>
 
-            <v-list-item-group v-model="currentTab">
+            <v-list-item-group :value="currentTab">
                 <template v-for="org in $store.state.orgFavorites">
-                    <v-list-item :key="org.name + 's051'">
+                    <v-list-item
+                        :key="org.name + 's051'"
+                        :value="org"
+                        v-if="org.name !== 'All Vtubers'"
+                        @click="selectOrg(org)"
+                    >
                         <v-list-item-content>
                             <v-list-item-title>{{ org.name }}</v-list-item-title>
                         </v-list-item-content>
@@ -86,7 +92,7 @@
                 </template>
             </v-list-item-group>
 
-            <v-list-item @click="showOrgDialog = true">
+            <v-list-item @click="showOrgDialog()">
                 <v-list-item-title class="primary--text">{{ $t("views.favorites.showall") }}</v-list-item-title>
             </v-list-item>
         </template>
@@ -125,6 +131,13 @@ export default {
         horizontal: {
             type: Boolean,
             default: false,
+        },
+    },
+    methods: {
+        selectOrg(val) {
+            // console.log("create change", val);
+            this.$store.commit("setCurrentOrg", val);
+            this.currentTab = val;
         },
     },
 };
