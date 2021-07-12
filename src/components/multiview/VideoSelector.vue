@@ -239,10 +239,26 @@ export default {
             return this.live.filter((l) => !this.activeVideos.find((v) => v.id === l.id));
         },
         topFilteredLive() {
-            // Filter out lives for top bar
-            let count = 0;
-            const filtered = this.live
-                .filter((l) => {
+            try {
+                // Filter out lives for top bar
+                let count = 0;
+                const filtered = this.live
+                    .filter((l) => {
+                        count += 1;
+                        // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
+                        return (
+                            l.status === "live" ||
+                            dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
+                            (count < 5 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
+                        );
+                    })
+                    .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+
+                return filtered;
+            } catch (err) {
+                this.$store.commit("multiview/resetState");
+                let count = 0;
+                return this.live.filter((l) => {
                     count += 1;
                     // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
                     return (
@@ -250,10 +266,8 @@ export default {
                         dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
                         (count < 5 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                     );
-                })
-                .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
-
-            return filtered;
+                });
+            }
         },
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
