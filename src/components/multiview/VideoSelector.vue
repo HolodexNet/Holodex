@@ -5,28 +5,14 @@
             <v-col class="org-dropdown" cols="12" sm="4" md="3" lg="2" mandatory v-if="$vuetify.breakpoint.xs">
                 <!-- Dropdown for breakpoint xs -->
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
-                <org-panel-picker />
+
+                <org-panel-picker horizontal @changed="handlePicker" />
             </v-col>
             <!-- Full list for greater than xs -->
             <v-col class="org-list" cols="12" sm="4" md="3" lg="2" mandatory v-else>
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
-                <v-list-item-group v-model="selectedOrg">
-                    <template v-for="org in orgList">
-                        <v-list-item v-if="org.value === 2" :key="org.value">
-                            <v-icon class="mr-2">{{ icons.mdiYoutube }}</v-icon>
-                            <v-list-item-title>URL</v-list-item-title>
-                        </v-list-item>
-                        <v-list-item v-else-if="org.value === 3" :key="org.value">
-                            <v-icon class="mr-2">{{ mdiTwitch }}</v-icon>
-                            <v-list-item-title>URL</v-list-item-title>
-                        </v-list-item>
-                        <v-list-item v-else :key="org.value">
-                            <v-list-item-content>
-                                <v-list-item-title>{{ org.text }}</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </template>
-                </v-list-item-group>
+
+                <org-panel-picker @changed="handlePicker" />
             </v-col>
             <v-col class="video-list" cols="12" sm="8" md="9" lg="10">
                 <!-- Custom YT Url should render different content -->
@@ -97,15 +83,7 @@
     <!-- Horizontal view for tool bar -->
     <div class="d-flex flex-row align-center" v-else>
         <!-- Drop down -->
-        <!-- <v-select
-            :items="orgList"
-            v-model="selectedOrg"
-            mandatory
-            hide-details
-            solo
-            style="max-width: 150px; margin-right: 10px"
-        ></v-select> -->
-        <org-panel-picker @change="newChoice"></org-panel-picker>
+        <org-panel-picker horizontal @changed="handlePicker"></org-panel-picker>
         <v-icon
             class="mr-2"
             @click="loadSelection"
@@ -115,7 +93,7 @@
             {{ icons.mdiRefresh }}
         </v-icon>
         <!-- Inline text input for custom yt url -->
-        <template v-if="selectedOrg === 2">
+        <template v-if="selectedOrg.name === 'YouTubeURL'">
             <v-text-field
                 label="Youtube Video Link"
                 placeholder="https://www.youtube.com/watch?v=..."
@@ -134,7 +112,7 @@
             </v-btn>
         </template>
         <!-- Inline text input for custom twitch url -->
-        <template v-else-if="selectedOrg === 3">
+        <template v-else-if="selectedOrg.name === 'TwitchURL'">
             <v-text-field
                 label="Twitch Channel Link"
                 placeholder="https://www.twitch.tv/..."
@@ -172,11 +150,7 @@
                         draggable="true"
                         v-on:dragstart="(ev) => dragVideo(ev, video)"
                     >
-                        <div
-                            class="live-badge"
-                            :key="'lvbg' + ticker"
-                            :class="video.status === 'live' ? 'red' : 'grey'"
-                        >
+                        <div class="live-badge" :key="'lvbg' + tick" :class="video.status === 'live' ? 'red' : 'grey'">
                             {{ formatDurationLive(video) }}
                         </div>
                         <v-avatar size="50" @click="handleVideoClick(video)">
@@ -192,7 +166,6 @@
 </template>
 
 <script lang="ts">
-import api from "@/utils/backend-api";
 import VideoCard from "@/components/video/VideoCard.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
@@ -202,10 +175,6 @@ import { getVideoIDFromUrl, resizeChannelPhoto } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
 import { mdiTwitch } from "@mdi/js";
 import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
-
-function insertIf(condition, ...elements) {
-    return condition ? elements : [];
-}
 
 export default {
     name: "VideoSelector",
@@ -225,7 +194,7 @@ export default {
     data() {
         return {
             live: [],
-            selectedOrg: 0,
+            selectedOrg: null,
             isLoading: false,
             hasError: false,
 
@@ -241,17 +210,9 @@ export default {
         };
     },
     mounted() {
-        // Set tab to favorites if logged in or currentOrg otherwise
-        if (this.$store.getters.isLoggedIn) {
-            this.loadSelection();
-        } else {
-            this.selectedOrg = this.orgList.find((x) => x.text === this.$store.state.currentOrg.name).value;
-        }
-
         // Start timer to update live time stamps
         this.ticker = setInterval(() => {
             this.tick = Date.now();
-            this.tryUpdateLives();
         }, 60000);
     },
     beforeDestroy() {
@@ -259,47 +220,24 @@ export default {
     },
     watch: {
         // Watch lastLiveUpdate from favorites module, and fetch new state
-        lastLiveUpdate() {
-            if (this.selectedOrg === 0) this.live = this.$store.state.favorites.live;
+        favUpdateTick() {
+            if (this.selectedOrg.name === "Favorites") this.live = this.$store.state.favorites.live;
+        },
+        homeUpdateTick() {
+            const { name } = this.selectedOrg;
+            if (name !== "Favorites" && name !== "Playlist" && !this.selectedOrg.inputType)
+                this.live = this.$store.state.home.live;
         },
         savedVideos() {
-            if (this.selectedOrg === 1) this.live = this.active.videos;
-        },
-        // Watch dropdown selection change
-        selectedOrg() {
-            this.loadSelection();
+            if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;
         },
     },
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),
-        ...mapState("favorites", ["lastLiveUpdate"]),
+        ...mapState("favorites", { favUpdateTick: "lastLiveUpdate" }),
+        ...mapState("home", { homeUpdateTick: "lastLiveUpdate" }),
         ...mapState("playlist", ["active"]),
         ...mapState(["orgFavorites"]),
-        orgList() {
-            const self = this;
-            const arr = [
-                {
-                    text: this.$t("component.mainNav.favorites"),
-                    value: 0,
-                },
-                ...insertIf(!this.horizontal, {
-                    text: self.$t("component.mainNav.playlist"),
-                    value: 1,
-                }),
-                {
-                    text: "Youtube URL",
-                    value: 2,
-                },
-                {
-                    text: "Twitch URL",
-                    value: 3,
-                },
-                ...this.orgFavorites
-                    .filter((x) => x.name !== "All Vtubers")
-                    .map(({ name }, idx) => ({ text: name, value: idx + 4 })),
-            ];
-            return arr;
-        },
         modalFilteredLive() {
             return this.live.filter((l) => !this.activeVideos.find((v) => v.id === l.id));
         },
@@ -358,27 +296,20 @@ export default {
                 this.customURLError = true;
             }
         },
-        // Check if 5 minutes have past since last update
-        tryUpdateLives() {
-            if (this.selectedOrg > 3 && Date.now() - this.lastUpdate > 1000 * 60 * 5) {
-                this.lastUpdate = Date.now();
-                this.loadOrg(this.selectedOrgName);
-            }
-        },
         // Load selected option
         loadSelection() {
             this.isLoading = false;
             this.hasError = false;
             // Do nothing for custom URLs
-            if (this.selectedOrg === 2 || this.selectedOrg === 3) {
+            if (this.selectedOrg.name === "YouTubeURL" || this.selectedOrg.name === "TwitchURL") {
                 return;
             }
             // Delegate dfferent function for favorites
-            if (this.selectedOrg === 0) {
+            if (this.selectedOrg.name === "Favorites") {
                 this.live = [];
                 this.isLoading = true;
                 this.$store.dispatch("favorites/fetchLive", { minutes: 2, force: true }).finally(() => {
-                    if (this.selectedOrg === 0) {
+                    if (this.selectedOrg.name === "Favorites") {
                         this.isLoading = false;
                         this.live = this.$store.state.favorites.live;
                     }
@@ -386,37 +317,26 @@ export default {
                 return;
             }
             // Delegate for library
-            if (this.selectedOrg === 1) {
+            if (this.selectedOrg.name === "Library") {
                 this.live = this.savedVideosList;
                 return;
             }
-            // Call api for specific org
-            this.loadOrg(this.selectedOrgName);
-        },
-        loadOrg(orgName) {
+
             this.live = [];
             this.isLoading = true;
-            this.hasError = false;
-            api.live({
-                org: orgName,
-            })
-                .then((res) => {
-                    if (this.selectedOrgName === orgName) {
-                        this.isLoading = false;
-                        this.live = res;
-                    }
-                })
-                .catch((e) => {
-                    console.error(e);
-                    if (this.selectedOrgName === orgName) {
-                        this.isLoading = false;
-                        this.hasError = true;
-                    }
-                });
+            this.$store.dispatch("home/fetchLive", { force: false }).finally(() => {
+                this.isLoading = false;
+                this.live = this.$store.state.home.live;
+            });
         },
         dragVideo(ev, video) {
             ev.dataTransfer.setData("text", `https://holodex.net/watch/${video.id}`);
             ev.dataTransfer.setData("application/json", JSON.stringify(video));
+        },
+        handlePicker(panel) {
+            console.log(panel);
+            this.selectedOrg = panel;
+            this.loadSelection();
         },
     },
 };

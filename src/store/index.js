@@ -242,6 +242,7 @@ export default new Vuex.Store({
         setCurrentOrg(state, val) {
             // if (!ORGS.find((org) => org === val)) return;
             state.currentOrg = val;
+            state.home.lastLiveUpdate = 0;
         },
         setIsMobile(state, val) {
             state.isMobile = val;

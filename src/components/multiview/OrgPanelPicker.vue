@@ -51,10 +51,16 @@
             }
         "
     >
-        <template v-slot:menu="{ currentOrg, showOrgDialog }">
+        <template v-slot:menu="{ showOrgDialog }">
             <v-list-item @click="currentTab = favTab" :input-value="currentTab === favTab">
                 <v-list-item-title>
-                    {{ $t("component.mainNav.favorites") }}
+                    <v-icon>{{ icons.mdiHeart }}</v-icon> {{ $t("component.mainNav.favorites") }}
+                </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item @click="currentTab = playlistTab" :input-value="currentTab === playlistTab">
+                <v-list-item-title>
+                    <v-icon>{{ icons.mdiPlaylistPlay }}</v-icon> {{ $t("component.mainNav.playlist") }}
                 </v-list-item-title>
             </v-list-item>
 
@@ -63,6 +69,7 @@
                     <v-icon>{{ icons.mdiYoutube }}</v-icon> URL
                 </v-list-item-title>
             </v-list-item>
+
             <v-list-item @click="currentTab = twitchTab" :input-value="currentTab === twitchTab">
                 <v-list-item-title>
                     <v-icon>{{ mdiTwitch }}</v-icon> URL
@@ -98,15 +105,21 @@ export default {
     data() {
         const favTab = { name: "Favorites", text: this.$t("component.mainNav.favorites") };
         const currentTab = this.$store.getters.isLoggedIn ? favTab : this.$store.state.currentOrg;
+        this.$emit("changed", currentTab);
         return {
             currentTab,
             favTab,
-            twitchTab: { name: "TwitchURL" },
-            ytTab: { name: "YouTubeURL" },
-            libraryTab: { name: "Playlist", text: this.$t("component.mainNav.playlist") },
+            twitchTab: { name: "TwitchURL", inputType: true },
+            ytTab: { name: "YouTubeURL", inputType: true },
+            playlistTab: { name: "Playlist", text: this.$t("component.mainNav.playlist") },
 
             mdiTwitch,
         };
+    },
+    watch: {
+        currentTab(val) {
+            this.$emit("changed", val);
+        },
     },
     props: {
         horizontal: {
