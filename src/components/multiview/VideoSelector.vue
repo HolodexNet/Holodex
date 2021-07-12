@@ -310,8 +310,8 @@ export default {
                 return;
             }
             // Delegate for library
-            if (this.selectedOrg.name === "Library") {
-                this.live = this.savedVideosList;
+            if (this.selectedOrg.name === "Playlist") {
+                this.live = this.active.videos;
                 return;
             }
 
