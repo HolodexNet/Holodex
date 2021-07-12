@@ -53,6 +53,11 @@ import chatMixin from "./chatMixin";
 export default {
     name: "ArchiveTranslations",
     mixins: [chatMixin],
+    props: {
+        currentTime: {
+            type: Number,
+        },
+    },
     components: {
         WatchLiveTranslationsSetting,
         ChatMessage,
@@ -61,21 +66,11 @@ export default {
     data() {
         return {
             ChatMessage,
-            currentTime: 0,
             curIndex: 0,
-            timer: null,
         };
     },
-    created() {},
     mounted() {
         this.loadMessages(true, true);
-        this.timer = setInterval(() => {
-            if (!this.$store.state.activeVideos[this.video.id]) return;
-            this.currentTime = this.$store.state.activeVideos[this.video.id].getCurrentTime();
-        }, 1000);
-    },
-    destroyed() {
-        if (this.timer) clearInterval(this.timer);
     },
     watch: {
         liveTlLang() {

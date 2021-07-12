@@ -1,3 +1,14 @@
+import { LayoutItem } from "@/external/vue-grid-layout/src/helpers/utils";
+
+export interface Content {
+    id: string;
+    type: string;
+    isTwitch?: Boolean;
+    video?: Object;
+    playerControls?: Object;
+    currentTab?: Number;
+}
+
 const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.";
 /**
  * Encodes a layout array and contents to a compact URI
@@ -21,16 +32,15 @@ export function encodeLayout({ layout, contents, includeVideo = false }) {
             if (invalid) return;
 
             if (contents[item.i]) {
-                const { type, content, currentTab } = contents[item.i];
+                const { id, type, isTwitch, video, currentTab } = contents[item.i];
                 if (type === "chat") {
                     encodedBlock += `chat${currentTab || 0}`;
                 } else if (type === "video" && includeVideo) {
-                    if (content.cellVideoType === "twitch") {
-                        encodedBlock += `twitch${content.id}`;
+                    if (isTwitch) {
+                        encodedBlock += `twitch${id}`;
                     } else {
                         encodedBlock +=
-                            content.id +
-                            (content.channel.english_name || content.channel.name.split(/[/\s]/)[0].replace(",", ""));
+                            id + (video.channel.english_name || video.channel.name.split(/[/\s]/)[0].replace(",", ""));
                     }
                 }
             }
@@ -59,15 +69,14 @@ export function decodeLayout(encodedStr) {
         const channelName = str.substring(15);
 
         const keys = ["x", "y", "w", "h"];
-        const layoutItem = {};
+        const layoutItem: LayoutItem = { w: 0, h: 0, x: 0, y: 0, i: index };
+
         xywh.split("").forEach((char, keyIndex) => {
             const num = b64.indexOf(char);
             layoutItem[keys[keyIndex]] = num;
         });
+
         layoutItem.i = index;
-
-        parsedLayout.push(layoutItem);
-
         if (isChat) {
             const currentTab = idOrChat.length === 5 ? Number(idOrChat[4]) : 0;
             parsedContent[index] = {
@@ -76,28 +85,39 @@ export function decodeLayout(encodedStr) {
             };
         } else if (isTwitch) {
             const twitchChannel = str.substring(10);
-            parsedContent[index] = {
+            parsedContent[twitchChannel] = {
                 type: "video",
-                content: {
+                // content: {
+                id: twitchChannel,
+                isTwitch: true,
+                video: {
                     id: twitchChannel,
-                    cellVideoType: "twitch",
+                    type: "twitch",
                     channel: {
                         name: twitchChannel,
                     },
                 },
+                // },
             };
+            layoutItem.i = twitchChannel;
         } else if (idOrChat.length === 11) {
-            parsedContent[index] = {
+            parsedContent[idOrChat] = {
                 type: "video",
-                content: {
+                // content: {
+                id: idOrChat,
+                video: {
                     id: idOrChat,
                     channel: {
                         name: channelName,
                     },
                 },
+                // },
             };
+            layoutItem.i = idOrChat;
         }
+        parsedLayout.push(layoutItem);
     });
+    // console.log(parsedLayout, parsedContent);
     return {
         layout: parsedLayout,
         content: parsedContent,
@@ -110,7 +130,7 @@ export function decodeLayout(encodedStr) {
  * @returns {number} count of empty cells
  */
 export function getEmptyCells({ layout, content }) {
-    return layout.length - Object.values(content).filter((o) => o.type === "chat").length;
+    return layout.length - Object.values(content).filter((o: Content) => o.type === "chat").length;
 }
 
 export const desktopPresets = Object.freeze([

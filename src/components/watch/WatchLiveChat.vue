@@ -9,9 +9,26 @@
         }"
     >
         <span class="loading-text" v-if="showLiveChat">{{ $t("views.watch.chat.loading") }}</span>
+        <ArchiveTranslations
+            v-show="shouldShowLiveTL"
+            :video="video"
+            v-if="video.status === 'past'"
+            :class="{
+                'chat-overlay': fixedBottom || fixedRight,
+                'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
+                'tl-full-height': !showLiveChat,
+            }"
+            :style="{
+                height:
+                    showLiveChat && $store.state.settings.liveTlWindowSize > 0
+                        ? $store.state.settings.liveTlWindowSize + '%'
+                        : '',
+            }"
+            :currentTime="currentTime"
+        />
         <LiveTranslations
             :video="video"
-            v-if="['upcoming', 'live'].includes(video.status) && !isMugen && shouldConnectLiveTL"
+            v-else-if="!isMugen && shouldConnectLiveTL"
             v-show="shouldShowLiveTL"
             :class="{
                 'chat-overlay': fixedBottom || fixedRight,
@@ -28,22 +45,6 @@
             @historyLength="handleHistoryLength"
         >
         </LiveTranslations>
-        <ArchiveTranslations
-            v-show="shouldShowLiveTL"
-            :video="video"
-            v-if="video.status === 'past'"
-            :class="{
-                'chat-overlay': fixedBottom || fixedRight,
-                'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
-                'tl-full-height': !showLiveChat,
-            }"
-            :style="{
-                height:
-                    showLiveChat && $store.state.settings.liveTlWindowSize > 0
-                        ? $store.state.settings.liveTlWindowSize + '%'
-                        : '',
-            }"
-        />
 
         <div
             class="embedded-chat"
