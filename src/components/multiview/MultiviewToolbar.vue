@@ -102,7 +102,7 @@
 <script>
 import copyToClipboard from "@/mixins/copyToClipboard";
 import { mdiLinkVariant, mdiClipboardPlusOutline } from "@mdi/js";
-import { encodeLayout } from "@/utils/mv-layout";
+import { encodeLayout } from "@/utils/mv-utils";
 import { mapState } from "vuex";
 
 export default {

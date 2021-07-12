@@ -146,6 +146,7 @@
                         :showLiveChat="showLiveChat"
                         :isMugen="isMugen"
                         @historyLength="handleHistoryLength"
+                        :currentTime="currentTime"
                     />
                     <template v-if="!isMobile">
                         <WatchPlaylist @playNext="playNextPlaylist" v-model="playlistIndex" />
@@ -214,6 +215,10 @@ export default {
             fullScreen: false,
 
             playlistIndex: -1,
+
+            timer: null,
+            currentTime: 0,
+            player: null,
         };
     },
     mounted() {
@@ -223,7 +228,7 @@ export default {
         }
     },
     destroyed() {
-        this.$store.commit("deleteActiveVideo", this.video.id);
+        if (this.timer) clearInterval(this.timer);
     },
     methods: {
         init() {
@@ -245,16 +250,17 @@ export default {
         },
         ready(event) {
             this.player = event.target;
-            this.$store.commit("setActiveVideo", {
-                videoId: this.video.id,
-                playerObj: this.player,
-            });
         },
         playing() {
             this.$gtag.event("start/resume", {
                 event_category: "video",
                 event_label: this.video.type,
             });
+            if (!this.timer) {
+                this.timer = setInterval(() => {
+                    this.currentTime = this.player.getCurrentTime();
+                }, 1000);
+            }
         },
         seekTo(time) {
             if (!this.player) return;

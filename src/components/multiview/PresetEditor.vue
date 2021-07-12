@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { mdiContentSave } from "@mdi/js";
-import { encodeLayout, getEmptyCells } from "@/utils/mv-layout";
+import { encodeLayout, getEmptyCells } from "@/utils/mv-utils";
 import { mapState } from "vuex";
 import LayoutPreview from "./LayoutPreview.vue";
 
@@ -69,9 +69,9 @@ export default {
                 name: this.name,
                 emptyCells: this.autoLayout
                     ? getEmptyCells({
-                        layout: this.layout,
-                        content: this.content,
-                    })
+                          layout: this.layout,
+                          content: this.content,
+                      })
                     : 0,
             };
             this.$store.commit("multiview/addPresetLayout", content);
