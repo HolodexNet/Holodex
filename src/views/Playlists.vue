@@ -24,7 +24,7 @@
                 :class="playlist.id === active.id ? 'active-playlist' : 'inactive-playlist'"
                 @click.stop="setNewPlaylist(playlist)"
             >
-                <v-list-item two-line>
+                <v-list-item two-line class="pr-1">
                     <v-icon left x-large color="secondary" class="mr-3 hidden-xs-only">{{ mdiFormatListText }}</v-icon>
                     <v-list-item-title>
                         <span class="font-weight-medium text-subtitle-1">
@@ -45,11 +45,11 @@
                             {{ toTime(playlist.updated_at) }}
                         </span>
                     </v-list-item-title>
-                    <v-list-item-action class="flex-row-reverse">
+                    <v-list-item-action class="flex-row-reverse ml-0" style="width: 380px">
                         <!-- local playlist support -->
                         <div class="group">
                             <img
-                                v-for="id in getTopFour(playlist)"
+                                v-for="id in getPlaylistPreview(playlist)"
                                 :src="imageSrc(id)"
                                 :key="`vid${id}thumb`"
                                 class="preview-img stack"
@@ -183,9 +183,10 @@ export default {
             // eslint-disable-next-line no-restricted-globals,no-alert
             return this.isSaved || confirm(this.$t("views.playlist.change-loss-warning"));
         },
-        getTopFour(playlist) {
-            if (playlist.video_ids) return playlist.video_ids.slice(0, 4);
-            if (playlist.videos) return playlist.videos.slice(0, 4).map(({ id }) => id);
+        getPlaylistPreview(playlist) {
+            const limit = this.$vuetify.breakpoint.xs ? 1 : 4;
+            if (playlist.video_ids) return playlist.video_ids.slice(0, limit);
+            if (playlist.videos) return playlist.videos.slice(0, limit).map(({ id }) => id);
             return [];
         },
         createNewPlaylist() {

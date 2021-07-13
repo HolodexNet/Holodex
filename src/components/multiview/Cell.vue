@@ -55,6 +55,7 @@
                 color="transparent"
                 class="cell-content"
                 :class="{ 'pa-6 pb-1': pausedMode, 'chat-cell': isChat }"
+                :key="`uid-${uniqueId}`"
             >
                 <div
                     class="mv-frame ma-auto"
@@ -277,6 +278,9 @@ export default {
         },
     },
     methods: {
+        setMuted(val) {
+            this.muted = val;
+        },
         // getVideoThumbnails,
         setItemAsChat(item) {
             this.$store.commit("multiview/setLayoutContentById", {
@@ -298,7 +302,7 @@ export default {
         },
         vidReady(evt) {
             if (evt) {
-                this.player = evt.target;
+                this.ytPlayer = evt.target;
                 this.playerControls = evt.target;
                 // console.log("reacehed");
             } else if (this.isTwitchVideo) {

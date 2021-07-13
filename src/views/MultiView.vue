@@ -368,7 +368,11 @@ export default {
             // set video for a specific cell id
             this.$store.commit("multiview/setLayoutContentById", {
                 id: this.showSelectorForId,
-                content: video,
+                content: {
+                    id: video.id,
+                    type: "video",
+                    video,
+                },
             });
             this.showSelectorForId = -1;
         },
