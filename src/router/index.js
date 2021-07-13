@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import { loadLanguageAsync } from "@/plugins/vuetify";
+import { loadLanguageAsync, setDayjsLang } from "@/plugins/vuetify";
 import Home from "../views/Home.vue";
 import store from "../store";
 
@@ -174,7 +174,7 @@ router.beforeEach((to, from, next) => {
 
     const { lang } = store.state.settings;
     if (lang !== "en") {
-        loadLanguageAsync(lang).then(() => next());
+        Promise.all([setDayjsLang(lang), loadLanguageAsync(lang)]).then(() => next());
     } else next();
 });
 
