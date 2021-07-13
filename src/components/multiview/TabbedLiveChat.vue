@@ -39,6 +39,7 @@
                 :hintConnectLiveTL="hintConnectLiveTL"
                 :showLiveChat="setShowChat"
                 fluid
+                :scale="scale"
                 :currentTime="currentTime"
             />
         </template>
@@ -70,6 +71,10 @@ export default {
         id: {
             type: [String, Number],
             required: true,
+        },
+        scale: {
+            type: Number,
+            default: 1,
         },
     },
     data() {

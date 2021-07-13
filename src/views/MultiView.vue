@@ -75,7 +75,13 @@
                 :isResizable="item.isResizable !== false"
                 :key="'mvgrid' + item.i"
             >
-                <cell :item="item" @showSelector="(id) => (showSelectorForId = id)" @delete="handleDelete"> </cell>
+                <cell
+                    :cellWidth="columnWidth * item.w"
+                    :ref="`cell-${item.i}`"
+                    :item="item"
+                    @showSelector="(id) => (showSelectorForId = id)"
+                    @delete="handleDelete"
+                />
             </grid-item>
         </grid-layout>
 
@@ -177,7 +183,7 @@ export default {
 
             showPresetSelector: false,
             showPresetEditor: false,
-
+            showVideoControls: false,
             layoutPreview: {},
         };
     },
@@ -187,7 +193,6 @@ export default {
             // TODO: verify layout
             try {
                 const parsed = decodeLayout(this.$route.params.layout);
-                console.log(parsed);
                 if (parsed.layout && parsed.content) {
                     // Load missing video data from backend
                     const { data } = await api.videos({
@@ -202,7 +207,6 @@ export default {
                             if (parsed.content[video.id]) parsed.content[video.id].video = video;
                         });
                     }
-                    console.log(parsed);
                     // prompt overwrite with permalink, remove permalink if cancelled
                     this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
                 }
@@ -253,6 +257,7 @@ export default {
                     tooltip: this.$t("views.multiview.muteAll"),
                     onClick: () => {
                         this.setMuteAll(true);
+                        // this.showVideoControls = !this.showVideoControls;
                     },
                     collapse: true,
                 },
@@ -323,7 +328,7 @@ export default {
             Object.keys(this.layoutContent).forEach((key) => {
                 const content = this.layoutContent[key];
                 if (content.type === "video") {
-                    this.$store.commit("multiview/setLayoutContentWithKey", { id: key, key: "muted", value: val });
+                    this.$refs[`cell-${key}`][0].setMuted(val);
                 }
             });
         },

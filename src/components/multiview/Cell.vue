@@ -99,6 +99,7 @@
                         :setShowTL="toggleTL"
                         :setShowChat="toggleChat"
                         :id="item.i"
+                        :scale="chatScale"
                     />
                 </template>
             </v-sheet>
@@ -183,6 +184,9 @@ export default {
             type: Object,
             required: true,
         },
+        cellWidth: {
+            type: Number,
+        },
     },
     data() {
         return {
@@ -193,7 +197,7 @@ export default {
             ytPlayer: null,
             toggleTL: false,
             toggleChat: true,
-
+            chatScale: 1,
             showDropOverlay: false,
             enterTarget: null,
             mdiSelectionEllipseArrowInside,
@@ -203,8 +207,12 @@ export default {
         // initialize chat cell in non paused mode
         if (this.cellContent?.type === "chat") this.pausedMode = false;
         this.setLayoutFreeze();
+        this.checkScale();
     },
     watch: {
+        cellWidth() {
+            this.checkScale();
+        },
         cellContent(nw, old) {
             // if cell becomes null or content changes to a different type, set paused mode back to true
             if (!nw || (old && nw && nw.type !== old.type)) this.pausedMode = true;
@@ -311,6 +319,17 @@ export default {
         },
         resetCell() {
             this.$store.commit("multiview/deleteLayoutContent", this.item.i);
+        },
+        checkScale() {
+            if (this.cellContent?.type === "chat") {
+                if (this.cellWidth < 200) {
+                    this.chatScale = 0.5;
+                } else if (this.cellWidth < 300) {
+                    this.chatScale = 0.75;
+                } else {
+                    this.chatScale = 1;
+                }
+            }
         },
         toggleChatHandle() {
             this.toggleChat = !this.toggleChat;

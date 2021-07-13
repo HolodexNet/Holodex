@@ -56,7 +56,7 @@
                         : '',
             }"
         >
-            <iframe :src="liveChatUrl" frameborder="0" />
+            <iframe :src="liveChatUrl" frameborder="0" :style="scale !== 1 && scaledStyle" />
         </div>
         <!-- <cookie-detect /> -->
     </v-sheet>
@@ -113,9 +113,10 @@ export default {
         currentTime: {
             type: Number,
         },
-    },
-    data() {
-        return {};
+        scale: {
+            type: Number,
+            default: 1,
+        },
     },
     computed: {
         liveChatUrl() {
@@ -129,6 +130,14 @@ export default {
         },
         shouldShowLiveTL() {
             return this.showTL;
+        },
+        scaledStyle() {
+            return {
+                transform: `scale(${this.scale})`,
+                height: `${100 / this.scale}%`,
+                width: `${100 / this.scale}%`,
+                "transform-origin": "top left",
+            };
         },
         // hasNewTranslations() {
         //     return (this.controlTL ? this.tl.new : this.newTL) > 0;
