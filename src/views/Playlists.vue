@@ -45,7 +45,7 @@
                             {{ toTime(playlist.updated_at) }}
                         </span>
                     </v-list-item-title>
-                    <v-list-item-action class="flex-row-reverse ml-0" style="width: 300px">
+                    <v-list-item-action class="flex-row-reverse ml-0" style="width: 380px">
                         <!-- local playlist support -->
                         <div class="group">
                             <img
