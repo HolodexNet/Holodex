@@ -186,7 +186,6 @@ export default {
                 return this.$store.state.settings.lang;
             },
             set(val) {
-                console.log(val);
                 this.$store.commit("settings/setLanguage", val);
             },
         },

@@ -5,6 +5,7 @@ import VueI18n from "vue-i18n";
 
 import enTL from "@/locales/en/ui.yml";
 import vuetifyEn from "vuetify/es5/locale/en";
+import { dayjs } from "@/utils/time";
 
 // ====== i18n setup ======
 Vue.use(VueI18n);
@@ -12,6 +13,7 @@ Vue.use(VueI18n);
 export const langs = [
     { val: "en", display: "English", credit: "@Holodex" },
     { val: "en-CA", display: "English (Canadian)", credit: "@Holodex" },
+    { val: "en-GB", display: "English (British)", credit: "@Holodex" },
     { val: "ja", display: "日本語", credit: "Yourein#3960,Saginomiya#2353" },
     { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
     { val: "ko", display: "한국어", credit: "AlexKoala#0253" },
@@ -29,59 +31,36 @@ export const langs = [
     { val: "hu", display: "Magyar", credit: "kuroihikikomori#3519" },
 ];
 
-export const dayjsLangs = {
-    async en() {
-        await import("dayjs/locale/en");
-    },
-    "en-CA": async () => {
-        await import("dayjs/locale/en-ca");
-    },
-    async ja() {
-        await import("dayjs/locale/ja");
-    },
-    async zh() {
-        await import("dayjs/locale/zh-tw");
-    },
-    async es() {
-        await import("dayjs/locale/es");
-    },
-    "es-ES": async () => {
-        await import("dayjs/locale/es");
-    },
-    async ms() {
-        await import("dayjs/locale/ms");
-    },
-    async id() {
-        await import("dayjs/locale/id");
-    },
-    async ru() {
-        await import("dayjs/locale/ru");
-    },
-    async fr() {
-        await import("dayjs/locale/fr");
-    },
-    async pt() {
-        await import("dayjs/locale/pt-br");
-    },
-    async de() {
-        await import("dayjs/locale/de");
-    },
-    async it() {
-        await import("dayjs/locale/it");
-    },
-    async ko() {
-        await import("dayjs/locale/ko");
-    },
-    async tr() {
-        await import("dayjs/locale/tr");
-    },
-    async vi() {
-        await import("dayjs/locale/vi");
-    },
-    async hu() {
-        await import("dayjs/locale/hu");
-    },
-};
+export function setDayjsLang(lang) {
+    const dayjsFile = {
+        en: "en",
+        "en-CA": "en-ca",
+        "en-GB": "en-gb",
+        ja: "ja",
+        zh: "zh-tw",
+        es: "es",
+        "es-ES": "es",
+        ms: "ms",
+        id: "id",
+        ru: "ru",
+        fr: "fr",
+        pt: "pt-br",
+        de: "de",
+        it: "it",
+        ko: "ko",
+        tr: "tr",
+        vi: "vi",
+        hu: "hu",
+    };
+    if (!dayjsFile[lang]) {
+        dayjs.locale("en");
+        return null;
+    }
+    return import(/* webpackChunkName: "[request]" */ `dayjs/locale/${dayjsFile[lang]}`).then(() => {
+        dayjs.locale(dayjsFile[lang]);
+    });
+}
+
 export const i18n = new VueI18n({
     locale: "en", // Set locale
     fallbackLocale: "en",
@@ -124,8 +103,8 @@ export const i18n = new VueI18n({
 const loadedLanguages = ["en"];
 
 function setI18nLanguage(lang) {
-    dayjsLangs[lang]();
     i18n.locale = lang;
+    setDayjsLang(lang);
 }
 
 // Load language from webpack chunked files
