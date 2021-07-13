@@ -134,21 +134,28 @@ export function getEmptyCells({ layout, content }) {
 }
 
 export const desktopPresets = Object.freeze([
-    { layout: "AATY,TAFYchat", name: "Side Chat 1", emptyCells: 1 },
+    { layout: "AAVY,VADYchat0", name: "Side Chat 1", emptyCells: 1 },
     { layout: "AARM,AMRM,RAHYchat", name: "Side Chat 2" },
     { layout: "AAOM,AMOM,OAFYchat,TAFYchat", name: "2 Video, 2 Chat", emptyCells: 2 },
     { layout: "AAMY,MAMM,MMMM", name: "p1s2", emptyCells: 3 },
     { layout: "AAMM,AMMM,MAMM,MMGMchat,SMGMchat", name: "3 Video, 2 Chat" },
-    { layout: "AAMM,AMMM,MAMM,MMMM", name: "2 x 2", emptyCells: 4 },
-    { layout: "SAGYchat,AAJM,AMJM,JAJM,JMJM", name: "2 x 2 Chat" },
+    { layout: "AAMM,AMMM,MAMM,MMMM", name: "2 x 2" },
+    { layout: "AADMchat0,DAJM,MAJM,VADMchat0,DMJM,MMJM,AMDMchat0,VMDMchat0", name: "2x2 4 Chat", emptyCells: 4 },
+    { layout: "PAJM,AAJM,AMJM,PMJM,JADMchat0,JMDMchat0,MADMchat0,MMDMchat0", name: "2 chat 2" },
+    { layout: "SAGYchat,AAJM,AMJM,JAJM,JMJM", name: "2x2 1 Chat" },
+    { layout: "AAIM,AMIM,IAIM,QMIM,QAIM,MMEMchat0,IMEMchat0", name: "5 Video", emptyCells: 5 },
     { layout: "AAIM,AMIM,IAIM,IMIM,QAIM,QMIM", name: "2 x 3", emptyCells: 6 },
+    { layout: "AAQQ,AQII,IQII,QAII,QIII,QQII", name: "p1s5" },
+    { layout: "AAJM,AMJM,JAJM,JMJM,SAGI,SIGI,SQGI", name: "7 Videos", emptyCells: 7 },
     { layout: "AAII,AIII,AQII,IAII,IIII,IQII,QAII,QIII,QQII", name: "3 x 3", emptyCells: 9 },
     {
         layout: "AAGI,GAGI,MAGI,AIGI,GIGI,MIGI,AQGI,GQGI,MQGI,SAGYchat",
-        name: "3 x 3 Chat",
+        name: "3x3 1 Chat",
     },
-
-    { layout: "AAQQ,AQII,IQII,QAII,QIII,QQII", name: "p1s5", emptyCells: 6 },
+    {
+        layout: "AAHI,AQHI,AIHI,HAHI,HIHI,HQHI,OAHI,OIHI,OQHI,VIDIchat0,VADIchat0,VQDIchat0",
+        name: "3x3 3 Chat",
+    },
     { layout: "AAML,MAML,ALGH,GLGH,MLGH,SLGH,ASGG,GSGG,MSGG,SSGG", name: "Among Us 1", emptyCells: 10 },
     { layout: "AAKL,KAKL,UAEYchat,ALFH,FLFH,KLFH,PLFH,ASFG,FSFG,KSFG,PSFG", name: "Among Us 2" },
     { layout: "AASR,SAGYchat,ARGH,GRGH,MRGH", name: "Sports Fes 1" },
