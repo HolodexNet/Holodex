@@ -33,16 +33,19 @@ export function formatDuration(secs) {
     return `${negate ? "-" : ""}${timestamp}`;
 }
 
+// eslint-disable-next-line no-unused-vars
 export function localizedDayjs(time, lang) {
-    // eslint-disable-next-line no-param-reassign
-    if (lang === "zh") lang = "zh-tw";
-    // eslint-disable-next-line no-param-reassign
-    if (lang === "pt") lang = "pt-br";
-    // eslint-disable-next-line no-param-reassign
-    if (lang === "es-ES") lang = "es";
-    return dayjs(time).locale(lang);
+    // const dayjsName = {
+    //     "en-CA": "en-ca",
+    //     "en-GB": "en-gb",
+    //     zh: "zh-tw",
+    //     "es-ES": "es",
+    //     "pt": "pt-br",
+    // }
+    // // eslint-disable-next-line no-param-reassign
+    // lang = dayjsName[lang] || lang;
+    return dayjs(time);
 }
-
 export function formatDistance(time, lang = "en", $t, allowNegative = true) {
     let diff;
     if (!time) return "?";
