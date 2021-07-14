@@ -18,18 +18,15 @@
                 <v-btn icon fab @click="playPause" color="primary">
                     <v-icon x-large>{{ playButtonIcon }}</v-icon>
                 </v-btn>
-                <v-btn
-                    icon
-                    class="mx-1"
-                    color="secondary"
-                    @click="
-                        () => {
-                            titleTransition = 'scroll-y-reverse-transition';
-                            $store.commit('music/nextSong', true);
-                        }
-                    "
-                >
-                    <v-icon>{{ mdiSkipNext }}</v-icon>
+                <v-btn icon class="mx-1" color="secondary" @click="nextButtonHandler">
+                    <v-progress-circular
+                        color="warning"
+                        :class="{ invisible: !showPatience }"
+                        :value="patience"
+                        size="40"
+                    >
+                        <v-icon color="secondary">{{ mdiSkipNext }}</v-icon>
+                    </v-progress-circular>
                 </v-btn>
                 <v-btn icon color="secondary" class="mx-1" @click="$store.commit('music/cycleMode')">
                     <v-icon>{{ shuffleButtonIcon }}</v-icon>
@@ -160,6 +157,8 @@
             @paused="songIsPaused"
             @ended="songIsDone"
             @progress="songProgress"
+            @error="songError"
+            @ready="songReady"
         ></song-frame>
     </v-bottom-sheet>
 </template>
@@ -210,6 +209,10 @@
         animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
         background-color: #f06292 !important;
     }
+}
+
+.invisible .v-progress-circular__underlay {
+    stroke: transparent;
 }
 
 .music-more-btn {
@@ -306,6 +309,9 @@ export default {
 
             progress: 0,
             player: null,
+
+            patience: 0,
+            showPatience: false,
 
             queueMenuOpen: false,
 
@@ -427,6 +433,16 @@ export default {
         songProgress(time) {
             if (!this.currentSong) this.progress = 0;
 
+            if (time === 0 && this.showPatience) {
+                this.patience -= 33;
+                if (this.patience <= 0) {
+                    this.$store.commit("music/nextSong");
+                    this.showPatience = false;
+                    this.patience = 0;
+                }
+                return;
+            }
+
             const { start, end } = this.currentSong;
             this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
             if (time > end + 1) {
@@ -434,6 +450,25 @@ export default {
             } else if (time < start - 10) {
                 this.player.seekTo(start);
             }
+        },
+        songError() {
+            // as far as i know nothing triggers this event even if it's privated.
+            this.$store.commit("music/nextSong");
+        },
+        songReady(evt) {
+            if (evt.target) {
+                this.player = evt.target;
+            }
+            const self = this;
+            setTimeout(() => {
+                const unstarted = evt.target.getPlayerState() === -1;
+                const data = evt.target.getVideoData();
+                if (unstarted && (!data || data.title === "")) {
+                    // autoAdvance = true
+                    self.showPatience = true;
+                    self.patience = 100;
+                }
+            }, 1000);
         },
         playPause() {
             // if(this.state === MUSIC_PLAYER_STATE.PLAYING) this.$store.commit("music/pause");
@@ -473,6 +508,10 @@ export default {
             }
             this.titleTransition = "scroll-y-transition";
             this.$store.commit("music/prevSong");
+        },
+        nextButtonHandler() {
+            this.titleTransition = "scroll-y-reverse-transition";
+            this.$store.commit("music/nextSong", true);
         },
         probableMouseClickInIFrame() {
             this.allowPlayOverride = Date.now();

@@ -2,7 +2,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import createMutationsSharer from "vuex-shared-mutations";
+import createMutationsSharer, { BroadcastChannelStrategy } from "vuex-shared-mutations";
 import createMigrate from "vuex-persistedstate-migrate";
 import jwtDecode from "jwt-decode";
 import { ORGS_PREFIX } from "@/utils/consts";
@@ -32,6 +32,8 @@ Vue.use(Vuex);
  *               Initial State
  *---------------------------------------------* */
 
+const VUEX_STATE_VERSION = 7;
+
 function defaultState() {
     return {
         // other
@@ -60,7 +62,7 @@ function defaultState() {
         ],
 
         // Migration: prevent migrating initial state.
-        migration: { version: 7 },
+        migration: { version: VUEX_STATE_VERSION },
 
         // Socket counter, if it is zero, then close the shared WebSocket
         activeSockets: 0,
@@ -227,6 +229,7 @@ export default new Vuex.Store({
                 // console.info(mutation);
                 return mutation.type.match(syncedModules) || mutation.type.match(syncedMutations); // channel & channels
             },
+            strategy: new BroadcastChannelStrategy({ key: `HLDXv${VUEX_STATE_VERSION}` }),
         }), // Share all mutations except historyPop/Push across tabs.
     ],
     state: defaultState(),
