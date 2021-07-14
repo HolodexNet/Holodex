@@ -77,7 +77,7 @@
             >
                 <cell
                     :cellWidth="columnWidth * item.w"
-                    :ref="`cell-${item.i}`"
+                    :ref="`cell`"
                     :item="item"
                     @showSelector="(id) => (showSelectorForId = id)"
                     @delete="handleDelete"
@@ -126,6 +126,47 @@
                         {{ $t("views.library.deleteConfirmationCancel") }}
                     </v-btn>
                 </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="showVideoControls" width="400">
+            <v-card>
+                <v-card-title> Video Controls </v-card-title>
+                <v-card-text class="d-flex flex-column justify-center align-center">
+                    <v-list max-width="100%" v-if="$refs['cell']">
+                        <v-list-item
+                            v-for="(cellState, index) in $refs['cell'].filter((c) => c.video)"
+                            :key="index"
+                            two-line
+                            style="border-bottom: 1px gray solid"
+                        >
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                    {{ cellState.video.title }}
+                                </v-list-item-title>
+
+                                <v-list-item-action class="flex-row justify-start ma-0 mt-1">
+                                    <v-btn icon @click="cellState.setPlaying(!cellState.pausedMode)">
+                                        <v-icon color="grey lighten-1">
+                                            {{ cellState.pausedMode ? icons.mdiPlay : icons.mdiMenu }}
+                                        </v-icon>
+                                    </v-btn>
+                                    <v-btn icon @click="cellState.refresh()">
+                                        <v-icon color="grey lighten-1">{{ icons.mdiRefresh }}</v-icon>
+                                    </v-btn>
+                                    <v-btn icon @click="handleDelete(findKeyByVideoId(cellState.cellContent.id))">
+                                        <v-icon color="grey lighten-1">{{ icons.mdiDelete }}</v-icon>
+                                    </v-btn>
+                                    <v-btn icon @click="cellState.setMuted(!cellState.muted)">
+                                        <v-icon color="grey lighten-1">
+                                            {{ cellState.muted ? icons.mdiVolumeHigh : icons.mdiVolumeMute }}
+                                        </v-icon>
+                                    </v-btn>
+                                </v-list-item-action>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-list>
+                </v-card-text>
             </v-card>
         </v-dialog>
     </div>
@@ -183,8 +224,9 @@ export default {
 
             showPresetSelector: false,
             showPresetEditor: false,
-            showVideoControls: false,
+            showVideoControls: true,
             layoutPreview: {},
+            isMounted: false,
         };
     },
     async mounted() {
@@ -215,6 +257,8 @@ export default {
                 console.log("invalid layout");
             }
         }
+
+        this.isMounted = true;
     },
     created() {
         Vue.use(VueYouTubeEmbed);
@@ -256,8 +300,8 @@ export default {
                     icon: this.icons.mdiVolumeMute,
                     tooltip: this.$t("views.multiview.muteAll"),
                     onClick: () => {
-                        this.setMuteAll(true);
-                        // this.showVideoControls = !this.showVideoControls;
+                        // this.setMuteAll(true);
+                        this.showVideoControls = !this.showVideoControls;
                     },
                     collapse: true,
                 },
@@ -327,6 +371,7 @@ export default {
         setMuteAll(val) {
             Object.keys(this.layoutContent).forEach((key) => {
                 const content = this.layoutContent[key];
+                console.log(this.$refs[`cell-${key}`][0]);
                 if (content.type === "video") {
                     this.$refs[`cell-${key}`][0].setMuted(val);
                 }
@@ -567,6 +612,9 @@ export default {
             } else if (document.exitFullscreen) {
                 document.exitFullscreen();
             }
+        },
+        findKeyByVideoId(id) {
+            return Object.keys(this.layoutContent).find((k) => this.layoutContent[k].id === id);
         },
     },
 };

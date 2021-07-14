@@ -286,6 +286,14 @@ export default {
         },
     },
     methods: {
+        refresh() {
+            this.uniqueId = Date.now();
+        },
+        setPlaying(val) {
+            this.pausedMode = val;
+            if (this.pausedMode) this.ytPlayer.pauseVideo();
+            else this.ytPlayer.playVideo();
+        },
         setMuted(val) {
             this.muted = val;
         },
@@ -312,7 +320,6 @@ export default {
             if (evt) {
                 this.ytPlayer = evt.target;
                 this.playerControls = evt.target;
-                // console.log("reacehed");
             } else if (this.isTwitchVideo) {
                 this.playerControls = this.$refs.twitchPlayer;
             }
