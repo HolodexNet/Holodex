@@ -191,18 +191,17 @@
 import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
-import VideoSelector from "@/components/multiview/VideoSelector.vue";
-import { mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause } from "@mdi/js";
-import { mdiDelete } from "@/utils/icons";
-import { Content, decodeLayout } from "@/utils/mv-utils";
+import Cell from "@/components/multiview/Cell.vue";
 import PresetEditor from "@/components/multiview/PresetEditor.vue";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
 import MultiviewToolbar from "@/components/multiview/MultiviewToolbar.vue";
-import Cell from "@/components/multiview/Cell.vue";
-import { mapState, mapGetters } from "vuex";
-import api from "@/utils/backend-api";
 import MultiviewLayoutMixin from "@/components/multiview/MultiviewLayoutMixin";
 import LayoutChangePrompt from "@/components/multiview/LayoutChangePrompt.vue";
+import VideoSelector from "@/components/multiview/VideoSelector.vue";
+import { mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause } from "@mdi/js";
+import { Content, decodeLayout } from "@/utils/mv-utils";
+import { mapState, mapGetters } from "vuex";
+import api from "@/utils/backend-api";
 
 export default {
     name: "MultiView",
@@ -276,14 +275,6 @@ export default {
                 console.log("invalid layout");
             }
         }
-
-        const outdatedSave = Object.keys(this.layoutContent).some((key) => {
-            return this.layoutContent[key].content;
-        });
-        if (outdatedSave) {
-            console.log("outdated save");
-            this.clearAllItems();
-        }
     },
     created() {
         Vue.use(VueYouTubeEmbed);
@@ -298,7 +289,7 @@ export default {
                     color: "green",
                 },
                 {
-                    icon: mdiDelete,
+                    icon: this.icons.mdiDelete,
                     tooltip: this.$t("component.music.clearPlaylist"),
                     onClick: this.clearAllItems,
                     color: "red",
