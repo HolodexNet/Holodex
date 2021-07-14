@@ -60,7 +60,7 @@ function defaultState() {
         ],
 
         // Migration: prevent migrating initial state.
-        migration: { version: 7 },
+        migration: { version: 8 },
 
         // Socket counter, if it is zero, then close the shared WebSocket
         activeSockets: 0,
@@ -191,6 +191,24 @@ const migrations = [
                         { name: "Nijisanji", short: "Niji" },
                         { name: "Independents", short: "Indie" },
                     ],
+                };
+            }
+            return state;
+        },
+    },
+    {
+        version: 8,
+        up: (state) => {
+            const { layoutContent, presetLayout } = state.multiview;
+            const outdatedSave = Object.keys(layoutContent).some((key) => {
+                return layoutContent[key].content;
+            });
+            if (outdatedSave) {
+                return {
+                    ...state,
+                    multiview: {
+                        presetLayout,
+                    },
                 };
             }
             return state;

@@ -73,7 +73,6 @@
                         @pause="vidPlaying({ data: 2 })"
                         @error="pausedMode = true"
                         :mute="muted"
-                        ref="twitchPlayer"
                     >
                     </VueTwitchPlayer>
                     <!-- Youtube Player -->
@@ -108,7 +107,7 @@
                 <!-- VIDEO + PAUSED --->
                 <CellControl
                     :playIcon="icons.mdiPlay"
-                    @playpause="ytPlayer.playVideo()"
+                    @playpause="setPlaying(true)"
                     @reset="uniqueId = Date.now()"
                     @back="resetCell"
                     @delete="deleteCell"
@@ -195,6 +194,7 @@ export default {
             pausedMode: true,
             uniqueId: Date.now(),
             ytPlayer: null,
+            twPlayer: null,
             toggleTL: false,
             toggleChat: true,
             chatScale: 1,
@@ -262,19 +262,6 @@ export default {
                 this.$store.commit("multiview/setLayoutContentWithKey", { id: this.item.i, key: "muted", value });
             },
         },
-        playerControls: {
-            get() {
-                if (!this.cellContent) return null;
-                return this.cellContent.player;
-            },
-            set(value) {
-                this.$store.commit("multiview/setLayoutContentWithKey", {
-                    id: this.item.i,
-                    key: "playerControls",
-                    value,
-                });
-            },
-        },
         video: {
             get() {
                 if (!this.cellContent) return null;
@@ -291,8 +278,12 @@ export default {
         },
         setPlaying(val) {
             this.pausedMode = !val;
-            if (this.pausedMode) this.ytPlayer.pauseVideo();
-            else this.ytPlayer.playVideo();
+            if (this.ytPlayer) {
+                this.pausedMode ? this.ytPlayer.pauseVideo() : this.ytPlayer.playVideo();
+            }
+            if (this.twPlayer) {
+                this.pausedMode ? this.twPlayer.pause() : this.twPlayer.play();
+            }
         },
         setMuted(val) {
             this.muted = val;
@@ -317,11 +308,10 @@ export default {
             }
         },
         vidReady(evt) {
-            if (evt) {
+            if (evt && this.isTwitchVideo) {
+                this.twPlayer = evt;
+            } else if (evt) {
                 this.ytPlayer = evt.target;
-                this.playerControls = evt.target;
-            } else if (this.isTwitchVideo) {
-                this.playerControls = this.$refs.twitchPlayer;
             }
         },
         resetCell() {

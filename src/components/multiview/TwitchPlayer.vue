@@ -1,5 +1,5 @@
 <template>
-    <div ref="player"></div>
+    <div :id="elementId"></div>
 </template>
 
 <script>
@@ -12,6 +12,8 @@ import LoadScript from "vue-plugin-load-script";
 
 Vue.use(LoadScript);
 let player;
+let pid = 0;
+
 export default {
     name: "twitch-player",
     props: {
@@ -44,6 +46,12 @@ export default {
         collection: String,
         video: String,
     },
+    data() {
+        pid += 1;
+        return {
+            elementId: `twitch-player-${pid}`,
+        };
+    },
     beforeCreate() {
         Vue.loadScript("https://player.twitch.tv/js/embed/v1.js")
             .then(() => {
@@ -63,7 +71,7 @@ export default {
                 } else {
                     this.$emit("error", "no source specified");
                 }
-                player = new window.Twitch.Player(this.$refs.player, options);
+                player = new window.Twitch.Player(this.elementId, options);
                 player.addEventListener("ended", () => this.$emit("ended"));
                 player.addEventListener("pause", () => this.$emit("pause"));
                 player.addEventListener("play", () => this.$emit("play"));
@@ -72,7 +80,7 @@ export default {
                 player.addEventListener("ready", () => {
                     player.setQuality(this.quality);
                     player.setVolume(this.volume);
-                    this.$emit("ready");
+                    this.$emit("ready", player);
                 });
             })
             .catch((e) => this.$emit("error", e));
