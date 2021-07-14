@@ -85,9 +85,8 @@ export function decodeLayout(encodedStr) {
             };
         } else if (isTwitch) {
             const twitchChannel = str.substring(10);
-            parsedContent[twitchChannel] = {
+            parsedContent[index] = {
                 type: "video",
-                // content: {
                 id: twitchChannel,
                 isTwitch: true,
                 video: {
@@ -97,13 +96,10 @@ export function decodeLayout(encodedStr) {
                         name: twitchChannel,
                     },
                 },
-                // },
             };
-            layoutItem.i = twitchChannel;
         } else if (idOrChat.length === 11) {
-            parsedContent[idOrChat] = {
+            parsedContent[index] = {
                 type: "video",
-                // content: {
                 id: idOrChat,
                 video: {
                     id: idOrChat,
@@ -111,9 +107,7 @@ export function decodeLayout(encodedStr) {
                         name: channelName,
                     },
                 },
-                // },
             };
-            layoutItem.i = idOrChat;
         }
         parsedLayout.push(layoutItem);
     });
