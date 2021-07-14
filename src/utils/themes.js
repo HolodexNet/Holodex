@@ -184,12 +184,12 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#d91a5d",
-                secondary: "#2196F3",
+                primary: "#98395c",
+                secondary: "#d91a5d",
             },
             light: {
                 background: "#f2f2f2",
-                secondary: "#5AA3DB ",
+                secondary: "#58294c ",
                 primary: "#d91a5d",
             },
         },
@@ -200,12 +200,12 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#ff00a0",
+                primary: "#ff79fa",
                 secondary: "#c90d40",
             },
             light: {
                 background: "#f3efef",
-                secondary: "#ff00a0",
+                secondary: "#ff79fa",
                 primary: "#c90d40",
             },
         },
@@ -312,13 +312,13 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#cda4d5",
-                secondary: "#4a477c",
+                primary: "#4a477c",
+                secondary: "#cda4d5",
             },
             light: {
                 background: "#f2f2f2",
-                primary: "#cda4d5",
-                secondary: "#4a477c",
+                primary: "#4a477c",
+                secondary: "#cda4d5",
             },
         },
     },
