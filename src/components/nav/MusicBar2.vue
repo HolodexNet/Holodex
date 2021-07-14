@@ -147,11 +147,11 @@
                 </v-btn>
             </div>
         </div>
+        <!--             :key="currentSong.video_id + playId" -->
         <song-frame
             :videoId="currentSong.video_id"
             :start="currentSong.start"
             :end="currentSong.end"
-            :key="currentSong.video_id + playId"
             style="width: 250px; width: 356px"
             @playing="songIsPlaying"
             @paused="songIsPaused"
@@ -437,6 +437,7 @@ export default {
                 this.patience -= 33;
                 if (this.patience <= 0) {
                     this.$store.commit("music/nextSong");
+                    this.$store.commit("music/play");
                     this.showPatience = false;
                     this.patience = 0;
                 }
@@ -452,8 +453,15 @@ export default {
             }
         },
         songError() {
-            // as far as i know nothing triggers this event even if it's privated.
-            this.$store.commit("music/nextSong");
+            // if you try to play into a not-available song it'll error.
+            if (document.visibilityState === "hidden") {
+                // when document is hidden
+                this.$store.commit("music/nextSong");
+                this.$store.commit("music/play");
+                return;
+            }
+            this.showPatience = true;
+            this.patience = 120;
         },
         songReady(evt) {
             if (evt.target) {
@@ -464,9 +472,15 @@ export default {
                 const unstarted = evt.target.getPlayerState() === -1;
                 const data = evt.target.getVideoData();
                 if (unstarted && (!data || data.title === "")) {
+                    if (document.visibilityState === "hidden") {
+                        // when document is hidden
+                        this.$store.commit("music/nextSong");
+                        this.$store.commit("music/play");
+                        return;
+                    }
                     // autoAdvance = true
                     self.showPatience = true;
-                    self.patience = 100;
+                    self.patience = 120;
                 }
             }, 1000);
         },

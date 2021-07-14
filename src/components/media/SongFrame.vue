@@ -2,8 +2,8 @@
     <!-- Purpose of Component: to contain a youtube video, load it and handle several actions -->
     <div class="song-player-container">
         <div class="song-player">
+            <!--                 :key="'ytplayer' + videoId" -->
             <youtube
-                :key="'ytplayer' + videoId"
                 v-if="videoId"
                 :video-id="videoId"
                 v-on="$listeners"
