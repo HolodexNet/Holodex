@@ -290,6 +290,15 @@ const ICON_MODE = {
     [MUSIC_PLAYBACK_MODE.LOOPONE]: mdiRepeatOnce,
     [MUSIC_PLAYBACK_MODE.SHUFFLE]: mdiShuffleVariant,
 };
+
+/** ==============================================
+ * - set the videoId to a new ID to play a song.
+ * - when it's DONE, advance to the next song.
+ * - wait for it to load the next song
+ * - after it loads, it PLAYS, which enables progress monitoring.
+ * -
+ *
+ *=============================================* */
 export default {
     name: "MusicBar2",
     components: { SongFrame, SongPlaylist, ResponsiveMenu },
@@ -394,14 +403,23 @@ export default {
             },
         },
         ...mapState("settings", ["nameProperty"]),
-        ...mapState("music", ["currentId", "playId", "playlist", "state", "mode", "addedAnimation", "isOpen"]),
+        ...mapState("music", [
+            "currentId",
+            "playId",
+            "playlist",
+            "state",
+            "mode",
+            "addedAnimation",
+            "isOpen",
+            "lastNextSong",
+        ]),
         ...mapGetters("music", ["currentSong", "canPlay"]),
     },
     methods: {
         // event handlers:
         // eslint-disable-next-line no-unused-vars
         songIsDone() {
-            console.log("DONE");
+            console.log("DONE", this.player, this.currentSong.video_id);
             this.$store.commit("music/nextSong", true);
         },
         songIsPlaying(player) {
@@ -453,7 +471,9 @@ export default {
             const { start, end } = this.currentSong;
             this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
             if (time > end + 1) {
-                this.$store.commit("music/nextSong", true);
+                if (Date.now() - this.lastNextSong > 3000) {
+                    this.$store.commit("music/nextSong", true);
+                }
             } else if (time < start - 10) {
                 this.player.seekTo(start);
             }
