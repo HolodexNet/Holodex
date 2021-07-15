@@ -117,7 +117,7 @@
             <v-card max-height="75vh" class="overflow-y-auto">
                 <v-card-title> {{ $t("views.multiview.mediaControls") }} </v-card-title>
                 <v-card-text class="d-flex flex-column justify-center align-center">
-                    <v-list max-width="100%" v-if="$refs['cell']">
+                    <v-list max-width="100%" v-if="$refs['cell'] && $refs['cell'].filter((c) => c.video).length">
                         <v-list-item two-line style="border-bottom: 1px gray solid">
                             <v-list-item-content>
                                 <v-list-item-title class="primary--text d-flex justify-center">
@@ -189,7 +189,9 @@
                             </v-list-item-content>
                         </v-list-item>
                     </v-list>
-                    <v-list-item v-else> </v-list-item>
+                    <v-list-item v-else>
+                        {{ $t("views.multiview.autoLayoutTip") }}
+                    </v-list-item>
                 </v-card-text>
             </v-card>
         </v-dialog>
