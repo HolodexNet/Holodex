@@ -353,6 +353,8 @@ views:
       selectLive: Select Live
       addCustomVideo: Add Custom Video
     fullScreen: Fullscreen
+    mediaControls: Media Controls
+    allVideos: All Videos
   mugen:
     welcome: >-
       Welcome to MugenClips! Everyone on this page is seeing the same randomly

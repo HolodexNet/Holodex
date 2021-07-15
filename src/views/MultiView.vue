@@ -113,16 +113,19 @@
             :layoutPreview="overwriteLayoutPreview"
         />
 
-        <v-dialog v-model="showVideoControls" width="400">
-            <v-card>
-                <v-card-title> Video Controls </v-card-title>
+        <v-dialog v-model="showMediaControls" max-width="400">
+            <v-card max-height="75vh" class="overflow-y-auto">
+                <v-card-title> {{ $t("views.multiview.mediaControls") }} </v-card-title>
                 <v-card-text class="d-flex flex-column justify-center align-center">
                     <v-list max-width="100%" v-if="$refs['cell']">
                         <v-list-item two-line style="border-bottom: 1px gray solid">
                             <v-list-item-content>
-                                <v-list-item-title>All</v-list-item-title>
+                                <v-list-item-title class="primary--text d-flex justify-center">
+                                    <v-icon>{{ icons.mdiAnimationPlay }}</v-icon>
+                                    {{ $t("views.multiview.allVideos") }}
+                                </v-list-item-title>
 
-                                <v-list-item-action class="flex-row justify-start ma-0 mt-1">
+                                <v-list-item-action class="flex-row justify-center ma-0 mt-1">
                                     <v-btn icon @click="allCellAction('play')">
                                         <v-icon color="grey lighten-1">
                                             {{ icons.mdiPlay }}
@@ -155,11 +158,16 @@
                             two-line
                             style="border-bottom: 1px gray solid"
                         >
+                            <v-list-item-avatar v-if="cellState.video.channel.photo" class="ma-0 mr-1">
+                                <v-img :src="cellState.video.channel.photo" />
+                            </v-list-item-avatar>
                             <v-list-item-content>
                                 <v-list-item-title>
                                     {{ cellState.video.title || cellState.video.channel.name }}
                                 </v-list-item-title>
-
+                                <!-- <v-list-item-subtitle>
+                                    {{ cellState.video.channel.english_name || cellState.video.channel.name  }}
+                                </v-list-item-subtitle> -->
                                 <v-list-item-action class="flex-row justify-start ma-0 mt-1">
                                     <v-btn icon @click="cellState.setPlaying(cellState.pausedMode)">
                                         <v-icon color="grey lighten-1">
@@ -244,7 +252,7 @@ export default {
 
             showPresetSelector: false,
             showPresetEditor: false,
-            showVideoControls: false,
+            showMediaControls: false,
         };
     },
     async mounted() {
@@ -264,11 +272,16 @@ export default {
                     });
                     if (data.length) {
                         data.forEach((video) => {
-                            if (parsed.content[video.id]) parsed.content[video.id].video = video;
+                            const matchingKey = Object.keys(parsed.content).find((key) => {
+                                return parsed.content[key].id === video.id;
+                            });
+                            if (matchingKey) {
+                                parsed.content[matchingKey].video = video;
+                            } else {
+                                parsed.content[matchingKey].custom = true;
+                            }
                         });
                     }
-                    // TODO: if id doesn't exist, flag it as custom
-
                     // prompt overwrite with permalink, remove permalink if cancelled
                     this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
                 }
@@ -304,6 +317,7 @@ export default {
                         this.showPresetSelector = true;
                     },
                     color: "primary",
+                    collapse: true,
                 },
                 {
                     icon: mdiContentSave,
@@ -316,12 +330,11 @@ export default {
                 },
                 {
                     icon: mdiTuneVertical,
-                    tooltip: "Media Controls",
+                    tooltip: this.$t("views.multiview.mediaControls"),
                     onClick: () => {
                         // this.setMuteAll(true);
-                        this.showVideoControls = !this.showVideoControls;
+                        this.showMediaControls = !this.showMediaControls;
                     },
-                    collapse: true,
                 },
                 {
                     icon: this.icons.mdiFullscreen,
