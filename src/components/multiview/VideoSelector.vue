@@ -227,7 +227,7 @@ export default {
         },
         homeUpdateTick() {
             const { name } = this.selectedOrg;
-            if (name !== "Favorites" && name !== "Playlist" && !this.selectedOrg.inputType)
+            if (name !== "Favorites" || name !== "Playlist" || !this.selectedOrg.inputType)
                 this.live = this.$store.state.home.live;
         },
         savedVideosList() {
@@ -237,7 +237,6 @@ export default {
         "$store.state.visibilityState": function () {
             if (this.$store.state.visibilityState === "visible") {
                 this.$store.dispatch("home/fetchLive", { force: false });
-                console.log(" visible ");
             }
         },
     },
@@ -260,7 +259,7 @@ export default {
                         return (
                             l.status === "live" ||
                             dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
-                            (count < 5 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
+                            (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                         );
                     })
                     .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
@@ -275,7 +274,7 @@ export default {
                     return (
                         l.status === "live" ||
                         dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
-                        (count < 5 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
+                        (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                     );
                 });
             }
@@ -291,12 +290,7 @@ export default {
         setAutoRefresh() {
             if (this.refreshTimer) clearInterval(this.refreshTimer);
             this.refreshTimer = setInterval(() => {
-                console.log(this.homeUpdateTick, Date.now() - this.homeUpdateTick > 1 * 60 * 1000);
-                this.isLoading = true;
-                this.$store.dispatch("home/fetchLive", { force: false }).finally(() => {
-                    this.isLoading = false;
-                    this.live = this.$store.state.home.live;
-                });
+                this.loadSelection();
             }, 2 * 60 * 1000);
         },
         // Returns a short hand form of time (ie. 33m, 2h)
@@ -337,7 +331,7 @@ export default {
             if (this.selectedOrg.name === "Favorites") {
                 this.live = [];
                 this.isLoading = true;
-                this.$store.dispatch("favorites/fetchLive", { minutes: 2, force: true }).finally(() => {
+                this.$store.dispatch("favorites/fetchLive", { minutes: 2, force }).finally(() => {
                     if (this.selectedOrg.name === "Favorites") {
                         this.isLoading = false;
                         this.live = this.$store.state.favorites.live;
@@ -365,7 +359,7 @@ export default {
         handlePicker(panel) {
             // console.log(panel);
             this.selectedOrg = panel;
-            this.loadSelection();
+            this.loadSelection(true);
         },
     },
 };

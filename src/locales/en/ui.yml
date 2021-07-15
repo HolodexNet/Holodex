@@ -354,7 +354,7 @@ views:
       addCustomVideo: Add Custom Video
     fullScreen: Fullscreen
     mediaControls: Media Controls
-    allVideos: All Videos
+    mediaControlsEmpty: Videos being played will appear here
   mugen:
     welcome: >-
       Welcome to MugenClips! Everyone on this page is seeing the same randomly

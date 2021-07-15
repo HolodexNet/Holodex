@@ -117,81 +117,78 @@
             <v-card max-height="75vh" class="overflow-y-auto">
                 <v-card-title> {{ $t("views.multiview.mediaControls") }} </v-card-title>
                 <v-card-text class="d-flex flex-column justify-center align-center">
-                    <v-list max-width="100%" v-if="$refs['cell'] && $refs['cell'].filter((c) => c.video).length">
-                        <v-list-item two-line style="border-bottom: 1px gray solid">
+                    <v-list max-width="100%">
+                        <v-list-item single-line style="border-bottom: 1px gray solid">
                             <v-list-item-content>
-                                <v-list-item-title class="primary--text d-flex justify-center">
-                                    <v-icon>{{ icons.mdiAnimationPlay }}</v-icon>
-                                    {{ $t("views.multiview.allVideos") }}
-                                </v-list-item-title>
-
                                 <v-list-item-action class="flex-row justify-center ma-0 mt-1">
                                     <v-btn icon @click="allCellAction('play')">
-                                        <v-icon color="grey lighten-1">
+                                        <v-icon color="secondary lighten-1">
                                             {{ icons.mdiPlay }}
                                         </v-icon>
                                     </v-btn>
                                     <v-btn icon @click="allCellAction('pause')">
-                                        <v-icon color="grey lighten-1">
+                                        <v-icon color="secondary lighten-1">
                                             {{ mdiPause }}
                                         </v-icon>
                                     </v-btn>
                                     <v-btn icon @click="allCellAction('refresh')">
-                                        <v-icon color="grey lighten-1">{{ icons.mdiRefresh }}</v-icon>
+                                        <v-icon color="secondary lighten-1">{{ icons.mdiRefresh }}</v-icon>
                                     </v-btn>
                                     <v-btn icon @click="allCellAction('unmute')">
-                                        <v-icon color="grey lighten-1">
+                                        <v-icon color="secondary lighten-1">
                                             {{ icons.mdiVolumeHigh }}
                                         </v-icon>
                                     </v-btn>
                                     <v-btn icon @click="allCellAction('mute')">
-                                        <v-icon color="grey lighten-1">
+                                        <v-icon color="secondary lighten-1">
                                             {{ icons.mdiVolumeMute }}
                                         </v-icon>
                                     </v-btn>
                                 </v-list-item-action>
                             </v-list-item-content>
                         </v-list-item>
-                        <v-list-item
-                            v-for="(cellState, index) in $refs['cell'].filter((c) => c.video)"
-                            :key="index"
-                            two-line
-                            style="border-bottom: 1px gray solid"
-                        >
-                            <v-list-item-avatar v-if="cellState.video.channel.photo" class="ma-0 mr-1">
-                                <v-img :src="cellState.video.channel.photo" />
-                            </v-list-item-avatar>
-                            <v-list-item-content>
-                                <v-list-item-title>
-                                    {{ cellState.video.title || cellState.video.channel.name }}
-                                </v-list-item-title>
-                                <!-- <v-list-item-subtitle>
-                                    {{ cellState.video.channel.english_name || cellState.video.channel.name  }}
-                                </v-list-item-subtitle> -->
-                                <v-list-item-action class="flex-row justify-start ma-0 mt-1">
-                                    <v-btn icon @click="cellState.setPlaying(cellState.pausedMode)">
-                                        <v-icon color="grey lighten-1">
-                                            {{ cellState.pausedMode ? icons.mdiPlay : mdiPause }}
-                                        </v-icon>
-                                    </v-btn>
-                                    <v-btn icon @click="cellState.refresh()">
-                                        <v-icon color="grey lighten-1">{{ icons.mdiRefresh }}</v-icon>
-                                    </v-btn>
-                                    <v-btn icon @click="handleDelete(findKeyByVideoId(cellState.cellContent.id))">
-                                        <v-icon color="grey lighten-1">{{ icons.mdiDelete }}</v-icon>
-                                    </v-btn>
-                                    <v-btn icon @click="cellState.setMuted(!cellState.muted)">
-                                        <v-icon color="grey lighten-1">
-                                            {{ cellState.muted ? icons.mdiVolumeMute : icons.mdiVolumeHigh }}
-                                        </v-icon>
-                                    </v-btn>
-                                </v-list-item-action>
-                            </v-list-item-content>
+                        <template v-if="$refs['cell'] && $refs['cell'].filter((c) => c.video).length">
+                            <v-list-item
+                                v-for="(cellState, index) in $refs['cell'].filter((c) => c.video)"
+                                :key="index"
+                                two-line
+                                style="border-bottom: 1px gray solid"
+                            >
+                                <v-list-item-avatar v-if="cellState.video.channel.photo" class="ma-0 mr-1">
+                                    <v-img :src="cellState.video.channel.photo" />
+                                </v-list-item-avatar>
+                                <v-list-item-content>
+                                    <v-list-item-title class="primary--text">
+                                        {{ cellState.video.title || cellState.video.channel.name }}
+                                    </v-list-item-title>
+                                    <!-- <v-list-item-subtitle>
+                                        {{ cellState.video.channel.english_name || cellState.video.channel.name  }}
+                                    </v-list-item-subtitle> -->
+                                    <v-list-item-action class="flex-row justify-start ma-0 mt-1">
+                                        <v-btn icon @click="cellState.setPlaying(cellState.pausedMode)">
+                                            <v-icon color="grey lighten-1">
+                                                {{ cellState.pausedMode ? icons.mdiPlay : mdiPause }}
+                                            </v-icon>
+                                        </v-btn>
+                                        <v-btn icon @click="cellState.refresh()">
+                                            <v-icon color="grey lighten-1">{{ icons.mdiRefresh }}</v-icon>
+                                        </v-btn>
+                                        <v-btn icon @click="handleDelete(findKeyByVideoId(cellState.cellContent.id))">
+                                            <v-icon color="grey lighten-1">{{ icons.mdiDelete }}</v-icon>
+                                        </v-btn>
+                                        <v-btn icon @click="cellState.setMuted(!cellState.muted)">
+                                            <v-icon color="grey lighten-1">
+                                                {{ cellState.muted ? icons.mdiVolumeMute : icons.mdiVolumeHigh }}
+                                            </v-icon>
+                                        </v-btn>
+                                    </v-list-item-action>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </template>
+                        <v-list-item v-else class="pa-2">
+                            {{ $t("views.multiview.mediaControlsEmpty") }}
                         </v-list-item>
                     </v-list>
-                    <v-list-item v-else>
-                        {{ $t("views.multiview.autoLayoutTip") }}
-                    </v-list-item>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -469,7 +466,6 @@ export default {
         allCellAction(key) {
             if (!this.$refs.cell) return;
             const cells = this.$refs.cell.filter((c) => c.video);
-            console.log(cells);
             const fns = {
                 play: () => {
                     cells.forEach((c) => c.setPlaying(true));
