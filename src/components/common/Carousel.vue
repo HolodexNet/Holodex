@@ -80,7 +80,7 @@ export default {
     justify-content: center;
 
     &--overflow-container {
-        overflow: hidden;
+        overflow: scroll;
     }
 
     &--nav__left,
