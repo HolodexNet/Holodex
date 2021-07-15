@@ -89,8 +89,9 @@
 </template>
 
 <script lang="ts">
-import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
+import VueYoutube from "@/external/vue-youtube";
+
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import WatchInfo from "@/components/watch/WatchInfo.vue";
 import WatchFrame from "@/components/watch/WatchFrame.vue";
@@ -144,7 +145,7 @@ export default {
         };
     },
     created() {
-        Vue.use(VueYouTubeEmbed);
+        Vue.use(VueYoutube);
     },
     mounted() {
         // Load specific tab if defined in the tab param
@@ -168,7 +169,7 @@ export default {
             }
         },
         ready(event) {
-            this.player = event.target;
+            this.player = event;
             this.setTimer();
         },
         seekTo(time, playNow, updateStartTime) {

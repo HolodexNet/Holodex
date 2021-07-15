@@ -260,8 +260,10 @@
 
 <script lang="ts">
 import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
-import VueYouTubeEmbed from "vue-youtube-embed";
+
 import Vue from "vue";
+import VueYoutube from "@/external/vue-youtube";
+
 import { mapGetters, mapState } from "vuex";
 import backendApi from "@/utils/backend-api";
 import {
@@ -282,8 +284,6 @@ import SongFrame from "../media/SongFrame.vue";
 import SongPlaylist from "../media/SongPlaylist.vue";
 import ResponsiveMenu from "../common/ResponsiveMenu.vue";
 
-Vue.use(VueYouTubeEmbed);
-
 const ICON_MODE = {
     [MUSIC_PLAYBACK_MODE.NATURAL]: mdiRepeatOff,
     [MUSIC_PLAYBACK_MODE.LOOP]: mdiRepeat,
@@ -293,6 +293,9 @@ const ICON_MODE = {
 export default {
     name: "MusicBar2",
     components: { SongFrame, SongPlaylist, ResponsiveMenu },
+    created() {
+        Vue.use(VueYoutube);
+    },
     data() {
         return {
             // isOpen: true,
@@ -397,11 +400,11 @@ export default {
     methods: {
         // event handlers:
         // eslint-disable-next-line no-unused-vars
-        songIsDone(_player) {
+        songIsDone() {
             this.$store.commit("music/nextSong");
         },
         songIsPlaying(player) {
-            this.player = player.target;
+            this.player = player;
             /**-----------------------
              * *       INFO
              *  if: the bar is NOT OPEN
@@ -423,7 +426,7 @@ export default {
             });
         },
         // eslint-disable-next-line no-unused-vars
-        songIsPaused(_player) {
+        songIsPaused() {
             this.$store.commit("music/pause");
             this.$gtag.event("pause", {
                 event_category: "music",
@@ -464,13 +467,13 @@ export default {
             this.patience = 120;
         },
         songReady(evt) {
-            if (evt.target) {
-                this.player = evt.target;
+            if (evt) {
+                this.player = evt;
             }
             const self = this;
             setTimeout(() => {
-                const unstarted = evt.target.getPlayerState() === -1;
-                const data = evt.target.getVideoData();
+                const unstarted = evt.getPlayerState() === -1;
+                const data = evt.getVideoData();
                 if (unstarted && (!data || data.title === "")) {
                     if (document.visibilityState === "hidden") {
                         // when document is hidden

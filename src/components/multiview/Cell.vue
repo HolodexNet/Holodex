@@ -88,7 +88,6 @@
                         @paused="vidPlaying"
                         @cued="pausedMode = true"
                         @error="pausedMode = true"
-                        :mute="muted"
                     >
                     </youtube>
                 </div>
@@ -311,7 +310,12 @@ export default {
             if (evt && this.isTwitchVideo) {
                 this.twPlayer = evt;
             } else if (evt) {
-                this.ytPlayer = evt.target;
+                this.ytPlayer = evt;
+                if (this.muted) {
+                    this.ytPlayer.mute();
+                } else {
+                    this.ytPlayer.unMute();
+                }
             }
         },
         resetCell() {

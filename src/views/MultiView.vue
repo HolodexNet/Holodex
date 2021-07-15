@@ -188,8 +188,9 @@
 </template>
 
 <script lang="ts">
-import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
+import VueYoutube from "@/external/vue-youtube";
+
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
 import Cell from "@/components/multiview/Cell.vue";
 import PresetEditor from "@/components/multiview/PresetEditor.vue";
@@ -277,7 +278,7 @@ export default {
         }
     },
     created() {
-        Vue.use(VueYouTubeEmbed);
+        Vue.use(VueYoutube);
     },
     computed: {
         buttons() {

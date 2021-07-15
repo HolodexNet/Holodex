@@ -56,8 +56,9 @@ export default {
     },
     methods: {
         ready(evt) {
-            this.player = evt.target;
+            this.player = evt;
             this.setTimer();
+            console.log(evt);
         },
         setTimer() {
             if (this.timer) clearInterval(this.timer);
