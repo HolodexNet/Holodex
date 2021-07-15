@@ -100,6 +100,7 @@ const mutations = {
         // if (alwaysNew && mode === MUSIC_PLAYBACK_MODE.LOOPONE) mode = MUSIC_PLAYBACK_MODE.LOOP;
         console.log(Date.now() - state.lastNextSong);
         if (isMachine && Date.now() - state.lastNextSong < 800) {
+            console.log("ignored");
             return;
         }
         state.lastNextSong = Date.now();
