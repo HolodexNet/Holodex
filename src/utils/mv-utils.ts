@@ -32,11 +32,11 @@ export function encodeLayout({ layout, contents, includeVideo = false }) {
             if (invalid) return;
 
             if (contents[item.i]) {
-                const { id, type, isTwitch, video, currentTab } = contents[item.i];
+                const { id, type, video, currentTab } = contents[item.i];
                 if (type === "chat") {
                     encodedBlock += `chat${currentTab || 0}`;
                 } else if (type === "video" && includeVideo) {
-                    if (isTwitch) {
+                    if (video?.type === "twitch") {
                         encodedBlock += `twitch${id}`;
                     } else {
                         encodedBlock +=

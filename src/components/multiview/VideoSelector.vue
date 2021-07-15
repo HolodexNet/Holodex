@@ -88,7 +88,7 @@
         <org-panel-picker horizontal @changed="handlePicker"></org-panel-picker>
         <v-icon
             class="mr-2"
-            @click="loadSelection"
+            @click="loadSelection(true)"
             :class="{ 'refresh-spin': isLoading }"
             v-if="selectedOrg.name !== 'YouTubeURL' && selectedOrg.name !== 'TwitchURL'"
         >
@@ -203,18 +203,22 @@ export default {
 
             tick: Date.now(),
             ticker: null,
-
-            lastUpdate: Date.now(),
+            refreshTimer: null,
         };
     },
     mounted() {
         // Start timer to update live time stamps
+        this.setAutoRefresh();
         this.ticker = setInterval(() => {
             this.tick = Date.now();
         }, 60000);
     },
     beforeDestroy() {
         if (this.ticker) clearInterval(this.ticker);
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
     },
     watch: {
         // Watch lastLiveUpdate from favorites module, and fetch new state
@@ -228,6 +232,13 @@ export default {
         },
         savedVideosList() {
             if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;
+        },
+        // eslint-disable-next-line func-names
+        "$store.state.visibilityState": function () {
+            if (this.$store.state.visibilityState === "visible") {
+                this.$store.dispatch("home/fetchLive", { force: false });
+                console.log(" visible ");
+            }
         },
     },
     computed: {
@@ -277,6 +288,17 @@ export default {
         },
     },
     methods: {
+        setAutoRefresh() {
+            if (this.refreshTimer) clearInterval(this.refreshTimer);
+            this.refreshTimer = setInterval(() => {
+                console.log(this.homeUpdateTick, Date.now() - this.homeUpdateTick > 1 * 60 * 1000);
+                this.isLoading = true;
+                this.$store.dispatch("home/fetchLive", { force: false }).finally(() => {
+                    this.isLoading = false;
+                    this.live = this.$store.state.home.live;
+                });
+            }, 2 * 60 * 1000);
+        },
         // Returns a short hand form of time (ie. 33m, 2h)
         formatDurationLive(video) {
             const now = dayjs();
@@ -304,7 +326,7 @@ export default {
             }
         },
         // Load selected option
-        loadSelection() {
+        loadSelection(force) {
             this.isLoading = false;
             this.hasError = false;
             // Do nothing for custom URLs
@@ -331,7 +353,7 @@ export default {
 
             this.live = [];
             this.isLoading = true;
-            this.$store.dispatch("home/fetchLive", { force: false }).finally(() => {
+            this.$store.dispatch("home/fetchLive", { force }).finally(() => {
                 this.isLoading = false;
                 this.live = this.$store.state.home.live;
             });
