@@ -84,10 +84,11 @@
                         }"
                         @ready="vidReady"
                         @ended="pausedMode = true"
-                        @playing="vidPlaying"
-                        @paused="vidPlaying"
+                        @playing="vidPlaying({ data: 1 })"
+                        @paused="vidPlaying({ data: 2 })"
                         @cued="pausedMode = true"
                         @error="pausedMode = true"
+                        :mute="muted"
                     >
                     </youtube>
                 </div>
@@ -276,12 +277,13 @@ export default {
             this.uniqueId = Date.now();
         },
         setPlaying(val) {
-            this.pausedMode = !val;
+            if (this.pausedMode !== val) return;
             if (this.ytPlayer) {
-                this.pausedMode ? this.ytPlayer.pauseVideo() : this.ytPlayer.playVideo();
+                console.log(this.ytPlayer);
+                !this.pausedMode ? this.ytPlayer.pauseVideo() : this.ytPlayer.playVideo();
             }
             if (this.twPlayer) {
-                this.pausedMode ? this.twPlayer.pause() : this.twPlayer.play();
+                !this.pausedMode ? this.twPlayer.pause() : this.twPlayer.play();
             }
         },
         setMuted(val) {
