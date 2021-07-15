@@ -401,9 +401,11 @@ export default {
         // event handlers:
         // eslint-disable-next-line no-unused-vars
         songIsDone() {
+            console.log("DONE");
             this.$store.commit("music/nextSong");
         },
         songIsPlaying(player) {
+            console.log("PLAYING");
             this.player = player;
             /**-----------------------
              * *       INFO
@@ -427,6 +429,7 @@ export default {
         },
         // eslint-disable-next-line no-unused-vars
         songIsPaused() {
+            console.log("PAUSED");
             this.$store.commit("music/pause");
             this.$gtag.event("pause", {
                 event_category: "music",
@@ -456,6 +459,7 @@ export default {
             }
         },
         songError() {
+            console.log("ERROR");
             // if you try to play into a not-available song it'll error.
             if (document.visibilityState === "hidden") {
                 // when document is hidden
@@ -467,6 +471,7 @@ export default {
             this.patience = 120;
         },
         songReady(evt) {
+            console.log("READY");
             if (evt) {
                 this.player = evt;
             }
