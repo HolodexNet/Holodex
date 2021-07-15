@@ -98,7 +98,8 @@ const mutations = {
         const { mode } = state;
         // if always new, will always move the playhead to a new song (or try to)
         // if (alwaysNew && mode === MUSIC_PLAYBACK_MODE.LOOPONE) mode = MUSIC_PLAYBACK_MODE.LOOP;
-        if (isMachine && Date.now() - state.lastNextSong < 500) {
+        console.log(Date.now() - state.lastNextSong);
+        if (isMachine && Date.now() - state.lastNextSong < 800) {
             return;
         }
         state.lastNextSong = Date.now();
