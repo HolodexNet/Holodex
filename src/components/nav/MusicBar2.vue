@@ -402,7 +402,7 @@ export default {
         // eslint-disable-next-line no-unused-vars
         songIsDone() {
             console.log("DONE");
-            this.$store.commit("music/nextSong");
+            this.$store.commit("music/nextSong", true);
         },
         songIsPlaying(player) {
             console.log("PLAYING");
@@ -442,7 +442,7 @@ export default {
             if (time === 0 && this.showPatience) {
                 this.patience -= 33;
                 if (this.patience <= 0) {
-                    this.$store.commit("music/nextSong");
+                    this.$store.commit("music/nextSong", true);
                     this.$store.commit("music/play");
                     this.showPatience = false;
                     this.patience = 0;
@@ -453,7 +453,7 @@ export default {
             const { start, end } = this.currentSong;
             this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
             if (time > end + 1) {
-                this.$store.commit("music/nextSong");
+                this.$store.commit("music/nextSong", true);
             } else if (time < start - 10) {
                 this.player.seekTo(start);
             }
@@ -463,7 +463,7 @@ export default {
             // if you try to play into a not-available song it'll error.
             if (document.visibilityState === "hidden") {
                 // when document is hidden
-                this.$store.commit("music/nextSong");
+                this.$store.commit("music/nextSong", true);
                 this.$store.commit("music/play");
                 return;
             }
@@ -533,7 +533,7 @@ export default {
         },
         nextButtonHandler() {
             this.titleTransition = "scroll-y-reverse-transition";
-            this.$store.commit("music/nextSong", true);
+            this.$store.commit("music/nextSong");
         },
         probableMouseClickInIFrame() {
             this.allowPlayOverride = Date.now();
