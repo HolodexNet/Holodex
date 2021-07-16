@@ -156,6 +156,7 @@
             @ended="songIsDone"
             @progress="songProgress"
             @error="songError"
+            @buffering="songBuffering"
             @ready="songReady"
         ></song-frame>
     </v-bottom-sheet>
@@ -416,11 +417,7 @@ export default {
         // event handlers:
         // eslint-disable-next-line no-unused-vars
         songIsDone() {
-            console.log(
-                `Received notice that song ${this.song.name} is done. Asking for next song.`,
-                this.player,
-                this.song.video_id,
-            );
+            console.log(`Received notice that song ${this.song.name} is done. Asking for next song.`);
             this.$store.commit("music/nextSong", { isAuto: true });
         },
         songIsPlaying(player) {
@@ -452,8 +449,12 @@ export default {
                 event_label: this.song.channel.name,
             });
         },
+        songBuffering() {},
         songProgress(time) {
-            if (!this.song) this.progress = 0;
+            if (!this.song) {
+                this.progress = 0;
+                return;
+            }
 
             if (time === 0 && this.showPatience) {
                 this.patience -= 33;
@@ -470,9 +471,10 @@ export default {
 
             const { start, end } = this.song;
             this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
-            if (time > end + 5) {
+            if (time > end && this.player.getPlayerState() === 1) {
+                // if it's PLAYING
                 console.log(`Progress debug: time=${time}, end=${end}`);
-                if (Date.now() - this.lastNextSong > 3000) {
+                if (Date.now() - this.lastNextSong > 8000) {
                     console.log("Next song triggered by temporal progress tick");
                     this.$store.commit("music/nextSong", { isAuto: true });
                 }
@@ -486,7 +488,7 @@ export default {
             if (document.visibilityState === "hidden") {
                 // when document is hidden
                 console.log("Since the window is hidden. Trigger next song");
-                this.$store.commit("music/nextSong", { isAuto: true });
+                this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
                 this.$store.commit("music/play");
                 return;
             }
@@ -510,7 +512,7 @@ export default {
                     if (document.visibilityState === "hidden") {
                         // when document is hidden
                         console.log("Window isn't in view, requesting continue to next song");
-                        this.$store.commit("music/nextSong");
+                        this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
                         this.$store.commit("music/play");
                         return;
                     }
@@ -519,7 +521,7 @@ export default {
                     self.showPatience = true;
                     self.patience = 120;
                 }
-            }, 1000);
+            }, 2000);
         },
         playPause() {
             // if(this.state === MUSIC_PLAYER_STATE.PLAYING) this.$store.commit("music/pause");
