@@ -14,7 +14,12 @@
                     <v-row>
                         <template v-for="preset in decodedCustomPresets">
                             <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
-                                <LayoutPreviewCard @click="handleSelected(preset)" :preset="preset" custom>
+                                <LayoutPreviewCard
+                                    @click="handleSelected(preset)"
+                                    :preset="preset"
+                                    custom
+                                    :active="presetInAuto(preset)"
+                                >
                                     <template v-slot:post>
                                         <v-menu bottom nudge-top="20px">
                                             <template v-slot:activator="{ on }">
@@ -44,7 +49,11 @@
                     <v-row>
                         <template v-for="preset in decodedDesktopPresets">
                             <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
-                                <LayoutPreviewCard @click="handleSelected(preset)" :preset="preset" />
+                                <LayoutPreviewCard
+                                    @click="handleSelected(preset)"
+                                    :preset="preset"
+                                    :active="presetInAuto(preset)"
+                                />
                             </v-col>
                         </template>
                     </v-row>
@@ -54,7 +63,11 @@
                     <v-row justify="space-around" align="center">
                         <template v-for="preset in decodedMobilePresets">
                             <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
-                                <LayoutPreviewCard @click="handleSelected(preset)" :preset="preset" />
+                                <LayoutPreviewCard
+                                    @click="handleSelected(preset)"
+                                    :preset="preset"
+                                    :active="presetInAuto(preset)"
+                                />
                             </v-col>
                         </template>
                     </v-row>
@@ -62,15 +75,19 @@
                 <v-tab-item>
                     <template v-for="(group, index) in desktopGroups">
                         <v-radio-group v-model="autoLayout[index]" column :key="'preset-' + index" hide-details>
-                            <v-card-subtitle class="text-body-1" v-if="index !== 0">
+                            <v-card-subtitle class="text-body-1 pa-1" v-if="index !== 0">
                                 <!-- {{ $t("views.multiview.preset.desktop") }} -->
-                                {{ $t("component.channelInfo.videoCount", [videoCells]) }}
+                                {{ $t("component.channelInfo.videoCount", [index]) }}
                             </v-card-subtitle>
 
                             <v-row :key="'preset-list-' + index" v-if="group">
                                 <template v-for="preset in group">
                                     <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
-                                        <LayoutPreviewCard :preset="preset" @click="setAutoLayout(index, preset.id)">
+                                        <LayoutPreviewCard
+                                            :preset="preset"
+                                            @click="setAutoLayout(index, preset.id)"
+                                            :active="presetInAuto(preset)"
+                                        >
                                             <template v-slot:pre>
                                                 <v-radio label="" :value="preset.id" class="ma-0"></v-radio>
                                             </template>
@@ -161,6 +178,9 @@ export default {
                 };
             });
         },
+        autoLayoutSet() {
+            return new Set(this.autoLayout);
+        },
     },
     methods: {
         setAutoLayout(index, encodedLayout) {
@@ -173,8 +193,11 @@ export default {
         removePresetLayout(preset) {
             this.$store.commit("multiview/removePresetLayout", preset.name);
         },
-        togglePresetAutoLayout(preset) {
-            this.$store.commit("multiview/togglePresetAutoLayout", preset.name);
+        // togglePresetAutoLayout(preset) {
+        //     this.$store.commit("multiview/togglePresetAutoLayout", preset.name);
+        // },
+        presetInAuto(preset) {
+            return this.autoLayoutSet.has(preset.id);
         },
     },
 };
