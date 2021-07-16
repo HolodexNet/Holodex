@@ -29,6 +29,17 @@ export default {
                 };
             });
         },
+        decodedAutoLayout() {
+            return this.autoLayout
+                .filter((l) => l)
+                .map((preset) => {
+                    return {
+                        // convert original encoded to id
+                        id: preset.layout,
+                        ...decodeLayout(preset),
+                    };
+                });
+        },
     },
     methods: {
         removeItemById(i) {
@@ -73,11 +84,7 @@ export default {
         },
         isPreset(currentLayout) {
             // filter out any presets that dont match the amount of cells
-            const toCompare = this.decodedCustomPresets
-                .concat(this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets)
-                .filter((preset) => {
-                    return preset.emptyCells && preset.layout.length === currentLayout.length;
-                });
+            const toCompare = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
 
             // there's no presets with equal cells
             if (toCompare.length === 0) return false;
@@ -105,12 +112,10 @@ export default {
         },
         addVideoAutoLayout(video, onConflict) {
             // find layout with space for one more new video
-            const presets = this.decodedCustomPresets.concat(
-                this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets,
-            );
+            const presets = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
             const newLayout =
-                presets.find((preset) => preset.emptyCells === this.activeVideos.length + 1) ??
-                presets.find((preset) => preset.emptyCells >= this.activeVideos.length + 1);
+                presets.find((preset) => preset.videoCellCount === this.activeVideos.length + 1) ??
+                presets.find((preset) => preset.videoCellCount >= this.activeVideos.length + 1);
 
             // found new layout
             if (newLayout) {
@@ -131,9 +136,7 @@ export default {
         },
         deleteVideoAutoLayout(cellId) {
             // Find and set to previous preset layout
-            const presets = this.decodedCustomPresets.concat(
-                this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets,
-            );
+            const presets = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
             const newLayout =
                 presets.find((preset) => preset.emptyCells === this.activeVideos.length - 1) ??
                 presets.find((preset) => preset.emptyCells >= this.activeVideos.length - 1);

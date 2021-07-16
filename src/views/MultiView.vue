@@ -343,7 +343,7 @@ export default {
                 },
             ]);
         },
-        ...mapState("multiview", ["layout", "layoutContent", "presetLayout"]),
+        ...mapState("multiview", ["layout", "layoutContent", "presetLayout", "autoLayout"]),
         ...mapGetters("multiview", ["activeVideos"]),
         // Return true if there's an id requesting, setting false is setting id to -1
         showVideoSelector: {

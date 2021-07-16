@@ -227,8 +227,7 @@ export default {
         },
         homeUpdateTick() {
             const { name } = this.selectedOrg;
-            if (name !== "Favorites" || name !== "Playlist" || !this.selectedOrg.inputType)
-                this.live = this.$store.state.home.live;
+            if (name !== "Favorites" || name !== "Playlist") this.live = this.$store.state.home.live;
         },
         savedVideosList() {
             if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;
@@ -236,7 +235,7 @@ export default {
         // eslint-disable-next-line func-names
         "$store.state.visibilityState": function () {
             if (this.$store.state.visibilityState === "visible") {
-                this.$store.dispatch("home/fetchLive", { force: false });
+                this.loadSelection();
             }
         },
     },
