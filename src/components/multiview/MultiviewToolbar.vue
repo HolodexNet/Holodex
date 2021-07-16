@@ -87,7 +87,7 @@
                 <v-list dense>
                     <template v-for="(b, index) in buttons.filter((btn) => btn.collapse)">
                         <v-list-item @click="b.onClick" block class="mb-2" :key="`mv-collapsed-${index}`">
-                            <v-icon left>{{ b.icon }}</v-icon>
+                            <v-icon left :color="b.color">{{ b.icon }}</v-icon>
                             <span>{{ b.tooltip }}</span>
                         </v-list-item>
                     </template>

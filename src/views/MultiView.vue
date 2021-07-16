@@ -330,6 +330,7 @@ export default {
                 {
                     icon: mdiTuneVertical,
                     tooltip: this.$t("views.multiview.mediaControls"),
+                    color: "orange",
                     onClick: () => {
                         // this.setMuteAll(true);
                         this.showMediaControls = !this.showMediaControls;
