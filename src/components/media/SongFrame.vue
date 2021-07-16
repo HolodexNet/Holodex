@@ -52,10 +52,11 @@ export default {
     },
     methods: {
         nextSong(n, o) {
-            console.log("tripped");
+            console.log("Next song engaged:", o.song.video_id, "->", n.song.video_id);
             // if the video ID changes, the youtube wrapper will take care of it, but
             // if the playId changes, we need to hook up a nextSong functionality.
             if (n.song === o.song) {
+                console.log("The songs are the same, but playback ID is probably different:");
                 this.player.loadVideoById({
                     startSeconds: this.playback.song.start,
                     endSeconds: this.playback.song.end,

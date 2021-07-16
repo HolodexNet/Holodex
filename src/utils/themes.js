@@ -200,13 +200,13 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#efd0e6",
-                secondary: "#c90d40",
+                primary: "#EB8FE1",
+                secondary: "#F7638B",
             },
             light: {
                 background: "#f3efef",
-                secondary: "#ff79fa",
-                primary: "#c90d40",
+                secondary: "#DB8FEB",
+                primary: "#F7638B",
             },
         },
     },

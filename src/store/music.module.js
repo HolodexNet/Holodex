@@ -95,11 +95,12 @@ const mutations = {
     },
     nextSong(state, { isAuto = false, breakLoop = false }) {
         let { mode } = state;
-        console.log(Date.now() - state.lastNextSong);
-        if (isAuto && !breakLoop && Date.now() - state.lastNextSong < 2600) {
-            console.log("ignored");
+        console.log("Received next song request, time since last auto-advance: ", Date.now() - state.lastNextSong);
+        if (isAuto && !breakLoop && Date.now() - state.lastNextSong < 4000) {
+            console.log("Next song request is ignored, has not been 4s since last auto-advance");
             return;
         }
+        console.log("Next song request is granted, advancing");
         if (breakLoop && mode === MUSIC_PLAYBACK_MODE.LOOPONE) mode = MUSIC_PLAYBACK_MODE.LOOP;
         // will always move the playhead to a new song (or try to)
 

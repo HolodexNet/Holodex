@@ -350,7 +350,6 @@ export default {
             }, 100);
         },
         playlist(nw) {
-            // console.log("playlist: ", nw.length);
             if (nw.length === 0) this.$store.commit("music/closeBar");
             if (this.isOpen === false && nw.length === 0) this.$store.commit("music/openBar");
         },
@@ -417,7 +416,11 @@ export default {
         // event handlers:
         // eslint-disable-next-line no-unused-vars
         songIsDone() {
-            console.log("DONE", this.player, this.song.video_id);
+            console.log(
+                `Received notice that song ${this.song.name} is done. Asking for next song.`,
+                this.player,
+                this.song.video_id,
+            );
             this.$store.commit("music/nextSong", { isAuto: true });
         },
         songIsPlaying(player) {
@@ -454,7 +457,9 @@ export default {
 
             if (time === 0 && this.showPatience) {
                 this.patience -= 33;
+                console.log("Patience:", this.patience);
                 if (this.patience <= 0) {
+                    console.log("Patience is now 0, requesting next song forcibly.");
                     this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
                     this.$store.commit("music/play");
                     this.showPatience = false;
@@ -465,8 +470,10 @@ export default {
 
             const { start, end } = this.song;
             this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
-            if (time > end + 1) {
+            if (time > end + 5) {
+                console.log(`Progress debug: time=${time}, end=${end}`);
                 if (Date.now() - this.lastNextSong > 3000) {
+                    console.log("Next song triggered by temporal progress tick");
                     this.$store.commit("music/nextSong", { isAuto: true });
                 }
             } else if (time < start - 10) {
@@ -474,19 +481,21 @@ export default {
             }
         },
         songError() {
-            console.log("ERROR");
+            console.log("Youtube Player encountered error");
             // if you try to play into a not-available song it'll error.
             if (document.visibilityState === "hidden") {
                 // when document is hidden
+                console.log("Since the window is hidden. Trigger next song");
                 this.$store.commit("music/nextSong", { isAuto: true });
                 this.$store.commit("music/play");
                 return;
             }
+            console.log("Due to error, Window is visible, so we are entering patience countdown.");
             this.showPatience = true;
             this.patience = 120;
         },
         songReady(evt) {
-            console.log("READY");
+            console.log("Youtube Player is Ready");
             if (evt) {
                 this.player = evt;
             }
@@ -495,13 +504,18 @@ export default {
                 const unstarted = evt.getPlayerState() === -1;
                 const data = evt.getVideoData();
                 if (unstarted && (!data || data.title === "")) {
+                    console.log(
+                        "YT player has been ready for 2s without having loaded the video data. We think it's a privated video or a unplayable video.",
+                    );
                     if (document.visibilityState === "hidden") {
                         // when document is hidden
+                        console.log("Window isn't in view, requesting continue to next song");
                         this.$store.commit("music/nextSong");
                         this.$store.commit("music/play");
                         return;
                     }
                     // autoAdvance = true
+                    console.log("Window is visible, entering patience countdown.");
                     self.showPatience = true;
                     self.patience = 120;
                 }

@@ -96,6 +96,8 @@ export default {
                 params.endSeconds = this.playerVars.end;
             }
 
+            console.log("LoadVideoByID in Vue-Youtube", params);
+
             if (this.playerVars.autoplay === 1) {
                 this.player.loadVideoById(params);
                 return;

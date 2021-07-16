@@ -117,9 +117,7 @@ export default {
     mixins: [copyToClipboard],
     components: { UserCard },
     data() {
-        return {
-            doneCopy: false,
-        };
+        return {};
     },
     mounted() {},
     computed: {
