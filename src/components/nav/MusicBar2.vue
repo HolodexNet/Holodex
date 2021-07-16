@@ -423,6 +423,8 @@ export default {
         songIsPlaying(player) {
             console.log("PLAYING");
             this.player = player;
+            this.showPatience = false;
+            this.patience = 0;
             /**-----------------------
              * *       INFO
              *  if: the bar is NOT OPEN
@@ -456,15 +458,17 @@ export default {
                 return;
             }
 
-            if (time === 0 && this.showPatience) {
+            if (this.showPatience) {
                 this.patience -= 33;
                 console.log("Patience:", this.patience);
-                if (this.patience <= 0) {
+                if (
+                    (this.patience <= 0 || document.visibilityState === "hidden") &&
+                    this.player.getPlayerState() === -1
+                ) {
                     console.log("Patience is now 0, requesting next song forcibly.");
                     this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
                     this.$store.commit("music/play");
-                    this.showPatience = false;
-                    this.patience = 0;
+                    this.patience = 70;
                 }
                 return;
             }
@@ -485,6 +489,8 @@ export default {
         songError() {
             console.log("Youtube Player encountered error");
             // if you try to play into a not-available song it'll error.
+            this.showPatience = true;
+            this.patience = 120;
             if (document.visibilityState === "hidden") {
                 // when document is hidden
                 console.log("Since the window is hidden. Trigger next song");
@@ -493,8 +499,6 @@ export default {
                 return;
             }
             console.log("Due to error, Window is visible, so we are entering patience countdown.");
-            this.showPatience = true;
-            this.patience = 120;
         },
         songReady(evt) {
             console.log("Youtube Player is Ready");
@@ -509,6 +513,8 @@ export default {
                     console.log(
                         "YT player has been ready for 2s without having loaded the video data. We think it's a privated video or a unplayable video.",
                     );
+                    self.showPatience = true;
+                    self.patience = 120;
                     if (document.visibilityState === "hidden") {
                         // when document is hidden
                         console.log("Window isn't in view, requesting continue to next song");
@@ -518,8 +524,6 @@ export default {
                     }
                     // autoAdvance = true
                     console.log("Window is visible, entering patience countdown.");
-                    self.showPatience = true;
-                    self.patience = 120;
                 }
             }, 2000);
         },

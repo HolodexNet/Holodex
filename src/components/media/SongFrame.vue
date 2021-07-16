@@ -57,7 +57,7 @@ export default {
             // if the video ID changes, the youtube wrapper will take care of it, but
             // if the playId changes, we need to hook up a nextSong functionality.
             if (n.playId !== o.playId) {
-                if (o.song.video_id === n.song.video_id && o.song.start === n.song.video_id) {
+                if (o.song.video_id === n.song.video_id && o.song.start === n.song.start) {
                     // same video, same track.
                     console.log("The songs are the same, but playback ID is probably different:");
                     this.player.loadVideoById({
