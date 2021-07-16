@@ -138,8 +138,8 @@ export default {
             // Find and set to previous preset layout
             const presets = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
             const newLayout =
-                presets.find((preset) => preset.emptyCells === this.activeVideos.length - 1) ??
-                presets.find((preset) => preset.emptyCells >= this.activeVideos.length - 1);
+                presets.find((preset) => preset.videoCellCount === this.activeVideos.length - 1) ??
+                presets.find((preset) => preset.videoCellCount >= this.activeVideos.length - 1);
 
             const clonedLayout = JSON.parse(JSON.stringify(newLayout));
             this.$store.commit("multiview/deleteLayoutContent", cellId);

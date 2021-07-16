@@ -100,15 +100,15 @@ const mutations = {
         const index = state.presetLayout.findIndex((x) => x.name === name);
         state.presetLayout.splice(index, 1);
     },
-    togglePresetAutoLayout(state, name) {
-        const index = state.presetLayout.findIndex((x) => x.name === name);
-        if (state.presetLayout[index].emptyCells > 0) {
-            Vue.set(state.presetLayout[index], "emptyCells", 0);
-        } else {
-            const decodedPreset = decodeLayout(state.presetLayout[index].layout);
-            Vue.set(state.presetLayout[index], "emptyCells", getEmptyCells(decodedPreset));
-        }
-    },
+    // togglePresetAutoLayout(state, name) {
+    //     const index = state.presetLayout.findIndex((x) => x.name === name);
+    //     if (state.presetLayout[index].emptyCells > 0) {
+    //         Vue.set(state.presetLayout[index], "emptyCells", 0);
+    //     } else {
+    //         const decodedPreset = decodeLayout(state.presetLayout[index].layout);
+    //         Vue.set(state.presetLayout[index], "emptyCells", getEmptyCells(decodedPreset));
+    //     }
+    // },
     resetState(state) {
         Object.assign(state, JSON.parse(JSON.stringify(initialState)), {
             presetLayout: state.presetLayout,

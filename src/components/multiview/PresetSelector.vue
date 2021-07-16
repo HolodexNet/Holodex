@@ -23,10 +23,10 @@
                                                 </v-icon>
                                             </template>
                                             <v-list dense>
-                                                <v-list-item @click="togglePresetAutoLayout(preset)"
+                                                <!-- <v-list-item @click="togglePresetAutoLayout(preset)"
                                                     ><v-icon left>{{ mdiToggleSwitch }}</v-icon>
                                                     {{ $t("views.multiview.preset.toggleAutoLayout") }}
-                                                </v-list-item>
+                                                </v-list-item> -->
                                                 <v-list-item @click.stop="removePresetLayout(preset)"
                                                     ><v-icon left>{{ icons.mdiDelete }}</v-icon>
                                                     {{ $t("views.multiview.preset.remove") }}
