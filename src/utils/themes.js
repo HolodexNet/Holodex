@@ -184,8 +184,8 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#98395c",
-                secondary: "#d91a5d",
+                primary: "#d91a5d",
+                secondary: "#98395c",
             },
             light: {
                 background: "#f2f2f2",
@@ -200,7 +200,7 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#ff79fa",
+                primary: "#efd0e6",
                 secondary: "#c90d40",
             },
             light: {
@@ -232,13 +232,13 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#fc3c86",
-                secondary: "#6fb1ee",
+                primary: "#e9d9a3",
+                secondary: "#7f796a",
             },
             light: {
                 background: "#f2f2f2",
-                secondary: "#fc3c86 ",
-                primary: "#6fb1ee",
+                secondary: "#7f796a ",
+                primary: "#D4C378",
             },
         },
     },
