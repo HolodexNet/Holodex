@@ -4,13 +4,13 @@
         <div class="song-player">
             <!--                 :key="'ytplayer' + videoId" -->
             <youtube
-                v-if="videoId"
-                :video-id="videoId"
+                v-if="playback.song.video_id"
+                :video-id="playback.song.video_id"
                 v-on="$listeners"
                 @ready="ready"
                 :playerVars="{
-                    ...(start && { start }),
-                    ...(end && { end }),
+                    ...(playback.song.start && { start: playback.song.start }),
+                    ...(playback.song.end && { end: playback.song.end }),
                     autoplay: 1,
                     playsinline: 1,
                     controls: 1,
@@ -29,15 +29,7 @@ export default {
     name: "SongFrame",
     components: {},
     props: {
-        videoId: {
-            required: true,
-        },
-        start: {
-            type: Number,
-            required: true,
-        },
-        end: {
-            type: Number,
+        playback: {
             required: true,
         },
     },
@@ -48,13 +40,29 @@ export default {
             // currentTime: 0,
         };
     },
-    computed: {
+    watch: {
         // shouldAutoPlay() {
         //     maybe $store.state.settings.autoplayVideo ? probably not.
         //     return this.$store.state.music.state === MUSIC_PLAYER_STATE.PLAYING ? 1 : 0;
         // }
+        playback: {
+            deep: true,
+            handler: "nextSong",
+        },
     },
     methods: {
+        nextSong(n, o) {
+            console.log("tripped");
+            // if the video ID changes, the youtube wrapper will take care of it, but
+            // if the playId changes, we need to hook up a nextSong functionality.
+            if (n.song === o.song) {
+                this.player.loadVideoById({
+                    startSeconds: this.playback.song.start,
+                    endSeconds: this.playback.song.end,
+                    videoId: this.playback.song.video_id,
+                });
+            }
+        },
         ready(evt) {
             this.player = evt;
             this.setTimer();

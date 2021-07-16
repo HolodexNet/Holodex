@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow */
-// import api from "@/utils/backend-api";
 import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
 
 const initialState = {
@@ -19,7 +18,7 @@ export const state = { ...initialState };
 const getters = {
     currentSong(state) {
         if (state.playlist && state.playlist.length > 0 && state.currentId < state.playlist.length) {
-            return state.playlist[state.currentId];
+            return { playId: state.playId, sid: state.currentId, song: state.playlist[state.currentId] };
         }
         return null;
     },
@@ -94,25 +93,26 @@ const mutations = {
     resetState(state) {
         Object.assign(state, initialState);
     },
-    nextSong(state, isMachine) {
-        const { mode } = state;
-        // if always new, will always move the playhead to a new song (or try to)
-        // if (alwaysNew && mode === MUSIC_PLAYBACK_MODE.LOOPONE) mode = MUSIC_PLAYBACK_MODE.LOOP;
+    nextSong(state, { isAuto = false, breakLoop = false }) {
+        let { mode } = state;
         console.log(Date.now() - state.lastNextSong);
-        if (isMachine && Date.now() - state.lastNextSong < 2600) {
+        if (isAuto && !breakLoop && Date.now() - state.lastNextSong < 2600) {
             console.log("ignored");
             return;
         }
+        if (breakLoop && mode === MUSIC_PLAYBACK_MODE.LOOPONE) mode = MUSIC_PLAYBACK_MODE.LOOP;
+        // will always move the playhead to a new song (or try to)
+
         state.lastNextSong = Date.now();
         switch (mode) {
             case MUSIC_PLAYBACK_MODE.NATURAL:
             case MUSIC_PLAYBACK_MODE.LOOP:
                 /* next song naturally */
                 if (state.currentId + 1 === state.playlist.length) {
-                    if (state.mode === MUSIC_PLAYBACK_MODE.LOOP) {
+                    if (mode === MUSIC_PLAYBACK_MODE.LOOP) {
                         state.currentId = 0;
                         state.playId += 1;
-                    } else if (state.mode === MUSIC_PLAYBACK_MODE.NATURAL) state.state = MUSIC_PLAYER_STATE.PAUSED;
+                    } else if (mode === MUSIC_PLAYBACK_MODE.NATURAL) state.state = MUSIC_PLAYER_STATE.PAUSED;
                 } else {
                     state.currentId += 1;
                     state.playId += 1;

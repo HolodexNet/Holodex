@@ -6,7 +6,7 @@
         :value="isOpen"
         :retain-focus="false"
         content-class="music-player-bar"
-        v-if="currentSong"
+        v-if="song"
         ref="sheet"
     >
         <v-slider class="music-progress" hide-details :value="progress" height="3" @change="progressChange" />
@@ -85,11 +85,11 @@
             </div>
             <!-- < v-scroll-y-transition mode="out-in"> -->
             <transition :name="titleTransition" mode="out-in">
-                <div class="d-flex align-center" :key="'snip' + (currentSong && currentSong.name)">
+                <div class="d-flex align-center" :key="'snip' + (song && song.name)">
                     <div class="pr-2">
                         <v-img
-                            v-if="currentSong && currentSong.art"
-                            :src="currentSong.art.replace('100x100', '50x50')"
+                            v-if="song && song.art"
+                            :src="song.art.replace('100x100', '50x50')"
                             aspect-ratio="1"
                             height="auto"
                             width="50px"
@@ -97,17 +97,17 @@
                     </div>
                     <div>
                         <div class="text-h6">
-                            {{ currentSong.name }}
+                            {{ song.name }}
                         </div>
                         <div class="single-line-clamp">
                             <router-link
                                 class="text-subtitle-2 secondary--text mr-2"
                                 id="songChannel"
-                                :to="`/channel/${currentSong.channel_id}`"
+                                :to="`/channel/${song.channel_id}`"
                             >
-                                {{ currentSong.channel[nameProperty] || currentSong.channel.name }}
+                                {{ song.channel[nameProperty] || song.channel.name }}
                             </router-link>
-                            <span class="text-subtitle-2 grey--text">({{ currentSong.original_artist }})</span>
+                            <span class="text-subtitle-2 grey--text">({{ song.original_artist }})</span>
                         </div>
                     </div>
                     <div class="music-more-btn">
@@ -127,11 +127,11 @@
                                 <v-list-item
                                     @click.stop
                                     target="_blank"
-                                    :href="`https://youtu.be/${currentSong.video_id}?t=${currentSong.start}`"
+                                    :href="`https://youtu.be/${song.video_id}?t=${song.start}`"
                                     ><v-icon left>{{ icons.mdiYoutube }}</v-icon>
                                     {{ $t("views.settings.redirectModeLabel") }}
                                 </v-list-item>
-                                <v-list-item :to="`/edit/video/${currentSong.video_id}/music`"
+                                <v-list-item :to="`/edit/video/${song.video_id}/music`"
                                     ><v-icon left>{{ icons.mdiPencil }}</v-icon>
                                     {{ $t("component.videoCard.edit") }}
                                 </v-list-item>
@@ -149,9 +149,7 @@
         </div>
         <!--             :key="currentSong.video_id + playId" -->
         <song-frame
-            :videoId="currentSong.video_id"
-            :start="currentSong.start"
-            :end="currentSong.end"
+            :playback="currentSong"
             style="width: 250px; width: 356px"
             @playing="songIsPlaying"
             @paused="songIsPaused"
@@ -213,9 +211,6 @@
 
 .invisible .v-progress-circular__underlay {
     stroke: transparent;
-}
-
-.music-more-btn {
 }
 
 .music-progress {
@@ -322,7 +317,7 @@ export default {
             progress: 0,
             player: null,
 
-            patience: 0,
+            patience: 0, // patience mechanism used to auto advance broken songs.
             showPatience: false,
 
             queueMenuOpen: false,
@@ -359,21 +354,21 @@ export default {
             if (nw.length === 0) this.$store.commit("music/closeBar");
             if (this.isOpen === false && nw.length === 0) this.$store.commit("music/openBar");
         },
-        currentSong(ns, os) {
-            if (os != null && this.progress > 80 && this.progress < 105) {
-                // console.log("track song");
-                backendApi.trackSongPlay(os.channel_id, os.video_id, os.name).catch((err) => console.error(err));
-                this.$gtag.event("fully-listen", {
-                    event_category: "music",
-                    event_label: this.currentSong.channel.name,
-                });
-            } else {
-                this.$gtag.event("quick-skip", {
-                    event_category: "music",
-                    event_label: this.currentSong.channel.name,
-                });
-            }
-            // console.log("change song");
+        currentSong: {
+            deep: true,
+            handler(ns, os) {
+                if (os != null && this.progress > 80 && this.progress < 105) {
+                    const { song } = os;
+                    // console.log("track song");
+                    backendApi
+                        .trackSongPlay(song.channel_id, song.video_id, song.name)
+                        .catch((err) => console.error(err));
+                    this.$gtag.event("fully-listen", {
+                        event_category: "music",
+                        event_label: song.channel.name,
+                    });
+                }
+            },
         },
         titleTransition(ns) {
             if (ns !== "scroll-y-reverse-transition") {
@@ -414,13 +409,16 @@ export default {
             "lastNextSong",
         ]),
         ...mapGetters("music", ["currentSong", "canPlay"]),
+        song() {
+            return this.currentSong && this.currentSong.song;
+        },
     },
     methods: {
         // event handlers:
         // eslint-disable-next-line no-unused-vars
         songIsDone() {
-            console.log("DONE", this.player, this.currentSong.video_id);
-            this.$store.commit("music/nextSong", true);
+            console.log("DONE", this.player, this.song.video_id);
+            this.$store.commit("music/nextSong", { isAuto: true });
         },
         songIsPlaying(player) {
             console.log("PLAYING");
@@ -428,12 +426,9 @@ export default {
             /**-----------------------
              * *       INFO
              *  if: the bar is NOT OPEN
-             *
              *  or
-             *
              *  The Music Player is supposed to be PAUSED
              *  AND the play event is not triggered by the user.
-             *
              *------------------------* */
             if (!this.isOpen || (this.state === MUSIC_PLAYER_STATE.PAUSED && this.allowPlayOverride === 0)) {
                 this.player.pauseVideo();
@@ -442,7 +437,7 @@ export default {
             this.$store.commit("music/play");
             this.$gtag.event("play", {
                 event_category: "music",
-                event_label: this.currentSong.channel.name,
+                event_label: this.song.channel.name,
             });
         },
         // eslint-disable-next-line no-unused-vars
@@ -451,16 +446,16 @@ export default {
             this.$store.commit("music/pause");
             this.$gtag.event("pause", {
                 event_category: "music",
-                event_label: this.currentSong.channel.name,
+                event_label: this.song.channel.name,
             });
         },
         songProgress(time) {
-            if (!this.currentSong) this.progress = 0;
+            if (!this.song) this.progress = 0;
 
             if (time === 0 && this.showPatience) {
                 this.patience -= 33;
                 if (this.patience <= 0) {
-                    this.$store.commit("music/nextSong", true);
+                    this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
                     this.$store.commit("music/play");
                     this.showPatience = false;
                     this.patience = 0;
@@ -468,11 +463,11 @@ export default {
                 return;
             }
 
-            const { start, end } = this.currentSong;
+            const { start, end } = this.song;
             this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
             if (time > end + 1) {
                 if (Date.now() - this.lastNextSong > 3000) {
-                    this.$store.commit("music/nextSong", true);
+                    this.$store.commit("music/nextSong", { isAuto: true });
                 }
             } else if (time < start - 10) {
                 this.player.seekTo(start);
@@ -483,7 +478,7 @@ export default {
             // if you try to play into a not-available song it'll error.
             if (document.visibilityState === "hidden") {
                 // when document is hidden
-                this.$store.commit("music/nextSong", true);
+                this.$store.commit("music/nextSong", { isAuto: true });
                 this.$store.commit("music/play");
                 return;
             }
@@ -531,13 +526,13 @@ export default {
             this.$store.commit("music/pause");
             this.$gtag.event("close", {
                 event_category: "music",
-                event_label: this.currentSong.channel.name,
+                event_label: this.song.channel.name,
             });
         },
         progressChange(progress) {
-            if (!this.currentSong || !this.player) return;
+            if (!this.song || !this.player) return;
 
-            const { start, end } = this.currentSong;
+            const { start, end } = this.song;
             const totalLength = end - start;
             const percent = progress / 100;
             const newOffsetTime = start + totalLength * percent;
@@ -545,15 +540,23 @@ export default {
         },
         prevButtonHandler() {
             if (this.progress > 5) {
-                this.player.seekTo(this.currentSong.start);
+                this.player.seekTo(this.song.start);
                 return;
             }
             this.titleTransition = "scroll-y-transition";
             this.$store.commit("music/prevSong");
         },
         nextButtonHandler() {
+            if (this.progress < 80) {
+                this.$gtag.event("quick-skip", {
+                    event_category: "music",
+                    event_label: this.song.channel.name,
+                });
+            }
+
             this.titleTransition = "scroll-y-reverse-transition";
-            this.$store.commit("music/nextSong");
+            this.$store.commit("music/nextSong", { breakLoop: true });
+            this.progress = 0;
         },
         probableMouseClickInIFrame() {
             this.allowPlayOverride = Date.now();
