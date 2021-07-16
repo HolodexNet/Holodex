@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
-import { LayoutItem, getFirstCollision } from "@/external/vue-grid-layout/src/helpers/utils";
-import { decodeLayout, getEmptyCells } from "@/utils/mv-utils";
+import { LayoutItem, getFirstCollision, getLayoutItem } from "@/external/vue-grid-layout/src/helpers/utils";
+import { decodeLayout, getEmptyCells, getDesktopDefaults } from "@/utils/mv-utils";
 import Vue from "vue";
 
 const initialState = {
@@ -8,6 +8,7 @@ const initialState = {
     index: 1,
     layoutContent: {},
     presetLayout: [],
+    autoLayout: getDesktopDefaults(),
 };
 
 export const state = { ...initialState };
@@ -99,19 +100,26 @@ const mutations = {
         const index = state.presetLayout.findIndex((x) => x.name === name);
         state.presetLayout.splice(index, 1);
     },
-    togglePresetAutoLayout(state, name) {
-        const index = state.presetLayout.findIndex((x) => x.name === name);
-        if (state.presetLayout[index].emptyCells > 0) {
-            Vue.set(state.presetLayout[index], "emptyCells", 0);
-        } else {
-            const decodedPreset = decodeLayout(state.presetLayout[index].layout);
-            Vue.set(state.presetLayout[index], "emptyCells", getEmptyCells(decodedPreset));
-        }
-    },
+    // togglePresetAutoLayout(state, name) {
+    //     const index = state.presetLayout.findIndex((x) => x.name === name);
+    //     if (state.presetLayout[index].emptyCells > 0) {
+    //         Vue.set(state.presetLayout[index], "emptyCells", 0);
+    //     } else {
+    //         const decodedPreset = decodeLayout(state.presetLayout[index].layout);
+    //         Vue.set(state.presetLayout[index], "emptyCells", getEmptyCells(decodedPreset));
+    //     }
+    // },
     resetState(state) {
         Object.assign(state, JSON.parse(JSON.stringify(initialState)), {
             presetLayout: state.presetLayout,
         });
+    },
+    setAutoLayout(state, { index, encodedLayout }) {
+        if (!encodedLayout) return;
+        Vue.set(state.autoLayout, index, encodedLayout);
+    },
+    resetAutoLayout(state) {
+        state.autoLayout = getDesktopDefaults();
     },
 };
 

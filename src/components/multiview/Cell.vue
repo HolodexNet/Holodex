@@ -13,31 +13,25 @@
         <!-- When Cell has no content: show video picker -->
         <v-sheet style="height: 100%" class="d-flex flex-column pt-4" v-if="!cellContent">
             <!--================= No Content Mode ================-->
-            <v-list
-                class="mx-6 thin-scroll-bar flex-grow-1 flex-shrink-1"
+            <v-sheet
+                class="mx-6 thin-scroll-bar d-flex flex-grow-1 flex-shrink-1 align-center justify-center"
                 v-if="!cellContent"
                 style="overflow-y: auto; overflow-x: hidden; position: relative"
             >
-                <v-sheet class="px-0 d-flex flex-grow-1 align-stretch mb-1">
-                    <v-btn
-                        class="flex-grow-1 mr-2"
-                        color="indigo darken-1"
-                        style="max-width: 300px; flex-basis: 50%"
-                        @click="$emit('showSelector', item.i)"
-                    >
-                        <v-icon>{{ icons.mdiMagnify }}</v-icon>
-                    </v-btn>
-                    <v-btn
-                        class="flex-grow-1"
-                        color="teal darken-1"
-                        style="max-width: 300px; flex-basis: 20%"
-                        @click="setItemAsChat(item)"
-                        v-if="!(cellContent && cellContent.type === 'chat')"
-                    >
-                        <v-icon>{{ mdiMessage }}</v-icon>
-                    </v-btn>
-                </v-sheet>
-            </v-list>
+                <!-- <v-sheet class="px-0 d-flex flex-grow-1 align-center justify-center mb-1"> -->
+                <v-btn class="mr-2" color="indigo darken-1" @click="$emit('showSelector', item.i)" rounded-sm large>
+                    <v-icon>{{ mdiCardPlus }}</v-icon>
+                </v-btn>
+                <v-btn
+                    color="teal darken-1"
+                    @click="setItemAsChat(item)"
+                    v-if="!(cellContent && cellContent.type === 'chat')"
+                    rounded-sm
+                    large
+                >
+                    <v-icon>{{ mdiMessage }}</v-icon>
+                </v-btn>
+            </v-sheet>
             <template>
                 <CellControl :playIcon="icons.mdiPlay" @delete="deleteCell" class="mx-6 mb-6 mt-0 flex-grow-0" />
             </template>
@@ -164,7 +158,7 @@
 </template>
 
 <script lang="ts">
-import { mdiMessage, mdiArrowLeftCircle, mdiSelectionEllipseArrowInside } from "@mdi/js";
+import { mdiCardPlus, mdiMessage, mdiArrowLeftCircle, mdiSelectionEllipseArrowInside } from "@mdi/js";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat.vue";
 import { mapState, mapGetters } from "vuex";
 import { getVideoIDFromUrl } from "@/utils/functions";
@@ -201,6 +195,7 @@ export default {
             showDropOverlay: false,
             enterTarget: null,
             mdiSelectionEllipseArrowInside,
+            mdiCardPlus,
         };
     },
     mounted() {
@@ -325,12 +320,24 @@ export default {
         },
         checkScale() {
             if (this.cellContent?.type === "chat") {
-                if (this.cellWidth < 200) {
-                    this.chatScale = 0.5;
-                } else if (this.cellWidth < 300) {
-                    this.chatScale = 0.75;
-                } else {
-                    this.chatScale = 1;
+                switch (true) {
+                    case this.cellWidth < 150:
+                        this.chatScale = 0.5;
+                        break;
+                    case this.cellWidth < 200:
+                        this.chatScale = 0.6;
+                        break;
+                    case this.cellWidth < 250:
+                        this.chatScale = 0.75;
+                        break;
+                    case this.cellWidth < 300:
+                        this.chatScale = 0.85;
+                        break;
+                    case this.cellWidth < 350:
+                        this.chatScale = 1;
+                        break;
+                    default:
+                        this.chatScale = 1;
                 }
             }
         },
