@@ -188,7 +188,7 @@ export default {
         sortedOrgs() {
             let list = this.ORGS.slice();
             if (this.search) {
-                list = list.filter((x) => x.toLowerCase().includes(this.search.toLowerCase()));
+                list = list.filter((x) => x.name.toLowerCase().includes(this.search.toLowerCase()));
             }
             list.sort((a, b) => {
                 const index1 = this.orgFavorites.findIndex((x) => x.name === a.name);
