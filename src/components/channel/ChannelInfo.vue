@@ -13,13 +13,25 @@
                 {{ subscriberCount }}
             </template>
             <template v-if="includeVideoCount">
-                <br />
+                •
                 {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
                 <router-link :to="`/channel/${channel.id}/clips`" class="no-decoration" v-if="channel.clip_count > 0">
                     •
                     <span class="primary--text">{{ $tc("component.channelInfo.clipCount", channel.clip_count) }}</span>
                 </router-link>
             </template>
+        </v-list-item-subtitle>
+        <v-list-item-subtitle v-if="channel.top_topics && channel.top_topics.length">
+            🏆
+            <a
+                v-for="topic in channel.top_topics"
+                :key="topic"
+                class="topic-chip"
+                :href="searchQuery(topic)"
+                @click.stop=""
+            >
+                {{ topic }}
+            </a>
         </v-list-item-subtitle>
         <v-list-item-subtitle v-if="includeSocials">
             <ChannelSocials :channel="channel" />
@@ -63,6 +75,9 @@ export default {
     },
     methods: {
         formatCount,
+        searchQuery(topicId) {
+            return `/search?q=type,value,text%0Achannel,${this.channel.id},${this.channel.name}%0Atopic,${topicId},${topicId}`;
+        },
     },
     computed: {
         subscriberCount() {
@@ -90,4 +105,22 @@ export default {
     font-weight: 400 !important;
     font-size: inherit;
 } */
+.topic-chip {
+    background-color: var(--v-background-darken3);
+    padding: 2px 6px;
+    border-radius: 1rem;
+    text-decoration: none;
+    text-transform: capitalize;
+    margin-right: 4px;
+    align-items: center;
+    display: inline-flex;
+    color: white;
+}
+.theme--dark .topic-chip {
+    background-color: var(--v-background-lighten2);
+    color: white;
+}
+.topic-chip:hover {
+    background-color: var(--v-primary-base);
+}
 </style>

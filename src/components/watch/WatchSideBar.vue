@@ -188,12 +188,12 @@ export default {
 
 <style>
 .lightup {
-    z-index: 3;
+    z-index: 1;
     position: relative;
     display: block;
 }
 .lightup * {
-    z-index: 2;
+    z-index: 1;
     line-height: 28px !important;
 }
 .lightup::after {
