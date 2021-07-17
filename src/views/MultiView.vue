@@ -282,6 +282,14 @@ export default {
                         });
                     }
                     // prompt overwrite with permalink, remove permalink if cancelled
+                    try {
+                        this.$gtag.event("init-from-link", {
+                            event_category: "multiview",
+                            event_label: `cells:${parsed?.layout?.length}`,
+                        });
+                        // eslint-disable-next-line no-empty
+                    } catch {}
+
                     this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
                 }
             } catch (e) {
@@ -374,14 +382,6 @@ export default {
             }
             // no layout, overwrite without asking
             if (!this.layout || Object.keys(this.layout).length === 0) {
-                try {
-                    this.$gtag.event("init-from-link", {
-                        event_category: "multiview",
-                        event_label: `cells:${layoutWithContent?.layout?.length}`,
-                    });
-                    // eslint-disable-next-line no-empty
-                } catch {}
-
                 this.setMultiview(layoutWithContent);
                 return;
             }
@@ -389,14 +389,6 @@ export default {
             this.overwriteLayoutPreview = layoutWithContent;
             this.overwriteConfirm = () => {
                 // hide dialog
-                try {
-                    this.$gtag.event("init-from-link", {
-                        event_category: "multiview",
-                        event_label: `cells:${layoutWithContent?.layout?.length}`,
-                    });
-                    // eslint-disable-next-line no-empty
-                } catch {}
-
                 this.overwriteDialog = false;
                 this.setMultiview({
                     ...layoutWithContent,
@@ -414,6 +406,10 @@ export default {
             this.overwriteDialog = true;
         },
         handleToolbarClick(video) {
+            this.$gtag.event("video-added", {
+                event_category: "multiview",
+                event_label: video.type || "untyped",
+            });
             const hasEmptyCell = this.findEmptyCell();
             // more cells needed, increment to next preset with space
             if (!hasEmptyCell) {
