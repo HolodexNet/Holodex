@@ -147,6 +147,10 @@ export default {
     },
     methods: {
         startCopyToClipboard(txt) {
+            this.$gtag.event("share-link-copied", {
+                event_category: "multiview",
+            });
+
             this.copyToClipboard(txt);
             const thisCopy = this;
             setTimeout(() => {

@@ -374,6 +374,14 @@ export default {
             }
             // no layout, overwrite without asking
             if (!this.layout || Object.keys(this.layout).length === 0) {
+                try {
+                    this.$gtag.event("init-from-link", {
+                        event_category: "multiview",
+                        event_label: `cells:${layoutWithContent?.layout?.length}`,
+                    });
+                    // eslint-disable-next-line no-empty
+                } catch {}
+
                 this.setMultiview(layoutWithContent);
                 return;
             }
@@ -381,6 +389,14 @@ export default {
             this.overwriteLayoutPreview = layoutWithContent;
             this.overwriteConfirm = () => {
                 // hide dialog
+                try {
+                    this.$gtag.event("init-from-link", {
+                        event_category: "multiview",
+                        event_label: `cells:${layoutWithContent?.layout?.length}`,
+                    });
+                    // eslint-disable-next-line no-empty
+                } catch {}
+
                 this.overwriteDialog = false;
                 this.setMultiview({
                     ...layoutWithContent,
@@ -433,6 +449,9 @@ export default {
         },
         handlePresetClicked(preset) {
             this.showPresetSelector = false;
+            this.$gtag.event("preset-clicked", {
+                event_category: "multiview",
+            });
             this.setMultiview({
                 ...preset,
                 mergeContent: true,

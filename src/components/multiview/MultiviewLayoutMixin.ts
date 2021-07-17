@@ -53,6 +53,10 @@ export default {
         },
         addVideoWithId(video, id) {
             // set video for a specific cell id
+            this.$gtag.event("video-added", {
+                event_category: "multiview",
+                event_label: video.type || "untyped",
+            });
             this.$store.commit("multiview/setLayoutContentById", {
                 id,
                 content: {
