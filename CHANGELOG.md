@@ -1,5 +1,25 @@
 # Holodex Changelog
 
+### 2.14 Holodex [*July 16th, 2021*]
+##### New Features
+- Added many more theme colors (Thanks I'm Rinsen.#0975)
+- Added multiview media controls to pause/play/mute/delete each or all videos playing
+- Autolayout is now fully configurable from the preset menu
+- Updated the organization selector in multiview to match rest of site
+- Added British and Canadian English for chaning time formatting YYYY-mm-dd or dd-mm-yy
+- Channels page will show the top 3 topics that a vtuber plays/does
+
+##### Patches
+- Multiview chat windows scale down according to size
+- Music autoplays in the background, and skips dead songs
+- Multiview chat cells now flip to different streams when added
+
+##### Bugfixes
+- Fix twitch link sharing
+- Fix auto update on multiview
+- Fix watch page stuck on theather mode
+- and many more bugfixes introduced from last update(s)
+
 ### 2.13.1 Holodex [*July 13th, 2021*]
 ##### Patches
 - Stabilization of playlists feature. Rarely you might've had trouble saving playlists, should be all fixed now.
