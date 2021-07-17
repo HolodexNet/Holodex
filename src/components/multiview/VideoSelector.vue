@@ -87,7 +87,7 @@
         <!-- Drop down -->
         <org-panel-picker horizontal @changed="handlePicker"></org-panel-picker>
         <v-icon
-            class="mr-2"
+            class="mr-2 ml-1"
             @click="loadSelection(true)"
             :class="{ 'refresh-spin': isLoading }"
             v-if="selectedOrg.name !== 'YouTubeURL' && selectedOrg.name !== 'TwitchURL'"
@@ -357,6 +357,7 @@ export default {
         },
         handlePicker(panel) {
             // console.log(panel);
+            if (this.selectedOrg === panel) return;
             this.selectedOrg = panel;
             this.loadSelection(true);
         },

@@ -122,9 +122,19 @@ export default {
             mdiTwitch,
         };
     },
+    computed: {
+        currentOrg() {
+            return this.$store.state.currentOrg;
+        },
+    },
     watch: {
         currentTab(val) {
             this.$emit("changed", val);
+        },
+        currentOrg(newval, oldval) {
+            if (this.currentTab === oldval) {
+                this.currentTab = newval;
+            }
         },
     },
     props: {
