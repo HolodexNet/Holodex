@@ -8,10 +8,12 @@ const initialState = {
     index: 1,
     layoutContent: {},
     presetLayout: [],
-    autoLayout: getDesktopDefaults(),
 };
 
-export const state = { ...initialState };
+const persistedState = {
+    autoLayout: getDesktopDefaults(),
+};
+export const state = { ...initialState, ...persistedState };
 
 const getters = {
     activeVideos(state) {

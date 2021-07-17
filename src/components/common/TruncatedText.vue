@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            style="white-space: pre-wrap"
+            style="white-space: pre-wrap; word-break: break-word"
             :class="{ 'truncated-text': !expanded }"
             :style="`-webkit-line-clamp: ${lines}`"
         >
