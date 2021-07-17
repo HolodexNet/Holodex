@@ -173,7 +173,9 @@ export default {
     async mounted() {
         this.ORGS = [
             ...(this.hideAllVTubers ? [] : [{ name: "All Vtubers", short: "Vtuber", name_jp: null }]),
-            ...(await backendApi.orgs()).data,
+            ...(await backendApi.orgs()).data.sort(
+                (a, b) => a.name.toLowerCase().charCodeAt(0) - b.name.toLowerCase().charCodeAt(0),
+            ),
         ];
     },
     computed: {
