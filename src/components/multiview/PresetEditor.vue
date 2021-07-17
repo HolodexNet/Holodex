@@ -76,8 +76,19 @@ export default {
                 }),
                 name: this.name,
             };
+            this.$gtag.event("created-preset", {
+                event_category: "multiview",
+                event_label: `v${this.videoCells}c${
+                    this.layout.filter((l) => this.content[l.i]?.type === "chat").length
+                }`,
+            });
             this.$store.commit("multiview/addPresetLayout", content);
-            this.$store.commit("multiview/setAutoLayout", { index: this.videoCells, encodedLayout: content.layout });
+            if (this.autoLayout) {
+                this.$store.commit("multiview/setAutoLayout", {
+                    index: this.videoCells,
+                    encodedLayout: content.layout,
+                });
+            }
             this.$emit("close");
         },
     },

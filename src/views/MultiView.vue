@@ -282,6 +282,14 @@ export default {
                         });
                     }
                     // prompt overwrite with permalink, remove permalink if cancelled
+                    try {
+                        this.$gtag.event("init-from-link", {
+                            event_category: "multiview",
+                            event_label: `cells:${parsed?.layout?.length}`,
+                        });
+                        // eslint-disable-next-line no-empty
+                    } catch {}
+
                     this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
                 }
             } catch (e) {
@@ -398,6 +406,10 @@ export default {
             this.overwriteDialog = true;
         },
         handleToolbarClick(video) {
+            this.$gtag.event("video-added", {
+                event_category: "multiview",
+                event_label: video.type || "untyped",
+            });
             const hasEmptyCell = this.findEmptyCell();
             // more cells needed, increment to next preset with space
             if (!hasEmptyCell) {
@@ -433,6 +445,9 @@ export default {
         },
         handlePresetClicked(preset) {
             this.showPresetSelector = false;
+            this.$gtag.event("preset-clicked", {
+                event_category: "multiview",
+            });
             this.setMultiview({
                 ...preset,
                 mergeContent: true,
