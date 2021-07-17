@@ -132,7 +132,12 @@ export default {
             this.$emit("changed", val);
         },
         currentOrg(newval, oldval) {
-            if (this.currentTab === oldval) {
+            if (
+                this.currentTab === oldval ||
+                this.currentTab.name === this.favTab.name ||
+                this.currentTab.name === this.ytTab.name ||
+                this.currentTab.name === this.playlistTab.name
+            ) {
                 this.currentTab = newval;
             }
         },
