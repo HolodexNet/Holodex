@@ -1,6 +1,7 @@
 <template>
     <v-card>
         <v-card-title>{{ $t("views.multiview.presetEditor.title") }}</v-card-title>
+        <v-card-subtitle class="pb-0">{{ $t("component.channelInfo.videoCount", [videoCells]) }}</v-card-subtitle>
         <v-card-text>
             <v-row>
                 <v-col cols="auto">
@@ -27,7 +28,7 @@
 
 <script lang="ts">
 import { mdiContentSave } from "@mdi/js";
-import { encodeLayout, getEmptyCells } from "@/utils/mv-utils";
+import { encodeLayout } from "@/utils/mv-utils";
 import { mapState } from "vuex";
 import LayoutPreview from "./LayoutPreview.vue";
 
@@ -56,7 +57,14 @@ export default {
     computed: {
         ...mapState("multiview", ["presetLayout"]),
         canSave() {
-            return this.name.length > 0 && !this.presetLayout.find((layout) => layout.name === this.name);
+            return (
+                this.name.length > 0 &&
+                !this.presetLayout.find((layout) => layout.name === this.name) &&
+                this.layout.length
+            );
+        },
+        videoCells() {
+            return this.layout.filter((l) => !this.content[l.i] || this.content[l.i].type !== "chat").length;
         },
     },
     methods: {
@@ -67,14 +75,20 @@ export default {
                     contents: this.content,
                 }),
                 name: this.name,
-                emptyCells: this.autoLayout
-                    ? getEmptyCells({
-                          layout: this.layout,
-                          content: this.content,
-                      })
-                    : 0,
             };
+            this.$gtag.event("created-preset", {
+                event_category: "multiview",
+                event_label: `v${this.videoCells}c${
+                    this.layout.filter((l) => this.content[l.i]?.type === "chat").length
+                }`,
+            });
             this.$store.commit("multiview/addPresetLayout", content);
+            if (this.autoLayout) {
+                this.$store.commit("multiview/setAutoLayout", {
+                    index: this.videoCells,
+                    encodedLayout: content.layout,
+                });
+            }
             this.$emit("close");
         },
     },

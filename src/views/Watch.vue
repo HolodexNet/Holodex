@@ -160,7 +160,7 @@
 </template>
 
 <script lang="ts">
-import VueYouTubeEmbed from "vue-youtube-embed";
+import VueYoutube from "@/external/vue-youtube";
 import Vue from "vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import WatchInfo from "@/components/watch/WatchInfo.vue";
@@ -175,7 +175,7 @@ import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff } from "@mdi/js";
 
-Vue.use(VueYouTubeEmbed);
+Vue.use(VueYoutube);
 
 export default {
     name: "Watch",
@@ -249,7 +249,7 @@ export default {
             this.$store.commit("watch/fetchEnd");
         },
         ready(event) {
-            this.player = event.target;
+            this.player = event;
         },
         playing() {
             this.$gtag.event("start/resume", {

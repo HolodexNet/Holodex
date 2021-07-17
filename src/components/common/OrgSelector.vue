@@ -173,7 +173,9 @@ export default {
     async mounted() {
         this.ORGS = [
             ...(this.hideAllVTubers ? [] : [{ name: "All Vtubers", short: "Vtuber", name_jp: null }]),
-            ...(await backendApi.orgs()).data,
+            ...(await backendApi.orgs()).data.sort(
+                (a, b) => a.name.toLowerCase().charCodeAt(0) - b.name.toLowerCase().charCodeAt(0),
+            ),
         ];
     },
     computed: {
@@ -188,7 +190,7 @@ export default {
         sortedOrgs() {
             let list = this.ORGS.slice();
             if (this.search) {
-                list = list.filter((x) => x.toLowerCase().includes(this.search.toLowerCase()));
+                list = list.filter((x) => x.name.toLowerCase().includes(this.search.toLowerCase()));
             }
             list.sort((a, b) => {
                 const index1 = this.orgFavorites.findIndex((x) => x.name === a.name);

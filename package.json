@@ -62,12 +62,12 @@
     "vue-router": "^3.5.1",
     "vue-socket.io-extended": "^4.2.0",
     "vue-virtual-scroll-list": "^2.3.2",
-    "vue-youtube-embed": "^2.2.2",
     "vuetify": "^2.5.4",
     "vuex": "^3.6.2",
     "vuex-persistedstate": "^3.2.0",
     "vuex-persistedstate-migrate": "^1.0.0",
-    "vuex-shared-mutations": "^1.0.2"
+    "vuex-shared-mutations": "^1.0.2",
+    "youtube-player": "^5.5.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",

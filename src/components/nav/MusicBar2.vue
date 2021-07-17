@@ -6,7 +6,7 @@
         :value="isOpen"
         :retain-focus="false"
         content-class="music-player-bar"
-        v-if="currentSong"
+        v-if="song"
         ref="sheet"
     >
         <v-slider class="music-progress" hide-details :value="progress" height="3" @change="progressChange" />
@@ -18,18 +18,15 @@
                 <v-btn icon fab @click="playPause" color="primary">
                     <v-icon x-large>{{ playButtonIcon }}</v-icon>
                 </v-btn>
-                <v-btn
-                    icon
-                    class="mx-1"
-                    color="secondary"
-                    @click="
-                        () => {
-                            titleTransition = 'scroll-y-reverse-transition';
-                            $store.commit('music/nextSong', true);
-                        }
-                    "
-                >
-                    <v-icon>{{ mdiSkipNext }}</v-icon>
+                <v-btn icon class="mx-1" color="secondary" @click="nextButtonHandler">
+                    <v-progress-circular
+                        color="warning"
+                        :class="{ invisible: !showPatience }"
+                        :value="patience"
+                        size="40"
+                    >
+                        <v-icon color="secondary">{{ mdiSkipNext }}</v-icon>
+                    </v-progress-circular>
                 </v-btn>
                 <v-btn icon color="secondary" class="mx-1" @click="$store.commit('music/cycleMode')">
                     <v-icon>{{ shuffleButtonIcon }}</v-icon>
@@ -88,11 +85,11 @@
             </div>
             <!-- < v-scroll-y-transition mode="out-in"> -->
             <transition :name="titleTransition" mode="out-in">
-                <div class="d-flex align-center" :key="'snip' + (currentSong && currentSong.name)">
+                <div class="d-flex align-center" :key="'snip' + (song && song.name)">
                     <div class="pr-2">
                         <v-img
-                            v-if="currentSong && currentSong.art"
-                            :src="currentSong.art.replace('100x100', '50x50')"
+                            v-if="song && song.art"
+                            :src="song.art.replace('100x100', '50x50')"
                             aspect-ratio="1"
                             height="auto"
                             width="50px"
@@ -100,17 +97,17 @@
                     </div>
                     <div>
                         <div class="text-h6">
-                            {{ currentSong.name }}
+                            {{ song.name }}
                         </div>
                         <div class="single-line-clamp">
                             <router-link
                                 class="text-subtitle-2 secondary--text mr-2"
                                 id="songChannel"
-                                :to="`/channel/${currentSong.channel_id}`"
+                                :to="`/channel/${song.channel_id}`"
                             >
-                                {{ currentSong.channel[nameProperty] || currentSong.channel.name }}
+                                {{ song.channel[nameProperty] || song.channel.name }}
                             </router-link>
-                            <span class="text-subtitle-2 grey--text">({{ currentSong.original_artist }})</span>
+                            <span class="text-subtitle-2 grey--text">({{ song.original_artist }})</span>
                         </div>
                     </div>
                     <div class="music-more-btn">
@@ -130,11 +127,11 @@
                                 <v-list-item
                                     @click.stop
                                     target="_blank"
-                                    :href="`https://youtu.be/${currentSong.video_id}?t=${currentSong.start}`"
+                                    :href="`https://youtu.be/${song.video_id}?t=${song.start}`"
                                     ><v-icon left>{{ icons.mdiYoutube }}</v-icon>
                                     {{ $t("views.settings.redirectModeLabel") }}
                                 </v-list-item>
-                                <v-list-item :to="`/edit/video/${currentSong.video_id}/music`"
+                                <v-list-item :to="`/edit/video/${song.video_id}/music`"
                                     ><v-icon left>{{ icons.mdiPencil }}</v-icon>
                                     {{ $t("component.videoCard.edit") }}
                                 </v-list-item>
@@ -150,16 +147,17 @@
                 </v-btn>
             </div>
         </div>
+        <!--             :key="currentSong.video_id + playId" -->
         <song-frame
-            :videoId="currentSong.video_id"
-            :start="currentSong.start"
-            :end="currentSong.end"
-            :key="currentSong.video_id + playId"
+            :playback="currentSong"
             style="width: 250px; width: 356px"
             @playing="songIsPlaying"
             @paused="songIsPaused"
             @ended="songIsDone"
             @progress="songProgress"
+            @error="songError"
+            @buffering="songBuffering"
+            @ready="songReady"
         ></song-frame>
     </v-bottom-sheet>
 </template>
@@ -212,7 +210,8 @@
     }
 }
 
-.music-more-btn {
+.invisible .v-progress-circular__underlay {
+    stroke: transparent;
 }
 
 .music-progress {
@@ -257,8 +256,10 @@
 
 <script lang="ts">
 import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
-import VueYouTubeEmbed from "vue-youtube-embed";
+
 import Vue from "vue";
+import VueYoutube from "@/external/vue-youtube";
+
 import { mapGetters, mapState } from "vuex";
 import backendApi from "@/utils/backend-api";
 import {
@@ -279,17 +280,27 @@ import SongFrame from "../media/SongFrame.vue";
 import SongPlaylist from "../media/SongPlaylist.vue";
 import ResponsiveMenu from "../common/ResponsiveMenu.vue";
 
-Vue.use(VueYouTubeEmbed);
-
 const ICON_MODE = {
     [MUSIC_PLAYBACK_MODE.NATURAL]: mdiRepeatOff,
     [MUSIC_PLAYBACK_MODE.LOOP]: mdiRepeat,
     [MUSIC_PLAYBACK_MODE.LOOPONE]: mdiRepeatOnce,
     [MUSIC_PLAYBACK_MODE.SHUFFLE]: mdiShuffleVariant,
 };
+
+/** ==============================================
+ * - set the videoId to a new ID to play a song.
+ * - when it's DONE, advance to the next song.
+ * - wait for it to load the next song
+ * - after it loads, it PLAYS, which enables progress monitoring.
+ * -
+ *
+ *=============================================* */
 export default {
     name: "MusicBar2",
     components: { SongFrame, SongPlaylist, ResponsiveMenu },
+    created() {
+        Vue.use(VueYoutube);
+    },
     data() {
         return {
             // isOpen: true,
@@ -306,6 +317,9 @@ export default {
 
             progress: 0,
             player: null,
+
+            patience: 0, // patience mechanism used to auto advance broken songs.
+            showPatience: false,
 
             queueMenuOpen: false,
 
@@ -337,25 +351,24 @@ export default {
             }, 100);
         },
         playlist(nw) {
-            // console.log("playlist: ", nw.length);
             if (nw.length === 0) this.$store.commit("music/closeBar");
             if (this.isOpen === false && nw.length === 0) this.$store.commit("music/openBar");
         },
-        currentSong(ns, os) {
-            if (os != null && this.progress > 80 && this.progress < 105) {
-                // console.log("track song");
-                backendApi.trackSongPlay(os.channel_id, os.video_id, os.name).catch((err) => console.error(err));
-                this.$gtag.event("fully-listen", {
-                    event_category: "music",
-                    event_label: this.currentSong.channel.name,
-                });
-            } else {
-                this.$gtag.event("quick-skip", {
-                    event_category: "music",
-                    event_label: this.currentSong.channel.name,
-                });
-            }
-            // console.log("change song");
+        currentSong: {
+            deep: true,
+            handler(ns, os) {
+                if (os != null && this.progress > 80 && this.progress < 105) {
+                    const { song } = os;
+                    // console.log("track song");
+                    backendApi
+                        .trackSongPlay(song.channel_id, song.video_id, song.name)
+                        .catch((err) => console.error(err));
+                    this.$gtag.event("fully-listen", {
+                        event_category: "music",
+                        event_label: song.channel.name,
+                    });
+                }
+            },
         },
         titleTransition(ns) {
             if (ns !== "scroll-y-reverse-transition") {
@@ -385,26 +398,39 @@ export default {
             },
         },
         ...mapState("settings", ["nameProperty"]),
-        ...mapState("music", ["currentId", "playId", "playlist", "state", "mode", "addedAnimation", "isOpen"]),
+        ...mapState("music", [
+            "currentId",
+            "playId",
+            "playlist",
+            "state",
+            "mode",
+            "addedAnimation",
+            "isOpen",
+            "lastNextSong",
+        ]),
         ...mapGetters("music", ["currentSong", "canPlay"]),
+        song() {
+            return this.currentSong && this.currentSong.song;
+        },
     },
     methods: {
         // event handlers:
         // eslint-disable-next-line no-unused-vars
-        songIsDone(_player) {
-            this.$store.commit("music/nextSong");
+        songIsDone() {
+            console.log(`Received notice that song ${this.song.name} is done. Asking for next song.`);
+            this.$store.commit("music/nextSong", { isAuto: true });
         },
         songIsPlaying(player) {
-            this.player = player.target;
+            console.log("PLAYING");
+            this.player = player;
+            this.showPatience = false;
+            this.patience = 0;
             /**-----------------------
              * *       INFO
              *  if: the bar is NOT OPEN
-             *
              *  or
-             *
              *  The Music Player is supposed to be PAUSED
              *  AND the play event is not triggered by the user.
-             *
              *------------------------* */
             if (!this.isOpen || (this.state === MUSIC_PLAYER_STATE.PAUSED && this.allowPlayOverride === 0)) {
                 this.player.pauseVideo();
@@ -413,27 +439,93 @@ export default {
             this.$store.commit("music/play");
             this.$gtag.event("play", {
                 event_category: "music",
-                event_label: this.currentSong.channel.name,
+                event_label: this.song.channel.name,
             });
         },
         // eslint-disable-next-line no-unused-vars
-        songIsPaused(_player) {
+        songIsPaused() {
+            console.log("PAUSED");
             this.$store.commit("music/pause");
             this.$gtag.event("pause", {
                 event_category: "music",
-                event_label: this.currentSong.channel.name,
+                event_label: this.song.channel.name,
             });
         },
+        songBuffering() {},
         songProgress(time) {
-            if (!this.currentSong) this.progress = 0;
+            if (!this.song) {
+                this.progress = 0;
+                return;
+            }
 
-            const { start, end } = this.currentSong;
+            if (this.showPatience) {
+                this.patience -= 33;
+                console.log("Patience:", this.patience);
+                if (
+                    (this.patience <= 0 || document.visibilityState === "hidden") &&
+                    this.player.getPlayerState() === -1
+                ) {
+                    console.log("Patience is now 0, requesting next song forcibly.");
+                    this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
+                    this.$store.commit("music/play");
+                    this.patience = 70;
+                }
+                return;
+            }
+
+            const { start, end } = this.song;
             this.progress = Math.min(Math.max(0, (time - start) / (end - start)), 1) * 100;
-            if (time > end + 1) {
-                this.$store.commit("music/nextSong");
+            if (time > end && this.player.getPlayerState() === 1) {
+                // if it's PLAYING
+                console.log(`Progress debug: time=${time}, end=${end}`);
+                if (Date.now() - this.lastNextSong > 8000) {
+                    console.log("Next song triggered by temporal progress tick");
+                    this.$store.commit("music/nextSong", { isAuto: true });
+                }
             } else if (time < start - 10) {
                 this.player.seekTo(start);
             }
+        },
+        songError() {
+            console.log("Youtube Player encountered error");
+            // if you try to play into a not-available song it'll error.
+            this.showPatience = true;
+            this.patience = 120;
+            if (document.visibilityState === "hidden") {
+                // when document is hidden
+                console.log("Since the window is hidden. Trigger next song");
+                this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
+                this.$store.commit("music/play");
+                return;
+            }
+            console.log("Due to error, Window is visible, so we are entering patience countdown.");
+        },
+        songReady(evt) {
+            console.log("Youtube Player is Ready");
+            if (evt) {
+                this.player = evt;
+            }
+            const self = this;
+            setTimeout(() => {
+                const unstarted = evt.getPlayerState() === -1;
+                const data = evt.getVideoData();
+                if (unstarted && (!data || data.title === "")) {
+                    console.log(
+                        "YT player has been ready for 2s without having loaded the video data. We think it's a privated video or a unplayable video.",
+                    );
+                    self.showPatience = true;
+                    self.patience = 120;
+                    if (document.visibilityState === "hidden") {
+                        // when document is hidden
+                        console.log("Window isn't in view, requesting continue to next song");
+                        this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
+                        this.$store.commit("music/play");
+                        return;
+                    }
+                    // autoAdvance = true
+                    console.log("Window is visible, entering patience countdown.");
+                }
+            }, 2000);
         },
         playPause() {
             // if(this.state === MUSIC_PLAYER_STATE.PLAYING) this.$store.commit("music/pause");
@@ -454,13 +546,13 @@ export default {
             this.$store.commit("music/pause");
             this.$gtag.event("close", {
                 event_category: "music",
-                event_label: this.currentSong.channel.name,
+                event_label: this.song.channel.name,
             });
         },
         progressChange(progress) {
-            if (!this.currentSong || !this.player) return;
+            if (!this.song || !this.player) return;
 
-            const { start, end } = this.currentSong;
+            const { start, end } = this.song;
             const totalLength = end - start;
             const percent = progress / 100;
             const newOffsetTime = start + totalLength * percent;
@@ -468,11 +560,23 @@ export default {
         },
         prevButtonHandler() {
             if (this.progress > 5) {
-                this.player.seekTo(this.currentSong.start);
+                this.player.seekTo(this.song.start);
                 return;
             }
             this.titleTransition = "scroll-y-transition";
             this.$store.commit("music/prevSong");
+        },
+        nextButtonHandler() {
+            if (this.progress < 80) {
+                this.$gtag.event("quick-skip", {
+                    event_category: "music",
+                    event_label: this.song.channel.name,
+                });
+            }
+
+            this.titleTransition = "scroll-y-reverse-transition";
+            this.$store.commit("music/nextSong", { breakLoop: true });
+            this.progress = 0;
         },
         probableMouseClickInIFrame() {
             this.allowPlayOverride = Date.now();

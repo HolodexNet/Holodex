@@ -61,7 +61,7 @@
             :vertical-compact="false"
             :prevent-collision="true"
             :margin="[1, 1]"
-            @layout-updated="layoutUpdatedEvent"
+            @layout-updated="onLayoutUpdated"
         >
             <grid-item
                 v-for="item in layout"
@@ -75,7 +75,13 @@
                 :isResizable="item.isResizable !== false"
                 :key="'mvgrid' + item.i"
             >
-                <cell :item="item" @showSelector="(id) => (showSelectorForId = id)" @delete="handleDelete"> </cell>
+                <cell
+                    :cellWidth="columnWidth * item.w"
+                    :ref="`cell`"
+                    :item="item"
+                    @showSelector="(id) => (showSelectorForId = id)"
+                    @delete="handleDelete"
+                />
             </grid-item>
         </grid-layout>
 
@@ -99,50 +105,116 @@
             />
         </v-dialog>
 
-        <!-- Confirmation for deleting layout -->
-        <v-dialog v-model="overwriteDialog" width="400">
-            <v-card>
-                <v-card-title> {{ $t("views.multiview.confirmOverwrite") }} </v-card-title>
+        <LayoutChangePrompt
+            v-model="overwriteDialog"
+            :cancelFn="overwriteCancel"
+            :confirmFn="overwriteConfirm"
+            :defaultOverwrite="overwriteMerge"
+            :layoutPreview="overwriteLayoutPreview"
+        />
+
+        <v-dialog v-model="showMediaControls" max-width="400">
+            <v-card max-height="75vh" class="overflow-y-auto">
+                <v-card-title> {{ $t("views.multiview.mediaControls") }} </v-card-title>
                 <v-card-text class="d-flex flex-column justify-center align-center">
-                    <LayoutPreview :layout="layoutPreview.layout" :content="layoutPreview.content" />
-                    <v-checkbox
-                        v-model="overwriteMerge"
-                        :label="`Fill empty cells with current videos`"
-                        hide-details
-                    ></v-checkbox>
+                    <v-list max-width="100%">
+                        <v-list-item single-line style="border-bottom: 1px gray solid">
+                            <v-list-item-content>
+                                <v-list-item-action class="flex-row justify-center ma-0 mt-1">
+                                    <v-btn icon @click="allCellAction('play')">
+                                        <v-icon color="secondary lighten-1">
+                                            {{ icons.mdiPlay }}
+                                        </v-icon>
+                                    </v-btn>
+                                    <v-btn icon @click="allCellAction('pause')">
+                                        <v-icon color="secondary lighten-1">
+                                            {{ mdiPause }}
+                                        </v-icon>
+                                    </v-btn>
+                                    <v-btn icon @click="allCellAction('refresh')">
+                                        <v-icon color="secondary lighten-1">{{ icons.mdiRefresh }}</v-icon>
+                                    </v-btn>
+                                    <v-btn icon @click="allCellAction('unmute')">
+                                        <v-icon color="secondary lighten-1">
+                                            {{ icons.mdiVolumeHigh }}
+                                        </v-icon>
+                                    </v-btn>
+                                    <v-btn icon @click="allCellAction('mute')">
+                                        <v-icon color="secondary lighten-1">
+                                            {{ icons.mdiVolumeMute }}
+                                        </v-icon>
+                                    </v-btn>
+                                </v-list-item-action>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <template v-if="$refs['cell'] && $refs['cell'].filter((c) => c.video).length">
+                            <v-list-item
+                                v-for="(cellState, index) in $refs['cell'].filter((c) => c.video)"
+                                :key="index"
+                                two-line
+                                style="border-bottom: 1px gray solid"
+                            >
+                                <v-list-item-avatar v-if="cellState.video.channel.photo" class="ma-0 mr-1">
+                                    <v-img :src="cellState.video.channel.photo" />
+                                </v-list-item-avatar>
+                                <v-list-item-content>
+                                    <v-list-item-title class="primary--text">
+                                        {{ cellState.video.title || cellState.video.channel.name }}
+                                    </v-list-item-title>
+                                    <!-- <v-list-item-subtitle>
+                                        {{ cellState.video.channel.english_name || cellState.video.channel.name  }}
+                                    </v-list-item-subtitle> -->
+                                    <v-list-item-action class="flex-row justify-start ma-0 mt-1">
+                                        <v-btn icon @click="cellState.setPlaying(cellState.pausedMode)">
+                                            <v-icon color="grey lighten-1">
+                                                {{ cellState.pausedMode ? icons.mdiPlay : mdiPause }}
+                                            </v-icon>
+                                        </v-btn>
+                                        <v-btn icon @click="cellState.refresh()">
+                                            <v-icon color="grey lighten-1">{{ icons.mdiRefresh }}</v-icon>
+                                        </v-btn>
+                                        <v-btn icon @click="handleDelete(findKeyByVideoId(cellState.cellContent.id))">
+                                            <v-icon color="grey lighten-1">{{ icons.mdiDelete }}</v-icon>
+                                        </v-btn>
+                                        <v-btn icon @click="cellState.setMuted(!cellState.muted)">
+                                            <v-icon color="grey lighten-1">
+                                                {{ cellState.muted ? icons.mdiVolumeMute : icons.mdiVolumeHigh }}
+                                            </v-icon>
+                                        </v-btn>
+                                    </v-list-item-action>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </template>
+                        <v-list-item v-else class="pa-2">
+                            {{ $t("views.multiview.mediaControlsEmpty") }}
+                        </v-list-item>
+                    </v-list>
                 </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="overwriteConfirm">
-                        {{ $t("views.multiview.confirmOverwriteYes") }}
-                    </v-btn>
-                    <v-btn color="primary" text @click="overwriteCancel">
-                        {{ $t("views.library.deleteConfirmationCancel") }}
-                    </v-btn>
-                </v-card-actions>
             </v-card>
         </v-dialog>
     </div>
 </template>
 
 <script lang="ts">
-import VueYouTubeEmbed from "vue-youtube-embed";
 import Vue from "vue";
+import VueYoutube from "@/external/vue-youtube";
+
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
-import VideoSelector from "@/components/multiview/VideoSelector.vue";
-import { mdiViewGridPlus, mdiCardPlus, mdiContentSave } from "@mdi/js";
-import { mdiDelete } from "@/utils/icons";
-import { Content, decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-utils";
+import Cell from "@/components/multiview/Cell.vue";
 import PresetEditor from "@/components/multiview/PresetEditor.vue";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
-import LayoutPreview from "@/components/multiview/LayoutPreview.vue";
 import MultiviewToolbar from "@/components/multiview/MultiviewToolbar.vue";
-import Cell from "@/components/multiview/Cell.vue";
+import MultiviewLayoutMixin from "@/components/multiview/MultiviewLayoutMixin";
+import LayoutChangePrompt from "@/components/multiview/LayoutChangePrompt.vue";
+import VideoSelector from "@/components/multiview/VideoSelector.vue";
+import { mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical } from "@mdi/js";
+import { Content, decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
 import api from "@/utils/backend-api";
 
 export default {
     name: "MultiView",
+    mixins: [MultiviewLayoutMixin],
     metaInfo() {
         const vm = this;
         return {
@@ -156,29 +228,30 @@ export default {
         GridItem,
         VideoSelector,
         PresetSelector,
-        LayoutPreview,
         Cell,
         PresetEditor,
         MultiviewToolbar,
+        LayoutChangePrompt,
     },
 
     data() {
         return {
             mdiCardPlus,
+            mdiPause,
 
             showSelectorForId: -1,
-
-            collapseToolbar: false,
 
             overwriteDialog: false, // whether to show the overwrite dialog.
             overwriteCancel: null, // callbacks that will be generated when needed.
             overwriteConfirm: null, // callbacks to be generated when needed.
             overwriteMerge: false, // if the layout will be merged.
+            overwriteLayoutPreview: {},
+
+            collapseToolbar: false,
 
             showPresetSelector: false,
             showPresetEditor: false,
-
-            layoutPreview: {},
+            showMediaControls: false,
         };
     },
     async mounted() {
@@ -187,7 +260,6 @@ export default {
             // TODO: verify layout
             try {
                 const parsed = decodeLayout(this.$route.params.layout);
-                console.log(parsed);
                 if (parsed.layout && parsed.content) {
                     // Load missing video data from backend
                     const { data } = await api.videos({
@@ -199,11 +271,25 @@ export default {
                     });
                     if (data.length) {
                         data.forEach((video) => {
-                            if (parsed.content[video.id]) parsed.content[video.id].video = video;
+                            const matchingKey = Object.keys(parsed.content).find((key) => {
+                                return parsed.content[key].id === video.id;
+                            });
+                            if (matchingKey) {
+                                parsed.content[matchingKey].video = video;
+                            } else {
+                                parsed.content[matchingKey].custom = true;
+                            }
                         });
                     }
-                    console.log(parsed);
                     // prompt overwrite with permalink, remove permalink if cancelled
+                    try {
+                        this.$gtag.event("init-from-link", {
+                            event_category: "multiview",
+                            event_label: `cells:${parsed?.layout?.length}`,
+                        });
+                        // eslint-disable-next-line no-empty
+                    } catch {}
+
                     this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
                 }
             } catch (e) {
@@ -213,7 +299,7 @@ export default {
         }
     },
     created() {
-        Vue.use(VueYouTubeEmbed);
+        Vue.use(VueYoutube);
     },
     computed: {
         buttons() {
@@ -225,7 +311,7 @@ export default {
                     color: "green",
                 },
                 {
-                    icon: mdiDelete,
+                    icon: this.icons.mdiDelete,
                     tooltip: this.$t("component.music.clearPlaylist"),
                     onClick: this.clearAllItems,
                     color: "red",
@@ -238,6 +324,7 @@ export default {
                         this.showPresetSelector = true;
                     },
                     color: "primary",
+                    collapse: true,
                 },
                 {
                     icon: mdiContentSave,
@@ -249,20 +336,13 @@ export default {
                     collapse: true,
                 },
                 {
-                    icon: this.icons.mdiVolumeMute,
-                    tooltip: this.$t("views.multiview.muteAll"),
+                    icon: mdiTuneVertical,
+                    tooltip: this.$t("views.multiview.mediaControls"),
+                    color: "orange",
                     onClick: () => {
-                        this.setMuteAll(true);
+                        // this.setMuteAll(true);
+                        this.showMediaControls = !this.showMediaControls;
                     },
-                    collapse: true,
-                },
-                {
-                    icon: this.icons.mdiVolumeHigh,
-                    tooltip: this.$t("views.multiview.unmuteAll"),
-                    onClick: () => {
-                        this.setMuteAll(false);
-                    },
-                    collapse: true,
                 },
                 {
                     icon: this.icons.mdiFullscreen,
@@ -272,7 +352,7 @@ export default {
                 },
             ]);
         },
-        ...mapState("multiview", ["layout", "layoutContent", "presetLayout"]),
+        ...mapState("multiview", ["layout", "layoutContent", "presetLayout", "autoLayout"]),
         ...mapGetters("multiview", ["activeVideos"]),
         // Return true if there's an id requesting, setting false is setting id to -1
         showVideoSelector: {
@@ -283,31 +363,6 @@ export default {
                 if (!open) this.showSelectorForId = -1;
             },
         },
-        decodedCustomPresets() {
-            return this.presetLayout.map((preset) => {
-                return {
-                    ...preset,
-                    ...decodeLayout(preset.layout),
-                };
-            });
-        },
-        decodedDesktopPresets() {
-            return desktopPresets.map((preset) => {
-                return {
-                    ...preset,
-                    ...decodeLayout(preset.layout),
-                };
-            });
-        },
-        decodedMobilePresets() {
-            return mobilePresets.map((preset) => {
-                return {
-                    ...preset,
-                    ...decodeLayout(preset.layout),
-                };
-            });
-        },
-
         isMobile() {
             return this.$store.state.isMobile;
         },
@@ -319,14 +374,6 @@ export default {
         },
     },
     methods: {
-        setMuteAll(val) {
-            Object.keys(this.layoutContent).forEach((key) => {
-                const content = this.layoutContent[key];
-                if (content.type === "video") {
-                    this.$store.commit("multiview/setLayoutContentWithKey", { id: key, key: "muted", value: val });
-                }
-            });
-        },
         // prompt user for layout change
         promptLayoutChange(layoutWithContent, confirmFunction, cancelFunction) {
             // a dialog is already active
@@ -339,7 +386,7 @@ export default {
                 return;
             }
             // show dialog with confirm or cancel functions
-            this.layoutPreview = layoutWithContent;
+            this.overwriteLayoutPreview = layoutWithContent;
             this.overwriteConfirm = () => {
                 // hide dialog
                 this.overwriteDialog = false;
@@ -358,174 +405,53 @@ export default {
             // show the dialog
             this.overwriteDialog = true;
         },
-
+        handleToolbarClick(video) {
+            this.$gtag.event("video-added", {
+                event_category: "multiview",
+                event_label: video.type || "untyped",
+            });
+            const hasEmptyCell = this.findEmptyCell();
+            // more cells needed, increment to next preset with space
+            if (!hasEmptyCell) {
+                // Find new layout and set/prompt layout
+                this.addVideoAutoLayout(video, (newLayout) => {
+                    // User made edits to a preset, prompt them to overwrite
+                    this.overwriteMerge = true;
+                    this.promptLayoutChange(
+                        newLayout,
+                        // set new layout, and try to fill with video
+                        () => {
+                            this.tryFillVideo(video);
+                        },
+                    );
+                });
+            } else {
+                // autolayout is not on, or there is an empty cell, just try filling
+                this.tryFillVideo(video);
+            }
+        },
         handleVideoClicked(video) {
             if (this.showSelectorForId < -1) {
                 this.handleToolbarClick(video);
                 this.showSelectorForId = -1;
                 return;
             }
-            // set video for a specific cell id
-            this.$store.commit("multiview/setLayoutContentById", {
-                id: this.showSelectorForId,
-                content: {
-                    id: video.id,
-                    type: "video",
-                    video,
-                },
-            });
+            this.addVideoWithId(video, this.showSelectorForId);
             this.showSelectorForId = -1;
         },
         handleToolbarShowSelector() {
             // Show selector and pass video to auto layout handler
             this.showSelectorForId = -2;
         },
-        handleToolbarClick(video) {
-            const hasEmptyCell = this.findEmptyCell();
-            // more cells needed, increment to next preset with space
-            if (!hasEmptyCell) {
-                // find layout with space for one more new video
-                const presets = this.decodedCustomPresets.concat(
-                    this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets,
-                );
-                const newLayout =
-                    presets.find((preset) => preset.emptyCells === this.activeVideos.length + 1) ??
-                    presets.find((preset) => preset.emptyCells >= this.activeVideos.length + 1);
-
-                // found new layout
-                if (newLayout) {
-                    // deep clone preset
-                    const clonedLayout = JSON.parse(JSON.stringify(newLayout));
-
-                    // if the current layout is a preset or empty, set next layout without prompting
-                    if (!this.layout.length || this.isPreset(this.layout)) {
-                        this.setMultiview({
-                            ...clonedLayout,
-                            mergeContent: true,
-                        });
-                        this.tryFillVideo(video);
-                        return;
-                    }
-
-                    // User made edits to a preset, prompt them to overwrite
-                    this.overwriteMerge = true;
-                    this.promptLayoutChange(
-                        clonedLayout,
-                        // set new layout, and try to fill with video
-                        () => {
-                            this.tryFillVideo(video);
-                        },
-                    );
-                }
-            } else {
-                // autolayout is not on, or there is an empty cell, just try filling
-                this.tryFillVideo(video);
-            }
-        },
-        isPreset(currentLayout) {
-            // filter out any presets that dont match the amount of cells
-            const toCompare = this.decodedCustomPresets
-                .concat(this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets)
-                .filter((preset) => {
-                    return preset.emptyCells && preset.layout.length === currentLayout.length;
-                });
-
-            // there's no presets with equal cells
-            if (toCompare.length === 0) return false;
-
-            // go through each preset, and check for full matching layouts
-            return toCompare.some((preset) => {
-                for (let i = 0; i < currentLayout.length; i += 1) {
-                    const presetCell = preset.layout[i];
-                    const layoutCell = currentLayout[i];
-                    if (
-                        !(
-                            presetCell.x === layoutCell.x &&
-                            presetCell.y === layoutCell.y &&
-                            presetCell.w === layoutCell.w &&
-                            presetCell.h === layoutCell.h
-                        )
-                    ) {
-                        // at least one cell doesn't match, invalid layout
-                        return false;
-                    }
-                }
-                // all cells match, layout is a preset
-                return true;
-            });
-        },
-        tryFillVideo(video) {
-            // try find empty cell
-            const emptyCell = this.findEmptyCell();
-            if (emptyCell) {
-                this.$store.commit("multiview/setLayoutContentById", {
-                    id: emptyCell.i,
-                    content: {
-                        id: video.id,
-                        type: "video",
-                        video,
-                    },
-                });
-            }
-            // TODO: snack bar saying no valid empty cells
-        },
-        findEmptyCell() {
-            return this.layout.find((l) => {
-                return !this.layoutContent[l.i];
-            });
-        },
         handlePresetClicked(preset) {
             this.showPresetSelector = false;
+            this.$gtag.event("preset-clicked", {
+                event_category: "multiview",
+            });
             this.setMultiview({
                 ...preset,
                 mergeContent: true,
             });
-        },
-        layoutUpdatedEvent(newLayout) {
-            this.$store.commit("multiview/setLayout", newLayout);
-        },
-        removeItemById(i) {
-            this.$store.commit("multiview/removeLayoutItem", i);
-        },
-        clearAllItems() {
-            this.$store.commit("multiview/resetState");
-        },
-        addItem() {
-            this.$store.commit("multiview/addLayoutItem");
-        },
-        setMultiview({ layout, content, mergeContent = false }) {
-            if (mergeContent) {
-                const contentsToMerge = {};
-                let currentIndex = 0;
-                const currentContent = Object.values(this.layoutContent).filter((o) => (o as any).type === "video");
-                // filter out already set items
-                layout
-                    .filter((item) => {
-                        return !content[item.i];
-                    })
-                    .forEach((item) => {
-                        // fill until there's no more current videos
-                        if (currentIndex >= this.activeVideos.length) {
-                            return;
-                        }
-
-                        // get next video to fill this item's cell
-                        const key = item.i;
-                        const c: any = currentContent[currentIndex];
-
-                        contentsToMerge[key] = c;
-                        currentIndex += 1;
-                    });
-                // merge by key, prefer incoming content
-                const merged = {
-                    ...contentsToMerge,
-                    ...content,
-                };
-                this.$store.commit("multiview/setLayoutContent", merged);
-            } else {
-                this.$store.commit("multiview/setLayoutContent", content);
-            }
-            this.$store.commit("multiview/setLayout", layout);
         },
         handleDelete(id) {
             // Check if preset and downgrade layout, if cell being deleted is video
@@ -536,25 +462,15 @@ export default {
                     return;
                 }
 
-                // Find and set to previous preset layout
-                const presets = this.decodedCustomPresets.concat(
-                    this.isMobile ? this.decodedMobilePresets : this.decodedDesktopPresets,
-                );
-                const newLayout =
-                    presets.find((preset) => preset.emptyCells === this.activeVideos.length - 1) ??
-                    presets.find((preset) => preset.emptyCells >= this.activeVideos.length - 1);
-
-                const clonedLayout = JSON.parse(JSON.stringify(newLayout));
-                this.$store.commit("multiview/deleteLayoutContent", id);
-                this.setMultiview({
-                    ...clonedLayout,
-                    mergeContent: true,
-                });
+                this.deleteVideoAutoLayout(id);
             }
             // Default: delete item
             else {
                 this.$store.commit("multiview/removeLayoutItem", id);
             }
+        },
+        onLayoutUpdated(newLayout) {
+            this.$store.commit("multiview/setLayout", newLayout);
         },
         toggleFullScreen() {
             if (!document.fullscreenElement) {
@@ -562,6 +478,28 @@ export default {
             } else if (document.exitFullscreen) {
                 document.exitFullscreen();
             }
+        },
+        allCellAction(key) {
+            if (!this.$refs.cell) return;
+            const cells = this.$refs.cell.filter((c) => c.video);
+            const fns = {
+                play: () => {
+                    cells.forEach((c) => c.setPlaying(true));
+                },
+                pause: () => {
+                    cells.forEach((c) => c.setPlaying(false));
+                },
+                mute: () => {
+                    cells.forEach((c) => c.setMuted(true));
+                },
+                unmute: () => {
+                    cells.forEach((c) => c.setMuted(false));
+                },
+                refresh: () => {
+                    cells.forEach((c) => c.refresh());
+                },
+            };
+            fns[key]();
         },
     },
 };

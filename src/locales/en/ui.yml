@@ -345,6 +345,7 @@ views:
       remove: Delete
       desktop: Desktop
       mobile: Mobile
+      autoLayout: AutoLayout
     presetEditor:
       title: Save Layout
       name: Name
@@ -353,6 +354,8 @@ views:
       selectLive: Select Live
       addCustomVideo: Add Custom Video
     fullScreen: Fullscreen
+    mediaControls: Media Controls
+    mediaControlsEmpty: Videos being played will appear here
   mugen:
     welcome: >-
       Welcome to MugenClips! Everyone on this page is seeing the same randomly

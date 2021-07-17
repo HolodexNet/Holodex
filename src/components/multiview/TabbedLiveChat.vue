@@ -39,6 +39,7 @@
                 :hintConnectLiveTL="hintConnectLiveTL"
                 :showLiveChat="setShowChat"
                 fluid
+                :scale="scale"
                 :currentTime="currentTime"
             />
         </template>
@@ -48,6 +49,7 @@
 <script lang="ts">
 import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import { Content } from "@/utils/mv-utils";
+import { mapState } from "vuex";
 
 export default {
     name: "TabbedLiveChat",
@@ -71,10 +73,14 @@ export default {
             type: [String, Number],
             required: true,
         },
+        scale: {
+            type: Number,
+            default: 1,
+        },
     },
     data() {
         return {
-            currentTab: 0,
+            // currentTab: 0,
             showTL: false,
             hintConnectLiveTL: false,
             newTL: 0,
@@ -91,33 +97,39 @@ export default {
             if (this.currentContent?.video?.status === "past")
                 this.currentTime = this.currentContent?.playerControls?.getCurrentTime();
         }, 1000);
+
+        if (this.activeVideos.length > 1) {
+            const curTabs = Object.values(this.layoutContent)
+                .filter((l: Content) => l.type === "chat")
+                .map((l: Content) => l.currentTab ?? 0);
+            const newTab = curTabs.findIndex((current, index) => {
+                return !curTabs.includes(index);
+            });
+            this.currentTab = newTab > 0 ? newTab : 0;
+        }
     },
     beforeDestroy() {
         if (this.timer) clearInterval(this.timer);
     },
     computed: {
+        ...mapState("multiview", ["layoutContent"]),
         currentContent() {
             if (!this.activeVideos[this.currentTab]) return null;
-            return Object.values(this.$store.state.multiview.layoutContent).find(
+            return Object.values(this.layoutContent).find(
                 (x: Content) => x.id === this.activeVideos[this.currentTab].id,
             );
         },
-        savedTab: {
+        currentTab: {
             get() {
-                if (
-                    !this.$store.state.multiview.layoutContent[this.id] ||
-                    !this.$store.state.multiview.layoutContent[this.id].currentTab
-                ) {
-                    return 0;
-                }
-                return this.$store.state.multiview.layoutContent[this.id].currentTab;
+                return this.layoutContent[this.id].currentTab ?? 0;
             },
-            set(val) {
-                const obj = this.$store.state.multiview.layoutContent[this.id];
-                obj.currentTab = val;
-                return this.$store.commit("multiview/setLayoutContentById", {
+            set(value) {
+                // const obj = this.layoutContent[this.id];
+                // obj.currentTab = val;
+                this.$store.commit("multiview/setLayoutContentWithKey", {
                     id: this.id,
-                    content: obj,
+                    key: "currentTab",
+                    value,
                 });
             },
         },

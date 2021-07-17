@@ -1,22 +1,23 @@
 <template>
     <div>
         <template v-if="video.songcount">
-            <span class="lightup">
-                <v-btn icon small tile @click="showDetailed = !showDetailed" class="float-right mr-2">
-                    <v-icon small> {{ mdiTimerOutline }} </v-icon></v-btn
-                >
-                <v-btn icon small tile @click="addToMusicPlaylist" class="float-right mr-2">
-                    <v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon></v-btn
-                >
+            <span class="lightup d-flex">
                 <a class="d-block text-overline mx-2 my-1" @click="toggleExpansion('songs')">
                     {{ hidden.songs ? "＋" : "－" }} {{ relationI18N("songs") }}
                 </a>
+                <v-spacer />
+                <v-btn icon small tile @click="showDetailed = !showDetailed" class="mr-2">
+                    <v-icon small> {{ mdiTimerOutline }} </v-icon>
+                </v-btn>
+                <v-btn icon small tile @click="addToMusicPlaylist" class="mr-2">
+                    <v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon>
+                </v-btn>
             </span>
             <!-- Match the same structure as VideoCardList -->
             <v-expand-transition>
                 <v-container class="py-0" v-show="!hidden.songs">
                     <v-row>
-                        <v-list dense>
+                        <v-list dense style="width: 100%">
                             <song-item
                                 :detailed="showDetailed"
                                 v-for="(song, idx) in songList"
@@ -34,16 +35,7 @@
         </template>
         <template v-for="relation in Object.keys(related)">
             <template v-if="related[relation].length">
-                <div class="lightup" :key="`band${relation}`">
-                    <v-btn
-                        icon
-                        tile
-                        small
-                        @click="addToPlaylist(related[relation])"
-                        class="float-right mr-2"
-                        :key="`playlist-btn-${relation}`"
-                        ><v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon></v-btn
-                    >
+                <div class="lightup d-flex" :key="`band${relation}`">
                     <a
                         class="d-block text-overline mx-2 my-1"
                         :key="`${relation}-title`"
@@ -51,6 +43,16 @@
                     >
                         {{ hidden[relation] ? "＋" : "－" }} {{ relationI18N(relation) }}
                     </a>
+                    <v-spacer />
+                    <v-btn
+                        icon
+                        tile
+                        small
+                        @click="addToPlaylist(related[relation])"
+                        class="mr-2"
+                        :key="`playlist-btn-${relation}`"
+                        ><v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon></v-btn
+                    >
                 </div>
                 <v-expand-transition :key="`${relation}-anim`">
                     <VideoCardList
@@ -186,12 +188,12 @@ export default {
 
 <style>
 .lightup {
-    z-index: 3;
+    z-index: 1;
     position: relative;
     display: block;
 }
 .lightup * {
-    z-index: 2;
+    z-index: 1;
     line-height: 28px !important;
 }
 .lightup::after {

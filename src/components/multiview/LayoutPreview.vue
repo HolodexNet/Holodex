@@ -2,7 +2,7 @@
     <div class="layout-preview" :class="{ mobile: mobile, desktop: !mobile, 'theme--light': !$vuetify.theme.dark }">
         <template v-for="l in layout">
             <div class="cell" :key="l.i" :style="getStyle(l)">
-                <span v-if="content && content[l.i] && content[l.i].type === 'chat'">Chat</span>
+                <span v-if="content && content[l.i] && content[l.i].type === 'chat'">💬</span>
             </div>
         </template>
     </div>
@@ -38,6 +38,9 @@ export default {
                 left: px(l.x),
                 width: px(l.w),
                 height: px(l.h),
+                ...(this.content && this.content[l.i] && this.content[l.i].type === "chat"
+                    ? { "background-color": `${this.$vuetify.theme.parsedTheme.warning.base}44` }
+                    : { "background-color": `${this.$vuetify.theme.parsedTheme.info.base}44` }),
             };
         },
     },

@@ -13,31 +13,25 @@
         <!-- When Cell has no content: show video picker -->
         <v-sheet style="height: 100%" class="d-flex flex-column pt-4" v-if="!cellContent">
             <!--================= No Content Mode ================-->
-            <v-list
-                class="mx-6 thin-scroll-bar flex-grow-1 flex-shrink-1"
+            <v-sheet
+                class="mx-6 thin-scroll-bar d-flex flex-grow-1 flex-shrink-1 align-center justify-center"
                 v-if="!cellContent"
                 style="overflow-y: auto; overflow-x: hidden; position: relative"
             >
-                <v-sheet class="px-0 d-flex flex-grow-1 align-stretch mb-1">
-                    <v-btn
-                        class="flex-grow-1 mr-2"
-                        color="indigo darken-1"
-                        style="max-width: 300px; flex-basis: 50%"
-                        @click="$emit('showSelector', item.i)"
-                    >
-                        <v-icon>{{ icons.mdiMagnify }}</v-icon>
-                    </v-btn>
-                    <v-btn
-                        class="flex-grow-1"
-                        color="teal darken-1"
-                        style="max-width: 300px; flex-basis: 20%"
-                        @click="setItemAsChat(item)"
-                        v-if="!(cellContent && cellContent.type === 'chat')"
-                    >
-                        <v-icon>{{ mdiMessage }}</v-icon>
-                    </v-btn>
-                </v-sheet>
-            </v-list>
+                <!-- <v-sheet class="px-0 d-flex flex-grow-1 align-center justify-center mb-1"> -->
+                <v-btn class="mr-2" color="indigo darken-1" @click="$emit('showSelector', item.i)" rounded-sm large>
+                    <v-icon>{{ mdiCardPlus }}</v-icon>
+                </v-btn>
+                <v-btn
+                    color="teal darken-1"
+                    @click="setItemAsChat(item)"
+                    v-if="!(cellContent && cellContent.type === 'chat')"
+                    rounded-sm
+                    large
+                >
+                    <v-icon>{{ mdiMessage }}</v-icon>
+                </v-btn>
+            </v-sheet>
             <template>
                 <CellControl :playIcon="icons.mdiPlay" @delete="deleteCell" class="mx-6 mb-6 mt-0 flex-grow-0" />
             </template>
@@ -73,7 +67,6 @@
                         @pause="vidPlaying({ data: 2 })"
                         @error="pausedMode = true"
                         :mute="muted"
-                        ref="twitchPlayer"
                     >
                     </VueTwitchPlayer>
                     <!-- Youtube Player -->
@@ -85,8 +78,8 @@
                         }"
                         @ready="vidReady"
                         @ended="pausedMode = true"
-                        @playing="vidPlaying"
-                        @paused="vidPlaying"
+                        @playing="vidPlaying({ data: 1 })"
+                        @paused="vidPlaying({ data: 2 })"
                         @cued="pausedMode = true"
                         @error="pausedMode = true"
                         :mute="muted"
@@ -99,6 +92,7 @@
                         :setShowTL="toggleTL"
                         :setShowChat="toggleChat"
                         :id="item.i"
+                        :scale="chatScale"
                     />
                 </template>
             </v-sheet>
@@ -107,7 +101,7 @@
                 <!-- VIDEO + PAUSED --->
                 <CellControl
                     :playIcon="icons.mdiPlay"
-                    @playpause="ytPlayer.playVideo()"
+                    @playpause="setPlaying(true)"
                     @reset="uniqueId = Date.now()"
                     @back="resetCell"
                     @delete="deleteCell"
@@ -142,7 +136,7 @@
                             M9.9,10.8v3.8h-2v-3.8L5.1,6.6h2.4l1.4,2.2 l1.4-2.2h2.4L9.9,10.8z
                             M18.9,8.6h-2v6h-2v-6h-2v-2h6V8.6z
                         </v-icon>
-                        Chat
+                        <template v-if="cellWidth > 200">Chat</template>
                     </v-btn>
                     <v-btn
                         :x-small="toggleChat || toggleTL"
@@ -154,7 +148,7 @@
                             M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z M4,10h4v2H4V10z
                             M14,16H4v-2h10V16z M20,16h-4v-2 h4V16z M20,12H10v-2h10V12z
                         </v-icon>
-                        TL
+                        <template v-if="cellWidth > 200">TL</template>
                     </v-btn>
                 </v-sheet>
                 <div style="height: 20%" v-if="!toggleChat && !toggleTL"></div>
@@ -164,7 +158,7 @@
 </template>
 
 <script lang="ts">
-import { mdiMessage, mdiArrowLeftCircle, mdiSelectionEllipseArrowInside } from "@mdi/js";
+import { mdiCardPlus, mdiMessage, mdiArrowLeftCircle, mdiSelectionEllipseArrowInside } from "@mdi/js";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat.vue";
 import { mapState, mapGetters } from "vuex";
 import { getVideoIDFromUrl } from "@/utils/functions";
@@ -183,6 +177,9 @@ export default {
             type: Object,
             required: true,
         },
+        cellWidth: {
+            type: Number,
+        },
     },
     data() {
         return {
@@ -191,20 +188,26 @@ export default {
             pausedMode: true,
             uniqueId: Date.now(),
             ytPlayer: null,
+            twPlayer: null,
             toggleTL: false,
             toggleChat: true,
-
+            chatScale: 1,
             showDropOverlay: false,
             enterTarget: null,
             mdiSelectionEllipseArrowInside,
+            mdiCardPlus,
         };
     },
     mounted() {
         // initialize chat cell in non paused mode
         if (this.cellContent?.type === "chat") this.pausedMode = false;
         this.setLayoutFreeze();
+        this.checkScale();
     },
     watch: {
+        cellWidth() {
+            this.checkScale();
+        },
         cellContent(nw, old) {
             // if cell becomes null or content changes to a different type, set paused mode back to true
             if (!nw || (old && nw && nw.type !== old.type)) this.pausedMode = true;
@@ -254,19 +257,6 @@ export default {
                 this.$store.commit("multiview/setLayoutContentWithKey", { id: this.item.i, key: "muted", value });
             },
         },
-        playerControls: {
-            get() {
-                if (!this.cellContent) return null;
-                return this.cellContent.player;
-            },
-            set(value) {
-                this.$store.commit("multiview/setLayoutContentWithKey", {
-                    id: this.item.i,
-                    key: "playerControls",
-                    value,
-                });
-            },
-        },
         video: {
             get() {
                 if (!this.cellContent) return null;
@@ -278,6 +268,20 @@ export default {
         },
     },
     methods: {
+        refresh() {
+            this.uniqueId = Date.now();
+            this.pausedMode = true;
+        },
+        setPlaying(val) {
+            if (this.pausedMode !== val) return;
+            if (this.ytPlayer) {
+                console.log(this.ytPlayer);
+                !this.pausedMode ? this.ytPlayer.pauseVideo() : this.ytPlayer.playVideo();
+            }
+            if (this.twPlayer) {
+                !this.pausedMode ? this.twPlayer.pause() : this.twPlayer.play();
+            }
+        },
         setMuted(val) {
             this.muted = val;
         },
@@ -301,16 +305,42 @@ export default {
             }
         },
         vidReady(evt) {
-            if (evt) {
-                this.ytPlayer = evt.target;
-                this.playerControls = evt.target;
-                // console.log("reacehed");
-            } else if (this.isTwitchVideo) {
-                this.playerControls = this.$refs.twitchPlayer;
+            if (evt && this.isTwitchVideo) {
+                this.twPlayer = evt;
+            } else if (evt) {
+                this.ytPlayer = evt;
+                if (this.muted) {
+                    this.ytPlayer.mute();
+                } else {
+                    this.ytPlayer.unMute();
+                }
             }
         },
         resetCell() {
             this.$store.commit("multiview/deleteLayoutContent", this.item.i);
+        },
+        checkScale() {
+            if (this.cellContent?.type === "chat") {
+                switch (true) {
+                    case this.cellWidth < 150:
+                        this.chatScale = 0.5;
+                        break;
+                    case this.cellWidth < 200:
+                        this.chatScale = 0.6;
+                        break;
+                    case this.cellWidth < 250:
+                        this.chatScale = 0.75;
+                        break;
+                    case this.cellWidth < 300:
+                        this.chatScale = 0.85;
+                        break;
+                    case this.cellWidth < 350:
+                        this.chatScale = 1;
+                        break;
+                    default:
+                        this.chatScale = 1;
+                }
+            }
         },
         toggleChatHandle() {
             this.toggleChat = !this.toggleChat;
@@ -360,6 +390,7 @@ export default {
                             type: "video",
                             id: video.id,
                             video: {
+                                custom: true,
                                 id: video.id,
                                 channel: {
                                     name: video.channel.name,

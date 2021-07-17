@@ -80,7 +80,14 @@ export default {
     justify-content: center;
 
     &--overflow-container {
-        overflow: hidden;
+        overflow: scroll;
+        // Firefox hide scrollbar, allow touch scroll
+        scrollbar-width: none;
+    }
+    // hide scrollbar, allow touch scroll
+    &--overflow-container::-webkit-scrollbar {
+        width: 0;
+        height: 0;
     }
 
     &--nav__left,

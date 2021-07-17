@@ -53,7 +53,8 @@
                 :close-on-content-click="false"
                 :open-on-hover="false"
                 v-model="shareDialog"
-                width="400"
+                min-width="200px"
+                max-width="400px"
                 z-index="300"
             >
                 <template v-slot:activator="{ on, attrs }">
@@ -61,7 +62,7 @@
                         <v-icon>{{ mdiLinkVariant }}</v-icon>
                     </v-btn>
                 </template>
-                <v-card rounded="lg">
+                <v-card rounded="lg" width="80vw">
                     <v-card-text class="d-flex">
                         <v-text-field
                             readonly
@@ -86,7 +87,7 @@
                 <v-list dense>
                     <template v-for="(b, index) in buttons.filter((btn) => btn.collapse)">
                         <v-list-item @click="b.onClick" block class="mb-2" :key="`mv-collapsed-${index}`">
-                            <v-icon left>{{ b.icon }}</v-icon>
+                            <v-icon left :color="b.color">{{ b.icon }}</v-icon>
                             <span>{{ b.tooltip }}</span>
                         </v-list-item>
                     </template>
@@ -146,6 +147,10 @@ export default {
     },
     methods: {
         startCopyToClipboard(txt) {
+            this.$gtag.event("share-link-copied", {
+                event_category: "multiview",
+            });
+
             this.copyToClipboard(txt);
             const thisCopy = this;
             setTimeout(() => {

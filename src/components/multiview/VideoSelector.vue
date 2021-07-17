@@ -87,8 +87,8 @@
         <!-- Drop down -->
         <org-panel-picker horizontal @changed="handlePicker"></org-panel-picker>
         <v-icon
-            class="mr-2"
-            @click="loadSelection"
+            class="mr-2 ml-1"
+            @click="loadSelection(true)"
             :class="{ 'refresh-spin': isLoading }"
             v-if="selectedOrg.name !== 'YouTubeURL' && selectedOrg.name !== 'TwitchURL'"
         >
@@ -203,18 +203,22 @@ export default {
 
             tick: Date.now(),
             ticker: null,
-
-            lastUpdate: Date.now(),
+            refreshTimer: null,
         };
     },
     mounted() {
         // Start timer to update live time stamps
+        this.setAutoRefresh();
         this.ticker = setInterval(() => {
             this.tick = Date.now();
         }, 60000);
     },
     beforeDestroy() {
         if (this.ticker) clearInterval(this.ticker);
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
     },
     watch: {
         // Watch lastLiveUpdate from favorites module, and fetch new state
@@ -223,11 +227,16 @@ export default {
         },
         homeUpdateTick() {
             const { name } = this.selectedOrg;
-            if (name !== "Favorites" && name !== "Playlist" && !this.selectedOrg.inputType)
-                this.live = this.$store.state.home.live;
+            if (name !== "Favorites" || name !== "Playlist") this.live = this.$store.state.home.live;
         },
         savedVideosList() {
             if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;
+        },
+        // eslint-disable-next-line func-names
+        "$store.state.visibilityState": function () {
+            if (this.$store.state.visibilityState === "visible") {
+                this.loadSelection();
+            }
         },
     },
     computed: {
@@ -249,7 +258,7 @@ export default {
                         return (
                             l.status === "live" ||
                             dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
-                            (count < 5 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
+                            (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                         );
                     })
                     .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
@@ -264,7 +273,7 @@ export default {
                     return (
                         l.status === "live" ||
                         dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
-                        (count < 5 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
+                        (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                     );
                 });
             }
@@ -277,6 +286,12 @@ export default {
         },
     },
     methods: {
+        setAutoRefresh() {
+            if (this.refreshTimer) clearInterval(this.refreshTimer);
+            this.refreshTimer = setInterval(() => {
+                this.loadSelection();
+            }, 2 * 60 * 1000);
+        },
         // Returns a short hand form of time (ie. 33m, 2h)
         formatDurationLive(video) {
             const now = dayjs();
@@ -304,7 +319,7 @@ export default {
             }
         },
         // Load selected option
-        loadSelection() {
+        loadSelection(force) {
             this.isLoading = false;
             this.hasError = false;
             // Do nothing for custom URLs
@@ -315,7 +330,7 @@ export default {
             if (this.selectedOrg.name === "Favorites") {
                 this.live = [];
                 this.isLoading = true;
-                this.$store.dispatch("favorites/fetchLive", { minutes: 2, force: true }).finally(() => {
+                this.$store.dispatch("favorites/fetchLive", { minutes: 2, force }).finally(() => {
                     if (this.selectedOrg.name === "Favorites") {
                         this.isLoading = false;
                         this.live = this.$store.state.favorites.live;
@@ -331,7 +346,7 @@ export default {
 
             this.live = [];
             this.isLoading = true;
-            this.$store.dispatch("home/fetchLive", { force: false }).finally(() => {
+            this.$store.dispatch("home/fetchLive", { force }).finally(() => {
                 this.isLoading = false;
                 this.live = this.$store.state.home.live;
             });
@@ -342,8 +357,9 @@ export default {
         },
         handlePicker(panel) {
             // console.log(panel);
+            if (this.selectedOrg === panel) return;
             this.selectedOrg = panel;
-            this.loadSelection();
+            this.loadSelection(true);
         },
     },
 };

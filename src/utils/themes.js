@@ -21,7 +21,7 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#F4B056",
+                primary: "#faa749", // #F4B056
                 secondary: "#82D251",
             },
             light: {
@@ -126,6 +126,199 @@ export default [
                 background: "#f2f2f2",
                 secondary: "#B333C9",
                 primary: "#FF9257",
+            },
+        },
+    },
+    {
+        name: "Suisei",
+        id: 8,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#a8d6fc",
+                secondary: "#3c3a97 ",
+                success: "#16f7a5",
+            },
+            light: {
+                background: "#f2f2f2",
+                secondary: "#a8d6fc",
+                primary: "#3c3a97",
+            },
+        },
+    },
+    {
+        name: "Haato",
+        id: 9,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#ffe799",
+                secondary: "#d52d43",
+            },
+            light: {
+                background: "#f2f2f2",
+                secondary: "#ffe799",
+                primary: "#d52d43",
+            },
+        },
+    },
+    {
+        name: "Miko",
+        id: 10,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#fbb3a5",
+                secondary: "#fe7c8b",
+            },
+            light: {
+                background: "#f2f2f2",
+                secondary: "#fe7c8b",
+                primary: "#fbb3a5",
+            },
+        },
+    },
+    {
+        name: "IRyS",
+        id: 11,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#d91a5d",
+                secondary: "#98395c",
+            },
+            light: {
+                background: "#f2f2f2",
+                secondary: "#58294c ",
+                primary: "#d91a5d",
+            },
+        },
+    },
+    {
+        name: "Luna",
+        id: 12,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#EB8FE1",
+                secondary: "#F7638B",
+            },
+            light: {
+                background: "#f3efef",
+                secondary: "#DB8FEB",
+                primary: "#F7638B",
+            },
+        },
+    },
+    {
+        name: "Pekora",
+        id: 13,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#fca94c",
+                secondary: "#d2def4",
+            },
+            light: {
+                background: "#f2f2f2",
+                secondary: "#fca94c",
+                primary: "#d2def4",
+            },
+        },
+    },
+    {
+        name: "Polka",
+        id: 14,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#e9d9a3",
+                secondary: "#7f796a",
+            },
+            light: {
+                background: "#f2f2f2",
+                secondary: "#7f796a ",
+                primary: "#D4C378",
+            },
+        },
+    },
+    {
+        name: "Towa",
+        id: 15,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#e0e187",
+                secondary: "#7e6bac",
+            },
+            light: {
+                background: "#f2f2f2",
+                secondary: "#e0e187",
+                primary: "#7e6bac",
+            },
+        },
+    },
+    {
+        name: "Flare",
+        id: 16,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#d79e69",
+                secondary: "#244f6f",
+            },
+            light: {
+                background: "#f2f2f2",
+                primary: "#d79e69",
+                secondary: "#244f6f",
+            },
+        },
+    },
+    {
+        name: "Noel",
+        id: 17,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#9ba4b1",
+                secondary: "#928c97",
+            },
+            light: {
+                background: "#f2f2f2",
+                primary: "#9ba4b1",
+                secondary: "#928c97",
+            },
+        },
+    },
+    {
+        name: "Lamy",
+        id: 18,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#338bcc",
+                secondary: "#72b0e4",
+            },
+            light: {
+                background: "#f2f2f2",
+                primary: "#338bcc",
+                secondary: "#72b0e4",
+            },
+        },
+    },
+    {
+        name: "Okayu",
+        id: 19,
+        themes: {
+            dark: {
+                background: "#121212",
+                primary: "#4a477c",
+                secondary: "#cda4d5",
+            },
+            light: {
+                background: "#f2f2f2",
+                primary: "#4a477c",
+                secondary: "#cda4d5",
             },
         },
     },

@@ -5,6 +5,7 @@ import VueI18n from "vue-i18n";
 
 import enTL from "@/locales/en/ui.yml";
 import vuetifyEn from "vuetify/es5/locale/en";
+import { dayjs } from "@/utils/time";
 
 // ====== i18n setup ======
 Vue.use(VueI18n);
@@ -12,6 +13,7 @@ Vue.use(VueI18n);
 export const langs = [
     { val: "en", display: "English", credit: "@Holodex" },
     { val: "en-CA", display: "English (Canadian)", credit: "@Holodex" },
+    { val: "en-GB", display: "English (British)", credit: "@Holodex" },
     { val: "ja", display: "日本語", credit: "Yourein#3960,Saginomiya#2353" },
     { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
     { val: "ko", display: "한국어", credit: "AlexKoala#0253" },
@@ -32,6 +34,9 @@ export const langs = [
 export const dayjsLangs = {
     async en() {
         await import("dayjs/locale/en");
+    },
+    "en-GB": async () => {
+        await import("dayjs/locale/en-gb");
     },
     "en-CA": async () => {
         await import("dayjs/locale/en-ca");
@@ -82,6 +87,21 @@ export const dayjsLangs = {
         await import("dayjs/locale/hu");
     },
 };
+
+const dayjsName = {
+    "en-CA": "en-ca",
+    "en-GB": "en-gb",
+    zh: "zh-tw",
+    "es-ES": "es",
+    pt: "pt-br",
+};
+
+export async function setDayjsLang(lang) {
+    await dayjsLangs[lang]();
+    const dayjsLang = dayjsName[lang] || lang || "en";
+    dayjs.locale(dayjsLang);
+}
+
 export const i18n = new VueI18n({
     locale: "en", // Set locale
     fallbackLocale: "en",
@@ -124,7 +144,6 @@ export const i18n = new VueI18n({
 const loadedLanguages = ["en"];
 
 function setI18nLanguage(lang) {
-    dayjsLangs[lang]();
     i18n.locale = lang;
 }
 
