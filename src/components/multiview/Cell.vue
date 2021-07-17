@@ -270,6 +270,7 @@ export default {
     methods: {
         refresh() {
             this.uniqueId = Date.now();
+            this.pausedMode = true;
         },
         setPlaying(val) {
             if (this.pausedMode !== val) return;
