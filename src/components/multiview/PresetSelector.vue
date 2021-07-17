@@ -125,7 +125,7 @@ export default {
     mounted() {
         // this.desktopPresets = sortPresets(this.desktopPresets);
         // this.mobilePresets = sortPresets(this.mobilePresets);
-        if (this.presetLayout.length) this.currentTab = 0;
+        if (this.presetLayout.length > 0) this.currentTab = 0;
     },
     computed: {
         ...mapState("multiview", ["presetLayout", "autoLayout"]),
