@@ -345,6 +345,7 @@ views:
       remove: Delete
       desktop: Desktop
       mobile: Mobile
+      autoLayout: AutoLayout
     presetEditor:
       title: Save Layout
       name: Name

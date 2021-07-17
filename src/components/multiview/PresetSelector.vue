@@ -2,15 +2,12 @@
     <v-card style="min-height: 90vh">
         <v-card-title>{{ $t("views.multiview.presets") }}</v-card-title>
         <v-card-text>
-            <v-tabs>
-                <v-tab>My Layouts</v-tab>
-                <v-tab>Desktop</v-tab>
-                <v-tab>Mobile</v-tab>
-                <v-tab>AutoLayout</v-tab>
-
-                <!-- <v-alert dense color="blue-grey" v-html="$t('views.multiview.preset.shareOnDiscord')"> </v-alert> -->
+            <v-tabs v-model="currentTab">
+                <v-tab>{{ $t("views.multiview.preset.custom") }}</v-tab>
+                <v-tab>{{ $t("views.multiview.preset.desktop") }}</v-tab>
+                <v-tab>{{ $t("views.multiview.preset.mobile") }}</v-tab>
+                <v-tab>{{ $t("views.multiview.preset.autoLayout") }}</v-tab>
                 <v-tab-item>
-                    <v-card-subtitle class="text-body-1">{{ $t("views.multiview.preset.custom") }}</v-card-subtitle>
                     <v-row>
                         <template v-for="preset in decodedCustomPresets">
                             <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
@@ -45,7 +42,6 @@
                     </v-row>
                 </v-tab-item>
                 <v-tab-item>
-                    <v-card-subtitle class="text-body-1">{{ $t("views.multiview.preset.desktop") }}</v-card-subtitle>
                     <v-row>
                         <template v-for="preset in decodedDesktopPresets">
                             <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
@@ -59,7 +55,6 @@
                     </v-row>
                 </v-tab-item>
                 <v-tab-item>
-                    <v-card-subtitle class="text-body-1">{{ $t("views.multiview.preset.mobile") }}</v-card-subtitle>
                     <v-row justify="space-around" align="center">
                         <template v-for="preset in decodedMobilePresets">
                             <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
@@ -76,7 +71,6 @@
                     <template v-for="(group, index) in desktopGroups">
                         <v-radio-group v-model="autoLayout[index]" column :key="'preset-' + index" hide-details>
                             <v-card-subtitle class="text-body-1 pa-1" v-if="index !== 0">
-                                <!-- {{ $t("views.multiview.preset.desktop") }} -->
                                 {{ $t("component.channelInfo.videoCount", [index]) }}
                             </v-card-subtitle>
 
@@ -121,15 +115,17 @@ export default {
         LayoutPreview,
         LayoutPreviewCard,
     },
-    mounted() {
-        // this.desktopPresets = sortPresets(this.desktopPresets);
-        // this.mobilePresets = sortPresets(this.mobilePresets);
-    },
     data() {
         return {
             mdiDotsVertical,
             mdiToggleSwitch,
+            currentTab: 1,
         };
+    },
+    mounted() {
+        // this.desktopPresets = sortPresets(this.desktopPresets);
+        // this.mobilePresets = sortPresets(this.mobilePresets);
+        if (this.presetLayout.length) this.currentTab = 0;
     },
     computed: {
         ...mapState("multiview", ["presetLayout", "autoLayout"]),
