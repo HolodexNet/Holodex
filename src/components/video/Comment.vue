@@ -1,6 +1,11 @@
 <template>
     <v-list-item class="d-block my-3 comment">
-        <truncated-text style="white-space: pre-wrap" class="text-body-2" :html="processedMessage" lines="5">
+        <truncated-text
+            style="white-space: pre-wrap; word-break: break-word"
+            class="text-body-2"
+            :html="processedMessage"
+            lines="5"
+        >
             <template v-slot:button="{ expanded }">
                 <span class="text-subtitle-2" style="color: #aaa">{{
                     expanded ? $t("component.comment.close") : $t("component.comment.readMore")

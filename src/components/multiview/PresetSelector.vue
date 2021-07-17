@@ -124,10 +124,6 @@ export default {
     mounted() {
         // this.desktopPresets = sortPresets(this.desktopPresets);
         // this.mobilePresets = sortPresets(this.mobilePresets);
-        console.log(this.autoLayout);
-        if (this.autoLayout.length === 0) {
-            this.$store.commit("multiview/resetAutoLayout");
-        }
     },
     data() {
         return {

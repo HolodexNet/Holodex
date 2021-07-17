@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
-import { LayoutItem, getFirstCollision, getLayoutItem } from "@/external/vue-grid-layout/src/helpers/utils";
-import { decodeLayout, getEmptyCells, getDesktopDefaults } from "@/utils/mv-utils";
+import { LayoutItem, getFirstCollision } from "@/external/vue-grid-layout/src/helpers/utils";
+import { getDesktopDefaults } from "@/utils/mv-utils";
 import Vue from "vue";
 
 const initialState = {
