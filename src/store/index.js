@@ -223,7 +223,7 @@ const migrations = [
  *------------------------* */
 const syncedModules = /^(?:playlist|settings|history)/;
 const syncedMutations =
-    /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout))/;
+    /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout|setAutoLayout))/;
 
 export default new Vuex.Store({
     plugins: [
