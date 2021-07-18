@@ -111,6 +111,24 @@
                         :label="$t('views.settings.hideCollabStreamsLabel')"
                         :messages="$t('views.settings.hideCollabStreamsMsg')"
                     ></v-switch>
+
+                    <v-divider class="my-2" />
+
+                    <v-autocomplete
+                        v-model="hiddenTopics"
+                        :items="topics"
+                        multiple
+                        chips
+                        clearable
+                        deletable-chips
+                        :label="$t('views.settings.hideTopicsLabel')"
+                        :hint="$t('views.settings.hideTopicsMsg')"
+                        persistent-hint
+                    >
+                    </v-autocomplete>
+
+                    <v-divider class="my-2" />
+
                     <v-switch
                         v-model="useEnName"
                         :label="$t('views.settings.useEnglishNameLabel')"
@@ -138,6 +156,7 @@ import { TL_LANGS } from "@/utils/consts";
 import themeSet from "@/utils/themes";
 import { syncState } from "@/utils/functions";
 import Vue from "vue";
+import backendApi from "@/utils/backend-api";
 
 export default {
     name: "Settings",
@@ -155,6 +174,11 @@ export default {
             default: false,
         },
     },
+    async mounted() {
+        backendApi.topics().then(({ data }) => {
+            this.topics = data.map(({ id, count }) => ({ value: id, text: `${id} (${count})` }));
+        });
+    },
     computed: {
         ...syncState("settings", [
             "darkMode",
@@ -164,6 +188,7 @@ export default {
             "hideThumbnail",
             "defaultOpen",
             "hideCollabStreams",
+            "hiddenTopics",
         ]),
         currentGridSize: {
             get() {
@@ -196,6 +221,14 @@ export default {
             set(val: any[]) {
                 // sort array to increase cache hit rate
                 this.$store.commit("settings/setClipLangs", val.sort());
+            },
+        },
+        hiddenTopics: {
+            get() {
+                return this.$store.state.settings.hiddenTopics;
+            },
+            set(val: any[]) {
+                this.$store.commit("settings/setHiddenTopics", val.sort());
             },
         },
         theme() {
@@ -243,6 +276,7 @@ export default {
                     value: "multiview",
                 },
             ]),
+            topics: [],
         };
     },
     methods: {
