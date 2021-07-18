@@ -104,6 +104,7 @@ const mutations = {
         "liveTlShowModerator",
         "liveTlWindowSize",
         "hideCollabStreams",
+        "hiddenTopics",
     ]),
     resetState(state) {
         Object.assign(state, initialState);
