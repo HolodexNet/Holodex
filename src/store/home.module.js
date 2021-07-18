@@ -35,11 +35,7 @@ const actions = {
                     include: "mentions",
                 })
                 .then((res) => {
-                    let live = res;
-                    if (rootState.settings.hiddenTopics) {
-                        live = live.filter((video) => !rootState.settings.hiddenTopics.includes(video.topic_id));
-                    }
-                    commit("setLive", live);
+                    commit("setLive", res);
                     commit("fetchEnd");
                 })
                 .catch((e) => {

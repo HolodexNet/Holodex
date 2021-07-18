@@ -274,18 +274,6 @@ export default {
                         limit,
                         offset,
                     })
-                    .then((apiRes) => {
-                        if (this.$store.state.settings.hideCollabStreams) {
-                            const favoritesSet = new Set(this.$store.state.favorites.map((f) => f.id));
-                            apiRes.data.items = apiRes.data.items.filter((v) => favoritesSet.has(v.channel.id));
-                        }
-                        if (this.$store.state.settings.hiddenTopics) {
-                            apiRes.data.items = apiRes.data.items.filter(
-                                (v) => !this.$store.state.settings.hiddenTopics.includes(v.topic_id),
-                            );
-                        }
-                        return apiRes;
-                    })
                     .catch((err) => {
                         console.error(err);
                         this.$store.dispatch("loginVerify"); // check if the user is actually logged in.
