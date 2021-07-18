@@ -146,17 +146,21 @@ export default {
         },
         processedVideos() {
             const blockedChannels = this.$store.getters["settings/blockedChannelIDs"];
+            const hiddenTopics = this.$store.getters["settings/hiddenTopics"];
+            const filterVideos: any = (x) => {
+                return (
+                    (this.ignoreBlock || !blockedChannels.has(x.channel_id || x.channel.id)) &&
+                    !hiddenTopics.has(x.topic_id)
+                );
+            };
+
             if (this.limitRows <= 0 || this.expanded) {
-                return this.videos.filter((x) => {
-                    return this.ignoreBlock || !blockedChannels.has(x.channel_id || x.channel.id);
-                });
+                return this.videos.filter(filterVideos);
             }
             return this.videos
                 .slice(0)
                 .splice(0, this.limitRows * this.colSize)
-                .filter((x) => {
-                    return this.ignoreBlock || !blockedChannels.has(x.channel_id || x.channel.id);
-                });
+                .filter(filterVideos);
         },
         colSize() {
             if (this.horizontal) return 1;
