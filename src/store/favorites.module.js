@@ -57,11 +57,14 @@ const actions = {
             return api
                 .favoritesLive(rootState.userdata.jwt)
                 .then((res) => {
-                    // filter out collab channels if settings is set
                     let live = res;
+                    // filter out collab channels if settings is set
                     if (rootState.settings.hideCollabStreams) {
                         const favoritesSet = new Set(state.favorites.map((f) => f.id));
-                        live = res.filter((video) => favoritesSet.has(video.channel.id));
+                        live = live.filter((video) => favoritesSet.has(video.channel.id));
+                    }
+                    if (rootState.settings.hiddenTopics) {
+                        live = live.filter((video) => !rootState.settings.hiddenTopics.includes(video.topic_id));
                     }
                     live.sort((a, b) => {
                         if (a.available_at === b.available_at) {

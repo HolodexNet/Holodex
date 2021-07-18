@@ -263,16 +263,25 @@ export default {
         },
         getLoadFn() {
             return async (offset, limit) => {
-                const res = await backendApi.videos({
-                    status: "past",
-                    ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                    include: "clips",
-                    org: this.$store.state.currentOrg.name,
-                    lang: this.$store.state.settings.clipLangs.join(","),
-                    paginated: !this.scrollMode,
-                    limit,
-                    offset,
-                });
+                const res = await backendApi
+                    .videos({
+                        status: "past",
+                        ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
+                        include: "clips",
+                        org: this.$store.state.currentOrg.name,
+                        lang: this.$store.state.settings.clipLangs.join(","),
+                        paginated: !this.scrollMode,
+                        limit,
+                        offset,
+                    })
+                    .then((apiRes) => {
+                        if (this.$store.state.settings.hiddenTopics) {
+                            apiRes.data.items = apiRes.data.items.filter(
+                                (v) => !this.$store.state.settings.hiddenTopics.includes(v.topic_id),
+                            );
+                        }
+                        return apiRes;
+                    });
                 return res.data;
             };
         },
