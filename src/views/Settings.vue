@@ -115,14 +115,14 @@
                     <v-divider class="my-2" />
 
                     <v-autocomplete
-                        v-model="hiddenTopics"
+                        v-model="ignoredTopics"
                         :items="topics"
                         multiple
                         chips
                         clearable
                         deletable-chips
-                        :label="$t('views.settings.hideTopicsLabel')"
-                        :hint="$t('views.settings.hideTopicsMsg')"
+                        :label="$t('views.settings.ignoredTopicsLabel')"
+                        :hint="$t('views.settings.ignoredTopicsMsg')"
                         persistent-hint
                     >
                     </v-autocomplete>
@@ -188,7 +188,7 @@ export default {
             "hideThumbnail",
             "defaultOpen",
             "hideCollabStreams",
-            "hiddenTopics",
+            "ignoredTopics",
         ]),
         currentGridSize: {
             get() {
@@ -223,12 +223,12 @@ export default {
                 this.$store.commit("settings/setClipLangs", val.sort());
             },
         },
-        hiddenTopics: {
+        ignoredTopics: {
             get() {
-                return this.$store.state.settings.hiddenTopics;
+                return this.$store.state.settings.ignoredTopics;
             },
             set(val: any[]) {
-                this.$store.commit("settings/setHiddenTopics", val.sort());
+                this.$store.commit("settings/setIgnoredTopics", val.sort());
             },
         },
         theme() {

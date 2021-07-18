@@ -129,6 +129,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        hideIgnoredTopics: {
+            type: Boolean,
+            default: false,
+        },
     },
     methods: {
         handleVideoClick(video) {
@@ -150,7 +154,7 @@ export default {
         },
         processedVideos() {
             const blockedChannels = this.$store.getters["settings/blockedChannelIDs"];
-            const hiddenTopics = this.$store.getters["settings/hiddenTopics"];
+            const ignoredTopics = this.$store.getters["settings/ignoredTopics"];
             const favoriteChannels = this.$store.getters["favorites/favoriteChannelIDs"];
 
             const filterVideos = (v) => {
@@ -165,7 +169,9 @@ export default {
                     keep &&= favoriteChannels.has(channelId);
                 }
 
-                keep &&= !hiddenTopics.has(v.topic_id);
+                if (this.hideIgnoredTopics) {
+                    keep &&= !ignoredTopics.has(v.topic_id);
+                }
 
                 return keep;
             };

@@ -253,8 +253,8 @@ views:
       - Small
     hideCollabStreamsLabel: Hide Collab Streams
     hideCollabStreamsMsg: Hide collab streams from your favorites feed
-    hideTopicsLabel: Hide Topics
-    hideTopicsMsg: Hide videos with these topics from all video feeds
+    ignoredTopicsLabel: Ignored Topics
+    ignoredTopicsMsg: Hide videos with these topics from the Home and Favorites pages
     theme: Theme
   app:
     update_available: An update is available
