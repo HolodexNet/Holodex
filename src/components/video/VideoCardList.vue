@@ -125,6 +125,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        hideCollabs: {
+            type: Boolean,
+            default: false,
+        },
     },
     methods: {
         handleVideoClick(video) {
@@ -147,11 +151,23 @@ export default {
         processedVideos() {
             const blockedChannels = this.$store.getters["settings/blockedChannelIDs"];
             const hiddenTopics = this.$store.getters["settings/hiddenTopics"];
-            const filterVideos: any = (x) => {
-                return (
-                    (this.ignoreBlock || !blockedChannels.has(x.channel_id || x.channel.id)) &&
-                    !hiddenTopics.has(x.topic_id)
-                );
+            const favoriteChannels = this.$store.getters["favorites/favoriteChannelIDs"];
+
+            const filterVideos = (v) => {
+                let keep = true;
+                const channelId = v.channel_id || v.channel.id;
+
+                if (!this.ignoreBlock) {
+                    keep &&= !blockedChannels.has(channelId);
+                }
+
+                if (this.hideCollabs) {
+                    keep &&= favoriteChannels.has(channelId);
+                }
+
+                keep &&= !hiddenTopics.has(v.topic_id);
+
+                return keep;
             };
 
             if (this.limitRows <= 0 || this.expanded) {
