@@ -54,6 +54,7 @@
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
+                        hideIgnoredTopics
                     >
                     </VideoCardList>
                     <v-divider class="my-3 secondary" v-if="lives.length" />
@@ -63,6 +64,7 @@
                         :includeAvatar="shouldIncludeAvatar"
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
+                        hideIgnoredTopics
                     >
                     </VideoCardList>
                 </template>
@@ -89,6 +91,7 @@
                             includeChannel
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
+                            hideIgnoredTopics
                         />
                         <!-- only show SkeletonCardList if it's loading -->
                         <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />

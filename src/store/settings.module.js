@@ -23,6 +23,7 @@ const initialState = {
     hideThumbnail: false,
     nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
     hideCollabStreams: false,
+    ignoredTopics: [],
 
     // Live TL Window Settings
     liveTlStickBottom: false,
@@ -51,6 +52,9 @@ const getters = {
     },
     liveTlBlockedNames(state) {
         return new Set(state.liveTlBlocked);
+    },
+    ignoredTopics(state) {
+        return new Set(state.ignoredTopics);
     },
 };
 
@@ -85,6 +89,9 @@ const mutations = {
     setClipLangs(state, val) {
         state.clipLangs = val;
     },
+    setIgnoredTopics(state, val) {
+        state.ignoredTopics = val;
+    },
     setScrollMode(state, val) {
         state.scrollMode = val;
     },
@@ -97,6 +104,7 @@ const mutations = {
         "liveTlShowModerator",
         "liveTlWindowSize",
         "hideCollabStreams",
+        "ignoredTopics",
     ]),
     resetState(state) {
         Object.assign(state, initialState);
