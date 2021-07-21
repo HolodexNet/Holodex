@@ -1,7 +1,6 @@
 ---
 component:
   apiError:
-    title: Gomenasorry!
     textBeforeTwitter: '콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 '
     textAfterTwitter: '를 확인하거나'
     aboutPage: 정보 페이지
@@ -32,7 +31,6 @@ component:
     settings: 설정
     login: 로그인
     logout: 로그아웃
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: 계정 설정
     music: 음악
     multiview: 멀티뷰
@@ -339,7 +337,6 @@ views:
 time:
   soon: 예정
   diff_future_date: '{0} 시작 ({1})'
-  distance_past_date: '{0}'
 editor:
   music:
     add: 추가
@@ -364,10 +361,8 @@ editor:
   enterMode: 동영상 편집
 about:
   quicklinks: 빠른 연결
-  discordBtn: Holodex Discord
   issueTracker: 이슈 트래커 / 소스
   faq:
-    title: FAQ
     ytchatHeader: YouTube 채팅에 로그인되지 않아요!
     ytchatContent: >-
       타사 쿠키 차단으로 알려진 보안 기능을 끄거나 이 웹사이트와 youtube.com을 타사 쿠키 차단에서 제외해주세요.
@@ -398,7 +393,8 @@ about:
       title: 저는 키리누키 제작자이고 제 채널 또는 클립을 Holodex에서 찾을 수 없습니다
       contents:
         - >-
-
+          Please check on the Channels page to see if you are listed as a subber, if not please fill out
+        - ', and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.'
         - >-
           , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
     feedback:
@@ -412,13 +408,6 @@ about:
     <a href="https://github.com/RiceCakess/Holodex/issues"> Github 이슈 트레커</a>에서 이슈를 생성하거나 Discord 내의 Holodex 팀을 찾을 수 있습니다 <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: 개발진
-    contents:
-      - I would like to give big thanks to the
-      - team for their work on
-      - >-
-        Also to all the subbers for helping the overseas bros! Please check them out!
-      - >-
-
   changelog:
     title: 변경 사항
   news:
