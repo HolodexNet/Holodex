@@ -397,11 +397,21 @@ about:
           klickst. Es ist momentan nicht möglich, Clipper als Favoriten zu markieren. Erwäge trotzdem, sie auf anderen Wegen zu unterstützen!
       disappear:
         title: Meine Favoritenliste ist verschwunden / Ich kann keine Favoriten setzen
+      contents:
+        - >-
+          Bitte stelle sicher, dass du eingeloggt bist und besuche die Registerkarte "Favoriten", um eine Aktualisierung zu erzwingen.
     mobile:
       title: Gibt es eine Android/iOS App für Holodex?
       content:
         summary: >-
-          Wir arbeiten daran! In der Zwischenzeit nutze bitte die "Add to Home"-Funktion in deinem Browser. Wir haben sie stark optimiert, damit sie sich wie eine App verhält
+          Wir arbeiten daran! In der Zwischenzeit nutze bitte die "Zum Startbildschirm hinzufügen"-Funktion in deinem Browser. Wir haben sie stark optimiert, damit sie sich wie eine App verhält
+        android:
+          - 'Android Chrome: Navigiere zur Seite, klicke auf die drei Punkte'
+          - oben rechts und finde "Zum Startbildschirm hinzufügen".
+        ios:
+          - >-
+            iOS Safari: Navigiere zur Seite auf deinem Smartphone und klicke auf das Quadrat mit dem Pfeil nach oben
+          - am unteren Rand des Browsers und klicke auf "Zum Startbildschirm hinzufügen"
     MugenClips:
       title: Was ist MugenClips?
     subber:
@@ -417,6 +427,14 @@ about:
     Du kannst einen Fehler im <a href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a> melden oder das Holodex Team auf Discord kontaktieren. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Credits
+    contents:
+      - Besonders möchte ich mich bedanken beim
+      - Team für ihre Arbeit an der
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+        This is a fan made website and the content found on this website is owned by Cover corp and its partners. The site follows the guidelines set forth by Cover corp in their
+      - Derivative Work License Agreement
   changelog:
     title: Änderungsverlauf
   news:
