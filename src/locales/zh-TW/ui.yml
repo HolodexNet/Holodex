@@ -39,6 +39,7 @@ component:
     points: pts
     playlist: 播放清單
   videoCard:
+    clips: '{n} 部剪輯'
     watching: '{0} 人正在觀看'
     liveNow: 實況中
     edit: 編輯
@@ -132,7 +133,9 @@ views:
   channel:
     video: 影片
     clips: 剪輯
+    music: 音樂
     collabs: 連動
+    about: 簡介
   channels:
     sortOptions:
       subscribers: 訂閱者數
@@ -144,6 +147,8 @@ views:
     tabs:
       Vtuber: Vtuber
       Subber: 翻譯剪輯
+      Favorites: 我的收藏
+      Blocked: 黑名單
     favoritesAreEmpty: 您目前沒有任何收藏！
     blockedAreEmpty: 沒有任何頻道在您的黑名單中
   home:
@@ -151,7 +156,9 @@ views:
     recentVideosHeading: 最近新增影片
     noStreams: 目前沒有任何正在實況／預定實況的頻道
     recentVideoToggles:
+      all: 全部
       official: 存檔
+      subber: 剪輯
   library:
     savedVideosTitle: 儲存的影片
     createYtPlaylistButton: 建立YouTube播放清單 ({0})
@@ -185,6 +192,7 @@ views:
       newest: 新增日期（最新）
       oldest: 新增日期（最舊）
     type:
+      all: 全部
       official: 官方
       clip: 剪輯
     unsupportedQuery: >-
@@ -192,6 +200,7 @@ views:
     sortByLabel: 排序方式
     typeDropdownLabel: 影片類型
   settings:
+    title: 網站設定
     darkModeLabel: 深色主題
     darkModeMsg: 設定本站要以淺色模式或是深色模式呈現。
     redirectModeLabel: 於YouTube開啟影片
@@ -231,6 +240,7 @@ views:
   app:
     update_available: 已取得更新
     update_btn: 更新
+    close_btn: 關閉
     check_about_page: 查看關於頁面以詳細了解更新內容
     nowSupportsMultiOrg: Holodex現在已支援更多Vtuber團體。
     loginCallToAction: 登入以取得您的收藏資料
@@ -264,6 +274,7 @@ views:
     promptForAction: >-
       創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
     manageFavorites: 管理我的收藏
+    close: 關閉
     showall: 顯示全部
   editor:
     needlogin: 需要登入Holodex才能編輯影片/音樂的相關資料。
@@ -306,6 +317,7 @@ views:
         想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
       custom: 自訂佈局
       toggleAutoLayout: 是否納入自動調整模式
+      remove: 刪除此佈局
       desktop: 桌上型電腦佈局
       mobile: 手機專用佈局
       autoLayout: 自動排版模式
@@ -337,6 +349,7 @@ time:
 editor:
   music:
     add: 加入歌曲
+    update: 更新
     permission: >-
       您需要擁有或取得高於「編輯者」身分組的權限才能更新/刪除歌曲。請至 <a class='white--text' href='/about'>Discord社群</a> 申請成為編輯者或是回報任何問題。
     titles:
@@ -398,7 +411,7 @@ about:
           - 然後選擇「加到主畫面」。
         ios:
           - >-
-            iOS Safari: Navigate to the site on your phone, click the square with arrow pointing up
+            iOS Safari：於瀏覽器開啟本站後，點擊Safari底部帶有向上箭頭的圖示
           - 然後選擇「加入主畫面」。
     MugenClips:
       title: MugenClips 是什麼？
