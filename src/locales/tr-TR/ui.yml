@@ -39,6 +39,7 @@ component:
     points: puan
     playlist: Listeler
   videoCard:
+    clips: '{n} Klip'
     watching: '{0} İzleyici'
     liveNow: Şu an canlı
     edit: Düzenle
@@ -132,7 +133,9 @@ views:
   channel:
     video: Videolar
     clips: Klipler
+    music: Müzik
     collabs: Collablar
+    about: Hakkında
   channels:
     sortOptions:
       subscribers: Aboneler
@@ -144,6 +147,8 @@ views:
     tabs:
       Vtuber: Vtuber
       Subber: Altyazıcı
+      Favorites: Favoriler
+      Blocked: Engellenenler
     favoritesAreEmpty: Hiç favoriniz yok!
     blockedAreEmpty: Engellediğiz kanal yok.
   home:
