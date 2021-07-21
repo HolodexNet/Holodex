@@ -1,1 +1,405 @@
 ---
+component:
+  apiError:
+    title: Sumimaaf!
+    textBeforeTwitter: 'Terdapat ralat ketika mendapatkan kembali kandungan. Sila semak di Twitter'
+    textAfterTwitter: ' atau laporkan ralat melalui'
+    aboutPage: laman Perihal
+    afterAboutPageHyperlink: .
+  channelList:
+    signInToFavorite: Pendaftaran diperlukan
+    unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
+    favoriteAllInGroup: Masukkan seluruh ahli pecahan ini ke dalam Kegemaran
+  channelInfo:
+    stats: Statistik
+    videoCount: '{0} Buah Video'
+    clipCount: '{n} Buah Sedutan'
+    subscriberCount: '{n} Langganan'
+    subscriberNA: Bilangan langganan tidak tersedia
+    totalViews: Jumlah Tontonan
+  channelSocials:
+    addToFavorites: Tambahkan pada Kegemaran
+    removeFromFavorites: Alih keluar daripada Kegemaran
+    unblock: Nyahsekat saluran ini
+    block: Sekat kandungan saluran ini di seluruh Holodex
+    blocked: Disekat
+  mainNav:
+    home: Laman Utama
+    favorites: Kegemaran
+    channels: Saluran
+    about: Perihal
+    library: Pustaka
+    settings: Tetapan
+    login: Daftar Masuk
+    logout: Daftar Keluar
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Tetapan Akaun
+    music: Muzik
+    multiview: Berbilang Tontonan
+    points: mata
+    playlist: Senarai main
+  videoCard:
+    watching: '{0} Tontonan Sekarang'
+    liveNow: Sedang Bersiaran
+    edit: Sunting
+    copiedToClipboard: Pautan telah disalin ke papan keratan.
+    copyLink: Salin Pautan Holodex
+    premiere: TAYANGAN PERDANA
+    googleCalendar: Tambahkan ke Kalendar Google
+  videoDescription:
+    description: Perihalan
+  description:
+    showLess: Tunjukkan Kurang
+    showMore: Tunjukkan Lagi
+  watch:
+    streamingFor: Telah berlangsung selama {0}
+    nextUpInMugen: Seterusnya
+    Comments:
+      title: Ulasan
+      all: Semua
+  search:
+    searchLabel: Cari
+    type:
+      channel: saluran
+      topic: topik
+      org: kumpulan
+      titledesc: tajuk/perihalan
+      comments: ulasan
+      videourl: url video
+  relatedVideo:
+    clipsLabel: sedutan
+    simulcastsLabel: siaran serentak
+    refersLabel: yang berkaitan
+    sourcesLabel: daripada
+    songsLabel: lagu
+    recommendationsLabel: disyorkan
+  paginateLoad:
+    newer: Lebih baharu
+    older: Lebih lama
+  music:
+    clearPlaylist: Kosongkan
+  channelMusic:
+    recentSongsHeader: Lagu Terkini
+    weeklyTopPlaysHeader: Lagu Teratas Mingguan
+  songList:
+    songTitle: Judul
+    songCoveredBy: Dinyanyikan oleh
+    songDuration: Tempoh
+    sangOnTime: Dinyanyikan pada
+  orgMusic:
+    monthlyTopForOrg: Lagu Teratas Bulanan {0}
+    weeklyTopForOrg: Lagu Teratas Mingguan {0}
+  installPrompt:
+    title: Pasang Holodex
+    callToAction: Video di Holodex boleh ditonton sebaiknya jika ditambahkan di layar utama
+    notNowBtn: Jangan Lagi
+    installBtn: Pasang
+    iOS:
+      popup: Pasang Holodex di iOS
+      afterExportIcon: lalu "Tambahkan di Layar Utama"
+      beforeExportIcon: Tekan
+  media:
+    remove: Alih keluar
+  comment:
+    close: Tutup
+    readMore: Lihat selanjutnya
+  reportDialog:
+    title: Laporkan
+    comments: Catatan tambahan (Tidak wajib)
+    success: Terima kasih! Laporan telah dikirim.
+    reasons:
+      - Video tidak ditandai dengan betul
+      - Kandungan video tidak bermutu atau mengelirukan
+      - Melanggar garis panduan pertubuhan terbabit atau memaparkan kandungan yang tidak bersesuaian
+      - Lain-lain
+  thirdpartycookie:
+    explanation: >-
+      Sesetengah penyemak imbas dengan dasar <b>kuki pihak ketiga</b> yang ketat ataupun yang menyekat cecikut <kbd>YouTube.com</kbd> berkebarangkalian menghadapi kesukaran mengelog masuk mahupun menggunakan sembang langsung Youtube. <br /><br /> Masalah ini boleh diselesaikan dengan memasukkan <kbd>Youtube.com</kbd> ke dalam senarai putih penyekat cecikut pihak ketiga ataupun menggunakan tahap tetapan keselamatan cecikut yang rendah bagi <kbd>Holodex.net</kbd>. <br /><br /> Berikut disertakan sekali beberapa tapak sesawang yang boleh memberikan maklumat lanjut berkenaan langkah-langkah yang harus dilakukan.
+    dialogTitle: Penggunaan Sembang YouTube di Holodex
+    alertText: >-
+      Log masuk ke ruangan sembang YouTube tidak boleh dilakukan disebabkan oleh tetapan kerahsiaan penyemak imbas anda. Sila rujuk di sini bagi mendapatkan maklumat lanjut
+    neverShowAgain: Jangan Dipaparkan Amaran Lagi
+  playlist:
+    menu:
+      export-playlist: Simpan Keluar Senarai Main
+      new-playlist: Senarai Main Baharu
+      rename-playlist: Namakan Semula Senarai Main
+      reset-unsaved: Tetapkan Semula Perubahan Yang Tidak Disimpan
+      delete-playlist: Hapuskan Senarai Main
+      clear-playlist: Kosongkan senarai main
+    save-error-not-logged-in: Log masuk agar senarai main boleh disimpan
+views:
+  channel:
+    video: Video
+    clips: Sedutan
+    collabs: Kerjasama
+  channels:
+    sortOptions:
+      subscribers: Langganan
+      group: Pecahan
+      recentUpload: Muat Naik Terkini
+      videoCount: Bilangan Video
+      clipCount: Bilangan Sedutan
+      org: Kumpulan
+    tabs:
+      Vtuber: Penggiat YouTube maya
+      Subber: Penyari Kata
+    favoritesAreEmpty: Tiada kegemaran lagi!
+    blockedAreEmpty: Tiada saluran yang disekat.
+  home:
+    liveOrUpcomingHeading: Langsung / Akan Datang
+    recentVideosHeading: Video Terkini
+    noStreams: Tiada siaran langsung buat masa ini dan masa akan datang
+    recentVideoToggles:
+      official: Arkib
+  library:
+    savedVideosTitle: Video yang Disimpan
+    createYtPlaylistButton: Buat Senarai Main YouTube ({0})
+    deleteFromLibraryButton: Padamkan ({0})
+    deleteConfirmation: Adakah anda pasti ingin memadamkan {0} video?
+    deleteConfirmationOK: Padamkan
+    deleteConfirmationCancel: Batal
+    selectionReset: Tetapkan Semula
+    selectionSelectAll: Pilih Semua
+    emptyLibrary: Tiada video yang disimpan!
+    exportSelected: Eksport yang dipilih ({0})
+    exportYtPlaylist: Senarai Main YouTube
+    exportCsv: Fail CSV
+    selectionSelect50: Pilih 50
+    exportYTExplanation: >-
+      Senarai main yang dibuat <b>tidak tersenarai</b> di YouTube serta berkebarangkalian dihapuskan oleh YouTube.<br /> Sekiranya anda mahu menyimpan senarai main <b>tidak tersenarai</b> ini di YouTube, anda harus mengikuti langkah berikut.
+    exportYTHeading: Arahan Menyimpan Senarai Main YouTube
+    exportYTInstructions: >-
+      <b class="red--text">Langkah 1</b>: Mainkan senarai main YouTube kemudian gunakan antara muka pemain mini. <br /><br /> <b class="red--text">Langkah 2</b>: Pilih mana-mana video kemudian tambahkan pada baris gilir. <br /><br /> <b class="red--text">Langkah 3</b>: Senarai main ini telah boleh disimpan. Simpan dengan menekan simpan.
+    sort:
+      dateaddedEarliestFirst: Tarikh Ditambahkan ke Pustaka mengikut urutan terdahulu
+      dateaddedLatestFirst: Tarikh Ditambahkan ke Pustaka mengikut urutan terkemudian
+      dateuploadedLatestFirst: Tarikh dimuat naik mengikut yang terbaharu
+      dateuploadedEarliestFirst: Tarikh dimuat naik mengikut yang terlama
+  notFound:
+    title: Kandungan tidak ditemui
+    back: Kembali ke Halaman Utama
+  search:
+    sort:
+      newest: Terbaharu
+      oldest: Terlama
+    type:
+      official: Rasmi
+      clip: Sedutan
+    unsupportedQuery: >-
+      Carian sedutan menggunakan <kbd>Topik</kbd> dan <kbd>Kumpulan</kbd> masih belum disokong. <b>Sedutan</b> tidak akan terpapar.
+    sortByLabel: Isih Mengikut
+    typeDropdownLabel: Jenis
+  settings:
+    darkModeLabel: Tema Gelap
+    darkModeMsg: Tukar antara tema cerah dan tema gelap
+    redirectModeLabel: Buka di YouTube
+    redirectModeMsg: >-
+      Mana-mana video yang ditekan akan terbuka di laman Youtube
+    useEnglishNameLabel: Gunakan Nama Inggeris
+    useEnglishNameMsg: Gunakan nama Inggeris bagi nama saluran YouTube
+    hideVideoThumbnailsLabel: Sembunyikan Lakaran Kecil (Gambar Kenit) Video
+    hideVideoThumbnailsMsg: >-
+      Gambar kenit disembunyikan agar mempercepat pemuatan dan mengurangkan tatalan pada peranti bimbit
+    pushNotificationLabel: Pemberitahuan Segera (Akan Datang)
+    pushNotificationMsg: Pemberitahuan segera akan diterima bagi saluran kegemaran
+    autoplayVideoLabel: Automain Video
+    autoplayVideoMsg: Dayakan main semula video secara automatik
+    scrollModeLabel: Mod Tatal
+    scrollModeMsg: Selak laman dengan menatal atau menekan butang
+    resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
+    clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
+    tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
+    defaultPage: Laman Lalai
+    defaultPageMsg: >-
+      Laman ini dijadikan sebagai laman yang dibuka setiap kali melawati holodex.net atau menekan lambang Holodex di sebelah kiri bahagian atas.
+    videoFeedSettings: Tetapan Suapan Video
+    siteNavigationSettings: Pandu Arah dan Rupa Laman
+    languageSettings: Bahasa
+    gridSizeLabel: Ukuran Gambar Kenit Video
+    gridSizeMsg: Ubah ukuran gambar kenit video di Laman Utama dan Kegemaran
+    gridSize:
+      - Besar
+      - Sederhana
+      - Kecil
+    hideCollabStreamsLabel: Sembunyikan Siaran Sama
+    hideCollabStreamsMsg: Sembunyikan siaran sama di laman Kegemaran
+    ignoredTopicsLabel: Topik Diketepikan
+    ignoredTopicsMsg: Video yang bertopik berikut disembunyikan di laman Utama dan Kegemaran
+    theme: Warna tema
+  app:
+    update_available: Terdapat kemas kini baharu
+    update_btn: Kemas Kini
+    check_about_page: Perubahan terkini boleh didapati di laman Perihal
+    nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong
+    loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
+  about:
+    add_my_channel: Tambah saluran saya di Holodex
+  watch:
+    theaterMode: Mod Teater
+    mentionIconLabel: MENYEBUT
+    chat:
+      loading: Sedang Memuat Sembang...
+      hideTLBtn: Sembunyikan Terjemahan
+      showTLBtn: Paparkan Terjemahan
+      TLSettingsTitle: Tetapan Terjemahan
+      StickBottomSettingLabel: Letakkan di Bawah (peranti mudah alih)
+      StickBottomSettingsDesc: Ruangan terjemahan diletakkan di bawah sembang (secara lalainya ruangan ini terletak di bahagian atas bagi peranti mudah alih)
+      showVerifiedMessages: Paparkan Sembang Oleh Pengguna Yang Disahkan
+      showModeratorMessages: Paparkan Sembang Oleh Penyederhana
+      tlFontSize: Saiz Fon
+      tlWindowSize: Peratusan (%) saiz ruangan terjemahan. 0% bagi perubahan saiz secara kendiri
+      retryBtn: Cuba Lagi
+      status:
+        reconnecting: Sedang Menyambung Semula Secara Kendiri...
+        reconnectFailed: Sambungan semula gagal
+        notLive: >-
+          Siaran langsung masih belum berlangsung. Cuba lagi apabila siaran berlangsung dalam masa 15 minit
+        connectedToChat: Bersambung
+        disconnectedToChat: Terputus
+    removeFromPlaylist: Alih keluar video daripada senarai main semasa
+    saveToPlaylist: Simpan video pada senarai main semasa
+  favorites:
+    promptForAction: >-
+      Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
+    manageFavorites: Uruskan Kegemaran
+    showall: Paparkan Semua
+  editor:
+    needlogin: Penyuntingan data meta video dan lagu di Holodex hanya untuk yang telah mengelog masuk.
+    changeTopic:
+      title: Ubah topik siaran
+      info: >-
+        Topik video boleh ditetapkan oleh semua pengguna namun hanya penyunting dan pentadbir yang dapat mengubah dan mengalih keluar sebuah topik setelah ditetapkan.
+      button: Simpan (Memakan masa kira-kira 5 minit sebelum menunjukkan kesan)
+    channelMentions:
+      title: Sebutan Saluran
+    sources:
+      title: Sumber dan Sedutan (sedang dibangunkan)
+  login:
+    apikeyMsg: >-
+      Kekunci API boleh digunakan dalam pengaturcaraan untuk membuat pertanyaan kepada API Holodex. Setiap akaun hanya terbatas dengan serentetan kekunci. Setelah mendapat kekunci baharu, kekunci lama akan tamat tempoh dalam masa 24 jam.
+    apikeyNew: Dapatkan Kekunci API baharu
+    ownedYtChannel: Saluran YouTube Milik Anda
+    futureYtcOwnerMessage: >-
+      Kami berancang akan menyediakan perkhidmatan tambahan kepada empunya saluran dengan kebolehan menyunting data meta video masing-masing.
+    linkAcc: Pautkan akaun lain
+    apikeyResetConfirm1: Adakah anda pasti anda ingin menetapkan semula Kekunci API anda?
+    apikeyResetConfirm2: Kekunci API lama akan tamat tempoh dalam masa 24 jam. Betul mahu tetapkan semula?
+    apikeyResetNvm: Entahlah apa yang terjadi.
+    with:
+      - Log masuk dengan Google
+      - Log masuk dengan Discord
+      - Log masuk dengan Twitter
+  multiview:
+    confirmOverwrite: Ubah tataletak semasa?
+    confirmOverwriteYes: Sahkan
+    permalink: Buat Pautan
+    presets: Tataletak Tersedia
+    addframe: Tambah Petak
+    muteAll: Senyapkan Semua
+    unmuteAll: Nyahsenyap Semua
+    autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak kendiri
+    createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
+    preset:
+      shareOnDiscord: >-
+        Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
+      custom: Tataletak Saya
+      toggleAutoLayout: Togolkan penggunaan tataletak ini secara kendiri
+      desktop: Peranti Atas Meja
+      mobile: Peranti Mudah Alih
+      autoLayout: Tataletak Kendiri
+    presetEditor:
+      title: Simpan Tataletak
+      name: Nama
+      autoLayout: Gunakan tataletak ini pada ragam kendiri
+    video:
+      selectLive: Pilih Siaran Langsung
+      addCustomVideo: Tambah Video Tersuai
+    fullScreen: Skrin penuh
+    mediaControls: Kawalan Bahantara
+    mediaControlsEmpty: Ruangan ini menyenaraikan video yang dibuka
+  mugen:
+    welcome: >-
+      Selamat datang ke MugenClips! Laman ini mempertontonkan kepada semua orang sedutan Hololive berbahasa Inggeris yang sama secara rambang. Mari tonton bersama-sama sambil bersembang dengan peminat Hololive dari serata dunia. Sekiranya anda mahu kembali menonton bahagian yang sama dengan semua orang setelah melangkau sedutan terlebih dahulu, sila muatkan semula laman ini.
+  playlist:
+    playlist-is-modified: Tidak disimpan
+    item-last-updated: 'Kemas Kini Terkini:'
+    login-prompt: Simpan senarai main serta miliki berbilang senarai main dengan mengelog masuk
+    new-playlist-btn-label: Buat Senarai Main baharu
+    page-heading: 'Senarai Main:'
+    page-instruction: Hidupkan senarai main dengan menekannya.
+    change-loss-warning: Perubahan yang tidak disimpan akan hilang. Teruskan juga?
+time:
+  soon: sebentar lagi
+  diff_future_date: Berlangsung {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: Tambah
+    permission: >-
+      Kuasa mengemas kini atau menghapuskan lagu hanya diberikan kepada pengguna berpangkat 'Penyunting' atau lebih tinggi. Sila hubungi kami di <a class='white--text' href='/about'>Discord</a> untuk memaklumkan penyunting akan sebarang kesilapan mahupun masalah atau membuat permohonan menjadi seorang penyunting.
+    titles:
+      addSong: 'Data Meta Lagu: Tambahkan lagu lain'
+      songList: 'Senarai Lagu: {0}'
+      help: Panduan
+    itunesLookupPlaceholder: (Pilihan) Cari di iTunes
+    moveRight2s: Maju sebanyak 2 saat
+    testEnd: Dengar balik 3 saat sebelum tamat.
+    setToCurrentTime: Tetapkan dengan masa semasa ({0})
+    moveLeft2s: Mandir sebanyak 2 saat
+    trackNameInput: Judul Runut
+    originalArtistInput: Penyanyi Asal
+    testStart: Semak masa mula
+    startInput: Masa Mula
+    endInput: 'Tempoh (saat): (tamat pada {0})'
+  exitMode: Selesaikan Suntingan
+  enterMode: Sunting Video
+about:
+  quicklinks: Pautan Pantas
+  discordBtn: Discord Holodex
+  issueTracker: Pengesan Masalah dan Kod Sumber
+  faq:
+    title: Soalan Lazim
+    ytchatHeader: Akaun saya tidak log masuk di ruangan sembang YouTube!
+    ytchatContent: >-
+      Anda harus melumpuhkan sekatan cecikut pihak ketiga di penyemak imbas anda atau menyenaraikan tapak sesawang ini dan youtube.com dalam senarai putih bagi membenarkan cecikut pihak ketiga.
+    ytchatFirefox: Arahan melumpuhkan kuki oleh Firefox. Penyemak imbas lain mungkin menggunakan kaedah yang sama.
+    autoplayHeader: Automain tidak berfungsi!
+    autoplayContent: Gelintar di internet cara menghidupkan automain bagi penyemak imbas masing-masing.
+    musicPlayer: Peranti mudah alih tidak boleh menggunakan Pemain Muzik dengan baik!
+    musicPlayerContent: >-
+      Harap maklum, sokongan Pemain Muzik adalah tidak lengkap di peranti mudah alih. <br/>Puncanya ialah: 1. Fungsi automain yang diperlukan tidak dibenarkan oleh peranti mudah alih; 2. Kebanyakan peranti mudah alih tidak membenarkan perangkaian muzik di latar oleh tapak sesawang. 3. Baris gilir lagu anda tidak disepadukan di pusat kawalan muzik aras sistem.
+    videoLinkage: Bagaimana caranya agar penggiat YouTube maya yang berkenaan dipautkan dengan tepat?
+    videoLinkageContent: >-
+      Keseluruhan maklumat dihuraikan berdasarkan isi perihalan video. Jika anda membuat sedutan mana-mana siaran rasmi, pastikan pautannya disertakan sekali. Jika sedutan anda daripada hasil ciptaan peminat (contohnya di bilibili), pastikan penggiat YouTube maya (penggiyut maya) yang berkaitan dipautkan saluran YouTube-nya. Sedutan yang tidak memautkan saluran penggiyut maya yang berkenaan tidak akan dipaparkan di Holodex kerana sedutan di tapak ini harus ada pautan kepada penggiyut maya yang disenaraikan di Holodex.
+    quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex"
+    quitHolodexContent: >-
+      Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.
+    favorite:
+      title: Apa itu kegemaran?
+      disappear:
+        title: Senarai kegemaran saya telah hilang / Saya tidak boleh menambah video kegemaran
+    mobile:
+      title: Adakah ada aplikasi Android/iOS untuk Holodex?
+      content:
+        summary: >-
+          Kami masih mengusahakannya! Buat sementara waktu, sila gunakan ciri "Tambahkan di Layar Utama" di penyemak imbas masing-masing. Kami telah menyelaraskan Holodex agar berfungsi seakan-akan sebuah aplikasi mudah alih
+    MugenClips:
+      title: Apa itu MugenClips?
+    subber:
+      title: Saya seorang penyari kata namun saluran atau sedutan saya tidak tersenarai di Holodex
+    feedback:
+      title: Saya mahu memberikan maklum balas/sumbangan kepada projek ini
+  gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
+  gdprContent: >-
+    Sebuah cecikut Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
+  gdprDeletion: Hubungi kami di Discord sekiranya anda ingin menghapuskan data pengguna anda!
+  feedback: Maklum Balas dan Laporan Pepijat
+  feedbackHtml: >-
+    Isu baharu boleh dibuka di <a href="https://github.com/RiceCakess/Holodex/issues"> Pengesan Isu Github </a> atau dibawa berbincang dengan pasukan Holodex di Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    title: Penghargaan
+  changelog:
+    title: Catatan perubahan
+  news:
+    title: Berita
