@@ -145,7 +145,7 @@ views:
       clipCount: Clip-Anzahl
       org: Organisation
     tabs:
-      Vtuber: Vtuber
+      Vtuber: VTuber
       Subber: Clipper
       Favorites: Favoriten
       Blocked: Blockiert
@@ -390,6 +390,11 @@ about:
       Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir helfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
     favorite:
       title: Was sind Favoriten?
+      Contents:
+        - >-
+          Favoriten erleichtern es dir, mit deinen Lieblings-VTubern auf dem Laufenden zu bleiben. Du kannst deine Lieblingskanäle hinzufügen, indem du auf das Herz-Symbol auf der
+        - >-
+          klickst. Es ist momentan nicht möglich, Clipper als Favoriten zu markieren. Erwäge trotzdem, sie auf anderen Wegen zu unterstützen!
       disappear:
         title: Meine Favoritenliste ist verschwunden / Ich kann keine Favoriten setzen
     mobile:
