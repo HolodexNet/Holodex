@@ -39,6 +39,7 @@ component:
     points: Pkte.
     playlist: Playlist
   videoCard:
+    clips: '{n} Clips'
     watching: '{0} Zuschauer'
     liveNow: Jetzt Live
     edit: Bearbeiten
@@ -132,7 +133,9 @@ views:
   channel:
     video: Videos
     clips: Clips
+    music: Musik
     collabs: Collabs
+    about: Kanalinfo
   channels:
     sortOptions:
       subscribers: Abonnenten
@@ -144,6 +147,8 @@ views:
     tabs:
       Vtuber: Vtuber
       Subber: Clipper
+      Favorites: Favoriten
+      Blocked: Blockiert
     favoritesAreEmpty: Du hast keine Favoriten!
     blockedAreEmpty: Du hast keine Kanäle blockiert.
   home:
@@ -151,7 +156,9 @@ views:
     recentVideosHeading: Aktuelle Videos
     noStreams: Im Moment gibt es keine Live- oder anstehenden Streams
     recentVideoToggles:
+      all: Alle
       official: Archiv
+      subber: Clips
   library:
     savedVideosTitle: Gespeicherte Videos
     createYtPlaylistButton: YT-Playlist erstellen ({0})
@@ -184,6 +191,7 @@ views:
       newest: Neuestes
       oldest: Ältestes
     type:
+      all: Alle
       official: Offiziell
       clip: Clip
     unsupportedQuery: >-
@@ -191,6 +199,7 @@ views:
     sortByLabel: Sortieren nach
     typeDropdownLabel: Art
   settings:
+    title: Einstellungen
     darkModeLabel: Dunkler Modus
     darkModeMsg: Ändert das Design zwischen dem hellen und dem dunklen Modus
     redirectModeLabel: In YouTube öffnen
@@ -230,6 +239,7 @@ views:
   app:
     update_available: Ein Update ist verfügbar
     update_btn: Update
+    close_btn: Schließen
     check_about_page: Besuche die Info-Seite um neue Änderungen zu sehen
     nowSupportsMultiOrg: Holodex unterstützt jetzt mehrere Organisationen.
     loginCallToAction: Melde dich an, um deine eigenen Favoriten zu sammeln!
@@ -263,6 +273,7 @@ views:
     promptForAction: >-
       Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
     manageFavorites: Favoriten verwalten
+    close: Schließen
     showall: Alle anzeigen
   editor:
     needlogin: Du musst dich einloggen, um Änderungen an Video-/Song-Metadaten in Holodex vorzunehmen.
@@ -305,6 +316,7 @@ views:
         Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
       custom: Meine Layouts
       toggleAutoLayout: Layout Automodus umschalten
+      remove: Entfernen
       desktop: Desktop
       mobile: Mobil
       autoLayout: AutoLayout
@@ -336,6 +348,7 @@ time:
 editor:
   music:
     add: Hinzufügen
+    update: Aktualisieren
     permission: >-
       Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
     titles:
