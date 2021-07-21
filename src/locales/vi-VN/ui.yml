@@ -1,12 +1,9 @@
+---
 component:
   apiError:
-    title: Gomenasorry!
-    textBeforeTwitter: >-
-      Đã xảy ra lỗi khi truy xuất nội dung, vui lòng kiểm tra thông báo tại
-      Twitter 
+    textBeforeTwitter: 'Đã xảy ra lỗi khi truy xuất nội dung, vui lòng kiểm tra thông báo tại Twitter'
     textAfterTwitter: ' hoặc báo cáo lỗi qua'
     aboutPage: trang Giới thiệu
-    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Đăng nhập để thêm vào mục Yêu thích
     unfavoriteAllInGroup: Xoá tất cả khỏi mục Yêu thích
@@ -33,12 +30,9 @@ component:
     settings: Cài đặt
     login: Đăng nhập
     logout: Đăng xuất
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Cài đặt tài khoản
     music: Nhạc
-    multiview: MultiView
     points: điểm
-    playlist: Playlist
   videoCard:
     clips: '{n} Clip'
     watching: '{0} người đang xem'
@@ -67,7 +61,6 @@ component:
       org: tổ chức
       titledesc: tiêu đề/mô tả
       comments: bình luận
-      videourl: video url
   relatedVideo:
     clipsLabel: clip
     simulcastsLabel: phát sóng cùng thời điểm
@@ -93,9 +86,7 @@ component:
     weeklyTopForOrg: Top lượt nghe trong tuần của {0}
   installPrompt:
     title: Cài đặt Holodex
-    callToAction: >-
-      Xem video trên Holodex sẽ hoạt động tốt nhất khi được thêm vào màn hình
-      chính
+    callToAction: Xem video trên Holodex sẽ hoạt động tốt nhất khi được thêm vào màn hình chính
     notNowBtn: Không phải lúc này
     installBtn: Cài đặt
     iOS:
@@ -114,17 +105,14 @@ component:
     reasons:
       - Video bị gắn thẻ sai
       - Chất lượng video quá kém/Nội dung dễ gây hiểu lầm
-      - >-
-        Vi phạm các nguyên tắc thực hiện tác phẩm phái sinh (Derivative Work
-        Guidelines) của tổ chức hoặc nội dung không phù hợp
+      - Vi phạm các nguyên tắc thực hiện tác phẩm phái sinh (Derivative Work Guidelines) của tổ chức hoặc nội dung không phù hợp
       - Khác
   thirdpartycookie:
     explanation: >-
       Dựa trên cách trình duyệt hoạt động, một số trình duyệt với khả năng giới hạn/chặn <b>cookies của bên thứ ba</b>, hoặc chặn cookies của <kbd>YouTube</kbd> sẽ gặp một chút khó khăn khi đăng nhập / sử dụng YouTube Chat. <br /><br /> Vấn đề này có thể được giải quyết bằng cách cho phép cookies của <kbd>YouTube</kbd> hoạt động trong trình duyệt, hoặc giảm giới hạn cookies / quyền riêng tư cho <kbd>Holodex.net</kbd>. <br /><br /> Chúng tôi có một số trang web giúp bạn có thêm thông tin và hướng dẫn chi tiết cho vấn đề này.
     dialogTitle: Sử dụng Youtube Chat trên Holodex
     alertText: >-
-      Cài đặt quyền riêng tư của trình duyệt bạn đang sử dụng khiến bạn không
-      thể đăng nhập vào Youtube Chat. Nhấn vào đây để tìm hiểu thêm
+      Cài đặt quyền riêng tư của trình duyệt bạn đang sử dụng khiến bạn không thể đăng nhập vào Youtube Chat. Nhấn vào đây để tìm hiểu thêm
     neverShowAgain: Ngừng hiển thị các cảnh báo này
 views:
   channel:
@@ -142,8 +130,6 @@ views:
       clipCount: Số lượng clip
       org: Tổ chức
     tabs:
-      Vtuber: Vtuber
-      Subber: Subber
       Favorites: Yêu thích
       Blocked: Đã chặn
     favoritesAreEmpty: Bạn chưa yêu thích kênh nào cả!
@@ -151,9 +137,7 @@ views:
   home:
     liveOrUpcomingHeading: Trực tiếp / Sắp tới
     recentVideosHeading: Video gần đây
-    noStreams: >-
-      Không có luồng phát sóng trực tiếp hoặc luồng phát sóng sắp tới vào lúc
-      này
+    noStreams: Không có luồng phát sóng trực tiếp hoặc luồng phát sóng sắp tới vào lúc này
     recentVideoToggles:
       all: Tất cả
       official: Lưu trữ
@@ -170,19 +154,12 @@ views:
     emptyLibrary: Bạn không có video đã lưu nào!
     exportSelected: Xuất các mục được chọn ({0})
     exportYtPlaylist: YouTube Playlist
-    exportCsv: CSV File
     selectionSelect50: Chọn 50
     exportYTExplanation: >-
-      Playlist Youtube được tạo bởi tính năng này sẽ <b>không công khai</b>
-      (Unlisted) và có thể sẽ bị xoá bởi Youtube. <br /> Vì tính năng này của
-      Youtube chưa được hoàn thiện, bạn cần phải làm những bước sau để lưu
-      playlist Youtube <b>không công khai</b> này vào tài khoản.
+      Playlist Youtube được tạo bởi tính năng này sẽ <b>không công khai</b> (Unlisted) và có thể sẽ bị xoá bởi Youtube. <br /> Vì tính năng này của Youtube chưa được hoàn thiện, bạn cần phải làm những bước sau để lưu playlist Youtube <b>không công khai</b> này vào tài khoản.
     exportYTHeading: Hướng dẫn lưu Youtube Playlist
     exportYTInstructions: >-
-      <b class="red--text">Bước 1</b>: Mở playlist và chọn mini-player. <br
-      /><br /> <b class="red--text">Bước 2</b>: Chọn một video bất kì và thêm
-      vào Queue. <br /><br /> <b class="red--text">Bước 3</b>: Đã có thể lưu
-      playlist. Nhấn lưu để lưu playlist.
+      <b class="red--text">Bước 1</b>: Mở playlist và chọn mini-player. <br /><br /> <b class="red--text">Bước 2</b>: Chọn một video bất kì và thêm vào Queue. <br /><br /> <b class="red--text">Bước 3</b>: Đã có thể lưu playlist. Nhấn lưu để lưu playlist.
     sort:
       dateaddedEarliestFirst: Ngày được thêm vào Thư viện, cũ nhất trên cùng
       dateaddedLatestFirst: Ngày được thêm vào Thư viện, mới nhất trên cùng
@@ -198,10 +175,8 @@ views:
     type:
       all: Tất cả
       official: Chính thức
-      clip: Clip
     unsupportedQuery: >-
-      Tìm kiếm clip dựa trên <kbd>Chủ đề</kbd> và <kbd>Tổ chức</kbd> hiện không
-      được hỗ trợ. Sẽ không có <b>clip</b> nào được hiển thị.
+      Tìm kiếm clip dựa trên <kbd>Chủ đề</kbd> và <kbd>Tổ chức</kbd> hiện không được hỗ trợ. Sẽ không có <b>clip</b> nào được hiển thị.
     sortByLabel: Sắp xếp theo
     typeDropdownLabel: Thể loại
   settings:
@@ -210,14 +185,12 @@ views:
     darkModeMsg: Chuyển đổi giao diện sáng và tối
     redirectModeLabel: Mở trên Youtube
     redirectModeMsg: >-
-      Nhấn vào hình thu nhỏ của video sẽ mở video trên YouTube, nhấn vào tiêu đề
-      sẽ mở video trên Holodex
+      Nhấn vào hình thu nhỏ của video sẽ mở video trên YouTube, nhấn vào tiêu đề sẽ mở video trên Holodex
     useEnglishNameLabel: Sử dụng tên tiếng Anh
     useEnglishNameMsg: Sử dụng tên tiếng Anh cho các kênh của VTuber
     hideVideoThumbnailsLabel: Ẩn hình thu nhỏ của video
     hideVideoThumbnailsMsg: >-
-      Ẩn hình thu nhỏ của video để tăng tốc độ tải trang và lướt nhanh hơn trên
-      điện thoại
+      Ẩn hình thu nhỏ của video để tăng tốc độ tải trang và lướt nhanh hơn trên điện thoại
     pushNotificationLabel: Thông báo (Sắp có)
     pushNotificationMsg: Bật thông báo cho những kênh yêu thích của bạn
     autoplayVideoLabel: Tự động phát video
@@ -229,8 +202,7 @@ views:
     tlLanguageSelection: Hiển thị bản dịch trực tiếp trong các ngôn ngữ sau
     defaultPage: Trang mặc định
     defaultPageMsg: >-
-      Mặc định mở trang này khi truy cập holodex.net hoặc khi nhấn vào biểu
-      tượng ở góc trái trên cùng.
+      Mặc định mở trang này khi truy cập holodex.net hoặc khi nhấn vào biểu tượng ở góc trái trên cùng.
     videoFeedSettings: Cài đặt trang Video
     siteNavigationSettings: Trang/Điều hướng
     languageSettings: Ngôn ngữ
@@ -261,9 +233,7 @@ views:
       showTLBtn: Hiện dịch trực tiếp
       TLSettingsTitle: Cài đặt dịch trực tiếp
       StickBottomSettingLabel: Đặt dưới cùng (di động)
-      StickBottomSettingsDesc: >-
-        Di chuyển hộp thoại dịch trực tiếp xuống phía dưới chat (mặc định hiển
-        thị ở phía trên cho các thiết bị điện thoại di động)
+      StickBottomSettingsDesc: Di chuyển hộp thoại dịch trực tiếp xuống phía dưới chat (mặc định hiển thị ở phía trên cho các thiết bị điện thoại di động)
       showVerifiedMessages: Hiển thị tin nhắn từ các kênh Verified
       showModeratorMessages: Hiển thị tin nhắn từ Moderator
       tlFontSize: Cỡ chữ
@@ -273,28 +243,23 @@ views:
         reconnecting: Tự động Kết nối lại...
         reconnectFailed: Không thể kết nối lại
         notLive: >-
-          Luồng phát sóng chưa bắt đầu, hãy thử lại khi đã phát trực tiếp được
-          khoảng 15 phút
+          Luồng phát sóng chưa bắt đầu, hãy thử lại khi đã phát trực tiếp được khoảng 15 phút
         connectedToChat: Đã kết nối
         disconnectedToChat: Đã ngắt kết nối
     removeFromPlaylist: Xoá video khỏi playlist hiện tại
     saveToPlaylist: Lưu video vào playlist hiện tại
   favorites:
     promptForAction: >-
-      Tạo một danh sách các Vtuber yêu thích để xem các clip và livestream mới
-      nhất của họ tại trang này.
+      Tạo một danh sách các Vtuber yêu thích để xem các clip và livestream mới nhất của họ tại trang này.
     manageFavorites: Quản lý mục Yêu thích
     close: Đóng
     showall: Hiển thị tất cả
   editor:
-    needlogin: >-
-      Bạn cần phải đăng nhập để chỉnh sửa dữ liệu của các video và bài hát trên
-      Holodex.
+    needlogin: Bạn cần phải đăng nhập để chỉnh sửa dữ liệu của các video và bài hát trên Holodex.
     changeTopic:
       title: Thay đổi chủ đề của stream
       info: >-
-        Mọi người dùng đều có thể gắn thẻ chủ đề cho video, nhưng chỉ có Editor
-        và Admin mới có thể xoá và thay đổi chủ đề có sẵn.
+        Mọi người dùng đều có thể gắn thẻ chủ đề cho video, nhưng chỉ có Editor và Admin mới có thể xoá và thay đổi chủ đề có sẵn.
       button: Lưu (có thể mất 5 phút mới có hiệu lực)
     channelMentions:
       title: Các kênh được nhắc đến
@@ -302,19 +267,14 @@ views:
       title: Nguồn/Clip (tính năng đang được phát triển)
   login:
     apikeyMsg: >-
-      Bạn có thể sử dụng khoá API để truy vấn đến API của Holodex một cách tự
-      động. Một tài khoản chỉ được phép có một khoá. Sau khi lấy khoá mới, khoá
-      cũ sẽ hết hạn sử dụng trong vòng 0 - 24 tiếng sau.
+      Bạn có thể sử dụng khoá API để truy vấn đến API của Holodex một cách tự động. Một tài khoản chỉ được phép có một khoá. Sau khi lấy khoá mới, khoá cũ sẽ hết hạn sử dụng trong vòng 0 - 24 tiếng sau.
     apikeyNew: Lấy khoá API mới
     ownedYtChannel: Sở hữu các kênh Youtube
     futureYtcOwnerMessage: >-
-      Trong tương lai, chúng tôi có kế hoạch cung cấp nhiều dịch vụ hơn cho chủ
-      sở hữu kênh như chỉnh sửa dữ liệu cho video của riêng họ.
+      Trong tương lai, chúng tôi có kế hoạch cung cấp nhiều dịch vụ hơn cho chủ sở hữu kênh như chỉnh sửa dữ liệu cho video của riêng họ.
     linkAcc: Liên kết với tài khoản khác
     apikeyResetConfirm1: Bạn có chắc chắn muốn đặt lại khoá API của mình chứ?
-    apikeyResetConfirm2: >-
-      Khoá API cũ sẽ hết hạn sau khoảng 0 - 24 giờ, bạn chắc chắn muốn đặt lại
-      chứ?
+    apikeyResetConfirm2: Khoá API cũ sẽ hết hạn sau khoảng 0 - 24 giờ, bạn chắc chắn muốn đặt lại chứ?
     apikeyResetNvm: Không có gì thú vị xảy ra.
     with:
       - Đăng nhập bằng Google
@@ -332,13 +292,10 @@ views:
     createLayoutTip: Tự tạo bố cục của riêng mình bằng cách thêm các ô hoặc sử dụng mẫu có sẵn
     preset:
       shareOnDiscord: >-
-        Muốn chia sẻ bố cục của mình? Hãy sử dụng nút chia sẻ và liên hệ với
-        chúng tôi trên <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
+        Muốn chia sẻ bố cục của mình? Hãy sử dụng nút chia sẻ và liên hệ với chúng tôi trên <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
       custom: Bố cục của tôi
       toggleAutoLayout: Bật/tắt sử dụng bố cục này trong chế độ tự động
       remove: Xoá
-      desktop: Desktop
-      mobile: Mobile
     presetEditor:
       title: Lưu bố cục
       name: Tên
@@ -361,16 +318,12 @@ views:
 time:
   soon: sớm
   diff_future_date: Bắt đầu {0} ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: Thêm
     update: Cập nhật
     permission: >-
-      Bạn cần phải có quyền "Editor" hoặc cao hơn để cập nhật hoặc xoá những bài
-      hát đã tồn tại. Xin hãy liên hệ với chúng tôi qua <a class='white--text'
-      href='/about'>discord</a> để thông báo cho các Editor khác về vấn đề này,
-      hoặc đăng kí để trở thành một Editor.
+      Bạn cần phải có quyền "Editor" hoặc cao hơn để cập nhật hoặc xoá những bài hát đã tồn tại. Xin hãy liên hệ với chúng tôi qua <a class='white--text' href='/about'>discord</a> để thông báo cho các Editor khác về vấn đề này, hoặc đăng kí để trở thành một Editor.
     titles:
       addSong: 'Song Metadata: Thêm bài hát mới'
       songList: 'Danh sách bài hát : {0}'
@@ -389,101 +342,53 @@ editor:
   enterMode: Chỉnh sửa Video
 about:
   quicklinks: Liên kết
-  discordBtn: Holodex Discord
   issueTracker: Danh sách Issue / Mã nguồn
   faq:
-    title: FAQ
     ytchatHeader: Tôi không đăng nhập được YouTube Chat!
     ytchatContent: >-
-      Vui lòng tắt tính năng chặn cookies bên thứ 3 trong trình duyệt, hoặc cho
-      phép cookies của Holodex.net và YouTube.com được hoạt động vào mục Cho
-      phép / Whitelist.
-    ytchatFirefox: >-
-      Đây là hướng dẫn cho trình duyệt Firefox, những trình duyệt khác có thể
-      tương tự.
+      Vui lòng tắt tính năng chặn cookies bên thứ 3 trong trình duyệt, hoặc cho phép cookies của Holodex.net và YouTube.com được hoạt động vào mục Cho phép / Whitelist.
+    ytchatFirefox: Đây là hướng dẫn cho trình duyệt Firefox, những trình duyệt khác có thể tương tự.
     autoplayHeader: AutoPlay / Tự động phát không hoạt động!
-    autoplayContent: >-
-      Vui lòng tra cứu cách bật AutoPlay / Tự động phát cho trình duyệt của bạn
-      như: Chrome, Firefox, Edge, Opera.
+    autoplayContent: 'Vui lòng tra cứu cách bật AutoPlay / Tự động phát cho trình duyệt của bạn như: Chrome, Firefox, Edge, Opera.'
     musicPlayer: Trình phát nhạc không hoạt động tốt trên thiết bị di động!
     musicPlayerContent: >-
-      Xin lỗi, nhưng hiện tại chúng tôi không thể hỗ trợ Trình phát nhạc dưới
-      dạng trang Web trên các thiết bị di động. <br/>Có ba yếu tố sau: 1. Thiết
-      bị di động thường cấm tự động phát - chúng tôi cần nó; 2. Thiết bị di động
-      thường không cho phép các trang web liên kết nhạc khi chạy nền. 3. Chúng
-      tôi không tích hợp được hàng chờ nhạc của bạn vào trung tâm điều khiển âm
-      nhạc cấp hệ thống.
-    videoLinkage: >-
-      Làm cách nào để tôi có thể đảm bảo rằng các video được liên kết đúng cách
-      với các Vtuber?
+      Xin lỗi, nhưng hiện tại chúng tôi không thể hỗ trợ Trình phát nhạc dưới dạng trang Web trên các thiết bị di động. <br/>Có ba yếu tố sau: 1. Thiết bị di động thường cấm tự động phát - chúng tôi cần nó; 2. Thiết bị di động thường không cho phép các trang web liên kết nhạc khi chạy nền. 3. Chúng tôi không tích hợp được hàng chờ nhạc của bạn vào trung tâm điều khiển âm nhạc cấp hệ thống.
+    videoLinkage: Làm cách nào để tôi có thể đảm bảo rằng các video được liên kết đúng cách với các Vtuber?
     videoLinkageContent: >-
-      Tất cả mọi thông tin đều được trích từ mô tả của video. Nếu bạn clip từ
-      một stream, xin hãy chắc chắn rằng bạn đã trích dẫn liên kết đến stream
-      gốc. Nếu như bạn clip từ một video của fan (vd: từ bilibili), hãy chắc
-      chắn rằng bạn có trích dẫn liên kết đến kênh Youtube chính thức của những
-      Vtuber liên quan. Nếu như bạn không đặt bất cứ liên kết nào đến Vtuber
-      trong phần mô tả video của mình, clip đó sẽ không được hiển thị trên
-      Holodex, vì mọi clip đều được yêu cầu phải liên kết đến một Vtuber cụ thể
-      trong hệ thống.
-    quitHolodex: |
-      Tôi là một subber/clipper và tôi muốn gỡ bỏ kênh của mình khỏi Holodex\r
+      Tất cả mọi thông tin đều được trích từ mô tả của video. Nếu bạn clip từ một stream, xin hãy chắc chắn rằng bạn đã trích dẫn liên kết đến stream gốc. Nếu như bạn clip từ một video của fan (vd: từ bilibili), hãy chắc chắn rằng bạn có trích dẫn liên kết đến kênh Youtube chính thức của những Vtuber liên quan. Nếu như bạn không đặt bất cứ liên kết nào đến Vtuber trong phần mô tả video của mình, clip đó sẽ không được hiển thị trên Holodex, vì mọi clip đều được yêu cầu phải liên kết đến một Vtuber cụ thể trong hệ thống.
+    quitHolodex: "Tôi là một subber/clipper và tôi muốn gỡ bỏ kênh của mình khỏi Holodex\\r"
     quitHolodexContent: >-
-      Buồn thật đấy :(, xin hãy cho tôi biết nếu bạn cần tôi giúp đỡ bất cứ thứ
-      gì về chuyện này. Nếu bạn vẫn muốn gỡ bỏ kênh của mình, xin hãy nhắn tin
-      cho chúng tôi trên Discord.
+      Buồn thật đấy :(, xin hãy cho tôi biết nếu bạn cần tôi giúp đỡ bất cứ thứ gì về chuyện này. Nếu bạn vẫn muốn gỡ bỏ kênh của mình, xin hãy nhắn tin cho chúng tôi trên Discord.
     favorite:
       title: Mục Yêu thích là gì?
       disappear:
-        title: >-
-          Danh sách yêu thích của tôi biến mất rồi / Tôi không sử dụng được tính
-          năng Yêu thích
+        title: Danh sách yêu thích của tôi biến mất rồi / Tôi không sử dụng được tính năng Yêu thích
     mobile:
       title: Có ứng dụng Holodex trên hệ điều hành Android/iOS không?
       content:
         summary: >-
-          Chúng tôi vẫn đang phát triển nó! Trong thời gian này, xin hãy sử dụng
-          tính năng "Thêm vào màn hình chính" trên trình duyệt của bạn. Chúng
-          tôi đã điều chỉnh nó rất nhiều để khiến nó hoạt động như một ứng dụng
+          Chúng tôi vẫn đang phát triển nó! Trong thời gian này, xin hãy sử dụng tính năng "Thêm vào màn hình chính" trên trình duyệt của bạn. Chúng tôi đã điều chỉnh nó rất nhiều để khiến nó hoạt động như một ứng dụng
     MugenClips:
       title: MugenClips là gì?
     subber:
-      title: >-
-        Tôi là subber/clipper nhưng lại không tìm thấy kênh hay clip của mình
-        trên Holodex
+      title: Tôi là subber/clipper nhưng lại không tìm thấy kênh hay clip của mình trên Holodex
       contents:
-        - ''
         - >-
-          , and we will add you manually. If you are already on the list, please
-          make sure your video descriptions have the correct youtube
-          source/channel links.
+          Please check on the Channels page to see if you are listed as a subber, if not please fill out
+        - ', and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.'
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
     feedback:
       title: Tôi có ý kiến/muốn đóng góp cho dự án này
   gdpr: GDPR và dữ liệu của tôi
   gdprContent: >-
-    Một cookie Google Analytics sẽ được sử dụng cho việc theo dõi số lượng truy
-    cập trang nhằm mục đích phân tích của chúng tôi. Danh sách mục Yêu thích của
-    bạn sẽ được liên kết với tên người dùng hoặc ID tài khoản mạng xã hội mà bạn
-    dùng để đăng nhập. Dữ liệu này có thể bao gồm email của bạn (nếu đăng nhập
-    bằng Google), Discord ID, hoặc tên đăng nhập Twitter tuỳ thuộc vào cách thức
-    đăng nhập của bạn.
-  gdprDeletion: >-
-    Để xoá mọi dữ liệu người dùng của bạn, xin hãy liên hệ với chúng tôi trên
-    Discord!
+    Một cookie Google Analytics sẽ được sử dụng cho việc theo dõi số lượng truy cập trang nhằm mục đích phân tích của chúng tôi. Danh sách mục Yêu thích của bạn sẽ được liên kết với tên người dùng hoặc ID tài khoản mạng xã hội mà bạn dùng để đăng nhập. Dữ liệu này có thể bao gồm email của bạn (nếu đăng nhập bằng Google), Discord ID, hoặc tên đăng nhập Twitter tuỳ thuộc vào cách thức đăng nhập của bạn.
+  gdprDeletion: Để xoá mọi dữ liệu người dùng của bạn, xin hãy liên hệ với chúng tôi trên Discord!
   feedback: Phản hồi / Báo cáo lỗi
   feedbackHtml: >-
-    Bạn có thể tạo một issue mới tại <a
-    href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker
-    </a> hoặc liên hệ với Holodex trên Discord <br /> <br /> Reddit: <a
-    href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+    Bạn có thể tạo một issue mới tại <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> hoặc liên hệ với Holodex trên Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Lời cảm ơn
-    contents:
-      - I would like to give big thanks to the
-      - team for their work on
-      - >-
-        Also to all the subbers for helping the overseas bros! Please check them
-        out!
-      - ''
   changelog:
     title: Các thay đổi
   news:
