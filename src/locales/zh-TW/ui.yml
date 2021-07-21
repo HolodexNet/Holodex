@@ -32,11 +32,9 @@ component:
     settings: 網站設定
     login: 登入
     logout: 登出
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: 帳號設定
     music: 音樂播放
     multiview: 多窗工具
-    points: pts
     playlist: 播放清單
   videoCard:
     clips: '{n} 部剪輯'
@@ -49,8 +47,6 @@ component:
     googleCalendar: 新增至 Google 日曆
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -139,7 +135,6 @@ views:
     collabs: 連動
     about: 簡介
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -148,7 +143,6 @@ views:
       clipCount: 剪輯數量
       org: 團體
     tabs:
-      Vtuber: Vtuber
       Subber: 翻譯剪輯
       Favorites: 我的收藏
       Blocked: 黑名單
@@ -177,8 +171,7 @@ views:
     exportCsv: CSV檔案
     selectionSelect50: 選擇50部影片
     exportYTExplanation: >-
-      以此功能建立的YouTube播放清單的瀏覽權限是<b>不公開</b>的，而且有可能會被YouTube刪除。<br />
-      因為YouTube提供的功能不足，您需要透過以下方式來將<b>未列出的</b>YouTube播放清單儲存至帳號內。
+      以此功能建立的YouTube播放清單的瀏覽權限是<b>不公開</b>的，而且有可能會被YouTube刪除。<br /> 因為YouTube提供的功能不足，您需要透過以下方式來將<b>未列出的</b>YouTube播放清單儲存至帳號內。
     exportYTHeading: YouTube播放清單保存教學
     exportYTInstructions: >-
       <b class="red--text">第一步</b>：播放YouTube播放清單，並且將介面變更為迷你播放器模式。<br /><br /><b class="red--text">第二步</b>：選擇任意影片，將其加入待播清單。<br /><br /><b class="red--text">第三步</b>：播放清單已可透過點擊「儲存」按鈕儲存。
@@ -343,7 +336,6 @@ views:
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: 加入歌曲
@@ -368,7 +360,6 @@ editor:
   enterMode: 編輯影片資料
 about:
   quicklinks: 相關連結
-  discordBtn: Holodex Discord
   issueTracker: Github原始碼 / 錯誤回報頁
   faq:
     title: 常見問題
@@ -407,10 +398,6 @@ about:
         android:
           - 'Android Chrome：在瀏覽器開啟本站，點擊畫面右上角的三點按鈕'
           - 然後選擇「加到主畫面」。
-        ios:
-          iOS Safari: >-
-                 
-            - 然後選擇「加入主畫面」。
     MugenClips:
       title: MugenClips 是什麼？
       contents:
@@ -420,10 +407,11 @@ about:
       title: 我是烤肉/剪輯MAN但我在 Holodex 上找不到自己的頻道/剪輯
       contents:
         - >-
-               
+
           - 此表單
+        - '，我們將會手動將您的頻道加入資料庫。如果您的頻道已經在資料庫裡的話，請確認頻道的影片描述包含正確的 Youtube 實況來源 / 頻道連結。'
         - >-
-          ，我們將會手動將您的頻道加入資料庫。如果您的頻道已經在資料庫裡的話，請確認頻道的影片描述包含正確的 Youtube 實況來源 / 頻道連結。
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
     feedback:
       title: 我想對 Holodex 這個計畫盡一份心力/表達回饋
       contents:
@@ -444,8 +432,9 @@ about:
       - >-
         還有所有協助海外觀眾更加了解Vtuber的烤肉MAN們！
       - >-
-             
+
         - 二創條款
+      - Derivative Work License Agreement
   changelog:
     title: 更新紀錄
   news:
