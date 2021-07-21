@@ -49,6 +49,8 @@ component:
     googleCalendar: 新增至 Google 日曆
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -137,6 +139,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -422,7 +425,7 @@ about:
       title: 我是烤肉/剪輯MAN但我在 Holodex 上找不到自己的頻道/剪輯
       contents:
         - >-
-          Please check on the Channels page to see if you are listed as a subber, if not please fill out
+          請至頻道頁面確認自己的頻道是否有被列於剪輯頻道上，如果沒有的話請填寫
         - 此表單
         - >-
           ，我們將會手動將您的頻道加入資料庫。如果您的頻道已經在資料庫裡的話，請確認頻道的影片描述包含正確的 Youtube 實況來源 / 頻道連結。
@@ -446,7 +449,7 @@ about:
       - >-
         還有所有協助海外觀眾更加了解Vtuber的烤肉MAN們！
       - >-
-        This is a fan made website and the content found on this website is owned by Cover corp and its partners. The site follows the guidelines set forth by Cover corp in their
+        本站為粉絲製作網站，所以出現於本站的創作版權皆由COVER株式會社與其相關人員所有，本站遵循COVER株式會社所提供的指導方針與
       - 二創條款
   changelog:
     title: 更新紀錄
