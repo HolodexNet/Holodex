@@ -233,6 +233,8 @@ views:
       - Klein
     hideCollabStreamsLabel: Collab-Streams ausblenden
     hideCollabStreamsMsg: Collab-Streams in deinem Favoriten-Feed ausblenden
+    ignoredTopicsLabel: Ignorierte Themen
+    ignoredTopicsMsg: Videos mit diesen Themen von der Startseite und deinen Favoriten ausblenden
     theme: Design
   app:
     update_available: Ein Update ist verfügbar
@@ -317,6 +319,7 @@ views:
       remove: Entfernen
       desktop: Desktop
       mobile: Mobil
+      autoLayout: AutoLayout
     presetEditor:
       title: Layout speichern
       name: Name
@@ -325,6 +328,8 @@ views:
       selectLive: Livestream auswählen
       addCustomVideo: Benutzerdefiniertes Video hinzufügen
     fullScreen: Vollbild
+    mediaControls: Mediensteuerelemente
+    mediaControlsEmpty: Alle Videos, die wiedergegeben werden, werden hier angezeigt
   mugen:
     welcome: >-
       Willkommen bei MugenClips! Auf dieser Seite sehen alle den gleichen zufällig ausgewählten englischen Hololive-Clip. Schaue mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du vorgespult hast, aber wieder mit allen synchronisiert werden möchtest, lade die Seite bitte neu.
