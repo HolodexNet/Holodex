@@ -39,6 +39,7 @@ component:
     points: mata
     playlist: Senarai main
   videoCard:
+    clips: '{n} Buah Sedutan'
     watching: '{0} Tontonan Sekarang'
     liveNow: Sedang Bersiaran
     edit: Sunting
@@ -132,7 +133,9 @@ views:
   channel:
     video: Video
     clips: Sedutan
+    music: Muzik
     collabs: Kerjasama
+    about: Perihal
   channels:
     sortOptions:
       subscribers: Langganan
@@ -144,6 +147,8 @@ views:
     tabs:
       Vtuber: Penggiat YouTube maya
       Subber: Penyari Kata
+      Favorites: Kegemaran
+      Blocked: Disekat
     favoritesAreEmpty: Tiada kegemaran lagi!
     blockedAreEmpty: Tiada saluran yang disekat.
   home:
@@ -151,7 +156,9 @@ views:
     recentVideosHeading: Video Terkini
     noStreams: Tiada siaran langsung buat masa ini dan masa akan datang
     recentVideoToggles:
+      all: Semua
       official: Arkib
+      subber: Sedutan
   library:
     savedVideosTitle: Video yang Disimpan
     createYtPlaylistButton: Buat Senarai Main YouTube ({0})
@@ -184,6 +191,7 @@ views:
       newest: Terbaharu
       oldest: Terlama
     type:
+      all: Semua
       official: Rasmi
       clip: Sedutan
     unsupportedQuery: >-
@@ -191,6 +199,7 @@ views:
     sortByLabel: Isih Mengikut
     typeDropdownLabel: Jenis
   settings:
+    title: Tetapan
     darkModeLabel: Tema Gelap
     darkModeMsg: Tukar antara tema cerah dan tema gelap
     redirectModeLabel: Buka di YouTube
@@ -230,6 +239,7 @@ views:
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
+    close_btn: Tutup
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
     nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong
     loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
@@ -263,6 +273,7 @@ views:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
     manageFavorites: Uruskan Kegemaran
+    close: Tutup
     showall: Paparkan Semua
   editor:
     needlogin: Penyuntingan data meta video dan lagu di Holodex hanya untuk yang telah mengelog masuk.
@@ -305,6 +316,7 @@ views:
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
       custom: Tataletak Saya
       toggleAutoLayout: Togolkan penggunaan tataletak ini secara kendiri
+      remove: Padamkan
       desktop: Peranti Atas Meja
       mobile: Peranti Mudah Alih
       autoLayout: Tataletak Kendiri
@@ -336,6 +348,7 @@ time:
 editor:
   music:
     add: Tambah
+    update: Kemas Kini
     permission: >-
       Kuasa mengemas kini atau menghapuskan lagu hanya diberikan kepada pengguna berpangkat 'Penyunting' atau lebih tinggi. Sila hubungi kami di <a class='white--text' href='/about'>Discord</a> untuk memaklumkan penyunting akan sebarang kesilapan mahupun masalah atau membuat permohonan menjadi seorang penyunting.
     titles:
@@ -377,13 +390,24 @@ about:
       Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.
     favorite:
       title: Apa itu kegemaran?
+      Contents:
+        - >-
+          Kegemaran membolehkan anda sentiasa dimaklumkan mengenai penggiat YouTube maya (penggiyut maya) kegemaran anda. Saluran kegemaran boleh ditambah dengan menekan gambar hati di laman
+        - >-
+          . Setakat ini saluran penyari kata masih belum boleh ditambahkan ke laman kegemaran. Sementara itu, anda masih boleh menyokong para penyari kata dengan melanggan saluran mereka atau melalui cara lain!
       disappear:
         title: Senarai kegemaran saya telah hilang / Saya tidak boleh menambah video kegemaran
+      contents:
+        - >-
+          Pastikan anda telah log masuk kemudian buka laman kegemaran agar senarai tersebut dikemas kini.
     mobile:
       title: Adakah ada aplikasi Android/iOS untuk Holodex?
       content:
         summary: >-
           Kami masih mengusahakannya! Buat sementara waktu, sila gunakan ciri "Tambahkan di Layar Utama" di penyemak imbas masing-masing. Kami telah menyelaraskan Holodex agar berfungsi seakan-akan sebuah aplikasi mudah alih
+        android:
+          - 'Chrome Android: Lawati laman ini kemudian tekan titik bertiga'
+          - on the top right and find "Add to Home Screen".
     MugenClips:
       title: Apa itu MugenClips?
     subber:
