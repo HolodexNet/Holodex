@@ -37,7 +37,9 @@ component:
     music: Música
     multiview: Multi Stream
     points: pts
+    playlist: Playlist
   videoCard:
+    clips: '{n} Clipes'
     watching: '{0} assistindo agora'
     liveNow: Ao Vivo
     edit: Editar
