@@ -49,6 +49,8 @@ component:
     googleCalendar: Tambahkan ke Kalendar Google
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -137,6 +139,7 @@ views:
     collabs: Kerjasama
     about: Perihal
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -406,14 +409,30 @@ about:
         summary: >-
           Kami masih mengusahakannya! Buat sementara waktu, sila gunakan ciri "Tambahkan di Layar Utama" di penyemak imbas masing-masing. Kami telah menyelaraskan Holodex agar berfungsi seakan-akan sebuah aplikasi mudah alih
         android:
-          - 'Chrome Android: Lawati laman ini kemudian tekan titik bertiga'
-          - on the top right and find "Add to Home Screen".
+          - 'Chrome Android: Kunjungi laman ini kemudian tekan titik bertiga'
+          - di sebelah kanan atas lalu pilih "Tambahkan kepada Skrin utama".
+        ios:
+          - >-
+            Safari iOS: Kunjungi laman ini kemudian tekan petak beranak panah menghala ke atas
+          - di bahagian bawah Safari lalu pilih "Tambahkan kepada Skrin Utama"
     MugenClips:
       title: Apa itu MugenClips?
+      contents:
+        - >-
+          MugenClips (無限 bermaksud tak terhingga, clips bermaksud sedutan; maksud harfiahnya ialah sedutan tak terhingga) ialah suatu tontonan berkumpulan yang membolehkan sesiapa pun menonton sedutan yang ditayangkan secara bergilir-gilir bersama pengunjung laman lain
     subber:
       title: Saya seorang penyari kata namun saluran atau sedutan saya tidak tersenarai di Holodex
+      contents:
+        - >-
+          Pastikan anda telah pun tersenarai sebagai seorang penyari kata di laman Saluran. Sekiranya saluran anda tidak tersenarai, tolong isikan
+        - borang ini
+        - >-
+          agar kami boleh menambah saluran anda secara sendiri. Sekiranya saluran anda telah pun tersenarai, tolong pastikan perihalan video anda mengandungi pautan yang betul.
     feedback:
       title: Saya mahu memberikan maklum balas/sumbangan kepada projek ini
+      contents:
+        - >-
+          Kami amat mengalu-alukan sebarang bantuan dan saranan! Sumbangan bagi antara muka pengguna serta bahagian belakang laman adalah diterima namun buat masa ini hanya antara muka pengguna yang bersumber terbuka. Sila hubungi kami di Discord sekiranya anda mahu mencapai kod sumber bahagian belakang laman atau sekadar mahu memberi cadangan.
   gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
     Sebuah cecikut Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
@@ -423,6 +442,14 @@ about:
     Isu baharu boleh dibuka di <a href="https://github.com/RiceCakess/Holodex/issues"> Pengesan Isu Github </a> atau dibawa berbincang dengan pasukan Holodex di Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Penghargaan
+    contents:
+      - Saya ingin mengucapkan terima kasih kepada pasukan
+      - atas kerja keras mereka pada
+      - >-
+        Tidak dilupakan juga untuk semua penyari kata yang telah membantu saudara luar! Kunjungi mereka!
+      - >-
+        Laman ini merupakan laman buatan peminat dan kandungan yang ditemukan di laman ini dimiliki sepenuhnya oleh perusahaan Cover dan rakan kongsinya. Laman ini mematuhi garis panduan yang ditetapkan oleh perusahaan Cover mengenai
+      - Panduan Karya Terbitan
   changelog:
     title: Catatan perubahan
   news:
