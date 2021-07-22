@@ -39,6 +39,7 @@ component:
     points: points
     playlist: Playlist
   videoCard:
+    clips: '{n} Clips'
     watching: '{0} Visionnages'
     liveNow: En Direct
     edit: Modifier
@@ -132,7 +133,9 @@ views:
   channel:
     video: Vidéos
     clips: Clips
+    music: Musique
     collabs: Collaborations
+    about: À Propos
   channels:
     sortOptions:
       subscribers: Abonnés
@@ -144,6 +147,8 @@ views:
     tabs:
       Vtuber: Vtuber
       Subber: Créateur de clip
+      Favorites: Favoris
+      Blocked: Bloqué
     favoritesAreEmpty: Vous n'avez aucun favoris
     blockedAreEmpty: Vous n'avez bloqué aucune chaine.
   home:
@@ -151,7 +156,9 @@ views:
     recentVideosHeading: Vidéos Récentes
     noStreams: Aucun live ou événement en direct à venir pour l'instant
     recentVideoToggles:
+      all: Tout
       official: Archives
+      subber: Clips
   library:
     savedVideosTitle: Vidéos Sauvegardées
     createYtPlaylistButton: Créer une playlist YT ({0})
@@ -184,6 +191,7 @@ views:
       newest: Plus récent
       oldest: Plus ancien
     type:
+      all: Tout
       official: Officiel
       clip: Clip
     unsupportedQuery: >-
@@ -191,6 +199,7 @@ views:
     sortByLabel: Trier par
     typeDropdownLabel: Type
   settings:
+    title: Paramètres
     darkModeLabel: Thème Sombre
     darkModeMsg: Basculer entre le thème sombre et le thème clair
     redirectModeLabel: Ouvrir sur Youtube
@@ -224,10 +233,13 @@ views:
       - Petite
     hideCollabStreamsLabel: Masquer les streams en collaborations
     hideCollabStreamsMsg: Masquer les streams en collaborations de vos favoris
+    ignoredTopicsLabel: Sujets ignorés
+    ignoredTopicsMsg: Cacher les vidéos avec ces sujets de la page d'accueil et des favoris
     theme: Thème
   app:
     update_available: Une mise à jour est disponible
     update_btn: Mettre à jour
+    close_btn: Fermer
     check_about_page: Visitez la page À Propos pour voir les changements
     nowSupportsMultiOrg: Holodex supporte maintenant de nombreuses organisations.
     loginCallToAction: Connectez-vous pour rassembler vos propres favoris !
@@ -261,6 +273,7 @@ views:
     promptForAction: >-
       Créez une liste de vtubers favoris et retrouvez leurs derniers clips et leurs dernières diffusions sur cette page
     manageFavorites: Gérer les favoris
+    close: Fermer
     showall: Tout afficher
   editor:
     needlogin: Vous devrez vous connecter pour faire des modifications aux métadonnées des vidéos et musiques d'Holodex.
@@ -303,8 +316,10 @@ views:
         Vous avez une mise en page sympa à partager ? Appuyez sur partager et faites le nous savoir sur notre <a href="https://discord.gg/jctkgHBt4b">serveur Discord</a>!
       custom: Mes dispositions
       toggleAutoLayout: Activer/désactiver la disposition automatique
+      remove: Supprimer
       desktop: Bureau
       mobile: Mobile
+      autoLayout: Disposition automatique
     presetEditor:
       title: Sauvegarder la disposition
       name: Nom
@@ -333,6 +348,7 @@ time:
 editor:
   music:
     add: Ajouter
+    update: Mettre à jour
     permission: >-
       Vous avez besoin d'être un utilisateur de niveau "éditeur" ou supérieur pour mettre à jour ou supprimer des chansons. Contactez-nous sur <a class='white--text' href='/about'>Discord</a> pour candidater en tant qu'éditeur, ou signaler un abus/problème.
     titles:
@@ -374,6 +390,11 @@ about:
       C'est triste de vous voir partir :c, laissez nous savoir si nous pouvons vous aider face aux problèmes que vous rencontrez. Si vous voulez quand même le supprimer, envoyez-nous un message sur Discord.
     favorite:
       title: Que sont les favoris ?
+      Contents:
+        - >-
+          Les favoris sont un moyen de voir vos vtubeurs préférés en priorité, vous pouvez ajouter vos chaînes en favoris en cliquant sur l'icône cœur sur le
+        - >-
+          page. Please note that favoriting subbers is currently not supported, but you should still consider subscribing and supporting them in other ways!
       disappear:
         title: Mes favoris ont disparu / Je ne peux pas ajouter de favori
     mobile:
