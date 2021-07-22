@@ -39,6 +39,7 @@ component:
     points: puan
     playlist: Listeler
   videoCard:
+    clips: '{n} Klip'
     watching: '{0} İzleyici'
     liveNow: Şu an canlı
     edit: Düzenle
@@ -132,7 +133,9 @@ views:
   channel:
     video: Videolar
     clips: Klipler
+    music: Müzik
     collabs: Collablar
+    about: Hakkında
   channels:
     sortOptions:
       subscribers: Aboneler
@@ -144,6 +147,8 @@ views:
     tabs:
       Vtuber: Vtuber
       Subber: Altyazıcı
+      Favorites: Favoriler
+      Blocked: Engellenenler
     favoritesAreEmpty: Hiç favoriniz yok!
     blockedAreEmpty: Engellediğiz kanal yok.
   home:
@@ -151,7 +156,9 @@ views:
     recentVideosHeading: Son Videolar
     noStreams: Şu an Canlı veya Yakında olan yayın yok
     recentVideoToggles:
+      all: Tümü
       official: Arşiv
+      subber: Klipler
   library:
     savedVideosTitle: Kaydedilen Videolar
     createYtPlaylistButton: YT Oynatma Listesi Oluştur ({0})
@@ -184,6 +191,7 @@ views:
       newest: En yeni
       oldest: En eski
     type:
+      all: Tümü
       official: Resmi
       clip: Klip
     unsupportedQuery: >-
@@ -191,6 +199,7 @@ views:
     sortByLabel: Sıralama türü
     typeDropdownLabel: İçerik türü
   settings:
+    title: Tercihler
     darkModeLabel: Koyu tema
     darkModeMsg: Temayı açık mod ve karanlık mod arasında değiştirir
     redirectModeLabel: Youtube'da aç
@@ -224,10 +233,13 @@ views:
       - Küçük
     hideCollabStreamsLabel: Collab yayınları sakla
     hideCollabStreamsMsg: Collab yayınları favoriler sayfanızdan saklar
+    ignoredTopicsLabel: Yok Sayılan Konular
+    ignoredTopicsMsg: Ana Sayfadan ve Favorilerden seçili konulara sahip videolar kaldırılır
     theme: Tema
   app:
     update_available: Bir güncelleme mevcut
     update_btn: Güncelle
+    close_btn: Kapat
     check_about_page: Değişiklikleri görüntülemek için Hakkında sayfasını ziyaret edin
     nowSupportsMultiOrg: Holodex artık birden fazla organizaysonu desteklememektedir.
     loginCallToAction: Favorilerinizi toplamak için Giriş Yapın!
@@ -261,6 +273,7 @@ views:
     promptForAction: >-
       Favori VTuberlarının bir listesini oluştur ve en son kliplerini ve yayınlarını bu sayfada görüntüle
     manageFavorites: Favorileri Yönet
+    close: Kapat
     showall: Tümünü Göster
   editor:
     needlogin: Holodex video ve şarkı üst verilerini düzenlemek için Giriş Yapmanız gerekektedir.
@@ -303,6 +316,7 @@ views:
         Paylaşmak istediğin harika bir düzenin mi var? Paylaş butonunu kullanıp <a href="https://discord.gg/jctkgHBt4b">Discord sunucumuzda</a> bizimle paylaş!
       custom: Düzenlerim
       toggleAutoLayout: Düzeni otomatik modda kullanmayı aç/kapat
+      remove: Sil
       desktop: Masaüstü
       mobile: Mobil
       autoLayout: OtoDüzen
@@ -334,6 +348,7 @@ time:
 editor:
   music:
     add: Ekle
+    update: Güncelle
     permission: >-
       Var olan müzikleri güncellemek veya silmek için "Editör" ya da daha üst bir seviye olmalısınız. Editörlere hataları/kötüye kullanmaları bildirmek veya editör olmaya başvurmak için lütfen <a class='white--text' href='/about'>discord</a> üzerinden bizimle iletişime geçin.
     titles:

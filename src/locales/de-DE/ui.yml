@@ -39,6 +39,7 @@ component:
     points: Pkte.
     playlist: Playlist
   videoCard:
+    clips: '{n} Clips'
     watching: '{0} Zuschauer'
     liveNow: Jetzt Live
     edit: Bearbeiten
@@ -48,6 +49,8 @@ component:
     googleCalendar: Zu Google Kalender hinzufügen
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -132,8 +135,11 @@ views:
   channel:
     video: Videos
     clips: Clips
+    music: Musik
     collabs: Collabs
+    about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -142,8 +148,10 @@ views:
       clipCount: Clip-Anzahl
       org: Organisation
     tabs:
-      Vtuber: Vtuber
+      Vtuber: VTuber
       Subber: Clipper
+      Favorites: Favoriten
+      Blocked: Blockiert
     favoritesAreEmpty: Du hast keine Favoriten!
     blockedAreEmpty: Du hast keine Kanäle blockiert.
   home:
@@ -151,7 +159,9 @@ views:
     recentVideosHeading: Aktuelle Videos
     noStreams: Im Moment gibt es keine Live- oder anstehenden Streams
     recentVideoToggles:
+      all: Alle
       official: Archiv
+      subber: Clips
   library:
     savedVideosTitle: Gespeicherte Videos
     createYtPlaylistButton: YT-Playlist erstellen ({0})
@@ -184,6 +194,7 @@ views:
       newest: Neuestes
       oldest: Ältestes
     type:
+      all: Alle
       official: Offiziell
       clip: Clip
     unsupportedQuery: >-
@@ -191,6 +202,7 @@ views:
     sortByLabel: Sortieren nach
     typeDropdownLabel: Art
   settings:
+    title: Einstellungen
     darkModeLabel: Dunkler Modus
     darkModeMsg: Ändert das Design zwischen dem hellen und dem dunklen Modus
     redirectModeLabel: In YouTube öffnen
@@ -230,6 +242,7 @@ views:
   app:
     update_available: Ein Update ist verfügbar
     update_btn: Update
+    close_btn: Schließen
     check_about_page: Besuche die Info-Seite um neue Änderungen zu sehen
     nowSupportsMultiOrg: Holodex unterstützt jetzt mehrere Organisationen.
     loginCallToAction: Melde dich an, um deine eigenen Favoriten zu sammeln!
@@ -263,6 +276,7 @@ views:
     promptForAction: >-
       Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
     manageFavorites: Favoriten verwalten
+    close: Schließen
     showall: Alle anzeigen
   editor:
     needlogin: Du musst dich einloggen, um Änderungen an Video-/Song-Metadaten in Holodex vorzunehmen.
@@ -305,6 +319,7 @@ views:
         Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
       custom: Meine Layouts
       toggleAutoLayout: Layout Automodus umschalten
+      remove: Entfernen
       desktop: Desktop
       mobile: Mobil
       autoLayout: AutoLayout
@@ -336,6 +351,7 @@ time:
 editor:
   music:
     add: Hinzufügen
+    update: Aktualisieren
     permission: >-
       Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
     titles:
@@ -377,19 +393,46 @@ about:
       Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir helfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
     favorite:
       title: Was sind Favoriten?
+      Contents:
+        - >-
+          Favoriten erleichtern es dir, mit deinen Lieblings-VTubern auf dem Laufenden zu bleiben. Du kannst deine Lieblingskanäle hinzufügen, indem du auf das Herz-Symbol auf der
+        - >-
+          klickst. Es ist momentan nicht möglich, Clipper als Favoriten zu markieren. Erwäge trotzdem, sie auf anderen Wegen zu unterstützen!
       disappear:
         title: Meine Favoritenliste ist verschwunden / Ich kann keine Favoriten setzen
+      contents:
+        - >-
+          Bitte stelle sicher, dass du eingeloggt bist und besuche die Registerkarte "Favoriten", um eine Aktualisierung zu erzwingen.
     mobile:
       title: Gibt es eine Android/iOS App für Holodex?
       content:
         summary: >-
-          Wir arbeiten daran! In der Zwischenzeit nutze bitte die "Add to Home"-Funktion in deinem Browser. Wir haben sie stark optimiert, damit sie sich wie eine App verhält
+          Wir arbeiten daran! In der Zwischenzeit nutze bitte die "Zum Startbildschirm hinzufügen"-Funktion in deinem Browser. Wir haben sie stark optimiert, damit sie sich wie eine App verhält
+        android:
+          - 'Android Chrome: Navigiere zur Seite, klicke auf die drei Punkte'
+          - oben rechts und finde "Zum Startbildschirm hinzufügen".
+        ios:
+          - >-
+            iOS Safari: Navigiere zur Seite auf deinem Smartphone und klicke auf das Quadrat mit dem Pfeil nach oben
+          - am unteren Rand des Browsers und klicke auf "Zum Startbildschirm hinzufügen"
     MugenClips:
       title: Was ist MugenClips?
+      contents:
+        - >-
+          MugenClips ist eine unendliche und vielfältige Clipwarteschlange, welche du dir gemeinsam mit anderen Fans ansehen kannst
     subber:
       title: Ich bin ein Clipper und finde meinen Kanal oder meine Clips nicht auf Holodex
+      contents:
+        - >-
+          Bitte sieh auf der Kanäle-Seite nach, ob du als Clipper gelistet bist. Falls nicht, fülle bitte
+        - dieses Formular
+        - >-
+          aus, und wir fügen dich manuell hinzu. Falls du schon auf der Liste stehst, stell bitte sicher, dass die Youtube-Quellen/Kanäle korrekt in deinen Videobeschreibungen verlinkt sind.
     feedback:
       title: Ich habe Feedback / möchte zu diesem Projekt beitragen
+      contents:
+        - >-
+          Alle Helfer und Ideen sind willkommen! Die Benutzeroberfläche und das Backend sind für Beiträge verfügbar, obwohl derzeit nur die UI Open Source ist. Bitte kontaktiere uns auf Discord, um Zugang zur Backend-Quelle zu erhalten oder einfach nur über deine Ideen zu chatten.
   gdpr: DSGVO und meine Daten
   gdprContent: >-
     Ein Google-Analytics-Cookie wird verwendet, um Seitenaufrufe für unsere analytischen Zwecke zu verfolgen. Nach dem Login verknüpfen wir deinen Benutzernamen und die ID deines Social Media Accounts mit deinen Favoriten. Diese Daten können deine E-Mail (für Google), deine Discord-ID oder dein Twitter-Handle beinhalten.
@@ -399,6 +442,14 @@ about:
     Du kannst einen Fehler im <a href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a> melden oder das Holodex Team auf Discord kontaktieren. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Credits
+    contents:
+      - Besonders möchte ich mich bedanken beim
+      - Team für ihre Arbeit an der
+      - >-
+        Dank gebührt auch den Clippern dafür, dass sie den Überseebrüdern helfen! Bitte sieh sie dir an!
+      - >-
+        Dies ist eine von Fans erstellte Website und die Inhalte dieser Website sind Eigentum von Cover Corp und seinen Partnern. Die Seite folgt den Richtlinien von Cover Corps
+      - Urheberrechtserklärung
   changelog:
     title: Änderungsverlauf
   news:

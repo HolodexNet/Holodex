@@ -39,6 +39,7 @@ component:
     points: mata
     playlist: Senarai main
   videoCard:
+    clips: '{n} Buah Sedutan'
     watching: '{0} Tontonan Sekarang'
     liveNow: Sedang Bersiaran
     edit: Sunting
@@ -48,6 +49,8 @@ component:
     googleCalendar: Tambahkan ke Kalendar Google
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -132,8 +135,11 @@ views:
   channel:
     video: Video
     clips: Sedutan
+    music: Muzik
     collabs: Kerjasama
+    about: Perihal
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -144,6 +150,8 @@ views:
     tabs:
       Vtuber: Penggiat YouTube maya
       Subber: Penyari Kata
+      Favorites: Kegemaran
+      Blocked: Disekat
     favoritesAreEmpty: Tiada kegemaran lagi!
     blockedAreEmpty: Tiada saluran yang disekat.
   home:
@@ -151,7 +159,9 @@ views:
     recentVideosHeading: Video Terkini
     noStreams: Tiada siaran langsung buat masa ini dan masa akan datang
     recentVideoToggles:
+      all: Semua
       official: Arkib
+      subber: Sedutan
   library:
     savedVideosTitle: Video yang Disimpan
     createYtPlaylistButton: Buat Senarai Main YouTube ({0})
@@ -184,6 +194,7 @@ views:
       newest: Terbaharu
       oldest: Terlama
     type:
+      all: Semua
       official: Rasmi
       clip: Sedutan
     unsupportedQuery: >-
@@ -191,6 +202,7 @@ views:
     sortByLabel: Isih Mengikut
     typeDropdownLabel: Jenis
   settings:
+    title: Tetapan
     darkModeLabel: Tema Gelap
     darkModeMsg: Tukar antara tema cerah dan tema gelap
     redirectModeLabel: Buka di YouTube
@@ -230,6 +242,7 @@ views:
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
+    close_btn: Tutup
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
     nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong
     loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
@@ -263,6 +276,7 @@ views:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
     manageFavorites: Uruskan Kegemaran
+    close: Tutup
     showall: Paparkan Semua
   editor:
     needlogin: Penyuntingan data meta video dan lagu di Holodex hanya untuk yang telah mengelog masuk.
@@ -305,6 +319,7 @@ views:
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
       custom: Tataletak Saya
       toggleAutoLayout: Togolkan penggunaan tataletak ini secara kendiri
+      remove: Padamkan
       desktop: Peranti Atas Meja
       mobile: Peranti Mudah Alih
       autoLayout: Tataletak Kendiri
@@ -336,6 +351,7 @@ time:
 editor:
   music:
     add: Tambah
+    update: Kemas Kini
     permission: >-
       Kuasa mengemas kini atau menghapuskan lagu hanya diberikan kepada pengguna berpangkat 'Penyunting' atau lebih tinggi. Sila hubungi kami di <a class='white--text' href='/about'>Discord</a> untuk memaklumkan penyunting akan sebarang kesilapan mahupun masalah atau membuat permohonan menjadi seorang penyunting.
     titles:
@@ -377,19 +393,46 @@ about:
       Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.
     favorite:
       title: Apa itu kegemaran?
+      Contents:
+        - >-
+          Kegemaran membolehkan anda sentiasa dimaklumkan mengenai penggiat YouTube maya (penggiyut maya) kegemaran anda. Saluran kegemaran boleh ditambah dengan menekan gambar hati di laman
+        - >-
+          . Setakat ini saluran penyari kata masih belum boleh ditambahkan ke laman kegemaran. Sementara itu, anda masih boleh menyokong para penyari kata dengan melanggan saluran mereka atau melalui cara lain!
       disappear:
         title: Senarai kegemaran saya telah hilang / Saya tidak boleh menambah video kegemaran
+      contents:
+        - >-
+          Pastikan anda telah log masuk kemudian buka laman kegemaran agar senarai tersebut dikemas kini.
     mobile:
       title: Adakah ada aplikasi Android/iOS untuk Holodex?
       content:
         summary: >-
           Kami masih mengusahakannya! Buat sementara waktu, sila gunakan ciri "Tambahkan di Layar Utama" di penyemak imbas masing-masing. Kami telah menyelaraskan Holodex agar berfungsi seakan-akan sebuah aplikasi mudah alih
+        android:
+          - 'Chrome Android: Kunjungi laman ini kemudian tekan titik bertiga'
+          - di sebelah kanan atas lalu pilih "Tambahkan kepada Skrin utama".
+        ios:
+          - >-
+            Safari iOS: Kunjungi laman ini kemudian tekan petak beranak panah menghala ke atas
+          - di bahagian bawah Safari lalu pilih "Tambahkan kepada Skrin Utama"
     MugenClips:
       title: Apa itu MugenClips?
+      contents:
+        - >-
+          MugenClips (無限 bermaksud tak terhingga, clips bermaksud sedutan; maksud harfiahnya ialah sedutan tak terhingga) ialah suatu tontonan berkumpulan yang membolehkan sesiapa pun menonton sedutan yang ditayangkan secara bergilir-gilir bersama pengunjung laman lain
     subber:
       title: Saya seorang penyari kata namun saluran atau sedutan saya tidak tersenarai di Holodex
+      contents:
+        - >-
+          Pastikan anda telah pun tersenarai sebagai seorang penyari kata di laman Saluran. Sekiranya saluran anda tidak tersenarai, tolong isikan
+        - borang ini
+        - >-
+          agar kami boleh menambah saluran anda secara sendiri. Sekiranya saluran anda telah pun tersenarai, tolong pastikan perihalan video anda mengandungi pautan yang betul.
     feedback:
       title: Saya mahu memberikan maklum balas/sumbangan kepada projek ini
+      contents:
+        - >-
+          Kami amat mengalu-alukan sebarang bantuan dan saranan! Sumbangan bagi antara muka pengguna serta bahagian belakang laman adalah diterima namun buat masa ini hanya antara muka pengguna yang bersumber terbuka. Sila hubungi kami di Discord sekiranya anda mahu mencapai kod sumber bahagian belakang laman atau sekadar mahu memberi cadangan.
   gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
     Sebuah cecikut Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
@@ -399,6 +442,14 @@ about:
     Isu baharu boleh dibuka di <a href="https://github.com/RiceCakess/Holodex/issues"> Pengesan Isu Github </a> atau dibawa berbincang dengan pasukan Holodex di Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Penghargaan
+    contents:
+      - Saya ingin mengucapkan terima kasih kepada pasukan
+      - atas kerja keras mereka pada
+      - >-
+        Tidak dilupakan juga untuk semua penyari kata yang telah membantu saudara luar! Kunjungi mereka!
+      - >-
+        Laman ini merupakan laman buatan peminat dan kandungan yang ditemukan di laman ini dimiliki sepenuhnya oleh perusahaan Cover dan rakan kongsinya. Laman ini mematuhi garis panduan yang ditetapkan oleh perusahaan Cover mengenai
+      - Panduan Karya Terbitan
   changelog:
     title: Catatan perubahan
   news:

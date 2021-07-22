@@ -39,6 +39,7 @@ component:
     points: poin
     playlist: Playlist
   videoCard:
+    clips: '{n} Klip'
     watching: '{0} sedang menonton'
     liveNow: Sedang Berlangsung
     edit: Ubah
@@ -48,6 +49,8 @@ component:
     googleCalendar: Tambahkan ke Kalender Google
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -119,12 +122,24 @@ component:
     alertText: >-
       Pengaturan pada privasi browser kamu membuat sulit untuk masuk pada chat Youtube. Klik disini untuk info lebih lanjut
     neverShowAgain: Jangan Pernah Tampilkan Peringatan ini Lagi
+  playlist:
+    menu:
+      export-playlist: Ekspor Playlist
+      new-playlist: Playlist Baru
+      rename-playlist: Ubah Nama Playlist
+      reset-unsaved: Reset Perubahan yang tidak disimpan
+      delete-playlist: Hapus Playlist
+      clear-playlist: Bersihkan Playlist
+    save-error-not-logged-in: Kamu harus masuk untuk menyimpan playlist
 views:
   channel:
     video: Video
     clips: Klip
+    music: Musik
     collabs: Kolaborasi
+    about: Tentang
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -135,6 +150,8 @@ views:
     tabs:
       Vtuber: Vtuber
       Subber: Subber
+      Favorites: Favorit
+      Blocked: Diblokir
     favoritesAreEmpty: Kamu tidak memiliki favorit!
     blockedAreEmpty: Kamu tidak memblokir channel manapun.
   home:
@@ -142,7 +159,9 @@ views:
     recentVideosHeading: Video Terkini
     noStreams: Saat ini tidak ada siaran yang sedang berlangsung atau akan tayang
     recentVideoToggles:
+      all: Semua
       official: Arsip
+      subber: Klip
   library:
     savedVideosTitle: Video Tersimpan
     createYtPlaylistButton: Buat YT Playlist ({0})
@@ -175,6 +194,7 @@ views:
       newest: Terbaru
       oldest: Terlama
     type:
+      all: Semua
       official: Resmi
       clip: Klip
     unsupportedQuery: >-
@@ -182,6 +202,7 @@ views:
     sortByLabel: Urutkan Berdasarkan
     typeDropdownLabel: Tipe
   settings:
+    title: Pengaturan
     darkModeLabel: Mode Malam
     darkModeMsg: Mengubah tema dari mode siang ke mode malam
     redirectModeLabel: Buka di YouTube
@@ -215,10 +236,13 @@ views:
       - Kecil
     hideCollabStreamsLabel: Sembunyikan Siaran Kolaborasi
     hideCollabStreamsMsg: Menyembunyikan siaran kolaborasi dari halaman favorit kamu
+    ignoredTopicsLabel: Topik yang Diabaikan
+    ignoredTopicsMsg: Menyembunyikan video yang berkaitan dengan topik yang dipilih dari halaman Beranda dan Favorit
     theme: Tema
   app:
     update_available: Pembaharuan tersedia
     update_btn: Perbarui
+    close_btn: Tutup
     check_about_page: Kunjungi halaman Tentang untuk melihat pembaharuan
     nowSupportsMultiOrg: Holodex kini mendukung berbagai organisasi
     loginCallToAction: Masuk untuk mengumpulkan favorit kamu!
@@ -252,6 +276,7 @@ views:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada halaman ini.
     manageFavorites: Kelola Favorit
+    close: Tutup
     showall: Tampilkan Semua
   editor:
     needlogin: Kamu harus masuk untuk mengubah metadata video dan lagu di Holodex.
@@ -294,8 +319,10 @@ views:
         Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!
       custom: Tataletak Saya
       toggleAutoLayout: Nyalakan/Matikan penggunaan tataletak ini pada otomatis
+      remove: Hapus
       desktop: Desktop
       mobile: Ponsel
+      autoLayout: Tataletak Otomatis
     presetEditor:
       title: Simpan Tataletak
       name: Nama
@@ -304,9 +331,19 @@ views:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Lain
     fullScreen: Layar Penuh
+    mediaControls: Kontrol Media
+    mediaControlsEmpty: Video yang diputar akan muncul disini
   mugen:
     welcome: >-
       Selamat datang di MugenClips! Semua orang yang berada di halaman ini melihat klip hololive bahasa inggris yang sama yang dipilih secara acak. Menonton bareng dan mengobrol sesama fans Hololive dari seluruh penjuru dunia. jika kamu mempercepat klip dan ingin mensinkronkan kembali video dengan semua orang, tekan refresh pada halaman ini.
+  playlist:
+    playlist-is-modified: Belum Disimpan
+    item-last-updated: 'Pembaharuan Terakhir:'
+    login-prompt: Masuk untuk menyimpan dan memiliki lebih dari satu playlist
+    new-playlist-btn-label: Buat Playlist baru
+    page-heading: 'Playlist Kamu:'
+    page-instruction: Klik playlist untuk menetapkannya sebagai aktif.
+    change-loss-warning: Perubahan yang belum disimpan akan hilang. Lanjutkan?
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
@@ -314,6 +351,7 @@ time:
 editor:
   music:
     add: Tambah
+    update: Perbarui
     permission: >-
       Kamu perlu level pengguna 'Editor' atau lebih tinggi untuk memperbarui atau menghapus lagu yang sudah ada. Hubungi kami di <a class='white--text' href='/about'>discord</a> untuk memberitau masalah/penyalahgunaan mengenai editor, atau mengajukan diri menjadi editor.
     titles:
@@ -355,19 +393,46 @@ about:
       Yaaahhh :( , mohon beritahu kami jika terdapat masalah. jika kamu tetap ingin channelnya dihapus, tolong kirim pesan pada kami di Discord.
     favorite:
       title: Apa itu favorit?
+      Contents:
+        - >-
+          Favorit merupakan cara untuk membuat vtuber favoritmu menjadi bagian teratas, kamu dapat menambahkan favorit dengan menekan ikon hati pada
+        - >-
+          halaman. Untuk saat ini memfavoritkan subber belum dapat dilakukan, tapi kamu tetap harus mempertimbangkan untuk mensubscribe dan mendukung mereka dengan cara lain!
       disappear:
         title: Daftar favorit saya menghilang / saya tidak bisa melakukan favorit
+      contents:
+        - >-
+          Pastikan kamu sudah masuk dan mengunjungi halaman saluran tab favorit untuk memaksa pemuatan ulang.
     mobile:
       title: Apakah ada aplikasi Android/iOS untuk Holodex?
       content:
         summary: >-
           Kami masih mengembangkan hal itu! untuk saat ini, mohon gunakan fitur "Tambah ke Layar Utama" pada browser kalian. kami telah menyetelnya agar terlihat seperti aplikasi
+        android:
+          - 'Android Chrome: Kunjungi situs, klik tiga dot'
+          - pada pojok kanan atas dan cari "Tambahkan ke Layar Utama".
+        ios:
+          - >-
+            iOS Safari: Kunjungi situs pada ponselmu, klik kotak dengan tanda panah menunjuk ke atas
+          - pada bagian bawah safari, klik "Tambahkan ke Layar Utama"
     MugenClips:
       title: Apa itu MugenClips?
+      contents:
+        - >-
+          MugenClips, atau Klip tak terbatas, merupakan halaman untuk nonton bareng bersama orang lain dimana semua orang dapat menonton berbagai klip yang terus diputar yang diunggah oleh berbagai banyak channel komunitas penerjemah
     subber:
       title: Saya subber dan tidak menemukan channel atau klip saya pada Holodex
+      contents:
+        - >-
+          Silahkan cek halaman saluran untuk melihat apa kamu sudah menjadi salah satu subber disini, jika belum silahkan isi
+        - form ini
+        - >-
+          , dan kami akan menambahkan kamu secara manual. Jika kamu sudah ada di dalam daftar, pastikan deskripsi video kamu memiliki sumber/channel tautan youtube yang benar.
     feedback:
       title: Saya punya saran/ingin berkontribusi pada projek ini
+      contents:
+        - >-
+          Semua bantuan dan ide dipersilahkan! UI dan Backend tersedia untuk kontribusi, meskipun untuk saat ini hanya UI yang open source. Hubungi kami di discord untuk mendapatkan akses ke sumber backend, atau simpel dengan utarakan idemu di chat.
   gdpr: GDPR dan data saya
   gdprContent: >-
     Cookie Google Analytics digunakan untuk melacak tampilan halaman untuk tujuan analitis kami. Setelah login, kami mengaitkan nama pengguna dan ID akun media sosial dengan favorit kamu. Data ini mungkin termasuk alamat Email (untuk Google), ID Discord, atau Twitter kamu.
@@ -377,6 +442,14 @@ about:
     Kamu dapat membuat isu baru di <a href="https://github.com/RiceCakess/Holodex/issues"> Github Pelacak Masalah </a> atau berbicara dengan tim Holodex di Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Kredit
+    contents:
+      - Saya ingin mengucapkan terima kasih kepada tim
+      - atas kerja keras mereka pada
+      - >-
+        Dan juga untuk semua subber yang telah membantu agan-agan! Kunjungi mereka!
+      - >-
+        Ini merupakan situs buatan penggemar dan konten yang ditemukan pada situs ini dimiliki oleh perusahaan Cover dan mitranya. Situs ini mengikuti pedoman yang ditetapkan oleh perusahaan Cover mengenai
+      - Panduan Karya Turunan
   changelog:
     title: Log Perubahan
   news:
