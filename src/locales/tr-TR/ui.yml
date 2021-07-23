@@ -106,7 +106,6 @@ component:
     readMore: Daha fazla
   reportDialog:
     title: Şikayet et
-    comments: Yorumlar (İsteğe bağlı)
     success: Şikayer gönderildi, teşekkürler!
     reasons:
       - Video yanlış işaretlendi
