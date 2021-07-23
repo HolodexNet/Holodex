@@ -49,6 +49,8 @@ component:
     googleCalendar: Zu Google Kalender hinzufügen
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -106,6 +108,7 @@ component:
     readMore: Mehr anzeigen
   reportDialog:
     title: Melden
+    comments: Welche Maßnahmen sollte Holodex ergreifen?
     success: Bericht gesendet, vielen Dank!
     reasons:
       - Video falsch getaggt
@@ -136,6 +139,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
