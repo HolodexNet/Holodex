@@ -106,7 +106,6 @@ component:
     readMore: En savoir plus
   reportDialog:
     title: Signaler
-    comments: Commentaires (facultatif)
     success: Signalement envoyé, merci !
     reasons:
       - Vidéo taguée incorrectement
