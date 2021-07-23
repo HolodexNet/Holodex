@@ -106,7 +106,6 @@ component:
     readMore: Mostrar mais
   reportDialog:
     title: Reportar
-    comments: Comentário (Opcional)
     success: Denuncia enviada, Obrigado!
     reasons:
       - Video tagged incorrectly
