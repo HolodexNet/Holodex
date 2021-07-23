@@ -105,7 +105,6 @@ component:
     readMore: 자세히 보기
   reportDialog:
     title: 신고
-    comments: 세부정보 (선택)
     success: 신고되었습니다. 감사합니다!
     reasons:
       - 잘못된 동영상 태그
