@@ -107,7 +107,7 @@ component:
     readMore: Read more
   reportDialog:
     title: Report
-    comments: Comments (Optional)
+    comments: What actions should Holodex take?
     success: Report sent, thank you!
     reasons:
       - Video tagged incorrectly
