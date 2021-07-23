@@ -105,7 +105,6 @@ component:
     readMore: Bővebben
   reportDialog:
     title: Bejelentés
-    comments: Hozzászólások (nem kötelező)
     success: Visszajelzés elküldve. Köszönjük!
     reasons:
       - Rosszul címkézett videó
