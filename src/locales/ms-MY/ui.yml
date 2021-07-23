@@ -49,8 +49,6 @@ component:
     googleCalendar: Tambahkan ke Kalendar Google
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -108,7 +106,6 @@ component:
     readMore: Lihat selanjutnya
   reportDialog:
     title: Laporkan
-    comments: Catatan tambahan (Tidak wajib)
     success: Terima kasih! Laporan telah dikirim.
     reasons:
       - Video tidak ditandai dengan betul
@@ -139,7 +136,6 @@ views:
     collabs: Kerjasama
     about: Perihal
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
