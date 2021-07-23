@@ -49,6 +49,8 @@ component:
     googleCalendar: 新增至 Google 日曆
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -106,6 +108,7 @@ component:
     readMore: 顯示更多
   reportDialog:
     title: 檢舉
+    comments: 您希望 Holodex 該如何處置此影片？
     success: 檢舉已送出，謝謝您
     reasons:
       - 影片標籤錯誤
@@ -136,6 +139,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
