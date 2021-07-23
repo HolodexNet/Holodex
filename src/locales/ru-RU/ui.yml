@@ -106,7 +106,6 @@ component:
     readMore: Узнать больше
   reportDialog:
     title: Пожаловаться
-    comments: Комментарии (опционально)
     success: Жалоба отправлена, спасибо!
     reasons:
       - Теги к видео неправильные
