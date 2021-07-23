@@ -15,6 +15,16 @@ export const MUSIC_PLAYER_STATE = Object.freeze({
     PAUSED: 0,
 });
 
+export const SONG_FRAME_EMBED_TYPE = Object.freeze({
+    FLOATING: 0,
+    BACKGROUND: 1,
+});
+
+export const SONG_FRAME_PORTAL_DEST = {
+    [SONG_FRAME_EMBED_TYPE.FLOATING]: "music-playback-floating",
+    [SONG_FRAME_EMBED_TYPE.BACKGROUND]: "music-playback-background",
+};
+
 export const MUSIC_PLAYBACK_MODE = Object.freeze({
     LOOP: 0,
     LOOPONE: 1,

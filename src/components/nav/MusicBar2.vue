@@ -141,24 +141,32 @@
                 </div>
             </transition>
             <!-- </> -->
+
             <div class="playlist-buttons align-self-center" v-if="$vuetify.breakpoint.smAndUp">
+                <v-btn icon large @click="toggleSongFrameModality">
+                    <v-icon>{{ icons.mdiTheater }}</v-icon>
+                </v-btn>
                 <v-btn icon large @click="closePlayer">
                     <v-icon>{{ icons.mdiClose }}</v-icon>
                 </v-btn>
             </div>
         </div>
         <!--             :key="currentSong.video_id + playId" -->
-        <song-frame
-            :playback="currentSong"
-            style="width: 250px; width: 356px"
-            @playing="songIsPlaying"
-            @paused="songIsPaused"
-            @ended="songIsDone"
-            @progress="songProgress"
-            @error="songError"
-            @buffering="songBuffering"
-            @ready="songReady"
-        ></song-frame>
+
+        <portal-target name="music-playback-floating"></portal-target>
+        <portal :to="songFrameDestination">
+            <song-frame
+                :playback="currentSong"
+                :isBackground="isEmbedPlayerInBackground"
+                @playing="songIsPlaying"
+                @paused="songIsPaused"
+                @ended="songIsDone"
+                @progress="songProgress"
+                @error="songError"
+                @buffering="songBuffering"
+                @ready="songReady"
+            ></song-frame>
+        </portal>
     </v-bottom-sheet>
 </template>
 
@@ -166,22 +174,16 @@
 .theme--light .music-player-bar {
     background: rgba(254, 253, 255, 0.95);
 }
+
 .theme--dark .music-player-bar {
     background: rgba(41, 43, 49, 0.99);
 }
+
 .music-player-bar {
     position: relative;
 
     iframe {
         border-radius: 4px;
-    }
-    .song-player-container {
-        // border-radius: 5px;
-        width: 356px;
-        position: absolute;
-        padding: 2px;
-        bottom: 100%;
-        right: 0;
     }
 }
 
@@ -255,7 +257,7 @@
 </style>
 
 <script lang="ts">
-import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
+import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE, SONG_FRAME_EMBED_TYPE, SONG_FRAME_PORTAL_DEST } from "@/utils/consts";
 
 import Vue from "vue";
 import VueYoutube from "@/external/vue-youtube";
@@ -328,6 +330,8 @@ export default {
             allowPlayOverride: 0, // set to timestamp user clicks on yt frame.
             // used to check whether or not to allow a user action to override current
             // playback state.
+
+            isEmbedPlayerInBackground: false,
         };
     },
     mounted() {
@@ -411,6 +415,11 @@ export default {
         ...mapGetters("music", ["currentSong", "canPlay"]),
         song() {
             return this.currentSong && this.currentSong.song;
+        },
+        songFrameDestination() {
+            return SONG_FRAME_PORTAL_DEST[
+                this.isEmbedPlayerInBackground ? SONG_FRAME_EMBED_TYPE.BACKGROUND : SONG_FRAME_EMBED_TYPE.FLOATING
+            ];
         },
     },
     methods: {
@@ -580,6 +589,9 @@ export default {
         },
         probableMouseClickInIFrame() {
             this.allowPlayOverride = Date.now();
+        },
+        toggleSongFrameModality() {
+            this.isEmbedPlayerInBackground = !this.isEmbedPlayerInBackground;
         },
     },
 };

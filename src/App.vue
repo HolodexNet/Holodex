@@ -4,6 +4,9 @@
         :class="{ 'bump-bottom': $store.state.music.isOpen }"
     >
         <MainNav />
+
+        <portal-target name="music-playback-background"></portal-target>
+
         <v-main style="transition: none">
             <PullToRefresh />
             <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists">
