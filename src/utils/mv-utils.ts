@@ -114,6 +114,7 @@ export function decodeLayout(encodedStr) {
     });
     // console.log(parsedLayout, parsedContent);
     return {
+        id: encodedStr,
         layout: parsedLayout,
         content: parsedContent,
         videoCellCount,

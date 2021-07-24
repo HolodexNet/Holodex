@@ -240,13 +240,13 @@ export default {
             return this.layoutContent[this.item.i];
         },
         isChat() {
-            return this.cellContent.type === "chat";
+            return this.cellContent?.type === "chat";
         },
         isVideo() {
-            return this.cellContent.type === "video";
+            return this.cellContent?.type === "video";
         },
         isTwitchVideo() {
-            return this.cellContent && this.cellContent.type === "video" && this.cellContent.video.type === "twitch";
+            return this.cellContent?.video?.type === "twitch";
         },
         muted: {
             get() {
@@ -275,7 +275,6 @@ export default {
         setPlaying(val) {
             if (this.pausedMode !== val) return;
             if (this.ytPlayer) {
-                console.log(this.ytPlayer);
                 !this.pausedMode ? this.ytPlayer.pauseVideo() : this.ytPlayer.playVideo();
             }
             if (this.twPlayer) {

@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import { LayoutItem, getFirstCollision } from "@/external/vue-grid-layout/src/helpers/utils";
-import { getDesktopDefaults } from "@/utils/mv-utils";
+import { getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout } from "@/utils/mv-utils";
 import Vue from "vue";
 
 const initialState = {
@@ -20,6 +20,41 @@ const getters = {
         return state.layout
             .filter((item) => state.layoutContent[item.i] && state.layoutContent[item.i].type === "video")
             .map((item) => state.layoutContent[item.i].video);
+    },
+    decodedCustomPresets(state) {
+        return state.presetLayout.map((preset) => {
+            return {
+                ...preset,
+                ...decodeLayout(preset.layout),
+            };
+        });
+    },
+    decodedDesktopPresets() {
+        return desktopPresets.map((preset) => {
+            return {
+                ...preset,
+                ...decodeLayout(preset.layout),
+            };
+        });
+    },
+    decodedMobilePresets() {
+        return mobilePresets.map((preset) => {
+            return {
+                ...preset,
+                ...decodeLayout(preset.layout),
+            };
+        });
+    },
+    desktopGroups(state, getters) {
+        const groups = [];
+        const seen = new Set();
+        getters.decodedDesktopPresets.concat(getters.decodedCustomPresets).forEach((preset) => {
+            if (seen.has(preset.id)) return;
+            seen.add(preset.id);
+            if (!groups[preset.videoCellCount]) groups[preset.videoCellCount] = [];
+            groups[preset.videoCellCount].push(preset);
+        });
+        return groups;
     },
 };
 
@@ -102,15 +137,6 @@ const mutations = {
         const index = state.presetLayout.findIndex((x) => x.name === name);
         state.presetLayout.splice(index, 1);
     },
-    // togglePresetAutoLayout(state, name) {
-    //     const index = state.presetLayout.findIndex((x) => x.name === name);
-    //     if (state.presetLayout[index].emptyCells > 0) {
-    //         Vue.set(state.presetLayout[index], "emptyCells", 0);
-    //     } else {
-    //         const decodedPreset = decodeLayout(state.presetLayout[index].layout);
-    //         Vue.set(state.presetLayout[index], "emptyCells", getEmptyCells(decodedPreset));
-    //     }
-    // },
     resetState(state) {
         Object.assign(state, JSON.parse(JSON.stringify(initialState)), {
             presetLayout: state.presetLayout,
