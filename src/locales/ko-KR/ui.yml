@@ -39,6 +39,7 @@ component:
     points: 포인트
     playlist: 재생목록
   videoCard:
+    clips: '{n} 클립'
     watching: '{0}명 시청 중'
     liveNow: 실시간 스트리밍 중
     edit: 편집
@@ -105,6 +106,7 @@ component:
     readMore: 자세히 보기
   reportDialog:
     title: 신고
+    comments: Holodex가 취해야 할 행동은 무엇인가요?
     success: 신고되었습니다. 감사합니다!
     reasons:
       - 잘못된 동영상 태그
@@ -131,7 +133,9 @@ views:
   channel:
     video: 동영상
     clips: 클립
+    music: 음악
     collabs: 콜라보
+    about: 정보
   channels:
     sortOptions:
       subscribers: 구독자
@@ -143,6 +147,8 @@ views:
     tabs:
       Vtuber: 버튜버
       Subber: 키리누키
+      Favorites: 즐겨찾기
+      Blocked: 차단됨
     favoritesAreEmpty: 즐겨찾기가 없습니다!
     blockedAreEmpty: 차단한 채널이 없습니다.
   home:
@@ -150,7 +156,9 @@ views:
     recentVideosHeading: 최근 동영상
     noStreams: 현재 실시간이거나 예정된 방송 없음
     recentVideoToggles:
+      all: 모두
       official: 아카이브
+      subber: 클립
   library:
     savedVideosTitle: 저장된 동영상
     createYtPlaylistButton: YouTube 재생목록 생성 ({0})
@@ -183,6 +191,7 @@ views:
       newest: 최신순
       oldest: 오래된순
     type:
+      all: 모두
       official: 공식
       clip: 클립
     unsupportedQuery: >-
@@ -190,6 +199,7 @@ views:
     sortByLabel: 정렬 기준
     typeDropdownLabel: 유형
   settings:
+    title: 설정
     darkModeLabel: 다크 모드
     darkModeMsg: 라이트 모드와 다크 모드 간에 테마를 변경합니다
     redirectModeLabel: YouTube에서 열기
@@ -223,10 +233,13 @@ views:
       - 작게
     hideCollabStreamsLabel: 콜라보 방송 숨기기
     hideCollabStreamsMsg: 즐겨찾기 피드에서 콜라보 방송을 숨깁니다
+    ignoredTopicsLabel: 무시된 주제
+    ignoredTopicsMsg: 홈과 즐겨찾기 페이지에서 해당 주제의 동영상을 숨깁니다
     theme: 테마
   app:
     update_available: 업데이트 가능
     update_btn: 업데이트
+    close_btn: 닫기
     check_about_page: 변경 사항에 대해 알아보려면 정보 페이지를 확인하세요
     nowSupportsMultiOrg: 이제 Holodex가 다수의 소속을 지원합니다.
     loginCallToAction: 자신만의 즐겨찾기를 만들려면 로그인해주세요!
@@ -260,6 +273,7 @@ views:
     promptForAction: >-
       이 페이지에서 좋아하는 버튜버 목록을 만들고 최신 클립과 삶을 확인해보세요.
     manageFavorites: 즐겨찾기 관리
+    close: 닫기
     showall: 모두 표시
   editor:
     needlogin: Holodex 동영상 및 노래 메타데이터를 편집하려면 로그인해야 합니다.
@@ -302,6 +316,7 @@ views:
         공유할 만한 멋있는 레이아웃이 있나요? 공유 버튼을 누른 후 우리의 <a href="https://discord.gg/jctkgHBt4b">Discord 서버</a>에 공유해주세요!
       custom: 내 레이아웃
       toggleAutoLayout: 자동 모드로 레이아웃 사용하기 켜기/끄기
+      remove: 삭제
       desktop: 데스크톱
       mobile: 모바일
       autoLayout: 자동 레이아웃
@@ -333,6 +348,7 @@ time:
 editor:
   music:
     add: 추가
+    update: 업데이트
     permission: >-
       이미 있는 노래를 수정하거나 삭제하려면 '편집자' 사용자 권한이 필요합니다. <a class='white--text' href='/about'>Discord</a>에서 이슈 / 악용 사항을 편집자에게 알리거나 편집자에 지원하세요.
     titles:
