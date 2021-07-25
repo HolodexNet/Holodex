@@ -39,6 +39,7 @@ component:
     points: pont
     playlist: Lejátszási lista
   videoCard:
+    clips: '{n} Klip'
     watching: '{0} néző'
     liveNow: Élőben
     edit: Szerkesztés
@@ -105,6 +106,7 @@ component:
     readMore: Bővebben
   reportDialog:
     title: Bejelentés
+    comments: Mit kéne a Holodexnek tennie?
     success: Visszajelzés elküldve. Köszönjük!
     reasons:
       - Rosszul címkézett videó
@@ -131,7 +133,9 @@ views:
   channel:
     video: Videók
     clips: Klipek
+    music: Zene
     collabs: Vendég
+    about: Leírás
   channels:
     sortOptions:
       subscribers: Feliratkozó
@@ -143,6 +147,8 @@ views:
     tabs:
       Vtuber: Vtuber
       Subber: Felirat készítő
+      Favorites: Kedvencek
+      Blocked: Letiltva
     favoritesAreEmpty: Még nincsenek kedvenceid!
     blockedAreEmpty: Még egy csatornát sem blokkoltál.
   home:
@@ -150,7 +156,9 @@ views:
     recentVideosHeading: Legújabb videók
     noStreams: Nincs élő vagy bejelentett stream jelenleg
     recentVideoToggles:
+      all: Összes
       official: Előző streamek
+      subber: Klipek
   library:
     savedVideosTitle: Mentett videók
     createYtPlaylistButton: YT lejátszási lista létrehozása ({0})
@@ -183,6 +191,7 @@ views:
       newest: Legújabb
       oldest: Legrégibb
     type:
+      all: Összes
       official: Hivatalos
       clip: Klip
     unsupportedQuery: >-
@@ -190,6 +199,7 @@ views:
     sortByLabel: Rendezés
     typeDropdownLabel: Típus
   settings:
+    title: Beállítások
     darkModeLabel: Sötét mód
     darkModeMsg: Átváltja az oldal témáját világos módról sötét módra.
     redirectModeLabel: Megnyitás a YouTube-on
@@ -229,6 +239,7 @@ views:
   app:
     update_available: Frissítés elérhető
     update_btn: Frissítés
+    close_btn: Bezárás
     check_about_page: Látogasd meg az Információ oldalt, hogy lásd a változásokat
     nowSupportsMultiOrg: Holodex már több szervezetet is támogat.
     loginCallToAction: Jelentkezz be, hogy kedvenceket válassz!
@@ -262,6 +273,7 @@ views:
     promptForAction: >-
       Készíts egy listát a kedvenc vtuberjeidről és láthatod az legújabb klipjeiket és adásaikat ezen az oldalon.
     manageFavorites: Kedvencek kezelése
+    close: Bezárás
     showall: Összes megjelenítése
   editor:
     needlogin: Be kell jelentkezned, hogy Holodex videókat és dal metaadatokat szerkessz.
@@ -304,6 +316,7 @@ views:
         Van egy jópofa elrendezésed? Használd a megosztás gombot és mutasd meg a <a href="https://discord.gg/jctkgHBt4b"> Discord szerverünkön</a>!
       custom: Elrendezéseim
       toggleAutoLayout: Auto-rendezés bekapcsolása
+      remove: Törlés
       desktop: Asztali
       mobile: Mobil
       autoLayout: Auto-kiosztás
@@ -335,6 +348,7 @@ time:
 editor:
   music:
     add: Hozzáadás
+    update: Frissítés
     permission: >-
       'Editor' vagy magasabb felhasználó szintűnek kell lenned, hogy törölj vagy frissíts meglévő dalokat. Kérlek vedd fel velünk a kapcsolatot <a class='white--text' href='/about'>discordon,</a> hogy jelezd a problémát a szerkesztőinknek, vagy jelentkezz szerkesztőnek.
     titles:
