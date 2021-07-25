@@ -318,27 +318,14 @@ export default {
         resetCell() {
             this.$store.commit("multiview/deleteLayoutContent", this.item.i);
         },
+        // Scale chat based on width
         checkScale() {
             if (this.cellContent?.type === "chat") {
-                switch (true) {
-                    case this.cellWidth < 150:
-                        this.chatScale = 0.5;
-                        break;
-                    case this.cellWidth < 200:
-                        this.chatScale = 0.6;
-                        break;
-                    case this.cellWidth < 250:
-                        this.chatScale = 0.75;
-                        break;
-                    case this.cellWidth < 300:
-                        this.chatScale = 0.85;
-                        break;
-                    case this.cellWidth < 350:
-                        this.chatScale = 1;
-                        break;
-                    default:
-                        this.chatScale = 1;
-                }
+                // width breakpoints where 150 < width < 200 => scale = 0.6
+                const widths = [150, 200, 250, 300, 350];
+                const scale = [0.5, 0.6, 0.75, 0.85, 1];
+                const idx = widths.findIndex((w) => this.cellWidth < w);
+                this.chatScale = idx >= 0 ? scale[idx] : 1;
             }
         },
         toggleChatHandle() {
