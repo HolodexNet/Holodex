@@ -390,13 +390,28 @@ about:
       Sajnáljuk, hogy elmész :(, kérlek jelezd ha van bármi probléma amivel segíthetnénk. Ha mindenképp szeretnéd eltávolíttatni, kérlek üzenj nekünk Discordon.
     favorite:
       title: Mik a Kedvencek?
+      Contents:
+        - >-
+          A Kedvencek funkció segít, hogy a kedvenc vtuberjeidet lásd elsőként, beállíthatod a kedvenc csatornáid a szívecske ikonra kattintva
+        - >-
+          Kérlek vedd figyelembe, hogy feliratkészítőket kedvencekhez adni jelenleg nem támogatott, viszont más módokon feliratkozhatsz rájuk, támogathatod őket.
       disappear:
         title: A Kedvencek listám eltűnt / Nem tudok kedvenceket hozzáadni
+      contents:
+        - >-
+          Kérlek bizonyosodj meg róla, hogy be vagy jelentkezve és látogass el a csatornák kedvencek oldalra, hogy erőltess egy frissítést!
     mobile:
       title: Van Android/iOS Holodex app?
       content:
         summary: >-
           Dolgozunk rajta! Addig is kérlek használd a "Hozzáadás kezdőlaphoz" funkciót a böngésződön. Arra hangoltuk, hogy nagyon úgy viselkedjen, mint egy app
+        android:
+          - 'Android Chrome: Látogass el az oldalra és nyomd meg a három pöttyöt'
+          - a jobb első sarokban és keresd meg a "Kezdőképernyőre" lehetőséget!
+        ios:
+          - >-
+            iOS Safari: Látogass el az oldalra a telefonodon, kattints a felfele mutató nyilas négyzetre
+          - a Safari alján, majd nyomj a "Kezdőképernyőre" opcióra!
     MugenClips:
       title: Mi az a MugenClips?
     subber:
