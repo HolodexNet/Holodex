@@ -49,6 +49,8 @@ component:
     googleCalendar: Hozzáadás a Google naptárhoz
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -137,6 +139,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -419,8 +422,17 @@ about:
           MugenClips, avagy végtelen klipek, közösen nézhetsz klipeket másokkal egy folyamatosan változó készletből, melyeket sok különböző fordító csatorna készített és készít
     subber:
       title: Felirat készítő vagyok és nem találom a csatornám és klipjeim a Holodexen
+      contents:
+        - >-
+          Kérlek nézd meg a Csatornák oldalon, hogy listázva vagy-e feliratkészítőként, amennyiben nem, kérlek töltsd ki
+        - ezt a lapot
+        - >-
+          , majd hozzáadunk manuálisan. Ha már a listán vagy, kérlek bizonyosodj meg róla, hogy a videóid leírása a helyes linkeket tartalmazza a youtube forráshoz/csatornához!
     feedback:
       title: Lenne visszajelzésem/szeretnék segíteni a projectben
+      contents:
+        - >-
+          Minden segítséget és ötletet szívesen fogadunk! Az UI és a Backend egyaránt elérhető, hozzájárulhatsz, viszont jelenleg csak a UI nyílt forráskódú. Kérlek vedd fel a kapcsolatot velünk Discord-on, hogy hozzáférést kapj a backend forráshoz, vagy csak chatelj az ötleteidről.
   gdpr: GDPR és az adataim
   gdprContent: >-
     Egy Google Analytics cookiet használunk, hogy nyomon tartsuk az oldal látogatóit, kizárólag elemzési célokkal. Bejelentkezés után társítjuk a közösségi fiókod felhasználónevét és ID-jét a kedvenceiddel. Ez az adat lehet az e-mail címed (Google), Discord ID vagy a Twittered illően kezelve.
@@ -430,6 +442,14 @@ about:
     Létrehozhatsz egy ügyet a <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker-en </a> vagy felkeresve a Holodex csapatot Discordon <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Közreműködők
+    contents:
+      - Szeretnék nagy köszönetet mondani a
+      - csapatnak a munkáikért
+      - >-
+        A feliratkészítőknek szintén, akik segítik a tengerentúli nézőket! Kérlek nézd meg őket!
+      - >-
+        Ez egy rajongói készítésű weboldal, a rajta talált tartalmakat a Cover corp és a partnerjei birtokolják. Az oldal követi a Cover corp irányelveit a
+      - Származtatott Munkavállalói Licencszerződés szerint
   changelog:
     title: Változtatások
   news:
