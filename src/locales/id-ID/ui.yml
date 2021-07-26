@@ -108,7 +108,7 @@ component:
     readMore: Baca selengkapnya
   reportDialog:
     title: Laporkan
-    comments: Detail Tambahan (Opsional)
+    comments: Tindakan apa yang harus Holodex lakukan?
     success: Laporan telah dikirim, Terima Kasih!
     reasons:
       - Tag Video salah

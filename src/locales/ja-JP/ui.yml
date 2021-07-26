@@ -105,7 +105,6 @@ component:
     readMore: 続きを読む
   reportDialog:
     title: 問題を報告する
-    comments: 備考 (任意)
     success: ご報告ありがとうございます。
     reasons:
       - タグが間違っています

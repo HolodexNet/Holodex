@@ -103,7 +103,6 @@ component:
     readMore: Leer más
   reportDialog:
     title: Reportar
-    comments: Comentario (opcional)
     success: Reporte enviado. ¡Gracias!
     reasons:
       - Vídeo etiquetado incorrectamente
