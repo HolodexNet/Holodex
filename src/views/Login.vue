@@ -100,7 +100,7 @@ const gauthOption = {
 };
 Vue.use(GAuth, gauthOption);
 
-const apiURI = process.env.NODE_ENV === "development" ? "http://localhost:2434" : "/api";
+const apiURI = "/api";
 // the fact this URI is invalid doesn't matter,
 // all it matters is we own the domain so oauth-open can grab the URI from the window
 
