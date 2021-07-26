@@ -39,6 +39,7 @@ component:
     points: ポイント
     playlist: プレイリスト
   videoCard:
+    clips: '{n} 本の切り抜き'
     watching: '{0}人が視聴中'
     liveNow: 配信中
     edit: 編集
@@ -105,6 +106,7 @@ component:
     readMore: 続きを読む
   reportDialog:
     title: 問題を報告する
+    comments: Holodex はどのような対応をすべきですか？
     success: ご報告ありがとうございます。
     reasons:
       - タグが間違っています
@@ -131,7 +133,9 @@ views:
   channel:
     video: 動画
     clips: 切り抜き
+    music: 音楽
     collabs: コラボ
+    about: 概要
   channels:
     sortOptions:
       subscribers: 登録者数
@@ -143,6 +147,8 @@ views:
     tabs:
       Vtuber: Vtuber
       Subber: 切り抜きチャンネル
+      Favorites: お気に入り
+      Blocked: ブロック済み
     favoritesAreEmpty: お気に入りチャンネルにはまだ何も登録されていません！
     blockedAreEmpty: ブロックしているチャンネルはありません
   home:
@@ -150,7 +156,9 @@ views:
     recentVideosHeading: 最近の動画
     noStreams: 現在配信中/配信予定の動画はありません。
     recentVideoToggles:
+      all: すべて
       official: アーカイブ
+      subber: 切り抜き
   library:
     savedVideosTitle: 保存した動画
     createYtPlaylistButton: Youtubeの再生リストを作成（{0}）
@@ -183,6 +191,7 @@ views:
       newest: 新しい順
       oldest: 古い順
     type:
+      all: すべて
       official: 公式
       clip: 切り抜き
     unsupportedQuery: >-
@@ -190,6 +199,7 @@ views:
     sortByLabel: 並べ替え
     typeDropdownLabel: 動画のタイプ
   settings:
+    title: 設定
     darkModeLabel: ダークモード
     darkModeMsg: ライトモードとダークモードを切り替えます
     redirectModeLabel: Youtubeで開く
@@ -223,10 +233,13 @@ views:
       - 小
     hideCollabStreamsLabel: コラボ配信を表示しない
     hideCollabStreamsMsg: お気に入りページでコラボ配信を非表示にします
+    ignoredTopicsLabel: 除外されたトピック
+    ignoredTopicsMsg: これらのトピックの動画はホームとお気に入りに表示されなくなります
     theme: テーマ
   app:
     update_available: ページの更新を利用可能です
     update_btn: アップデート
+    close_btn: 閉じる
     check_about_page: 案内ページで更新内容を確認できます
     nowSupportsMultiOrg: Holodexで他箱のライバーを視聴可能になりました!
     loginCallToAction: お気に入りを利用するにはログインしてください!
@@ -260,6 +273,7 @@ views:
     promptForAction: >-
       お気に入りのVtuberリストを作るとそのページでお気に入りしたVtuberの最新動画を確認できます。
     manageFavorites: お気に入りを管理
+    close: 閉じる
     showall: すべて表示
   editor:
     needlogin: Holodex上の動画を編集または曲情報を変更するにはログインが必要です
@@ -302,8 +316,10 @@ views:
         なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
       custom: マイレイアウト
       toggleAutoLayout: 自動的にレイアウトに切り替え
+      remove: 削除
       desktop: デスクトップ
       mobile: モバイル
+      autoLayout: オートレイアウト
     presetEditor:
       title: レイアウトを保存
       name: 名前
@@ -312,6 +328,8 @@ views:
       selectLive: 配信を選択
       addCustomVideo: 任意の動画を追加
     fullScreen: フルスクリーン
+    mediaControls: メディアコントロール
+    mediaControlsEmpty: 再生中の動画はここに表示されます
   mugen:
     welcome: >-
       MugenClipsへようこそ！このページでは全員がランダムに選択されたホロライブの英訳切り抜きを見ています。世界中のホロライブのファンと一緒に見て、チャットしましょう。 先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
@@ -330,6 +348,7 @@ time:
 editor:
   music:
     add: 追加
+    update: 更新
     permission: >-
       すでに登録された曲情報を更新もしくは削除するには「Editor」以上の権限が必要です。 「Editor」権限を新たに取得する場合または「Editor」に曲情報の不備を知らせるには <a class='white--text' href='/about'>discord</a>上で私達に連絡してください。
     titles:
@@ -373,15 +392,34 @@ about:
       title: お気に入りって何？
       disappear:
         title: お気に入りリストが消えてしまいました/お気に入りに追加できません
+      contents:
+        - >-
+          ログインしていることを確認してから、「チャンネル」の「お気に入りタブ」を開いてください。
     mobile:
       title: HolodexのAndroid/iOSアプリ版はありますか?
       content:
         summary: >-
           現在誠意開発中です! それまではブラウザの「ホーム画面に追加」機能をお使いください。現在のウェブサイトもアプリであるかのように動作するように調整されています。
+        android:
+          - 'Android版Chrome: サイトに移動してから「︙」ボタンをタップ'
+          - on the top right and find "Add to Home Screen".
+        ios:
+          - >-
+            iOS版Safari: サイトに移動してから、共有ボタン「
+          - '」をタップして、メニューから「ホーム画面に追加」を選ぶ'
     MugenClips:
       title: MugenClipとはなんですか?
+      contents:
+        - >-
+          MugenClips（無限クリップ）では、コミュニティが投稿した翻訳切り抜きをサイト上の他の人たちと一緒に同時視聴できます
     subber:
       title: Holodexで私の切り抜き動画が表示されていないのですが？
+      contents:
+        - >-
+          チャンネルページを確認して、あなたが切り抜き動画投稿者としてリストされているかどうかを確認してください。もし無ければ、
+        - このフォーム
+        - >-
+          , and we will add you manually. If you are already on the list, please make sure your video descriptions have the correct youtube source/channel links.
     feedback:
       title: holodexへのフィードバック/コントリビュートを行いたい
   gdpr: 私のデータはGDPRに基づいてどう扱われますか?
@@ -393,6 +431,14 @@ about:
     Issueを作成したい場合は <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> もしくは、Discord上でHolodex開発チームにお知らせください。 <br /><br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: クレジット
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+        This is a fan made website and the content found on this website is owned by Cover corp and its partners. The site follows the guidelines set forth by Cover corp in their
+      - 二次創作ガイドライン
   changelog:
     title: 更新履歴
   news:
