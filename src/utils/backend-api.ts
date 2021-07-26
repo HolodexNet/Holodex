@@ -4,12 +4,8 @@ import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 import { Playlist, PlaylistList } from "./types";
 
-export const API_BASE_URL =
-    process.env.NODE_ENV === "development" ? "https://staging.holodex.net/api" : `${window.location.origin}/api`;
-export const SITE_BASE_URL =
-    process.env.NODE_ENV === "development" ? "https://staging.holodex.net/" : `${window.location.origin}/`;
-
-// export const API_BASE_URL = "http://localhost:2434";
+export const API_BASE_URL = `${window.location.origin}/api`;
+export const SITE_BASE_URL = `${window.location.origin}/`;
 
 export const axiosInstance = (() => {
     const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
