@@ -58,6 +58,8 @@ export default {
                 const options = {
                     width: this.width,
                     height: this.height,
+                    parent: [window.location.hostname],
+                    autoplay: false,
                 };
                 if (this.playsInline) {
                     options.playsinline = true;
