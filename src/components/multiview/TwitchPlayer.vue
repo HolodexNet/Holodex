@@ -11,7 +11,6 @@ import Vue from "vue";
 import LoadScript from "vue-plugin-load-script";
 
 Vue.use(LoadScript);
-let player;
 let pid = 0;
 
 export default {
@@ -49,6 +48,7 @@ export default {
     data() {
         pid += 1;
         return {
+            player: {},
             elementId: `twitch-player-${pid}`,
         };
     },
@@ -71,16 +71,16 @@ export default {
                 } else {
                     this.$emit("error", "no source specified");
                 }
-                player = new window.Twitch.Player(this.elementId, options);
-                player.addEventListener("ended", () => this.$emit("ended"));
-                player.addEventListener("pause", () => this.$emit("pause"));
-                player.addEventListener("play", () => this.$emit("play"));
-                player.addEventListener("offline", () => this.$emit("offline"));
-                player.addEventListener("online", () => this.$emit("online"));
-                player.addEventListener("ready", () => {
-                    player.setQuality(this.quality);
-                    player.setVolume(this.volume);
-                    this.$emit("ready", player);
+                this.player = new window.Twitch.Player(this.elementId, options);
+                this.player.addEventListener("ended", () => this.$emit("ended"));
+                this.player.addEventListener("pause", () => this.$emit("pause"));
+                this.player.addEventListener("play", () => this.$emit("play"));
+                this.player.addEventListener("offline", () => this.$emit("offline"));
+                this.player.addEventListener("online", () => this.$emit("online"));
+                this.player.addEventListener("ready", () => {
+                    this.player.setQuality(this.quality);
+                    this.player.setVolume(this.volume);
+                    this.$emit("ready", this.player);
                 });
             })
             .catch((e) => this.$emit("error", e));
@@ -88,48 +88,48 @@ export default {
     methods: {
         play() {
             // Begins playing the specified video.
-            player.play();
+            this.player.play();
         },
         pause() {
             // Pauses the player.
-            player.pause();
+            this.player.pause();
         },
         seek(timestamp) {
             // Seeks to the specified timestamp (in seconds) in the video and resumes playing if paused.
             // Does not work for live streams.
-            player.seek(timestamp);
+            this.player.seek(timestamp);
         },
         getCurrentTime() {
             // Returns the current video’s timestamp, in seconds. Works only for VODs, not live streams.
-            return player.getCurrentTime();
+            return this.player.getCurrentTime();
         },
         getDuration() {
             // Returns the duration of the video, in seconds. Works only for VODs,not live streams.
-            return player.getDuration();
+            return this.player.getDuration();
         },
         getPlaybackStats() {
             // Returns an object with statistics the embedded video player and the current live stream or VOD.
-            return player.getPlaybackStats();
+            return this.player.getPlaybackStats();
         },
         getQuality() {
             // Returns the current quality of video playback.
-            return player.getQuality();
+            return this.player.getQuality();
         },
         isPaused() {
             // Returns true if the video is paused; otherwise, false. Buffering or seeking is considered playing.
-            return player.isPaused();
+            return this.player.isPaused();
         },
         hasEnded() {
             // Returns true if the live stream or VOD has ended; otherwise, false.
-            return player.getEnded();
+            return this.player.getEnded();
         },
         getVolume() {
             // Returns the volume level, a value between 0.0 and 1.0.
-            return player.getVolume();
+            return this.player.getVolume();
         },
         isMuted() {
             // Returns true if the player is muted; otherwise, false.
-            return player.getMuted();
+            return this.player.getMuted();
         },
         // mute() {
         //     // Mutes the player.
@@ -140,33 +140,33 @@ export default {
         //     player.setMuted(false);
         // },
         checkChannel() {
-            return this.channel === player.getChannel();
+            return this.channel === this.player.getChannel();
         },
         checkVideo() {
             // eslint-disable-next-line no-return-assign
-            return (this.video = player.getVideo());
+            return (this.video = this.player.getVideo());
         },
     },
     watch: {
         channel(newChannel) {
-            player.setChannel(newChannel);
+            this.player.setChannel(newChannel);
         },
         collection(newCollection) {
-            player.setCollection(newCollection);
+            this.player.setCollection(newCollection);
         },
         video(newVideo) {
-            player.setVideo(newVideo);
+            this.player.setVideo(newVideo);
         },
         volume(newVolume) {
-            player.setVolume(newVolume);
+            this.player.setVolume(newVolume);
         },
         quality(newQuality) {
-            if (player.getQualities().indexOf(newQuality) !== -1) {
-                player.setQuality(newQuality);
+            if (this.player.getQualities().indexOf(newQuality) !== -1) {
+                this.player.setQuality(newQuality);
             }
         },
         mute(value) {
-            player.setMuted(value);
+            this.player.setMuted(value);
         },
     },
 };

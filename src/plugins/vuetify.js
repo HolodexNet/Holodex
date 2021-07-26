@@ -106,12 +106,6 @@ export const asyncLang = {
     },
 };
 
-// export async function setDayjsLang(lang) {
-//     await dayjsLangs[lang]();
-//     const dayjsLang = dayjsName[lang] || lang || "en";
-//     dayjs.locale(dayjsLang);
-// }
-
 export const i18n = new VueI18n({
     locale: "en", // Set locale
     fallbackLocale: "en",
@@ -166,26 +160,7 @@ function setI18nLanguage(lang) {
     const dayjsLang = dayjsName[lang] || lang || "en";
     dayjs.locale(dayjsLang);
 }
-// Map short language code to full
-// const langFile = {
-//     ja: "ja-JP",
-//     "en-CA": "en",
-//     "en-GB": "en",
-//     es: "es-MX",
-//     "es-ES": "es-ES",
-//     ms: "ms-MY",
-//     zh: "zh-TW",
-//     id: "id-ID",
-//     ru: "ru-RU",
-//     fr: "fr-FR",
-//     pt: "pt-BR",
-//     de: "de-DE",
-//     it: "it-IT",
-//     ko: "ko-KR",
-//     tr: "tr-TR",
-//     vi: "vi-VN",
-//     hu: "hu-HU",
-// };
+
 // Load language from webpack chunked files
 export function loadLanguageAsync(lang) {
     // If the same language
