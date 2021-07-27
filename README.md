@@ -17,7 +17,7 @@
 ```
 git clone git@github.com:RiceCakess/Holodex.git
 npm install
-# By default the api url points to localhost, change to "https://holodex.net/api/v2" in util/backend.js if working on frontend only
+# By default the api is proxied to staging, copy, rename and edit the .env.placeholder to change API_BASE_URL
 npm run serve
 ```
 
