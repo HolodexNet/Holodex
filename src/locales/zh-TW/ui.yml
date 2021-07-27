@@ -22,7 +22,7 @@ component:
     removeFromFavorites: 取消收藏
     unblock: 取消封鎖此頻道
     block: 在 Holodex 上封鎖此頻道
-    blocked: 已封鎖
+    blocked: 黑名單
   mainNav:
     home: 首頁
     favorites: 我的收藏
@@ -64,7 +64,7 @@ component:
     searchLabel: 搜尋
     type:
       channel: 頻道
-      topic: 主題
+      topic: 內容標籤
       org: 團體
       titledesc: 標題/描述
       comments: 留言
@@ -108,7 +108,7 @@ component:
     readMore: 顯示更多
   reportDialog:
     title: 檢舉
-    comments: 詳細描述（可選）
+    comments: 您希望 Holodex 該如何處置此影片？
     success: 檢舉已送出，謝謝您
     reasons:
       - 影片標籤錯誤
@@ -203,7 +203,7 @@ views:
     sortByLabel: 排序方式
     typeDropdownLabel: 影片類型
   settings:
-    title: 設定
+    title: 網站設定
     darkModeLabel: 深色主題
     darkModeMsg: 設定本站要以淺色模式或是深色模式呈現。
     redirectModeLabel: 於YouTube開啟影片
@@ -237,6 +237,8 @@ views:
       - 小
     hideCollabStreamsLabel: 隱藏連動實況
     hideCollabStreamsMsg: 於「我的收藏」頁面隱藏相關的連動實況
+    ignoredTopicsLabel: 隱藏指定內容標籤
+    ignoredTopicsMsg: 在首頁與我的收藏頁面中隱藏含有下列內容標籤的影片
     theme: 佈景主題
   app:
     update_available: 已取得更新
@@ -282,7 +284,7 @@ views:
     changeTopic:
       title: 更改內容標籤
       info: >-
-        所有使用者都能為影片設定內容標籤<br/> 但只有擁有「編輯者」權限的用戶能夠更改/刪除已存在的內容標籤。
+        所有使用者都能為影片設定內容標籤，但只有擁有「編輯者」權限的用戶能夠更改/刪除已存在的內容標籤。
       button: 儲存（可能需要５分鐘才會顯示更新後內容）
     channelMentions:
       title: 提及頻道
@@ -321,6 +323,7 @@ views:
       remove: 刪除此佈局
       desktop: 桌上型電腦佈局
       mobile: 手機專用佈局
+      autoLayout: 自動排版模式
     presetEditor:
       title: 儲存目前佈局
       name: 佈局名稱
@@ -329,6 +332,8 @@ views:
       selectLive: 選擇實況
       addCustomVideo: 添加指定YouTube影片
     fullScreen: 全螢幕顯示
+    mediaControls: 媒體控制面板
+    mediaControlsEmpty: 加入任意影片後即會顯示控制按鈕
   mugen:
     welcome: >-
       歡迎來到 MugenClips！所有使用者在本頁面都在同時隨機觀看同一段Hololive的英文剪輯！和其他Holo粉絲一起觀看一起聊天吧。如果您手動變更了時間軸但想再次與其他人同步進度的話，請重新整理此頁面。
@@ -408,9 +413,9 @@ about:
           - 'Android Chrome：在瀏覽器開啟本站，點擊畫面右上角的三點按鈕'
           - 然後選擇「加到主畫面」。
         ios:
-          iOS Safari: >-
-                 
-            - 然後選擇「加入主畫面」。
+          - >-
+            iOS Safari：於瀏覽器開啟本站後，點擊Safari底部帶有向上箭頭的圖示
+          - 然後選擇「加入主畫面」。
     MugenClips:
       title: MugenClips 是什麼？
       contents:
@@ -420,8 +425,8 @@ about:
       title: 我是烤肉/剪輯MAN但我在 Holodex 上找不到自己的頻道/剪輯
       contents:
         - >-
-               
-          - 此表單
+          請至頻道頁面確認自己的頻道是否有被列於剪輯頻道上，如果沒有的話請填寫
+        - 此表單
         - >-
           ，我們將會手動將您的頻道加入資料庫。如果您的頻道已經在資料庫裡的話，請確認頻道的影片描述包含正確的 Youtube 實況來源 / 頻道連結。
     feedback:
@@ -444,8 +449,8 @@ about:
       - >-
         還有所有協助海外觀眾更加了解Vtuber的烤肉MAN們！
       - >-
-             
-        - 二創條款
+        本站為粉絲製作網站，所以出現於本站的創作版權皆由COVER株式會社與其相關人員所有，本站遵循COVER株式會社所提供的指導方針與
+      - 二創條款
   changelog:
     title: 更新紀錄
   news:

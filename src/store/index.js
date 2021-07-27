@@ -5,10 +5,8 @@ import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import createMigrate from "vuex-persistedstate-migrate";
 import jwtDecode from "jwt-decode";
-import { ORGS_PREFIX } from "@/utils/consts";
 import * as icons from "@/utils/icons";
 import { sendTokenToExtension } from "@/utils/messaging";
-import kvidb from "kv-idb";
 
 // import { dayjs } from "@/utils/time";
 
@@ -23,6 +21,7 @@ import music from "./music.module";
 import multiview from "./multiview.module";
 import playlist from "./playlist.module";
 import history from "./history.module";
+import { migrations, VUEX_STATE_VERSION } from "./migrations";
 
 // import socket from "./socket.module";
 
@@ -31,8 +30,6 @@ Vue.use(Vuex);
 /**--------------------------------------------
  *               Initial State
  *---------------------------------------------* */
-
-const VUEX_STATE_VERSION = 8;
 
 function defaultState() {
     return {
@@ -83,147 +80,12 @@ function defaultState() {
     };
 }
 
-/**--------------------------------------------
- *               Put Migrations Here
- *---------------------------------------------* */
-
-const migrations = [
-    {
-        version: 2,
-        // migrate old defaultOpenFavorites boolean => defaultOpen enum value.
-        up: (state) => {
-            const defaultOpen =
-                state.settings.defaultOpen || (state.settings.defaultOpenFavorites ? "favorites" : "home");
-
-            return {
-                ...state,
-                settings: {
-                    ...state.settings,
-                    defaultOpen,
-                    autoplayVideo: false,
-                },
-            };
-        },
-    },
-    {
-        // deletion of VWP and Hanayori org.
-        version: 4,
-        up: (state) => {
-            const orgFavorites = state.orgFavorites.filter(
-                (v) => v !== "Virtual Witch Phenomenon" && v !== "Hanayori Joshiryo",
-            );
-            return {
-                ...state,
-                orgFavorites,
-            };
-        },
-    },
-    {
-        version: 5,
-        // migrates library -->
-        up: (state) => {
-            try {
-                const mergedPlaylist =
-                    state.playlist && state.playlist.active ? state.playlist.active.videos || [] : [];
-
-                for (const property in state.library.savedVideos) {
-                    if (property.length === 11)
-                        // yt video
-                        mergedPlaylist.push(state.library.savedVideos[property]);
-                }
-
-                try {
-                    const db = kvidb("watch-history");
-                    for (const property in state.library.watchedVideos) {
-                        if (property.length === 11)
-                            // yt video
-                            db.put(property, 1, (x, err) => {
-                                console.log(x, err);
-                            });
-                    }
-                } catch (err) {
-                    console.error(err);
-                }
-
-                // delete state.library;
-
-                return {
-                    ...state,
-                    playlist: {
-                        ...(state.playlist && state.playlist),
-                        active: {
-                            ...(state.playlist && state.playlist.active),
-                            videos: mergedPlaylist,
-                        },
-                    },
-                };
-            } catch (err) {
-                console.error(err);
-            }
-            return state;
-        },
-    },
-    {
-        version: 6,
-        up: (state) => {
-            const newCurrentOrg = {
-                name: state.currentOrg,
-                short: ORGS_PREFIX[state.currentOrg] ? ORGS_PREFIX[state.currentOrg] : null,
-            };
-            const newOrgFavorites = state.orgFavorites.map((org) => {
-                return { name: org, short: ORGS_PREFIX[org] ? ORGS_PREFIX[org] : null };
-            });
-            return {
-                ...state,
-                currentOrg: newCurrentOrg,
-                orgFavorites: newOrgFavorites,
-            };
-        },
-    },
-    {
-        version: 7,
-        up: (state) => {
-            if (state.currentOrg.name.includes('short"')) {
-                return {
-                    ...state,
-                    currentOrg: { name: "Hololive", short: "Holo" },
-                    orgFavorites: [
-                        { name: "All Vtubers", short: "Vtuber" },
-                        { name: "Hololive", short: "Holo" },
-                        { name: "Nijisanji", short: "Niji" },
-                        { name: "Independents", short: "Indie" },
-                    ],
-                };
-            }
-            return state;
-        },
-    },
-    {
-        version: 8,
-        up: (state) => {
-            const { layoutContent, presetLayout } = state.multiview;
-            const outdatedSave = Object.keys(layoutContent).some((key) => {
-                return layoutContent[key].content;
-            });
-            if (outdatedSave) {
-                return {
-                    ...state,
-                    multiview: {
-                        presetLayout,
-                    },
-                };
-            }
-            return state;
-        },
-    },
-];
-
 /**-----------------------
  *     Configure Synchronized Modules & Mutations across tabs
  *------------------------* */
 const syncedModules = /^(?:playlist|settings|history)/;
 const syncedMutations =
-    /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout))/;
+    /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout|setAutoLayout))/;
 
 export default new Vuex.Store({
     plugins: [

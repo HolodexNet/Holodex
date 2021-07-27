@@ -30,6 +30,9 @@ const getters = {
             (state.favorites.find((f) => f.id === channelId) && state.stagedFavorites[channelId] !== "remove")
         );
     },
+    favoriteChannelIDs: (state) => {
+        return new Set(state.favorites.map((f) => f.id));
+    },
 };
 
 const actions = {
@@ -57,13 +60,7 @@ const actions = {
             return api
                 .favoritesLive(rootState.userdata.jwt)
                 .then((res) => {
-                    // filter out collab channels if settings is set
-                    let live = res;
-                    if (rootState.settings.hideCollabStreams) {
-                        const favoritesSet = new Set(state.favorites.map((f) => f.id));
-                        live = res.filter((video) => favoritesSet.has(video.channel.id));
-                    }
-                    live.sort((a, b) => {
+                    res.sort((a, b) => {
                         if (a.available_at === b.available_at) {
                             return a.id - b.id;
                         }
@@ -71,7 +68,7 @@ const actions = {
                         const dateB = new Date(b.available_at).getTime();
                         return dateA - dateB;
                     });
-                    commit("setLive", live);
+                    commit("setLive", res);
                     commit("fetchEnd");
                 })
                 .catch((e) => {

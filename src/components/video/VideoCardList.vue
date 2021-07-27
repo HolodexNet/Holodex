@@ -125,6 +125,14 @@ export default {
             type: Boolean,
             default: false,
         },
+        hideCollabs: {
+            type: Boolean,
+            default: false,
+        },
+        hideIgnoredTopics: {
+            type: Boolean,
+            default: false,
+        },
     },
     methods: {
         handleVideoClick(video) {
@@ -146,17 +154,35 @@ export default {
         },
         processedVideos() {
             const blockedChannels = this.$store.getters["settings/blockedChannelIDs"];
+            const ignoredTopics = this.$store.getters["settings/ignoredTopics"];
+            const favoriteChannels = this.$store.getters["favorites/favoriteChannelIDs"];
+
+            const filterVideos = (v) => {
+                let keep = true;
+                const channelId = v.channel_id || v.channel.id;
+
+                if (!this.ignoreBlock) {
+                    keep &&= !blockedChannels.has(channelId);
+                }
+
+                if (this.hideCollabs) {
+                    keep &&= favoriteChannels.has(channelId);
+                }
+
+                if (this.hideIgnoredTopics) {
+                    keep &&= !ignoredTopics.has(v.topic_id);
+                }
+
+                return keep;
+            };
+
             if (this.limitRows <= 0 || this.expanded) {
-                return this.videos.filter((x) => {
-                    return this.ignoreBlock || !blockedChannels.has(x.channel_id || x.channel.id);
-                });
+                return this.videos.filter(filterVideos);
             }
             return this.videos
                 .slice(0)
                 .splice(0, this.limitRows * this.colSize)
-                .filter((x) => {
-                    return this.ignoreBlock || !blockedChannels.has(x.channel_id || x.channel.id);
-                });
+                .filter(filterVideos);
         },
         colSize() {
             if (this.horizontal) return 1;

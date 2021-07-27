@@ -1,14 +1,17 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import relativeTime from "dayjs/plugin/relativeTime";
-// import advancedFormat from "dayjs/plugin/advancedFormat";
+import timezone from "dayjs/plugin/timezone";
+import advancedFormat from "dayjs/plugin/advancedFormat";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import isTomorrow from "dayjs/plugin/isTomorrow";
 
 dayjs.extend(localizedFormat);
 dayjs.extend(isTomorrow);
-// dayjs.extend(advancedFormat);
+dayjs.extend(advancedFormat);
 dayjs.extend(utc);
+dayjs.extend(timezone);
+
 const thresholds = [
     { l: "s", r: 1 },
     { l: "m", r: 1 },

@@ -17,13 +17,13 @@
         <div
             class="d-flex flex-column pa-md-3"
             :class="{
-                'flex-nowrap': !theatherMode,
-                'flex-sm-row': !theatherMode,
+                'flex-nowrap': !theaterMode,
+                'flex-sm-row': !theaterMode,
             }"
         >
             <div
                 class="d-inline-flex flex-shrink-1 flex-column py-0 pl-0"
-                :md="theatherMode ? 12 : 9"
+                :md="theaterMode ? 12 : 9"
                 :style="{
                     'padding-right': isMobile && showChatWindow && landscape ? '220px' : 0,
                     width: '100%',
@@ -91,8 +91,8 @@
                                 <v-btn
                                     icon
                                     lg
-                                    @click="theatherMode = !theatherMode"
-                                    :color="theatherMode ? 'primary' : ''"
+                                    @click="theaterMode = !theaterMode"
+                                    :color="theaterMode ? 'primary' : ''"
                                     v-bind="attrs"
                                     v-on="on"
                                 >
@@ -103,8 +103,8 @@
                         </v-tooltip>
                     </template>
                 </WatchToolBar>
-                <WatchInfo :video="video" key="info" @timeJump="seekTo" v-if="!theatherMode" />
-                <WatchQuickEditor v-if="role === 'admin' || role === 'editor'" :video="video" />
+                <WatchInfo :video="video" key="info" @timeJump="seekTo" v-if="!theaterMode" />
+                <WatchQuickEditor v-if="!theaterMode && (role === 'admin' || role === 'editor')" :video="video" />
                 <!-- Mobile mode only sidebar -->
                 <WatchSideBar :video="video" @timeJump="seekTo" v-if="isMobile" />
                 <!-- Mobile mode Mugen -->
@@ -115,11 +115,11 @@
                     :limit="isMobile ? 5 : 0"
                     @timeJump="seekTo"
                     key="comments"
-                    v-if="comments.length && !theatherMode"
+                    v-if="comments.length && !theaterMode"
                 />
             </div>
-            <div class="related-videos pt-0 row ma-0" :class="{ 'sidebar-width': !isMobile && !theatherMode }">
-                <v-col v-if="theatherMode" md="8" lg="9" class="pa-0">
+            <div class="related-videos pt-0 row ma-0" :class="{ 'sidebar-width': !isMobile && !theaterMode }">
+                <v-col v-if="theaterMode" md="8" lg="9" class="pa-0">
                     <WatchInfo :video="video" key="info" @timeJump="seekTo" />
                     <WatchQuickEditor v-if="role === 'admin' || role === 'editor'" :video="video" />
                     <v-divider />
@@ -132,7 +132,7 @@
                         v-if="comments.length"
                     />
                 </v-col>
-                <v-col :md="theatherMode ? 4 : 12" :lg="theatherMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
+                <v-col :md="theaterMode ? 4 : 12" :lg="theaterMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
                     <WatchLiveChat
                         v-if="showChatWindow"
                         :video="video"
@@ -204,7 +204,7 @@ export default {
             mdiMessage,
             mdiMessageOff,
 
-            // theatherMode: false,
+            // theaterMode: false,
 
             // showTL: false,
             hintConnectLiveTL: false,
@@ -364,12 +364,12 @@ export default {
         landscape() {
             return this.$vuetify.breakpoint.width >= 568;
         },
-        theatherMode: {
+        theaterMode: {
             get() {
-                return this.$store.state.watch.theatherMode && !this.isMobile;
+                return this.$store.state.watch.theaterMode && !this.isMobile;
             },
             set(val) {
-                return this.$store.commit("watch/setTheatherMode", val);
+                return this.$store.commit("watch/setTheaterMode", val);
             },
         },
         firstVisitMugen: {

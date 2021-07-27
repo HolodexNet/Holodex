@@ -57,6 +57,8 @@
                             :includeAvatar="shouldIncludeAvatar"
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
+                            :hideCollabs="shouldHideCollabs"
+                            hideIgnoredTopics
                         >
                         </VideoCardList>
                         <v-divider class="my-3 secondary" v-if="lives.length" />
@@ -66,6 +68,8 @@
                             :includeAvatar="shouldIncludeAvatar"
                             :cols="colSizes"
                             :dense="currentGridSize > 0"
+                            :hideCollabs="shouldHideCollabs"
+                            hideIgnoredTopics
                         >
                         </VideoCardList>
                     </template>
@@ -92,6 +96,8 @@
                                 includeChannel
                                 :cols="colSizes"
                                 :dense="currentGridSize > 0"
+                                :hideCollabs="shouldHideCollabs"
+                                hideIgnoredTopics
                             />
                             <!-- only show SkeletonCardList if it's loading -->
                             <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -207,6 +213,9 @@ export default {
             if (this.$vuetify.breakpoint.sm && this.currentGridSize > 0) return false;
             if (this.$vuetify.breakpoint.xs && this.currentGridSize > 0) return false;
             return true;
+        },
+        shouldHideCollabs() {
+            return this.$store.state.settings.hideCollabStreams;
         },
         lives() {
             return this.live.filter((v) => v.status === "live");

@@ -102,13 +102,14 @@
                         :class="{ 'name-vtuber': data.type === 'stream' || data.channel.type === 'vtuber' }"
                         :href="`/channel/${data.channel.id}`"
                         @click.exact.stop.prevent="goToChannel(data.channel.id)"
+                        :title="data.channel.name + '\n' + (data.channel.english_name || '')"
                     >
                         {{ channelName }}
                     </a>
                 </div>
                 <!-- Time/Viewer Info -->
                 <div class="video-card-subtitle">
-                    <span :class="'text-' + this.data.status">
+                    <span :class="'text-' + this.data.status" :title="absoluteTimeString">
                         {{ formattedTime }}
                     </span>
                     <template v-if="data.clips && data.clips.length > 0">
@@ -170,7 +171,7 @@
 
 <script lang="ts">
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
-import { formatDuration, formatDistance, dayjs } from "@/utils/time";
+import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
 import * as icons from "@/utils/icons";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */
@@ -300,6 +301,16 @@ export default {
                 default:
                     return formatDistance(this.data.available_at, this.lang, this.$t.bind(this));
             }
+        },
+        absoluteTimeString() {
+            const ts = localizedDayjs(this.data.available_at, this.lang);
+
+            const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
+            const ts2 = ts.tz("Japan").format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
+            if (ts1 === ts2) {
+                return ts1;
+            }
+            return `${ts1}\n${ts2}`;
         },
         formattedDuration() {
             if (this.data.start_actual && this.data.status === "live") {

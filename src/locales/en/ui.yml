@@ -107,7 +107,7 @@ component:
     readMore: Read more
   reportDialog:
     title: Report
-    comments: Comments (Optional)
+    comments: What actions should Holodex take?
     success: Report sent, thank you!
     reasons:
       - Video tagged incorrectly
@@ -253,6 +253,8 @@ views:
       - Small
     hideCollabStreamsLabel: Hide Collab Streams
     hideCollabStreamsMsg: Hide collab streams from your favorites feed
+    ignoredTopicsLabel: Ignored Topics
+    ignoredTopicsMsg: Hide videos with these topics from the Home and Favorites pages
     theme: Theme
   app:
     update_available: An update is available

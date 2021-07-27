@@ -45,8 +45,8 @@
                             :label="$t('component.reportDialog.comments')"
                             v-model="comments"
                             persistent-hint
-                            hint="English / 日本語 / 繁體中文 OK"
-                            :error="selectedReason === 'Other' && !comments.length"
+                            hint="* English / 日本語 / 繁體中文 OK"
+                            :error="!comments.length"
                         />
                     </v-card-text>
 
@@ -60,7 +60,7 @@
                         <v-btn text :disabled="isLoading" @click="showReportDialog = false">
                             {{ $t("views.app.close_btn") }}
                         </v-btn>
-                        <v-btn color="primary" text :disabled="isLoading" @click="sendReport">
+                        <v-btn color="primary" text :disabled="isLoading || comments.length === 0" @click="sendReport">
                             {{ $t("views.multiview.confirmOverwriteYes") }}
                         </v-btn>
                     </v-card-actions>
