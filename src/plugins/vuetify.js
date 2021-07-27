@@ -185,7 +185,7 @@ export function loadLanguageAsync(lang) {
 
 const initThemeJSON = localStorage.getItem("theme");
 const initThemeDarkMode = localStorage.getItem("darkMode");
-const theme = themeSet[+initThemeJSON || 0];
+const theme = themeSet[+initThemeJSON || 0] || themeSet[0];
 const darkTheme = initThemeDarkMode !== "false"; // true if unset.
 
 export const config = {

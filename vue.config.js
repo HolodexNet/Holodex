@@ -6,7 +6,7 @@ module.exports = {
         proxy: {
             "/api": {
                 target: API_BASE_URL,
-                pathRewrite: REWRITE_API_PATH && { "^/api": "" },
+                pathRewrite: REWRITE_API_PATH ? { "^/api": "" } : null,
                 secure: false,
             },
             "/orgs.json": {

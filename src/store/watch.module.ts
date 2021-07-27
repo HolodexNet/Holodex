@@ -18,7 +18,7 @@ const initialState = {
 const persistedState = {
     showTL: false,
     showLiveChat: true,
-    theatherMode: false,
+    theaterMode: false,
     playlist: {},
 };
 
@@ -66,7 +66,7 @@ const mutations = {
     setVideo(state, video) {
         state.video = video;
     },
-    ...createSimpleMutation(["showTL", "showLiveChat", "theatherMode"]),
+    ...createSimpleMutation(["showTL", "showLiveChat", "theaterMode"]),
     // setComments(state, comments) {
     //     state.comments = comments;
     // },
