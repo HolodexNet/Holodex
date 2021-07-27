@@ -21,6 +21,12 @@
                 {{ $t("component.mainNav.multiview") }}
             </v-list-item>
         </template>
+
+        <v-list-item @click.stop="copyLink" :class="doneCopy ? 'green lighten-2' : ''"
+            ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
+            {{ $t("component.videoCard.copyLink") }}
+        </v-list-item>
+
         <v-list-item @click="$store.commit('setReportVideo', video)">
             <v-icon left>{{ icons.mdiFlag }} </v-icon>
             {{ $t("component.reportDialog.title") }}
@@ -30,6 +36,7 @@
 
 <script>
 import { dayjs } from "@/utils/time";
+import copyToClipboard from "@/mixins/copyToClipboard";
 
 export default {
     props: {
@@ -38,6 +45,7 @@ export default {
             required: true,
         },
     },
+    mixins: [copyToClipboard],
     methods: {
         getChannelShortname(ch) {
             return (
@@ -55,6 +63,10 @@ export default {
             const eventStart = dayjs(startdate).format(googleCalendarFormat);
             const eventEnd = dayjs(startdate).add(1, "hour").format(googleCalendarFormat);
             window.open(url1.concat(videoTitle, url2, eventStart, "/", eventEnd), "_blank");
+        },
+        copyLink() {
+            const link = `${window.origin}/watch/${this.video.id}`;
+            this.copyToClipboard(link);
         },
     },
 };
