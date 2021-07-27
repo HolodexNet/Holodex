@@ -105,7 +105,7 @@ import Vue from "vue";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
 
-const manager = new Manager(/* process.env.NODE_ENV === "development" ? "http://localhost:2434" : */ API_BASE_URL, {
+const manager = new Manager(API_BASE_URL, {
     reconnectionAttempts: 10,
     transports: ["websocket"],
     upgrade: false,

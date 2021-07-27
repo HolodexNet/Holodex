@@ -108,7 +108,7 @@ component:
     readMore: Lihat selanjutnya
   reportDialog:
     title: Laporkan
-    comments: Catatan tambahan (Tidak wajib)
+    comments: Apakah tindakan selanjutnya?
     success: Terima kasih! Laporan telah dikirim.
     reasons:
       - Video tidak ditandai dengan betul
@@ -387,7 +387,7 @@ about:
       Harap maklum, sokongan Pemain Muzik adalah tidak lengkap di peranti mudah alih. <br/>Puncanya ialah: 1. Fungsi automain yang diperlukan tidak dibenarkan oleh peranti mudah alih; 2. Kebanyakan peranti mudah alih tidak membenarkan perangkaian muzik di latar oleh tapak sesawang. 3. Baris gilir lagu anda tidak disepadukan di pusat kawalan muzik aras sistem.
     videoLinkage: Bagaimana caranya agar penggiat YouTube maya yang berkenaan dipautkan dengan tepat?
     videoLinkageContent: >-
-      Keseluruhan maklumat dihuraikan berdasarkan isi perihalan video. Jika anda membuat sedutan mana-mana siaran rasmi, pastikan pautannya disertakan sekali. Jika sedutan anda daripada hasil ciptaan peminat (contohnya di bilibili), pastikan penggiat YouTube maya (penggiyut maya) yang berkaitan dipautkan saluran YouTube-nya. Sedutan yang tidak memautkan saluran penggiyut maya yang berkenaan tidak akan dipaparkan di Holodex kerana sedutan di tapak ini harus ada pautan kepada penggiyut maya yang disenaraikan di Holodex.
+      Keseluruhan maklumat dihuraikan berdasarkan isi perihalan video. Jika anda membuat sedutan mana-mana siaran rasmi, pastikan pautannya disertakan sekali. Jika sedutan anda daripada hasil ciptaan peminat (contohnya di bilibili), pastikan penggiyut maya yang berkaitan dipautkan saluran YouTube-nya. Sedutan yang tidak memautkan saluran penggiyut maya yang berkenaan tidak akan dipaparkan di Holodex kerana sedutan di tapak ini harus ada pautan kepada penggiyut maya yang disenaraikan di Holodex.
     quitHolodex: "Saya seorang penyari kata yang tidak mahu saluran saya disenaraikan di Holodex"
     quitHolodexContent: >-
       Pemergian anda amatlah disesali :( Anda boleh beritahu saya sekiranya terdapat sebarang masalah yang ingin diselesaikan. Anda boleh mengirim pesanan kepada kami di Discord sekiranya anda masih tekad ingin saluran anda dikeluarkan.

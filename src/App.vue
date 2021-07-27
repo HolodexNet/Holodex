@@ -33,7 +33,7 @@
 import MainNav from "@/components/nav/MainNav.vue";
 import ReportDialog from "@/components/common/ReportDialog.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
-import { loadLanguageAsync, setDayjsLang } from "./plugins/vuetify";
+import { loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
 
 export default {
@@ -99,7 +99,7 @@ export default {
         // set theme
         this.$vuetify.theme.dark = this.darkMode;
         // set lang
-        setDayjsLang(this.$store.state.settings.lang);
+        // setDayjsLang(this.$store.state.settings.lang);
         this.$i18n.locale = this.$store.state.settings.lang;
         this.$vuetify.lang.current = this.$store.state.settings.lang;
         // check for pwa updates
@@ -178,7 +178,7 @@ export default {
             // watches the computed.lang variable and updates vue I18N
             // import(`dayjs/locale/${this.lang}`) // ES 2015
             loadLanguageAsync(this.$store.state.settings.lang);
-            setDayjsLang(this.$store.state.settings.lang);
+            // setDayjsLang(this.$store.state.settings.lang);
         },
         // watches change in breakpoint from vuetify and updates store
         // eslint-disable-next-line func-names

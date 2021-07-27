@@ -1,4 +1,20 @@
+const API_BASE_URL = process.env.API_BASE_URL || "https://staging.holodex.net";
+const REWRITE_API_PATH = !!process.env.REWRITE_API_PATH;
+
 module.exports = {
+    devServer: {
+        proxy: {
+            "/api": {
+                target: API_BASE_URL,
+                pathRewrite: REWRITE_API_PATH && { "^/api": "" },
+                secure: false,
+            },
+            "/orgs.json": {
+                target: `${API_BASE_URL}/orgs.json`,
+                secure: false,
+            },
+        },
+    },
     chainWebpack: (config) => {
         // if (process.env.STORYBOOK && process.env.STORYBOOK.trim() === "true") {
         //     console.info("info => Updating webpack using chain-webpack");

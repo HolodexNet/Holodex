@@ -105,7 +105,6 @@ component:
     readMore: Xem thêm
   reportDialog:
     title: Báo cáo
-    comments: Bình luận (không bắt buộc)
     success: Đã gửi báo cáo, cảm ơn bạn!
     reasons:
       - Video bị gắn thẻ sai

@@ -101,8 +101,8 @@
 import { mdiDotsVertical, mdiToggleSwitch } from "@mdi/js";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
-import { decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-utils";
-import { mapState } from "vuex";
+import { decodeLayout } from "@/utils/mv-utils";
+import { mapState, mapGetters } from "vuex";
 // import Vue from "vue";
 import LayoutPreview from "./LayoutPreview.vue";
 import LayoutPreviewCard from "./LayoutPreviewCard.vue";
@@ -129,47 +129,12 @@ export default {
     },
     computed: {
         ...mapState("multiview", ["presetLayout", "autoLayout"]),
-        decodedCustomPresets() {
-            return this.presetLayout.map((preset) => {
-                return {
-                    // convert original encoded to id
-                    id: preset.layout,
-                    ...preset,
-                    ...decodeLayout(preset.layout),
-                };
-            });
-        },
-        decodedDesktopPresets() {
-            return desktopPresets.map((preset) => {
-                return {
-                    // convert original encoded to id
-                    id: preset.layout,
-                    ...preset,
-                    ...decodeLayout(preset.layout),
-                };
-            });
-        },
-        desktopGroups() {
-            const groups = [];
-            const seen = new Set();
-            this.decodedDesktopPresets.concat(this.decodedCustomPresets).forEach((preset) => {
-                if (seen.has(preset.id)) return;
-                seen.add(preset.id);
-                if (!groups[preset.videoCellCount]) groups[preset.videoCellCount] = [];
-                groups[preset.videoCellCount].push(preset);
-            });
-            return groups;
-        },
-        decodedMobilePresets() {
-            return mobilePresets.map((preset) => {
-                return {
-                    // convert original encoded to id
-                    id: preset.layout,
-                    ...preset,
-                    ...decodeLayout(preset.layout),
-                };
-            });
-        },
+        ...mapGetters("multiview", [
+            "decodedCustomPresets",
+            "decodedDesktopPresets",
+            "decodedMobilePresets",
+            "desktopGroups",
+        ]),
         autoLayoutSet() {
             return new Set(this.autoLayout);
         },

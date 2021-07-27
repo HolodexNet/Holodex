@@ -216,8 +216,8 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#fca94c",
-                secondary: "#d2def4",
+                primary: "#d2def4",
+                secondary: "#fca94c",
             },
             light: {
                 background: "#f2f2f2",
@@ -312,8 +312,8 @@ export default [
         themes: {
             dark: {
                 background: "#121212",
-                primary: "#4a477c",
-                secondary: "#cda4d5",
+                primary: "#cda4d5",
+                secondary: "#4a477c",
             },
             light: {
                 background: "#f2f2f2",

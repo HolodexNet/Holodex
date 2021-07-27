@@ -108,7 +108,7 @@ component:
     readMore: Mehr anzeigen
   reportDialog:
     title: Melden
-    comments: Kommentar (optional)
+    comments: Welche Maßnahmen sollte Holodex ergreifen?
     success: Bericht gesendet, vielen Dank!
     reasons:
       - Video falsch getaggt

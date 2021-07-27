@@ -1,34 +1,17 @@
 import { decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-utils";
+import { mapGetters } from "vuex";
 
 export default {
     data() {
         return {};
     },
     computed: {
-        decodedCustomPresets() {
-            return this.presetLayout.map((preset) => {
-                return {
-                    ...preset,
-                    ...decodeLayout(preset.layout),
-                };
-            });
-        },
-        decodedDesktopPresets() {
-            return desktopPresets.map((preset) => {
-                return {
-                    ...preset,
-                    ...decodeLayout(preset.layout),
-                };
-            });
-        },
-        decodedMobilePresets() {
-            return mobilePresets.map((preset) => {
-                return {
-                    ...preset,
-                    ...decodeLayout(preset.layout),
-                };
-            });
-        },
+        ...mapGetters("multiview", [
+            "decodedCustomPresets",
+            "decodedDesktopPresets",
+            "decodedMobilePresets",
+            "desktopGroups",
+        ]),
         decodedAutoLayout() {
             return this.autoLayout
                 .filter((l) => l)

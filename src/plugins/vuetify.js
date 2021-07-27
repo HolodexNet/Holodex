@@ -31,76 +31,80 @@ export const langs = [
     { val: "hu", display: "Magyar", credit: "kuroihikikomori#3519" },
 ];
 
-export const dayjsLangs = {
+export const asyncLang = {
     async en() {
         await import("dayjs/locale/en");
+        return import("@/locales/en/ui.yml");
     },
     "en-GB": async () => {
         await import("dayjs/locale/en-gb");
+        return import("@/locales/en/ui.yml");
     },
     "en-CA": async () => {
         await import("dayjs/locale/en-ca");
+        return import("@/locales/en/ui.yml");
     },
     async ja() {
         await import("dayjs/locale/ja");
+        return import("@/locales/ja-JP/ui.yml");
     },
     async zh() {
         await import("dayjs/locale/zh-tw");
+        return import("@/locales/zh-TW/ui.yml");
     },
     async es() {
         await import("dayjs/locale/es");
+        return import("@/locales/es-MX/ui.yml");
     },
     "es-ES": async () => {
         await import("dayjs/locale/es");
+        return import("@/locales/es-ES/ui.yml");
     },
     async ms() {
         await import("dayjs/locale/ms");
+        return import("@/locales/ms-MY/ui.yml");
     },
     async id() {
         await import("dayjs/locale/id");
+        return import("@/locales/id-ID/ui.yml");
     },
     async ru() {
         await import("dayjs/locale/ru");
+        return import("@/locales/ru-RU/ui.yml");
     },
     async fr() {
         await import("dayjs/locale/fr");
+        return import("@/locales/fr-FR/ui.yml");
     },
     async pt() {
         await import("dayjs/locale/pt-br");
+        return import("@/locales/pt-BR/ui.yml");
     },
     async de() {
         await import("dayjs/locale/de");
+        return import("@/locales/de-DE/ui.yml");
     },
     async it() {
         await import("dayjs/locale/it");
+        return import("@/locales/it-IT/ui.yml");
     },
     async ko() {
         await import("dayjs/locale/ko");
+        return import("@/locales/ko-KR/ui.yml");
     },
     async tr() {
         await import("dayjs/locale/tr");
+        return import("@/locales/tr-TR/ui.yml");
     },
     async vi() {
         await import("dayjs/locale/vi");
+        return import("@/locales/vi-VN/ui.yml");
     },
     async hu() {
         await import("dayjs/locale/hu");
+        return import("@/locales/hu-HU/ui.yml");
     },
 };
-
-const dayjsName = {
-    "en-CA": "en-ca",
-    "en-GB": "en-gb",
-    zh: "zh-tw",
-    "es-ES": "es",
-    pt: "pt-br",
-};
-
-export async function setDayjsLang(lang) {
-    await dayjsLangs[lang]();
-    const dayjsLang = dayjsName[lang] || lang || "en";
-    dayjs.locale(dayjsLang);
-}
 
 export const i18n = new VueI18n({
     locale: "en", // Set locale
@@ -143,33 +147,22 @@ export const i18n = new VueI18n({
 
 const loadedLanguages = ["en"];
 
+const dayjsName = {
+    "en-CA": "en-ca",
+    "en-GB": "en-gb",
+    zh: "zh-tw",
+    "es-ES": "es",
+    pt: "pt-br",
+};
+
 function setI18nLanguage(lang) {
     i18n.locale = lang;
+    const dayjsLang = dayjsName[lang] || lang || "en";
+    dayjs.locale(dayjsLang);
 }
 
 // Load language from webpack chunked files
 export function loadLanguageAsync(lang) {
-    // Map short language code to full
-    const langFile = {
-        ja: "ja-JP",
-        "en-CA": "en",
-        "en-GB": "en",
-        es: "es-MX",
-        "es-ES": "es-ES",
-        ms: "ms-MY",
-        zh: "zh-TW",
-        id: "id-ID",
-        ru: "ru-RU",
-        fr: "fr-FR",
-        pt: "pt-BR",
-        de: "de-DE",
-        it: "it-IT",
-        ko: "ko-KR",
-        tr: "tr-TR",
-        vi: "vi-VN",
-        hu: "hu-HU",
-    };
-
     // If the same language
     if (i18n.locale === lang) {
         return Promise.resolve(setI18nLanguage(lang));
@@ -181,7 +174,7 @@ export function loadLanguageAsync(lang) {
     }
 
     // If the language hasn't been loaded yet
-    return import(/* webpackChunkName: "[request]" */ `@/locales/${langFile[lang]}/ui.yml`).then((msg) => {
+    return asyncLang[lang]().then((msg) => {
         i18n.setLocaleMessage(lang, msg.default);
         loadedLanguages.push(lang);
         return setI18nLanguage(lang);
