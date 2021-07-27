@@ -6,7 +6,7 @@ module.exports = {
         proxy: {
             "/api": {
                 target: API_BASE_URL,
-                pathRewrite: REWRITE_API_PATH ? { "^/api": "" } : null,
+                ...(REWRITE_API_PATH && { pathRewrite: { "^/api": "" } }),
                 secure: false,
             },
             "/orgs.json": {
@@ -16,23 +16,6 @@ module.exports = {
         },
     },
     chainWebpack: (config) => {
-        // if (process.env.STORYBOOK && process.env.STORYBOOK.trim() === "true") {
-        //     console.info("info => Updating webpack using chain-webpack");
-        //     // eslint-disable-next-line no-param-reassign
-        //     config.module
-        //         .rule("addon-storysource")
-        //         .enforce()
-        //         .pre()
-        //         .test(/\.stories\.jsx?$/)
-        //         .use("@storybook/addon-storysource/loader")
-        //         .loader("@storybook/addon-storysource/loader")
-        //         .options({
-        //             semi: false,
-        //             printWidth: 120,
-        //             singleQuote: true,
-        //         })
-        //         .end();
-        // }
         return config;
     },
     css: {

@@ -398,6 +398,9 @@ about:
           Üzerinde çalışıyoruz! Biz bu özelliği eklerken, tarayıcınızdaki "Ana Ekrana Ekle" özelliğini kullanabilirsiniz. Bu özelliğin bir uygulama gibi davranması için bir çok değişiklik yaptık.
     MugenClips:
       title: MugenClips nedir?
+      contents:
+        - >-
+          MugenClips veya sonsuz klipler, çok sayıda topluluk çeviri kanalı tarafından yüklenen kliplerin sürekli döndürüldüğü bir birlikle izleme partisidir
     subber:
       title: Ben bir altyazıcıyım ama kanalımı Holodex'te bulamıyorum.
     feedback:
