@@ -107,12 +107,13 @@ export default {
 <style lang="scss">
 .song-player-container {
     width: 356px;
-    position: absolute;
-    bottom: 100%;
+    position: fixed;
+    top: 80px;
     right: 0;
     margin: 0 10px 10px 0;
     border-radius: 4px;
     overflow: hidden;
+    z-index: 1000;
 
     .song-player {
         position: relative;

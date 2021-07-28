@@ -228,8 +228,11 @@ body {
     margin: 0px -12px;
 }
 .bump-bottom .v-main__wrap {
-    padding-bottom: 250px;
+    /* to allow floating song frame to sit top right space */
+    padding-top: 140px;
+
     /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
+    padding-bottom: 120px;
 }
 
 /* pull to refresh skin */
