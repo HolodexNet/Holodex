@@ -86,7 +86,7 @@ component:
     songTitle: Başlık
     songCoveredBy: Söyleyen
     songDuration: Süre
-    sangOnTime: Söylenme zamanı
+    sangOnTime: Söylenme tarihi
   orgMusic:
     monthlyTopForOrg: '{0} Ayın En Çok Dinlenenleri'
     weeklyTopForOrg: '{0} Haftanın En Çok Dinlenenleri'
