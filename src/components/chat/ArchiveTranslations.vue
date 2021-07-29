@@ -100,7 +100,9 @@ export default {
             }
         },
         curIndex(idx) {
-            this.$refs.tlBody.scrollToIndex(idx);
+            const ref = this.$refs.tlBody;
+            ref.scrollToIndex(idx);
+            ref.scrollToOffset(ref.getOffset() - ref.getClientSize() / 2 + 10);
         },
     },
     computed: {
