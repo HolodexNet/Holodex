@@ -101,7 +101,9 @@ export default {
             default: "500px",
         },
     },
-    mounted() {},
+    mounted() {
+        this.$refs.virtualVideoList.scrollToIndex(this.activeIndex);
+    },
     methods: {
         checkActive(index) {
             if (index === this.activeIndex) return "video-card-active";
