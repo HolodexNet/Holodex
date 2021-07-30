@@ -245,7 +245,11 @@ export default {
         ...mapState("home", { homeUpdateTick: "lastLiveUpdate" }),
         ...mapState("playlist", ["active"]),
         modalFilteredLive() {
-            return this.live.filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+            return this.live.filter(
+                (l) =>
+                    !this.activeVideos.find((v) => v.id === l.id) &&
+                    !this.$store.getters["settings/blockedChannelIDs"].has(l.channel.id),
+            );
         },
         topFilteredLive() {
             try {
@@ -261,7 +265,11 @@ export default {
                             (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                         );
                     })
-                    .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+                    .filter(
+                        (l) =>
+                            !this.activeVideos.find((v) => v.id === l.id) &&
+                            !this.$store.getters["settings/blockedChannelIDs"].has(l.channel.id),
+                    );
 
                 return filtered;
             } catch (err) {
