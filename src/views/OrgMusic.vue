@@ -237,7 +237,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 /* .recent-table .selectable {
     cursor: pointer;
 }
@@ -265,5 +265,9 @@ export default {
 .bump-bottom .org-music-container {
     /* to allow floating song frame to sit top right space */
     padding-top: 140px;
+
+    @media screen and (max-width: 768px) {
+        padding-top: inherit;
+    }
 }
 </style>
