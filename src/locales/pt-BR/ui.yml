@@ -117,6 +117,9 @@ component:
     alertText: >-
       As configurações de privacidade do seu navegador está impossibilitando o Chat do Youtube de se conectar. Clique aqui para mais informações
     neverShowAgain: Não Mostrar Este Alerta Novamente
+  playlist:
+    menu:
+      export-playlist: Exportar Playlist
 views:
   channel:
     video: Vídeos
