@@ -89,6 +89,10 @@ export const TL_LANGS = Object.freeze([
         text: "Русский язык",
         value: "ru",
     },
+    {
+        text: "한국어",
+        value: "ko",
+    },
 ]);
 
 // exports.CHANNEL_TYPE_TO_VIDEO_TYPE = {
