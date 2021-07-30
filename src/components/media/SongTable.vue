@@ -145,6 +145,10 @@ export default {
 </script>
 
 <style>
+.recent-table.theme--dark {
+    background: #1e1e1eeb;
+}
+
 .recent-table .selectable {
     cursor: pointer;
 }
