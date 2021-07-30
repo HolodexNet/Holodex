@@ -33,7 +33,7 @@ export default {
             }),
             status: 0,
             nextPage: 1,
-            isVisible: this.initVisible, // always visible at start
+            isVisible: false, // always invisible at start
         };
     },
     props: {
@@ -48,7 +48,7 @@ export default {
         },
     },
     mounted() {
-        if (this.isVisible) this.emitEvent();
+        if (this.initVisible) this.emitEvent();
     },
     watch: {
         identifier() {
@@ -64,18 +64,15 @@ export default {
             if (this.status === this.STATUSES.READY && isIntersecting) this.emitEvent();
         },
         emitEvent() {
-            const self = this;
-
-            if (this.status !== this.STATUSES.READY || !this.isVisible) return;
-            // if it's not ready to load, don't load.
-
             const loaded = () => {
-                self.nextPage += 1;
-                self.status = this.STATUSES.READY;
-                setTimeout(self.emitEvent, 100);
+                this.nextPage += 1;
+                this.status = this.STATUSES.READY;
+                setTimeout(() => {
+                    if (this.status === this.STATUSES.READY && this.isVisible) this.emitEvent();
+                }, 100);
             };
             const completed = () => {
-                self.status = this.STATUSES.COMPLETED;
+                this.status = this.STATUSES.COMPLETED;
             };
             const error = () => {
                 this.status = this.STATUSES.ERROR;
