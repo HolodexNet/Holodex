@@ -149,7 +149,12 @@
             <!-- </> -->
 
             <div class="playlist-buttons align-self-center" v-if="$vuetify.breakpoint.smAndUp">
-                <v-btn icon large @click="toggleSongFrameModality">
+                <v-btn
+                    icon
+                    large
+                    @click="toggleSongFrameModality"
+                    :color="isEmbedPlayerInBackground ? 'secondary lighten-2' : ''"
+                >
                     <v-icon>{{ icons.mdiTheater }}</v-icon>
                 </v-btn>
                 <v-btn icon large @click="closePlayer">

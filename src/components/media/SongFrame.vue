@@ -124,7 +124,7 @@ export default {
 }
 
 .song-player-container-background {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     left: 0;
