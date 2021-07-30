@@ -76,6 +76,8 @@
                         }"
                         :horizontal="$vuetify.breakpoint.mdAndDown"
                         dense
+                        hideIgnoredTopics
+                        :hideCollabs="shouldHideCollabs"
                     ></VideoCardList>
                     <div class="d-block" style="height: 120px"></div>
                 </template>
@@ -175,9 +177,11 @@ import { dayjs } from "@/utils/time";
 import { getVideoIDFromUrl } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
 import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
+import filterVideos from "@/mixins/filterVideos";
 
 export default {
     name: "VideoSelector",
+    mixins: [filterVideos],
     components: {
         VideoCard,
         VideoCardList,
@@ -252,30 +256,17 @@ export default {
             );
         },
         topFilteredLive() {
-            try {
-                // Filter out lives for top bar
-                let count = 0;
-                const filtered = this.live
-                    .filter((l) => {
-                        count += 1;
-                        // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
-                        return (
-                            l.status === "live" ||
-                            dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
-                            (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
-                        );
-                    })
-                    .filter(
-                        (l) =>
-                            !this.activeVideos.find((v) => v.id === l.id) &&
-                            !this.$store.getters["settings/blockedChannelIDs"].has(l.channel.id),
-                    );
-
-                return filtered;
-            } catch (err) {
-                this.$store.commit("multiview/resetState");
-                let count = 0;
-                return this.live.filter((l) => {
+            // Filter out lives for top bar
+            let count = 0;
+            const filterConfig = {
+                ignoreBlock: false,
+                // only hide collabs when favorites tab
+                hideCollabs: this.shouldHideCollabs,
+                hideIgnoredTopics: true,
+            };
+            const filtered = this.live
+                .filter((l) => this.filterVideos(l, filterConfig))
+                .filter((l) => {
                     count += 1;
                     // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
                     return (
@@ -283,14 +274,19 @@ export default {
                         dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
                         (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                     );
-                });
-            }
+                })
+                .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+
+            return filtered;
         },
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
         },
         savedVideosList() {
             return this.active.videos;
+        },
+        shouldHideCollabs() {
+            return this.selectedOrg?.name === "Favorites" && this.$store.state.settings.hideCollabStreams;
         },
     },
     methods: {

@@ -1,8 +1,9 @@
 <template>
     <!-- Purpose of Component: to contain a youtube video, load it and handle several actions -->
-    <div class="song-player-container">
+    <div :class="containerClass">
         <div class="song-player">
             <!--                 :key="'ytplayer' + videoId" -->
+            <!-- https://developers.google.com/youtube/player_parameters -->
             <youtube
                 v-if="playback.song.video_id"
                 :video-id="playback.song.video_id"
@@ -15,6 +16,11 @@
                     playsinline: 1,
                     controls: 1,
                     disablekb: 1,
+                    fs: 0,
+                    modestbranding: 1,
+                    rel: 0,
+                    cc_load_policy: 0,
+                    iv_load_policy: 3,
                 }"
             >
             </youtube>
@@ -23,14 +29,16 @@
 </template>
 
 <script lang="ts">
-// import { MUSIC_PLAYER_STATE } from "@/utils/consts";
-
 export default {
     name: "SongFrame",
     components: {},
     props: {
         playback: {
             required: true,
+        },
+        isBackground: {
+            type: Boolean,
+            default: false,
         },
     },
     data() {
@@ -88,15 +96,40 @@ export default {
             }
         },
     },
+    computed: {
+        containerClass() {
+            return this.isBackground ? "song-player-container-background" : "song-player-container";
+        },
+    },
 };
 </script>
 
-<style>
-.song-player {
-    position: relative;
-    padding-bottom: 56.25%;
-    /* padding-bottom: min(56.25%, calc(100vh - 120px)); */
-    width: 100%;
+<style lang="scss">
+.song-player-container {
+    width: 356px;
+    position: fixed;
+    top: 80px;
+    right: 0;
+    margin: 0 10px 10px 0;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 1000;
+
+    .song-player {
+        position: relative;
+        padding-bottom: 56.25%;
+        /* padding-bottom: min(56.25%, calc(100vh - 120px)); */
+        /* width: 100%; */
+    }
+}
+
+.song-player-container-background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    opacity: 0.3;
+    height: 100vh;
 }
 
 .song-player iframe {

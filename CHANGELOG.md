@@ -1,5 +1,19 @@
 # Holodex Changelog
-
+### 2.15 Holodex [*July 27th, 2021*]
+##### New Features
+- Topics can now be filtered from the settings (Thanks @ajhall)
+- Settings page has been renewed with a fresh coat of paint
+- Hovering over video time and channel will give the full time/name
+##### Patches
+- Twitch no longer autoplays when added
+- License Updated.... to current year :Inayaya: (Thanks @Zeryther)
+- Added translations to missing UI elements (Thank you translators!)
+##### Bugfixes
+- Fixed Twitch media controls
+- Fixed Okayu and Pekora theme having hard to see text
+#### Other
+- We adopted an @stu43005's holodex-api client as the official js client. Check it out [here](https://github.com/HolodexNet/holodex-api)
+- Welcomed two new members to the team, @stu43005 and @uetchy! 
 ### 2.14 Holodex [*July 16th, 2021*]
 ##### New Features
 - Added many more theme colors (Thanks I'm Rinsen.#0975)

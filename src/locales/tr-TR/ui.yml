@@ -86,7 +86,7 @@ component:
     songTitle: Başlık
     songCoveredBy: Söyleyen
     songDuration: Süre
-    sangOnTime: Söylenme zamanı
+    sangOnTime: Söylenme tarihi
   orgMusic:
     monthlyTopForOrg: '{0} Ayın En Çok Dinlenenleri'
     weeklyTopForOrg: '{0} Haftanın En Çok Dinlenenleri'
@@ -396,6 +396,13 @@ about:
       content:
         summary: >-
           Üzerinde çalışıyoruz! Biz bu özelliği eklerken, tarayıcınızdaki "Ana Ekrana Ekle" özelliğini kullanabilirsiniz. Bu özelliğin bir uygulama gibi davranması için bir çok değişiklik yaptık.
+        android:
+          - 'Android Chrome: Siteye girin, sağ üstteki üç noktaya'
+          - tıklayın ve "Ana Ekrana Ekle"yi seçin.
+        ios:
+          - >-
+            iOS Safari: Siteye girin, Safarinin en altındaki yukarı oklu kareye
+          - tıklayın ve "Ana Ekrana Ekle"yi seçin
     MugenClips:
       title: MugenClips nedir?
       contents:
@@ -403,6 +410,12 @@ about:
           MugenClips veya sonsuz klipler, çok sayıda topluluk çeviri kanalı tarafından yüklenen kliplerin sürekli döndürüldüğü bir birlikle izleme partisidir
     subber:
       title: Ben bir altyazıcıyım ama kanalımı Holodex'te bulamıyorum.
+      contents:
+        - >-
+          Lütfen Kanallar sayfasında kanalınızın altyazıcı olarak listelendiğini kontrol edin, eğer değilse lütfen
+        - bu formu doldurun
+        - >-
+           ki sizi manuel olarak ekleyelim. Eğer zaten listede varsanız, lütfen video açıklamalarınızın doğru video/kanal linklerine sahip olduğundan emin olun.
     feedback:
       title: Bu projeye geri bildirimde/katkıda bulunmak istiyorum.
   gdpr: GVKY ve verilerim

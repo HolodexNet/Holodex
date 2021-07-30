@@ -12,74 +12,80 @@
         <v-slider class="music-progress" hide-details :value="progress" height="3" @change="progressChange" />
         <div class="d-flex justify-space-between pa-2" :class="{ 'flex-column': $vuetify.breakpoint.xs }">
             <div class="player-controls d-flex align-center">
-                <v-btn icon class="mx-1" @click="prevButtonHandler" color="secondary">
-                    <v-icon>{{ mdiSkipPrevious }}</v-icon>
-                </v-btn>
-                <v-btn icon fab @click="playPause" color="primary">
-                    <v-icon x-large>{{ playButtonIcon }}</v-icon>
-                </v-btn>
-                <v-btn icon class="mx-1" color="secondary" @click="nextButtonHandler">
-                    <v-progress-circular
-                        color="warning"
-                        :class="{ invisible: !showPatience }"
-                        :value="patience"
-                        size="40"
-                    >
-                        <v-icon color="secondary">{{ mdiSkipNext }}</v-icon>
-                    </v-progress-circular>
-                </v-btn>
-                <v-btn icon color="secondary" class="mx-1" @click="$store.commit('music/cycleMode')">
-                    <v-icon>{{ shuffleButtonIcon }}</v-icon>
-                </v-btn>
-                <ResponsiveMenu
-                    :close-on-content-click="false"
-                    offset-y
-                    top
-                    origin="right bottom"
-                    transition="slide-y-reverse-transition"
-                    min-width="30vw"
-                    max-width="50vw"
-                    max-height="50vh"
-                    v-model="queueMenuOpen"
-                    :itemCount="playlist.length"
-                >
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            elevation="0"
-                            :ripple="false"
-                            class="queue-btn mx-1 px-1"
-                            :class="{ 'added-animation': animateAdded }"
-                            @animationend="animateAdded = false"
-                            v-on="on"
-                            @click="queueMenuOpen = !queueMenuOpen"
+                <div>
+                    <v-btn icon class="mx-1" @click="prevButtonHandler" color="secondary">
+                        <v-icon>{{ mdiSkipPrevious }}</v-icon>
+                    </v-btn>
+                    <v-btn icon fab @click="playPause" color="primary">
+                        <v-icon x-large>{{ playButtonIcon }}</v-icon>
+                    </v-btn>
+                    <v-btn icon class="mx-1" color="secondary" @click="nextButtonHandler">
+                        <v-progress-circular
+                            color="warning"
+                            :class="{ invisible: !showPatience }"
+                            :value="patience"
+                            size="40"
                         >
-                            <v-icon color="secondary">{{ icons.mdiPlaylistMusic }}</v-icon>
-                            <div class="secondary--text text--darken-2">
-                                ({{ currentId + 1 }}/{{ playlist.length }})
-                            </div>
-                        </v-btn>
-                    </template>
-                    <song-playlist :songs="playlist" :currentId="currentId"></song-playlist>
-                </ResponsiveMenu>
-                <v-slide-x-transition>
-                    <v-btn
-                        small
-                        v-if="queueMenuOpen"
-                        style="position: relative; margin-right: -60px"
-                        elevation="0"
-                        color="warning"
-                        @click="
-                            () => {
-                                queueMenuOpen = false;
-                                $store.commit('music/clearPlaylist');
-                            }
-                        "
-                        ><v-icon left>{{ mdiPlaylistRemove }}</v-icon> {{ $t("component.music.clearPlaylist") }}</v-btn
+                            <v-icon color="secondary">{{ mdiSkipNext }}</v-icon>
+                        </v-progress-circular>
+                    </v-btn>
+                    <v-btn icon color="secondary" class="mx-1" @click="$store.commit('music/cycleMode')">
+                        <v-icon>{{ shuffleButtonIcon }}</v-icon>
+                    </v-btn>
+                    <ResponsiveMenu
+                        :close-on-content-click="false"
+                        offset-y
+                        top
+                        origin="right bottom"
+                        transition="slide-y-reverse-transition"
+                        min-width="30vw"
+                        max-width="50vw"
+                        max-height="50vh"
+                        v-model="queueMenuOpen"
+                        :itemCount="playlist.length"
                     >
-                </v-slide-x-transition>
-                <div v-if="$vuetify.breakpoint.xs">
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                elevation="0"
+                                :ripple="false"
+                                class="queue-btn mx-1 px-1"
+                                :class="{ 'added-animation': animateAdded }"
+                                @animationend="animateAdded = false"
+                                v-on="on"
+                                @click="queueMenuOpen = !queueMenuOpen"
+                            >
+                                <v-icon color="secondary">{{ icons.mdiPlaylistMusic }}</v-icon>
+                                <div class="secondary--text text--darken-2">
+                                    ({{ currentId + 1 }}/{{ playlist.length }})
+                                </div>
+                            </v-btn>
+                        </template>
+                        <song-playlist :songs="playlist" :currentId="currentId"></song-playlist>
+                    </ResponsiveMenu>
+                    <v-slide-x-transition>
+                        <v-btn
+                            small
+                            v-if="queueMenuOpen"
+                            style="position: relative; margin-right: -60px"
+                            elevation="0"
+                            color="warning"
+                            @click="
+                                () => {
+                                    queueMenuOpen = false;
+                                    $store.commit('music/clearPlaylist');
+                                }
+                            "
+                            ><v-icon left>{{ mdiPlaylistRemove }}</v-icon>
+                            {{ $t("component.music.clearPlaylist") }}</v-btn
+                        >
+                    </v-slide-x-transition>
+                </div>
+                <div v-if="$vuetify.breakpoint.xs" style="display: flex; flex-direction: column; align-items: center">
                     <v-btn icon @click="closePlayer">
                         <v-icon>{{ icons.mdiClose }}</v-icon>
+                    </v-btn>
+                    <v-btn icon large @click="toggleSongFrameModality">
+                        <v-icon>{{ icons.mdiTheater }}</v-icon>
                     </v-btn>
                 </div>
             </div>
@@ -141,24 +147,31 @@
                 </div>
             </transition>
             <!-- </> -->
+
             <div class="playlist-buttons align-self-center" v-if="$vuetify.breakpoint.smAndUp">
+                <v-btn icon large @click="toggleSongFrameModality">
+                    <v-icon>{{ icons.mdiTheater }}</v-icon>
+                </v-btn>
                 <v-btn icon large @click="closePlayer">
                     <v-icon>{{ icons.mdiClose }}</v-icon>
                 </v-btn>
             </div>
         </div>
         <!--             :key="currentSong.video_id + playId" -->
-        <song-frame
-            :playback="currentSong"
-            style="width: 250px; width: 356px"
-            @playing="songIsPlaying"
-            @paused="songIsPaused"
-            @ended="songIsDone"
-            @progress="songProgress"
-            @error="songError"
-            @buffering="songBuffering"
-            @ready="songReady"
-        ></song-frame>
+
+        <portal to="music-playback-background">
+            <song-frame
+                :playback="currentSong"
+                :isBackground="isEmbedPlayerInBackground"
+                @playing="songIsPlaying"
+                @paused="songIsPaused"
+                @ended="songIsDone"
+                @progress="songProgress"
+                @error="songError"
+                @buffering="songBuffering"
+                @ready="songReady"
+            ></song-frame
+        ></portal>
     </v-bottom-sheet>
 </template>
 
@@ -166,22 +179,16 @@
 .theme--light .music-player-bar {
     background: rgba(254, 253, 255, 0.95);
 }
+
 .theme--dark .music-player-bar {
     background: rgba(41, 43, 49, 0.99);
 }
+
 .music-player-bar {
     position: relative;
 
     iframe {
         border-radius: 4px;
-    }
-    .song-player-container {
-        // border-radius: 5px;
-        width: 356px;
-        position: absolute;
-        padding: 2px;
-        bottom: 100%;
-        right: 0;
     }
 }
 
@@ -193,6 +200,10 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     display: -webkit-box;
+}
+
+.player-controls {
+    justify-content: space-between;
 }
 
 .player-controls .v-btn::before {
@@ -328,6 +339,8 @@ export default {
             allowPlayOverride: 0, // set to timestamp user clicks on yt frame.
             // used to check whether or not to allow a user action to override current
             // playback state.
+
+            isEmbedPlayerInBackground: false,
         };
     },
     mounted() {
@@ -580,6 +593,9 @@ export default {
         },
         probableMouseClickInIFrame() {
             this.allowPlayOverride = Date.now();
+        },
+        toggleSongFrameModality() {
+            this.isEmbedPlayerInBackground = !this.isEmbedPlayerInBackground;
         },
     },
 };
