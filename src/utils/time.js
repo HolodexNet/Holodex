@@ -31,8 +31,7 @@ dayjs.extend(relativeTime, {
 
 export function formatDuration(secs) {
     const negate = secs < 0;
-    const timestamp =
-        secs > 60 * 60 * 1000 ? dayjs.utc(Math.abs(secs)).format("H:mm:ss") : dayjs.utc(Math.abs(secs)).format("m:ss");
+    const timestamp = secs > 60 * 60 * 1000 ? dayjs.utc(Math.abs(secs)).format("H:mm:ss") : dayjs.utc(Math.abs(secs)).format("m:ss");
     return `${negate ? "-" : ""}${timestamp}`;
 }
 

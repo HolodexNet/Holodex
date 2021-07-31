@@ -19,7 +19,13 @@
                     <v-checkbox v-model="autoLayout" :label="$t('views.multiview.presetEditor.autoLayout')" />
                 </v-col>
                 <v-col cols="12">
-                    <v-btn color="success" elevation="5" width="100%" :disabled="!canSave" @click="addPresetLayout()">
+                    <v-btn
+                        color="success"
+                        elevation="5"
+                        width="100%"
+                        :disabled="!canSave"
+                        @click="addPresetLayout()"
+                    >
                         <v-icon>{{ mdiContentSave }}</v-icon>
                     </v-btn>
                 </v-col>
@@ -60,9 +66,9 @@ export default {
         ...mapState("multiview", ["presetLayout"]),
         canSave() {
             return (
-                this.name.length > 0 &&
-                !this.presetLayout.find((layout) => layout.name === this.name) &&
-                this.layout.length
+                this.name.length > 0
+                && !this.presetLayout.find((layout) => layout.name === this.name)
+                && this.layout.length
             );
         },
         videoCells() {

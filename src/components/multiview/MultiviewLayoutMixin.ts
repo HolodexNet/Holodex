@@ -75,10 +75,10 @@ export default {
                     const layoutCell = currentLayout[i];
                     if (
                         !(
-                            presetCell.x === layoutCell.x &&
-                            presetCell.y === layoutCell.y &&
-                            presetCell.w === layoutCell.w &&
-                            presetCell.h === layoutCell.h
+                            presetCell.x === layoutCell.x
+                            && presetCell.y === layoutCell.y
+                            && presetCell.w === layoutCell.w
+                            && presetCell.h === layoutCell.h
                         )
                     ) {
                         // at least one cell doesn't match, invalid layout
@@ -92,9 +92,8 @@ export default {
         addVideoAutoLayout(video, onConflict) {
             // find layout with space for one more new video
             const presets = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
-            const newLayout =
-                presets.find((preset) => preset.videoCellCount === this.activeVideos.length + 1) ??
-                presets.find((preset) => preset.videoCellCount >= this.activeVideos.length + 1);
+            const newLayout = presets.find((preset) => preset.videoCellCount === this.activeVideos.length + 1)
+                ?? presets.find((preset) => preset.videoCellCount >= this.activeVideos.length + 1);
 
             // found new layout
             if (newLayout) {
@@ -116,9 +115,8 @@ export default {
         deleteVideoAutoLayout(cellId) {
             // Find and set to previous preset layout
             const presets = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
-            const newLayout =
-                presets.find((preset) => preset.videoCellCount === this.activeVideos.length - 1) ??
-                presets.find((preset) => preset.videoCellCount >= this.activeVideos.length - 1);
+            const newLayout = presets.find((preset) => preset.videoCellCount === this.activeVideos.length - 1)
+                ?? presets.find((preset) => preset.videoCellCount >= this.activeVideos.length - 1);
 
             const clonedLayout = JSON.parse(JSON.stringify(newLayout));
             this.$store.commit("multiview/deleteLayoutContent", cellId);

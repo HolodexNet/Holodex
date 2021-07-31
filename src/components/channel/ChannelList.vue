@@ -8,14 +8,24 @@
                 <v-col :key="'title-' + index" cols="12" class="text-h6">
                     {{ group.title }}
                 </v-col>
-                <v-col v-for="channel in group.items" :key="channel.id" cols="12" md="4">
+                <v-col
+                    v-for="channel in group.items"
+                    :key="channel.id"
+                    cols="12"
+                    md="4"
+                >
                     <ChannelCard :channel="channel" />
                 </v-col>
             </template>
         </v-row>
         <!-- Or show normally -->
         <v-row v-else dense>
-            <v-col v-for="channel in channels" :key="channel.id" cols="12" md="4">
+            <v-col
+                v-for="channel in channels"
+                :key="channel.id"
+                cols="12"
+                md="4"
+            >
                 <ChannelCard :channel="channel" />
             </v-col>
         </v-row>
@@ -25,7 +35,12 @@
         <!-- channelsByGroup has group title and group items, nested loop -->
         <template v-for="(group, index) in channelsByGroup">
             <v-divider :key="'divider-grp' + index" />
-            <v-list-group :key="`${index}-${group.title}`" no-action sub-group value="0">
+            <v-list-group
+                :key="`${index}-${group.title}`"
+                no-action
+                sub-group
+                value="0"
+            >
                 <!-- Header with group name and a favorite all button + tooltip -->
                 <template #activator>
                     <v-list-item class="d-flex justify-space-between flex-grow-1">
@@ -51,8 +66,8 @@
                                     !isLoggedIn
                                         ? $t("component.channelList.signInToFavorite")
                                         : group.allFavorited
-                                        ? $t("component.channelList.unfavoriteAllInGroup")
-                                        : $t("component.channelList.favoriteAllInGroup")
+                                            ? $t("component.channelList.unfavoriteAllInGroup")
+                                            : $t("component.channelList.favoriteAllInGroup")
                                 }}
                             </span>
                         </v-tooltip>

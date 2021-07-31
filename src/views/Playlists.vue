@@ -1,8 +1,7 @@
 <template>
     <v-container>
         <v-col>
-            <span class="text-h5">{{ $t("views.playlist.page-heading") }}</span
-            ><br />
+            <span class="text-h5">{{ $t("views.playlist.page-heading") }}</span><br>
             <span class="text-subtitle-2">{{ $t("views.playlist.page-instruction") }}</span>
             <!-- <v-list class="mt-4" color="transparent"> -->
             <v-card id="new-playlist-btn" class="my-4" @click.stop="createNewPlaylist">
@@ -12,7 +11,7 @@
                     </v-icon>
                     <v-list-item-title class="font-weight-medium text-subtitle-2">
                         {{ $t("views.playlist.new-playlist-btn-label") }}
-                        <br />
+                        <br>
                         <div v-if="!jwt" class="text-caption">
                             {{ $t("views.playlist.login-prompt") }}
                         </div>
@@ -27,7 +26,12 @@
                 @click.stop="setNewPlaylist(playlist)"
             >
                 <v-list-item two-line class="pr-1">
-                    <v-icon left x-large color="secondary" class="mr-3 hidden-xs-only">
+                    <v-icon
+                        left
+                        x-large
+                        color="secondary"
+                        class="mr-3 hidden-xs-only"
+                    >
                         {{ mdiFormatListText }}
                     </v-icon>
                     <v-list-item-title>
@@ -43,7 +47,7 @@
                         >
                             {{ $t("views.playlist.playlist-is-modified") }}
                         </v-chip>
-                        <br />
+                        <br>
                         <span v-show="playlist.updated_at" class="text-caption">
                             <span class="hidden-xs-only">{{ $t("views.playlist.item-last-updated") }}</span>
                             {{ toTime(playlist.updated_at) }}
@@ -57,7 +61,7 @@
                                 :key="`vid${id}thumb`"
                                 :src="imageSrc(id)"
                                 class="preview-img stack"
-                            />
+                            >
                         </div>
                     </v-list-item-action>
                 </v-list-item>

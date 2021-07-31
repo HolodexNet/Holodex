@@ -5,7 +5,12 @@
                 {{ video.title }}
             </span>
 
-            <router-link v-else tag="span" style="cursor: pointer" :to="`/watch/${video.id}`">
+            <router-link
+                v-else
+                tag="span"
+                style="cursor: pointer"
+                :to="`/watch/${video.id}`"
+            >
                 {{ video.title }}
             </router-link>
         </v-card-title>
@@ -52,7 +57,12 @@
                 </v-list>
             </v-col>
             <v-col cols="auto">
-                <v-avatar v-if="channelChips && channelChips.length > 0" rounded left size="40">
+                <v-avatar
+                    v-if="channelChips && channelChips.length > 0"
+                    rounded
+                    left
+                    size="40"
+                >
                     <v-icon size="25" color="grey darken-2">
                         {{ mdiAt }}
                     </v-icon>
@@ -83,7 +93,9 @@ import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 // import VideoDescription from "@/components/video/VideoDescription.vue";
 import { getVideoThumbnails } from "@/utils/functions";
-import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
+import {
+    formatDuration, formatDistance, dayjs, localizedDayjs,
+} from "@/utils/time";
 import TruncatedText from "@/components/common/TruncatedText.vue";
 import { mdiAt } from "@mdi/js";
 // import VideoSongs from "@/components/media/VideoEditSongs.vue";

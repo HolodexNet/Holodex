@@ -25,7 +25,9 @@
                     :style="{ height: Math.min(videos.length, 6) * 102 + 'px' }"
                 />
             </template>
-            <v-card-title v-if="hasError"> Error loading playlist, does it exist? </v-card-title>
+            <v-card-title v-if="hasError">
+                Error loading playlist, does it exist?
+            </v-card-title>
         </v-card>
         <!-- </v-card-text> -->
     </div>
@@ -72,10 +74,10 @@ export default {
     watch: {
         value(nw) {
             if (
-                !this.videos.length ||
-                this.videos.length === nw ||
-                nw === -1 ||
-                this.$route.params.id === this.videos[nw].id
+                !this.videos.length
+                || this.videos.length === nw
+                || nw === -1
+                || this.$route.params.id === this.videos[nw].id
             ) {
                 return;
             }

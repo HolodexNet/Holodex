@@ -1,7 +1,12 @@
 <template>
     <v-dialog v-model="dialog" width="500">
         <template #activator="{ on, attrs }">
-            <v-btn icon x-small v-bind="attrs" v-on="on">
+            <v-btn
+                icon
+                x-small
+                v-bind="attrs"
+                v-on="on"
+            >
                 <v-icon>
                     {{ icons.mdiCog }}
                 </v-icon>
@@ -35,7 +40,9 @@
                         hide-details
                     />
                     <v-switch v-model="liveTlShowModerator" :label="$t('views.watch.chat.showModeratorMessages')" />
-                    <v-btn @click="showBlockedList = true"> Edit Blocked List </v-btn>
+                    <v-btn @click="showBlockedList = true">
+                        Edit Blocked List
+                    </v-btn>
                     <v-divider class="my-6" />
                     <v-combobox
                         v-model="liveTlFontSize"
@@ -43,7 +50,9 @@
                         :label="$t('views.watch.chat.tlFontSize')"
                         outlined
                     >
-                        <template #append-outer> px </template>
+                        <template #append-outer>
+                            px
+                        </template>
                     </v-combobox>
                     <v-combobox
                         v-model="liveTlWindowSize"
@@ -52,7 +61,9 @@
                         outlined
                         hide-details
                     >
-                        <template #append-outer> % </template>
+                        <template #append-outer>
+                            %
+                        </template>
                     </v-combobox>
                     <v-switch
                         v-model="liveTlStickBottom"
@@ -67,7 +78,9 @@
                                 {{ name }}
                             </v-list-item-content>
                             <v-list-item-action>
-                                <v-btn @click="toggleBlockName(name)"> Unblock </v-btn>
+                                <v-btn @click="toggleBlockName(name)">
+                                    Unblock
+                                </v-btn>
                             </v-list-item-action>
                         </v-list-item>
                     </v-list>

@@ -7,7 +7,12 @@
                 <template #activator="{ on }">
                     <div v-on="on" @click="mountTwitter">
                         <span class="text-overline"> {{ $t("editor.music.titles.help") }} </span>
-                        <v-btn fab color="info" class="mx-1" x-small>
+                        <v-btn
+                            fab
+                            color="info"
+                            class="mx-1"
+                            x-small
+                        >
                             <v-icon>{{ icons.mdiHelpCircle }}</v-icon>
                         </v-btn>
                     </div>
@@ -19,18 +24,33 @@
                             <a href="https://t.co/1KJXYDcJjo">pic.twitter.com/1KJXYDcJjo</a>
                         </p>
                         &mdash; Holodex (@holodex)
-                        <a href="https://twitter.com/holodex/status/1371290072058785797?ref_src=twsrc%5Etfw"
-                            >March 15, 2021</a
-                        >
+                        <a
+                            href="https://twitter.com/holodex/status/1371290072058785797?ref_src=twsrc%5Etfw"
+                        >March 15, 2021</a>
                     </blockquote>
                 </v-card>
             </v-dialog>
         </v-row>
         <v-row dense>
-            <v-col cols="8" sm="9" md="10" lg="10">
-                <song-search :id="current.itunesid" ref="search" :value="current.song" @input="processSearch" />
+            <v-col
+                cols="8"
+                sm="9"
+                md="10"
+                lg="10"
+            >
+                <song-search
+                    :id="current.itunesid"
+                    ref="search"
+                    :value="current.song"
+                    @input="processSearch"
+                />
             </v-col>
-            <v-col cols="4" sm="3" md="2" lg="2">
+            <v-col
+                cols="4"
+                sm="3"
+                md="2"
+                lg="2"
+            >
                 <v-text-field
                     outlined
                     readonly
@@ -41,7 +61,12 @@
                     style="font-size: 12px"
                 />
             </v-col>
-            <v-col cols="12" sm="7" md="6" lg="6">
+            <v-col
+                cols="12"
+                sm="7"
+                md="6"
+                lg="6"
+            >
                 <v-text-field
                     v-model="current.name"
                     outlined
@@ -49,7 +74,12 @@
                     hide-details="auto"
                 />
             </v-col>
-            <v-col cols="12" sm="5" md="6" lg="6">
+            <v-col
+                cols="12"
+                sm="5"
+                md="6"
+                lg="6"
+            >
                 <v-text-field
                     v-model="current.original_artist"
                     outlined
@@ -57,7 +87,13 @@
                     hide-details="auto"
                 />
             </v-col>
-            <v-col cols="12" sm="6" md="6" lg="6" class="d-flex align-justify">
+            <v-col
+                cols="12"
+                sm="6"
+                md="6"
+                lg="6"
+                class="d-flex align-justify"
+            >
                 <v-tooltip bottom>
                     <template #activator="{ on }">
                         <button
@@ -125,7 +161,13 @@
                     <span>{{ $t("editor.music.moveRight2s") }}</span>
                 </v-tooltip>
             </v-col>
-            <v-col cols="12" sm="6" md="6" lg="6" class="d-flex align-justify">
+            <v-col
+                cols="12"
+                sm="6"
+                md="6"
+                lg="6"
+                class="d-flex align-justify"
+            >
                 <v-tooltip bottom>
                     <template #activator="{ on }">
                         <button class="tweak-btn" v-on="on" @click="current.end -= 2">
@@ -194,7 +236,13 @@
                 </v-btn>
             </v-col>
             <v-col cols="2" sm="2" md="1">
-                <v-btn color="red" elevation="5" width="100%" style="padding: 0 0px; min-width: 30px" @click="reset">
+                <v-btn
+                    color="red"
+                    elevation="5"
+                    width="100%"
+                    style="padding: 0 0px; min-width: 30px"
+                    @click="reset"
+                >
                     <v-icon>{{ mdiRestore }}</v-icon>
                 </v-btn>
             </v-col>
@@ -257,7 +305,9 @@
 </template>
 
 <script lang="ts">
-import { mdiEarHearing, mdiRestore, mdiTimerOutline, mdiDebugStepOver } from "@mdi/js";
+import {
+    mdiEarHearing, mdiRestore, mdiTimerOutline, mdiDebugStepOver,
+} from "@mdi/js";
 import Vue from "vue";
 
 import backendApi from "@/utils/backend-api";
@@ -358,11 +408,11 @@ export default {
             const userRole = user && user.role;
             const userId = user && user.id;
             return (
-                !isUpdate || // Additions are always allowed.
-                (isUpdate && // updates need some priviledges:
-                    (userRole === "admin" ||
-                        userRole === "editor" || // you are a superuser
-                        (userId && userId.length > 0 && +this.current.creator_id === +userId)))
+                !isUpdate // Additions are always allowed.
+                || (isUpdate // updates need some priviledges:
+                    && (userRole === "admin"
+                        || userRole === "editor" // you are a superuser
+                        || (userId && userId.length > 0 && +this.current.creator_id === +userId)))
             );
             // or you created it in the first place.
         },

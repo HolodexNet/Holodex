@@ -59,8 +59,8 @@ export default {
     methods: {
         getChannelShortname(ch) {
             return (
-                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_")) ||
-                ch.name.split(/[/\s]/)[0].replace(",", "")
+                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_"))
+                || ch.name.split(/[/\s]/)[0].replace(",", "")
             );
         },
         // Open google calendar to add the time specified in the element

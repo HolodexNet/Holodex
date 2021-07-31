@@ -1,7 +1,12 @@
 <template>
     <v-container v-if="!isLoading && !hasError" fluid class="video-editor">
         <v-row>
-            <v-col :md="3" :lg="4" cols="12" class="px-0 pt-0 px-md-3">
+            <v-col
+                :md="3"
+                :lg="4"
+                cols="12"
+                class="px-0 pt-0 px-md-3"
+            >
                 <WatchFrame :video="video">
                     <template #youtube>
                         <youtube

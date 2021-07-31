@@ -213,7 +213,9 @@ import MultiviewToolbar from "@/components/multiview/MultiviewToolbar.vue";
 import MultiviewLayoutMixin from "@/components/multiview/MultiviewLayoutMixin";
 import LayoutChangePrompt from "@/components/multiview/LayoutChangePrompt.vue";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
-import { mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical } from "@mdi/js";
+import {
+    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical,
+} from "@mdi/js";
 import { Content, decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
 import api from "@/utils/backend-api";

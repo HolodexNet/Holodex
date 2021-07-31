@@ -15,7 +15,12 @@
             </v-container>
             <v-container class="pa-0">
                 <v-tabs>
-                    <v-tab v-for="tab in tabs.filter((t) => !t.hide)" :key="tab.path" :to="tab.path" :exact="tab.exact">
+                    <v-tab
+                        v-for="tab in tabs.filter((t) => !t.hide)"
+                        :key="tab.path"
+                        :to="tab.path"
+                        :exact="tab.exact"
+                    >
                         {{ tab.name }}
                     </v-tab>
                 </v-tabs>

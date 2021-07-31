@@ -13,7 +13,7 @@
             </v-col>
             <v-col style="white-space: pre-wrap" class="col-12 col-md-9" order="md-first">
                 <strong>{{ $t("component.videoDescription.description") }}</strong>
-                <br />
+                <br>
                 <div v-linkified v-html="channel.description" />
             </v-col>
         </v-row>

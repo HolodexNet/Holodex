@@ -172,7 +172,9 @@
 
 <script lang="ts">
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
-import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
+import {
+    formatDuration, formatDistance, dayjs, localizedDayjs,
+} from "@/utils/time";
 import * as icons from "@/utils/icons";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */

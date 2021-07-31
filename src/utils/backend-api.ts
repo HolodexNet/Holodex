@@ -30,12 +30,10 @@ export default {
     },
     live(query) {
         const q = querystring.stringify(query);
-        return axiosInstance.get(`/live?${q}`).then((res) =>
-            res.data
+        return axiosInstance.get(`/live?${q}`).then((res) => res.data
                 // .concat(res.data.upcoming)
                 // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
-                .filter((live) => !(!live.start_actual && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h")))),
-        );
+                .filter((live) => !(!live.start_actual && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h")))));
     },
     channel(id) {
         return axiosInstance.get(`/channels/${id}`);
@@ -126,14 +124,12 @@ export default {
             .get("/users/live", {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             })
-            .then((res) =>
-                res.data
+            .then((res) => res.data
                     // .concat(res.data.upcoming)
                     // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
                     .filter((live) => !(!live.start_actual && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))))
                     // get currently live and upcoming lives within the next 3 weeks
-                    .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))),
-            );
+                    .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))));
     },
     patchFavorites(jwt, operations) {
         return axiosInstance.patch("/users/favorites", operations, {

@@ -10,7 +10,14 @@
         }"
     >
         <!-- Mugen info message -->
-        <v-alert v-if="isMugen" v-model="firstVisitMugen" dense text type="info" dismissible>
+        <v-alert
+            v-if="isMugen"
+            v-model="firstVisitMugen"
+            dense
+            text
+            type="info"
+            dismissible
+        >
             {{ $t("views.mugen.welcome") }}
         </v-alert>
 
@@ -101,7 +108,12 @@
                         </v-tooltip>
                     </template>
                 </WatchToolBar>
-                <WatchInfo v-if="!theaterMode" key="info" :video="video" @timeJump="seekTo" />
+                <WatchInfo
+                    v-if="!theaterMode"
+                    key="info"
+                    :video="video"
+                    @timeJump="seekTo"
+                />
                 <WatchQuickEditor v-if="!theaterMode && (role === 'admin' || role === 'editor')" :video="video" />
                 <!-- Mobile mode only sidebar -->
                 <WatchSideBar v-if="isMobile" :video="video" @timeJump="seekTo" />
@@ -117,7 +129,12 @@
                 />
             </div>
             <div class="related-videos pt-0 row ma-0" :class="{ 'sidebar-width': !isMobile && !theaterMode }">
-                <v-col v-if="theaterMode" md="8" lg="9" class="pa-0">
+                <v-col
+                    v-if="theaterMode"
+                    md="8"
+                    lg="9"
+                    class="pa-0"
+                >
                     <WatchInfo key="info" :video="video" @timeJump="seekTo" />
                     <WatchQuickEditor v-if="role === 'admin' || role === 'editor'" :video="video" />
                     <v-divider />
@@ -171,7 +188,9 @@ import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff } from "@mdi/js";
+import {
+    mdiOpenInNew, mdiRectangleOutline, mdiMessage, mdiMessageOff,
+} from "@mdi/js";
 
 Vue.use(VueYoutube);
 
@@ -293,9 +312,8 @@ export default {
             this.init();
         },
         video() {
-            this.showLiveChatOverride =
-                this.video.type === "stream" &&
-                (["upcoming", "live"].includes(this.video.status) || !!(window as any).extensionSupport);
+            this.showLiveChatOverride = this.video.type === "stream"
+                && (["upcoming", "live"].includes(this.video.status) || !!(window as any).extensionSupport);
         },
     },
     created() {

@@ -4,7 +4,7 @@
             <img
                 src="https://holodex.net/img/icons/apple-touch-icon-152x152.png"
                 style="height: 40px; width: 40px; border-radius: 6px"
-            />
+            >
             <div class="ml-2 text-subtitle-2">
                 {{ $t("component.installPrompt.title") }}
             </div>
@@ -13,7 +13,12 @@
             {{ $t("component.installPrompt.callToAction") }}
         </div>
         <div class="d-flex justify-end">
-            <v-btn text small style="color: rgba(255, 255, 255, 0.7)" @click="hideInstallPrompt">
+            <v-btn
+                text
+                small
+                style="color: rgba(255, 255, 255, 0.7)"
+                @click="hideInstallPrompt"
+            >
                 {{ $t("component.installPrompt.notNowBtn") }}
             </v-btn>
             <v-btn small color="secondary" @click="install">
@@ -27,7 +32,7 @@
                         <img
                             src="https://holodex.net/img/icons/apple-touch-icon-152x152.png"
                             style="height: 75px; width: 75px; border-radius: 6px"
-                        />
+                        >
                     </div>
                     <div class="text-h5">
                         {{ $t("component.installPrompt.iOS.popup") }}
@@ -70,8 +75,7 @@ export default {
     },
     computed: {
         showInstallPrompt() {
-            const promptWeekly =
-                new Date().getTime() - this.$store.state.lastShownInstallPrompt > 1000 * 60 * 60 * 24 * 7;
+            const promptWeekly = new Date().getTime() - this.$store.state.lastShownInstallPrompt > 1000 * 60 * 60 * 24 * 7;
             if (this.isAppleDevice() && !this.isStandAlone() && promptWeekly) {
                 return true;
             }

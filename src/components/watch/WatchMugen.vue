@@ -75,10 +75,10 @@ export default {
             // schedule became empty, or last start is ending within 30 minutes...
             if (!this.playlist) return;
             if (
-                this.playlist === [] ||
-                this.playlist[this.playlist.length - 1].timestamp +
-                    this.playlist[this.playlist.length - 1].video.duration <
-                    new Date().getTime() / 1000 + 1800
+                this.playlist === []
+                || this.playlist[this.playlist.length - 1].timestamp
+                    + this.playlist[this.playlist.length - 1].video.duration
+                    < new Date().getTime() / 1000 + 1800
             ) {
                 this.init();
             }

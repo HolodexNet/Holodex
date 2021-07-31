@@ -19,7 +19,13 @@
                 style="overflow-y: auto; overflow-x: hidden; position: relative"
             >
                 <!-- <v-sheet class="px-0 d-flex flex-grow-1 align-center justify-center mb-1"> -->
-                <v-btn class="mr-2" color="indigo darken-1" rounded-sm large @click="$emit('showSelector', item.i)">
+                <v-btn
+                    class="mr-2"
+                    color="indigo darken-1"
+                    rounded-sm
+                    large
+                    @click="$emit('showSelector', item.i)"
+                >
                     <v-icon>{{ mdiCardPlus }}</v-icon>
                 </v-btn>
                 <v-btn
@@ -121,8 +127,8 @@
                 <v-sheet class="cell-control">
                     <v-btn :x-small="toggleChat || toggleTL" width="50%" @click="pausedMode = !pausedMode">
                         <v-icon small class="mr-1">
-                            {{ icons.mdiMenu }} </v-icon
-                        >{{ $t("component.videoCard.edit") }}
+                            {{ icons.mdiMenu }}
+                        </v-icon>{{ $t("component.videoCard.edit") }}
                     </v-btn>
                     <v-btn
                         :x-small="toggleChat || toggleTL"
@@ -135,7 +141,9 @@
                             M9.9,10.8v3.8h-2v-3.8L5.1,6.6h2.4l1.4,2.2 l1.4-2.2h2.4L9.9,10.8z
                             M18.9,8.6h-2v6h-2v-6h-2v-2h6V8.6z
                         </v-icon>
-                        <template v-if="cellWidth > 200"> Chat </template>
+                        <template v-if="cellWidth > 200">
+                            Chat
+                        </template>
                     </v-btn>
                     <v-btn
                         :x-small="toggleChat || toggleTL"
@@ -147,7 +155,9 @@
                             M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z M4,10h4v2H4V10z
                             M14,16H4v-2h10V16z M20,16h-4v-2 h4V16z M20,12H10v-2h10V12z
                         </v-icon>
-                        <template v-if="cellWidth > 200"> TL </template>
+                        <template v-if="cellWidth > 200">
+                            TL
+                        </template>
                     </v-btn>
                 </v-sheet>
                 <div v-if="!toggleChat && !toggleTL" style="height: 20%" />
@@ -157,7 +167,9 @@
 </template>
 
 <script lang="ts">
-import { mdiCardPlus, mdiMessage, mdiArrowLeftCircle, mdiSelectionEllipseArrowInside } from "@mdi/js";
+import {
+    mdiCardPlus, mdiMessage, mdiArrowLeftCircle, mdiSelectionEllipseArrowInside,
+} from "@mdi/js";
 import TabbedLiveChat from "@/components/multiview/TabbedLiveChat.vue";
 import { mapState, mapGetters } from "vuex";
 import { getVideoIDFromUrl } from "@/utils/functions";
@@ -243,14 +255,13 @@ export default {
             this.setLayoutFreeze();
 
             if (
-                nw &&
-                nw.type === "video" &&
-                this.iOS() &&
-                this.$store.state.multiview.layout.find(
-                    (item) =>
-                        item.i !== this.item.i &&
-                        this.layoutContent[item.i] &&
-                        this.layoutContent[item.i].type === "video", // &&
+                nw
+                && nw.type === "video"
+                && this.iOS()
+                && this.$store.state.multiview.layout.find(
+                    (item) => item.i !== this.item.i
+                        && this.layoutContent[item.i]
+                        && this.layoutContent[item.i].type === "video", // &&
                 )
             ) {
                 this.muted = true;
@@ -339,9 +350,9 @@ export default {
             return (
                 ["iPad Simulator", "iPhone Simulator", "iPod Simulator", "iPad", "iPhone", "iPod"].includes(
                     navigator.platform,
-                ) ||
+                )
                 // iPad on iOS 13 detection
-                (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+                || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
             );
         },
         setLayoutFreeze(newMode = this.pausedMode) {

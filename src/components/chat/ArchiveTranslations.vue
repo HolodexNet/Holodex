@@ -1,11 +1,21 @@
 <template>
-    <v-card class="text-body-2 tl-overlay" tile flat style="width: 100%">
+    <v-card
+        class="text-body-2 tl-overlay"
+        tile
+        flat
+        style="width: 100%"
+    >
         <v-card-subtitle class="py-1 d-flex justify-space-between">
             <div>TLdex [{{ liveTlLang }}]</div>
             <span>
                 <v-dialog v-model="expanded" width="800">
                     <template #activator="{ on, attrs }">
-                        <v-btn icon x-small v-bind="attrs" v-on="on">
+                        <v-btn
+                            icon
+                            x-small
+                            v-bind="attrs"
+                            v-on="on"
+                        >
                             <v-icon>
                                 {{ mdiArrowExpand }}
                             </v-icon>

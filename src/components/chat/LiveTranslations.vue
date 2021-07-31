@@ -1,5 +1,10 @@
 <template>
-    <v-card class="text-body-2 tl-overlay" tile flat style="width: 100%">
+    <v-card
+        class="text-body-2 tl-overlay"
+        tile
+        flat
+        style="width: 100%"
+    >
         <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
             <div v-if="isLoading">
                 {{ $t("views.watch.chat.loading") }}
@@ -12,11 +17,18 @@
             </v-btn>
         </v-overlay>
         <v-card-subtitle class="py-1 d-flex justify-space-between">
-            <div :class="connected ? 'green--text' : 'red--text'">TLdex [{{ liveTlLang }}]</div>
+            <div :class="connected ? 'green--text' : 'red--text'">
+                TLdex [{{ liveTlLang }}]
+            </div>
             <span>
                 <v-dialog v-model="expanded" width="800">
                     <template #activator="{ on, attrs }">
-                        <v-btn icon x-small v-bind="attrs" v-on="on">
+                        <v-btn
+                            icon
+                            x-small
+                            v-bind="attrs"
+                            v-on="on"
+                        >
                             <v-icon>
                                 {{ mdiArrowExpand }}
                             </v-icon>
@@ -52,9 +64,9 @@
                             <div
                                 v-if="
                                     index === 0 ||
-                                    index === tlHistory.length - 1 ||
-                                    item.name !== tlHistory[index - 1].name ||
-                                    item.breakpoint
+                                        index === tlHistory.length - 1 ||
+                                        item.name !== tlHistory[index - 1].name ||
+                                        item.breakpoint
                                 "
                                 class="tl-caption"
                                 :class="{
@@ -77,7 +89,13 @@
                         </div>
                     </template>
                 </transition-group>
-                <v-btn v-if="!historyLoading" text color="primary" :disabled="completed" @click="loadMessages()">
+                <v-btn
+                    v-if="!historyLoading"
+                    text
+                    color="primary"
+                    :disabled="completed"
+                    @click="loadMessages()"
+                >
                     {{ completed ? "Start of Messages" : "Load More" }}
                 </v-btn>
                 <v-btn
@@ -252,11 +270,11 @@ export default {
                 if (this.blockedNames.has(msg.name)) return;
 
                 if (
-                    msg.is_tl ||
-                    msg.is_vtuber ||
-                    msg.is_owner ||
-                    (msg.is_moderator && this.liveTlShowModerator) ||
-                    (msg.is_verified && this.liveTlShowVerified)
+                    msg.is_tl
+                    || msg.is_vtuber
+                    || msg.is_owner
+                    || (msg.is_moderator && this.liveTlShowModerator)
+                    || (msg.is_verified && this.liveTlShowVerified)
                 ) {
                     if (Math.abs(this.$refs.tlBody.scrollTop) <= 15) this.$refs.tlBody.scrollTo(0, 0);
                     this.tlHistory.push(this.parseMessage(msg));
@@ -323,8 +341,8 @@ export default {
             // Disallow users from joining a chat room that doesn't exist yet
             // Backend will create a chatroom when it's 15 minutes before a stream
             if (
-                this.video.status !== "live" &&
-                !dayjs().isAfter(dayjs(this.video.start_scheduled).subtract(15, "minutes"))
+                this.video.status !== "live"
+                && !dayjs().isAfter(dayjs(this.video.start_scheduled).subtract(15, "minutes"))
             ) {
                 this.overlayMessage = this.$t("views.watch.chat.status.notLive");
                 this.isLoading = false;

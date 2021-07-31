@@ -6,11 +6,19 @@
                     {{ $t("component.reportDialog.title") }}
                 </v-card-title>
                 <v-card-text :v-if="!isLoading">
-                    <v-alert v-model="error" dense text type="error" dismissible> Error Occured </v-alert>
+                    <v-alert
+                        v-model="error"
+                        dense
+                        text
+                        type="error"
+                        dismissible
+                    >
+                        Error Occured
+                    </v-alert>
                     <span class="text-body-1">{{ video.title }}</span>
-                    <br />
+                    <br>
                     {{ video.channel.name }}
-                    <br />
+                    <br>
                     <v-radio-group v-model="selectedReason">
                         <v-radio
                             v-for="reason in reasons"
@@ -50,7 +58,13 @@
                 </v-card-text>
 
                 <v-divider />
-                <channel-socials :channel="video.channel" show-delete hide-yt vertical class="d-inline-block ml-4" />
+                <channel-socials
+                    :channel="video.channel"
+                    show-delete
+                    hide-yt
+                    vertical
+                    class="d-inline-block ml-4"
+                />
                 <v-icon small class="ml-1">
                     {{ icons.mdiArrowLeft }}
                 </v-icon>

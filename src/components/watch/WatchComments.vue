@@ -19,12 +19,23 @@
                 </template>
             </template>
             <v-divider />
-            <v-list v-if="comments" dense class="pa-0 transparent caption" @click.native="handleClick">
+            <v-list
+                v-if="comments"
+                dense
+                class="pa-0 transparent caption"
+                @click.native="handleClick"
+            >
                 <template v-for="comment in limitComment">
                     <Comment :key="comment.comment_key" :comment="comment" :video-id="video.id" />
                 </template>
             </v-list>
-            <v-btn v-if="shouldLimit" plain small text @click="expanded = !expanded">
+            <v-btn
+                v-if="shouldLimit"
+                plain
+                small
+                text
+                @click="expanded = !expanded"
+            >
                 {{ expanded ? $t("views.app.close_btn") : $t("component.description.showMore") }}
             </v-btn>
         </v-card-text>

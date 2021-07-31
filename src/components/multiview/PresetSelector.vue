@@ -71,7 +71,12 @@
                 </v-tab-item>
                 <v-tab-item>
                     <template v-for="(group, index) in desktopGroups">
-                        <v-radio-group :key="'preset-' + index" v-model="autoLayout[index]" column hide-details>
+                        <v-radio-group
+                            :key="'preset-' + index"
+                            v-model="autoLayout[index]"
+                            column
+                            hide-details
+                        >
                             <v-card-subtitle v-if="index !== 0" class="text-body-1 pa-1">
                                 {{ $t("component.channelInfo.videoCount", [index]) }}
                             </v-card-subtitle>

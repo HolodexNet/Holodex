@@ -1,13 +1,25 @@
 <template>
     <v-card tile class="d-flex justify-space-between flex-wrap-reverse flex-sm-nowrap px-lg-4">
-        <v-btn v-if="!noBackButton" icon lg @click="goBack()">
+        <v-btn
+            v-if="!noBackButton"
+            icon
+            lg
+            @click="goBack()"
+        >
             <v-icon>{{ mdiArrowLeft }}</v-icon>
         </v-btn>
         <div class="watch-btn-group ml-auto d-flex">
             <slot name="buttons" />
             <v-tooltip bottom>
                 <template #activator="{ on, attrs }">
-                    <v-btn icon lg :color="hasSaved ? 'primary' : ''" v-bind="attrs" @click="toggleSaved" v-on="on">
+                    <v-btn
+                        icon
+                        lg
+                        :color="hasSaved ? 'primary' : ''"
+                        v-bind="attrs"
+                        @click="toggleSaved"
+                        v-on="on"
+                    >
                         <v-icon>{{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}</v-icon>
                     </v-btn>
                 </template>
@@ -16,7 +28,12 @@
             </v-tooltip>
             <v-menu bottom nudge-top="20px">
                 <template #activator="{ on }">
-                    <v-btn icon lg :ripple="false" v-on="on">
+                    <v-btn
+                        icon
+                        lg
+                        :ripple="false"
+                        v-on="on"
+                    >
                         <v-icon>
                             {{ icons.mdiDotsVertical }}
                         </v-icon>
@@ -53,7 +70,12 @@
                 </v-list>
             </v-menu>
         </div>
-        <v-snackbar v-model="doneCopy" app :timeout="3000" color="success">
+        <v-snackbar
+            v-model="doneCopy"
+            app
+            :timeout="3000"
+            color="success"
+        >
             {{ $t("component.videoCard.copiedToClipboard") }}
             <template #action="{ attrs }">
                 <v-btn text v-bind="attrs" @click="doneCopy = false">
@@ -100,8 +122,8 @@ export default {
     methods: {
         getChannelShortname(ch) {
             return (
-                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_")) ||
-                ch.name.split(/[/\s]/)[0].replace(",", "")
+                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_"))
+                || ch.name.split(/[/\s]/)[0].replace(",", "")
             );
         },
         toggleSaved() {

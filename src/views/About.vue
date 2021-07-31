@@ -6,14 +6,27 @@
                     {{ $t("component.mainNav.about") }}
                 </div>
             </v-col>
-            <v-col cols="12" md="4" sm="4" lg="3" xl="2" float-right>
+            <v-col
+                cols="12"
+                md="4"
+                sm="4"
+                lg="3"
+                xl="2"
+                float-right
+            >
                 <div class="text-h5 mb-2">
                     {{ $t("about.news.title") }}
                 </div>
                 <TwitterFeed :key="'twtrTimeline' + timelinekey" />
             </v-col>
 
-            <v-col cols="12" md="8" sm="8" lg="9" xl="10">
+            <v-col
+                cols="12"
+                md="8"
+                sm="8"
+                lg="9"
+                xl="10"
+            >
                 <div class="text-h5 mb-2">
                     {{ $t("about.quicklinks") }}
                 </div>
@@ -104,7 +117,7 @@
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
                             {{ $t("about.faq.ytchatContent") }}
-                            <br />
+                            <br>
                             <a
                                 href="https://support.mozilla.org/en-US/kb/third-party-cookies-firefox-tracking-protection?redirectslug=disable-third-party-cookies"
                             >
@@ -118,17 +131,17 @@
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
                             {{ $t("about.faq.autoplayContent") }}
-                            <br />
-                            <br />Safari: <br />
+                            <br>
+                            <br>Safari: <br>
                             <img
                                 width="80%"
                                 src="https://www.imore.com/sites/imore.com/files/styles/large/public/field/image/2017/07/safari-custom-settings-websites-mac-screenshot-06.jpg?itok=ONVYTcno"
-                            />
-                            <br />Firefox: <br />
+                            >
+                            <br>Firefox: <br>
                             <img
                                 width="80%"
                                 src="https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/firefox/files/2019/04/Screen-Shot-2019-04-01-at-11.21.21-AM.png"
-                            />
+                            >
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel>
@@ -228,13 +241,13 @@
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                 </v-expansion-panels>
-                <br />
+                <br>
 
                 <div class="text-h5">
                     {{ $t("about.feedback") }}
                 </div>
                 <p class="text-body-2" v-html="$t('about.feedbackHtml')" />
-                <br />
+                <br>
 
                 <div id="changelog" class="text-h5">
                     {{ $t("about.credits.title") }}
@@ -243,15 +256,15 @@
                     {{ $t("about.credits.contents[0]") }}
                     <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.credits.contents[1]") }}
                     <a href="https://github.com/holofans/holoapi">holoapi</a>.
-                    <br />
+                    <br>
                     {{ $t("about.credits.contents[2]") }}
                 </p>
-                <br />
+                <br>
                 <p class="text-body-2">
                     {{ $t("about.credits.contents[3]") }}
                     <a href="https://en.hololive.tv/terms"> {{ $t("about.credits.contents[4]") }} </a>
                 </p>
-                <br />
+                <br>
 
                 <a class="text-h5" href="https://github.com/RiceCakess/Holodex/blob/dev/CHANGELOG.md">{{
                     $t("about.changelog.title")

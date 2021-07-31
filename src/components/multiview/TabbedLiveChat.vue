@@ -1,10 +1,23 @@
 <template>
     <div style="width: 100%; height: 100%">
         <div class="d-flex flex-row align-center py-1">
-            <v-btn v-if="setShowChat" icon small class="mx-1" :disabled="currentTab <= 0" @click="currentTab -= 1">
+            <v-btn
+                v-if="setShowChat"
+                icon
+                small
+                class="mx-1"
+                :disabled="currentTab <= 0"
+                @click="currentTab -= 1"
+            >
                 <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
             </v-btn>
-            <v-select v-model="currentTab" :items="channels" outlined hide-details class="tabbed-chat-select mx-1" />
+            <v-select
+                v-model="currentTab"
+                :items="channels"
+                outlined
+                hide-details
+                class="tabbed-chat-select mx-1"
+            />
             <v-btn
                 v-if="setShowChat"
                 icon

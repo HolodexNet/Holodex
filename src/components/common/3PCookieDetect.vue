@@ -15,7 +15,12 @@
                 {{ $t("component.thirdpartycookie.alertText") }}
             </div>
         </v-alert>
-        <v-dialog v-if="dialogOpen" v-model="dialogOpen" max-width="86vw" width="700px">
+        <v-dialog
+            v-if="dialogOpen"
+            v-model="dialogOpen"
+            max-width="86vw"
+            width="700px"
+        >
             <v-card>
                 <v-card-title class="headline">
                     {{ $t("component.thirdpartycookie.dialogTitle") }}
@@ -30,14 +35,14 @@
                         >
                             How to enable Third-Party Cookies on different browsers
                         </a>
-                        <br />Chinese:
+                        <br>Chinese:
                         <a
                             target="_blank"
                             href="https://support.mozilla.org/zh-CN/kb/Firefox%20%E7%9A%84%E8%B7%9F%E8%B8%AA%E4%BF%9D%E6%8A%A4%E5%92%8C%E7%AC%AC%E4%B8%89%E6%96%B9%20Cookie?redirectslug=%E7%A6%81%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9+Cookie+%E9%98%BB%E6%AD%A2%E6%9F%90%E4%BA%9B%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%B9%BF%E5%91%8A%E5%95%86%E8%B7%9F%E8%B8%AA&redirectlocale=zh-CN"
                         >
                             Firefox 的跟踪保护和第三方 Cookie
                         </a>
-                        <br />Japanese:
+                        <br>Japanese:
                         <a
                             target="_blank"
                             href="https://help.talend.com/r/shQsvBn3CEOBmBTtOP7vcg/qDx2O9S7Pz~W5_x~IO1Sgw"
@@ -88,8 +93,8 @@ export default {
         ...mapState(["TPCookieEnabled", "TPCookieAlertDismissed"]),
         shouldTestTPCookie() {
             return (
-                (!this.TPCookieEnabled || this.TPCookieEnabled < Date.now() - 24 * 7 * 60 * 60 * 1000) &&
-                /* every week, check */ !this.TPCookieAlertDismissed
+                (!this.TPCookieEnabled || this.TPCookieEnabled < Date.now() - 24 * 7 * 60 * 60 * 1000)
+                /* every week, check */ && !this.TPCookieAlertDismissed
             );
         },
     },

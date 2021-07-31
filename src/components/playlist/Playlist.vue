@@ -15,17 +15,35 @@
                 @click:append="editNameMode = false"
             />
             <span v-else class="text-h5 flex-grow flex-shrink" style="flex-basis: 100%">
-                <v-btn v-show="isEditable" icon small class="float-right" @click="editNameMode = true">
+                <v-btn
+                    v-show="isEditable"
+                    icon
+                    small
+                    class="float-right"
+                    @click="editNameMode = true"
+                >
                     <v-icon> {{ icons.mdiPencil }} </v-icon>
                 </v-btn>
                 {{ playlist.name }}
             </span>
-            <v-btn v-show="!isSaved" icon small class="float-right" color="success" @click="trySaving">
+            <v-btn
+                v-show="!isSaved"
+                icon
+                small
+                class="float-right"
+                color="success"
+                @click="trySaving"
+            >
                 <v-icon>{{ mdiContentSave }}</v-icon>
             </v-btn>
             <v-menu bottom offset-y nudge-width="500">
                 <template #activator="{ on }">
-                    <v-btn icon small class="float-right" v-on="on">
+                    <v-btn
+                        icon
+                        small
+                        class="float-right"
+                        v-on="on"
+                    >
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                     </v-btn>
                 </template>
@@ -62,8 +80,8 @@
                     <!-- Exporting options -->
                     <v-list-item disabled class="mt-1 mb-1" dense>
                         <v-icon left disabled>
-                            {{ icons.mdiOpenInNew }} </v-icon
-                        ><span>{{ $t("component.playlist.menu.export-playlist") }}</span>
+                            {{ icons.mdiOpenInNew }}
+                        </v-icon><span>{{ $t("component.playlist.menu.export-playlist") }}</span>
                     </v-list-item>
                     <v-list-item dense class="ml-5" @click.stop="instructionsDialog = true">
                         <v-icon left>
@@ -128,9 +146,9 @@
                     <v-row>
                         <v-col cols="">
                             <p v-html="$t('views.library.exportYTExplanation')" />
-                            <br />
+                            <br>
 
-                            <br />
+                            <br>
                             <p v-html="$t('views.library.exportYTInstructions')" />
                             <v-btn class="mt-2 mx-2" color="green" @click="exportToYT">
                                 {{ $t("views.library.createYtPlaylistButton", [(playlist.videos || []).length]) }}
@@ -140,7 +158,7 @@
                             </v-btn>
                         </v-col>
                         <v-col cols="12" md="auto">
-                            <img src="/img/playlist-instruction.jpg" />
+                            <img src="/img/playlist-instruction.jpg">
                         </v-col>
                     </v-row>
                 </v-card-text>
@@ -154,7 +172,9 @@ import VirtualVideoCardList from "@/components/video/VirtualVideoCardList.vue";
 import { Playlist } from "@/utils/types";
 import { PropType } from "vue";
 import { json2csvAsync } from "json-2-csv";
-import { mdiContentSave, mdiFileDelimited, mdiChevronDoubleUp, mdiChevronDoubleDown } from "@mdi/js";
+import {
+    mdiContentSave, mdiFileDelimited, mdiChevronDoubleUp, mdiChevronDoubleDown,
+} from "@mdi/js";
 import { MAX_PLAYLIST_LENGTH } from "@/utils/consts";
 
 export default {

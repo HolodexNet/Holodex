@@ -7,7 +7,12 @@
         </v-row>
         <v-row class="justify-end" style="margin-bottom: -10px">
             <v-col sm="4" md="2" class="py-1">
-                <v-select v-model="filter_sort" :items="options.sort" dense :label="$t('views.search.sortByLabel')" />
+                <v-select
+                    v-model="filter_sort"
+                    :items="options.sort"
+                    dense
+                    :label="$t('views.search.sortByLabel')"
+                />
             </v-col>
             <v-col sm="4" md="2" class="py-1">
                 <v-select

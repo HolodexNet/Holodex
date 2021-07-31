@@ -1,5 +1,10 @@
 <template>
-    <div :key="identifier" class="d-flex justify-center py-4" style="min-height: 100px" @click.capture="clicked = true">
+    <div
+        :key="identifier"
+        class="d-flex justify-center py-4"
+        style="min-height: 100px"
+        @click.capture="clicked = true"
+    >
         <v-pagination
             v-if="!pageLess"
             v-show="status === STATUSES.READY || status === STATUSES.COMPLETED"

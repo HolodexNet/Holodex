@@ -18,7 +18,12 @@
                 v-for="(b, index) in buttons.filter((btn) => !btn.collapse || (!collapseButtons && btn.collapse))"
             >
                 <!-- Create btn with tooltip -->
-                <v-tooltip v-if="b.tooltip" :key="`mv-btn-${index}`" bottom :color="b.color">
+                <v-tooltip
+                    v-if="b.tooltip"
+                    :key="`mv-btn-${index}`"
+                    bottom
+                    :color="b.color"
+                >
                     <template #activator="{ on, attrs }">
                         <v-btn
                             :color="b.color"
@@ -80,13 +85,23 @@
             <!-- Show vertical dots menu for collapsible buttons -->
             <v-menu offset-y>
                 <template #activator="{ on, attrs }">
-                    <v-btn v-show="collapseButtons" v-bind="attrs" icon v-on="on">
+                    <v-btn
+                        v-show="collapseButtons"
+                        v-bind="attrs"
+                        icon
+                        v-on="on"
+                    >
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                     </v-btn>
                 </template>
                 <v-list dense>
                     <template v-for="(b, index) in buttons.filter((btn) => btn.collapse)">
-                        <v-list-item :key="`mv-collapsed-${index}`" block class="mb-2" @click="b.onClick">
+                        <v-list-item
+                            :key="`mv-collapsed-${index}`"
+                            block
+                            class="mb-2"
+                            @click="b.onClick"
+                        >
                             <v-icon left :color="b.color">
                                 {{ b.icon }}
                             </v-icon>

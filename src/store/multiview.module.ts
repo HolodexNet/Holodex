@@ -1,6 +1,8 @@
 /* eslint-disable no-shadow */
 import { LayoutItem, getFirstCollision } from "@/external/vue-grid-layout/src/helpers/utils";
-import { getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout } from "@/utils/mv-utils";
+import {
+ getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout,
+} from "@/utils/mv-utils";
 import Vue from "vue";
 
 const initialState = {

@@ -38,7 +38,12 @@
                         </v-btn>
                     </template>
                     <v-list>
-                        <v-list-item v-for="(item, index) in sortOptions" :key="index" link @click="sort = item.value">
+                        <v-list-item
+                            v-for="(item, index) in sortOptions"
+                            :key="index"
+                            link
+                            @click="sort = item.value"
+                        >
                             <v-list-item-title>
                                 {{ item.text }}
                             </v-list-item-title>
@@ -151,30 +156,30 @@ export default {
                             order: "desc",
                         },
                     },
-                    ...((this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES) &&
-                    this.$store.state.currentOrg.name !== "All Vtubers"
+                    ...((this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES)
+                        && this.$store.state.currentOrg.name !== "All Vtubers"
                         ? [
-                              {
-                                  text: this.$t("views.channels.sortOptions.group"),
-                                  value: "group",
-                                  query_value: {
-                                      sort: "suborg",
-                                      order: "asc",
-                                  },
-                              },
-                          ]
+                            {
+                                text: this.$t("views.channels.sortOptions.group"),
+                                value: "group",
+                                query_value: {
+                                    sort: "suborg",
+                                    order: "asc",
+                                },
+                            },
+                        ]
                         : []),
                     ...(this.$store.state.currentOrg.name === "All Vtubers"
                         ? [
-                              {
-                                  text: this.$t("views.channels.sortOptions.org"),
-                                  value: "org",
-                                  query_value: {
-                                      sort: "org",
-                                      order: "asc",
-                                  },
-                              },
-                          ]
+                            {
+                                text: this.$t("views.channels.sortOptions.org"),
+                                value: "org",
+                                query_value: {
+                                    sort: "org",
+                                    order: "asc",
+                                },
+                            },
+                        ]
                         : []),
                     {
                         text: this.$t("views.channels.sortOptions.videoCount"),
@@ -186,15 +191,15 @@ export default {
                     },
                     ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.FAVORITES
                         ? [
-                              {
-                                  text: this.$t("views.channels.sortOptions.clipCount"),
-                                  value: "clip_count",
-                                  query_value: {
-                                      sort: "clip_count",
-                                      order: "desc",
-                                  },
-                              },
-                          ]
+                            {
+                                text: this.$t("views.channels.sortOptions.clipCount"),
+                                value: "clip_count",
+                                query_value: {
+                                    sort: "clip_count",
+                                    order: "desc",
+                                },
+                            },
+                        ]
                         : []),
                 ];
                 /* eslint-enable indent */

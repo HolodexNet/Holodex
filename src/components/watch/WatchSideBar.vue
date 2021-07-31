@@ -6,10 +6,22 @@
                     {{ hidden.songs ? "＋" : "－" }} {{ relationI18N("songs") }}
                 </a>
                 <v-spacer />
-                <v-btn icon small tile class="mr-2" @click="showDetailed = !showDetailed">
+                <v-btn
+                    icon
+                    small
+                    tile
+                    class="mr-2"
+                    @click="showDetailed = !showDetailed"
+                >
                     <v-icon small> {{ mdiTimerOutline }} </v-icon>
                 </v-btn>
-                <v-btn icon small tile class="mr-2" @click="addToMusicPlaylist">
+                <v-btn
+                    icon
+                    small
+                    tile
+                    class="mr-2"
+                    @click="addToMusicPlaylist"
+                >
                     <v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon>
                 </v-btn>
             </span>
@@ -120,9 +132,9 @@ export default {
             return {
                 simulcasts: this.video.simulcasts || [],
                 clips:
-                    (this.video.clips &&
-                        this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang))) ||
-                    [],
+                    (this.video.clips
+                        && this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)))
+                    || [],
                 sources: this.video.sources || [],
                 refers: this.video.refers || [],
                 recommendations: (this.video.recommendations && this.video.recommendations.slice(0, 10)) || [],

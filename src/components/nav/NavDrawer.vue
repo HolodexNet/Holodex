@@ -28,7 +28,12 @@
                     </v-list-item-content>
                     <!-- Quick Settings Popup -->
                     <v-list-item-icon v-if="page.path === '/settings'">
-                        <v-menu right nudge-right max-height="80vh" :close-on-content-click="false">
+                        <v-menu
+                            right
+                            nudge-right
+                            max-height="80vh"
+                            :close-on-content-click="false"
+                        >
                             <template #activator="{ on, attrs }">
                                 <v-icon v-bind="attrs" v-on="on" @click.stop.prevent>
                                     {{ mdiTuneVariant }}

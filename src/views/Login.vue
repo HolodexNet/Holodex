@@ -57,8 +57,8 @@
                 <span class="text-caption">
                     {{ $t("views.login.futureYtcOwnerMessage") }}
                 </span>
-                <br />
-                <br />
+                <br>
+                <br>
                 <span class="text-subtitle-2 mb-1 d-inline-block">API Key</span>
                 <v-text-field
                     readonly
@@ -71,14 +71,25 @@
                     :append-icon="icons.mdiClipboardPlusOutline"
                     @click:append="copyToClipboard(userdata.user.api_key)"
                 />
-                <br />
-                <v-btn small block color="warning" @click="resetKey">
+                <br>
+                <v-btn
+                    small
+                    block
+                    color="warning"
+                    @click="resetKey"
+                >
                     {{ $t("views.login.apikeyNew") }}
                 </v-btn>
                 <span class="text-caption">
                     {{ $t("views.login.apikeyMsg") }}
                 </span>
-                <v-btn small block color="info" href="https://holodex.stoplight.io/" target="_blank">
+                <v-btn
+                    small
+                    block
+                    color="info"
+                    href="https://holodex.stoplight.io/"
+                    target="_blank"
+                >
                     API Documentation
                     <v-icon small right>
                         {{ icons.mdiOpenInNew }}

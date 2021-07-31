@@ -1,9 +1,16 @@
 <template>
     <div class="d-flex flex-row mentions">
         <template v-for="channel in mentions.slice(0, 3)">
-            <channel-img :key="channel.id" :channel="channel" :size="24" rounded />
+            <channel-img
+                :key="channel.id"
+                :channel="channel"
+                :size="24"
+                rounded
+            />
         </template>
-        <div v-if="mentions.length > 3" class="collapsed-mention-count">+{{ mentions.length - 1 }}</div>
+        <div v-if="mentions.length > 3" class="collapsed-mention-count">
+            +{{ mentions.length - 1 }}
+        </div>
     </div>
 </template>
 

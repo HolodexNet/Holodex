@@ -15,7 +15,14 @@
         </v-main>
         <Stats />
 
-        <v-snackbar v-if="updateExists" bottom right :value="updateExists" :timeout="-1" color="primary">
+        <v-snackbar
+            v-if="updateExists"
+            bottom
+            right
+            :value="updateExists"
+            :timeout="-1"
+            color="primary"
+        >
             {{ $t("views.app.update_available") }}
             <template #action>
                 <v-btn text class="ml-auto" @click="refreshApp">
@@ -26,10 +33,24 @@
                 </v-btn>
             </template>
         </v-snackbar>
-        <v-snackbar v-if="showUpdateDetails" bottom center :value="showUpdateDetails" color="primary" :timeout="-1">
+        <v-snackbar
+            v-if="showUpdateDetails"
+            bottom
+            center
+            :value="showUpdateDetails"
+            color="primary"
+            :timeout="-1"
+        >
             {{ $t("views.app.check_about_page") }}
             <template #action>
-                <v-btn text class="ml-auto" to="/about#changelog" @click="showUpdateDetails = false"> Changelog </v-btn>
+                <v-btn
+                    text
+                    class="ml-auto"
+                    to="/about#changelog"
+                    @click="showUpdateDetails = false"
+                >
+                    Changelog
+                </v-btn>
                 <v-btn text class="ml-auto" @click="showUpdateDetails = false">
                     {{ $t("views.app.close_btn") }}
                 </v-btn>

@@ -3,10 +3,20 @@
         <div class="text-h6">
             <v-icon>{{ mdiAt }}</v-icon> Channel Mentions/Tags
         </div>
-        <v-snackbar v-if="successMessage" v-model="showSuccessAlert" color="success" dismissible>
+        <v-snackbar
+            v-if="successMessage"
+            v-model="showSuccessAlert"
+            color="success"
+            dismissible
+        >
             {{ successMessage }}
         </v-snackbar>
-        <v-snackbar v-if="errorMessage" v-model="showErrorAlert" color="error" dismissible>
+        <v-snackbar
+            v-if="errorMessage"
+            v-model="showErrorAlert"
+            color="error"
+            dismissible
+        >
             {{ errorMessage }}
         </v-snackbar>
         <div class="d-flex flex-column my-2">
@@ -19,11 +29,19 @@
                 chips
                 label="Search Channels"
             />
-            <v-btn @click="addMention(selectedChannel.id)"> Add </v-btn>
+            <v-btn @click="addMention(selectedChannel.id)">
+                Add
+            </v-btn>
         </div>
         <channel-list :channels="mentions" :include-video-count="false">
             <template #action="{ channel }">
-                <v-btn class="deleteBtn" icon x-large color="red" @click.stop.prevent="deleteMention(channel.id)">
+                <v-btn
+                    class="deleteBtn"
+                    icon
+                    x-large
+                    color="red"
+                    @click.stop.prevent="deleteMention(channel.id)"
+                >
                     <v-icon large>
                         {{ icons.mdiDelete }}
                     </v-icon>

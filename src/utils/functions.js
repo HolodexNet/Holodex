@@ -180,8 +180,8 @@ export function syncState(namespace, states) {
 
     states.forEach((stateName) => {
         if (
-            Object.prototype.hasOwnProperty.call(statesObj, stateName) &&
-            Object.prototype.hasOwnProperty.call(mutationObj, mutationName(stateName))
+            Object.prototype.hasOwnProperty.call(statesObj, stateName)
+            && Object.prototype.hasOwnProperty.call(mutationObj, mutationName(stateName))
         ) {
             computedSyncs[stateName] = {
                 get: statesObj[stateName],

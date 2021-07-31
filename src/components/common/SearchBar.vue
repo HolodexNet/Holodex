@@ -103,10 +103,20 @@
         </template>
         <template #append-outer>
             <v-btn large class="ml-1 append-btn" @click="commitSearch">
-                <v-icon key="searchbtn" large color="secondary" v-text="icons.mdiMagnify" />
+                <v-icon
+                    key="searchbtn"
+                    large
+                    color="secondary"
+                    v-text="icons.mdiMagnify"
+                />
             </v-btn>
             <v-btn large class="ml-1 append-btn" @click="goToOrToggleAdvanced">
-                <v-icon key="advanced" large color="secondary" v-text="mdiFilter" />
+                <v-icon
+                    key="advanced"
+                    large
+                    color="secondary"
+                    v-text="mdiFilter"
+                />
             </v-btn>
         </template>
     </v-autocomplete>

@@ -1,7 +1,12 @@
 <template>
     <v-container class="org-music-container">
         <v-row>
-            <v-col v-if="!isAllVTubers" cols="12" class="mb-0 pa-0" style="min-height: 404px">
+            <v-col
+                v-if="!isAllVTubers"
+                cols="12"
+                class="mb-0 pa-0"
+                style="min-height: 404px"
+            >
                 <v-card-title>
                     <span class="text-lg-h5 mr-2">{{
                         $t("component.orgMusic.monthlyTopForOrg", [currentOrg.name])
@@ -42,7 +47,12 @@
                     </v-icon>
                 </carousel>
             </v-col>
-            <v-col v-if="!isAllVTubers" cols="12" class="my-0 pa-0" style="min-height: 404px">
+            <v-col
+                v-if="!isAllVTubers"
+                cols="12"
+                class="my-0 pa-0"
+                style="min-height: 404px"
+            >
                 <v-card-title>
                     <span class="text-lg-h5 mr-2">
                         {{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg.name]) }}

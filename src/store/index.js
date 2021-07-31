@@ -84,8 +84,7 @@ function defaultState() {
  *     Configure Synchronized Modules & Mutations across tabs
  *------------------------* */
 const syncedModules = /^(?:playlist|settings|history)/;
-const syncedMutations =
-    /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout|setAutoLayout))/;
+const syncedMutations = /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout|setAutoLayout))/;
 
 export default new Vuex.Store({
     plugins: [
@@ -105,8 +104,7 @@ export default new Vuex.Store({
             getState: createMigrate(migrations, "migration.version"),
         }),
         createMutationsSharer({
-            predicate: (mutation /* state */) =>
-                mutation.type.match(syncedModules) || mutation.type.match(syncedMutations), // channel & channels
+            predicate: (mutation /* state */) => mutation.type.match(syncedModules) || mutation.type.match(syncedMutations), // channel & channels
         }), // Share all mutations except historyPop/Push across tabs.
     ],
     state: defaultState(),

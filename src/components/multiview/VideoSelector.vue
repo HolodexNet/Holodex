@@ -2,19 +2,42 @@
     <!-- Vertical: -->
     <v-card v-if="!horizontal" class="pa-3">
         <v-row class="flex-column flex-nowrap flex-sm-wrap" style="height: 80vh">
-            <v-col v-if="$vuetify.breakpoint.xs" class="org-dropdown" cols="12" sm="4" md="3" lg="2" mandatory>
+            <v-col
+                v-if="$vuetify.breakpoint.xs"
+                class="org-dropdown"
+                cols="12"
+                sm="4"
+                md="3"
+                lg="2"
+                mandatory
+            >
                 <!-- Dropdown for breakpoint xs -->
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
 
                 <org-panel-picker horizontal @changed="handlePicker" />
             </v-col>
             <!-- Full list for greater than xs -->
-            <v-col v-else class="org-list" cols="12" sm="4" md="3" lg="2" mandatory style="min-height: 100%">
+            <v-col
+                v-else
+                class="org-list"
+                cols="12"
+                sm="4"
+                md="3"
+                lg="2"
+                mandatory
+                style="min-height: 100%"
+            >
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
 
                 <org-panel-picker @changed="handlePicker" />
             </v-col>
-            <v-col class="video-list" cols="12" sm="8" md="9" lg="10">
+            <v-col
+                class="video-list"
+                cols="12"
+                sm="8"
+                md="9"
+                lg="10"
+            >
                 <!-- Custom YT Url should render different content -->
                 <template v-if="selectedOrg.name === 'YouTubeURL'">
                     <div class="text-h5">
@@ -151,7 +174,12 @@
         </template>
         <!-- Channel icons -->
         <template v-else>
-            <v-tooltip v-for="video in topFilteredLive" :key="video.id" transition="v-fade-transition" bottom>
+            <v-tooltip
+                v-for="video in topFilteredLive"
+                :key="video.id"
+                transition="v-fade-transition"
+                bottom
+            >
                 <template #activator="{ on, attrs }">
                     <div
                         v-bind="attrs"
@@ -168,7 +196,12 @@
                         </v-avatar>
                     </div>
                 </template>
-                <VideoCard :video="video" disable-default-click include-channel style="max-width: 250px" />
+                <VideoCard
+                    :video="video"
+                    disable-default-click
+                    include-channel
+                    style="max-width: 250px"
+                />
             </v-tooltip>
         </template>
     </div>
@@ -223,9 +256,8 @@ export default {
         ...mapState("playlist", ["active"]),
         modalFilteredLive() {
             return this.live.filter(
-                (l) =>
-                    !this.activeVideos.find((v) => v.id === l.id) &&
-                    !this.$store.getters["settings/blockedChannelIDs"].has(l.channel.id),
+                (l) => !this.activeVideos.find((v) => v.id === l.id)
+                    && !this.$store.getters["settings/blockedChannelIDs"].has(l.channel.id),
             );
         },
         topFilteredLive() {
@@ -243,9 +275,9 @@ export default {
                     count += 1;
                     // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
                     return (
-                        l.status === "live" ||
-                        dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
-                        (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
+                        l.status === "live"
+                        || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m"))
+                        || (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                     );
                 })
                 .filter((l) => !this.activeVideos.find((v) => v.id === l.id));

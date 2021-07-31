@@ -1,5 +1,10 @@
 <template>
-    <v-container :id="'t' + randomId" class="py-0" style="position: relative" fluid>
+    <v-container
+        :id="'t' + randomId"
+        class="py-0"
+        style="position: relative"
+        fluid
+    >
         <!-- Video Card grid rows -->
         <v-row :dense="dense" class="video-row">
             <!-- Video Cards with custom grid size class based on breakpoint -->
@@ -42,7 +47,13 @@
         </v-row>
         <!-- Expand button/show more -->
         <div v-if="hasExpansion" class="text-center" style="width: 100%">
-            <v-btn v-if="hasExpansion" ref="expandBtn" :text="!isMobile" color="primary" @click="expanded = !expanded">
+            <v-btn
+                v-if="hasExpansion"
+                ref="expandBtn"
+                :text="!isMobile"
+                color="primary"
+                @click="expanded = !expanded"
+            >
                 {{ expanded ? $t("component.description.showLess") : $t("component.description.showMore") }}
                 <v-icon>
                     {{ expanded ? mdiChevronUp : mdiChevronDown }}

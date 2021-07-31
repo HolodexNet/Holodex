@@ -9,19 +9,40 @@
         :retain-focus="false"
         content-class="music-player-bar"
     >
-        <v-slider class="music-progress" hide-details :value="progress" height="3" @change="progressChange" />
+        <v-slider
+            class="music-progress"
+            hide-details
+            :value="progress"
+            height="3"
+            @change="progressChange"
+        />
         <div class="d-flex justify-space-between pa-2" :class="{ 'flex-column': $vuetify.breakpoint.xs }">
             <div class="player-controls d-flex align-center">
                 <div>
-                    <v-btn icon class="mx-1" color="secondary" @click="prevButtonHandler">
+                    <v-btn
+                        icon
+                        class="mx-1"
+                        color="secondary"
+                        @click="prevButtonHandler"
+                    >
                         <v-icon>{{ mdiSkipPrevious }}</v-icon>
                     </v-btn>
-                    <v-btn icon fab color="primary" @click="playPause">
+                    <v-btn
+                        icon
+                        fab
+                        color="primary"
+                        @click="playPause"
+                    >
                         <v-icon x-large>
                             {{ playButtonIcon }}
                         </v-icon>
                     </v-btn>
-                    <v-btn icon class="mx-1" color="secondary" @click="nextButtonHandler">
+                    <v-btn
+                        icon
+                        class="mx-1"
+                        color="secondary"
+                        @click="nextButtonHandler"
+                    >
                         <v-progress-circular
                             color="warning"
                             :class="{ invisible: !showPatience }"
@@ -33,7 +54,12 @@
                             </v-icon>
                         </v-progress-circular>
                     </v-btn>
-                    <v-btn icon color="secondary" class="mx-1" @click="$store.commit('music/cycleMode')">
+                    <v-btn
+                        icon
+                        color="secondary"
+                        class="mx-1"
+                        @click="$store.commit('music/cycleMode')"
+                    >
                         <v-icon>{{ shuffleButtonIcon }}</v-icon>
                     </v-btn>
                     <ResponsiveMenu
@@ -128,7 +154,13 @@
                     <div class="music-more-btn">
                         <v-menu bottom nudge-top="20px">
                             <template #activator="{ on }">
-                                <v-btn icon large class="mt-1" v-on="on" @click.stop.prevent>
+                                <v-btn
+                                    icon
+                                    large
+                                    class="mt-1"
+                                    v-on="on"
+                                    @click.stop.prevent
+                                >
                                     <v-icon>
                                         {{ icons.mdiDotsVertical }}
                                     </v-icon>
@@ -404,8 +436,8 @@ export default {
                 this.patience -= 33;
                 console.log("Patience:", this.patience);
                 if (
-                    (this.patience <= 0 || document.visibilityState === "hidden") &&
-                    this.player.getPlayerState() === -1
+                    (this.patience <= 0 || document.visibilityState === "hidden")
+                    && this.player.getPlayerState() === -1
                 ) {
                     console.log("Patience is now 0, requesting next song forcibly.");
                     this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });

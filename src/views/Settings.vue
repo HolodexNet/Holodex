@@ -9,14 +9,24 @@
             <v-col :cols="slim ? 12 : currentCol">
                 <v-sheet class="settings-group">
                     <v-card-title class="py-1">
-                        <v-icon large disabled left class="ml-n3">
+                        <v-icon
+                            large
+                            disabled
+                            left
+                            class="ml-n3"
+                        >
                             {{ mdiEarth }}
                         </v-icon>
 
                         <span class="text-h6 font-weight-light">{{ $t("views.settings.languageSettings") }}</span>
                     </v-card-title>
                     <v-card-text>
-                        <v-select v-model="language" :items="langs" item-value="val" :prepend-icon="icons.mdiTranslate">
+                        <v-select
+                            v-model="language"
+                            :items="langs"
+                            item-value="val"
+                            :prepend-icon="icons.mdiTranslate"
+                        >
                             <template #item="{ item }">
                                 <!-- {{item}} -->
                                 <div>
@@ -60,7 +70,12 @@
             <v-col :cols="slim ? 12 : currentCol">
                 <v-sheet class="settings-group">
                     <v-card-title class="py-1">
-                        <v-icon large disabled left class="ml-n3">
+                        <v-icon
+                            large
+                            disabled
+                            left
+                            class="ml-n3"
+                        >
                             {{ icons.mdiCog }}
                         </v-icon>
                         <span class="text-h6 font-weight-light">{{ $t("views.settings.siteNavigationSettings") }}</span>
@@ -165,7 +180,12 @@
             <v-col v-if="!slim">
                 <v-sheet class="settings-group">
                     <v-card-title class="py-1">
-                        <v-icon large disabled left class="ml-n3">
+                        <v-icon
+                            large
+                            disabled
+                            left
+                            class="ml-n3"
+                        >
                             {{ icons.mdiAnimationPlay }}
                         </v-icon>
                         <span class="text-h6 font-weight-light">{{ $t("views.settings.videoFeedSettings") }}</span>
@@ -203,8 +223,13 @@
                         />
                     </v-card-text>
                 </v-sheet>
-                <br v-if="!slim" />
-                <v-btn v-if="!slim" block color="warning" @click="resetSettings">
+                <br v-if="!slim">
+                <v-btn
+                    v-if="!slim"
+                    block
+                    color="warning"
+                    @click="resetSettings"
+                >
                     {{ $t("views.settings.resetAllSettings") }}
                 </v-btn>
             </v-col>

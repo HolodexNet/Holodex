@@ -26,15 +26,13 @@
                                         'grey--text text--darken-4': !darkMode,
                                         'grey-text text--lighten-2': darkMode,
                                     }"
-                                    >{{ currentOrg.short || currentOrg.name }}</span
-                                >
+                                >{{ currentOrg.short || currentOrg.name }}</span>
                             </v-fade-transition>
                             <span
                                 ref="dexBtn"
                                 class="primary--text"
                                 :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
-                                >dex</span
-                            >
+                            >dex</span>
                             <v-tooltip
                                 v-model="firstVisit"
                                 right

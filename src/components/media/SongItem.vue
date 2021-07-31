@@ -6,8 +6,20 @@
                     <!-- actual artwork -->
                     <v-img v-if="song.art" lazy-src :src="song.art" />
                     <!-- artwork not available, have a stand-in -->
-                    <v-sheet v-else width="100%" height="100%" color="grey darken-1" class="d-flex pa-1">
-                        <v-btn small icon class="ma-auto" outlined disabled>
+                    <v-sheet
+                        v-else
+                        width="100%"
+                        height="100%"
+                        color="grey darken-1"
+                        class="d-flex pa-1"
+                    >
+                        <v-btn
+                            small
+                            icon
+                            class="ma-auto"
+                            outlined
+                            disabled
+                        >
                             <v-icon small>
                                 {{ icons.mdiMusic }}
                             </v-icon>
@@ -22,7 +34,13 @@
                         class="d-flex pa-1 hover-item"
                         style="position: absolute; left: 0px"
                     >
-                        <v-btn x-small fab class="ma-auto" color="blue lighten-3" elevation="2">
+                        <v-btn
+                            x-small
+                            fab
+                            class="ma-auto"
+                            color="blue lighten-3"
+                            elevation="2"
+                        >
                             <v-icon small>
                                 {{ hoverIcon }}
                             </v-icon>
@@ -144,11 +162,11 @@ export default {
         userCanDelete() {
             const u = this.$store.state.userdata;
             return (
-                u &&
-                u.user &&
-                u.user.role &&
-                u.user.id &&
-                (u.user.role !== "user" || +u.user.id === +this.song.creator_id)
+                u
+                && u.user
+                && u.user.role
+                && u.user.id
+                && (u.user.role !== "user" || +u.user.id === +this.song.creator_id)
             );
         },
         formattedTime() {

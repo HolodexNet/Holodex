@@ -9,7 +9,12 @@
                     <v-btn class="mr-1 mb-1" color="blue-grey" @click="showReset ? reset() : selectAll()">
                         {{ showReset ? $t("views.library.selectionReset") : $t("views.library.selectionSelectAll") }}
                     </v-btn>
-                    <v-btn v-if="!showReset" class="mr-1 mb-1" color="blue-grey" @click="select(50)">
+                    <v-btn
+                        v-if="!showReset"
+                        class="mr-1 mb-1"
+                        color="blue-grey"
+                        @click="select(50)"
+                    >
                         {{ $t("views.library.selectionSelect50") }}
                     </v-btn>
 
@@ -44,7 +49,12 @@
                     </v-btn> -->
                     <v-dialog v-model="deleteDialog" max-width="290">
                         <template #activator="{ on, attrs }">
-                            <v-btn color="red" class="mr-2 mb-1" v-bind="attrs" v-on="on">
+                            <v-btn
+                                color="red"
+                                class="mr-2 mb-1"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
                                 {{ $t("views.library.deleteFromLibraryButton", [selected.length]) }}
                             </v-btn>
                         </template>
@@ -94,7 +104,12 @@
             :per-page="50"
             :load-fn="getLoadFn()"
         >
-            <VideoCardList :videos="data" horizontal include-channel dense>
+            <VideoCardList
+                :videos="data"
+                horizontal
+                include-channel
+                dense
+            >
                 <template #action="prop">
                     <v-checkbox
                         v-model="selected"
@@ -116,9 +131,9 @@
                     <v-row>
                         <v-col cols="">
                             <p v-html="$t('views.library.exportYTExplanation')" />
-                            <br />
+                            <br>
 
-                            <br />
+                            <br>
                             <p v-html="$t('views.library.exportYTInstructions')" />
                             <v-btn class="mt-2 mx-2" color="green" @click="exportSelected">
                                 {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
@@ -128,7 +143,7 @@
                             </v-btn>
                         </v-col>
                         <v-col cols="12" md="auto">
-                            <img src="/img/playlist-instruction.jpg" />
+                            <img src="/img/playlist-instruction.jpg">
                         </v-col>
                     </v-row>
                 </v-card-text>

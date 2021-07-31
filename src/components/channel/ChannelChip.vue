@@ -12,7 +12,12 @@
         close-delay="250"
     >
         <template #activator="{ on: tooltip }">
-            <v-avatar left :size="size" class="mr-1" v-on="tooltip">
+            <v-avatar
+                left
+                :size="size"
+                class="mr-1"
+                v-on="tooltip"
+            >
                 <v-img
                     :src="photo"
                     crossorigin="anonymous"
@@ -33,7 +38,12 @@
             </v-avatar>
         </template>
         <div class="channel-hover-tooltip">
-            <ChannelSocials :channel="channel" vertical hide-yt hide-twitter />
+            <ChannelSocials
+                :channel="channel"
+                vertical
+                hide-yt
+                hide-twitter
+            />
             <span class="grey--text text--lighten-1 ml-2">{{ channelName }}</span>
         </div>
     </v-menu>

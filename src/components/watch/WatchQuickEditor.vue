@@ -1,9 +1,19 @@
 <template>
     <v-card class="watch-card rounded-0 striped">
-        <v-snackbar v-if="errorMessage" v-model="showErrorAlert" color="error" dismissible>
+        <v-snackbar
+            v-if="errorMessage"
+            v-model="showErrorAlert"
+            color="error"
+            dismissible
+        >
             {{ errorMessage }}
         </v-snackbar>
-        <v-snackbar v-if="successMessage" v-model="showSuccessAlert" color="success" dismissible>
+        <v-snackbar
+            v-if="successMessage"
+            v-model="showSuccessAlert"
+            color="success"
+            dismissible
+        >
             {{ successMessage }}
         </v-snackbar>
         <div class="d-flex justify-space-between flex-wrap align-center">

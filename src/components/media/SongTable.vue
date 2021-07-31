@@ -36,7 +36,13 @@
         </template>
         <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template v-if="!$vuetify.breakpoint.smAndDown" #item.channel_id="{ item }">
-            <v-btn small class="hoverable" icon outlined @click.stop="() => $store.dispatch('music/skipToSong', item)">
+            <v-btn
+                small
+                class="hoverable"
+                icon
+                outlined
+                @click.stop="() => $store.dispatch('music/skipToSong', item)"
+            >
                 <v-icon>{{ icons.mdiPlay }}</v-icon>
             </v-btn>
         </template>
@@ -77,7 +83,14 @@
                     {{ icons.mdiLoginVariant }}
                 </v-icon>
             </v-btn>
-            <v-btn class="popup" small icon target="_blank" :href="`/edit/video/${item.video_id}/music`" @click.stop>
+            <v-btn
+                class="popup"
+                small
+                icon
+                target="_blank"
+                :href="`/edit/video/${item.video_id}/music`"
+                @click.stop
+            >
                 <v-icon small>
                     {{ icons.mdiPencil }}
                 </v-icon>
