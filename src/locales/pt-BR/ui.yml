@@ -117,11 +117,21 @@ component:
     alertText: >-
       As configurações de privacidade do seu navegador está impossibilitando o Chat do Youtube de se conectar. Clique aqui para mais informações
     neverShowAgain: Não Mostrar Este Alerta Novamente
+  playlist:
+    menu:
+      export-playlist: Exportar Playlist
+      new-playlist: Nova Playlist
+      rename-playlist: Renomear Playlist
+      delete-playlist: Excluir Playlist
+      clear-playlist: Limpar Playlist
+    save-error-not-logged-in: Você precisa estar logado para salvar Playlists
 views:
   channel:
     video: Vídeos
     clips: Clipes
+    music: Músicas
     collabs: Collabs
+    about: Informações
   channels:
     sortOptions:
       subscribers: Inscritos
@@ -133,13 +143,17 @@ views:
     tabs:
       Vtuber: VTuber
       Subber: Tradutores
+      Favorites: Favoritos
+      Blocked: Bloqueados
     favoritesAreEmpty: Você não tem favoritos!
     blockedAreEmpty: Você não bloqueou nenhum canal.
   home:
     liveOrUpcomingHeading: Live / Próximas Transmissões
     recentVideosHeading: Vídeos Recentes
     recentVideoToggles:
+      all: Todos
       official: VODs
+      subber: Clipes
   library:
     savedVideosTitle: Vídeos Salvos
     createYtPlaylistButton: Criar uma Playlist no Youtube ({0})
@@ -167,6 +181,7 @@ views:
       newest: Novos
       oldest: Angitos
     type:
+      all: Todos
       official: Oficiais
       clip: Clipe
     unsupportedQuery: >-
@@ -174,6 +189,7 @@ views:
     sortByLabel: Ordenar por
     typeDropdownLabel: Tipo
   settings:
+    title: Configurações
     darkModeLabel: Modo Escuro
     darkModeMsg: Altera o tema entre modo claro e modo escuro
     redirectModeLabel: Assistir no Youtube
@@ -196,6 +212,8 @@ views:
     defaultPage: Página Padrão
     defaultPageMsg: >-
       Abra esta página por padrão quando visitar holodex.net, ou clicar no logotipo no canto superior esquerdo.
+    siteNavigationSettings: Navegação do site
+    languageSettings: Idioma
     gridSizeLabel: Miniatura/Tamanho da Grade
     gridSizeMsg: Alterar tamanho da grade de miniaturas/vídeo na página Início/Favoritos
     gridSize:
@@ -204,6 +222,7 @@ views:
       - Pequeno
     hideCollabStreamsLabel: Ocultar Collab Streams 
     hideCollabStreamsMsg: Ocultar Streams que são Collab do seus Favoritos
+    ignoredTopicsLabel: Tópicos Ignorados
     theme: Tema
   app:
     update_available: Uma atualização está disponível

@@ -1,4 +1,20 @@
 # Holodex Changelog
+
+### 2.16 Holodex [*July 30th, 2021*]
+##### New Features
+- You can now background music videos while browsing! Click the theater mode button on the music playback bar.
+- Korean TLdex support
+
+##### Patches
+- Reporting videos error fixed.
+- Music table is now easier to read on mobile
+
+##### Bugfixes
+- Channel blocklists now apply to Multiview top bar.
+- Fixed music playlist autoscroll to current video
+
+
+
 ### 2.15 Holodex [*July 27th, 2021*]
 ##### New Features
 - Topics can now be filtered from the settings (Thanks @ajhall)

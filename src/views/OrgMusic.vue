@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container class="org-music-container">
         <v-row>
             <v-col cols="12" class="mb-0 pa-0" style="min-height: 404px" v-if="!this.isAllVTubers">
                 <v-card-title>
@@ -237,7 +237,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 /* .recent-table .selectable {
     cursor: pointer;
 }
@@ -260,5 +260,14 @@ export default {
     margin-bottom: 2px;
     margin-top: -2px;
     color: var(--v-secondary-lighten1);
+}
+
+.bump-bottom .org-music-container {
+    /* to allow floating song frame to sit top right space */
+    padding-top: 140px;
+
+    @media screen and (max-width: 768px) {
+        padding-top: inherit;
+    }
 }
 </style>

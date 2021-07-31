@@ -55,10 +55,12 @@
 <script lang="ts">
 import VideoCard from "@/components/video/VideoCard.vue";
 import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
+import filterVideos from "@/mixins/filterVideos";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
 export default {
     name: "VideoCardList",
+    mixins: [filterVideos],
     components: {
         VideoCard,
         ApiErrorMessage,
@@ -133,6 +135,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        ignoreBlock: {
+            type: Boolean,
+            default: false,
+        },
     },
     methods: {
         handleVideoClick(video) {
@@ -153,36 +159,18 @@ export default {
             return this.limitRows > 0 && this.videos.length > this.limitRows * this.colSize;
         },
         processedVideos() {
-            const blockedChannels = this.$store.getters["settings/blockedChannelIDs"];
-            const ignoredTopics = this.$store.getters["settings/ignoredTopics"];
-            const favoriteChannels = this.$store.getters["favorites/favoriteChannelIDs"];
-
-            const filterVideos = (v) => {
-                let keep = true;
-                const channelId = v.channel_id || v.channel.id;
-
-                if (!this.ignoreBlock) {
-                    keep &&= !blockedChannels.has(channelId);
-                }
-
-                if (this.hideCollabs) {
-                    keep &&= favoriteChannels.has(channelId);
-                }
-
-                if (this.hideIgnoredTopics) {
-                    keep &&= !ignoredTopics.has(v.topic_id);
-                }
-
-                return keep;
+            const filterConfig = {
+                ignoreBlock: this.ignoreBlock,
+                hideCollabs: this.hideCollabs,
+                hideIgnoredTopics: this.hideIgnoredTopics,
             };
-
             if (this.limitRows <= 0 || this.expanded) {
-                return this.videos.filter(filterVideos);
+                return this.videos.filter((v) => this.filterVideos(v, filterConfig));
             }
             return this.videos
                 .slice(0)
                 .splice(0, this.limitRows * this.colSize)
-                .filter(filterVideos);
+                .filter((v) => this.filterVideos(v, filterConfig));
         },
         colSize() {
             if (this.horizontal) return 1;

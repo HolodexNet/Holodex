@@ -47,7 +47,7 @@
         <div v-show="!hasError">
             <template v-if="tab === Tabs.LIVE_UPCOMING">
                 <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
-                <template v-else-if="lives.length || upcoming.length">
+                <div v-if="lives.length || upcoming.length">
                     <VideoCardList
                         :videos="lives"
                         includeChannel
@@ -67,12 +67,10 @@
                         hideIgnoredTopics
                     >
                     </VideoCardList>
-                </template>
-                <template v-else>
-                    <div class="ma-auto pa-5 text-center">
-                        {{ $t("views.home.noStreams") }}
-                    </div>
-                </template>
+                </div>
+                <div class="ma-auto pa-5 text-center" v-show="!isLoading && lives.length == 0 && upcoming.length == 0">
+                    {{ $t("views.home.noStreams") }}
+                </div>
             </template>
             <template v-else>
                 <keep-alive>

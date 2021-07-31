@@ -57,10 +57,10 @@
                     <v-divider></v-divider>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn text :disabled="isLoading" @click="showReportDialog = false">
+                        <v-btn text @click="showReportDialog = false">
                             {{ $t("views.app.close_btn") }}
                         </v-btn>
-                        <v-btn color="primary" text :disabled="isLoading || comments.length === 0" @click="sendReport">
+                        <v-btn color="primary" :disabled="comments.length === 0" @click="sendReport">
                             {{ $t("views.multiview.confirmOverwriteYes") }}
                         </v-btn>
                     </v-card-actions>
@@ -102,7 +102,7 @@ export default {
             this.isLoading = true;
             axiosInstance
                 .post(
-                    "https://discord.com/api/webhooks/840830368855752764/aPTyAkefvhl8pk0LFBnaucY1LegfMJ7F_CbIZJpott8Oeh9wvtlf-781wPh20gV1d9ya",
+                    "https://discord.com/api/webhooks/870849393849413692/jdIbF5gwoJCI9r2xLgs5iU0oZ0-e0UCFMuSjr5MlaU2_R_P-4LYpl9fKNQTISPxx8JHZ",
                     {
                         content: "Look what the dog dragged in...",
                         embeds: [

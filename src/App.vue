@@ -3,7 +3,10 @@
         :style="{ background: $vuetify.theme.themes[this.darkMode ? 'dark' : 'light'].background }"
         :class="{ 'bump-bottom': $store.state.music.isOpen }"
     >
+        <portal-target name="music-playback-background"></portal-target>
+
         <MainNav />
+
         <v-main style="transition: none">
             <PullToRefresh />
             <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists">
@@ -225,8 +228,8 @@ body {
     margin: 0px -12px;
 }
 .bump-bottom .v-main__wrap {
-    padding-bottom: 250px;
     /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
+    padding-bottom: 140px;
 }
 
 /* pull to refresh skin */
