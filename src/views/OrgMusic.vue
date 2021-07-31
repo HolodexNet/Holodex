@@ -172,7 +172,7 @@ export default {
             committedSearch: "",
         };
     },
-    mounted() {
+    created() {
         this.songsByPopular();
     },
     computed: {

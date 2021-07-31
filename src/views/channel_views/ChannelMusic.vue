@@ -114,7 +114,7 @@ export default {
             committedSearch: "",
         };
     },
-    mounted() {
+    created() {
         // this.songsByRecent();
         this.songsByPopular();
     },

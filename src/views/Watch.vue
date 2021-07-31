@@ -221,7 +221,7 @@ export default {
             player: null,
         };
     },
-    mounted() {
+    created() {
         this.init();
         if (this.showTL && !this.hintConnectLiveTL) {
             this.hintConnectLiveTL = true;

@@ -138,9 +138,10 @@ export default {
             defaultSort: "subscribers",
         };
     },
-    mounted() {
+    created() {
         this.init();
     },
+    mounted() {},
     watch: {
         category() {
             this.resetChannels();

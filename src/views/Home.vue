@@ -140,7 +140,7 @@ export default {
             refreshTimer: null,
         };
     },
-    mounted() {
+    created() {
         this.init();
         this.setAutoRefresh();
     },

@@ -16,6 +16,9 @@ export default {
     orgs() {
         return axiosInstance({ url: "orgs.json", baseURL: SITE_BASE_URL });
     },
+    stats() {
+        return axiosInstance({ url: "/api/stats.json", baseURL: SITE_BASE_URL });
+    },
     channels(query) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/channels?${q}`);

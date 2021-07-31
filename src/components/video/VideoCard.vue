@@ -66,6 +66,7 @@
                 :aspect-ratio="16 / 9"
                 width="100%"
                 v-if="!horizontal && !shouldHideThumbnail"
+                :transition="false"
                 class="rounded"
             />
             <v-img v-else-if="!horizontal && shouldHideThumbnail" width="100%" :aspect-ratio="60 / 9"></v-img>
