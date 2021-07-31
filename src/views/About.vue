@@ -2,15 +2,21 @@
     <v-container class="pt-3">
         <v-row>
             <v-col v-if="!$store.state.isMobile" cols="12">
-                <div class="text-h4">{{ $t("component.mainNav.about") }}</div>
+                <div class="text-h4">
+                    {{ $t("component.mainNav.about") }}
+                </div>
             </v-col>
             <v-col cols="12" md="4" sm="4" lg="3" xl="2" float-right>
-                <div class="text-h5 mb-2">{{ $t("about.news.title") }}</div>
+                <div class="text-h5 mb-2">
+                    {{ $t("about.news.title") }}
+                </div>
                 <TwitterFeed :key="'twtrTimeline' + timelinekey" />
             </v-col>
 
             <v-col cols="12" md="8" sm="8" lg="9" xl="10">
-                <div class="text-h5 mb-2">{{ $t("about.quicklinks") }}</div>
+                <div class="text-h5 mb-2">
+                    {{ $t("about.quicklinks") }}
+                </div>
 
                 <v-row dense class="mx-1">
                     <v-col cols="12" md="auto">
@@ -22,7 +28,9 @@
                             target="_blank"
                             href="https://forms.gle/xkN4w8fyPr6YTGfx6"
                         >
-                            <v-icon large left>{{ icons.mdiPencil }}</v-icon>
+                            <v-icon large left>
+                                {{ icons.mdiPencil }}
+                            </v-icon>
                             {{ $t("views.about.add_my_channel") }}
                         </v-btn>
                     </v-col>
@@ -35,7 +43,9 @@
                             target="_blank"
                             href="https://discord.gg/jctkgHBt4b"
                         >
-                            <v-icon large left>{{ icons.mdiDiscord }}</v-icon>
+                            <v-icon large left>
+                                {{ icons.mdiDiscord }}
+                            </v-icon>
                             {{ $t("about.discordBtn") }}
                         </v-btn>
                     </v-col>
@@ -48,7 +58,9 @@
                             target="_blank"
                             href="https://discord.gg/xJd9Der"
                         >
-                            <v-icon large left>{{ icons.mdiDiscord }}</v-icon>
+                            <v-icon large left>
+                                {{ icons.mdiDiscord }}
+                            </v-icon>
                             Hololive Creators (#holodex)
                         </v-btn>
                     </v-col>
@@ -60,7 +72,9 @@
                             target="_blank"
                             href="https://github.com/RiceCakess/Holodex"
                         >
-                            <v-icon large left color="black">{{ mdiGithub }}</v-icon>
+                            <v-icon large left color="black">
+                                {{ mdiGithub }}
+                            </v-icon>
                             {{ $t("about.issueTracker") }}
                         </v-btn>
                     </v-col>
@@ -72,13 +86,17 @@
                             href="https://holodex.stoplight.io/"
                             target="_blank"
                         >
-                            <v-icon large left>{{ mdiConsole }}</v-icon>
+                            <v-icon large left>
+                                {{ mdiConsole }}
+                            </v-icon>
                             API documentation
                         </v-btn>
                     </v-col>
                 </v-row>
 
-                <div class="text-h5 mb-2 mt-4">{{ $t("about.faq.title") }}</div>
+                <div class="text-h5 mb-2 mt-4">
+                    {{ $t("about.faq.title") }}
+                </div>
                 <v-expansion-panels>
                     <v-expansion-panel>
                         <v-expansion-panel-header>
@@ -118,7 +136,7 @@
                             {{ $t("about.faq.musicPlayer") }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            <div v-html="$t('about.faq.musicPlayerContent')"></div>
+                            <div v-html="$t('about.faq.musicPlayerContent')" />
                         </v-expansion-panel-content>
                     </v-expansion-panel>
 
@@ -148,7 +166,9 @@
                         <v-expansion-panel-header> {{ $t("about.faq.favorite.title") }} </v-expansion-panel-header>
                         <v-expansion-panel-content>
                             {{ $t("about.faq.favorite.Contents.0") }}
-                            <router-link to="/channel">{{ $t("component.mainNav.channels") }}</router-link>
+                            <router-link to="/channel">
+                                {{ $t("component.mainNav.channels") }}
+                            </router-link>
                             {{ $t("about.faq.favorite.Contents[1]") }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
@@ -210,11 +230,15 @@
                 </v-expansion-panels>
                 <br />
 
-                <div class="text-h5">{{ $t("about.feedback") }}</div>
-                <p class="text-body-2" v-html="$t('about.feedbackHtml')"></p>
+                <div class="text-h5">
+                    {{ $t("about.feedback") }}
+                </div>
+                <p class="text-body-2" v-html="$t('about.feedbackHtml')" />
                 <br />
 
-                <div id="changelog" class="text-h5">{{ $t("about.credits.title") }}</div>
+                <div id="changelog" class="text-h5">
+                    {{ $t("about.credits.title") }}
+                </div>
                 <p class="text-body-2">
                     {{ $t("about.credits.contents[0]") }}
                     <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.credits.contents[1]") }}
@@ -238,7 +262,7 @@
                         seamless
                         src="https://holodexnet.github.io/Holodex/"
                         style="height: 80vh; border: none; border-radius: 3px; background: #eee"
-                    ></iframe>
+                    />
                 </div>
             </v-col>
         </v-row>

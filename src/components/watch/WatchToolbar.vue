@@ -4,7 +4,7 @@
             <v-icon>{{ mdiArrowLeft }}</v-icon>
         </v-btn>
         <div class="watch-btn-group ml-auto d-flex">
-            <slot name="buttons"></slot>
+            <slot name="buttons" />
             <v-tooltip bottom>
                 <template #activator="{ on, attrs }">
                     <v-btn icon lg :color="hasSaved ? 'primary' : ''" v-bind="attrs" @click="toggleSaved" v-on="on">
@@ -29,8 +29,10 @@
                         </v-icon>
                         {{ $t("views.settings.redirectModeLabel") }}
                     </v-list-item>
-                    <v-list-item @click.stop="copyLink"
-                        ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
+                    <v-list-item @click.stop="copyLink">
+                        <v-icon left>
+                            {{ icons.mdiClipboardPlusOutline }}
+                        </v-icon>
                         {{ $t("component.videoCard.copyLink") }}
                     </v-list-item>
                     <v-list-item
@@ -43,7 +45,9 @@
                         {{ $t("component.mainNav.multiview") }}
                     </v-list-item>
                     <v-list-item @click="$store.commit('setReportVideo', video)">
-                        <v-icon left :color="video.type === 'clip' ? 'grey' : ''">{{ icons.mdiFlag }} </v-icon>
+                        <v-icon left :color="video.type === 'clip' ? 'grey' : ''">
+                            {{ icons.mdiFlag }}
+                        </v-icon>
                         {{ $t("component.reportDialog.title") }}
                     </v-list-item>
                 </v-list>
@@ -70,6 +74,7 @@ export default {
     mixins: [copyToClipboard],
     props: {
         video: {
+            type: Object,
             required: true,
         },
         noBackButton: {

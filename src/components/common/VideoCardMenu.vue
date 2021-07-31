@@ -1,7 +1,9 @@
 <template>
     <v-list v-if="video" dense>
-        <v-list-item target="_blank" :href="`https://youtu.be/${video.id}`" @click.stop
-            ><v-icon left>{{ icons.mdiYoutube }}</v-icon>
+        <v-list-item target="_blank" :href="`https://youtu.be/${video.id}`" @click.stop>
+            <v-icon left>
+                {{ icons.mdiYoutube }}
+            </v-icon>
             {{ $t("views.settings.redirectModeLabel") }}
         </v-list-item>
 
@@ -12,23 +14,31 @@
             {{ $t("component.videoCard.googleCalendar") }}
         </v-list-item>
         <v-list-item :to="`/edit/video/${video.id}${video.type !== 'stream' ? '/mentions' : '/'}`">
-            <v-icon left>{{ icons.mdiPencil }}</v-icon>
+            <v-icon left>
+                {{ icons.mdiPencil }}
+            </v-icon>
             {{ $t("component.videoCard.edit") }}
         </v-list-item>
         <template v-if="video.type !== 'clip'">
             <v-list-item :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`">
-                <v-icon left>{{ icons.mdiViewDashboard }}</v-icon>
+                <v-icon left>
+                    {{ icons.mdiViewDashboard }}
+                </v-icon>
                 {{ $t("component.mainNav.multiview") }}
             </v-list-item>
         </template>
 
-        <v-list-item :class="doneCopy ? 'green lighten-2' : ''" @click.stop="copyLink"
-            ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
+        <v-list-item :class="doneCopy ? 'green lighten-2' : ''" @click.stop="copyLink">
+            <v-icon left>
+                {{ icons.mdiClipboardPlusOutline }}
+            </v-icon>
             {{ $t("component.videoCard.copyLink") }}
         </v-list-item>
 
         <v-list-item @click="$store.commit('setReportVideo', video)">
-            <v-icon left>{{ icons.mdiFlag }} </v-icon>
+            <v-icon left>
+                {{ icons.mdiFlag }}
+            </v-icon>
             {{ $t("component.reportDialog.title") }}
         </v-list-item>
     </v-list>

@@ -33,11 +33,8 @@
                         v-model="liveTlShowVerified"
                         :label="$t('views.watch.chat.showVerifiedMessages')"
                         hide-details
-                    ></v-switch>
-                    <v-switch
-                        v-model="liveTlShowModerator"
-                        :label="$t('views.watch.chat.showModeratorMessages')"
-                    ></v-switch>
+                    />
+                    <v-switch v-model="liveTlShowModerator" :label="$t('views.watch.chat.showModeratorMessages')" />
                     <v-btn @click="showBlockedList = true"> Edit Blocked List </v-btn>
                     <v-divider class="my-6" />
                     <v-combobox
@@ -61,7 +58,7 @@
                         v-model="liveTlStickBottom"
                         :label="$t('views.watch.chat.StickBottomSettingLabel')"
                         :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
-                    ></v-switch>
+                    />
                 </template>
                 <template v-else>
                     <v-list style="max-height: 300px; overflow: auto">
@@ -93,14 +90,6 @@ export default {
             TL_LANGS,
         };
     },
-    watch: {
-        dialog(nw) {
-            // unshow blocked list when exiting dialog
-            if (!nw) {
-                this.showBlockedList = false;
-            }
-        },
-    },
     computed: {
         ...syncState("settings", [
             "liveTlStickBottom",
@@ -112,6 +101,14 @@ export default {
         ]),
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];
+        },
+    },
+    watch: {
+        dialog(nw) {
+            // unshow blocked list when exiting dialog
+            if (!nw) {
+                this.showBlockedList = false;
+            }
         },
     },
     methods: {

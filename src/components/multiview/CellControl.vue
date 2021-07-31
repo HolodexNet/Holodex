@@ -8,7 +8,9 @@
                 color="amber darken-2 ml-n3 returnbtn mr-auto"
                 @click="$emit('back')"
             >
-                <v-icon right>{{ mdiArrowLeftCircle }}</v-icon>
+                <v-icon right>
+                    {{ mdiArrowLeftCircle }}
+                </v-icon>
             </v-btn>
             <v-btn
                 v-if="$listeners.playpause"
@@ -51,7 +53,11 @@
 import { mdiArrowLeftCircle, mdiDeleteEmpty } from "@mdi/js";
 
 export default {
-    props: ["playIcon"],
+    props: {
+        playIcon: {
+            type: String,
+        },
+    },
     data() {
         return { mdiDeleteEmpty, mdiArrowLeftCircle };
     },

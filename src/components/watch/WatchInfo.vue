@@ -46,14 +46,16 @@
                         <v-list-item-avatar size="80">
                             <ChannelImg :channel="video.channel" size="80" />
                         </v-list-item-avatar>
-                        <ChannelInfo :channel="video.channel" class="uploader-data-list"> </ChannelInfo>
+                        <ChannelInfo :channel="video.channel" class="uploader-data-list" />
                         <ChannelSocials :channel="video.channel" />
                     </v-list-item>
                 </v-list>
             </v-col>
             <v-col cols="auto">
                 <v-avatar v-if="channelChips && channelChips.length > 0" rounded left size="40">
-                    <v-icon size="25" color="grey darken-2">{{ mdiAt }}</v-icon>
+                    <v-icon size="25" color="grey darken-2">
+                        {{ mdiAt }}
+                    </v-icon>
                 </v-avatar>
                 <template v-for="mention in channelChips">
                     <ChannelChip :key="mention.id" :channel="mention" :size="60" />
@@ -101,7 +103,9 @@ export default {
     },
     props: {
         video: {
+            type: Object,
             required: true,
+            default: null,
         },
         noChips: {
             type: Boolean,

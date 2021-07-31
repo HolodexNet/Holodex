@@ -7,14 +7,13 @@ module.exports = {
         es6: true,
     },
 
-    extends: ["plugin:vue/recommended", "airbnb-base", "eslint:recommended", "prettier", "prettier/vue", "@vue/typescript"],
+    extends: ["plugin:vue/recommended", "airbnb-base", "eslint:recommended", "@vue/typescript"],
     parser: "vue-eslint-parser",
 
     parserOptions: {
         parser: "@typescript-eslint/parser",
-        "sourceType": "module"
+        sourceType: "module",
     },
-
     rules: {
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
         "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
@@ -23,7 +22,7 @@ module.exports = {
         "max-len": [
             "warn",
             {
-                code: 120,
+                code: 200,
                 ignoreTemplateLiterals: true,
                 ignoreStrings: true,
                 ignoreUrls: true,
@@ -43,6 +42,21 @@ module.exports = {
             },
         ],
         "vue/no-v-html": "off",
+        indent: "off",
+        "vue/script-indent": ["error", 4, { baseIndent: 0, switchCase: 1 }],
+        "linebreak-style": "off",
+        "vue/max-attributes-per-line": [
+            "error",
+            {
+                singleline: {
+                    max: 3,
+                    allowFirstLine: true,
+                },
+            },
+        ],
+        "nonblock-statement-body-position": ["warn", "any"],
+        "vue/html-indent": ["error", 4],
+        "vue/require-default-prop": "off",
     },
 
     ignorePatterns: ["src/external/**", "src/locales/**", ".eslintrc.js"],

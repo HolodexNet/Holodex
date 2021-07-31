@@ -22,8 +22,7 @@
                 }"
                 v-on="$listeners"
                 @ready="ready"
-            >
-            </youtube>
+            />
         </div>
     </div>
 </template>
@@ -34,6 +33,7 @@ export default {
     components: {},
     props: {
         playback: {
+            type: Object,
             required: true,
         },
         isBackground: {

@@ -1,11 +1,11 @@
 <template>
     <v-container fluid style="height: 100%">
         <v-card class="ma-auto mt-6" elevation="12" max-width="500px">
-            <user-card v-if="userdata.user"></user-card>
-            <v-divider></v-divider>
-            <v-card-subtitle class="justify-center">{{
-                userdata.user ? $t("views.login.linkAcc") : $t("component.mainNav.login")
-            }}</v-card-subtitle>
+            <user-card v-if="userdata.user" />
+            <v-divider />
+            <v-card-subtitle class="justify-center">
+                {{ userdata.user ? $t("views.login.linkAcc") : $t("component.mainNav.login") }}
+            </v-card-subtitle>
             <v-card-text class="d-flex flex-column">
                 <v-btn
                     v-if="!userdata.user || !userdata.user.google_id"
@@ -13,7 +13,9 @@
                     color="red accent-2"
                     @click.prevent="loginGoogle"
                 >
-                    <v-icon left>{{ icons.mdiGoogle }}</v-icon>
+                    <v-icon left>
+                        {{ icons.mdiGoogle }}
+                    </v-icon>
                     {{ $t("views.login.with.0") }}
                 </v-btn>
                 <v-btn
@@ -22,7 +24,9 @@
                     color="indigo"
                     @click.prevent="loginDiscord"
                 >
-                    <v-icon left>{{ icons.mdiDiscord }}</v-icon>
+                    <v-icon left>
+                        {{ icons.mdiDiscord }}
+                    </v-icon>
 
                     {{ $t("views.login.with.1") }}
                 </v-btn>
@@ -32,12 +36,14 @@
                     color="blue lighten-1"
                     @click.prevent="loginTwitter"
                 >
-                    <v-icon left>{{ icons.mdiTwitter }}</v-icon>
+                    <v-icon left>
+                        {{ icons.mdiTwitter }}
+                    </v-icon>
 
                     {{ $t("views.login.with.2") }}
                 </v-btn>
             </v-card-text>
-            <v-divider></v-divider>
+            <v-divider />
             <v-card-text v-if="userdata.user">
                 <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.ownedYtChannel") }}</span>
                 <v-text-field
@@ -47,7 +53,7 @@
                     dense
                     hide-details
                     :value="userdata.user.yt_channel_key || 'None on file'"
-                ></v-text-field>
+                />
                 <span class="text-caption">
                     {{ $t("views.login.futureYtcOwnerMessage") }}
                 </span>
@@ -64,15 +70,19 @@
                     :value="userdata.user.api_key || 'None on file'"
                     :append-icon="icons.mdiClipboardPlusOutline"
                     @click:append="copyToClipboard(userdata.user.api_key)"
-                ></v-text-field>
+                />
                 <br />
-                <v-btn small block color="warning" @click="resetKey">{{ $t("views.login.apikeyNew") }}</v-btn>
+                <v-btn small block color="warning" @click="resetKey">
+                    {{ $t("views.login.apikeyNew") }}
+                </v-btn>
                 <span class="text-caption">
                     {{ $t("views.login.apikeyMsg") }}
                 </span>
                 <v-btn small block color="info" href="https://holodex.stoplight.io/" target="_blank">
                     API Documentation
-                    <v-icon small right>{{ icons.mdiOpenInNew }}</v-icon>
+                    <v-icon small right>
+                        {{ icons.mdiOpenInNew }}
+                    </v-icon>
                 </v-btn>
             </v-card-text>
         </v-card>

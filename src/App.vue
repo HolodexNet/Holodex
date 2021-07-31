@@ -3,7 +3,7 @@
         :style="{ background: $vuetify.theme.themes[darkMode ? 'dark' : 'light'].background }"
         :class="{ 'bump-bottom': $store.state.music.isOpen }"
     >
-        <portal-target name="music-playback-background"></portal-target>
+        <portal-target name="music-playback-background" />
 
         <MainNav />
 
@@ -18,15 +18,21 @@
         <v-snackbar v-if="updateExists" bottom right :value="updateExists" :timeout="-1" color="primary">
             {{ $t("views.app.update_available") }}
             <template #action>
-                <v-btn text class="ml-auto" @click="refreshApp"> {{ $t("views.app.update_btn") }} </v-btn>
-                <v-btn text class="ml-auto" @click="updateExists = false"> {{ $t("views.app.close_btn") }} </v-btn>
+                <v-btn text class="ml-auto" @click="refreshApp">
+                    {{ $t("views.app.update_btn") }}
+                </v-btn>
+                <v-btn text class="ml-auto" @click="updateExists = false">
+                    {{ $t("views.app.close_btn") }}
+                </v-btn>
             </template>
         </v-snackbar>
         <v-snackbar v-if="showUpdateDetails" bottom center :value="showUpdateDetails" color="primary" :timeout="-1">
             {{ $t("views.app.check_about_page") }}
             <template #action>
                 <v-btn text class="ml-auto" to="/about#changelog" @click="showUpdateDetails = false"> Changelog </v-btn>
-                <v-btn text class="ml-auto" @click="showUpdateDetails = false"> {{ $t("views.app.close_btn") }} </v-btn>
+                <v-btn text class="ml-auto" @click="showUpdateDetails = false">
+                    {{ $t("views.app.close_btn") }}
+                </v-btn>
             </template>
         </v-snackbar>
         <ReportDialog />
@@ -103,8 +109,9 @@ export default {
         },
         // eslint-disable-next-line func-names
         "$store.state.visibilityState": function () {
-            if (this.$store.state.visibilityState === "visible")
+            if (this.$store.state.visibilityState === "visible") {
                 this.$store.dispatch("favorites/fetchLive", { force: false, minutes: 5 });
+            }
         },
     },
     created() {

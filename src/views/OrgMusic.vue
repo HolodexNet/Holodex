@@ -25,9 +25,9 @@
                 >
                     <template v-for="(song, idx) in popularMonthlySongs">
                         <song-item-card
+                            :key="'clist3' + idx"
                             style="width: 200px; margin: 10px"
                             :song="song"
-                            :key="'clist3' + idx"
                             show-time
                             show-artist
                             :hover-icon="icons.mdiPlaylistMusic"
@@ -35,9 +35,11 @@
                             @play="$store.commit('music/addSong', song)"
                             @playNow="skipToSong"
                             @channel="$router.push({ path: `/channel/${song.channel_id}` })"
-                        ></song-item-card>
+                        />
                     </template>
-                    <v-icon v-if="popularMonthlySongs.length === 0" disabled>{{ icons.mdiDatabaseOff }}</v-icon>
+                    <v-icon v-if="popularMonthlySongs.length === 0" disabled>
+                        {{ icons.mdiDatabaseOff }}
+                    </v-icon>
                 </carousel>
             </v-col>
             <v-col v-if="!isAllVTubers" cols="12" class="my-0 pa-0" style="min-height: 404px">
@@ -64,9 +66,9 @@
                 >
                     <template v-for="(song, idx) in popularWeeklySongs">
                         <song-item-card
+                            :key="'clist4' + idx"
                             style="width: 200px; margin: 10px"
                             :song="song"
-                            :key="'clist4' + idx"
                             show-time
                             show-artist
                             :hover-icon="icons.mdiPlaylistMusic"
@@ -74,9 +76,11 @@
                             @play="$store.commit('music/addSong', song)"
                             @playNow="skipToSong"
                             @channel="$router.push({ path: `/channel/${song.channel_id}` })"
-                        ></song-item-card>
+                        />
                     </template>
-                    <v-icon v-if="popularWeeklySongs.length === 0" disabled>{{ icons.mdiDatabaseOff }}</v-icon>
+                    <v-icon v-if="popularWeeklySongs.length === 0" disabled>
+                        {{ icons.mdiDatabaseOff }}
+                    </v-icon>
                 </carousel>
             </v-col>
             <v-col cols="12" class="my-0 py-0">
@@ -100,7 +104,7 @@
                             <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
                         </v-btn>
 
-                        <v-spacer></v-spacer>
+                        <v-spacer />
 
                         <v-text-field
                             ref="searchbox"
@@ -112,16 +116,16 @@
                             @submit="doSearch(search)"
                             @click:append="doSearch(search)"
                             @keydown.enter="doSearch(search)"
-                        ></v-text-field>
+                        />
                     </v-card-title>
                     <v-row>
                         <v-col>
                             <song-table
-                                :p-e-r-p-a-g-e-i-t-e-m-s="PER_PAGE_ITEMS"
+                                :per-page-items="PER_PAGE_ITEMS"
                                 channel-link
                                 :loading="isLoading"
                                 :songs="data"
-                            ></song-table>
+                            />
                         </v-col>
                     </v-row>
                 </generic-list-loader>
@@ -133,9 +137,7 @@
 <script lang="ts">
 import backendApi from "@/utils/backend-api";
 import SongItemCard from "@/components/media/SongItemCard.vue";
-import SongItem from "@/components/media/SongItem.vue";
 import Carousel from "@/components/common/Carousel.vue";
-import PaginateLoad from "@/components/common/PaginateLoad.vue";
 import { mapState } from "vuex";
 import SongTable from "@/components/media/SongTable.vue";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
@@ -151,7 +153,12 @@ const PER_PAGE_ITEMS = 20;
 
 export default {
     name: "OrgMusic",
-    components: { SongItem, SongItemCard, Carousel, PaginateLoad, SongTable, GenericListLoader },
+    components: {
+        SongItemCard,
+        Carousel,
+        SongTable,
+        GenericListLoader,
+    },
     metaInfo() {
         const vm = this;
         return {
@@ -172,9 +179,6 @@ export default {
             committedSearch: "",
         };
     },
-    created() {
-        this.songsByPopular();
-    },
     computed: {
         ...mapState(["currentOrg"]),
         isAllVTubers() {
@@ -185,6 +189,9 @@ export default {
         currentOrg() {
             this.songsByPopular();
         },
+    },
+    created() {
+        this.songsByPopular();
     },
     methods: {
         async songsByPopular() {

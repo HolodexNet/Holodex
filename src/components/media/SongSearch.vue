@@ -25,7 +25,7 @@
             <div class="ma-n1 py-0 pl-3 pr-1 d-flex" style="width: 100%">
                 <!-- @click="addItem(dropdownItem.item) -->
                 <v-list-item-avatar tile>
-                    <v-img :src="x.item.artworkUrl100"></v-img>
+                    <v-img :src="x.item.artworkUrl100" />
                 </v-list-item-avatar>
 
                 <v-list-item-content class="py-1 pt-1">
@@ -43,7 +43,7 @@
             <div class="ma-n1 py-0 pl-3 pr-1 d-flex">
                 <!-- @click="addItem(dropdownItem.item) -->
                 <v-list-item-avatar tile>
-                    <v-img :src="x.item.artworkUrl100"></v-img>
+                    <v-img :src="x.item.artworkUrl100" />
                 </v-list-item-avatar>
 
                 <v-list-item-content class="py-1 pt-1">

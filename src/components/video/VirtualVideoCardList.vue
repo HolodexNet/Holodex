@@ -2,9 +2,9 @@
     <!-- <v-container class="py-0" style="position: relative" fluid :id="'t' + randomId"> -->
     <!-- Video Card grid rows -->
     <virtual-list
+        ref="virtualVideoList"
         style="overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain"
         class="thin-scroll-bar"
-        ref="virtualVideoList"
         :style="{ height: computedHeight }"
         :data-key="'id'"
         :data-sources="videos"
@@ -21,15 +21,12 @@
 
 <script lang="ts">
 import VideoCard from "@/components/video/VideoCard.vue";
-import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
 import VirtualList from "vue-virtual-scroll-list";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
 export default {
     name: "VirtualVideoCardList",
     components: {
-        VideoCard,
-        ApiErrorMessage,
         VirtualList,
     },
     props: {
@@ -65,24 +62,21 @@ export default {
         },
         pageMode: {
             type: Boolean,
-            default: false,
         },
         activeId: {
             required: false,
             type: String,
+            default: null,
         },
         dense: {
             type: Boolean,
-            default: false,
         },
         // to be used in conjunction with videoClicked event
         disableDefaultClick: {
             type: Boolean,
-            default: false,
         },
         activePlaylistItem: {
             type: Boolean,
-            default: false,
         },
         activeIndex: {
             type: Number,

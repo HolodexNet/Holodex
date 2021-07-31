@@ -10,20 +10,16 @@ const initialState = {
 export const state = { ...initialState };
 
 const getters = {
-    hasWatched: (state) => {
-        return (
-            state.lastCheck &&
-            (async (videoId) => {
-                return new Promise((res, rej) =>
-                    db.get(videoId, (e, x) => {
-                        if (e) res(0);
-                        if (x) res(x);
-                        rej(new Error("weird"));
-                    }),
-                );
-            })
-        );
-    },
+    hasWatched: (state) =>
+        state.lastCheck &&
+        (async (videoId) =>
+            new Promise((res, rej) =>
+                db.get(videoId, (e, x) => {
+                    if (e) res(0);
+                    if (x) res(x);
+                    rej(new Error("weird"));
+                }),
+            )),
 };
 
 const actions = {

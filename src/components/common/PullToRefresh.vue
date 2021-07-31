@@ -44,16 +44,13 @@ export default {
             animates: ptrAnimatesMaterial,
             // animates: ptrAnimatesMaterial2,
             // animates: ptrAnimatesIos,
-            shouldPullToRefresh: () => {
-                return (
-                    !window.scrollY &&
-                    // disable on watch page
-                    !self.shouldRefresh &&
-                    // disable on mobile when navdrawer is pulled out
-                    // self.$store.state.isMobile && (removing restriction on mobile)
-                    !self.$store.state.navDrawer
-                );
-            },
+            shouldPullToRefresh: () =>
+                !window.scrollY &&
+                // disable on watch page
+                !self.shouldRefresh &&
+                // disable on mobile when navdrawer is pulled out
+                // self.$store.state.isMobile && (removing restriction on mobile)
+                !self.$store.state.navDrawer,
             async refresh() {
                 // here to fetch the data and rerender the contents.
                 // check if there's a handler on the sequence

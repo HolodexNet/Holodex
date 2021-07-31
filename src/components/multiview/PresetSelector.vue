@@ -29,8 +29,10 @@
                                                     ><v-icon left>{{ mdiToggleSwitch }}</v-icon>
                                                     {{ $t("views.multiview.preset.toggleAutoLayout") }}
                                                 </v-list-item> -->
-                                                <v-list-item @click.stop="removePresetLayout(preset)"
-                                                    ><v-icon left>{{ icons.mdiDelete }}</v-icon>
+                                                <v-list-item @click.stop="removePresetLayout(preset)">
+                                                    <v-icon left>
+                                                        {{ icons.mdiDelete }}
+                                                    </v-icon>
                                                     {{ $t("views.multiview.preset.remove") }}
                                                 </v-list-item>
                                             </v-list>
@@ -83,7 +85,7 @@
                                             @click="setAutoLayout(index, preset.id)"
                                         >
                                             <template #pre>
-                                                <v-radio label="" :value="preset.id" class="ma-0"></v-radio>
+                                                <v-radio label="" :value="preset.id" class="ma-0" />
                                             </template>
                                         </LayoutPreviewCard>
                                     </v-col>
@@ -99,20 +101,13 @@
 
 <script lang="ts">
 import { mdiDotsVertical, mdiToggleSwitch } from "@mdi/js";
-import VideoCardList from "@/components/video/VideoCardList.vue";
-import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
-// import Vue from "vue";
-import LayoutPreview from "./LayoutPreview.vue";
 import LayoutPreviewCard from "./LayoutPreviewCard.vue";
 
 export default {
     name: "PresetSelector",
     components: {
-        VideoCardList,
-        LoadingOverlay,
-        LayoutPreview,
         LayoutPreviewCard,
     },
     data() {
@@ -121,11 +116,6 @@ export default {
             mdiToggleSwitch,
             currentTab: 1,
         };
-    },
-    mounted() {
-        // this.desktopPresets = sortPresets(this.desktopPresets);
-        // this.mobilePresets = sortPresets(this.mobilePresets);
-        if (this.presetLayout.length > 0) this.currentTab = 0;
     },
     computed: {
         ...mapState("multiview", ["presetLayout", "autoLayout"]),
@@ -138,6 +128,11 @@ export default {
         autoLayoutSet() {
             return new Set(this.autoLayout);
         },
+    },
+    mounted() {
+        // this.desktopPresets = sortPresets(this.desktopPresets);
+        // this.mobilePresets = sortPresets(this.mobilePresets);
+        if (this.presetLayout.length > 0) this.currentTab = 0;
     },
     methods: {
         setAutoLayout(index, encodedLayout) {

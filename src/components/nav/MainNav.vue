@@ -5,8 +5,8 @@
         <NavDrawer v-model="navDrawer" :pages="pages" :temporary="isMobile || isWatchPage">
             <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
             <template v-if="isMobile">
-                <InstallPrompt></InstallPrompt>
-                <user-card no-setting in-nav-drawer style="background-color: inherit"></user-card>
+                <InstallPrompt />
+                <user-card no-setting in-nav-drawer style="background-color: inherit" />
                 <v-divider />
             </template>
         </NavDrawer>
@@ -81,9 +81,9 @@
                 <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
                     <template #activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" class="ml-2" v-on="on">
-                            <v-icon v-if="!($store.state.userdata && $store.state.userdata.user)">{{
-                                icons.mdiAccountCircleOutline
-                            }}</v-icon>
+                            <v-icon v-if="!($store.state.userdata && $store.state.userdata.user)">
+                                {{ icons.mdiAccountCircleOutline }}
+                            </v-icon>
                             <v-avatar v-else size="40">
                                 <img
                                     :src="`https://avatars.dicebear.com/api/jdenticon/${$store.state.userdata.user.id}.svg`"
@@ -94,7 +94,7 @@
                     </template>
 
                     <!------- USER CARD ------->
-                    <user-card></user-card>
+                    <user-card />
                     <!------- END USER CARD ------->
                 </v-menu>
 
@@ -141,7 +141,7 @@
             <template v-if="!disableExt" #extension>
                 <v-slide-y-transition>
                     <!-- v-tabs are teleported here from their respective view -->
-                    <portal-target v-if="showExt" name="mainNavExt" slim> </portal-target>
+                    <portal-target v-if="showExt" name="mainNavExt" slim />
                 </v-slide-y-transition>
             </template>
         </v-app-bar>

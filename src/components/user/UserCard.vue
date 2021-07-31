@@ -2,18 +2,18 @@
     <!-- Menu Card -->
     <!--
 *  General goal: show User / prompt login.
-*  
+*
 *  If logged in: (in no particular order)
 *     show user name, contributions.
 *     # of favorited channels
 *     log out button
 *     settings page link
-*     
+*
 *  If not logged in:
 *     social login buttons
 *     settings page link
-*     
-                     *  
+*
+                     *
                      -->
     <v-card v-intersect="tryUpdateUser" flat>
         <v-list :dense="inNavDrawer" class="pb-0">
@@ -29,21 +29,23 @@
                     <v-list-item-subtitle>
                         <span v-if="user.role !== 'user'" style="text-transform: capitalize">{{ user.role }}</span>
                         &nbsp;
-                        <v-icon small :color="user.discord_id ? 'green lighten-2' : 'grey'">{{
-                            icons.mdiDiscord
-                        }}</v-icon>
+                        <v-icon small :color="user.discord_id ? 'green lighten-2' : 'grey'">
+                            {{ icons.mdiDiscord }}
+                        </v-icon>
                         &nbsp;
-                        <v-icon small :color="user.google_id ? 'green lighten-2' : 'grey'">{{
-                            icons.mdiGoogle
-                        }}</v-icon>
+                        <v-icon small :color="user.google_id ? 'green lighten-2' : 'grey'">
+                            {{ icons.mdiGoogle }}
+                        </v-icon>
                         &nbsp;
-                        <v-icon small :color="user.twitter_id ? 'green lighten-2' : 'grey'">{{
-                            icons.mdiTwitter
-                        }}</v-icon>
+                        <v-icon small :color="user.twitter_id ? 'green lighten-2' : 'grey'">
+                            {{ icons.mdiTwitter }}
+                        </v-icon>
                         &nbsp;
                     </v-list-item-subtitle>
                     <v-list-item-content class="primary--text d-inline">
-                        <v-icon x-small class="d-inline">{{ icons.mdiStarFourPointsOutline }}</v-icon>
+                        <v-icon x-small class="d-inline">
+                            {{ icons.mdiStarFourPointsOutline }}
+                        </v-icon>
                         {{ user.contribution_count }} {{ $t("component.mainNav.points") }}
                     </v-list-item-content>
                 </v-list-item-content>
@@ -56,7 +58,7 @@
                 <v-list-item-title>{{ $t("component.mainNav.login") }}</v-list-item-title>
             </v-list-item>
 
-            <v-divider v-if="user"></v-divider>
+            <v-divider v-if="user" />
             <v-list-item v-if="user" to="/login" link>
                 <v-list-item-icon>
                     <v-icon>{{ icons.mdiAccountCircleOutline }}</v-icon>

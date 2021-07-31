@@ -22,7 +22,7 @@
                 >
                     <!-- pass slot to each individual video card -->
                     <template #action>
-                        <slot name="action" :video="video"></slot>
+                        <slot name="action" :video="video" />
                     </template>
                 </VideoCard>
                 <!-- Append comment item for Comment Search -->
@@ -32,10 +32,10 @@
                     dense
                     class="pa-0 transparent overflow-y-auto caption overflow-x-hidden"
                 >
-                    <v-divider class="mx-4" style="flex-basis: 100%; height: 0"></v-divider>
+                    <v-divider class="mx-4" style="flex-basis: 100%; height: 0" />
                     <!-- Render Channel Avatar if necessary -->
                     <v-list-item v-for="comment in video.comments" :key="comment.comment_key" class="pa-0">
-                        <comment :comment="comment" :video-id="video.id"></comment>
+                        <comment :comment="comment" :video-id="video.id" />
                     </v-list-item>
                 </v-list>
             </v-col>
@@ -54,7 +54,6 @@
 
 <script lang="ts">
 import VideoCard from "@/components/video/VideoCard.vue";
-import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
 import filterVideos from "@/mixins/filterVideos";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
@@ -62,7 +61,6 @@ export default {
     name: "VideoCardList",
     components: {
         VideoCard,
-        ApiErrorMessage,
         Comment: () => import("./Comment.vue"),
     },
     mixins: [filterVideos],
@@ -106,6 +104,7 @@ export default {
         activeId: {
             required: false,
             type: String,
+            default: "",
         },
         dense: {
             type: Boolean,
@@ -172,10 +171,11 @@ export default {
     watch: {
         expanded() {
             // on close, set the scroll position back to the expand button
-            if (!this.expanded)
+            if (!this.expanded) {
                 this.$nextTick(() => {
                     this.$refs.expandBtn.$el.scrollIntoView({ block: "center" });
                 });
+            }
         },
     },
     methods: {

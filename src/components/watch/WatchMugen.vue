@@ -2,10 +2,7 @@
     <v-card tile class="mb-2">
         <v-card-subtitle>{{ $t("component.watch.nextUpInMugen") }} {{ nextUpTime }}</v-card-subtitle>
         <!-- <v-card-text> -->
-        <v-progress-linear
-            :color="countdownProgress > 0 ? 'primary' : 'grey'"
-            :value="countdownProgress"
-        ></v-progress-linear>
+        <v-progress-linear :color="countdownProgress > 0 ? 'primary' : 'grey'" :value="countdownProgress" />
         <VideoCardList
             v-if="playlist.length > 0"
             :videos="videos"

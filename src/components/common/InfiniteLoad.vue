@@ -23,6 +23,18 @@ export default {
     components: {
         LoadingOverlay,
     },
+    props: {
+        identifier: {
+            type: [String, Number],
+            default: +new Date(),
+        },
+        initVisible: {
+            // initial visibility, set to FALSE to prevent page loading at start. Usually you want TRUE
+            // unless you're *absolutely* sure the object is not going to be visible.
+            default: true,
+            type: Boolean,
+        },
+    },
     data() {
         return {
             STATUSES: Object.freeze({
@@ -36,17 +48,7 @@ export default {
             isVisible: false, // always invisible at start
         };
     },
-    props: {
-        identifier: {
-            default: +new Date(),
-        },
-        initVisible: {
-            // initial visibility, set to FALSE to prevent page loading at start. Usually you want TRUE
-            // unless you're *absolutely* sure the object is not going to be visible.
-            default: true,
-            type: Boolean,
-        },
-    },
+
     watch: {
         identifier() {
             this.reset();

@@ -13,8 +13,7 @@
                                 playsinline: 1,
                             }"
                             @ready="ready"
-                        >
-                        </youtube>
+                        />
                     </template>
                 </WatchFrame>
                 <div v-if="video.comments.length" class="comment-scroller">
@@ -34,19 +33,26 @@
                     v-if="!$store.state.userdata || !$store.state.userdata.jwt"
                     color="error"
                     v-html="$t('views.editor.needlogin')"
-                >
-                </v-alert>
+                />
                 <v-row fluid>
                     <v-tabs v-model="currentTab">
-                        <v-tab :disabled="video.type !== 'stream'">{{ $t("component.search.type.topic") }}</v-tab>
-                        <v-tab :disabled="video.type !== 'stream'">{{ $t("component.mainNav.music") }}</v-tab>
+                        <v-tab :disabled="video.type !== 'stream'">
+                            {{ $t("component.search.type.topic") }}
+                        </v-tab>
+                        <v-tab :disabled="video.type !== 'stream'">
+                            {{ $t("component.mainNav.music") }}
+                        </v-tab>
                         <v-tab>{{ $t("views.editor.channelMentions.title") }}</v-tab>
-                        <v-tab disabled>{{ $t("views.editor.sources.title") }}</v-tab>
+                        <v-tab disabled>
+                            {{ $t("views.editor.sources.title") }}
+                        </v-tab>
                     </v-tabs>
                     <v-col cols="12" class="pa-4">
                         <div v-show="currentTab === TABS.TOPIC">
                             <v-card-title>
-                                <v-icon left>{{ icons.mdiAnimationPlay }}</v-icon>
+                                <v-icon left>
+                                    {{ icons.mdiAnimationPlay }}
+                                </v-icon>
                                 <h5>{{ $t("views.editor.changeTopic.title") }}</h5>
                             </v-card-title>
                             <v-card-text>
@@ -72,7 +78,7 @@
                                 :video="video"
                                 :current-time="currentTime"
                                 @timeJump="seekTo"
-                            ></VideoEditSongs>
+                            />
                         </div>
                         <div v-if="currentTab === TABS.MENTIONS">
                             <VideoEditMentions :video="video" />
@@ -96,7 +102,6 @@ import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import WatchInfo from "@/components/watch/WatchInfo.vue";
 import WatchFrame from "@/components/watch/WatchFrame.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
-import WatchSideBar from "@/components/watch/WatchSideBar.vue";
 import VideoEditSongs from "@/components/edit/VideoEditSongs.vue";
 import VideoEditMentions from "@/components/edit/VideoEditMentions.vue";
 import { decodeHTMLEntities } from "@/utils/functions";
@@ -115,11 +120,9 @@ export default {
         LoadingOverlay,
         WatchInfo,
         WatchFrame,
-        WatchSideBar,
         VideoEditSongs,
         WatchComments,
         VideoEditMentions,
-        WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
     },
     data() {
         return {

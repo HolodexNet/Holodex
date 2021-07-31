@@ -35,13 +35,11 @@
 import VirtualVideoCardList from "@/components/video/VirtualVideoCardList.vue";
 import { mapState } from "vuex";
 import backendApi from "@/utils/backend-api";
-import LoadingOverlay from "../common/LoadingOverlay.vue";
 
 export default {
     name: "WatchPlaylist",
     components: {
         VirtualVideoCardList,
-        LoadingOverlay,
     },
     props: {
         // sync'd playlist index value
@@ -64,6 +62,13 @@ export default {
             // activeIndex: 0,
         };
     },
+    computed: {
+        ...mapState("watch", ["video"]),
+        ...mapState("playlist", ["active", "isSaved"]),
+        videos() {
+            return (this.playlist && this.playlist.videos) || [];
+        },
+    },
     watch: {
         value(nw) {
             if (
@@ -71,8 +76,9 @@ export default {
                 this.videos.length === nw ||
                 nw === -1 ||
                 this.$route.params.id === this.videos[nw].id
-            )
+            ) {
                 return;
+            }
             this.$emit("playNext", { video: this.videos[nw] });
         },
         video() {
@@ -112,13 +118,6 @@ export default {
                 .finally(() => {
                     this.isLoading = false;
                 });
-        },
-    },
-    computed: {
-        ...mapState("watch", ["video"]),
-        ...mapState("playlist", ["active", "isSaved"]),
-        videos() {
-            return (this.playlist && this.playlist.videos) || [];
         },
     },
 };

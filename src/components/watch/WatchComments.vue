@@ -1,6 +1,8 @@
 <template>
     <v-card>
-        <v-card-title class="text-body-1">{{ $t("component.watch.Comments.title") }}</v-card-title>
+        <v-card-title class="text-body-1">
+            {{ $t("component.watch.Comments.title") }}
+        </v-card-title>
         <v-card-text>
             <template v-if="!hideBuckets">
                 <template v-for="b in buckets">
@@ -19,23 +21,15 @@
             <v-divider />
             <v-list v-if="comments" dense class="pa-0 transparent caption" @click.native="handleClick">
                 <template v-for="comment in limitComment">
-                    <Comment :key="comment.comment_key" :comment="comment" :video-id="video.id"></Comment>
+                    <Comment :key="comment.comment_key" :comment="comment" :video-id="video.id" />
                 </template>
             </v-list>
             <v-btn v-if="shouldLimit" plain small text @click="expanded = !expanded">
-                {{ expanded ? $t("views.app.close_btn") : $t("component.description.showMore") }}</v-btn
-            >
+                {{ expanded ? $t("views.app.close_btn") : $t("component.description.showMore") }}
+            </v-btn>
         </v-card-text>
     </v-card>
 </template>
-
-<style>
-button.ts-btn.v-btn {
-    font-size: 11px;
-    padding: 0px 5px !important;
-    height: 25px !important;
-}
-</style>
 
 <script lang="ts">
 import Comment from "@/components/video/Comment.vue";
@@ -84,6 +78,7 @@ export default {
         },
         filteredComments() {
             if (this.currentFilter < 0) {
+                // eslint-disable-next-line vue/no-side-effects-in-computed-properties
                 return this.groupedComments.sort((a, b) => b.times.length - a.times.length);
             }
             return this.comments
@@ -164,3 +159,10 @@ export default {
     },
 };
 </script>
+<style>
+button.ts-btn.v-btn {
+    font-size: 11px;
+    padding: 0px 5px !important;
+    height: 25px !important;
+}
+</style>

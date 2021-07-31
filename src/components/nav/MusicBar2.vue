@@ -17,7 +17,9 @@
                         <v-icon>{{ mdiSkipPrevious }}</v-icon>
                     </v-btn>
                     <v-btn icon fab color="primary" @click="playPause">
-                        <v-icon x-large>{{ playButtonIcon }}</v-icon>
+                        <v-icon x-large>
+                            {{ playButtonIcon }}
+                        </v-icon>
                     </v-btn>
                     <v-btn icon class="mx-1" color="secondary" @click="nextButtonHandler">
                         <v-progress-circular
@@ -26,7 +28,9 @@
                             :value="patience"
                             size="40"
                         >
-                            <v-icon color="secondary">{{ mdiSkipNext }}</v-icon>
+                            <v-icon color="secondary">
+                                {{ mdiSkipNext }}
+                            </v-icon>
                         </v-progress-circular>
                     </v-btn>
                     <v-btn icon color="secondary" class="mx-1" @click="$store.commit('music/cycleMode')">
@@ -54,13 +58,15 @@
                                 v-on="on"
                                 @click="queueMenuOpen = !queueMenuOpen"
                             >
-                                <v-icon color="secondary">{{ icons.mdiPlaylistMusic }}</v-icon>
+                                <v-icon color="secondary">
+                                    {{ icons.mdiPlaylistMusic }}
+                                </v-icon>
                                 <div class="secondary--text text--darken-2">
                                     ({{ currentId + 1 }}/{{ playlist.length }})
                                 </div>
                             </v-btn>
                         </template>
-                        <song-playlist :songs="playlist" :current-id="currentId"></song-playlist>
+                        <song-playlist :songs="playlist" :current-id="currentId" />
                     </ResponsiveMenu>
                     <v-slide-x-transition>
                         <v-btn
@@ -75,9 +81,12 @@
                                     $store.commit('music/clearPlaylist');
                                 }
                             "
-                            ><v-icon left>{{ mdiPlaylistRemove }}</v-icon>
-                            {{ $t("component.music.clearPlaylist") }}</v-btn
                         >
+                            <v-icon left>
+                                {{ mdiPlaylistRemove }}
+                            </v-icon>
+                            {{ $t("component.music.clearPlaylist") }}
+                        </v-btn>
                     </v-slide-x-transition>
                 </div>
                 <div v-if="$vuetify.breakpoint.xs" style="display: flex; flex-direction: column; align-items: center">
@@ -99,7 +108,7 @@
                             aspect-ratio="1"
                             height="auto"
                             width="50px"
-                        ></v-img>
+                        />
                     </div>
                     <div>
                         <div class="text-h6">
@@ -134,11 +143,16 @@
                                     target="_blank"
                                     :href="`https://youtu.be/${song.video_id}?t=${song.start}`"
                                     @click.stop
-                                    ><v-icon left>{{ icons.mdiYoutube }}</v-icon>
+                                >
+                                    <v-icon left>
+                                        {{ icons.mdiYoutube }}
+                                    </v-icon>
                                     {{ $t("views.settings.redirectModeLabel") }}
                                 </v-list-item>
-                                <v-list-item :to="`/edit/video/${song.video_id}/music`"
-                                    ><v-icon left>{{ icons.mdiPencil }}</v-icon>
+                                <v-list-item :to="`/edit/video/${song.video_id}/music`">
+                                    <v-icon left>
+                                        {{ icons.mdiPencil }}
+                                    </v-icon>
                                     {{ $t("component.videoCard.edit") }}
                                 </v-list-item>
                             </v-list>
@@ -175,100 +189,10 @@
                 @error="songError"
                 @buffering="songBuffering"
                 @ready="songReady"
-            ></song-frame
-        ></portal>
+            />
+        </portal>
     </v-bottom-sheet>
 </template>
-
-<style lang="scss">
-.theme--light .music-player-bar {
-    background: rgba(254, 253, 255, 0.95);
-}
-
-.theme--dark .music-player-bar {
-    background: rgba(41, 43, 49, 0.99);
-}
-
-.music-player-bar {
-    position: relative;
-
-    iframe {
-        border-radius: 4px;
-    }
-}
-
-.single-line-clamp {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    white-space: initial;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-}
-
-.player-controls {
-    justify-content: space-between;
-}
-
-.player-controls .v-btn::before {
-    background-color: transparent;
-}
-#songChannel {
-    text-decoration: none;
-}
-.queue-btn {
-    transition: background-color 2s ease;
-    background-color: transparent !important;
-    &.added-animation {
-        animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-        background-color: #f06292 !important;
-    }
-}
-
-.invisible .v-progress-circular__underlay {
-    stroke: transparent;
-}
-
-.music-progress {
-    .v-slider {
-        cursor: pointer !important;
-    }
-
-    .v-slider__track-container {
-        transition: height 0.2s ease-out;
-    }
-
-    .v-slider:hover {
-        .v-slider__track-container {
-            height: 6px;
-        }
-    }
-}
-
-@keyframes shake {
-    10%,
-    90% {
-        transform: translate3d(-1px, 0, 0);
-    }
-
-    20%,
-    80% {
-        transform: translate3d(2px, 0, 0);
-    }
-
-    30%,
-    50%,
-    70% {
-        transform: translate3d(-4px, 0, 0);
-    }
-
-    40%,
-    60% {
-        transform: translate3d(4px, 0, 0);
-    }
-}
-</style>
 
 <script lang="ts">
 import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
@@ -345,6 +269,41 @@ export default {
             isEmbedPlayerInBackground: false,
         };
     },
+    computed: {
+        isMobile() {
+            return this.$store.state.isMobile;
+        },
+        playButtonIcon() {
+            if (this.state === MUSIC_PLAYER_STATE.PLAYING) return mdiPause;
+            return mdiPlay;
+        },
+        shuffleButtonIcon() {
+            return ICON_MODE[this.mode];
+        },
+        animateAdded: {
+            get() {
+                return this.addedAnimation;
+            },
+            set() {
+                this.$store.commit("music/stopAddedAnimation");
+            },
+        },
+        ...mapState("settings", ["nameProperty"]),
+        ...mapState("music", [
+            "currentId",
+            "playId",
+            "playlist",
+            "state",
+            "mode",
+            "addedAnimation",
+            "isOpen",
+            "lastNextSong",
+        ]),
+        ...mapGetters("music", ["currentSong", "canPlay"]),
+        song() {
+            return this.currentSong && this.currentSong.song;
+        },
+    },
     watch: {
         isOpen() {
             // workaround to allow scrolling when media is popped open:
@@ -395,41 +354,6 @@ export default {
     },
     beforeDestroy() {
         window.removeEventListener("blur", this.probableMouseClickInIFrame);
-    },
-    computed: {
-        isMobile() {
-            return this.$store.state.isMobile;
-        },
-        playButtonIcon() {
-            if (this.state === MUSIC_PLAYER_STATE.PLAYING) return mdiPause;
-            return mdiPlay;
-        },
-        shuffleButtonIcon() {
-            return ICON_MODE[this.mode];
-        },
-        animateAdded: {
-            get() {
-                return this.addedAnimation;
-            },
-            set() {
-                this.$store.commit("music/stopAddedAnimation");
-            },
-        },
-        ...mapState("settings", ["nameProperty"]),
-        ...mapState("music", [
-            "currentId",
-            "playId",
-            "playlist",
-            "state",
-            "mode",
-            "addedAnimation",
-            "isOpen",
-            "lastNextSong",
-        ]),
-        ...mapGetters("music", ["currentSong", "canPlay"]),
-        song() {
-            return this.currentSong && this.currentSong.song;
-        },
     },
     methods: {
         // event handlers:
@@ -605,3 +529,92 @@ export default {
     },
 };
 </script>
+<style lang="scss">
+.theme--light .music-player-bar {
+    background: rgba(254, 253, 255, 0.95);
+}
+
+.theme--dark .music-player-bar {
+    background: rgba(41, 43, 49, 0.99);
+}
+
+.music-player-bar {
+    position: relative;
+
+    iframe {
+        border-radius: 4px;
+    }
+}
+
+.single-line-clamp {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    white-space: initial;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}
+
+.player-controls {
+    justify-content: space-between;
+}
+
+.player-controls .v-btn::before {
+    background-color: transparent;
+}
+#songChannel {
+    text-decoration: none;
+}
+.queue-btn {
+    transition: background-color 2s ease;
+    background-color: transparent !important;
+    &.added-animation {
+        animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        background-color: #f06292 !important;
+    }
+}
+
+.invisible .v-progress-circular__underlay {
+    stroke: transparent;
+}
+
+.music-progress {
+    .v-slider {
+        cursor: pointer !important;
+    }
+
+    .v-slider__track-container {
+        transition: height 0.2s ease-out;
+    }
+
+    .v-slider:hover {
+        .v-slider__track-container {
+            height: 6px;
+        }
+    }
+}
+
+@keyframes shake {
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+</style>

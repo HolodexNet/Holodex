@@ -18,7 +18,7 @@
                     lg: 5,
                     xl: 6,
                 }"
-            ></VideoCardList>
+            />
             <v-divider v-if="videoList.videos.length" class="my-5" />
         </v-container>
     </v-container>

@@ -8,14 +8,16 @@
         </v-snackbar>
         <div class="d-flex justify-space-between flex-wrap align-center">
             <v-col cols="auto">
-                <v-avatar rounded left size="40"
-                    ><v-icon size="25" color="grey darken-2">
+                <v-avatar rounded left size="40">
+                    <v-icon size="25" color="grey darken-2">
                         {{ icons.mdiPencil }}
-                    </v-icon></v-avatar
-                >
-                <v-avatar rounded left size="40"
-                    ><v-icon size="25" color="grey darken-2">{{ mdiAt }}</v-icon></v-avatar
-                >
+                    </v-icon>
+                </v-avatar>
+                <v-avatar rounded left size="40">
+                    <v-icon size="25" color="grey darken-2">
+                        {{ mdiAt }}
+                    </v-icon>
+                </v-avatar>
                 <template v-for="item in mentions">
                     <ChannelChip :key="item.id + 'chip'" :channel="item" :size="60">
                         <template #default>
@@ -61,16 +63,16 @@
             </v-col>
             <v-divider vertical />
             <v-col cols="auto">
-                <v-avatar rounded left size="40"
-                    ><v-icon size="25" color="grey darken-2">
+                <v-avatar rounded left size="40">
+                    <v-icon size="25" color="grey darken-2">
                         {{ icons.mdiPencil }}
-                    </v-icon></v-avatar
-                >
-                <v-avatar rounded left size="40"
-                    ><v-icon size="25" color="grey darken-2">
+                    </v-icon>
+                </v-avatar>
+                <v-avatar rounded left size="40">
+                    <v-icon size="25" color="grey darken-2">
                         {{ icons.mdiAnimationPlay }}
-                    </v-icon></v-avatar
-                >
+                    </v-icon>
+                </v-avatar>
                 <span class="text-overline ml-3 text--disabled">{{ $t("component.search.type.topic") }}</span>
                 <v-autocomplete
                     v-model="newTopic"
@@ -127,6 +129,7 @@ export default {
     },
     props: {
         video: {
+            type: Object,
             required: true,
         },
     },
@@ -149,6 +152,30 @@ export default {
             topics: [],
             newTopic: "",
         };
+    },
+    computed: {
+        role() {
+            return this.$store.state.userdata?.user?.role;
+        },
+    },
+    watch: {
+        // eslint-disable-next-line func-names
+        search: debounce(function () {
+            if (!this.search) {
+                this.searchResults = [];
+                return;
+            }
+            backendApi
+                .searchChannel({
+                    type: CHANNEL_TYPES.VTUBER,
+                    queryText: this.search,
+                })
+                .then(({ data }) => {
+                    this.searchResults = data.filter(
+                        (d) => !(this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id)),
+                    );
+                });
+        }, 400),
     },
     mounted() {
         this.updateMentions();
@@ -222,30 +249,6 @@ export default {
         saveTopic() {
             backendApi.topicSet(this.newTopic, this.video.id, this.$store.state.userdata.jwt);
             this.topic = this.newTopic;
-        },
-    },
-    watch: {
-        // eslint-disable-next-line func-names
-        search: debounce(function () {
-            if (!this.search) {
-                this.searchResults = [];
-                return;
-            }
-            backendApi
-                .searchChannel({
-                    type: CHANNEL_TYPES.VTUBER,
-                    queryText: this.search,
-                })
-                .then(({ data }) => {
-                    this.searchResults = data.filter((d) => {
-                        return !(this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id));
-                    });
-                });
-        }, 400),
-    },
-    computed: {
-        role() {
-            return this.$store.state.userdata?.user?.role;
         },
     },
 };

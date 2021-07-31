@@ -43,8 +43,7 @@
             }"
             @videoUpdate="handleVideoUpdate"
             @historyLength="handleHistoryLength"
-        >
-        </LiveTranslations>
+        />
 
         <div
             v-if="showLiveChat"
@@ -77,10 +76,12 @@ export default {
     props: {
         video: {
             type: Object,
-            required: false,
+            default: null,
         },
         mugenId: {
+            type: String,
             required: false,
+            default: null,
         },
         fixedBottom: {
             type: Boolean,
@@ -112,6 +113,7 @@ export default {
         },
         currentTime: {
             type: Number,
+            default: 0,
         },
         scale: {
             type: Number,

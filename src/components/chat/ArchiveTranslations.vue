@@ -13,7 +13,7 @@
                     </template>
 
                     <v-card>
-                        <portal-target name="expandedMessage" class="d-flex tl-expanded"> </portal-target>
+                        <portal-target name="expandedMessage" class="d-flex tl-expanded" />
                         <v-divider />
                         <v-card-actions>
                             <v-spacer />
@@ -37,8 +37,7 @@
                 :data-sources="tlHistory"
                 :item-height="20"
                 :item-class-add="activeClass"
-            >
-            </virtual-list>
+            />
         </portal>
     </v-card>
 </template>
@@ -54,13 +53,13 @@ export default {
     name: "ArchiveTranslations",
     components: {
         WatchLiveTranslationsSetting,
-        ChatMessage,
         VirtualList,
     },
     mixins: [chatMixin],
     props: {
         currentTime: {
             type: Number,
+            default: 0,
         },
     },
     data() {

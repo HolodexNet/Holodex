@@ -60,7 +60,7 @@
                 </template>
 
                 <v-list style="max-height: 300px; overscroll-behavior: contain" class="overflow-y-auto">
-                    <slot name="prepend-dropdown"></slot>
+                    <slot name="prepend-dropdown" />
                     <v-list-item
                         v-for="org in orgFavorites"
                         :key="org.name + 'select'"
@@ -157,6 +157,11 @@ export default {
         currentSelection: {
             type: Object,
             optional: true,
+            default: () => ({
+                name: "Hololive",
+                short: "Holo",
+                name_jp: null,
+            }),
         },
         hideAllVTubers: {
             type: Boolean,

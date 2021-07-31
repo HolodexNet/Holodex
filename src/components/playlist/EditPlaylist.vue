@@ -2,7 +2,7 @@
     <v-card width="400" class="nav-scroll thin-scroll-bar pl-2">
         <slot />
         <div class="pa-2">
-            <playlist :playlist="active" is-editable :is-saved="isSaved" horizontal></playlist>
+            <playlist :playlist="active" is-editable :is-saved="isSaved" horizontal />
         </div>
     </v-card>
 </template>
@@ -14,15 +14,9 @@ import Playlist from "@/components/playlist/Playlist.vue";
 export default {
     name: "EditPlaylist",
     components: { Playlist },
-    data() {
-        return {};
-    },
-    mounted() {},
-    beforeDestroy() {},
     computed: {
         ...mapState("playlist", ["active", "isSaved"]),
     },
-    methods: {},
 };
 </script>
 

@@ -17,7 +17,7 @@
             <span v-if="source.timestamp" class="tl-caption mr-1">
                 {{ source.displayTime }}
             </span>
-            <span class="text--primary" v-html="source.message"></span>
+            <span class="text--primary" v-html="source.message" />
         </div>
         <v-dialog v-model="showBlockChannelDialog" width="500">
             <v-card>
@@ -42,6 +42,7 @@ export default {
         },
         index: {
             type: Number,
+            default: 0,
         },
     },
     data() {

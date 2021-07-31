@@ -24,7 +24,7 @@
     <v-list v-else-if="grouped" class="pa-0">
         <!-- channelsByGroup has group title and group items, nested loop -->
         <template v-for="(group, index) in channelsByGroup">
-            <v-divider :key="'divider-grp' + index"></v-divider>
+            <v-divider :key="'divider-grp' + index" />
             <v-list-group :key="`${index}-${group.title}`" no-action sub-group value="0">
                 <!-- Header with group name and a favorite all button + tooltip -->
                 <template #activator>
@@ -59,8 +59,8 @@
                     </v-list-item>
                 </template>
                 <!-- Channel list -->
-                <template v-for="(channel, index) in group.items">
-                    <v-divider :key="'divider-' + index"></v-divider>
+                <template v-for="(channel, index2) in group.items">
+                    <v-divider :key="'divider-' + index2" />
                     <v-list-item
                         v-if="channel"
                         :key="channel.id"
@@ -83,7 +83,7 @@
     <!-- Normal channel list -->
     <v-list v-else class="pa-0">
         <template v-for="(channel, index) in channels">
-            <v-divider :key="'divider-' + index"></v-divider>
+            <v-divider :key="'divider-' + index" />
             <v-list-item
                 v-if="channel"
                 :key="channel.id"
@@ -194,8 +194,9 @@ export default {
                     this.$store.commit("favorites/toggleFavorite", c.id);
                 }
             });
-            if (Object.keys(this.$store.state.favorites.stagedFavorites).length > 0)
+            if (Object.keys(this.$store.state.favorites.stagedFavorites).length > 0) {
                 this.$store.dispatch("favorites/updateFavorites");
+            }
         },
     },
 };

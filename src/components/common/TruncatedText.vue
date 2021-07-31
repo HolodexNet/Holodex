@@ -29,9 +29,11 @@ export default {
     props: {
         html: {
             type: String,
+            default: "",
         },
         text: {
             type: String,
+            default: "",
         },
         lines: {
             type: [Number, String],

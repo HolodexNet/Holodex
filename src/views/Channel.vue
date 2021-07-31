@@ -22,7 +22,7 @@
             </v-container>
         </v-card>
         <v-container class="channel" style="min-height: 85vh">
-            <router-view></router-view>
+            <router-view />
         </v-container>
     </v-container>
     <LoadingOverlay v-else :is-loading="isLoading" :show-error="hasError" />
@@ -50,14 +50,6 @@ export default {
         ChannelInfo,
         ChannelImg,
         LoadingOverlay,
-    },
-    data() {
-        return {
-            tab: 0,
-        };
-    },
-    created() {
-        this.init();
     },
     computed: {
         ...mapState("channel", ["id", "channel", "isLoading", "hasError"]),
@@ -119,6 +111,9 @@ export default {
         metaImage() {
             return this.channel.photo;
         },
+    },
+    created() {
+        this.init();
     },
     methods: {
         init() {

@@ -1,7 +1,9 @@
 <template>
     <v-card>
         <v-card-title>{{ $t("views.multiview.presetEditor.title") }}</v-card-title>
-        <v-card-subtitle class="pb-0">{{ $t("component.channelInfo.videoCount", [videoCells]) }}</v-card-subtitle>
+        <v-card-subtitle class="pb-0">
+            {{ $t("component.channelInfo.videoCount", [videoCells]) }}
+        </v-card-subtitle>
         <v-card-text>
             <v-row>
                 <v-col cols="auto">

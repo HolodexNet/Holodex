@@ -79,12 +79,13 @@ export function getBannerImages(url) {
 const formatters = {};
 
 export function formatCount(n, lang = "en") {
-    if (!formatters[lang])
+    if (!formatters[lang]) {
         formatters[lang] = new Intl.NumberFormat(lang, {
             compactDisplay: "short",
             notation: "compact",
             maximumSignificantDigits: 3,
         });
+    }
     let num = n;
     if (typeof n === "string") num = +n;
     return formatters[lang].format(num);

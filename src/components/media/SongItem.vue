@@ -4,11 +4,13 @@
             <v-hover v-slot="{ hover: hoverInner }">
                 <v-list-item-avatar tile>
                     <!-- actual artwork -->
-                    <v-img v-if="song.art" lazy-src :src="song.art"></v-img>
+                    <v-img v-if="song.art" lazy-src :src="song.art" />
                     <!-- artwork not available, have a stand-in -->
                     <v-sheet v-else width="100%" height="100%" color="grey darken-1" class="d-flex pa-1">
                         <v-btn small icon class="ma-auto" outlined disabled>
-                            <v-icon small>{{ icons.mdiMusic }}</v-icon>
+                            <v-icon small>
+                                {{ icons.mdiMusic }}
+                            </v-icon>
                         </v-btn>
                     </v-sheet>
                     <!-- Queue up button or default item click button -->
@@ -21,7 +23,9 @@
                         style="position: absolute; left: 0px"
                     >
                         <v-btn x-small fab class="ma-auto" color="blue lighten-3" elevation="2">
-                            <v-icon small>{{ hoverIcon }}</v-icon>
+                            <v-icon small>
+                                {{ hoverIcon }}
+                            </v-icon>
                         </v-btn>
                     </v-sheet>
                     <!-- Play immediately button over the artwork -->
@@ -41,11 +45,13 @@
                             elevation="2"
                             @click.stop.prevent="$emit('playNow', song)"
                         >
-                            <v-icon small>{{ artworkHoverIcon }}</v-icon>
+                            <v-icon small>
+                                {{ artworkHoverIcon }}
+                            </v-icon>
                         </v-btn>
                     </v-sheet>
-                </v-list-item-avatar></v-hover
-            >
+                </v-list-item-avatar>
+            </v-hover>
             <v-list-item-content class="py-1 pt-1">
                 <v-list-item-subtitle class="text--primary text-subtitle-1">
                     <a
@@ -121,9 +127,11 @@ export default {
             default: false,
         },
         hoverIcon: {
+            type: String,
             default: null,
         },
         artworkHoverIcon: {
+            type: String,
             default: null,
         },
     },

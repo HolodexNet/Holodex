@@ -32,14 +32,14 @@
                     <v-icon>{{ mdiMessage }}</v-icon>
                 </v-btn>
             </v-sheet>
-            <template>
-                <CellControl :play-icon="icons.mdiPlay" class="mx-6 mb-6 mt-0 flex-grow-0" @delete="deleteCell" />
-            </template>
+            <CellControl :play-icon="icons.mdiPlay" class="mx-6 mb-6 mt-0 flex-grow-0" @delete="deleteCell" />
         </v-sheet>
 
         <v-overlay absolute :value="showDropOverlay">
             <div>
-                <v-icon x-large>{{ mdiSelectionEllipseArrowInside }}</v-icon>
+                <v-icon x-large>
+                    {{ mdiSelectionEllipseArrowInside }}
+                </v-icon>
             </div>
         </v-overlay>
         <!--=== Video/Chat iFrame based on type ===-->
@@ -67,8 +67,7 @@
                         @play="vidPlaying({ data: 1 })"
                         @pause="vidPlaying({ data: 2 })"
                         @error="pausedMode = true"
-                    >
-                    </VueTwitchPlayer>
+                    />
                     <!-- Youtube Player -->
                     <youtube
                         v-else
@@ -83,8 +82,7 @@
                         @paused="vidPlaying({ data: 2 })"
                         @cued="pausedMode = true"
                         @error="pausedMode = true"
-                    >
-                    </youtube>
+                    />
                 </div>
                 <template v-else-if="cellContent.type === 'chat'">
                     <TabbedLiveChat
@@ -121,10 +119,11 @@
             <template v-if="isChat && !pausedMode">
                 <!-- CHAT + UNPAUSED --->
                 <v-sheet class="cell-control">
-                    <v-btn :x-small="toggleChat || toggleTL" width="50%" @click="pausedMode = !pausedMode"
-                        ><v-icon small class="mr-1">{{ icons.mdiMenu }}</v-icon
-                        >{{ $t("component.videoCard.edit") }}</v-btn
-                    >
+                    <v-btn :x-small="toggleChat || toggleTL" width="50%" @click="pausedMode = !pausedMode">
+                        <v-icon small class="mr-1">
+                            {{ icons.mdiMenu }} </v-icon
+                        >{{ $t("component.videoCard.edit") }}
+                    </v-btn>
                     <v-btn
                         :x-small="toggleChat || toggleTL"
                         width="25%"
@@ -136,7 +135,7 @@
                             M9.9,10.8v3.8h-2v-3.8L5.1,6.6h2.4l1.4,2.2 l1.4-2.2h2.4L9.9,10.8z
                             M18.9,8.6h-2v6h-2v-6h-2v-2h6V8.6z
                         </v-icon>
-                        <template v-if="cellWidth > 200">Chat</template>
+                        <template v-if="cellWidth > 200"> Chat </template>
                     </v-btn>
                     <v-btn
                         :x-small="toggleChat || toggleTL"
@@ -148,10 +147,10 @@
                             M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z M4,10h4v2H4V10z
                             M14,16H4v-2h10V16z M20,16h-4v-2 h4V16z M20,12H10v-2h10V12z
                         </v-icon>
-                        <template v-if="cellWidth > 200">TL</template>
+                        <template v-if="cellWidth > 200"> TL </template>
                     </v-btn>
                 </v-sheet>
-                <div v-if="!toggleChat && !toggleTL" style="height: 20%"></div>
+                <div v-if="!toggleChat && !toggleTL" style="height: 20%" />
             </template>
         </template>
     </v-card>
@@ -199,41 +198,6 @@ export default {
             mdiCardPlus,
         };
     },
-    watch: {
-        cellWidth() {
-            this.checkScale();
-        },
-        cellContent(nw, old) {
-            // if cell becomes null or content changes to a different type, set paused mode back to true
-            if (!nw || (old && nw && nw.type !== old.type)) this.pausedMode = true;
-            if (nw && nw.type === "chat") this.pausedMode = false;
-            this.setLayoutFreeze();
-
-            if (
-                nw &&
-                nw.type === "video" &&
-                this.iOS() &&
-                this.$store.state.multiview.layout.find((item) => {
-                    return (
-                        item.i !== this.item.i &&
-                        this.layoutContent[item.i] &&
-                        this.layoutContent[item.i].type === "video" // &&
-                    );
-                })
-            ) {
-                this.muted = true;
-            }
-        },
-        pausedMode(newMode) {
-            this.setLayoutFreeze(newMode);
-        },
-    },
-    mounted() {
-        // initialize chat cell in non paused mode
-        if (this.cellContent?.type === "chat") this.pausedMode = false;
-        this.setLayoutFreeze();
-        this.checkScale();
-    },
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),
         ...mapState("multiview", ["layoutContent"]),
@@ -267,6 +231,40 @@ export default {
                 this.$store.commit("multiview/setLayoutContentWithKey", { id: this.item.i, key: "video", value });
             },
         },
+    },
+    watch: {
+        cellWidth() {
+            this.checkScale();
+        },
+        cellContent(nw, old) {
+            // if cell becomes null or content changes to a different type, set paused mode back to true
+            if (!nw || (old && nw && nw.type !== old.type)) this.pausedMode = true;
+            if (nw && nw.type === "chat") this.pausedMode = false;
+            this.setLayoutFreeze();
+
+            if (
+                nw &&
+                nw.type === "video" &&
+                this.iOS() &&
+                this.$store.state.multiview.layout.find(
+                    (item) =>
+                        item.i !== this.item.i &&
+                        this.layoutContent[item.i] &&
+                        this.layoutContent[item.i].type === "video", // &&
+                )
+            ) {
+                this.muted = true;
+            }
+        },
+        pausedMode(newMode) {
+            this.setLayoutFreeze(newMode);
+        },
+    },
+    mounted() {
+        // initialize chat cell in non paused mode
+        if (this.cellContent?.type === "chat") this.pausedMode = false;
+        this.setLayoutFreeze();
+        this.checkScale();
     },
     methods: {
         refresh() {

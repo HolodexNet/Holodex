@@ -13,7 +13,7 @@
                         type="image, list-item-avatar-three-line"
                         style="position: absolute; width: 100%; height: 100%"
                         boilerplate
-                    ></v-skeleton-loader>
+                    />
                 </div>
             </v-col>
         </v-row>
@@ -66,11 +66,9 @@ export default {
         processedVideos() {
             const currentTime = new Date();
             const size = this.limitRows ? this.limitRows * this.colSize : this.expectedSize;
-            return [...new Array(size)].map((el, index) => {
-                return {
-                    id: +currentTime + index,
-                };
-            });
+            return [...new Array(size)].map((el, index) => ({
+                id: +currentTime + index,
+            }));
         },
         colSize() {
             if (this.horizontal) return 1;

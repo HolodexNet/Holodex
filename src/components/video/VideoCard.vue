@@ -69,7 +69,7 @@
                 :transition="false"
                 class="rounded"
             />
-            <v-img v-else-if="!horizontal && shouldHideThumbnail" width="100%" :aspect-ratio="60 / 9"></v-img>
+            <v-img v-else-if="!horizontal && shouldHideThumbnail" width="100%" :aspect-ratio="60 / 9" />
         </div>
         <a
             class="d-flex flex-row flex-grow-1 no-decoration"
@@ -165,7 +165,7 @@
                     <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
                 </button>
             </template>
-            <slot name="action"></slot>
+            <slot name="action" />
         </v-list-item-action>
     </a>
 </template>
@@ -181,16 +181,17 @@ export default {
     name: "VideoCard",
     components: {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
-        Comment: () => import("./Comment.vue"),
         VideoCardMenu,
     },
     props: {
         video: {
             // required: true,
             type: Object,
+            default: null,
         },
         source: {
             type: Object,
+            default: null,
         },
         fluid: {
             required: false,
@@ -238,6 +239,7 @@ export default {
         },
         parentPlaylistId: {
             type: [Number, String],
+            default: null,
         },
     },
     data() {

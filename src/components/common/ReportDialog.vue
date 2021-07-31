@@ -5,72 +5,74 @@
                 <v-card-title class="headline">
                     {{ $t("component.reportDialog.title") }}
                 </v-card-title>
-                <template :v-if="!isLoading">
-                    <v-card-text>
-                        <v-alert v-model="error" dense text type="error" dismissible> Error Occured </v-alert>
-                        <span class="text-body-1">{{ video.title }}</span>
-                        <br />
-                        {{ video.channel.name }}
-                        <br />
-                        <v-radio-group v-model="selectedReason">
-                            <v-radio
-                                v-for="reason in reasons"
-                                :key="reason.value"
-                                :label="reason.text"
-                                :value="reason.value"
-                            ></v-radio>
-                        </v-radio-group>
-                        <v-card-text v-if="video.channel.id === 'UCF4-I8ZQL6Aa-iHfdz-B9KQ'" class="red--text">
-                            <b>Note: Please don't report just because you disagree / dislike this subber.</b>
-                            <div v-if="readMore">
-                                <p>
-                                    Holodex platform doesn't arbitrate between sub-par and good TLs. For minor issues,
-                                    you should feedback changes to the subber on youtube via comments, or else reporting
-                                    them to whoever they're clipping (Cover or Nijisanji etc.).
-                                </p>
-                                <p>
-                                    However, if the video in question is indeed dangerously translated to cause
-                                    misunderstandings, we will definitely either delete the video or deplatform the
-                                    channel, in addition to escalating to relevant organizations.
-                                </p>
-                                <p>
-                                    If you'd like to not see this channel ever again, there's a
-                                    <b>Block Channel</b> button below, and on the channel page.
-                                </p>
-                            </div>
-                            <a v-else @click.stop="readMore = true"> Read more...</a>
-                        </v-card-text>
-                        <v-textarea
-                            v-model="comments"
-                            filled
-                            :label="$t('component.reportDialog.comments')"
-                            persistent-hint
-                            hint="* English / 日本語 / 繁體中文 OK"
-                            :error="!comments.length"
+                <v-card-text :v-if="!isLoading">
+                    <v-alert v-model="error" dense text type="error" dismissible> Error Occured </v-alert>
+                    <span class="text-body-1">{{ video.title }}</span>
+                    <br />
+                    {{ video.channel.name }}
+                    <br />
+                    <v-radio-group v-model="selectedReason">
+                        <v-radio
+                            v-for="reason in reasons"
+                            :key="reason.value"
+                            :label="reason.text"
+                            :value="reason.value"
                         />
+                    </v-radio-group>
+                    <v-card-text v-if="video.channel.id === 'UCF4-I8ZQL6Aa-iHfdz-B9KQ'" class="red--text">
+                        <b>Note: Please don't report just because you disagree / dislike this subber.</b>
+                        <div v-if="readMore">
+                            <p>
+                                Holodex platform doesn't arbitrate between sub-par and good TLs. For minor issues, you
+                                should feedback changes to the subber on youtube via comments, or else reporting them to
+                                whoever they're clipping (Cover or Nijisanji etc.).
+                            </p>
+                            <p>
+                                However, if the video in question is indeed dangerously translated to cause
+                                misunderstandings, we will definitely either delete the video or deplatform the channel,
+                                in addition to escalating to relevant organizations.
+                            </p>
+                            <p>
+                                If you'd like to not see this channel ever again, there's a
+                                <b>Block Channel</b> button below, and on the channel page.
+                            </p>
+                        </div>
+                        <a v-else @click.stop="readMore = true"> Read more...</a>
                     </v-card-text>
+                    <v-textarea
+                        v-model="comments"
+                        filled
+                        :label="$t('component.reportDialog.comments')"
+                        persistent-hint
+                        hint="* English / 日本語 / 繁體中文 OK"
+                        :error="!comments.length"
+                    />
+                </v-card-text>
 
-                    <v-divider></v-divider>
-                    <channel-socials :channel="video.channel" show-delete hide-yt vertical class="d-inline-block ml-4" />
-                    <v-icon small class="ml-1">{{ icons.mdiArrowLeft }}</v-icon>
-                    {{ $t("component.channelSocials.block") }}
-                    <v-divider></v-divider>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn text @click="showReportDialog = false">
-                            {{ $t("views.app.close_btn") }}
-                        </v-btn>
-                        <v-btn color="primary" :disabled="comments.length === 0" @click="sendReport">
-                            {{ $t("views.multiview.confirmOverwriteYes") }}
-                        </v-btn>
-                    </v-card-actions>
-                </template>
+                <v-divider />
+                <channel-socials :channel="video.channel" show-delete hide-yt vertical class="d-inline-block ml-4" />
+                <v-icon small class="ml-1">
+                    {{ icons.mdiArrowLeft }}
+                </v-icon>
+                {{ $t("component.channelSocials.block") }}
+                <v-divider />
+                <v-card-actions>
+                    <v-spacer />
+                    <v-btn text @click="showReportDialog = false">
+                        {{ $t("views.app.close_btn") }}
+                    </v-btn>
+                    <v-btn color="primary" :disabled="comments.length === 0" @click="sendReport">
+                        {{ $t("views.multiview.confirmOverwriteYes") }}
+                    </v-btn>
+                </v-card-actions>
             </v-card>
         </v-dialog>
         <v-snackbar v-model="showSnackbar" :timeout="3000" color="success">
             {{ $t("component.reportDialog.success") }}
             <template #action>
-                <v-btn text class="ml-auto" @click="showSnackbar = false"> {{ $t("views.app.close_btn") }} </v-btn>
+                <v-btn text class="ml-auto" @click="showSnackbar = false">
+                    {{ $t("views.app.close_btn") }}
+                </v-btn>
             </template>
         </v-snackbar>
     </div>

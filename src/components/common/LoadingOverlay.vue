@@ -7,7 +7,7 @@
                 size="82"
                 class="ma-auto"
                 color="primary"
-            ></v-progress-circular>
+            />
             <ApiErrorMessage v-if="showError" />
             <NotFound v-if="showNotFound" />
         </v-col>

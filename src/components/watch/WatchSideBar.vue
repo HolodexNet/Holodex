@@ -27,7 +27,7 @@
                                 style="width: 100%"
                                 @play="$emit('timeJump', song.start)"
                                 @playNow="$store.commit('music/skipTo', idx)"
-                            ></song-item>
+                            />
                         </v-list>
                     </v-row>
                 </v-container>
@@ -51,8 +51,11 @@
                         small
                         class="mr-2"
                         @click="addToPlaylist(related[relation])"
-                        ><v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon></v-btn
                     >
+                        <v-icon small>
+                            {{ icons.mdiPlaylistPlus }}
+                        </v-icon>
+                    </v-btn>
                 </div>
                 <v-expand-transition :key="`${relation}-anim`">
                     <VideoCardList
@@ -69,8 +72,7 @@
                         }"
                         dense
                         @videoClicked="logRelationClick(relation)"
-                    >
-                    </VideoCardList>
+                    />
                 </v-expand-transition>
             </template>
         </template>
@@ -129,14 +131,12 @@ export default {
         songList() {
             if (this.video && this.video.songs) {
                 return this.video.songs
-                    .map((song) => {
-                        return {
-                            ...song,
-                            video_id: this.video.id,
-                            channel_id: this.video.channel.id,
-                            channel: this.video.channel,
-                        };
-                    })
+                    .map((song) => ({
+                        ...song,
+                        video_id: this.video.id,
+                        channel_id: this.video.channel.id,
+                        channel: this.video.channel,
+                    }))
                     .sort((a, b) => a.start - b.start);
             }
             return [];

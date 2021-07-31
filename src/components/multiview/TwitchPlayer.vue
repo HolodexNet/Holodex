@@ -1,5 +1,6 @@
+/* eslint-disable vue/require-default-prop */
 <template>
-    <div :id="elementId"></div>
+    <div :id="elementId" />
 </template>
 
 <script>
@@ -41,9 +42,18 @@ export default {
             type: Boolean,
             default: false,
         },
-        channel: String,
-        collection: String,
-        video: String,
+        channel: {
+            type: String,
+            default: "",
+        },
+        collection: {
+            type: String,
+            default: "",
+        },
+        video: {
+            type: String,
+            default: "",
+        },
     },
     data() {
         pid += 1;
@@ -167,7 +177,7 @@ export default {
             return this.channel === this.player.getChannel();
         },
         checkVideo() {
-            // eslint-disable-next-line no-return-assign
+            // eslint-disable-next-line
             return (this.video = this.player.getVideo());
         },
     },

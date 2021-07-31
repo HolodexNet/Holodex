@@ -55,8 +55,7 @@
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
                         hide-ignored-topics
-                    >
-                    </VideoCardList>
+                    />
                     <v-divider v-if="lives.length" class="my-3 secondary" />
                     <VideoCardList
                         :videos="upcoming"
@@ -65,8 +64,7 @@
                         :cols="colSizes"
                         :dense="currentGridSize > 0"
                         hide-ignored-topics
-                    >
-                    </VideoCardList>
+                    />
                 </div>
                 <div v-show="!isLoading && lives.length == 0 && upcoming.length == 0" class="ma-auto pa-5 text-center">
                     {{ $t("views.home.noStreams") }}
@@ -140,44 +138,6 @@ export default {
             refreshTimer: null,
         };
     },
-    watch: {
-        // eslint-disable-next-line func-names
-        "$store.state.currentOrg": function () {
-            this.init();
-        },
-        // eslint-disable-next-line func-names
-        "$store.state.visibilityState": function () {
-            if (this.isActive && this.$store.state.visibilityState === "visible")
-                this.$store.dispatch("home/fetchLive", { force: false });
-        },
-        tab() {
-            // Scroll to top
-            this.$nextTick(() => {
-                window.scrollTo(0, 0);
-            });
-            this.changeTab();
-        },
-    },
-    created() {
-        this.init();
-        this.setAutoRefresh();
-    },
-    activated() {
-        this.changeTab(true);
-        this.setAutoRefresh();
-    },
-    deactivated() {
-        if (this.refreshTimer) {
-            clearInterval(this.refreshTimer);
-            this.refreshTimer = null;
-        }
-    },
-    beforeDestroy() {
-        if (this.refreshTimer) {
-            clearInterval(this.refreshTimer);
-            this.refreshTimer = null;
-        }
-    },
     computed: {
         ...mapState("home", ["live", "isLoading", "hasError"]),
         scrollMode() {
@@ -215,6 +175,45 @@ export default {
         liveUpcomingHeaderSplit() {
             return this.$t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/);
         },
+    },
+    watch: {
+        // eslint-disable-next-line func-names
+        "$store.state.currentOrg": function () {
+            this.init();
+        },
+        // eslint-disable-next-line func-names
+        "$store.state.visibilityState": function () {
+            if (this.isActive && this.$store.state.visibilityState === "visible") {
+                this.$store.dispatch("home/fetchLive", { force: false });
+            }
+        },
+        tab() {
+            // Scroll to top
+            this.$nextTick(() => {
+                window.scrollTo(0, 0);
+            });
+            this.changeTab();
+        },
+    },
+    created() {
+        this.init();
+        this.setAutoRefresh();
+    },
+    activated() {
+        this.changeTab(true);
+        this.setAutoRefresh();
+    },
+    deactivated() {
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
+    },
+    beforeDestroy() {
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
     },
     methods: {
         setAutoRefresh() {

@@ -16,7 +16,7 @@
                             :label="$t('component.search.type.org')"
                             :prepend-icon="mdiAccountMultiple"
                             @click="loadOrgs"
-                        ></v-select>
+                        />
                     </v-col>
 
                     <v-col cols="12">
@@ -28,7 +28,7 @@
                             :label="$t('component.search.type.topic')"
                             solo-inverted
                             :prepend-icon="icons.mdiAnimationPlay"
-                        ></v-select>
+                        />
                     </v-col>
 
                     <v-col cols="12">
@@ -49,9 +49,9 @@
                             small-chips
                             return-object
                             @input="channelClearAPIResults"
-                        ></v-autocomplete>
+                        />
                     </v-col>
-                    <v-divider></v-divider>
+                    <v-divider />
                     <v-col cols="12" md="6">
                         <v-text-field
                             v-model="title"
@@ -62,9 +62,9 @@
                             :solo-inverted="!commentIsFilled"
                             :outlined="commentIsFilled"
                             :disabled="commentIsFilled"
-                        ></v-text-field>
+                        />
                     </v-col>
-                    <v-divider v-if="!$vuetify.breakpoint.smAndDown" vertical></v-divider>
+                    <v-divider v-if="!$vuetify.breakpoint.smAndDown" vertical />
                     <v-col cols="12" md="6">
                         <v-text-field
                             v-model="comment"
@@ -75,7 +75,7 @@
                             :solo-inverted="!titleIsFilled"
                             :outlined="titleIsFilled"
                             :disabled="titleIsFilled"
-                        ></v-text-field>
+                        />
                     </v-col>
 
                     <v-btn
@@ -135,11 +135,16 @@ export default {
             topics: [],
         };
     },
-    async mounted() {
-        backendApi.topics().then(({ data }) => {
-            this.topics = data.map(({ id, count }) => ({ value: id, text: `${id} (${count})` }));
-        });
-        this.processQuery(await csv2jsonAsync(this.$route.query.q));
+    computed: {
+        channelResultsFinal() {
+            return this.channelResults.concat(this.channels || []);
+        },
+        commentIsFilled() {
+            return (this.comment && this.comment.length > 0) || false;
+        },
+        titleIsFilled() {
+            return (this.title && this.title.length > 0) || false;
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -161,16 +166,11 @@ export default {
             this.processQuery(await csv2jsonAsync(to.query.q));
         },
     },
-    computed: {
-        channelResultsFinal() {
-            return this.channelResults.concat(this.channels || []);
-        },
-        commentIsFilled() {
-            return (this.comment && this.comment.length > 0) || false;
-        },
-        titleIsFilled() {
-            return (this.title && this.title.length > 0) || false;
-        },
+    async mounted() {
+        backendApi.topics().then(({ data }) => {
+            this.topics = data.map(({ id, count }) => ({ value: id, text: `${id} (${count})` }));
+        });
+        this.processQuery(await csv2jsonAsync(this.$route.query.q));
     },
     methods: {
         channelClearAPIResults() {
@@ -222,10 +222,12 @@ export default {
             }
             if (this.topic) reconstruction.push({ type: "topic", value: `${this.topic}`, text: this.topic });
             if (this.channels) reconstruction.push(...this.channels);
-            if (this.title)
+            if (this.title) {
                 reconstruction.push({ type: "title & desc", value: `${this.title}title & desc`, text: this.title });
-            if (this.comment)
+            }
+            if (this.comment) {
                 reconstruction.push({ type: "comments", value: `${this.comment}comments`, text: this.comment });
+            }
 
             this.$router.push({
                 path: "/search",

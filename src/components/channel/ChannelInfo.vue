@@ -36,7 +36,7 @@
         <v-list-item-subtitle v-if="includeSocials">
             <ChannelSocials :channel="channel" />
         </v-list-item-subtitle>
-        <slot></slot>
+        <slot />
     </v-list-item-content>
 </template>
 

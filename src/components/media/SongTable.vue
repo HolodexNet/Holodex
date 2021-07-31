@@ -9,7 +9,7 @@
         :class="{ 'recent-table-small': $vuetify.breakpoint.smAndDown }"
         :search="search"
         hide-default-footer
-        :items-per-page="PER_PAGE_ITEMS"
+        :items-per-page="perPageItems"
         disable-sort
         :loading="loading"
         :dense="$vuetify.breakpoint.smAndDown"
@@ -30,7 +30,7 @@
                         :hover-icon="icons.mdiPlay"
                         class="mx-0 px-0"
                         @play="$store.dispatch('music/skipToSong', item)"
-                    ></song-item>
+                    />
                 </td>
             </tr>
         </template>
@@ -51,7 +51,9 @@
                 :to="`/channel/${item.channel_id}/music`"
                 @click.stop
             >
-                <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
+                <v-icon small>
+                    {{ icons.mdiLoginVariant }}
+                </v-icon>
             </v-btn>
         </template>
         <!-- eslint-disable-next-line vue/valid-v-slot -->
@@ -71,10 +73,14 @@
                 :href="`/watch/${item.video_id}?t=${item.start}`"
                 @click.stop
             >
-                <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
+                <v-icon small>
+                    {{ icons.mdiLoginVariant }}
+                </v-icon>
             </v-btn>
             <v-btn class="popup" small icon target="_blank" :href="`/edit/video/${item.video_id}/music`" @click.stop>
-                <v-icon small>{{ icons.mdiPencil }}</v-icon>
+                <v-icon small>
+                    {{ icons.mdiPencil }}
+                </v-icon>
             </v-btn>
         </template>
     </v-data-table>
@@ -94,7 +100,7 @@ export default {
             default: null,
             required: false,
         },
-        PER_PAGE_ITEMS: {
+        perPageItems: {
             type: Number,
             default: 20,
             required: false,
@@ -130,7 +136,12 @@ export default {
                         width: "20px",
                     },
                     { text: this.$t("editor.music.trackNameInput"), sortable: false },
-                    { text: this.$t("component.songList.songDuration"), value: "start", width: "100px", align: "end" },
+                    {
+                        text: this.$t("component.songList.songDuration"),
+                        value: "start",
+                        width: "100px",
+                        align: "end",
+                    },
                 ];
             }
             return [
@@ -150,7 +161,12 @@ export default {
                 ...(this.$vuetify.breakpoint.mdAndUp
                     ? [{ text: this.$t("editor.music.originalArtistInput"), width: "20%", value: "original_artist" }]
                     : []),
-                { text: this.$t("component.songList.songDuration"), value: "start", width: "100px", align: "end" },
+                {
+                    text: this.$t("component.songList.songDuration"),
+                    value: "start",
+                    width: "100px",
+                    align: "end",
+                },
                 {
                     text: this.$t("component.songList.sangOnTime"),
                     value: "available_at",

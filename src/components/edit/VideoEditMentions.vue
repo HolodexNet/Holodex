@@ -19,12 +19,14 @@
                 chips
                 label="Search Channels"
             />
-            <v-btn @click="addMention(selectedChannel.id)">Add</v-btn>
+            <v-btn @click="addMention(selectedChannel.id)"> Add </v-btn>
         </div>
         <channel-list :channels="mentions" :include-video-count="false">
             <template #action="{ channel }">
                 <v-btn class="deleteBtn" icon x-large color="red" @click.stop.prevent="deleteMention(channel.id)">
-                    <v-icon large>{{ icons.mdiDelete }}</v-icon>
+                    <v-icon large>
+                        {{ icons.mdiDelete }}
+                    </v-icon>
                 </v-btn>
             </template>
         </channel-list>
@@ -38,11 +40,10 @@ import backendApi from "@/utils/backend-api";
 import { CHANNEL_TYPES } from "@/utils/consts";
 import { debounce } from "@/utils/functions";
 import ChannelList from "../channel/ChannelList.vue";
-import LoadingOverlay from "../common/LoadingOverlay.vue";
 
 export default {
     name: "VideoEditMentions",
-    components: { ChannelList, LoadingOverlay },
+    components: { ChannelList },
     props: {
         video: {
             type: Object,
@@ -78,13 +79,11 @@ export default {
                     queryText: this.search,
                 })
                 .then(({ data }) => {
-                    this.searchResults = data.map((d) => {
-                        return {
-                            text: this.getChannelName(d),
-                            value: d,
-                            disabled: this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id),
-                        };
-                    });
+                    this.searchResults = data.map((d) => ({
+                        text: this.getChannelName(d),
+                        value: d,
+                        disabled: this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id),
+                    }));
                 });
         }, 200),
     },

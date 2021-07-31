@@ -7,7 +7,9 @@
             <!-- <v-list class="mt-4" color="transparent"> -->
             <v-card id="new-playlist-btn" class="my-4" @click.stop="createNewPlaylist">
                 <v-list-item two-line>
-                    <v-icon left x-large class="mr-3">{{ icons.mdiPlaylistPlus }}</v-icon>
+                    <v-icon left x-large class="mr-3">
+                        {{ icons.mdiPlaylistPlus }}
+                    </v-icon>
                     <v-list-item-title class="font-weight-medium text-subtitle-2">
                         {{ $t("views.playlist.new-playlist-btn-label") }}
                         <br />
@@ -25,7 +27,9 @@
                 @click.stop="setNewPlaylist(playlist)"
             >
                 <v-list-item two-line class="pr-1">
-                    <v-icon left x-large color="secondary" class="mr-3 hidden-xs-only">{{ mdiFormatListText }}</v-icon>
+                    <v-icon left x-large color="secondary" class="mr-3 hidden-xs-only">
+                        {{ mdiFormatListText }}
+                    </v-icon>
                     <v-list-item-title>
                         <span class="font-weight-medium text-subtitle-1">
                             {{ playlist.name }}
@@ -62,6 +66,93 @@
         </v-col>
     </v-container>
 </template>
+
+<script>
+import backendApi from "@/utils/backend-api";
+import { localizedDayjs } from "@/utils/time";
+import { mdiFormatListText } from "@mdi/js";
+import { getVideoThumbnails } from "@/utils/functions";
+import { mapState } from "vuex";
+
+export default {
+    name: "Playlists",
+    components: {},
+    data() {
+        return {
+            mdiFormatListText,
+            serverside: [],
+            loading: true,
+        };
+    },
+    computed: {
+        ...mapState("playlist", ["active", "isSaved"]),
+        playlists() {
+            if (!this.active.id) return [this.active, ...this.serverside];
+            return this.serverside;
+        },
+        jwt() {
+            return this.$store.state.userdata.jwt;
+        },
+    },
+    watch: {
+        async isSaved(newval) {
+            if (newval) {
+                // is now saved
+                this.serverside = (await backendApi.getPlaylistList(this.jwt)).data;
+            }
+        },
+    },
+    async mounted() {
+        try {
+            if (this.jwt) {
+                this.serverside = (await backendApi.getPlaylistList(this.jwt)).data;
+            }
+        } catch {
+            this.serverside = [];
+        }
+    },
+
+    methods: {
+        toTime(ts) {
+            return localizedDayjs(ts, this.$store.state.settings.lang).format("LLL");
+        },
+        imageSrc(id) {
+            // load different images based on current column size, which correspond to breakpoints
+            const srcs = getVideoThumbnails(id, false);
+            return srcs.medium;
+        },
+        setNewPlaylist(playlist) {
+            // Ignore clicks on same playlist
+            if (playlist.id === this.active.id) return;
+
+            if (this.confirmIfNotSaved()) {
+                this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
+            }
+        },
+        confirmIfNotSaved() {
+            // eslint-disable-next-line no-restricted-globals,no-alert
+            return this.isSaved || confirm(this.$t("views.playlist.change-loss-warning"));
+        },
+        getPlaylistPreview(playlist) {
+            const limit = this.$vuetify.breakpoint.xs ? 1 : 4;
+            if (playlist.video_ids) return playlist.video_ids.slice(0, limit);
+            if (playlist.videos) return playlist.videos.slice(0, limit).map(({ id }) => id);
+            return [];
+        },
+        createNewPlaylist() {
+            if (!this.jwt) {
+                this.$router.push("/login");
+                return;
+            }
+            if (this.confirmIfNotSaved()) {
+                this.$store.commit("playlist/resetPlaylist");
+                this.$store.commit("playlist/modified");
+                // resetting is basically the same as creating a new one
+            }
+        },
+    },
+};
+</script>
 <style scoped>
 .active-playlist {
     position: relative;
@@ -118,88 +209,3 @@
     opacity: 0.8;
 }
 </style>
-
-<script>
-import backendApi from "@/utils/backend-api";
-import { localizedDayjs } from "@/utils/time";
-import { mdiFormatListText } from "@mdi/js";
-import { getVideoThumbnails } from "@/utils/functions";
-import { mapState } from "vuex";
-
-export default {
-    name: "Playlists",
-    components: {},
-    data() {
-        return {
-            mdiFormatListText,
-            serverside: [],
-            loading: true,
-        };
-    },
-    async mounted() {
-        try {
-            if (this.jwt) {
-                this.serverside = (await backendApi.getPlaylistList(this.jwt)).data;
-            }
-        } catch {
-            this.serverside = [];
-        }
-    },
-    computed: {
-        ...mapState("playlist", ["active", "isSaved"]),
-        playlists() {
-            if (!this.active.id) return [this.active, ...this.serverside];
-            return this.serverside;
-        },
-        jwt() {
-            return this.$store.state.userdata.jwt;
-        },
-    },
-    watch: {
-        async isSaved(newval) {
-            if (newval)
-                // is now saved
-                this.serverside = (await backendApi.getPlaylistList(this.jwt)).data;
-        },
-    },
-    methods: {
-        toTime(ts) {
-            return localizedDayjs(ts, this.$store.state.settings.lang).format("LLL");
-        },
-        imageSrc(id) {
-            // load different images based on current column size, which correspond to breakpoints
-            const srcs = getVideoThumbnails(id, false);
-            return srcs.medium;
-        },
-        setNewPlaylist(playlist) {
-            // Ignore clicks on same playlist
-            if (playlist.id === this.active.id) return;
-
-            if (this.confirmIfNotSaved()) {
-                this.$store.dispatch("playlist/setActivePlaylistByID", playlist.id);
-            }
-        },
-        confirmIfNotSaved() {
-            // eslint-disable-next-line no-restricted-globals,no-alert
-            return this.isSaved || confirm(this.$t("views.playlist.change-loss-warning"));
-        },
-        getPlaylistPreview(playlist) {
-            const limit = this.$vuetify.breakpoint.xs ? 1 : 4;
-            if (playlist.video_ids) return playlist.video_ids.slice(0, limit);
-            if (playlist.videos) return playlist.videos.slice(0, limit).map(({ id }) => id);
-            return [];
-        },
-        createNewPlaylist() {
-            if (!this.jwt) {
-                this.$router.push("/login");
-                return;
-            }
-            if (this.confirmIfNotSaved()) {
-                this.$store.commit("playlist/resetPlaylist");
-                this.$store.commit("playlist/modified");
-                // resetting is basically the same as creating a new one
-            }
-        },
-    },
-};
-</script>

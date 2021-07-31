@@ -1,6 +1,6 @@
 <template>
     <v-toolbar class="mv-toolbar" style="right: 0" height="64">
-        <v-app-bar-nav-icon @click="toggleMainNav"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="toggleMainNav" />
         <!-- Toolbar Live Video Selector -->
         <div
             class="justify-start d-flex mv-toolbar-btn align-center thin-scroll-bar"
@@ -73,7 +73,7 @@
                             :value="exportURL"
                             :append-icon="mdiClipboardPlusOutline"
                             @click:append.stop="startCopyToClipboard(exportURL)"
-                        ></v-text-field>
+                        />
                     </v-card-text>
                 </v-card>
             </v-menu>
@@ -87,7 +87,9 @@
                 <v-list dense>
                     <template v-for="(b, index) in buttons.filter((btn) => btn.collapse)">
                         <v-list-item :key="`mv-collapsed-${index}`" block class="mb-2" @click="b.onClick">
-                            <v-icon left :color="b.color">{{ b.icon }}</v-icon>
+                            <v-icon left :color="b.color">
+                                {{ b.icon }}
+                            </v-icon>
                             <span>{{ b.tooltip }}</span>
                         </v-list-item>
                     </template>
@@ -110,7 +112,7 @@ export default {
     name: "MultiviewToolbar",
     mixins: [copyToClipboard],
     props: {
-        buttons: { 
+        buttons: {
             type: Array,
             default: () => [],
         },

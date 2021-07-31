@@ -20,7 +20,9 @@
                 <template v-else>
                     {{ currentTab.text || currentTab.name }}
                 </template>
-                <v-icon right small>{{ icons.mdiMenuDown }}</v-icon>
+                <v-icon right small>
+                    {{ icons.mdiMenuDown }}
+                </v-icon>
             </v-btn>
         </template>
         <template #prepend-dropdown>
@@ -93,7 +95,9 @@
             </v-list-item-group>
 
             <v-list-item @click="showOrgDialog()">
-                <v-list-item-title class="primary--text">{{ $t("views.favorites.showall") }}</v-list-item-title>
+                <v-list-item-title class="primary--text">
+                    {{ $t("views.favorites.showall") }}
+                </v-list-item-title>
             </v-list-item>
         </template>
     </org-selector>

@@ -138,23 +138,6 @@ export default {
             defaultSort: "subscribers",
         };
     },
-    watch: {
-        category() {
-            this.resetChannels();
-            if (this.category === this.Tabs.FAVORITES) this.$store.dispatch("favorites/fetchFavorites");
-        },
-        sort() {
-            if (this.category !== this.Tabs.FAVORITES) this.resetChannels();
-        },
-        // eslint-disable-next-line func-names
-        "$store.state.currentOrg": function () {
-            this.resetChannels();
-        },
-    },
-    created() {
-        this.init();
-    },
-    mounted() {},
     computed: {
         sortOptions: {
             get() {
@@ -259,6 +242,23 @@ export default {
             return localSortChannels(this.$store.state.favorites.favorites, this.currentSortValue.query_value);
         },
     },
+    watch: {
+        category() {
+            this.resetChannels();
+            if (this.category === this.Tabs.FAVORITES) this.$store.dispatch("favorites/fetchFavorites");
+        },
+        sort() {
+            if (this.category !== this.Tabs.FAVORITES) this.resetChannels();
+        },
+        // eslint-disable-next-line func-names
+        "$store.state.currentOrg": function () {
+            this.resetChannels();
+        },
+    },
+    created() {
+        this.init();
+    },
+    mounted() {},
     methods: {
         init() {
             this.$store.commit("channels/resetState");

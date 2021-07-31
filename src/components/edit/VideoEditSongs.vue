@@ -1,15 +1,15 @@
 <template>
     <div>
         <v-row align="center">
-            <v-divider> </v-divider> <span class="text-overline"> {{ $t("editor.music.titles.addSong") }} </span>
-            <v-divider> </v-divider>
+            <v-divider /> <span class="text-overline"> {{ $t("editor.music.titles.addSong") }} </span>
+            <v-divider />
             <v-dialog content-class="width-auto">
                 <template #activator="{ on }">
                     <div v-on="on" @click="mountTwitter">
                         <span class="text-overline"> {{ $t("editor.music.titles.help") }} </span>
-                        <v-btn fab color="info" class="mx-1" x-small
-                            ><v-icon>{{ icons.mdiHelpCircle }}</v-icon></v-btn
-                        >
+                        <v-btn fab color="info" class="mx-1" x-small>
+                            <v-icon>{{ icons.mdiHelpCircle }}</v-icon>
+                        </v-btn>
                     </div>
                 </template>
                 <v-card>
@@ -69,7 +69,10 @@
                                 currentStartTime = secondsToHuman(current.start);
                             "
                         >
-                            <v-icon small>{{ icons.mdiChevronLeft }}</v-icon> 2s
+                            <v-icon small>
+                                {{ icons.mdiChevronLeft }}
+                            </v-icon>
+                            2s
                         </button>
                     </template>
                     <span>{{ $t("editor.music.moveLeft2s") }}</span>
@@ -93,8 +96,7 @@
                     :rules="[checkStartTime]"
                     validate-on-blur
                     class="tweak-input"
-                >
-                </v-text-field>
+                />
                 <v-tooltip bottom>
                     <template #activator="{ on }">
                         <button class="tweak-btn" v-on="on" @click="$emit('timeJump', current.start, true)">
@@ -115,7 +117,9 @@
                                 currentStartTime = secondsToHuman(current.start);
                             "
                         >
-                            2s<v-icon small>{{ icons.mdiChevronRight }}</v-icon>
+                            2s<v-icon small>
+                                {{ icons.mdiChevronRight }}
+                            </v-icon>
                         </button>
                     </template>
                     <span>{{ $t("editor.music.moveRight2s") }}</span>
@@ -125,7 +129,10 @@
                 <v-tooltip bottom>
                     <template #activator="{ on }">
                         <button class="tweak-btn" v-on="on" @click="current.end -= 2">
-                            <v-icon small>{{ icons.mdiChevronLeft }}</v-icon> 2s
+                            <v-icon small>
+                                {{ icons.mdiChevronLeft }}
+                            </v-icon>
+                            2s
                         </button>
                     </template>
                     <span>{{ $t("editor.music.moveLeft2s") }}</span>
@@ -149,8 +156,7 @@
                     :rules="[checkEndTime]"
                     validate-on-blur
                     class="tweak-input"
-                >
-                </v-text-field>
+                />
 
                 <v-tooltip bottom>
                     <template #activator="{ on }">
@@ -168,7 +174,9 @@
                 <v-tooltip bottom>
                     <template #activator="{ on }">
                         <button class="tweak-btn" v-on="on" @click="current.end += 2">
-                            2s<v-icon small>{{ icons.mdiChevronRight }}</v-icon>
+                            2s<v-icon small>
+                                {{ icons.mdiChevronRight }}
+                            </v-icon>
                         </button>
                     </template>
                     <span>{{ $t("editor.music.moveRight2s") }}</span>
@@ -203,20 +211,23 @@
                     <v-avatar left tile size="26px">
                         <v-img
                             src="https://apple-resources.s3.amazonaws.com/medusa/production/images/5f600674c4f022000191d6c4/en-us-large@1x.png"
-                        ></v-img>
+                        />
                     </v-avatar>
                     <span class="ml-2" style="font-size: 0.7rem">Listen on Apple Music</span>
                 </v-btn>
             </v-col>
             <v-col cols="12">
-                <v-alert v-if="!canSave && !priviledgeSufficient" color="error" v-html="$t('editor.music.permission')">
-                </v-alert>
+                <v-alert
+                    v-if="!canSave && !priviledgeSufficient"
+                    color="error"
+                    v-html="$t('editor.music.permission')"
+                />
             </v-col>
         </v-row>
         <v-row align="center">
-            <v-divider> </v-divider>
+            <v-divider />
             <span class="text-overline"> {{ $t("editor.music.titles.songList", [video.title]) }}</span>
-            <v-divider> </v-divider>
+            <v-divider />
         </v-row>
         <v-row dense>
             <v-col cols="12">
@@ -237,7 +248,7 @@
                                 }
                             "
                             @playNow="(x) => $emit('timeJump', x.start, true)"
-                        ></song-item>
+                        />
                     </template>
                 </v-list>
             </v-col>
@@ -325,6 +336,7 @@ export default {
         currentTime: {
             type: Number,
             required: false,
+            default: 0,
         },
     },
     data() {

@@ -1,8 +1,12 @@
 <template>
     <v-card class="text-body-2 tl-overlay" tile flat style="width: 100%">
         <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
-            <div v-if="isLoading">{{ $t("views.watch.chat.loading") }}</div>
-            <div v-else class="pa-3">{{ overlayMessage }}</div>
+            <div v-if="isLoading">
+                {{ $t("views.watch.chat.loading") }}
+            </div>
+            <div v-else class="pa-3">
+                {{ overlayMessage }}
+            </div>
             <v-btn v-if="$socket.disconnected" @click="tlJoin()">
                 {{ $t("views.watch.chat.retryBtn") }}
             </v-btn>
@@ -20,11 +24,13 @@
                     </template>
 
                     <v-card>
-                        <portal-target name="expandedMessage" class="d-flex tl-expanded"> </portal-target>
+                        <portal-target name="expandedMessage" class="d-flex tl-expanded" />
                         <v-divider />
                         <v-card-actions>
                             <v-spacer />
-                            <v-btn text color="red" @click="expanded = false">{{ $t("views.app.close_btn") }}</v-btn>
+                            <v-btn text color="red" @click="expanded = false">
+                                {{ $t("views.app.close_btn") }}
+                            </v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -66,7 +72,7 @@
                                 <span v-if="item.timestamp" class="tl-caption mr-1">
                                     {{ item.displayTime }}
                                 </span>
-                                <span class="text--primary" v-html="item.message"></span>
+                                <span class="text--primary" v-html="item.message" />
                             </div>
                         </div>
                     </template>

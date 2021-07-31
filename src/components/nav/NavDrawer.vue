@@ -24,13 +24,15 @@
                         <v-icon>{{ page.icon }}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title v-html="page.name"> </v-list-item-title>
+                        <v-list-item-title v-html="page.name" />
                     </v-list-item-content>
                     <!-- Quick Settings Popup -->
                     <v-list-item-icon v-if="page.path === '/settings'">
                         <v-menu right nudge-right max-height="80vh" :close-on-content-click="false">
                             <template #activator="{ on, attrs }">
-                                <v-icon v-bind="attrs" v-on="on" @click.stop.prevent>{{ mdiTuneVariant }}</v-icon>
+                                <v-icon v-bind="attrs" v-on="on" @click.stop.prevent>
+                                    {{ mdiTuneVariant }}
+                                </v-icon>
                             </template>
                             <v-card rounded="lg" class="py-n2 scrollable">
                                 <settings slim />
@@ -82,9 +84,13 @@
             </v-list-item>
             <v-list-item>
                 <router-link to="/settings" style="font-size: 0.825rem" class="ma-auto">
-                    <v-icon small>{{ icons.mdiEarth }}</v-icon>
+                    <v-icon small>
+                        {{ icons.mdiEarth }}
+                    </v-icon>
                     <span class="px-1">{{ language }}</span>
-                    <v-icon small>{{ icons.mdiMessageCogOutline }}</v-icon>
+                    <v-icon small>
+                        {{ icons.mdiMessageCogOutline }}
+                    </v-icon>
                 </router-link>
             </v-list-item>
         </v-list>

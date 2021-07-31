@@ -9,7 +9,7 @@
             :hover-icon="icons.mdiPlay"
             @play="$store.commit('music/skipTo', idx)"
             @remove="$store.commit('music/removeSong', idx)"
-        ></song-item>
+        />
     </v-list>
 </template>
 

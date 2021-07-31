@@ -17,13 +17,15 @@
             <v-col class="video-list" cols="12" sm="8" md="9" lg="10">
                 <!-- Custom YT Url should render different content -->
                 <template v-if="selectedOrg.name === 'YouTubeURL'">
-                    <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
+                    <div class="text-h5">
+                        {{ $t("views.multiview.video.addCustomVideo") }}
+                    </div>
                     <v-text-field
                         v-model="customURL"
                         label="Youtube Video Link"
                         hint="https://www.youtube.com/watch?v=..."
                         :error="customURLError"
-                    ></v-text-field>
+                    />
                     <v-btn
                         :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                         @click="addCustomVideo"
@@ -33,13 +35,15 @@
                 </template>
                 <!-- Custom Twitch URL -->
                 <template v-else-if="selectedOrg.name === 'TwitchURL'">
-                    <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
+                    <div class="text-h5">
+                        {{ $t("views.multiview.video.addCustomVideo") }}
+                    </div>
                     <v-text-field
                         v-model="customURL"
                         label="Twitch Channel Link"
                         hint="https://www.twitch.tv/..."
                         :error="customURLError"
-                    ></v-text-field>
+                    />
                     <v-btn
                         :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                         @click="addCustomVideo"
@@ -50,7 +54,7 @@
                 <!-- Favorites when not logged in -->
                 <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
                     <div class="pa-3">
-                        <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
+                        <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')" />
                         <center>
                             <v-btn :to="isLoggedIn ? '/channel' : '/login'">
                                 {{ isLoggedIn ? $t("views.favorites.manageFavorites") : $t("component.mainNav.login") }}
@@ -60,7 +64,9 @@
                 </template>
                 <!-- Video Card List for normal content -->
                 <template v-else>
-                    <h4 class="pa-1">{{ selectedOrg.name }}</h4>
+                    <h4 class="pa-1">
+                        {{ selectedOrg.name }}
+                    </h4>
                     <LoadingOverlay :is-loading="isLoading" :show-error="hasError" />
                     <VideoCardList
                         :videos="modalFilteredLive"
@@ -78,8 +84,8 @@
                         hide-ignored-topics
                         :hide-collabs="shouldHideCollabs"
                         @videoClicked="handleVideoClick"
-                    ></VideoCardList>
-                    <div class="d-block" style="height: 120px"></div>
+                    />
+                    <div class="d-block" style="height: 120px" />
                 </template>
             </v-col>
         </v-row>
@@ -87,7 +93,7 @@
     <!-- Horizontal view for tool bar -->
     <div v-else class="d-flex flex-row align-center">
         <!-- Drop down -->
-        <org-panel-picker horizontal @changed="handlePicker"></org-panel-picker>
+        <org-panel-picker horizontal @changed="handlePicker" />
         <v-icon
             v-if="selectedOrg.name !== 'YouTubeURL' && selectedOrg.name !== 'TwitchURL'"
             class="mr-2 ml-1"
@@ -106,7 +112,7 @@
                 hide-details
                 solo
                 style="width: 100%"
-            ></v-text-field>
+            />
             <v-btn
                 :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                 icon
@@ -125,7 +131,7 @@
                 hide-details
                 solo
                 style="width: 100%"
-            ></v-text-field>
+            />
             <v-btn
                 :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                 icon
@@ -137,7 +143,7 @@
         <!-- Login prompt for favorites -->
         <template v-else-if="selectedOrg === 0 && !isLoggedIn">
             <div class="flex d-flex flex-row align-center">
-                <span class="" v-html="$t('views.app.loginCallToAction')"></span>
+                <span class="" v-html="$t('views.app.loginCallToAction')" />
                 <v-btn text :to="isLoggedIn ? '/channel' : '/login'">
                     {{ $t("component.mainNav.login") }}
                 </v-btn>
@@ -162,7 +168,7 @@
                         </v-avatar>
                     </div>
                 </template>
-                <VideoCard :video="video" disable-default-click include-channel style="max-width: 250px"></VideoCard>
+                <VideoCard :video="video" disable-default-click include-channel style="max-width: 250px" />
             </v-tooltip>
         </template>
     </div>
@@ -210,39 +216,6 @@ export default {
             refreshTimer: null,
         };
     },
-    watch: {
-        // Watch lastLiveUpdate from favorites module, and fetch new state
-        favUpdateTick() {
-            if (this.selectedOrg.name === "Favorites") this.live = this.$store.state.favorites.live;
-        },
-        homeUpdateTick() {
-            const { name } = this.selectedOrg;
-            if (name !== "Favorites" && name !== "Playlist") this.live = this.$store.state.home.live;
-        },
-        savedVideosList() {
-            if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;
-        },
-        // eslint-disable-next-line func-names
-        "$store.state.visibilityState": function () {
-            if (this.$store.state.visibilityState === "visible") {
-                this.loadSelection();
-            }
-        },
-    },
-    mounted() {
-        // Start timer to update live time stamps
-        this.setAutoRefresh();
-        this.ticker = setInterval(() => {
-            this.tick = Date.now();
-        }, 60000);
-    },
-    beforeDestroy() {
-        if (this.ticker) clearInterval(this.ticker);
-        if (this.refreshTimer) {
-            clearInterval(this.refreshTimer);
-            this.refreshTimer = null;
-        }
-    },
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),
         ...mapState("favorites", { favUpdateTick: "lastLiveUpdate" }),
@@ -288,6 +261,39 @@ export default {
         shouldHideCollabs() {
             return this.selectedOrg?.name === "Favorites" && this.$store.state.settings.hideCollabStreams;
         },
+    },
+    watch: {
+        // Watch lastLiveUpdate from favorites module, and fetch new state
+        favUpdateTick() {
+            if (this.selectedOrg.name === "Favorites") this.live = this.$store.state.favorites.live;
+        },
+        homeUpdateTick() {
+            const { name } = this.selectedOrg;
+            if (name !== "Favorites" && name !== "Playlist") this.live = this.$store.state.home.live;
+        },
+        savedVideosList() {
+            if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;
+        },
+        // eslint-disable-next-line func-names
+        "$store.state.visibilityState": function () {
+            if (this.$store.state.visibilityState === "visible") {
+                this.loadSelection();
+            }
+        },
+    },
+    mounted() {
+        // Start timer to update live time stamps
+        this.setAutoRefresh();
+        this.ticker = setInterval(() => {
+            this.tick = Date.now();
+        }, 60000);
+    },
+    beforeDestroy() {
+        if (this.ticker) clearInterval(this.ticker);
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
     },
     methods: {
         setAutoRefresh() {

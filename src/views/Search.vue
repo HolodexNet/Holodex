@@ -2,17 +2,12 @@
     <v-container style="height: 100%">
         <v-row v-if="advancedOpen">
             <v-col class="offset-xl-1 col-xl-10">
-                <search-form></search-form>
+                <search-form />
             </v-col>
         </v-row>
         <v-row class="justify-end" style="margin-bottom: -10px">
             <v-col sm="4" md="2" class="py-1">
-                <v-select
-                    v-model="filter_sort"
-                    :items="options.sort"
-                    dense
-                    :label="$t('views.search.sortByLabel')"
-                ></v-select>
+                <v-select v-model="filter_sort" :items="options.sort" dense :label="$t('views.search.sortByLabel')" />
             </v-col>
             <v-col sm="4" md="2" class="py-1">
                 <v-select
@@ -20,7 +15,7 @@
                     :items="options.type"
                     dense
                     :label="$t('views.search.typeDropdownLabel')"
-                ></v-select>
+                />
             </v-col>
         </v-row>
         <v-row>
@@ -45,7 +40,7 @@
                             lg: 5,
                             xl: 6,
                         }"
-                    ></VideoCardList>
+                    />
                     <!-- Render skeleton items when data hasn't loaded yet -->
                     <skeleton-card-list
                         v-if="isLoading"
@@ -168,6 +163,8 @@ export default {
             // this.videos = [];
             const { q } = this.query;
             if (q.length < 5) return null;
+            // TODO: What dis doing
+            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
             this.executedQuery = q; // save to executed query;
 
             const self = this;

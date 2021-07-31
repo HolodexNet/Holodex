@@ -132,7 +132,9 @@
                                         </v-icon>
                                     </v-btn>
                                     <v-btn icon @click="allCellAction('refresh')">
-                                        <v-icon color="secondary lighten-1">{{ icons.mdiRefresh }}</v-icon>
+                                        <v-icon color="secondary lighten-1">
+                                            {{ icons.mdiRefresh }}
+                                        </v-icon>
                                     </v-btn>
                                     <v-btn icon @click="allCellAction('unmute')">
                                         <v-icon color="secondary lighten-1">
@@ -171,10 +173,14 @@
                                             </v-icon>
                                         </v-btn>
                                         <v-btn icon @click="cellState.refresh()">
-                                            <v-icon color="grey lighten-1">{{ icons.mdiRefresh }}</v-icon>
+                                            <v-icon color="grey lighten-1">
+                                                {{ icons.mdiRefresh }}
+                                            </v-icon>
                                         </v-btn>
                                         <v-btn icon @click="handleDelete(findKeyByVideoId(cellState.cellContent.id))">
-                                            <v-icon color="grey lighten-1">{{ icons.mdiDelete }}</v-icon>
+                                            <v-icon color="grey lighten-1">
+                                                {{ icons.mdiDelete }}
+                                            </v-icon>
                                         </v-btn>
                                         <v-btn icon @click="cellState.setMuted(!cellState.muted)">
                                             <v-icon color="grey lighten-1">
@@ -343,9 +349,9 @@ export default {
                     });
                     if (data.length) {
                         data.forEach((video) => {
-                            const matchingKey = Object.keys(parsed.content).find((key) => {
-                                return parsed.content[key].id === video.id;
-                            });
+                            const matchingKey = Object.keys(parsed.content).find(
+                                (key) => parsed.content[key].id === video.id,
+                            );
                             if (matchingKey) {
                                 parsed.content[matchingKey].video = video;
                             } else {
@@ -463,9 +469,8 @@ export default {
                 }
 
                 this.deleteVideoAutoLayout(id);
-            }
-            // Default: delete item
-            else {
+            } else {
+                // Default: delete item
                 this.$store.commit("multiview/removeLayoutItem", id);
             }
         },

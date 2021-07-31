@@ -59,8 +59,7 @@
                             :dense="currentGridSize > 0"
                             :hide-collabs="shouldHideCollabs"
                             hide-ignored-topics
-                        >
-                        </VideoCardList>
+                        />
                         <v-divider v-if="lives.length" class="my-3 secondary" />
                         <VideoCardList
                             :videos="upcoming"
@@ -70,8 +69,7 @@
                             :dense="currentGridSize > 0"
                             :hide-collabs="shouldHideCollabs"
                             hide-ignored-topics
-                        >
-                        </VideoCardList>
+                        />
                     </div>
                     <div
                         v-show="!isLoading && lives.length == 0 && upcoming.length == 0"
@@ -109,8 +107,10 @@
         </template>
         <template v-else>
             <div class="ma-auto d-flex flex-column align-center">
-                <v-icon color="primary" large>{{ icons.mdiHeart }}</v-icon>
-                <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
+                <v-icon color="primary" large>
+                    {{ icons.mdiHeart }}
+                </v-icon>
+                <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')" />
                 <v-btn :to="isLoggedIn ? '/channel' : '/login'">
                     {{ isLoggedIn ? $t("views.favorites.manageFavorites") : $t("component.mainNav.login") }}
                 </v-btn>
@@ -161,29 +161,6 @@ export default {
             }),
         };
     },
-    watch: {
-        favorites: {
-            deep: true,
-            handler(nw, old) {
-                if (isActive && nw.find((c, index) => old[index] && c.id !== old[index].id)) {
-                    this.init(false);
-                }
-            },
-        },
-        tab() {
-            this.changeTab();
-            // Scroll to top
-            this.$nextTick(() => {
-                window.scrollTo(0, 0);
-            });
-        },
-    },
-    created() {
-        this.init(true);
-    },
-    activated() {
-        this.changeTab(true);
-    },
     computed: {
         ...mapState("favorites", ["favorites", "live", "isLoading", "hasError", "currentOffset"]),
         isLoggedIn() {
@@ -230,6 +207,29 @@ export default {
         favoritesSet() {
             return new Set(this.favorites.map((x) => x.id));
         },
+    },
+    watch: {
+        favorites: {
+            deep: true,
+            handler(nw, old) {
+                if (isActive && nw.find((c, index) => old[index] && c.id !== old[index].id)) {
+                    this.init(false);
+                }
+            },
+        },
+        tab() {
+            this.changeTab();
+            // Scroll to top
+            this.$nextTick(() => {
+                window.scrollTo(0, 0);
+            });
+        },
+    },
+    created() {
+        this.init(true);
+    },
+    activated() {
+        this.changeTab(true);
     },
     methods: {
         init(updateFavorites) {

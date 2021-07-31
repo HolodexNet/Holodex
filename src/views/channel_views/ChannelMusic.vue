@@ -30,9 +30,11 @@
                         :artwork-hover-icon="icons.mdiPlay"
                         @play="$store.commit('music/addSong', song)"
                         @playNow="skipToSong"
-                    ></song-item-card>
+                    />
                 </template>
-                <v-icon v-if="popularSongs.length === 0" disabled>{{ icons.mdiDatabaseOff }}</v-icon>
+                <v-icon v-if="popularSongs.length === 0" disabled>
+                    {{ icons.mdiDatabaseOff }}
+                </v-icon>
             </carousel>
         </v-col>
         <v-col sm="12" md="12">
@@ -56,7 +58,7 @@
                         <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
                     </v-btn>
 
-                    <v-spacer></v-spacer>
+                    <v-spacer />
 
                     <v-text-field
                         ref="searchbox"
@@ -68,12 +70,12 @@
                         @submit="doSearch(search)"
                         @click:append="doSearch(search)"
                         @keydown.enter="doSearch(search)"
-                    ></v-text-field>
+                    />
                 </v-card-title>
 
                 <v-row>
                     <v-col>
-                        <song-table :p-e-r-p-a-g-e-i-t-e-m-s="PER_PAGE_ITEMS" :loading="isLoading" :songs="data"></song-table>
+                        <song-table :per-page-items="PER_PAGE_ITEMS" :loading="isLoading" :songs="data" />
                     </v-col>
                 </v-row>
             </generic-list-loader>
@@ -84,9 +86,7 @@
 <script lang="ts">
 import backendApi from "@/utils/backend-api";
 import SongItemCard from "@/components/media/SongItemCard.vue";
-import SongItem from "@/components/media/SongItem.vue";
 import Carousel from "@/components/common/Carousel.vue";
-import PaginateLoad from "@/components/common/PaginateLoad.vue";
 // import { mapState } from "vuex";
 import SongTable from "@/components/media/SongTable.vue";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
@@ -102,7 +102,12 @@ const PER_PAGE_ITEMS = 20;
 
 export default {
     name: "ChannelMusic",
-    components: { SongItem, SongItemCard, Carousel, PaginateLoad, SongTable, GenericListLoader },
+    components: {
+        SongItemCard,
+        Carousel,
+        SongTable,
+        GenericListLoader,
+    },
     data() {
         return {
             popularSongs: [],

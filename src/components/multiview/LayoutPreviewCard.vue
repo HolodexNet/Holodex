@@ -27,6 +27,8 @@ export default {
     props: {
         preset: {
             type: Object,
+            default: null,
+            required: true,
         },
         custom: {
             type: Boolean,

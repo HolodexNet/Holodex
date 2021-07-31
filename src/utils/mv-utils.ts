@@ -69,7 +69,13 @@ export function decodeLayout(encodedStr) {
         const channelName = str.substring(15);
 
         const keys = ["x", "y", "w", "h"];
-        const layoutItem: LayoutItem = { w: 0, h: 0, x: 0, y: 0, i: index };
+        const layoutItem: LayoutItem = {
+            w: 0,
+            h: 0,
+            x: 0,
+            y: 0,
+            i: index,
+        };
 
         xywh.split("").forEach((char, keyIndex) => {
             const num = b64.indexOf(char);
@@ -164,9 +170,24 @@ export const desktopPresets = Object.freeze([
 ]);
 
 export const mobilePresets = Object.freeze([
-    { layout: "AAYI,AIYQchat0", name: "Mobile 1", emptyCells: 1, portrait: true },
-    { layout: "AOYKchat,AAYH,AHYH", name: "Mobile 2", emptyCells: 2, portrait: true },
-    { layout: "AAYI,AIYI,AQYI", name: "Mobile 3", emptyCells: 3, portrait: true },
+    {
+        layout: "AAYI,AIYQchat0",
+        name: "Mobile 1",
+        emptyCells: 1,
+        portrait: true,
+    },
+    {
+        layout: "AOYKchat,AAYH,AHYH",
+        name: "Mobile 2",
+        emptyCells: 2,
+        portrait: true,
+    },
+    {
+        layout: "AAYI,AIYI,AQYI",
+        name: "Mobile 3",
+        emptyCells: 3,
+        portrait: true,
+    },
     { layout: "MAMY,AAMM,AMMM", name: "Mobile 3L" },
     { layout: "AAMM,AMMM,MAMM,MMMM", name: "Mobile 4", emptyCells: 4 },
 ]);

@@ -8,9 +8,10 @@ export default <IMigration>{
             name: state.currentOrg,
             short: ORGS_PREFIX[state.currentOrg] ? ORGS_PREFIX[state.currentOrg] : null,
         };
-        const newOrgFavorites = state.orgFavorites.map((org) => {
-            return { name: org, short: ORGS_PREFIX[org] ? ORGS_PREFIX[org] : null };
-        });
+        const newOrgFavorites = state.orgFavorites.map((org) => ({
+            name: org,
+            short: ORGS_PREFIX[org] ? ORGS_PREFIX[org] : null,
+        }));
         return {
             ...state,
             currentOrg: newCurrentOrg,

@@ -9,7 +9,9 @@
             rel="noreferrer"
             target="_blank"
         >
-            <v-icon color="#C4302B">{{ icons.mdiYoutube }}</v-icon>
+            <v-icon color="#C4302B">
+                {{ icons.mdiYoutube }}
+            </v-icon>
         </v-btn>
         <v-btn
             v-if="channel.twitter && !hideTwitter"
@@ -19,7 +21,9 @@
             rel="noreferrer"
             target="_blank"
         >
-            <v-icon color="#00ACEE">{{ icons.mdiTwitter }}</v-icon>
+            <v-icon color="#00ACEE">
+                {{ icons.mdiTwitter }}
+            </v-icon>
         </v-btn>
         <v-tooltip v-if="channel.type === 'vtuber' && !hideFav" bottom>
             <template #activator="{ on, attrs }">

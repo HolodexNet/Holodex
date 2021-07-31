@@ -42,8 +42,7 @@
                             @ready="ready"
                             @playing="playing"
                             @ended="ended"
-                        >
-                        </youtube>
+                        />
                     </template>
                 </WatchFrame>
                 <WatchToolBar :video="video" :no-back-button="!isMobile">
@@ -58,12 +57,11 @@
                                     @click="toggleTL"
                                     v-on="on"
                                 >
-                                    <div v-if="newTL > 0" class="notification-sticker"></div>
-                                    <v-icon
-                                        >M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z
-                                        M4,10h4v2H4V10z M14,16H4v-2h10V16z M20,16h-4v-2 h4V16z
-                                        M20,12H10v-2h10V12z</v-icon
-                                    >
+                                    <div v-if="newTL > 0" class="notification-sticker" />
+                                    <v-icon>
+                                        M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z
+                                        M4,10h4v2H4V10z M14,16H4v-2h10V16z M20,16h-4v-2 h4V16z M20,12H10v-2h10V12z
+                                    </v-icon>
                                 </v-btn>
                             </template>
                             <span>{{
@@ -221,6 +219,85 @@ export default {
             player: null,
         };
     },
+    computed: {
+        ...mapState("watch", ["video", "isLoading", "hasError"]),
+        ...syncState("watch", ["showTL"]),
+        showLiveChat: {
+            get() {
+                return this.$store.state.watch.showLiveChat && this.showLiveChatOverride;
+            },
+            set(val) {
+                this.$store.commit("watch/setShowLiveChat", val);
+            },
+        },
+        videoId() {
+            return this.$route.params.id || this.$route.query.v;
+        },
+        timeOffset() {
+            return +this.$route.query.t || this.startTime;
+        },
+        title() {
+            return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
+        },
+        hasLiveChat() {
+            return this.isMugen || this.video.type === "stream";
+        },
+        hasLiveTL() {
+            return this.video.type === "stream";
+        },
+        showChatWindow() {
+            return this.hasLiveChat && (this.showLiveChat || this.showTL);
+        },
+        isMugen() {
+            return this.$route.name === "mugen-clips";
+        },
+        isMobile() {
+            return this.$store.state.isMobile;
+        },
+        landscape() {
+            return this.$vuetify.breakpoint.width >= 568;
+        },
+        theaterMode: {
+            get() {
+                return this.$store.state.watch.theaterMode && !this.isMobile;
+            },
+            set(val) {
+                return this.$store.commit("watch/setTheaterMode", val);
+            },
+        },
+        firstVisitMugen: {
+            get() {
+                return this.$store.state.firstVisitMugen;
+            },
+            set() {
+                return this.$store.commit("setVisitedMugen");
+            },
+        },
+        comments() {
+            return this.video.comments || [];
+        },
+        isPlaylist() {
+            return this.$route.query.playlist;
+        },
+        role() {
+            return this.$store.state.userdata?.user?.role;
+        },
+    },
+    watch: {
+        // eslint-disable-next-line func-names
+        "$route.params.id": function () {
+            this.init();
+        },
+        // eslint-disable-next-line func-names
+        "$route.query.v": function () {
+            this.init();
+        },
+        video() {
+            this.showLiveChatOverride =
+                this.video.type === "stream" &&
+                (["upcoming", "live"].includes(this.video.status) || !!(window as any).extensionSupport);
+        },
+    },
     created() {
         this.init();
         if (this.showTL && !this.hintConnectLiveTL) {
@@ -324,85 +401,6 @@ export default {
             if (this.playlistIndex >= 0) {
                 this.playlistIndex += 1;
             }
-        },
-    },
-    computed: {
-        ...mapState("watch", ["video", "isLoading", "hasError"]),
-        ...syncState("watch", ["showTL"]),
-        showLiveChat: {
-            get() {
-                return this.$store.state.watch.showLiveChat && this.showLiveChatOverride;
-            },
-            set(val) {
-                this.$store.commit("watch/setShowLiveChat", val);
-            },
-        },
-        videoId() {
-            return this.$route.params.id || this.$route.query.v;
-        },
-        timeOffset() {
-            return +this.$route.query.t || this.startTime;
-        },
-        title() {
-            return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
-        },
-        hasLiveChat() {
-            return this.isMugen || this.video.type === "stream";
-        },
-        hasLiveTL() {
-            return this.video.type === "stream";
-        },
-        showChatWindow() {
-            return this.hasLiveChat && (this.showLiveChat || this.showTL);
-        },
-        isMugen() {
-            return this.$route.name === "mugen-clips";
-        },
-        isMobile() {
-            return this.$store.state.isMobile;
-        },
-        landscape() {
-            return this.$vuetify.breakpoint.width >= 568;
-        },
-        theaterMode: {
-            get() {
-                return this.$store.state.watch.theaterMode && !this.isMobile;
-            },
-            set(val) {
-                return this.$store.commit("watch/setTheaterMode", val);
-            },
-        },
-        firstVisitMugen: {
-            get() {
-                return this.$store.state.firstVisitMugen;
-            },
-            set() {
-                return this.$store.commit("setVisitedMugen");
-            },
-        },
-        comments() {
-            return this.video.comments || [];
-        },
-        isPlaylist() {
-            return this.$route.query.playlist;
-        },
-        role() {
-            return this.$store.state.userdata?.user?.role;
-        },
-    },
-    watch: {
-        // eslint-disable-next-line func-names
-        "$route.params.id": function () {
-            this.init();
-        },
-        // eslint-disable-next-line func-names
-        "$route.query.v": function () {
-            this.init();
-        },
-        video() {
-            this.showLiveChatOverride =
-                this.video.type === "stream" &&
-                (["upcoming", "live"].includes(this.video.status) || !!(window as any).extensionSupport);
         },
     },
 };

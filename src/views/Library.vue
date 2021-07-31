@@ -25,9 +25,9 @@
                                     <v-list-item-icon>
                                         <v-icon>{{ icons.mdiYoutube }}</v-icon>
                                     </v-list-item-icon>
-                                    <v-list-item-content>{{
-                                        $t("views.library.exportYtPlaylist")
-                                    }}</v-list-item-content>
+                                    <v-list-item-content>
+                                        {{ $t("views.library.exportYtPlaylist") }}
+                                    </v-list-item-content>
                                 </v-list-item>
                                 <v-list-item @click.stop="downloadAsCSV">
                                     <v-list-item-icon>
@@ -54,7 +54,7 @@
                                 {{ $t("views.library.deleteConfirmation", [selected.length]) }}
                             </v-card-title>
                             <v-card-actions>
-                                <v-spacer></v-spacer>
+                                <v-spacer />
                                 <v-btn text @click="deleteDialog = false">
                                     {{ $t("views.library.deleteConfirmationCancel") }}
                                 </v-btn>
@@ -81,8 +81,7 @@
                         dense
                         filled
                         hide-details
-                    >
-                    </v-select>
+                    />
                     <!-- </div> -->
                 </div>
             </v-col>
@@ -116,24 +115,24 @@
                 <v-card-text>
                     <v-row>
                         <v-col cols="">
-                            <p v-html="$t('views.library.exportYTExplanation')"></p>
+                            <p v-html="$t('views.library.exportYTExplanation')" />
                             <br />
 
                             <br />
-                            <p v-html="$t('views.library.exportYTInstructions')"></p>
+                            <p v-html="$t('views.library.exportYTInstructions')" />
                             <v-btn class="mt-2 mx-2" color="green" @click="exportSelected">
                                 {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
                             </v-btn>
-                            <v-btn class="mt-2 mx-2" @click="instructionsDialog = false">{{
-                                $t("views.library.deleteConfirmationCancel")
-                            }}</v-btn>
+                            <v-btn class="mt-2 mx-2" @click="instructionsDialog = false">
+                                {{ $t("views.library.deleteConfirmationCancel") }}
+                            </v-btn>
                         </v-col>
                         <v-col cols="12" md="auto">
                             <img src="/img/playlist-instruction.jpg" />
                         </v-col>
                     </v-row>
                 </v-card-text>
-                <v-card-actions> </v-card-actions>
+                <v-card-actions />
             </v-card>
         </v-dialog>
     </v-container>

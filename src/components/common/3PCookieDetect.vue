@@ -17,7 +17,9 @@
         </v-alert>
         <v-dialog v-if="dialogOpen" v-model="dialogOpen" max-width="86vw" width="700px">
             <v-card>
-                <v-card-title class="headline"> {{ $t("component.thirdpartycookie.dialogTitle") }} </v-card-title>
+                <v-card-title class="headline">
+                    {{ $t("component.thirdpartycookie.dialogTitle") }}
+                </v-card-title>
                 <v-card-text>
                     <p v-html="$t('component.thirdpartycookie.explanation')" />
                     <p>
@@ -46,7 +48,7 @@
                     <v-img
                         width="400px"
                         src="https://blog.mozilla.org/wp-content/uploads/2019/08/ETP-Blocking-Cookies-300x264.png"
-                    ></v-img>
+                    />
                 </v-card-text>
                 <v-card-actions>
                     <v-btn outlined color="warning" @click="dialogOpen = false">
@@ -94,6 +96,7 @@ export default {
     created() {
         if (this.shouldTestTPCookie) {
             const self = this;
+            // eslint-disable-next-line func-names
             const receiveMessage = function (evt) {
                 if (evt.data === "MM:3PCunsupported") {
                     // document.getElementById("result").innerHTML = "not supported";
