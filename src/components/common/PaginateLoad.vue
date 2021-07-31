@@ -3,18 +3,18 @@
         <!-- <LoadingOverlay :isLoading="status === STATUSES.LOADING" :showError="status === STATUSES.ERROR" /> -->
         <!-- <template> -->
         <v-pagination
+            v-if="!pageLess"
+            v-show="status === STATUSES.READY || status === STATUSES.COMPLETED"
             v-model="page"
             :length="pages"
-            v-if="!pageLess"
             :total-visible="TOTAL_PAGINATION_COUNT[$vuetify.breakpoint.name]"
-            v-show="status === STATUSES.READY || status === STATUSES.COMPLETED"
         ></v-pagination>
         <div v-show="status === STATUSES.READY || status === STATUSES.COMPLETED" v-else>
-            <v-btn class="ma-2 pr-6" @click="page -= 1" :disabled="page === 1">
+            <v-btn class="ma-2 pr-6" :disabled="page === 1" @click="page -= 1">
                 <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
                 {{ $t("component.paginateLoad.newer") }}
             </v-btn>
-            <v-btn class="ma-2 pl-6" @click="page += 1" :disabled="status === STATUSES.COMPLETED">
+            <v-btn class="ma-2 pl-6" :disabled="status === STATUSES.COMPLETED" @click="page += 1">
                 {{ $t("component.paginateLoad.older") }}
                 <v-icon>{{ icons.mdiChevronRight }}</v-icon>
             </v-btn>
@@ -29,10 +29,10 @@ import isActive from "@/mixins/isActive";
 
 export default {
     name: "PaginateLoad",
-    mixins: [isActive],
     components: {
         LoadingOverlay,
     },
+    mixins: [isActive],
     data() {
         return {
             STATUSES: Object.freeze({
@@ -70,12 +70,6 @@ export default {
             type: String,
         },
     },
-    activated() {
-        // page has changed between activation/deactivation, resync
-        // if (this.lastPage !== this.page) {
-        //     this.emitEvent();
-        // }
-    },
     computed: {
         page: {
             get() {
@@ -93,10 +87,6 @@ export default {
                 });
             },
         },
-    },
-    mounted() {
-        // this.status = this.STATUSES.LOADING;
-        this.emitEvent();
     },
     watch: {
         identifier() {
@@ -117,6 +107,16 @@ export default {
                 this.emitEvent();
             }
         },
+    },
+    activated() {
+        // page has changed between activation/deactivation, resync
+        // if (this.lastPage !== this.page) {
+        //     this.emitEvent();
+        // }
+    },
+    mounted() {
+        // this.status = this.STATUSES.LOADING;
+        this.emitEvent();
     },
     methods: {
         reset() {

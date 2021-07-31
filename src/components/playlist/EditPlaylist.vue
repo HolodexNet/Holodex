@@ -2,7 +2,7 @@
     <v-card width="400" class="nav-scroll thin-scroll-bar pl-2">
         <slot />
         <div class="pa-2">
-            <playlist :playlist="active" isEditable :isSaved="isSaved" horizontal></playlist>
+            <playlist :playlist="active" is-editable :is-saved="isSaved" horizontal></playlist>
         </div>
     </v-card>
 </template>

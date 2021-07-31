@@ -15,33 +15,33 @@
                 </v-btn>
             </v-card-title>
             <carousel
-                :windowSize="BREAKPOINTS[$vuetify.breakpoint.name]"
-                :itemWidth="220"
-                :itemCount="popularSongs.length"
                 v-if="popularSongs.length"
+                :window-size="BREAKPOINTS[$vuetify.breakpoint.name]"
+                :item-width="220"
+                :item-count="popularSongs.length"
             >
                 <template v-for="(song, idx) in popularSongs">
                     <song-item-card
+                        :key="'clist2' + idx"
                         style="width: 200px; margin: 10px"
                         :song="song"
+                        show-time
+                        :hover-icon="icons.mdiPlaylistPlus"
+                        :artwork-hover-icon="icons.mdiPlay"
                         @play="$store.commit('music/addSong', song)"
                         @playNow="skipToSong"
-                        showTime
-                        :hoverIcon="icons.mdiPlaylistPlus"
-                        :artworkHoverIcon="icons.mdiPlay"
-                        :key="'clist2' + idx"
                     ></song-item-card>
                 </template>
-                <v-icon disabled v-if="popularSongs.length === 0">{{ icons.mdiDatabaseOff }}</v-icon>
+                <v-icon v-if="popularSongs.length === 0" disabled>{{ icons.mdiDatabaseOff }}</v-icon>
             </carousel>
         </v-col>
         <v-col sm="12" md="12">
             <generic-list-loader
-                paginate
                 :key="'ldr' + channel.id + '+' + committedSearch"
-                :perPage="PER_PAGE_ITEMS"
-                :loadFn="getSongLoader()"
                 v-slot="{ data, isLoading }"
+                paginate
+                :per-page="PER_PAGE_ITEMS"
+                :load-fn="getSongLoader()"
             >
                 <v-card-title>
                     <span class="text-h5 mr-3">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
@@ -59,10 +59,10 @@
                     <v-spacer></v-spacer>
 
                     <v-text-field
+                        ref="searchbox"
                         v-model="search"
                         :append-icon="icons.mdiMagnify"
                         :label="$t('component.search.searchLabel')"
-                        ref="searchbox"
                         single-line
                         hide-details
                         @submit="doSearch(search)"
@@ -73,7 +73,7 @@
 
                 <v-row>
                     <v-col>
-                        <song-table :PER_PAGE_ITEMS="PER_PAGE_ITEMS" :loading="isLoading" :songs="data"></song-table>
+                        <song-table :p-e-r-p-a-g-e-i-t-e-m-s="PER_PAGE_ITEMS" :loading="isLoading" :songs="data"></song-table>
                     </v-col>
                 </v-row>
             </generic-list-loader>
@@ -101,8 +101,8 @@ const BREAKPOINTS = Object.freeze({
 const PER_PAGE_ITEMS = 20;
 
 export default {
-    components: { SongItem, SongItemCard, Carousel, PaginateLoad, SongTable, GenericListLoader },
     name: "ChannelMusic",
+    components: { SongItem, SongItemCard, Carousel, PaginateLoad, SongTable, GenericListLoader },
     data() {
         return {
             popularSongs: [],
@@ -114,10 +114,6 @@ export default {
             committedSearch: "",
         };
     },
-    created() {
-        // this.songsByRecent();
-        this.songsByPopular();
-    },
     computed: {
         channel() {
             return this.$store.state.channel.channel;
@@ -127,6 +123,10 @@ export default {
         channel() {
             this.songsByPopular();
         },
+    },
+    created() {
+        // this.songsByRecent();
+        this.songsByPopular();
     },
     methods: {
         async songsByPopular() {

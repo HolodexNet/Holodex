@@ -7,7 +7,7 @@
                 </v-card-title>
                 <template :v-if="!isLoading">
                     <v-card-text>
-                        <v-alert dense text type="error" dismissible v-model="error"> Error Occured </v-alert>
+                        <v-alert v-model="error" dense text type="error" dismissible> Error Occured </v-alert>
                         <span class="text-body-1">{{ video.title }}</span>
                         <br />
                         {{ video.channel.name }}
@@ -20,7 +20,7 @@
                                 :value="reason.value"
                             ></v-radio>
                         </v-radio-group>
-                        <v-card-text class="red--text" v-if="video.channel.id === 'UCF4-I8ZQL6Aa-iHfdz-B9KQ'">
+                        <v-card-text v-if="video.channel.id === 'UCF4-I8ZQL6Aa-iHfdz-B9KQ'" class="red--text">
                             <b>Note: Please don't report just because you disagree / dislike this subber.</b>
                             <div v-if="readMore">
                                 <p>
@@ -41,9 +41,9 @@
                             <a v-else @click.stop="readMore = true"> Read more...</a>
                         </v-card-text>
                         <v-textarea
+                            v-model="comments"
                             filled
                             :label="$t('component.reportDialog.comments')"
-                            v-model="comments"
                             persistent-hint
                             hint="* English / 日本語 / 繁體中文 OK"
                             :error="!comments.length"
@@ -51,7 +51,7 @@
                     </v-card-text>
 
                     <v-divider></v-divider>
-                    <channel-socials :channel="video.channel" showDelete hideYt vertical class="d-inline-block ml-4" />
+                    <channel-socials :channel="video.channel" show-delete hide-yt vertical class="d-inline-block ml-4" />
                     <v-icon small class="ml-1">{{ icons.mdiArrowLeft }}</v-icon>
                     {{ $t("component.channelSocials.block") }}
                     <v-divider></v-divider>
@@ -69,8 +69,8 @@
         </v-dialog>
         <v-snackbar v-model="showSnackbar" :timeout="3000" color="success">
             {{ $t("component.reportDialog.success") }}
-            <template v-slot:action>
-                <v-btn text @click="showSnackbar = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
+            <template #action>
+                <v-btn text class="ml-auto" @click="showSnackbar = false"> {{ $t("views.app.close_btn") }} </v-btn>
             </template>
         </v-snackbar>
     </div>
@@ -81,8 +81,8 @@ import { axiosInstance } from "@/utils/backend-api";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 
 export default {
-    components: { ChannelSocials },
     name: "ReportDialog",
+    components: { ChannelSocials },
     data() {
         return {
             selectedReason: "Video tagged incorrectly",
@@ -92,6 +92,42 @@ export default {
             error: false,
             readMore: false,
         };
+    },
+    computed: {
+        reasons() {
+            return [
+                {
+                    text: this.$t("component.reportDialog.reasons[0]"),
+                    value: "Video tagged incorrectly",
+                },
+                {
+                    text: this.$t("component.reportDialog.reasons[1]"),
+                    value: "Low Quality/Misleading Content",
+                },
+                {
+                    text: this.$t("component.reportDialog.reasons[2]"),
+                    value: "Violates the org's derivative work guidelines or inappropriate",
+                },
+                {
+                    text: this.$t("component.reportDialog.reasons[3]"),
+                    value: "Other",
+                },
+            ];
+        },
+        video() {
+            return this.$store.state.reportVideo;
+        },
+        user() {
+            return this.$store.state.userdata.user;
+        },
+        showReportDialog: {
+            get() {
+                return this.$store.state.reportVideo;
+            },
+            set(val) {
+                if (!val) this.$store.commit("setReportVideo", null);
+            },
+        },
     },
     methods: {
         sendReport() {
@@ -152,42 +188,6 @@ export default {
                 .finally(() => {
                     this.isLoading = false;
                 });
-        },
-    },
-    computed: {
-        reasons() {
-            return [
-                {
-                    text: this.$t("component.reportDialog.reasons[0]"),
-                    value: "Video tagged incorrectly",
-                },
-                {
-                    text: this.$t("component.reportDialog.reasons[1]"),
-                    value: "Low Quality/Misleading Content",
-                },
-                {
-                    text: this.$t("component.reportDialog.reasons[2]"),
-                    value: "Violates the org's derivative work guidelines or inappropriate",
-                },
-                {
-                    text: this.$t("component.reportDialog.reasons[3]"),
-                    value: "Other",
-                },
-            ];
-        },
-        video() {
-            return this.$store.state.reportVideo;
-        },
-        user() {
-            return this.$store.state.userdata.user;
-        },
-        showReportDialog: {
-            get() {
-                return this.$store.state.reportVideo;
-            },
-            set(val) {
-                if (!val) this.$store.commit("setReportVideo", null);
-            },
         },
     },
 };

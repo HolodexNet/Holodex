@@ -15,7 +15,7 @@
             <template v-if="includeVideoCount">
                 •
                 {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
-                <router-link :to="`/channel/${channel.id}/clips`" class="no-decoration" v-if="channel.clip_count > 0">
+                <router-link v-if="channel.clip_count > 0" :to="`/channel/${channel.id}/clips`" class="no-decoration">
                     •
                     <span class="primary--text">{{ $tc("component.channelInfo.clipCount", channel.clip_count) }}</span>
                 </router-link>
@@ -73,12 +73,6 @@ export default {
         //     default: false,
         // },
     },
-    methods: {
-        formatCount,
-        searchQuery(topicId) {
-            return `/search?q=type,value,text%0Achannel,${this.channel.id},${this.channel.name}%0Atopic,${topicId},${topicId}`;
-        },
-    },
     computed: {
         subscriberCount() {
             if (this.channel.subscriber_count) {
@@ -93,6 +87,12 @@ export default {
             const prop = this.$store.state.settings.nameProperty;
             if (this.channel[prop]) return this.channel[prop];
             return this.channel.name;
+        },
+    },
+    methods: {
+        formatCount,
+        searchQuery(topicId) {
+            return `/search?q=type,value,text%0Achannel,${this.channel.id},${this.channel.name}%0Atopic,${topicId},${topicId}`;
         },
     },
 };

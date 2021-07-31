@@ -1,5 +1,5 @@
 <template>
-    <div class="pa-2 primary" v-if="showInstallPrompt">
+    <div v-if="showInstallPrompt" class="pa-2 primary">
         <div class="d-flex align-center">
             <img
                 src="https://holodex.net/img/icons/apple-touch-icon-152x152.png"
@@ -14,7 +14,7 @@
             }}</v-btn>
             <v-btn small color="secondary" @click="install">{{ $t("component.installPrompt.installBtn") }}</v-btn>
         </div>
-        <v-dialog max-width="350" v-model="iOSInstallDialog">
+        <v-dialog v-model="iOSInstallDialog" max-width="350">
             <v-card class="py-4">
                 <div style="text-align: center">
                     <div>
@@ -58,6 +58,19 @@ export default {
             mdiExportVariant,
         };
     },
+    computed: {
+        showInstallPrompt() {
+            const promptWeekly =
+                new Date().getTime() - this.$store.state.lastShownInstallPrompt > 1000 * 60 * 60 * 24 * 7;
+            if (this.isAppleDevice() && !this.isStandAlone() && promptWeekly) {
+                return true;
+            }
+            if (this.deferredPrompt && promptWeekly) {
+                return true;
+            }
+            return false;
+        },
+    },
     mounted() {
         window.addEventListener("beforeinstallprompt", (e) => {
             // Prevent the mini-infobar from appearing on mobile
@@ -73,19 +86,6 @@ export default {
         // this.$gtag.event("pwa:source", {
         //     event_label: this.isStandAlone() ? "pwa" : "browser",
         // });
-    },
-    computed: {
-        showInstallPrompt() {
-            const promptWeekly =
-                new Date().getTime() - this.$store.state.lastShownInstallPrompt > 1000 * 60 * 60 * 24 * 7;
-            if (this.isAppleDevice() && !this.isStandAlone() && promptWeekly) {
-                return true;
-            }
-            if (this.deferredPrompt && promptWeekly) {
-                return true;
-            }
-            return false;
-        },
     },
     methods: {
         async install() {

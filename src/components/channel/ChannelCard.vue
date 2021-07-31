@@ -4,7 +4,7 @@
             <v-list-item-avatar size="100" tile>
                 <ChannelImg :channel="channel" size="100" />
             </v-list-item-avatar>
-            <ChannelInfo :channel="channel" includeVideoCount>
+            <ChannelInfo :channel="channel" include-video-count>
                 <ChannelSocials :channel="channel" class="pa-0 justify-start" />
             </ChannelInfo>
         </v-list-item>

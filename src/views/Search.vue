@@ -27,17 +27,17 @@
             <v-col class="offset-xl-1 col-xl-10">
                 <generic-list-loader
                     v-if="searchVideo !== null"
-                    paginate
-                    :perPage="pageLength"
-                    :loadFn="searchVideo"
                     v-slot="{ data, isLoading }"
                     :key="filter_type + filter_sort + id + executedQuery"
+                    paginate
+                    :per-page="pageLength"
+                    :load-fn="searchVideo"
                 >
                     <VideoCardList
                         v-show="!isLoading"
                         :videos="data"
                         :horizontal="horizontal"
-                        includeChannel
+                        include-channel
                         :cols="{
                             xs: 1,
                             sm: 3,
@@ -48,6 +48,7 @@
                     ></VideoCardList>
                     <!-- Render skeleton items when data hasn't loaded yet -->
                     <skeleton-card-list
+                        v-if="isLoading"
                         :cols="{
                             xs: 1,
                             sm: 3,
@@ -56,7 +57,6 @@
                             xl: 6,
                         }"
                         dense
-                        v-if="isLoading"
                     />
                 </generic-list-loader>
             </v-col>
@@ -76,6 +76,12 @@ import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 
 export default {
     name: "Search",
+    components: {
+        VideoCardList,
+        SearchForm,
+        GenericListLoader,
+        SkeletonCardList,
+    },
     mixins: [isActive],
     metaInfo() {
         const vm = this;
@@ -84,12 +90,6 @@ export default {
                 return `${vm.$t("component.search.searchLabel")} - Holodex`;
             },
         };
-    },
-    components: {
-        VideoCardList,
-        SearchForm,
-        GenericListLoader,
-        SkeletonCardList,
     },
     data() {
         return {

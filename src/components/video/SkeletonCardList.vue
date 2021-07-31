@@ -23,12 +23,6 @@
 <script lang="ts">
 export default {
     name: "SkeletonCardList",
-    data() {
-        return {
-            expanded: false,
-            randomId: Date.now(),
-        };
-    },
     props: {
         horizontal: {
             required: false,
@@ -62,10 +56,11 @@ export default {
             default: 24,
         },
     },
-    methods: {
-        handleVideoClick(video) {
-            this.$emit("videoClicked", video);
-        },
+    data() {
+        return {
+            expanded: false,
+            randomId: Date.now(),
+        };
     },
     computed: {
         processedVideos() {
@@ -80,6 +75,11 @@ export default {
         colSize() {
             if (this.horizontal) return 1;
             return this.cols[this.$vuetify.breakpoint.name];
+        },
+    },
+    methods: {
+        handleVideoClick(video) {
+            this.$emit("videoClicked", video);
         },
     },
 };

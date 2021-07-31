@@ -5,24 +5,24 @@
             <template v-if="!hideBuckets">
                 <template v-for="b in buckets">
                     <v-btn
-                        class="mr-2 mb-2 ts-btn"
                         :key="b.time"
+                        class="mr-2 mb-2 ts-btn"
                         label
-                        @click="currentFilter = b.time"
                         :color="currentFilter === b.time ? 'primary darken-1' : ''"
                         small
+                        @click="currentFilter = b.time"
                     >
                         {{ b.display }} ({{ b.count }})
                     </v-btn>
                 </template>
             </template>
             <v-divider />
-            <v-list dense class="pa-0 transparent caption" v-if="comments" @click.native="handleClick">
+            <v-list v-if="comments" dense class="pa-0 transparent caption" @click.native="handleClick">
                 <template v-for="comment in limitComment">
-                    <Comment :comment="comment" :videoId="video.id" :key="comment.comment_key"></Comment>
+                    <Comment :key="comment.comment_key" :comment="comment" :video-id="video.id"></Comment>
                 </template>
             </v-list>
-            <v-btn plain small text @click="expanded = !expanded" v-if="shouldLimit">
+            <v-btn v-if="shouldLimit" plain small text @click="expanded = !expanded">
                 {{ expanded ? $t("views.app.close_btn") : $t("component.description.showMore") }}</v-btn
             >
         </v-card-text>
@@ -48,12 +48,6 @@ export default {
     components: {
         Comment,
     },
-    data() {
-        return {
-            currentFilter: -1,
-            expanded: false,
-        };
-    },
     props: {
         comments: {
             type: Array,
@@ -73,15 +67,11 @@ export default {
             default: false,
         },
     },
-    methods: {
-        formatDuration,
-        handleClick(e) {
-            if (e.target.matches(".comment-chip")) {
-                this.$emit("timeJump", e.target.getAttribute("data-time"), true, true);
-                // timeJump, timestamp, playNow = true, updateStartTime = true
-                e.preventDefault();
-            }
-        },
+    data() {
+        return {
+            currentFilter: -1,
+            expanded: false,
+        };
     },
     computed: {
         shouldLimit() {
@@ -160,6 +150,16 @@ export default {
                 subBucket.push(t);
             });
             return buckets.sort((a, b) => b.count - a.count);
+        },
+    },
+    methods: {
+        formatDuration,
+        handleClick(e) {
+            if (e.target.matches(".comment-chip")) {
+                this.$emit("timeJump", e.target.getAttribute("data-time"), true, true);
+                // timeJump, timestamp, playNow = true, updateStartTime = true
+                e.preventDefault();
+            }
         },
     },
 };

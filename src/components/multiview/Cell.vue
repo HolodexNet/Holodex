@@ -5,35 +5,35 @@
         :class="{
             'edit-mode': pausedMode,
         }"
-        v-on:drop="drop"
-        v-on:dragover="allowDrop"
-        v-on:dragleave="dragLeave"
-        v-on:dragenter="dragEnter"
+        @drop="drop"
+        @dragover="allowDrop"
+        @dragleave="dragLeave"
+        @dragenter="dragEnter"
     >
         <!-- When Cell has no content: show video picker -->
-        <v-sheet style="height: 100%" class="d-flex flex-column pt-4" v-if="!cellContent">
+        <v-sheet v-if="!cellContent" style="height: 100%" class="d-flex flex-column pt-4">
             <!--================= No Content Mode ================-->
             <v-sheet
-                class="mx-6 thin-scroll-bar d-flex flex-grow-1 flex-shrink-1 align-center justify-center"
                 v-if="!cellContent"
+                class="mx-6 thin-scroll-bar d-flex flex-grow-1 flex-shrink-1 align-center justify-center"
                 style="overflow-y: auto; overflow-x: hidden; position: relative"
             >
                 <!-- <v-sheet class="px-0 d-flex flex-grow-1 align-center justify-center mb-1"> -->
-                <v-btn class="mr-2" color="indigo darken-1" @click="$emit('showSelector', item.i)" rounded-sm large>
+                <v-btn class="mr-2" color="indigo darken-1" rounded-sm large @click="$emit('showSelector', item.i)">
                     <v-icon>{{ mdiCardPlus }}</v-icon>
                 </v-btn>
                 <v-btn
-                    color="teal darken-1"
-                    @click="setItemAsChat(item)"
                     v-if="!(cellContent && cellContent.type === 'chat')"
+                    color="teal darken-1"
                     rounded-sm
                     large
+                    @click="setItemAsChat(item)"
                 >
                     <v-icon>{{ mdiMessage }}</v-icon>
                 </v-btn>
             </v-sheet>
             <template>
-                <CellControl :playIcon="icons.mdiPlay" @delete="deleteCell" class="mx-6 mb-6 mt-0 flex-grow-0" />
+                <CellControl :play-icon="icons.mdiPlay" class="mx-6 mb-6 mt-0 flex-grow-0" @delete="deleteCell" />
             </template>
         </v-sheet>
 
@@ -45,53 +45,53 @@
         <!--=== Video/Chat iFrame based on type ===-->
         <template v-if="cellContent">
             <v-sheet
+                :key="`uid-${uniqueId}`"
                 rounded="md"
                 color="transparent"
                 class="cell-content"
                 :class="{ 'pa-6 pb-1': pausedMode, 'chat-cell': isChat }"
-                :key="`uid-${uniqueId}`"
             >
                 <div
+                    v-if="cellContent.type === 'video' && cellContent.id"
                     class="mv-frame ma-auto"
                     :class="{ 'elevation-4': pausedMode }"
-                    v-if="cellContent.type === 'video' && cellContent.id"
                 >
                     <!-- Twitch Player -->
                     <VueTwitchPlayer
                         v-if="isTwitchVideo"
                         :channel="cellContent.id"
-                        :playsInline="true"
+                        :plays-inline="true"
+                        :mute="muted"
                         @ready="vidReady"
                         @ended="pausedMode = true"
                         @play="vidPlaying({ data: 1 })"
                         @pause="vidPlaying({ data: 2 })"
                         @error="pausedMode = true"
-                        :mute="muted"
                     >
                     </VueTwitchPlayer>
                     <!-- Youtube Player -->
                     <youtube
                         v-else
                         :video-id="cellContent.id"
-                        :playerVars="{
+                        :player-vars="{
                             playsinline: 1,
                         }"
+                        :mute="muted"
                         @ready="vidReady"
                         @ended="pausedMode = true"
                         @playing="vidPlaying({ data: 1 })"
                         @paused="vidPlaying({ data: 2 })"
                         @cued="pausedMode = true"
                         @error="pausedMode = true"
-                        :mute="muted"
                     >
                     </youtube>
                 </div>
                 <template v-else-if="cellContent.type === 'chat'">
                     <TabbedLiveChat
-                        :activeVideos="activeVideos"
-                        :setShowTL="toggleTL"
-                        :setShowChat="toggleChat"
                         :id="item.i"
+                        :active-videos="activeVideos"
+                        :set-show-t-l="toggleTL"
+                        :set-show-chat="toggleChat"
                         :scale="chatScale"
                     />
                 </template>
@@ -100,22 +100,22 @@
             <template v-if="isVideo && pausedMode">
                 <!-- VIDEO + PAUSED --->
                 <CellControl
-                    :playIcon="icons.mdiPlay"
+                    :play-icon="icons.mdiPlay"
+                    class="ma-6 mt-0"
                     @playpause="setPlaying(true)"
                     @reset="uniqueId = Date.now()"
                     @back="resetCell"
                     @delete="deleteCell"
-                    class="ma-6 mt-0"
                 />
             </template>
             <template v-if="isChat && pausedMode">
                 <!-- CHAT + PAUSED --->
                 <CellControl
-                    :playIcon="icons.mdiCheck"
+                    :play-icon="icons.mdiCheck"
+                    class="ma-6 mt-0"
                     @back="resetCell"
                     @playpause="pausedMode = !pausedMode"
                     @delete="deleteCell"
-                    class="ma-6 mt-0"
                 />
             </template>
             <template v-if="isChat && !pausedMode">
@@ -128,8 +128,8 @@
                     <v-btn
                         :x-small="toggleChat || toggleTL"
                         width="25%"
-                        @click="toggleChatHandle"
                         :color="toggleChat ? 'primary' : ''"
+                        @click="toggleChatHandle"
                     >
                         <v-icon small class="mr-1">
                             M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z
@@ -141,8 +141,8 @@
                     <v-btn
                         :x-small="toggleChat || toggleTL"
                         width="25%"
-                        @click="toggleTLHandle"
                         :color="toggleTL ? 'primary' : ''"
+                        @click="toggleTLHandle"
                     >
                         <v-icon small class="mr-1">
                             M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z M4,10h4v2H4V10z
@@ -151,7 +151,7 @@
                         <template v-if="cellWidth > 200">TL</template>
                     </v-btn>
                 </v-sheet>
-                <div style="height: 20%" v-if="!toggleChat && !toggleTL"></div>
+                <div v-if="!toggleChat && !toggleTL" style="height: 20%"></div>
             </template>
         </template>
     </v-card>
@@ -179,6 +179,7 @@ export default {
         },
         cellWidth: {
             type: Number,
+            default: 0,
         },
     },
     data() {
@@ -197,12 +198,6 @@ export default {
             mdiSelectionEllipseArrowInside,
             mdiCardPlus,
         };
-    },
-    mounted() {
-        // initialize chat cell in non paused mode
-        if (this.cellContent?.type === "chat") this.pausedMode = false;
-        this.setLayoutFreeze();
-        this.checkScale();
     },
     watch: {
         cellWidth() {
@@ -232,6 +227,12 @@ export default {
         pausedMode(newMode) {
             this.setLayoutFreeze(newMode);
         },
+    },
+    mounted() {
+        // initialize chat cell in non paused mode
+        if (this.cellContent?.type === "chat") this.pausedMode = false;
+        this.setLayoutFreeze();
+        this.checkScale();
     },
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),

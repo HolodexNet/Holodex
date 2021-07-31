@@ -7,11 +7,11 @@
             :value="countdownProgress"
         ></v-progress-linear>
         <VideoCardList
-            :videos="videos"
             v-if="playlist.length > 0"
-            limitRows="2"
-            :activeId="video.id"
-            includeChannel
+            :videos="videos"
+            limit-rows="2"
+            :active-id="video.id"
+            include-channel
             horizontal
             :cols="{
                 xs: 1,
@@ -21,7 +21,7 @@
                 xl: 5,
             }"
             dense
-            ignoreBlock
+            ignore-block
         />
         <!-- </v-card-text> -->
     </v-card>
@@ -49,37 +49,6 @@ export default {
             countdownProgress: 0,
             isLoading: true,
         };
-    },
-    mounted() {
-        const vm = this;
-        this.timer = setInterval(() => {
-            vm.currentTime = Math.floor(new Date().getTime() / 1000);
-        }, 1000);
-        this.init();
-    },
-    beforeDestroy() {
-        clearInterval(this.timer);
-    },
-    methods: {
-        init() {
-            api.rotation().then((res) => {
-                this.playlist = res.data.sort((x, y) => +x.timestamp - y.timestamp);
-                this.calculateVideo();
-            });
-        },
-        calculateVideo() {
-            const now = new Date().getTime() / 1000;
-            this.playlist = this.playlist.filter((x) => +x.timestamp + x.video.duration > now);
-            const toPlay = this.playlist[0];
-
-            this.nextCheck = this.playlist[1].timestamp;
-            api.video(toPlay.video.id).then((res) => {
-                this.timeOffset = Math.floor(now - toPlay.timestamp);
-                this.video = res.data;
-                this.$emit("playNext", { video: this.video, timeOffset: this.timeOffset });
-                // this.isLoading = false;
-            });
-        },
     },
     computed: {
         videos() {
@@ -116,6 +85,37 @@ export default {
             ) {
                 this.init();
             }
+        },
+    },
+    mounted() {
+        const vm = this;
+        this.timer = setInterval(() => {
+            vm.currentTime = Math.floor(new Date().getTime() / 1000);
+        }, 1000);
+        this.init();
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
+    },
+    methods: {
+        init() {
+            api.rotation().then((res) => {
+                this.playlist = res.data.sort((x, y) => +x.timestamp - y.timestamp);
+                this.calculateVideo();
+            });
+        },
+        calculateVideo() {
+            const now = new Date().getTime() / 1000;
+            this.playlist = this.playlist.filter((x) => +x.timestamp + x.video.duration > now);
+            const toPlay = this.playlist[0];
+
+            this.nextCheck = this.playlist[1].timestamp;
+            api.video(toPlay.video.id).then((res) => {
+                this.timeOffset = Math.floor(now - toPlay.timestamp);
+                this.video = res.data;
+                this.$emit("playNext", { video: this.video, timeOffset: this.timeOffset });
+                // this.isLoading = false;
+            });
         },
     },
 };

@@ -2,6 +2,7 @@
     <v-container fluid class="pa-0">
         <div style="font-size: 1rem !important; font-weight: 500" class="ml-0 mb-1 d-flex">
             <v-text-field
+                v-if="editNameMode"
                 v-model="playlistName"
                 autofocus
                 single-line
@@ -9,24 +10,23 @@
                 style="flex-basis: 80"
                 class="flex-shrink flex-grow pt-0 mt-0"
                 :append-icon="icons.mdiPencil"
-                v-if="editNameMode"
+                :rules="[(v) => v.length > 0 || 'Should not be empty']"
                 @keydown.enter="editNameMode = false"
                 @click:append="editNameMode = false"
-                :rules="[(v) => v.length > 0 || 'Should not be empty']"
             >
             </v-text-field>
-            <span class="text-h5 flex-grow flex-shrink" style="flex-basis: 100%" v-else>
-                <v-btn icon small class="float-right" v-show="isEditable" @click="editNameMode = true">
+            <span v-else class="text-h5 flex-grow flex-shrink" style="flex-basis: 100%">
+                <v-btn v-show="isEditable" icon small class="float-right" @click="editNameMode = true">
                     <v-icon> {{ icons.mdiPencil }} </v-icon>
                 </v-btn>
                 {{ playlist.name }}
             </span>
-            <v-btn icon small class="float-right" v-show="!isSaved" color="success" @click="trySaving"
+            <v-btn v-show="!isSaved" icon small class="float-right" color="success" @click="trySaving"
                 ><v-icon>{{ mdiContentSave }}</v-icon></v-btn
             >
             <v-menu bottom offset-y nudge-width="500">
-                <template v-slot:activator="{ on }">
-                    <v-btn v-on="on" icon small class="float-right">
+                <template #activator="{ on }">
+                    <v-btn icon small class="float-right" v-on="on">
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                     </v-btn>
                 </template>
@@ -42,8 +42,8 @@
                     <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
                     <v-list-item
                         v-if="isEditable"
-                        @click="$store.dispatch('playlist/setActivePlaylistByID', playlist.id)"
                         :disabled="isSaved || !playlist.id"
+                        @click="$store.dispatch('playlist/setActivePlaylistByID', playlist.id)"
                         ><v-icon left>{{ icons.mdiRefresh }}</v-icon> {{ $t("component.playlist.menu.reset-unsaved") }}
                     </v-list-item>
                     <!-- <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
@@ -56,17 +56,17 @@
                         <v-icon left disabled>{{ icons.mdiOpenInNew }}</v-icon
                         ><span>{{ $t("component.playlist.menu.export-playlist") }}</span>
                     </v-list-item>
-                    <v-list-item dense @click.stop="instructionsDialog = true" class="ml-5">
+                    <v-list-item dense class="ml-5" @click.stop="instructionsDialog = true">
                         <v-icon left>{{ icons.mdiYoutube }}</v-icon>
                         {{ $t("views.library.exportYtPlaylist") }}
                     </v-list-item>
-                    <v-list-item dense @click.stop="downloadAsCSV" class="ml-5 mb-2">
+                    <v-list-item dense class="ml-5 mb-2" @click.stop="downloadAsCSV">
                         <v-icon left>{{ mdiFileDelimited }}</v-icon>
                         {{ $t("views.library.exportCsv") }}
                     </v-list-item>
                     <!-- End Exporting options -->
                     <v-divider class="mb-2" />
-                    <v-list-item @click="$store.dispatch('playlist/deleteActivePlaylist')" v-if="isEditable">
+                    <v-list-item v-if="isEditable" @click="$store.dispatch('playlist/deleteActivePlaylist')">
                         <v-icon left color="error"> {{ icons.mdiDelete }} </v-icon>
                         {{
                             playlist.id
@@ -80,7 +80,7 @@
         <v-snackbar v-model="loginWarning" :timeout="5000" color="warning">
             {{ $t("component.playlist.save-error-not-logged-in") }}
 
-            <template v-slot:action="{ attrs }">
+            <template #action="{ attrs }">
                 <v-btn
                     color="red darken-2"
                     text
@@ -99,9 +99,9 @@
         </span>
         <VirtualVideoCardList
             :playlist="playlist"
-            includeChannel
+            include-channel
             :horizontal="horizontal"
-            activePlaylistItem
+            active-playlist-item
             class="playlist-video-list"
         >
         </VirtualVideoCardList>

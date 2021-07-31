@@ -1,6 +1,6 @@
 <template>
     <!-- Confirmation for deleting layout -->
-    <v-dialog v-bind:value="value" v-on:input="$emit('input', $event)" width="400">
+    <v-dialog :value="value" width="400" @input="$emit('input', $event)">
         <v-card>
             <v-card-title> {{ $t("views.multiview.confirmOverwrite") }} </v-card-title>
             <v-card-text class="d-flex flex-column justify-center align-center">
@@ -32,11 +32,6 @@ export default {
     components: {
         LayoutPreview,
     },
-    data() {
-        return {
-            overwriteMerge: this.defaultOverwrite,
-        };
-    },
     props: {
         value: {
             type: Boolean,
@@ -54,6 +49,11 @@ export default {
         layoutPreview: {
             type: Object,
         },
+    },
+    data() {
+        return {
+            overwriteMerge: this.defaultOverwrite,
+        };
     },
 };
 </script>

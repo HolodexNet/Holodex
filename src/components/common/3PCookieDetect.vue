@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-alert
+            v-if="shouldTestTPCookie && tpCookieTested"
             border="top"
             color="error"
             type="error"
@@ -9,7 +10,6 @@
             class="alert-overlay"
             transition="scroll-y-transition"
             :value="true"
-            v-if="shouldTestTPCookie && tpCookieTested"
         >
             <div @click.stop="dialogOpen = true">
                 {{ $t("component.thirdpartycookie.alertText") }}
@@ -65,7 +65,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <div style="display: none" v-if="shouldTestTPCookie && !tpCookieTested">
+        <div v-if="shouldTestTPCookie && !tpCookieTested" style="display: none">
             <!-- only if should test -->
             <iframe src="https://ricecakess.github.io/Holodex/3pcookie2.html" />
         </div>

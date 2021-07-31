@@ -7,6 +7,7 @@
         flat
         multiple
         deletable-chips
+        v-model="query"
         chips
         disable-lookup
         clearable
@@ -17,19 +18,18 @@
         :rules="[validate]"
         :autofocus="autofocus"
         :small-chips="dense"
-        v-model="query"
         :loading="isLoading"
         :items="results"
         :search-input.sync="search"
-        @input="onInput"
         :append-icon="''"
         :label="$t('component.search.searchLabel')"
         :filter="(a, b) => true"
         return-object
-        @keydown.enter="onEnterKeyDown"
         hide-details="auto"
+        @input="onInput"
+        @keydown.enter="onEnterKeyDown"
     >
-        <template v-slot:selection="selection">
+        <template #selection="selection">
             <v-card
                 :color="$vuetify.theme.dark ? 'grey darken-3' : 'primary accent-4'"
                 :label="selection.item.type !== 'channel'"
@@ -38,12 +38,12 @@
             >
                 <v-list-item class="ma-n1 py-0 pl-3 pr-1">
                     <div class="selected-card-type px-1 py-0 ma-0 rounded text--disabled caption">
-                        <v-icon x-small v-if="selection.item.type === 'channel'">{{ icons.mdiYoutube }}</v-icon>
-                        <v-icon x-small v-if="selection.item.type === 'video url'">{{ icons.mdiYoutube }}</v-icon>
-                        <v-icon x-small v-if="selection.item.type === 'topic'">{{ icons.mdiAnimationPlay }}</v-icon>
-                        <v-icon x-small v-if="selection.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
-                        <v-icon x-small v-if="selection.item.type === 'title & desc'">{{ mdiTextSearch }}</v-icon>
-                        <v-icon x-small v-if="selection.item.type === 'comments'">{{ mdiCommentSearch }}</v-icon>
+                        <v-icon v-if="selection.item.type === 'channel'" x-small>{{ icons.mdiYoutube }}</v-icon>
+                        <v-icon v-if="selection.item.type === 'video url'" x-small>{{ icons.mdiYoutube }}</v-icon>
+                        <v-icon v-if="selection.item.type === 'topic'" x-small>{{ icons.mdiAnimationPlay }}</v-icon>
+                        <v-icon v-if="selection.item.type === 'org'" x-small>{{ mdiAccountMultiple }}</v-icon>
+                        <v-icon v-if="selection.item.type === 'title & desc'" x-small>{{ mdiTextSearch }}</v-icon>
+                        <v-icon v-if="selection.item.type === 'comments'" x-small>{{ mdiCommentSearch }}</v-icon>
                         {{ i18nItem(selection.item.type) }}
                     </div>
 
@@ -62,25 +62,25 @@
                 </v-list-item>
             </v-card>
         </template>
-        <template v-slot:item="dropdownItem">
+        <template #item="dropdownItem">
             <div class="ma-n1 py-0 pl-3 pr-1">
                 <!-- @click="addItem(dropdownItem.item) -->
                 <v-list-item-content class="py-1 pt-1">
                     <v-list-item-subtitle class="text--primary">
                         {{ i18nItem(dropdownItem.item.type) }}
-                        <v-icon small v-if="dropdownItem.item.type === 'channel'">{{ icons.mdiYoutube }}</v-icon>
-                        <v-icon small v-if="dropdownItem.item.type === 'video url'">{{ icons.mdiYoutube }}</v-icon>
-                        <v-icon small v-if="dropdownItem.item.type === 'topic'">{{ icons.mdiAnimationPlay }}</v-icon>
-                        <v-icon small v-if="dropdownItem.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
-                        <v-icon small v-if="dropdownItem.item.type === 'title & desc'">{{ mdiTextSearch }}</v-icon>
-                        <v-icon small v-if="dropdownItem.item.type === 'comments'">{{ mdiCommentSearch }}</v-icon>
+                        <v-icon v-if="dropdownItem.item.type === 'channel'" small>{{ icons.mdiYoutube }}</v-icon>
+                        <v-icon v-if="dropdownItem.item.type === 'video url'" small>{{ icons.mdiYoutube }}</v-icon>
+                        <v-icon v-if="dropdownItem.item.type === 'topic'" small>{{ icons.mdiAnimationPlay }}</v-icon>
+                        <v-icon v-if="dropdownItem.item.type === 'org'" small>{{ mdiAccountMultiple }}</v-icon>
+                        <v-icon v-if="dropdownItem.item.type === 'title & desc'" small>{{ mdiTextSearch }}</v-icon>
+                        <v-icon v-if="dropdownItem.item.type === 'comments'" small>{{ mdiCommentSearch }}</v-icon>
 
                         {{ dropdownItem.item.text }}
                     </v-list-item-subtitle>
                 </v-list-item-content>
             </div>
         </template>
-        <template v-slot:append-outer>
+        <template #append-outer>
             <v-btn large class="ml-1 append-btn" @click="commitSearch">
                 <v-icon key="searchbtn" large color="secondary" v-text="icons.mdiMagnify"></v-icon>
             </v-btn>
@@ -111,6 +111,16 @@ export default {
     components: {
         ChannelImg,
     },
+    props: {
+        dense: {
+            type: Boolean,
+            default: false,
+        },
+        autofocus: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
             query: [],
@@ -125,16 +135,6 @@ export default {
             search: null,
             fromApi: [],
         };
-    },
-    props: {
-        dense: {
-            type: Boolean,
-            default: false,
-        },
-        autofocus: {
-            type: Boolean,
-            default: false,
-        },
     },
 
     computed: {

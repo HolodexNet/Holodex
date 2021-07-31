@@ -1,46 +1,46 @@
 <template>
     <div style="width: 100%; height: 100%">
         <div class="d-flex flex-row align-center py-1">
-            <v-btn icon small class="mx-1" @click="currentTab -= 1" :disabled="currentTab <= 0" v-if="setShowChat">
+            <v-btn v-if="setShowChat" icon small class="mx-1" :disabled="currentTab <= 0" @click="currentTab -= 1">
                 <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
             </v-btn>
             <v-select
-                :items="channels"
                 v-model="currentTab"
+                :items="channels"
                 outlined
                 hide-details
                 class="tabbed-chat-select mx-1"
             ></v-select>
             <v-btn
+                v-if="setShowChat"
                 icon
                 small
                 class="mx-1"
-                @click="currentTab += 1"
                 :disabled="currentTab >= activeVideos.length - 1"
-                v-if="setShowChat"
+                @click="currentTab += 1"
             >
                 <v-icon>{{ icons.mdiChevronRight }}</v-icon>
             </v-btn>
         </div>
         <template v-if="activeVideos.length && currentTab >= 0">
             <iframe
-                :src="twitchChatLink"
                 v-if="activeVideos[currentTab || 0].type === 'twitch'"
+                :src="twitchChatLink"
                 style="width: 100%; height: calc(100% - 32px)"
                 frameborder="0"
             >
             </iframe>
             <WatchLiveChat
                 v-else
+                :key="'wlc' + activeVideos[currentTab || 0].id"
                 :video="activeVideos[currentTab || 0]"
                 style="width: 100%; height: calc(100% - 32px)"
-                :key="'wlc' + activeVideos[currentTab || 0].id"
-                :showTL="showTL"
-                :hintConnectLiveTL="hintConnectLiveTL"
-                :showLiveChat="setShowChat"
+                :show-t-l="showTL"
+                :hint-connect-live-t-l="hintConnectLiveTL"
+                :show-live-chat="setShowChat"
                 fluid
                 :scale="scale"
-                :currentTime="currentTime"
+                :current-time="currentTime"
             />
         </template>
     </div>

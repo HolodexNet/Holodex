@@ -10,16 +10,16 @@
                 <v-tab-item>
                     <v-row>
                         <template v-for="preset in decodedCustomPresets">
-                            <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
+                            <v-col :key="preset.name" cols="auto" class="d-flex flex-column align-center">
                                 <LayoutPreviewCard
-                                    @click="handleSelected(preset)"
                                     :preset="preset"
                                     custom
                                     :active="presetInAuto(preset)"
+                                    @click="handleSelected(preset)"
                                 >
-                                    <template v-slot:post>
+                                    <template #post>
                                         <v-menu bottom nudge-top="20px">
-                                            <template v-slot:activator="{ on }">
+                                            <template #activator="{ on }">
                                                 <v-icon v-on="on" @click.stop.prevent>
                                                     {{ icons.mdiDotsVertical }}
                                                 </v-icon>
@@ -44,11 +44,11 @@
                 <v-tab-item>
                     <v-row>
                         <template v-for="preset in decodedDesktopPresets">
-                            <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
+                            <v-col :key="preset.name" cols="auto" class="d-flex flex-column align-center">
                                 <LayoutPreviewCard
-                                    @click="handleSelected(preset)"
                                     :preset="preset"
                                     :active="presetInAuto(preset)"
+                                    @click="handleSelected(preset)"
                                 />
                             </v-col>
                         </template>
@@ -57,11 +57,11 @@
                 <v-tab-item>
                     <v-row justify="space-around" align="center">
                         <template v-for="preset in decodedMobilePresets">
-                            <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
+                            <v-col :key="preset.name" cols="auto" class="d-flex flex-column align-center">
                                 <LayoutPreviewCard
-                                    @click="handleSelected(preset)"
                                     :preset="preset"
                                     :active="presetInAuto(preset)"
+                                    @click="handleSelected(preset)"
                                 />
                             </v-col>
                         </template>
@@ -69,20 +69,20 @@
                 </v-tab-item>
                 <v-tab-item>
                     <template v-for="(group, index) in desktopGroups">
-                        <v-radio-group v-model="autoLayout[index]" column :key="'preset-' + index" hide-details>
-                            <v-card-subtitle class="text-body-1 pa-1" v-if="index !== 0">
+                        <v-radio-group :key="'preset-' + index" v-model="autoLayout[index]" column hide-details>
+                            <v-card-subtitle v-if="index !== 0" class="text-body-1 pa-1">
                                 {{ $t("component.channelInfo.videoCount", [index]) }}
                             </v-card-subtitle>
 
-                            <v-row :key="'preset-list-' + index" v-if="group">
+                            <v-row v-if="group" :key="'preset-list-' + index">
                                 <template v-for="preset in group">
-                                    <v-col cols="auto" :key="preset.name" class="d-flex flex-column align-center">
+                                    <v-col :key="preset.name" cols="auto" class="d-flex flex-column align-center">
                                         <LayoutPreviewCard
                                             :preset="preset"
-                                            @click="setAutoLayout(index, preset.id)"
                                             :active="presetInAuto(preset)"
+                                            @click="setAutoLayout(index, preset.id)"
                                         >
-                                            <template v-slot:pre>
+                                            <template #pre>
                                                 <v-radio label="" :value="preset.id" class="ma-0"></v-radio>
                                             </template>
                                         </LayoutPreviewCard>

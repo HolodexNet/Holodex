@@ -18,15 +18,15 @@
                 v-for="(b, index) in buttons.filter((btn) => !btn.collapse || (!collapseButtons && btn.collapse))"
             >
                 <!-- Create btn with tooltip -->
-                <v-tooltip bottom :key="`mv-btn-${index}`" v-if="b.tooltip" :color="b.color">
-                    <template v-slot:activator="{ on, attrs }">
+                <v-tooltip v-if="b.tooltip" :key="`mv-btn-${index}`" bottom :color="b.color">
+                    <template #activator="{ on, attrs }">
                         <v-btn
-                            @click="b.onClick"
                             :color="b.color"
                             icon
                             v-bind="attrs"
-                            v-on="on"
                             :class="{ 'mx-1': $vuetify.breakpoint.lgAndUp }"
+                            @click="b.onClick"
+                            v-on="on"
                         >
                             <v-icon>{{ b.icon }}</v-icon>
                         </v-btn>
@@ -35,30 +35,30 @@
                 </v-tooltip>
                 <!-- Create normal button with no tooltip -->
                 <v-btn
-                    @click="b.onClick"
+                    v-else
+                    :key="`mv-btn-${index}`"
                     :color="b.color"
                     icon
-                    :key="`mv-btn-${index}`"
                     :class="{ 'mx-1': $vuetify.breakpoint.lgAndUp }"
-                    v-else
+                    @click="b.onClick"
                 >
                     <v-icon>{{ b.icon }}</v-icon>
                 </v-btn>
             </template>
             <!-- Share button and dialog -->
             <v-menu
+                v-model="shareDialog"
                 :open-on-click="true"
                 bottom
                 nudge-bottom="40px"
                 :close-on-content-click="false"
                 :open-on-hover="false"
-                v-model="shareDialog"
                 min-width="200px"
                 max-width="400px"
                 z-index="300"
             >
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn v-bind="attrs" v-on="on" icon>
+                <template #activator="{ on, attrs }">
+                    <v-btn v-bind="attrs" icon v-on="on">
                         <v-icon>{{ mdiLinkVariant }}</v-icon>
                     </v-btn>
                 </template>
@@ -79,14 +79,14 @@
             </v-menu>
             <!-- Show vertical dots menu for collapsible buttons -->
             <v-menu offset-y>
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn v-bind="attrs" v-on="on" icon v-show="collapseButtons">
+                <template #activator="{ on, attrs }">
+                    <v-btn v-show="collapseButtons" v-bind="attrs" icon v-on="on">
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                     </v-btn>
                 </template>
                 <v-list dense>
                     <template v-for="(b, index) in buttons.filter((btn) => btn.collapse)">
-                        <v-list-item @click="b.onClick" block class="mb-2" :key="`mv-collapsed-${index}`">
+                        <v-list-item :key="`mv-collapsed-${index}`" block class="mb-2" @click="b.onClick">
                             <v-icon left :color="b.color">{{ b.icon }}</v-icon>
                             <span>{{ b.tooltip }}</span>
                         </v-list-item>
@@ -110,7 +110,10 @@ export default {
     name: "MultiviewToolbar",
     mixins: [copyToClipboard],
     props: {
-        buttons: Array,
+        buttons: { 
+            type: Array,
+            default: () => [],
+        },
         input: Boolean,
     },
     data() {

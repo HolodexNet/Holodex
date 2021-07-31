@@ -4,6 +4,7 @@
     <virtual-list
         style="overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain"
         class="thin-scroll-bar"
+        ref="virtualVideoList"
         :style="{ height: computedHeight }"
         :data-key="'id'"
         :data-sources="videos"
@@ -14,7 +15,6 @@
         :page-mode="pageMode"
         :item-class="'virtual-video-list-item'"
         :item-class-add="checkActive"
-        ref="virtualVideoList"
     />
     <!-- </v-container> -->
 </template>
@@ -31,14 +31,6 @@ export default {
         VideoCard,
         ApiErrorMessage,
         VirtualList,
-    },
-    data() {
-        return {
-            expanded: false,
-            randomId: Date.now(),
-            VideoCard,
-            ...{ mdiChevronUp, mdiChevronDown },
-        };
     },
     props: {
         // videos: {
@@ -101,14 +93,13 @@ export default {
             default: "500px",
         },
     },
-    mounted() {
-        this.$refs.virtualVideoList.scrollToIndex(this.activeIndex);
-    },
-    methods: {
-        checkActive(index) {
-            if (index === this.activeIndex) return "video-card-active";
-            return "";
-        },
+    data() {
+        return {
+            expanded: false,
+            randomId: Date.now(),
+            VideoCard,
+            ...{ mdiChevronUp, mdiChevronDown },
+        };
     },
     computed: {
         videos() {
@@ -124,6 +115,15 @@ export default {
     watch: {
         activeIndex(idx) {
             this.$refs.virtualVideoList.scrollToIndex(idx);
+        },
+    },
+    mounted() {
+        this.$refs.virtualVideoList.scrollToIndex(this.activeIndex);
+    },
+    methods: {
+        checkActive(index) {
+            if (index === this.activeIndex) return "video-card-active";
+            return "";
         },
     },
 };

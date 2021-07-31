@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="dialog" width="500">
-        <template v-slot:activator="{ on, attrs }">
+        <template #activator="{ on, attrs }">
             <v-btn icon x-small v-bind="attrs" v-on="on">
                 <v-icon>
                     {{ icons.mdiCog }}
@@ -46,7 +46,7 @@
                         :label="$t('views.watch.chat.tlFontSize')"
                         outlined
                     >
-                        <template v-slot:append-outer> px </template>
+                        <template #append-outer> px </template>
                     </v-combobox>
                     <v-combobox
                         v-model="liveTlWindowSize"
@@ -55,7 +55,7 @@
                         outlined
                         hide-details
                     >
-                        <template v-slot:append-outer> % </template>
+                        <template #append-outer> % </template>
                     </v-combobox>
                     <v-switch
                         v-model="liveTlStickBottom"

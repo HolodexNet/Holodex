@@ -49,8 +49,8 @@
             <v-list-item-content class="py-1 pt-1">
                 <v-list-item-subtitle class="text--primary text-subtitle-1">
                     <a
-                        class="text-caption error--text float-right ml-1 song-clickable"
                         v-if="alwaysShowDeletion || (detailed && $listeners.remove && userCanDelete)"
+                        class="text-caption error--text float-right ml-1 song-clickable"
                         @click.stop="$emit('remove', song)"
                     >
                         {{ $t("component.media.remove") }}
@@ -67,13 +67,13 @@
 
                 <v-list-item-subtitle class="text--caption">
                     <div class="float-right">
-                        <span class="muted" v-if="showTime">{{ formattedTime }}</span>
+                        <span v-if="showTime" class="muted">{{ formattedTime }}</span>
                         {{ Math.floor((song.end - song.start) / 60) }}:{{
                             (Math.round(song.end - song.start) % 60).toString().padStart(2, "0")
                         }}
                     </div>
 
-                    <span class="song-clickable" v-if="$listeners.channel" @click.stop="$emit('channel', song)">
+                    <span v-if="$listeners.channel" class="song-clickable" @click.stop="$emit('channel', song)">
                         {{ song.channel[nameProperty] || song.channel.name }}
                     </span>
                     <span v-else> {{ song.channel[nameProperty] || song.channel.name }} </span>
@@ -89,11 +89,6 @@ import { formatDistance, secondsToHuman } from "@/utils/time";
 
 export default {
     name: "SongItem",
-    data() {
-        return {
-            albumArt: null,
-        };
-    },
     props: {
         song: {
             type: Object,
@@ -132,6 +127,11 @@ export default {
             default: null,
         },
     },
+    data() {
+        return {
+            albumArt: null,
+        };
+    },
     computed: {
         userCanDelete() {
             const u = this.$store.state.userdata;
@@ -150,10 +150,10 @@ export default {
             return this.$store.state.settings.nameProperty;
         },
     },
+    mounted() {},
     methods: {
         secondsToHuman,
     },
-    mounted() {},
 };
 </script>
 

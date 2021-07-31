@@ -1,31 +1,31 @@
 <template>
-    <v-container fluid v-if="!isLoading && !hasError" class="video-editor">
+    <v-container v-if="!isLoading && !hasError" fluid class="video-editor">
         <v-row>
             <v-col :md="3" :lg="4" cols="12" class="px-0 pt-0 px-md-3">
                 <WatchFrame :video="video">
-                    <template v-slot:youtube>
+                    <template #youtube>
                         <youtube
                             v-if="video.id"
                             :video-id="video.id"
-                            @ready="ready"
-                            :playerVars="{
+                            :player-vars="{
                                 ...(timeOffset && { start: timeOffset }),
                                 autoplay: 1,
                                 playsinline: 1,
                             }"
+                            @ready="ready"
                         >
                         </youtube>
                     </template>
                 </WatchFrame>
-                <div class="comment-scroller" v-if="video.comments.length">
+                <div v-if="video.comments.length" class="comment-scroller">
                     <WatchComments
-                        hideBuckets
+                        v-if="video && video.comments && video.comments.length"
+                        key="comments"
+                        hide-buckets
                         :comments="video.comments"
                         :video="video"
                         :limit="$store.state.isMobile ? 5 : 0"
                         @timeJump="seekTo"
-                        key="comments"
-                        v-if="video && video.comments && video.comments.length"
                     />
                 </div>
             </v-col>
@@ -54,9 +54,9 @@
                                     {{ $t("views.editor.changeTopic.info") }}
                                 </p>
                                 <v-autocomplete
+                                    v-model="newTopic"
                                     :items="topics"
                                     label="Topic (leave empty to unset)"
-                                    v-model="newTopic"
                                 />
                             </v-card-text>
                             <v-card-actions>
@@ -70,7 +70,7 @@
                                 id="musicEditor"
                                 ref="musicEditor"
                                 :video="video"
-                                :currentTime="currentTime"
+                                :current-time="currentTime"
                                 @timeJump="seekTo"
                             ></VideoEditSongs>
                         </div>
@@ -79,13 +79,13 @@
                         </div>
                     </v-col>
                     <v-col cols="12">
-                        <WatchInfo :video="video" key="info" />
+                        <WatchInfo key="info" :video="video" />
                     </v-col>
                 </v-row>
             </v-col>
         </v-row>
     </v-container>
-    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
+    <LoadingOverlay v-else :is-loading="isLoading" :show-error="hasError" />
 </template>
 
 <script lang="ts">
@@ -143,6 +143,33 @@ export default {
             timer: null,
             currentTime: 0,
         };
+    },
+    computed: {
+        videoId() {
+            return this.$route.params.id || this.$route.query.v;
+        },
+        timeOffset() {
+            return +this.$route.query.t || this.startTime;
+        },
+        title() {
+            return (this.video && this.video.title && decodeHTMLEntities(this.video.title)) || "";
+        },
+        role() {
+            return this.$store.state.userdata?.user?.role;
+        },
+    },
+    watch: {
+        // eslint-disable-next-line func-names
+        "$route.params.id": function () {
+            this.init();
+        },
+        // eslint-disable-next-line func-names
+        "$route.query.v": function () {
+            this.init();
+        },
+        currentTab() {
+            this.initTab();
+        },
     },
     created() {
         Vue.use(VueYoutube);
@@ -213,33 +240,6 @@ export default {
                     this.currentTime = this.player.getCurrentTime();
                 }, 1000);
             }
-        },
-    },
-    computed: {
-        videoId() {
-            return this.$route.params.id || this.$route.query.v;
-        },
-        timeOffset() {
-            return +this.$route.query.t || this.startTime;
-        },
-        title() {
-            return (this.video && this.video.title && decodeHTMLEntities(this.video.title)) || "";
-        },
-        role() {
-            return this.$store.state.userdata?.user?.role;
-        },
-    },
-    watch: {
-        // eslint-disable-next-line func-names
-        "$route.params.id": function () {
-            this.init();
-        },
-        // eslint-disable-next-line func-names
-        "$route.query.v": function () {
-            this.init();
-        },
-        currentTab() {
-            this.initTab();
         },
     },
 };

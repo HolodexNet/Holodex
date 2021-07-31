@@ -18,10 +18,10 @@
                 <VirtualVideoCardList
                     :videos="videos"
                     :playlist="playlist"
-                    includeChannel
+                    include-channel
                     horizontal
-                    ignoreBlock
-                    :activeIndex="value"
+                    ignore-block
+                    :active-index="value"
                     :style="{ height: Math.min(videos.length, 6) * 102 + 'px' }"
                 />
             </template>
@@ -64,6 +64,21 @@ export default {
             // activeIndex: 0,
         };
     },
+    watch: {
+        value(nw) {
+            if (
+                !this.videos.length ||
+                this.videos.length === nw ||
+                nw === -1 ||
+                this.$route.params.id === this.videos[nw].id
+            )
+                return;
+            this.$emit("playNext", { video: this.videos[nw] });
+        },
+        video() {
+            this.updateCurrentIndex();
+        },
+    },
     beforeDestroy() {},
     mounted() {
         if (!this.$route.query.playlist) return;
@@ -97,21 +112,6 @@ export default {
                 .finally(() => {
                     this.isLoading = false;
                 });
-        },
-    },
-    watch: {
-        value(nw) {
-            if (
-                !this.videos.length ||
-                this.videos.length === nw ||
-                nw === -1 ||
-                this.$route.params.id === this.videos[nw].id
-            )
-                return;
-            this.$emit("playNext", { video: this.videos[nw] });
-        },
-        video() {
-            this.updateCurrentIndex();
         },
     },
     computed: {

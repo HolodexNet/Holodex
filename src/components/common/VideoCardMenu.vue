@@ -1,6 +1,6 @@
 <template>
-    <v-list dense v-if="video">
-        <v-list-item @click.stop target="_blank" :href="`https://youtu.be/${video.id}`"
+    <v-list v-if="video" dense>
+        <v-list-item target="_blank" :href="`https://youtu.be/${video.id}`" @click.stop
             ><v-icon left>{{ icons.mdiYoutube }}</v-icon>
             {{ $t("views.settings.redirectModeLabel") }}
         </v-list-item>
@@ -22,7 +22,7 @@
             </v-list-item>
         </template>
 
-        <v-list-item @click.stop="copyLink" :class="doneCopy ? 'green lighten-2' : ''"
+        <v-list-item :class="doneCopy ? 'green lighten-2' : ''" @click.stop="copyLink"
             ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
             {{ $t("component.videoCard.copyLink") }}
         </v-list-item>
@@ -39,13 +39,13 @@ import { dayjs } from "@/utils/time";
 import copyToClipboard from "@/mixins/copyToClipboard";
 
 export default {
+    mixins: [copyToClipboard],
     props: {
         video: {
             type: Object,
             required: true,
         },
     },
-    mixins: [copyToClipboard],
     methods: {
         getChannelShortname(ch) {
             return (

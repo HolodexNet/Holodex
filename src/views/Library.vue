@@ -6,16 +6,16 @@
                     {{ $t("views.library.savedVideosTitle") }}
                 </div>
                 <div class="d-flex flex-row flex-wrap">
-                    <v-btn class="mr-1 mb-1" @click="showReset ? reset() : selectAll()" color="blue-grey">
+                    <v-btn class="mr-1 mb-1" color="blue-grey" @click="showReset ? reset() : selectAll()">
                         {{ showReset ? $t("views.library.selectionReset") : $t("views.library.selectionSelectAll") }}
                     </v-btn>
-                    <v-btn class="mr-1 mb-1" @click="select(50)" v-if="!showReset" color="blue-grey">
+                    <v-btn v-if="!showReset" class="mr-1 mb-1" color="blue-grey" @click="select(50)">
                         {{ $t("views.library.selectionSelect50") }}
                     </v-btn>
 
                     <v-menu>
-                        <template v-slot:activator="{ on }">
-                            <v-btn v-on="on" class="mr-1 mb-1" color="green darken-2">
+                        <template #activator="{ on }">
+                            <v-btn class="mr-1 mb-1" color="green darken-2" v-on="on">
                                 {{ $t("views.library.exportSelected", [selected.length]) }}
                             </v-btn>
                         </template>
@@ -43,7 +43,7 @@
                         {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
                     </v-btn> -->
                     <v-dialog v-model="deleteDialog" max-width="290">
-                        <template v-slot:activator="{ on, attrs }">
+                        <template #activator="{ on, attrs }">
                             <v-btn color="red" class="mr-2 mb-1" v-bind="attrs" v-on="on">
                                 {{ $t("views.library.deleteFromLibraryButton", [selected.length]) }}
                             </v-btn>
@@ -74,10 +74,10 @@
 
                     <!-- <div class="d-inline-block"> -->
                     <v-select
+                        v-model="sortModel"
                         class="d-inline-flex align-self-center mt-n1"
                         :prepend-inner-icon="mdiSort"
                         :items="sortby"
-                        v-model="sortModel"
                         dense
                         filled
                         hide-details
@@ -89,14 +89,14 @@
         </v-row>
         <generic-list-loader
             v-if="savedVideosList.length > 0"
-            :paginate="true"
-            :perPage="50"
-            :loadFn="getLoadFn()"
             v-slot="{ data }"
             :key="'vl-home-' + sortModel + '=' + savedVideosList.length"
+            :paginate="true"
+            :per-page="50"
+            :load-fn="getLoadFn()"
         >
-            <VideoCardList :videos="data" horizontal includeChannel dense>
-                <template v-slot:action="prop">
+            <VideoCardList :videos="data" horizontal include-channel dense>
+                <template #action="prop">
                     <v-checkbox
                         v-model="selected"
                         :ripple="false"
@@ -195,7 +195,6 @@ export default {
             sortModel: 0,
         };
     },
-    created() {},
     computed: {
         savedVideos() {
             return this.$store.state.library.savedVideos;
@@ -212,6 +211,7 @@ export default {
             return this.selected.length !== 0;
         },
     },
+    created() {},
     methods: {
         selectAll() {
             this.selected = this.savedVideosList.map((v) => v.id);

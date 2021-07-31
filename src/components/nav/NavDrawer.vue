@@ -1,24 +1,24 @@
 <template>
     <v-navigation-drawer
-        v-bind:value="value"
-        v-on:input="$emit('input', $event)"
+        :value="value"
         app
         width="240"
         clipped
         class="nav-scroll thin-scroll-bar"
         :temporary="temporary"
         style="padding-top: env(safe-area-inset-top); padding-left: calc(env(safe-area-inset-left) / 1.3)"
+        @input="$emit('input', $event)"
     >
         <slot />
         <v-list dense class="pb-0">
             <!-- <v-list> -->
             <template v-for="page in pages">
                 <v-list-item
-                    link
                     :key="page.name"
-                    @click.prevent="handlePageClick(page)"
+                    link
                     :href="page.path"
                     :class="{ 'v-list-item--active': $route.path === page.path }"
+                    @click.prevent="handlePageClick(page)"
                 >
                     <v-list-item-icon>
                         <v-icon>{{ page.icon }}</v-icon>
@@ -29,8 +29,8 @@
                     <!-- Quick Settings Popup -->
                     <v-list-item-icon v-if="page.path === '/settings'">
                         <v-menu right nudge-right max-height="80vh" :close-on-content-click="false">
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-icon v-on="on" v-bind="attrs" @click.stop.prevent>{{ mdiTuneVariant }}</v-icon>
+                            <template #activator="{ on, attrs }">
+                                <v-icon v-bind="attrs" v-on="on" @click.stop.prevent>{{ mdiTuneVariant }}</v-icon>
                             </template>
                             <v-card rounded="lg" class="py-n2 scrollable">
                                 <settings slim />
@@ -45,7 +45,7 @@
         <v-divider />
         <v-list dense>
             <v-subheader class="pl-5 text-overline">
-                {{ this.$t("component.mainNav.favorites") }}
+                {{ $t("component.mainNav.favorites") }}
             </v-subheader>
             <template v-for="vid in collapsedFavorites">
                 <v-list-item
@@ -56,16 +56,16 @@
                     <v-list-item-avatar :size="30" :class="{ outlined: isLive(vid) }">
                         <ChannelImg :channel="vid.channel" :size="30" />
                     </v-list-item-avatar>
-                    <ChannelInfo :channel="vid.channel" noSubscriberCount noGroup />
-                    <v-list-item-action-text :key="'liveclock' + vid.id + tick" v-if="vid.id">
-                        <span class="ch-live" v-if="isLive(vid)">●</span>
-                        <span class="ch-upcoming" v-else>
+                    <ChannelInfo :channel="vid.channel" no-subscriber-count no-group />
+                    <v-list-item-action-text v-if="vid.id" :key="'liveclock' + vid.id + tick">
+                        <span v-if="isLive(vid)" class="ch-live">●</span>
+                        <span v-else class="ch-upcoming">
                             {{ formatDurationUpcoming(vid.available_at) }}
                         </span>
                     </v-list-item-action-text>
                 </v-list-item>
             </template>
-            <v-list-item link @click="favoritesExpanded = !favoritesExpanded" v-if="favorites.length > 8">
+            <v-list-item v-if="favorites.length > 8" link @click="favoritesExpanded = !favoritesExpanded">
                 <v-list-item-action>
                     <v-icon>{{ favoritesExpanded ? icons.mdiChevronUp : icons.mdiChevronDown }}</v-icon>
                 </v-list-item-action>
@@ -136,14 +136,6 @@ export default {
             mdiTuneVariant,
         };
     },
-    mounted() {
-        this.ticker = setInterval(() => {
-            this.tick = Date.now();
-        }, 60000);
-    },
-    beforeDestroy() {
-        if (this.ticker) clearInterval(this.ticker);
-    },
     computed: {
         // ...mapState("favorites", ["favorites", "live"]),
         language() {
@@ -182,6 +174,14 @@ export default {
         collapsedFavorites() {
             return !this.favoritesExpanded && this.favorites.length > 8 ? this.favorites.slice(0, 8) : this.favorites;
         },
+    },
+    mounted() {
+        this.ticker = setInterval(() => {
+            this.tick = Date.now();
+        }, 60000);
+    },
+    beforeDestroy() {
+        if (this.ticker) clearInterval(this.ticker);
     },
     methods: {
         handlePageClick(page) {

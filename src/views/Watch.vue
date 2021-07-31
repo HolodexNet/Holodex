@@ -1,5 +1,5 @@
 <template>
-    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-if="isLoading || hasError" />
+    <LoadingOverlay v-if="isLoading || hasError" :is-loading="isLoading" :show-error="hasError" />
     <div
         v-else
         ref="watchFullscreen"
@@ -10,7 +10,7 @@
         }"
     >
         <!-- Mugen info message -->
-        <v-alert dense text type="info" dismissible v-model="firstVisitMugen" v-if="isMugen">
+        <v-alert v-if="isMugen" v-model="firstVisitMugen" dense text type="info" dismissible>
             {{ $t("views.mugen.welcome") }}
         </v-alert>
 
@@ -30,35 +30,35 @@
                 }"
             >
                 <WatchFrame :video="video" :fluid="isMobile">
-                    <template v-slot:youtube>
+                    <template #youtube>
                         <youtube
                             v-if="video.id"
                             :video-id="video.id"
-                            @ready="ready"
-                            @playing="playing"
-                            :playerVars="{
+                            :player-vars="{
                                 ...(timeOffset && { start: timeOffset }),
                                 autoplay: isMugen || isPlaylist ? 1 : 0,
                                 playsinline: 1,
                             }"
+                            @ready="ready"
+                            @playing="playing"
                             @ended="ended"
                         >
                         </youtube>
                     </template>
                 </WatchFrame>
-                <WatchToolBar :video="video" :noBackButton="!isMobile">
-                    <template v-slot:buttons>
-                        <v-tooltip bottom v-if="hasLiveTL">
-                            <template v-slot:activator="{ on, attrs }">
+                <WatchToolBar :video="video" :no-back-button="!isMobile">
+                    <template #buttons>
+                        <v-tooltip v-if="hasLiveTL" bottom>
+                            <template #activator="{ on, attrs }">
                                 <v-btn
                                     icon
                                     lg
-                                    @click="toggleTL"
                                     :color="showTL ? 'primary' : ''"
                                     v-bind="attrs"
+                                    @click="toggleTL"
                                     v-on="on"
                                 >
-                                    <div class="notification-sticker" v-if="newTL > 0"></div>
+                                    <div v-if="newTL > 0" class="notification-sticker"></div>
                                     <v-icon
                                         >M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z
                                         M4,10h4v2H4V10z M14,16H4v-2h10V16z M20,16h-4v-2 h4V16z
@@ -71,11 +71,11 @@
                             }}</span>
                         </v-tooltip>
                         <v-btn
+                            v-if="hasLiveChat && showLiveChatOverride"
                             icon
                             lg
-                            @click="showLiveChat = !showLiveChat"
-                            v-if="hasLiveChat && showLiveChatOverride"
                             :color="showLiveChat ? 'primary' : ''"
+                            @click="showLiveChat = !showLiveChat"
                         >
                             <v-icon>
                                 M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z
@@ -86,14 +86,14 @@
                         <v-btn icon lg @click="toggleFullScreen">
                             <v-icon>{{ icons.mdiFullscreen }}</v-icon>
                         </v-btn>
-                        <v-tooltip bottom v-if="!isMobile">
-                            <template v-slot:activator="{ on, attrs }">
+                        <v-tooltip v-if="!isMobile" bottom>
+                            <template #activator="{ on, attrs }">
                                 <v-btn
                                     icon
                                     lg
-                                    @click="theaterMode = !theaterMode"
                                     :color="theaterMode ? 'primary' : ''"
                                     v-bind="attrs"
+                                    @click="theaterMode = !theaterMode"
                                     v-on="on"
                                 >
                                     <v-icon>{{ mdiRectangleOutline }}</v-icon>
@@ -103,54 +103,54 @@
                         </v-tooltip>
                     </template>
                 </WatchToolBar>
-                <WatchInfo :video="video" key="info" @timeJump="seekTo" v-if="!theaterMode" />
+                <WatchInfo v-if="!theaterMode" key="info" :video="video" @timeJump="seekTo" />
                 <WatchQuickEditor v-if="!theaterMode && (role === 'admin' || role === 'editor')" :video="video" />
                 <!-- Mobile mode only sidebar -->
-                <WatchSideBar :video="video" @timeJump="seekTo" v-if="isMobile" />
+                <WatchSideBar v-if="isMobile" :video="video" @timeJump="seekTo" />
                 <!-- Mobile mode Mugen -->
-                <WatchMugen @playNext="playNextMugen" v-if="isMugen && isMobile" />
+                <WatchMugen v-if="isMugen && isMobile" @playNext="playNextMugen" />
                 <WatchComments
+                    v-if="comments.length && !theaterMode"
+                    key="comments"
                     :comments="comments"
                     :video="video"
                     :limit="isMobile ? 5 : 0"
                     @timeJump="seekTo"
-                    key="comments"
-                    v-if="comments.length && !theaterMode"
                 />
             </div>
             <div class="related-videos pt-0 row ma-0" :class="{ 'sidebar-width': !isMobile && !theaterMode }">
                 <v-col v-if="theaterMode" md="8" lg="9" class="pa-0">
-                    <WatchInfo :video="video" key="info" @timeJump="seekTo" />
+                    <WatchInfo key="info" :video="video" @timeJump="seekTo" />
                     <WatchQuickEditor v-if="role === 'admin' || role === 'editor'" :video="video" />
                     <v-divider />
                     <WatchComments
+                        v-if="comments.length"
+                        key="comments"
                         :comments="comments"
                         :video="video"
                         :limit="isMobile ? 5 : 0"
                         @timeJump="seekTo"
-                        key="comments"
-                        v-if="comments.length"
                     />
                 </v-col>
                 <v-col :md="theaterMode ? 4 : 12" :lg="theaterMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
                     <WatchLiveChat
                         v-if="showChatWindow"
-                        :video="video"
-                        :mugenId="isMugen && '4ANxvWIM3Bs'"
                         :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
+                        :video="video"
+                        :mugen-id="isMugen && '4ANxvWIM3Bs'"
+                        :fixed-right="isMobile && landscape"
+                        :fixed-bottom="isMobile && !landscape"
+                        :show-t-l="showTL"
+                        :hint-connect-live-t-l="hintConnectLiveTL"
+                        :show-live-chat="showLiveChat"
+                        :is-mugen="isMugen"
+                        :current-time="currentTime"
                         @videoUpdate="handleVideoUpdate"
-                        :fixedRight="isMobile && landscape"
-                        :fixedBottom="isMobile && !landscape"
-                        :showTL="showTL"
-                        :hintConnectLiveTL="hintConnectLiveTL"
-                        :showLiveChat="showLiveChat"
-                        :isMugen="isMugen"
                         @historyLength="handleHistoryLength"
-                        :currentTime="currentTime"
                     />
                     <template v-if="!isMobile">
-                        <WatchPlaylist @playNext="playNextPlaylist" v-model="playlistIndex" />
-                        <WatchMugen @playNext="playNextMugen" v-if="isMugen" />
+                        <WatchPlaylist v-model="playlistIndex" @playNext="playNextPlaylist" />
+                        <WatchMugen v-if="isMugen" @playNext="playNextMugen" />
                         <WatchSideBar :video="video" @timeJump="seekTo" />
                     </template>
                 </v-col>

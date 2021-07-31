@@ -10,7 +10,7 @@
         class="d-flex justify-center py-4"
         style="min-height: 100px"
     >
-        <LoadingOverlay :isLoading="status === STATUSES.LOADING" :showError="status === STATUSES.ERROR" />
+        <LoadingOverlay :is-loading="status === STATUSES.LOADING" :show-error="status === STATUSES.ERROR" />
         <div v-if="status === STATUSES.COMPLETED">End of list</div>
     </div>
 </template>
@@ -47,13 +47,13 @@ export default {
             type: Boolean,
         },
     },
-    mounted() {
-        if (this.initVisible) this.emitEvent();
-    },
     watch: {
         identifier() {
             this.reset();
         },
+    },
+    mounted() {
+        if (this.initVisible) this.emitEvent();
     },
     methods: {
         reset() {

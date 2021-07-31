@@ -7,18 +7,17 @@ module.exports = {
         es6: true,
     },
 
-    extends: ["airbnb-base", "eslint:recommended", "prettier", "prettier/vue", "@vue/typescript"],
+    extends: ["plugin:vue/recommended", "airbnb-base", "eslint:recommended", "prettier", "prettier/vue", "@vue/typescript"],
     parser: "vue-eslint-parser",
 
     parserOptions: {
         parser: "@typescript-eslint/parser",
+        "sourceType": "module"
     },
 
     rules: {
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
         "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-        indent: process.env.STORYBOOK === "true" ? "off" : ["warn", 4, { SwitchCase: 1 }],
-        // indent: ["error", 4, { SwitchCase: 1 }],
         quotes: ["error", "double", { avoidEscape: true }],
         eqeqeq: "error",
         "max-len": [
@@ -43,6 +42,7 @@ module.exports = {
                 vue: "always",
             },
         ],
+        "vue/no-v-html": "off",
     },
 
     ignorePatterns: ["src/external/**", "src/locales/**", ".eslintrc.js"],

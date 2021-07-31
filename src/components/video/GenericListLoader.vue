@@ -1,15 +1,15 @@
 <template>
     <div>
         <div :id="'tjump' + randomId"></div>
-        <slot v-bind:data="data" v-bind:isLoading="isLoading"> </slot>
-        <InfiniteLoad v-if="infiniteLoad" @infinite="emitLoad" :identifier="identifier" />
+        <slot :data="data" :isLoading="isLoading"> </slot>
+        <InfiniteLoad v-if="infiniteLoad" :identifier="identifier" @infinite="emitLoad" />
         <PaginateLoad
             v-if="paginate"
             :identifier="identifier"
             :pages="pages"
+            :page-less="pageless || total === null"
+            :scroll-element-id="'tjump' + randomId"
             @paginate="emitLoad"
-            :pageLess="pageless || total === null"
-            :scrollElementId="'tjump' + randomId"
         />
     </div>
 </template>

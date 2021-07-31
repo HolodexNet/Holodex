@@ -9,12 +9,12 @@
                 </v-col>
                 <v-col style="min-width: 150px">
                     <v-text-field
+                        v-model="name"
                         outlined
                         :label="$t('views.multiview.presetEditor.name')"
                         hide-details="auto"
-                        v-model="name"
                     />
-                    <v-checkbox :label="$t('views.multiview.presetEditor.autoLayout')" v-model="autoLayout" />
+                    <v-checkbox v-model="autoLayout" :label="$t('views.multiview.presetEditor.autoLayout')" />
                 </v-col>
                 <v-col cols="12">
                     <v-btn color="success" elevation="5" width="100%" :disabled="!canSave" @click="addPresetLayout()">

@@ -12,10 +12,10 @@
                             multiple
                             chips
                             deletable-chips
-                            @click="loadOrgs"
                             :items="orgs"
                             :label="$t('component.search.type.org')"
                             :prepend-icon="mdiAccountMultiple"
+                            @click="loadOrgs"
                         ></v-select>
                     </v-col>
 
@@ -33,22 +33,22 @@
 
                     <v-col cols="12">
                         <v-autocomplete
+                            v-model="channels"
                             chips
                             clearable
                             hide-details="auto"
-                            v-model="channels"
                             :label="$t('component.search.type.channel')"
                             :prepend-icon="icons.mdiYoutube"
                             :loading="channelLoading"
                             :items="channelResultsFinal"
                             :search-input.sync="channelSearch"
-                            @input="channelClearAPIResults"
                             no-filter
                             multiple
                             solo-inverted
                             item-color="secondary"
                             small-chips
                             return-object
+                            @input="channelClearAPIResults"
                         ></v-autocomplete>
                     </v-col>
                     <v-divider></v-divider>

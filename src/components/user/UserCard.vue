@@ -15,7 +15,7 @@
 *     
                      *  
                      -->
-    <v-card flat v-intersect="tryUpdateUser">
+    <v-card v-intersect="tryUpdateUser" flat>
         <v-list :dense="inNavDrawer" class="pb-0">
             <v-list-item v-if="user">
                 <v-list-item-avatar>
@@ -57,7 +57,7 @@
             </v-list-item>
 
             <v-divider v-if="user"></v-divider>
-            <v-list-item to="/login" v-if="user" link>
+            <v-list-item v-if="user" to="/login" link>
                 <v-list-item-icon>
                     <v-icon>{{ icons.mdiAccountCircleOutline }}</v-icon>
                 </v-list-item-icon>
@@ -68,7 +68,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item to="/settings" v-if="!noSetting" link>
+            <v-list-item v-if="!noSetting" to="/settings" link>
                 <v-list-item-icon>
                     <v-icon>{{ icons.mdiCog }}</v-icon>
                 </v-list-item-icon>
@@ -78,7 +78,7 @@
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
-            <v-list-item v-if="user" @click.prevent="logout" link>
+            <v-list-item v-if="user" link @click.prevent="logout">
                 <v-list-item-icon>
                     <v-icon>{{ icons.mdiLogoutVariant }}</v-icon>
                 </v-list-item-icon>
@@ -99,9 +99,6 @@ import backendApi from "@/utils/backend-api";
 
 export default {
     name: "UserCard",
-    data: () => ({
-        icons,
-    }),
     props: {
         noSetting: {
             type: Boolean,
@@ -112,6 +109,9 @@ export default {
             default: false,
         },
     },
+    data: () => ({
+        icons,
+    }),
     computed: {
         userdata() {
             return this.$store.state.userdata;

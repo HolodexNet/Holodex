@@ -8,29 +8,29 @@
             }}</v-card-subtitle>
             <v-card-text class="d-flex flex-column">
                 <v-btn
-                    class="my-3"
                     v-if="!userdata.user || !userdata.user.google_id"
-                    @click.prevent="loginGoogle"
+                    class="my-3"
                     color="red accent-2"
+                    @click.prevent="loginGoogle"
                 >
                     <v-icon left>{{ icons.mdiGoogle }}</v-icon>
                     {{ $t("views.login.with.0") }}
                 </v-btn>
                 <v-btn
-                    class="my-3"
                     v-if="!userdata.user || !userdata.user.discord_id"
-                    @click.prevent="loginDiscord"
+                    class="my-3"
                     color="indigo"
+                    @click.prevent="loginDiscord"
                 >
                     <v-icon left>{{ icons.mdiDiscord }}</v-icon>
 
                     {{ $t("views.login.with.1") }}
                 </v-btn>
                 <v-btn
-                    class="my-3"
                     v-if="!userdata.user || !userdata.user.twitter_id"
-                    @click.prevent="loginTwitter"
+                    class="my-3"
                     color="blue lighten-1"
+                    @click.prevent="loginTwitter"
                 >
                     <v-icon left>{{ icons.mdiTwitter }}</v-icon>
 
@@ -114,17 +114,17 @@ export default {
             },
         };
     },
-    mixins: [copyToClipboard],
     components: { UserCard },
+    mixins: [copyToClipboard],
     data() {
         return {};
     },
-    mounted() {},
     computed: {
         userdata() {
             return this.$store.state.userdata;
         },
     },
+    mounted() {},
     methods: {
         async loginGoogle() {
             const authCode = await this.$gAuth.getAuthCode();

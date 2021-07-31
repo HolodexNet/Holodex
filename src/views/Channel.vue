@@ -1,5 +1,5 @@
 <template>
-    <v-container class="channel-container" fluid v-if="!isLoading && !hasError">
+    <v-container v-if="!isLoading && !hasError" class="channel-container" fluid>
         <v-card>
             <v-img v-if="bannerImage" :src="bannerImage" class="channel-banner" />
             <v-container :class="{ 'pa-0': isMobile, 'pa-1': !isMobile }">
@@ -9,7 +9,7 @@
                             <ChannelImg :size="avatarSize" :channel="channel" />
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" />
-                        <ChannelSocials :channel="channel" showDelete />
+                        <ChannelSocials :channel="channel" show-delete />
                     </v-list-item>
                 </v-list>
             </v-container>
@@ -25,7 +25,7 @@
             <router-view></router-view>
         </v-container>
     </v-container>
-    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
+    <LoadingOverlay v-else :is-loading="isLoading" :show-error="hasError" />
 </template>
 
 <script lang="ts">

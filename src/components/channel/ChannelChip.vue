@@ -1,6 +1,7 @@
 <template>
     <!-- struggling a little bit with mobile/desktop compatibility -->
     <v-menu
+        v-model="isHover"
         open-on-click
         open-on-focus
         :open-on-hover="!$store.state.isMobile"
@@ -9,10 +10,9 @@
         :nudge-top="size + 5"
         content-class="elevation-0"
         close-delay="250"
-        v-model="isHover"
     >
-        <template v-slot:activator="{ on: tooltip }">
-            <v-avatar left :size="size" v-on="tooltip" class="mr-1">
+        <template #activator="{ on: tooltip }">
+            <v-avatar left :size="size" class="mr-1" v-on="tooltip">
                 <v-img
                     :src="photo"
                     crossorigin="anonymous"
@@ -21,7 +21,7 @@
                     :height="size"
                 />
                 <!-- <span class="channel-name-overlay">{{ channelName }}</span> -->
-                <slot v-bind:isHover="isHover">
+                <slot :isHover="isHover">
                     <v-fade-transition>
                         <v-overlay v-show="isHover" absolute class="chip-overlay">
                             <v-btn icon :to="`/channel/${channel.id}`">
@@ -33,7 +33,7 @@
             </v-avatar>
         </template>
         <div class="channel-hover-tooltip">
-            <ChannelSocials :channel="channel" vertical hideYt hideTwitter />
+            <ChannelSocials :channel="channel" vertical hide-yt hide-twitter />
             <span class="grey--text text--lighten-1 ml-2">{{ channelName }}</span>
         </div>
     </v-menu>
@@ -42,12 +42,10 @@
 <script lang="ts">
 import { resizeChannelPhoto } from "@/utils/functions";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
-import ChannelImg from "./ChannelImg.vue";
 
 export default {
     name: "ChannelChip",
     components: {
-        ChannelImg,
         ChannelSocials,
     },
     props: {

@@ -14,7 +14,7 @@ Vue.use(LoadScript);
 let pid = 0;
 
 export default {
-    name: "twitch-player",
+    name: "TwitchPlayer",
     props: {
         width: {
             type: String,
@@ -51,6 +51,28 @@ export default {
             player: {},
             elementId: `twitch-player-${pid}`,
         };
+    },
+    watch: {
+        channel(newChannel) {
+            this.player.setChannel(newChannel);
+        },
+        collection(newCollection) {
+            this.player.setCollection(newCollection);
+        },
+        video(newVideo) {
+            this.player.setVideo(newVideo);
+        },
+        volume(newVolume) {
+            this.player.setVolume(newVolume);
+        },
+        quality(newQuality) {
+            if (this.player.getQualities().indexOf(newQuality) !== -1) {
+                this.player.setQuality(newQuality);
+            }
+        },
+        mute(value) {
+            this.player.setMuted(value);
+        },
     },
     beforeCreate() {
         Vue.loadScript("https://player.twitch.tv/js/embed/v1.js")
@@ -147,28 +169,6 @@ export default {
         checkVideo() {
             // eslint-disable-next-line no-return-assign
             return (this.video = this.player.getVideo());
-        },
-    },
-    watch: {
-        channel(newChannel) {
-            this.player.setChannel(newChannel);
-        },
-        collection(newCollection) {
-            this.player.setCollection(newCollection);
-        },
-        video(newVideo) {
-            this.player.setVideo(newVideo);
-        },
-        volume(newVolume) {
-            this.player.setVolume(newVolume);
-        },
-        quality(newQuality) {
-            if (this.player.getQualities().indexOf(newQuality) !== -1) {
-                this.player.setQuality(newQuality);
-            }
-        },
-        mute(value) {
-            this.player.setMuted(value);
         },
     },
 };

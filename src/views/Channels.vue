@@ -7,7 +7,7 @@
         style="min-height: 70vh"
     >
         <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
-            <v-tabs v-model="category" class="channels-tabs secondary darken-1" v-if="isActive">
+            <v-tabs v-if="isActive" v-model="category" class="channels-tabs secondary darken-1">
                 <v-tab>{{ $t("views.channels.tabs.Vtuber") }}</v-tab>
                 <v-tab>{{ $t("views.channels.tabs.Subber") }}</v-tab>
                 <v-tab>{{ $t("views.channels.tabs.Favorites") }}</v-tab>
@@ -16,16 +16,16 @@
         </portal>
 
         <v-container fluid class="pa-0">
-            <v-list class="d-flex justify-space-between" style="background: none" v-if="category !== Tabs.BLOCKED">
+            <v-list v-if="category !== Tabs.BLOCKED" class="d-flex justify-space-between" style="background: none">
                 <!-- Dropdown to pick sort-by into 'sort' data attr -->
                 <v-menu offset-y>
-                    <template v-slot:activator="{ on, attrs }">
+                    <template #activator="{ on, attrs }">
                         <v-btn
                             v-bind="attrs"
-                            v-on="on"
                             text
                             style="border: none; text-transform: initial; font-weight: 400"
                             class="text--secondary pa-1"
+                            v-on="on"
                         >
                             {{ currentSortValue.text }}
                             <span
@@ -55,29 +55,29 @@
             </v-list>
             <!-- Static channel list with no loading for locally stored blocked/favorites list -->
             <ChannelList
-                :channels="channelList"
-                includeVideoCount
-                :grouped="sort === 'group'"
-                :cardView="cardView"
                 v-if="category === Tabs.BLOCKED || category === Tabs.FAVORITES"
-                :showDelete="category === Tabs.BLOCKED"
+                :channels="channelList"
+                include-video-count
+                :grouped="sort === 'group'"
+                :card-view="cardView"
+                :show-delete="category === Tabs.BLOCKED"
             />
             <!-- API retrieved channels list -->
             <generic-list-loader
                 v-else
-                infiniteLoad
-                :perPage="category === Tabs.VTUBER ? 100 : 25"
-                :loadFn="getLoadFn()"
                 v-slot="{ data }"
                 :key="`channel-list-${category}-${identifier}`"
+                infinite-load
+                :per-page="category === Tabs.VTUBER ? 100 : 25"
+                :load-fn="getLoadFn()"
             >
                 <ChannelList
                     :channels="data"
-                    includeVideoCount
+                    include-video-count
                     :grouped="currentSortValue.value === 'group' || currentSortValue.value === 'org'"
-                    :groupKey="$store.state.currentOrg.name === 'All Vtubers' ? 'org' : 'group'"
-                    :cardView="cardView"
-                    :showDelete="category === Tabs.SUBBER"
+                    :group-key="$store.state.currentOrg.name === 'All Vtubers' ? 'org' : 'group'"
+                    :card-view="cardView"
+                    :show-delete="category === Tabs.SUBBER"
                 />
             </generic-list-loader>
         </v-container>
@@ -110,6 +110,10 @@ import isActive from "@/mixins/isActive";
 
 export default {
     name: "Channels",
+    components: {
+        ChannelList,
+        GenericListLoader,
+    },
     mixins: [reloadable, isActive],
     metaInfo() {
         const vm = this;
@@ -118,10 +122,6 @@ export default {
                 return `${vm.$t("component.mainNav.channels")} - Holodex`;
             },
         };
-    },
-    components: {
-        ChannelList,
-        GenericListLoader,
     },
     data() {
         return {
@@ -138,10 +138,6 @@ export default {
             defaultSort: "subscribers",
         };
     },
-    created() {
-        this.init();
-    },
-    mounted() {},
     watch: {
         category() {
             this.resetChannels();
@@ -155,6 +151,10 @@ export default {
             this.resetChannels();
         },
     },
+    created() {
+        this.init();
+    },
+    mounted() {},
     computed: {
         sortOptions: {
             get() {

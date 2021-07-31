@@ -6,7 +6,7 @@
             :html="processedMessage"
             lines="5"
         >
-            <template v-slot:button="{ expanded }">
+            <template #button="{ expanded }">
                 <span class="text-subtitle-2" style="color: #aaa">{{
                     expanded ? $t("component.comment.close") : $t("component.comment.readMore")
                 }}</span>
@@ -33,9 +33,6 @@ const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/g
 export default {
     name: "Comment",
     components: { TruncatedText },
-    data() {
-        return {};
-    },
     props: {
         comment: {
             required: true,
@@ -46,7 +43,9 @@ export default {
             type: String,
         },
     },
-    methods: {},
+    data() {
+        return {};
+    },
     computed: {
         processedMessage() {
             const decoder = document.createElement("div");
@@ -59,6 +58,7 @@ export default {
             });
         },
     },
+    methods: {},
 };
 </script>
 

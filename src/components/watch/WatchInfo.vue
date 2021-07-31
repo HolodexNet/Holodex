@@ -11,6 +11,7 @@
         </v-card-title>
         <v-card-subtitle>
             <v-btn
+                id="video-edit-btn"
                 text
                 x-small
                 color="primary"
@@ -20,7 +21,6 @@
                         ? `/watch/${video.id}`
                         : `/edit/video/${video.id}${video.type !== 'stream' ? '/mentions' : '/'}`
                 "
-                id="video-edit-btn"
             >
                 {{ $route.path.includes("edit") ? $t("editor.exitMode") : $t("editor.enterMode") }}
             </v-btn>
@@ -32,7 +32,7 @@
                     ({{ (liveViewerChange > 0 ? "+ " : "") + liveViewerChange }})
                 </span>
             </template>
-            <span class="mx-1" style="text-transform: capitalize" v-show="video.topic_id">
+            <span v-show="video.topic_id" class="mx-1" style="text-transform: capitalize">
                 • <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
                 {{ video.topic_id }}
             </span>
@@ -52,17 +52,17 @@
                 </v-list>
             </v-col>
             <v-col cols="auto">
-                <v-avatar rounded left size="40" v-if="channelChips && channelChips.length > 0">
+                <v-avatar v-if="channelChips && channelChips.length > 0" rounded left size="40">
                     <v-icon size="25" color="grey darken-2">{{ mdiAt }}</v-icon>
                 </v-avatar>
                 <template v-for="mention in channelChips">
-                    <ChannelChip :channel="mention" :key="mention.id" :size="60" />
+                    <ChannelChip :key="mention.id" :channel="mention" :size="60" />
                 </template>
                 <a
-                    @click="showAllMentions = !showAllMentions"
+                    v-if="mentions.length > 3"
                     style="white-space: pre"
                     class="text-subtitle-2"
-                    v-if="mentions.length > 3"
+                    @click="showAllMentions = !showAllMentions"
                 >
                     [ {{ showAllMentions ? "-" : "+" }} {{ mentions.length - 3 }} ]
                 </a>
@@ -119,46 +119,6 @@ export default {
             mdiAt,
         };
     },
-    methods: {
-        formatDuration,
-        formatDistance,
-        setTimer() {
-            if (this.timer) clearInterval(this.timer);
-            // if(this.video.status === "live" || this.video.status === "upcoming") {
-            //     this.timer = setInterval(()=> {
-            //         this.formattedTime = this.formatTime();
-            //     }, this.video.status === "live" ? 1000 : 1000*60);
-            // }
-            if (this.video.status === "live") {
-                this.timer = setInterval(() => {
-                    this.elapsedTime = this.formatDuration(dayjs().diff(dayjs(this.video.start_actual)));
-                }, 1000);
-            }
-        },
-        handleClick(e) {
-            if (e.target.matches(".comment-chip")) {
-                console.log("timejumping");
-                this.$emit("timeJump", e.target.getAttribute("data-time"));
-                e.preventDefault();
-            }
-        },
-    },
-    mounted() {
-        this.setTimer();
-    },
-    beforeDestroy() {
-        clearInterval(this.timer);
-    },
-    watch: {
-        // eslint-disable-next-line func-names
-        "video.status": function () {
-            this.setTimer();
-        },
-        // eslint-disable-next-line func-names
-        "video.live_viewers": function (nw, old) {
-            this.lastViewerCount = old;
-        },
-    },
     computed: {
         lang() {
             return this.$store.state.settings.lang;
@@ -199,6 +159,46 @@ export default {
                 const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
                 return `<a class="comment-chip" href="${vidUrl}?t=${time}" data-time="${time}"> ${match} </a>`;
             });
+        },
+    },
+    watch: {
+        // eslint-disable-next-line func-names
+        "video.status": function () {
+            this.setTimer();
+        },
+        // eslint-disable-next-line func-names
+        "video.live_viewers": function (nw, old) {
+            this.lastViewerCount = old;
+        },
+    },
+    mounted() {
+        this.setTimer();
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
+    },
+    methods: {
+        formatDuration,
+        formatDistance,
+        setTimer() {
+            if (this.timer) clearInterval(this.timer);
+            // if(this.video.status === "live" || this.video.status === "upcoming") {
+            //     this.timer = setInterval(()=> {
+            //         this.formattedTime = this.formatTime();
+            //     }, this.video.status === "live" ? 1000 : 1000*60);
+            // }
+            if (this.video.status === "live") {
+                this.timer = setInterval(() => {
+                    this.elapsedTime = this.formatDuration(dayjs().diff(dayjs(this.video.start_actual)));
+                }, 1000);
+            }
+        },
+        handleClick(e) {
+            if (e.target.matches(".comment-chip")) {
+                console.log("timejumping");
+                this.$emit("timeJump", e.target.getAttribute("data-time"));
+                e.preventDefault();
+            }
         },
     },
 };

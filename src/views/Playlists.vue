@@ -5,7 +5,7 @@
             ><br />
             <span class="text-subtitle-2">{{ $t("views.playlist.page-instruction") }}</span>
             <!-- <v-list class="mt-4" color="transparent"> -->
-            <v-card class="my-4" id="new-playlist-btn" @click.stop="createNewPlaylist">
+            <v-card id="new-playlist-btn" class="my-4" @click.stop="createNewPlaylist">
                 <v-list-item two-line>
                     <v-icon left x-large class="mr-3">{{ icons.mdiPlaylistPlus }}</v-icon>
                     <v-list-item-title class="font-weight-medium text-subtitle-2">
@@ -18,9 +18,9 @@
                 </v-list-item>
             </v-card>
             <v-card
-                class="my-4"
                 v-for="playlist in playlists"
                 :key="'plst' + playlist.id + playlist.name"
+                class="my-4"
                 :class="playlist.id === active.id ? 'active-playlist' : 'inactive-playlist'"
                 @click.stop="setNewPlaylist(playlist)"
             >
@@ -31,8 +31,8 @@
                             {{ playlist.name }}
                         </span>
                         <v-chip
-                            small
                             v-if="playlist.id === active.id && !$store.state.playlist.isSaved"
+                            small
                             color="warning"
                             label
                             class="py-0 ml-1"
@@ -40,7 +40,7 @@
                             {{ $t("views.playlist.playlist-is-modified") }}
                         </v-chip>
                         <br />
-                        <span class="text-caption" v-show="playlist.updated_at">
+                        <span v-show="playlist.updated_at" class="text-caption">
                             <span class="hidden-xs-only">{{ $t("views.playlist.item-last-updated") }}</span>
                             {{ toTime(playlist.updated_at) }}
                         </span>
@@ -50,8 +50,8 @@
                         <div class="group">
                             <img
                                 v-for="id in getPlaylistPreview(playlist)"
-                                :src="imageSrc(id)"
                                 :key="`vid${id}thumb`"
+                                :src="imageSrc(id)"
                                 class="preview-img stack"
                             />
                         </div>
@@ -129,6 +129,13 @@ import { mapState } from "vuex";
 export default {
     name: "Playlists",
     components: {},
+    data() {
+        return {
+            mdiFormatListText,
+            serverside: [],
+            loading: true,
+        };
+    },
     async mounted() {
         try {
             if (this.jwt) {
@@ -137,13 +144,6 @@ export default {
         } catch {
             this.serverside = [];
         }
-    },
-    data() {
-        return {
-            mdiFormatListText,
-            serverside: [],
-            loading: true,
-        };
     },
     computed: {
         ...mapState("playlist", ["active", "isSaved"]),

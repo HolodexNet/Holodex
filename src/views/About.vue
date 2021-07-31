@@ -1,7 +1,7 @@
 <template>
     <v-container class="pt-3">
         <v-row>
-            <v-col cols="12" v-if="!$store.state.isMobile">
+            <v-col v-if="!$store.state.isMobile" cols="12">
                 <div class="text-h4">{{ $t("component.mainNav.about") }}</div>
             </v-col>
             <v-col cols="12" md="4" sm="4" lg="3" xl="2" float-right>
@@ -214,7 +214,7 @@
                 <p class="text-body-2" v-html="$t('about.feedbackHtml')"></p>
                 <br />
 
-                <div class="text-h5" id="changelog">{{ $t("about.credits.title") }}</div>
+                <div id="changelog" class="text-h5">{{ $t("about.credits.title") }}</div>
                 <p class="text-body-2">
                     {{ $t("about.credits.contents[0]") }}
                     <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.credits.contents[1]") }}
@@ -263,9 +263,6 @@ export default {
     components: {
         TwitterFeed,
     },
-    activated() {
-        this.timelinekey += 1;
-    },
     data() {
         return {
             icons,
@@ -274,6 +271,9 @@ export default {
             mdiConsole,
             timelinekey: 12,
         };
+    },
+    activated() {
+        this.timelinekey += 1;
     },
 };
 </script>

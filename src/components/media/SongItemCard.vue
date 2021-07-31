@@ -1,6 +1,6 @@
 <template>
     <v-hover v-slot="{ hover }">
-        <v-card @click.stop="$emit('play', song)" elevation="0" style="max-width: 200px" color="transparent">
+        <v-card elevation="0" style="max-width: 200px" color="transparent" @click.stop="$emit('play', song)">
             <v-sheet class="song-card-artwork rounded" :elevation="hover ? 6 : 3">
                 <!-- actual artwork -->
                 <div class="song-card-data text-caption rounded-br-sm px-1">
@@ -64,7 +64,7 @@
                         {{ song.name }}
                     </v-list-item-title>
                     <v-list-item-subtitle class="text--caption song-artists">
-                        <span class="song-clickable" v-if="$listeners.channel" @click.stop="$emit('channel', song)">
+                        <span v-if="$listeners.channel" class="song-clickable" @click.stop="$emit('channel', song)">
                             {{ song.channel[nameProperty] || song.channel.name }}
                         </span>
                         <span v-else> {{ song.channel.name }} </span> <br />
@@ -83,11 +83,6 @@ import { formatDistance } from "@/utils/time";
 export default {
     name: "SongItem",
     components: { ChannelImg },
-    data() {
-        return {
-            albumArt: null,
-        };
-    },
     props: {
         song: {
             type: Object,
@@ -123,6 +118,11 @@ export default {
         artworkHoverIcon: {
             default: null,
         },
+    },
+    data() {
+        return {
+            albumArt: null,
+        };
     },
     computed: {
         userCanDelete() {

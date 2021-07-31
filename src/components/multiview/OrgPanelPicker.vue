@@ -1,16 +1,16 @@
 <template>
     <org-selector
         v-if="horizontal"
+        :current-selection="currentTab"
+        :hide-all-v-tubers="true"
         @changed="
             (neworg) => {
                 currentTab = neworg;
             }
         "
-        :currentSelection="currentTab"
-        :hideAllVTubers="true"
     >
-        <template v-slot:visible="{ activator }">
-            <v-btn v-on="activator.on" v-bind="activator.attrs" depressed>
+        <template #visible="{ activator }">
+            <v-btn v-bind="activator.attrs" depressed v-on="activator.on">
                 <template v-if="currentTab.name === 'YouTubeURL'">
                     <v-icon>{{ icons.mdiYoutube }}</v-icon> URL
                 </template>
@@ -23,19 +23,19 @@
                 <v-icon right small>{{ icons.mdiMenuDown }}</v-icon>
             </v-btn>
         </template>
-        <template v-slot:prepend-dropdown>
-            <v-list-item @click="currentTab = favTab" :input-value="currentTab === favTab">
+        <template #prepend-dropdown>
+            <v-list-item :input-value="currentTab === favTab" @click="currentTab = favTab">
                 <v-list-item-title>
                     {{ $t("component.mainNav.favorites") }}
                 </v-list-item-title>
             </v-list-item>
 
-            <v-list-item @click="currentTab = ytTab" :input-value="currentTab === ytTab">
+            <v-list-item :input-value="currentTab === ytTab" @click="currentTab = ytTab">
                 <v-list-item-title>
                     <v-icon>{{ icons.mdiYoutube }}</v-icon> URL
                 </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="currentTab = twitchTab" :input-value="currentTab === twitchTab">
+            <v-list-item :input-value="currentTab === twitchTab" @click="currentTab = twitchTab">
                 <v-list-item-title>
                     <v-icon>{{ mdiTwitch }}</v-icon> URL
                 </v-list-item-title>
@@ -44,34 +44,34 @@
     </org-selector>
     <org-selector
         v-else
+        :hide-all-v-tubers="true"
         @changed="
             (neworg) => {
                 currentTab = neworg;
                 $emit('changed', neworg);
             }
         "
-        :hideAllVTubers="true"
     >
-        <template v-slot:menu="{ showOrgDialog }">
-            <v-list-item @click="currentTab = favTab" :input-value="currentTab === favTab">
+        <template #menu="{ showOrgDialog }">
+            <v-list-item :input-value="currentTab === favTab" @click="currentTab = favTab">
                 <v-list-item-title>
                     <v-icon>{{ icons.mdiHeart }}</v-icon> {{ $t("component.mainNav.favorites") }}
                 </v-list-item-title>
             </v-list-item>
 
-            <v-list-item @click="currentTab = playlistTab" :input-value="currentTab === playlistTab">
+            <v-list-item :input-value="currentTab === playlistTab" @click="currentTab = playlistTab">
                 <v-list-item-title>
                     <v-icon>{{ icons.mdiPlaylistPlay }}</v-icon> {{ $t("component.mainNav.playlist") }}
                 </v-list-item-title>
             </v-list-item>
 
-            <v-list-item @click="currentTab = ytTab" :input-value="currentTab === ytTab">
+            <v-list-item :input-value="currentTab === ytTab" @click="currentTab = ytTab">
                 <v-list-item-title>
                     <v-icon>{{ icons.mdiYoutube }}</v-icon> URL
                 </v-list-item-title>
             </v-list-item>
 
-            <v-list-item @click="currentTab = twitchTab" :input-value="currentTab === twitchTab">
+            <v-list-item :input-value="currentTab === twitchTab" @click="currentTab = twitchTab">
                 <v-list-item-title>
                     <v-icon>{{ mdiTwitch }}</v-icon> URL
                 </v-list-item-title>
@@ -80,9 +80,9 @@
             <v-list-item-group :value="currentTab">
                 <template v-for="org in $store.state.orgFavorites">
                     <v-list-item
+                        v-if="org.name !== 'All Vtubers'"
                         :key="org.name + 's051'"
                         :value="org"
-                        v-if="org.name !== 'All Vtubers'"
                         @click="selectOrg(org)"
                     >
                         <v-list-item-content>
@@ -108,6 +108,12 @@ import OrgSelector from "../common/OrgSelector.vue";
 */
 export default {
     components: { OrgSelector },
+    props: {
+        horizontal: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         const favTab = { name: "Favorites", text: this.$t("component.mainNav.favorites") };
         const currentTab = this.$store.getters.isLoggedIn ? favTab : this.$store.state.currentOrg;
@@ -140,12 +146,6 @@ export default {
             ) {
                 this.currentTab = newval;
             }
-        },
-    },
-    props: {
-        horizontal: {
-            type: Boolean,
-            default: false,
         },
     },
     methods: {
