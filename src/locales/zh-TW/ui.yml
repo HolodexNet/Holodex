@@ -49,6 +49,8 @@ component:
     googleCalendar: 新增至 Google 日曆
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -137,6 +139,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -244,6 +247,8 @@ views:
     check_about_page: 查看關於頁面以詳細了解更新內容
     nowSupportsMultiOrg: Holodex現在已支援更多Vtuber團體。
     loginCallToAction: 登入以取得您的收藏資料
+  about:
+    add_my_channel: 將我的頻道加入Holodex
   watch:
     theaterMode: 劇院模式
     mentionIconLabel: 提及人物
@@ -378,6 +383,8 @@ about:
     autoplayHeader: 影片不會自動開始播放！
     autoplayContent: 請用Google查詢如何啟用您所使用的瀏覽器的自動播放功能。
     musicPlayer: 音樂播放器在行動裝置上無法正常使用！
+    musicPlayerContent: >-
+      對大多數iOS裝置來說，是無法讓使用者在關閉螢幕/Safari的情況下同時使用 Holodex 播放音樂的。這個限制在Android裝置上則依不同裝置而有所區別。如果您對於播放方式有更好的想法，請在discord上讓我們知曉。
     videoLinkage: 我該如何確保影片有確實與Vtuber關聯？
     videoLinkageContent: >-
       Holodex 的影片資料皆是由影片描述自動分析而來。如果您的剪輯來自特定實況，請確保在描述中附帶該次實況的官方連結。如果您的剪輯來自粉絲二創作品（舉例來說：B站），請確保在描述中附帶該剪輯中所出現的Vtuber頻道連結。如果您的影片描述中未包含任何 Vtuber 或是實況連結的話，Holodex就不會於網站上顯示該影片，所有的剪輯/翻譯影片都必需連結至 Holodex 已知的 Vtuber。
