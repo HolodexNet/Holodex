@@ -108,7 +108,7 @@ component:
     title: Reportar
     success: Denuncia enviada, Obrigado!
     reasons:
-      - Video tagged incorrectly
+      - Vídeo etiquetado incorretamente
       - Conteúdo Perigososamente de Baixa Qualidade ou Enganoso
       - Inapropriado ou Viola as diretrizes de trabalho derivado
       - Outros
