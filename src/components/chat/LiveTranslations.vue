@@ -3,7 +3,9 @@
         <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
             <div v-if="isLoading">{{ $t("views.watch.chat.loading") }}</div>
             <div class="pa-3" v-else>{{ overlayMessage }}</div>
-            <v-btn v-if="$socket.disconnected" @click="tlJoin()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
+            <v-btn v-if="$socket.disconnected" @click="tlJoin()">
+                {{ $t("views.watch.chat.retryBtn") }}
+            </v-btn>
         </v-overlay>
         <v-card-subtitle class="py-1 d-flex justify-space-between">
             <div :class="connected ? 'green--text' : 'red--text'">TLdex [{{ liveTlLang }}]</div>
@@ -163,6 +165,8 @@ export default {
                 vm.$store.commit("incrementActiveSockets");
             }
             this.$emit("videoUpdate", obj);
+            vm.showOverlay = false;
+            vm.isLoading = false;
         },
         // Failed to join the chat room
         subscribeError(obj) {
