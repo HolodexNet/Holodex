@@ -1,30 +1,30 @@
 <template>
-    <!-- Purpose of Component: to contain a youtube video, load it and handle several actions -->
-    <div :class="containerClass">
-        <div class="song-player">
-            <!--                 :key="'ytplayer' + videoId" -->
-            <!-- https://developers.google.com/youtube/player_parameters -->
-            <youtube
-                v-if="playback.song.video_id"
-                :video-id="playback.song.video_id"
-                :player-vars="{
-                    ...(playback.song.start && { start: playback.song.start }),
-                    ...(playback.song.end && { end: playback.song.end }),
-                    autoplay: 1,
-                    playsinline: 1,
-                    controls: 1,
-                    disablekb: 1,
-                    fs: 0,
-                    modestbranding: 1,
-                    rel: 0,
-                    cc_load_policy: 0,
-                    iv_load_policy: 3,
-                }"
-                v-on="$listeners"
-                @ready="ready"
-            />
-        </div>
+  <!-- Purpose of Component: to contain a youtube video, load it and handle several actions -->
+  <div :class="containerClass">
+    <div class="song-player">
+      <!--                 :key="'ytplayer' + videoId" -->
+      <!-- https://developers.google.com/youtube/player_parameters -->
+      <youtube
+        v-if="playback.song.video_id"
+        :video-id="playback.song.video_id"
+        :player-vars="{
+          ...(playback.song.start && { start: playback.song.start }),
+          ...(playback.song.end && { end: playback.song.end }),
+          autoplay: 1,
+          playsinline: 1,
+          controls: 1,
+          disablekb: 1,
+          fs: 0,
+          modestbranding: 1,
+          rel: 0,
+          cc_load_policy: 0,
+          iv_load_policy: 3,
+        }"
+        v-on="$listeners"
+        @ready="ready"
+      />
     </div>
+  </div>
 </template>
 
 <script lang="ts">

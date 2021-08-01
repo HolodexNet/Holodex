@@ -1,102 +1,102 @@
 <template>
-    <v-data-table
-        id="songSearchTable"
-        :headers="RECENT_HEADER"
-        :items="songs"
-        :item-class="() => 'selectable'"
-        item-key="id"
-        class="elevation-1 recent-table"
-        :class="{ 'recent-table-small': $vuetify.breakpoint.smAndDown }"
-        :search="search"
-        hide-default-footer
-        :items-per-page="perPageItems"
-        disable-sort
-        :loading="loading"
-        :dense="$vuetify.breakpoint.smAndDown"
-        @click:row="
-            (item) => {
-                $store.commit('music/addSong', item);
-            }
-        "
-    >
-        <template v-if="$vuetify.breakpoint.smAndDown" #item="{ item }">
-            <tr>
-                <td :key="item.name + item.video_id + 'cell'" colspan="5">
-                    <song-item
-                        :song="item"
-                        :class="{
-                            active: item.name === currentSong.song.name && item.video_id === currentSong.song.video_id,
-                        }"
-                        :hover-icon="icons.mdiPlay"
-                        class="mx-0 px-0"
-                        @play="$store.dispatch('music/skipToSong', item)"
-                    />
-                </td>
-            </tr>
-        </template>
-        <!-- eslint-disable-next-line vue/valid-v-slot -->
-        <template v-if="!$vuetify.breakpoint.smAndDown" #item.channel_id="{ item }">
-            <v-btn
-                small
-                class="hoverable"
-                icon
-                outlined
-                @click.stop="() => $store.dispatch('music/skipToSong', item)"
-            >
-                <v-icon>{{ icons.mdiPlay }}</v-icon>
-            </v-btn>
-        </template>
-        <!-- eslint-disable-next-line vue/valid-v-slot -->
-        <template v-if="!$vuetify.breakpoint.smAndDown" #item.channel.name="{ item, value }">
-            <span>{{ item.channel[nameProperty] || value }}</span>
-            <v-btn
-                v-if="channelLink"
-                class="popup"
-                icon
-                target="_blank"
-                :to="`/channel/${item.channel_id}/music`"
-                @click.stop
-            >
-                <v-icon small>
-                    {{ icons.mdiLoginVariant }}
-                </v-icon>
-            </v-btn>
-        </template>
-        <!-- eslint-disable-next-line vue/valid-v-slot -->
-        <template v-if="!$vuetify.breakpoint.smAndDown" #item.start="{ item }">
-            <span>{{ formatDuration(item.end * 1000 - item.start * 1000) }}</span>
-        </template>
-        <!-- eslint-disable-next-line vue/valid-v-slot -->
-        <template v-if="!$vuetify.breakpoint.smAndDown" #item.available_at="{ item }">
-            <span v-if="$vuetify.breakpoint.xs || $vuetify.breakpoint.mdAndUp" class="blue-grey--text">{{
-                formatDate(item.available_at)
-            }}</span>
-            <v-btn
-                class="popup"
-                icon
-                small
-                target="_blank"
-                :href="`/watch/${item.video_id}?t=${item.start}`"
-                @click.stop
-            >
-                <v-icon small>
-                    {{ icons.mdiLoginVariant }}
-                </v-icon>
-            </v-btn>
-            <v-btn
-                class="popup"
-                small
-                icon
-                target="_blank"
-                :href="`/edit/video/${item.video_id}/music`"
-                @click.stop
-            >
-                <v-icon small>
-                    {{ icons.mdiPencil }}
-                </v-icon>
-            </v-btn>
-        </template>
-    </v-data-table>
+  <v-data-table
+    id="songSearchTable"
+    :headers="RECENT_HEADER"
+    :items="songs"
+    :item-class="() => 'selectable'"
+    item-key="id"
+    class="elevation-1 recent-table"
+    :class="{ 'recent-table-small': $vuetify.breakpoint.smAndDown }"
+    :search="search"
+    hide-default-footer
+    :items-per-page="perPageItems"
+    disable-sort
+    :loading="loading"
+    :dense="$vuetify.breakpoint.smAndDown"
+    @click:row="
+      (item) => {
+        $store.commit('music/addSong', item);
+      }
+    "
+  >
+    <template v-if="$vuetify.breakpoint.smAndDown" #item="{ item }">
+      <tr>
+        <td :key="item.name + item.video_id + 'cell'" colspan="5">
+          <song-item
+            :song="item"
+            :class="{
+              active: item.name === currentSong.song.name && item.video_id === currentSong.song.video_id,
+            }"
+            :hover-icon="icons.mdiPlay"
+            class="mx-0 px-0"
+            @play="$store.dispatch('music/skipToSong', item)"
+          />
+        </td>
+      </tr>
+    </template>
+    <!-- eslint-disable-next-line vue/valid-v-slot -->
+    <template v-if="!$vuetify.breakpoint.smAndDown" #item.channel_id="{ item }">
+      <v-btn
+        small
+        class="hoverable"
+        icon
+        outlined
+        @click.stop="() => $store.dispatch('music/skipToSong', item)"
+      >
+        <v-icon>{{ icons.mdiPlay }}</v-icon>
+      </v-btn>
+    </template>
+    <!-- eslint-disable-next-line vue/valid-v-slot -->
+    <template v-if="!$vuetify.breakpoint.smAndDown" #item.channel.name="{ item, value }">
+      <span>{{ item.channel[nameProperty] || value }}</span>
+      <v-btn
+        v-if="channelLink"
+        class="popup"
+        icon
+        target="_blank"
+        :to="`/channel/${item.channel_id}/music`"
+        @click.stop
+      >
+        <v-icon small>
+          {{ icons.mdiLoginVariant }}
+        </v-icon>
+      </v-btn>
+    </template>
+    <!-- eslint-disable-next-line vue/valid-v-slot -->
+    <template v-if="!$vuetify.breakpoint.smAndDown" #item.start="{ item }">
+      <span>{{ formatDuration(item.end * 1000 - item.start * 1000) }}</span>
+    </template>
+    <!-- eslint-disable-next-line vue/valid-v-slot -->
+    <template v-if="!$vuetify.breakpoint.smAndDown" #item.available_at="{ item }">
+      <span v-if="$vuetify.breakpoint.xs || $vuetify.breakpoint.mdAndUp" class="blue-grey--text">{{
+        formatDate(item.available_at)
+      }}</span>
+      <v-btn
+        class="popup"
+        icon
+        small
+        target="_blank"
+        :href="`/watch/${item.video_id}?t=${item.start}`"
+        @click.stop
+      >
+        <v-icon small>
+          {{ icons.mdiLoginVariant }}
+        </v-icon>
+      </v-btn>
+      <v-btn
+        class="popup"
+        small
+        icon
+        target="_blank"
+        :href="`/edit/video/${item.video_id}/music`"
+        @click.stop
+      >
+        <v-icon small>
+          {{ icons.mdiPencil }}
+        </v-icon>
+      </v-btn>
+    </template>
+  </v-data-table>
 </template>
 
 <script lang="ts">

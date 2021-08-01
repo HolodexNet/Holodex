@@ -55,7 +55,7 @@ module.exports = {
             },
         ],
         "nonblock-statement-body-position": ["warn", "any"],
-        "vue/html-indent": ["error", 4],
+        "vue/html-indent": ["error", 2],
         "vue/require-default-prop": "off",
     },
 

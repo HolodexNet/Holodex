@@ -1,17 +1,17 @@
 <template>
-    <div>
-        <div :id="'tjump' + randomId" />
-        <slot :data="data" :isLoading="isLoading" />
-        <InfiniteLoad v-if="infiniteLoad" :identifier="identifier" @infinite="emitLoad" />
-        <PaginateLoad
-            v-if="paginate"
-            :identifier="identifier"
-            :pages="pages"
-            :page-less="pageless || total === null"
-            :scroll-element-id="'tjump' + randomId"
-            @paginate="emitLoad"
-        />
-    </div>
+  <div>
+    <div :id="'tjump' + randomId" />
+    <slot :data="data" :isLoading="isLoading" />
+    <InfiniteLoad v-if="infiniteLoad" :identifier="identifier" @infinite="emitLoad" />
+    <PaginateLoad
+      v-if="paginate"
+      :identifier="identifier"
+      :pages="pages"
+      :page-less="pageless || total === null"
+      :scroll-element-id="'tjump' + randomId"
+      @paginate="emitLoad"
+    />
+  </div>
 </template>
 
 <script lang="ts">

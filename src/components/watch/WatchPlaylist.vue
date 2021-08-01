@@ -1,6 +1,6 @@
 <template>
-    <div class="mb-2" elevation="0">
-        <!-- <a
+  <div class="mb-2" elevation="0">
+    <!-- <a
             class="d-block text-overline ma-2"
             @click="
                 showPlaylist = !showPlaylist;
@@ -8,29 +8,29 @@
         >
             {{ !showPlaylist ? "＋" : "－" }} Playlist
         </a> -->
-        <v-card>
-            <template v-if="playlist">
-                <v-card-title>
-                    {{ playlist.name }}
-                </v-card-title>
-                <v-card-subtitle>{{ value + 1 }}/{{ videos.length }}</v-card-subtitle>
-                <v-divider />
-                <VirtualVideoCardList
-                    :videos="videos"
-                    :playlist="playlist"
-                    include-channel
-                    horizontal
-                    ignore-block
-                    :active-index="value"
-                    :style="{ height: Math.min(videos.length, 6) * 102 + 'px' }"
-                />
-            </template>
-            <v-card-title v-if="hasError">
-                Error loading playlist, does it exist?
-            </v-card-title>
-        </v-card>
-        <!-- </v-card-text> -->
-    </div>
+    <v-card>
+      <template v-if="playlist">
+        <v-card-title>
+          {{ playlist.name }}
+        </v-card-title>
+        <v-card-subtitle>{{ value + 1 }}/{{ videos.length }}</v-card-subtitle>
+        <v-divider />
+        <VirtualVideoCardList
+          :videos="videos"
+          :playlist="playlist"
+          include-channel
+          horizontal
+          ignore-block
+          :active-index="value"
+          :style="{ height: Math.min(videos.length, 6) * 102 + 'px' }"
+        />
+      </template>
+      <v-card-title v-if="hasError">
+        Error loading playlist, does it exist?
+      </v-card-title>
+    </v-card>
+    <!-- </v-card-text> -->
+  </div>
 </template>
 
 <script lang="ts">

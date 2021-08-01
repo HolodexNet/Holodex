@@ -1,97 +1,97 @@
 <template>
-    <div>
-        <template v-if="video.songcount">
-            <span class="lightup d-flex">
-                <a class="d-block text-overline mx-2 my-1" @click="toggleExpansion('songs')">
-                    {{ hidden.songs ? "＋" : "－" }} {{ relationI18N("songs") }}
-                </a>
-                <v-spacer />
-                <v-btn
-                    icon
-                    small
-                    tile
-                    class="mr-2"
-                    @click="showDetailed = !showDetailed"
-                >
-                    <v-icon small> {{ mdiTimerOutline }} </v-icon>
-                </v-btn>
-                <v-btn
-                    icon
-                    small
-                    tile
-                    class="mr-2"
-                    @click="addToMusicPlaylist"
-                >
-                    <v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon>
-                </v-btn>
-            </span>
-            <!-- Match the same structure as VideoCardList -->
-            <v-expand-transition>
-                <v-container v-show="!hidden.songs" class="py-0">
-                    <v-row>
-                        <v-list dense style="width: 100%">
-                            <song-item
-                                v-for="(song, idx) in songList"
-                                :key="song.name + song.video_id + idx"
-                                :detailed="showDetailed"
-                                :song="song"
-                                :hover-icon="icons.mdiPlay"
-                                style="width: 100%"
-                                @play="$emit('timeJump', song.start)"
-                                @playNow="$store.commit('music/skipTo', idx)"
-                            />
-                        </v-list>
-                    </v-row>
-                </v-container>
-            </v-expand-transition>
-        </template>
-        <template v-for="relation in Object.keys(related)">
-            <template v-if="related[relation].length">
-                <div :key="`band${relation}`" class="lightup d-flex">
-                    <a
-                        :key="`${relation}-title`"
-                        class="d-block text-overline mx-2 my-1"
-                        @click="toggleExpansion(relation)"
-                    >
-                        {{ hidden[relation] ? "＋" : "－" }} {{ relationI18N(relation) }}
-                    </a>
-                    <v-spacer />
-                    <v-btn
-                        :key="`playlist-btn-${relation}`"
-                        icon
-                        tile
-                        small
-                        class="mr-2"
-                        @click="addToPlaylist(related[relation])"
-                    >
-                        <v-icon small>
-                            {{ icons.mdiPlaylistPlus }}
-                        </v-icon>
-                    </v-btn>
-                </div>
-                <v-expand-transition :key="`${relation}-anim`">
-                    <VideoCardList
-                        v-show="!hidden[relation]"
-                        :key="`${relation}-videos`"
-                        :videos="related[relation]"
-                        horizontal
-                        include-channel
-                        :cols="{
-                            lg: 12,
-                            md: 4,
-                            cols: 12,
-                            sm: 6,
-                        }"
-                        dense
-                        @videoClicked="logRelationClick(relation)"
-                    />
-                </v-expand-transition>
-            </template>
-        </template>
-        <!-- <template v-if="totalRelations === 0">
+  <div>
+    <template v-if="video.songcount">
+      <span class="lightup d-flex">
+        <a class="d-block text-overline mx-2 my-1" @click="toggleExpansion('songs')">
+          {{ hidden.songs ? "＋" : "－" }} {{ relationI18N("songs") }}
+        </a>
+        <v-spacer />
+        <v-btn
+          icon
+          small
+          tile
+          class="mr-2"
+          @click="showDetailed = !showDetailed"
+        >
+          <v-icon small> {{ mdiTimerOutline }} </v-icon>
+        </v-btn>
+        <v-btn
+          icon
+          small
+          tile
+          class="mr-2"
+          @click="addToMusicPlaylist"
+        >
+          <v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon>
+        </v-btn>
+      </span>
+      <!-- Match the same structure as VideoCardList -->
+      <v-expand-transition>
+        <v-container v-show="!hidden.songs" class="py-0">
+          <v-row>
+            <v-list dense style="width: 100%">
+              <song-item
+                v-for="(song, idx) in songList"
+                :key="song.name + song.video_id + idx"
+                :detailed="showDetailed"
+                :song="song"
+                :hover-icon="icons.mdiPlay"
+                style="width: 100%"
+                @play="$emit('timeJump', song.start)"
+                @playNow="$store.commit('music/skipTo', idx)"
+              />
+            </v-list>
+          </v-row>
+        </v-container>
+      </v-expand-transition>
+    </template>
+    <template v-for="relation in Object.keys(related)">
+      <template v-if="related[relation].length">
+        <div :key="`band${relation}`" class="lightup d-flex">
+          <a
+            :key="`${relation}-title`"
+            class="d-block text-overline mx-2 my-1"
+            @click="toggleExpansion(relation)"
+          >
+            {{ hidden[relation] ? "＋" : "－" }} {{ relationI18N(relation) }}
+          </a>
+          <v-spacer />
+          <v-btn
+            :key="`playlist-btn-${relation}`"
+            icon
+            tile
+            small
+            class="mr-2"
+            @click="addToPlaylist(related[relation])"
+          >
+            <v-icon small>
+              {{ icons.mdiPlaylistPlus }}
+            </v-icon>
+          </v-btn>
+        </div>
+        <v-expand-transition :key="`${relation}-anim`">
+          <VideoCardList
+            v-show="!hidden[relation]"
+            :key="`${relation}-videos`"
+            :videos="related[relation]"
+            horizontal
+            include-channel
+            :cols="{
+              lg: 12,
+              md: 4,
+              cols: 12,
+              sm: 6,
+            }"
+            dense
+            @videoClicked="logRelationClick(relation)"
+          />
+        </v-expand-transition>
+      </template>
+    </template>
+    <!-- <template v-if="totalRelations === 0">
             No clips or related videos yet...
         </template> -->
-    </div>
+  </div>
 </template>
 
 <script lang="ts">

@@ -1,21 +1,21 @@
 <template>
-    <generic-list-loader
-        v-slot="{ data, isLoading }"
-        :key="id + type"
-        paginate
-        :per-page="pageLength"
-        :load-fn="getLoadFn()"
-    >
-        <VideoCardList
-            v-show="!isLoading"
-            :videos="data"
-            :include-channel="hasChannelInfo"
-            :cols="cols"
-            dense
-        />
-        <!-- Render skeleton items when data hasn't loaded yet -->
-        <SkeletonCardList v-if="isLoading" :cols="cols" dense />
-    </generic-list-loader>
+  <generic-list-loader
+    v-slot="{ data, isLoading }"
+    :key="id + type"
+    paginate
+    :per-page="pageLength"
+    :load-fn="getLoadFn()"
+  >
+    <VideoCardList
+      v-show="!isLoading"
+      :videos="data"
+      :include-channel="hasChannelInfo"
+      :cols="cols"
+      dense
+    />
+    <!-- Render skeleton items when data hasn't loaded yet -->
+    <SkeletonCardList v-if="isLoading" :cols="cols" dense />
+  </generic-list-loader>
 </template>
 
 <script lang="ts">

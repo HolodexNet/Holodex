@@ -1,23 +1,23 @@
 <template>
-    <v-container class="py-0" style="position: relative" fluid>
-        <v-row :dense="dense">
-            <!-- Video Cards with custom grid size class based on breakpoint -->
-            <v-col
-                v-for="(video, index) in processedVideos"
-                :key="`${index}-${video.id}`"
-                :class="['video-col', `video-${colSize}`]"
-            >
-                <!-- Render skeleton items when data hasn't loaded yet -->
-                <div style="position: relative; width: 100%; padding-bottom: calc(56.25% + 88px)">
-                    <v-skeleton-loader
-                        type="image, list-item-avatar-three-line"
-                        style="position: absolute; width: 100%; height: 100%"
-                        boilerplate
-                    />
-                </div>
-            </v-col>
-        </v-row>
-    </v-container>
+  <v-container class="py-0" style="position: relative" fluid>
+    <v-row :dense="dense">
+      <!-- Video Cards with custom grid size class based on breakpoint -->
+      <v-col
+        v-for="(video, index) in processedVideos"
+        :key="`${index}-${video.id}`"
+        :class="['video-col', `video-${colSize}`]"
+      >
+        <!-- Render skeleton items when data hasn't loaded yet -->
+        <div style="position: relative; width: 100%; padding-bottom: calc(56.25% + 88px)">
+          <v-skeleton-loader
+            type="image, list-item-avatar-three-line"
+            style="position: absolute; width: 100%; height: 100%"
+            boilerplate
+          />
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">

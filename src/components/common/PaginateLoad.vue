@@ -1,29 +1,29 @@
 <template>
-    <div
-        :key="identifier"
-        class="d-flex justify-center py-4"
-        style="min-height: 100px"
-        @click.capture="clicked = true"
-    >
-        <v-pagination
-            v-if="!pageLess"
-            v-show="status === STATUSES.READY || status === STATUSES.COMPLETED"
-            v-model="page"
-            :length="pages"
-            :total-visible="TOTAL_PAGINATION_COUNT[$vuetify.breakpoint.name]"
-        />
-        <div v-show="status === STATUSES.READY || status === STATUSES.COMPLETED" v-else>
-            <v-btn class="ma-2 pr-6" :disabled="page === 1" @click="page -= 1">
-                <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
-                {{ $t("component.paginateLoad.newer") }}
-            </v-btn>
-            <v-btn class="ma-2 pl-6" :disabled="status === STATUSES.COMPLETED" @click="page += 1">
-                {{ $t("component.paginateLoad.older") }}
-                <v-icon>{{ icons.mdiChevronRight }}</v-icon>
-            </v-btn>
-        </div>
-        <!-- </template> -->
+  <div
+    :key="identifier"
+    class="d-flex justify-center py-4"
+    style="min-height: 100px"
+    @click.capture="clicked = true"
+  >
+    <v-pagination
+      v-if="!pageLess"
+      v-show="status === STATUSES.READY || status === STATUSES.COMPLETED"
+      v-model="page"
+      :length="pages"
+      :total-visible="TOTAL_PAGINATION_COUNT[$vuetify.breakpoint.name]"
+    />
+    <div v-show="status === STATUSES.READY || status === STATUSES.COMPLETED" v-else>
+      <v-btn class="ma-2 pr-6" :disabled="page === 1" @click="page -= 1">
+        <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
+        {{ $t("component.paginateLoad.newer") }}
+      </v-btn>
+      <v-btn class="ma-2 pl-6" :disabled="status === STATUSES.COMPLETED" @click="page += 1">
+        {{ $t("component.paginateLoad.older") }}
+        <v-icon>{{ icons.mdiChevronRight }}</v-icon>
+      </v-btn>
     </div>
+    <!-- </template> -->
+  </div>
 </template>
 
 <script lang="ts">

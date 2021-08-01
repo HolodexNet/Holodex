@@ -1,27 +1,27 @@
 <template>
-    <v-card tile class="mb-2">
-        <v-card-subtitle>{{ $t("component.watch.nextUpInMugen") }} {{ nextUpTime }}</v-card-subtitle>
-        <!-- <v-card-text> -->
-        <v-progress-linear :color="countdownProgress > 0 ? 'primary' : 'grey'" :value="countdownProgress" />
-        <VideoCardList
-            v-if="playlist.length > 0"
-            :videos="videos"
-            limit-rows="2"
-            :active-id="video.id"
-            include-channel
-            horizontal
-            :cols="{
-                xs: 1,
-                sm: 2,
-                md: 3,
-                lg: 5,
-                xl: 5,
-            }"
-            dense
-            ignore-block
-        />
-        <!-- </v-card-text> -->
-    </v-card>
+  <v-card tile class="mb-2">
+    <v-card-subtitle>{{ $t("component.watch.nextUpInMugen") }} {{ nextUpTime }}</v-card-subtitle>
+    <!-- <v-card-text> -->
+    <v-progress-linear :color="countdownProgress > 0 ? 'primary' : 'grey'" :value="countdownProgress" />
+    <VideoCardList
+      v-if="playlist.length > 0"
+      :videos="videos"
+      limit-rows="2"
+      :active-id="video.id"
+      include-channel
+      horizontal
+      :cols="{
+        xs: 1,
+        sm: 2,
+        md: 3,
+        lg: 5,
+        xl: 5,
+      }"
+      dense
+      ignore-block
+    />
+    <!-- </v-card-text> -->
+  </v-card>
 </template>
 
 <script lang="ts">

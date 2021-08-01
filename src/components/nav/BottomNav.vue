@@ -1,27 +1,27 @@
 <template>
-    <v-bottom-navigation
-        v-show="!isWatchPage"
-        :value="value"
-        grow
-        :input-value="active"
-        :app="!isWatchPage"
-        :scroll-threshold="10000"
-        class="bottom-nav"
-    >
-        <template v-for="page in pages">
-            <v-btn
-                :key="page.name"
-                :value="page.path"
-                :to="page.path"
-                class="nav-btn"
-                style="background: transparent"
-                @click.native="scrollToTop(page)"
-            >
-                <span>{{ page.name }}</span>
-                <v-icon>{{ page.icon }}</v-icon>
-            </v-btn>
-        </template>
-    </v-bottom-navigation>
+  <v-bottom-navigation
+    v-show="!isWatchPage"
+    :value="value"
+    grow
+    :input-value="active"
+    :app="!isWatchPage"
+    :scroll-threshold="10000"
+    class="bottom-nav"
+  >
+    <template v-for="page in pages">
+      <v-btn
+        :key="page.name"
+        :value="page.path"
+        :to="page.path"
+        class="nav-btn"
+        style="background: transparent"
+        @click.native="scrollToTop(page)"
+      >
+        <span>{{ page.name }}</span>
+        <v-icon>{{ page.icon }}</v-icon>
+      </v-btn>
+    </template>
+  </v-bottom-navigation>
 </template>
 
 <script lang="ts">

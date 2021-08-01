@@ -1,55 +1,55 @@
 <template>
-    <v-card
-        class="text-body-2 tl-overlay"
-        tile
-        flat
-        style="width: 100%"
-    >
-        <v-card-subtitle class="py-1 d-flex justify-space-between">
-            <div>TLdex [{{ liveTlLang }}]</div>
-            <span>
-                <v-dialog v-model="expanded" width="800">
-                    <template #activator="{ on, attrs }">
-                        <v-btn
-                            icon
-                            x-small
-                            v-bind="attrs"
-                            v-on="on"
-                        >
-                            <v-icon>
-                                {{ mdiArrowExpand }}
-                            </v-icon>
-                        </v-btn>
-                    </template>
+  <v-card
+    class="text-body-2 tl-overlay"
+    tile
+    flat
+    style="width: 100%"
+  >
+    <v-card-subtitle class="py-1 d-flex justify-space-between">
+      <div>TLdex [{{ liveTlLang }}]</div>
+      <span>
+        <v-dialog v-model="expanded" width="800">
+          <template #activator="{ on, attrs }">
+            <v-btn
+              icon
+              x-small
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>
+                {{ mdiArrowExpand }}
+              </v-icon>
+            </v-btn>
+          </template>
 
-                    <v-card>
-                        <portal-target name="expandedMessage" class="d-flex tl-expanded" />
-                        <v-divider />
-                        <v-card-actions>
-                            <v-spacer />
-                            <v-btn text color="red" @click="expanded = false">{{ $t("views.app.close_btn") }}</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
-                <WatchLiveTranslationsSetting />
-            </span>
-        </v-card-subtitle>
-        <v-divider />
-        <portal to="expandedMessage" :disabled="!expanded" slim>
-            <virtual-list
-                ref="tlBody"
-                class="archive tl-body thin-scroll-bar pa-1 pa-lg-3"
-                :style="{
-                    'font-size': liveTlFontSize + 'px',
-                }"
-                :data-component="ChatMessage"
-                :data-key="getKey"
-                :data-sources="tlHistory"
-                :item-height="20"
-                :item-class-add="activeClass"
-            />
-        </portal>
-    </v-card>
+          <v-card>
+            <portal-target name="expandedMessage" class="d-flex tl-expanded" />
+            <v-divider />
+            <v-card-actions>
+              <v-spacer />
+              <v-btn text color="red" @click="expanded = false">{{ $t("views.app.close_btn") }}</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <WatchLiveTranslationsSetting />
+      </span>
+    </v-card-subtitle>
+    <v-divider />
+    <portal to="expandedMessage" :disabled="!expanded" slim>
+      <virtual-list
+        ref="tlBody"
+        class="archive tl-body thin-scroll-bar pa-1 pa-lg-3"
+        :style="{
+          'font-size': liveTlFontSize + 'px',
+        }"
+        :data-component="ChatMessage"
+        :data-key="getKey"
+        :data-sources="tlHistory"
+        :item-height="20"
+        :item-class-add="activeClass"
+      />
+    </portal>
+  </v-card>
 </template>
 
 <script lang="ts">

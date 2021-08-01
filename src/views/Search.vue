@@ -1,67 +1,67 @@
 <template>
-    <v-container style="height: 100%">
-        <v-row v-if="advancedOpen">
-            <v-col class="offset-xl-1 col-xl-10">
-                <search-form />
-            </v-col>
-        </v-row>
-        <v-row class="justify-end" style="margin-bottom: -10px">
-            <v-col sm="4" md="2" class="py-1">
-                <v-select
-                    v-model="filter_sort"
-                    :items="options.sort"
-                    dense
-                    :label="$t('views.search.sortByLabel')"
-                />
-            </v-col>
-            <v-col sm="4" md="2" class="py-1">
-                <v-select
-                    v-model="filter_type"
-                    :items="options.type"
-                    dense
-                    :label="$t('views.search.typeDropdownLabel')"
-                />
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col class="offset-xl-1 col-xl-10">
-                <generic-list-loader
-                    v-if="searchVideo !== null"
-                    v-slot="{ data, isLoading }"
-                    :key="filter_type + filter_sort + id + executedQuery"
-                    paginate
-                    :per-page="pageLength"
-                    :load-fn="searchVideo"
-                >
-                    <VideoCardList
-                        v-show="!isLoading"
-                        :videos="data"
-                        :horizontal="horizontal"
-                        include-channel
-                        :cols="{
-                            xs: 1,
-                            sm: 3,
-                            md: 4,
-                            lg: 5,
-                            xl: 6,
-                        }"
-                    />
-                    <!-- Render skeleton items when data hasn't loaded yet -->
-                    <skeleton-card-list
-                        v-if="isLoading"
-                        :cols="{
-                            xs: 1,
-                            sm: 3,
-                            md: 4,
-                            lg: 5,
-                            xl: 6,
-                        }"
-                        dense
-                    />
-                </generic-list-loader>
-            </v-col>
-        </v-row>
-    </v-container>
+  <v-container style="height: 100%">
+    <v-row v-if="advancedOpen">
+      <v-col class="offset-xl-1 col-xl-10">
+        <search-form />
+      </v-col>
+    </v-row>
+    <v-row class="justify-end" style="margin-bottom: -10px">
+      <v-col sm="4" md="2" class="py-1">
+        <v-select
+          v-model="filter_sort"
+          :items="options.sort"
+          dense
+          :label="$t('views.search.sortByLabel')"
+        />
+      </v-col>
+      <v-col sm="4" md="2" class="py-1">
+        <v-select
+          v-model="filter_type"
+          :items="options.type"
+          dense
+          :label="$t('views.search.typeDropdownLabel')"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="offset-xl-1 col-xl-10">
+        <generic-list-loader
+          v-if="searchVideo !== null"
+          v-slot="{ data, isLoading }"
+          :key="filter_type + filter_sort + id + executedQuery"
+          paginate
+          :per-page="pageLength"
+          :load-fn="searchVideo"
+        >
+          <VideoCardList
+            v-show="!isLoading"
+            :videos="data"
+            :horizontal="horizontal"
+            include-channel
+            :cols="{
+              xs: 1,
+              sm: 3,
+              md: 4,
+              lg: 5,
+              xl: 6,
+            }"
+          />
+          <!-- Render skeleton items when data hasn't loaded yet -->
+          <skeleton-card-list
+            v-if="isLoading"
+            :cols="{
+              xs: 1,
+              sm: 3,
+              md: 4,
+              lg: 5,
+              xl: 6,
+            }"
+            dense
+          />
+        </generic-list-loader>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">

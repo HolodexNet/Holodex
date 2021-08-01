@@ -1,240 +1,240 @@
 <template>
-    <v-container :style="slim && 'width: 500px;'" :class="{ 'pa-0': slim }">
-        <v-row>
-            <v-col v-if="!slim" cols="12">
-                <div class="text-h4 mb-4">
-                    {{ $t("views.settings.title") }}
+  <v-container :style="slim && 'width: 500px;'" :class="{ 'pa-0': slim }">
+    <v-row>
+      <v-col v-if="!slim" cols="12">
+        <div class="text-h4 mb-4">
+          {{ $t("views.settings.title") }}
+        </div>
+      </v-col>
+      <v-col :cols="slim ? 12 : currentCol">
+        <v-sheet class="settings-group">
+          <v-card-title class="py-1">
+            <v-icon
+              large
+              disabled
+              left
+              class="ml-n3"
+            >
+              {{ mdiEarth }}
+            </v-icon>
+
+            <span class="text-h6 font-weight-light">{{ $t("views.settings.languageSettings") }}</span>
+          </v-card-title>
+          <v-card-text>
+            <v-select
+              v-model="language"
+              :items="langs"
+              item-value="val"
+              :prepend-icon="icons.mdiTranslate"
+            >
+              <template #item="{ item }">
+                <!-- {{item}} -->
+                <div>
+                  <span class="primary--text" style="">{{ item.display }}</span>
+                  <span class="px-2 text--secondary text-caption"> ♡ {{ item.credit }}</span>
                 </div>
-            </v-col>
-            <v-col :cols="slim ? 12 : currentCol">
-                <v-sheet class="settings-group">
-                    <v-card-title class="py-1">
-                        <v-icon
-                            large
-                            disabled
-                            left
-                            class="ml-n3"
-                        >
-                            {{ mdiEarth }}
-                        </v-icon>
+              </template>
+              <template #selection="{ item }">
+                <span class="primary--text" style="">{{ item.display }}</span>
+              </template>
+            </v-select>
+            <v-switch
+              v-model="useEnName"
+              class="v-input--reverse v-input--expand mt-0"
+              inset
+              prepend-icon=" "
+              :label="$t('views.settings.useEnglishNameLabel')"
+              :messages="$t('views.settings.useEnglishNameMsg')"
+            />
 
-                        <span class="text-h6 font-weight-light">{{ $t("views.settings.languageSettings") }}</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-select
-                            v-model="language"
-                            :items="langs"
-                            item-value="val"
-                            :prepend-icon="icons.mdiTranslate"
-                        >
-                            <template #item="{ item }">
-                                <!-- {{item}} -->
-                                <div>
-                                    <span class="primary--text" style="">{{ item.display }}</span>
-                                    <span class="px-2 text--secondary text-caption"> ♡ {{ item.credit }}</span>
-                                </div>
-                            </template>
-                            <template #selection="{ item }">
-                                <span class="primary--text" style="">{{ item.display }}</span>
-                            </template>
-                        </v-select>
-                        <v-switch
-                            v-model="useEnName"
-                            class="v-input--reverse v-input--expand mt-0"
-                            inset
-                            prepend-icon=" "
-                            :label="$t('views.settings.useEnglishNameLabel')"
-                            :messages="$t('views.settings.useEnglishNameMsg')"
-                        />
-
-                        <div class="mt-6">
-                            <v-icon style="margin-right: 9px">
-                                {{ mdiFilter }}
-                            </v-icon>
-                            <span class="text-body-1">{{ $t("views.settings.clipLanguageSelection") }}</span>
-                        </div>
-                        <v-container fluid>
-                            <v-checkbox
-                                v-for="l in TL_LANGS"
-                                :key="l.value + 'settingcheckbox'"
-                                v-model="clipLangs"
-                                :label="l.text"
-                                :value="l.value"
-                                dense
-                                class="ml-4 mt-n2"
-                            />
-                        </v-container>
-                    </v-card-text>
-                </v-sheet>
-            </v-col>
-            <v-col :cols="slim ? 12 : currentCol">
-                <v-sheet class="settings-group">
-                    <v-card-title class="py-1">
-                        <v-icon
-                            large
-                            disabled
-                            left
-                            class="ml-n3"
-                        >
-                            {{ icons.mdiCog }}
-                        </v-icon>
-                        <span class="text-h6 font-weight-light">{{ $t("views.settings.siteNavigationSettings") }}</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-switch
-                            v-model="darkMode"
-                            class="v-input--reverse v-input--expand"
-                            :label="$t('views.settings.darkModeLabel')"
-                            hide-details
-                            inset
-                            :prepend-icon="mdiWeatherNight"
-                        />
-                        <!-- :messages="$t('views.settings.darkModeMsg')" -->
-                        <div class="mt-6">
-                            <v-icon style="margin-right: 9px">
-                                {{ mdiPalette }}
-                            </v-icon>
-                            <span class="text-body-1">{{ $t("views.settings.theme") }}</span>
-                            <!-- <div class="theme-preview d-inline float-right text-body-1">
+            <div class="mt-6">
+              <v-icon style="margin-right: 9px">
+                {{ mdiFilter }}
+              </v-icon>
+              <span class="text-body-1">{{ $t("views.settings.clipLanguageSelection") }}</span>
+            </div>
+            <v-container fluid>
+              <v-checkbox
+                v-for="l in TL_LANGS"
+                :key="l.value + 'settingcheckbox'"
+                v-model="clipLangs"
+                :label="l.text"
+                :value="l.value"
+                dense
+                class="ml-4 mt-n2"
+              />
+            </v-container>
+          </v-card-text>
+        </v-sheet>
+      </v-col>
+      <v-col :cols="slim ? 12 : currentCol">
+        <v-sheet class="settings-group">
+          <v-card-title class="py-1">
+            <v-icon
+              large
+              disabled
+              left
+              class="ml-n3"
+            >
+              {{ icons.mdiCog }}
+            </v-icon>
+            <span class="text-h6 font-weight-light">{{ $t("views.settings.siteNavigationSettings") }}</span>
+          </v-card-title>
+          <v-card-text>
+            <v-switch
+              v-model="darkMode"
+              class="v-input--reverse v-input--expand"
+              :label="$t('views.settings.darkModeLabel')"
+              hide-details
+              inset
+              :prepend-icon="mdiWeatherNight"
+            />
+            <!-- :messages="$t('views.settings.darkModeMsg')" -->
+            <div class="mt-6">
+              <v-icon style="margin-right: 9px">
+                {{ mdiPalette }}
+              </v-icon>
+              <span class="text-body-1">{{ $t("views.settings.theme") }}</span>
+              <!-- <div class="theme-preview d-inline float-right text-body-1">
                                 <span :style="`background:${themeSet[themeId].themes[mode].primary}`"></span>
                                 <span :style="`background:${themeSet[themeId].themes[mode].secondary}`"></span>
                                 {{ themeSet[themeId].name }}
                             </div> -->
 
-                            <v-select
-                                v-model="themeId"
-                                class="mt-0 d-inline-block float-right"
-                                hide-details
-                                dense
-                                style="width: 150px"
-                                :items="themeSet"
-                                item-value="id"
-                            >
-                                <template #item="{ item }">
-                                    <div class="theme-preview">
-                                        <span :style="`background:${item.themes[mode].primary}`" />
-                                        <span :style="`background:${item.themes[mode].secondary}`" />
-                                        {{ item.name }}
-                                    </div>
-                                </template>
-                                <template #selection="{ item }">
-                                    <div class="theme-preview">
-                                        <span :style="`background:${item.themes[mode].primary}`" />
-                                        <span :style="`background:${item.themes[mode].secondary}`" />
-                                        {{ item.name }}
-                                    </div>
-                                </template>
-                            </v-select>
-                        </div>
+              <v-select
+                v-model="themeId"
+                class="mt-0 d-inline-block float-right"
+                hide-details
+                dense
+                style="width: 150px"
+                :items="themeSet"
+                item-value="id"
+              >
+                <template #item="{ item }">
+                  <div class="theme-preview">
+                    <span :style="`background:${item.themes[mode].primary}`" />
+                    <span :style="`background:${item.themes[mode].secondary}`" />
+                    {{ item.name }}
+                  </div>
+                </template>
+                <template #selection="{ item }">
+                  <div class="theme-preview">
+                    <span :style="`background:${item.themes[mode].primary}`" />
+                    <span :style="`background:${item.themes[mode].secondary}`" />
+                    {{ item.name }}
+                  </div>
+                </template>
+              </v-select>
+            </div>
 
-                        <div class="mb-0 mt-6">
-                            <v-icon style="margin-right: 9px">
-                                {{ mdiHome }}
-                            </v-icon>
-                            <span class="text-body-1">{{ $t("views.settings.defaultPage") }}</span>
-                        </div>
-                        <v-select
-                            v-model="defaultOpen"
-                            class="mt-n4"
-                            prepend-icon=" "
-                            :items="defaultOpenChoices"
-                            :messages="$t('views.settings.defaultPageMsg')"
-                        />
+            <div class="mb-0 mt-6">
+              <v-icon style="margin-right: 9px">
+                {{ mdiHome }}
+              </v-icon>
+              <span class="text-body-1">{{ $t("views.settings.defaultPage") }}</span>
+            </div>
+            <v-select
+              v-model="defaultOpen"
+              class="mt-n4"
+              prepend-icon=" "
+              :items="defaultOpenChoices"
+              :messages="$t('views.settings.defaultPageMsg')"
+            />
 
-                        <div class="mb-0 mt-6">
-                            <v-icon style="margin-right: 9px">
-                                {{ icons.mdiGrid }}
-                            </v-icon>
-                            <span class="text-body-1">{{ $t("views.settings.gridSizeLabel") }}</span>
-                        </div>
-                        <v-select
-                            v-model="currentGridSize"
-                            prepend-icon=" "
-                            class="mt-n4"
-                            :items="[
-                                { text: $t('views.settings.gridSize[0]'), value: 0 },
-                                { text: $t('views.settings.gridSize[1]'), value: 1 },
-                                { text: $t('views.settings.gridSize[2]'), value: 2 },
-                            ]"
-                            :messages="$t('views.settings.gridSizeMsg')"
-                        />
-                        <v-switch
-                            v-model="scrollMode"
-                            class="v-input--reverse v-input--expand mt-6"
-                            :prepend-icon="mdiBookOpenPageVariantOutline"
-                            inset
-                            :label="$t('views.settings.scrollModeLabel')"
-                            :messages="$t('views.settings.scrollModeMsg')"
-                        />
-                        <v-switch
-                            v-model="redirectMode"
-                            class="v-input--reverse v-input--expand mt-6"
-                            :prepend-icon="icons.mdiYoutube"
-                            inset
-                            :label="$t('views.settings.redirectModeLabel')"
-                            :messages="$t('views.settings.redirectModeMsg')"
-                        />
-                    </v-card-text>
-                </v-sheet>
-            </v-col>
-            <v-col v-if="!slim">
-                <v-sheet class="settings-group">
-                    <v-card-title class="py-1">
-                        <v-icon
-                            large
-                            disabled
-                            left
-                            class="ml-n3"
-                        >
-                            {{ icons.mdiAnimationPlay }}
-                        </v-icon>
-                        <span class="text-h6 font-weight-light">{{ $t("views.settings.videoFeedSettings") }}</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-switch
-                            v-model="hideCollabStreams"
-                            :prepend-icon="mdiEyeOff"
-                            class="v-input--reverse v-input--expand"
-                            inset
-                            :label="$t('views.settings.hideCollabStreamsLabel')"
-                            :messages="$t('views.settings.hideCollabStreamsMsg')"
-                        />
+            <div class="mb-0 mt-6">
+              <v-icon style="margin-right: 9px">
+                {{ icons.mdiGrid }}
+              </v-icon>
+              <span class="text-body-1">{{ $t("views.settings.gridSizeLabel") }}</span>
+            </div>
+            <v-select
+              v-model="currentGridSize"
+              prepend-icon=" "
+              class="mt-n4"
+              :items="[
+                { text: $t('views.settings.gridSize[0]'), value: 0 },
+                { text: $t('views.settings.gridSize[1]'), value: 1 },
+                { text: $t('views.settings.gridSize[2]'), value: 2 },
+              ]"
+              :messages="$t('views.settings.gridSizeMsg')"
+            />
+            <v-switch
+              v-model="scrollMode"
+              class="v-input--reverse v-input--expand mt-6"
+              :prepend-icon="mdiBookOpenPageVariantOutline"
+              inset
+              :label="$t('views.settings.scrollModeLabel')"
+              :messages="$t('views.settings.scrollModeMsg')"
+            />
+            <v-switch
+              v-model="redirectMode"
+              class="v-input--reverse v-input--expand mt-6"
+              :prepend-icon="icons.mdiYoutube"
+              inset
+              :label="$t('views.settings.redirectModeLabel')"
+              :messages="$t('views.settings.redirectModeMsg')"
+            />
+          </v-card-text>
+        </v-sheet>
+      </v-col>
+      <v-col v-if="!slim">
+        <v-sheet class="settings-group">
+          <v-card-title class="py-1">
+            <v-icon
+              large
+              disabled
+              left
+              class="ml-n3"
+            >
+              {{ icons.mdiAnimationPlay }}
+            </v-icon>
+            <span class="text-h6 font-weight-light">{{ $t("views.settings.videoFeedSettings") }}</span>
+          </v-card-title>
+          <v-card-text>
+            <v-switch
+              v-model="hideCollabStreams"
+              :prepend-icon="mdiEyeOff"
+              class="v-input--reverse v-input--expand"
+              inset
+              :label="$t('views.settings.hideCollabStreamsLabel')"
+              :messages="$t('views.settings.hideCollabStreamsMsg')"
+            />
 
-                        <v-autocomplete
-                            v-model="ignoredTopics"
-                            :items="topics"
-                            prepend-icon=" "
-                            multiple
-                            chips
-                            clearable
-                            deletable-chips
-                            :label="$t('views.settings.ignoredTopicsLabel')"
-                            :hint="$t('views.settings.ignoredTopicsMsg')"
-                            persistent-hint
-                        />
+            <v-autocomplete
+              v-model="ignoredTopics"
+              :items="topics"
+              prepend-icon=" "
+              multiple
+              chips
+              clearable
+              deletable-chips
+              :label="$t('views.settings.ignoredTopicsLabel')"
+              :hint="$t('views.settings.ignoredTopicsMsg')"
+              persistent-hint
+            />
 
-                        <v-switch
-                            v-model="hideThumbnail"
-                            prepend-icon=" "
-                            class="v-input--reverse v-input--expand"
-                            inset
-                            :label="$t('views.settings.hideVideoThumbnailsLabel')"
-                            :messages="$t('views.settings.hideVideoThumbnailsMsg')"
-                        />
-                    </v-card-text>
-                </v-sheet>
-                <br v-if="!slim">
-                <v-btn
-                    v-if="!slim"
-                    block
-                    color="warning"
-                    @click="resetSettings"
-                >
-                    {{ $t("views.settings.resetAllSettings") }}
-                </v-btn>
-            </v-col>
-        </v-row>
-    </v-container>
+            <v-switch
+              v-model="hideThumbnail"
+              prepend-icon=" "
+              class="v-input--reverse v-input--expand"
+              inset
+              :label="$t('views.settings.hideVideoThumbnailsLabel')"
+              :messages="$t('views.settings.hideVideoThumbnailsMsg')"
+            />
+          </v-card-text>
+        </v-sheet>
+        <br v-if="!slim">
+        <v-btn
+          v-if="!slim"
+          block
+          color="warning"
+          @click="resetSettings"
+        >
+          {{ $t("views.settings.resetAllSettings") }}
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">

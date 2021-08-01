@@ -1,214 +1,214 @@
 <template>
-    <div ref="fullscreen-content" style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }">
-        <!-- Floating tool bar -->
-        <!--  -->
-        <MultiviewToolbar v-show="!collapseToolbar" v-model="collapseToolbar" :buttons="buttons">
-            <template #left>
-                <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
-                <!-- Single Button video selector for xs displays -->
-                <v-btn icon large @click="handleToolbarShowSelector">
-                    <v-icon style="border-radius: 0 position: relative; margin-right: 3px; cursor: pointer" large>
-                        {{ mdiCardPlus }}
-                    </v-icon>
-                </v-btn>
-            </template>
-        </MultiviewToolbar>
-
-        <!-- Multiview Cell Area Background -->
-        <div
-            class="mv-background"
-            :style="{
-                'background-size': `${columnWidth}px ${rowHeight}px`,
-                height: `calc(100% - ${collapseToolbar ? 0 : 64}px)`,
-                top: `${collapseToolbar ? 0 : 64}px`,
-            }"
-        >
-            <template v-if="layout.length === 0">
-                <div style="max-width: 50%; display: inline-block">
-                    <div style="display: inline-block; margin-right: 20px; margin-left: 10px">
-                        <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
-                        {{ $t("views.multiview.autoLayoutTip") }}
-                    </div>
-                </div>
-                <div style="max-width: 50%; display: inline-block; float: right">
-                    <div style="display: inline-block; margin-right: 10px">
-                        <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
-                        {{ $t("views.multiview.createLayoutTip") }}
-                    </div>
-                </div>
-            </template>
-        </div>
-        <!-- Floating button to open toolbar when collapsed -->
-        <v-btn
-            v-if="collapseToolbar"
-            class="open-mv-toolbar-btn"
-            tile
-            small
-            color="secondary"
-            @click="collapseToolbar = false"
-        >
-            <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+  <div ref="fullscreen-content" style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }">
+    <!-- Floating tool bar -->
+    <!--  -->
+    <MultiviewToolbar v-show="!collapseToolbar" v-model="collapseToolbar" :buttons="buttons">
+      <template #left>
+        <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
+        <!-- Single Button video selector for xs displays -->
+        <v-btn icon large @click="handleToolbarShowSelector">
+          <v-icon style="border-radius: 0 position: relative; margin-right: 3px; cursor: pointer" large>
+            {{ mdiCardPlus }}
+          </v-icon>
         </v-btn>
-        <!-- Grid Layout -->
-        <!-- rowHeight = 100vh/colNum, makes layout consistent across different heights -->
-        <grid-layout
-            :layout="layout"
-            :col-num="24"
-            :row-height="rowHeight - 26.0 / 24.0"
-            :col-width="30"
-            is-draggable
-            is-resizable
-            :vertical-compact="false"
-            :prevent-collision="true"
-            :margin="[1, 1]"
-            @layout-updated="onLayoutUpdated"
-        >
-            <grid-item
-                v-for="item in layout"
-                :key="'mvgrid' + item.i"
-                :static="item.static"
-                :x="item.x"
-                :y="item.y"
-                :w="item.w"
-                :h="item.h"
-                :i="item.i"
-                :is-draggable="item.isDraggable !== false"
-                :is-resizable="item.isResizable !== false"
-            >
-                <cell
-                    :ref="`cell`"
-                    :cell-width="columnWidth * item.w"
-                    :item="item"
-                    @showSelector="(id) => (showSelectorForId = id)"
-                    @delete="handleDelete"
-                />
-            </grid-item>
-        </grid-layout>
+      </template>
+    </MultiviewToolbar>
 
-        <!-- Video Selector -->
-        <v-dialog v-model="showVideoSelector" min-width="75vw">
-            <VideoSelector @videoClicked="handleVideoClicked" />
-        </v-dialog>
-
-        <!-- Preset Selector -->
-        <v-dialog v-model="showPresetSelector" width="1000">
-            <PresetSelector @selected="handlePresetClicked" />
-        </v-dialog>
-
-        <!-- Preset Editor -->
-        <v-dialog v-model="showPresetEditor" width="500">
-            <PresetEditor
-                v-if="showPresetEditor"
-                :layout="layout"
-                :content="layoutContent"
-                @close="showPresetEditor = false"
-            />
-        </v-dialog>
-
-        <LayoutChangePrompt
-            v-model="overwriteDialog"
-            :cancel-fn="overwriteCancel"
-            :confirm-fn="overwriteConfirm"
-            :default-overwrite="overwriteMerge"
-            :layout-preview="overwriteLayoutPreview"
-        />
-
-        <v-dialog v-model="showMediaControls" max-width="400">
-            <v-card max-height="75vh" class="overflow-y-auto">
-                <v-card-title> {{ $t("views.multiview.mediaControls") }} </v-card-title>
-                <v-card-text class="d-flex flex-column justify-center align-center">
-                    <v-list max-width="100%">
-                        <v-list-item single-line style="border-bottom: 1px gray solid">
-                            <v-list-item-content>
-                                <v-list-item-action class="flex-row justify-center ma-0 mt-1">
-                                    <v-btn icon @click="allCellAction('play')">
-                                        <v-icon color="secondary lighten-1">
-                                            {{ icons.mdiPlay }}
-                                        </v-icon>
-                                    </v-btn>
-                                    <v-btn icon title="Sync" @click="allCellAction('sync')">
-                                        <v-icon color="secondary lighten-1">
-                                            {{ mdiFastForward }}
-                                        </v-icon>
-                                    </v-btn>
-                                    <v-btn icon @click="allCellAction('pause')">
-                                        <v-icon color="secondary lighten-1">
-                                            {{ mdiPause }}
-                                        </v-icon>
-                                    </v-btn>
-                                    <v-btn icon @click="allCellAction('refresh')">
-                                        <v-icon color="secondary lighten-1">
-                                            {{ icons.mdiRefresh }}
-                                        </v-icon>
-                                    </v-btn>
-                                    <v-btn icon @click="allCellAction('unmute')">
-                                        <v-icon color="secondary lighten-1">
-                                            {{ icons.mdiVolumeHigh }}
-                                        </v-icon>
-                                    </v-btn>
-                                    <v-btn icon @click="allCellAction('mute')">
-                                        <v-icon color="secondary lighten-1">
-                                            {{ icons.mdiVolumeMute }}
-                                        </v-icon>
-                                    </v-btn>
-                                </v-list-item-action>
-                            </v-list-item-content>
-                        </v-list-item>
-                        <template v-if="$refs['cell'] && $refs['cell'].filter((c) => c.video).length">
-                            <v-list-item
-                                v-for="(cellState, index) in $refs['cell'].filter((c) => c.video)"
-                                :key="index"
-                                two-line
-                                style="border-bottom: 1px gray solid"
-                            >
-                                <v-list-item-avatar v-if="cellState.video.channel.photo" class="ma-0 mr-1">
-                                    <v-img :src="cellState.video.channel.photo" />
-                                </v-list-item-avatar>
-                                <v-list-item-content>
-                                    <v-list-item-title class="primary--text">
-                                        {{ cellState.video.title || cellState.video.channel.name }}
-                                    </v-list-item-title>
-                                    <v-list-item-action class="flex-row justify-start ma-0 mt-1">
-                                        <v-btn icon @click="cellState.setPlaying(cellState.pausedMode)">
-                                            <v-icon color="grey lighten-1">
-                                                {{ cellState.pausedMode ? icons.mdiPlay : mdiPause }}
-                                            </v-icon>
-                                        </v-btn>
-                                        <v-btn
-                                            icon
-                                            @click="cellState.trySync()"
-                                        >
-                                            <v-icon :color="cellState.isFastFoward ? 'primary' :'grey' ">
-                                                {{ mdiFastForward }}
-                                            </v-icon>
-                                        </v-btn>
-                                        <v-btn icon @click="cellState.refresh()">
-                                            <v-icon color="grey lighten-1">
-                                                {{ icons.mdiRefresh }}
-                                            </v-icon>
-                                        </v-btn>
-                                        <v-btn icon @click="handleDelete(findKeyByVideoId(cellState.cellContent.id))">
-                                            <v-icon color="grey lighten-1">
-                                                {{ icons.mdiDelete }}
-                                            </v-icon>
-                                        </v-btn>
-                                        <v-btn icon @click="cellState.setMuted(!cellState.muted)">
-                                            <v-icon color="grey lighten-1">
-                                                {{ cellState.muted ? icons.mdiVolumeMute : icons.mdiVolumeHigh }}
-                                            </v-icon>
-                                        </v-btn>
-                                    </v-list-item-action>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </template>
-                        <v-list-item v-else class="pa-2">
-                            {{ $t("views.multiview.mediaControlsEmpty") }}
-                        </v-list-item>
-                    </v-list>
-                </v-card-text>
-            </v-card>
-        </v-dialog>
+    <!-- Multiview Cell Area Background -->
+    <div
+      class="mv-background"
+      :style="{
+        'background-size': `${columnWidth}px ${rowHeight}px`,
+        height: `calc(100% - ${collapseToolbar ? 0 : 64}px)`,
+        top: `${collapseToolbar ? 0 : 64}px`,
+      }"
+    >
+      <template v-if="layout.length === 0">
+        <div style="max-width: 50%; display: inline-block">
+          <div style="display: inline-block; margin-right: 20px; margin-left: 10px">
+            <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
+            {{ $t("views.multiview.autoLayoutTip") }}
+          </div>
+        </div>
+        <div style="max-width: 50%; display: inline-block; float: right">
+          <div style="display: inline-block; margin-right: 10px">
+            <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
+            {{ $t("views.multiview.createLayoutTip") }}
+          </div>
+        </div>
+      </template>
     </div>
+    <!-- Floating button to open toolbar when collapsed -->
+    <v-btn
+      v-if="collapseToolbar"
+      class="open-mv-toolbar-btn"
+      tile
+      small
+      color="secondary"
+      @click="collapseToolbar = false"
+    >
+      <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+    </v-btn>
+    <!-- Grid Layout -->
+    <!-- rowHeight = 100vh/colNum, makes layout consistent across different heights -->
+    <grid-layout
+      :layout="layout"
+      :col-num="24"
+      :row-height="rowHeight - 26.0 / 24.0"
+      :col-width="30"
+      is-draggable
+      is-resizable
+      :vertical-compact="false"
+      :prevent-collision="true"
+      :margin="[1, 1]"
+      @layout-updated="onLayoutUpdated"
+    >
+      <grid-item
+        v-for="item in layout"
+        :key="'mvgrid' + item.i"
+        :static="item.static"
+        :x="item.x"
+        :y="item.y"
+        :w="item.w"
+        :h="item.h"
+        :i="item.i"
+        :is-draggable="item.isDraggable !== false"
+        :is-resizable="item.isResizable !== false"
+      >
+        <cell
+          :ref="`cell`"
+          :cell-width="columnWidth * item.w"
+          :item="item"
+          @showSelector="(id) => (showSelectorForId = id)"
+          @delete="handleDelete"
+        />
+      </grid-item>
+    </grid-layout>
+
+    <!-- Video Selector -->
+    <v-dialog v-model="showVideoSelector" min-width="75vw">
+      <VideoSelector @videoClicked="handleVideoClicked" />
+    </v-dialog>
+
+    <!-- Preset Selector -->
+    <v-dialog v-model="showPresetSelector" width="1000">
+      <PresetSelector @selected="handlePresetClicked" />
+    </v-dialog>
+
+    <!-- Preset Editor -->
+    <v-dialog v-model="showPresetEditor" width="500">
+      <PresetEditor
+        v-if="showPresetEditor"
+        :layout="layout"
+        :content="layoutContent"
+        @close="showPresetEditor = false"
+      />
+    </v-dialog>
+
+    <LayoutChangePrompt
+      v-model="overwriteDialog"
+      :cancel-fn="overwriteCancel"
+      :confirm-fn="overwriteConfirm"
+      :default-overwrite="overwriteMerge"
+      :layout-preview="overwriteLayoutPreview"
+    />
+
+    <v-dialog v-model="showMediaControls" max-width="400">
+      <v-card max-height="75vh" class="overflow-y-auto">
+        <v-card-title> {{ $t("views.multiview.mediaControls") }} </v-card-title>
+        <v-card-text class="d-flex flex-column justify-center align-center">
+          <v-list max-width="100%">
+            <v-list-item single-line style="border-bottom: 1px gray solid">
+              <v-list-item-content>
+                <v-list-item-action class="flex-row justify-center ma-0 mt-1">
+                  <v-btn icon @click="allCellAction('play')">
+                    <v-icon color="secondary lighten-1">
+                      {{ icons.mdiPlay }}
+                    </v-icon>
+                  </v-btn>
+                  <v-btn icon title="Sync" @click="allCellAction('sync')">
+                    <v-icon color="secondary lighten-1">
+                      {{ mdiFastForward }}
+                    </v-icon>
+                  </v-btn>
+                  <v-btn icon @click="allCellAction('pause')">
+                    <v-icon color="secondary lighten-1">
+                      {{ mdiPause }}
+                    </v-icon>
+                  </v-btn>
+                  <v-btn icon @click="allCellAction('refresh')">
+                    <v-icon color="secondary lighten-1">
+                      {{ icons.mdiRefresh }}
+                    </v-icon>
+                  </v-btn>
+                  <v-btn icon @click="allCellAction('unmute')">
+                    <v-icon color="secondary lighten-1">
+                      {{ icons.mdiVolumeHigh }}
+                    </v-icon>
+                  </v-btn>
+                  <v-btn icon @click="allCellAction('mute')">
+                    <v-icon color="secondary lighten-1">
+                      {{ icons.mdiVolumeMute }}
+                    </v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </v-list-item-content>
+            </v-list-item>
+            <template v-if="$refs['cell'] && $refs['cell'].filter((c) => c.video).length">
+              <v-list-item
+                v-for="(cellState, index) in $refs['cell'].filter((c) => c.video)"
+                :key="index"
+                two-line
+                style="border-bottom: 1px gray solid"
+              >
+                <v-list-item-avatar v-if="cellState.video.channel.photo" class="ma-0 mr-1">
+                  <v-img :src="cellState.video.channel.photo" />
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title class="primary--text">
+                    {{ cellState.video.title || cellState.video.channel.name }}
+                  </v-list-item-title>
+                  <v-list-item-action class="flex-row justify-start ma-0 mt-1">
+                    <v-btn icon @click="cellState.setPlaying(cellState.pausedMode)">
+                      <v-icon color="grey lighten-1">
+                        {{ cellState.pausedMode ? icons.mdiPlay : mdiPause }}
+                      </v-icon>
+                    </v-btn>
+                    <v-btn
+                      icon
+                      @click="cellState.trySync()"
+                    >
+                      <v-icon :color="cellState.isFastFoward ? 'primary' :'grey' ">
+                        {{ mdiFastForward }}
+                      </v-icon>
+                    </v-btn>
+                    <v-btn icon @click="cellState.refresh()">
+                      <v-icon color="grey lighten-1">
+                        {{ icons.mdiRefresh }}
+                      </v-icon>
+                    </v-btn>
+                    <v-btn icon @click="handleDelete(findKeyByVideoId(cellState.cellContent.id))">
+                      <v-icon color="grey lighten-1">
+                        {{ icons.mdiDelete }}
+                      </v-icon>
+                    </v-btn>
+                    <v-btn icon @click="cellState.setMuted(!cellState.muted)">
+                      <v-icon color="grey lighten-1">
+                        {{ cellState.muted ? icons.mdiVolumeMute : icons.mdiVolumeHigh }}
+                      </v-icon>
+                    </v-btn>
+                  </v-list-item-action>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+            <v-list-item v-else class="pa-2">
+              {{ $t("views.multiview.mediaControlsEmpty") }}
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script lang="ts">

@@ -1,16 +1,16 @@
 <template>
-    <v-list v-intersect="shown" dense class="song-list">
-        <song-item
-            v-for="(song, idx) in songs"
-            :key="song.name + song.video_id + idx"
-            :song="song"
-            :class="{ active: idx === currentId }"
-            always-show-deletion
-            :hover-icon="icons.mdiPlay"
-            @play="$store.commit('music/skipTo', idx)"
-            @remove="$store.commit('music/removeSong', idx)"
-        />
-    </v-list>
+  <v-list v-intersect="shown" dense class="song-list">
+    <song-item
+      v-for="(song, idx) in songs"
+      :key="song.name + song.video_id + idx"
+      :song="song"
+      :class="{ active: idx === currentId }"
+      always-show-deletion
+      :hover-icon="icons.mdiPlay"
+      @play="$store.commit('music/skipTo', idx)"
+      @remove="$store.commit('music/removeSong', idx)"
+    />
+  </v-list>
 </template>
 
 <script lang="ts">

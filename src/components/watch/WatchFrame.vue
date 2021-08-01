@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <div class="video" :class="{ 'video-fluid': fluid }">
-            <slot name="youtube" />
-        </div>
+  <div>
+    <div class="video" :class="{ 'video-fluid': fluid }">
+      <slot name="youtube" />
     </div>
+  </div>
 </template>
 
 <script lang="ts">
