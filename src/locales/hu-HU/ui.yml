@@ -49,6 +49,8 @@ component:
     googleCalendar: Hozzáadás a Google naptárhoz
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -137,6 +139,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -243,6 +246,8 @@ views:
     check_about_page: Látogasd meg az Információ oldalt, hogy lásd a változásokat
     nowSupportsMultiOrg: Holodex már több szervezetet is támogat.
     loginCallToAction: Jelentkezz be, hogy kedvenceket válassz!
+  about:
+    add_my_channel: Csatorna igénylés
   watch:
     theaterMode: Mozi mód
     mentionIconLabel: EMLÍTÉSEK
@@ -377,6 +382,8 @@ about:
     autoplayHeader: Nem működik az AutoPlay!
     autoplayContent: Kérlek google-n keresd, hogyan kell a böngésződben engedélyezni az AutoPlay-t.
     musicPlayer: A Music Player nem működik rendesen mobil eszközökön!
+    musicPlayerContent: >-
+      A legtöbb iOS eszközön nem tudod kikapcsolni a képernyőd vagy bezárni a Safari-t miközben Holodex zenét játszol le. Ez a korlátozás érvényesülhet Android eszközökön is (eszköztől függően). Kérlek jelezz Discord-on, ha van ötleted jobb playback rendszer megoldásához.
     videoLinkage: Hogyan bizonyosodom meg róla, hogy a videók és klipek biztosan hozzá vannak kapcsolva a vtuberekhez?
     videoLinkageContent: >-
       Minden információt a leírásból szedünk. Ha klipelsz egy streamet, kérlek ne felejtsd el linkelni az eredeti streamet a leírásban. Ha egy rajongói tartalmat klipelsz, (pl. bilibili-ről), csak linkeld be az eredeti hivatalos youtube csatornát a hozzátartozó vtuberhez. Ha nem linkeled a vtuber csatornáját, akkor nem fog megjelenni a videód Holodexen, mivel minden kliphez szükséges egy link a vtuberhez aki ismert Holodexen is.
