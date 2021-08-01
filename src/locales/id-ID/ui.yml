@@ -49,6 +49,8 @@ component:
     googleCalendar: Tambahkan ke Kalender Google
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -137,6 +139,7 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -243,6 +246,8 @@ views:
     check_about_page: Kunjungi halaman Tentang untuk melihat pembaharuan
     nowSupportsMultiOrg: Holodex kini mendukung berbagai organisasi
     loginCallToAction: Masuk untuk mengumpulkan favorit kamu!
+  about:
+    add_my_channel: Mengajukan Channel
   watch:
     theaterMode: Mode Teater
     mentionIconLabel: MENTION
@@ -377,6 +382,8 @@ about:
     autoplayHeader: AutoPlay tidak berfungsi!
     autoplayContent: Kamu bisa cari di internet bagaimana cara mengaktifkan autoplay pada browsermu.
     musicPlayer: Pemutar Musik tidak berfungsi dengan baik pada perangkat seluler!
+    musicPlayerContent: >-
+      Untuk sebagian besar perangkat iOS, kamu tidak dapat mematikan layar atau menutup Safari ketika pemutar musik Holodex sedang dimainkan. Larangan ini mungkin diterapkan atau mungkin juga tidak pada perangkat Android (tergantung pada perangkatnya). Mohon berikan saran pada kami di discord jika kamu memiliki ide mengenai bagaimana cara menghasilkan sistem pemutaran yang lebih baik.
     videoLinkage: Bagaimana cara saya memastikan video yang diunggah terhubung dengan vtuber yang berkaitan?
     videoLinkageContent: >-
       Semua informasi video diuraikan dalam deskripsi video tersebut. jika kamu mengklip siaran, pastikan untuk mencantumkan tautan video resminya. Jika kamu mengklip konten buatan fans (contohnya dari bilibili), pastikan juga untuk mencantumkan tautan channel youtube resmi vtuber yang berkaitan. Jika kamu tidak mencantumkan channelnya, maka klip tidak akan muncul di holodex, karena semua klip membutuhkan keterkaitan tautan pada vtuber yang berkaitan untuk muncul di holodex.
