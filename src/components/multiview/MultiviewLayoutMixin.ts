@@ -69,25 +69,27 @@ export default {
             if (toCompare.length === 0) return false;
 
             // go through each preset, and check for full matching layouts
-            return toCompare.some((preset) => {
-                for (let i = 0; i < currentLayout.length; i += 1) {
-                    const presetCell = preset.layout[i];
-                    const layoutCell = currentLayout[i];
-                    if (
-                        !(
-                            presetCell.x === layoutCell.x
-                            && presetCell.y === layoutCell.y
-                            && presetCell.w === layoutCell.w
-                            && presetCell.h === layoutCell.h
-                        )
-                    ) {
-                        // at least one cell doesn't match, invalid layout
-                        return false;
+            return toCompare
+                .filter((preset) => preset.layout.length === currentLayout.length)
+                .some((preset) => {
+                    for (let i = 0; i < currentLayout.length; i += 1) {
+                        const presetCell = preset.layout[i];
+                        const layoutCell = currentLayout[i];
+                        if (
+                            !(
+                                presetCell.x === layoutCell.x
+                                && presetCell.y === layoutCell.y
+                                && presetCell.w === layoutCell.w
+                                && presetCell.h === layoutCell.h
+                            )
+                        ) {
+                            // at least one cell doesn't match, invalid layout
+                            return false;
+                        }
                     }
-                }
-                // all cells match, layout is a preset
-                return true;
-            });
+                    // all cells match, layout is a preset
+                    return true;
+                });
         },
         addVideoAutoLayout(video, onConflict) {
             // find layout with space for one more new video
