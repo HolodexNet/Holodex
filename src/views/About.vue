@@ -263,12 +263,12 @@
               $t("about.changelog.title")
             }}</a>
           </v-card-title>
-          <div class="text-body-2">
+          <div>
             <iframe
               width="100%"
               seamless
-              src="https://holodexnet.github.io/Holodex/"
-              style="height: 80vh; border: none; border-radius: 3px; background: #eee"
+              src="https://holodexnet.github.io/Holodex/CHANGELOG.html"
+              style="height: 60vh; border: none; background: #eee"
             />
           </div>
         </v-card>

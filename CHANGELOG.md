@@ -1,5 +1,9 @@
 # Holodex Changelog
 
+### 2.17 Holodex [*Not released*]
+##### New Features
+- New changelog
+
 ### 2.16 Holodex [*July 30th, 2021*]
 ##### New Features
 - You can now background music videos while browsing! Click the theater mode button on the music playback bar.
