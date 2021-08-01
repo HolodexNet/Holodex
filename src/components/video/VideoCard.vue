@@ -51,6 +51,9 @@
                     <div v-if="data.songcount" class="video-duration">
                         <v-icon small>{{ icons.mdiMusic }}</v-icon>
                     </div>
+                    <div v-if="hasTLs" class="video-duration" style="line-height: 2px">
+                        <v-icon small>{{ icons.tlChat }}</v-icon> {{ tlLangInChat }}
+                    </div>
                     <!-- Duration/Current live stream time -->
                     <div
                         v-if="data.duration > 0 || data.start_actual"
@@ -327,6 +330,15 @@ export default {
         watchLink() {
             const q = this.parentPlaylistId ? `?playlist=${this.parentPlaylistId}` : "";
             return `/watch/${this.data.id}${q}`;
+        },
+        hasTLs() {
+            return this.video?.recent_live_tls?.includes(this.$store.state.settings.liveTlLang);
+        },
+        tlLangInChat() {
+            if (this.hasTLs) {
+                return `[${this.$store.state.settings.liveTlLang}]`;
+            }
+            return "";
         },
     },
     // created() {
