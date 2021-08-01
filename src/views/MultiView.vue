@@ -126,6 +126,11 @@
                                             {{ icons.mdiPlay }}
                                         </v-icon>
                                     </v-btn>
+                                    <v-btn icon title="Sync" @click="allCellAction('sync')">
+                                        <v-icon color="secondary lighten-1">
+                                            {{ mdiFastForward }}
+                                        </v-icon>
+                                    </v-btn>
                                     <v-btn icon @click="allCellAction('pause')">
                                         <v-icon color="secondary lighten-1">
                                             {{ mdiPause }}
@@ -163,13 +168,18 @@
                                     <v-list-item-title class="primary--text">
                                         {{ cellState.video.title || cellState.video.channel.name }}
                                     </v-list-item-title>
-                                    <!-- <v-list-item-subtitle>
-                                        {{ cellState.video.channel.english_name || cellState.video.channel.name  }}
-                                    </v-list-item-subtitle> -->
                                     <v-list-item-action class="flex-row justify-start ma-0 mt-1">
                                         <v-btn icon @click="cellState.setPlaying(cellState.pausedMode)">
                                             <v-icon color="grey lighten-1">
                                                 {{ cellState.pausedMode ? icons.mdiPlay : mdiPause }}
+                                            </v-icon>
+                                        </v-btn>
+                                        <v-btn
+                                            icon
+                                            @click="cellState.trySync()"
+                                        >
+                                            <v-icon :color="cellState.isFastFoward ? 'primary' :'grey' ">
+                                                {{ mdiFastForward }}
                                             </v-icon>
                                         </v-btn>
                                         <v-btn icon @click="cellState.refresh()">
@@ -214,7 +224,7 @@ import MultiviewLayoutMixin from "@/components/multiview/MultiviewLayoutMixin";
 import LayoutChangePrompt from "@/components/multiview/LayoutChangePrompt.vue";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
 import {
-    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical,
+    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical, mdiFastForward,
 } from "@mdi/js";
 import { Content, decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
@@ -246,6 +256,7 @@ export default {
         return {
             mdiCardPlus,
             mdiPause,
+            mdiFastForward,
 
             showSelectorForId: -1,
 
@@ -504,6 +515,9 @@ export default {
                 },
                 refresh: () => {
                     cells.forEach((c) => c.refresh());
+                },
+                sync: () => {
+                    cells.forEach((c) => c.trySync());
                 },
             };
             fns[key]();
