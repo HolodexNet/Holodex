@@ -1,45 +1,45 @@
 <template>
-    <v-card>
-        <v-card-title class="text-body-1">
-            {{ $t("component.watch.Comments.title") }}
-        </v-card-title>
-        <v-card-text>
-            <template v-if="!hideBuckets">
-                <template v-for="b in buckets">
-                    <v-btn
-                        :key="b.time"
-                        class="mr-2 mb-2 ts-btn"
-                        label
-                        :color="currentFilter === b.time ? 'primary darken-1' : ''"
-                        small
-                        @click="currentFilter = b.time"
-                    >
-                        {{ b.display }} ({{ b.count }})
-                    </v-btn>
-                </template>
-            </template>
-            <v-divider />
-            <v-list
-                v-if="comments"
-                dense
-                class="pa-0 transparent caption"
-                @click.native="handleClick"
-            >
-                <template v-for="comment in limitComment">
-                    <Comment :key="comment.comment_key" :comment="comment" :video-id="video.id" />
-                </template>
-            </v-list>
-            <v-btn
-                v-if="shouldLimit"
-                plain
-                small
-                text
-                @click="expanded = !expanded"
-            >
-                {{ expanded ? $t("views.app.close_btn") : $t("component.description.showMore") }}
-            </v-btn>
-        </v-card-text>
-    </v-card>
+  <v-card>
+    <v-card-title class="text-body-1">
+      {{ $t("component.watch.Comments.title") }}
+    </v-card-title>
+    <v-card-text>
+      <template v-if="!hideBuckets">
+        <template v-for="b in buckets">
+          <v-btn
+            :key="b.time"
+            class="mr-2 mb-2 ts-btn"
+            label
+            :color="currentFilter === b.time ? 'primary darken-1' : ''"
+            small
+            @click="currentFilter = b.time"
+          >
+            {{ b.display }} ({{ b.count }})
+          </v-btn>
+        </template>
+      </template>
+      <v-divider />
+      <v-list
+        v-if="comments"
+        dense
+        class="pa-0 transparent caption"
+        @click.native="handleClick"
+      >
+        <template v-for="comment in limitComment">
+          <Comment :key="comment.comment_key" :comment="comment" :video-id="video.id" />
+        </template>
+      </v-list>
+      <v-btn
+        v-if="shouldLimit"
+        plain
+        small
+        text
+        @click="expanded = !expanded"
+      >
+        {{ expanded ? $t("views.app.close_btn") : $t("component.description.showMore") }}
+      </v-btn>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">

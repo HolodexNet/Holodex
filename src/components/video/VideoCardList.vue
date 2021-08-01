@@ -1,66 +1,66 @@
 <template>
-    <v-container
-        :id="'t' + randomId"
-        class="py-0"
-        style="position: relative"
-        fluid
-    >
-        <!-- Video Card grid rows -->
-        <v-row :dense="dense" class="video-row">
-            <!-- Video Cards with custom grid size class based on breakpoint -->
-            <v-col
-                v-for="(video, index) in processedVideos"
-                :key="`${index}-${video.id}`"
-                :class="['video-col', `video-${colSize}`, 'flex-column']"
-            >
-                <VideoCard
-                    :video="video"
-                    fluid
-                    :include-channel="includeChannel"
-                    :horizontal="horizontal"
-                    :include-avatar="includeAvatar"
-                    :col-size="colSize"
-                    :active="video.id === activeId"
-                    :disable-default-click="disableDefaultClick"
-                    :hide-thumbnail="shouldHideThumbnail"
-                    @videoClicked="handleVideoClick"
-                >
-                    <!-- pass slot to each individual video card -->
-                    <template #action>
-                        <slot name="action" :video="video" />
-                    </template>
-                </VideoCard>
-                <!-- Append comment item for Comment Search -->
-                <v-list
-                    v-if="video.comments"
-                    style="max-height: 400px"
-                    dense
-                    class="pa-0 transparent overflow-y-auto caption overflow-x-hidden"
-                >
-                    <v-divider class="mx-4" style="flex-basis: 100%; height: 0" />
-                    <!-- Render Channel Avatar if necessary -->
-                    <v-list-item v-for="comment in video.comments" :key="comment.comment_key" class="pa-0">
-                        <comment :comment="comment" :video-id="video.id" />
-                    </v-list-item>
-                </v-list>
-            </v-col>
-        </v-row>
-        <!-- Expand button/show more -->
-        <div v-if="hasExpansion" class="text-center" style="width: 100%">
-            <v-btn
-                v-if="hasExpansion"
-                ref="expandBtn"
-                :text="!isMobile"
-                color="primary"
-                @click="expanded = !expanded"
-            >
-                {{ expanded ? $t("component.description.showLess") : $t("component.description.showMore") }}
-                <v-icon>
-                    {{ expanded ? mdiChevronUp : mdiChevronDown }}
-                </v-icon>
-            </v-btn>
-        </div>
-    </v-container>
+  <v-container
+    :id="'t' + randomId"
+    class="py-0"
+    style="position: relative"
+    fluid
+  >
+    <!-- Video Card grid rows -->
+    <v-row :dense="dense" class="video-row">
+      <!-- Video Cards with custom grid size class based on breakpoint -->
+      <v-col
+        v-for="(video, index) in processedVideos"
+        :key="`${index}-${video.id}`"
+        :class="['video-col', `video-${colSize}`, 'flex-column']"
+      >
+        <VideoCard
+          :video="video"
+          fluid
+          :include-channel="includeChannel"
+          :horizontal="horizontal"
+          :include-avatar="includeAvatar"
+          :col-size="colSize"
+          :active="video.id === activeId"
+          :disable-default-click="disableDefaultClick"
+          :hide-thumbnail="shouldHideThumbnail"
+          @videoClicked="handleVideoClick"
+        >
+          <!-- pass slot to each individual video card -->
+          <template #action>
+            <slot name="action" :video="video" />
+          </template>
+        </VideoCard>
+        <!-- Append comment item for Comment Search -->
+        <v-list
+          v-if="video.comments"
+          style="max-height: 400px"
+          dense
+          class="pa-0 transparent overflow-y-auto caption overflow-x-hidden"
+        >
+          <v-divider class="mx-4" style="flex-basis: 100%; height: 0" />
+          <!-- Render Channel Avatar if necessary -->
+          <v-list-item v-for="comment in video.comments" :key="comment.comment_key" class="pa-0">
+            <comment :comment="comment" :video-id="video.id" />
+          </v-list-item>
+        </v-list>
+      </v-col>
+    </v-row>
+    <!-- Expand button/show more -->
+    <div v-if="hasExpansion" class="text-center" style="width: 100%">
+      <v-btn
+        v-if="hasExpansion"
+        ref="expandBtn"
+        :text="!isMobile"
+        color="primary"
+        @click="expanded = !expanded"
+      >
+        {{ expanded ? $t("component.description.showLess") : $t("component.description.showMore") }}
+        <v-icon>
+          {{ expanded ? mdiChevronUp : mdiChevronDown }}
+        </v-icon>
+      </v-btn>
+    </div>
+  </v-container>
 </template>
 
 <script lang="ts">

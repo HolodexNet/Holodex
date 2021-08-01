@@ -1,62 +1,62 @@
 <template>
-    <v-app
-        :style="{ background: $vuetify.theme.themes[darkMode ? 'dark' : 'light'].background }"
-        :class="{ 'bump-bottom': $store.state.music.isOpen }"
+  <v-app
+    :style="{ background: $vuetify.theme.themes[darkMode ? 'dark' : 'light'].background }"
+    :class="{ 'bump-bottom': $store.state.music.isOpen }"
+  >
+    <portal-target name="music-playback-background" />
+
+    <MainNav />
+
+    <v-main style="transition: none">
+      <PullToRefresh />
+      <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists">
+        <router-view :key="viewKey" />
+      </keep-alive>
+    </v-main>
+
+    <v-snackbar
+      v-if="updateExists"
+      bottom
+      right
+      :value="updateExists"
+      :timeout="-1"
+      color="primary"
     >
-        <portal-target name="music-playback-background" />
-
-        <MainNav />
-
-        <v-main style="transition: none">
-            <PullToRefresh />
-            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists">
-                <router-view :key="viewKey" />
-            </keep-alive>
-        </v-main>
-
-        <v-snackbar
-            v-if="updateExists"
-            bottom
-            right
-            :value="updateExists"
-            :timeout="-1"
-            color="primary"
+      {{ $t("views.app.update_available") }}
+      <template #action>
+        <v-btn text class="ml-auto" @click="refreshApp">
+          {{ $t("views.app.update_btn") }}
+        </v-btn>
+        <v-btn text class="ml-auto" @click="updateExists = false">
+          {{ $t("views.app.close_btn") }}
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar
+      v-if="showUpdateDetails"
+      bottom
+      center
+      :value="showUpdateDetails"
+      color="primary"
+      :timeout="-1"
+    >
+      {{ $t("views.app.check_about_page") }}
+      <template #action>
+        <v-btn
+          text
+          class="ml-auto"
+          to="/about#changelog"
+          @click="showUpdateDetails = false"
         >
-            {{ $t("views.app.update_available") }}
-            <template #action>
-                <v-btn text class="ml-auto" @click="refreshApp">
-                    {{ $t("views.app.update_btn") }}
-                </v-btn>
-                <v-btn text class="ml-auto" @click="updateExists = false">
-                    {{ $t("views.app.close_btn") }}
-                </v-btn>
-            </template>
-        </v-snackbar>
-        <v-snackbar
-            v-if="showUpdateDetails"
-            bottom
-            center
-            :value="showUpdateDetails"
-            color="primary"
-            :timeout="-1"
-        >
-            {{ $t("views.app.check_about_page") }}
-            <template #action>
-                <v-btn
-                    text
-                    class="ml-auto"
-                    to="/about#changelog"
-                    @click="showUpdateDetails = false"
-                >
-                    Changelog
-                </v-btn>
-                <v-btn text class="ml-auto" @click="showUpdateDetails = false">
-                    {{ $t("views.app.close_btn") }}
-                </v-btn>
-            </template>
-        </v-snackbar>
-        <ReportDialog />
-    </v-app>
+          Changelog
+        </v-btn>
+        <v-btn text class="ml-auto" @click="showUpdateDetails = false">
+          {{ $t("views.app.close_btn") }}
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <ReportDialog />
+  </v-app>
 </template>
 
 <script lang="ts">

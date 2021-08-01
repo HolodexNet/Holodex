@@ -1,210 +1,210 @@
 <template>
-    <!-- Vertical: -->
-    <v-card v-if="!horizontal" class="pa-3">
-        <v-row class="flex-column flex-nowrap flex-sm-wrap" style="height: 80vh">
-            <v-col
-                v-if="$vuetify.breakpoint.xs"
-                class="org-dropdown"
-                cols="12"
-                sm="4"
-                md="3"
-                lg="2"
-                mandatory
-            >
-                <!-- Dropdown for breakpoint xs -->
-                <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
+  <!-- Vertical: -->
+  <v-card v-if="!horizontal" class="pa-3">
+    <v-row class="flex-column flex-nowrap flex-sm-wrap" style="height: 80vh">
+      <v-col
+        v-if="$vuetify.breakpoint.xs"
+        class="org-dropdown"
+        cols="12"
+        sm="4"
+        md="3"
+        lg="2"
+        mandatory
+      >
+        <!-- Dropdown for breakpoint xs -->
+        <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
 
-                <org-panel-picker horizontal @changed="handlePicker" />
-            </v-col>
-            <!-- Full list for greater than xs -->
-            <v-col
-                v-else
-                class="org-list"
-                cols="12"
-                sm="4"
-                md="3"
-                lg="2"
-                mandatory
-                style="min-height: 100%"
-            >
-                <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
-
-                <org-panel-picker @changed="handlePicker" />
-            </v-col>
-            <v-col
-                class="video-list"
-                cols="12"
-                sm="8"
-                md="9"
-                lg="10"
-            >
-                <!-- Custom YT Url should render different content -->
-                <template v-if="selectedOrg.name === 'YouTubeURL'">
-                    <div class="text-h5">
-                        {{ $t("views.multiview.video.addCustomVideo") }}
-                    </div>
-                    <v-text-field
-                        v-model="customURL"
-                        label="Youtube Video Link"
-                        hint="https://www.youtube.com/watch?v=..."
-                        :error="customURLError"
-                    />
-                    <v-btn
-                        :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
-                        @click="addCustomVideo"
-                    >
-                        <v-icon>{{ icons.mdiCheck }}</v-icon>
-                    </v-btn>
-                </template>
-                <!-- Custom Twitch URL -->
-                <template v-else-if="selectedOrg.name === 'TwitchURL'">
-                    <div class="text-h5">
-                        {{ $t("views.multiview.video.addCustomVideo") }}
-                    </div>
-                    <v-text-field
-                        v-model="customURL"
-                        label="Twitch Channel Link"
-                        hint="https://www.twitch.tv/..."
-                        :error="customURLError"
-                    />
-                    <v-btn
-                        :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
-                        @click="addCustomVideo"
-                    >
-                        <v-icon>{{ icons.mdiCheck }}</v-icon>
-                    </v-btn>
-                </template>
-                <!-- Favorites when not logged in -->
-                <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
-                    <div class="pa-3">
-                        <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')" />
-                        <center>
-                            <v-btn :to="isLoggedIn ? '/channel' : '/login'">
-                                {{ isLoggedIn ? $t("views.favorites.manageFavorites") : $t("component.mainNav.login") }}
-                            </v-btn>
-                        </center>
-                    </div>
-                </template>
-                <!-- Video Card List for normal content -->
-                <template v-else>
-                    <h4 class="pa-1">
-                        {{ selectedOrg.name }}
-                    </h4>
-                    <LoadingOverlay :is-loading="isLoading" :show-error="hasError" />
-                    <VideoCardList
-                        :videos="modalFilteredLive"
-                        disable-default-click
-                        include-channel
-                        :cols="{
-                            xs: 1,
-                            sm: 1,
-                            md: 2,
-                            lg: 4,
-                            xl: 5,
-                        }"
-                        :horizontal="$vuetify.breakpoint.mdAndDown"
-                        dense
-                        hide-ignored-topics
-                        :hide-collabs="shouldHideCollabs"
-                        @videoClicked="handleVideoClick"
-                    />
-                    <div class="d-block" style="height: 120px" />
-                </template>
-            </v-col>
-        </v-row>
-    </v-card>
-    <!-- Horizontal view for tool bar -->
-    <div v-else class="d-flex flex-row align-center">
-        <!-- Drop down -->
         <org-panel-picker horizontal @changed="handlePicker" />
-        <v-icon
-            v-if="selectedOrg.name !== 'YouTubeURL' && selectedOrg.name !== 'TwitchURL'"
-            class="mr-2 ml-1"
-            :class="{ 'refresh-spin': isLoading }"
-            @click="loadSelection(true)"
-        >
-            {{ icons.mdiRefresh }}
-        </v-icon>
-        <!-- Inline text input for custom yt url -->
+      </v-col>
+      <!-- Full list for greater than xs -->
+      <v-col
+        v-else
+        class="org-list"
+        cols="12"
+        sm="4"
+        md="3"
+        lg="2"
+        mandatory
+        style="min-height: 100%"
+      >
+        <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
+
+        <org-panel-picker @changed="handlePicker" />
+      </v-col>
+      <v-col
+        class="video-list"
+        cols="12"
+        sm="8"
+        md="9"
+        lg="10"
+      >
+        <!-- Custom YT Url should render different content -->
         <template v-if="selectedOrg.name === 'YouTubeURL'">
-            <v-text-field
-                v-model="customURL"
-                label="Youtube Video Link"
-                placeholder="https://www.youtube.com/watch?v=..."
-                :error="customURLError"
-                hide-details
-                solo
-                style="width: 100%"
-            />
-            <v-btn
-                :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
-                icon
-                @click="addCustomVideo"
-            >
-                <v-icon>{{ icons.mdiCheck }}</v-icon>
-            </v-btn>
+          <div class="text-h5">
+            {{ $t("views.multiview.video.addCustomVideo") }}
+          </div>
+          <v-text-field
+            v-model="customURL"
+            label="Youtube Video Link"
+            hint="https://www.youtube.com/watch?v=..."
+            :error="customURLError"
+          />
+          <v-btn
+            :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
+            @click="addCustomVideo"
+          >
+            <v-icon>{{ icons.mdiCheck }}</v-icon>
+          </v-btn>
         </template>
-        <!-- Inline text input for custom twitch url -->
+        <!-- Custom Twitch URL -->
         <template v-else-if="selectedOrg.name === 'TwitchURL'">
-            <v-text-field
-                v-model="customURL"
-                label="Twitch Channel Link"
-                placeholder="https://www.twitch.tv/..."
-                :error="customURLError"
-                hide-details
-                solo
-                style="width: 100%"
-            />
-            <v-btn
-                :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
-                icon
-                @click="addCustomVideo"
-            >
-                <v-icon>{{ icons.mdiCheck }}</v-icon>
-            </v-btn>
+          <div class="text-h5">
+            {{ $t("views.multiview.video.addCustomVideo") }}
+          </div>
+          <v-text-field
+            v-model="customURL"
+            label="Twitch Channel Link"
+            hint="https://www.twitch.tv/..."
+            :error="customURLError"
+          />
+          <v-btn
+            :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
+            @click="addCustomVideo"
+          >
+            <v-icon>{{ icons.mdiCheck }}</v-icon>
+          </v-btn>
         </template>
-        <!-- Login prompt for favorites -->
-        <template v-else-if="selectedOrg === 0 && !isLoggedIn">
-            <div class="flex d-flex flex-row align-center">
-                <span class="" v-html="$t('views.app.loginCallToAction')" />
-                <v-btn text :to="isLoggedIn ? '/channel' : '/login'">
-                    {{ $t("component.mainNav.login") }}
-                </v-btn>
-            </div>
+        <!-- Favorites when not logged in -->
+        <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
+          <div class="pa-3">
+            <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')" />
+            <center>
+              <v-btn :to="isLoggedIn ? '/channel' : '/login'">
+                {{ isLoggedIn ? $t("views.favorites.manageFavorites") : $t("component.mainNav.login") }}
+              </v-btn>
+            </center>
+          </div>
         </template>
-        <!-- Channel icons -->
+        <!-- Video Card List for normal content -->
         <template v-else>
-            <v-tooltip
-                v-for="video in topFilteredLive"
-                :key="video.id"
-                transition="v-fade-transition"
-                bottom
-            >
-                <template #activator="{ on, attrs }">
-                    <div
-                        v-bind="attrs"
-                        style="position: relative; margin-right: 3px; cursor: pointer"
-                        draggable="true"
-                        v-on="on"
-                        @dragstart="(ev) => dragVideo(ev, video)"
-                    >
-                        <div :key="'lvbg' + tick" class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
-                            {{ formatDurationLive(video) }}
-                        </div>
-                        <v-avatar size="50" @click="handleVideoClick(video)">
-                            <ChannelImg :channel="video.channel" :size="50" no-link />
-                        </v-avatar>
-                    </div>
-                </template>
-                <VideoCard
-                    :video="video"
-                    disable-default-click
-                    include-channel
-                    style="max-width: 250px"
-                />
-            </v-tooltip>
+          <h4 class="pa-1">
+            {{ selectedOrg.name }}
+          </h4>
+          <LoadingOverlay :is-loading="isLoading" :show-error="hasError" />
+          <VideoCardList
+            :videos="modalFilteredLive"
+            disable-default-click
+            include-channel
+            :cols="{
+              xs: 1,
+              sm: 1,
+              md: 2,
+              lg: 4,
+              xl: 5,
+            }"
+            :horizontal="$vuetify.breakpoint.mdAndDown"
+            dense
+            hide-ignored-topics
+            :hide-collabs="shouldHideCollabs"
+            @videoClicked="handleVideoClick"
+          />
+          <div class="d-block" style="height: 120px" />
         </template>
-    </div>
+      </v-col>
+    </v-row>
+  </v-card>
+  <!-- Horizontal view for tool bar -->
+  <div v-else class="d-flex flex-row align-center">
+    <!-- Drop down -->
+    <org-panel-picker horizontal @changed="handlePicker" />
+    <v-icon
+      v-if="selectedOrg.name !== 'YouTubeURL' && selectedOrg.name !== 'TwitchURL'"
+      class="mr-2 ml-1"
+      :class="{ 'refresh-spin': isLoading }"
+      @click="loadSelection(true)"
+    >
+      {{ icons.mdiRefresh }}
+    </v-icon>
+    <!-- Inline text input for custom yt url -->
+    <template v-if="selectedOrg.name === 'YouTubeURL'">
+      <v-text-field
+        v-model="customURL"
+        label="Youtube Video Link"
+        placeholder="https://www.youtube.com/watch?v=..."
+        :error="customURLError"
+        hide-details
+        solo
+        style="width: 100%"
+      />
+      <v-btn
+        :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
+        icon
+        @click="addCustomVideo"
+      >
+        <v-icon>{{ icons.mdiCheck }}</v-icon>
+      </v-btn>
+    </template>
+    <!-- Inline text input for custom twitch url -->
+    <template v-else-if="selectedOrg.name === 'TwitchURL'">
+      <v-text-field
+        v-model="customURL"
+        label="Twitch Channel Link"
+        placeholder="https://www.twitch.tv/..."
+        :error="customURLError"
+        hide-details
+        solo
+        style="width: 100%"
+      />
+      <v-btn
+        :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
+        icon
+        @click="addCustomVideo"
+      >
+        <v-icon>{{ icons.mdiCheck }}</v-icon>
+      </v-btn>
+    </template>
+    <!-- Login prompt for favorites -->
+    <template v-else-if="selectedOrg === 0 && !isLoggedIn">
+      <div class="flex d-flex flex-row align-center">
+        <span class="" v-html="$t('views.app.loginCallToAction')" />
+        <v-btn text :to="isLoggedIn ? '/channel' : '/login'">
+          {{ $t("component.mainNav.login") }}
+        </v-btn>
+      </div>
+    </template>
+    <!-- Channel icons -->
+    <template v-else>
+      <v-tooltip
+        v-for="video in topFilteredLive"
+        :key="video.id"
+        transition="v-fade-transition"
+        bottom
+      >
+        <template #activator="{ on, attrs }">
+          <div
+            v-bind="attrs"
+            style="position: relative; margin-right: 3px; cursor: pointer"
+            draggable="true"
+            v-on="on"
+            @dragstart="(ev) => dragVideo(ev, video)"
+          >
+            <div :key="'lvbg' + tick" class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
+              {{ formatDurationLive(video) }}
+            </div>
+            <v-avatar size="50" @click="handleVideoClick(video)">
+              <ChannelImg :channel="video.channel" :size="50" no-link />
+            </v-avatar>
+          </div>
+        </template>
+        <VideoCard
+          :video="video"
+          disable-default-click
+          include-channel
+          style="max-width: 250px"
+        />
+      </v-tooltip>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">

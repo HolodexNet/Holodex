@@ -1,20 +1,20 @@
 <template>
-    <div
-        :key="identifier"
-        v-intersect="{
-            handler: onIntersect,
-            options: {
-                threshold: [0, 0.5, 1.0],
-            },
-        }"
-        class="d-flex justify-center py-4"
-        style="min-height: 100px"
-    >
-        <LoadingOverlay :is-loading="status === STATUSES.LOADING" :show-error="status === STATUSES.ERROR" />
-        <div v-if="status === STATUSES.COMPLETED">
-            End of list
-        </div>
+  <div
+    :key="identifier"
+    v-intersect="{
+      handler: onIntersect,
+      options: {
+        threshold: [0, 0.5, 1.0],
+      },
+    }"
+    class="d-flex justify-center py-4"
+    style="min-height: 100px"
+  >
+    <LoadingOverlay :is-loading="status === STATUSES.LOADING" :show-error="status === STATUSES.ERROR" />
+    <div v-if="status === STATUSES.COMPLETED">
+      End of list
     </div>
+  </div>
 </template>
 
 <script lang="ts">

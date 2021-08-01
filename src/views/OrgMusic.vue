@@ -1,147 +1,147 @@
 <template>
-    <v-container class="org-music-container">
-        <v-row>
-            <v-col
-                v-if="!isAllVTubers"
-                cols="12"
-                class="mb-0 pa-0"
-                style="min-height: 404px"
+  <v-container class="org-music-container">
+    <v-row>
+      <v-col
+        v-if="!isAllVTubers"
+        cols="12"
+        class="mb-0 pa-0"
+        style="min-height: 404px"
+      >
+        <v-card-title>
+          <span class="text-lg-h5 mr-2">{{
+            $t("component.orgMusic.monthlyTopForOrg", [currentOrg.name])
+          }}</span>
+          <v-btn
+            fab
+            color="primary"
+            @click="
+              $store.commit('music/addSong', popularMonthlySongs);
+              $store.commit('music/openBar');
+            "
+          >
+            <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
+          </v-btn>
+        </v-card-title>
+        <carousel
+          v-if="popularMonthlySongs.length"
+          :window-size="BREAKPOINTS[$vuetify.breakpoint.name]"
+          :item-width="220"
+          :item-count="popularMonthlySongs.length"
+        >
+          <template v-for="(song, idx) in popularMonthlySongs">
+            <song-item-card
+              :key="'clist3' + idx"
+              style="width: 200px; margin: 10px"
+              :song="song"
+              show-time
+              show-artist
+              :hover-icon="icons.mdiPlaylistMusic"
+              :artwork-hover-icon="icons.mdiPlay"
+              @play="$store.commit('music/addSong', song)"
+              @playNow="skipToSong"
+              @channel="$router.push({ path: `/channel/${song.channel_id}` })"
+            />
+          </template>
+          <v-icon v-if="popularMonthlySongs.length === 0" disabled>
+            {{ icons.mdiDatabaseOff }}
+          </v-icon>
+        </carousel>
+      </v-col>
+      <v-col
+        v-if="!isAllVTubers"
+        cols="12"
+        class="my-0 pa-0"
+        style="min-height: 404px"
+      >
+        <v-card-title>
+          <span class="text-lg-h5 mr-2">
+            {{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg.name]) }}
+          </span>
+          <v-btn
+            fab
+            color="primary"
+            @click="
+              $store.commit('music/addSong', popularWeeklySongs);
+              $store.commit('music/openBar');
+            "
+          >
+            <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
+          </v-btn>
+        </v-card-title>
+        <carousel
+          v-if="popularWeeklySongs.length"
+          :window-size="BREAKPOINTS[$vuetify.breakpoint.name]"
+          :item-width="220"
+          :item-count="popularWeeklySongs.length"
+        >
+          <template v-for="(song, idx) in popularWeeklySongs">
+            <song-item-card
+              :key="'clist4' + idx"
+              style="width: 200px; margin: 10px"
+              :song="song"
+              show-time
+              show-artist
+              :hover-icon="icons.mdiPlaylistMusic"
+              :artwork-hover-icon="icons.mdiPlay"
+              @play="$store.commit('music/addSong', song)"
+              @playNow="skipToSong"
+              @channel="$router.push({ path: `/channel/${song.channel_id}` })"
+            />
+          </template>
+          <v-icon v-if="popularWeeklySongs.length === 0" disabled>
+            {{ icons.mdiDatabaseOff }}
+          </v-icon>
+        </carousel>
+      </v-col>
+      <v-col cols="12" class="my-0 py-0">
+        <generic-list-loader
+          :key="'ldr' + currentOrg.name + '+' + committedSearch"
+          v-slot="{ data, isLoading }"
+          paginate
+          :per-page="PER_PAGE_ITEMS"
+          :load-fn="getSongLoader()"
+        >
+          <v-card-title>
+            <span class="text-lg-h5 mr-2">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
+            <v-btn
+              fab
+              color="primary"
+              @click="
+                $store.commit('music/addSong', data);
+                $store.commit('music/openBar');
+              "
             >
-                <v-card-title>
-                    <span class="text-lg-h5 mr-2">{{
-                        $t("component.orgMusic.monthlyTopForOrg", [currentOrg.name])
-                    }}</span>
-                    <v-btn
-                        fab
-                        color="primary"
-                        @click="
-                            $store.commit('music/addSong', popularMonthlySongs);
-                            $store.commit('music/openBar');
-                        "
-                    >
-                        <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
-                    </v-btn>
-                </v-card-title>
-                <carousel
-                    v-if="popularMonthlySongs.length"
-                    :window-size="BREAKPOINTS[$vuetify.breakpoint.name]"
-                    :item-width="220"
-                    :item-count="popularMonthlySongs.length"
-                >
-                    <template v-for="(song, idx) in popularMonthlySongs">
-                        <song-item-card
-                            :key="'clist3' + idx"
-                            style="width: 200px; margin: 10px"
-                            :song="song"
-                            show-time
-                            show-artist
-                            :hover-icon="icons.mdiPlaylistMusic"
-                            :artwork-hover-icon="icons.mdiPlay"
-                            @play="$store.commit('music/addSong', song)"
-                            @playNow="skipToSong"
-                            @channel="$router.push({ path: `/channel/${song.channel_id}` })"
-                        />
-                    </template>
-                    <v-icon v-if="popularMonthlySongs.length === 0" disabled>
-                        {{ icons.mdiDatabaseOff }}
-                    </v-icon>
-                </carousel>
-            </v-col>
-            <v-col
-                v-if="!isAllVTubers"
-                cols="12"
-                class="my-0 pa-0"
-                style="min-height: 404px"
-            >
-                <v-card-title>
-                    <span class="text-lg-h5 mr-2">
-                        {{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg.name]) }}
-                    </span>
-                    <v-btn
-                        fab
-                        color="primary"
-                        @click="
-                            $store.commit('music/addSong', popularWeeklySongs);
-                            $store.commit('music/openBar');
-                        "
-                    >
-                        <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
-                    </v-btn>
-                </v-card-title>
-                <carousel
-                    v-if="popularWeeklySongs.length"
-                    :window-size="BREAKPOINTS[$vuetify.breakpoint.name]"
-                    :item-width="220"
-                    :item-count="popularWeeklySongs.length"
-                >
-                    <template v-for="(song, idx) in popularWeeklySongs">
-                        <song-item-card
-                            :key="'clist4' + idx"
-                            style="width: 200px; margin: 10px"
-                            :song="song"
-                            show-time
-                            show-artist
-                            :hover-icon="icons.mdiPlaylistMusic"
-                            :artwork-hover-icon="icons.mdiPlay"
-                            @play="$store.commit('music/addSong', song)"
-                            @playNow="skipToSong"
-                            @channel="$router.push({ path: `/channel/${song.channel_id}` })"
-                        />
-                    </template>
-                    <v-icon v-if="popularWeeklySongs.length === 0" disabled>
-                        {{ icons.mdiDatabaseOff }}
-                    </v-icon>
-                </carousel>
-            </v-col>
-            <v-col cols="12" class="my-0 py-0">
-                <generic-list-loader
-                    :key="'ldr' + currentOrg.name + '+' + committedSearch"
-                    v-slot="{ data, isLoading }"
-                    paginate
-                    :per-page="PER_PAGE_ITEMS"
-                    :load-fn="getSongLoader()"
-                >
-                    <v-card-title>
-                        <span class="text-lg-h5 mr-2">{{ $t("component.channelMusic.recentSongsHeader") }}</span>
-                        <v-btn
-                            fab
-                            color="primary"
-                            @click="
-                                $store.commit('music/addSong', data);
-                                $store.commit('music/openBar');
-                            "
-                        >
-                            <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
-                        </v-btn>
+              <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
+            </v-btn>
 
-                        <v-spacer />
+            <v-spacer />
 
-                        <v-text-field
-                            ref="searchbox"
-                            v-model="search"
-                            :append-icon="icons.mdiMagnify"
-                            :label="$t('component.search.searchLabel')"
-                            single-line
-                            hide-details
-                            @submit="doSearch(search)"
-                            @click:append="doSearch(search)"
-                            @keydown.enter="doSearch(search)"
-                        />
-                    </v-card-title>
-                    <v-row>
-                        <v-col>
-                            <song-table
-                                :per-page-items="PER_PAGE_ITEMS"
-                                channel-link
-                                :loading="isLoading"
-                                :songs="data"
-                            />
-                        </v-col>
-                    </v-row>
-                </generic-list-loader>
+            <v-text-field
+              ref="searchbox"
+              v-model="search"
+              :append-icon="icons.mdiMagnify"
+              :label="$t('component.search.searchLabel')"
+              single-line
+              hide-details
+              @submit="doSearch(search)"
+              @click:append="doSearch(search)"
+              @keydown.enter="doSearch(search)"
+            />
+          </v-card-title>
+          <v-row>
+            <v-col>
+              <song-table
+                :per-page-items="PER_PAGE_ITEMS"
+                channel-link
+                :loading="isLoading"
+                :songs="data"
+              />
             </v-col>
-        </v-row>
-    </v-container>
+          </v-row>
+        </generic-list-loader>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">

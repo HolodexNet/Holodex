@@ -1,74 +1,74 @@
 <template>
-    <v-container>
-        <v-col>
-            <span class="text-h5">{{ $t("views.playlist.page-heading") }}</span><br>
-            <span class="text-subtitle-2">{{ $t("views.playlist.page-instruction") }}</span>
-            <!-- <v-list class="mt-4" color="transparent"> -->
-            <v-card id="new-playlist-btn" class="my-4" @click.stop="createNewPlaylist">
-                <v-list-item two-line>
-                    <v-icon left x-large class="mr-3">
-                        {{ icons.mdiPlaylistPlus }}
-                    </v-icon>
-                    <v-list-item-title class="font-weight-medium text-subtitle-2">
-                        {{ $t("views.playlist.new-playlist-btn-label") }}
-                        <br>
-                        <div v-if="!jwt" class="text-caption">
-                            {{ $t("views.playlist.login-prompt") }}
-                        </div>
-                    </v-list-item-title>
-                </v-list-item>
-            </v-card>
-            <v-card
-                v-for="playlist in playlists"
-                :key="'plst' + playlist.id + playlist.name"
-                class="my-4"
-                :class="playlist.id === active.id ? 'active-playlist' : 'inactive-playlist'"
-                @click.stop="setNewPlaylist(playlist)"
+  <v-container>
+    <v-col>
+      <span class="text-h5">{{ $t("views.playlist.page-heading") }}</span><br>
+      <span class="text-subtitle-2">{{ $t("views.playlist.page-instruction") }}</span>
+      <!-- <v-list class="mt-4" color="transparent"> -->
+      <v-card id="new-playlist-btn" class="my-4" @click.stop="createNewPlaylist">
+        <v-list-item two-line>
+          <v-icon left x-large class="mr-3">
+            {{ icons.mdiPlaylistPlus }}
+          </v-icon>
+          <v-list-item-title class="font-weight-medium text-subtitle-2">
+            {{ $t("views.playlist.new-playlist-btn-label") }}
+            <br>
+            <div v-if="!jwt" class="text-caption">
+              {{ $t("views.playlist.login-prompt") }}
+            </div>
+          </v-list-item-title>
+        </v-list-item>
+      </v-card>
+      <v-card
+        v-for="playlist in playlists"
+        :key="'plst' + playlist.id + playlist.name"
+        class="my-4"
+        :class="playlist.id === active.id ? 'active-playlist' : 'inactive-playlist'"
+        @click.stop="setNewPlaylist(playlist)"
+      >
+        <v-list-item two-line class="pr-1">
+          <v-icon
+            left
+            x-large
+            color="secondary"
+            class="mr-3 hidden-xs-only"
+          >
+            {{ mdiFormatListText }}
+          </v-icon>
+          <v-list-item-title>
+            <span class="font-weight-medium text-subtitle-1">
+              {{ playlist.name }}
+            </span>
+            <v-chip
+              v-if="playlist.id === active.id && !$store.state.playlist.isSaved"
+              small
+              color="warning"
+              label
+              class="py-0 ml-1"
             >
-                <v-list-item two-line class="pr-1">
-                    <v-icon
-                        left
-                        x-large
-                        color="secondary"
-                        class="mr-3 hidden-xs-only"
-                    >
-                        {{ mdiFormatListText }}
-                    </v-icon>
-                    <v-list-item-title>
-                        <span class="font-weight-medium text-subtitle-1">
-                            {{ playlist.name }}
-                        </span>
-                        <v-chip
-                            v-if="playlist.id === active.id && !$store.state.playlist.isSaved"
-                            small
-                            color="warning"
-                            label
-                            class="py-0 ml-1"
-                        >
-                            {{ $t("views.playlist.playlist-is-modified") }}
-                        </v-chip>
-                        <br>
-                        <span v-show="playlist.updated_at" class="text-caption">
-                            <span class="hidden-xs-only">{{ $t("views.playlist.item-last-updated") }}</span>
-                            {{ toTime(playlist.updated_at) }}
-                        </span>
-                    </v-list-item-title>
-                    <v-list-item-action class="flex-row-reverse ml-0" style="width: 380px">
-                        <!-- local playlist support -->
-                        <div class="group">
-                            <img
-                                v-for="id in getPlaylistPreview(playlist)"
-                                :key="`vid${id}thumb`"
-                                :src="imageSrc(id)"
-                                class="preview-img stack"
-                            >
-                        </div>
-                    </v-list-item-action>
-                </v-list-item>
-            </v-card>
-            <!-- </v-list> -->
-        </v-col>
-    </v-container>
+              {{ $t("views.playlist.playlist-is-modified") }}
+            </v-chip>
+            <br>
+            <span v-show="playlist.updated_at" class="text-caption">
+              <span class="hidden-xs-only">{{ $t("views.playlist.item-last-updated") }}</span>
+              {{ toTime(playlist.updated_at) }}
+            </span>
+          </v-list-item-title>
+          <v-list-item-action class="flex-row-reverse ml-0" style="width: 380px">
+            <!-- local playlist support -->
+            <div class="group">
+              <img
+                v-for="id in getPlaylistPreview(playlist)"
+                :key="`vid${id}thumb`"
+                :src="imageSrc(id)"
+                class="preview-img stack"
+              >
+            </div>
+          </v-list-item-action>
+        </v-list-item>
+      </v-card>
+      <!-- </v-list> -->
+    </v-col>
+  </v-container>
 </template>
 
 <script>

@@ -1,43 +1,43 @@
 <template>
-    <v-list-item-content>
-        <v-list-item-title style="align-self: flex-start">
-            <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
-                {{ channelName }}
-                <div class="text-body-2 text--secondary">
-                    {{ channel.org }} <span v-if="!noGroup && channel.group">• {{ channel.group }}</span>
-                </div>
-            </router-link>
-        </v-list-item-title>
-        <v-list-item-subtitle>
-            <template v-if="!noSubscriberCount">
-                {{ subscriberCount }}
-            </template>
-            <template v-if="includeVideoCount">
-                •
-                {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
-                <router-link v-if="channel.clip_count > 0" :to="`/channel/${channel.id}/clips`" class="no-decoration">
-                    •
-                    <span class="primary--text">{{ $tc("component.channelInfo.clipCount", channel.clip_count) }}</span>
-                </router-link>
-            </template>
-        </v-list-item-subtitle>
-        <v-list-item-subtitle v-if="channel.top_topics && channel.top_topics.length">
-            🏆
-            <a
-                v-for="topic in channel.top_topics"
-                :key="topic"
-                class="topic-chip"
-                :href="searchQuery(topic)"
-                @click.stop=""
-            >
-                {{ topic }}
-            </a>
-        </v-list-item-subtitle>
-        <v-list-item-subtitle v-if="includeSocials">
-            <ChannelSocials :channel="channel" />
-        </v-list-item-subtitle>
-        <slot />
-    </v-list-item-content>
+  <v-list-item-content>
+    <v-list-item-title style="align-self: flex-start">
+      <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
+        {{ channelName }}
+        <div class="text-body-2 text--secondary">
+          {{ channel.org }} <span v-if="!noGroup && channel.group">• {{ channel.group }}</span>
+        </div>
+      </router-link>
+    </v-list-item-title>
+    <v-list-item-subtitle>
+      <template v-if="!noSubscriberCount">
+        {{ subscriberCount }}
+      </template>
+      <template v-if="includeVideoCount">
+        •
+        {{ $t("component.channelInfo.videoCount", [channel.video_count]) }}
+        <router-link v-if="channel.clip_count > 0" :to="`/channel/${channel.id}/clips`" class="no-decoration">
+          •
+          <span class="primary--text">{{ $tc("component.channelInfo.clipCount", channel.clip_count) }}</span>
+        </router-link>
+      </template>
+    </v-list-item-subtitle>
+    <v-list-item-subtitle v-if="channel.top_topics && channel.top_topics.length">
+      🏆
+      <a
+        v-for="topic in channel.top_topics"
+        :key="topic"
+        class="topic-chip"
+        :href="searchQuery(topic)"
+        @click.stop=""
+      >
+        {{ topic }}
+      </a>
+    </v-list-item-subtitle>
+    <v-list-item-subtitle v-if="includeSocials">
+      <ChannelSocials :channel="channel" />
+    </v-list-item-subtitle>
+    <slot />
+  </v-list-item-content>
 </template>
 
 <script lang="ts">

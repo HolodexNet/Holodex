@@ -1,98 +1,98 @@
 <template>
-    <v-card>
-        <v-form>
-            <v-container>
-                <v-row class="px-3">
-                    <v-col cols="12">
-                        <v-select
-                            v-model="selectedOrgs"
-                            clearable
-                            solo-inverted
-                            hide-details="auto"
-                            multiple
-                            chips
-                            deletable-chips
-                            :items="orgs"
-                            :label="$t('component.search.type.org')"
-                            :prepend-icon="mdiAccountMultiple"
-                            @click="loadOrgs"
-                        />
-                    </v-col>
+  <v-card>
+    <v-form>
+      <v-container>
+        <v-row class="px-3">
+          <v-col cols="12">
+            <v-select
+              v-model="selectedOrgs"
+              clearable
+              solo-inverted
+              hide-details="auto"
+              multiple
+              chips
+              deletable-chips
+              :items="orgs"
+              :label="$t('component.search.type.org')"
+              :prepend-icon="mdiAccountMultiple"
+              @click="loadOrgs"
+            />
+          </v-col>
 
-                    <v-col cols="12">
-                        <v-select
-                            v-model="topic"
-                            clearable
-                            :items="topics"
-                            hide-details="auto"
-                            :label="$t('component.search.type.topic')"
-                            solo-inverted
-                            :prepend-icon="icons.mdiAnimationPlay"
-                        />
-                    </v-col>
+          <v-col cols="12">
+            <v-select
+              v-model="topic"
+              clearable
+              :items="topics"
+              hide-details="auto"
+              :label="$t('component.search.type.topic')"
+              solo-inverted
+              :prepend-icon="icons.mdiAnimationPlay"
+            />
+          </v-col>
 
-                    <v-col cols="12">
-                        <v-autocomplete
-                            v-model="channels"
-                            chips
-                            clearable
-                            hide-details="auto"
-                            :label="$t('component.search.type.channel')"
-                            :prepend-icon="icons.mdiYoutube"
-                            :loading="channelLoading"
-                            :items="channelResultsFinal"
-                            :search-input.sync="channelSearch"
-                            no-filter
-                            multiple
-                            solo-inverted
-                            item-color="secondary"
-                            small-chips
-                            return-object
-                            @input="channelClearAPIResults"
-                        />
-                    </v-col>
-                    <v-divider />
-                    <v-col cols="12" md="6">
-                        <v-text-field
-                            v-model="title"
-                            clearable
-                            hide-details="auto"
-                            :label="$t('component.search.type.titledesc')"
-                            :prepend-icon="mdiTextSearch"
-                            :solo-inverted="!commentIsFilled"
-                            :outlined="commentIsFilled"
-                            :disabled="commentIsFilled"
-                        />
-                    </v-col>
-                    <v-divider v-if="!$vuetify.breakpoint.smAndDown" vertical />
-                    <v-col cols="12" md="6">
-                        <v-text-field
-                            v-model="comment"
-                            clearable
-                            hide-details="auto"
-                            :label="$t('component.search.type.comments')"
-                            :prepend-icon="mdiCommentSearch"
-                            :solo-inverted="!titleIsFilled"
-                            :outlined="titleIsFilled"
-                            :disabled="titleIsFilled"
-                        />
-                    </v-col>
+          <v-col cols="12">
+            <v-autocomplete
+              v-model="channels"
+              chips
+              clearable
+              hide-details="auto"
+              :label="$t('component.search.type.channel')"
+              :prepend-icon="icons.mdiYoutube"
+              :loading="channelLoading"
+              :items="channelResultsFinal"
+              :search-input.sync="channelSearch"
+              no-filter
+              multiple
+              solo-inverted
+              item-color="secondary"
+              small-chips
+              return-object
+              @input="channelClearAPIResults"
+            />
+          </v-col>
+          <v-divider />
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="title"
+              clearable
+              hide-details="auto"
+              :label="$t('component.search.type.titledesc')"
+              :prepend-icon="mdiTextSearch"
+              :solo-inverted="!commentIsFilled"
+              :outlined="commentIsFilled"
+              :disabled="commentIsFilled"
+            />
+          </v-col>
+          <v-divider v-if="!$vuetify.breakpoint.smAndDown" vertical />
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="comment"
+              clearable
+              hide-details="auto"
+              :label="$t('component.search.type.comments')"
+              :prepend-icon="mdiCommentSearch"
+              :solo-inverted="!titleIsFilled"
+              :outlined="titleIsFilled"
+              :disabled="titleIsFilled"
+            />
+          </v-col>
 
-                    <v-btn
-                        fab
-                        color="primary"
-                        large
-                        type="submit"
-                        class="ml-auto mr-3 mb-3"
-                        :disabled="false"
-                        @click.stop.prevent="submitSearch"
-                    >
-                        <v-icon>{{ icons.mdiMagnify }}</v-icon>
-                    </v-btn>
-                </v-row>
-            </v-container>
-        </v-form>
-    </v-card>
+          <v-btn
+            fab
+            color="primary"
+            large
+            type="submit"
+            class="ml-auto mr-3 mb-3"
+            :disabled="false"
+            @click.stop.prevent="submitSearch"
+          >
+            <v-icon>{{ icons.mdiMagnify }}</v-icon>
+          </v-btn>
+        </v-row>
+      </v-container>
+    </v-form>
+  </v-card>
 </template>
 
 <script>

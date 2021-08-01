@@ -1,33 +1,33 @@
 <template>
-    <div class="pull-to-refresh-material__control" style="z-index: 4">
-        <svg
-            class="pull-to-refresh-material__icon"
-            fill="#4285f4"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-        >
-            <path :d="icons.mdiRefresh" />
-            <!-- <path d="M0 0h24v24H0z" fill="none" /> -->
-        </svg>
-        <svg
-            class="pull-to-refresh-material__spinner"
-            width="24"
-            height="24"
-            viewBox="25 25 50 50"
-        >
-            <circle
-                class="pull-to-refresh-material__path"
-                cx="50"
-                cy="50"
-                r="20"
-                fill="none"
-                stroke="#4285f4"
-                stroke-width="4"
-                stroke-miterlimit="10"
-            />
-        </svg>
-    </div>
+  <div class="pull-to-refresh-material__control" style="z-index: 4">
+    <svg
+      class="pull-to-refresh-material__icon"
+      fill="#4285f4"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path :d="icons.mdiRefresh" />
+      <!-- <path d="M0 0h24v24H0z" fill="none" /> -->
+    </svg>
+    <svg
+      class="pull-to-refresh-material__spinner"
+      width="24"
+      height="24"
+      viewBox="25 25 50 50"
+    >
+      <circle
+        class="pull-to-refresh-material__path"
+        cx="50"
+        cy="50"
+        r="20"
+        fill="none"
+        stroke="#4285f4"
+        stroke-width="4"
+        stroke-miterlimit="10"
+      />
+    </svg>
+  </div>
 </template>
 
 <script>

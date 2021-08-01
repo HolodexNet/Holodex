@@ -1,22 +1,22 @@
 <template>
-    <!-- <v-container class="py-0" style="position: relative" fluid :id="'t' + randomId"> -->
-    <!-- Video Card grid rows -->
-    <virtual-list
-        ref="virtualVideoList"
-        style="overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain"
-        class="thin-scroll-bar"
-        :style="{ height: computedHeight }"
-        :data-key="'id'"
-        :data-sources="videos"
-        :data-component="VideoCard"
-        :extra-props="{ ...$props, parentPlaylistId: (playlist && playlist.id) || 'local' }"
-        :estimate-size="88"
-        :keeps="keeps"
-        :page-mode="pageMode"
-        :item-class="'virtual-video-list-item'"
-        :item-class-add="checkActive"
-    />
-    <!-- </v-container> -->
+  <!-- <v-container class="py-0" style="position: relative" fluid :id="'t' + randomId"> -->
+  <!-- Video Card grid rows -->
+  <virtual-list
+    ref="virtualVideoList"
+    style="overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain"
+    class="thin-scroll-bar"
+    :style="{ height: computedHeight }"
+    :data-key="'id'"
+    :data-sources="videos"
+    :data-component="VideoCard"
+    :extra-props="{ ...$props, parentPlaylistId: (playlist && playlist.id) || 'local' }"
+    :estimate-size="88"
+    :keeps="keeps"
+    :page-mode="pageMode"
+    :item-class="'virtual-video-list-item'"
+    :item-class-add="checkActive"
+  />
+  <!-- </v-container> -->
 </template>
 
 <script lang="ts">

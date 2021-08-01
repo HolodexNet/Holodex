@@ -1,17 +1,17 @@
 <template>
-    <v-row v-if="isLoading || showError">
-        <v-col class="d-flex align-center justify-center flex-column">
-            <v-progress-circular
-                v-if="isLoading && !showError"
-                indeterminate
-                size="82"
-                class="ma-auto"
-                color="primary"
-            />
-            <ApiErrorMessage v-if="showError" />
-            <NotFound v-if="showNotFound" />
-        </v-col>
-    </v-row>
+  <v-row v-if="isLoading || showError">
+    <v-col class="d-flex align-center justify-center flex-column">
+      <v-progress-circular
+        v-if="isLoading && !showError"
+        indeterminate
+        size="82"
+        class="ma-auto"
+        color="primary"
+      />
+      <ApiErrorMessage v-if="showError" />
+      <NotFound v-if="showNotFound" />
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">

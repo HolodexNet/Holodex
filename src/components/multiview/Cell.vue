@@ -1,169 +1,166 @@
 <template>
-    <v-card
-        flat
-        class="mv-cell d-flex"
-        :class="{
-            'edit-mode': pausedMode,
-        }"
-        @drop="drop"
-        @dragover="allowDrop"
-        @dragleave="dragLeave"
-        @dragenter="dragEnter"
-    >
-        <!-- When Cell has no content: show video picker -->
-        <v-sheet v-if="!cellContent" style="height: 100%" class="d-flex flex-column pt-4">
-            <!--================= No Content Mode ================-->
-            <v-sheet
-                v-if="!cellContent"
-                class="mx-6 thin-scroll-bar d-flex flex-grow-1 flex-shrink-1 align-center justify-center"
-                style="overflow-y: auto; overflow-x: hidden; position: relative"
-            >
-                <!-- <v-sheet class="px-0 d-flex flex-grow-1 align-center justify-center mb-1"> -->
-                <v-btn
-                    class="mr-2"
-                    color="indigo darken-1"
-                    rounded-sm
-                    large
-                    @click="$emit('showSelector', item.i)"
-                >
-                    <v-icon>{{ mdiCardPlus }}</v-icon>
-                </v-btn>
-                <v-btn
-                    v-if="!(cellContent && cellContent.type === 'chat')"
-                    color="teal darken-1"
-                    rounded-sm
-                    large
-                    @click="setItemAsChat(item)"
-                >
-                    <v-icon>{{ mdiMessage }}</v-icon>
-                </v-btn>
-            </v-sheet>
-            <CellControl :play-icon="icons.mdiPlay" class="mx-6 mb-6 mt-0 flex-grow-0" @delete="deleteCell" />
-        </v-sheet>
+  <v-card
+    flat
+    class="mv-cell d-flex"
+    :class="{
+      'edit-mode': pausedMode,
+    }"
+    @drop="drop"
+    @dragover="allowDrop"
+    @dragleave="dragLeave"
+    @dragenter="dragEnter"
+  >
+    <!-- When Cell has no content: show video picker -->
+    <v-sheet v-if="!cellContent" style="height: 100%" class="d-flex flex-column pt-4">
+      <!--================= No Content Mode ================-->
+      <v-sheet
+        v-if="!cellContent"
+        class="mx-6 thin-scroll-bar d-flex flex-grow-1 flex-shrink-1 align-center justify-center"
+        style="overflow-y: auto; overflow-x: hidden; position: relative"
+      >
+        <!-- <v-sheet class="px-0 d-flex flex-grow-1 align-center justify-center mb-1"> -->
+        <v-btn
+          class="mr-2"
+          color="indigo darken-1"
+          rounded-sm
+          large
+          @click="$emit('showSelector', item.i)"
+        >
+          <v-icon>{{ mdiCardPlus }}</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="!(cellContent && cellContent.type === 'chat')"
+          color="teal darken-1"
+          rounded-sm
+          large
+          @click="setItemAsChat(item)"
+        >
+          <v-icon>{{ mdiMessage }}</v-icon>
+        </v-btn>
+      </v-sheet>
+      <CellControl :play-icon="icons.mdiPlay" class="mx-6 mb-6 mt-0 flex-grow-0" @delete="deleteCell" />
+    </v-sheet>
 
-        <v-overlay absolute :value="showDropOverlay">
-            <div>
-                <v-icon x-large>
-                    {{ mdiSelectionEllipseArrowInside }}
-                </v-icon>
-            </div>
-        </v-overlay>
-        <!--=== Video/Chat iFrame based on type ===-->
-        <template v-if="cellContent">
-            <v-sheet
-                :key="`uid-${uniqueId}`"
-                rounded="md"
-                color="transparent"
-                class="cell-content"
-                :class="{ 'pa-6 pb-1': pausedMode, 'chat-cell': isChat }"
-            >
-                <div
-                    v-if="cellContent.type === 'video' && cellContent.id"
-                    class="mv-frame ma-auto"
-                    :class="{ 'elevation-4': pausedMode }"
-                >
-                    <!-- Twitch Player -->
-                    <VueTwitchPlayer
-                        v-if="isTwitchVideo"
-                        :channel="cellContent.id"
-                        :plays-inline="true"
-                        :mute="muted"
-                        @ready="vidReady"
-                        @ended="pausedMode = true"
-                        @play="vidPlaying({ data: 1 })"
-                        @pause="vidPlaying({ data: 2 })"
-                        @error="pausedMode = true"
-                    />
-                    <!-- Youtube Player -->
-                    <youtube
-                        v-else
-                        :video-id="cellContent.id"
-                        :player-vars="{
-                            playsinline: 1,
-                        }"
-                        :mute="muted"
-                        @ready="vidReady"
-                        @ended="pausedMode = true"
-                        @playing="vidPlaying({ data: 1 })"
-                        @paused="vidPlaying({ data: 2 })"
-                        @cued="pausedMode = true"
-                        @error="pausedMode = true"
-                    />
-                </div>
-                <template v-else-if="cellContent.type === 'chat'">
-                    <TabbedLiveChat
-                        :id="item.i"
-                        :active-videos="activeVideos"
-                        :set-show-t-l="toggleTL"
-                        :set-show-chat="toggleChat"
-                        :scale="chatScale"
-                    />
-                </template>
-            </v-sheet>
-
-            <template v-if="isVideo && pausedMode">
-                <!-- VIDEO + PAUSED --->
-                <CellControl
-                    :play-icon="icons.mdiPlay"
-                    class="ma-6 mt-0"
-                    @playpause="setPlaying(true)"
-                    @reset="uniqueId = Date.now()"
-                    @back="resetCell"
-                    @delete="deleteCell"
-                />
-            </template>
-            <template v-if="isChat && pausedMode">
-                <!-- CHAT + PAUSED --->
-                <CellControl
-                    :play-icon="icons.mdiCheck"
-                    class="ma-6 mt-0"
-                    @back="resetCell"
-                    @playpause="pausedMode = !pausedMode"
-                    @delete="deleteCell"
-                />
-            </template>
-            <template v-if="isChat && !pausedMode">
-                <!-- CHAT + UNPAUSED --->
-                <v-sheet class="cell-control">
-                    <v-btn :x-small="toggleChat || toggleTL" width="50%" @click="pausedMode = !pausedMode">
-                        <v-icon small class="mr-1">
-                            {{ icons.mdiMenu }}
-                        </v-icon>{{ $t("component.videoCard.edit") }}
-                    </v-btn>
-                    <v-btn
-                        :x-small="toggleChat || toggleTL"
-                        width="25%"
-                        :color="toggleChat ? 'primary' : ''"
-                        @click="toggleChatHandle"
-                    >
-                        <v-icon small class="mr-1">
-                            M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z
-                            M9.9,10.8v3.8h-2v-3.8L5.1,6.6h2.4l1.4,2.2 l1.4-2.2h2.4L9.9,10.8z
-                            M18.9,8.6h-2v6h-2v-6h-2v-2h6V8.6z
-                        </v-icon>
-                        <template v-if="cellWidth > 200">
-                            Chat
-                        </template>
-                    </v-btn>
-                    <v-btn
-                        :x-small="toggleChat || toggleTL"
-                        width="25%"
-                        :color="toggleTL ? 'primary' : ''"
-                        @click="toggleTLHandle"
-                    >
-                        <v-icon small class="mr-1">
-                            M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z M4,10h4v2H4V10z
-                            M14,16H4v-2h10V16z M20,16h-4v-2 h4V16z M20,12H10v-2h10V12z
-                        </v-icon>
-                        <template v-if="cellWidth > 200">
-                            TL
-                        </template>
-                    </v-btn>
-                </v-sheet>
-                <div v-if="!toggleChat && !toggleTL" style="height: 20%" />
-            </template>
+    <v-overlay absolute :value="showDropOverlay">
+      <div>
+        <v-icon x-large>
+          {{ mdiSelectionEllipseArrowInside }}
+        </v-icon>
+      </div>
+    </v-overlay>
+    <!--=== Video/Chat iFrame based on type ===-->
+    <template v-if="cellContent">
+      <v-sheet
+        :key="`uid-${uniqueId}`"
+        rounded="md"
+        color="transparent"
+        class="cell-content"
+        :class="{ 'pa-6 pb-1': pausedMode, 'chat-cell': isChat }"
+      >
+        <div
+          v-if="cellContent.type === 'video' && cellContent.id"
+          class="mv-frame ma-auto"
+          :class="{ 'elevation-4': pausedMode }"
+        >
+          <!-- Twitch Player -->
+          <VueTwitchPlayer
+            v-if="isTwitchVideo"
+            :channel="cellContent.id"
+            :plays-inline="true"
+            :mute="muted"
+            @ready="vidReady"
+            @ended="pausedMode = true"
+            @play="vidPlaying({ data: 1 })"
+            @pause="vidPlaying({ data: 2 })"
+            @error="pausedMode = true"
+          />
+          <!-- Youtube Player -->
+          <youtube
+            v-else
+            :video-id="cellContent.id"
+            :player-vars="{
+              playsinline: 1,
+            }"
+            :mute="muted"
+            @ready="vidReady"
+            @ended="pausedMode = true"
+            @playing="vidPlaying({ data: 1 })"
+            @paused="vidPlaying({ data: 2 })"
+            @cued="pausedMode = true"
+            @error="pausedMode = true"
+          />
+        </div>
+        <template v-else-if="cellContent.type === 'chat'">
+          <TabbedLiveChat
+            :id="item.i"
+            :active-videos="activeVideos"
+            :set-show-t-l="toggleTL"
+            :set-show-chat="toggleChat"
+            :scale="chatScale"
+          />
         </template>
-    </v-card>
+      </v-sheet>
+
+      <template v-if="isVideo && pausedMode">
+        <!-- VIDEO + PAUSED --->
+        <CellControl
+          :play-icon="icons.mdiPlay"
+          class="ma-6 mt-0"
+          @playpause="setPlaying(true)"
+          @reset="uniqueId = Date.now()"
+          @back="resetCell"
+          @delete="deleteCell"
+        />
+      </template>
+      <template v-if="isChat && pausedMode">
+        <!-- CHAT + PAUSED --->
+        <CellControl
+          :play-icon="icons.mdiCheck"
+          class="ma-6 mt-0"
+          @back="resetCell"
+          @playpause="pausedMode = !pausedMode"
+          @delete="deleteCell"
+        />
+      </template>
+      <template v-if="isChat && !pausedMode">
+        <!-- CHAT + UNPAUSED --->
+        <v-sheet class="cell-control">
+          <v-btn :x-small="toggleChat || toggleTL" width="50%" @click="pausedMode = !pausedMode">
+            <v-icon small class="mr-1">
+              {{ icons.mdiMenu }}
+            </v-icon>{{ $t("component.videoCard.edit") }}
+          </v-btn>
+          <v-btn
+            :x-small="toggleChat || toggleTL"
+            width="25%"
+            :color="toggleChat ? 'primary' : ''"
+            @click="toggleChatHandle"
+          >
+            <v-icon small class="mr-1">
+              {{ icons.ytChat }}
+            </v-icon>
+            <template v-if="cellWidth > 200">
+              Chat
+            </template>
+          </v-btn>
+          <v-btn
+            :x-small="toggleChat || toggleTL"
+            width="25%"
+            :color="toggleTL ? 'primary' : ''"
+            @click="toggleTLHandle"
+          >
+            <v-icon small class="mr-1">
+              {{ icons.tlChat }}
+            </v-icon>
+            <template v-if="cellWidth > 200">
+              TL
+            </template>
+          </v-btn>
+        </v-sheet>
+        <div v-if="!toggleChat && !toggleTL" style="height: 20%" />
+      </template>
+    </template>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -208,6 +205,7 @@ export default {
             enterTarget: null,
             mdiSelectionEllipseArrowInside,
             mdiCardPlus,
+            playbackRate: 1,
         };
     },
     computed: {
@@ -242,6 +240,9 @@ export default {
             set(value) {
                 this.$store.commit("multiview/setLayoutContentWithKey", { id: this.item.i, key: "video", value });
             },
+        },
+        isFastFoward() {
+            return this.playbackRate !== 1;
         },
     },
     watch: {
@@ -278,6 +279,16 @@ export default {
         this.checkScale();
     },
     methods: {
+        trySync() {
+            if (!this.isVideo) return;
+            // Toggle playback rate, and attempt to track state
+            if (this.ytPlayer.getPlaybackRate() !== 1) {
+                this.ytPlayer.setPlaybackRate(1);
+            } else {
+                this.ytPlayer.setPlaybackRate(2);
+            }
+            if (this.video.status === "past") { this.playbackRate = this.ytPlayer.getPlaybackRate(); }
+        },
         refresh() {
             this.uniqueId = Date.now();
             this.pausedMode = true;

@@ -1,125 +1,125 @@
 <template>
-    <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
-    <v-autocomplete
-        v-model="query"
-        class="ma-auto search-bar"
-        :class="{ 'search-bar-small': isMobile }"
-        solo
-        flat
-        multiple
-        deletable-chips
-        chips
-        disable-lookup
-        clearable
-        hide-no-data
-        hide-selected
-        auto-select-first
-        dense
-        :rules="[validate]"
-        :autofocus="autofocus"
-        :small-chips="dense"
-        :loading="isLoading"
-        :items="results"
-        :search-input.sync="search"
-        :append-icon="''"
-        :label="$t('component.search.searchLabel')"
-        :filter="(a, b) => true"
-        return-object
-        hide-details="auto"
-        @input="onInput"
-        @keydown.enter="onEnterKeyDown"
-    >
-        <template #selection="selection">
-            <v-card
-                :color="$vuetify.theme.dark ? 'grey darken-3' : 'primary accent-4'"
-                :label="selection.item.type !== 'channel'"
-                class="pa-0 selected-card"
-                :dark="$vuetify.theme.dark"
-            >
-                <v-list-item class="ma-n1 py-0 pl-3 pr-1">
-                    <div class="selected-card-type px-1 py-0 ma-0 rounded text--disabled caption">
-                        <v-icon v-if="selection.item.type === 'channel'" x-small>
-                            {{ icons.mdiYoutube }}
-                        </v-icon>
-                        <v-icon v-if="selection.item.type === 'video url'" x-small>
-                            {{ icons.mdiYoutube }}
-                        </v-icon>
-                        <v-icon v-if="selection.item.type === 'topic'" x-small>
-                            {{ icons.mdiAnimationPlay }}
-                        </v-icon>
-                        <v-icon v-if="selection.item.type === 'org'" x-small>
-                            {{ mdiAccountMultiple }}
-                        </v-icon>
-                        <v-icon v-if="selection.item.type === 'title & desc'" x-small>
-                            {{ mdiTextSearch }}
-                        </v-icon>
-                        <v-icon v-if="selection.item.type === 'comments'" x-small>
-                            {{ mdiCommentSearch }}
-                        </v-icon>
-                        {{ i18nItem(selection.item.type) }}
-                    </div>
+  <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
+  <v-autocomplete
+    v-model="query"
+    class="ma-auto search-bar"
+    :class="{ 'search-bar-small': isMobile }"
+    solo
+    flat
+    multiple
+    deletable-chips
+    chips
+    disable-lookup
+    clearable
+    hide-no-data
+    hide-selected
+    auto-select-first
+    dense
+    :rules="[validate]"
+    :autofocus="autofocus"
+    :small-chips="dense"
+    :loading="isLoading"
+    :items="results"
+    :search-input.sync="search"
+    :append-icon="''"
+    :label="$t('component.search.searchLabel')"
+    :filter="(a, b) => true"
+    return-object
+    hide-details="auto"
+    @input="onInput"
+    @keydown.enter="onEnterKeyDown"
+  >
+    <template #selection="selection">
+      <v-card
+        :color="$vuetify.theme.dark ? 'grey darken-3' : 'primary accent-4'"
+        :label="selection.item.type !== 'channel'"
+        class="pa-0 selected-card"
+        :dark="$vuetify.theme.dark"
+      >
+        <v-list-item class="ma-n1 py-0 pl-3 pr-1">
+          <div class="selected-card-type px-1 py-0 ma-0 rounded text--disabled caption">
+            <v-icon v-if="selection.item.type === 'channel'" x-small>
+              {{ icons.mdiYoutube }}
+            </v-icon>
+            <v-icon v-if="selection.item.type === 'video url'" x-small>
+              {{ icons.mdiYoutube }}
+            </v-icon>
+            <v-icon v-if="selection.item.type === 'topic'" x-small>
+              {{ icons.mdiAnimationPlay }}
+            </v-icon>
+            <v-icon v-if="selection.item.type === 'org'" x-small>
+              {{ mdiAccountMultiple }}
+            </v-icon>
+            <v-icon v-if="selection.item.type === 'title & desc'" x-small>
+              {{ mdiTextSearch }}
+            </v-icon>
+            <v-icon v-if="selection.item.type === 'comments'" x-small>
+              {{ mdiCommentSearch }}
+            </v-icon>
+            {{ i18nItem(selection.item.type) }}
+          </div>
 
-                    <v-list-item-content class="py-1 pt-4">
-                        <v-list-item-subtitle class="text--primary search-item" v-text="selection.item.text" />
-                    </v-list-item-content>
+          <v-list-item-content class="py-1 pt-4">
+            <v-list-item-subtitle class="text--primary search-item" v-text="selection.item.text" />
+          </v-list-item-content>
 
-                    <v-list-item-action>
-                        <v-icon small color="primary accent-2" @click="deleteChip(selection.item)">
-                            {{ icons.mdiClose }}
-                        </v-icon>
-                    </v-list-item-action>
-                </v-list-item>
-            </v-card>
-        </template>
-        <template #item="dropdownItem">
-            <div class="ma-n1 py-0 pl-3 pr-1">
-                <!-- @click="addItem(dropdownItem.item) -->
-                <v-list-item-content class="py-1 pt-1">
-                    <v-list-item-subtitle class="text--primary">
-                        {{ i18nItem(dropdownItem.item.type) }}
-                        <v-icon v-if="dropdownItem.item.type === 'channel'" small>
-                            {{ icons.mdiYoutube }}
-                        </v-icon>
-                        <v-icon v-if="dropdownItem.item.type === 'video url'" small>
-                            {{ icons.mdiYoutube }}
-                        </v-icon>
-                        <v-icon v-if="dropdownItem.item.type === 'topic'" small>
-                            {{ icons.mdiAnimationPlay }}
-                        </v-icon>
-                        <v-icon v-if="dropdownItem.item.type === 'org'" small>
-                            {{ mdiAccountMultiple }}
-                        </v-icon>
-                        <v-icon v-if="dropdownItem.item.type === 'title & desc'" small>
-                            {{ mdiTextSearch }}
-                        </v-icon>
-                        <v-icon v-if="dropdownItem.item.type === 'comments'" small>
-                            {{ mdiCommentSearch }}
-                        </v-icon>
+          <v-list-item-action>
+            <v-icon small color="primary accent-2" @click="deleteChip(selection.item)">
+              {{ icons.mdiClose }}
+            </v-icon>
+          </v-list-item-action>
+        </v-list-item>
+      </v-card>
+    </template>
+    <template #item="dropdownItem">
+      <div class="ma-n1 py-0 pl-3 pr-1">
+        <!-- @click="addItem(dropdownItem.item) -->
+        <v-list-item-content class="py-1 pt-1">
+          <v-list-item-subtitle class="text--primary">
+            {{ i18nItem(dropdownItem.item.type) }}
+            <v-icon v-if="dropdownItem.item.type === 'channel'" small>
+              {{ icons.mdiYoutube }}
+            </v-icon>
+            <v-icon v-if="dropdownItem.item.type === 'video url'" small>
+              {{ icons.mdiYoutube }}
+            </v-icon>
+            <v-icon v-if="dropdownItem.item.type === 'topic'" small>
+              {{ icons.mdiAnimationPlay }}
+            </v-icon>
+            <v-icon v-if="dropdownItem.item.type === 'org'" small>
+              {{ mdiAccountMultiple }}
+            </v-icon>
+            <v-icon v-if="dropdownItem.item.type === 'title & desc'" small>
+              {{ mdiTextSearch }}
+            </v-icon>
+            <v-icon v-if="dropdownItem.item.type === 'comments'" small>
+              {{ mdiCommentSearch }}
+            </v-icon>
 
-                        {{ dropdownItem.item.text }}
-                    </v-list-item-subtitle>
-                </v-list-item-content>
-            </div>
-        </template>
-        <template #append-outer>
-            <v-btn large class="ml-1 append-btn" @click="commitSearch">
-                <v-icon
-                    key="searchbtn"
-                    large
-                    color="secondary"
-                    v-text="icons.mdiMagnify"
-                />
-            </v-btn>
-            <v-btn large class="ml-1 append-btn" @click="goToOrToggleAdvanced">
-                <v-icon
-                    key="advanced"
-                    large
-                    color="secondary"
-                    v-text="mdiFilter"
-                />
-            </v-btn>
-        </template>
-    </v-autocomplete>
+            {{ dropdownItem.item.text }}
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </div>
+    </template>
+    <template #append-outer>
+      <v-btn large class="ml-1 append-btn" @click="commitSearch">
+        <v-icon
+          key="searchbtn"
+          large
+          color="secondary"
+          v-text="icons.mdiMagnify"
+        />
+      </v-btn>
+      <v-btn large class="ml-1 append-btn" @click="goToOrToggleAdvanced">
+        <v-icon
+          key="advanced"
+          large
+          color="secondary"
+          v-text="mdiFilter"
+        />
+      </v-btn>
+    </template>
+  </v-autocomplete>
 </template>
 
 <script lang="ts">

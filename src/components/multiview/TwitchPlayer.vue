@@ -1,6 +1,6 @@
 /* eslint-disable vue/require-default-prop */
 <template>
-    <div :id="elementId" />
+  <div :id="elementId" />
 </template>
 
 <script>

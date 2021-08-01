@@ -1,125 +1,125 @@
 <template>
-    <v-card
-        class="text-body-2 tl-overlay"
-        tile
-        flat
-        style="width: 100%"
-    >
-        <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
-            <div v-if="isLoading">
-                {{ $t("views.watch.chat.loading") }}
-            </div>
-            <div v-else class="pa-3">
-                {{ overlayMessage }}
-            </div>
-            <v-btn v-if="$socket.disconnected" @click="tlJoin()">
-                {{ $t("views.watch.chat.retryBtn") }}
-            </v-btn>
-        </v-overlay>
-        <v-card-subtitle class="py-1 d-flex justify-space-between">
-            <div :class="connected ? 'green--text' : 'red--text'">
-                TLdex [{{ liveTlLang }}]
-            </div>
-            <span>
-                <v-dialog v-model="expanded" width="800">
-                    <template #activator="{ on, attrs }">
-                        <v-btn
-                            icon
-                            x-small
-                            v-bind="attrs"
-                            v-on="on"
-                        >
-                            <v-icon>
-                                {{ mdiArrowExpand }}
-                            </v-icon>
-                        </v-btn>
-                    </template>
-
-                    <v-card>
-                        <portal-target name="expandedMessage" class="d-flex tl-expanded" />
-                        <v-divider />
-                        <v-card-actions>
-                            <v-spacer />
-                            <v-btn text color="red" @click="expanded = false">
-                                {{ $t("views.app.close_btn") }}
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
-                <WatchLiveTranslationsSetting />
-            </span>
-        </v-card-subtitle>
-        <v-divider />
-        <portal to="expandedMessage" :disabled="!expanded" slim>
-            <v-card-text
-                ref="tlBody"
-                class="tl-body thin-scroll-bar pa-1 pa-lg-3"
-                :style="{
-                    'font-size': liveTlFontSize + 'px',
-                }"
+  <v-card
+    class="text-body-2 tl-overlay"
+    tile
+    flat
+    style="width: 100%"
+  >
+    <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
+      <div v-if="isLoading">
+        {{ $t("views.watch.chat.loading") }}
+      </div>
+      <div v-else class="pa-3">
+        {{ overlayMessage }}
+      </div>
+      <v-btn v-if="$socket.disconnected" @click="tlJoin()">
+        {{ $t("views.watch.chat.retryBtn") }}
+      </v-btn>
+    </v-overlay>
+    <v-card-subtitle class="py-1 d-flex justify-space-between">
+      <div :class="connected ? 'green--text' : 'red--text'">
+        TLdex [{{ liveTlLang }}]
+      </div>
+      <span>
+        <v-dialog v-model="expanded" width="800">
+          <template #activator="{ on, attrs }">
+            <v-btn
+              icon
+              x-small
+              v-bind="attrs"
+              v-on="on"
             >
-                <transition-group name="fade">
-                    <template v-for="(item, index) in tlHistory">
-                        <div :id="item.key" :key="item.key" :ref="item.breakpoint && 'messageBreakpoint'">
-                            <div
-                                v-if="
-                                    index === 0 ||
-                                        index === tlHistory.length - 1 ||
-                                        item.name !== tlHistory[index - 1].name ||
-                                        item.breakpoint
-                                "
-                                class="tl-caption"
-                                :class="{
-                                    'primary--text': item.is_owner,
-                                    'secondary--text': item.is_verified || item.is_moderator || item.is_vtuber,
-                                }"
-                            >
-                                <v-divider class="my-1" />
-                                <span style="cursor: pointer" @click="selectedChannel = item.name">
-                                    <v-icon x-small>{{ icons.mdiCog }}</v-icon>
-                                    {{ `${item.prefix} ${item.name}` }}:
-                                </span>
-                            </div>
-                            <div>
-                                <span v-if="item.timestamp" class="tl-caption mr-1">
-                                    {{ item.displayTime }}
-                                </span>
-                                <span class="text--primary" v-html="item.message" />
-                            </div>
-                        </div>
-                    </template>
-                </transition-group>
-                <v-btn
-                    v-if="!historyLoading"
-                    text
-                    color="primary"
-                    :disabled="completed"
-                    @click="loadMessages()"
-                >
-                    {{ completed ? "Start of Messages" : "Load More" }}
-                </v-btn>
-                <v-btn
-                    v-if="!completed && !historyLoading && expanded"
-                    text
-                    color="primary"
-                    @click="loadMessages(false, true)"
-                >
-                    Load All
-                </v-btn>
-            </v-card-text>
-        </portal>
+              <v-icon>
+                {{ mdiArrowExpand }}
+              </v-icon>
+            </v-btn>
+          </template>
 
-        <v-dialog v-model="showBlockChannelDialog" width="500">
-            <v-card>
-                <v-card-title>{{ selectedChannel }}</v-card-title>
-                <v-card-text>
-                    <v-btn @click="toggleBlockName(selectedChannel)">
-                        {{ !blockedNames.has(selectedChannel) ? "Block Channel" : "Unblock" }}
-                    </v-btn>
-                </v-card-text>
-            </v-card>
+          <v-card>
+            <portal-target name="expandedMessage" class="d-flex tl-expanded" />
+            <v-divider />
+            <v-card-actions>
+              <v-spacer />
+              <v-btn text color="red" @click="expanded = false">
+                {{ $t("views.app.close_btn") }}
+              </v-btn>
+            </v-card-actions>
+          </v-card>
         </v-dialog>
-    </v-card>
+        <WatchLiveTranslationsSetting />
+      </span>
+    </v-card-subtitle>
+    <v-divider />
+    <portal to="expandedMessage" :disabled="!expanded" slim>
+      <v-card-text
+        ref="tlBody"
+        class="tl-body thin-scroll-bar pa-1 pa-lg-3"
+        :style="{
+          'font-size': liveTlFontSize + 'px',
+        }"
+      >
+        <transition-group name="fade">
+          <template v-for="(item, index) in tlHistory">
+            <div :id="item.key" :key="item.key" :ref="item.breakpoint && 'messageBreakpoint'">
+              <div
+                v-if="
+                  index === 0 ||
+                    index === tlHistory.length - 1 ||
+                    item.name !== tlHistory[index - 1].name ||
+                    item.breakpoint
+                "
+                class="tl-caption"
+                :class="{
+                  'primary--text': item.is_owner,
+                  'secondary--text': item.is_verified || item.is_moderator || item.is_vtuber,
+                }"
+              >
+                <v-divider class="my-1" />
+                <span style="cursor: pointer" @click="selectedChannel = item.name">
+                  <v-icon x-small>{{ icons.mdiCog }}</v-icon>
+                  {{ `${item.prefix} ${item.name}` }}:
+                </span>
+              </div>
+              <div>
+                <span v-if="item.timestamp" class="tl-caption mr-1">
+                  {{ item.displayTime }}
+                </span>
+                <span class="text--primary" v-html="item.message" />
+              </div>
+            </div>
+          </template>
+        </transition-group>
+        <v-btn
+          v-if="!historyLoading"
+          text
+          color="primary"
+          :disabled="completed"
+          @click="loadMessages()"
+        >
+          {{ completed ? "Start of Messages" : "Load More" }}
+        </v-btn>
+        <v-btn
+          v-if="!completed && !historyLoading && expanded"
+          text
+          color="primary"
+          @click="loadMessages(false, true)"
+        >
+          Load All
+        </v-btn>
+      </v-card-text>
+    </portal>
+
+    <v-dialog v-model="showBlockChannelDialog" width="500">
+      <v-card>
+        <v-card-title>{{ selectedChannel }}</v-card-title>
+        <v-card-text>
+          <v-btn @click="toggleBlockName(selectedChannel)">
+            {{ !blockedNames.has(selectedChannel) ? "Block Channel" : "Unblock" }}
+          </v-btn>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </v-card>
 </template>
 
 <script lang="ts">

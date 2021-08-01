@@ -1,15 +1,15 @@
 <template>
-    <v-card width="400" class="nav-scroll thin-scroll-bar pl-2">
-        <slot />
-        <div class="pa-2">
-            <playlist
-                :playlist="active"
-                is-editable
-                :is-saved="isSaved"
-                horizontal
-            />
-        </div>
-    </v-card>
+  <v-card width="400" class="nav-scroll thin-scroll-bar pl-2">
+    <slot />
+    <div class="pa-2">
+      <playlist
+        :playlist="active"
+        is-editable
+        :is-saved="isSaved"
+        horizontal
+      />
+    </div>
+  </v-card>
 </template>
 
 <script lang="ts">

@@ -1,99 +1,99 @@
 <template>
-    <v-card class="watch-card rounded-0 striped">
-        <v-snackbar
-            v-if="errorMessage"
-            v-model="showErrorAlert"
-            color="error"
-            dismissible
-        >
-            {{ errorMessage }}
-        </v-snackbar>
-        <v-snackbar
-            v-if="successMessage"
-            v-model="showSuccessAlert"
-            color="success"
-            dismissible
-        >
-            {{ successMessage }}
-        </v-snackbar>
-        <div class="d-flex justify-space-between flex-wrap align-center">
-            <v-col cols="auto">
-                <v-avatar rounded left size="40">
-                    <v-icon size="25" color="grey darken-2">
-                        {{ icons.mdiPencil }}
-                    </v-icon>
-                </v-avatar>
-                <v-avatar rounded left size="40">
-                    <v-icon size="25" color="grey darken-2">
-                        {{ mdiAt }}
-                    </v-icon>
-                </v-avatar>
-                <template v-for="item in mentions">
-                    <ChannelChip :key="item.id + 'chip'" :channel="item" :size="60">
-                        <template #default>
-                            <v-overlay absolute>
-                                <v-btn icon @click.stop.prevent="deleteMention(item)">
-                                    <v-icon>{{ icons.mdiClose }}</v-icon>
-                                </v-btn>
-                            </v-overlay>
-                        </template>
-                    </ChannelChip>
-                </template>
+  <v-card class="watch-card rounded-0 striped">
+    <v-snackbar
+      v-if="errorMessage"
+      v-model="showErrorAlert"
+      color="error"
+      dismissible
+    >
+      {{ errorMessage }}
+    </v-snackbar>
+    <v-snackbar
+      v-if="successMessage"
+      v-model="showSuccessAlert"
+      color="success"
+      dismissible
+    >
+      {{ successMessage }}
+    </v-snackbar>
+    <div class="d-flex justify-space-between flex-wrap align-center">
+      <v-col cols="auto">
+        <v-avatar rounded left size="40">
+          <v-icon size="25" color="grey darken-2">
+            {{ icons.mdiPencil }}
+          </v-icon>
+        </v-avatar>
+        <v-avatar rounded left size="40">
+          <v-icon size="25" color="grey darken-2">
+            {{ mdiAt }}
+          </v-icon>
+        </v-avatar>
+        <template v-for="item in mentions">
+          <ChannelChip :key="item.id + 'chip'" :channel="item" :size="60">
+            <template #default>
+              <v-overlay absolute>
+                <v-btn icon @click.stop.prevent="deleteMention(item)">
+                  <v-icon>{{ icons.mdiClose }}</v-icon>
+                </v-btn>
+              </v-overlay>
+            </template>
+          </ChannelChip>
+        </template>
 
-                <v-autocomplete
-                    v-model="fake"
-                    :search-input.sync="search"
-                    :items="searchResults"
-                    hide-no-data
-                    multiple
-                    chips
-                    hide-details="auto"
-                    :rules="[]"
-                    return-object
-                    item-value="id"
-                    label="Add Mentioned Channels"
-                    no-filter
-                    style="min-width: 300px"
-                >
-                    <template #selection="selection">
-                        <ChannelChip :key="selection.item.id + 'chip'" :channel="selection.item" :size="60">
-                            <v-btn icon @click.stop.prevent="deleteMention(selection.item)">
-                                <v-icon>{{ icons.mdiClose }}</v-icon>
-                            </v-btn>
-                        </ChannelChip>
-                    </template>
-                    <template #item="dropdownItem">
-                        <v-list-item-content class="py-1 pt-1" @click.stop="addMention(dropdownItem.item)">
-                            <v-list-item-subtitle class="text--primary">
-                                {{ getChannelName(dropdownItem.item) }}
-                            </v-list-item-subtitle>
-                        </v-list-item-content>
-                    </template>
-                </v-autocomplete>
-            </v-col>
-            <v-divider vertical />
-            <v-col cols="auto">
-                <v-avatar rounded left size="40">
-                    <v-icon size="25" color="grey darken-2">
-                        {{ icons.mdiPencil }}
-                    </v-icon>
-                </v-avatar>
-                <v-avatar rounded left size="40">
-                    <v-icon size="25" color="grey darken-2">
-                        {{ icons.mdiAnimationPlay }}
-                    </v-icon>
-                </v-avatar>
-                <span class="text-overline ml-3 text--disabled">{{ $t("component.search.type.topic") }}</span>
-                <v-autocomplete
-                    v-model="newTopic"
-                    :items="topics"
-                    inline
-                    label="Topic (leave empty to unset)"
-                    :append-outer-icon="mdiContentSave"
-                    @click="loadTopics"
-                    @click:append-outer="saveTopic"
-                />
-                <!-- <v-avatar rounded left size="40" v-if="channelChips && channelChips.length > 0">
+        <v-autocomplete
+          v-model="fake"
+          :search-input.sync="search"
+          :items="searchResults"
+          hide-no-data
+          multiple
+          chips
+          hide-details="auto"
+          :rules="[]"
+          return-object
+          item-value="id"
+          label="Add Mentioned Channels"
+          no-filter
+          style="min-width: 300px"
+        >
+          <template #selection="selection">
+            <ChannelChip :key="selection.item.id + 'chip'" :channel="selection.item" :size="60">
+              <v-btn icon @click.stop.prevent="deleteMention(selection.item)">
+                <v-icon>{{ icons.mdiClose }}</v-icon>
+              </v-btn>
+            </ChannelChip>
+          </template>
+          <template #item="dropdownItem">
+            <v-list-item-content class="py-1 pt-1" @click.stop="addMention(dropdownItem.item)">
+              <v-list-item-subtitle class="text--primary">
+                {{ getChannelName(dropdownItem.item) }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </template>
+        </v-autocomplete>
+      </v-col>
+      <v-divider vertical />
+      <v-col cols="auto">
+        <v-avatar rounded left size="40">
+          <v-icon size="25" color="grey darken-2">
+            {{ icons.mdiPencil }}
+          </v-icon>
+        </v-avatar>
+        <v-avatar rounded left size="40">
+          <v-icon size="25" color="grey darken-2">
+            {{ icons.mdiAnimationPlay }}
+          </v-icon>
+        </v-avatar>
+        <span class="text-overline ml-3 text--disabled">{{ $t("component.search.type.topic") }}</span>
+        <v-autocomplete
+          v-model="newTopic"
+          :items="topics"
+          inline
+          label="Topic (leave empty to unset)"
+          :append-outer-icon="mdiContentSave"
+          @click="loadTopics"
+          @click:append-outer="saveTopic"
+        />
+        <!-- <v-avatar rounded left size="40" v-if="channelChips && channelChips.length > 0">
                     <v-icon size="25" color="grey darken-2">{{ mdiAt }}</v-icon>
                 </v-avatar>
                 <template v-for="mention in channelChips">
@@ -107,9 +107,9 @@
                 >
                     [ {{ showAllMentions ? "-" : "+" }} {{ mentions.length - 3 }} ]
                 </a> -->
-            </v-col>
-        </div>
-    </v-card>
+      </v-col>
+    </div>
+  </v-card>
 </template>
 
 <script lang="ts">

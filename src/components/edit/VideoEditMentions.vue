@@ -1,55 +1,55 @@
 <template>
-    <div>
-        <div class="text-h6">
-            <v-icon>{{ mdiAt }}</v-icon> Channel Mentions/Tags
-        </div>
-        <v-snackbar
-            v-if="successMessage"
-            v-model="showSuccessAlert"
-            color="success"
-            dismissible
-        >
-            {{ successMessage }}
-        </v-snackbar>
-        <v-snackbar
-            v-if="errorMessage"
-            v-model="showErrorAlert"
-            color="error"
-            dismissible
-        >
-            {{ errorMessage }}
-        </v-snackbar>
-        <div class="d-flex flex-column my-2">
-            <v-autocomplete
-                v-model="selectedChannel"
-                :search-input.sync="search"
-                :items="searchResults"
-                hide-no-data
-                clearable
-                chips
-                label="Search Channels"
-            />
-            <v-btn @click="addMention(selectedChannel.id)">
-                Add
-            </v-btn>
-        </div>
-        <channel-list :channels="mentions" :include-video-count="false">
-            <template #action="{ channel }">
-                <v-btn
-                    class="deleteBtn"
-                    icon
-                    x-large
-                    color="red"
-                    @click.stop.prevent="deleteMention(channel.id)"
-                >
-                    <v-icon large>
-                        {{ icons.mdiDelete }}
-                    </v-icon>
-                </v-btn>
-            </template>
-        </channel-list>
-        <!-- <loading-overlay :isLoading="isLoading" :showError="hasError" /> -->
+  <div>
+    <div class="text-h6">
+      <v-icon>{{ mdiAt }}</v-icon> Channel Mentions/Tags
     </div>
+    <v-snackbar
+      v-if="successMessage"
+      v-model="showSuccessAlert"
+      color="success"
+      dismissible
+    >
+      {{ successMessage }}
+    </v-snackbar>
+    <v-snackbar
+      v-if="errorMessage"
+      v-model="showErrorAlert"
+      color="error"
+      dismissible
+    >
+      {{ errorMessage }}
+    </v-snackbar>
+    <div class="d-flex flex-column my-2">
+      <v-autocomplete
+        v-model="selectedChannel"
+        :search-input.sync="search"
+        :items="searchResults"
+        hide-no-data
+        clearable
+        chips
+        label="Search Channels"
+      />
+      <v-btn @click="addMention(selectedChannel.id)">
+        Add
+      </v-btn>
+    </div>
+    <channel-list :channels="mentions" :include-video-count="false">
+      <template #action="{ channel }">
+        <v-btn
+          class="deleteBtn"
+          icon
+          x-large
+          color="red"
+          @click.stop.prevent="deleteMention(channel.id)"
+        >
+          <v-icon large>
+            {{ icons.mdiDelete }}
+          </v-icon>
+        </v-btn>
+      </template>
+    </channel-list>
+    <!-- <loading-overlay :isLoading="isLoading" :showError="hasError" /> -->
+  </div>
 </template>
 
 <script>
