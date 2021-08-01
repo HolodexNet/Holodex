@@ -307,7 +307,7 @@ export default {
             const ts = localizedDayjs(this.data.available_at, this.lang);
 
             const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
-            const ts2 = ts.tz("Japan").format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
+            const ts2 = ts.tz("Asia/Tokyo").format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
             if (ts1 === ts2) {
                 return ts1;
             }
