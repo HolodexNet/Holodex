@@ -13,7 +13,6 @@
                 <router-view :key="viewKey" />
             </keep-alive>
         </v-main>
-        <Stats />
 
         <v-snackbar
             v-if="updateExists"
@@ -64,7 +63,6 @@
 import MainNav from "@/components/nav/MainNav.vue";
 import ReportDialog from "@/components/common/ReportDialog.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
-import Stats from "@/components/common/Stats.vue";
 import { loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
 
@@ -78,7 +76,6 @@ export default {
         MainNav,
         ReportDialog,
         PullToRefresh,
-        Stats,
     },
     data() {
         return {
