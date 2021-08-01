@@ -243,6 +243,8 @@ views:
     check_about_page: Besuche die Info-Seite um neue Änderungen zu sehen
     nowSupportsMultiOrg: Holodex unterstützt jetzt mehrere Organisationen.
     loginCallToAction: Melde dich an, um deine eigenen Favoriten zu sammeln!
+  about:
+    add_my_channel: Kanalanfrage
   watch:
     theaterMode: Theatermodus
     mentionIconLabel: Erwähnungen
