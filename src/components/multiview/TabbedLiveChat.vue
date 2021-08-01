@@ -92,7 +92,7 @@ export default {
             newTL: 0,
 
             currentTime: 0,
-            timer: null,
+            // timer: null,
             // showLiveChat: true,
         };
     },
@@ -154,12 +154,12 @@ export default {
     },
     mounted() {
         this.currentTab = this.savedTab;
-        this.timer = setInterval(() => {
-            // check if timer is needed for current video
-            if (this.currentContent?.video?.status === "past") {
-                this.currentTime = this.currentContent?.playerControls?.getCurrentTime();
-            }
-        }, 1000);
+        // this.timer = setInterval(() => {
+        //     // check if timer is needed for current video
+        //     if (this.currentContent?.video?.status === "past") {
+        //         this.currentTime = this.currentContent?.playerControls?.getCurrentTime();
+        //     }
+        // }, 1000);
 
         if (this.activeVideos.length > 1) {
             const curTabs = Object.values(this.layoutContent)

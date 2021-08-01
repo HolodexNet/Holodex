@@ -205,6 +205,7 @@ export default {
             enterTarget: null,
             mdiSelectionEllipseArrowInside,
             mdiCardPlus,
+            playbackRate: 1,
         };
     },
     computed: {
@@ -239,6 +240,9 @@ export default {
             set(value) {
                 this.$store.commit("multiview/setLayoutContentWithKey", { id: this.item.i, key: "video", value });
             },
+        },
+        isFastFoward() {
+            return this.playbackRate !== 1;
         },
     },
     watch: {
@@ -276,9 +280,14 @@ export default {
     },
     methods: {
         trySync() {
-            if (this.isVideo && this.cellContent.video.status !== "past") {
+            if (!this.isVideo) return;
+            // Toggle playback rate, and attempt to track state
+            if (this.ytPlayer.getPlaybackRate() !== 1) {
+                this.ytPlayer.setPlaybackRate(1);
+            } else {
                 this.ytPlayer.setPlaybackRate(2);
             }
+            if (this.video.status === "past") { this.playbackRate = this.ytPlayer.getPlaybackRate(); }
         },
         refresh() {
             this.uniqueId = Date.now();
