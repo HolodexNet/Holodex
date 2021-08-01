@@ -10,103 +10,130 @@
                 cols="12"
                 md="4"
                 sm="4"
-                lg="3"
-                xl="2"
+                lg="4"
+                xl="3"
                 float-right
             >
-                <div class="text-h5 mb-2">
-                    {{ $t("about.news.title") }}
-                </div>
-                <TwitterFeed :key="'twtrTimeline' + timelinekey" />
+                <v-card class="pa-0">
+                    <!-- <div class="text-h5 mb-2">
+                        {{ $t("about.news.title") }}
+                    </div> -->
+                    <TwitterFeed :key="'twtrTimeline' + timelinekey" />
+                </v-card>
+            </v-col>
+
+            <v-col
+                cols="12"
+                md="4"
+                sm="4"
+                lg="4"
+                xl="3"
+            >
+                <v-card>
+                    <v-card-title>
+                        <div class="text-h6">
+                            {{ $t("about.quicklinks") }}
+                        </div>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-btn
+                            color="info white--text"
+                            block
+                            class="text-left mb-4"
+
+                            target="_blank"
+                            href="https://forms.gle/xkN4w8fyPr6YTGfx6"
+                        >
+                            <v-icon left>
+                                {{ mdiAccountPlus }}
+                            </v-icon>
+                            {{ $t("views.about.add_my_channel") }}
+                        </v-btn>
+                        <v-btn
+                            color="indigo white--text"
+                            block
+                            class="text-left my-4"
+
+                            target="_blank"
+                            href="https://discord.gg/jctkgHBt4b"
+                        >
+                            <v-icon left>
+                                {{ icons.mdiDiscord }}
+                            </v-icon>
+                            {{ $t("about.discordBtn") }}
+                        </v-btn>
+                        <v-btn
+                            class="text-left my-4 white--text deep-purple"
+                            block
+
+                            target="_blank"
+                            href="https://github.com/RiceCakess/Holodex"
+                        >
+                            <v-icon left>
+                                {{ mdiGithub }}
+                            </v-icon>
+                            GitHub
+                        </v-btn>
+                        <v-btn
+                            class="text-left mt-4 white--text orange"
+                            block
+
+                            href="https://holodex.stoplight.io/"
+                            target="_blank"
+                        >
+                            <v-icon left>
+                                {{ mdiConsole }}
+                            </v-icon>
+                            API documentation
+                        </v-btn>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+
+            <v-col
+                cols="12"
+                md="4"
+                sm="4"
+                lg="4"
+                xl="3"
+            >
+                <!-- <v-card>
+                    <div class="text-h5">
+                        {{ $t("about.feedback") }}
+                    </div>
+                    <p class="text-body-2" v-html="$t('about.feedbackHtml')" />
+                    <br>
+                </v-card> -->
+                <v-card>
+                    <v-card-title>
+                        <div id="changelog" class="text-h6">
+                            {{ $t("about.credits.title") }}
+                        </div>
+                    </v-card-title>
+                    <v-card-text>
+                        <p class="text-body-2">
+                            {{ $t("about.credits.contents[0]") }}
+                            <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.credits.contents[1]") }}
+                            <a href="https://github.com/holofans/holoapi">holoapi</a>.
+                            <br>
+                            {{ $t("about.credits.contents[2]") }}
+                        </p>
+                        <br>
+                        <p class="text-body-2">
+                            {{ $t("about.credits.contents[3]") }}
+                            <a href="https://en.hololive.tv/terms"> {{ $t("about.credits.contents[4]") }} </a>
+                        </p>
+                    </v-card-text>
+                </v-card>
             </v-col>
 
             <v-col
                 cols="12"
                 md="8"
                 sm="8"
-                lg="9"
-                xl="10"
+                lg="8"
+                xl="9"
             >
-                <div class="text-h5 mb-2">
-                    {{ $t("about.quicklinks") }}
-                </div>
-
-                <v-row dense class="mx-1">
-                    <v-col cols="12" md="auto">
-                        <v-btn
-                            color="info white--text"
-                            block
-                            class="text-left justify-start"
-                            large
-                            target="_blank"
-                            href="https://forms.gle/xkN4w8fyPr6YTGfx6"
-                        >
-                            <v-icon large left>
-                                {{ icons.mdiPencil }}
-                            </v-icon>
-                            {{ $t("views.about.add_my_channel") }}
-                        </v-btn>
-                    </v-col>
-                    <v-col cols="12" md="auto">
-                        <v-btn
-                            color="indigo white--text"
-                            block
-                            class="text-left justify-start"
-                            large
-                            target="_blank"
-                            href="https://discord.gg/jctkgHBt4b"
-                        >
-                            <v-icon large left>
-                                {{ icons.mdiDiscord }}
-                            </v-icon>
-                            {{ $t("about.discordBtn") }}
-                        </v-btn>
-                    </v-col>
-                    <v-col cols="12" md="auto">
-                        <v-btn
-                            color="teal white--text"
-                            block
-                            class="text-left justify-start"
-                            large
-                            target="_blank"
-                            href="https://discord.gg/xJd9Der"
-                        >
-                            <v-icon large left>
-                                {{ icons.mdiDiscord }}
-                            </v-icon>
-                            Hololive Creators (#holodex)
-                        </v-btn>
-                    </v-col>
-                    <v-col cols="12" md="auto">
-                        <v-btn
-                            class="text-left justify-start white--text deep-purple"
-                            block
-                            large
-                            target="_blank"
-                            href="https://github.com/RiceCakess/Holodex"
-                        >
-                            <v-icon large left color="black">
-                                {{ mdiGithub }}
-                            </v-icon>
-                            {{ $t("about.issueTracker") }}
-                        </v-btn>
-                    </v-col>
-                    <v-col cols="12" md="auto">
-                        <v-btn
-                            class="text-left justify-start white--text orange"
-                            block
-                            large
-                            href="https://holodex.stoplight.io/"
-                            target="_blank"
-                        >
-                            <v-icon large left>
-                                {{ mdiConsole }}
-                            </v-icon>
-                            API documentation
-                        </v-btn>
-                    </v-col>
-                </v-row>
-
                 <div class="text-h5 mb-2 mt-4">
                     {{ $t("about.faq.title") }}
                 </div>
@@ -243,29 +270,6 @@
                 </v-expansion-panels>
                 <br>
 
-                <div class="text-h5">
-                    {{ $t("about.feedback") }}
-                </div>
-                <p class="text-body-2" v-html="$t('about.feedbackHtml')" />
-                <br>
-
-                <div id="changelog" class="text-h5">
-                    {{ $t("about.credits.title") }}
-                </div>
-                <p class="text-body-2">
-                    {{ $t("about.credits.contents[0]") }}
-                    <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.credits.contents[1]") }}
-                    <a href="https://github.com/holofans/holoapi">holoapi</a>.
-                    <br>
-                    {{ $t("about.credits.contents[2]") }}
-                </p>
-                <br>
-                <p class="text-body-2">
-                    {{ $t("about.credits.contents[3]") }}
-                    <a href="https://en.hololive.tv/terms"> {{ $t("about.credits.contents[4]") }} </a>
-                </p>
-                <br>
-
                 <a class="text-h5" href="https://github.com/RiceCakess/Holodex/blob/dev/CHANGELOG.md">{{
                     $t("about.changelog.title")
                 }}</a>
@@ -283,7 +287,9 @@
 </template>
 
 <script lang="ts">
-import { mdiExportVariant, mdiGithub, mdiConsole } from "@mdi/js";
+import {
+    mdiExportVariant, mdiGithub, mdiConsole, mdiAccountPlus,
+} from "@mdi/js";
 import * as icons from "@/utils/icons";
 import TwitterFeed from "@/components/common/TwitterFeed.vue";
 
@@ -306,6 +312,7 @@ export default {
             mdiExportVariant,
             mdiGithub,
             mdiConsole,
+            mdiAccountPlus,
             timelinekey: 12,
         };
     },

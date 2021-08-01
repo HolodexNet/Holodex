@@ -1,8 +1,9 @@
----
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: 'Es ist ein Fehler beim Abrufen der Inhalte aufgetreten, bitte check Twitter '
+    textBeforeTwitter: >-
+      Es ist ein Fehler beim Abrufen der Inhalte aufgetreten, bitte check
+      Twitter 
     textAfterTwitter: ' oder melde den Fehler über die'
     aboutPage: Info-Seite
     afterAboutPageHyperlink: .
@@ -50,7 +51,7 @@ component:
   videoDescription:
     description: Beschreibung
   video:
-    comment: { }
+    comment: {}
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -94,7 +95,9 @@ component:
     weeklyTopForOrg: Top-Songs der Woche von {0}
   installPrompt:
     title: Holodex installieren
-    callToAction: Das Anschauen von Videos auf Holodex funktioniert am besten, wenn du es zu deinem Startbildschirm hinzugefügst
+    callToAction: >-
+      Das Anschauen von Videos auf Holodex funktioniert am besten, wenn du es zu
+      deinem Startbildschirm hinzugefügst
     notNowBtn: Nicht jetzt
     installBtn: Installieren
     iOS:
@@ -117,10 +120,19 @@ component:
       - Sonstiges
   thirdpartycookie:
     explanation: >-
-      Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>youtube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Einloggen in / Verwenden des Youtube-Chats auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.
+      Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit
+      strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du
+      <kbd>youtube.com</kbd> Cookies blockierst, können Schwierigkeiten beim
+      Einloggen in / Verwenden des Youtube-Chats auftreten. <br /><br /> Dies
+      kannst du durch Whitelisting von <kbd>youtube.com</kbd> in Blockierern von
+      Cookies von Dritten, oder durch das Senken deiner
+      Sicherheits-/Privatsphäreeinstellungen für <kbd>holodex.net</kbd> beheben.
+      <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man
+      das macht.
     dialogTitle: Nutzung des Youtube-Chats auf Holodex
     alertText: >-
-      Die Privatsphäre-Einstellungen deines Browsers machen es unmöglich, dich im Youtube-Chat anzumelden. Klicke hier für weitere Informationen
+      Die Privatsphäre-Einstellungen deines Browsers machen es unmöglich, dich
+      im Youtube-Chat anzumelden. Klicke hier für weitere Informationen
     neverShowAgain: Nicht erneut anzeigen
   playlist:
     menu:
@@ -139,7 +151,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
-    channelType: { }
+    channelType: {}
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -177,10 +189,17 @@ views:
     exportCsv: CSV-Datei
     selectionSelect50: 50 auswählen
     exportYTExplanation: >-
-      Die mit dieser Funktion erstellte YouTube-Playlist ist <b>ungelistet</b> und könnte von YouTube gelöscht werden. <br /> Da diese YouTube- Funktion unvollständig ist, musst du Folgendes tun, um die <b>ungelistete</b> YouTube-Playlist in deinem Account zu speichern.
+      Die mit dieser Funktion erstellte YouTube-Playlist ist <b>ungelistet</b>
+      und könnte von YouTube gelöscht werden. <br /> Da diese YouTube- Funktion
+      unvollständig ist, musst du Folgendes tun, um die <b>ungelistete</b>
+      YouTube-Playlist in deinem Account zu speichern.
     exportYTHeading: Anleitung zum Speichern von YouTube-Playlisten
     exportYTInstructions: >-
-      <b class="red--text">Schritt 1</b>: Spiele die YouTube-Playlist ab, und ändere die Player-Benutzeroberfläche in den Miniplayer-Modus. <br /><br /> <b class="red--text">Schritt 2</b>: Wähle ein beliebiges Video und füge es zur Warteschleife hinzu. <br /><br /> <b class="red--text">Schritt 3</b>: Die Playlist ist nun speicherbar. Klicke, um sie zu speichern.
+      <b class="red--text">Schritt 1</b>: Spiele die YouTube-Playlist ab, und
+      ändere die Player-Benutzeroberfläche in den Miniplayer-Modus. <br /><br />
+      <b class="red--text">Schritt 2</b>: Wähle ein beliebiges Video und füge es
+      zur Warteschleife hinzu. <br /><br /> <b class="red--text">Schritt 3</b>:
+      Die Playlist ist nun speicherbar. Klicke, um sie zu speichern.
     sort:
       dateaddedEarliestFirst: Zur Bibliothek hinzugefügt am, Frühestes zuerst
       dateaddedLatestFirst: Zur Bibliothek hinzugefügt am, Neuestes zuerst
@@ -198,7 +217,9 @@ views:
       official: Offiziell
       clip: Clip
     unsupportedQuery: >-
-      Derzeit wird das Suchen von Clips nach <kbd>Thema</kbd> und <kbd>Organisation</kbd> nicht unterstützt. Es werden keine <b>Clips</b> angezeigt.
+      Derzeit wird das Suchen von Clips nach <kbd>Thema</kbd> und
+      <kbd>Organisation</kbd> nicht unterstützt. Es werden keine <b>Clips</b>
+      angezeigt.
     sortByLabel: Sortieren nach
     typeDropdownLabel: Art
   settings:
@@ -207,12 +228,14 @@ views:
     darkModeMsg: Ändert das Design zwischen dem hellen und dem dunklen Modus
     redirectModeLabel: In YouTube öffnen
     redirectModeMsg: >-
-      Ein Klick auf das Video-Thumbnail öffnet es in YouTube, ein Klick auf den Videotitel öffnet es in Holodex
+      Ein Klick auf das Video-Thumbnail öffnet es in YouTube, ein Klick auf den
+      Videotitel öffnet es in Holodex
     useEnglishNameLabel: Englische Namen verwenden
     useEnglishNameMsg: Verwendet englisch lokalisierte Namen für VTuber-Kanäle
     hideVideoThumbnailsLabel: Thumbnails ausblenden
     hideVideoThumbnailsMsg: >-
-      Video-Thumbnails ausblenden, beschleunigt die Ladezeit und verringert das Scrollen auf dem Handy
+      Video-Thumbnails ausblenden, beschleunigt die Ladezeit und verringert das
+      Scrollen auf dem Handy
     pushNotificationLabel: Push-Benachrichtigungen (Bald verfügbar)
     pushNotificationMsg: Push-Benachrichtigung für favorisierte Kanäle aktivieren
     autoplayVideoLabel: Automatische Wiedergabe
@@ -224,7 +247,8 @@ views:
     tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
     defaultPage: Standardseite
     defaultPageMsg: >-
-      Öffne diese Seite standardmäßig, wenn du holodex.net besuchst oder auf das Logo oben links klickst.
+      Öffne diese Seite standardmäßig, wenn du holodex.net besuchst oder auf das
+      Logo oben links klickst.
     videoFeedSettings: Video-Feed Einstellungen
     siteNavigationSettings: Seite/Navigation
     languageSettings: Sprache
@@ -237,7 +261,9 @@ views:
     hideCollabStreamsLabel: Collab-Streams ausblenden
     hideCollabStreamsMsg: Collab-Streams in deinem Favoriten-Feed ausblenden
     ignoredTopicsLabel: Ignorierte Themen
-    ignoredTopicsMsg: Videos mit diesen Themen von der Startseite und deinen Favoriten ausblenden
+    ignoredTopicsMsg: >-
+      Videos mit diesen Themen von der Startseite und deinen Favoriten
+      ausblenden
     theme: Design
   app:
     update_available: Ein Update ist verfügbar
@@ -267,38 +293,52 @@ views:
         reconnecting: Automatisch neu verbinden...
         reconnectFailed: Verbindung fehlgeschlagen
         notLive: >-
-          Der Stream ist noch nicht live. Bitte versuche es 15 Minuten vor Stream-Beginn erneut
+          Der Stream ist noch nicht live. Bitte versuche es 15 Minuten vor
+          Stream-Beginn erneut
         connectedToChat: Verbunden
         disconnectedToChat: Verbindung getrennt
     removeFromPlaylist: Video von aktueller Playlist entfernen
     saveToPlaylist: Video zu aktueller Playlist hinzufügen
   favorites:
     promptForAction: >-
-      Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
+      Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten
+      Clips und Livestreams auf dieser Seite an.
     manageFavorites: Favoriten verwalten
     close: Schließen
     showall: Alle anzeigen
   editor:
-    needlogin: Du musst dich einloggen, um Änderungen an Video-/Song-Metadaten in Holodex vorzunehmen.
+    needlogin: >-
+      Du musst dich einloggen, um Änderungen an Video-/Song-Metadaten in Holodex
+      vorzunehmen.
     changeTopic:
       title: Stream-Thema ändern
       info: >-
-        Alle Benutzer können Videos einem Thema zuordnen, aber nur Editoren und Administratoren können das Thema entfernen oder ändern, nachdem es gesetzt wurde.
-      button: Speichern (Es kann bis zu 5 Minuten dauern, bevor die Änderung sichtbar wird)
+        Alle Benutzer können Videos einem Thema zuordnen, aber nur Editoren und
+        Administratoren können das Thema entfernen oder ändern, nachdem es
+        gesetzt wurde.
+      button: >-
+        Speichern (Es kann bis zu 5 Minuten dauern, bevor die Änderung sichtbar
+        wird)
     channelMentions:
       title: Kanalerwähnungen
     sources:
       title: Quellen/Clips (in Entwicklung)
   login:
     apikeyMsg: >-
-      Du kannst den API-Schlüssel verwenden, um die Holodex-API automatisiert abzufragen. Nur ein Schlüssel pro Account. Nachdem du einen neuen Schlüssel erhalten hast, läuft der alte Schlüssel innerhalb von 24 Stunden ab.
+      Du kannst den API-Schlüssel verwenden, um die Holodex-API automatisiert
+      abzufragen. Nur ein Schlüssel pro Account. Nachdem du einen neuen
+      Schlüssel erhalten hast, läuft der alte Schlüssel innerhalb von 24 Stunden
+      ab.
     apikeyNew: Neuen API-Schlüssel erstellen
     ownedYtChannel: Dein YouTube-Kanal
     futureYtcOwnerMessage: >-
-      In Zukunft planen wir, Kanalbesitzern mehr Dienste, wie z.B. die Bearbeitung von Metadaten für ihre eigenen Videos, anzubieten.
+      In Zukunft planen wir, Kanalbesitzern mehr Dienste, wie z.B. die
+      Bearbeitung von Metadaten für ihre eigenen Videos, anzubieten.
     linkAcc: Weiteren Account verknüpfen
     apikeyResetConfirm1: Bist du sicher, dass du deinen API-Schlüssel zurücksetzen möchtest?
-    apikeyResetConfirm2: Es dauert 0-24 Stunden bis der alte API-Schlüssel abläuft. Wirklich zurücksetzen?
+    apikeyResetConfirm2: >-
+      Es dauert 0-24 Stunden bis der alte API-Schlüssel abläuft. Wirklich
+      zurücksetzen?
     apikeyResetNvm: Es ist nichts Interessantes passiert.
     with:
       - Mit Google einloggen
@@ -313,10 +353,14 @@ views:
     muteAll: Alles stummschalten
     unmuteAll: Alle Stummschaltungen aufheben
     autoLayoutTip: Klicke auf einen Kanal, um im automatischen Layout-Modus zu schauen
-    createLayoutTip: Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine Vorlage verwendest
+    createLayoutTip: >-
+      Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine
+      Vorlage verwendest
     preset:
       shareOnDiscord: >-
-        Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
+        Hast du ein cooles Layout, das du teilen möchtest? Benutze den
+        Teilen-Button und lass es uns wissen auf unserem <a
+        href="https://discord.gg/jctkgHBt4b">Discord server</a>!
       custom: Meine Layouts
       toggleAutoLayout: Layout Automodus umschalten
       remove: Entfernen
@@ -335,11 +379,16 @@ views:
     mediaControlsEmpty: Alle Videos, die wiedergegeben werden, werden hier angezeigt
   mugen:
     welcome: >-
-      Willkommen bei MugenClips! Auf dieser Seite sehen alle den gleichen zufällig ausgewählten englischen Hololive-Clip. Schaue mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du vorgespult hast, aber wieder mit allen synchronisiert werden möchtest, lade die Seite bitte neu.
+      Willkommen bei MugenClips! Auf dieser Seite sehen alle den gleichen
+      zufällig ausgewählten englischen Hololive-Clip. Schaue mit und chatte mit
+      anderen Hololive-Fans aus der ganzen Welt. Wenn du vorgespult hast, aber
+      wieder mit allen synchronisiert werden möchtest, lade die Seite bitte neu.
   playlist:
     playlist-is-modified: Nicht gespeichert
     item-last-updated: 'Zuletzt aktualisiert:'
-    login-prompt: Melde dich an, um Playlisten zu speichern und um mehr als eine Playlist zu haben
+    login-prompt: >-
+      Melde dich an, um Playlisten zu speichern und um mehr als eine Playlist zu
+      haben
     new-playlist-btn-label: Neue Playlist erstellen
     page-heading: 'Deine Playlisten:'
     page-instruction: Klicke auf eine Playlist, um sie zu aktivieren.
@@ -353,7 +402,10 @@ editor:
     add: Hinzufügen
     update: Aktualisieren
     permission: >-
-      Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
+      Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Songs zu
+      aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a
+      class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme /
+      Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
     titles:
       addSong: 'Song-Metadaten: Neuen Song hinzufügen'
       songList: 'Songliste : {0}'
@@ -373,82 +425,131 @@ editor:
 about:
   quicklinks: Kurzlinks
   discordBtn: Holodex Discord
-  issueTracker: Fehlerverfolgung / Quelle
   faq:
     title: Häufig gestellte Fragen
     ytchatHeader: Mein Youtube-Chat ist nicht eingeloggt!
     ytchatContent: >-
-      Bitte deaktiviere die Browser-Sicherheitsfunktion "Blockieren von Cookies von Drittanbietern" oder nimm diese Website und youtube.com mit in die Whitelist auf.
+      Bitte deaktiviere die Browser-Sicherheitsfunktion "Blockieren von Cookies
+      von Drittanbietern" oder nimm diese Website und youtube.com mit in die
+      Whitelist auf.
     ytchatFirefox: Firefox-Anleitung, andere Browser sollten ähnlich sein.
     autoplayHeader: Automatische Wiedergabe funktioniert nicht!
-    autoplayContent: Bitte google, wie du automatische Wiedergabe / AutoPlay für deinen Browser aktivieren kannst.
+    autoplayContent: >-
+      Bitte google, wie du automatische Wiedergabe / AutoPlay für deinen Browser
+      aktivieren kannst.
     musicPlayer: Die Musikwiedergabe funktioniert auf mobilen Geräten nicht gut!
     musicPlayerContent: >-
-      Es tut uns leid, aber es ist uns zurzeit nicht möglich, die mobile Musikwiedergabe zu unterstützen. <br/>Das hat mehrere Gründe: Erstens verbieten mobile Geräte meistens die automatische Wiedergabe, welche wir hierfür benötigen würden; und zweitens verbieten sie Webseiten meistens, dass sie im Hintergrund Songs aneinanderreihen. Außerdem integrieren wir deine Warteschlange nicht in Musiksteuerungszentralen auf Systemebene.
+      Es tut uns leid, aber es ist uns zurzeit nicht möglich, die mobile
+      Musikwiedergabe zu unterstützen. <br/>Das hat mehrere Gründe: Erstens
+      verbieten mobile Geräte meistens die automatische Wiedergabe, welche wir
+      hierfür benötigen würden; und zweitens verbieten sie Webseiten meistens,
+      dass sie im Hintergrund Songs aneinanderreihen. Außerdem integrieren wir
+      deine Warteschlange nicht in Musiksteuerungszentralen auf Systemebene.
     videoLinkage: Wie stelle ich sicher, dass Videos richtig mit VTubern verlinkt werden?
     videoLinkageContent: >-
-      Alle Informationen werden automatisch aus der Videobeschreibung ausgelesen. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden VTuber. Wenn du keine VTuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem VTuber benötigen, welcher Holodex bekannt ist.
-    quitHolodex: "Ich bin ein Clipper und möchte, dass mein Kanal von Holodex entfernt wird\\r\n"
+      Alle Informationen werden automatisch aus der Videobeschreibung
+      ausgelesen. Wenn du einen Stream clippst, stelle bitte sicher, dass du den
+      offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B.
+      von Bilibili) clippst, dann verlinke bitte auch die offiziellen
+      YouTube-Kanäle der entsprechenden VTuber. Wenn du keine VTuber-Kanäle
+      verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips
+      eine Verlinkung zu einem VTuber benötigen, welcher Holodex bekannt ist.
+    quitHolodex: >
+      Ich bin ein Clipper und möchte, dass mein Kanal von Holodex entfernt
+      wird\r
     quitHolodexContent: >-
-      Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein Problem gibt, bei dem wir dir helfen können. Wenn du dich trotzdem entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
+      Traurig, dich gehen zu sehen :(, bitte lass es uns wissen, wenn es ein
+      Problem gibt, bei dem wir dir helfen können. Wenn du dich trotzdem
+      entfernen lassen möchtest, schicke uns bitte eine Nachricht auf Discord.
     favorite:
       title: Was sind Favoriten?
       Contents:
         - >-
-          Favoriten erleichtern es dir, mit deinen Lieblings-VTubern auf dem Laufenden zu bleiben. Du kannst deine Lieblingskanäle hinzufügen, indem du auf das Herz-Symbol auf der
+          Favoriten erleichtern es dir, mit deinen Lieblings-VTubern auf dem
+          Laufenden zu bleiben. Du kannst deine Lieblingskanäle hinzufügen,
+          indem du auf das Herz-Symbol auf der
         - >-
-          klickst. Es ist momentan nicht möglich, Clipper als Favoriten zu markieren. Erwäge trotzdem, sie auf anderen Wegen zu unterstützen!
+          klickst. Es ist momentan nicht möglich, Clipper als Favoriten zu
+          markieren. Erwäge trotzdem, sie auf anderen Wegen zu unterstützen!
       disappear:
-        title: Meine Favoritenliste ist verschwunden / Ich kann keine Favoriten setzen
+        title: >-
+          Meine Favoritenliste ist verschwunden / Ich kann keine Favoriten
+          setzen
       contents:
         - >-
-          Bitte stelle sicher, dass du eingeloggt bist und besuche die Registerkarte "Favoriten", um eine Aktualisierung zu erzwingen.
+          Bitte stelle sicher, dass du eingeloggt bist und besuche die
+          Registerkarte "Favoriten", um eine Aktualisierung zu erzwingen.
     mobile:
       title: Gibt es eine Android/iOS App für Holodex?
       content:
         summary: >-
-          Wir arbeiten daran! In der Zwischenzeit nutze bitte die "Zum Startbildschirm hinzufügen"-Funktion in deinem Browser. Wir haben sie stark optimiert, damit sie sich wie eine App verhält
+          Wir arbeiten daran! In der Zwischenzeit nutze bitte die "Zum
+          Startbildschirm hinzufügen"-Funktion in deinem Browser. Wir haben sie
+          stark optimiert, damit sie sich wie eine App verhält
         android:
           - 'Android Chrome: Navigiere zur Seite, klicke auf die drei Punkte'
           - oben rechts und finde "Zum Startbildschirm hinzufügen".
         ios:
           - >-
-            iOS Safari: Navigiere zur Seite auf deinem Smartphone und klicke auf das Quadrat mit dem Pfeil nach oben
-          - am unteren Rand des Browsers und klicke auf "Zum Startbildschirm hinzufügen"
+            iOS Safari: Navigiere zur Seite auf deinem Smartphone und klicke auf
+            das Quadrat mit dem Pfeil nach oben
+          - >-
+            am unteren Rand des Browsers und klicke auf "Zum Startbildschirm
+            hinzufügen"
     MugenClips:
       title: Was ist MugenClips?
       contents:
         - >-
-          MugenClips ist eine unendliche und vielfältige Clipwarteschlange, welche du dir gemeinsam mit anderen Fans ansehen kannst
+          MugenClips ist eine unendliche und vielfältige Clipwarteschlange,
+          welche du dir gemeinsam mit anderen Fans ansehen kannst
     subber:
-      title: Ich bin ein Clipper und finde meinen Kanal oder meine Clips nicht auf Holodex
+      title: >-
+        Ich bin ein Clipper und finde meinen Kanal oder meine Clips nicht auf
+        Holodex
       contents:
         - >-
-          Bitte sieh auf der Kanäle-Seite nach, ob du als Clipper gelistet bist. Falls nicht, fülle bitte
+          Bitte sieh auf der Kanäle-Seite nach, ob du als Clipper gelistet bist.
+          Falls nicht, fülle bitte
         - dieses Formular
         - >-
-          aus, und wir fügen dich manuell hinzu. Falls du schon auf der Liste stehst, stell bitte sicher, dass die Youtube-Quellen/Kanäle korrekt in deinen Videobeschreibungen verlinkt sind.
+          aus, und wir fügen dich manuell hinzu. Falls du schon auf der Liste
+          stehst, stell bitte sicher, dass die Youtube-Quellen/Kanäle korrekt in
+          deinen Videobeschreibungen verlinkt sind.
     feedback:
       title: Ich habe Feedback / möchte zu diesem Projekt beitragen
       contents:
         - >-
-          Alle Helfer und Ideen sind willkommen! Die Benutzeroberfläche und das Backend sind für Beiträge verfügbar, obwohl derzeit nur die UI Open Source ist. Bitte kontaktiere uns auf Discord, um Zugang zur Backend-Quelle zu erhalten oder einfach nur über deine Ideen zu chatten.
+          Alle Helfer und Ideen sind willkommen! Die Benutzeroberfläche und das
+          Backend sind für Beiträge verfügbar, obwohl derzeit nur die UI Open
+          Source ist. Bitte kontaktiere uns auf Discord, um Zugang zur
+          Backend-Quelle zu erhalten oder einfach nur über deine Ideen zu
+          chatten.
   gdpr: DSGVO und meine Daten
   gdprContent: >-
-    Ein Google-Analytics-Cookie wird verwendet, um Seitenaufrufe für unsere analytischen Zwecke zu verfolgen. Nach dem Login verknüpfen wir deinen Benutzernamen und die ID deines Social Media Accounts mit deinen Favoriten. Diese Daten können deine E-Mail (für Google), deine Discord-ID oder dein Twitter-Handle beinhalten.
+    Ein Google-Analytics-Cookie wird verwendet, um Seitenaufrufe für unsere
+    analytischen Zwecke zu verfolgen. Nach dem Login verknüpfen wir deinen
+    Benutzernamen und die ID deines Social Media Accounts mit deinen Favoriten.
+    Diese Daten können deine E-Mail (für Google), deine Discord-ID oder dein
+    Twitter-Handle beinhalten.
   gdprDeletion: Um deine Benutzerdaten löschen zu lassen, kontaktiere uns bitte auf Discord!
   feedback: Feedback / Fehlerberichte
   feedbackHtml: >-
-    Du kannst einen Fehler im <a href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a> melden oder das Holodex Team auf Discord kontaktieren. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+    Du kannst einen Fehler im <a
+    href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a>
+    melden oder das Holodex Team auf Discord kontaktieren. <br /> <br /> Reddit:
+    <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Credits
     contents:
       - Besonders möchte ich mich bedanken beim
       - Team für ihre Arbeit an der
       - >-
-        Dank gebührt auch den Clippern dafür, dass sie den Überseebrüdern helfen! Bitte sieh sie dir an!
+        Dank gebührt auch den Clippern dafür, dass sie den Überseebrüdern
+        helfen! Bitte sieh sie dir an!
       - >-
-        Dies ist eine von Fans erstellte Website und die Inhalte dieser Website sind Eigentum von Cover Corp und seinen Partnern. Die Seite folgt den Richtlinien von Cover Corps
+        Dies ist eine von Fans erstellte Website und die Inhalte dieser Website
+        sind Eigentum von Cover Corp und seinen Partnern. Die Seite folgt den
+        Richtlinien von Cover Corps
       - Urheberrechtserklärung
   changelog:
     title: Änderungsverlauf

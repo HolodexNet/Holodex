@@ -1,4 +1,3 @@
----
 component:
   apiError:
     title: ゴメナソーリー!
@@ -14,7 +13,7 @@ component:
     stats: 統計情報
     videoCount: '{0}本の動画'
     clipCount: '{n}本の切り抜き'
-    subscriberCount: 'チャンネル登録者数 {n} 人'
+    subscriberCount: チャンネル登録者数 {n} 人
     subscriberNA: 登録者数は現在利用できません
     totalViews: 回視聴
   channelSocials:
@@ -98,7 +97,7 @@ component:
     iOS:
       popup: iOSにHolodexをインストール
       afterExportIcon: をタップして「ホーム画面に追加」を選択
-      beforeExportIcon: '  '
+      beforeExportIcon:   
   media:
     remove: 消去
   comment:
@@ -115,10 +114,13 @@ component:
       - その他
   thirdpartycookie:
     explanation: >-
-      ブラウザの<b>サードパーティー Cookie</b>ポリシーによる場合や<kbd>Youtube.com</kbd>でのCookieをブロックしている場合にはYoutubeライブチャットへのログインが難しい、もしくは不可能な場合があります。 <br /><br />これはサードパーティーCookieのホワイトリストに<kbd>Youtube.com</kbd>を追加するか、ブラウザの設定から<kbd>Holodex.net</kbd>でのプライバシー設定を低レベルのものに設定することにより解決可能な場合があります。<br /><br />それに関する詳しい情報を提供しているサイトをいくつか紹介しています。
+      ブラウザの<b>サードパーティー
+      Cookie</b>ポリシーによる場合や<kbd>Youtube.com</kbd>でのCookieをブロックしている場合にはYoutubeライブチャットへのログインが難しい、もしくは不可能な場合があります。
+      <br /><br
+      />これはサードパーティーCookieのホワイトリストに<kbd>Youtube.com</kbd>を追加するか、ブラウザの設定から<kbd>Holodex.net</kbd>でのプライバシー設定を低レベルのものに設定することにより解決可能な場合があります。<br
+      /><br />それに関する詳しい情報を提供しているサイトをいくつか紹介しています。
     dialogTitle: Holodex上でライブチャットを使う
-    alertText: >-
-      ブラウザのプライバシー設定により、Youtubeチャットへのログインができませんでした。詳しくはこちらを参照してください。
+    alertText: ブラウザのプライバシー設定により、Youtubeチャットへのログインができませんでした。詳しくはこちらを参照してください。
     neverShowAgain: 今後警告を表示しない
   playlist:
     menu:
@@ -174,10 +176,13 @@ views:
     exportCsv: CSVファイル
     selectionSelect50: 50個選択
     exportYTExplanation: >-
-      この機能によって作られた再生リストはYoutube側の仕様により<b>限定公開</b>になり、その後削除される可能性があります。<br /><b>限定公開</b>のリストをアカウントに保存しておくには次の手順に従ってください。
+      この機能によって作られた再生リストはYoutube側の仕様により<b>限定公開</b>になり、その後削除される可能性があります。<br
+      /><b>限定公開</b>のリストをアカウントに保存しておくには次の手順に従ってください。
     exportYTHeading: Youtubeの再生リストの保存方法
     exportYTInstructions: >-
-      <b class="red--text">ステップ 1</b>: Youtubeの再生リストを再生してミニプレイヤーに表示を変更してください。<br /><br /> <b class="red--text">ステップ 2</b>: 何かしらの動画をキューに追加してください。<br /><br /> <b class="red--text">ステップ 3</b>: 再生リストが保存可能になります。画像に従って保存してください。
+      <b class="red--text">ステップ 1</b>: Youtubeの再生リストを再生してミニプレイヤーに表示を変更してください。<br
+      /><br /> <b class="red--text">ステップ 2</b>: 何かしらの動画をキューに追加してください。<br /><br
+      /> <b class="red--text">ステップ 3</b>: 再生リストが保存可能になります。画像に従って保存してください。
     sort:
       dateaddedEarliestFirst: 'ライブラリ追加日時 : 古い順'
       dateaddedLatestFirst: 'ライブラリ追加日時 : 新しい順'
@@ -194,8 +199,7 @@ views:
       all: すべて
       official: 公式
       clip: 切り抜き
-    unsupportedQuery: >-
-      現在<kbd>配信内容</kbd>と<kbd>所属</kbd>での検索はサポートされていません。<b>切り抜き</b>は検索結果に表示されません。
+    unsupportedQuery: 現在<kbd>配信内容</kbd>と<kbd>所属</kbd>での検索はサポートされていません。<b>切り抜き</b>は検索結果に表示されません。
     sortByLabel: 並べ替え
     typeDropdownLabel: 動画のタイプ
   settings:
@@ -203,13 +207,11 @@ views:
     darkModeLabel: ダークモード
     darkModeMsg: ライトモードとダークモードを切り替えます
     redirectModeLabel: Youtubeで開く
-    redirectModeMsg: >-
-      動画のサムネをクリックするとYoutubeに移動します。(タイトルをクリックする通常と変わらずHolodexで見れます。)
+    redirectModeMsg: 動画のサムネをクリックするとYoutubeに移動します。(タイトルをクリックする通常と変わらずHolodexで見れます。)
     useEnglishNameLabel: 英語名を使用する
     useEnglishNameMsg: 英語圏版のチャンネル名を表示します(一部のチャンネルは対応していません)
     hideVideoThumbnailsLabel: サムネイルを非表示にする
-    hideVideoThumbnailsMsg: >-
-      動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
+    hideVideoThumbnailsMsg: 動画のサムネイルを非表示にすることで携帯での読み込み時間を短縮し、スクロールを減らします
     pushNotificationLabel: プッシュ通知（準備中）
     pushNotificationMsg: お気に入りのチャンネルのプッシュ通知を有効にする
     autoplayVideoLabel: 動画を自動再生する
@@ -217,11 +219,10 @@ views:
     scrollModeLabel: スクロールモード
     scrollModeMsg: スクロール/タップしてページをめくる
     resetAllSettings: すべての設定やデータをリセット
-    clipLanguageSelection: '次の言語で切り抜きを表示する'
+    clipLanguageSelection: 次の言語で切り抜きを表示する
     tlLanguageSelection: 次の言語でライブチャット翻訳を表示する
     defaultPage: デフォルトページ
-    defaultPageMsg: >-
-      holodex.net にアクセスしたときやページ左上のロゴをクリックしたとき、デフォルトでこのページを開きます。
+    defaultPageMsg: holodex.net にアクセスしたときやページ左上のロゴをクリックしたとき、デフォルトでこのページを開きます。
     videoFeedSettings: 動画フィードの設定
     siteNavigationSettings: サイトナビゲーション
     languageSettings: 言語
@@ -263,15 +264,13 @@ views:
       status:
         reconnecting: 再接続中...
         reconnectFailed: 再接続に失敗しました
-        notLive: >-
-          配信はまだ開始されてないです。チャットは配信の予定時刻の15分前から使用可能になります。
+        notLive: 配信はまだ開始されてないです。チャットは配信の予定時刻の15分前から使用可能になります。
         connectedToChat: 接続されました
         disconnectedToChat: 切断しました
     removeFromPlaylist: 現在のプレイリストから動画を削除
     saveToPlaylist: 現在のプレイリストに動画を保存
   favorites:
-    promptForAction: >-
-      お気に入りのVtuberリストを作るとそのページでお気に入りしたVtuberの最新動画を確認できます。
+    promptForAction: お気に入りのVtuberリストを作るとそのページでお気に入りしたVtuberの最新動画を確認できます。
     manageFavorites: お気に入りを管理
     close: 閉じる
     showall: すべて表示
@@ -279,8 +278,7 @@ views:
     needlogin: Holodex上の動画を編集または曲情報を変更するにはログインが必要です
     changeTopic:
       title: 配信のメイン内容を設定
-      info: >-
-        すべてのユーザーはトピックを動画に設定できますが、一度設定するとエディターと管理者のみトピックを削除および変更できます。
+      info: すべてのユーザーはトピックを動画に設定できますが、一度設定するとエディターと管理者のみトピックを削除および変更できます。
       button: 保存(5分ほどで有効になります)
     channelMentions:
       title: チャンネルメンション
@@ -288,11 +286,11 @@ views:
       title: 本編/切り抜き(開発中)
   login:
     apikeyMsg: >-
-      APIキーを使用することでプログラムからHolodex APIにクエリを送信することができます。 キーはアカウント毎に一つのみ使用可能で、新しくキーを取得すると過去のキーは24時間以内に失効します。
+      APIキーを使用することでプログラムからHolodex APIにクエリを送信することができます。
+      キーはアカウント毎に一つのみ使用可能で、新しくキーを取得すると過去のキーは24時間以内に失効します。
     apikeyNew: 新規APIキーを発行する
     ownedYtChannel: あなたのYoutubeチャンネル
-    futureYtcOwnerMessage: >-
-      今後のアップデートでHolodexに登録した自分のチャンネル上の動画のメタデータを編集可能になります
+    futureYtcOwnerMessage: 今後のアップデートでHolodexに登録した自分のチャンネル上の動画のメタデータを編集可能になります
     linkAcc: 別のアカウントを連携する
     apikeyResetConfirm1: 本当にAPIキーをリセットしてもよろしいですか?
     apikeyResetConfirm2: 以前のAPIキーは24時間以内に失効します。本当にリセットしてもよろしいですか?
@@ -313,7 +311,8 @@ views:
     createLayoutTip: セルを追加してオリジナルのレイアウトを作成するか、プリセットを使用してください
     preset:
       shareOnDiscord: >-
-        なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
+        なにか良いレイアウトが思いついたら私達の <a
+        href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
       custom: マイレイアウト
       toggleAutoLayout: 自動的にレイアウトに切り替え
       remove: 削除
@@ -332,10 +331,11 @@ views:
     mediaControlsEmpty: 再生中の動画はここに表示されます
   mugen:
     welcome: >-
-      MugenClipsへようこそ！このページでは全員がランダムに選択されたホロライブの英訳切り抜きを見ています。世界中のホロライブのファンと一緒に見て、チャットしましょう。 先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
+      MugenClipsへようこそ！このページでは全員がランダムに選択されたホロライブの英訳切り抜きを見ています。世界中のホロライブのファンと一緒に見て、チャットしましょう。
+      先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
   playlist:
     playlist-is-modified: 保存されていません
-    item-last-updated: '最終更新日時'
+    item-last-updated: 最終更新日時
     login-prompt: プレイリストの保存、複数のプレイリストの保持にはログインが必要です。
     new-playlist-btn-label: 新しいプレイリストを作成
     page-heading: 'プレイリスト:'
@@ -350,9 +350,11 @@ editor:
     add: 追加
     update: 更新
     permission: >-
-      すでに登録された曲情報を更新もしくは削除するには「Editor」以上の権限が必要です。 「Editor」権限を新たに取得する場合または「Editor」に曲情報の不備を知らせるには <a class='white--text' href='/about'>discord</a>上で私達に連絡してください。
+      すでに登録された曲情報を更新もしくは削除するには「Editor」以上の権限が必要です。
+      「Editor」権限を新たに取得する場合または「Editor」に曲情報の不備を知らせるには <a class='white--text'
+      href='/about'>discord</a>上で私達に連絡してください。
     titles:
-      addSong: '曲情報:曲を追加'
+      addSong: 曲情報:曲を追加
       songList: '曲リスト : {0}'
       help: ヘルプ
     itunesLookupPlaceholder: (任意) iTunesで原曲を検索
@@ -364,13 +366,12 @@ editor:
     originalArtistInput: 原曲の歌手
     testStart: 開始位置を確認
     startInput: 開始位置
-    endInput: '再生時間(秒) ({0}に終了)'
+    endInput: 再生時間(秒) ({0}に終了)
   exitMode: 編集モードを終了
   enterMode: 動画を編集
 about:
   quicklinks: クイックリンク
   discordBtn: Holodex Discord
-  issueTracker: Issue管理 / ソースコード
   faq:
     title: よくある質問
     ytchatHeader: Youtubeチャットにログインできません！
@@ -381,42 +382,43 @@ about:
     autoplayContent: ご利用中のブラウザでの自動再生を有効化方法について検索してください。
     musicPlayer: モバイルデバイスでは音楽プレーヤーがうまく動きません！
     musicPlayerContent: >-
-      申し訳ありませんが、スマホ等のモバイル機器かつwebブラウザでのご利用の場合は音楽プレーヤーはサポート対象外です。 <br/>3つの要因があります: 1. ホロデックスでは自動再生が必要ですが、モバイル機器では多くの場合自動再生が禁止されています。2. モバイル機器では多くの場合ウェブサイトが裏側で音楽を再生したままにすることが許可されていません。3. 音楽再生のご要望を、我々がお客様の音楽コントロールセンターにシステムレベルで管理や処理をすることは憚られます。
+      申し訳ありませんが、スマホ等のモバイル機器かつwebブラウザでのご利用の場合は音楽プレーヤーはサポート対象外です。 <br/>3つの要因があります:
+      1. ホロデックスでは自動再生が必要ですが、モバイル機器では多くの場合自動再生が禁止されています。2.
+      モバイル機器では多くの場合ウェブサイトが裏側で音楽を再生したままにすることが許可されていません。3.
+      音楽再生のご要望を、我々がお客様の音楽コントロールセンターにシステムレベルで管理や処理をすることは憚られます。
     videoLinkage: 動画が相当のVtuberに正しくリンクされていることを確認するにはどうすればよいですか?
     videoLinkageContent: >-
       全ての情報は動画概要欄から解析されます。生放送を切り抜きする場合は必ず元の生放送のURLを貼ってください。二次コンテンツ(例えばbilibiliから)を切り抜きする場合はその動画に関連するVtuberの公式YoutubeチャンネルのURLを貼ってください。どのVtuberのチャンネルともリンクしない場合、Holodexでは全ての切り抜きにリンク先としてHolodexの把握しているVtuberチャンネルが必要です。そのためリンクの無い切り抜きをHolodexで表示することができません。
-    quitHolodex: "私は字幕制作者です。Holodexから私のチャンネルを削除したいです。"
+    quitHolodex: 私は字幕制作者です。Holodexから私のチャンネルを削除したいです。
     quitHolodexContent: >-
-      あなたが出て行ってしまうことは本当に悲しいです(T_T) もし何か私ができることがあれば是非教えてください。その上で尚、削除の意志が堅ければDiscordでメッセージをください。
+      あなたが出て行ってしまうことは本当に悲しいです(T_T)
+      もし何か私ができることがあれば是非教えてください。その上で尚、削除の意志が堅ければDiscordでメッセージをください。
     favorite:
       title: お気に入りって何？
       disappear:
         title: お気に入りリストが消えてしまいました/お気に入りに追加できません
       contents:
-        - >-
-          ログインしていることを確認してから、「チャンネル」の「お気に入りタブ」を開いてください。
+        - ログインしていることを確認してから、「チャンネル」の「お気に入りタブ」を開いてください。
     mobile:
       title: HolodexのAndroid/iOSアプリ版はありますか?
       content:
         summary: >-
-          現在誠意開発中です! それまではブラウザの「ホーム画面に追加」機能をお使いください。現在のウェブサイトもアプリであるかのように動作するように調整されています。
+          現在誠意開発中です!
+          それまではブラウザの「ホーム画面に追加」機能をお使いください。現在のウェブサイトもアプリであるかのように動作するように調整されています。
         android:
           - 'Android版Chrome: サイトに移動してから「︙」ボタンをタップ'
           - on the top right and find "Add to Home Screen".
         ios:
-          - >-
-            iOS版Safari: サイトに移動してから、共有ボタン「
-          - '」をタップして、メニューから「ホーム画面に追加」を選ぶ'
+          - 'iOS版Safari: サイトに移動してから、共有ボタン「'
+          - 」をタップして、メニューから「ホーム画面に追加」を選ぶ
     MugenClips:
       title: MugenClipとはなんですか?
       contents:
-        - >-
-          MugenClips（無限クリップ）では、コミュニティが投稿した翻訳切り抜きをサイト上の他の人たちと一緒に同時視聴できます
+        - MugenClips（無限クリップ）では、コミュニティが投稿した翻訳切り抜きをサイト上の他の人たちと一緒に同時視聴できます
     subber:
       title: Holodexで私の切り抜き動画が表示されていないのですが？
       contents:
-        - >-
-          チャンネルページを確認して、あなたが切り抜き動画投稿者としてリストされているかどうかを確認してください。もし無ければ、
+        - チャンネルページを確認して、あなたが切り抜き動画投稿者としてリストされているかどうかを確認してください。もし無ければ、
         - このフォーム
         - >-
           で追加申請を送ってください。もしリストに名前があるのに動画が見つからない場合は、動画の説明に元動画のリンクがちゃんと掲載されていることを確認してください。
@@ -424,18 +426,23 @@ about:
       title: holodexへのフィードバック/コントリビュートを行いたい
   gdpr: 私のデータはGDPRに基づいてどう扱われますか?
   gdprContent: >-
-    Googleアナリティクスのデータは当サイトの解析のためにページの閲覧をトラッキングする目的でのみ使用されます。ログインすると、各ソーシャルメディアのアカウント名とIDがお気に入りと関連付けられます。また、このデータにはあなたのGoogleのメールアドレス、Discord ID、及びTwitterのハンドルネームが含まれる場合があります。
+    Googleアナリティクスのデータは当サイトの解析のためにページの閲覧をトラッキングする目的でのみ使用されます。ログインすると、各ソーシャルメディアのアカウント名とIDがお気に入りと関連付けられます。また、このデータにはあなたのGoogleのメールアドレス、Discord
+    ID、及びTwitterのハンドルネームが含まれる場合があります。
   gdprDeletion: 収集されたデータの削除が必要な場合は、開発チームにDiscord上でお知らせください
   feedback: フィードバック/バグ報告
   feedbackHtml: >-
-    Issueを作成したい場合は <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> もしくは、Discord上でHolodex開発チームにお知らせください。 <br /><br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+    Issueを作成したい場合は <a href="https://github.com/RiceCakess/Holodex/issues">
+    Github Issue Tracker </a> もしくは、Discord上でHolodex開発チームにお知らせください。 <br /><br />
+    Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess
+    </a>
   credits:
     title: クレジット
     contents:
       - I would like to give big thanks to the
       - team for their work on
       - >-
-        Also to all the subbers for helping the overseas bros! Please check them out!
+        Also to all the subbers for helping the overseas bros! Please check them
+        out!
       - >-
         当サイトは有志によって開発されたファンサービスであり、サイト上のコンテンツはカバー株式会社とそのパートナーが所有しています。当サイトはカバー株式会社の「二次創作ガイドライン」に沿って開発・運営されています。
       - 二次創作ガイドライン

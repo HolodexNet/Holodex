@@ -264,7 +264,7 @@ views:
     nowSupportsMultiOrg: Holodex now supports multiple organizations.
     loginCallToAction: Login to gather your own favorites!
   about:
-    add_my_channel: Add my channel to Holodex
+    add_my_channel: Channel Request
   watch:
     theaterMode: Theater Mode
     mentionIconLabel: MENTIONS
@@ -404,7 +404,6 @@ editor:
 about:
   quicklinks: Quick Links
   discordBtn: Holodex Discord
-  issueTracker: Issue Tracker / Source
   faq:
     title: FAQ
     ytchatHeader: My Youtube Chat is not logged in!

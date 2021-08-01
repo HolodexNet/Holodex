@@ -1,6 +1,6 @@
 <template>
     <v-container :style="slim && 'width: 500px;'" :class="{ 'pa-0': slim }">
-        <v-row>
+        <v-row dense>
             <v-col v-if="!slim" cols="12">
                 <div class="text-h4 mb-4">
                     {{ $t("views.settings.title") }}
@@ -47,23 +47,23 @@
                             :messages="$t('views.settings.useEnglishNameMsg')"
                         />
 
-                        <div class="mt-6">
+                        <div class="mt-6 mb-4">
                             <v-icon style="margin-right: 9px">
                                 {{ mdiFilter }}
                             </v-icon>
                             <span class="text-body-1">{{ $t("views.settings.clipLanguageSelection") }}</span>
                         </div>
-                        <v-container fluid>
-                            <v-checkbox
-                                v-for="l in TL_LANGS"
-                                :key="l.value + 'settingcheckbox'"
-                                v-model="clipLangs"
-                                :label="l.text"
-                                :value="l.value"
-                                dense
-                                class="ml-4 mt-n2"
-                            />
-                        </v-container>
+                        <!-- <v-container fluid> -->
+                        <v-checkbox
+                            v-for="l in TL_LANGS"
+                            :key="l.value + 'settingcheckbox'"
+                            v-model="clipLangs"
+                            :label="l.text"
+                            :value="l.value"
+                            dense
+                            class="ml-4 mt-n2"
+                        />
+                        <!-- </v-container> -->
                     </v-card-text>
                 </v-sheet>
             </v-col>
@@ -402,7 +402,6 @@ export default {
     padding: 12px;
     border: 1px solid var(--v-primary-base);
     border-radius: 8px;
-    margin-bottom: 16px;
 }
 .theme-preview span {
     width: 1rem;
