@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pt-3">
+  <v-container key="aboutpg" class="pt-3">
     <v-row>
       <v-col v-if="!$store.state.isMobile" cols="12">
         <div class="text-h4">
@@ -97,13 +97,6 @@
         lg="4"
         xl="3"
       >
-        <!-- <v-card>
-                    <div class="text-h5">
-                        {{ $t("about.feedback") }}
-                    </div>
-                    <p class="text-body-2" v-html="$t('about.feedbackHtml')" />
-                    <br>
-                </v-card> -->
         <v-card>
           <v-card-title>
             <div id="changelog" class="text-h6">
@@ -131,156 +124,154 @@
         cols="12"
         md="8"
         sm="8"
-        lg="8"
-        xl="9"
+        lg="6"
+        xl="6"
       >
-        <div class="text-h5 mb-2 mt-4">
-          {{ $t("about.faq.title") }}
-        </div>
-        <v-expansion-panels>
-          <v-expansion-panel>
-            <v-expansion-panel-header>
-              {{ $t("about.faq.ytchatHeader") }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.faq.ytchatContent") }}
-              <br>
-              <a
-                href="https://support.mozilla.org/en-US/kb/third-party-cookies-firefox-tracking-protection?redirectslug=disable-third-party-cookies"
-              >
-                {{ $t("about.faq.ytchatFirefox") }}
-              </a>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header>
-              {{ $t("about.faq.autoplayHeader") }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.faq.autoplayContent") }}
-              <br>
-              <br>Safari: <br>
-              <img
-                width="80%"
-                src="https://www.imore.com/sites/imore.com/files/styles/large/public/field/image/2017/07/safari-custom-settings-websites-mac-screenshot-06.jpg?itok=ONVYTcno"
-              >
-              <br>Firefox: <br>
-              <img
-                width="80%"
-                src="https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/firefox/files/2019/04/Screen-Shot-2019-04-01-at-11.21.21-AM.png"
-              >
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header>
-              {{ $t("about.faq.musicPlayer") }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <div v-html="$t('about.faq.musicPlayerContent')" />
-            </v-expansion-panel-content>
-          </v-expansion-panel>
+        <v-card>
+          <v-card-title>
+            <div class="text-h6">
+              {{ $t("about.faq.title") }}
+            </div>
+          </v-card-title>
+          <v-expansion-panels accordion focusable>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                {{ $t("about.faq.ytchatHeader") }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                {{ $t("about.faq.ytchatContent") }}
+                <br>
+                <a
+                  href="https://support.mozilla.org/en-US/kb/third-party-cookies-firefox-tracking-protection?redirectslug=disable-third-party-cookies"
+                >
+                  {{ $t("about.faq.ytchatFirefox") }}
+                </a>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                {{ $t("about.faq.autoplayHeader") }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                {{ $t("about.faq.autoplayContent") }}
+                <br>
+                <br>Safari: <br>
+                <img
+                  width="80%"
+                  src="https://www.imore.com/sites/imore.com/files/styles/large/public/field/image/2017/07/safari-custom-settings-websites-mac-screenshot-06.jpg?itok=ONVYTcno"
+                >
+                <br>Firefox: <br>
+                <img
+                  width="80%"
+                  src="https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/firefox/files/2019/04/Screen-Shot-2019-04-01-at-11.21.21-AM.png"
+                >
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                {{ $t("about.faq.musicPlayer") }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <div v-html="$t('about.faq.musicPlayerContent')" />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
 
-          <v-expansion-panel>
-            <v-expansion-panel-header> {{ $t("about.faq.mobile.title") }} </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.faq.mobile.content.summary") }}
-              <ul>
-                <li>
-                  {{ $t("about.faq.mobile.content.android.0") }}
-                  <v-icon color="primary">
-                    {{ icons.mdiDotsVertical }}
-                  </v-icon>
-                  {{ $t("about.faq.mobile.content.android.1") }}
-                </li>
-                <li>
-                  {{ $t("about.faq.mobile.content.ios.0") }}
-                  <v-icon color="primary">
-                    {{ mdiExportVariant }}
-                  </v-icon>
-                  {{ $t("about.faq.mobile.content.ios[1]") }}
-                </li>
-              </ul>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header> {{ $t("about.faq.favorite.title") }} </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.faq.favorite.Contents.0") }}
-              <router-link to="/channel">
-                {{ $t("component.mainNav.channels") }}
-              </router-link>
-              {{ $t("about.faq.favorite.Contents[1]") }}
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header>
-              {{ $t("about.faq.favorite.disappear.title") }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.faq.favorite.contents.0") }}
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header> {{ $t("about.faq.MugenClips.title") }} </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.faq.MugenClips.contents.0") }}
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header>
-              {{ $t("about.faq.subber.title") }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.faq.subber.contents.0") }}
-              <a href="https://forms.gle/xkN4w8fyPr6YTGfx6"> {{ $t("about.faq.subber.contents.1") }} </a>
-              {{ $t("about.faq.subber.contents.2") }}
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header>
-              {{ $t("about.faq.videoLinkage") }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.faq.videoLinkageContent") }}
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header>
-              {{ $t("about.faq.quitHolodex") }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.faq.quitHolodexContent") }}
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header>
-              {{ $t("about.faq.feedback.title") }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.faq.feedback.contents.0") }}
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-header> {{ $t("about.gdpr") }} </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ $t("about.gdprContent") }}
-              <b>{{ $t("about.gdprDeletion") }}</b>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
-        <br>
-
-        <a class="text-h5" href="https://github.com/RiceCakess/Holodex/blob/dev/CHANGELOG.md">{{
-          $t("about.changelog.title")
-        }}</a>
-        <div class="text-body-2">
-          <iframe
-            width="100%"
-            seamless
-            src="https://holodexnet.github.io/Holodex/"
-            style="height: 80vh; border: none; border-radius: 3px; background: #eee"
-          />
-        </div>
+            <v-expansion-panel>
+              <v-expansion-panel-header> {{ $t("about.faq.mobile.title") }} </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                {{ $t("about.faq.mobile.content.summary") }}
+                <ul>
+                  <li>
+                    {{ $t("about.faq.mobile.content.android.0") }}
+                    <v-icon color="primary">
+                      {{ icons.mdiDotsVertical }}
+                    </v-icon>
+                    {{ $t("about.faq.mobile.content.android.1") }}
+                  </li>
+                  <li>
+                    {{ $t("about.faq.mobile.content.ios.0") }}
+                    <v-icon color="primary">
+                      {{ mdiExportVariant }}
+                    </v-icon>
+                    {{ $t("about.faq.mobile.content.ios[1]") }}
+                  </li>
+                </ul>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                {{ $t("about.faq.favorite.disappear.title") }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                {{ $t("about.faq.favorite.contents.0") }}
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header> {{ $t("about.faq.MugenClips.title") }} </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                {{ $t("about.faq.MugenClips.contents.0") }}
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                {{ $t("about.faq.subber.title") }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                {{ $t("about.faq.subber.contents.0") }}
+                <a href="https://forms.gle/xkN4w8fyPr6YTGfx6"> {{ $t("about.faq.subber.contents.1") }} </a>
+                {{ $t("about.faq.subber.contents.2") }}
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                {{ $t("about.faq.videoLinkage") }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                {{ $t("about.faq.videoLinkageContent") }}
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                {{ $t("about.faq.quitHolodex") }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                {{ $t("about.faq.quitHolodexContent") }}
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                {{ $t("about.faq.feedback.title") }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                {{ $t("about.faq.feedback.contents.0") }}
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header> {{ $t("about.gdpr") }} </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                {{ $t("about.gdprContent") }}
+                <b>{{ $t("about.gdprDeletion") }}</b>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card>
+          <v-card-title>
+            <a class="text-h5" href="https://github.com/RiceCakess/Holodex/blob/dev/CHANGELOG.md">{{
+              $t("about.changelog.title")
+            }}</a>
+          </v-card-title>
+          <div class="text-body-2">
+            <iframe
+              width="100%"
+              seamless
+              src="https://holodexnet.github.io/Holodex/"
+              style="height: 80vh; border: none; border-radius: 3px; background: #eee"
+            />
+          </div>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -322,4 +313,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.v-expansion-panel-content__wrap {
+    padding-top: 12px;
+}
+</style>
