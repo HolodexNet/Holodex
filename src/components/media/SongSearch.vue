@@ -1,6 +1,7 @@
 <template>
     <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
     <v-autocomplete
+        v-model="query"
         class="ma-auto song-lookup"
         solo
         filled
@@ -9,23 +10,22 @@
         auto-select-first
         clearable
         :autofocus="autofocus"
-        v-model="query"
         :loading="isLoading"
         :items="results"
         :item-value="(x) => x.trackId"
         :search-input.sync="search"
-        @input="onInput"
         :label="$t('editor.music.itunesLookupPlaceholder')"
         :filter="(a, b) => true"
         return-object
-        @keydown.enter="onEnterKeyDown"
         hide-details
+        @input="onInput"
+        @keydown.enter="onEnterKeyDown"
     >
-        <template v-slot:selection="x">
+        <template #selection="x">
             <div class="ma-n1 py-0 pl-3 pr-1 d-flex" style="width: 100%">
                 <!-- @click="addItem(dropdownItem.item) -->
                 <v-list-item-avatar tile>
-                    <v-img :src="x.item.artworkUrl100"></v-img>
+                    <v-img :src="x.item.artworkUrl100" />
                 </v-list-item-avatar>
 
                 <v-list-item-content class="py-1 pt-1">
@@ -39,11 +39,11 @@
             </div>
         </template>
 
-        <template v-slot:item="x">
+        <template #item="x">
             <div class="ma-n1 py-0 pl-3 pr-1 d-flex">
                 <!-- @click="addItem(dropdownItem.item) -->
                 <v-list-item-avatar tile>
-                    <v-img :src="x.item.artworkUrl100"></v-img>
+                    <v-img :src="x.item.artworkUrl100" />
                 </v-list-item-avatar>
 
                 <v-list-item-content class="py-1 pt-1">
@@ -82,6 +82,20 @@ import { compareTwoStrings } from "string-similarity";
 export default {
     name: "SongSearch",
     components: {},
+    props: {
+        autofocus: {
+            type: Boolean,
+            default: false,
+        },
+        value: {
+            type: Object,
+            default: null,
+        },
+        id: {
+            type: Number,
+            default: null,
+        },
+    },
     data() {
         return {
             query: this.value,
@@ -96,20 +110,6 @@ export default {
             search: null,
             fromApi: [],
         };
-    },
-    props: {
-        autofocus: {
-            type: Boolean,
-            default: false,
-        },
-        value: {
-            type: Object,
-            default: null,
-        },
-        id: {
-            type: Number,
-            default: null,
-        },
     },
     computed: {
         isMobile() {

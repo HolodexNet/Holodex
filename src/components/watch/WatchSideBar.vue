@@ -6,28 +6,40 @@
                     {{ hidden.songs ? "＋" : "－" }} {{ relationI18N("songs") }}
                 </a>
                 <v-spacer />
-                <v-btn icon small tile @click="showDetailed = !showDetailed" class="mr-2">
+                <v-btn
+                    icon
+                    small
+                    tile
+                    class="mr-2"
+                    @click="showDetailed = !showDetailed"
+                >
                     <v-icon small> {{ mdiTimerOutline }} </v-icon>
                 </v-btn>
-                <v-btn icon small tile @click="addToMusicPlaylist" class="mr-2">
+                <v-btn
+                    icon
+                    small
+                    tile
+                    class="mr-2"
+                    @click="addToMusicPlaylist"
+                >
                     <v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon>
                 </v-btn>
             </span>
             <!-- Match the same structure as VideoCardList -->
             <v-expand-transition>
-                <v-container class="py-0" v-show="!hidden.songs">
+                <v-container v-show="!hidden.songs" class="py-0">
                     <v-row>
                         <v-list dense style="width: 100%">
                             <song-item
-                                :detailed="showDetailed"
                                 v-for="(song, idx) in songList"
-                                :song="song"
                                 :key="song.name + song.video_id + idx"
+                                :detailed="showDetailed"
+                                :song="song"
+                                :hover-icon="icons.mdiPlay"
+                                style="width: 100%"
                                 @play="$emit('timeJump', song.start)"
                                 @playNow="$store.commit('music/skipTo', idx)"
-                                :hoverIcon="icons.mdiPlay"
-                                style="width: 100%"
-                            ></song-item>
+                            />
                         </v-list>
                     </v-row>
                 </v-container>
@@ -35,33 +47,35 @@
         </template>
         <template v-for="relation in Object.keys(related)">
             <template v-if="related[relation].length">
-                <div class="lightup d-flex" :key="`band${relation}`">
+                <div :key="`band${relation}`" class="lightup d-flex">
                     <a
-                        class="d-block text-overline mx-2 my-1"
                         :key="`${relation}-title`"
+                        class="d-block text-overline mx-2 my-1"
                         @click="toggleExpansion(relation)"
                     >
                         {{ hidden[relation] ? "＋" : "－" }} {{ relationI18N(relation) }}
                     </a>
                     <v-spacer />
                     <v-btn
+                        :key="`playlist-btn-${relation}`"
                         icon
                         tile
                         small
-                        @click="addToPlaylist(related[relation])"
                         class="mr-2"
-                        :key="`playlist-btn-${relation}`"
-                        ><v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon></v-btn
+                        @click="addToPlaylist(related[relation])"
                     >
+                        <v-icon small>
+                            {{ icons.mdiPlaylistPlus }}
+                        </v-icon>
+                    </v-btn>
                 </div>
                 <v-expand-transition :key="`${relation}-anim`">
                     <VideoCardList
-                        @videoClicked="logRelationClick(relation)"
                         v-show="!hidden[relation]"
                         :key="`${relation}-videos`"
                         :videos="related[relation]"
                         horizontal
-                        includeChannel
+                        include-channel
                         :cols="{
                             lg: 12,
                             md: 4,
@@ -69,8 +83,8 @@
                             sm: 6,
                         }"
                         dense
-                    >
-                    </VideoCardList>
+                        @videoClicked="logRelationClick(relation)"
+                    />
                 </v-expand-transition>
             </template>
         </template>
@@ -118,9 +132,9 @@ export default {
             return {
                 simulcasts: this.video.simulcasts || [],
                 clips:
-                    (this.video.clips &&
-                        this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang))) ||
-                    [],
+                    (this.video.clips
+                        && this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)))
+                    || [],
                 sources: this.video.sources || [],
                 refers: this.video.refers || [],
                 recommendations: (this.video.recommendations && this.video.recommendations.slice(0, 10)) || [],
@@ -129,14 +143,12 @@ export default {
         songList() {
             if (this.video && this.video.songs) {
                 return this.video.songs
-                    .map((song) => {
-                        return {
-                            ...song,
-                            video_id: this.video.id,
-                            channel_id: this.video.channel.id,
-                            channel: this.video.channel,
-                        };
-                    })
+                    .map((song) => ({
+                        ...song,
+                        video_id: this.video.id,
+                        channel_id: this.video.channel.id,
+                        channel: this.video.channel,
+                    }))
                     .sort((a, b) => a.start - b.start);
             }
             return [];

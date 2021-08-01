@@ -1,24 +1,24 @@
 <template>
     <div class="card-carousel-wrapper">
-        <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList">
-            <v-btn icon
-                ><v-icon>{{ icons.mdiChevronLeft }}</v-icon></v-btn
-            >
+        <div class="card-carousel--nav__left" :disabled="atHeadOfList" @click="moveCarousel(-1)">
+            <v-btn icon>
+                <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
+            </v-btn>
         </div>
-        <div class="card-carousel" v-bind:style="{ 'min-width': itemWidth * windowSize + 'px' }">
+        <div class="card-carousel" :style="{ 'min-width': itemWidth * windowSize + 'px' }">
             <div class="card-carousel--overflow-container">
                 <div
                     class="card-carousel-cards"
                     :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')' }"
                 >
-                    <slot></slot>
+                    <slot />
                 </div>
             </div>
         </div>
-        <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList">
-            <v-btn icon
-                ><v-icon>{{ icons.mdiChevronRight }}</v-icon></v-btn
-            >
+        <div class="card-carousel--nav__right" :disabled="atEndOfList" @click="moveCarousel(1)">
+            <v-btn icon>
+                <v-icon>{{ icons.mdiChevronRight }}</v-icon>
+            </v-btn>
         </div>
     </div>
 </template>
@@ -40,6 +40,7 @@ export default {
         itemCount: {
             type: Number,
             required: false,
+            default: 0,
         },
     },
     data() {

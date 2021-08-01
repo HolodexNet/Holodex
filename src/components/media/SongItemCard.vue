@@ -1,6 +1,11 @@
 <template>
     <v-hover v-slot="{ hover }">
-        <v-card @click.stop="$emit('play', song)" elevation="0" style="max-width: 200px" color="transparent">
+        <v-card
+            elevation="0"
+            style="max-width: 200px"
+            color="transparent"
+            @click.stop="$emit('play', song)"
+        >
             <v-sheet class="song-card-artwork rounded" :elevation="hover ? 6 : 3">
                 <!-- actual artwork -->
                 <div class="song-card-data text-caption rounded-br-sm px-1">
@@ -17,11 +22,25 @@
                     width="200px"
                     aspect-ratio="1"
                     class="rounded"
-                ></v-img>
+                />
                 <!-- artwork not available, have a stand-in -->
-                <v-sheet v-else width="100%" height="100%" color="grey darken-1" class="d-flex pa-1 rounded">
-                    <v-btn x-large icon class="ma-auto" outlined disabled>
-                        <v-icon x-large>{{ icons.mdiMusic }}</v-icon>
+                <v-sheet
+                    v-else
+                    width="100%"
+                    height="100%"
+                    color="grey darken-1"
+                    class="d-flex pa-1 rounded"
+                >
+                    <v-btn
+                        x-large
+                        icon
+                        class="ma-auto"
+                        outlined
+                        disabled
+                    >
+                        <v-icon x-large>
+                            {{ icons.mdiMusic }}
+                        </v-icon>
                     </v-btn>
                 </v-sheet>
                 <v-avatar v-if="showArtist" class="floating-avatar" size="60">
@@ -29,7 +48,7 @@
                     <channel-img
                         :channel="{ photo: song.channel.photo, name: song.channel.name, id: song.channel_id }"
                         :size="60"
-                    ></channel-img>
+                    />
                 </v-avatar>
                 <!-- Queue up button or default item click button -->
                 <v-sheet
@@ -40,8 +59,16 @@
                     class="d-flex pa-1 hover-item rounded"
                     style="position: absolute; left: 0px"
                 >
-                    <v-btn x-small fab class="ma-auto" color="blue lighten-3" elevation="2">
-                        <v-icon small>{{ hoverIcon }}</v-icon>
+                    <v-btn
+                        x-small
+                        fab
+                        class="ma-auto"
+                        color="blue lighten-3"
+                        elevation="2"
+                    >
+                        <v-icon small>
+                            {{ hoverIcon }}
+                        </v-icon>
                     </v-btn>
                     <v-btn
                         v-if="$listeners.playNow"
@@ -52,7 +79,9 @@
                         elevation="2"
                         @click.stop.prevent="$emit('playNow', song)"
                     >
-                        <v-icon small>{{ artworkHoverIcon }}</v-icon>
+                        <v-icon small>
+                            {{ artworkHoverIcon }}
+                        </v-icon>
                     </v-btn>
                 </v-sheet>
                 <!-- Play immediately button over the artwork -->
@@ -64,10 +93,10 @@
                         {{ song.name }}
                     </v-list-item-title>
                     <v-list-item-subtitle class="text--caption song-artists">
-                        <span class="song-clickable" v-if="$listeners.channel" @click.stop="$emit('channel', song)">
+                        <span v-if="$listeners.channel" class="song-clickable" @click.stop="$emit('channel', song)">
                             {{ song.channel[nameProperty] || song.channel.name }}
                         </span>
-                        <span v-else> {{ song.channel.name }} </span> <br />
+                        <span v-else> {{ song.channel.name }} </span> <br>
                         <span class="primary--text"> / {{ song.original_artist }}</span>
                     </v-list-item-subtitle>
                 </v-list-item-content>
@@ -83,11 +112,6 @@ import { formatDistance } from "@/utils/time";
 export default {
     name: "SongItem",
     components: { ChannelImg },
-    data() {
-        return {
-            albumArt: null,
-        };
-    },
     props: {
         song: {
             type: Object,
@@ -118,11 +142,18 @@ export default {
             default: false,
         },
         hoverIcon: {
+            type: String,
             default: null,
         },
         artworkHoverIcon: {
+            type: String,
             default: null,
         },
+    },
+    data() {
+        return {
+            albumArt: null,
+        };
     },
     computed: {
         userCanDelete() {

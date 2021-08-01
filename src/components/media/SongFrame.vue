@@ -7,9 +7,7 @@
             <youtube
                 v-if="playback.song.video_id"
                 :video-id="playback.song.video_id"
-                v-on="$listeners"
-                @ready="ready"
-                :playerVars="{
+                :player-vars="{
                     ...(playback.song.start && { start: playback.song.start }),
                     ...(playback.song.end && { end: playback.song.end }),
                     autoplay: 1,
@@ -22,8 +20,9 @@
                     cc_load_policy: 0,
                     iv_load_policy: 3,
                 }"
-            >
-            </youtube>
+                v-on="$listeners"
+                @ready="ready"
+            />
         </div>
     </div>
 </template>
@@ -34,6 +33,7 @@ export default {
     components: {},
     props: {
         playback: {
+            type: Object,
             required: true,
         },
         isBackground: {
@@ -47,6 +47,11 @@ export default {
             player: null,
             // currentTime: 0,
         };
+    },
+    computed: {
+        containerClass() {
+            return this.isBackground ? "song-player-container-background" : "song-player-container";
+        },
     },
     watch: {
         // shouldAutoPlay() {
@@ -94,11 +99,6 @@ export default {
                     // if (this.currentTime >= this.end) this.$emit("done");
                 }, 1000);
             }
-        },
-    },
-    computed: {
-        containerClass() {
-            return this.isBackground ? "song-player-container-background" : "song-player-container";
         },
     },
 };

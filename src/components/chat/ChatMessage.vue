@@ -14,10 +14,10 @@
             </span>
         </div>
         <div class="tl-message">
-            <span class="tl-caption mr-1" v-if="source.timestamp">
+            <span v-if="source.timestamp" class="tl-caption mr-1">
                 {{ source.displayTime }}
             </span>
-            <span class="text--primary" v-html="source.message"></span>
+            <span class="text--primary" v-html="source.message" />
         </div>
         <v-dialog v-model="showBlockChannelDialog" width="500">
             <v-card>
@@ -35,11 +35,6 @@
 <script>
 export default {
     name: "ChatMessage",
-    data() {
-        return {
-            showBlockChannelDialog: false,
-        };
-    },
     props: {
         source: {
             type: Object,
@@ -47,7 +42,13 @@ export default {
         },
         index: {
             type: Number,
+            default: 0,
         },
+    },
+    data() {
+        return {
+            showBlockChannelDialog: false,
+        };
     },
     computed: {
         blockedNames() {

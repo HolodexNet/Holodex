@@ -1,10 +1,16 @@
 <template>
     <v-card class="rounded-sm" tile :to="`/channel/${channel.id}`">
-        <v-list-item v-if="channel" :key="channel.id" :to="`/channel/${channel.id}`" style="padding: 0 16px" three-line>
+        <v-list-item
+            v-if="channel"
+            :key="channel.id"
+            :to="`/channel/${channel.id}`"
+            style="padding: 0 16px"
+            three-line
+        >
             <v-list-item-avatar size="100" tile>
                 <ChannelImg :channel="channel" size="100" />
             </v-list-item-avatar>
-            <ChannelInfo :channel="channel" includeVideoCount>
+            <ChannelInfo :channel="channel" include-video-count>
                 <ChannelSocials :channel="channel" class="pa-0 justify-start" />
             </ChannelInfo>
         </v-list-item>

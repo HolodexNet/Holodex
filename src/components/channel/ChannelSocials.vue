@@ -9,7 +9,9 @@
             rel="noreferrer"
             target="_blank"
         >
-            <v-icon color="#C4302B">{{ icons.mdiYoutube }}</v-icon>
+            <v-icon color="#C4302B">
+                {{ icons.mdiYoutube }}
+            </v-icon>
         </v-btn>
         <v-btn
             v-if="channel.twitter && !hideTwitter"
@@ -19,11 +21,19 @@
             rel="noreferrer"
             target="_blank"
         >
-            <v-icon color="#00ACEE">{{ icons.mdiTwitter }}</v-icon>
+            <v-icon color="#00ACEE">
+                {{ icons.mdiTwitter }}
+            </v-icon>
         </v-btn>
-        <v-tooltip bottom v-if="channel.type === 'vtuber' && !hideFav">
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn icon sm @click.stop="toggleFavorite($event)" v-on="on" v-bind="attrs">
+        <v-tooltip v-if="channel.type === 'vtuber' && !hideFav" bottom>
+            <template #activator="{ on, attrs }">
+                <v-btn
+                    icon
+                    sm
+                    v-bind="attrs"
+                    @click.stop="toggleFavorite($event)"
+                    v-on="on"
+                >
                     <v-icon :color="isFavorited && isLoggedIn ? 'red' : 'gray'">
                         {{ isFavorited ? icons.mdiHeart : mdiHeartOutline }}
                     </v-icon>
@@ -34,14 +44,14 @@
                 {{ tooltip }}
             </span>
         </v-tooltip>
-        <v-tooltip bottom v-if="showDelete">
-            <template v-slot:activator="{ on, attrs }">
+        <v-tooltip v-if="showDelete" bottom>
+            <template #activator="{ on, attrs }">
                 <v-btn
                     :icon="!isBlocked"
                     :color="isBlocked ? 'red' : 'grey'"
                     v-bind="attrs"
-                    v-on="on"
                     sm
+                    v-on="on"
                     @click.stop.prevent="toggleBlocked"
                 >
                     <v-icon :left="isBlocked">
@@ -61,12 +71,6 @@
 import { mdiAccountCancel, mdiHeartOutline } from "@mdi/js";
 
 export default {
-    data() {
-        return {
-            mdiAccountCancel,
-            mdiHeartOutline,
-        };
-    },
     props: {
         channel: {
             type: Object,
@@ -96,6 +100,12 @@ export default {
             default: false,
             required: false,
         },
+    },
+    data() {
+        return {
+            mdiAccountCancel,
+            mdiHeartOutline,
+        };
     },
     computed: {
         tooltip() {

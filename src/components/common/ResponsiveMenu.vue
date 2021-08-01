@@ -8,6 +8,7 @@ export default {
     props: {
         itemCount: {
             type: Number,
+            default: 0,
         },
     },
     computed: {

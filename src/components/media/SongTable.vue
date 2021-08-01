@@ -1,15 +1,15 @@
 <template>
     <v-data-table
+        id="songSearchTable"
         :headers="RECENT_HEADER"
         :items="songs"
         :item-class="() => 'selectable'"
         item-key="id"
         class="elevation-1 recent-table"
         :class="{ 'recent-table-small': $vuetify.breakpoint.smAndDown }"
-        id="songSearchTable"
         :search="search"
         hide-default-footer
-        :items-per-page="PER_PAGE_ITEMS"
+        :items-per-page="perPageItems"
         disable-sort
         :loading="loading"
         :dense="$vuetify.breakpoint.smAndDown"
@@ -19,29 +19,35 @@
             }
         "
     >
-        <template v-if="$vuetify.breakpoint.smAndDown" v-slot:item="{ item }">
+        <template v-if="$vuetify.breakpoint.smAndDown" #item="{ item }">
             <tr>
-                <td colspan="5" :key="item.name + item.video_id + 'cell'">
+                <td :key="item.name + item.video_id + 'cell'" colspan="5">
                     <song-item
                         :song="item"
                         :class="{
                             active: item.name === currentSong.song.name && item.video_id === currentSong.song.video_id,
                         }"
-                        @play="$store.dispatch('music/skipToSong', item)"
-                        :hoverIcon="icons.mdiPlay"
+                        :hover-icon="icons.mdiPlay"
                         class="mx-0 px-0"
-                    ></song-item>
+                        @play="$store.dispatch('music/skipToSong', item)"
+                    />
                 </td>
             </tr>
         </template>
         <!-- eslint-disable-next-line vue/valid-v-slot -->
-        <template v-if="!$vuetify.breakpoint.smAndDown" v-slot:item.channel_id="{ item }">
-            <v-btn small class="hoverable" icon outlined @click.stop="() => $store.dispatch('music/skipToSong', item)">
+        <template v-if="!$vuetify.breakpoint.smAndDown" #item.channel_id="{ item }">
+            <v-btn
+                small
+                class="hoverable"
+                icon
+                outlined
+                @click.stop="() => $store.dispatch('music/skipToSong', item)"
+            >
                 <v-icon>{{ icons.mdiPlay }}</v-icon>
             </v-btn>
         </template>
         <!-- eslint-disable-next-line vue/valid-v-slot -->
-        <template v-if="!$vuetify.breakpoint.smAndDown" v-slot:item.channel.name="{ item, value }">
+        <template v-if="!$vuetify.breakpoint.smAndDown" #item.channel.name="{ item, value }">
             <span>{{ item.channel[nameProperty] || value }}</span>
             <v-btn
                 v-if="channelLink"
@@ -51,16 +57,18 @@
                 :to="`/channel/${item.channel_id}/music`"
                 @click.stop
             >
-                <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
+                <v-icon small>
+                    {{ icons.mdiLoginVariant }}
+                </v-icon>
             </v-btn>
         </template>
         <!-- eslint-disable-next-line vue/valid-v-slot -->
-        <template v-if="!$vuetify.breakpoint.smAndDown" v-slot:item.start="{ item }">
+        <template v-if="!$vuetify.breakpoint.smAndDown" #item.start="{ item }">
             <span>{{ formatDuration(item.end * 1000 - item.start * 1000) }}</span>
         </template>
         <!-- eslint-disable-next-line vue/valid-v-slot -->
-        <template v-if="!$vuetify.breakpoint.smAndDown" v-slot:item.available_at="{ item }">
-            <span class="blue-grey--text" v-if="$vuetify.breakpoint.xs || $vuetify.breakpoint.mdAndUp">{{
+        <template v-if="!$vuetify.breakpoint.smAndDown" #item.available_at="{ item }">
+            <span v-if="$vuetify.breakpoint.xs || $vuetify.breakpoint.mdAndUp" class="blue-grey--text">{{
                 formatDate(item.available_at)
             }}</span>
             <v-btn
@@ -71,10 +79,21 @@
                 :href="`/watch/${item.video_id}?t=${item.start}`"
                 @click.stop
             >
-                <v-icon small>{{ icons.mdiLoginVariant }}</v-icon>
+                <v-icon small>
+                    {{ icons.mdiLoginVariant }}
+                </v-icon>
             </v-btn>
-            <v-btn class="popup" small icon target="_blank" :href="`/edit/video/${item.video_id}/music`" @click.stop>
-                <v-icon small>{{ icons.mdiPencil }}</v-icon>
+            <v-btn
+                class="popup"
+                small
+                icon
+                target="_blank"
+                :href="`/edit/video/${item.video_id}/music`"
+                @click.stop
+            >
+                <v-icon small>
+                    {{ icons.mdiPencil }}
+                </v-icon>
             </v-btn>
         </template>
     </v-data-table>
@@ -86,18 +105,15 @@ import { mapState, mapGetters } from "vuex";
 import SongItem from "./SongItem.vue";
 
 export default {
-    components: { SongItem },
     name: "ChannelMusic",
-    data() {
-        return {};
-    },
+    components: { SongItem },
     props: {
         search: {
             type: String,
             default: null,
             required: false,
         },
-        PER_PAGE_ITEMS: {
+        perPageItems: {
             type: Number,
             default: 20,
             required: false,
@@ -117,6 +133,9 @@ export default {
             required: false,
         },
     },
+    data() {
+        return {};
+    },
     computed: {
         RECENT_HEADER() {
             // const breakpoint = $vuetify.breakpoint.name
@@ -130,7 +149,12 @@ export default {
                         width: "20px",
                     },
                     { text: this.$t("editor.music.trackNameInput"), sortable: false },
-                    { text: this.$t("component.songList.songDuration"), value: "start", width: "100px", align: "end" },
+                    {
+                        text: this.$t("component.songList.songDuration"),
+                        value: "start",
+                        width: "100px",
+                        align: "end",
+                    },
                 ];
             }
             return [
@@ -150,7 +174,12 @@ export default {
                 ...(this.$vuetify.breakpoint.mdAndUp
                     ? [{ text: this.$t("editor.music.originalArtistInput"), width: "20%", value: "original_artist" }]
                     : []),
-                { text: this.$t("component.songList.songDuration"), value: "start", width: "100px", align: "end" },
+                {
+                    text: this.$t("component.songList.songDuration"),
+                    value: "start",
+                    width: "100px",
+                    align: "end",
+                },
                 {
                     text: this.$t("component.songList.sangOnTime"),
                     value: "available_at",

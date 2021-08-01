@@ -10,8 +10,10 @@
         class="d-flex justify-center py-4"
         style="min-height: 100px"
     >
-        <LoadingOverlay :isLoading="status === STATUSES.LOADING" :showError="status === STATUSES.ERROR" />
-        <div v-if="status === STATUSES.COMPLETED">End of list</div>
+        <LoadingOverlay :is-loading="status === STATUSES.LOADING" :show-error="status === STATUSES.ERROR" />
+        <div v-if="status === STATUSES.COMPLETED">
+            End of list
+        </div>
     </div>
 </template>
 
@@ -22,6 +24,18 @@ export default {
     name: "InfiniteLoad",
     components: {
         LoadingOverlay,
+    },
+    props: {
+        identifier: {
+            type: [String, Number],
+            default: +new Date(),
+        },
+        initVisible: {
+            // initial visibility, set to FALSE to prevent page loading at start. Usually you want TRUE
+            // unless you're *absolutely* sure the object is not going to be visible.
+            default: true,
+            type: Boolean,
+        },
     },
     data() {
         return {
@@ -36,24 +50,14 @@ export default {
             isVisible: false, // always invisible at start
         };
     },
-    props: {
-        identifier: {
-            default: +new Date(),
-        },
-        initVisible: {
-            // initial visibility, set to FALSE to prevent page loading at start. Usually you want TRUE
-            // unless you're *absolutely* sure the object is not going to be visible.
-            default: true,
-            type: Boolean,
-        },
-    },
-    mounted() {
-        if (this.initVisible) this.emitEvent();
-    },
+
     watch: {
         identifier() {
             this.reset();
         },
+    },
+    mounted() {
+        if (this.initVisible) this.emitEvent();
     },
     methods: {
         reset() {

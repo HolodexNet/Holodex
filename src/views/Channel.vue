@@ -1,5 +1,5 @@
 <template>
-    <v-container class="channel-container" fluid v-if="!isLoading && !hasError">
+    <v-container v-if="!isLoading && !hasError" class="channel-container" fluid>
         <v-card>
             <v-img v-if="bannerImage" :src="bannerImage" class="channel-banner" />
             <v-container :class="{ 'pa-0': isMobile, 'pa-1': !isMobile }">
@@ -9,23 +9,28 @@
                             <ChannelImg :size="avatarSize" :channel="channel" />
                         </v-list-item-avatar>
                         <ChannelInfo :channel="channel" />
-                        <ChannelSocials :channel="channel" showDelete />
+                        <ChannelSocials :channel="channel" show-delete />
                     </v-list-item>
                 </v-list>
             </v-container>
             <v-container class="pa-0">
                 <v-tabs>
-                    <v-tab v-for="tab in tabs.filter((t) => !t.hide)" :key="tab.path" :to="tab.path" :exact="tab.exact">
+                    <v-tab
+                        v-for="tab in tabs.filter((t) => !t.hide)"
+                        :key="tab.path"
+                        :to="tab.path"
+                        :exact="tab.exact"
+                    >
                         {{ tab.name }}
                     </v-tab>
                 </v-tabs>
             </v-container>
         </v-card>
         <v-container class="channel" style="min-height: 85vh">
-            <router-view></router-view>
+            <router-view />
         </v-container>
     </v-container>
-    <LoadingOverlay :isLoading="isLoading" :showError="hasError" v-else />
+    <LoadingOverlay v-else :is-loading="isLoading" :show-error="hasError" />
 </template>
 
 <script lang="ts">
@@ -50,14 +55,6 @@ export default {
         ChannelInfo,
         ChannelImg,
         LoadingOverlay,
-    },
-    data() {
-        return {
-            tab: 0,
-        };
-    },
-    created() {
-        this.init();
     },
     computed: {
         ...mapState("channel", ["id", "channel", "isLoading", "hasError"]),
@@ -119,6 +116,9 @@ export default {
         metaImage() {
             return this.channel.photo;
         },
+    },
+    created() {
+        this.init();
     },
     methods: {
         init() {

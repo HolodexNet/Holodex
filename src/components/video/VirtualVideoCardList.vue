@@ -2,6 +2,7 @@
     <!-- <v-container class="py-0" style="position: relative" fluid :id="'t' + randomId"> -->
     <!-- Video Card grid rows -->
     <virtual-list
+        ref="virtualVideoList"
         style="overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain"
         class="thin-scroll-bar"
         :style="{ height: computedHeight }"
@@ -14,31 +15,19 @@
         :page-mode="pageMode"
         :item-class="'virtual-video-list-item'"
         :item-class-add="checkActive"
-        ref="virtualVideoList"
     />
     <!-- </v-container> -->
 </template>
 
 <script lang="ts">
 import VideoCard from "@/components/video/VideoCard.vue";
-import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
 import VirtualList from "vue-virtual-scroll-list";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
 export default {
     name: "VirtualVideoCardList",
     components: {
-        VideoCard,
-        ApiErrorMessage,
         VirtualList,
-    },
-    data() {
-        return {
-            expanded: false,
-            randomId: Date.now(),
-            VideoCard,
-            ...{ mdiChevronUp, mdiChevronDown },
-        };
     },
     props: {
         // videos: {
@@ -73,24 +62,21 @@ export default {
         },
         pageMode: {
             type: Boolean,
-            default: false,
         },
         activeId: {
             required: false,
             type: String,
+            default: null,
         },
         dense: {
             type: Boolean,
-            default: false,
         },
         // to be used in conjunction with videoClicked event
         disableDefaultClick: {
             type: Boolean,
-            default: false,
         },
         activePlaylistItem: {
             type: Boolean,
-            default: false,
         },
         activeIndex: {
             type: Number,
@@ -101,14 +87,13 @@ export default {
             default: "500px",
         },
     },
-    mounted() {
-        this.$refs.virtualVideoList.scrollToIndex(this.activeIndex);
-    },
-    methods: {
-        checkActive(index) {
-            if (index === this.activeIndex) return "video-card-active";
-            return "";
-        },
+    data() {
+        return {
+            expanded: false,
+            randomId: Date.now(),
+            VideoCard,
+            ...{ mdiChevronUp, mdiChevronDown },
+        };
     },
     computed: {
         videos() {
@@ -124,6 +109,15 @@ export default {
     watch: {
         activeIndex(idx) {
             this.$refs.virtualVideoList.scrollToIndex(idx);
+        },
+    },
+    mounted() {
+        this.$refs.virtualVideoList.scrollToIndex(this.activeIndex);
+    },
+    methods: {
+        checkActive(index) {
+            if (index === this.activeIndex) return "video-card-active";
+            return "";
         },
     },
 };

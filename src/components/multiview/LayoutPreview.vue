@@ -1,7 +1,7 @@
 <template>
     <div class="layout-preview" :class="{ mobile: mobile, desktop: !mobile, 'theme--light': !$vuetify.theme.dark }">
         <template v-for="l in layout">
-            <div class="cell" :key="l.i" :style="getStyle(l)">
+            <div :key="l.i" class="cell" :style="getStyle(l)">
                 <span v-if="content && content[l.i] && content[l.i].type === 'chat'">💬</span>
             </div>
         </template>

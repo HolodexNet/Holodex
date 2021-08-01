@@ -1,5 +1,6 @@
+/* eslint-disable vue/require-default-prop */
 <template>
-    <div :id="elementId"></div>
+    <div :id="elementId" />
 </template>
 
 <script>
@@ -14,7 +15,7 @@ Vue.use(LoadScript);
 let pid = 0;
 
 export default {
-    name: "twitch-player",
+    name: "TwitchPlayer",
     props: {
         width: {
             type: String,
@@ -41,9 +42,18 @@ export default {
             type: Boolean,
             default: false,
         },
-        channel: String,
-        collection: String,
-        video: String,
+        channel: {
+            type: String,
+            default: "",
+        },
+        collection: {
+            type: String,
+            default: "",
+        },
+        video: {
+            type: String,
+            default: "",
+        },
     },
     data() {
         pid += 1;
@@ -51,6 +61,28 @@ export default {
             player: {},
             elementId: `twitch-player-${pid}`,
         };
+    },
+    watch: {
+        channel(newChannel) {
+            this.player.setChannel(newChannel);
+        },
+        collection(newCollection) {
+            this.player.setCollection(newCollection);
+        },
+        video(newVideo) {
+            this.player.setVideo(newVideo);
+        },
+        volume(newVolume) {
+            this.player.setVolume(newVolume);
+        },
+        quality(newQuality) {
+            if (this.player.getQualities().indexOf(newQuality) !== -1) {
+                this.player.setQuality(newQuality);
+            }
+        },
+        mute(value) {
+            this.player.setMuted(value);
+        },
     },
     beforeCreate() {
         Vue.loadScript("https://player.twitch.tv/js/embed/v1.js")
@@ -145,30 +177,8 @@ export default {
             return this.channel === this.player.getChannel();
         },
         checkVideo() {
-            // eslint-disable-next-line no-return-assign
+            // eslint-disable-next-line
             return (this.video = this.player.getVideo());
-        },
-    },
-    watch: {
-        channel(newChannel) {
-            this.player.setChannel(newChannel);
-        },
-        collection(newCollection) {
-            this.player.setCollection(newCollection);
-        },
-        video(newVideo) {
-            this.player.setVideo(newVideo);
-        },
-        volume(newVolume) {
-            this.player.setVolume(newVolume);
-        },
-        quality(newQuality) {
-            if (this.player.getQualities().indexOf(newQuality) !== -1) {
-                this.player.setQuality(newQuality);
-            }
-        },
-        mute(value) {
-            this.player.setMuted(value);
         },
     },
 };

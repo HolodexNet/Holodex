@@ -1,17 +1,17 @@
 <template>
     <v-bottom-navigation
+        v-show="!isWatchPage"
         :value="value"
         grow
         :input-value="active"
         :app="!isWatchPage"
-        v-show="!isWatchPage"
         :scroll-threshold="10000"
         class="bottom-nav"
     >
         <template v-for="page in pages">
             <v-btn
-                :value="page.path"
                 :key="page.name"
+                :value="page.path"
                 :to="page.path"
                 class="nav-btn"
                 style="background: transparent"

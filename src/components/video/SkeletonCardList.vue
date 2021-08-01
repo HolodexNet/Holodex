@@ -13,7 +13,7 @@
                         type="image, list-item-avatar-three-line"
                         style="position: absolute; width: 100%; height: 100%"
                         boilerplate
-                    ></v-skeleton-loader>
+                    />
                 </div>
             </v-col>
         </v-row>
@@ -23,12 +23,6 @@
 <script lang="ts">
 export default {
     name: "SkeletonCardList",
-    data() {
-        return {
-            expanded: false,
-            randomId: Date.now(),
-        };
-    },
     props: {
         horizontal: {
             required: false,
@@ -62,24 +56,28 @@ export default {
             default: 24,
         },
     },
-    methods: {
-        handleVideoClick(video) {
-            this.$emit("videoClicked", video);
-        },
+    data() {
+        return {
+            expanded: false,
+            randomId: Date.now(),
+        };
     },
     computed: {
         processedVideos() {
             const currentTime = new Date();
             const size = this.limitRows ? this.limitRows * this.colSize : this.expectedSize;
-            return [...new Array(size)].map((el, index) => {
-                return {
-                    id: +currentTime + index,
-                };
-            });
+            return [...new Array(size)].map((el, index) => ({
+                id: +currentTime + index,
+            }));
         },
         colSize() {
             if (this.horizontal) return 1;
             return this.cols[this.$vuetify.breakpoint.name];
+        },
+    },
+    methods: {
+        handleVideoClick(video) {
+            this.$emit("videoClicked", video);
         },
     },
 };

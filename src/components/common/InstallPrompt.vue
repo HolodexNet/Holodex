@@ -1,33 +1,48 @@
 <template>
-    <div class="pa-2 primary" v-if="showInstallPrompt">
+    <div v-if="showInstallPrompt" class="pa-2 primary">
         <div class="d-flex align-center">
             <img
                 src="https://holodex.net/img/icons/apple-touch-icon-152x152.png"
                 style="height: 40px; width: 40px; border-radius: 6px"
-            />
-            <div class="ml-2 text-subtitle-2">{{ $t("component.installPrompt.title") }}</div>
+            >
+            <div class="ml-2 text-subtitle-2">
+                {{ $t("component.installPrompt.title") }}
+            </div>
         </div>
-        <div class="text-caption my-2">{{ $t("component.installPrompt.callToAction") }}</div>
+        <div class="text-caption my-2">
+            {{ $t("component.installPrompt.callToAction") }}
+        </div>
         <div class="d-flex justify-end">
-            <v-btn text small style="color: rgba(255, 255, 255, 0.7)" @click="hideInstallPrompt">{{
-                $t("component.installPrompt.notNowBtn")
-            }}</v-btn>
-            <v-btn small color="secondary" @click="install">{{ $t("component.installPrompt.installBtn") }}</v-btn>
+            <v-btn
+                text
+                small
+                style="color: rgba(255, 255, 255, 0.7)"
+                @click="hideInstallPrompt"
+            >
+                {{ $t("component.installPrompt.notNowBtn") }}
+            </v-btn>
+            <v-btn small color="secondary" @click="install">
+                {{ $t("component.installPrompt.installBtn") }}
+            </v-btn>
         </div>
-        <v-dialog max-width="350" v-model="iOSInstallDialog">
+        <v-dialog v-model="iOSInstallDialog" max-width="350">
             <v-card class="py-4">
                 <div style="text-align: center">
                     <div>
                         <img
                             src="https://holodex.net/img/icons/apple-touch-icon-152x152.png"
                             style="height: 75px; width: 75px; border-radius: 6px"
-                        />
+                        >
                     </div>
-                    <div class="text-h5">{{ $t("component.installPrompt.iOS.popup") }}</div>
-                    <v-divider></v-divider>
+                    <div class="text-h5">
+                        {{ $t("component.installPrompt.iOS.popup") }}
+                    </div>
+                    <v-divider />
                     <div class="mt-3">
                         {{ $t("component.installPrompt.iOS.beforeExportIcon") }}
-                        <v-icon color="secondary">{{ mdiExportVariant }}</v-icon>
+                        <v-icon color="secondary">
+                            {{ mdiExportVariant }}
+                        </v-icon>
                         {{ $t("component.installPrompt.iOS.afterExportIcon") }}
                     </div>
                 </div>
@@ -58,6 +73,18 @@ export default {
             mdiExportVariant,
         };
     },
+    computed: {
+        showInstallPrompt() {
+            const promptWeekly = new Date().getTime() - this.$store.state.lastShownInstallPrompt > 1000 * 60 * 60 * 24 * 7;
+            if (this.isAppleDevice() && !this.isStandAlone() && promptWeekly) {
+                return true;
+            }
+            if (this.deferredPrompt && promptWeekly) {
+                return true;
+            }
+            return false;
+        },
+    },
     mounted() {
         window.addEventListener("beforeinstallprompt", (e) => {
             // Prevent the mini-infobar from appearing on mobile
@@ -73,19 +100,6 @@ export default {
         // this.$gtag.event("pwa:source", {
         //     event_label: this.isStandAlone() ? "pwa" : "browser",
         // });
-    },
-    computed: {
-        showInstallPrompt() {
-            const promptWeekly =
-                new Date().getTime() - this.$store.state.lastShownInstallPrompt > 1000 * 60 * 60 * 24 * 7;
-            if (this.isAppleDevice() && !this.isStandAlone() && promptWeekly) {
-                return true;
-            }
-            if (this.deferredPrompt && promptWeekly) {
-                return true;
-            }
-            return false;
-        },
     },
     methods: {
         async install() {

@@ -2,6 +2,7 @@
     <v-container fluid class="pa-0">
         <div style="font-size: 1rem !important; font-weight: 500" class="ml-0 mb-1 d-flex">
             <v-text-field
+                v-if="editNameMode"
                 v-model="playlistName"
                 autofocus
                 single-line
@@ -9,42 +10,67 @@
                 style="flex-basis: 80"
                 class="flex-shrink flex-grow pt-0 mt-0"
                 :append-icon="icons.mdiPencil"
-                v-if="editNameMode"
+                :rules="[(v) => v.length > 0 || 'Should not be empty']"
                 @keydown.enter="editNameMode = false"
                 @click:append="editNameMode = false"
-                :rules="[(v) => v.length > 0 || 'Should not be empty']"
-            >
-            </v-text-field>
-            <span class="text-h5 flex-grow flex-shrink" style="flex-basis: 100%" v-else>
-                <v-btn icon small class="float-right" v-show="isEditable" @click="editNameMode = true">
+            />
+            <span v-else class="text-h5 flex-grow flex-shrink" style="flex-basis: 100%">
+                <v-btn
+                    v-show="isEditable"
+                    icon
+                    small
+                    class="float-right"
+                    @click="editNameMode = true"
+                >
                     <v-icon> {{ icons.mdiPencil }} </v-icon>
                 </v-btn>
                 {{ playlist.name }}
             </span>
-            <v-btn icon small class="float-right" v-show="!isSaved" color="success" @click="trySaving"
-                ><v-icon>{{ mdiContentSave }}</v-icon></v-btn
+            <v-btn
+                v-show="!isSaved"
+                icon
+                small
+                class="float-right"
+                color="success"
+                @click="trySaving"
             >
+                <v-icon>{{ mdiContentSave }}</v-icon>
+            </v-btn>
             <v-menu bottom offset-y nudge-width="500">
-                <template v-slot:activator="{ on }">
-                    <v-btn v-on="on" icon small class="float-right">
+                <template #activator="{ on }">
+                    <v-btn
+                        icon
+                        small
+                        class="float-right"
+                        v-on="on"
+                    >
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                     </v-btn>
                 </template>
                 <v-list nav>
-                    <v-list-item v-if="isEditable" @click="$emit('new-playlist')"
-                        ><v-icon left color="success">{{ icons.mdiPlusBox }}</v-icon>
+                    <v-list-item v-if="isEditable" @click="$emit('new-playlist')">
+                        <v-icon left color="success">
+                            {{ icons.mdiPlusBox }}
+                        </v-icon>
                         {{ $t("component.playlist.menu.new-playlist") }}
                     </v-list-item>
                     <!-- feed back a green ripple on click... theoretically -->
-                    <v-list-item v-if="isEditable" @click="editNameMode = true"
-                        ><v-icon left>{{ icons.mdiPencil }}</v-icon> {{ $t("component.playlist.menu.rename-playlist") }}
+                    <v-list-item v-if="isEditable" @click="editNameMode = true">
+                        <v-icon left>
+                            {{ icons.mdiPencil }}
+                        </v-icon>
+                        {{ $t("component.playlist.menu.rename-playlist") }}
                     </v-list-item>
                     <!-- $store.dispatch('playlist/setActivePlaylistByID', playlist.id) -->
                     <v-list-item
                         v-if="isEditable"
-                        @click="$store.dispatch('playlist/setActivePlaylistByID', playlist.id)"
                         :disabled="isSaved || !playlist.id"
-                        ><v-icon left>{{ icons.mdiRefresh }}</v-icon> {{ $t("component.playlist.menu.reset-unsaved") }}
+                        @click="$store.dispatch('playlist/setActivePlaylistByID', playlist.id)"
+                    >
+                        <v-icon left>
+                            {{ icons.mdiRefresh }}
+                        </v-icon>
+                        {{ $t("component.playlist.menu.reset-unsaved") }}
                     </v-list-item>
                     <!-- <v-list-item :ripple="{ class: 'green--text' }" :disabled="!playlist.id"
                         ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
@@ -53,21 +79,28 @@
                     <v-divider />
                     <!-- Exporting options -->
                     <v-list-item disabled class="mt-1 mb-1" dense>
-                        <v-icon left disabled>{{ icons.mdiOpenInNew }}</v-icon
-                        ><span>{{ $t("component.playlist.menu.export-playlist") }}</span>
+                        <v-icon left disabled>
+                            {{ icons.mdiOpenInNew }}
+                        </v-icon><span>{{ $t("component.playlist.menu.export-playlist") }}</span>
                     </v-list-item>
-                    <v-list-item dense @click.stop="instructionsDialog = true" class="ml-5">
-                        <v-icon left>{{ icons.mdiYoutube }}</v-icon>
+                    <v-list-item dense class="ml-5" @click.stop="instructionsDialog = true">
+                        <v-icon left>
+                            {{ icons.mdiYoutube }}
+                        </v-icon>
                         {{ $t("views.library.exportYtPlaylist") }}
                     </v-list-item>
-                    <v-list-item dense @click.stop="downloadAsCSV" class="ml-5 mb-2">
-                        <v-icon left>{{ mdiFileDelimited }}</v-icon>
+                    <v-list-item dense class="ml-5 mb-2" @click.stop="downloadAsCSV">
+                        <v-icon left>
+                            {{ mdiFileDelimited }}
+                        </v-icon>
                         {{ $t("views.library.exportCsv") }}
                     </v-list-item>
                     <!-- End Exporting options -->
                     <v-divider class="mb-2" />
-                    <v-list-item @click="$store.dispatch('playlist/deleteActivePlaylist')" v-if="isEditable">
-                        <v-icon left color="error"> {{ icons.mdiDelete }} </v-icon>
+                    <v-list-item v-if="isEditable" @click="$store.dispatch('playlist/deleteActivePlaylist')">
+                        <v-icon left color="error">
+                            {{ icons.mdiDelete }}
+                        </v-icon>
                         {{
                             playlist.id
                                 ? $t("component.playlist.menu.delete-playlist")
@@ -80,7 +113,7 @@
         <v-snackbar v-model="loginWarning" :timeout="5000" color="warning">
             {{ $t("component.playlist.save-error-not-logged-in") }}
 
-            <template v-slot:action="{ attrs }">
+            <template #action="{ attrs }">
                 <v-btn
                     color="red darken-2"
                     text
@@ -99,12 +132,11 @@
         </span>
         <VirtualVideoCardList
             :playlist="playlist"
-            includeChannel
+            include-channel
             :horizontal="horizontal"
-            activePlaylistItem
+            active-playlist-item
             class="playlist-video-list"
-        >
-        </VirtualVideoCardList>
+        />
 
         <!--* INSTRUCTIONS DIALOG FOR YOUTUBE --->
         <v-dialog v-model="instructionsDialog" :width="$store.state.isMobile ? '90%' : '60vw'">
@@ -113,20 +145,20 @@
                 <v-card-text>
                     <v-row>
                         <v-col cols="">
-                            <p v-html="$t('views.library.exportYTExplanation')"></p>
-                            <br />
+                            <p v-html="$t('views.library.exportYTExplanation')" />
+                            <br>
 
-                            <br />
-                            <p v-html="$t('views.library.exportYTInstructions')"></p>
+                            <br>
+                            <p v-html="$t('views.library.exportYTInstructions')" />
                             <v-btn class="mt-2 mx-2" color="green" @click="exportToYT">
                                 {{ $t("views.library.createYtPlaylistButton", [(playlist.videos || []).length]) }}
                             </v-btn>
-                            <v-btn class="mt-2 mx-2" @click="instructionsDialog = false">{{
-                                $t("views.library.deleteConfirmationCancel")
-                            }}</v-btn>
+                            <v-btn class="mt-2 mx-2" @click="instructionsDialog = false">
+                                {{ $t("views.library.deleteConfirmationCancel") }}
+                            </v-btn>
                         </v-col>
                         <v-col cols="12" md="auto">
-                            <img src="/img/playlist-instruction.jpg" />
+                            <img src="/img/playlist-instruction.jpg">
                         </v-col>
                     </v-row>
                 </v-card-text>
@@ -140,7 +172,9 @@ import VirtualVideoCardList from "@/components/video/VirtualVideoCardList.vue";
 import { Playlist } from "@/utils/types";
 import { PropType } from "vue";
 import { json2csvAsync } from "json-2-csv";
-import { mdiContentSave, mdiFileDelimited, mdiChevronDoubleUp, mdiChevronDoubleDown } from "@mdi/js";
+import {
+    mdiContentSave, mdiFileDelimited, mdiChevronDoubleUp, mdiChevronDoubleDown,
+} from "@mdi/js";
 import { MAX_PLAYLIST_LENGTH } from "@/utils/consts";
 
 export default {

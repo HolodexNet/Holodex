@@ -18,14 +18,16 @@
                 <VirtualVideoCardList
                     :videos="videos"
                     :playlist="playlist"
-                    includeChannel
+                    include-channel
                     horizontal
-                    ignoreBlock
-                    :activeIndex="value"
+                    ignore-block
+                    :active-index="value"
                     :style="{ height: Math.min(videos.length, 6) * 102 + 'px' }"
                 />
             </template>
-            <v-card-title v-if="hasError"> Error loading playlist, does it exist? </v-card-title>
+            <v-card-title v-if="hasError">
+                Error loading playlist, does it exist?
+            </v-card-title>
         </v-card>
         <!-- </v-card-text> -->
     </div>
@@ -35,13 +37,11 @@
 import VirtualVideoCardList from "@/components/video/VirtualVideoCardList.vue";
 import { mapState } from "vuex";
 import backendApi from "@/utils/backend-api";
-import LoadingOverlay from "../common/LoadingOverlay.vue";
 
 export default {
     name: "WatchPlaylist",
     components: {
         VirtualVideoCardList,
-        LoadingOverlay,
     },
     props: {
         // sync'd playlist index value
@@ -63,6 +63,29 @@ export default {
             // userEnforced: false,
             // activeIndex: 0,
         };
+    },
+    computed: {
+        ...mapState("watch", ["video"]),
+        ...mapState("playlist", ["active", "isSaved"]),
+        videos() {
+            return (this.playlist && this.playlist.videos) || [];
+        },
+    },
+    watch: {
+        value(nw) {
+            if (
+                !this.videos.length
+                || this.videos.length === nw
+                || nw === -1
+                || this.$route.params.id === this.videos[nw].id
+            ) {
+                return;
+            }
+            this.$emit("playNext", { video: this.videos[nw] });
+        },
+        video() {
+            this.updateCurrentIndex();
+        },
     },
     beforeDestroy() {},
     mounted() {
@@ -97,28 +120,6 @@ export default {
                 .finally(() => {
                     this.isLoading = false;
                 });
-        },
-    },
-    watch: {
-        value(nw) {
-            if (
-                !this.videos.length ||
-                this.videos.length === nw ||
-                nw === -1 ||
-                this.$route.params.id === this.videos[nw].id
-            )
-                return;
-            this.$emit("playNext", { video: this.videos[nw] });
-        },
-        video() {
-            this.updateCurrentIndex();
-        },
-    },
-    computed: {
-        ...mapState("watch", ["video"]),
-        ...mapState("playlist", ["active", "isSaved"]),
-        videos() {
-            return (this.playlist && this.playlist.videos) || [];
         },
     },
 };

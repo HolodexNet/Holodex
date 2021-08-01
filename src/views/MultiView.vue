@@ -1,12 +1,12 @@
 <template>
-    <div style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }" ref="fullscreen-content">
+    <div ref="fullscreen-content" style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }">
         <!-- Floating tool bar -->
         <!--  -->
-        <MultiviewToolbar :buttons="buttons" v-show="!collapseToolbar" v-model="collapseToolbar">
-            <template v-slot:left>
+        <MultiviewToolbar v-show="!collapseToolbar" v-model="collapseToolbar" :buttons="buttons">
+            <template #left>
                 <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
                 <!-- Single Button video selector for xs displays -->
-                <v-btn @click="handleToolbarShowSelector" icon large>
+                <v-btn icon large @click="handleToolbarShowSelector">
                     <v-icon style="border-radius: 0 position: relative; margin-right: 3px; cursor: pointer" large>
                         {{ mdiCardPlus }}
                     </v-icon>
@@ -41,11 +41,11 @@
         <!-- Floating button to open toolbar when collapsed -->
         <v-btn
             v-if="collapseToolbar"
-            @click="collapseToolbar = false"
             class="open-mv-toolbar-btn"
             tile
             small
             color="secondary"
+            @click="collapseToolbar = false"
         >
             <v-icon>{{ icons.mdiChevronDown }}</v-icon>
         </v-btn>
@@ -65,19 +65,19 @@
         >
             <grid-item
                 v-for="item in layout"
+                :key="'mvgrid' + item.i"
                 :static="item.static"
                 :x="item.x"
                 :y="item.y"
                 :w="item.w"
                 :h="item.h"
                 :i="item.i"
-                :isDraggable="item.isDraggable !== false"
-                :isResizable="item.isResizable !== false"
-                :key="'mvgrid' + item.i"
+                :is-draggable="item.isDraggable !== false"
+                :is-resizable="item.isResizable !== false"
             >
                 <cell
-                    :cellWidth="columnWidth * item.w"
                     :ref="`cell`"
+                    :cell-width="columnWidth * item.w"
                     :item="item"
                     @showSelector="(id) => (showSelectorForId = id)"
                     @delete="handleDelete"
@@ -107,10 +107,10 @@
 
         <LayoutChangePrompt
             v-model="overwriteDialog"
-            :cancelFn="overwriteCancel"
-            :confirmFn="overwriteConfirm"
-            :defaultOverwrite="overwriteMerge"
-            :layoutPreview="overwriteLayoutPreview"
+            :cancel-fn="overwriteCancel"
+            :confirm-fn="overwriteConfirm"
+            :default-overwrite="overwriteMerge"
+            :layout-preview="overwriteLayoutPreview"
         />
 
         <v-dialog v-model="showMediaControls" max-width="400">
@@ -132,7 +132,9 @@
                                         </v-icon>
                                     </v-btn>
                                     <v-btn icon @click="allCellAction('refresh')">
-                                        <v-icon color="secondary lighten-1">{{ icons.mdiRefresh }}</v-icon>
+                                        <v-icon color="secondary lighten-1">
+                                            {{ icons.mdiRefresh }}
+                                        </v-icon>
                                     </v-btn>
                                     <v-btn icon @click="allCellAction('unmute')">
                                         <v-icon color="secondary lighten-1">
@@ -171,10 +173,14 @@
                                             </v-icon>
                                         </v-btn>
                                         <v-btn icon @click="cellState.refresh()">
-                                            <v-icon color="grey lighten-1">{{ icons.mdiRefresh }}</v-icon>
+                                            <v-icon color="grey lighten-1">
+                                                {{ icons.mdiRefresh }}
+                                            </v-icon>
                                         </v-btn>
                                         <v-btn icon @click="handleDelete(findKeyByVideoId(cellState.cellContent.id))">
-                                            <v-icon color="grey lighten-1">{{ icons.mdiDelete }}</v-icon>
+                                            <v-icon color="grey lighten-1">
+                                                {{ icons.mdiDelete }}
+                                            </v-icon>
                                         </v-btn>
                                         <v-btn icon @click="cellState.setMuted(!cellState.muted)">
                                             <v-icon color="grey lighten-1">
@@ -207,22 +213,15 @@ import MultiviewToolbar from "@/components/multiview/MultiviewToolbar.vue";
 import MultiviewLayoutMixin from "@/components/multiview/MultiviewLayoutMixin";
 import LayoutChangePrompt from "@/components/multiview/LayoutChangePrompt.vue";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
-import { mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical } from "@mdi/js";
+import {
+    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical,
+} from "@mdi/js";
 import { Content, decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
 import api from "@/utils/backend-api";
 
 export default {
     name: "MultiView",
-    mixins: [MultiviewLayoutMixin],
-    metaInfo() {
-        const vm = this;
-        return {
-            get title() {
-                return `${vm.$t("component.mainNav.multiview")} - Holodex`;
-            },
-        };
-    },
     components: {
         GridLayout,
         GridItem,
@@ -232,6 +231,15 @@ export default {
         PresetEditor,
         MultiviewToolbar,
         LayoutChangePrompt,
+    },
+    mixins: [MultiviewLayoutMixin],
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.multiview")} - Holodex`;
+            },
+        };
     },
 
     data() {
@@ -253,53 +261,6 @@ export default {
             showPresetEditor: false,
             showMediaControls: false,
         };
-    },
-    async mounted() {
-        // Check if permalink layout is empty
-        if (this.$route.params.layout) {
-            // TODO: verify layout
-            try {
-                const parsed = decodeLayout(this.$route.params.layout);
-                if (parsed.layout && parsed.content) {
-                    // Load missing video data from backend
-                    const { data } = await api.videos({
-                        include: "live_info",
-                        id: Object.values(parsed.content)
-                            .filter((x: Content) => x.type === "video" && (x.video as any).type !== "twitch")
-                            .map((x: Content) => x.id)
-                            .join(","),
-                    });
-                    if (data.length) {
-                        data.forEach((video) => {
-                            const matchingKey = Object.keys(parsed.content).find((key) => {
-                                return parsed.content[key].id === video.id;
-                            });
-                            if (matchingKey) {
-                                parsed.content[matchingKey].video = video;
-                            } else {
-                                parsed.content[matchingKey].custom = true;
-                            }
-                        });
-                    }
-                    // prompt overwrite with permalink, remove permalink if cancelled
-                    try {
-                        this.$gtag.event("init-from-link", {
-                            event_category: "multiview",
-                            event_label: `cells:${parsed?.layout?.length}`,
-                        });
-                        // eslint-disable-next-line no-empty
-                    } catch {}
-
-                    this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
-                }
-            } catch (e) {
-                console.error(e);
-                console.log("invalid layout");
-            }
-        }
-    },
-    created() {
-        Vue.use(VueYoutube);
     },
     computed: {
         buttons() {
@@ -372,6 +333,53 @@ export default {
         columnWidth() {
             return this.$vuetify.breakpoint.width / 24.0;
         },
+    },
+    async mounted() {
+        // Check if permalink layout is empty
+        if (this.$route.params.layout) {
+            // TODO: verify layout
+            try {
+                const parsed = decodeLayout(this.$route.params.layout);
+                if (parsed.layout && parsed.content) {
+                    // Load missing video data from backend
+                    const { data } = await api.videos({
+                        include: "live_info",
+                        id: Object.values(parsed.content)
+                            .filter((x: Content) => x.type === "video" && (x.video as any).type !== "twitch")
+                            .map((x: Content) => x.id)
+                            .join(","),
+                    });
+                    if (data.length) {
+                        data.forEach((video) => {
+                            const matchingKey = Object.keys(parsed.content).find(
+                                (key) => parsed.content[key].id === video.id,
+                            );
+                            if (matchingKey) {
+                                parsed.content[matchingKey].video = video;
+                            } else {
+                                parsed.content[matchingKey].custom = true;
+                            }
+                        });
+                    }
+                    // prompt overwrite with permalink, remove permalink if cancelled
+                    try {
+                        this.$gtag.event("init-from-link", {
+                            event_category: "multiview",
+                            event_label: `cells:${parsed?.layout?.length}`,
+                        });
+                        // eslint-disable-next-line no-empty
+                    } catch {}
+
+                    this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
+                }
+            } catch (e) {
+                console.error(e);
+                console.log("invalid layout");
+            }
+        }
+    },
+    created() {
+        Vue.use(VueYoutube);
     },
     methods: {
         // prompt user for layout change
@@ -463,9 +471,8 @@ export default {
                 }
 
                 this.deleteVideoAutoLayout(id);
-            }
-            // Default: delete item
-            else {
+            } else {
+                // Default: delete item
                 this.$store.commit("multiview/removeLayoutItem", id);
             }
         },

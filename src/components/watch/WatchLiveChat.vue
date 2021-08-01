@@ -8,11 +8,11 @@
             fluid: fluid,
         }"
     >
-        <span class="loading-text" v-if="showLiveChat">{{ $t("views.watch.chat.loading") }}</span>
+        <span v-if="showLiveChat" class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
         <ArchiveTranslations
             v-show="shouldShowLiveTL"
-            :video="video"
             v-if="video.status === 'past'"
+            :video="video"
             :class="{
                 'chat-overlay': fixedBottom || fixedRight,
                 'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
@@ -24,12 +24,12 @@
                         ? $store.state.settings.liveTlWindowSize + '%'
                         : '',
             }"
-            :currentTime="currentTime"
+            :current-time="currentTime"
         />
         <LiveTranslations
-            :video="video"
             v-else-if="!isMugen && shouldConnectLiveTL"
             v-show="shouldShowLiveTL"
+            :video="video"
             :class="{
                 'chat-overlay': fixedBottom || fixedRight,
                 'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
@@ -43,12 +43,11 @@
             }"
             @videoUpdate="handleVideoUpdate"
             @historyLength="handleHistoryLength"
-        >
-        </LiveTranslations>
+        />
 
         <div
-            class="embedded-chat"
             v-if="showLiveChat"
+            class="embedded-chat"
             :style="{
                 height:
                     $store.state.settings.liveTlWindowSize > 0 && shouldShowLiveTL && !fixedBottom && !fixedRight
@@ -77,10 +76,12 @@ export default {
     props: {
         video: {
             type: Object,
-            required: false,
+            default: null,
         },
         mugenId: {
+            type: String,
             required: false,
+            default: null,
         },
         fixedBottom: {
             type: Boolean,
@@ -112,6 +113,7 @@ export default {
         },
         currentTime: {
             type: Number,
+            default: 0,
         },
         scale: {
             type: Number,

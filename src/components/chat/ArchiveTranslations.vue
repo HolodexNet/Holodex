@@ -1,11 +1,21 @@
 <template>
-    <v-card class="text-body-2 tl-overlay" tile flat style="width: 100%">
+    <v-card
+        class="text-body-2 tl-overlay"
+        tile
+        flat
+        style="width: 100%"
+    >
         <v-card-subtitle class="py-1 d-flex justify-space-between">
             <div>TLdex [{{ liveTlLang }}]</div>
             <span>
                 <v-dialog v-model="expanded" width="800">
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon x-small v-bind="attrs" v-on="on">
+                    <template #activator="{ on, attrs }">
+                        <v-btn
+                            icon
+                            x-small
+                            v-bind="attrs"
+                            v-on="on"
+                        >
                             <v-icon>
                                 {{ mdiArrowExpand }}
                             </v-icon>
@@ -13,11 +23,11 @@
                     </template>
 
                     <v-card>
-                        <portal-target name="expandedMessage" class="d-flex tl-expanded"> </portal-target>
+                        <portal-target name="expandedMessage" class="d-flex tl-expanded" />
                         <v-divider />
                         <v-card-actions>
                             <v-spacer />
-                            <v-btn text @click="expanded = false" color="red">{{ $t("views.app.close_btn") }}</v-btn>
+                            <v-btn text color="red" @click="expanded = false">{{ $t("views.app.close_btn") }}</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -27,8 +37,8 @@
         <v-divider />
         <portal to="expandedMessage" :disabled="!expanded" slim>
             <virtual-list
-                class="archive tl-body thin-scroll-bar pa-1 pa-lg-3"
                 ref="tlBody"
+                class="archive tl-body thin-scroll-bar pa-1 pa-lg-3"
                 :style="{
                     'font-size': liveTlFontSize + 'px',
                 }"
@@ -37,8 +47,7 @@
                 :data-sources="tlHistory"
                 :item-height="20"
                 :item-class-add="activeClass"
-            >
-            </virtual-list>
+            />
         </portal>
     </v-card>
 </template>
@@ -52,16 +61,16 @@ import chatMixin from "./chatMixin";
 
 export default {
     name: "ArchiveTranslations",
+    components: {
+        WatchLiveTranslationsSetting,
+        VirtualList,
+    },
     mixins: [chatMixin],
     props: {
         currentTime: {
             type: Number,
+            default: 0,
         },
-    },
-    components: {
-        WatchLiveTranslationsSetting,
-        ChatMessage,
-        VirtualList,
     },
     data() {
         return {
@@ -69,8 +78,10 @@ export default {
             curIndex: 0,
         };
     },
-    mounted() {
-        this.loadMessages(true, true);
+    computed: {
+        startTimeUnix() {
+            return Number(dayjs(this.video.start_actual || this.video.start_scheduled));
+        },
     },
     watch: {
         liveTlLang() {
@@ -105,10 +116,8 @@ export default {
             ref.scrollToOffset(ref.getOffset() - ref.getClientSize() / 2 + 10);
         },
     },
-    computed: {
-        startTimeUnix() {
-            return Number(dayjs(this.video.start_actual || this.video.start_scheduled));
-        },
+    mounted() {
+        this.loadMessages(true, true);
     },
     methods: {
         getRelativeSecs(index) {

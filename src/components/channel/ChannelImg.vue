@@ -11,7 +11,7 @@
         :height="size"
         class="d-block"
     />
-    <a :href="`/channel/${channel.id}`" @click.stop v-else>
+    <a v-else :href="`/channel/${channel.id}`" @click.stop>
         <v-lazy
             tag="img"
             :src="photo"

@@ -3,28 +3,48 @@
         <div class="text-h6">
             <v-icon>{{ mdiAt }}</v-icon> Channel Mentions/Tags
         </div>
-        <v-snackbar color="success" v-if="successMessage" v-model="showSuccessAlert" dismissible>
+        <v-snackbar
+            v-if="successMessage"
+            v-model="showSuccessAlert"
+            color="success"
+            dismissible
+        >
             {{ successMessage }}
         </v-snackbar>
-        <v-snackbar color="error" v-if="errorMessage" v-model="showErrorAlert" dismissible>
+        <v-snackbar
+            v-if="errorMessage"
+            v-model="showErrorAlert"
+            color="error"
+            dismissible
+        >
             {{ errorMessage }}
         </v-snackbar>
         <div class="d-flex flex-column my-2">
             <v-autocomplete
+                v-model="selectedChannel"
                 :search-input.sync="search"
                 :items="searchResults"
-                v-model="selectedChannel"
                 hide-no-data
                 clearable
                 chips
                 label="Search Channels"
             />
-            <v-btn @click="addMention(selectedChannel.id)">Add</v-btn>
+            <v-btn @click="addMention(selectedChannel.id)">
+                Add
+            </v-btn>
         </div>
-        <channel-list :channels="mentions" :includeVideoCount="false">
-            <template v-slot:action="{ channel }">
-                <v-btn class="deleteBtn" icon x-large color="red" @click.stop.prevent="deleteMention(channel.id)">
-                    <v-icon large>{{ icons.mdiDelete }}</v-icon>
+        <channel-list :channels="mentions" :include-video-count="false">
+            <template #action="{ channel }">
+                <v-btn
+                    class="deleteBtn"
+                    icon
+                    x-large
+                    color="red"
+                    @click.stop.prevent="deleteMention(channel.id)"
+                >
+                    <v-icon large>
+                        {{ icons.mdiDelete }}
+                    </v-icon>
                 </v-btn>
             </template>
         </channel-list>
@@ -38,11 +58,10 @@ import backendApi from "@/utils/backend-api";
 import { CHANNEL_TYPES } from "@/utils/consts";
 import { debounce } from "@/utils/functions";
 import ChannelList from "../channel/ChannelList.vue";
-import LoadingOverlay from "../common/LoadingOverlay.vue";
 
 export default {
     name: "VideoEditMentions",
-    components: { ChannelList, LoadingOverlay },
+    components: { ChannelList },
     props: {
         video: {
             type: Object,
@@ -78,13 +97,11 @@ export default {
                     queryText: this.search,
                 })
                 .then(({ data }) => {
-                    this.searchResults = data.map((d) => {
-                        return {
-                            text: this.getChannelName(d),
-                            value: d,
-                            disabled: this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id),
-                        };
-                    });
+                    this.searchResults = data.map((d) => ({
+                        text: this.getChannelName(d),
+                        value: d,
+                        disabled: this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id),
+                    }));
                 });
         }, 200),
     },

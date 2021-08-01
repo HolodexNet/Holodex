@@ -1,48 +1,75 @@
 <template>
     <!-- Vertical: -->
-    <v-card class="pa-3" v-if="!horizontal">
+    <v-card v-if="!horizontal" class="pa-3">
         <v-row class="flex-column flex-nowrap flex-sm-wrap" style="height: 80vh">
-            <v-col class="org-dropdown" cols="12" sm="4" md="3" lg="2" mandatory v-if="$vuetify.breakpoint.xs">
+            <v-col
+                v-if="$vuetify.breakpoint.xs"
+                class="org-dropdown"
+                cols="12"
+                sm="4"
+                md="3"
+                lg="2"
+                mandatory
+            >
                 <!-- Dropdown for breakpoint xs -->
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
 
                 <org-panel-picker horizontal @changed="handlePicker" />
             </v-col>
             <!-- Full list for greater than xs -->
-            <v-col class="org-list" cols="12" sm="4" md="3" lg="2" mandatory style="min-height: 100%" v-else>
+            <v-col
+                v-else
+                class="org-list"
+                cols="12"
+                sm="4"
+                md="3"
+                lg="2"
+                mandatory
+                style="min-height: 100%"
+            >
                 <v-card-title>{{ $t("views.multiview.video.selectLive") }}</v-card-title>
 
                 <org-panel-picker @changed="handlePicker" />
             </v-col>
-            <v-col class="video-list" cols="12" sm="8" md="9" lg="10">
+            <v-col
+                class="video-list"
+                cols="12"
+                sm="8"
+                md="9"
+                lg="10"
+            >
                 <!-- Custom YT Url should render different content -->
                 <template v-if="selectedOrg.name === 'YouTubeURL'">
-                    <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
+                    <div class="text-h5">
+                        {{ $t("views.multiview.video.addCustomVideo") }}
+                    </div>
                     <v-text-field
+                        v-model="customURL"
                         label="Youtube Video Link"
                         hint="https://www.youtube.com/watch?v=..."
-                        v-model="customURL"
                         :error="customURLError"
-                    ></v-text-field>
+                    />
                     <v-btn
-                        @click="addCustomVideo"
                         :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
+                        @click="addCustomVideo"
                     >
                         <v-icon>{{ icons.mdiCheck }}</v-icon>
                     </v-btn>
                 </template>
                 <!-- Custom Twitch URL -->
                 <template v-else-if="selectedOrg.name === 'TwitchURL'">
-                    <div class="text-h5">{{ $t("views.multiview.video.addCustomVideo") }}</div>
+                    <div class="text-h5">
+                        {{ $t("views.multiview.video.addCustomVideo") }}
+                    </div>
                     <v-text-field
+                        v-model="customURL"
                         label="Twitch Channel Link"
                         hint="https://www.twitch.tv/..."
-                        v-model="customURL"
                         :error="customURLError"
-                    ></v-text-field>
+                    />
                     <v-btn
-                        @click="addCustomVideo"
                         :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
+                        @click="addCustomVideo"
                     >
                         <v-icon>{{ icons.mdiCheck }}</v-icon>
                     </v-btn>
@@ -50,7 +77,7 @@
                 <!-- Favorites when not logged in -->
                 <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
                     <div class="pa-3">
-                        <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')"></div>
+                        <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')" />
                         <center>
                             <v-btn :to="isLoggedIn ? '/channel' : '/login'">
                                 {{ isLoggedIn ? $t("views.favorites.manageFavorites") : $t("component.mainNav.login") }}
@@ -60,13 +87,14 @@
                 </template>
                 <!-- Video Card List for normal content -->
                 <template v-else>
-                    <h4 class="pa-1">{{ selectedOrg.name }}</h4>
-                    <LoadingOverlay :isLoading="isLoading" :showError="hasError" />
+                    <h4 class="pa-1">
+                        {{ selectedOrg.name }}
+                    </h4>
+                    <LoadingOverlay :is-loading="isLoading" :show-error="hasError" />
                     <VideoCardList
                         :videos="modalFilteredLive"
-                        @videoClicked="handleVideoClick"
-                        disableDefaultClick
-                        includeChannel
+                        disable-default-click
+                        include-channel
                         :cols="{
                             xs: 1,
                             sm: 1,
@@ -76,41 +104,42 @@
                         }"
                         :horizontal="$vuetify.breakpoint.mdAndDown"
                         dense
-                        hideIgnoredTopics
-                        :hideCollabs="shouldHideCollabs"
-                    ></VideoCardList>
-                    <div class="d-block" style="height: 120px"></div>
+                        hide-ignored-topics
+                        :hide-collabs="shouldHideCollabs"
+                        @videoClicked="handleVideoClick"
+                    />
+                    <div class="d-block" style="height: 120px" />
                 </template>
             </v-col>
         </v-row>
     </v-card>
     <!-- Horizontal view for tool bar -->
-    <div class="d-flex flex-row align-center" v-else>
+    <div v-else class="d-flex flex-row align-center">
         <!-- Drop down -->
-        <org-panel-picker horizontal @changed="handlePicker"></org-panel-picker>
+        <org-panel-picker horizontal @changed="handlePicker" />
         <v-icon
-            class="mr-2 ml-1"
-            @click="loadSelection(true)"
-            :class="{ 'refresh-spin': isLoading }"
             v-if="selectedOrg.name !== 'YouTubeURL' && selectedOrg.name !== 'TwitchURL'"
+            class="mr-2 ml-1"
+            :class="{ 'refresh-spin': isLoading }"
+            @click="loadSelection(true)"
         >
             {{ icons.mdiRefresh }}
         </v-icon>
         <!-- Inline text input for custom yt url -->
         <template v-if="selectedOrg.name === 'YouTubeURL'">
             <v-text-field
+                v-model="customURL"
                 label="Youtube Video Link"
                 placeholder="https://www.youtube.com/watch?v=..."
-                v-model="customURL"
                 :error="customURLError"
                 hide-details
                 solo
                 style="width: 100%"
-            ></v-text-field>
+            />
             <v-btn
-                @click="addCustomVideo"
                 :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                 icon
+                @click="addCustomVideo"
             >
                 <v-icon>{{ icons.mdiCheck }}</v-icon>
             </v-btn>
@@ -118,18 +147,18 @@
         <!-- Inline text input for custom twitch url -->
         <template v-else-if="selectedOrg.name === 'TwitchURL'">
             <v-text-field
+                v-model="customURL"
                 label="Twitch Channel Link"
                 placeholder="https://www.twitch.tv/..."
-                v-model="customURL"
                 :error="customURLError"
                 hide-details
                 solo
                 style="width: 100%"
-            ></v-text-field>
+            />
             <v-btn
-                @click="addCustomVideo"
                 :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
                 icon
+                @click="addCustomVideo"
             >
                 <v-icon>{{ icons.mdiCheck }}</v-icon>
             </v-btn>
@@ -137,7 +166,7 @@
         <!-- Login prompt for favorites -->
         <template v-else-if="selectedOrg === 0 && !isLoggedIn">
             <div class="flex d-flex flex-row align-center">
-                <span class="" v-html="$t('views.app.loginCallToAction')"></span>
+                <span class="" v-html="$t('views.app.loginCallToAction')" />
                 <v-btn text :to="isLoggedIn ? '/channel' : '/login'">
                     {{ $t("component.mainNav.login") }}
                 </v-btn>
@@ -145,24 +174,34 @@
         </template>
         <!-- Channel icons -->
         <template v-else>
-            <v-tooltip :key="video.id" v-for="video in topFilteredLive" transition="v-fade-transition" bottom>
-                <template v-slot:activator="{ on, attrs }">
+            <v-tooltip
+                v-for="video in topFilteredLive"
+                :key="video.id"
+                transition="v-fade-transition"
+                bottom
+            >
+                <template #activator="{ on, attrs }">
                     <div
-                        v-on="on"
                         v-bind="attrs"
                         style="position: relative; margin-right: 3px; cursor: pointer"
                         draggable="true"
-                        v-on:dragstart="(ev) => dragVideo(ev, video)"
+                        v-on="on"
+                        @dragstart="(ev) => dragVideo(ev, video)"
                     >
-                        <div class="live-badge" :key="'lvbg' + tick" :class="video.status === 'live' ? 'red' : 'grey'">
+                        <div :key="'lvbg' + tick" class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
                             {{ formatDurationLive(video) }}
                         </div>
                         <v-avatar size="50" @click="handleVideoClick(video)">
-                            <ChannelImg :channel="video.channel" :size="50" noLink />
+                            <ChannelImg :channel="video.channel" :size="50" no-link />
                         </v-avatar>
                     </div>
                 </template>
-                <VideoCard :video="video" disableDefaultClick includeChannel style="max-width: 250px"></VideoCard>
+                <VideoCard
+                    :video="video"
+                    disable-default-click
+                    include-channel
+                    style="max-width: 250px"
+                />
             </v-tooltip>
         </template>
     </div>
@@ -181,7 +220,6 @@ import filterVideos from "@/mixins/filterVideos";
 
 export default {
     name: "VideoSelector",
-    mixins: [filterVideos],
     components: {
         VideoCard,
         VideoCardList,
@@ -189,6 +227,7 @@ export default {
         ChannelImg,
         OrgPanelPicker,
     },
+    mixins: [filterVideos],
     props: {
         horizontal: {
             type: Boolean,
@@ -210,19 +249,50 @@ export default {
             refreshTimer: null,
         };
     },
-    mounted() {
-        // Start timer to update live time stamps
-        this.setAutoRefresh();
-        this.ticker = setInterval(() => {
-            this.tick = Date.now();
-        }, 60000);
-    },
-    beforeDestroy() {
-        if (this.ticker) clearInterval(this.ticker);
-        if (this.refreshTimer) {
-            clearInterval(this.refreshTimer);
-            this.refreshTimer = null;
-        }
+    computed: {
+        ...mapGetters("multiview", ["activeVideos"]),
+        ...mapState("favorites", { favUpdateTick: "lastLiveUpdate" }),
+        ...mapState("home", { homeUpdateTick: "lastLiveUpdate" }),
+        ...mapState("playlist", ["active"]),
+        modalFilteredLive() {
+            return this.live.filter(
+                (l) => !this.activeVideos.find((v) => v.id === l.id)
+                    && !this.$store.getters["settings/blockedChannelIDs"].has(l.channel.id),
+            );
+        },
+        topFilteredLive() {
+            // Filter out lives for top bar
+            let count = 0;
+            const filterConfig = {
+                ignoreBlock: false,
+                // only hide collabs when favorites tab
+                hideCollabs: this.shouldHideCollabs,
+                hideIgnoredTopics: true,
+            };
+            const filtered = this.live
+                .filter((l) => this.filterVideos(l, filterConfig))
+                .filter((l) => {
+                    count += 1;
+                    // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
+                    return (
+                        l.status === "live"
+                        || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m"))
+                        || (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
+                    );
+                })
+                .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+
+            return filtered;
+        },
+        isLoggedIn() {
+            return this.$store.getters.isLoggedIn;
+        },
+        savedVideosList() {
+            return this.active.videos;
+        },
+        shouldHideCollabs() {
+            return this.selectedOrg?.name === "Favorites" && this.$store.state.settings.hideCollabStreams;
+        },
     },
     watch: {
         // Watch lastLiveUpdate from favorites module, and fetch new state
@@ -243,51 +313,19 @@ export default {
             }
         },
     },
-    computed: {
-        ...mapGetters("multiview", ["activeVideos"]),
-        ...mapState("favorites", { favUpdateTick: "lastLiveUpdate" }),
-        ...mapState("home", { homeUpdateTick: "lastLiveUpdate" }),
-        ...mapState("playlist", ["active"]),
-        modalFilteredLive() {
-            return this.live.filter(
-                (l) =>
-                    !this.activeVideos.find((v) => v.id === l.id) &&
-                    !this.$store.getters["settings/blockedChannelIDs"].has(l.channel.id),
-            );
-        },
-        topFilteredLive() {
-            // Filter out lives for top bar
-            let count = 0;
-            const filterConfig = {
-                ignoreBlock: false,
-                // only hide collabs when favorites tab
-                hideCollabs: this.shouldHideCollabs,
-                hideIgnoredTopics: true,
-            };
-            const filtered = this.live
-                .filter((l) => this.filterVideos(l, filterConfig))
-                .filter((l) => {
-                    count += 1;
-                    // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
-                    return (
-                        l.status === "live" ||
-                        dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m")) ||
-                        (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
-                    );
-                })
-                .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
-
-            return filtered;
-        },
-        isLoggedIn() {
-            return this.$store.getters.isLoggedIn;
-        },
-        savedVideosList() {
-            return this.active.videos;
-        },
-        shouldHideCollabs() {
-            return this.selectedOrg?.name === "Favorites" && this.$store.state.settings.hideCollabStreams;
-        },
+    mounted() {
+        // Start timer to update live time stamps
+        this.setAutoRefresh();
+        this.ticker = setInterval(() => {
+            this.tick = Date.now();
+        }, 60000);
+    },
+    beforeDestroy() {
+        if (this.ticker) clearInterval(this.ticker);
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
     },
     methods: {
         setAutoRefresh() {

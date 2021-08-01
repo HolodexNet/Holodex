@@ -1,6 +1,8 @@
 /* eslint-disable no-shadow */
 import { LayoutItem, getFirstCollision } from "@/external/vue-grid-layout/src/helpers/utils";
-import { getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout } from "@/utils/mv-utils";
+import {
+ getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout,
+} from "@/utils/mv-utils";
 import Vue from "vue";
 
 const initialState = {
@@ -22,28 +24,22 @@ const getters = {
             .map((item) => state.layoutContent[item.i].video);
     },
     decodedCustomPresets(state) {
-        return state.presetLayout.map((preset) => {
-            return {
-                ...preset,
-                ...decodeLayout(preset.layout),
-            };
-        });
+        return state.presetLayout.map((preset) => ({
+            ...preset,
+            ...decodeLayout(preset.layout),
+        }));
     },
     decodedDesktopPresets() {
-        return desktopPresets.map((preset) => {
-            return {
-                ...preset,
-                ...decodeLayout(preset.layout),
-            };
-        });
+        return desktopPresets.map((preset) => ({
+            ...preset,
+            ...decodeLayout(preset.layout),
+        }));
     },
     decodedMobilePresets() {
-        return mobilePresets.map((preset) => {
-            return {
-                ...preset,
-                ...decodeLayout(preset.layout),
-            };
-        });
+        return mobilePresets.map((preset) => ({
+            ...preset,
+            ...decodeLayout(preset.layout),
+        }));
     },
     desktopGroups(state, getters) {
         const groups = [];
@@ -97,7 +93,7 @@ const mutations = {
             }
         }
 
-        if (!newLayoutItem)
+        if (!newLayoutItem) {
             newLayoutItem = {
                 x: 0,
                 y: 0, // puts it at the bottom
@@ -107,6 +103,7 @@ const mutations = {
                 isResizable: true,
                 isDraggable: true,
             };
+        }
         state.layout.push(newLayoutItem);
     },
     setLayoutContentWithKey(state, { id, key, value }) {

@@ -23,10 +23,10 @@ const actions = {
     fetchLive({ state, commit, rootState }, { force = false, minutes = 5 }) {
         if (rootState.visibilityState === "hidden" && !force) return null;
         if (
-            state.hasError ||
-            force ||
-            !state.lastLiveUpdate ||
-            Date.now() - state.lastLiveUpdate > minutes * 60 * 1000
+            state.hasError
+            || force
+            || !state.lastLiveUpdate
+            || Date.now() - state.lastLiveUpdate > minutes * 60 * 1000
         ) {
             commit("fetchStart");
             return api

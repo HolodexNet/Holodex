@@ -59,8 +59,7 @@ export const ORGS_PREFIX = Object.freeze({
 
 export const CHANNEL_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/)(?:channel|c)\/([\w\-\_]*)/i;
 
-export const VIDEO_URL_REGEX =
-    /((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be|holodex.net))(\/(?:[\w\-]+\?v=|embed\/|v\/|watch\/)?)([\w\-]+)(\S+)?/i;
+export const VIDEO_URL_REGEX = /((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be|holodex.net))(\/(?:[\w\-]+\?v=|embed\/|v\/|watch\/)?)([\w\-]+)(\S+)?/i;
 
 export const TWITCH_VIDEO_URL_REGEX = /(?:https:\/\/)?twitch\.tv\/([\w\-_]*)/i;
 

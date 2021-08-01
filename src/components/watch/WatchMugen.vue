@@ -2,16 +2,13 @@
     <v-card tile class="mb-2">
         <v-card-subtitle>{{ $t("component.watch.nextUpInMugen") }} {{ nextUpTime }}</v-card-subtitle>
         <!-- <v-card-text> -->
-        <v-progress-linear
-            :color="countdownProgress > 0 ? 'primary' : 'grey'"
-            :value="countdownProgress"
-        ></v-progress-linear>
+        <v-progress-linear :color="countdownProgress > 0 ? 'primary' : 'grey'" :value="countdownProgress" />
         <VideoCardList
-            :videos="videos"
             v-if="playlist.length > 0"
-            limitRows="2"
-            :activeId="video.id"
-            includeChannel
+            :videos="videos"
+            limit-rows="2"
+            :active-id="video.id"
+            include-channel
             horizontal
             :cols="{
                 xs: 1,
@@ -21,7 +18,7 @@
                 xl: 5,
             }"
             dense
-            ignoreBlock
+            ignore-block
         />
         <!-- </v-card-text> -->
     </v-card>
@@ -49,6 +46,43 @@ export default {
             countdownProgress: 0,
             isLoading: true,
         };
+    },
+    computed: {
+        videos() {
+            return this.playlist.map((p) => p.video);
+        },
+        nextUpTime() {
+            if (!this.nextCheck || !this.currentTime) return "";
+            const diff = this.nextCheck - this.currentTime;
+            if (diff < 0 /* && this.isLoading */) {
+                return "Loading...";
+            }
+            return localizedDayjs(new Date(this.nextCheck * 1000), this.$store.state.settings.lang).fromNow();
+        },
+    },
+    watch: {
+        currentTime() {
+            if (this.currentTime > this.nextCheck) {
+                this.calculateVideo();
+                this.countdownPercentage = 0;
+            }
+            // if (this.nextCheck - this.currentTime < 10) {
+            //     this.countdownPercentage = ((10.0 - (this.nextCheck - this.currentTime)) / 10.0) * 100;
+            // }
+            this.countdownProgress = (1 - (this.nextCheck - this.currentTime) / this.video.duration) * 100;
+        },
+        playlist() {
+            // schedule became empty, or last start is ending within 30 minutes...
+            if (!this.playlist) return;
+            if (
+                this.playlist === []
+                || this.playlist[this.playlist.length - 1].timestamp
+                    + this.playlist[this.playlist.length - 1].video.duration
+                    < new Date().getTime() / 1000 + 1800
+            ) {
+                this.init();
+            }
+        },
     },
     mounted() {
         const vm = this;
@@ -79,43 +113,6 @@ export default {
                 this.$emit("playNext", { video: this.video, timeOffset: this.timeOffset });
                 // this.isLoading = false;
             });
-        },
-    },
-    computed: {
-        videos() {
-            return this.playlist.map((p) => p.video);
-        },
-        nextUpTime() {
-            if (!this.nextCheck || !this.currentTime) return "";
-            const diff = this.nextCheck - this.currentTime;
-            if (diff < 0 /* && this.isLoading */) {
-                return "Loading...";
-            }
-            return localizedDayjs(new Date(this.nextCheck * 1000), this.$store.state.settings.lang).fromNow();
-        },
-    },
-    watch: {
-        currentTime() {
-            if (this.currentTime > this.nextCheck) {
-                this.calculateVideo();
-                this.countdownPercentage = 0;
-            }
-            // if (this.nextCheck - this.currentTime < 10) {
-            //     this.countdownPercentage = ((10.0 - (this.nextCheck - this.currentTime)) / 10.0) * 100;
-            // }
-            this.countdownProgress = (1 - (this.nextCheck - this.currentTime) / this.video.duration) * 100;
-        },
-        playlist() {
-            // schedule became empty, or last start is ending within 30 minutes...
-            if (!this.playlist) return;
-            if (
-                this.playlist === [] ||
-                this.playlist[this.playlist.length - 1].timestamp +
-                    this.playlist[this.playlist.length - 1].video.duration <
-                    new Date().getTime() / 1000 + 1800
-            ) {
-                this.init();
-            }
         },
     },
 };

@@ -1,24 +1,36 @@
 <template>
     <v-card class="watch-card rounded-0 striped">
-        <v-snackbar color="error" v-if="errorMessage" v-model="showErrorAlert" dismissible>
+        <v-snackbar
+            v-if="errorMessage"
+            v-model="showErrorAlert"
+            color="error"
+            dismissible
+        >
             {{ errorMessage }}
         </v-snackbar>
-        <v-snackbar color="success" v-if="successMessage" v-model="showSuccessAlert" dismissible>
+        <v-snackbar
+            v-if="successMessage"
+            v-model="showSuccessAlert"
+            color="success"
+            dismissible
+        >
             {{ successMessage }}
         </v-snackbar>
         <div class="d-flex justify-space-between flex-wrap align-center">
             <v-col cols="auto">
-                <v-avatar rounded left size="40"
-                    ><v-icon size="25" color="grey darken-2">
+                <v-avatar rounded left size="40">
+                    <v-icon size="25" color="grey darken-2">
                         {{ icons.mdiPencil }}
-                    </v-icon></v-avatar
-                >
-                <v-avatar rounded left size="40"
-                    ><v-icon size="25" color="grey darken-2">{{ mdiAt }}</v-icon></v-avatar
-                >
+                    </v-icon>
+                </v-avatar>
+                <v-avatar rounded left size="40">
+                    <v-icon size="25" color="grey darken-2">
+                        {{ mdiAt }}
+                    </v-icon>
+                </v-avatar>
                 <template v-for="item in mentions">
-                    <ChannelChip :channel="item" :key="item.id + 'chip'" :size="60">
-                        <template v-slot:default>
+                    <ChannelChip :key="item.id + 'chip'" :channel="item" :size="60">
+                        <template #default>
                             <v-overlay absolute>
                                 <v-btn icon @click.stop.prevent="deleteMention(item)">
                                     <v-icon>{{ icons.mdiClose }}</v-icon>
@@ -29,9 +41,9 @@
                 </template>
 
                 <v-autocomplete
+                    v-model="fake"
                     :search-input.sync="search"
                     :items="searchResults"
-                    v-model="fake"
                     hide-no-data
                     multiple
                     chips
@@ -43,14 +55,14 @@
                     no-filter
                     style="min-width: 300px"
                 >
-                    <template v-slot:selection="selection">
-                        <ChannelChip :channel="selection.item" :key="selection.item.id + 'chip'" :size="60">
+                    <template #selection="selection">
+                        <ChannelChip :key="selection.item.id + 'chip'" :channel="selection.item" :size="60">
                             <v-btn icon @click.stop.prevent="deleteMention(selection.item)">
                                 <v-icon>{{ icons.mdiClose }}</v-icon>
                             </v-btn>
                         </ChannelChip>
                     </template>
-                    <template v-slot:item="dropdownItem">
+                    <template #item="dropdownItem">
                         <v-list-item-content class="py-1 pt-1" @click.stop="addMention(dropdownItem.item)">
                             <v-list-item-subtitle class="text--primary">
                                 {{ getChannelName(dropdownItem.item) }}
@@ -61,24 +73,24 @@
             </v-col>
             <v-divider vertical />
             <v-col cols="auto">
-                <v-avatar rounded left size="40"
-                    ><v-icon size="25" color="grey darken-2">
+                <v-avatar rounded left size="40">
+                    <v-icon size="25" color="grey darken-2">
                         {{ icons.mdiPencil }}
-                    </v-icon></v-avatar
-                >
-                <v-avatar rounded left size="40"
-                    ><v-icon size="25" color="grey darken-2">
+                    </v-icon>
+                </v-avatar>
+                <v-avatar rounded left size="40">
+                    <v-icon size="25" color="grey darken-2">
                         {{ icons.mdiAnimationPlay }}
-                    </v-icon></v-avatar
-                >
+                    </v-icon>
+                </v-avatar>
                 <span class="text-overline ml-3 text--disabled">{{ $t("component.search.type.topic") }}</span>
                 <v-autocomplete
-                    @click="loadTopics"
+                    v-model="newTopic"
                     :items="topics"
                     inline
                     label="Topic (leave empty to unset)"
-                    v-model="newTopic"
                     :append-outer-icon="mdiContentSave"
+                    @click="loadTopics"
                     @click:append-outer="saveTopic"
                 />
                 <!-- <v-avatar rounded left size="40" v-if="channelChips && channelChips.length > 0">
@@ -127,6 +139,7 @@ export default {
     },
     props: {
         video: {
+            type: Object,
             required: true,
         },
     },
@@ -150,6 +163,34 @@ export default {
             newTopic: "",
         };
     },
+    computed: {
+        role() {
+            return this.$store.state.userdata?.user?.role;
+        },
+    },
+    watch: {
+        // eslint-disable-next-line func-names
+        search: debounce(function () {
+            if (!this.search) {
+                this.searchResults = [];
+                return;
+            }
+            backendApi
+                .searchChannel({
+                    type: CHANNEL_TYPES.VTUBER,
+                    queryText: this.search,
+                })
+                .then(({ data }) => {
+                    this.searchResults = data.filter(
+                        (d) => !(this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id)),
+                    );
+                });
+        }, 400),
+    },
+    mounted() {
+        this.updateMentions();
+    },
+    beforeDestroy() {},
     methods: {
         updateMentions() {
             backendApi
@@ -218,34 +259,6 @@ export default {
         saveTopic() {
             backendApi.topicSet(this.newTopic, this.video.id, this.$store.state.userdata.jwt);
             this.topic = this.newTopic;
-        },
-    },
-    mounted() {
-        this.updateMentions();
-    },
-    beforeDestroy() {},
-    watch: {
-        // eslint-disable-next-line func-names
-        search: debounce(function () {
-            if (!this.search) {
-                this.searchResults = [];
-                return;
-            }
-            backendApi
-                .searchChannel({
-                    type: CHANNEL_TYPES.VTUBER,
-                    queryText: this.search,
-                })
-                .then(({ data }) => {
-                    this.searchResults = data.filter((d) => {
-                        return !(this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id));
-                    });
-                });
-        }, 400),
-    },
-    computed: {
-        role() {
-            return this.$store.state.userdata?.user?.role;
         },
     },
 };

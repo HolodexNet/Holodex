@@ -1,20 +1,23 @@
 <template>
-    <div :key="identifier" class="d-flex justify-center py-4" style="min-height: 100px" @click.capture="clicked = true">
-        <!-- <LoadingOverlay :isLoading="status === STATUSES.LOADING" :showError="status === STATUSES.ERROR" /> -->
-        <!-- <template> -->
+    <div
+        :key="identifier"
+        class="d-flex justify-center py-4"
+        style="min-height: 100px"
+        @click.capture="clicked = true"
+    >
         <v-pagination
+            v-if="!pageLess"
+            v-show="status === STATUSES.READY || status === STATUSES.COMPLETED"
             v-model="page"
             :length="pages"
-            v-if="!pageLess"
             :total-visible="TOTAL_PAGINATION_COUNT[$vuetify.breakpoint.name]"
-            v-show="status === STATUSES.READY || status === STATUSES.COMPLETED"
-        ></v-pagination>
+        />
         <div v-show="status === STATUSES.READY || status === STATUSES.COMPLETED" v-else>
-            <v-btn class="ma-2 pr-6" @click="page -= 1" :disabled="page === 1">
+            <v-btn class="ma-2 pr-6" :disabled="page === 1" @click="page -= 1">
                 <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
                 {{ $t("component.paginateLoad.newer") }}
             </v-btn>
-            <v-btn class="ma-2 pl-6" @click="page += 1" :disabled="status === STATUSES.COMPLETED">
+            <v-btn class="ma-2 pl-6" :disabled="status === STATUSES.COMPLETED" @click="page += 1">
                 {{ $t("component.paginateLoad.older") }}
                 <v-icon>{{ icons.mdiChevronRight }}</v-icon>
             </v-btn>
@@ -24,14 +27,28 @@
 </template>
 
 <script lang="ts">
-import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import isActive from "@/mixins/isActive";
 
 export default {
     name: "PaginateLoad",
     mixins: [isActive],
-    components: {
-        LoadingOverlay,
+    props: {
+        identifier: {
+            type: [String, Number],
+            default: +new Date(),
+        },
+        pages: {
+            default: 1,
+            type: Number,
+        },
+        pageLess: {
+            default: false,
+            type: Boolean,
+        },
+        scrollElementId: {
+            default: null,
+            type: String,
+        },
     },
     data() {
         return {
@@ -53,29 +70,6 @@ export default {
             }),
         };
     },
-    props: {
-        identifier: {
-            default: +new Date(),
-        },
-        pages: {
-            default: 1,
-            type: Number,
-        },
-        pageLess: {
-            default: false,
-            type: Boolean,
-        },
-        scrollElementId: {
-            default: null,
-            type: String,
-        },
-    },
-    activated() {
-        // page has changed between activation/deactivation, resync
-        // if (this.lastPage !== this.page) {
-        //     this.emitEvent();
-        // }
-    },
     computed: {
         page: {
             get() {
@@ -93,10 +87,6 @@ export default {
                 });
             },
         },
-    },
-    mounted() {
-        // this.status = this.STATUSES.LOADING;
-        this.emitEvent();
     },
     watch: {
         identifier() {
@@ -118,6 +108,16 @@ export default {
             }
         },
     },
+    activated() {
+        // page has changed between activation/deactivation, resync
+        // if (this.lastPage !== this.page) {
+        //     this.emitEvent();
+        // }
+    },
+    mounted() {
+        // this.status = this.STATUSES.LOADING;
+        this.emitEvent();
+    },
     methods: {
         reset() {
             this.status = this.STATUSES.READY;
@@ -136,8 +136,9 @@ export default {
             const loaded = () => {
                 // this.$emit("$PaginateLoad:loaded", { target: this });
                 this.status = this.STATUSES.READY;
-                if (this.clicked && this.scrollElementId)
+                if (this.clicked && this.scrollElementId) {
                     window.scrollTo(0, document.getElementById(this.scrollElementId).offsetTop - 100);
+                }
             };
             const completed = () => {
                 this.status = this.STATUSES.COMPLETED;

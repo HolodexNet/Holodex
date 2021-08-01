@@ -5,11 +5,11 @@
             :class="{ 'truncated-text': !expanded }"
             :style="`-webkit-line-clamp: ${lines}`"
         >
-            <span v-if="html" v-html="html" v-linkified />
-            <span v-else v-text="text" v-linkified />
+            <span v-if="html" v-linkified v-html="html" />
+            <span v-else v-linkified v-text="text" />
         </div>
-        <a @click="expanded = !expanded" v-if="newLineCount > lines">
-            <slot name="button" v-bind:expanded="expanded">
+        <a v-if="newLineCount > lines" @click="expanded = !expanded">
+            <slot name="button" :expanded="expanded">
                 <span class="text-button">{{
                     expanded ? $t("component.description.showLess") : $t("component.description.showMore")
                 }}</span>
@@ -26,22 +26,24 @@ export default {
     directives: {
         linkified: linkify,
     },
-    data() {
-        return {
-            expanded: false,
-        };
-    },
     props: {
         html: {
             type: String,
+            default: "",
         },
         text: {
             type: String,
+            default: "",
         },
         lines: {
             type: [Number, String],
             default: 5,
         },
+    },
+    data() {
+        return {
+            expanded: false,
+        };
     },
     computed: {
         newLineCount() {

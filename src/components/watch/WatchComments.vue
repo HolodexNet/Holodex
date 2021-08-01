@@ -1,41 +1,46 @@
 <template>
     <v-card>
-        <v-card-title class="text-body-1">{{ $t("component.watch.Comments.title") }}</v-card-title>
+        <v-card-title class="text-body-1">
+            {{ $t("component.watch.Comments.title") }}
+        </v-card-title>
         <v-card-text>
             <template v-if="!hideBuckets">
                 <template v-for="b in buckets">
                     <v-btn
-                        class="mr-2 mb-2 ts-btn"
                         :key="b.time"
+                        class="mr-2 mb-2 ts-btn"
                         label
-                        @click="currentFilter = b.time"
                         :color="currentFilter === b.time ? 'primary darken-1' : ''"
                         small
+                        @click="currentFilter = b.time"
                     >
                         {{ b.display }} ({{ b.count }})
                     </v-btn>
                 </template>
             </template>
             <v-divider />
-            <v-list dense class="pa-0 transparent caption" v-if="comments" @click.native="handleClick">
+            <v-list
+                v-if="comments"
+                dense
+                class="pa-0 transparent caption"
+                @click.native="handleClick"
+            >
                 <template v-for="comment in limitComment">
-                    <Comment :comment="comment" :videoId="video.id" :key="comment.comment_key"></Comment>
+                    <Comment :key="comment.comment_key" :comment="comment" :video-id="video.id" />
                 </template>
             </v-list>
-            <v-btn plain small text @click="expanded = !expanded" v-if="shouldLimit">
-                {{ expanded ? $t("views.app.close_btn") : $t("component.description.showMore") }}</v-btn
+            <v-btn
+                v-if="shouldLimit"
+                plain
+                small
+                text
+                @click="expanded = !expanded"
             >
+                {{ expanded ? $t("views.app.close_btn") : $t("component.description.showMore") }}
+            </v-btn>
         </v-card-text>
     </v-card>
 </template>
-
-<style>
-button.ts-btn.v-btn {
-    font-size: 11px;
-    padding: 0px 5px !important;
-    height: 25px !important;
-}
-</style>
 
 <script lang="ts">
 import Comment from "@/components/video/Comment.vue";
@@ -47,12 +52,6 @@ export default {
     name: "WatchComments",
     components: {
         Comment,
-    },
-    data() {
-        return {
-            currentFilter: -1,
-            expanded: false,
-        };
     },
     props: {
         comments: {
@@ -73,15 +72,11 @@ export default {
             default: false,
         },
     },
-    methods: {
-        formatDuration,
-        handleClick(e) {
-            if (e.target.matches(".comment-chip")) {
-                this.$emit("timeJump", e.target.getAttribute("data-time"), true, true);
-                // timeJump, timestamp, playNow = true, updateStartTime = true
-                e.preventDefault();
-            }
-        },
+    data() {
+        return {
+            currentFilter: -1,
+            expanded: false,
+        };
     },
     computed: {
         shouldLimit() {
@@ -94,6 +89,7 @@ export default {
         },
         filteredComments() {
             if (this.currentFilter < 0) {
+                // eslint-disable-next-line vue/no-side-effects-in-computed-properties
                 return this.groupedComments.sort((a, b) => b.times.length - a.times.length);
             }
             return this.comments
@@ -162,5 +158,22 @@ export default {
             return buckets.sort((a, b) => b.count - a.count);
         },
     },
+    methods: {
+        formatDuration,
+        handleClick(e) {
+            if (e.target.matches(".comment-chip")) {
+                this.$emit("timeJump", e.target.getAttribute("data-time"), true, true);
+                // timeJump, timestamp, playNow = true, updateStartTime = true
+                e.preventDefault();
+            }
+        },
+    },
 };
 </script>
+<style>
+button.ts-btn.v-btn {
+    font-size: 11px;
+    padding: 0px 5px !important;
+    height: 25px !important;
+}
+</style>

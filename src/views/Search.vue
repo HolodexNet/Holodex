@@ -2,7 +2,7 @@
     <v-container style="height: 100%">
         <v-row v-if="advancedOpen">
             <v-col class="offset-xl-1 col-xl-10">
-                <search-form></search-form>
+                <search-form />
             </v-col>
         </v-row>
         <v-row class="justify-end" style="margin-bottom: -10px">
@@ -12,7 +12,7 @@
                     :items="options.sort"
                     dense
                     :label="$t('views.search.sortByLabel')"
-                ></v-select>
+                />
             </v-col>
             <v-col sm="4" md="2" class="py-1">
                 <v-select
@@ -20,24 +20,24 @@
                     :items="options.type"
                     dense
                     :label="$t('views.search.typeDropdownLabel')"
-                ></v-select>
+                />
             </v-col>
         </v-row>
         <v-row>
             <v-col class="offset-xl-1 col-xl-10">
                 <generic-list-loader
                     v-if="searchVideo !== null"
-                    paginate
-                    :perPage="pageLength"
-                    :loadFn="searchVideo"
                     v-slot="{ data, isLoading }"
                     :key="filter_type + filter_sort + id + executedQuery"
+                    paginate
+                    :per-page="pageLength"
+                    :load-fn="searchVideo"
                 >
                     <VideoCardList
                         v-show="!isLoading"
                         :videos="data"
                         :horizontal="horizontal"
-                        includeChannel
+                        include-channel
                         :cols="{
                             xs: 1,
                             sm: 3,
@@ -45,9 +45,10 @@
                             lg: 5,
                             xl: 6,
                         }"
-                    ></VideoCardList>
+                    />
                     <!-- Render skeleton items when data hasn't loaded yet -->
                     <skeleton-card-list
+                        v-if="isLoading"
                         :cols="{
                             xs: 1,
                             sm: 3,
@@ -56,7 +57,6 @@
                             xl: 6,
                         }"
                         dense
-                        v-if="isLoading"
                     />
                 </generic-list-loader>
             </v-col>
@@ -76,6 +76,12 @@ import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 
 export default {
     name: "Search",
+    components: {
+        VideoCardList,
+        SearchForm,
+        GenericListLoader,
+        SkeletonCardList,
+    },
     mixins: [isActive],
     metaInfo() {
         const vm = this;
@@ -84,12 +90,6 @@ export default {
                 return `${vm.$t("component.search.searchLabel")} - Holodex`;
             },
         };
-    },
-    components: {
-        VideoCardList,
-        SearchForm,
-        GenericListLoader,
-        SkeletonCardList,
     },
     data() {
         return {
@@ -168,6 +168,8 @@ export default {
             // this.videos = [];
             const { q } = this.query;
             if (q.length < 5) return null;
+            // TODO: What dis doing
+            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
             this.executedQuery = q; // save to executed query;
 
             const self = this;

@@ -15,9 +15,7 @@ module.exports = {
             },
         },
     },
-    chainWebpack: (config) => {
-        return config;
-    },
+    chainWebpack: (config) => config,
     css: {
         extract: process.env.NODE_ENV !== "production" ? undefined : { ignoreOrder: true },
     },
