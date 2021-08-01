@@ -6,10 +6,12 @@
           {{ $t("component.mainNav.about") }}
         </div>
       </v-col>
+      <v-col cols="12">
+        <stats />
+      </v-col>
       <v-col
         cols="12"
         md="4"
-        sm="4"
         lg="4"
         xl="3"
         float-right
@@ -25,7 +27,6 @@
       <v-col
         cols="12"
         md="4"
-        sm="4"
         lg="4"
         xl="3"
       >
@@ -93,7 +94,6 @@
       <v-col
         cols="12"
         md="4"
-        sm="4"
         lg="4"
         xl="3"
       >
@@ -122,8 +122,7 @@
 
       <v-col
         cols="12"
-        md="8"
-        sm="8"
+        md="6"
         lg="6"
         xl="6"
       >
@@ -259,7 +258,7 @@
       <v-col>
         <v-card>
           <v-card-title>
-            <a class="text-h5" href="https://github.com/RiceCakess/Holodex/blob/dev/CHANGELOG.md">{{
+            <a class="text-h6" href="https://github.com/RiceCakess/Holodex/blob/dev/CHANGELOG.md">{{
               $t("about.changelog.title")
             }}</a>
           </v-card-title>
@@ -283,6 +282,7 @@ import {
 } from "@mdi/js";
 import * as icons from "@/utils/icons";
 import TwitterFeed from "@/components/common/TwitterFeed.vue";
+import Stats from "@/components/common/Stats.vue";
 
 export default {
     name: "About",
@@ -296,6 +296,7 @@ export default {
     },
     components: {
         TwitterFeed,
+        Stats,
     },
     data() {
         return {

@@ -1,23 +1,45 @@
 <template>
-  <div class="text-center text-body-2 mt-8 mb-2">
-    <small class="cat">Channels</small>
-    <small>1d
-      <span class="green--text">
-        &#127483;&#8201;+{{ s.dailyChannels.vtuber || 0 }} 🎬+{{ s.dailyChannels.subber || 0 }}
-      </span></small>
-    <small>30d
-      <span class="green--text">
-        &#127483;&#8201;+{{ s.monthlyChannels.vtuber || 0 }} 🎬+{{ s.monthlyChannels.subber || 0 }}
-      </span></small>
-    <small>All
-      <span class="">
-        &#127483; <b>{{ s.channelCount.vtuber || 0 }}</b> 🎬 <b>{{ s.channelCount.subber || 0 }}</b>
-      </span></small>
-    -------
-    <small class="cat">Videos</small>
-    <small>1d <span class="green--text">+{{ s.dailyVideos.count }} </span></small>
-    <small>All <b>{{ s.totalVideos.count }}</b></small>
-  </div>
+  <v-row>
+    <v-col cols="auto">
+      <v-card class="stat">
+        <div class="text-overline">
+          VTubers
+        </div>
+        <div class="text-h3">
+          {{ s.channelCount.vtuber || 0 }}
+        </div>
+        <div class="green--text text-caption">
+          +{{ s.monthlyChannels.vtuber || 0 }} last month
+        </div>
+      </v-card>
+    </v-col>
+    <v-col cols="auto">
+      <v-card class="stat">
+        <div class="text-overline">
+          Subbers
+        </div>
+        <div class="text-h3">
+          {{ s.channelCount.subber || 0 }}
+        </div>
+        <div class="green--text text-caption">
+          +{{ s.monthlyChannels.subber || 0 }} last month
+        </div>
+      </v-card>
+    </v-col>
+    <v-col cols="auto">
+      <v-card class="stat">
+        <div class="text-overline">
+          Videos
+        </div>
+        <div class="text-h3">
+          {{ s.totalVideos.count || 0 }}
+        </div>
+        <div class="green--text text-caption">
+          +{{ s.dailyVideos.count || 0 }} yesterday
+        </div>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -41,6 +63,14 @@ export default {
 </script>
 
 <style scoped>
+.stat {
+  min-width: 140px;
+  max-width: 250px;
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+  padding: 15px 20px;
+}
 small {
     margin: 3px;
     display: inline-block;
