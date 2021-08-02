@@ -8,6 +8,7 @@
 ##### Patches & Bugfixes
 - Slightly changed Multiview logic, you shouldn't notice it.
 - Fixed Music page blank if you've never used it before
+- Support for this one person who's using Chrome 70.
 
 ### 2.16 Holodex [*July 30th, 2021*]
 ##### New Features
