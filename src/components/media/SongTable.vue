@@ -25,7 +25,7 @@
           <song-item
             :song="item"
             :class="{
-              active: item.name === currentSong.song.name && item.video_id === currentSong.song.video_id,
+              active: currentSong && currentSong.song && item.name === currentSong.song.name && item.video_id === currentSong.song.video_id,
             }"
             :hover-icon="icons.mdiPlay"
             class="mx-0 px-0"
