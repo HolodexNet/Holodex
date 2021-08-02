@@ -1,3 +1,4 @@
+---
 component:
   apiError:
     title: Gomenasorry!
@@ -49,7 +50,7 @@ component:
   videoDescription:
     description: Leírás
   video:
-    comment: {}
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -116,18 +117,10 @@ component:
       - Egyéb
   thirdpartycookie:
     explanation: >-
-      Mert ilyenek a böngészők, néhány amelynek működése szigorú a <b>Harmadik
-      féltől származó cookiekkal</b>, vagy amelyek tiltják a
-      <kbd>YouTube.com</kbd> cookiekat, nehézségeket okozhatnak a
-      bejelentkezéssel / Youtube chat használatával. <br /><br /> Ez ellen
-      tehetsz ha fehérlistára teszed a <kbd>Youtube.com</kbd>-ot a harmadik fél
-      cookie blokkolókban, vagy lejjebb véve a cookie védelmet / biztonsági
-      szintet a <kbd>Holodex.net</kbd>-nek. <br /><br /> Hagytunk pár oldalt,
-      amely több információt nyújt arról, hogy hogyan csinálhatod ezt.
+      Mert ilyenek a böngészők, néhány amelynek működése szigorú a <b>Harmadik féltől származó cookiekkal</b>, vagy amelyek tiltják a <kbd>YouTube.com</kbd> cookiekat, nehézségeket okozhatnak a bejelentkezéssel / Youtube chat használatával. <br /><br /> Ez ellen tehetsz ha fehérlistára teszed a <kbd>Youtube.com</kbd>-ot a harmadik fél cookie blokkolókban, vagy lejjebb véve a cookie védelmet / biztonsági szintet a <kbd>Holodex.net</kbd>-nek. <br /><br /> Hagytunk pár oldalt, amely több információt nyújt arról, hogy hogyan csinálhatod ezt.
     dialogTitle: Youtube chat használata Holodex-en
     alertText: >-
-      A böngésződ biztonsági beállításai lehetetlenné teszik a bejelentkezést
-      Youtube chathez. Kattints ide több infóért
+      A böngésződ biztonsági beállításai lehetetlenné teszik a bejelentkezést Youtube chathez. Kattints ide több infóért
     neverShowAgain: Ne mutassa többet
   playlist:
     menu:
@@ -146,7 +139,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
-    channelType: {}
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -184,17 +177,10 @@ views:
     exportCsv: CSV fájl
     selectionSelect50: 50 kijelölése
     exportYTExplanation: >-
-      A youtube lejátszási lista amit ezzel a funkcióval hoztak létre
-      <b>listázatlan</b> és törölve lehetett a Youtube által. <br/>A youtube
-      funkciójának befejezetlensége miatt az alábbiakat kell megcsinálnod, hogy
-      elmentsd a <b>listázatlan</b> Youtube lejátszási listát a profilodon.
+      A youtube lejátszási lista amit ezzel a funkcióval hoztak létre <b>listázatlan</b> és törölve lehetett a Youtube által. <br/>A youtube funkciójának befejezetlensége miatt az alábbiakat kell megcsinálnod, hogy elmentsd a <b>listázatlan</b> Youtube lejátszási listát a profilodon.
     exportYTHeading: Youtube lejátszási lista mentés útmutató
     exportYTInstructions: >-
-      <b class="red--text">1. lépés</b>: Indítsd el a lejátszási listát és tedd
-      minilejátszóba a méretét. <br /><br /> <b class="red--text">2. lépés</b>:
-      Válassz bármilyen videót és tedd várólistába. <br /><br /> <b
-      class="red--text">3. lépés</b>: A lejátszási lista most már menthető.
-      Nyomj mentést, hogy elmentsd.
+      <b class="red--text">1. lépés</b>: Indítsd el a lejátszási listát és tedd minilejátszóba a méretét. <br /><br /> <b class="red--text">2. lépés</b>: Válassz bármilyen videót és tedd várólistába. <br /><br /> <b class="red--text">3. lépés</b>: A lejátszási lista most már menthető. Nyomj mentést, hogy elmentsd.
     sort:
       dateaddedEarliestFirst: Könyvtárhoz adás dátuma, korábbiak előbb
       dateaddedLatestFirst: Könyvtárhoz adás dátuma, későbbiek előbb
@@ -212,8 +198,7 @@ views:
       official: Hivatalos
       clip: Klip
     unsupportedQuery: >-
-      Jelenleg klipek keresése <kbd>Téma</kbd> és <kbd>Szervezet</kbd> által nem
-      támogatott. Nem lesznek <b>klipek</b> előhozva.
+      Jelenleg klipek keresése <kbd>Téma</kbd> és <kbd>Szervezet</kbd> által nem támogatott. Nem lesznek <b>klipek</b> előhozva.
     sortByLabel: Rendezés
     typeDropdownLabel: Típus
   settings:
@@ -222,14 +207,12 @@ views:
     darkModeMsg: Átváltja az oldal témáját világos módról sötét módra.
     redirectModeLabel: Megnyitás a YouTube-on
     redirectModeMsg: >-
-      A videó indeképére kattintva a Youtube-on nyitja meg, a videó címére
-      kattintva a Holodex-en nyitja meg.
+      A videó indeképére kattintva a Youtube-on nyitja meg, a videó címére kattintva a Holodex-en nyitja meg.
     useEnglishNameLabel: Angol vtuber nevek
     useEnglishNameMsg: A vtuberek csatornáinak nevei angolul lesznek megjelenítve
     hideVideoThumbnailsLabel: Videó indexképek elrejtése
     hideVideoThumbnailsMsg: >-
-      Elrejti a indexképeket, gyorsabb betöltést eredményez és kevesebb tekerést
-      mobilon.
+      Elrejti a indexképeket, gyorsabb betöltést eredményez és kevesebb tekerést mobilon.
     pushNotificationLabel: Értesítések (Hamarosan)
     pushNotificationMsg: Értesítések engedélyezése a kedvenc csatornáidtól
     autoplayVideoLabel: Videók automatikus lejátszása
@@ -241,8 +224,7 @@ views:
     tlLanguageSelection: Élő chatek fordítása az alábbi nyelveken
     defaultPage: Alapértelmezett oldal
     defaultPageMsg: >-
-      Ennek az oldalnak megnyitása alapértelmezettként a Holodex.net
-      meglátogatásakor, vagy a bal fenti logóra kattintáskor.
+      Ennek az oldalnak megnyitása alapértelmezettként a Holodex.net meglátogatásakor, vagy a bal fenti logóra kattintáskor.
     videoFeedSettings: Videó beállítások
     siteNavigationSettings: Oldal navigáció
     languageSettings: Nyelv
@@ -265,7 +247,7 @@ views:
     nowSupportsMultiOrg: Holodex már több szervezetet is támogat.
     loginCallToAction: Jelentkezz be, hogy kedvenceket válassz!
   about:
-    add_my_channel: Csatornám hozzáadása Holodex-hez
+    add_my_channel: Csatorna igénylés
   watch:
     theaterMode: Mozi mód
     mentionIconLabel: EMLÍTÉSEK
@@ -285,16 +267,14 @@ views:
         reconnecting: Újracsatlakozás...
         reconnectFailed: Nem tudtunk visszacsatlakozni
         notLive: >-
-          Még nem indult el az adás, kérlek próbáld újra amikor a stream 15
-          percre van indulástól
+          Még nem indult el az adás, kérlek próbáld újra amikor a stream 15 percre van indulástól
         connectedToChat: Csatlakozva
         disconnectedToChat: Lecsatlakozva
     removeFromPlaylist: Videó eltávolítása a lejátszási listából
     saveToPlaylist: Videó mentése a lejátszási listába
   favorites:
     promptForAction: >-
-      Készíts egy listát a kedvenc vtuberjeidről és láthatod az legújabb
-      klipjeiket és adásaikat ezen az oldalon.
+      Készíts egy listát a kedvenc vtuberjeidről és láthatod az legújabb klipjeiket és adásaikat ezen az oldalon.
     manageFavorites: Kedvencek kezelése
     close: Bezárás
     showall: Összes megjelenítése
@@ -303,8 +283,7 @@ views:
     changeTopic:
       title: Stream téma megváltoztatása
       info: >-
-        Minden felhasználó hozzáadhat témát a videókhoz, de csak a szerkesztők
-        és adminok tudják eltávolítani és megváltoztatni utána.
+        Minden felhasználó hozzáadhat témát a videókhoz, de csak a szerkesztők és adminok tudják eltávolítani és megváltoztatni utána.
       button: Mentés (Igénybe vehet 5 percet)
     channelMentions:
       title: Csatorna említések
@@ -312,14 +291,11 @@ views:
       title: Források/Klipek (készülőben)
   login:
     apikeyMsg: >-
-      Az API kulcsot a Holodex API programozott lekérdezéséhez használhatod.
-      Csak egy kulcs felhasználónként! Miután új kulcsot kaptál, a régi lejár
-      0-24 órán belül.
+      Az API kulcsot a Holodex API programozott lekérdezéséhez használhatod. Csak egy kulcs felhasználónként! Miután új kulcsot kaptál, a régi lejár 0-24 órán belül.
     apikeyNew: Új API kulcs kérése
     ownedYtChannel: Birtokolt Youtube csatorna
     futureYtcOwnerMessage: >-
-      A jövőben tervezünk több funkciót biztosítani csatorna tulajdonosoknak,
-      mint például metaadatok szerkesztése a saját videóikhoz.
+      A jövőben tervezünk több funkciót biztosítani csatorna tulajdonosoknak, mint például metaadatok szerkesztése a saját videóikhoz.
     linkAcc: Másik fiók hozzáadása
     apikeyResetConfirm1: Biztos vissza szeretnéd újraállítani az API kulcsod?
     apikeyResetConfirm2: A régi API kulcs lejár 0-24 órán belül. Biztos visszaállítod?
@@ -337,13 +313,10 @@ views:
     muteAll: Minden némítása
     unmuteAll: Minden némítás visszavonása
     autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
-    createLayoutTip: >-
-      Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy
-      előrendezés használatával
+    createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
     preset:
       shareOnDiscord: >-
-        Van egy jópofa elrendezésed? Használd a megosztás gombot és mutasd meg a
-        <a href="https://discord.gg/jctkgHBt4b"> Discord szerverünkön</a>!
+        Van egy jópofa elrendezésed? Használd a megosztás gombot és mutasd meg a <a href="https://discord.gg/jctkgHBt4b"> Discord szerverünkön</a>!
       custom: Elrendezéseim
       toggleAutoLayout: Auto-rendezés bekapcsolása
       remove: Törlés
@@ -362,11 +335,7 @@ views:
     mediaControlsEmpty: A lejátszott videók itt fognak megjelenni
   mugen:
     welcome: >-
-      Üdvözöllek a MugenClips-nél! Ezen az oldalon mindenki ugyan azt a
-      véletlenszerűen kiválasztott angol Hololive klipet nézi. Együtt nézheted
-      és chatelhetsz más Hololive rajongókkal az egész világon. Ha előretekersz
-      és szeretnél újra egyidejűleg lenni a többiekkel, kérlek frissítsd az
-      oldalt.
+      Üdvözöllek a MugenClips-nél! Ezen az oldalon mindenki ugyan azt a véletlenszerűen kiválasztott angol Hololive klipet nézi. Együtt nézheted és chatelhetsz más Hololive rajongókkal az egész világon. Ha előretekersz és szeretnél újra egyidejűleg lenni a többiekkel, kérlek frissítsd az oldalt.
   playlist:
     playlist-is-modified: Nincs mentve
     item-last-updated: 'Legutóbb frissítve:'
@@ -384,10 +353,7 @@ editor:
     add: Hozzáadás
     update: Frissítés
     permission: >-
-      'Editor' vagy magasabb felhasználó szintűnek kell lenned, hogy törölj vagy
-      frissíts meglévő dalokat. Kérlek vedd fel velünk a kapcsolatot <a
-      class='white--text' href='/about'>discordon,</a> hogy jelezd a problémát a
-      szerkesztőinknek, vagy jelentkezz szerkesztőnek.
+      'Editor' vagy magasabb felhasználó szintűnek kell lenned, hogy törölj vagy frissíts meglévő dalokat. Kérlek vedd fel velünk a kapcsolatot <a class='white--text' href='/about'>discordon,</a> hogy jelezd a problémát a szerkesztőinknek, vagy jelentkezz szerkesztőnek.
     titles:
       addSong: 'Dal metaadat: Új dal hozzáadása'
       songList: 'Dalok listája: {0}'
@@ -411,124 +377,77 @@ about:
     title: GYIK
     ytchatHeader: A Youtube chatem nincs bejelentkezve!
     ytchatContent: >-
-      Kérlek kapcsold ki a böngésző védelem harmadik fél cookie tiltását vagy
-      fehérlistázd az oldalt és a youtube.com-ot, hogy elérje a harmadik fél
-      cookiekat.
+      Kérlek kapcsold ki a böngésző védelem harmadik fél cookie tiltását vagy fehérlistázd az oldalt és a youtube.com-ot, hogy elérje a harmadik fél cookiekat.
     ytchatFirefox: Útmutató Firefoxhoz, más böngészőkkel hasonlóan működhet.
     autoplayHeader: Nem működik az AutoPlay!
-    autoplayContent: >-
-      Kérlek google-n keresd, hogyan kell a böngésződben engedélyezni az
-      AutoPlay-t.
+    autoplayContent: Kérlek google-n keresd, hogyan kell a böngésződben engedélyezni az AutoPlay-t.
     musicPlayer: A Music Player nem működik rendesen mobil eszközökön!
     musicPlayerContent: >-
-      Sajnálom, de lehetetlen a Music Player-t támogatni weboldalként mobilon.
-      <br/>Két fő oka: 1. Mobil eszközök általában megtagadják az autoplay-t,
-      amire nekünk szükségünk van; 2. Mobil eszközök általában nem engedik
-      weboldalaknak, hogy összeláncolják a zenét a háttérben. 3. Nem integráljuk
-      a várólistád rendszer szintű zeneirányítóba.
-    videoLinkage: >-
-      Hogyan bizonyosodom meg róla, hogy a videók és klipek biztosan hozzá
-      vannak kapcsolva a vtuberekhez?
+      A legtöbb iOS eszközön nem tudod kikapcsolni a képernyőd vagy bezárni a Safari-t miközben Holodex zenét játszol le. Ez a korlátozás érvényesülhet Android eszközökön is (eszköztől függően). Kérlek jelezz Discord-on, ha van ötleted jobb playback rendszer megoldásához.
+    videoLinkage: Hogyan bizonyosodom meg róla, hogy a videók és klipek biztosan hozzá vannak kapcsolva a vtuberekhez?
     videoLinkageContent: >-
-      Minden információt a leírásból szedünk. Ha klipelsz egy streamet, kérlek
-      ne felejtsd el linkelni az eredeti streamet a leírásban. Ha egy rajongói
-      tartalmat klipelsz, (pl. bilibili-ről), csak linkeld be az eredeti
-      hivatalos youtube csatornát a hozzátartozó vtuberhez. Ha nem linkeled a
-      vtuber csatornáját, akkor nem fog megjelenni a videód Holodexen, mivel
-      minden kliphez szükséges egy link a vtuberhez aki ismert Holodexen is.
-    quitHolodex: |
-      Felirat készítő vagyok és szeretném a tartalmaim eltávolítani Holodexről.
+      Minden információt a leírásból szedünk. Ha klipelsz egy streamet, kérlek ne felejtsd el linkelni az eredeti streamet a leírásban. Ha egy rajongói tartalmat klipelsz, (pl. bilibili-ről), csak linkeld be az eredeti hivatalos youtube csatornát a hozzátartozó vtuberhez. Ha nem linkeled a vtuber csatornáját, akkor nem fog megjelenni a videód Holodexen, mivel minden kliphez szükséges egy link a vtuberhez aki ismert Holodexen is.
+    quitHolodex: "Felirat készítő vagyok és szeretném a tartalmaim eltávolítani Holodexről.\n"
     quitHolodexContent: >-
-      Sajnáljuk, hogy elmész :(, kérlek jelezd ha van bármi probléma amivel
-      segíthetnénk. Ha mindenképp szeretnéd eltávolíttatni, kérlek üzenj nekünk
-      Discordon.
+      Sajnáljuk, hogy elmész :(, kérlek jelezd ha van bármi probléma amivel segíthetnénk. Ha mindenképp szeretnéd eltávolíttatni, kérlek üzenj nekünk Discordon.
     favorite:
       title: Mik a Kedvencek?
       Contents:
         - >-
-          A Kedvencek funkció segít, hogy a kedvenc vtuberjeidet lásd elsőként,
-          beállíthatod a kedvenc csatornáid a szívecske ikonra kattintva
+          A Kedvencek funkció segít, hogy a kedvenc vtuberjeidet lásd elsőként, beállíthatod a kedvenc csatornáid a szívecske ikonra kattintva
         - >-
-          Kérlek vedd figyelembe, hogy feliratkészítőket kedvencekhez adni
-          jelenleg nem támogatott, viszont más módokon feliratkozhatsz rájuk,
-          támogathatod őket.
+          Kérlek vedd figyelembe, hogy feliratkészítőket kedvencekhez adni jelenleg nem támogatott, viszont más módokon feliratkozhatsz rájuk, támogathatod őket.
       disappear:
         title: A Kedvencek listám eltűnt / Nem tudok kedvenceket hozzáadni
       contents:
         - >-
-          Kérlek bizonyosodj meg róla, hogy be vagy jelentkezve és látogass el a
-          csatornák kedvencek oldalra, hogy erőltess egy frissítést!
+          Kérlek bizonyosodj meg róla, hogy be vagy jelentkezve és látogass el a csatornák kedvencek oldalra, hogy erőltess egy frissítést!
     mobile:
       title: Van Android/iOS Holodex app?
       content:
         summary: >-
-          Dolgozunk rajta! Addig is kérlek használd a "Hozzáadás kezdőlaphoz"
-          funkciót a böngésződön. Arra hangoltuk, hogy nagyon úgy viselkedjen,
-          mint egy app
+          Dolgozunk rajta! Addig is kérlek használd a "Hozzáadás kezdőlaphoz" funkciót a böngésződön. Arra hangoltuk, hogy nagyon úgy viselkedjen, mint egy app
         android:
           - 'Android Chrome: Látogass el az oldalra és nyomd meg a három pöttyöt'
           - a jobb első sarokban és keresd meg a "Kezdőképernyőre" lehetőséget!
         ios:
           - >-
-            iOS Safari: Látogass el az oldalra a telefonodon, kattints a felfele
-            mutató nyilas négyzetre
+            iOS Safari: Látogass el az oldalra a telefonodon, kattints a felfele mutató nyilas négyzetre
           - a Safari alján, majd nyomj a "Kezdőképernyőre" opcióra!
     MugenClips:
       title: Mi az a MugenClips?
       contents:
         - >-
-          MugenClips, avagy végtelen klipek, közösen nézhetsz klipeket másokkal
-          egy folyamatosan változó készletből, melyeket sok különböző fordító
-          csatorna készített és készít
+          MugenClips, avagy végtelen klipek, közösen nézhetsz klipeket másokkal egy folyamatosan változó készletből, melyeket sok különböző fordító csatorna készített és készít
     subber:
-      title: >-
-        Felirat készítő vagyok és nem találom a csatornám és klipjeim a
-        Holodexen
+      title: Felirat készítő vagyok és nem találom a csatornám és klipjeim a Holodexen
       contents:
         - >-
-          Kérlek nézd meg a Csatornák oldalon, hogy listázva vagy-e
-          feliratkészítőként, amennyiben nem, kérlek töltsd ki
+          Kérlek nézd meg a Csatornák oldalon, hogy listázva vagy-e feliratkészítőként, amennyiben nem, kérlek töltsd ki
         - ezt a lapot
         - >-
-          , majd hozzáadunk manuálisan. Ha már a listán vagy, kérlek bizonyosodj
-          meg róla, hogy a videóid leírása a helyes linkeket tartalmazza a
-          youtube forráshoz/csatornához!
+          , majd hozzáadunk manuálisan. Ha már a listán vagy, kérlek bizonyosodj meg róla, hogy a videóid leírása a helyes linkeket tartalmazza a youtube forráshoz/csatornához!
     feedback:
       title: Lenne visszajelzésem/szeretnék segíteni a projectben
       contents:
         - >-
-          Minden segítséget és ötletet szívesen fogadunk! Az UI és a Backend
-          egyaránt elérhető, hozzájárulhatsz, viszont jelenleg csak a UI nyílt
-          forráskódú. Kérlek vedd fel a kapcsolatot velünk Discord-on, hogy
-          hozzáférést kapj a backend forráshoz, vagy csak chatelj az
-          ötleteidről.
+          Minden segítséget és ötletet szívesen fogadunk! Az UI és a Backend egyaránt elérhető, hozzájárulhatsz, viszont jelenleg csak a UI nyílt forráskódú. Kérlek vedd fel a kapcsolatot velünk Discord-on, hogy hozzáférést kapj a backend forráshoz, vagy csak chatelj az ötleteidről.
   gdpr: GDPR és az adataim
   gdprContent: >-
-    Egy Google Analytics cookiet használunk, hogy nyomon tartsuk az oldal
-    látogatóit, kizárólag elemzési célokkal. Bejelentkezés után társítjuk a
-    közösségi fiókod felhasználónevét és ID-jét a kedvenceiddel. Ez az adat
-    lehet az e-mail címed (Google), Discord ID vagy a Twittered illően kezelve.
-  gdprDeletion: >-
-    A felhasználói adataid törléséhez kérlek vedd fel velünk a kapcsolatot
-    Discordon!
+    Egy Google Analytics cookiet használunk, hogy nyomon tartsuk az oldal látogatóit, kizárólag elemzési célokkal. Bejelentkezés után társítjuk a közösségi fiókod felhasználónevét és ID-jét a kedvenceiddel. Ez az adat lehet az e-mail címed (Google), Discord ID vagy a Twittered illően kezelve.
+  gdprDeletion: A felhasználói adataid törléséhez kérlek vedd fel velünk a kapcsolatot Discordon!
   feedback: Visszajelzés/Hiba jelentés
   feedbackHtml: >-
-    Létrehozhatsz egy ügyet a <a
-    href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker-en
-    </a> vagy felkeresve a Holodex csapatot Discordon <br /> <br /> Reddit: <a
-    href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+    Létrehozhatsz egy ügyet a <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker-en </a> vagy felkeresve a Holodex csapatot Discordon <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Közreműködők
     contents:
       - Szeretnék nagy köszönetet mondani a
       - csapatnak a munkáikért
       - >-
-        A feliratkészítőknek szintén, akik segítik a tengerentúli nézőket!
-        Kérlek nézd meg őket!
+        A feliratkészítőknek szintén, akik segítik a tengerentúli nézőket! Kérlek nézd meg őket!
       - >-
-        Ez egy rajongói készítésű weboldal, a rajta talált tartalmakat a Cover
-        corp és a partnerjei birtokolják. Az oldal követi a Cover corp
-        irányelveit a
+        Ez egy rajongói készítésű weboldal, a rajta talált tartalmakat a Cover corp és a partnerjei birtokolják. Az oldal követi a Cover corp irányelveit a
       - Származtatott Munkavállalói Licencszerződés szerint
   changelog:
     title: Változtatások
