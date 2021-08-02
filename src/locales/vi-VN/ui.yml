@@ -221,8 +221,6 @@ views:
     check_about_page: Truy cập trang Giới thiệu để đọc về các thay đổi mới
     nowSupportsMultiOrg: Holodex giờ đã hỗ trợ nhiều tổ chức khác nhau.
     loginCallToAction: Hãy đăng nhập để lưu các kênh bạn yêu thích!
-  about:
-    add_my_channel: Thêm kênh của tôi vào Holodex
   watch:
     theaterMode: Chế độ Rạp chiếu phim
     mentionIconLabel: ĐỀ CẬP
@@ -342,7 +340,6 @@ editor:
 about:
   quicklinks: Liên kết
   discordBtn: Holodex Discord
-  issueTracker: Danh sách Issue / Mã nguồn
   faq:
     title: FAQ
     ytchatHeader: Tôi không đăng nhập được YouTube Chat!
@@ -352,8 +349,6 @@ about:
     autoplayHeader: AutoPlay / Tự động phát không hoạt động!
     autoplayContent: 'Vui lòng tra cứu cách bật AutoPlay / Tự động phát cho trình duyệt của bạn như: Chrome, Firefox, Edge, Opera.'
     musicPlayer: Trình phát nhạc không hoạt động tốt trên thiết bị di động!
-    musicPlayerContent: >-
-      Xin lỗi, nhưng hiện tại chúng tôi không thể hỗ trợ Trình phát nhạc dưới dạng trang Web trên các thiết bị di động. <br/>Có ba yếu tố sau: 1. Thiết bị di động thường cấm tự động phát - chúng tôi cần nó; 2. Thiết bị di động thường không cho phép các trang web liên kết nhạc khi chạy nền. 3. Chúng tôi không tích hợp được hàng chờ nhạc của bạn vào trung tâm điều khiển âm nhạc cấp hệ thống.
     videoLinkage: Làm cách nào để tôi có thể đảm bảo rằng các video được liên kết đúng cách với các Vtuber?
     videoLinkageContent: >-
       Tất cả mọi thông tin đều được trích từ mô tả của video. Nếu bạn clip từ một stream, xin hãy chắc chắn rằng bạn đã trích dẫn liên kết đến stream gốc. Nếu như bạn clip từ một video của fan (vd: từ bilibili), hãy chắc chắn rằng bạn có trích dẫn liên kết đến kênh Youtube chính thức của những Vtuber liên quan. Nếu như bạn không đặt bất cứ liên kết nào đến Vtuber trong phần mô tả video của mình, clip đó sẽ không được hiển thị trên Holodex, vì mọi clip đều được yêu cầu phải liên kết đến một Vtuber cụ thể trong hệ thống.

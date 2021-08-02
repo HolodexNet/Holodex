@@ -1,110 +1,125 @@
 <template>
-    <!-- Show channel list as cards -->
-    <v-container v-if="cardView" dense>
-        <!-- Add headers if it's grouped channels -->
-        <v-row v-if="grouped" dense>
-            <!-- channelsByGroup has group title and group items, nested loop -->
-            <template v-for="(group, index) in channelsByGroup">
-                <v-col cols="12" class="text-h6" :key="'title-' + index">
-                    {{ group.title }}
-                </v-col>
-                <v-col cols="12" md="4" :key="channel.id" v-for="channel in group.items">
-                    <ChannelCard :channel="channel" />
-                </v-col>
-            </template>
-        </v-row>
-        <!-- Or show normally -->
-        <v-row v-else dense>
-            <v-col cols="12" md="4" :key="channel.id" v-for="channel in channels">
-                <ChannelCard :channel="channel" />
-            </v-col>
-        </v-row>
-    </v-container>
-    <!-- Grouped channel list with headers and a favorite by group button -->
-    <v-list class="pa-0" v-else-if="grouped">
-        <!-- channelsByGroup has group title and group items, nested loop -->
-        <template v-for="(group, index) in channelsByGroup">
-            <v-divider :key="'divider-grp' + index"></v-divider>
-            <v-list-group :key="`${index}-${group.title}`" no-action sub-group value="0">
-                <!-- Header with group name and a favorite all button + tooltip -->
-                <template v-slot:activator>
-                    <v-list-item class="d-flex justify-space-between flex-grow-1">
-                        <v-list-item-title>
-                            {{ group.title }}
-                        </v-list-item-title>
-                        <!-- TODO ADD CONFIRMATION DIALOG -->
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn sm outlined @click.stop="toggleFavoriteAll(index)">
-                                    <v-icon
-                                        :color="group.allFavorited && isLoggedIn ? 'red' : 'grey'"
-                                        v-bind="attrs"
-                                        v-on="on"
-                                    >
-                                        {{ icons.mdiHeart }}
-                                    </v-icon>
-                                    {{ $t("views.search.type.all") }}
-                                </v-btn>
-                            </template>
-                            <span>
-                                {{
-                                    !isLoggedIn
-                                        ? $t("component.channelList.signInToFavorite")
-                                        : group.allFavorited
-                                        ? $t("component.channelList.unfavoriteAllInGroup")
-                                        : $t("component.channelList.favoriteAllInGroup")
-                                }}
-                            </span>
-                        </v-tooltip>
-                    </v-list-item>
-                </template>
-                <!-- Channel list -->
-                <template v-for="(channel, index) in group.items">
-                    <v-divider :key="'divider-' + index"></v-divider>
-                    <v-list-item
-                        v-if="channel"
-                        :key="channel.id"
-                        :to="`/channel/${channel.id}`"
-                        style="padding: 0 16px"
-                        three-line
-                    >
-                        <v-list-item-avatar size="55">
-                            <ChannelImg :channel="channel" size="55" />
-                        </v-list-item-avatar>
-                        <ChannelInfo :channel="channel" :includeVideoCount="includeVideoCount" style="width: 80px">
-                            <ChannelSocials :channel="channel" class="pa-0 justify-start" v-if="isXs" />
-                        </ChannelInfo>
-                        <ChannelSocials :channel="channel" v-if="!isXs" />
-                    </v-list-item>
-                </template>
-            </v-list-group>
+  <!-- Show channel list as cards -->
+  <v-container v-if="cardView" dense>
+    <!-- Add headers if it's grouped channels -->
+    <v-row v-if="grouped" dense>
+      <!-- channelsByGroup has group title and group items, nested loop -->
+      <template v-for="(group, index) in channelsByGroup">
+        <v-col :key="'title-' + index" cols="12" class="text-h6">
+          {{ group.title }}
+        </v-col>
+        <v-col
+          v-for="channel in group.items"
+          :key="channel.id"
+          cols="12"
+          md="4"
+        >
+          <ChannelCard :channel="channel" />
+        </v-col>
+      </template>
+    </v-row>
+    <!-- Or show normally -->
+    <v-row v-else dense>
+      <v-col
+        v-for="channel in channels"
+        :key="channel.id"
+        cols="12"
+        md="4"
+      >
+        <ChannelCard :channel="channel" />
+      </v-col>
+    </v-row>
+  </v-container>
+  <!-- Grouped channel list with headers and a favorite by group button -->
+  <v-list v-else-if="grouped" class="pa-0">
+    <!-- channelsByGroup has group title and group items, nested loop -->
+    <template v-for="(group, index) in channelsByGroup">
+      <v-divider :key="'divider-grp' + index" />
+      <v-list-group
+        :key="`${index}-${group.title}`"
+        no-action
+        sub-group
+        value="0"
+      >
+        <!-- Header with group name and a favorite all button + tooltip -->
+        <template #activator>
+          <v-list-item class="d-flex justify-space-between flex-grow-1">
+            <v-list-item-title>
+              {{ group.title }}
+            </v-list-item-title>
+            <!-- TODO ADD CONFIRMATION DIALOG -->
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn sm outlined @click.stop="toggleFavoriteAll(index)">
+                  <v-icon
+                    :color="group.allFavorited && isLoggedIn ? 'red' : 'grey'"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    {{ icons.mdiHeart }}
+                  </v-icon>
+                  {{ $t("views.search.type.all") }}
+                </v-btn>
+              </template>
+              <span>
+                {{
+                  !isLoggedIn
+                    ? $t("component.channelList.signInToFavorite")
+                    : group.allFavorited
+                      ? $t("component.channelList.unfavoriteAllInGroup")
+                      : $t("component.channelList.favoriteAllInGroup")
+                }}
+              </span>
+            </v-tooltip>
+          </v-list-item>
         </template>
-    </v-list>
-    <!-- Normal channel list -->
-    <v-list class="pa-0" v-else>
-        <template v-for="(channel, index) in channels">
-            <v-divider :key="'divider-' + index"></v-divider>
-            <v-list-item
-                v-if="channel"
-                :key="channel.id"
-                :to="`/channel/${channel.id}`"
-                style="padding: 0 16px"
-                three-line
-            >
-                <v-list-item-avatar size="55">
-                    <ChannelImg :channel="channel" size="55" />
-                </v-list-item-avatar>
-                <ChannelInfo :channel="channel" :includeVideoCount="includeVideoCount">
-                    <slot name="action" v-if="isXs" v-bind:channel="channel">
-                        <ChannelSocials :channel="channel" class="pa-0 justify-start" :showDelete="showDelete" />
-                    </slot>
-                </ChannelInfo>
-                <slot name="action" v-if="!isXs" v-bind:channel="channel">
-                    <ChannelSocials :channel="channel" />
-                </slot>
-            </v-list-item>
+        <!-- Channel list -->
+        <template v-for="(channel, index2) in group.items">
+          <v-divider :key="'divider-' + index2" />
+          <v-list-item
+            v-if="channel"
+            :key="channel.id"
+            :to="`/channel/${channel.id}`"
+            style="padding: 0 16px"
+            three-line
+          >
+            <v-list-item-avatar size="55">
+              <ChannelImg :channel="channel" size="55" />
+            </v-list-item-avatar>
+            <ChannelInfo :channel="channel" :include-video-count="includeVideoCount" style="width: 80px">
+              <ChannelSocials v-if="isXs" :channel="channel" class="pa-0 justify-start" />
+            </ChannelInfo>
+            <ChannelSocials v-if="!isXs" :channel="channel" />
+          </v-list-item>
         </template>
-    </v-list>
+      </v-list-group>
+    </template>
+  </v-list>
+  <!-- Normal channel list -->
+  <v-list v-else class="pa-0">
+    <template v-for="(channel, index) in channels">
+      <v-divider :key="'divider-' + index" />
+      <v-list-item
+        v-if="channel"
+        :key="channel.id"
+        :to="`/channel/${channel.id}`"
+        style="padding: 0 16px"
+        three-line
+      >
+        <v-list-item-avatar size="55">
+          <ChannelImg :channel="channel" size="55" />
+        </v-list-item-avatar>
+        <ChannelInfo :channel="channel" :include-video-count="includeVideoCount">
+          <slot v-if="isXs" name="action" :channel="channel">
+            <ChannelSocials :channel="channel" class="pa-0 justify-start" :show-delete="showDelete" />
+          </slot>
+        </ChannelInfo>
+        <slot v-if="!isXs" name="action" :channel="channel">
+          <ChannelSocials :channel="channel" />
+        </slot>
+      </v-list-item>
+    </template>
+  </v-list>
 </template>
 
 <script lang="ts">
@@ -120,11 +135,6 @@ export default {
         ChannelInfo,
         ChannelSocials,
         ChannelCard: () => import("./ChannelCard.vue"),
-    },
-    data() {
-        return {
-            icons,
-        };
     },
     props: {
         channels: {
@@ -151,6 +161,11 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    data() {
+        return {
+            icons,
+        };
     },
     computed: {
         isXs() {
@@ -194,8 +209,9 @@ export default {
                     this.$store.commit("favorites/toggleFavorite", c.id);
                 }
             });
-            if (Object.keys(this.$store.state.favorites.stagedFavorites).length > 0)
+            if (Object.keys(this.$store.state.favorites.stagedFavorites).length > 0) {
                 this.$store.dispatch("favorites/updateFavorites");
+            }
         },
     },
 };

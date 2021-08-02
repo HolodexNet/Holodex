@@ -49,8 +49,6 @@ component:
     googleCalendar: Tambahkan ke Kalendar Google
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -139,7 +137,6 @@ views:
     collabs: Kerjasama
     about: Perihal
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -246,8 +243,6 @@ views:
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
     nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong
     loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
-  about:
-    add_my_channel: Tambah saluran saya di Holodex
   watch:
     theaterMode: Mod Teater
     mentionIconLabel: MENYEBUT
@@ -373,7 +368,6 @@ editor:
 about:
   quicklinks: Pautan Pantas
   discordBtn: Discord Holodex
-  issueTracker: Pengesan Masalah dan Kod Sumber
   faq:
     title: Soalan Lazim
     ytchatHeader: Akaun saya tidak log masuk di ruangan sembang YouTube!
@@ -383,8 +377,6 @@ about:
     autoplayHeader: Automain tidak berfungsi!
     autoplayContent: Gelintar di internet cara menghidupkan automain bagi penyemak imbas masing-masing.
     musicPlayer: Peranti mudah alih tidak boleh menggunakan Pemain Muzik dengan baik!
-    musicPlayerContent: >-
-      Harap maklum, sokongan Pemain Muzik adalah tidak lengkap di peranti mudah alih. <br/>Puncanya ialah: 1. Fungsi automain yang diperlukan tidak dibenarkan oleh peranti mudah alih; 2. Kebanyakan peranti mudah alih tidak membenarkan perangkaian muzik di latar oleh tapak sesawang. 3. Baris gilir lagu anda tidak disepadukan di pusat kawalan muzik aras sistem.
     videoLinkage: Bagaimana caranya agar penggiat YouTube maya yang berkenaan dipautkan dengan tepat?
     videoLinkageContent: >-
       Keseluruhan maklumat dihuraikan berdasarkan isi perihalan video. Jika anda membuat sedutan mana-mana siaran rasmi, pastikan pautannya disertakan sekali. Jika sedutan anda daripada hasil ciptaan peminat (contohnya di bilibili), pastikan penggiyut maya yang berkaitan dipautkan saluran YouTube-nya. Sedutan yang tidak memautkan saluran penggiyut maya yang berkenaan tidak akan dipaparkan di Holodex kerana sedutan di tapak ini harus ada pautan kepada penggiyut maya yang disenaraikan di Holodex.

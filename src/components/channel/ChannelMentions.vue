@@ -1,18 +1,25 @@
 <template>
-    <div class="d-flex flex-row mentions">
-        <template v-for="channel in mentions.slice(0, 3)">
-            <channel-img :channel="channel" :key="channel.id" :size="24" rounded />
-        </template>
-        <div class="collapsed-mention-count" v-if="mentions.length > 3">+{{ mentions.length - 1 }}</div>
+  <div class="d-flex flex-row mentions">
+    <template v-for="channel in mentions.slice(0, 3)">
+      <channel-img
+        :key="channel.id"
+        :channel="channel"
+        :size="24"
+        rounded
+      />
+    </template>
+    <div v-if="mentions.length > 3" class="collapsed-mention-count">
+      +{{ mentions.length - 1 }}
     </div>
+  </div>
 </template>
 
 <script>
 import ChannelImg from "./ChannelImg.vue";
 
 export default {
-    components: { ChannelImg },
     name: "ChannelMentions",
+    components: { ChannelImg },
     props: {
         mentions: {
             type: Array,

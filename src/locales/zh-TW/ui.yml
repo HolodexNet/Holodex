@@ -374,7 +374,6 @@ editor:
 about:
   quicklinks: 相關連結
   discordBtn: Holodex Discord
-  issueTracker: Github原始碼 / 錯誤回報頁
   faq:
     title: 常見問題
     ytchatHeader: YouTube聊天室顯示我尚未登入
@@ -385,7 +384,7 @@ about:
     autoplayContent: 請用Google查詢如何啟用您所使用的瀏覽器的自動播放功能。
     musicPlayer: 音樂播放器在行動裝置上無法正常使用！
     musicPlayerContent: >-
-      非常抱歉，但行動裝置沒辦法像是電腦網頁那樣完美運作我們的音樂播放器。 <br/>有三個原因：<br/>１. 行動裝置的系統通常會禁用我們所需要的自動播放功能。<br/>２. 行動裝置通常不允許網站在背景播放音樂。<br/>３. 我們不會將您的播放清單整合到系統的音樂控制中心。
+      對大多數iOS裝置來說，是無法讓使用者在關閉螢幕/Safari的情況下同時使用 Holodex 播放音樂的。這個限制在Android裝置上則依不同裝置而有所區別。如果您對於播放方式有更好的想法，請在discord上讓我們知曉。
     videoLinkage: 我該如何確保影片有確實與Vtuber關聯？
     videoLinkageContent: >-
       Holodex 的影片資料皆是由影片描述自動分析而來。如果您的剪輯來自特定實況，請確保在描述中附帶該次實況的官方連結。如果您的剪輯來自粉絲二創作品（舉例來說：B站），請確保在描述中附帶該剪輯中所出現的Vtuber頻道連結。如果您的影片描述中未包含任何 Vtuber 或是實況連結的話，Holodex就不會於網站上顯示該影片，所有的剪輯/翻譯影片都必需連結至 Holodex 已知的 Vtuber。

@@ -17,12 +17,8 @@ const initialState = {
 export const state = { ...initialState };
 
 const getters = {
-    videoIds: (state) => {
-        return new Set(state.active.videos.map((x) => x.id));
-    },
-    contains: (state, getters) => (id) => {
-        return getters.videoIds.has(id);
-    },
+    videoIds: (state) => new Set(state.active.videos.map((x) => x.id)),
+    contains: (state, getters) => (id) => getters.videoIds.has(id),
 };
 
 const mutations = {

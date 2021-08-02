@@ -1,142 +1,156 @@
 <template>
-    <v-container>
-        <v-row class="d-flex justify-space-between">
-            <v-col>
-                <div class="text-h6 mb-2">
-                    {{ $t("views.library.savedVideosTitle") }}
-                </div>
-                <div class="d-flex flex-row flex-wrap">
-                    <v-btn class="mr-1 mb-1" @click="showReset ? reset() : selectAll()" color="blue-grey">
-                        {{ showReset ? $t("views.library.selectionReset") : $t("views.library.selectionSelectAll") }}
-                    </v-btn>
-                    <v-btn class="mr-1 mb-1" @click="select(50)" v-if="!showReset" color="blue-grey">
-                        {{ $t("views.library.selectionSelect50") }}
-                    </v-btn>
+  <v-container>
+    <v-row class="d-flex justify-space-between">
+      <v-col>
+        <div class="text-h6 mb-2">
+          {{ $t("views.library.savedVideosTitle") }}
+        </div>
+        <div class="d-flex flex-row flex-wrap">
+          <v-btn class="mr-1 mb-1" color="blue-grey" @click="showReset ? reset() : selectAll()">
+            {{ showReset ? $t("views.library.selectionReset") : $t("views.library.selectionSelectAll") }}
+          </v-btn>
+          <v-btn
+            v-if="!showReset"
+            class="mr-1 mb-1"
+            color="blue-grey"
+            @click="select(50)"
+          >
+            {{ $t("views.library.selectionSelect50") }}
+          </v-btn>
 
-                    <v-menu>
-                        <template v-slot:activator="{ on }">
-                            <v-btn v-on="on" class="mr-1 mb-1" color="green darken-2">
-                                {{ $t("views.library.exportSelected", [selected.length]) }}
-                            </v-btn>
-                        </template>
-                        <v-list dense>
-                            <v-list-item-group>
-                                <v-list-item @click.stop="instructionsDialog = true">
-                                    <v-list-item-icon>
-                                        <v-icon>{{ icons.mdiYoutube }}</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-content>{{
-                                        $t("views.library.exportYtPlaylist")
-                                    }}</v-list-item-content>
-                                </v-list-item>
-                                <v-list-item @click.stop="downloadAsCSV">
-                                    <v-list-item-icon>
-                                        <v-icon>{{ mdiFileTable }}</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-content>{{ $t("views.library.exportCsv") }}</v-list-item-content>
-                                </v-list-item>
-                            </v-list-item-group>
-                        </v-list>
-                    </v-menu>
+          <v-menu>
+            <template #activator="{ on }">
+              <v-btn class="mr-1 mb-1" color="green darken-2" v-on="on">
+                {{ $t("views.library.exportSelected", [selected.length]) }}
+              </v-btn>
+            </template>
+            <v-list dense>
+              <v-list-item-group>
+                <v-list-item @click.stop="instructionsDialog = true">
+                  <v-list-item-icon>
+                    <v-icon>{{ icons.mdiYoutube }}</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    {{ $t("views.library.exportYtPlaylist") }}
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click.stop="downloadAsCSV">
+                  <v-list-item-icon>
+                    <v-icon>{{ mdiFileTable }}</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>{{ $t("views.library.exportCsv") }}</v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-menu>
 
-                    <!-- <v-btn class="mr-1 mb-1" color="green" @click="exportSelected">
+          <!-- <v-btn class="mr-1 mb-1" color="green" @click="exportSelected">
                         {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
                     </v-btn> -->
-                    <v-dialog v-model="deleteDialog" max-width="290">
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn color="red" class="mr-2 mb-1" v-bind="attrs" v-on="on">
-                                {{ $t("views.library.deleteFromLibraryButton", [selected.length]) }}
-                            </v-btn>
-                        </template>
-                        <!-- Deletion confirm dialog -->
-                        <v-card>
-                            <v-card-title>
-                                {{ $t("views.library.deleteConfirmation", [selected.length]) }}
-                            </v-card-title>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn text @click="deleteDialog = false">
-                                    {{ $t("views.library.deleteConfirmationCancel") }}
-                                </v-btn>
-                                <v-btn
-                                    color="red darken-1"
-                                    text
-                                    @click="
-                                        deleteDialog = false;
-                                        deleteSelected();
-                                    "
-                                >
-                                    {{ $t("views.library.deleteConfirmationOK") }}
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-
-                    <!-- <div class="d-inline-block"> -->
-                    <v-select
-                        class="d-inline-flex align-self-center mt-n1"
-                        :prepend-inner-icon="mdiSort"
-                        :items="sortby"
-                        v-model="sortModel"
-                        dense
-                        filled
-                        hide-details
-                    >
-                    </v-select>
-                    <!-- </div> -->
-                </div>
-            </v-col>
-        </v-row>
-        <generic-list-loader
-            v-if="savedVideosList.length > 0"
-            :paginate="true"
-            :perPage="50"
-            :loadFn="getLoadFn()"
-            v-slot="{ data }"
-            :key="'vl-home-' + sortModel + '=' + savedVideosList.length"
-        >
-            <VideoCardList :videos="data" horizontal includeChannel dense>
-                <template v-slot:action="prop">
-                    <v-checkbox
-                        v-model="selected"
-                        :ripple="false"
-                        :value="prop.video.id"
-                        hide-details
-                        @click.prevent.stop
-                    />
-                </template>
-            </VideoCardList>
-        </generic-list-loader>
-        <div v-else class="text-center">
-            {{ $t("views.library.emptyLibrary") }}
-        </div>
-        <v-dialog v-model="instructionsDialog" :width="$store.state.isMobile ? '90%' : '60vw'">
+          <v-dialog v-model="deleteDialog" max-width="290">
+            <template #activator="{ on, attrs }">
+              <v-btn
+                color="red"
+                class="mr-2 mb-1"
+                v-bind="attrs"
+                v-on="on"
+              >
+                {{ $t("views.library.deleteFromLibraryButton", [selected.length]) }}
+              </v-btn>
+            </template>
+            <!-- Deletion confirm dialog -->
             <v-card>
-                <v-card-title>{{ $t("views.library.exportYTHeading") }}</v-card-title>
-                <v-card-text>
-                    <v-row>
-                        <v-col cols="">
-                            <p v-html="$t('views.library.exportYTExplanation')"></p>
-                            <br />
-
-                            <br />
-                            <p v-html="$t('views.library.exportYTInstructions')"></p>
-                            <v-btn class="mt-2 mx-2" color="green" @click="exportSelected">
-                                {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
-                            </v-btn>
-                            <v-btn class="mt-2 mx-2" @click="instructionsDialog = false">{{
-                                $t("views.library.deleteConfirmationCancel")
-                            }}</v-btn>
-                        </v-col>
-                        <v-col cols="12" md="auto">
-                            <img src="/img/playlist-instruction.jpg" />
-                        </v-col>
-                    </v-row>
-                </v-card-text>
-                <v-card-actions> </v-card-actions>
+              <v-card-title>
+                {{ $t("views.library.deleteConfirmation", [selected.length]) }}
+              </v-card-title>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn text @click="deleteDialog = false">
+                  {{ $t("views.library.deleteConfirmationCancel") }}
+                </v-btn>
+                <v-btn
+                  color="red darken-1"
+                  text
+                  @click="
+                    deleteDialog = false;
+                    deleteSelected();
+                  "
+                >
+                  {{ $t("views.library.deleteConfirmationOK") }}
+                </v-btn>
+              </v-card-actions>
             </v-card>
-        </v-dialog>
-    </v-container>
+          </v-dialog>
+
+          <!-- <div class="d-inline-block"> -->
+          <v-select
+            v-model="sortModel"
+            class="d-inline-flex align-self-center mt-n1"
+            :prepend-inner-icon="mdiSort"
+            :items="sortby"
+            dense
+            filled
+            hide-details
+          />
+          <!-- </div> -->
+        </div>
+      </v-col>
+    </v-row>
+    <generic-list-loader
+      v-if="savedVideosList.length > 0"
+      v-slot="{ data }"
+      :key="'vl-home-' + sortModel + '=' + savedVideosList.length"
+      :paginate="true"
+      :per-page="50"
+      :load-fn="getLoadFn()"
+    >
+      <VideoCardList
+        :videos="data"
+        horizontal
+        include-channel
+        dense
+      >
+        <template #action="prop">
+          <v-checkbox
+            v-model="selected"
+            :ripple="false"
+            :value="prop.video.id"
+            hide-details
+            @click.prevent.stop
+          />
+        </template>
+      </VideoCardList>
+    </generic-list-loader>
+    <div v-else class="text-center">
+      {{ $t("views.library.emptyLibrary") }}
+    </div>
+    <v-dialog v-model="instructionsDialog" :width="$store.state.isMobile ? '90%' : '60vw'">
+      <v-card>
+        <v-card-title>{{ $t("views.library.exportYTHeading") }}</v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col cols="">
+              <p v-html="$t('views.library.exportYTExplanation')" />
+              <br>
+
+              <br>
+              <p v-html="$t('views.library.exportYTInstructions')" />
+              <v-btn class="mt-2 mx-2" color="green" @click="exportSelected">
+                {{ $t("views.library.createYtPlaylistButton", [selected.length]) }}
+              </v-btn>
+              <v-btn class="mt-2 mx-2" @click="instructionsDialog = false">
+                {{ $t("views.library.deleteConfirmationCancel") }}
+              </v-btn>
+            </v-col>
+            <v-col cols="12" md="auto">
+              <img src="/img/playlist-instruction.jpg">
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions />
+      </v-card>
+    </v-dialog>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -195,7 +209,6 @@ export default {
             sortModel: 0,
         };
     },
-    created() {},
     computed: {
         savedVideos() {
             return this.$store.state.library.savedVideos;
@@ -212,6 +225,7 @@ export default {
             return this.selected.length !== 0;
         },
     },
+    created() {},
     methods: {
         selectAll() {
             this.selected = this.savedVideosList.map((v) => v.id);

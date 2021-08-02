@@ -247,7 +247,7 @@ views:
     nowSupportsMultiOrg: Holodex unterstützt jetzt mehrere Organisationen.
     loginCallToAction: Melde dich an, um deine eigenen Favoriten zu sammeln!
   about:
-    add_my_channel: Meinen Kanal zu Holodex hinzufügen
+    add_my_channel: Kanalanfrage
   watch:
     theaterMode: Theatermodus
     mentionIconLabel: Erwähnungen
@@ -373,7 +373,6 @@ editor:
 about:
   quicklinks: Kurzlinks
   discordBtn: Holodex Discord
-  issueTracker: Fehlerverfolgung / Quelle
   faq:
     title: Häufig gestellte Fragen
     ytchatHeader: Mein Youtube-Chat ist nicht eingeloggt!
@@ -384,7 +383,7 @@ about:
     autoplayContent: Bitte google, wie du automatische Wiedergabe / AutoPlay für deinen Browser aktivieren kannst.
     musicPlayer: Die Musikwiedergabe funktioniert auf mobilen Geräten nicht gut!
     musicPlayerContent: >-
-      Es tut uns leid, aber es ist uns zurzeit nicht möglich, die mobile Musikwiedergabe zu unterstützen. <br/>Das hat mehrere Gründe: Erstens verbieten mobile Geräte meistens die automatische Wiedergabe, welche wir hierfür benötigen würden; und zweitens verbieten sie Webseiten meistens, dass sie im Hintergrund Songs aneinanderreihen. Außerdem integrieren wir deine Warteschlange nicht in Musiksteuerungszentralen auf Systemebene.
+      Bei den meisten iOS-Geräten kannst du weder den Bildschirm ausschalten, noch Safari schließen, während du Holodex-Musik abspielst. Diese Beschränkung kann auch auf Android-Geräte (abhängig vom Gerät) zutreffen. Bitte gib uns Feedback auf Discord, wenn du eine Idee hast, wie wir das Wiedergabesystem verbessern können.
     videoLinkage: Wie stelle ich sicher, dass Videos richtig mit VTubern verlinkt werden?
     videoLinkageContent: >-
       Alle Informationen werden automatisch aus der Videobeschreibung ausgelesen. Wenn du einen Stream clippst, stelle bitte sicher, dass du den offiziellen Stream verlinkst. Wenn du von Fans erstellte Inhalte (z. B. von Bilibili) clippst, dann verlinke bitte auch die offiziellen YouTube-Kanäle der entsprechenden VTuber. Wenn du keine VTuber-Kanäle verlinkst, werden wir den Clip nicht auf Holodex anzeigen, da alle Clips eine Verlinkung zu einem VTuber benötigen, welcher Holodex bekannt ist.

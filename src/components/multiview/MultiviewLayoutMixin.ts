@@ -15,13 +15,11 @@ export default {
         decodedAutoLayout() {
             return this.autoLayout
                 .filter((l) => l)
-                .map((preset) => {
-                    return {
-                        // convert original encoded to id
-                        id: preset.layout,
-                        ...decodeLayout(preset),
-                    };
-                });
+                .map((preset) => ({
+                    // convert original encoded to id
+                    id: preset.layout,
+                    ...decodeLayout(preset),
+                }));
         },
     },
     methods: {
@@ -46,9 +44,7 @@ export default {
             });
         },
         findEmptyCell() {
-            return this.layout.find((l) => {
-                return !this.layoutContent[l.i];
-            });
+            return this.layout.find((l) => !this.layoutContent[l.i]);
         },
         tryFillVideo(video) {
             // try find empty cell
@@ -73,32 +69,33 @@ export default {
             if (toCompare.length === 0) return false;
 
             // go through each preset, and check for full matching layouts
-            return toCompare.some((preset) => {
-                for (let i = 0; i < currentLayout.length; i += 1) {
-                    const presetCell = preset.layout[i];
-                    const layoutCell = currentLayout[i];
-                    if (
-                        !(
-                            presetCell.x === layoutCell.x &&
-                            presetCell.y === layoutCell.y &&
-                            presetCell.w === layoutCell.w &&
-                            presetCell.h === layoutCell.h
-                        )
-                    ) {
-                        // at least one cell doesn't match, invalid layout
-                        return false;
+            return toCompare
+                .filter((preset) => preset.layout.length === currentLayout.length)
+                .some((preset) => {
+                    for (let i = 0; i < currentLayout.length; i += 1) {
+                        const presetCell = preset.layout[i];
+                        const layoutCell = currentLayout[i];
+                        if (
+                            !(
+                                presetCell.x === layoutCell.x
+                                && presetCell.y === layoutCell.y
+                                && presetCell.w === layoutCell.w
+                                && presetCell.h === layoutCell.h
+                            )
+                        ) {
+                            // at least one cell doesn't match, invalid layout
+                            return false;
+                        }
                     }
-                }
-                // all cells match, layout is a preset
-                return true;
-            });
+                    // all cells match, layout is a preset
+                    return true;
+                });
         },
         addVideoAutoLayout(video, onConflict) {
             // find layout with space for one more new video
             const presets = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
-            const newLayout =
-                presets.find((preset) => preset.videoCellCount === this.activeVideos.length + 1) ??
-                presets.find((preset) => preset.videoCellCount >= this.activeVideos.length + 1);
+            const newLayout = presets.find((preset) => preset.videoCellCount === this.activeVideos.length + 1)
+                ?? presets.find((preset) => preset.videoCellCount >= this.activeVideos.length + 1);
 
             // found new layout
             if (newLayout) {
@@ -120,9 +117,8 @@ export default {
         deleteVideoAutoLayout(cellId) {
             // Find and set to previous preset layout
             const presets = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
-            const newLayout =
-                presets.find((preset) => preset.videoCellCount === this.activeVideos.length - 1) ??
-                presets.find((preset) => preset.videoCellCount >= this.activeVideos.length - 1);
+            const newLayout = presets.find((preset) => preset.videoCellCount === this.activeVideos.length - 1)
+                ?? presets.find((preset) => preset.videoCellCount >= this.activeVideos.length - 1);
 
             const clonedLayout = JSON.parse(JSON.stringify(newLayout));
             this.$store.commit("multiview/deleteLayoutContent", cellId);
@@ -138,9 +134,7 @@ export default {
                 const currentContent = Object.values(this.layoutContent).filter((o) => (o as any).type === "video");
                 // filter out already set items
                 layout
-                    .filter((item) => {
-                        return !content[item.i];
-                    })
+                    .filter((item) => !content[item.i])
                     .forEach((item) => {
                         // fill until there's no more current videos
                         if (currentIndex >= this.activeVideos.length) {

@@ -1,82 +1,103 @@
 <template>
-    <v-container fluid style="height: 100%">
-        <v-card class="ma-auto mt-6" elevation="12" max-width="500px">
-            <user-card v-if="userdata.user"></user-card>
-            <v-divider></v-divider>
-            <v-card-subtitle class="justify-center">{{
-                userdata.user ? $t("views.login.linkAcc") : $t("component.mainNav.login")
-            }}</v-card-subtitle>
-            <v-card-text class="d-flex flex-column">
-                <v-btn
-                    class="my-3"
-                    v-if="!userdata.user || !userdata.user.google_id"
-                    @click.prevent="loginGoogle"
-                    color="red accent-2"
-                >
-                    <v-icon left>{{ icons.mdiGoogle }}</v-icon>
-                    {{ $t("views.login.with.0") }}
-                </v-btn>
-                <v-btn
-                    class="my-3"
-                    v-if="!userdata.user || !userdata.user.discord_id"
-                    @click.prevent="loginDiscord"
-                    color="indigo"
-                >
-                    <v-icon left>{{ icons.mdiDiscord }}</v-icon>
+  <v-container fluid style="height: 100%">
+    <v-card class="ma-auto mt-6" elevation="12" max-width="500px">
+      <user-card v-if="userdata.user" />
+      <v-divider />
+      <v-card-subtitle class="justify-center">
+        {{ userdata.user ? $t("views.login.linkAcc") : $t("component.mainNav.login") }}
+      </v-card-subtitle>
+      <v-card-text class="d-flex flex-column">
+        <v-btn
+          v-if="!userdata.user || !userdata.user.google_id"
+          class="my-3"
+          color="red accent-2"
+          @click.prevent="loginGoogle"
+        >
+          <v-icon left>
+            {{ icons.mdiGoogle }}
+          </v-icon>
+          {{ $t("views.login.with.0") }}
+        </v-btn>
+        <v-btn
+          v-if="!userdata.user || !userdata.user.discord_id"
+          class="my-3"
+          color="indigo"
+          @click.prevent="loginDiscord"
+        >
+          <v-icon left>
+            {{ icons.mdiDiscord }}
+          </v-icon>
 
-                    {{ $t("views.login.with.1") }}
-                </v-btn>
-                <v-btn
-                    class="my-3"
-                    v-if="!userdata.user || !userdata.user.twitter_id"
-                    @click.prevent="loginTwitter"
-                    color="blue lighten-1"
-                >
-                    <v-icon left>{{ icons.mdiTwitter }}</v-icon>
+          {{ $t("views.login.with.1") }}
+        </v-btn>
+        <v-btn
+          v-if="!userdata.user || !userdata.user.twitter_id"
+          class="my-3"
+          color="blue lighten-1"
+          @click.prevent="loginTwitter"
+        >
+          <v-icon left>
+            {{ icons.mdiTwitter }}
+          </v-icon>
 
-                    {{ $t("views.login.with.2") }}
-                </v-btn>
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-text v-if="userdata.user">
-                <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.ownedYtChannel") }}</span>
-                <v-text-field
-                    readonly
-                    rounded
-                    filled
-                    dense
-                    hide-details
-                    :value="userdata.user.yt_channel_key || 'None on file'"
-                ></v-text-field>
-                <span class="text-caption">
-                    {{ $t("views.login.futureYtcOwnerMessage") }}
-                </span>
-                <br />
-                <br />
-                <span class="text-subtitle-2 mb-1 d-inline-block">API Key</span>
-                <v-text-field
-                    readonly
-                    rounded
-                    outlined
-                    dense
-                    hide-details
-                    :class="doneCopy ? 'green lighten-2' : ''"
-                    :value="userdata.user.api_key || 'None on file'"
-                    :append-icon="icons.mdiClipboardPlusOutline"
-                    @click:append="copyToClipboard(userdata.user.api_key)"
-                ></v-text-field>
-                <br />
-                <v-btn small block color="warning" @click="resetKey">{{ $t("views.login.apikeyNew") }}</v-btn>
-                <span class="text-caption">
-                    {{ $t("views.login.apikeyMsg") }}
-                </span>
-                <v-btn small block color="info" href="https://holodex.stoplight.io/" target="_blank">
-                    API Documentation
-                    <v-icon small right>{{ icons.mdiOpenInNew }}</v-icon>
-                </v-btn>
-            </v-card-text>
-        </v-card>
-    </v-container>
+          {{ $t("views.login.with.2") }}
+        </v-btn>
+      </v-card-text>
+      <v-divider />
+      <v-card-text v-if="userdata.user">
+        <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.ownedYtChannel") }}</span>
+        <v-text-field
+          readonly
+          rounded
+          filled
+          dense
+          hide-details
+          :value="userdata.user.yt_channel_key || 'None on file'"
+        />
+        <span class="text-caption">
+          {{ $t("views.login.futureYtcOwnerMessage") }}
+        </span>
+        <br>
+        <br>
+        <span class="text-subtitle-2 mb-1 d-inline-block">API Key</span>
+        <v-text-field
+          readonly
+          rounded
+          outlined
+          dense
+          hide-details
+          :class="doneCopy ? 'green lighten-2' : ''"
+          :value="userdata.user.api_key || 'None on file'"
+          :append-icon="icons.mdiClipboardPlusOutline"
+          @click:append="copyToClipboard(userdata.user.api_key)"
+        />
+        <br>
+        <v-btn
+          small
+          block
+          color="warning"
+          @click="resetKey"
+        >
+          {{ $t("views.login.apikeyNew") }}
+        </v-btn>
+        <span class="text-caption">
+          {{ $t("views.login.apikeyMsg") }}
+        </span>
+        <v-btn
+          small
+          block
+          color="info"
+          href="https://holodex.stoplight.io/"
+          target="_blank"
+        >
+          API Documentation
+          <v-icon small right>
+            {{ icons.mdiOpenInNew }}
+          </v-icon>
+        </v-btn>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -114,17 +135,17 @@ export default {
             },
         };
     },
-    mixins: [copyToClipboard],
     components: { UserCard },
+    mixins: [copyToClipboard],
     data() {
         return {};
     },
-    mounted() {},
     computed: {
         userdata() {
             return this.$store.state.userdata;
         },
     },
+    mounted() {},
     methods: {
         async loginGoogle() {
             const authCode = await this.$gAuth.getAuthCode();

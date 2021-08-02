@@ -1,57 +1,63 @@
 <template>
-    <v-sheet color="transparent" rounded="md" class="cell-control">
-        <v-row>
-            <v-btn
-                v-if="$listeners.back"
-                @click="$emit('back')"
-                small
-                elevation="0"
-                color="amber darken-2 ml-n3 returnbtn mr-auto"
-            >
-                <v-icon right>{{ mdiArrowLeftCircle }}</v-icon>
-            </v-btn>
-            <v-btn
-                v-if="$listeners.playpause"
-                @click="$emit('playpause')"
-                small
-                elevation="0"
-                color="primary"
-                class="px-3 flex-grow-1 ml-4"
-                style=""
-                max-width="100px"
-            >
-                <v-icon>{{ playIcon }}</v-icon>
-            </v-btn>
-            <v-btn
-                v-if="$listeners.reset"
-                @click="$emit('reset')"
-                small
-                elevation="0"
-                color="secondary"
-                class="ml-2 mr-0"
-            >
-                <v-icon>{{ icons.mdiRefresh }}</v-icon>
-            </v-btn>
-            <v-hover v-slot="{ hover }">
-                <v-btn
-                    @click="$emit('delete')"
-                    small
-                    elevation="0"
-                    color="deep-orange darken-1"
-                    class="float-right ml-auto mr-3"
-                >
-                    <v-icon>{{ hover ? mdiDeleteEmpty : icons.mdiDelete }}</v-icon>
-                </v-btn>
-            </v-hover>
-        </v-row>
-    </v-sheet>
+  <v-sheet color="transparent" rounded="md" class="cell-control">
+    <v-row>
+      <v-btn
+        v-if="$listeners.back"
+        small
+        elevation="0"
+        color="amber darken-2 ml-n3 returnbtn mr-auto"
+        @click="$emit('back')"
+      >
+        <v-icon right>
+          {{ mdiArrowLeftCircle }}
+        </v-icon>
+      </v-btn>
+      <v-btn
+        v-if="$listeners.playpause"
+        small
+        elevation="0"
+        color="primary"
+        class="px-3 flex-grow-1 ml-4"
+        style=""
+        max-width="100px"
+        @click="$emit('playpause')"
+      >
+        <v-icon>{{ playIcon }}</v-icon>
+      </v-btn>
+      <v-btn
+        v-if="$listeners.reset"
+        small
+        elevation="0"
+        color="secondary"
+        class="ml-2 mr-0"
+        @click="$emit('reset')"
+      >
+        <v-icon>{{ icons.mdiRefresh }}</v-icon>
+      </v-btn>
+      <v-hover v-slot="{ hover }">
+        <v-btn
+          small
+          elevation="0"
+          color="deep-orange darken-1"
+          class="float-right ml-auto mr-3"
+          @click="$emit('delete')"
+        >
+          <v-icon>{{ hover ? mdiDeleteEmpty : icons.mdiDelete }}</v-icon>
+        </v-btn>
+      </v-hover>
+    </v-row>
+  </v-sheet>
 </template>
 
 <script lang="ts">
 import { mdiArrowLeftCircle, mdiDeleteEmpty } from "@mdi/js";
 
 export default {
-    props: ["playIcon"],
+    props: {
+        playIcon: {
+            type: String,
+        },
+    },
     data() {
         return { mdiDeleteEmpty, mdiArrowLeftCircle };
     },

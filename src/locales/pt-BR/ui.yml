@@ -108,7 +108,7 @@ component:
     title: Reportar
     success: Denuncia enviada, Obrigado!
     reasons:
-      - Video tagged incorrectly
+      - Vídeo etiquetado incorretamente
       - Conteúdo Perigososamente de Baixa Qualidade ou Enganoso
       - Inapropriado ou Viola as diretrizes de trabalho derivado
       - Outros
@@ -230,8 +230,6 @@ views:
     check_about_page: Veja o que há de novo no Holodex acessando a página de Informações
     nowSupportsMultiOrg: Holodex agora suporta múltiplas organizações.
     loginCallToAction: Faça login para ter seus próprios favoritos!
-  about:
-    add_my_channel: Adicionar meu canal ao Holodex
   watch:
     theaterMode: Modo Teatro
     mentionIconLabel: Menções
@@ -329,7 +327,6 @@ editor:
 about:
   quicklinks: Links
   discordBtn: Discord do Holodex
-  issueTracker: Issue Tracker / Fonte
   faq:
     title: FAQ - Perguntas Frequentes
     ytchatHeader: Meu Chat do Youtube não está conectado!
@@ -339,8 +336,6 @@ about:
     autoplayHeader: O AutoPlay não está funcionando!
     autoplayContent: Por favor, procure no Google como ativar a reprodução automática para o seu navegador.
     musicPlayer: Reprodutor de música não funciona bem em dispositivos móveis!
-    musicPlayerContent: >-
-      Desculpe, mas é impossível suportar o Player de Música em um site no celular. <br/>Três fatores: 1. Dispositivos móveis geralmente proíbem a reprodução automática, o que precisamos; 2. Dispositivos móveis geralmente não permitem que sites toquem músicas em segundo plano. 3. Nós não integramosa a fila de músicas a centros de controle de música do sistema.
     videoLinkage: Como posso me certificar de que os vídeos estão ligados aos vtubers apropriadamente?
     videoLinkageContent: >-
       Todas as informações são analisadas na descrição dos vídeos. Se você está clipando uma transmissão, por favor certifique-se de mencionar a transmissão oficial. Se você está clipando conteúdo feito por fãs (por exemplo, um vídeo do bilibili), apenas certifique-se de mencionar os canais oficiais do youtube de vtubers relevantes. Se você não mencionar nenhum canal de vtuber, então não mostraremos esse clipe no holodex, como todos os clipes requerem uma menção a um vtuber existente no holodex.

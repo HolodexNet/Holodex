@@ -1,99 +1,125 @@
 <template>
-    <v-card class="text-body-2 tl-overlay" tile flat style="width: 100%">
-        <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
-            <div v-if="isLoading">{{ $t("views.watch.chat.loading") }}</div>
-            <div class="pa-3" v-else>{{ overlayMessage }}</div>
-            <v-btn v-if="$socket.disconnected" @click="tlJoin()">{{ $t("views.watch.chat.retryBtn") }}</v-btn>
-        </v-overlay>
-        <v-card-subtitle class="py-1 d-flex justify-space-between">
-            <div :class="connected ? 'green--text' : 'red--text'">TLdex [{{ liveTlLang }}]</div>
-            <span>
-                <v-dialog v-model="expanded" width="800">
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon x-small v-bind="attrs" v-on="on">
-                            <v-icon>
-                                {{ mdiArrowExpand }}
-                            </v-icon>
-                        </v-btn>
-                    </template>
-
-                    <v-card>
-                        <portal-target name="expandedMessage" class="d-flex tl-expanded"> </portal-target>
-                        <v-divider />
-                        <v-card-actions>
-                            <v-spacer />
-                            <v-btn text @click="expanded = false" color="red">{{ $t("views.app.close_btn") }}</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
-                <WatchLiveTranslationsSetting />
-            </span>
-        </v-card-subtitle>
-        <v-divider />
-        <portal to="expandedMessage" :disabled="!expanded" slim>
-            <v-card-text
-                class="tl-body thin-scroll-bar pa-1 pa-lg-3"
-                ref="tlBody"
-                :style="{
-                    'font-size': liveTlFontSize + 'px',
-                }"
+  <v-card
+    class="text-body-2 tl-overlay"
+    tile
+    flat
+    style="width: 100%"
+  >
+    <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
+      <div v-if="isLoading">
+        {{ $t("views.watch.chat.loading") }}
+      </div>
+      <div v-else class="pa-3">
+        {{ overlayMessage }}
+      </div>
+      <v-btn v-if="$socket.disconnected" @click="tlJoin()">
+        {{ $t("views.watch.chat.retryBtn") }}
+      </v-btn>
+    </v-overlay>
+    <v-card-subtitle class="py-1 d-flex justify-space-between">
+      <div :class="connected ? 'green--text' : 'red--text'">
+        TLdex [{{ liveTlLang }}]
+      </div>
+      <span>
+        <v-dialog v-model="expanded" width="800">
+          <template #activator="{ on, attrs }">
+            <v-btn
+              icon
+              x-small
+              v-bind="attrs"
+              v-on="on"
             >
-                <transition-group name="fade">
-                    <template v-for="(item, index) in tlHistory">
-                        <div :key="item.key" :id="item.key" :ref="item.breakpoint && 'messageBreakpoint'">
-                            <div
-                                v-if="
-                                    index === 0 ||
-                                    index === tlHistory.length - 1 ||
-                                    item.name !== tlHistory[index - 1].name ||
-                                    item.breakpoint
-                                "
-                                class="tl-caption"
-                                :class="{
-                                    'primary--text': item.is_owner,
-                                    'secondary--text': item.is_verified || item.is_moderator || item.is_vtuber,
-                                }"
-                            >
-                                <v-divider class="my-1" />
-                                <span style="cursor: pointer" @click="selectedChannel = item.name">
-                                    <v-icon x-small>{{ icons.mdiCog }}</v-icon>
-                                    {{ `${item.prefix} ${item.name}` }}:
-                                </span>
-                            </div>
-                            <div>
-                                <span class="tl-caption mr-1" v-if="item.timestamp">
-                                    {{ item.displayTime }}
-                                </span>
-                                <span class="text--primary" v-html="item.message"></span>
-                            </div>
-                        </div>
-                    </template>
-                </transition-group>
-                <v-btn text color="primary" @click="loadMessages()" :disabled="completed" v-if="!historyLoading">
-                    {{ completed ? "Start of Messages" : "Load More" }}
-                </v-btn>
-                <v-btn
-                    text
-                    color="primary"
-                    @click="loadMessages(false, true)"
-                    v-if="!completed && !historyLoading && expanded"
-                >
-                    Load All
-                </v-btn>
-            </v-card-text>
-        </portal>
+              <v-icon>
+                {{ mdiArrowExpand }}
+              </v-icon>
+            </v-btn>
+          </template>
 
-        <v-dialog v-model="showBlockChannelDialog" width="500">
-            <v-card>
-                <v-card-title>{{ selectedChannel }}</v-card-title>
-                <v-card-text>
-                    <v-btn @click="toggleBlockName(selectedChannel)">
-                        {{ !blockedNames.has(selectedChannel) ? "Block Channel" : "Unblock" }}
-                    </v-btn>
-                </v-card-text>
-            </v-card>
+          <v-card>
+            <portal-target name="expandedMessage" class="d-flex tl-expanded" />
+            <v-divider />
+            <v-card-actions>
+              <v-spacer />
+              <v-btn text color="red" @click="expanded = false">
+                {{ $t("views.app.close_btn") }}
+              </v-btn>
+            </v-card-actions>
+          </v-card>
         </v-dialog>
-    </v-card>
+        <WatchLiveTranslationsSetting />
+      </span>
+    </v-card-subtitle>
+    <v-divider />
+    <portal to="expandedMessage" :disabled="!expanded" slim>
+      <v-card-text
+        ref="tlBody"
+        class="tl-body thin-scroll-bar pa-1 pa-lg-3"
+        :style="{
+          'font-size': liveTlFontSize + 'px',
+        }"
+      >
+        <transition-group name="fade">
+          <template v-for="(item, index) in tlHistory">
+            <div :id="item.key" :key="item.key" :ref="item.breakpoint && 'messageBreakpoint'">
+              <div
+                v-if="
+                  index === 0 ||
+                    index === tlHistory.length - 1 ||
+                    item.name !== tlHistory[index - 1].name ||
+                    item.breakpoint
+                "
+                class="tl-caption"
+                :class="{
+                  'primary--text': item.is_owner,
+                  'secondary--text': item.is_verified || item.is_moderator || item.is_vtuber,
+                }"
+              >
+                <v-divider class="my-1" />
+                <span style="cursor: pointer" @click="selectedChannel = item.name">
+                  <v-icon x-small>{{ icons.mdiCog }}</v-icon>
+                  {{ `${item.prefix} ${item.name}` }}:
+                </span>
+              </div>
+              <div>
+                <span v-if="item.timestamp" class="tl-caption mr-1">
+                  {{ item.displayTime }}
+                </span>
+                <span class="text--primary" v-html="item.message" />
+              </div>
+            </div>
+          </template>
+        </transition-group>
+        <v-btn
+          v-if="!historyLoading"
+          text
+          color="primary"
+          :disabled="completed"
+          @click="loadMessages()"
+        >
+          {{ completed ? "Start of Messages" : "Load More" }}
+        </v-btn>
+        <v-btn
+          v-if="!completed && !historyLoading && expanded"
+          text
+          color="primary"
+          @click="loadMessages(false, true)"
+        >
+          Load All
+        </v-btn>
+      </v-card-text>
+    </portal>
+
+    <v-dialog v-model="showBlockChannelDialog" width="500">
+      <v-card>
+        <v-card-title>{{ selectedChannel }}</v-card-title>
+        <v-card-text>
+          <v-btn @click="toggleBlockName(selectedChannel)">
+            {{ !blockedNames.has(selectedChannel) ? "Block Channel" : "Unblock" }}
+          </v-btn>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -118,10 +144,10 @@ Vue.use(VueSocketIOExt, manager.socket("/"));
 
 export default {
     name: "LiveTranslations",
-    mixins: [chatMixin],
     components: {
         WatchLiveTranslationsSetting,
     },
+    mixins: [chatMixin],
     data() {
         return {
             overlayMessage: this.$t("views.watch.chat.loading"),
@@ -163,6 +189,8 @@ export default {
                 vm.$store.commit("incrementActiveSockets");
             }
             this.$emit("videoUpdate", obj);
+            vm.showOverlay = false;
+            vm.isLoading = false;
         },
         // Failed to join the chat room
         subscribeError(obj) {
@@ -172,6 +200,35 @@ export default {
                 vm.isLoading = false;
                 vm.showOverlay = true;
             }
+        },
+    },
+    computed: {
+        connected() {
+            return this.$socket.connected;
+        },
+        showBlockChannelDialog: {
+            get() {
+                return this.selectedChannel;
+            },
+            set(val) {
+                if (!val) this.selectedChannel = "";
+            },
+        },
+    },
+    watch: {
+        liveTlLang(nw, old) {
+            this.switchLanguage(nw, old);
+        },
+        connected(nw) {
+            if (nw) {
+                this.isLoading = false;
+            }
+        },
+        liveTlShowVerified() {
+            this.loadMessages(true);
+        },
+        liveTlShowModerator() {
+            this.loadMessages(true);
         },
     },
     created() {},
@@ -196,35 +253,6 @@ export default {
     beforeDestroy() {
         this.tlLeave();
     },
-    watch: {
-        liveTlLang(nw, old) {
-            this.switchLanguage(nw, old);
-        },
-        connected(nw) {
-            if (nw) {
-                this.isLoading = false;
-            }
-        },
-        liveTlShowVerified() {
-            this.loadMessages(true);
-        },
-        liveTlShowModerator() {
-            this.loadMessages(true);
-        },
-    },
-    computed: {
-        connected() {
-            return this.$socket.connected;
-        },
-        showBlockChannelDialog: {
-            get() {
-                return this.selectedChannel;
-            },
-            set(val) {
-                if (!val) this.selectedChannel = "";
-            },
-        },
-    },
     methods: {
         toggleBlockName(name) {
             this.$store.commit("settings/toggleLiveTlBlocked", name);
@@ -242,11 +270,11 @@ export default {
                 if (this.blockedNames.has(msg.name)) return;
 
                 if (
-                    msg.is_tl ||
-                    msg.is_vtuber ||
-                    msg.is_owner ||
-                    (msg.is_moderator && this.liveTlShowModerator) ||
-                    (msg.is_verified && this.liveTlShowVerified)
+                    msg.is_tl
+                    || msg.is_vtuber
+                    || msg.is_owner
+                    || (msg.is_moderator && this.liveTlShowModerator)
+                    || (msg.is_verified && this.liveTlShowVerified)
                 ) {
                     if (Math.abs(this.$refs.tlBody.scrollTop) <= 15) this.$refs.tlBody.scrollTo(0, 0);
                     this.tlHistory.push(this.parseMessage(msg));
@@ -313,8 +341,8 @@ export default {
             // Disallow users from joining a chat room that doesn't exist yet
             // Backend will create a chatroom when it's 15 minutes before a stream
             if (
-                this.video.status !== "live" &&
-                !dayjs().isAfter(dayjs(this.video.start_scheduled).subtract(15, "minutes"))
+                this.video.status !== "live"
+                && !dayjs().isAfter(dayjs(this.video.start_scheduled).subtract(15, "minutes"))
             ) {
                 this.overlayMessage = this.$t("views.watch.chat.status.notLive");
                 this.isLoading = false;

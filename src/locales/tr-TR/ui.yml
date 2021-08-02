@@ -242,8 +242,6 @@ views:
     check_about_page: Değişiklikleri görüntülemek için Hakkında sayfasını ziyaret edin
     nowSupportsMultiOrg: Holodex artık birden fazla organizaysonu desteklememektedir.
     loginCallToAction: Favorilerinizi toplamak için Giriş Yapın!
-  about:
-    add_my_channel: Kanalımı Holodex'e ekle
   watch:
     theaterMode: Tiyatro Modu
     mentionIconLabel: Söz edilenler
@@ -369,7 +367,6 @@ editor:
 about:
   quicklinks: Hızlı Bağlantılar
   discordBtn: Holodex Discord'u
-  issueTracker: Sorun İzleyici / Kaynak
   faq:
     title: SSS
     ytchatHeader: Youtube Sohbetime giriş yapılmadı!
@@ -379,8 +376,6 @@ about:
     autoplayHeader: Otomatik Oynatma çalışmıyor!
     autoplayContent: Lütfen tarayıcınızda otomatik oynatmayı nasıl etkinleştireceğinizi google'da aratın.
     musicPlayer: Müzik Oynatıcısı mobil cihazlarda iyi çalışmıyor!
-    musicPlayerContent: >-
-      Üzgünüz ama Müzik Oynatıcısını mobilde bir site olarak desteklemek imkansız. </br>Üç faktör: 1. Mobil cihazlar genellikle, ihtiyacımız olan otomatik oynatmayı yasaklar. 2. Mobil cihazlar genelde, sitelerin arka planda müzik zincirlemesine izin vermez. 3. Müzik sıranızı sistem seviyesindeki müzik kontrol merkezlerine bağlamıyoruz.
     videoLinkage: Videolarımın VTuberlara uygun olarak bağlantılı olduğundan nasıl emin olurum?
     videoLinkageContent: >-
       Tüm bilgiler açıklama kısmından ayrıştırılır. Eğer bir yayının klipliyorsanız, lütfen asıl yayının bağlantısını eklediğinizden emin olun. Eğer fan yapımı içeriği klipliyorsanız (ör. bilibili), ilgili VTuberların kanallarını eklediğinizden emin olun. Eğer hiç bir kanalı eklemezseniz, tüm kliplerin Holodexe bilinen bir VTubera bağlı olması gerektiğinden, klipi Holodexte göstermeyiz.

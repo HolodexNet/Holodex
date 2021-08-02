@@ -1,49 +1,55 @@
 <template>
-    <div style="width: 100%; height: 100%">
-        <div class="d-flex flex-row align-center py-1">
-            <v-btn icon small class="mx-1" @click="currentTab -= 1" :disabled="currentTab <= 0" v-if="setShowChat">
-                <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
-            </v-btn>
-            <v-select
-                :items="channels"
-                v-model="currentTab"
-                outlined
-                hide-details
-                class="tabbed-chat-select mx-1"
-            ></v-select>
-            <v-btn
-                icon
-                small
-                class="mx-1"
-                @click="currentTab += 1"
-                :disabled="currentTab >= activeVideos.length - 1"
-                v-if="setShowChat"
-            >
-                <v-icon>{{ icons.mdiChevronRight }}</v-icon>
-            </v-btn>
-        </div>
-        <template v-if="activeVideos.length && currentTab >= 0">
-            <iframe
-                :src="twitchChatLink"
-                v-if="activeVideos[currentTab || 0].type === 'twitch'"
-                style="width: 100%; height: calc(100% - 32px)"
-                frameborder="0"
-            >
-            </iframe>
-            <WatchLiveChat
-                v-else
-                :video="activeVideos[currentTab || 0]"
-                style="width: 100%; height: calc(100% - 32px)"
-                :key="'wlc' + activeVideos[currentTab || 0].id"
-                :showTL="showTL"
-                :hintConnectLiveTL="hintConnectLiveTL"
-                :showLiveChat="setShowChat"
-                fluid
-                :scale="scale"
-                :currentTime="currentTime"
-            />
-        </template>
+  <div style="width: 100%; height: 100%">
+    <div class="d-flex flex-row align-center py-1">
+      <v-btn
+        v-if="setShowChat"
+        icon
+        small
+        class="mx-1"
+        :disabled="currentTab <= 0"
+        @click="currentTab -= 1"
+      >
+        <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
+      </v-btn>
+      <v-select
+        v-model="currentTab"
+        :items="channels"
+        outlined
+        hide-details
+        class="tabbed-chat-select mx-1"
+      />
+      <v-btn
+        v-if="setShowChat"
+        icon
+        small
+        class="mx-1"
+        :disabled="currentTab >= activeVideos.length - 1"
+        @click="currentTab += 1"
+      >
+        <v-icon>{{ icons.mdiChevronRight }}</v-icon>
+      </v-btn>
     </div>
+    <template v-if="activeVideos.length && currentTab >= 0">
+      <iframe
+        v-if="activeVideos[currentTab || 0].type === 'twitch'"
+        :src="twitchChatLink"
+        style="width: 100%; height: calc(100% - 32px)"
+        frameborder="0"
+      />
+      <WatchLiveChat
+        v-else
+        :key="'wlc' + activeVideos[currentTab || 0].id"
+        :video="activeVideos[currentTab || 0]"
+        style="width: 100%; height: calc(100% - 32px)"
+        :show-t-l="showTL"
+        :hint-connect-live-t-l="hintConnectLiveTL"
+        :show-live-chat="setShowChat"
+        fluid
+        :scale="scale"
+        :current-time="currentTime"
+      />
+    </template>
+  </div>
 </template>
 
 <script lang="ts">
@@ -86,30 +92,9 @@ export default {
             newTL: 0,
 
             currentTime: 0,
-            timer: null,
+            // timer: null,
             // showLiveChat: true,
         };
-    },
-    mounted() {
-        this.currentTab = this.savedTab;
-        this.timer = setInterval(() => {
-            // check if timer is needed for current video
-            if (this.currentContent?.video?.status === "past")
-                this.currentTime = this.currentContent?.playerControls?.getCurrentTime();
-        }, 1000);
-
-        if (this.activeVideos.length > 1) {
-            const curTabs = Object.values(this.layoutContent)
-                .filter((l: Content) => l.type === "chat")
-                .map((l: Content) => l.currentTab ?? 0);
-            const newTab = curTabs.findIndex((current, index) => {
-                return !curTabs.includes(index);
-            });
-            this.currentTab = newTab > 0 ? newTab : 0;
-        }
-    },
-    beforeDestroy() {
-        if (this.timer) clearInterval(this.timer);
     },
     computed: {
         ...mapState("multiview", ["layoutContent"]),
@@ -142,12 +127,10 @@ export default {
             return this.$store.state.settings.darkMode;
         },
         channels() {
-            return this.activeVideos.map((video, index) => {
-                return {
-                    text: video.channel.name.split(" ")[0],
-                    value: index,
-                };
-            });
+            return this.activeVideos.map((video, index) => ({
+                text: video.channel.name.split(" ")[0],
+                value: index,
+            }));
         },
     },
     watch: {
@@ -168,6 +151,26 @@ export default {
                 this.currentTab = 0;
             }
         },
+    },
+    mounted() {
+        this.currentTab = this.savedTab;
+        // this.timer = setInterval(() => {
+        //     // check if timer is needed for current video
+        //     if (this.currentContent?.video?.status === "past") {
+        //         this.currentTime = this.currentContent?.playerControls?.getCurrentTime();
+        //     }
+        // }, 1000);
+
+        if (this.activeVideos.length > 1) {
+            const curTabs = Object.values(this.layoutContent)
+                .filter((l: Content) => l.type === "chat")
+                .map((l: Content) => l.currentTab ?? 0);
+            const newTab = curTabs.findIndex((current, index) => !curTabs.includes(index));
+            this.currentTab = newTab > 0 ? newTab : 0;
+        }
+    },
+    beforeDestroy() {
+        if (this.timer) clearInterval(this.timer);
     },
 };
 </script>

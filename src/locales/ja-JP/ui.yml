@@ -243,8 +243,6 @@ views:
     check_about_page: 案内ページで更新内容を確認できます
     nowSupportsMultiOrg: Holodexで他箱のライバーを視聴可能になりました!
     loginCallToAction: お気に入りを利用するにはログインしてください!
-  about:
-    add_my_channel: チャンネルをHolodexに登録
   watch:
     theaterMode: シアターモード
     mentionIconLabel: メンション
@@ -370,7 +368,6 @@ editor:
 about:
   quicklinks: クイックリンク
   discordBtn: Holodex Discord
-  issueTracker: Issue管理 / ソースコード
   faq:
     title: よくある質問
     ytchatHeader: Youtubeチャットにログインできません！
@@ -380,8 +377,6 @@ about:
     autoplayHeader: 自動再生されません！
     autoplayContent: ご利用中のブラウザでの自動再生を有効化方法について検索してください。
     musicPlayer: モバイルデバイスでは音楽プレーヤーがうまく動きません！
-    musicPlayerContent: >-
-      申し訳ありませんが、スマホ等のモバイル機器かつwebブラウザでのご利用の場合は音楽プレーヤーはサポート対象外です。 <br/>3つの要因があります: 1. ホロデックスでは自動再生が必要ですが、モバイル機器では多くの場合自動再生が禁止されています。2. モバイル機器では多くの場合ウェブサイトが裏側で音楽を再生したままにすることが許可されていません。3. 音楽再生のご要望を、我々がお客様の音楽コントロールセンターにシステムレベルで管理や処理をすることは憚られます。
     videoLinkage: 動画が相当のVtuberに正しくリンクされていることを確認するにはどうすればよいですか?
     videoLinkageContent: >-
       全ての情報は動画概要欄から解析されます。生放送を切り抜きする場合は必ず元の生放送のURLを貼ってください。二次コンテンツ(例えばbilibiliから)を切り抜きする場合はその動画に関連するVtuberの公式YoutubeチャンネルのURLを貼ってください。どのVtuberのチャンネルともリンクしない場合、Holodexでは全ての切り抜きにリンク先としてHolodexの把握しているVtuberチャンネルが必要です。そのためリンクの無い切り抜きをHolodexで表示することができません。

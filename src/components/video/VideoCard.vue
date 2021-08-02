@@ -1,177 +1,183 @@
 <template>
-    <a
-        class="video-card no-decoration d-flex flex-column"
-        :class="{
-            'video-card-fluid': fluid,
-            'video-card-active': active,
-            'video-card-horizontal': horizontal,
-        }"
-        @click.exact.prevent="(e) => (!redirectMode ? goToVideo(data.id) : goToYoutube(data.id))"
-        :target="redirectMode ? '_blank' : ''"
-        :href="!redirectMode ? watchLink : `https://youtu.be/${data.id}`"
-        rel="noopener"
-        draggable="true"
-        v-on:dragstart="drag"
-        style="position: relative"
+  <a
+    class="video-card no-decoration d-flex flex-column"
+    :class="{
+      'video-card-fluid': fluid,
+      'video-card-active': active,
+      'video-card-horizontal': horizontal,
+    }"
+    :target="redirectMode ? '_blank' : ''"
+    :href="!redirectMode ? watchLink : `https://youtu.be/${data.id}`"
+    rel="noopener"
+    draggable="true"
+    style="position: relative"
+    @click.exact.prevent="(e) => (!redirectMode ? goToVideo(data.id) : goToYoutube(data.id))"
+    @dragstart="drag"
+  >
+    <!-- Video Image with Duration -->
+    <div
+      style="position: relative; width: 100%"
+      class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
+      :style="horizontal && !shouldHideThumbnail && `background: url(${imageSrc}) center/cover;`"
     >
-        <!-- Video Image with Duration -->
-        <div
-            style="position: relative; width: 100%"
-            class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
-            :style="horizontal && !shouldHideThumbnail && `background: url(${imageSrc}) center/cover;`"
-        >
-            <!-- Image Overlay -->
-            <div
-                class="video-card-overlay d-flex justify-space-between flex-column"
-                style="height: 100%; position: absolute; width: 100%; z-index: 1"
-            >
-                <div class="d-flex justify-space-between align-start">
-                    <!-- Topic Id display -->
-                    <div
-                        class="video-topic rounded-tl-sm"
-                        :style="{ visibility: data.topic_id ? 'visible' : 'hidden' }"
-                    >
-                        {{ data.topic_id }}
-                    </div>
+      <!-- Image Overlay -->
+      <div
+        class="video-card-overlay d-flex justify-space-between flex-column"
+        style="height: 100%; position: absolute; width: 100%; z-index: 1"
+      >
+        <div class="d-flex justify-space-between align-start">
+          <!-- Topic Id display -->
+          <div
+            class="video-topic rounded-tl-sm"
+            :style="{ visibility: data.topic_id ? 'visible' : 'hidden' }"
+          >
+            {{ data.topic_id }}
+          </div>
 
-                    <!-- Check box for saved video -->
-                    <v-icon
-                        :color="hasSaved ? 'primary' : 'white'"
-                        class="video-card-action rounded-tr-sm"
-                        :class="{ 'hover-show': !hasSaved && !isMobile }"
-                        @click.prevent.stop="toggleSaved($event)"
-                    >
-                        {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
-                    </v-icon>
-                </div>
-
-                <!-- Video duration/music indicator -->
-                <div class="d-flex flex-column align-end">
-                    <!-- Show music icon if songs exist -->
-                    <div class="video-duration" v-if="data.songcount">
-                        <v-icon small>{{ icons.mdiMusic }}</v-icon>
-                    </div>
-                    <!-- Duration/Current live stream time -->
-                    <div
-                        v-if="data.duration > 0 || data.start_actual"
-                        class="video-duration rounded-br-sm"
-                        :class="data.status === 'live' && 'video-duration-live'"
-                    >
-                        {{ formattedDuration }}
-                    </div>
-                </div>
-            </div>
-            <v-img
-                :src="imageSrc"
-                :aspect-ratio="16 / 9"
-                width="100%"
-                v-if="!horizontal && !shouldHideThumbnail"
-                class="rounded"
-            />
-            <v-img v-else-if="!horizontal && shouldHideThumbnail" width="100%" :aspect-ratio="60 / 9"></v-img>
+          <!-- Check box for saved video -->
+          <v-icon
+            :color="hasSaved ? 'primary' : 'white'"
+            class="video-card-action rounded-tr-sm"
+            :class="{ 'hover-show': !hasSaved && !isMobile }"
+            @click.prevent.stop="toggleSaved($event)"
+          >
+            {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
+          </v-icon>
         </div>
-        <a
-            class="d-flex flex-row flex-grow-1 no-decoration"
-            style="height: 88px; position: relative"
-            @click.exact.stop.prevent="goToVideo(data.id)"
-            :href="watchLink"
-            rel="noopener"
+
+        <!-- Video duration/music indicator -->
+        <div class="d-flex flex-column align-end">
+          <!-- Show music icon if songs exist -->
+          <div v-if="data.songcount" class="video-duration">
+            <v-icon small>{{ icons.mdiMusic }}</v-icon>
+          </div>
+          <div v-if="hasTLs" class="video-duration" style="line-height: 2px">
+            <v-icon small>{{ icons.tlChat }}</v-icon> {{ tlLangInChat }}
+          </div>
+          <!-- Duration/Current live stream time -->
+          <div
+            v-if="data.duration > 0 || data.start_actual"
+            class="video-duration rounded-br-sm"
+            :class="data.status === 'live' && 'video-duration-live'"
+          >
+            {{ formattedDuration }}
+          </div>
+        </div>
+      </div>
+      <v-img
+        v-if="!horizontal && !shouldHideThumbnail"
+        :src="imageSrc"
+        :aspect-ratio="16 / 9"
+        width="100%"
+        :transition="false"
+        class="rounded"
+      />
+      <v-img v-else-if="!horizontal && shouldHideThumbnail" width="100%" :aspect-ratio="60 / 9" />
+    </div>
+    <a
+      class="d-flex flex-row flex-grow-1 no-decoration"
+      style="height: 88px; position: relative"
+      :href="watchLink"
+      rel="noopener"
+      @click.exact.stop.prevent="goToVideo(data.id)"
+    >
+      <!-- Channel icon -->
+      <div
+        v-if="includeChannel && includeAvatar && !horizontal && data.channel"
+        class="d-flex align-self-center mx-2 flex-column d-flex"
+      >
+        <ChannelImg :channel="data.channel" rounded class="align-self-center" />
+      </div>
+      <!-- Three lines for title, channel, available time -->
+      <div class="d-flex flex-column my-1 justify-space-between">
+        <!-- Video title -->
+        <div
+          :class="['video-card-title ', { 'video-watched': hasWatched }]"
+          :title="title"
+          style="user-select: text"
+          :style="{ 'font-size': `${1 - $store.state.currentGridSize / 16}rem` }"
         >
-            <!-- Channel icon -->
-            <div
-                class="d-flex align-self-center mx-2 flex-column d-flex"
-                v-if="includeChannel && includeAvatar && !horizontal && data.channel"
-            >
-                <ChannelImg :channel="data.channel" rounded class="align-self-center" />
-            </div>
-            <!-- Three lines for title, channel, available time -->
-            <div class="d-flex flex-column my-1 justify-space-between">
-                <!-- Video title -->
-                <div
-                    :class="['video-card-title ', { 'video-watched': hasWatched }]"
-                    :title="title"
-                    style="user-select: text"
-                    :style="{ 'font-size': `${1 - $store.state.currentGridSize / 16}rem` }"
-                >
-                    {{ title }}
-                </div>
-                <!-- Channel -->
-                <div v-if="includeChannel" class="channel-name video-card-subtitle">
-                    <a
-                        class="no-decoration"
-                        :class="{ 'name-vtuber': data.type === 'stream' || data.channel.type === 'vtuber' }"
-                        :href="`/channel/${data.channel.id}`"
-                        @click.exact.stop.prevent="goToChannel(data.channel.id)"
-                        :title="data.channel.name + '\n' + (data.channel.english_name || '')"
-                    >
-                        {{ channelName }}
-                    </a>
-                </div>
-                <!-- Time/Viewer Info -->
-                <div class="video-card-subtitle">
-                    <span :class="'text-' + this.data.status" :title="absoluteTimeString">
-                        {{ formattedTime }}
-                    </span>
-                    <template v-if="data.clips && data.clips.length > 0">
-                        •
-                        <span class="primary--text">
-                            {{
-                                $tc(
-                                    "component.videoCard.clips",
-                                    typeof data.clips === "object" ? data.clips.length : +data.clips,
-                                )
-                            }}
-                        </span>
-                    </template>
-                    <template v-else-if="data.status === 'live' && data.live_viewers > 0">
-                        •
-                        {{
-                            $tc("component.videoCard.watching", formatCount(data.live_viewers, lang), [
-                                formatCount(data.live_viewers, lang),
-                            ])
-                        }}
-                    </template>
-                </div>
-            </div>
-            <!-- Vertical dots menu -->
-            <v-menu bottom nudge-top="20px">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                        icon
-                        v-bind="attrs"
-                        v-on="on"
-                        @click.stop.prevent
-                        :ripple="false"
-                        class="video-card-menu"
-                        :class="{ 'hover-show': !hasSaved && !isMobile }"
-                    >
-                        <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
-                    </v-btn>
-                </template>
-                <video-card-menu :video="data" />
-            </v-menu>
-        </a>
-        <!-- optional breaker object to row-break into a new row. -->
-        <v-list-item-action v-if="!!this.$slots.action || activePlaylistItem" class="video-card-item-actions">
-            <template v-if="activePlaylistItem">
-                <button @click.stop.prevent="move(data.id, 'up')">
-                    <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
-                </button>
-                <button @click.stop.prevent="$store.commit('playlist/removeVideoByID', data.id)">
-                    <v-icon small> {{ icons.mdiDelete }} </v-icon>
-                </button>
-                <button @click.stop.prevent="move(data.id, 'down')">
-                    <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
-                </button>
-            </template>
-            <slot name="action"></slot>
-        </v-list-item-action>
+          {{ title }}
+        </div>
+        <!-- Channel -->
+        <div v-if="includeChannel" class="channel-name video-card-subtitle">
+          <a
+            class="no-decoration"
+            :class="{ 'name-vtuber': data.type === 'stream' || data.channel.type === 'vtuber' }"
+            :href="`/channel/${data.channel.id}`"
+            :title="data.channel.name + '\n' + (data.channel.english_name || '')"
+            @click.exact.stop.prevent="goToChannel(data.channel.id)"
+          >
+            {{ channelName }}
+          </a>
+        </div>
+        <!-- Time/Viewer Info -->
+        <div class="video-card-subtitle">
+          <span :class="'text-' + data.status" :title="absoluteTimeString">
+            {{ formattedTime }}
+          </span>
+          <template v-if="data.clips && data.clips.length > 0">
+            •
+            <span class="primary--text">
+              {{
+                $tc(
+                  "component.videoCard.clips",
+                  typeof data.clips === "object" ? data.clips.length : +data.clips,
+                )
+              }}
+            </span>
+          </template>
+          <template v-else-if="data.status === 'live' && data.live_viewers > 0">
+            •
+            {{
+              $tc("component.videoCard.watching", formatCount(data.live_viewers, lang), [
+                formatCount(data.live_viewers, lang),
+              ])
+            }}
+          </template>
+        </div>
+      </div>
+      <!-- Vertical dots menu -->
+      <v-menu bottom nudge-top="20px">
+        <template #activator="{ on, attrs }">
+          <v-btn
+            icon
+            v-bind="attrs"
+            :ripple="false"
+            class="video-card-menu"
+            :class="{ 'hover-show': !hasSaved && !isMobile }"
+            v-on="on"
+            @click.stop.prevent
+          >
+            <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
+          </v-btn>
+        </template>
+        <video-card-menu :video="data" />
+      </v-menu>
     </a>
+    <!-- optional breaker object to row-break into a new row. -->
+    <v-list-item-action v-if="!!$slots.action || activePlaylistItem" class="video-card-item-actions">
+      <template v-if="activePlaylistItem">
+        <button @click.stop.prevent="move(data.id, 'up')">
+          <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
+        </button>
+        <button @click.stop.prevent="$store.commit('playlist/removeVideoByID', data.id)">
+          <v-icon small> {{ icons.mdiDelete }} </v-icon>
+        </button>
+        <button @click.stop.prevent="move(data.id, 'down')">
+          <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
+        </button>
+      </template>
+      <slot name="action" />
+    </v-list-item-action>
+  </a>
 </template>
 
 <script lang="ts">
 import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
-import { formatDuration, formatDistance, dayjs, localizedDayjs } from "@/utils/time";
+import {
+    formatDuration, formatDistance, dayjs, localizedDayjs,
+} from "@/utils/time";
 import * as icons from "@/utils/icons";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */
@@ -180,26 +186,17 @@ export default {
     name: "VideoCard",
     components: {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
-        Comment: () => import("./Comment.vue"),
         VideoCardMenu,
-    },
-    data() {
-        return {
-            data: this.source || this.video,
-            forceJPG: true,
-            icons,
-            now: Date.now(),
-            updatecycle: null,
-            hasWatched: false,
-        };
     },
     props: {
         video: {
             // required: true,
             type: Object,
+            default: null,
         },
         source: {
             type: Object,
+            default: null,
         },
         fluid: {
             required: false,
@@ -247,35 +244,18 @@ export default {
         },
         parentPlaylistId: {
             type: [Number, String],
+            default: null,
         },
     },
-    // created() {
-    //     this.data = this.video || this.source;
-    // },
-    mounted() {
-        this.$store.getters["history/hasWatched"](this.data.id)
-            .then((x) => {
-                if (x) this.hasWatched = true;
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-        if (!this.updatecycle && this.data.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
-    },
-    activated() {
-        if (!this.updatecycle && this.data.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
-    },
-    deactivated() {
-        if (this.updatecycle) {
-            clearInterval(this.updatecycle);
-            this.updatecycle = null;
-        }
-    },
-    beforeDestroy() {
-        if (this.updatecycle) {
-            clearInterval(this.updatecycle);
-            this.updatecycle = null;
-        }
+    data() {
+        return {
+            data: this.source || this.video,
+            forceJPG: true,
+            icons,
+            now: Date.now(),
+            updatecycle: null,
+            hasWatched: false,
+        };
     },
     computed: {
         title() {
@@ -306,7 +286,7 @@ export default {
             const ts = localizedDayjs(this.data.available_at, this.lang);
 
             const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
-            const ts2 = ts.tz("Japan").format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
+            const ts2 = ts.tz("Asia/Tokyo").format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
             if (ts1 === ts2) {
                 return ts1;
             }
@@ -351,6 +331,43 @@ export default {
             const q = this.parentPlaylistId ? `?playlist=${this.parentPlaylistId}` : "";
             return `/watch/${this.data.id}${q}`;
         },
+        hasTLs() {
+            return this.video?.recent_live_tls?.includes(this.$store.state.settings.liveTlLang);
+        },
+        tlLangInChat() {
+            if (this.hasTLs) {
+                return `[${this.$store.state.settings.liveTlLang}]`;
+            }
+            return "";
+        },
+    },
+    // created() {
+    //     this.data = this.video || this.source;
+    // },
+    mounted() {
+        this.$store.getters["history/hasWatched"](this.data.id)
+            .then((x) => {
+                if (x) this.hasWatched = true;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        if (!this.updatecycle && this.data.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+    },
+    activated() {
+        if (!this.updatecycle && this.data.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+    },
+    deactivated() {
+        if (this.updatecycle) {
+            clearInterval(this.updatecycle);
+            this.updatecycle = null;
+        }
+    },
+    beforeDestroy() {
+        if (this.updatecycle) {
+            clearInterval(this.updatecycle);
+            this.updatecycle = null;
+        }
     },
     methods: {
         formatDuration,

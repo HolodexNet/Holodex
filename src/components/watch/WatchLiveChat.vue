@@ -1,65 +1,64 @@
 <template>
-    <v-sheet
-        class="watch-live-chat"
-        :class="{
-            'fixed-bottom': fixedBottom,
-            'fixed-right': fixedRight,
-            'show-tl-overlay': !isMugen && shouldShowLiveTL,
-            fluid: fluid,
-        }"
-    >
-        <span class="loading-text" v-if="showLiveChat">{{ $t("views.watch.chat.loading") }}</span>
-        <ArchiveTranslations
-            v-show="shouldShowLiveTL"
-            :video="video"
-            v-if="video.status === 'past'"
-            :class="{
-                'chat-overlay': fixedBottom || fixedRight,
-                'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
-                'tl-full-height': !showLiveChat,
-            }"
-            :style="{
-                height:
-                    showLiveChat && $store.state.settings.liveTlWindowSize > 0
-                        ? $store.state.settings.liveTlWindowSize + '%'
-                        : '',
-            }"
-            :currentTime="currentTime"
-        />
-        <LiveTranslations
-            :video="video"
-            v-else-if="!isMugen && shouldConnectLiveTL"
-            v-show="shouldShowLiveTL"
-            :class="{
-                'chat-overlay': fixedBottom || fixedRight,
-                'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
-                'tl-full-height': !showLiveChat,
-            }"
-            :style="{
-                height:
-                    showLiveChat && $store.state.settings.liveTlWindowSize > 0
-                        ? $store.state.settings.liveTlWindowSize + '%'
-                        : '',
-            }"
-            @videoUpdate="handleVideoUpdate"
-            @historyLength="handleHistoryLength"
-        >
-        </LiveTranslations>
+  <v-sheet
+    class="watch-live-chat"
+    :class="{
+      'fixed-bottom': fixedBottom,
+      'fixed-right': fixedRight,
+      'show-tl-overlay': !isMugen && shouldShowLiveTL,
+      fluid: fluid,
+    }"
+  >
+    <span v-if="showLiveChat" class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
+    <ArchiveTranslations
+      v-show="shouldShowLiveTL"
+      v-if="video.status === 'past'"
+      :video="video"
+      :class="{
+        'chat-overlay': fixedBottom || fixedRight,
+        'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
+        'tl-full-height': !showLiveChat,
+      }"
+      :style="{
+        height:
+          showLiveChat && $store.state.settings.liveTlWindowSize > 0
+            ? $store.state.settings.liveTlWindowSize + '%'
+            : '',
+      }"
+      :current-time="currentTime"
+    />
+    <LiveTranslations
+      v-else-if="!isMugen && shouldConnectLiveTL"
+      v-show="shouldShowLiveTL"
+      :video="video"
+      :class="{
+        'chat-overlay': fixedBottom || fixedRight,
+        'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
+        'tl-full-height': !showLiveChat,
+      }"
+      :style="{
+        height:
+          showLiveChat && $store.state.settings.liveTlWindowSize > 0
+            ? $store.state.settings.liveTlWindowSize + '%'
+            : '',
+      }"
+      @videoUpdate="handleVideoUpdate"
+      @historyLength="handleHistoryLength"
+    />
 
-        <div
-            class="embedded-chat"
-            v-if="showLiveChat"
-            :style="{
-                height:
-                    $store.state.settings.liveTlWindowSize > 0 && shouldShowLiveTL && !fixedBottom && !fixedRight
-                        ? 100 - $store.state.settings.liveTlWindowSize + '%'
-                        : '',
-            }"
-        >
-            <iframe :src="liveChatUrl" frameborder="0" :style="scale !== 1 && scaledStyle" />
-        </div>
-        <!-- <cookie-detect /> -->
-    </v-sheet>
+    <div
+      v-if="showLiveChat"
+      class="embedded-chat"
+      :style="{
+        height:
+          $store.state.settings.liveTlWindowSize > 0 && shouldShowLiveTL && !fixedBottom && !fixedRight
+            ? 100 - $store.state.settings.liveTlWindowSize + '%'
+            : '',
+      }"
+    >
+      <iframe :src="liveChatUrl" frameborder="0" :style="scale !== 1 && scaledStyle" />
+    </div>
+    <!-- <cookie-detect /> -->
+  </v-sheet>
 </template>
 
 <script lang="ts">
@@ -77,10 +76,12 @@ export default {
     props: {
         video: {
             type: Object,
-            required: false,
+            default: null,
         },
         mugenId: {
+            type: String,
             required: false,
+            default: null,
         },
         fixedBottom: {
             type: Boolean,
@@ -112,6 +113,7 @@ export default {
         },
         currentTime: {
             type: Number,
+            default: 0,
         },
         scale: {
             type: Number,

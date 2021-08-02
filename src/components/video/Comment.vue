@@ -1,27 +1,27 @@
 <template>
-    <v-list-item class="d-block my-3 comment">
-        <truncated-text
-            style="white-space: pre-wrap; word-break: break-word"
-            class="text-body-2"
-            :html="processedMessage"
-            lines="5"
-        >
-            <template v-slot:button="{ expanded }">
-                <span class="text-subtitle-2" style="color: #aaa">{{
-                    expanded ? $t("component.comment.close") : $t("component.comment.readMore")
-                }}</span>
-            </template>
-        </truncated-text>
-        <a
-            class="openOnYoutube"
-            :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <v-icon small>{{ icons.mdiOpenInNew }}</v-icon>
-        </a>
-        <!-- comment body -->
-    </v-list-item>
+  <v-list-item class="d-block my-3 comment">
+    <truncated-text
+      style="white-space: pre-wrap; word-break: break-word"
+      class="text-body-2"
+      :html="processedMessage"
+      lines="5"
+    >
+      <template #button="{ expanded }">
+        <span class="text-subtitle-2" style="color: #aaa">{{
+          expanded ? $t("component.comment.close") : $t("component.comment.readMore")
+        }}</span>
+      </template>
+    </truncated-text>
+    <a
+      class="openOnYoutube"
+      :href="`https://www.youtube.com/watch?v=${videoId}&lc=${comment.comment_key}`"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <v-icon small>{{ icons.mdiOpenInNew }}</v-icon>
+    </a>
+    <!-- comment body -->
+  </v-list-item>
 </template>
 
 <script lang="ts">
@@ -33,9 +33,6 @@ const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/g
 export default {
     name: "Comment",
     components: { TruncatedText },
-    data() {
-        return {};
-    },
     props: {
         comment: {
             required: true,
@@ -46,7 +43,9 @@ export default {
             type: String,
         },
     },
-    methods: {},
+    data() {
+        return {};
+    },
     computed: {
         processedMessage() {
             const decoder = document.createElement("div");
@@ -59,6 +58,7 @@ export default {
             });
         },
     },
+    methods: {},
 };
 </script>
 

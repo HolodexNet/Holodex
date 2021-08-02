@@ -1,87 +1,111 @@
 <template>
-    <v-hover v-slot="{ hover }">
-        <v-list-item @click.stop="$emit('play', song)">
-            <v-hover v-slot="{ hover: hoverInner }">
-                <v-list-item-avatar tile>
-                    <!-- actual artwork -->
-                    <v-img v-if="song.art" lazy-src :src="song.art"></v-img>
-                    <!-- artwork not available, have a stand-in -->
-                    <v-sheet v-else width="100%" height="100%" color="grey darken-1" class="d-flex pa-1">
-                        <v-btn small icon class="ma-auto" outlined disabled>
-                            <v-icon small>{{ icons.mdiMusic }}</v-icon>
-                        </v-btn>
-                    </v-sheet>
-                    <!-- Queue up button or default item click button -->
-                    <v-sheet
-                        v-if="hover && !hoverInner"
-                        width="100%"
-                        height="100%"
-                        color="transparent"
-                        class="d-flex pa-1 hover-item"
-                        style="position: absolute; left: 0px"
-                    >
-                        <v-btn x-small fab class="ma-auto" color="blue lighten-3" elevation="2">
-                            <v-icon small>{{ hoverIcon }}</v-icon>
-                        </v-btn>
-                    </v-sheet>
-                    <!-- Play immediately button over the artwork -->
-                    <v-sheet
-                        v-if="$listeners.playNow && hoverInner"
-                        width="100%"
-                        height="100%"
-                        color="transparent"
-                        class="d-flex pa-1 hover-art"
-                        style="position: absolute; left: 0px"
-                    >
-                        <v-btn
-                            x-small
-                            fab
-                            class="ma-auto"
-                            color="blue lighten-3"
-                            elevation="2"
-                            @click.stop.prevent="$emit('playNow', song)"
-                        >
-                            <v-icon small>{{ artworkHoverIcon }}</v-icon>
-                        </v-btn>
-                    </v-sheet>
-                </v-list-item-avatar></v-hover
+  <v-hover v-slot="{ hover }">
+    <v-list-item @click.stop="$emit('play', song)">
+      <v-hover v-slot="{ hover: hoverInner }">
+        <v-list-item-avatar tile>
+          <!-- actual artwork -->
+          <v-img v-if="song.art" lazy-src :src="song.art" />
+          <!-- artwork not available, have a stand-in -->
+          <v-sheet
+            v-else
+            width="100%"
+            height="100%"
+            color="grey darken-1"
+            class="d-flex pa-1"
+          >
+            <v-btn
+              small
+              icon
+              class="ma-auto"
+              outlined
+              disabled
             >
-            <v-list-item-content class="py-1 pt-1">
-                <v-list-item-subtitle class="text--primary text-subtitle-1">
-                    <a
-                        class="text-caption error--text float-right ml-1 song-clickable"
-                        v-if="alwaysShowDeletion || (detailed && $listeners.remove && userCanDelete)"
-                        @click.stop="$emit('remove', song)"
-                    >
-                        {{ $t("component.media.remove") }}
-                    </a>
-                    <div v-if="detailed" class="float-right text-caption">
-                        [{{ secondsToHuman(song.start) }} - {{ secondsToHuman(song.end) }}]
-                    </div>
+              <v-icon small>
+                {{ icons.mdiMusic }}
+              </v-icon>
+            </v-btn>
+          </v-sheet>
+          <!-- Queue up button or default item click button -->
+          <v-sheet
+            v-if="hover && !hoverInner"
+            width="100%"
+            height="100%"
+            color="transparent"
+            class="d-flex pa-1 hover-item"
+            style="position: absolute; left: 0px"
+          >
+            <v-btn
+              x-small
+              fab
+              class="ma-auto"
+              color="blue lighten-3"
+              elevation="2"
+            >
+              <v-icon small>
+                {{ hoverIcon }}
+              </v-icon>
+            </v-btn>
+          </v-sheet>
+          <!-- Play immediately button over the artwork -->
+          <v-sheet
+            v-if="$listeners.playNow && hoverInner"
+            width="100%"
+            height="100%"
+            color="transparent"
+            class="d-flex pa-1 hover-art"
+            style="position: absolute; left: 0px"
+          >
+            <v-btn
+              x-small
+              fab
+              class="ma-auto"
+              color="blue lighten-3"
+              elevation="2"
+              @click.stop.prevent="$emit('playNow', song)"
+            >
+              <v-icon small>
+                {{ artworkHoverIcon }}
+              </v-icon>
+            </v-btn>
+          </v-sheet>
+        </v-list-item-avatar>
+      </v-hover>
+      <v-list-item-content class="py-1 pt-1">
+        <v-list-item-subtitle class="text--primary text-subtitle-1">
+          <a
+            v-if="alwaysShowDeletion || (detailed && $listeners.remove && userCanDelete)"
+            class="text-caption error--text float-right ml-1 song-clickable"
+            @click.stop="$emit('remove', song)"
+          >
+            {{ $t("component.media.remove") }}
+          </a>
+          <div v-if="detailed" class="float-right text-caption">
+            [{{ secondsToHuman(song.start) }} - {{ secondsToHuman(song.end) }}]
+          </div>
 
-                    <span class="limit-width">
-                        {{ song.name }} /
-                        <span class="primary--text">{{ song.original_artist }}</span>
-                    </span>
-                </v-list-item-subtitle>
+          <span class="limit-width">
+            {{ song.name }} /
+            <span class="primary--text">{{ song.original_artist }}</span>
+          </span>
+        </v-list-item-subtitle>
 
-                <v-list-item-subtitle class="text--caption">
-                    <div class="float-right">
-                        <span class="muted" v-if="showTime">{{ formattedTime }}</span>
-                        {{ Math.floor((song.end - song.start) / 60) }}:{{
-                            (Math.round(song.end - song.start) % 60).toString().padStart(2, "0")
-                        }}
-                    </div>
+        <v-list-item-subtitle class="text--caption">
+          <div class="float-right">
+            <span v-if="showTime" class="muted">{{ formattedTime }}</span>
+            {{ Math.floor((song.end - song.start) / 60) }}:{{
+              (Math.round(song.end - song.start) % 60).toString().padStart(2, "0")
+            }}
+          </div>
 
-                    <span class="song-clickable" v-if="$listeners.channel" @click.stop="$emit('channel', song)">
-                        {{ song.channel[nameProperty] || song.channel.name }}
-                    </span>
-                    <span v-else> {{ song.channel[nameProperty] || song.channel.name }} </span>
-                </v-list-item-subtitle>
-                <!-- Else: -->
-            </v-list-item-content>
-        </v-list-item>
-    </v-hover>
+          <span v-if="$listeners.channel" class="song-clickable" @click.stop="$emit('channel', song)">
+            {{ song.channel[nameProperty] || song.channel.name }}
+          </span>
+          <span v-else> {{ song.channel[nameProperty] || song.channel.name }} </span>
+        </v-list-item-subtitle>
+        <!-- Else: -->
+      </v-list-item-content>
+    </v-list-item>
+  </v-hover>
 </template>
 
 <script lang="ts">
@@ -89,11 +113,6 @@ import { formatDistance, secondsToHuman } from "@/utils/time";
 
 export default {
     name: "SongItem",
-    data() {
-        return {
-            albumArt: null,
-        };
-    },
     props: {
         song: {
             type: Object,
@@ -126,21 +145,28 @@ export default {
             default: false,
         },
         hoverIcon: {
+            type: String,
             default: null,
         },
         artworkHoverIcon: {
+            type: String,
             default: null,
         },
+    },
+    data() {
+        return {
+            albumArt: null,
+        };
     },
     computed: {
         userCanDelete() {
             const u = this.$store.state.userdata;
             return (
-                u &&
-                u.user &&
-                u.user.role &&
-                u.user.id &&
-                (u.user.role !== "user" || +u.user.id === +this.song.creator_id)
+                u
+                && u.user
+                && u.user.role
+                && u.user.id
+                && (u.user.role !== "user" || +u.user.id === +this.song.creator_id)
             );
         },
         formattedTime() {
@@ -150,10 +176,10 @@ export default {
             return this.$store.state.settings.nameProperty;
         },
     },
+    mounted() {},
     methods: {
         secondsToHuman,
     },
-    mounted() {},
 };
 </script>
 

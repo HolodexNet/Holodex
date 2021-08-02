@@ -1,94 +1,125 @@
 <template>
-    <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
-    <v-autocomplete
-        class="ma-auto search-bar"
-        :class="{ 'search-bar-small': isMobile }"
-        solo
-        flat
-        multiple
-        deletable-chips
-        chips
-        disable-lookup
-        clearable
-        hide-no-data
-        hide-selected
-        auto-select-first
-        dense
-        :rules="[validate]"
-        :autofocus="autofocus"
-        :small-chips="dense"
-        v-model="query"
-        :loading="isLoading"
-        :items="results"
-        :search-input.sync="search"
-        @input="onInput"
-        :append-icon="''"
-        :label="$t('component.search.searchLabel')"
-        :filter="(a, b) => true"
-        return-object
-        @keydown.enter="onEnterKeyDown"
-        hide-details="auto"
-    >
-        <template v-slot:selection="selection">
-            <v-card
-                :color="$vuetify.theme.dark ? 'grey darken-3' : 'primary accent-4'"
-                :label="selection.item.type !== 'channel'"
-                class="pa-0 selected-card"
-                :dark="$vuetify.theme.dark"
-            >
-                <v-list-item class="ma-n1 py-0 pl-3 pr-1">
-                    <div class="selected-card-type px-1 py-0 ma-0 rounded text--disabled caption">
-                        <v-icon x-small v-if="selection.item.type === 'channel'">{{ icons.mdiYoutube }}</v-icon>
-                        <v-icon x-small v-if="selection.item.type === 'video url'">{{ icons.mdiYoutube }}</v-icon>
-                        <v-icon x-small v-if="selection.item.type === 'topic'">{{ icons.mdiAnimationPlay }}</v-icon>
-                        <v-icon x-small v-if="selection.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
-                        <v-icon x-small v-if="selection.item.type === 'title & desc'">{{ mdiTextSearch }}</v-icon>
-                        <v-icon x-small v-if="selection.item.type === 'comments'">{{ mdiCommentSearch }}</v-icon>
-                        {{ i18nItem(selection.item.type) }}
-                    </div>
+  <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
+  <v-autocomplete
+    v-model="query"
+    class="ma-auto search-bar"
+    :class="{ 'search-bar-small': isMobile }"
+    solo
+    flat
+    multiple
+    deletable-chips
+    chips
+    disable-lookup
+    clearable
+    hide-no-data
+    hide-selected
+    auto-select-first
+    dense
+    :rules="[validate]"
+    :autofocus="autofocus"
+    :small-chips="dense"
+    :loading="isLoading"
+    :items="results"
+    :search-input.sync="search"
+    :append-icon="''"
+    :label="$t('component.search.searchLabel')"
+    :filter="(a, b) => true"
+    return-object
+    hide-details="auto"
+    @input="onInput"
+    @keydown.enter="onEnterKeyDown"
+  >
+    <template #selection="selection">
+      <v-card
+        :color="$vuetify.theme.dark ? 'grey darken-3' : 'primary accent-4'"
+        :label="selection.item.type !== 'channel'"
+        class="pa-0 selected-card"
+        :dark="$vuetify.theme.dark"
+      >
+        <v-list-item class="ma-n1 py-0 pl-3 pr-1">
+          <div class="selected-card-type px-1 py-0 ma-0 rounded text--disabled caption">
+            <v-icon v-if="selection.item.type === 'channel'" x-small>
+              {{ icons.mdiYoutube }}
+            </v-icon>
+            <v-icon v-if="selection.item.type === 'video url'" x-small>
+              {{ icons.mdiYoutube }}
+            </v-icon>
+            <v-icon v-if="selection.item.type === 'topic'" x-small>
+              {{ icons.mdiAnimationPlay }}
+            </v-icon>
+            <v-icon v-if="selection.item.type === 'org'" x-small>
+              {{ mdiAccountMultiple }}
+            </v-icon>
+            <v-icon v-if="selection.item.type === 'title & desc'" x-small>
+              {{ mdiTextSearch }}
+            </v-icon>
+            <v-icon v-if="selection.item.type === 'comments'" x-small>
+              {{ mdiCommentSearch }}
+            </v-icon>
+            {{ i18nItem(selection.item.type) }}
+          </div>
 
-                    <v-list-item-content class="py-1 pt-4">
-                        <v-list-item-subtitle
-                            class="text--primary search-item"
-                            v-text="selection.item.text"
-                        ></v-list-item-subtitle>
-                    </v-list-item-content>
+          <v-list-item-content class="py-1 pt-4">
+            <v-list-item-subtitle class="text--primary search-item" v-text="selection.item.text" />
+          </v-list-item-content>
 
-                    <v-list-item-action>
-                        <v-icon small color="primary accent-2" @click="deleteChip(selection.item)">{{
-                            icons.mdiClose
-                        }}</v-icon>
-                    </v-list-item-action>
-                </v-list-item>
-            </v-card>
-        </template>
-        <template v-slot:item="dropdownItem">
-            <div class="ma-n1 py-0 pl-3 pr-1">
-                <!-- @click="addItem(dropdownItem.item) -->
-                <v-list-item-content class="py-1 pt-1">
-                    <v-list-item-subtitle class="text--primary">
-                        {{ i18nItem(dropdownItem.item.type) }}
-                        <v-icon small v-if="dropdownItem.item.type === 'channel'">{{ icons.mdiYoutube }}</v-icon>
-                        <v-icon small v-if="dropdownItem.item.type === 'video url'">{{ icons.mdiYoutube }}</v-icon>
-                        <v-icon small v-if="dropdownItem.item.type === 'topic'">{{ icons.mdiAnimationPlay }}</v-icon>
-                        <v-icon small v-if="dropdownItem.item.type === 'org'">{{ mdiAccountMultiple }}</v-icon>
-                        <v-icon small v-if="dropdownItem.item.type === 'title & desc'">{{ mdiTextSearch }}</v-icon>
-                        <v-icon small v-if="dropdownItem.item.type === 'comments'">{{ mdiCommentSearch }}</v-icon>
+          <v-list-item-action>
+            <v-icon small color="primary accent-2" @click="deleteChip(selection.item)">
+              {{ icons.mdiClose }}
+            </v-icon>
+          </v-list-item-action>
+        </v-list-item>
+      </v-card>
+    </template>
+    <template #item="dropdownItem">
+      <div class="ma-n1 py-0 pl-3 pr-1">
+        <!-- @click="addItem(dropdownItem.item) -->
+        <v-list-item-content class="py-1 pt-1">
+          <v-list-item-subtitle class="text--primary">
+            {{ i18nItem(dropdownItem.item.type) }}
+            <v-icon v-if="dropdownItem.item.type === 'channel'" small>
+              {{ icons.mdiYoutube }}
+            </v-icon>
+            <v-icon v-if="dropdownItem.item.type === 'video url'" small>
+              {{ icons.mdiYoutube }}
+            </v-icon>
+            <v-icon v-if="dropdownItem.item.type === 'topic'" small>
+              {{ icons.mdiAnimationPlay }}
+            </v-icon>
+            <v-icon v-if="dropdownItem.item.type === 'org'" small>
+              {{ mdiAccountMultiple }}
+            </v-icon>
+            <v-icon v-if="dropdownItem.item.type === 'title & desc'" small>
+              {{ mdiTextSearch }}
+            </v-icon>
+            <v-icon v-if="dropdownItem.item.type === 'comments'" small>
+              {{ mdiCommentSearch }}
+            </v-icon>
 
-                        {{ dropdownItem.item.text }}
-                    </v-list-item-subtitle>
-                </v-list-item-content>
-            </div>
-        </template>
-        <template v-slot:append-outer>
-            <v-btn large class="ml-1 append-btn" @click="commitSearch">
-                <v-icon key="searchbtn" large color="secondary" v-text="icons.mdiMagnify"></v-icon>
-            </v-btn>
-            <v-btn large class="ml-1 append-btn" @click="goToOrToggleAdvanced">
-                <v-icon key="advanced" large color="secondary" v-text="mdiFilter"></v-icon>
-            </v-btn>
-        </template>
-    </v-autocomplete>
+            {{ dropdownItem.item.text }}
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </div>
+    </template>
+    <template #append-outer>
+      <v-btn large class="ml-1 append-btn" @click="commitSearch">
+        <v-icon
+          key="searchbtn"
+          large
+          color="secondary"
+          v-text="icons.mdiMagnify"
+        />
+      </v-btn>
+      <v-btn large class="ml-1 append-btn" @click="goToOrToggleAdvanced">
+        <v-icon
+          key="advanced"
+          large
+          color="secondary"
+          v-text="mdiFilter"
+        />
+      </v-btn>
+    </template>
+  </v-autocomplete>
 </template>
 
 <script lang="ts">
@@ -102,14 +133,20 @@ import {
 } from "@mdi/js";
 import * as icons from "@/utils/icons";
 import api from "@/utils/backend-api";
-import ChannelImg from "@/components/channel/ChannelImg.vue";
 import { debounce } from "@/utils/functions";
 import { json2csvAsync, csv2jsonAsync } from "json-2-csv";
 
 export default {
     name: "SearchBar",
-    components: {
-        ChannelImg,
+    props: {
+        dense: {
+            type: Boolean,
+            default: false,
+        },
+        autofocus: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -126,17 +163,6 @@ export default {
             fromApi: [],
         };
     },
-    props: {
-        dense: {
-            type: Boolean,
-            default: false,
-        },
-        autofocus: {
-            type: Boolean,
-            default: false,
-        },
-    },
-
     computed: {
         isMobile() {
             return this.$store.state.isMobile;
@@ -150,11 +176,6 @@ export default {
         nameProperty() {
             return this.$store.state.settings.nameProperty;
         },
-    },
-    async mounted() {
-        if (this.$route.query && this.$route.query.q) {
-            this.query = await csv2jsonAsync(this.$route.query.q);
-        }
     },
     watch: {
         "$route.query": {
@@ -175,17 +196,35 @@ export default {
             this.getAutocomplete(formatted)
                 .then((res) => {
                     let textQueries = [];
-                    if (encodeURIComponent(val).length > 1)
+                    if (encodeURIComponent(val).length > 1) {
                         textQueries = [
-                            { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                            {
+                                type: "none",
+                                disabled: true,
+                                divider: true,
+                                value: "div",
+                                text: "div",
+                            },
                             { type: "title & desc", value: `${val}title & desc`, text: val.trim() },
-                            { type: "none", disabled: true, divider: true, value: "div", text: "div" },
+                            {
+                                type: "none",
+                                disabled: true,
+                                divider: true,
+                                value: "div",
+                                text: "div",
+                            },
                             { type: "comments", value: `${val}comments`, text: val.trim() },
                         ];
+                    }
                     this.fromApi = [...res.data, ...textQueries];
                 })
                 .catch((e) => console.log(e));
         }, 500),
+    },
+    async mounted() {
+        if (this.$route.query && this.$route.query.q) {
+            this.query = await csv2jsonAsync(this.$route.query.q);
+        }
     },
     methods: {
         async getAutocomplete(query) {
@@ -261,8 +300,9 @@ export default {
             // if text search AND comment search, fail
             const countcomments = currentQuery.filter((x) => x.type === "comments").length;
             if (countcomments > 1) return "Cannot search using multiple comment conditions.";
-            if (countcomments === 1 && currentQuery.filter((x) => x.type === "title & desc").length > 0)
+            if (countcomments === 1 && currentQuery.filter((x) => x.type === "title & desc").length > 0) {
                 return "Cannot search using comment + title & desc filters at the same time.";
+            }
             return true;
         },
         i18nItem(item) {

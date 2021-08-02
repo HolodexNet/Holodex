@@ -1,17 +1,17 @@
 <template>
-    <div>
-        <div :id="'tjump' + randomId"></div>
-        <slot v-bind:data="data" v-bind:isLoading="isLoading"> </slot>
-        <InfiniteLoad v-if="infiniteLoad" @infinite="emitLoad" :identifier="identifier" />
-        <PaginateLoad
-            v-if="paginate"
-            :identifier="identifier"
-            :pages="pages"
-            @paginate="emitLoad"
-            :pageLess="pageless || total === null"
-            :scrollElementId="'tjump' + randomId"
-        />
-    </div>
+  <div>
+    <div :id="'tjump' + randomId" />
+    <slot :data="data" :isLoading="isLoading" />
+    <InfiniteLoad v-if="infiniteLoad" :identifier="identifier" @infinite="emitLoad" />
+    <PaginateLoad
+      v-if="paginate"
+      :identifier="identifier"
+      :pages="pages"
+      :page-less="pageless || total === null"
+      :scroll-element-id="'tjump' + randomId"
+      @paginate="emitLoad"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -34,13 +34,10 @@
  *  [{object}] <-- only usable with infinite or uncountable pages.
  *
  *========================* */
-import VideoCardList from "@/components/video/VideoCardList.vue";
-// import api from "@/utils/backend-api";
 
 export default {
     name: "GenericListLoader",
     components: {
-        VideoCardList,
         InfiniteLoad: () => import("@/components/common/InfiniteLoad.vue"),
         PaginateLoad: () => import("@/components/common/PaginateLoad.vue"),
     },
@@ -61,7 +58,7 @@ export default {
             type: Boolean,
             default: false,
         },
-        /* only applicable if pageless, if true, then the infinite scrolling stops when a partial page is hit, 
+        /* only applicable if pageless, if true, then the infinite scrolling stops when a partial page is hit,
         if false it'll stop on a empty page. */
         endIfPartialPage: {
             type: Boolean,
@@ -72,7 +69,7 @@ export default {
         // load function, called with (offset, perPage) arg
         loadFn: {
             type: Function,
-            default: false,
+            default: () => false,
             required: true,
         },
         // how many to load per page.

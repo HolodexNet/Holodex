@@ -1,136 +1,134 @@
 <template>
-    <span>
-        <slot
-            name="menu"
-            v-bind:currentOrg="currentOrg"
-            v-bind:showOrgDialog="
-                () => {
-                    showOrgDialog = true;
-                }
-            "
-        >
-            <v-menu bottom offset-y>
-                <template v-slot:activator="activator">
-                    <slot name="visible" v-bind:currentOrg="currentOrg" v-bind:activator="activator">
-                        <div
-                            v-bind="activator.attrs"
-                            v-on="activator.on"
-                            class="d-inline nav-title"
-                            style="position: relative"
-                        >
-                            <v-fade-transition hide-on-leave>
-                                <span
-                                    :key="currentOrg.name + 'header'"
-                                    style="text-decoration: underline"
-                                    :class="{
-                                        'grey--text text--darken-4': !darkMode,
-                                        'grey-text text--lighten-2': darkMode,
-                                    }"
-                                    >{{ currentOrg.short || currentOrg.name }}</span
-                                >
-                            </v-fade-transition>
-                            <span
-                                class="primary--text"
-                                :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
-                                ref="dexBtn"
-                                >dex</span
-                            >
-                            <v-tooltip
-                                v-model="firstVisit"
-                                right
-                                bottom
-                                z-index="120"
-                                content-class="first-visit-tooltip"
-                            >
-                                <template v-slot:activator="{}">
-                                    <v-icon
-                                        size="30"
-                                        class="change-org-icon"
-                                        :class="{ 'rotate-180': activator.attrs['aria-expanded'] === 'true' }"
-                                        v-on="activator.on"
-                                    >
-                                        {{ icons.mdiMenuDown }}
-                                    </v-icon>
-                                </template>
-                                <div>{{ $t("views.app.nowSupportsMultiOrg") }}</div>
-                                <div>{{ $t("views.app.loginCallToAction") }}</div>
-                            </v-tooltip>
-                        </div>
-                    </slot>
+  <span>
+    <slot
+      name="menu"
+      :currentOrg="currentOrg"
+      :showOrgDialog="
+        () => {
+          showOrgDialog = true;
+        }
+      "
+    >
+      <v-menu bottom offset-y>
+        <template #activator="activator">
+          <slot name="visible" :currentOrg="currentOrg" :activator="activator">
+            <div
+              v-bind="activator.attrs"
+              class="d-inline nav-title"
+              style="position: relative"
+              v-on="activator.on"
+            >
+              <v-fade-transition hide-on-leave>
+                <span
+                  :key="currentOrg.name + 'header'"
+                  style="text-decoration: underline"
+                  :class="{
+                    'grey--text text--darken-4': !darkMode,
+                    'grey-text text--lighten-2': darkMode,
+                  }"
+                >{{ currentOrg.short || currentOrg.name }}</span>
+              </v-fade-transition>
+              <span
+                ref="dexBtn"
+                class="primary--text"
+                :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
+              >dex</span>
+              <v-tooltip
+                v-model="firstVisit"
+                right
+                bottom
+                z-index="120"
+                content-class="first-visit-tooltip"
+              >
+                <template #activator="{}">
+                  <v-icon
+                    size="30"
+                    class="change-org-icon"
+                    :class="{ 'rotate-180': activator.attrs['aria-expanded'] === 'true' }"
+                    v-on="activator.on"
+                  >
+                    {{ icons.mdiMenuDown }}
+                  </v-icon>
                 </template>
+                <div>{{ $t("views.app.nowSupportsMultiOrg") }}</div>
+                <div>{{ $t("views.app.loginCallToAction") }}</div>
+              </v-tooltip>
+            </div>
+          </slot>
+        </template>
 
-                <v-list style="max-height: 300px; overscroll-behavior: contain" class="overflow-y-auto">
-                    <slot name="prepend-dropdown"></slot>
-                    <v-list-item
-                        v-for="org in orgFavorites"
-                        :key="org.name + 'select'"
-                        @click="currentOrg = org"
-                        :input-value="org === (currentSelection || currentOrg)"
-                    >
-                        <v-list-item-title>{{ org.name }}</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item @click="showOrgDialog = true">
-                        <v-list-item-title class="primary--text">{{ $t("views.favorites.showall") }}</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu>
-        </slot>
-        <v-dialog v-model="showOrgDialog" max-width="1000px">
-            <v-card>
-                <v-card-title>{{ $t("views.channels.sortOptions.org") }}</v-card-title>
+        <v-list style="max-height: 300px; overscroll-behavior: contain" class="overflow-y-auto">
+          <slot name="prepend-dropdown" />
+          <v-list-item
+            v-for="org in orgFavorites"
+            :key="org.name + 'select'"
+            :input-value="org === (currentSelection || currentOrg)"
+            @click="currentOrg = org"
+          >
+            <v-list-item-title>{{ org.name }}</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="showOrgDialog = true">
+            <v-list-item-title class="primary--text">{{ $t("views.favorites.showall") }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </slot>
+    <v-dialog v-model="showOrgDialog" max-width="1000px">
+      <v-card>
+        <v-card-title>{{ $t("views.channels.sortOptions.org") }}</v-card-title>
 
-                <v-card-text class="px-1">
-                    <v-text-field :label="$t('component.search.searchLabel')" v-model="search" class="px-4" />
-                    <v-list style="overflow-y: auto; height: calc(75vh - 176px)">
-                        <v-list-item
-                            v-for="org in sortedOrgs"
-                            :key="org.name + 'list'"
-                            dense
-                            @click="
-                                () => {
-                                    currentOrg = org;
-                                    showOrgDialog = false;
-                                }
-                            "
-                            :ripple="false"
-                        >
-                            <v-list-item-action height="32px">
-                                <v-btn
-                                    icon
-                                    @click.stop="toggleFavoriteOrg(org)"
-                                    :color="orgFavoritesNameSet.has(org.name) ? 'yellow' : 'grey'"
-                                >
-                                    <v-icon>{{ icons.mdiStar }}</v-icon>
-                                </v-btn>
-                            </v-list-item-action>
+        <v-card-text class="px-1">
+          <v-text-field v-model="search" :label="$t('component.search.searchLabel')" class="px-4" />
+          <v-list style="overflow-y: auto; height: calc(75vh - 176px)">
+            <v-list-item
+              v-for="org in sortedOrgs"
+              :key="org.name + 'list'"
+              dense
+              :ripple="false"
+              @click="
+                () => {
+                  currentOrg = org;
+                  showOrgDialog = false;
+                }
+              "
+            >
+              <v-list-item-action height="32px">
+                <v-btn
+                  icon
+                  :color="orgFavoritesNameSet.has(org.name) ? 'yellow' : 'grey'"
+                  @click.stop="toggleFavoriteOrg(org)"
+                >
+                  <v-icon>{{ icons.mdiStar }}</v-icon>
+                </v-btn>
+              </v-list-item-action>
 
-                            <v-list-item-content>
-                                {{ org.name }} {{ org.name_jp ? `(${org.name_jp})` : "" }}
-                            </v-list-item-content>
+              <v-list-item-content>
+                {{ org.name }} {{ org.name_jp ? `(${org.name_jp})` : "" }}
+              </v-list-item-content>
 
-                            <v-list-item-action
-                                style="flex-direction: row !important"
-                                v-if="orgFavoritesNameSet.has(org.name)"
-                                @click.stop.prevent
-                            >
-                                <v-btn @click.stop="shiftOrgFavorites({ org, up: true })" icon :ripple="false">
-                                    <v-icon>{{ icons.mdiChevronUp }}</v-icon>
-                                </v-btn>
-                                <v-btn @click.stop="shiftOrgFavorites({ org, up: false })" icon :ripple="false">
-                                    <v-icon>{{ icons.mdiChevronDown }}</v-icon>
-                                </v-btn>
-                            </v-list-item-action>
-                        </v-list-item>
-                    </v-list>
-                </v-card-text>
-                <v-divider />
-                <v-card-actions>
-                    <v-spacer />
-                    <v-btn text @click="showOrgDialog = false" color="red">{{ $t("views.app.close_btn") }}</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </span>
+              <v-list-item-action
+                v-if="orgFavoritesNameSet.has(org.name)"
+                style="flex-direction: row !important"
+                @click.stop.prevent
+              >
+                <v-btn icon :ripple="false" @click.stop="shiftOrgFavorites({ org, up: true })">
+                  <v-icon>{{ icons.mdiChevronUp }}</v-icon>
+                </v-btn>
+                <v-btn icon :ripple="false" @click.stop="shiftOrgFavorites({ org, up: false })">
+                  <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+                </v-btn>
+              </v-list-item-action>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+        <v-divider />
+        <v-card-actions>
+          <v-spacer />
+          <v-btn text color="red" @click="showOrgDialog = false">{{ $t("views.app.close_btn") }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </span>
 </template>
 
 <script>
@@ -153,30 +151,27 @@ import { mapMutations } from "vuex";
 
 export default {
     name: "OrgSelector",
-    data() {
-        return {
-            showOrgDialog: false,
-            search: "",
-            ORGS: [],
-        };
-    },
     props: {
         currentSelection: {
             type: Object,
             optional: true,
+            default: () => ({
+                name: "Hololive",
+                short: "Holo",
+                name_jp: null,
+            }),
         },
         hideAllVTubers: {
             type: Boolean,
             optional: true,
         },
     },
-    async mounted() {
-        this.ORGS = [
-            ...(this.hideAllVTubers ? [] : [{ name: "All Vtubers", short: "Vtuber", name_jp: null }]),
-            ...(await backendApi.orgs()).data.sort(
-                (a, b) => a.name.toLowerCase().charCodeAt(0) - b.name.toLowerCase().charCodeAt(0),
-            ),
-        ];
+    data() {
+        return {
+            showOrgDialog: false,
+            search: "",
+            ORGS: [],
+        };
     },
     computed: {
         firstVisit: {
@@ -225,6 +220,14 @@ export default {
         darkMode() {
             return this.$store.state.settings.darkMode;
         },
+    },
+    async mounted() {
+        this.ORGS = [
+            ...(this.hideAllVTubers ? [] : [{ name: "All Vtubers", short: "Vtuber", name_jp: null }]),
+            ...(await backendApi.orgs()).data.sort(
+                (a, b) => a.name.toLowerCase().charCodeAt(0) - b.name.toLowerCase().charCodeAt(0),
+            ),
+        ];
     },
     methods: {
         ...mapMutations(["toggleFavoriteOrg", "shiftOrgFavorites"]),

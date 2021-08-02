@@ -172,8 +172,6 @@ views:
     check_about_page: Visita la "Pagina delle Info" per vedere i nuovi cambiamenti
     nowSupportsMultiOrg: Holodex ora supporta più organizzazioni.
     loginCallToAction: Accedi per ottenere i tuoi preferiti!
-  about:
-    add_my_channel: Aggiungi il mio canale ad Holodex
   watch:
     theaterMode: Modalità Cinema
     mentionIconLabel: MENZIONI
@@ -251,7 +249,6 @@ editor:
 about:
   quicklinks: Collegamenti rapidi
   discordBtn: Server di Discord
-  issueTracker: Issue Tracker / Sorgente
   faq:
     title: Domande frequenti (FAQ)
     ytchatHeader: Il mio canale YouTube non è connesso!
@@ -261,8 +258,6 @@ about:
     autoplayHeader: La riproduzione automatica non funziona!
     autoplayContent: Cerca su Google come attivare la riproduzione automatica nel tuo browser.
     musicPlayer: Il Riproduttore Musicale non funziona bene sui dispositivi mobili!
-    musicPlayerContent: >-
-      Siamo spiacenti, ma non è possibile supportare il Riproduttore Musicale come sito web sui dispositivi mobili. <br/>Per tre motivi: 1. I dispositivi mobili di solito bloccano la riproduzione automatica, di cui abbiamo bisogno; 2. I dispositivi mobili, di solito, non permettono ai siti web di concatenare la musica in background. 3. Non integriamo le tue liste di canzoni nel centro di controllo del volume della musica di sistema.
     videoLinkage: Come posso assicurarmi che i video siano collegati correttamente ai relativi vtuber?
     videoLinkageContent: >-
       Tutte le informazioni sono analizzate dalla descrizione del video. Se stai clippando una diretta, per favore assicurati di linkare la diretta originale. Se stai clippando contenuti fan made (es. da bilibili) assicurati di aver linkato il canale ufficiale dei relativi vtuber. Se non linki alcun canale di un vtuber non mostreremo tale clip su Holodex poiché tutte le clip richiedono il link verso un vtuber conosciuto da Holodex.

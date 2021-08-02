@@ -1,103 +1,101 @@
 <template>
-    <v-container
-        fluid
-        v-touch="{
-            right: () => {
-                tab = Math.max(tab - 1, 0);
-                changeTab(false);
-            },
-            left: () => {
-                tab = Math.min(tab + 1, 2);
-                changeTab(false);
-            },
-        }"
-        style="min-height: 100%"
-        class="d-flex flex-column pt-0"
-    >
-        <!-- Teleport tabs to nav extension slot -->
-        <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
-            <v-tabs
-                @change="changeTab(false)"
-                v-model="tab"
-                :centered="$vuetify.breakpoint.xs"
-                :class="$store.state.settings.darkMode ? 'secondary darken-1' : 'primary lighten-1'"
-                :active-class="
-                    $store.state.settings.darkMode ? 'primary--text text--lighten-3' : 'primary--text text--darken-2'
-                "
-            >
-                <v-tab class="pa-2">
-                    {{ liveUpcomingHeaderSplit[1] }}
-                    <span class="stream-count-chip mx-1 rounded-md primary white--text rounded-lg pa-1">
-                        {{ lives.length }}
-                    </span>
-                    {{ liveUpcomingHeaderSplit[2] }}
-                    <span class="stream-count-chip ml-1 rounded-md primary white--text rounded-lg pa-1">
-                        {{ upcoming.length }}
-                    </span>
-                </v-tab>
-                <v-tab class="pa-2">
-                    {{ $t("views.home.recentVideoToggles.official") }}
-                </v-tab>
-                <v-tab class="pa-2">
-                    {{ $t("views.home.recentVideoToggles.subber") }}
-                </v-tab>
-            </v-tabs>
-        </portal>
-        <LoadingOverlay :isLoading="false" :showError="hasError" />
-        <div v-show="!hasError">
-            <template v-if="tab === Tabs.LIVE_UPCOMING">
-                <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
-                <div v-if="lives.length || upcoming.length">
-                    <VideoCardList
-                        :videos="lives"
-                        includeChannel
-                        :includeAvatar="shouldIncludeAvatar"
-                        :cols="colSizes"
-                        :dense="currentGridSize > 0"
-                        hideIgnoredTopics
-                    >
-                    </VideoCardList>
-                    <v-divider class="my-3 secondary" v-if="lives.length" />
-                    <VideoCardList
-                        :videos="upcoming"
-                        includeChannel
-                        :includeAvatar="shouldIncludeAvatar"
-                        :cols="colSizes"
-                        :dense="currentGridSize > 0"
-                        hideIgnoredTopics
-                    >
-                    </VideoCardList>
-                </div>
-                <div class="ma-auto pa-5 text-center" v-show="!isLoading && lives.length == 0 && upcoming.length == 0">
-                    {{ $t("views.home.noStreams") }}
-                </div>
-            </template>
-            <template v-else>
-                <keep-alive>
-                    <generic-list-loader
-                        :infiniteLoad="scrollMode"
-                        :paginate="!scrollMode"
-                        :perPage="this.pageLength"
-                        :loadFn="getLoadFn()"
-                        v-slot="{ data, isLoading }"
-                        :key="'vl-home-' + tab + identifier"
-                    >
-                        <!-- only keep VideoCardList rendered if scrollMode OR it's not loading. -->
-                        <VideoCardList
-                            v-show="scrollMode || !isLoading"
-                            :videos="data"
-                            includeChannel
-                            :cols="colSizes"
-                            :dense="currentGridSize > 0"
-                            hideIgnoredTopics
-                        />
-                        <!-- only show SkeletonCardList if it's loading -->
-                        <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
-                    </generic-list-loader>
-                </keep-alive>
-            </template>
+  <v-container
+    v-touch="{
+      right: () => {
+        tab = Math.max(tab - 1, 0);
+        changeTab(false);
+      },
+      left: () => {
+        tab = Math.min(tab + 1, 2);
+        changeTab(false);
+      },
+    }"
+    fluid
+    style="min-height: 100%"
+    class="d-flex flex-column pt-0"
+  >
+    <!-- Teleport tabs to nav extension slot -->
+    <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
+      <v-tabs
+        v-model="tab"
+        :centered="$vuetify.breakpoint.xs"
+        :class="$store.state.settings.darkMode ? 'secondary darken-1' : 'primary lighten-1'"
+        :active-class="
+          $store.state.settings.darkMode ? 'primary--text text--lighten-3' : 'primary--text text--darken-2'
+        "
+        @change="changeTab(false)"
+      >
+        <v-tab class="pa-2">
+          {{ liveUpcomingHeaderSplit[1] }}
+          <span class="stream-count-chip mx-1 rounded-md primary white--text rounded-lg pa-1">
+            {{ lives.length }}
+          </span>
+          {{ liveUpcomingHeaderSplit[2] }}
+          <span class="stream-count-chip ml-1 rounded-md primary white--text rounded-lg pa-1">
+            {{ upcoming.length }}
+          </span>
+        </v-tab>
+        <v-tab class="pa-2">
+          {{ $t("views.home.recentVideoToggles.official") }}
+        </v-tab>
+        <v-tab class="pa-2">
+          {{ $t("views.home.recentVideoToggles.subber") }}
+        </v-tab>
+      </v-tabs>
+    </portal>
+    <LoadingOverlay :is-loading="false" :show-error="hasError" />
+    <div v-show="!hasError">
+      <template v-if="tab === Tabs.LIVE_UPCOMING">
+        <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
+        <div v-if="lives.length || upcoming.length">
+          <VideoCardList
+            :videos="lives"
+            include-channel
+            :include-avatar="shouldIncludeAvatar"
+            :cols="colSizes"
+            :dense="currentGridSize > 0"
+            hide-ignored-topics
+          />
+          <v-divider v-if="lives.length" class="my-3 secondary" />
+          <VideoCardList
+            :videos="upcoming"
+            include-channel
+            :include-avatar="shouldIncludeAvatar"
+            :cols="colSizes"
+            :dense="currentGridSize > 0"
+            hide-ignored-topics
+          />
         </div>
-    </v-container>
+        <div v-show="!isLoading && lives.length == 0 && upcoming.length == 0" class="ma-auto pa-5 text-center">
+          {{ $t("views.home.noStreams") }}
+        </div>
+      </template>
+      <template v-else>
+        <keep-alive>
+          <generic-list-loader
+            v-slot="{ data, isLoading }"
+            :key="'vl-home-' + tab + identifier"
+            :infinite-load="scrollMode"
+            :paginate="!scrollMode"
+            :per-page="pageLength"
+            :load-fn="getLoadFn()"
+          >
+            <!-- only keep VideoCardList rendered if scrollMode OR it's not loading. -->
+            <VideoCardList
+              v-show="scrollMode || !isLoading"
+              :videos="data"
+              include-channel
+              :cols="colSizes"
+              :dense="currentGridSize > 0"
+              hide-ignored-topics
+            />
+            <!-- only show SkeletonCardList if it's loading -->
+            <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
+          </generic-list-loader>
+        </keep-alive>
+      </template>
+    </div>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -119,13 +117,13 @@ export default {
             },
         };
     },
-    mixins: [reloadable, isActive],
     components: {
         VideoCardList,
         LoadingOverlay,
         GenericListLoader,
         SkeletonCardList,
     },
+    mixins: [reloadable, isActive],
     data() {
         return {
             identifier: Date.now(),
@@ -139,44 +137,6 @@ export default {
             }),
             refreshTimer: null,
         };
-    },
-    mounted() {
-        this.init();
-        this.setAutoRefresh();
-    },
-    activated() {
-        this.changeTab(true);
-        this.setAutoRefresh();
-    },
-    deactivated() {
-        if (this.refreshTimer) {
-            clearInterval(this.refreshTimer);
-            this.refreshTimer = null;
-        }
-    },
-    beforeDestroy() {
-        if (this.refreshTimer) {
-            clearInterval(this.refreshTimer);
-            this.refreshTimer = null;
-        }
-    },
-    watch: {
-        // eslint-disable-next-line func-names
-        "$store.state.currentOrg": function () {
-            this.init();
-        },
-        // eslint-disable-next-line func-names
-        "$store.state.visibilityState": function () {
-            if (this.isActive && this.$store.state.visibilityState === "visible")
-                this.$store.dispatch("home/fetchLive", { force: false });
-        },
-        tab() {
-            // Scroll to top
-            this.$nextTick(() => {
-                window.scrollTo(0, 0);
-            });
-            this.changeTab();
-        },
     },
     computed: {
         ...mapState("home", ["live", "isLoading", "hasError"]),
@@ -215,6 +175,45 @@ export default {
         liveUpcomingHeaderSplit() {
             return this.$t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/);
         },
+    },
+    watch: {
+        // eslint-disable-next-line func-names
+        "$store.state.currentOrg": function () {
+            this.init();
+        },
+        // eslint-disable-next-line func-names
+        "$store.state.visibilityState": function () {
+            if (this.isActive && this.$store.state.visibilityState === "visible") {
+                this.$store.dispatch("home/fetchLive", { force: false });
+            }
+        },
+        tab() {
+            // Scroll to top
+            this.$nextTick(() => {
+                window.scrollTo(0, 0);
+            });
+            this.changeTab();
+        },
+    },
+    created() {
+        this.init();
+        this.setAutoRefresh();
+    },
+    activated() {
+        this.changeTab(true);
+        this.setAutoRefresh();
+    },
+    deactivated() {
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
+    },
+    beforeDestroy() {
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
     },
     methods: {
         setAutoRefresh() {

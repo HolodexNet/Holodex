@@ -1,29 +1,29 @@
 <template>
-    <!-- Render with opaque response for cache if size is lte 40 -->
+  <!-- Render with opaque response for cache if size is lte 40 -->
+  <v-lazy
+    v-if="noLink"
+    tag="img"
+    :src="photo"
+    crossorigin="anonymous"
+    loading="lazy"
+    :alt="`${channel.name}'s profile picture`"
+    :width="size"
+    :height="size"
+    class="d-block"
+  />
+  <a v-else :href="`/channel/${channel.id}`" @click.stop>
     <v-lazy
-        v-if="noLink"
-        tag="img"
-        :src="photo"
-        crossorigin="anonymous"
-        loading="lazy"
-        :alt="`${channel.name}'s profile picture`"
-        :width="size"
-        :height="size"
-        class="d-block"
+      tag="img"
+      :src="photo"
+      crossorigin="anonymous"
+      loading="lazy"
+      :alt="`${channel.name}'s profile picture`"
+      :width="size"
+      :height="size"
+      class="d-block"
+      :class="rounded && 'rounded-circle'"
     />
-    <a :href="`/channel/${channel.id}`" @click.stop v-else>
-        <v-lazy
-            tag="img"
-            :src="photo"
-            crossorigin="anonymous"
-            loading="lazy"
-            :alt="`${channel.name}'s profile picture`"
-            :width="size"
-            :height="size"
-            class="d-block"
-            :class="rounded && 'rounded-circle'"
-        />
-    </a>
+  </a>
 </template>
 
 <script lang="ts">

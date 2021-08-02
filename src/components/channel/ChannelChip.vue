@@ -1,53 +1,61 @@
 <template>
-    <!-- struggling a little bit with mobile/desktop compatibility -->
-    <v-menu
-        open-on-click
-        open-on-focus
-        :open-on-hover="!$store.state.isMobile"
-        class=""
-        top
-        :nudge-top="size + 5"
-        content-class="elevation-0"
-        close-delay="250"
-        v-model="isHover"
-    >
-        <template v-slot:activator="{ on: tooltip }">
-            <v-avatar left :size="size" v-on="tooltip" class="mr-1">
-                <v-img
-                    :src="photo"
-                    crossorigin="anonymous"
-                    :alt="`${channel.name}'s profile picture`"
-                    :width="size"
-                    :height="size"
-                />
-                <!-- <span class="channel-name-overlay">{{ channelName }}</span> -->
-                <slot v-bind:isHover="isHover">
-                    <v-fade-transition>
-                        <v-overlay v-show="isHover" absolute class="chip-overlay">
-                            <v-btn icon :to="`/channel/${channel.id}`">
-                                <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
-                            </v-btn>
-                        </v-overlay>
-                    </v-fade-transition>
-                </slot>
-            </v-avatar>
-        </template>
-        <div class="channel-hover-tooltip">
-            <ChannelSocials :channel="channel" vertical hideYt hideTwitter />
-            <span class="grey--text text--lighten-1 ml-2">{{ channelName }}</span>
-        </div>
-    </v-menu>
+  <!-- struggling a little bit with mobile/desktop compatibility -->
+  <v-menu
+    v-model="isHover"
+    open-on-click
+    open-on-focus
+    :open-on-hover="!$store.state.isMobile"
+    class=""
+    top
+    :nudge-top="size + 5"
+    content-class="elevation-0"
+    close-delay="250"
+  >
+    <template #activator="{ on: tooltip }">
+      <v-avatar
+        left
+        :size="size"
+        class="mr-1"
+        v-on="tooltip"
+      >
+        <v-img
+          :src="photo"
+          crossorigin="anonymous"
+          :alt="`${channel.name}'s profile picture`"
+          :width="size"
+          :height="size"
+        />
+        <!-- <span class="channel-name-overlay">{{ channelName }}</span> -->
+        <slot :isHover="isHover">
+          <v-fade-transition>
+            <v-overlay v-show="isHover" absolute class="chip-overlay">
+              <v-btn icon :to="`/channel/${channel.id}`">
+                <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
+              </v-btn>
+            </v-overlay>
+          </v-fade-transition>
+        </slot>
+      </v-avatar>
+    </template>
+    <div class="channel-hover-tooltip">
+      <ChannelSocials
+        :channel="channel"
+        vertical
+        hide-yt
+        hide-twitter
+      />
+      <span class="grey--text text--lighten-1 ml-2">{{ channelName }}</span>
+    </div>
+  </v-menu>
 </template>
 
 <script lang="ts">
 import { resizeChannelPhoto } from "@/utils/functions";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
-import ChannelImg from "./ChannelImg.vue";
 
 export default {
     name: "ChannelChip",
     components: {
-        ChannelImg,
         ChannelSocials,
     },
     props: {

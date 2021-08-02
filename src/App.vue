@@ -1,35 +1,62 @@
 <template>
-    <v-app
-        :style="{ background: $vuetify.theme.themes[this.darkMode ? 'dark' : 'light'].background }"
-        :class="{ 'bump-bottom': $store.state.music.isOpen }"
+  <v-app
+    :style="{ background: $vuetify.theme.themes[darkMode ? 'dark' : 'light'].background }"
+    :class="{ 'bump-bottom': $store.state.music.isOpen }"
+  >
+    <portal-target name="music-playback-background" />
+
+    <MainNav />
+
+    <v-main style="transition: none">
+      <PullToRefresh />
+      <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists">
+        <router-view :key="viewKey" />
+      </keep-alive>
+    </v-main>
+
+    <v-snackbar
+      v-if="updateExists"
+      bottom
+      right
+      :value="updateExists"
+      :timeout="-1"
+      color="primary"
     >
-        <portal-target name="music-playback-background"></portal-target>
-
-        <MainNav />
-
-        <v-main style="transition: none">
-            <PullToRefresh />
-            <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists">
-                <router-view :key="viewKey" />
-            </keep-alive>
-        </v-main>
-
-        <v-snackbar bottom right :value="updateExists" :timeout="-1" color="primary" v-if="updateExists">
-            {{ $t("views.app.update_available") }}
-            <template v-slot:action>
-                <v-btn text @click="refreshApp" class="ml-auto"> {{ $t("views.app.update_btn") }} </v-btn>
-                <v-btn text @click="updateExists = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
-            </template>
-        </v-snackbar>
-        <v-snackbar bottom center :value="showUpdateDetails" color="primary" :timeout="-1" v-if="showUpdateDetails">
-            {{ $t("views.app.check_about_page") }}
-            <template v-slot:action>
-                <v-btn text @click="showUpdateDetails = false" class="ml-auto" to="/about#changelog"> Changelog </v-btn>
-                <v-btn text @click="showUpdateDetails = false" class="ml-auto"> {{ $t("views.app.close_btn") }} </v-btn>
-            </template>
-        </v-snackbar>
-        <ReportDialog />
-    </v-app>
+      {{ $t("views.app.update_available") }}
+      <template #action>
+        <v-btn text class="ml-auto" @click="refreshApp">
+          {{ $t("views.app.update_btn") }}
+        </v-btn>
+        <v-btn text class="ml-auto" @click="updateExists = false">
+          {{ $t("views.app.close_btn") }}
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar
+      v-if="showUpdateDetails"
+      bottom
+      center
+      :value="showUpdateDetails"
+      color="primary"
+      :timeout="-1"
+    >
+      {{ $t("views.app.check_about_page") }}
+      <template #action>
+        <v-btn
+          text
+          class="ml-auto"
+          to="/about#changelog"
+          @click="showUpdateDetails = false"
+        >
+          Changelog
+        </v-btn>
+        <v-btn text class="ml-auto" @click="showUpdateDetails = false">
+          {{ $t("views.app.close_btn") }}
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <ReportDialog />
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -56,6 +83,54 @@ export default {
             registration: null,
             favoritesUpdateTask: null,
         };
+    },
+    computed: {
+        viewKey() {
+            const key = this.$route.path;
+            // channel has subviewws that will cause unwanted keep-alive instances
+            // Key them all under channel/:id to avoid duplicating
+            if (key.match("^/channel/.{16}")) {
+                return key.substring(0, 33);
+            }
+            return key;
+        },
+        darkMode() {
+            return this.$store.state.settings.darkMode;
+        },
+        showUpdateDetails: {
+            set(val) {
+                this.$store.commit("setShowUpdatesDetail", val);
+            },
+            get() {
+                return this.$store.state.showUpdateDetails;
+            },
+        },
+        lang() {
+            // connected to the watch.lang hook below.
+            return this.$store.state.settings.lang;
+        },
+    },
+    watch: {
+        darkMode() {
+            this.$vuetify.theme.dark = this.darkMode;
+        },
+        lang() {
+            // watches the computed.lang variable and updates vue I18N
+            // import(`dayjs/locale/${this.lang}`) // ES 2015
+            loadLanguageAsync(this.$store.state.settings.lang);
+            // setDayjsLang(this.$store.state.settings.lang);
+        },
+        // watches change in breakpoint from vuetify and updates store
+        // eslint-disable-next-line func-names
+        "$vuetify.breakpoint.name": function () {
+            this.updateIsMobile();
+        },
+        // eslint-disable-next-line func-names
+        "$store.state.visibilityState": function () {
+            if (this.$store.state.visibilityState === "visible") {
+                this.$store.dispatch("favorites/fetchLive", { force: false, minutes: 5 });
+            }
+        },
     },
     created() {
         this.$store.commit("setVisiblityState", document.visibilityState);
@@ -146,53 +221,6 @@ export default {
     },
     beforeDestroy() {
         if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
-    },
-    computed: {
-        viewKey() {
-            const key = this.$route.path;
-            // channel has subviewws that will cause unwanted keep-alive instances
-            // Key them all under channel/:id to avoid duplicating
-            if (key.match("^/channel/.{16}")) {
-                return key.substring(0, 33);
-            }
-            return key;
-        },
-        darkMode() {
-            return this.$store.state.settings.darkMode;
-        },
-        showUpdateDetails: {
-            set(val) {
-                this.$store.commit("setShowUpdatesDetail", val);
-            },
-            get() {
-                return this.$store.state.showUpdateDetails;
-            },
-        },
-        lang() {
-            // connected to the watch.lang hook below.
-            return this.$store.state.settings.lang;
-        },
-    },
-    watch: {
-        darkMode() {
-            this.$vuetify.theme.dark = this.darkMode;
-        },
-        lang() {
-            // watches the computed.lang variable and updates vue I18N
-            // import(`dayjs/locale/${this.lang}`) // ES 2015
-            loadLanguageAsync(this.$store.state.settings.lang);
-            // setDayjsLang(this.$store.state.settings.lang);
-        },
-        // watches change in breakpoint from vuetify and updates store
-        // eslint-disable-next-line func-names
-        "$vuetify.breakpoint.name": function () {
-            this.updateIsMobile();
-        },
-        // eslint-disable-next-line func-names
-        "$store.state.visibilityState": function () {
-            if (this.$store.state.visibilityState === "visible")
-                this.$store.dispatch("favorites/fetchLive", { force: false, minutes: 5 });
-        },
     },
     methods: {
         updateIsMobile() {

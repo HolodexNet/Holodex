@@ -206,8 +206,6 @@ views:
     check_about_page: Visita la pagina "Acerca de" para ver los nuevos cambios
     nowSupportsMultiOrg: Holodex ahora soporta múltiples organizaciones.
     loginCallToAction: '¡Inicia sesión para crear tu propia lista de favoritos!'
-  about:
-    add_my_channel: Añadir mi canal a Holodex
   watch:
     theaterMode: Modo Cine
     mentionIconLabel: MENCIONES
@@ -317,7 +315,6 @@ editor:
 about:
   quicklinks: Acceso rápido
   discordBtn: Discord de Holodex
-  issueTracker: Reportar incidencias / Código fuente
   faq:
     title: Preguntas frecuentes (FAQ)
     ytchatHeader: '¡Mi chat de Youtube no está conectado!'
@@ -327,8 +324,6 @@ about:
     autoplayHeader: '¡La reproducción automática no funciona!'
     autoplayContent: '¡Google es tu amigo! Busca en él como habilitar la reproducción automática de videos en tu navegador.'
     musicPlayer: '¡El reproductor de música no funciona bien en dispositivos móviles!'
-    musicPlayerContent: >-
-      Lo sentimos mucho, pero es imposible dar soporte a esta función en dispositivos móviles. <br/>Por tres simples motivos: <br/>1. Generalmente los navegadores no soportan la reproducción automática en dispositivos móviles y nosotros requerimos de esa función. <br/>2. Los navegadores no suelen reproducir contenido en segundo plano. <br/>3. No podemos integrar tu lista a tu reproductor habitual de tu teléfono.
     videoLinkage: '¿Cómo puedo asegurarme de que los vídeos estén correctamente vinculados a los vtubers?'
     videoLinkageContent: >-
       Toda la información es obtenida de la descripción de los vídeos. Si estás haciendo un clip de un directo, por favor asegúrate de enlazar el directo oficial. Si estás haciendo un clip por ejemplo de “bilibili” asegúrate de enlazar los canales oficiales de las vtubers que sean relevantes referentes al clip. Si no vinculas ningún Vtuber no se mostrara ese clip en Holodex, ya que todos los clips requiere que esté enlazado a un Vtuber reconocido por Holodex.

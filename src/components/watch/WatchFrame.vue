@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <div class="video" :class="{ 'video-fluid': fluid }">
-            <slot name="youtube"></slot>
-        </div>
+  <div>
+    <div class="video" :class="{ 'video-fluid': fluid }">
+      <slot name="youtube" />
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -12,7 +12,9 @@ export default {
     components: {},
     props: {
         video: {
+            type: Object,
             required: true,
+            default: null,
         },
         fluid: {
             type: Boolean,

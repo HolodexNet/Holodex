@@ -1,274 +1,230 @@
 <template>
-    <v-bottom-sheet
-        hide-overlay
-        persistent
-        no-click-animation
-        :value="isOpen"
-        :retain-focus="false"
-        content-class="music-player-bar"
-        v-if="song"
-        ref="sheet"
-    >
-        <v-slider class="music-progress" hide-details :value="progress" height="3" @change="progressChange" />
-        <div class="d-flex justify-space-between pa-2" :class="{ 'flex-column': $vuetify.breakpoint.xs }">
-            <div class="player-controls d-flex align-center">
-                <div>
-                    <v-btn icon class="mx-1" @click="prevButtonHandler" color="secondary">
-                        <v-icon>{{ mdiSkipPrevious }}</v-icon>
-                    </v-btn>
-                    <v-btn icon fab @click="playPause" color="primary">
-                        <v-icon x-large>{{ playButtonIcon }}</v-icon>
-                    </v-btn>
-                    <v-btn icon class="mx-1" color="secondary" @click="nextButtonHandler">
-                        <v-progress-circular
-                            color="warning"
-                            :class="{ invisible: !showPatience }"
-                            :value="patience"
-                            size="40"
-                        >
-                            <v-icon color="secondary">{{ mdiSkipNext }}</v-icon>
-                        </v-progress-circular>
-                    </v-btn>
-                    <v-btn icon color="secondary" class="mx-1" @click="$store.commit('music/cycleMode')">
-                        <v-icon>{{ shuffleButtonIcon }}</v-icon>
-                    </v-btn>
-                    <ResponsiveMenu
-                        :close-on-content-click="false"
-                        offset-y
-                        top
-                        origin="right bottom"
-                        transition="slide-y-reverse-transition"
-                        min-width="30vw"
-                        max-width="50vw"
-                        max-height="50vh"
-                        v-model="queueMenuOpen"
-                        :itemCount="playlist.length"
-                    >
-                        <template v-slot:activator="{ on }">
-                            <v-btn
-                                elevation="0"
-                                :ripple="false"
-                                class="queue-btn mx-1 px-1"
-                                :class="{ 'added-animation': animateAdded }"
-                                @animationend="animateAdded = false"
-                                v-on="on"
-                                @click="queueMenuOpen = !queueMenuOpen"
-                            >
-                                <v-icon color="secondary">{{ icons.mdiPlaylistMusic }}</v-icon>
-                                <div class="secondary--text text--darken-2">
-                                    ({{ currentId + 1 }}/{{ playlist.length }})
-                                </div>
-                            </v-btn>
-                        </template>
-                        <song-playlist :songs="playlist" :currentId="currentId"></song-playlist>
-                    </ResponsiveMenu>
-                    <v-slide-x-transition>
-                        <v-btn
-                            small
-                            v-if="queueMenuOpen"
-                            style="position: relative; margin-right: -60px"
-                            elevation="0"
-                            color="warning"
-                            @click="
-                                () => {
-                                    queueMenuOpen = false;
-                                    $store.commit('music/clearPlaylist');
-                                }
-                            "
-                            ><v-icon left>{{ mdiPlaylistRemove }}</v-icon>
-                            {{ $t("component.music.clearPlaylist") }}</v-btn
-                        >
-                    </v-slide-x-transition>
+  <v-bottom-sheet
+    v-if="song"
+    ref="sheet"
+    hide-overlay
+    persistent
+    no-click-animation
+    :value="isOpen"
+    :retain-focus="false"
+    content-class="music-player-bar"
+  >
+    <v-slider
+      class="music-progress"
+      hide-details
+      :value="progress"
+      height="3"
+      @change="progressChange"
+    />
+    <div class="d-flex justify-space-between pa-2" :class="{ 'flex-column': $vuetify.breakpoint.xs }">
+      <div class="player-controls d-flex align-center">
+        <div>
+          <v-btn
+            icon
+            class="mx-1"
+            color="secondary"
+            @click="prevButtonHandler"
+          >
+            <v-icon>{{ mdiSkipPrevious }}</v-icon>
+          </v-btn>
+          <v-btn
+            icon
+            fab
+            color="primary"
+            @click="playPause"
+          >
+            <v-icon x-large>
+              {{ playButtonIcon }}
+            </v-icon>
+          </v-btn>
+          <v-btn
+            icon
+            class="mx-1"
+            color="secondary"
+            @click="nextButtonHandler"
+          >
+            <v-progress-circular
+              color="warning"
+              :class="{ invisible: !showPatience }"
+              :value="patience"
+              size="40"
+            >
+              <v-icon color="secondary">
+                {{ mdiSkipNext }}
+              </v-icon>
+            </v-progress-circular>
+          </v-btn>
+          <v-btn
+            icon
+            color="secondary"
+            class="mx-1"
+            @click="$store.commit('music/cycleMode')"
+          >
+            <v-icon>{{ shuffleButtonIcon }}</v-icon>
+          </v-btn>
+          <ResponsiveMenu
+            v-model="queueMenuOpen"
+            :close-on-content-click="false"
+            offset-y
+            top
+            origin="right bottom"
+            transition="slide-y-reverse-transition"
+            min-width="30vw"
+            max-width="50vw"
+            max-height="50vh"
+            :item-count="playlist.length"
+          >
+            <template #activator="{ on }">
+              <v-btn
+                elevation="0"
+                :ripple="false"
+                class="queue-btn mx-1 px-1"
+                :class="{ 'added-animation': animateAdded }"
+                @animationend="animateAdded = false"
+                v-on="on"
+                @click="queueMenuOpen = !queueMenuOpen"
+              >
+                <v-icon color="secondary">
+                  {{ icons.mdiPlaylistMusic }}
+                </v-icon>
+                <div class="secondary--text text--darken-2">
+                  ({{ currentId + 1 }}/{{ playlist.length }})
                 </div>
-                <div v-if="$vuetify.breakpoint.xs" style="display: flex; flex-direction: column; align-items: center">
-                    <v-btn icon @click="closePlayer">
-                        <v-icon>{{ icons.mdiClose }}</v-icon>
-                    </v-btn>
-                    <v-btn icon large @click="toggleSongFrameModality">
-                        <v-icon>{{ icons.mdiTheater }}</v-icon>
-                    </v-btn>
-                </div>
+              </v-btn>
+            </template>
+            <song-playlist :songs="playlist" :current-id="currentId" />
+          </ResponsiveMenu>
+          <v-slide-x-transition>
+            <v-btn
+              v-if="queueMenuOpen"
+              small
+              style="position: relative; margin-right: -60px"
+              elevation="0"
+              color="warning"
+              @click="
+                () => {
+                  queueMenuOpen = false;
+                  $store.commit('music/clearPlaylist');
+                }
+              "
+            >
+              <v-icon left>
+                {{ mdiPlaylistRemove }}
+              </v-icon>
+              {{ $t("component.music.clearPlaylist") }}
+            </v-btn>
+          </v-slide-x-transition>
+        </div>
+        <div v-if="$vuetify.breakpoint.xs" style="display: flex; flex-direction: column; align-items: center">
+          <v-btn icon @click="closePlayer">
+            <v-icon>{{ icons.mdiClose }}</v-icon>
+          </v-btn>
+          <v-btn icon large @click="toggleSongFrameModality">
+            <v-icon>{{ icons.mdiTheater }}</v-icon>
+          </v-btn>
+        </div>
+      </div>
+      <!-- < v-scroll-y-transition mode="out-in"> -->
+      <transition :name="titleTransition" mode="out-in">
+        <div :key="'snip' + (song && song.name)" class="d-flex align-center">
+          <div class="pr-2">
+            <v-img
+              v-if="song && song.art"
+              :src="song.art.replace('100x100', '50x50')"
+              aspect-ratio="1"
+              height="auto"
+              width="50px"
+            />
+          </div>
+          <div>
+            <div class="text-h6">
+              {{ song.name }}
             </div>
-            <!-- < v-scroll-y-transition mode="out-in"> -->
-            <transition :name="titleTransition" mode="out-in">
-                <div class="d-flex align-center" :key="'snip' + (song && song.name)">
-                    <div class="pr-2">
-                        <v-img
-                            v-if="song && song.art"
-                            :src="song.art.replace('100x100', '50x50')"
-                            aspect-ratio="1"
-                            height="auto"
-                            width="50px"
-                        ></v-img>
-                    </div>
-                    <div>
-                        <div class="text-h6">
-                            {{ song.name }}
-                        </div>
-                        <div class="single-line-clamp">
-                            <router-link
-                                class="text-subtitle-2 secondary--text mr-2"
-                                id="songChannel"
-                                :to="`/channel/${song.channel_id}`"
-                            >
-                                {{ song.channel[nameProperty] || song.channel.name }}
-                            </router-link>
-                            <span class="text-subtitle-2 grey--text">({{ song.original_artist }})</span>
-                        </div>
-                    </div>
-                    <div class="music-more-btn">
-                        <v-menu bottom nudge-top="20px">
-                            <template v-slot:activator="{ on }">
-                                <v-btn icon large v-on="on" @click.stop.prevent class="mt-1">
-                                    <v-icon>
-                                        {{ icons.mdiDotsVertical }}
-                                    </v-icon>
-                                </v-btn>
-                            </template>
-                            <v-list dense>
-                                <!-- <v-list-item @click.stop="" disabled
+            <div class="single-line-clamp">
+              <router-link
+                id="songChannel"
+                class="text-subtitle-2 secondary--text mr-2"
+                :to="`/channel/${song.channel_id}`"
+              >
+                {{ song.channel[nameProperty] || song.channel.name }}
+              </router-link>
+              <span class="text-subtitle-2 grey--text">({{ song.original_artist }})</span>
+            </div>
+          </div>
+          <div class="music-more-btn">
+            <v-menu bottom nudge-top="20px">
+              <template #activator="{ on }">
+                <v-btn
+                  icon
+                  large
+                  class="mt-1"
+                  v-on="on"
+                  @click.stop.prevent
+                >
+                  <v-icon>
+                    {{ icons.mdiDotsVertical }}
+                  </v-icon>
+                </v-btn>
+              </template>
+              <v-list dense>
+                <!-- <v-list-item @click.stop="" disabled
                                     ><v-icon left>{{ icons.mdiClipboardPlusOutline }}</v-icon>
                                     {{ $t("component.videoCard.copyLink") }}
                                 </v-list-item> -->
-                                <v-list-item
-                                    @click.stop
-                                    target="_blank"
-                                    :href="`https://youtu.be/${song.video_id}?t=${song.start}`"
-                                    ><v-icon left>{{ icons.mdiYoutube }}</v-icon>
-                                    {{ $t("views.settings.redirectModeLabel") }}
-                                </v-list-item>
-                                <v-list-item :to="`/edit/video/${song.video_id}/music`"
-                                    ><v-icon left>{{ icons.mdiPencil }}</v-icon>
-                                    {{ $t("component.videoCard.edit") }}
-                                </v-list-item>
-                            </v-list>
-                        </v-menu>
-                    </div>
-                </div>
-            </transition>
-            <!-- </> -->
-
-            <div class="playlist-buttons align-self-center" v-if="$vuetify.breakpoint.smAndUp">
-                <v-btn
-                    icon
-                    large
-                    @click="toggleSongFrameModality"
-                    :color="isEmbedPlayerInBackground ? 'secondary lighten-2' : ''"
+                <v-list-item
+                  target="_blank"
+                  :href="`https://youtu.be/${song.video_id}?t=${song.start}`"
+                  @click.stop
                 >
-                    <v-icon>{{ icons.mdiTheater }}</v-icon>
-                </v-btn>
-                <v-btn icon large @click="closePlayer">
-                    <v-icon>{{ icons.mdiClose }}</v-icon>
-                </v-btn>
-            </div>
+                  <v-icon left>
+                    {{ icons.mdiYoutube }}
+                  </v-icon>
+                  {{ $t("views.settings.redirectModeLabel") }}
+                </v-list-item>
+                <v-list-item :to="`/edit/video/${song.video_id}/music`">
+                  <v-icon left>
+                    {{ icons.mdiPencil }}
+                  </v-icon>
+                  {{ $t("component.videoCard.edit") }}
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
         </div>
-        <!--             :key="currentSong.video_id + playId" -->
+      </transition>
+      <!-- </> -->
 
-        <portal to="music-playback-background">
-            <song-frame
-                :playback="currentSong"
-                :isBackground="isEmbedPlayerInBackground"
-                @playing="songIsPlaying"
-                @paused="songIsPaused"
-                @ended="songIsDone"
-                @progress="songProgress"
-                @error="songError"
-                @buffering="songBuffering"
-                @ready="songReady"
-            ></song-frame
-        ></portal>
-    </v-bottom-sheet>
+      <div v-if="$vuetify.breakpoint.smAndUp" class="playlist-buttons align-self-center">
+        <v-btn
+          icon
+          large
+          :color="isEmbedPlayerInBackground ? 'secondary lighten-2' : ''"
+          @click="toggleSongFrameModality"
+        >
+          <v-icon>{{ icons.mdiTheater }}</v-icon>
+        </v-btn>
+        <v-btn icon large @click="closePlayer">
+          <v-icon>{{ icons.mdiClose }}</v-icon>
+        </v-btn>
+      </div>
+    </div>
+    <!--             :key="currentSong.video_id + playId" -->
+
+    <portal to="music-playback-background">
+      <song-frame
+        :playback="currentSong"
+        :is-background="isEmbedPlayerInBackground"
+        @playing="songIsPlaying"
+        @paused="songIsPaused"
+        @ended="songIsDone"
+        @progress="songProgress"
+        @error="songError"
+        @buffering="songBuffering"
+        @ready="songReady"
+      />
+    </portal>
+  </v-bottom-sheet>
 </template>
-
-<style lang="scss">
-.theme--light .music-player-bar {
-    background: rgba(254, 253, 255, 0.95);
-}
-
-.theme--dark .music-player-bar {
-    background: rgba(41, 43, 49, 0.99);
-}
-
-.music-player-bar {
-    position: relative;
-
-    iframe {
-        border-radius: 4px;
-    }
-}
-
-.single-line-clamp {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    white-space: initial;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-}
-
-.player-controls {
-    justify-content: space-between;
-}
-
-.player-controls .v-btn::before {
-    background-color: transparent;
-}
-#songChannel {
-    text-decoration: none;
-}
-.queue-btn {
-    transition: background-color 2s ease;
-    background-color: transparent !important;
-    &.added-animation {
-        animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-        background-color: #f06292 !important;
-    }
-}
-
-.invisible .v-progress-circular__underlay {
-    stroke: transparent;
-}
-
-.music-progress {
-    .v-slider {
-        cursor: pointer !important;
-    }
-
-    .v-slider__track-container {
-        transition: height 0.2s ease-out;
-    }
-
-    .v-slider:hover {
-        .v-slider__track-container {
-            height: 6px;
-        }
-    }
-}
-
-@keyframes shake {
-    10%,
-    90% {
-        transform: translate3d(-1px, 0, 0);
-    }
-
-    20%,
-    80% {
-        transform: translate3d(2px, 0, 0);
-    }
-
-    30%,
-    50%,
-    70% {
-        transform: translate3d(-4px, 0, 0);
-    }
-
-    40%,
-    60% {
-        transform: translate3d(4px, 0, 0);
-    }
-}
-</style>
 
 <script lang="ts">
 import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
@@ -314,9 +270,6 @@ const ICON_MODE = {
 export default {
     name: "MusicBar2",
     components: { SongFrame, SongPlaylist, ResponsiveMenu },
-    created() {
-        Vue.use(VueYoutube);
-    },
     data() {
         return {
             // isOpen: true,
@@ -348,11 +301,40 @@ export default {
             isEmbedPlayerInBackground: false,
         };
     },
-    mounted() {
-        window.addEventListener("blur", this.probableMouseClickInIFrame);
-    },
-    beforeDestroy() {
-        window.removeEventListener("blur", this.probableMouseClickInIFrame);
+    computed: {
+        isMobile() {
+            return this.$store.state.isMobile;
+        },
+        playButtonIcon() {
+            if (this.state === MUSIC_PLAYER_STATE.PLAYING) return mdiPause;
+            return mdiPlay;
+        },
+        shuffleButtonIcon() {
+            return ICON_MODE[this.mode];
+        },
+        animateAdded: {
+            get() {
+                return this.addedAnimation;
+            },
+            set() {
+                this.$store.commit("music/stopAddedAnimation");
+            },
+        },
+        ...mapState("settings", ["nameProperty"]),
+        ...mapState("music", [
+            "currentId",
+            "playId",
+            "playlist",
+            "state",
+            "mode",
+            "addedAnimation",
+            "isOpen",
+            "lastNextSong",
+        ]),
+        ...mapGetters("music", ["currentSong", "canPlay"]),
+        song() {
+            return this.currentSong && this.currentSong.song;
+        },
     },
     watch: {
         isOpen() {
@@ -396,40 +378,14 @@ export default {
             }
         },
     },
-    computed: {
-        isMobile() {
-            return this.$store.state.isMobile;
-        },
-        playButtonIcon() {
-            if (this.state === MUSIC_PLAYER_STATE.PLAYING) return mdiPause;
-            return mdiPlay;
-        },
-        shuffleButtonIcon() {
-            return ICON_MODE[this.mode];
-        },
-        animateAdded: {
-            get() {
-                return this.addedAnimation;
-            },
-            set() {
-                this.$store.commit("music/stopAddedAnimation");
-            },
-        },
-        ...mapState("settings", ["nameProperty"]),
-        ...mapState("music", [
-            "currentId",
-            "playId",
-            "playlist",
-            "state",
-            "mode",
-            "addedAnimation",
-            "isOpen",
-            "lastNextSong",
-        ]),
-        ...mapGetters("music", ["currentSong", "canPlay"]),
-        song() {
-            return this.currentSong && this.currentSong.song;
-        },
+    created() {
+        Vue.use(VueYoutube);
+    },
+    mounted() {
+        window.addEventListener("blur", this.probableMouseClickInIFrame);
+    },
+    beforeDestroy() {
+        window.removeEventListener("blur", this.probableMouseClickInIFrame);
     },
     methods: {
         // event handlers:
@@ -480,8 +436,8 @@ export default {
                 this.patience -= 33;
                 console.log("Patience:", this.patience);
                 if (
-                    (this.patience <= 0 || document.visibilityState === "hidden") &&
-                    this.player.getPlayerState() === -1
+                    (this.patience <= 0 || document.visibilityState === "hidden")
+                    && this.player.getPlayerState() === -1
                 ) {
                     console.log("Patience is now 0, requesting next song forcibly.");
                     this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
@@ -605,3 +561,92 @@ export default {
     },
 };
 </script>
+<style lang="scss">
+.theme--light .music-player-bar {
+    background: rgba(254, 253, 255, 0.95);
+}
+
+.theme--dark .music-player-bar {
+    background: rgba(41, 43, 49, 0.99);
+}
+
+.music-player-bar {
+    position: relative;
+
+    iframe {
+        border-radius: 4px;
+    }
+}
+
+.single-line-clamp {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    white-space: initial;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}
+
+.player-controls {
+    justify-content: space-between;
+}
+
+.player-controls .v-btn::before {
+    background-color: transparent;
+}
+#songChannel {
+    text-decoration: none;
+}
+.queue-btn {
+    transition: background-color 2s ease;
+    background-color: transparent !important;
+    &.added-animation {
+        animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        background-color: #f06292 !important;
+    }
+}
+
+.invisible .v-progress-circular__underlay {
+    stroke: transparent;
+}
+
+.music-progress {
+    .v-slider {
+        cursor: pointer !important;
+    }
+
+    .v-slider__track-container {
+        transition: height 0.2s ease-out;
+    }
+
+    .v-slider:hover {
+        .v-slider__track-container {
+            height: 6px;
+        }
+    }
+}
+
+@keyframes shake {
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+</style>

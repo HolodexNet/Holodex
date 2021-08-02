@@ -1,5 +1,16 @@
 # Holodex Changelog
 
+### 2.17 Holodex [*August 1st, 2021*]
+##### New Features
+- New changelog (you're reading it)
+- New About page (you're probably reading it)
+- Fast forward / Sync button in multiview media controls to speed up all streams to 'live'.
+
+##### Patches & Bugfixes
+- Slightly changed Multiview logic, you shouldn't notice it.
+- Fixed Music page blank if you've never used it before
+- Support for this one person who's using Chrome 70.
+
 ### 2.16 Holodex [*July 30th, 2021*]
 ##### New Features
 - You can now background music videos while browsing! Click the theater mode button on the music playback bar.

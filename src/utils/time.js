@@ -31,8 +31,7 @@ dayjs.extend(relativeTime, {
 
 export function formatDuration(secs) {
     const negate = secs < 0;
-    const timestamp =
-        secs > 60 * 60 * 1000 ? dayjs.utc(Math.abs(secs)).format("H:mm:ss") : dayjs.utc(Math.abs(secs)).format("m:ss");
+    const timestamp = secs > 60 * 60 * 1000 ? dayjs.utc(Math.abs(secs)).format("H:mm:ss") : dayjs.utc(Math.abs(secs)).format("m:ss");
     return `${negate ? "-" : ""}${timestamp}`;
 }
 
@@ -56,8 +55,9 @@ export function formatDistance(time, lang = "en", $t, allowNegative = true) {
     if (Math.abs(minutesdiff) < 1) return $t("time.soon");
     if (!allowNegative && minutesdiff > 0) return $t("time.soon");
     if (Math.abs(dayjs().diff(time, "days")) > 60) return localizedDayjs(time, lang).format("ll");
-    if (Math.abs(dayjs().diff(time, "hour")) > 23)
+    if (Math.abs(dayjs().diff(time, "hour")) > 23) {
         return `${localizedDayjs(time, lang).format("l")} (${localizedDayjs(time, lang).format("LT")})`;
+    }
     const timeObj = localizedDayjs(time, lang);
     if (new Date(time) > Date.now()) {
         diff = $t("time.diff_future_date", [

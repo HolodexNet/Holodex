@@ -1,72 +1,76 @@
 <template>
-    <!-- prevent default on entire div to make dead click zone -->
-    <div :class="{ 'channel-social-horizontal': !vertical }" @click.stop="">
+  <!-- prevent default on entire div to make dead click zone -->
+  <div :class="{ 'channel-social-horizontal': !vertical }" @click.stop="">
+    <v-btn
+      v-if="channel.id && !hideYt"
+      icon
+      sm
+      :href="`https://www.youtube.com/channel/${channel.id}`"
+      rel="noreferrer"
+      target="_blank"
+    >
+      <v-icon color="#C4302B">
+        {{ icons.mdiYoutube }}
+      </v-icon>
+    </v-btn>
+    <v-btn
+      v-if="channel.twitter && !hideTwitter"
+      icon
+      sm
+      :href="`https://twitter.com/${channel.twitter}`"
+      rel="noreferrer"
+      target="_blank"
+    >
+      <v-icon color="#00ACEE">
+        {{ icons.mdiTwitter }}
+      </v-icon>
+    </v-btn>
+    <v-tooltip v-if="channel.type === 'vtuber' && !hideFav" bottom>
+      <template #activator="{ on, attrs }">
         <v-btn
-            v-if="channel.id && !hideYt"
-            icon
-            sm
-            :href="`https://www.youtube.com/channel/${channel.id}`"
-            rel="noreferrer"
-            target="_blank"
+          icon
+          sm
+          v-bind="attrs"
+          @click.stop="toggleFavorite($event)"
+          v-on="on"
         >
-            <v-icon color="#C4302B">{{ icons.mdiYoutube }}</v-icon>
+          <v-icon :color="isFavorited && isLoggedIn ? 'red' : 'gray'">
+            {{ isFavorited ? icons.mdiHeart : mdiHeartOutline }}
+          </v-icon>
+          <!-- <span                         :left="isFavorited" v-if="isFavorited">FAV</span> -->
         </v-btn>
+      </template>
+      <span>
+        {{ tooltip }}
+      </span>
+    </v-tooltip>
+    <v-tooltip v-if="showDelete" bottom>
+      <template #activator="{ on, attrs }">
         <v-btn
-            v-if="channel.twitter && !hideTwitter"
-            icon
-            sm
-            :href="`https://twitter.com/${channel.twitter}`"
-            rel="noreferrer"
-            target="_blank"
+          :icon="!isBlocked"
+          :color="isBlocked ? 'red' : 'grey'"
+          v-bind="attrs"
+          sm
+          v-on="on"
+          @click.stop.prevent="toggleBlocked"
         >
-            <v-icon color="#00ACEE">{{ icons.mdiTwitter }}</v-icon>
+          <v-icon :left="isBlocked">
+            {{ mdiAccountCancel }}
+          </v-icon>
+          <span v-if="isBlocked">{{ $t("component.channelSocials.blocked") }}</span>
         </v-btn>
-        <v-tooltip bottom v-if="channel.type === 'vtuber' && !hideFav">
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn icon sm @click.stop="toggleFavorite($event)" v-on="on" v-bind="attrs">
-                    <v-icon :color="isFavorited && isLoggedIn ? 'red' : 'gray'">
-                        {{ isFavorited ? icons.mdiHeart : mdiHeartOutline }}
-                    </v-icon>
-                    <!-- <span                         :left="isFavorited" v-if="isFavorited">FAV</span> -->
-                </v-btn>
-            </template>
-            <span>
-                {{ tooltip }}
-            </span>
-        </v-tooltip>
-        <v-tooltip bottom v-if="showDelete">
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    :icon="!isBlocked"
-                    :color="isBlocked ? 'red' : 'grey'"
-                    v-bind="attrs"
-                    v-on="on"
-                    sm
-                    @click.stop.prevent="toggleBlocked"
-                >
-                    <v-icon :left="isBlocked">
-                        {{ mdiAccountCancel }}
-                    </v-icon>
-                    <span v-if="isBlocked">{{ $t("component.channelSocials.blocked") }}</span>
-                </v-btn>
-            </template>
-            <span>
-                {{ blockTooltip }}
-            </span>
-        </v-tooltip>
-    </div>
+      </template>
+      <span>
+        {{ blockTooltip }}
+      </span>
+    </v-tooltip>
+  </div>
 </template>
 
 <script lang="ts">
 import { mdiAccountCancel, mdiHeartOutline } from "@mdi/js";
 
 export default {
-    data() {
-        return {
-            mdiAccountCancel,
-            mdiHeartOutline,
-        };
-    },
     props: {
         channel: {
             type: Object,
@@ -96,6 +100,12 @@ export default {
             default: false,
             required: false,
         },
+    },
+    data() {
+        return {
+            mdiAccountCancel,
+            mdiHeartOutline,
+        };
     },
     computed: {
         tooltip() {

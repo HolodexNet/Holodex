@@ -1,29 +1,37 @@
 <template>
-    <v-card>
-        <v-card-title>{{ $t("views.multiview.presetEditor.title") }}</v-card-title>
-        <v-card-subtitle class="pb-0">{{ $t("component.channelInfo.videoCount", [videoCells]) }}</v-card-subtitle>
-        <v-card-text>
-            <v-row>
-                <v-col cols="auto">
-                    <LayoutPreview :layout="layout" :content="content" />
-                </v-col>
-                <v-col style="min-width: 150px">
-                    <v-text-field
-                        outlined
-                        :label="$t('views.multiview.presetEditor.name')"
-                        hide-details="auto"
-                        v-model="name"
-                    />
-                    <v-checkbox :label="$t('views.multiview.presetEditor.autoLayout')" v-model="autoLayout" />
-                </v-col>
-                <v-col cols="12">
-                    <v-btn color="success" elevation="5" width="100%" :disabled="!canSave" @click="addPresetLayout()">
-                        <v-icon>{{ mdiContentSave }}</v-icon>
-                    </v-btn>
-                </v-col>
-            </v-row>
-        </v-card-text>
-    </v-card>
+  <v-card>
+    <v-card-title>{{ $t("views.multiview.presetEditor.title") }}</v-card-title>
+    <v-card-subtitle class="pb-0">
+      {{ $t("component.channelInfo.videoCount", [videoCells]) }}
+    </v-card-subtitle>
+    <v-card-text>
+      <v-row>
+        <v-col cols="auto">
+          <LayoutPreview :layout="layout" :content="content" />
+        </v-col>
+        <v-col style="min-width: 150px">
+          <v-text-field
+            v-model="name"
+            outlined
+            :label="$t('views.multiview.presetEditor.name')"
+            hide-details="auto"
+          />
+          <v-checkbox v-model="autoLayout" :label="$t('views.multiview.presetEditor.autoLayout')" />
+        </v-col>
+        <v-col cols="12">
+          <v-btn
+            color="success"
+            elevation="5"
+            width="100%"
+            :disabled="!canSave"
+            @click="addPresetLayout()"
+          >
+            <v-icon>{{ mdiContentSave }}</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -58,9 +66,9 @@ export default {
         ...mapState("multiview", ["presetLayout"]),
         canSave() {
             return (
-                this.name.length > 0 &&
-                !this.presetLayout.find((layout) => layout.name === this.name) &&
-                this.layout.length
+                this.name.length > 0
+                && !this.presetLayout.find((layout) => layout.name === this.name)
+                && this.layout.length
             );
         },
         videoCells() {

@@ -247,7 +247,7 @@ views:
     nowSupportsMultiOrg: Holodex kini mendukung berbagai organisasi
     loginCallToAction: Masuk untuk mengumpulkan favorit kamu!
   about:
-    add_my_channel: Tambah channel saya ke Holodex
+    add_my_channel: Mengajukan Channel
   watch:
     theaterMode: Mode Teater
     mentionIconLabel: MENTION
@@ -373,7 +373,6 @@ editor:
 about:
   quicklinks: Tautan cepat
   discordBtn: Discord Holodex
-  issueTracker: Pelacak Masalah / Sumber
   faq:
     title: Pertanyaan Umum
     ytchatHeader: Akun Youtube saya tidak login pada kolom chat!
@@ -384,7 +383,7 @@ about:
     autoplayContent: Kamu bisa cari di internet bagaimana cara mengaktifkan autoplay pada browsermu.
     musicPlayer: Pemutar Musik tidak berfungsi dengan baik pada perangkat seluler!
     musicPlayerContent: >-
-      Maaf, karena mustahil untuk mendukung pemutar musik sebagai situs web pada perangkat seluler. <br/>karena faktor: 1. Perangkat seluler biasanya melarang autoplay, dimana kami memerlukan izin tersebut; 2. Perangkat seluler biasanya tidak mengizinkan situs untuk menumpuk banyak musik di latar belakang. 3. Kami tidak mengintegrasikan antrean kamu ke pusat kendali musik tingkat sistem.
+      Untuk sebagian besar perangkat iOS, kamu tidak dapat mematikan layar atau menutup Safari ketika pemutar musik Holodex sedang dimainkan. Larangan ini mungkin diterapkan atau mungkin juga tidak pada perangkat Android (tergantung pada perangkatnya). Mohon berikan saran pada kami di discord jika kamu memiliki ide mengenai bagaimana cara menghasilkan sistem pemutaran yang lebih baik.
     videoLinkage: Bagaimana cara saya memastikan video yang diunggah terhubung dengan vtuber yang berkaitan?
     videoLinkageContent: >-
       Semua informasi video diuraikan dalam deskripsi video tersebut. jika kamu mengklip siaran, pastikan untuk mencantumkan tautan video resminya. Jika kamu mengklip konten buatan fans (contohnya dari bilibili), pastikan juga untuk mencantumkan tautan channel youtube resmi vtuber yang berkaitan. Jika kamu tidak mencantumkan channelnya, maka klip tidak akan muncul di holodex, karena semua klip membutuhkan keterkaitan tautan pada vtuber yang berkaitan untuk muncul di holodex.

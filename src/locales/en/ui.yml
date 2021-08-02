@@ -264,7 +264,7 @@ views:
     nowSupportsMultiOrg: Holodex now supports multiple organizations.
     loginCallToAction: Login to gather your own favorites!
   about:
-    add_my_channel: Add my channel to Holodex
+    add_my_channel: Channel Request
   watch:
     theaterMode: Theater Mode
     mentionIconLabel: MENTIONS
@@ -404,7 +404,6 @@ editor:
 about:
   quicklinks: Quick Links
   discordBtn: Holodex Discord
-  issueTracker: Issue Tracker / Source
   faq:
     title: FAQ
     ytchatHeader: My Youtube Chat is not logged in!
@@ -417,11 +416,10 @@ about:
     autoplayContent: Please google how to enable autoplay for your browser.
     musicPlayer: Music Player doesn't work well on Mobile Devices!
     musicPlayerContent: >-
-      Sorry, but it's impossible to support Music Player as a website on mobile.
-      <br/>Two factors: 1. Mobile devices usually forbid autoplay, which we
-      require; 2. Mobile devices usually doesn't allow websites to chain up
-      music in the background. 3. We don't integrate your queue into system
-      level music control centers.
+      For most iOS devices, you cannot turn off the screen or close Safari while
+      playing Holodex music. This restriction may or may not apply to Android
+      devices (depends on device). Please give us feedback on discord if you
+      have any idea how to produce a better playback system.
     videoLinkage: How do I make sure that videos are linked properly to vtubers?
     videoLinkageContent: >-
       All information is parsed from the video description. If you are clipping

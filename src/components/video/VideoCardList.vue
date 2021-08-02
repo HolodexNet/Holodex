@@ -1,78 +1,80 @@
 <template>
-    <v-container class="py-0" style="position: relative" fluid :id="'t' + randomId">
-        <!-- Video Card grid rows -->
-        <v-row :dense="dense" class="video-row">
-            <!-- Video Cards with custom grid size class based on breakpoint -->
-            <v-col
-                v-for="(video, index) in processedVideos"
-                :key="`${index}-${video.id}`"
-                :class="['video-col', `video-${colSize}`, 'flex-column']"
-            >
-                <VideoCard
-                    :video="video"
-                    fluid
-                    :includeChannel="includeChannel"
-                    :horizontal="horizontal"
-                    :includeAvatar="includeAvatar"
-                    :colSize="colSize"
-                    :active="video.id === activeId"
-                    @videoClicked="handleVideoClick"
-                    :disableDefaultClick="disableDefaultClick"
-                    :hideThumbnail="shouldHideThumbnail"
-                >
-                    <!-- pass slot to each individual video card -->
-                    <template v-slot:action>
-                        <slot name="action" :video="video"></slot>
-                    </template>
-                </VideoCard>
-                <!-- Append comment item for Comment Search -->
-                <v-list
-                    style="max-height: 400px"
-                    dense
-                    class="pa-0 transparent overflow-y-auto caption overflow-x-hidden"
-                    v-if="video.comments"
-                >
-                    <v-divider class="mx-4" style="flex-basis: 100%; height: 0"></v-divider>
-                    <!-- Render Channel Avatar if necessary -->
-                    <v-list-item class="pa-0" v-for="comment in video.comments" :key="comment.comment_key">
-                        <comment :comment="comment" :videoId="video.id"></comment>
-                    </v-list-item>
-                </v-list>
-            </v-col>
-        </v-row>
-        <!-- Expand button/show more -->
-        <div class="text-center" style="width: 100%" v-if="hasExpansion">
-            <v-btn :text="!isMobile" @click="expanded = !expanded" v-if="hasExpansion" color="primary" ref="expandBtn">
-                {{ this.expanded ? $t("component.description.showLess") : $t("component.description.showMore") }}
-                <v-icon>
-                    {{ this.expanded ? mdiChevronUp : mdiChevronDown }}
-                </v-icon>
-            </v-btn>
-        </div>
-    </v-container>
+  <v-container
+    :id="'t' + randomId"
+    class="py-0"
+    style="position: relative"
+    fluid
+  >
+    <!-- Video Card grid rows -->
+    <v-row :dense="dense" class="video-row">
+      <!-- Video Cards with custom grid size class based on breakpoint -->
+      <v-col
+        v-for="(video, index) in processedVideos"
+        :key="`${index}-${video.id}`"
+        :class="['video-col', `video-${colSize}`, 'flex-column']"
+      >
+        <VideoCard
+          :video="video"
+          fluid
+          :include-channel="includeChannel"
+          :horizontal="horizontal"
+          :include-avatar="includeAvatar"
+          :col-size="colSize"
+          :active="video.id === activeId"
+          :disable-default-click="disableDefaultClick"
+          :hide-thumbnail="shouldHideThumbnail"
+          @videoClicked="handleVideoClick"
+        >
+          <!-- pass slot to each individual video card -->
+          <template #action>
+            <slot name="action" :video="video" />
+          </template>
+        </VideoCard>
+        <!-- Append comment item for Comment Search -->
+        <v-list
+          v-if="video.comments"
+          style="max-height: 400px"
+          dense
+          class="pa-0 transparent overflow-y-auto caption overflow-x-hidden"
+        >
+          <v-divider class="mx-4" style="flex-basis: 100%; height: 0" />
+          <!-- Render Channel Avatar if necessary -->
+          <v-list-item v-for="comment in video.comments" :key="comment.comment_key" class="pa-0">
+            <comment :comment="comment" :video-id="video.id" />
+          </v-list-item>
+        </v-list>
+      </v-col>
+    </v-row>
+    <!-- Expand button/show more -->
+    <div v-if="hasExpansion" class="text-center" style="width: 100%">
+      <v-btn
+        v-if="hasExpansion"
+        ref="expandBtn"
+        :text="!isMobile"
+        color="primary"
+        @click="expanded = !expanded"
+      >
+        {{ expanded ? $t("component.description.showLess") : $t("component.description.showMore") }}
+        <v-icon>
+          {{ expanded ? mdiChevronUp : mdiChevronDown }}
+        </v-icon>
+      </v-btn>
+    </div>
+  </v-container>
 </template>
 
 <script lang="ts">
 import VideoCard from "@/components/video/VideoCard.vue";
-import ApiErrorMessage from "@/components/common/ApiErrorMessage.vue";
 import filterVideos from "@/mixins/filterVideos";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
 export default {
     name: "VideoCardList",
-    mixins: [filterVideos],
     components: {
         VideoCard,
-        ApiErrorMessage,
         Comment: () => import("./Comment.vue"),
     },
-    data() {
-        return {
-            expanded: false,
-            randomId: Date.now(),
-            ...{ mdiChevronUp, mdiChevronDown },
-        };
-    },
+    mixins: [filterVideos],
     props: {
         videos: {
             required: true,
@@ -113,6 +115,7 @@ export default {
         activeId: {
             required: false,
             type: String,
+            default: "",
         },
         dense: {
             type: Boolean,
@@ -140,19 +143,12 @@ export default {
             default: false,
         },
     },
-    methods: {
-        handleVideoClick(video) {
-            this.$emit("videoClicked", video);
-        },
-    },
-    watch: {
-        expanded() {
-            // on close, set the scroll position back to the expand button
-            if (!this.expanded)
-                this.$nextTick(() => {
-                    this.$refs.expandBtn.$el.scrollIntoView({ block: "center" });
-                });
-        },
+    data() {
+        return {
+            expanded: false,
+            randomId: Date.now(),
+            ...{ mdiChevronUp, mdiChevronDown },
+        };
     },
     computed: {
         hasExpansion() {
@@ -181,6 +177,21 @@ export default {
         },
         shouldHideThumbnail() {
             return this.$store.state.settings.hideThumbnail || this.hideThumbnail;
+        },
+    },
+    watch: {
+        expanded() {
+            // on close, set the scroll position back to the expand button
+            if (!this.expanded) {
+                this.$nextTick(() => {
+                    this.$refs.expandBtn.$el.scrollIntoView({ block: "center" });
+                });
+            }
+        },
+    },
+    methods: {
+        handleVideoClick(video) {
+            this.$emit("videoClicked", video);
         },
     },
 };

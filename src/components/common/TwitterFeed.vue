@@ -1,15 +1,15 @@
 <template>
-    <div class="ma-auto">
-        <a
-            class="twitter-timeline"
-            data-dnt="true"
-            :data-height="$store.state.isMobile ? '340' : '800'"
-            :data-theme="this.$vuetify.theme.dark ? 'dark' : 'light'"
-            href="https://twitter.com/holodex?ref_src=twsrc%5Etfw"
-        >
-            Tweets by @holodex
-        </a>
-    </div>
+  <!-- <div class="ma-auto"> -->
+  <a
+    class="twitter-timeline"
+    data-dnt="true"
+    :data-height="$store.state.isMobile ? '410' : '410'"
+    :data-theme="$vuetify.theme.dark ? 'dark' : 'light'"
+    href="https://twitter.com/holodex?ref_src=twsrc%5Etfw"
+  >
+    Tweets by @holodex
+  </a>
+  <!-- </div> -->
 </template>
 <script lang="ts">
 export default {

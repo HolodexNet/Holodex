@@ -24,19 +24,15 @@ export const state = {
 };
 
 const getters = {
-    isFavorited: (state) => (channelId) => {
-        return (
-            state.stagedFavorites[channelId] === "add" ||
-            (state.favorites.find((f) => f.id === channelId) && state.stagedFavorites[channelId] !== "remove")
-        );
-    },
-    favoriteChannelIDs: (state) => {
-        return new Set(state.favorites.map((f) => f.id));
-    },
+    isFavorited: (state) => (channelId) => state.stagedFavorites[channelId] === "add"
+        || (state.favorites.find((f) => f.id === channelId) && state.stagedFavorites[channelId] !== "remove"),
+    favoriteChannelIDs: (state) => new Set(state.favorites.map((f) => f.id)),
 };
 
 const actions = {
-    fetchFavorites({ commit, rootState, state, dispatch }) {
+    fetchFavorites({
+ commit, rootState, state, dispatch,
+}) {
         return api
             .favorites(rootState.userdata.jwt)
             .then((res) => {
@@ -47,14 +43,17 @@ const actions = {
                 dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
             });
     },
-    fetchLive({ state, commit, rootState, dispatch }, { force = false, minutes = 2 }) {
-        if (!(rootState.userdata && rootState.userdata.jwt) || (rootState.visibilityState === "hidden" && !force))
-            return null; // don't update.
+    fetchLive({
+ state, commit, rootState, dispatch,
+}, { force = false, minutes = 2 }) {
+        if (!(rootState.userdata && rootState.userdata.jwt) || (rootState.visibilityState === "hidden" && !force)) {
+            return null;
+        } // don't update.
         if (
-            state.hasError ||
-            force ||
-            !state.lastLiveUpdate ||
-            Date.now() - state.lastLiveUpdate > minutes * 60 * 1000
+            state.hasError
+            || force
+            || !state.lastLiveUpdate
+            || Date.now() - state.lastLiveUpdate > minutes * 60 * 1000
         ) {
             commit("fetchStart");
             return api
@@ -80,13 +79,13 @@ const actions = {
         commit("resetErrors");
         return null;
     }, // eslint-disable-next-line no-unused-vars
-    updateFavorites: debounce(({ state, commit, dispatch, rootState }) => {
-        const operations = Object.keys(state.stagedFavorites).map((key) => {
-            return {
-                op: state.stagedFavorites[key],
-                channel_id: key,
-            };
-        });
+    updateFavorites: debounce(({
+ state, commit, dispatch, rootState,
+}) => {
+        const operations = Object.keys(state.stagedFavorites).map((key) => ({
+            op: state.stagedFavorites[key],
+            channel_id: key,
+        }));
         return api
             .patchFavorites(rootState.userdata.jwt, operations)
             .catch((e) => {

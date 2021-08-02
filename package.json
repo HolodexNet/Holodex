@@ -1,34 +1,26 @@
 {
-  "name": "holoclips",
+  "name": "holodex",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "changelog": "changelog-to-html --outputDirectoryPath docs",
+    "changelog": "changelog-to-html --outputDirectoryPath docs; generate-md --layout ./layouts/roryg-ghostwriter --input ./CHANGELOG.md --output ./docs;",
     "analyze-bundle": "vue-cli-service build --report-json && webpack-bundle-analyzer dist/report.json"
   },
   "workspaces": [
     "src/external/vue-grid-layout"
   ],
-  "prettier": {
-    "tabWidth": 4,
-    "semi": true,
-    "singleQuote": false,
-    "trailingComma": "all",
-    "printWidth": 120
-  },
   "lint-staged": {
     "*.{js,ts,vue}": [
       "eslint --fix",
-      "prettier --write",
       "git add"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx lint-staged;"
+      "pre-commit": "npx lint-staged; npm run changelog;"
     }
   },
   "dependencies": {
@@ -89,7 +81,6 @@
     "@vue/cli-plugin-typescript": "^4.5.13",
     "@vue/cli-plugin-vuex": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
-    "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "babel-loader": "^8.2.2",
     "changelog-to-html": "^0.6.0",
@@ -98,12 +89,11 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.11.1",
     "eslint-webpack-plugin": "^2.5.4",
     "husky": "^4.3.8",
     "lint-staged": "^10.5.3",
-    "prettier": "^2.3.1",
+    "markdown-styles": "^3.2.0",
     "sass": "^1.32.13",
     "sass-loader": "^10.1.0",
     "typescript": "~4.2.4",

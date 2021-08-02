@@ -242,8 +242,6 @@ views:
     check_about_page: Visitez la page À Propos pour voir les changements
     nowSupportsMultiOrg: Holodex supporte maintenant de nombreuses organisations.
     loginCallToAction: Connectez-vous pour rassembler vos propres favoris !
-  about:
-    add_my_channel: Ajouter ma chaîne à Holodex
   watch:
     theaterMode: Mode Cinéma
     mentionIconLabel: MENTIONS
@@ -369,7 +367,6 @@ editor:
 about:
   quicklinks: Raccourcis
   discordBtn: Discord Holodex
-  issueTracker: Suivi des problèmes / Source
   faq:
     title: FAQ
     ytchatHeader: Mon chat Youtube n'est pas connecté !
@@ -379,8 +376,6 @@ about:
     autoplayHeader: La lecture automatique ne fonctionne pas !
     autoplayContent: Veuillez chercher comment activer la lecture automatique pour votre navigateur.
     musicPlayer: Le lecteur de musique ne fonctionne pas correctement sur mobile !
-    musicPlayerContent: >-
-      Désolé, mais il est impossible de prendre en charge la lecture de musique en tant que site Web sur téléphone. <br/>Trois raisons : 1. Les téléphones interdisent généralement la lecture automatique, ce dont nous avons besoin ; 2. Les téléphones n'autorisent généralement pas les sites Web à enchaîner la musique en arrière-plan. 3. Nous n'intégrons pas votre file d'attente dans l'application musique de votre téléphone.
     videoLinkage: Comment puis-je être sûr que mes vidéos sont bien affichés pour ce Vtuber ?
     videoLinkageContent: >-
       Toutes les informations sont analysées depuis la description de la vidéo. Si vous faites un clip d'un stream, n'oubliez pas de donner le lien du stream. Si vous faites un clip provenant d'une vidéo faites par un autre clipper, donnez le lien des chaines de Vtuber en question. Si vous ne donnez aucun lien, le clip ne pourra pas s'afficher sur Holodex, tout les clips ont besoin d'un lien vers la chaine du Vtuber en question.
