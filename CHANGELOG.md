@@ -1,6 +1,6 @@
 # Holodex Changelog
 
-### 2.17 Holodex [*Not released*]
+### 2.17 Holodex [*August 1st, 2021*]
 ##### New Features
 - New changelog (you're reading it)
 - New About page (you're probably reading it)
