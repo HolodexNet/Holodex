@@ -2,7 +2,12 @@
 
 ### 2.17 Holodex [*Not released*]
 ##### New Features
-- New changelog
+- New changelog (you're reading it)
+- New About page (you're probably reading it)
+
+##### Patches & Bugfixes
+- Slightly changed Multiview logic, you shouldn't notice it.
+- Fixed Music page blank if you've never used it before
 
 ### 2.16 Holodex [*July 30th, 2021*]
 ##### New Features
