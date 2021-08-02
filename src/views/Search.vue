@@ -45,6 +45,7 @@
               lg: 5,
               xl: 6,
             }"
+            show-comments
           />
           <!-- Render skeleton items when data hasn't loaded yet -->
           <skeleton-card-list

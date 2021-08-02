@@ -193,7 +193,7 @@ export default {
             return true;
         },
         shouldHideCollabs() {
-            return this.$store.state.settings.hideCollabStreams;
+            return this.tab !== this.Tabs.CLIPS && this.$store.state.settings.hideCollabStreams;
         },
         lives() {
             return this.live.filter((v) => v.status === "live");

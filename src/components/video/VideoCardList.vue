@@ -32,7 +32,7 @@
         </VideoCard>
         <!-- Append comment item for Comment Search -->
         <v-list
-          v-if="video.comments"
+          v-if="showComments && video.comments"
           style="max-height: 400px"
           dense
           class="pa-0 transparent overflow-y-auto caption overflow-x-hidden"
@@ -141,6 +141,9 @@ export default {
         ignoreBlock: {
             type: Boolean,
             default: false,
+        },
+        showComments: {
+            type: Boolean,
         },
     },
     data() {

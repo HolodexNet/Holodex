@@ -1,4 +1,8 @@
 # Holodex Changelog
+### 2.17.1 Holodex [*August 2nd, 2021*]
+##### Bugfixes
+- Hot fix for clip page not loading when "Hide collab stream setting is enabled"
+
 
 ### 2.17 Holodex [*August 1st, 2021*]
 ##### New Features
