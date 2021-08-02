@@ -4,6 +4,7 @@
 ##### New Features
 - New changelog (you're reading it)
 - New About page (you're probably reading it)
+- Fast forward / Sync button in multiview media controls to speed up all streams to 'live'.
 
 ##### Patches & Bugfixes
 - Slightly changed Multiview logic, you shouldn't notice it.
