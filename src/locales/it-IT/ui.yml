@@ -49,6 +49,8 @@ component:
     googleCalendar: Aggiungi a Google Calendar
   videoDescription:
     description: Descrizione
+  video:
+    comment: { }
   description:
     showLess: Mostra meno
     showMore: Mostra altro
@@ -137,6 +139,7 @@ views:
     collabs: Collaborazioni
     about: Chi siamo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Iscritti
       group: Gruppo
@@ -332,7 +335,7 @@ views:
     mediaControlsEmpty: I video in riproduzione appariranno qui
   mugen:
     welcome: >-
-      Benvenuto a MugenClips! Tutti su questa pagina stanno vedendo le clip inglesi di Hololive selezionate casualmente. Guarda insieme e parla con i fan di Hololive di tutto il mondo. Se vuoi saltare avanti ed essere ri-sincronizzato con tutti, per favore ricarica la pagina.
+      Benvenuto su MugenClips! Tutti su questa pagina stanno vedendo le clip inglesi di Hololive selezionate casualmente. Guarda insieme e parla con i fan di Hololive di tutto il mondo. Se vuoi saltare avanti ed essere ri-sincronizzato con tutti, per favore ricarica la pagina.
   playlist:
     playlist-is-modified: Non salvato
     item-last-updated: 'Ultimo Aggiornamento:'
@@ -389,8 +392,41 @@ about:
       Ci spiace che tu te ne vada (っ °Д °;)っ. Per favore, fammi sapere se c'è qualche problema con cui posso aiutarti. Se vuoi comunque che il tuo canale venga rimosso, per favore, inviaci un messaggio su Discord.
     favorite:
       title: Cosa sono i preferiti?
+      Contents:
+        - >-
+          I preferiti sono un modo per rimanere sempre aggiornati sui propri vtuber preferiti, puoi aggiungere i tuoi canali preferiti premendo sull'icona a forma di cuore nella
+        - >-
+          pagina. Al momento non è possibile inserire i sottotitolatori tra i preferiti, ma puoi sempre iscriverti o supportarli in altri modi!
+      disappear:
+        title: La mia lista preferiti è sparita / Non posso mettere tra i preferiti
+      contents:
+        - >-
+          Assicurati di aver effettuato l'accesso, poi visita la scheda dei canali preferiti per forzare l'aggiornamento.
+    mobile:
+      title: C'è un'app per Android/iOS per Holodex?
+      content:
+        summary: >-
+          Ci stiamo lavorando! Nel mentre, si prega di utilizzare la funzione "Aggiungi a schermata Home" del proprio browser. L'abbiamo regolata in modo da farla comportare proprio come un app
+        android:
+          - 'Android Chrome: Visita il sito, clicca sui tre punti'
+          - in alto a destra e premi "Aggiungi a schermata Home".
+        ios:
+          - >-
+            iOS Safari: Visita il sito, clicca sul quadrato con la freccia che punta verso l'alto
+          - in fondo a Safari, e premi "Aggiungi a Home"
     MugenClips:
       title: Cos'è MugenClips?
+      contents:
+        - >-
+          MugenClips, o clip infinite, è una sezione del sito dove persone possono guardare una costante varietà di clip caricate dalle varie community di traduttori
+    subber:
+      title: Sono un sottotitolatore e non riesco a trovare il mio canale o le mie clip su Holodex
+      contents:
+        - >-
+          Controlla la pagina del tuo Canale per vedere se sei elencato come sottotitolatore, se non è così compila
+        - questo modulo
+        - >-
+          , e ti aggiungeremo manualmente. Se sei già nella lista, assicurati che nella descrizione dei video siano presenti i link alla fonte/canale youtube.
     feedback:
       title: Ho un feedback/voglio contribuire a questo progetto
       contents:
@@ -403,3 +439,17 @@ about:
   feedback: Inviaci un Feedback / Segnala un Bug
   feedbackHtml: >-
     Puoi segnalare un problema sull'<a href="https://github.com/RiceCakess/Holodex/issues"> Issue Tracker di Github </a> o contattare il team di Holodex su Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    title: Riconoscimenti
+    contents:
+      - Vorrei ringraziare di cuore il
+      - team per il loro lavoro su
+      - >-
+        Anche a tutti i sottotitolatori per aver aiutato i bros all'estero! Per favore dategli un'occhiata!
+      - >-
+        Questo è un sito creato dai fan e il contenuto che si trova su questo sito è di proprietà di Cover corp e dei suoi partner. Il sito segue le linee guida stabilite da Cover Corp nel loro
+      - Accordo di Licenza sulle Opere Derivate
+  changelog:
+    title: Novità
+  news:
+    title: Notizie
