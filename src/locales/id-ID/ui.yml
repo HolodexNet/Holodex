@@ -49,8 +49,6 @@ component:
     googleCalendar: Tambahkan ke Kalender Google
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -139,7 +137,6 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
