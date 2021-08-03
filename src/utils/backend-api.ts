@@ -239,4 +239,10 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
+    reportVideo(id: string, body:Array<Object>, jwt: string) {
+        if (!id) throw new Error("Arg bad");
+        return axiosInstance.post(`/reports/video/${id}`, body, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
 };
