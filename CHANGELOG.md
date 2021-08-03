@@ -1,4 +1,10 @@
 # Holodex Changelog
+### 2.17.2 Holodex [*August 2nd, 2021*]
+##### New Features
+- Music player now has keyboard controls for `m`, `j`, `l`, `k`
+- Streams that has an active live chat translators are marked (Missed in previous note)
+##### Patches & Bugfixes
+- Hot fix for reporting video
 ### 2.17.1 Holodex [*August 2nd, 2021*]
 ##### Bugfixes
 - Hot fix for clip page not loading when "Hide collab stream setting is enabled"
