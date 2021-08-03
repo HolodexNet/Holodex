@@ -46,6 +46,8 @@ component:
     copyLink: Copy Holodex Link
     premiere: PREMIERE
     googleCalendar: Add to Google Calendar
+    totalTLs: Total live chat TLs
+    tlPresence: Active translator in last 30 mins
   videoDescription:
     description: Description
   video:

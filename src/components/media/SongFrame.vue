@@ -13,7 +13,7 @@
           autoplay: 1,
           playsinline: 1,
           controls: 1,
-          disablekb: 1,
+          disablekb: 0,
           fs: 0,
           modestbranding: 1,
           rel: 0,
@@ -23,6 +23,7 @@
         v-on="$listeners"
         @ready="ready"
       />
+      <Keypress @any="keyPress" />
     </div>
   </div>
 </template>
@@ -30,7 +31,9 @@
 <script lang="ts">
 export default {
     name: "SongFrame",
-    components: {},
+    components: {
+        Keypress: () => import("vue-keypress"),
+    },
     props: {
         playback: {
             type: Object,
@@ -88,7 +91,6 @@ export default {
         ready(evt) {
             this.player = evt;
             this.setTimer();
-            console.log(evt);
         },
         setTimer() {
             if (this.timer) clearInterval(this.timer);
@@ -98,6 +100,27 @@ export default {
                     this.$emit("progress", currentTime);
                     // if (this.currentTime >= this.end) this.$emit("done");
                 }, 1000);
+            }
+        },
+        keyPress({ event }) {
+            if (this.player) {
+                const p = this.player;
+                switch (event.key) {
+                    case "j": // Rewind
+                        p.seekTo(Math.max(p.getCurrentTime() - 10, 0), true);
+                        break;
+                    case "k": // Toggle play
+                        p.getPlayerState() === 1 ? p.pauseVideo() : p.playVideo();
+                        break;
+                    case "l": // Fast-Forward
+                        p.seekTo(Math.min(p.getCurrentTime() + 10, p.getDuration()), true);
+                        break;
+                    case "m": // Toggle Mute
+                        p.isMuted() ? p.unMute() : p.mute();
+                        break;
+                    default: // Required to pass ESLint
+                        break;
+                }
             }
         },
     },

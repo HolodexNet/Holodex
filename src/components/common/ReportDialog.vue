@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { axiosInstance } from "@/utils/backend-api";
+import backendApi from "@/utils/backend-api";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 
 export default {
@@ -152,46 +152,16 @@ export default {
                 return;
             }
             this.isLoading = true;
-            axiosInstance
-                .post(
-                    "https://discord.com/api/webhooks/870849393849413692/jdIbF5gwoJCI9r2xLgs5iU0oZ0-e0UCFMuSjr5MlaU2_R_P-4LYpl9fKNQTISPxx8JHZ",
-                    {
-                        content: "Look what the dog dragged in...",
-                        embeds: [
-                            {
-                                title: "Video Report",
-                                color: 13840175,
-                                ...(this.user && {
-                                    author: {
-                                        name: this.user.username,
-                                    },
-                                }),
-                                fields: [
-                                    {
-                                        name: "Reason",
-                                        value: this.selectedReason,
-                                    },
-                                    {
-                                        name: "Comments",
-                                        value: this.comments ? this.comments : "No comment",
-                                    },
-                                    {
-                                        name: "Video Title",
-                                        value: this.video.title,
-                                    },
-                                    {
-                                        name: "Channel",
-                                        value: this.video.channel.name,
-                                    },
-                                    {
-                                        name: "Link",
-                                        value: `https://holodex.net/watch/${this.video.id}`,
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                )
+            backendApi.reportVideo(this.video.id, [
+                {
+                    name: "Reason",
+                    value: this.selectedReason,
+                },
+                {
+                    name: "Comments",
+                    value: this.comments ? this.comments : "No comment",
+                },
+            ], this.$store.state.userdata?.jwt)
                 .then(() => {
                     this.showReportDialog = false;
                     this.showSnackbar = true;
