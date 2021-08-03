@@ -11,6 +11,7 @@ component:
     unfavoriteAllInGroup: Rimuovi tutti i canali dalla lista dei preferiti
     favoriteAllInGroup: Imposta tutti i canali come preferiti
   channelInfo:
+    stats: Statistiche
     videoCount: '{0} Video'
     clipCount: '{n} Clip'
     subscriberCount: '{n} Iscritti'
@@ -35,13 +36,17 @@ component:
     accountSettings: Impostazioni dell'account
     music: Musica
     multiview: Multi-Stream
+    points: punti
+    playlist: Playlist
   videoCard:
+    clips: '{n} Clip'
     watching: '{0} stanno guardando'
     liveNow: In diretta ora
     edit: Modifica
     copiedToClipboard: Link copiato negli appunti.
     copyLink: Copia il Link di Holodex
     premiere: PREMIЀRE
+    googleCalendar: Aggiungi a Google Calendar
   videoDescription:
     description: Descrizione
   description:
@@ -51,6 +56,7 @@ component:
     streamingFor: In diretta da {0}
     nextUpInMugen: Prossimo
     Comments:
+      title: Commenti
       all: Tutti
   search:
     searchLabel: Cerca
@@ -58,6 +64,7 @@ component:
       channel: canale
       topic: argomento
       org: org
+      titledesc: titolo/descrizione
       comments: commenti
       videourl: url del video
   relatedVideo:
@@ -92,8 +99,20 @@ component:
       popup: Installa Holodex su iOS
       afterExportIcon: poi 'Aggiungi alla Schermata Home
       beforeExportIcon: Clicca
+  media:
+    remove: Rimuovi
   comment:
     close: Chiudi
+    readMore: Leggi tutto
+  reportDialog:
+    title: Segnala
+    comments: Quali azioni dovrebbe prendere Holodex?
+    success: Grazie per il tuo feedback!
+    reasons:
+      - Video taggato in modo errato
+      - Contenuti di estrema Bassa Qualità/Fuorvianti
+      - Viola le linee guida di opere derivate o è inappropriato
+      - Altro
 views:
   channel:
     clips: Clip
