@@ -51,8 +51,9 @@
           <div v-if="data.songcount" class="video-duration">
             <v-icon small>{{ icons.mdiMusic }}</v-icon>
           </div>
-          <div v-if="hasTLs" class="video-duration" style="line-height: 2px">
-            <v-icon small>{{ icons.tlChat }}</v-icon> {{ tlLangInChat }}
+          <!-- Show TL chat icon if recently active or has archive tl exist -->
+          <div v-if="hasTLs" class="video-duration d-flex align-center">
+            {{ tlLangInChat }} <v-icon small>{{ icons.mdiTranslate }}</v-icon>
           </div>
           <!-- Duration/Current live stream time -->
           <div
@@ -332,13 +333,13 @@ export default {
             return `/watch/${this.data.id}${q}`;
         },
         hasTLs() {
-            return this.video?.recent_live_tls?.includes(this.$store.state.settings.liveTlLang);
+            const lang = this.$store.state.settings.liveTlLang;
+            return (this.video.status === "past" && this.video?.live_tl_count?.[lang])
+                || this.video?.recent_live_tls?.includes(lang);
         },
         tlLangInChat() {
-            if (this.hasTLs) {
-                return `[${this.$store.state.settings.liveTlLang}]`;
-            }
-            return "";
+            const lang = this.$store.state.settings.liveTlLang;
+            return this.hasTLs && this.video.status === "past" ? `${this.video.live_tl_count[lang]}` : "";
         },
     },
     // created() {
