@@ -52,8 +52,8 @@
             <v-icon small>{{ icons.mdiMusic }}</v-icon>
           </div>
           <!-- Show TL chat icon if recently active or has archive tl exist -->
-          <div v-if="hasTLs" class="video-duration d-flex align-center">
-            {{ tlLangInChat }} <v-icon small>{{ icons.mdiTranslate }}</v-icon>
+          <div v-if="hasTLs" class="video-duration d-flex align-center" :title="tlIconTitle">
+            {{ tlLangInChat }} <v-icon small>{{ icons.tlChat }}</v-icon>
           </div>
           <!-- Duration/Current live stream time -->
           <div
@@ -340,6 +340,9 @@ export default {
         tlLangInChat() {
             const lang = this.$store.state.settings.liveTlLang;
             return this.hasTLs && this.video.status === "past" ? `${this.video.live_tl_count[lang]}` : "";
+        },
+        tlIconTitle() {
+            return this.video.status === "past" ? this.$t("component.videoCard.totalTLs") : this.$t("component.videoCard.tlPresence");
         },
     },
     // created() {
