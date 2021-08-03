@@ -336,6 +336,7 @@ views:
   playlist:
     playlist-is-modified: Non salvato
     item-last-updated: 'Ultimo Aggiornamento:'
+    login-prompt: Accedi per salvare le playlist e averne più di una
     new-playlist-btn-label: Crea una nuova Playlist
     page-heading: 'Le tue Playlist:'
     page-instruction: Clicca su una playlist per attivarla.
@@ -378,6 +379,8 @@ about:
     autoplayHeader: La riproduzione automatica non funziona!
     autoplayContent: Cerca su Google come attivare la riproduzione automatica nel tuo browser.
     musicPlayer: Il Riproduttore Musicale non funziona bene sui dispositivi mobili!
+    musicPlayerContent: >-
+      Sulla maggior parte dei dispositivi iOS, non è possibile spegnere lo schermo o chiudere Safari mentre si sta riproducendo musica su Holodex. Questa restrizione potrebbe non essere applicata sui dispositivi Android (dipende dal dispositivo). Si prega di comunicarci su Discord se avete qualche idea per migliorare il sistema di riproduzione.
     videoLinkage: Come posso assicurarmi che i video siano collegati correttamente ai relativi vtuber?
     videoLinkageContent: >-
       Tutte le informazioni sono analizzate dalla descrizione del video. Se stai clippando una diretta, per favore assicurati di linkare la diretta originale. Se stai clippando contenuti fan made (es. da bilibili) assicurati di aver linkato il canale ufficiale dei relativi vtuber. Se non linki alcun canale di un vtuber non mostreremo tale clip su Holodex poiché tutte le clip richiedono il link verso un vtuber conosciuto da Holodex.
