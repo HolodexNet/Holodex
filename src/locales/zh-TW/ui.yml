@@ -47,6 +47,8 @@ component:
     copyLink: 複製 Holodex 連結
     premiere: 首播
     googleCalendar: 新增至 Google 日曆
+    totalTLs: 聊天室即時翻譯數
+    tlPresence: 過去半小時內有即時翻譯
   videoDescription:
     description: 影片資訊
   video:
