@@ -334,15 +334,15 @@ export default {
         },
         hasTLs() {
             const lang = this.$store.state.settings.liveTlLang;
-            return (this.video.status === "past" && this.video?.live_tl_count?.[lang])
-                || this.video?.recent_live_tls?.includes(lang);
+            return (this.data?.status === "past" && this.data?.live_tl_count?.[lang])
+                || this.data?.recent_live_tls?.includes(lang);
         },
         tlLangInChat() {
             const lang = this.$store.state.settings.liveTlLang;
-            return this.hasTLs && this.video.status === "past" ? `${this.video.live_tl_count[lang]}` : "";
+            return this.hasTLs && this.data.status === "past" ? `${this.data.live_tl_count[lang]}` : "";
         },
         tlIconTitle() {
-            return this.video.status === "past" ? this.$t("component.videoCard.totalTLs") : this.$t("component.videoCard.tlPresence");
+            return this.data.status === "past" ? this.$t("component.videoCard.totalTLs") : this.$t("component.videoCard.tlPresence");
         },
     },
     // created() {
