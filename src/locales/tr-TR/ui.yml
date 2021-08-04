@@ -47,6 +47,7 @@ component:
     copyLink: Holodex Bağlantısını Kopyala
     premiere: İLK GÖSTERİM
     googleCalendar: Google Takvim'e Ekle
+    tlPresence: Son 30 dakikada aktif çevirmen
   videoDescription:
     description: Açıklama
   description:
