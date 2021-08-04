@@ -200,7 +200,7 @@
           :video="video"
           disable-default-click
           include-channel
-          style="max-width: 250px"
+          style="width: 250px"
         />
       </v-tooltip>
     </template>
