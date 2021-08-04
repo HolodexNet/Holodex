@@ -47,9 +47,12 @@ component:
     copyLink: Holodex Bağlantısını Kopyala
     premiere: İLK GÖSTERİM
     googleCalendar: Google Takvim'e Ekle
+    totalTLs: Toplam canlı sohbet çevirileri
     tlPresence: Son 30 dakikada aktif çevirmen
   videoDescription:
     description: Açıklama
+  video:
+    comment: { }
   description:
     showLess: Daha az
     showMore: Daha çok
@@ -107,6 +110,7 @@ component:
     readMore: Daha fazla
   reportDialog:
     title: Şikayet et
+    comments: Holodex nasıl bir eylemde bulunmalı?
     success: Şikayer gönderildi, teşekkürler!
     reasons:
       - Video yanlış işaretlendi
@@ -137,6 +141,7 @@ views:
     collabs: Collablar
     about: Hakkında
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Aboneler
       group: Grup
@@ -243,6 +248,8 @@ views:
     check_about_page: Değişiklikleri görüntülemek için Hakkında sayfasını ziyaret edin
     nowSupportsMultiOrg: Holodex artık birden fazla organizaysonu desteklememektedir.
     loginCallToAction: Favorilerinizi toplamak için Giriş Yapın!
+  about:
+    add_my_channel: Kanal Talebi
   watch:
     theaterMode: Tiyatro Modu
     mentionIconLabel: Söz edilenler
@@ -377,6 +384,8 @@ about:
     autoplayHeader: Otomatik Oynatma çalışmıyor!
     autoplayContent: Lütfen tarayıcınızda otomatik oynatmayı nasıl etkinleştireceğinizi google'da aratın.
     musicPlayer: Müzik Oynatıcısı mobil cihazlarda iyi çalışmıyor!
+    musicPlayerContent: >-
+      Çoğu iOS cihazında, Holodex müzik çalarken ekranı kapatamaz veya Safari'den çıkamazsınız. Bu kısıtlamalar cihaza bağlı olarak Android cihazlarda da geçerli olabilir veya olmayabilir. Daha iyi bir çalma sistemi için fikirleriniz varsa lütfen bize geri bildirim verin.
     videoLinkage: Videolarımın VTuberlara uygun olarak bağlantılı olduğundan nasıl emin olurum?
     videoLinkageContent: >-
       Tüm bilgiler açıklama kısmından ayrıştırılır. Eğer bir yayının klipliyorsanız, lütfen asıl yayının bağlantısını eklediğinizden emin olun. Eğer fan yapımı içeriği klipliyorsanız (ör. bilibili), ilgili VTuberların kanallarını eklediğinizden emin olun. Eğer hiç bir kanalı eklemezseniz, tüm kliplerin Holodexe bilinen bir VTubera bağlı olması gerektiğinden, klipi Holodexte göstermeyiz.
@@ -385,8 +394,16 @@ about:
       Gitmeni gördüğüme üzüldüm :(, lütfen yardım edebileceğim bir sorun varsa bilmeme izin ver. Eğer hala kanalının kaldırılmasını istiyorsan, lütfen Discord üzerinden bize bir mesaj gönder.
     favorite:
       title: Favoriler nelerdir?
+      Contents:
+        - >-
+          Favoriler, favori Vtuberlarınızla takipte kalmanın bir yoludur.
+        - >-
+          sayfasında bulunan kalp simgesine tıklayarak favori kanallarınızı seçebilirsiniz. Altyazıcıları favorilere eklemek şu an desteklenmemekte olsa da, yine de onlara abone olmayı ve diğer yollarla desteklemeyi unutmayın!
       disappear:
         title: Favori listem kayboldu / Favori ekleyemiyorum
+      contents:
+        - >-
+          Lütfen giriş yaptığınızdan emin olun ve yenileme zorlamak için Kanallar > Favoriler sayfasını ziyaret edin.
     mobile:
       title: Holodex'in bir Android/iOS uygulaması var mı?
       content:
@@ -414,6 +431,9 @@ about:
            ki sizi manuel olarak ekleyelim. Eğer zaten listede varsanız, lütfen video açıklamalarınızın doğru video/kanal linklerine sahip olduğundan emin olun.
     feedback:
       title: Bu projeye geri bildirimde/katkıda bulunmak istiyorum.
+      contents:
+        - >-
+          Tüm yardım ve fikirlere açığız! Hem Arayüzümüz hem de Backend'imiz katkıda bulunmaya açık olmasına rağmen şu anda sadece Arayüzümüz açık kaynaklıdır. Backend'imize erişim sağlamak için lütfen Discord üzerinden bizimle iletişime geçin veya fikirlerimiz hakkında sohbet edin.
   gdpr: GVKY ve verilerim
   gdprContent: >-
     Analitik amaçlarımız için sayfa görüntülemelerini takip etmek için bir Google Analitics çerezi kullanıyoruz. Girişten sonra, sosyal medya hesabı kullanıcı adınızı ve ID'nizi favorilerinizle ilişkilendiriyoruz. Bu verilere her biri ayrı olarak Email adresiniz (Google için), Discord ID'niz veya Twitter kullanıcı adınız dahil olabilir.
@@ -423,6 +443,14 @@ about:
     <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> üzerinde bir Issue oluşturabilir veya Holodex takımını Discord üzerinden bulabilirsiniz. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Teşekkürler
+    contents:
+      - ' '
+      - takımına,
+      - >-
+        üzerindeki çalışmaları için ve tüm altyazıcılara overseas bro'lara yardımları için teşekkürlerimi iletmek istiyorum. Lütfen onlara bir göz atın!
+      - >-
+        Bu web sitesi fan yapımıdır ve sitede bulunan içerikler Cover corp ve ortaklarına aittir. Bu site Cover corp tarafından ortaya konulan yönergelere uymaktadır:
+      - Türetilmiş Çalışma Lisans Sözleşmesi
   changelog:
     title: Değişiklikler
   news:
