@@ -47,6 +47,8 @@ component:
     copyLink: Salin Tautan Holodex
     premiere: PREMIER
     googleCalendar: Tambahkan ke Kalender Google
+    totalTLs: Jumlah Terjemahan Obrolan
+    tlPresence: Penerjemah aktif dalam 30 menit terakhir
   videoDescription:
     description: Deskripsi
   video:
