@@ -39,6 +39,16 @@
         </div>
       </v-card>
     </v-col>
+    <v-col cols="auto">
+      <v-card class="stat">
+        <div class="text-overline">
+          Songs
+        </div>
+        <div class="text-h3">
+          {{ s.totalSongs.count || 0 }}
+        </div>
+      </v-card>
+    </v-col>
   </v-row>
 </template>
 
