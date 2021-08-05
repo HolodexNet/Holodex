@@ -9,7 +9,7 @@
 
     <v-main style="transition: none">
       <PullToRefresh />
-      <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists,About,Search">
+      <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists,About">
         <router-view :key="viewKey" />
       </keep-alive>
     </v-main>
