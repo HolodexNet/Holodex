@@ -23,15 +23,14 @@
     </v-list-item-subtitle>
     <v-list-item-subtitle v-if="channel.top_topics && channel.top_topics.length">
       🏆
-      <a
+      <router-link
         v-for="topic in channel.top_topics"
         :key="topic"
         class="topic-chip"
-        :href="searchQuery(topic)"
-        @click.stop=""
+        :to="searchQuery(topic)"
       >
         {{ topic }}
-      </a>
+      </router-link>
     </v-list-item-subtitle>
     <v-list-item-subtitle v-if="includeSocials">
       <ChannelSocials :channel="channel" />

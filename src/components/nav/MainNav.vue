@@ -82,9 +82,9 @@
           <edit-playlist>
             <div class="pt-2 pl-2">
               <span class="text-overline secondary--text">Current Playlist</span>&emsp;
-              <a href="/playlist" class="text-caption" @click.prevent="$router.push('/playlists')">
+              <router-link to="/playlists" class="text-caption">
                 (more)
-              </a>
+              </router-link>
             </div>
           </edit-playlist>
         </ResponsiveMenu>

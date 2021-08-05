@@ -9,7 +9,7 @@
 
     <v-main style="transition: none">
       <PullToRefresh />
-      <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists,About">
+      <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists,About,Search">
         <router-view :key="viewKey" />
       </keep-alive>
     </v-main>
@@ -196,12 +196,14 @@ export default {
         this.$store.dispatch("loginCheck");
 
         // on update, reresh page and set update notification flag
-        navigator.serviceWorker.addEventListener("controllerchange", () => {
-            if (this.refreshing) return;
-            this.refreshing = true;
-            this.showUpdateDetails = true;
-            window.location.reload();
-        });
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.addEventListener("controllerchange", () => {
+                if (this.refreshing) return;
+                this.refreshing = true;
+                this.showUpdateDetails = true;
+                window.location.reload();
+            });
+        }
 
         if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
 

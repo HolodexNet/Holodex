@@ -21,8 +21,13 @@
 </template>
 
 <script lang="ts">
+import linkify from "vue-linkify";
+
 export default {
     name: "ChannelAbout",
+    directives: {
+        linkified: linkify,
+    },
     computed: {
         channel() {
             return this.$store.state.channel.channel;

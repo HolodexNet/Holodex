@@ -246,11 +246,14 @@ export default {
         sortedFavorites() {
             return localSortChannels(this.$store.state.favorites.favorites, this.currentSortValue.query_value);
         },
+        isLoggedIn() {
+            return this.$store.getters.isLoggedIn;
+        },
     },
     watch: {
         category() {
             this.resetChannels();
-            if (this.category === this.Tabs.FAVORITES) this.$store.dispatch("favorites/fetchFavorites");
+            if (this.category === this.Tabs.FAVORITES && this.isLoggedIn) this.$store.dispatch("favorites/fetchFavorites");
         },
         sort() {
             if (this.category !== this.Tabs.FAVORITES) this.resetChannels();

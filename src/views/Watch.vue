@@ -149,7 +149,7 @@
             v-if="showChatWindow"
             :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
             :video="video"
-            :mugen-id="isMugen && '4ANxvWIM3Bs'"
+            :mugen-id="isMugen && '4ANxvWIM3Bs' || ''"
             :fixed-right="isMobile && landscape"
             :fixed-bottom="isMobile && !landscape"
             :show-t-l="showTL"
