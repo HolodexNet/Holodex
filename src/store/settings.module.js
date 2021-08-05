@@ -108,6 +108,8 @@ const mutations = {
     ]),
     resetState(state) {
         Object.assign(state, initialState);
+        localStorage.removeItem("theme");
+        localStorage.removeItem("darkMode");
     },
     toggleBlocked(state, channel) {
         // initialize if doesn't exist

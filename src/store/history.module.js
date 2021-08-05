@@ -35,6 +35,9 @@ const mutations = {
     update(state) {
         state.lastCheck = Date.now();
     },
+    resetState(state) {
+        Object.assign(state, initialState);
+    },
 };
 
 export default {

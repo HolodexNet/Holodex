@@ -391,7 +391,21 @@ export default {
     },
     methods: {
         resetSettings() {
-            this.$store.commit("resetState");
+            // eslint-disable-next-line no-restricted-globals,no-alert
+            if (confirm(this.$t("views.settings.resetAllSettingsWarning"))) {
+                this.$store.commit("resetState");
+                this.$store.commit("home/resetState");
+                this.$store.commit("channel/resetState");
+                this.$store.commit("channels/resetState");
+                this.$store.commit("watch/resetState");
+                this.$store.commit("settings/resetState");
+                this.$store.commit("favorites/resetState");
+                this.$store.commit("music/resetState");
+                this.$store.commit("multiview/resetState");
+                this.$store.commit("playlist/resetState");
+                this.$store.commit("history/resetState");
+                window.location.reload();
+            }
         },
     },
 };

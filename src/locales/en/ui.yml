@@ -238,6 +238,7 @@ views:
     scrollModeLabel: Scroll Mode
     scrollModeMsg: Use scroll/tap to turn pages
     resetAllSettings: Reset All Settings/Data
+    resetAllSettingsWarning: You will lose all data. Continue?
     clipLanguageSelection: 'See Clips in these Languages:'
     tlLanguageSelection: See live-chat TL in these languages
     defaultPage: Default Page
