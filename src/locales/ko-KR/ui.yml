@@ -47,8 +47,12 @@ component:
     copyLink: Holodex 링크 복사
     premiere: 최초 공개
     googleCalendar: Google Calendar에 추가
+    totalTLs: 전체 실시간 채팅 TL
+    tlPresence: 최근 30분 간 활동 중인 번역가
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -137,6 +141,7 @@ views:
     collabs: 콜라보
     about: 정보
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 구독자
       group: 그룹
@@ -243,6 +248,8 @@ views:
     check_about_page: 변경 사항에 대해 알아보려면 정보 페이지를 확인하세요
     nowSupportsMultiOrg: 이제 Holodex가 다수의 소속을 지원합니다.
     loginCallToAction: 자신만의 즐겨찾기를 만들려면 로그인해주세요!
+  about:
+    add_my_channel: 채널 요청
   watch:
     theaterMode: 영화관 모드
     mentionIconLabel: 언급
@@ -377,6 +384,8 @@ about:
     autoplayHeader: 자동 재생이 작동하지 않아요!
     autoplayContent: 자신이 사용하고 있는 브라우저에서 자동 재생을 활성화하는 방법에 대해 검색해보세요.
     musicPlayer: 뮤직 플레이어가 모바일 기기에서 제대로 작동하지 않아요!
+    musicPlayerContent: >-
+      대부분의 iOS 기기의 경우 Holodex 음악을 재생하는 동안 화면을 끄거나 Safari를 닫을 수 없습니다. 이 제한은 Android 기기에 적용되거나 적용되지 않을 수 있습니다(기기에 따라 다름). 더 나은 재생 시스템을 만드는 방법에 대한 아이디어가 있으면 Discord에 대한 피드백을 보내주세요.
     videoLinkage: 동영상이 버튜버에 제대로 연결되었는지 어떻게 확인하나요?
     videoLinkageContent: >-
       모든 정보는 비디오 설명에서 불러와집니다. 스트림을 클립하는 경우 공식 방송을 연결해야 합니다. 팬이 만든 콘텐츠 (예: bilibili에서 가져온 콘텐츠) 를 클리핑하는 경우 관련 버튜버의 공식 YouTube 채널을 연결해야 합니다. 모든 클립은 Holodex에 알려진 버튜버에 연결되어야하므로 버튜버 채널을 연결하지 않으면 Holodex에 해당 클립이 표시되지 않습니다.
