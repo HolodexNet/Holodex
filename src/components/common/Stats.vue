@@ -47,6 +47,9 @@
         <div class="text-h3">
           {{ s.totalSongs.count || 0 }}
         </div>
+        <div class="green--text text-caption">
+          &ensp;
+        </div>
       </v-card>
     </v-col>
   </v-row>
