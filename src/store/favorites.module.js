@@ -26,7 +26,7 @@ export const state = {
 const getters = {
     isFavorited: (state) => (channelId) => state.stagedFavorites[channelId] === "add"
         || (state.favorites.find((f) => f.id === channelId) && state.stagedFavorites[channelId] !== "remove"),
-    favoriteChannelIDs: (state) => new Set(state.favorites.map((f) => f.id)),
+    favoriteChannelIDs: (state) => new Set(state?.favorites?.map((f) => f.id) || []),
 };
 
 const actions = {
