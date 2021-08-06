@@ -237,7 +237,7 @@ views:
       tlWindowSize: Kích thước khung dịch (%), đặt 0% để tự động điều chỉnh
       retryBtn: Thử lại
       status:
-        reconnecting: Tự động Kết nối lại...
+        reconnecting: Tự động kết nối lại...
         reconnectFailed: Không thể kết nối lại
         notLive: >-
           Luồng phát sóng chưa bắt đầu, hãy thử lại khi đã phát trực tiếp được khoảng 15 phút
@@ -338,7 +338,7 @@ editor:
   exitMode: Thoát khỏi Chế độ Chỉnh sửa
   enterMode: Chỉnh sửa Video
 about:
-  quicklinks: Liên kết
+  quicklinks: Liên kết nhanh
   discordBtn: Holodex Discord
   faq:
     title: FAQ
