@@ -223,7 +223,7 @@ views:
     scrollModeMsg: Blättern/Tippen zum Umblättern der Seiten verwenden
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
     clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
-    tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
+    tlLanguageSelection: Live-Chat-Übersetzungen in diesen Sprachen anzeigen
     defaultPage: Standardseite
     defaultPageMsg: >-
       Öffne diese Seite standardmäßig, wenn du holodex.net besuchst oder auf das Logo oben links klickst.
@@ -324,7 +324,7 @@ views:
       remove: Entfernen
       desktop: Desktop
       mobile: Mobil
-      autoLayout: AutoLayout
+      autoLayout: Auto-Layout
     presetEditor:
       title: Layout speichern
       name: Name
