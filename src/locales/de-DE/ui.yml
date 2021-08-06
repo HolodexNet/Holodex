@@ -47,7 +47,7 @@ component:
     copyLink: Holodex-Link kopieren
     premiere: PREMIERE
     googleCalendar: Zu Google Kalender hinzufügen
-    totalTLs: Anzahl an Übersetzungen im Livechat
+    totalTLs: Anzahl an Übersetzungen im Live-Chat
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
   videoDescription:
     description: Beschreibung
@@ -223,7 +223,7 @@ views:
     scrollModeMsg: Blättern/Tippen zum Umblättern der Seiten verwenden
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
     clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
-    tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
+    tlLanguageSelection: Live-Chat-Übersetzungen in diesen Sprachen anzeigen
     defaultPage: Standardseite
     defaultPageMsg: >-
       Öffne diese Seite standardmäßig, wenn du holodex.net besuchst oder auf das Logo oben links klickst.
@@ -324,7 +324,7 @@ views:
       remove: Entfernen
       desktop: Desktop
       mobile: Mobil
-      autoLayout: AutoLayout
+      autoLayout: Auto-Layout
     presetEditor:
       title: Layout speichern
       name: Name
@@ -449,7 +449,7 @@ about:
       - >-
         Dank gebührt auch den Clippern dafür, dass sie den Überseebrüdern helfen! Bitte sieh sie dir an!
       - >-
-        Dies ist eine von Fans erstellte Website und die Inhalte dieser Website sind Eigentum von Cover Corp und seinen Partnern. Die Seite folgt den Richtlinien von Cover Corps
+        Dies ist eine von Fans erstellte Website, ihre Inhalte sind Eigentum von Cover Corp und ihren Partnern. Die Seite folgt den Richtlinien von Cover Corps
       - Urheberrechtserklärung
   changelog:
     title: Änderungsverlauf
