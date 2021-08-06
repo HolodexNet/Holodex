@@ -51,6 +51,8 @@ component:
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -139,6 +141,7 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -219,6 +222,7 @@ views:
     scrollModeLabel: Mode Gulir
     scrollModeMsg: Menggulir halaman menggunakan scroll / menekan tombol.
     resetAllSettings: Reset Semua Pengaturan/Data
+    resetAllSettingsWarning: Semua data kamu akan hilang. Lanjutkan?
     clipLanguageSelection: 'Melihat Klip dalam bahasa berikut:'
     tlLanguageSelection: Melihat Terjemahan dalam bahasa ini
     defaultPage: Halaman Awal
