@@ -147,7 +147,7 @@ export default {
             this.showTL = nw;
         },
         activeVideos() {
-            if (!this.activeVideos.length) {
+            if (this.currentTab >= this.activeVideos.length) {
                 this.currentTab = 0;
             }
         },

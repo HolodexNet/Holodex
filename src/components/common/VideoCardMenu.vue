@@ -20,7 +20,7 @@
       {{ $t("component.videoCard.edit") }}
     </v-list-item>
     <template v-if="video.type !== 'clip'">
-      <v-list-item :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`">
+      <v-list-item :to="`/multiview/AAUY${video.id}%2CUAEYchat`">
         <v-icon left>
           {{ icons.mdiViewDashboard }}
         </v-icon>
@@ -57,12 +57,6 @@ export default {
         },
     },
     methods: {
-        getChannelShortname(ch) {
-            return (
-                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_"))
-                || ch.name.split(/[/\s]/)[0].replace(",", "")
-            );
-        },
         // Open google calendar to add the time specified in the element
         openGoogleCalendar() {
             const startdate = this.video.start_scheduled;

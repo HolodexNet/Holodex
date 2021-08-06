@@ -168,15 +168,18 @@ export default {
         searchVideo() {
             // this.videos = [];
             const { q } = this.query;
-            if (q.length < 5) return null;
-            // TODO: What dis doing
-            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-            this.executedQuery = q; // save to executed query;
+            if (this.isActive) {
+                // TODO: What dis doing
+                // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+                this.executedQuery = q; // save to executed query;
+            }
+            if (!this.executedQuery || this.executedQuery.length < 5) {
+                return null;
+            }
 
             const self = this;
-            console.log("Generating new search function");
             return async (offset, limit) => {
-                const parsedQuery = await csv2jsonAsync(q);
+                const parsedQuery = await csv2jsonAsync(this.executedQuery);
                 const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
                     sort: self.filter_sort,
                     lang: self.$store.state.settings.clipLangs,

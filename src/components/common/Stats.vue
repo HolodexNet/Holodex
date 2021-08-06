@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row v-if="s">
     <v-col cols="auto">
       <v-card class="stat">
         <div class="text-overline">
@@ -61,12 +61,12 @@ import backendApi from "@/utils/backend-api";
 export default {
     data() {
         return {
-            metrics: { statistics: {} },
+            metrics: {},
         };
     },
     computed: {
         s() {
-            return this.metrics.statistics || {};
+            return this.metrics.statistics;
         },
     },
     async mounted() {

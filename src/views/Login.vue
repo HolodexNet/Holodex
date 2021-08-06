@@ -104,13 +104,9 @@
 import GAuth from "vue-google-oauth2";
 import open from "oauth-open";
 import api from "@/utils/backend-api";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import Vue from "vue";
 import UserCard from "@/components/user/UserCard.vue";
 import copyToClipboard from "@/mixins/copyToClipboard";
-
-dayjs.extend(utc);
 
 const gauthOption = {
     clientId: "275540829388-87s7f9v2ht3ih51ah0tjkqng8pd8bqo2.apps.googleusercontent.com",

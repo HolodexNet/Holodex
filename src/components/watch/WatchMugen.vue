@@ -6,7 +6,7 @@
     <VideoCardList
       v-if="playlist.length > 0"
       :videos="videos"
-      limit-rows="2"
+      :limit-rows="2"
       :active-id="video.id"
       include-channel
       horizontal

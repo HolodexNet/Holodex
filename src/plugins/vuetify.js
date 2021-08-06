@@ -4,7 +4,7 @@ import themeSet from "@/utils/themes";
 import VueI18n from "vue-i18n";
 
 import enTL from "@/locales/en/ui.yml";
-import vuetifyEn from "vuetify/es5/locale/en";
+import vuetifyEn from "vuetify/lib/locale/en";
 import { dayjs } from "@/utils/time";
 
 // ====== i18n setup ======

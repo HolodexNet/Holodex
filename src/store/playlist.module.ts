@@ -101,6 +101,9 @@ const mutations = {
             videos: [],
         });
     },
+    resetState(state) {
+        Object.assign(state, initialState);
+    },
 };
 
 const actions = {
