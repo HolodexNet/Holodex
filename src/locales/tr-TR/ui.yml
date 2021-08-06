@@ -51,6 +51,8 @@ component:
     tlPresence: Son 30 dakikada aktif çevirmen
   videoDescription:
     description: Açıklama
+  video:
+    comment: { }
   description:
     showLess: Daha az
     showMore: Daha çok
@@ -139,6 +141,7 @@ views:
     collabs: Collablar
     about: Hakkında
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Aboneler
       group: Grup
@@ -219,6 +222,7 @@ views:
     scrollModeLabel: Kaydırma Modu
     scrollModeMsg: Sayfa çevirmek için kaydırmayı kullanın
     resetAllSettings: Tüm ayarları/bilgileri sıfırla
+    resetAllSettingsWarning: Tüm verilerinizi kaybedeceksiniz. Devam edilsin mi?
     clipLanguageSelection: 'Klipleri şu dillerde görüntüle:'
     tlLanguageSelection: Canlı-sohbet çevirilerini bu dilde görüntüle
     defaultPage: Varsayılan sayfa
