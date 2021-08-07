@@ -222,6 +222,7 @@ views:
     scrollModeLabel: Kaydırma Modu
     scrollModeMsg: Sayfa çevirmek için kaydırmayı kullanın
     resetAllSettings: Tüm ayarları/bilgileri sıfırla
+    resetAllSettingsWarning: Tüm verilerinizi kaybedeceksiniz. Devam edilsin mi?
     clipLanguageSelection: 'Klipleri şu dillerde görüntüle:'
     tlLanguageSelection: Canlı-sohbet çevirilerini bu dilde görüntüle
     defaultPage: Varsayılan sayfa
