@@ -222,6 +222,7 @@ views:
     defaultPage: Página Padrão
     defaultPageMsg: >-
       Abra esta página por padrão quando visitar holodex.net, ou clicar no logotipo no canto superior esquerdo.
+    videoFeedSettings: Definições do feed de vídeos
     siteNavigationSettings: Navegação do site
     languageSettings: Idioma
     gridSizeLabel: Miniatura/Tamanho da Grade
@@ -233,13 +234,17 @@ views:
     hideCollabStreamsLabel: Ocultar Collab Streams 
     hideCollabStreamsMsg: Ocultar Streams que são Collab do seus Favoritos
     ignoredTopicsLabel: Tópicos Ignorados
+    ignoredTopicsMsg: Ocultar vídeos com esses tópicos das páginas Início e Favoritos
     theme: Tema
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
+    close_btn: Fechar
     check_about_page: Veja o que há de novo no Holodex acessando a página de Informações
     nowSupportsMultiOrg: Holodex agora suporta múltiplas organizações.
     loginCallToAction: Faça login para ter seus próprios favoritos!
+  about:
+    add_my_channel: Solicitação de canal
   watch:
     theaterMode: Modo Teatro
     mentionIconLabel: Menções
@@ -262,10 +267,12 @@ views:
           A transmissão ainda não começou, tente novamente dentro de 15 minutos após o início da transmissão
         connectedToChat: Conectado
         disconnectedToChat: Desconectado
+    saveToPlaylist: Salvar vídeo na lista atual
   favorites:
     promptForAction: >-
       Crie uma lista com seus vtubers favoritos para ver clipes e lives mais recentes nesta página.
     manageFavorites: Gerenciar Favoritos
+    close: Fechar
     showall: Mostrar todos
   editor:
     needlogin: Você precisará fazer login para editar metadados de vídeo e música do Holodex.
@@ -301,6 +308,7 @@ views:
     addframe: Adicionar Célula
     muteAll: Silenciar Tudo
     unmuteAll: Desmutar Tudo
+    autoLayoutTip: Clique para assistir um canal usando um layout automático
     preset:
       shareOnDiscord: >-
         Tem um layout legal para compartilhar? Use o botão compartilhar e nos informe no nosso <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
