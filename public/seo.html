@@ -6,8 +6,8 @@
         <meta name="viewport" content="viewport-fit=cover,initial-scale=1.0,width=device-width" />
         <meta name="theme-color" content="#42a5f5" />
         {{#metadata}}
-        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-        <title><%= htmlWebpackPlugin.options.title %></title>
+        <link rel="icon" href="/favicon.ico" />
+        <title>Holodex</title>
         <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" as="style">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap">
         <style> 
@@ -37,6 +37,7 @@
             >
         </noscript>
         <div id="app"></div>
+        <script type="module" src="/src/main.ts"></script>
         <!-- built files will be auto injected -->
     </body>
 </html>
