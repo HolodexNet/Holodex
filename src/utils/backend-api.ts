@@ -5,7 +5,7 @@ import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 import { Playlist, PlaylistList } from "./types";
 
 // @ts-ignore
-const BASE_URL = import.meta.env.API_BASE_URL ? import.meta.env.API_BASE_URL : "https://staging.holodex.net";
+const BASE_URL = import.meta.env.API_BASE_URL ?? "https://staging.holodex.net";
 export const API_BASE_URL = `${BASE_URL}/api`;
 export const SITE_BASE_URL = `${BASE_URL}/`;
 
