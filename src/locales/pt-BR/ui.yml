@@ -124,6 +124,7 @@ component:
       export-playlist: Exportar Playlist
       new-playlist: Nova Playlist
       rename-playlist: Renomear Playlist
+      reset-unsaved: Redefinir mudanças não salvas
       delete-playlist: Excluir Playlist
       clear-playlist: Limpar Playlist
     save-error-not-logged-in: Você precisa estar logado para salvar Playlists
@@ -152,6 +153,7 @@ views:
   home:
     liveOrUpcomingHeading: Live / Próximas Transmissões
     recentVideosHeading: Vídeos Recentes
+    noStreams: Sem lives ou streams futuras no momento
     recentVideoToggles:
       all: Todos
       official: VODs
@@ -175,6 +177,11 @@ views:
     exportYTHeading: Instruções para salvar a Playlist no Youtube
     exportYTInstructions: >-
       <b class="red--text">Passo 1</b>: Abra a playlist no youtube, e altere a interface para o modo Miniplayer. <br /><br /> <b class="red--text">Passo 2</b>: Escolha qualquer vídeo e adicione-o à fila. <br /><br /> <b class="red--text">Passo 3</b>: A Playlist agora pode ser salva em sua conta clicando em Salvar.
+    sort:
+      dateaddedEarliestFirst: Data adicionado, do mais recente
+      dateaddedLatestFirst: Data adicionado, do mais antigo
+      dateuploadedLatestFirst: Data de envio, do mais antigo
+      dateuploadedEarliestFirst: Data de envio, do mais recente
   notFound:
     title: Conteúdo não encontrado
     back: Voltar para o Início
@@ -209,6 +216,7 @@ views:
     scrollModeLabel: Modo de Rolagem
     scrollModeMsg: Use rolar/tocar para navegar nas páginas
     resetAllSettings: Redefinir todas as configurações/dados
+    resetAllSettingsWarning: Perderás todos os dados. Continuar?
     clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
     tlLanguageSelection: Ver Traduções no Chat nestes idiomas
     defaultPage: Página Padrão
