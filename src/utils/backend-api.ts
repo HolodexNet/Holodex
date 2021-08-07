@@ -4,8 +4,10 @@ import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 import { Playlist, PlaylistList } from "./types";
 
-export const API_BASE_URL = `${window.location.origin}/api`;
-export const SITE_BASE_URL = `${window.location.origin}/`;
+// @ts-ignore
+const BASE_URL = import.meta.env.API_BASE_URL ? import.meta.env.API_BASE_URL : "https://staging.holodex.net";
+export const API_BASE_URL = `${BASE_URL}/api`;
+export const SITE_BASE_URL = `${BASE_URL}/`;
 
 export const axiosInstance = (() => {
     const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
@@ -17,7 +19,7 @@ export default {
         return axiosInstance({ url: "orgs.json", baseURL: SITE_BASE_URL });
     },
     stats() {
-        return axiosInstance({ url: "/api/stats.json", baseURL: SITE_BASE_URL });
+        return axiosInstance({ url: "stats.json", baseURL: SITE_BASE_URL });
     },
     channels(query) {
         const q = querystring.stringify(query);

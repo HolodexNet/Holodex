@@ -59,7 +59,7 @@ module.exports = {
         "vue/require-default-prop": "off",
     },
 
-    ignorePatterns: ["src/external/**", "src/locales/**", ".eslintrc.js"],
+    ignorePatterns: ["src/external/**", "src/locales/**", ".eslintrc.js", "*.config.js"],
 
     settings: {
         "import/resolver": {

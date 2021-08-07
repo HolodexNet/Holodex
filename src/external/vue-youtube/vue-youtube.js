@@ -1,4 +1,4 @@
-const player = require("youtube-player");
+import player from "youtube-player";
 
 const UNSTARTED = -1;
 const ENDED = 0;

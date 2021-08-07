@@ -15,8 +15,7 @@
         <meta property="og:url" content="https://holodex.net" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="theme-color" content="#42a5f5" />
-        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-        <title><%= htmlWebpackPlugin.options.title %></title>
+        <link rel="icon" href="/favicon.ico" />
         <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" as="style">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap">
         <style> 
@@ -40,12 +39,13 @@
     </head>
     <body style="background-color: black; margin-top: env(safe-area-inset-top)" class="scroll-bar">
         <noscript>
-            <strong
-                >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript
-                enabled. Please enable it to continue.</strong
-            >
+            <strong>
+                We're sorry but this site doesn't work properly without JavaScript
+                enabled. Please enable it to continue.
+            </strong>
         </noscript>
         <div id="app"></div>
+        <script type="module" src="/src/main.ts"></script>
         <!-- built files will be auto injected -->
     </body>
 </html>
