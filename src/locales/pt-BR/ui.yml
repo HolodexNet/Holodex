@@ -47,6 +47,7 @@ component:
     copyLink: Copiar link Holodex
     premiere: ESTREIA
     googleCalendar: Adicionar ao Google Agenda
+    tlPresence: Tradutor ativo nos últimos 30 min
   videoDescription:
     description: Descrição
   description:
@@ -106,6 +107,7 @@ component:
     readMore: Mostrar mais
   reportDialog:
     title: Reportar
+    comments: Que ações o Holodex deve tomar?
     success: Denuncia enviada, Obrigado!
     reasons:
       - Vídeo etiquetado incorretamente
