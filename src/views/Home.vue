@@ -36,7 +36,7 @@
           </span>
         </v-tab>
         <v-tab class="pa-2">
-          {{ $t("views.home.recentVideoToggles.official") }} "yo"
+          {{ $t("views.home.recentVideoToggles.official") }}
         </v-tab>
         <v-tab class="pa-2">
           {{ $t("views.home.recentVideoToggles.subber") }}
