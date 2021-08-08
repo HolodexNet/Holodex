@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig } from "vite";
 import { createVuePlugin } from "vite-plugin-vue2";
 import ViteComponents, { VuetifyResolver } from "vite-plugin-components";
 import visualizer from 'rollup-plugin-visualizer';
@@ -73,8 +73,8 @@ export default defineConfig({
                 ],
               // workbox options for generateSW
             }
-          }),
-        visualizer({ gzipSize: true }),
+        }),
+        visualizer({ gzipSize: true })
     ],
     resolve: {
         alias: [

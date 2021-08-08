@@ -3,13 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "serve2": "vite",
-    "build2": "vite build --mode prod",
-    "lint": "vue-cli-service lint",
-    "changelog": "changelog-to-html --outputDirectoryPath docs; generate-md --layout ./layouts/roryg-ghostwriter --input ./CHANGELOG.md --output ./docs;",
-    "analyze-bundle": "vue-cli-service build --report-json && webpack-bundle-analyzer dist/report.json"
+    "serve": "vite",
+    "build": "vite build --mode prod",
+    "changelog": "changelog-to-html --outputDirectoryPath docs; generate-md --layout ./layouts/roryg-ghostwriter --input ./CHANGELOG.md --output ./docs;"
   },
   "workspaces": [
     "src/external/vue-grid-layout"
@@ -62,33 +58,16 @@
     "vuex-persistedstate": "^3.2.1",
     "vuex-persistedstate-migrate": "^1.0.0",
     "vuex-shared-mutations": "^1.0.2",
+    "workbox-window": "^6.1.5",
     "youtube-player": "^5.5.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.15.0",
-    "@babel/eslint-parser": "^7.15.0",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.14.5",
-    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
-    "@babel/plugin-transform-flow-comments": "^7.12.13",
-    "@babel/preset-env": "^7.15.0",
-    "@babel/preset-flow": "^7.14.5",
-    "@kazupon/vue-i18n-loader": "^0.5.0",
     "@rollup/plugin-yaml": "^3.1.0",
     "@types/chrome": "^0.0.139",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
-    "@vue/cli-plugin-babel": "^4.5.13",
-    "@vue/cli-plugin-eslint": "5.0.0-beta.2",
-    "@vue/cli-plugin-pwa": "^4.5.13",
-    "@vue/cli-plugin-router": "^4.5.13",
-    "@vue/cli-plugin-typescript": "^4.5.13",
-    "@vue/cli-plugin-vuex": "^4.5.13",
-    "@vue/cli-service": "^4.5.13",
     "@vue/eslint-config-typescript": "^7.0.0",
-    "babel-loader": "^8.2.2",
     "changelog-to-html": "^0.6.0",
-    "core-js": "^3.16.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-alias": "^1.1.2",
@@ -100,16 +79,10 @@
     "markdown-styles": "^3.2.0",
     "rollup-plugin-visualizer": "^5.5.2",
     "sass": "^1.32.13",
-    "sass-loader": "^10.1.1",
     "typescript": "~4.2.4",
     "vite": "^2.4.4",
     "vite-plugin-components": "^0.13.2",
     "vite-plugin-pwa": "^0.9.3",
-    "vite-plugin-vue2": "^1.7.3",
-    "vue-cli-plugin-vuetify": "^2.4.2",
-    "vue-cli-plugin-yaml": "^1.0.2",
-    "vue-template-compiler": "^2.6.14",
-    "vuetify-loader": "^1.7.2",
-    "webpack-bundle-analyzer": "^4.4.2"
+    "vite-plugin-vue2": "^1.7.3"
   }
 }
