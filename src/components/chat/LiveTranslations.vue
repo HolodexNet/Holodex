@@ -135,7 +135,7 @@ const manager = new Manager(API_BASE_URL, {
     reconnectionAttempts: 10,
     transports: ["websocket"],
     upgrade: false,
-    path: /* process.env.NODE_ENV !== "development" && */ "/api/socket.io/",
+    path: /* !import.meta.env.MODE === "dev" && */ "/api/socket.io/",
     secure: true,
     autoConnect: false,
 });

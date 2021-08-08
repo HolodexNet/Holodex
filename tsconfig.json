@@ -6,17 +6,20 @@
     "target": "esnext",
     "module": "esnext",
     "jsx": "preserve",
+    "isolatedModules": true,
     "importHelpers": true,
     "moduleResolution": "node",
     "allowJs": true,
+    "importsNotUsedAsValues": "error",
     "skipLibCheck": true,
+    // TODO: work towards enabling this
+    // "strictNullChecks": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
     "outDir": "./dist",
     "types": [
-      "webpack-env",
       "chrome"
     ],
     "paths": {

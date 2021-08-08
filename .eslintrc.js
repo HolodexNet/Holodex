@@ -59,18 +59,14 @@ module.exports = {
         "vue/require-default-prop": "off",
     },
 
-    ignorePatterns: ["src/external/**", "src/locales/**", ".eslintrc.js"],
+    ignorePatterns: ["src/external/**", "src/locales/**", ".eslintrc.js", "*.config.js"],
 
     settings: {
         "import/resolver": {
             alias: {
                 map: [["@", "./src"]],
                 extensions: [".js", ".vue", ".ts"],
-            },
-            webpack: {
-                // https://github.com/vuejs/vue-cli/issues/2628
-                config: require.resolve("@vue/cli-service/webpack.config.js"),
-            },
+            }
         },
     },
 };
