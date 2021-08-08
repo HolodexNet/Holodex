@@ -109,20 +109,14 @@ import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
 import { dayjs } from "@/utils/time";
 import { mdiTuneVariant } from "@mdi/js";
-
-// function getChannelLiveAtTime(ch) {
-//     if (ch.videos && ch.videos[0]) {
-//         return dayjs(ch.videos[0].start_actual || ch.videos[0].start_scheduled).valueOf();
-//     }
-//     return null;
-// }
+import Settings from "@/views/Settings.vue";
 
 export default {
     name: "NavDrawer",
     components: {
         ChannelImg,
         ChannelInfo,
-        Settings: () => import("@/views/Settings.vue"),
+        Settings,
     },
     props: {
         pages: {

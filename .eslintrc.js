@@ -57,6 +57,7 @@ module.exports = {
         "nonblock-statement-body-position": ["warn", "any"],
         "vue/html-indent": ["error", 2],
         "vue/require-default-prop": "off",
+        "vue/script-setup-uses-vars": "off"
     },
 
     ignorePatterns: ["src/external/**", "src/locales/**", ".eslintrc.js", "*.config.js"],
