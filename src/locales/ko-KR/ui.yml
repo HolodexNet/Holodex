@@ -51,6 +51,8 @@ component:
     tlPresence: 최근 30분 간 활동 중인 번역가
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -139,6 +141,7 @@ views:
     collabs: 콜라보
     about: 정보
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 구독자
       group: 그룹
@@ -219,6 +222,7 @@ views:
     scrollModeLabel: 스크롤 모드
     scrollModeMsg: 스크롤/탭하여 페이지를 이동합니다
     resetAllSettings: 모든 설정/데이터 초기화
+    resetAllSettingsWarning: 모든 데이터가 손실됩니다. 계속하시겠습니까?
     clipLanguageSelection: '다음 언어로 된 클립 보기:'
     tlLanguageSelection: 해당 언어로 실시간 채팅 번역 보기
     defaultPage: 기본 페이지
