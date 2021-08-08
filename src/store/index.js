@@ -122,6 +122,10 @@ export default new Vuex.Store({
                     return icons.mdiGridLarge;
             }
         },
+        isSuperuser(state) {
+            const role = state.userdata?.user?.role;
+            return role === "admin" || role === "editor";
+        },
     },
     mutations: {
         // other

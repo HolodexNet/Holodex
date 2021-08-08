@@ -41,14 +41,24 @@
       </v-icon>
       {{ $t("component.reportDialog.title") }}
     </v-list-item>
+
+    <template v-if="$store.getters['isSuperuser']">
+      <!-- <v-list-item> -->
+      <v-lazy>
+        <watch-quick-editor :video="video" />
+      </v-lazy>
+      <!-- </v-list-item> -->
+    </template>
   </v-list>
 </template>
 
 <script>
 import { dayjs } from "@/utils/time";
 import copyToClipboard from "@/mixins/copyToClipboard";
+import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 
 export default {
+    components: { WatchQuickEditor },
     mixins: [copyToClipboard],
     props: {
         video: {

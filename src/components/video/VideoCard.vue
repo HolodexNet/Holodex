@@ -139,7 +139,11 @@
         </div>
       </div>
       <!-- Vertical dots menu -->
-      <v-menu bottom nudge-top="20px">
+      <v-menu
+        bottom
+        :close-on-content-click="false"
+        nudge-top="20px"
+      >
         <template #activator="{ on, attrs }">
           <v-btn
             icon

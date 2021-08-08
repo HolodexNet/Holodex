@@ -72,7 +72,7 @@
         </v-autocomplete>
       </v-col>
       <v-divider vertical />
-      <v-col cols="auto">
+      <v-col v-if="video.type === 'stream'" cols="auto">
         <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiPencil }}
