@@ -15,19 +15,19 @@
     </v-main>
 
     <v-snackbar
-      v-if="updateExists"
+      v-if="needRefresh"
       bottom
       right
-      :value="updateExists"
+      :value="needRefresh"
       :timeout="-1"
       color="primary"
     >
       {{ $t("views.app.update_available") }}
       <template #action>
-        <v-btn text class="ml-auto" @click="refreshApp">
+        <v-btn text class="ml-auto" @click="updateServiceWorker">
           {{ $t("views.app.update_btn") }}
         </v-btn>
-        <v-btn text class="ml-auto" @click="updateExists = false">
+        <v-btn text class="ml-auto" @click="needRefresh = false">
           {{ $t("views.app.close_btn") }}
         </v-btn>
       </template>
@@ -65,6 +65,7 @@ import ReportDialog from "@/components/common/ReportDialog.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
 import { loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
+import * as SW from "./sw";
 
 export default {
     name: "App",
@@ -79,8 +80,7 @@ export default {
     },
     data() {
         return {
-            updateExists: false,
-            registration: null,
+            needRefresh: false,
             favoritesUpdateTask: null,
         };
     },
@@ -132,7 +132,7 @@ export default {
             }
         },
     },
-    created() {
+    async created() {
         this.$store.commit("setVisiblityState", document.visibilityState);
         document.addEventListener("visibilitychange", () => {
             this.$store.commit("setVisiblityState", document.visibilityState);
@@ -180,30 +180,9 @@ export default {
         // setDayjsLang(this.$store.state.settings.lang);
         this.$i18n.locale = this.$store.state.settings.lang;
         this.$vuetify.lang.current = this.$store.state.settings.lang;
-        // check for pwa updates
-        document.addEventListener(
-            "swUpdated",
-            (event: CustomEvent<any>) => {
-                this.registration = event.detail;
-                this.updateExists = true;
-            },
-            {
-                once: true,
-            },
-        );
 
         // relog if necessary:
         this.$store.dispatch("loginCheck");
-
-        // on update, reresh page and set update notification flag
-        if (navigator.serviceWorker) {
-            navigator.serviceWorker.addEventListener("controllerchange", () => {
-                if (this.refreshing) return;
-                this.refreshing = true;
-                this.showUpdateDetails = true;
-                window.location.reload();
-            });
-        }
 
         if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
 
@@ -220,6 +199,11 @@ export default {
         }, 5000);
         // check current breakpoint and set isMobile
         this.updateIsMobile();
+
+        SW.setNeedsRefreshCallback(() => {
+            console.log("sw needs refresh");
+            this.needRefresh = true;
+        });
     },
     beforeDestroy() {
         if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
@@ -228,12 +212,11 @@ export default {
         updateIsMobile() {
             this.$store.commit("setIsMobile", ["xs", "sm"].includes(this.$vuetify.breakpoint.name));
         },
-        refreshApp() {
-            this.updateExists = false;
-            // Make sure we only send a 'skip waiting' message if the SW is waiting
-            if (!this.registration || !this.registration.waiting) return;
-            // send message to SW to skip the waiting and activate the new SW
-            this.registration.waiting.postMessage({ type: "SKIP_WAITING" });
+        async updateServiceWorker() {
+            console.log("update service worker");
+            await SW.updateServiceWorker();
+            this.showUpdateDetails = true;
+            window.location.reload();
         },
     },
 };

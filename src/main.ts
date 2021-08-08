@@ -13,7 +13,6 @@ import store from "./store";
 import router from "./router";
 import { i18n, vuetify } from "./plugins/vuetify";
 
-import "./registerServiceWorker";
 // import { API_BASE_URL } from "./utils/backend-api";
 
 Vue.config.productionTip = false;

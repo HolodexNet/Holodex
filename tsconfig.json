@@ -10,13 +10,14 @@
     "moduleResolution": "node",
     "allowJs": true,
     "skipLibCheck": true,
+    // TODO: work towards enabling this
+    // "strictNullChecks": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
     "outDir": "./dist",
     "types": [
-      "webpack-env",
       "chrome"
     ],
     "paths": {

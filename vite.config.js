@@ -1,11 +1,10 @@
 import { defineConfig, loadEnv } from "vite";
 import { createVuePlugin } from "vite-plugin-vue2";
 import ViteComponents, { VuetifyResolver } from "vite-plugin-components";
-import { visualizer } from 'rollup-plugin-visualizer';
+import visualizer from 'rollup-plugin-visualizer';
 import yaml from "@rollup/plugin-yaml";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "path";
-const { resolve } = require('path')
 
 
 export default defineConfig({
@@ -26,7 +25,9 @@ export default defineConfig({
                 scope: "/",
             },
             workbox: {
-                swDest: "./dist/service-worker.js",
+                // NOTE: `vite-plugin-pwa` expects the service worker to be called `sw.js` for some reason.
+                // there is no way to change this.
+                swDest: "./dist/sw.js",
                 runtimeCaching: [
                     {
                         urlPattern: new RegExp("https://fonts.(?:googleapis|gstatic).com/(.*)"),
@@ -73,7 +74,7 @@ export default defineConfig({
               // workbox options for generateSW
             }
           }),
-        visualizer({gzipSize: true,}),
+        visualizer({ gzipSize: true }),
     ],
     resolve: {
         alias: [
@@ -83,19 +84,14 @@ export default defineConfig({
             }
         ]
     },
+    sourcemap: true,
     build: {
         rollupOptions: {
-          input: {
-            main: resolve(__dirname, 'public/index.html'),
-            seo: resolve(__dirname, 'public/seo.html')
-          },
-          output: {
-              dir: 'dist',
-          }
+            input: {
+                main: path.resolve(__dirname, 'index.html'),
+                seo: path.resolve(__dirname, 'seo.html')
+            }
         }
-    },
-    output: {
-      dir: 'dist'
     },
     server: {
         port: 8080
