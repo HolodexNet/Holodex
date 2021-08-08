@@ -267,6 +267,7 @@ views:
           A transmissão ainda não começou, tente novamente dentro de 15 minutos após o início da transmissão
         connectedToChat: Conectado
         disconnectedToChat: Desconectado
+    removeFromPlaylist: Remover vídeo da lista atual
     saveToPlaylist: Salvar vídeo na lista atual
   favorites:
     promptForAction: >-
@@ -309,9 +310,13 @@ views:
     muteAll: Silenciar Tudo
     unmuteAll: Desmutar Tudo
     autoLayoutTip: Clique para assistir um canal usando um layout automático
+    createLayoutTip: Crie teu próprio layout adindo uma célula ou use um modelo
     preset:
       shareOnDiscord: >-
         Tem um layout legal para compartilhar? Use o botão compartilhar e nos informe no nosso <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
+      custom: Meus layouts
+      toggleAutoLayout: Alternar layout automático
+      remove: Excluir
       desktop: Desktop
       mobile: Mobile
     video:
