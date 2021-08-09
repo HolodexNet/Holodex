@@ -11,7 +11,8 @@ import router from "./router";
 import { i18n, vuetify } from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
-Vue.config.performance = true;
+// @ts-ignore TODO: env shims
+Vue.config.performance = import.meta.env.DEV;
 // @ts-ignore TODO: env shims
 Vue.config.devtools = import.meta.env.DEV;
 
