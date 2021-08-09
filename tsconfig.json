@@ -20,7 +20,8 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "types": [
-      "chrome"
+      "chrome",
+      "vite-plugin-pwa/client"
     ],
     "paths": {
       "@/*": [

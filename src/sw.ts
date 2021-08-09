@@ -1,3 +1,7 @@
+// TODO: make eslint resolve this... somehow...
+// eslint-disable-next-line
+import { registerSW } from 'virtual:pwa-register'
+
 let updateServiceWorkerFn = async (shouldReloadPage: boolean) => {};
 let needsRefreshCallback = () => {};
 let offlineReadyCallback = () => {};
@@ -12,26 +16,22 @@ function waitFor(type: string, target: EventTarget): Promise<Event> {
 }
 
 // @ts-ignore TODO: env shims
-if (import.meta.env.MODE === "prod") {
-    // TODO: make eslint resolve this... somehow...
-    import("virtual:pwa-register") // eslint-disable-line import/no-unresolved
-        .then(({ registerSW }) => {
-            registerSW({
-                immediate: true,
-                onNeedRefresh: () => {
-                    needsRefreshCallback();
-                },
-                onOfflineReady() {
-                    offlineReadyCallback();
-                },
-                onRegistered(newReg) {
-                    reg = newReg;
-                },
-                onRegisterError(err) {
-                    console.log("Error during service worker registration:", err);
-                },
-            });
-        });
+if (import.meta.env.PROD) {
+    registerSW({
+        immediate: true,
+        onNeedRefresh: () => {
+            needsRefreshCallback();
+        },
+        onOfflineReady() {
+            offlineReadyCallback();
+        },
+        onRegistered(newReg) {
+            reg = newReg;
+        },
+        onRegisterError(err) {
+            console.log("Error during service worker registration:", err);
+        },
+    });
     if ("serviceWorker" in navigator) {
         updateServiceWorkerFn = async (shouldReloadPage) => {
             if (reg && reg.waiting) {
