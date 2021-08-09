@@ -12,10 +12,11 @@ import { i18n, vuetify } from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
 // @ts-ignore TODO: env shims
-Vue.config.performance = import.meta.env.DEV;
+Vue.config.performance = false;
 // @ts-ignore TODO: env shims
-Vue.config.devtools = import.meta.env.DEV;
-
+Vue.config.devtools = false;
+// @ts-ignore TODO: env shims
+console.log(import.meta.env.DEV);
 Vue.use(
     VueGTag,
     {
