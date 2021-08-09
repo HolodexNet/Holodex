@@ -7,7 +7,12 @@ module.exports = {
         es6: true,
     },
 
-    extends: ["plugin:vue/recommended", "airbnb-base", "eslint:recommended", "@vue/typescript"],
+    extends: [
+        "plugin:vue/recommended",
+        "airbnb-base",
+        "eslint:recommended",
+        "@vue/typescript",
+    ],
     parser: "vue-eslint-parser",
 
     parserOptions: {
@@ -31,7 +36,10 @@ module.exports = {
         "no-param-reassign": ["error", { props: false }],
         "no-restricted-syntax": "off",
         "no-await-in-loop": "off",
-        "no-unused-expressions": ["error", { allowShortCircuit: true, allowTernary: true }],
+        "no-unused-expressions": [
+            "error",
+            { allowShortCircuit: true, allowTernary: true },
+        ],
         "import/extensions": [
             "error",
             "always",
@@ -42,7 +50,7 @@ module.exports = {
             },
         ],
         "vue/no-v-html": "off",
-        indent: "off",
+        indent: ["error", 4],
         "vue/script-indent": ["error", 4, { baseIndent: 0, switchCase: 1 }],
         "linebreak-style": "off",
         "vue/max-attributes-per-line": [
@@ -57,17 +65,17 @@ module.exports = {
         "nonblock-statement-body-position": ["warn", "any"],
         "vue/html-indent": ["error", 2],
         "vue/require-default-prop": "off",
-        "vue/script-setup-uses-vars": "off"
+        "vue/script-setup-uses-vars": "off",
     },
 
-    ignorePatterns: ["src/external/**", "src/locales/**", ".eslintrc.js", "*.config.js"],
+    ignorePatterns: ["src/external/**", "src/locales/**"],
 
     settings: {
         "import/resolver": {
             alias: {
                 map: [["@", "./src"]],
                 extensions: [".js", ".vue", ".ts"],
-            }
+            },
         },
     },
 };

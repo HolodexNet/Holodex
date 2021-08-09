@@ -1,24 +1,27 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from "vite";
 import { createVuePlugin } from "vite-plugin-vue2";
 import ViteComponents, { VuetifyResolver } from "vite-plugin-components";
-import visualizer from 'rollup-plugin-visualizer';
+import visualizer from "rollup-plugin-visualizer";
 import yaml from "@rollup/plugin-yaml";
 import { VitePWA } from "vite-plugin-pwa";
-import path from "path";
+import { resolve, replace } from "path";
 
+const API_BASE_URL = process.env.API_BASE_URL || "https://staging.holodex.net";
+const REWRITE_API_ROUTES = !!process.env.REWRITE_API_ROUTES;
 
 export default defineConfig({
     plugins: [
         yaml(),
         createVuePlugin(),
         ViteComponents({
-            customComponentResolvers: [VuetifyResolver()]
+            customComponentResolvers: [VuetifyResolver()],
         }),
         VitePWA({
             manifest: {
-              // content of manifest
+                // content of manifest
                 display: "standalone",
-                theme_color:"#42a5f5",
+                theme_color: "#42a5f5",
                 name: "Holodex",
                 background_color: "#42a5f5",
                 start_url: "/?utm_source=homescreen",
@@ -30,7 +33,9 @@ export default defineConfig({
                 swDest: "./dist/sw.js",
                 runtimeCaching: [
                     {
-                        urlPattern: new RegExp("https://fonts.(?:googleapis|gstatic).com/(.*)"),
+                        urlPattern: new RegExp(
+                            "https://fonts.(?:googleapis|gstatic).com/(.*)",
+                        ),
                         handler: "CacheFirst",
                         options: {
                             cacheName: "google-fonts",
@@ -43,7 +48,9 @@ export default defineConfig({
                         },
                     },
                     {
-                        urlPattern: new RegExp("https://yt3.ggpht.com/(a/|ytc/)(.*)=s(40|88)-c-k-c0x00ffffff-no-rj-mo(.*)"),
+                        urlPattern: new RegExp(
+                            "https://yt3.ggpht.com/(a/|ytc/)(.*)=s(40|88)-c-k-c0x00ffffff-no-rj-mo(.*)",
+                        ),
                         handler: "CacheFirst",
                         options: {
                             cacheName: "channel-photo",
@@ -71,29 +78,42 @@ export default defineConfig({
                         },
                     },
                 ],
-              // workbox options for generateSW
-            }
+                // workbox options for generateSW
+            },
         }),
-        visualizer({ gzipSize: true })
+        visualizer({ gzipSize: true }),
     ],
     resolve: {
         alias: [
             {
                 find: "@",
-                replacement: path.resolve(__dirname, "src")
-            }
-        ]
+                replacement: resolve(__dirname, "src"),
+            },
+        ],
     },
     sourcemap: true,
     build: {
         rollupOptions: {
             input: {
-                main: path.resolve(__dirname, 'index.html'),
-                seo: path.resolve(__dirname, 'seo.html')
-            }
-        }
+                main: resolve(__dirname, "index.html"),
+                seo: resolve(__dirname, "seo.html"),
+            },
+        },
     },
     server: {
-        port: 8080
-    }
+        port: 8080,
+        proxy: {
+            "/api": {
+                target: API_BASE_URL,
+                changeOrigin: true,
+                secure: false,
+                rewrite: (path) => (REWRITE_API_ROUTES ? replace(/^\/api/, "") : path),
+            },
+            "^/(stats|orgs).json$": {
+                target: API_BASE_URL,
+                changeOrigin: true,
+                secure: false,
+            },
+        },
+    },
 });
