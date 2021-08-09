@@ -319,12 +319,22 @@ views:
       remove: Excluir
       desktop: Desktop
       mobile: Mobile
+      autoLayout: Layout Automático
+    presetEditor:
+      title: Salvar Layout
+      name: Nome
+      autoLayout: Usar layout no modo automático
     video:
       selectLive: Selecionar Live
       addCustomVideo: Adicionar Vídeo
+    fullScreen: Tela Cheia
+    mediaControls: Controles de Mídia
+    mediaControlsEmpty: Vídeos que estão sendo reproduzidos aparecerão aqui
+  playlist:
+    item-last-updated: 'Última Atualização:'
 time:
   soon: em breve
-  diff_future_date: Ao Vivo {0} ({1})
+  diff_future_date: Começa {0} ({1})
   distance_past_date: '{0}'
 editor:
   music:
