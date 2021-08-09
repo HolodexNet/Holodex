@@ -50,7 +50,7 @@ module.exports = {
             },
         ],
         "vue/no-v-html": "off",
-        indent: ["error", 4],
+        indent: "off",
         "vue/script-indent": ["error", 4, { baseIndent: 0, switchCase: 1 }],
         "linebreak-style": "off",
         "vue/max-attributes-per-line": [
@@ -78,4 +78,12 @@ module.exports = {
             },
         },
     },
+    overrides: [
+        {
+            files: [".eslintrc.js", "*.config.js"],
+            rules: {
+                indent: ["error", 4],
+            },
+        },
+    ],
 };

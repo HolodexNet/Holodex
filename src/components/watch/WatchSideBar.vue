@@ -38,7 +38,7 @@
                 :hover-icon="icons.mdiPlay"
                 style="width: 100%"
                 @play="$emit('timeJump', song.start)"
-                @playNow="$store.commit('music/skipTo', idx)"
+                @playNow="$emit('timeJump', song.start)"
               />
             </v-list>
           </v-row>

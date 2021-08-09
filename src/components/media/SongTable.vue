@@ -13,11 +13,6 @@
     disable-sort
     :loading="loading"
     :dense="$vuetify.breakpoint.smAndDown"
-    @click:row="
-      (item) => {
-        $store.commit('music/addSong', item);
-      }
-    "
   >
     <template v-if="$vuetify.breakpoint.smAndDown" #item="{ item }">
       <tr>

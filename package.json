@@ -6,7 +6,8 @@
     "serve": "vite",
     "build": "vite build --mode prod",
     "changelog": "changelog-to-html --outputDirectoryPath docs && generate-md --layout ./layouts/roryg-ghostwriter --input ./CHANGELOG.md --output ./docs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint --fix"
   },
   "workspaces": [
     "src/external/vue-grid-layout"
