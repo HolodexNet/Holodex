@@ -31,7 +31,6 @@ const actuallyLoadEnv = (mode, dir) => {
  * @param {{ mode: string, command: string }}
  */
 export default ({ mode }) => {
-    // `process.env` is second so that loaded env vars dont overwrite anything by accident
     const env = actuallyLoadEnv(mode, __dirname);
     const API_BASE_URL = env.API_BASE_URL ?? "https://staging.holodex.net";
     const REWRITE_API_ROUTES = !!env.REWRITE_API_ROUTES;
