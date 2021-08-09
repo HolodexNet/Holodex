@@ -26,6 +26,7 @@ export default defineConfig({
                 name: "Holodex",
                 background_color: "#42a5f5",
                 scope: "/",
+                start_url: "/",
                 icons: [
                     {
                         src: "img/icons/android-chrome-192x192.png",
