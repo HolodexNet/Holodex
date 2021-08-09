@@ -5,7 +5,7 @@ import ViteComponents, { VuetifyResolver } from "vite-plugin-components";
 import visualizer from "rollup-plugin-visualizer";
 import yaml from "@rollup/plugin-yaml";
 import { VitePWA } from "vite-plugin-pwa";
-import { resolve, replace } from "path";
+import { resolve } from "path";
 
 const API_BASE_URL = process.env.API_BASE_URL || "https://staging.holodex.net";
 const REWRITE_API_ROUTES = !!process.env.REWRITE_API_ROUTES;
@@ -126,7 +126,7 @@ export default defineConfig({
                 target: API_BASE_URL,
                 changeOrigin: true,
                 secure: false,
-                rewrite: (path) => (REWRITE_API_ROUTES ? replace(/^\/api/, "") : path),
+                rewrite: (path) => (REWRITE_API_ROUTES ? path.replace(/^\/api/, "") : path),
             },
             "^/(stats|orgs).json$": {
                 target: API_BASE_URL,
