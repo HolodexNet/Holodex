@@ -51,6 +51,8 @@ component:
     tlPresence: 過去半小時內有即時翻譯
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -139,6 +141,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -220,6 +223,7 @@ views:
     scrollModeLabel: 瀑布流設計
     scrollModeMsg: 選擇列表要使用分頁/無限捲軸模式。
     resetAllSettings: 重設所有設定/資料
+    resetAllSettingsWarning: 未儲存的變更將會遺失，確定要繼續嗎？
     clipLanguageSelection: '顯示以下語言的剪輯影片'
     tlLanguageSelection: 在翻譯聊天室中顯示下列語言
     defaultPage: 預設頁面
