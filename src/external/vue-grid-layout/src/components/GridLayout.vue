@@ -20,7 +20,7 @@
 </style>
 <script lang="ts">
 import Vue from "vue";
-const elementResizeDetectorMaker = require("element-resize-detector");
+import elementResizeDetectorMaker from "element-resize-detector";
 
 import {
     bottom,
