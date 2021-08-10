@@ -47,6 +47,7 @@ component:
     copyLink: Salin Pautan Holodex
     premiere: TAYANGAN PERDANA
     googleCalendar: Tambahkan ke Kalendar Google
+    totalTLs: Jumlah terjemahan sembang langsung
   videoDescription:
     description: Perihalan
   description:
@@ -217,6 +218,7 @@ views:
     scrollModeLabel: Mod Tatal
     scrollModeMsg: Selak laman dengan menatal atau menekan butang
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
+    resetAllSettingsWarning: Semua data anda akan hilang. Teruskan?
     clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
     tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
     defaultPage: Laman Lalai
@@ -243,6 +245,8 @@ views:
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
     nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong
     loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
+  about:
+    add_my_channel: Memohon Penambahan Saluran
   watch:
     theaterMode: Mod Teater
     mentionIconLabel: MENYEBUT
