@@ -8,6 +8,7 @@ import { VitePWA } from "vite-plugin-pwa";
 import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
+import replace from "@rollup/plugin-replace";
 
 /**
  * @param {string} mode
@@ -124,6 +125,9 @@ export default ({ mode }) => {
                     ],
                     // workbox options for generateSW
                 },
+            }),
+            replace({
+                "process.env.NODE_ENV": JSON.stringify(mode),
             }),
             visualizer({ gzipSize: true }),
         ],

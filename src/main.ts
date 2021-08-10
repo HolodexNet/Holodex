@@ -11,8 +11,6 @@ import router from "./router";
 import { i18n, vuetify } from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
-Vue.config.devtools = window.location.hostname === "localhost";
-Vue.config.performance = ["localhost", "staging.holodex.net"].includes(window.location.hostname);
 
 Vue.use(
     VueGTag,
