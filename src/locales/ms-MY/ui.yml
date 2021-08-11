@@ -51,6 +51,8 @@ component:
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -139,6 +141,7 @@ views:
     collabs: Kerjasama
     about: Perihal
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -314,6 +317,7 @@ views:
     unmuteAll: Nyahsenyap Semua
     autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak kendiri
     createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
+    openToolbarTip: Mulakan berbilang tontonan dengan membuka ruangan alat
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
