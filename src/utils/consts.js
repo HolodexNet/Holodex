@@ -81,7 +81,7 @@ export const TL_LANGS = Object.freeze([
         value: "zh",
     },
     {
-        text: "Indonesian / Malay",
+        text: "Bahasa Indonesia / Melayu",
         value: "id",
     },
     {
