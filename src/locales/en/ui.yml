@@ -341,6 +341,7 @@ views:
     unmuteAll: Unmute All
     autoLayoutTip: Click on a channel to start watching using auto layout mode
     createLayoutTip: Create your own layout by adding a cell, or using a preset
+    openToolbarTip: Open the toolbar to start using multiview
     preset:
       shareOnDiscord: >-
         Have a cool layout to share? Use the share button and let us know on our
