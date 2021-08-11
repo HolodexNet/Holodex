@@ -51,6 +51,8 @@ component:
     tlPresence: 過去半小時內有即時翻譯
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -139,6 +141,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -315,6 +318,7 @@ views:
     unmuteAll: 全部取消靜音
     autoLayoutTip: 點擊任意頻道即可使用自動排版模式觀看實況
     createLayoutTip: 增加新分割以創造專屬排版，亦能使用預設佈局
+    openToolbarTip: 開啟控制欄以開始使用多窗工具
     preset:
       shareOnDiscord: >-
         想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
