@@ -70,13 +70,13 @@ export default {
         // Open google calendar to add the time specified in the element
         openGoogleCalendar() {
             const startdate = this.video.start_scheduled;
-            const url1 = "https://www.google.com/calendar/render?action=TEMPLATE&text=";
+            const baseurl = "https://www.google.com/calendar/render?action=TEMPLATE&text=";
             const videoTitle = encodeURIComponent(this.video.title);
-            const url2 = "&dates=";
             const googleCalendarFormat = "YYYYMMDD[T]HHmmss";
             const eventStart = dayjs(startdate).format(googleCalendarFormat);
             const eventEnd = dayjs(startdate).add(1, "hour").format(googleCalendarFormat);
-            window.open(url1.concat(videoTitle, url2, eventStart, "/", eventEnd), "_blank");
+            const details = `<a href="${window.origin}/watch/${this.video.id}">Open Video</a>`;
+            window.open(baseurl.concat(videoTitle, "&dates=", eventStart, "/", eventEnd, "&details=", details), "_blank");
         },
         copyLink() {
             const link = `${window.origin}/watch/${this.video.id}`;
