@@ -51,6 +51,8 @@ component:
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -139,6 +141,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -314,6 +317,7 @@ views:
     unmuteAll: Alle Stummschaltungen aufheben
     autoLayoutTip: Klicke auf einen Kanal, um im automatischen Layout-Modus zu schauen
     createLayoutTip: Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine Vorlage verwendest
+    openToolbarTip: Öffne die Symbolleiste, um Multiview zu verwenden
     preset:
       shareOnDiscord: >-
         Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
