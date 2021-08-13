@@ -317,6 +317,7 @@ views:
     unmuteAll: Tümünün Sesini Aç
     autoLayoutTip: Oto düzen modunu kullanmak için bir kanala tıklayın
     createLayoutTip: Hücre ekleyerek veya önceden ayarlanmış düzen kullanarak kendi düzeninizi oluşturun
+    openToolbarTip: Çoklu izlemeye başlamak için araç çubuğunu açın
     preset:
       shareOnDiscord: >-
         Paylaşmak istediğin harika bir düzenin mi var? Paylaş butonunu kullanıp <a href="https://discord.gg/jctkgHBt4b">Discord sunucumuzda</a> bizimle paylaş!

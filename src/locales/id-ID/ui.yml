@@ -317,6 +317,7 @@ views:
     unmuteAll: Nyalakan Suara Semua Video
     autoLayoutTip: Tekan channel untuk mulai menonton menggunakan mode tataletak otomatis
     createLayoutTip: Membuat tataletak kreasimu sendiri dengan menambahkan kolom, atau menggunakan preset
+    openToolbarTip: Buka bilah alat untuk mulai menggunakan multiview
     preset:
       shareOnDiscord: >-
         Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!

@@ -47,8 +47,12 @@ component:
     copyLink: Salin Pautan Holodex
     premiere: TAYANGAN PERDANA
     googleCalendar: Tambahkan ke Kalendar Google
+    totalTLs: Jumlah terjemahan sembang langsung
+    tlPresence: Penerjemah yang masih bergiat 30 minit lalu
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -115,7 +119,7 @@ component:
       - Lain-lain
   thirdpartycookie:
     explanation: >-
-      Sesetengah penyemak imbas dengan dasar <b>kuki pihak ketiga</b> yang ketat ataupun yang menyekat cecikut <kbd>YouTube.com</kbd> berkebarangkalian menghadapi kesukaran mengelog masuk mahupun menggunakan sembang langsung Youtube. <br /><br /> Masalah ini boleh diselesaikan dengan memasukkan <kbd>Youtube.com</kbd> ke dalam senarai putih penyekat cecikut pihak ketiga ataupun menggunakan tahap tetapan keselamatan cecikut yang rendah bagi <kbd>Holodex.net</kbd>. <br /><br /> Berikut disertakan sekali beberapa tapak sesawang yang boleh memberikan maklumat lanjut berkenaan langkah-langkah yang harus dilakukan.
+      Sesetengah penyemak imbas dengan dasar <b>cecikut pihak ketiga</b> yang ketat ataupun yang menyekat cecikut <kbd>YouTube.com</kbd> berkebarangkalian menghadapi kesukaran mengelog masuk mahupun menggunakan sembang langsung Youtube. <br /><br /> Masalah ini boleh diselesaikan dengan memasukkan <kbd>Youtube.com</kbd> ke dalam senarai putih penyekat cecikut pihak ketiga ataupun menggunakan tahap tetapan keselamatan cecikut yang rendah bagi <kbd>Holodex.net</kbd>. <br /><br /> Berikut disertakan sekali beberapa tapak sesawang yang boleh memberikan maklumat lanjut berkenaan langkah-langkah yang harus dilakukan.
     dialogTitle: Penggunaan Sembang YouTube di Holodex
     alertText: >-
       Log masuk ke ruangan sembang YouTube tidak boleh dilakukan disebabkan oleh tetapan kerahsiaan penyemak imbas anda. Sila rujuk di sini bagi mendapatkan maklumat lanjut
@@ -137,6 +141,7 @@ views:
     collabs: Kerjasama
     about: Perihal
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -217,6 +222,7 @@ views:
     scrollModeLabel: Mod Tatal
     scrollModeMsg: Selak laman dengan menatal atau menekan butang
     resetAllSettings: Tetapkan Semula Kesemua Tetapan/Data
+    resetAllSettingsWarning: Semua data anda akan hilang. Teruskan?
     clipLanguageSelection: 'Paparkan sedutan yang berbahasa:'
     tlLanguageSelection: Paparkan terjemahan sembang langsung yang berbahasa
     defaultPage: Laman Lalai
@@ -243,6 +249,8 @@ views:
     check_about_page: Perubahan terkini boleh didapati di laman Perihal
     nowSupportsMultiOrg: Pelbagai kumpulan penggiat YouTube maya kini disokong
     loginCallToAction: Himpunkan kegemaran anda dengan mendaftar masuk!
+  about:
+    add_my_channel: Memohon Penambahan Saluran
   watch:
     theaterMode: Mod Teater
     mentionIconLabel: MENYEBUT
@@ -309,6 +317,7 @@ views:
     unmuteAll: Nyahsenyap Semua
     autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak kendiri
     createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
+    openToolbarTip: Mulakan berbilang tontonan dengan membuka ruangan alat
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
@@ -373,10 +382,12 @@ about:
     ytchatHeader: Akaun saya tidak log masuk di ruangan sembang YouTube!
     ytchatContent: >-
       Anda harus melumpuhkan sekatan cecikut pihak ketiga di penyemak imbas anda atau menyenaraikan tapak sesawang ini dan youtube.com dalam senarai putih bagi membenarkan cecikut pihak ketiga.
-    ytchatFirefox: Arahan melumpuhkan kuki oleh Firefox. Penyemak imbas lain mungkin menggunakan kaedah yang sama.
+    ytchatFirefox: Arahan melumpuhkan cecikut oleh Firefox. Penyemak imbas lain mungkin menggunakan kaedah yang sama.
     autoplayHeader: Automain tidak berfungsi!
     autoplayContent: Gelintar di internet cara menghidupkan automain bagi penyemak imbas masing-masing.
     musicPlayer: Peranti mudah alih tidak boleh menggunakan Pemain Muzik dengan baik!
+    musicPlayerContent: >-
+      Peranti iOS umumnya tidak membenarkan muzik di Holodex dimainkan apabila layar atau Safari ditutup. Mungkin terdapat juga larangan ini di peranti Android mengikut peranti masing-masing. Sekiranya anda tahu cara membuatkan muzik dimainkan dengan lebih baik, mohon diberikan maklum balas di Discord.
     videoLinkage: Bagaimana caranya agar penggiat YouTube maya yang berkenaan dipautkan dengan tepat?
     videoLinkageContent: >-
       Keseluruhan maklumat dihuraikan berdasarkan isi perihalan video. Jika anda membuat sedutan mana-mana siaran rasmi, pastikan pautannya disertakan sekali. Jika sedutan anda daripada hasil ciptaan peminat (contohnya di bilibili), pastikan penggiyut maya yang berkaitan dipautkan saluran YouTube-nya. Sedutan yang tidak memautkan saluran penggiyut maya yang berkenaan tidak akan dipaparkan di Holodex kerana sedutan di tapak ini harus ada pautan kepada penggiyut maya yang disenaraikan di Holodex.

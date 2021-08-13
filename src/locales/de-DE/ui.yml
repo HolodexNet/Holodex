@@ -51,6 +51,8 @@ component:
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -139,6 +141,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -219,6 +222,7 @@ views:
     scrollModeLabel: Scroll-Modus
     scrollModeMsg: Blättern/Tippen zum Umblättern der Seiten verwenden
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
+    resetAllSettingsWarning: Du wirst all deine Daten verlieren. Fortfahren?
     clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
     tlLanguageSelection: Live-Chat-Übersetzungen in diesen Sprachen anzeigen
     defaultPage: Standardseite
@@ -313,6 +317,7 @@ views:
     unmuteAll: Alle Stummschaltungen aufheben
     autoLayoutTip: Klicke auf einen Kanal, um im automatischen Layout-Modus zu schauen
     createLayoutTip: Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine Vorlage verwendest
+    openToolbarTip: Öffne die Symbolleiste, um Multiview zu verwenden
     preset:
       shareOnDiscord: >-
         Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
@@ -441,12 +446,12 @@ about:
   credits:
     title: Credits
     contents:
-      - Besonders möchte ich mich bedanken beim
+      - Insbesondere bedanken möchte ich mich beim
       - Team für ihre Arbeit an der
       - >-
-        Dank gebührt auch den Clippern dafür, dass sie den Überseebrüdern helfen! Bitte sieh sie dir an!
+        Dank gebührt auch den Clippern dafür, dass sie uns Überseebrüdern helfen! Bitte sieh sie dir an!
       - >-
-        Dies ist eine von Fans erstellte Website, ihre Inhalte sind Eigentum von Cover Corp und ihren Partnern. Die Seite folgt den Richtlinien von Cover Corps
+        Diese Website wurde von Fans erstellt, ihre Inhalte sind Eigentum von Cover Corp und ihren Partnern. Die Seite folgt den Richtlinien von Cover Corps
       - Urheberrechtserklärung
   changelog:
     title: Änderungsverlauf

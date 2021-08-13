@@ -1,1 +1,9 @@
 ---
+component:
+  comment:
+    close: Peklose
+views:
+  app:
+    close_btn: Peklose
+  favorites:
+    close: Peklose

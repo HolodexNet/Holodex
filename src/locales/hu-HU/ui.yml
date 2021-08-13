@@ -219,6 +219,7 @@ views:
     scrollModeLabel: Görgő mód
     scrollModeMsg: Görgetés/érintés használata lapozáshoz
     resetAllSettings: Minden beállítás/adat alaphelyzetbe állítása
+    resetAllSettingsWarning: Minden adatod el fog veszni. Folytatod?
     clipLanguageSelection: 'Klipek megjelenítése az alábbi nyelveken:'
     tlLanguageSelection: Élő chatek fordítása az alábbi nyelveken
     defaultPage: Alapértelmezett oldal
