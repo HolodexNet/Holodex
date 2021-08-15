@@ -51,6 +51,8 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -139,6 +141,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -314,6 +317,7 @@ views:
     unmuteAll: Minden némítás visszavonása
     autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
     createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
+    openToolbarTip: Nyisd meg az eszköztárat a több képernyős nézet használatához
     preset:
       shareOnDiscord: >-
         Van egy jópofa elrendezésed? Használd a megosztás gombot és mutasd meg a <a href="https://discord.gg/jctkgHBt4b"> Discord szerverünkön</a>!
