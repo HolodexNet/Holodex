@@ -333,7 +333,9 @@ views:
     mediaControls: Controles de Mídia
     mediaControlsEmpty: Vídeos que estão sendo reproduzidos aparecerão aqui
   playlist:
+    playlist-is-modified: Não salvo
     item-last-updated: 'Última Atualização:'
+    new-playlist-btn-label: Criar uma nova lista
 time:
   soon: em breve
   diff_future_date: Começa {0} ({1})
