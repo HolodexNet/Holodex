@@ -47,6 +47,7 @@ component:
     copyLink: Copiar link Holodex
     premiere: ESTREIA
     googleCalendar: Adicionar ao Google Agenda
+    totalTLs: Total de tradutores no chat
     tlPresence: Tradutor ativo nos últimos 30 min
   videoDescription:
     description: Descrição
@@ -335,7 +336,11 @@ views:
   playlist:
     playlist-is-modified: Não salvo
     item-last-updated: 'Última Atualização:'
+    login-prompt: Faça login para salvar as listas e ter mais de uma
     new-playlist-btn-label: Criar uma nova lista
+    page-heading: 'Suas listas:'
+    page-instruction: Clique numa lista para torná-la ativa.
+    change-loss-warning: Perderás mudanças não salvas. Continuar?
 time:
   soon: em breve
   diff_future_date: Começa {0} ({1})
@@ -343,6 +348,7 @@ time:
 editor:
   music:
     add: Adicionar
+    update: Atualizar
     permission: >-
       Você precisa ser um usuário com título de "Editor" ou superior para atualizar ou excluir  músicas existente. Use nosso <a class='white--text' href='/about'>discord</a> para notificar os editores sobre problemas ou abusos, ou candidate-se para se tornar um editor.
     titles:
@@ -400,6 +406,14 @@ about:
     Você pode criar uma issue no <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> ou contactar a equipe do Holodex no Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Creditos
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+        This is a fan made website and the content found on this website is owned by Cover corp and its partners. The site follows the guidelines set forth by Cover corp in their
+      - Contrato de Licença de Obra Derivada
   changelog:
     title: Mudanças
   news:
