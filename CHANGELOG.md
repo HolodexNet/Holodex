@@ -1,4 +1,13 @@
 # Holodex Changelog
+
+### 2.17.3 Holodex [*August 21st, 2021*]
+(not released yet)
+##### New Features
+- Placeholder
+##### Patches & Bugfixes
+- Placeholder
+
+
 ### 2.17.2 Holodex [*August 2nd, 2021*]
 ##### New Features
 - Music player now has keyboard controls for `m`, `j`, `l`, `k` (Thanks @akiroz)
