@@ -1,39 +1,19 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { createVuePlugin } from "vite-plugin-vue2";
 import ViteComponents, { VuetifyResolver } from "vite-plugin-components";
 import visualizer from "rollup-plugin-visualizer";
 import yaml from "@rollup/plugin-yaml";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "path";
-import fs from "fs";
-import dotenv from "dotenv";
-
-/**
- * @param {string} mode
- * @param {string} dir
- * @returns {Record<string, string>}
- */
-const actuallyLoadEnv = (mode, dir) => {
-    let env = {};
-    const files = [".env", ".env.local", `.env.${mode}`, `.env.${mode}.local`];
-    for (const file of files) {
-        if (fs.existsSync(path.join(dir, file))) {
-            const content = fs.readFileSync(path.join(dir, file), "utf-8");
-            const data = dotenv.parse(content);
-            env = { ...env, ...data };
-        }
-    }
-    return env;
-};
 
 /**
  * @param {{ mode: string, command: string }}
  */
 export default ({ mode }) => {
-    const env = actuallyLoadEnv(mode, __dirname);
-    const API_BASE_URL = env.API_BASE_URL ?? "https://staging.holodex.net";
-    const REWRITE_API_ROUTES = !!env.REWRITE_API_ROUTES;
+    const env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+    const API_BASE_URL = env.VITE_API_BASE_URL ?? "https://staging.holodex.net";
+    const REWRITE_API_ROUTES = !!env.VITE_REWRITE_API_ROUTES;
 
     return defineConfig({
         plugins: [
@@ -151,6 +131,7 @@ export default ({ mode }) => {
                     target: API_BASE_URL,
                     changeOrigin: true,
                     secure: false,
+                    ws: true,
                     rewrite: (url) => (REWRITE_API_ROUTES ? url.replace(/^\/api/, "") : url),
                 },
                 "^/(stats|orgs).json$": {
