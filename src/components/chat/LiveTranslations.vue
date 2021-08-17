@@ -131,8 +131,7 @@ import Vue from "vue";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
 
-console.log(API_BASE_URL);
-const manager = new Manager("https://holodex.net", {
+const manager = new Manager(API_BASE_URL, {
     reconnectionAttempts: 10,
     transports: ["websocket"],
     upgrade: false,

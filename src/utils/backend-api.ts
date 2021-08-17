@@ -4,8 +4,9 @@ import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
 import type { Playlist, PlaylistList } from "./types";
 
-export const API_BASE_URL = "/api";
-export const SITE_BASE_URL = "/";
+// Need full domain for socket.io to work!!
+export const API_BASE_URL = `${window.location.origin}/api`;
+export const SITE_BASE_URL = `${window.location.origin}`;
 
 export const axiosInstance = (() => {
     const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
