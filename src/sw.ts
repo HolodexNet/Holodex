@@ -7,6 +7,7 @@ let needsRefreshCallback = () => {};
 let offlineReadyCallback = () => {};
 let reg: ServiceWorkerRegistration | undefined;
 
+const SW_UPDATE_INTERVAL = 60 * 60 * 1000;
 function waitFor(type: string, target: EventTarget): Promise<Event> {
     return new Promise((resolve) => {
         target.addEventListener(type, (evt) => {
@@ -25,6 +26,10 @@ registerSW({
     },
     onRegistered(newReg) {
         reg = newReg;
+        // check for sw updates at 1 hour intervals
+        newReg && setInterval(() => {
+            newReg.update();
+        }, SW_UPDATE_INTERVAL);
     },
     onRegisterError(err) {
         console.log("Error during service worker registration:", err);
