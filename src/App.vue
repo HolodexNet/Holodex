@@ -13,48 +13,7 @@
         <router-view :key="viewKey" />
       </keep-alive>
     </v-main>
-
-    <v-snackbar
-      v-if="needRefresh"
-      bottom
-      right
-      :value="needRefresh"
-      :timeout="-1"
-      color="primary"
-    >
-      {{ $t("views.app.update_available") }}
-      <template #action>
-        <v-btn text class="ml-auto" @click="updateServiceWorker">
-          {{ $t("views.app.update_btn") }}
-        </v-btn>
-        <v-btn text class="ml-auto" @click="needRefresh = false">
-          {{ $t("views.app.close_btn") }}
-        </v-btn>
-      </template>
-    </v-snackbar>
-    <v-snackbar
-      v-if="showUpdateDetails"
-      bottom
-      center
-      :value="showUpdateDetails"
-      color="primary"
-      :timeout="-1"
-    >
-      {{ $t("views.app.check_about_page") }}
-      <template #action>
-        <v-btn
-          text
-          class="ml-auto"
-          to="/about#changelog"
-          @click="showUpdateDetails = false"
-        >
-          Changelog
-        </v-btn>
-        <v-btn text class="ml-auto" @click="showUpdateDetails = false">
-          {{ $t("views.app.close_btn") }}
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <PWAUpdate />
     <ReportDialog />
   </v-app>
 </template>
@@ -63,9 +22,9 @@
 import MainNav from "@/components/nav/MainNav.vue";
 import ReportDialog from "@/components/common/ReportDialog.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
+import PWAUpdate from "@/components/common/PWAUpdate.vue";
 import { loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
-import * as SW from "./sw";
 
 export default {
     name: "App",
@@ -77,6 +36,7 @@ export default {
         MainNav,
         ReportDialog,
         PullToRefresh,
+        PWAUpdate,
     },
     data() {
         return {
@@ -96,14 +56,6 @@ export default {
         },
         darkMode() {
             return this.$store.state.settings.darkMode;
-        },
-        showUpdateDetails: {
-            set(val) {
-                this.$store.commit("setShowUpdatesDetail", val);
-            },
-            get() {
-                return this.$store.state.showUpdateDetails;
-            },
         },
         lang() {
             // connected to the watch.lang hook below.
@@ -137,7 +89,41 @@ export default {
         document.addEventListener("visibilitychange", () => {
             this.$store.commit("setVisiblityState", document.visibilityState);
         });
-        axiosInstance.interceptors.response.use(undefined, (error) => {
+        axiosInstance.interceptors.response.use(undefined, this.interceptError);
+
+        // set theme
+        this.$vuetify.theme.dark = this.darkMode;
+        // set lang
+        this.$i18n.locale = this.$store.state.settings.lang;
+        this.$vuetify.lang.current = this.$store.state.settings.lang;
+
+        // relog if necessary:
+        this.$store.dispatch("loginCheck");
+
+        if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
+
+        this.favoritesUpdateTask = setInterval(() => {
+            this.$store.dispatch("favorites/fetchLive", { minutes: 5 });
+        }, 6 * 60 * 1000);
+
+        // queue up a favorite updating task to run in 5 seconds.
+        // rationale: if I'm reloading the page i expect to have recent Favorites data in my side bar and stuff.
+        // why 5 seconds? 1. it's to give the illusion of the page updating quickly.
+        // 2. it's so if you're landing on the /favorites page this request occurs AFTER that one's to save bandwidth.
+        setTimeout(() => {
+            this.$store.dispatch("favorites/fetchLive", { force: false, minutes: 2 });
+        }, 5000);
+        // check current breakpoint and set isMobile
+        this.updateIsMobile();
+    },
+    beforeDestroy() {
+        if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
+    },
+    methods: {
+        updateIsMobile() {
+            this.$store.commit("setIsMobile", ["xs", "sm"].includes(this.$vuetify.breakpoint.name));
+        },
+        interceptError(error) {
             // Any status codes that falls outside the range of 2xx cause this function to trigger
             // Do something with response error
             if (error.response) {
@@ -172,51 +158,6 @@ export default {
                 console.error("Error", error.message);
             }
             return Promise.reject(error);
-        });
-
-        // set theme
-        this.$vuetify.theme.dark = this.darkMode;
-        // set lang
-        // setDayjsLang(this.$store.state.settings.lang);
-        this.$i18n.locale = this.$store.state.settings.lang;
-        this.$vuetify.lang.current = this.$store.state.settings.lang;
-
-        // relog if necessary:
-        this.$store.dispatch("loginCheck");
-
-        if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
-
-        this.favoritesUpdateTask = setInterval(() => {
-            this.$store.dispatch("favorites/fetchLive", { minutes: 5 });
-        }, 6 * 60 * 1000);
-
-        // queue up a favorite updating task to run in 5 seconds.
-        // rationale: if I'm reloading the page i expect to have recent Favorites data in my side bar and stuff.
-        // why 5 seconds? 1. it's to give the illusion of the page updating quickly.
-        // 2. it's so if you're landing on the /favorites page this request occurs AFTER that one's to save bandwidth.
-        setTimeout(() => {
-            this.$store.dispatch("favorites/fetchLive", { force: false, minutes: 2 });
-        }, 5000);
-        // check current breakpoint and set isMobile
-        this.updateIsMobile();
-
-        SW.setNeedsRefreshCallback(() => {
-            console.log("sw needs refresh");
-            this.needRefresh = true;
-        });
-    },
-    beforeDestroy() {
-        if (this.favoritesUpdateTask) clearInterval(this.favoritesUpdateTask);
-    },
-    methods: {
-        updateIsMobile() {
-            this.$store.commit("setIsMobile", ["xs", "sm"].includes(this.$vuetify.breakpoint.name));
-        },
-        async updateServiceWorker() {
-            console.log("update service worker");
-            await SW.updateServiceWorker();
-            this.showUpdateDetails = true;
-            window.location.reload();
         },
     },
 };
@@ -245,60 +186,6 @@ body {
     padding-bottom: 140px;
 }
 
-/* pull to refresh skin */
-
-.ptr--ptr {
-    box-shadow: none !important;
-}
-
-.ptr--box {
-    padding: 0px !important;
-    justify-content: center;
-    display: flex;
-}
-
-/* icon size */
-.ptr--icon,
-.ptr--text > svg {
-    width: 32px;
-    height: 32px;
-}
-
-/* rotate left arrow to be down arrow, micro bandwidth savings */
-.ptr--icon {
-    transform: rotate(90deg);
-}
-
-/* only display either icon or text */
-.ptr--ptr.ptr--refresh .ptr--content .ptr--icon {
-    display: none;
-}
-
-.ptr--text {
-    display: none;
-}
-
-/* rotate arrow when threshold reached */
-.ptr--ptr.ptr--release .ptr--content .ptr--icon {
-    transform: rotate(270deg);
-}
-
-/* show text with refresh spinner and animate */
-.ptr--ptr.ptr--refresh .ptr--content .ptr--text {
-    animation: spin 1.1s infinite linear;
-    display: block;
-}
-
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
 .thin-scroll-bar {
     scrollbar-width: thin;
 }
