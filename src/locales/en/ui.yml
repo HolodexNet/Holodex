@@ -109,6 +109,7 @@ component:
     readMore: Read more
   reportDialog:
     title: Report
+    collabing: This channel may be collabing with a {org} member or with your favorites. You can disable this feature through the settings
     comments: What actions should Holodex take?
     success: Report sent, thank you!
     reasons:

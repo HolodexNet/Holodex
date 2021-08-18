@@ -15,6 +15,9 @@
           >
             Error Occured
           </v-alert>
+          <v-alert v-if="isCollab" type="info">
+            {{ $t("component.reportDialog.collabing", {org: $store.state.currentOrg.name }) }}
+          </v-alert>
           <span class="text-body-1">{{ video.title }}</span>
           <br>
           {{ video.channel.name }}
@@ -95,10 +98,12 @@
 <script>
 import backendApi from "@/utils/backend-api";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
+import filterVideos from "@/mixins/filterVideos";
 
 export default {
     name: "ReportDialog",
     components: { ChannelSocials },
+    mixins: [filterVideos],
     data() {
         return {
             selectedReason: "Video tagged incorrectly",
@@ -132,6 +137,9 @@ export default {
         },
         video() {
             return this.$store.state.reportVideo;
+        },
+        isCollab() {
+            return !this.filterVideos(this.video, { hideCollabs: true });
         },
         user() {
             return this.$store.state.userdata.user;

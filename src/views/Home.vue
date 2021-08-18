@@ -55,6 +55,7 @@
             :cols="colSizes"
             :dense="currentGridSize > 0"
             hide-ignored-topics
+            :hide-collabs="shouldHideCollabs"
           />
           <v-divider v-if="lives.length" class="my-3 secondary" />
           <VideoCardList
@@ -64,6 +65,7 @@
             :cols="colSizes"
             :dense="currentGridSize > 0"
             hide-ignored-topics
+            :hide-collabs="shouldHideCollabs"
           />
         </div>
         <div v-show="!isLoading && lives.length == 0 && upcoming.length == 0" class="ma-auto pa-5 text-center">
@@ -88,6 +90,7 @@
               :cols="colSizes"
               :dense="currentGridSize > 0"
               hide-ignored-topics
+              :hide-collabs="shouldHideCollabs"
             />
             <!-- only show SkeletonCardList if it's loading -->
             <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
@@ -174,6 +177,9 @@ export default {
         },
         liveUpcomingHeaderSplit() {
             return this.$t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/);
+        },
+        shouldHideCollabs() {
+            return this.tab !== this.Tabs.CLIPS && this.$store.state.settings.hideCollabStreams && this.$store.state.currentOrg.name !== "All Vtubers";
         },
     },
     watch: {

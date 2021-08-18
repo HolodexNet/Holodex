@@ -32,7 +32,6 @@ const actions = {
             return api
                 .live({
                     org: rootState.currentOrg.name,
-                    include: "mentions",
                 })
                 .then((res) => {
                     commit("setLive", res);
