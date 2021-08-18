@@ -51,6 +51,8 @@ component:
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -108,6 +110,7 @@ component:
     readMore: Mehr anzeigen
   reportDialog:
     title: Melden
+    collabing: Dieser Kanal kollaboriert möglicherweise mit einem {org} Mitglied oder mit deinen Favoriten. Du kannst diese Funktion in den Einstellungen deaktivieren
     comments: Welche Maßnahmen sollte Holodex ergreifen?
     success: Bericht gesendet, vielen Dank!
     reasons:
@@ -139,6 +142,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
