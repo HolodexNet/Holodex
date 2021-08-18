@@ -51,6 +51,8 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -108,6 +110,7 @@ component:
     readMore: Bővebben
   reportDialog:
     title: Bejelentés
+    collabing: Ez a csatorna kollaborálhat egy {org} taggal vagy a kedvenceiddel. Kikapcsolhatod ezt a funkciót a beállításokban
     comments: Mit kéne a Holodexnek tennie?
     success: Visszajelzés elküldve. Köszönjük!
     reasons:
@@ -139,6 +142,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
