@@ -51,6 +51,8 @@ component:
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -108,6 +110,7 @@ component:
     readMore: Lihat selanjutnya
   reportDialog:
     title: Laporkan
+    collabing: Ada kemungkinan saluran ini bersiaran sama dengan ahli {org} atau mana-mana penggiat YouTube kegemaranmu. Saluran ini boleh disembunyikan di laman tetapan
     comments: Apakah tindakan selanjutnya?
     success: Terima kasih! Laporan telah dikirim.
     reasons:
@@ -139,6 +142,7 @@ views:
     collabs: Kerjasama
     about: Perihal
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
