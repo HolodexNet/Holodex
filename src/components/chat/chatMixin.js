@@ -86,7 +86,7 @@ export default {
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://")) {
                 // match a :HUMU:https://<url>
-                const regex = /(:\S+:)(https:\/\/\S*-c-k-nd)/gi;
+                const regex = /(:\S+:)(https:\/\/(yt\d+\.ggpht\.com\/\S+-c-k-nd|www\.youtube\.com\/\S+\.svg))/gi;
                 const str = msg.message;
                 // find first match
                 let match = regex.exec(str);
@@ -99,7 +99,7 @@ export default {
                     processed += str.substring(curIndex, index);
                     processed += `<img src="${match[2].replace("=w48-h48-c-k-nd", "=w24-h24-c-k-nd")}" alt="${
                         match[1]
-                    }"/>`;
+                    }" style="width: auto; height: 1.3em; vertical-align: middle;" />`;
                     curIndex = index + match[0].length;
                     match = regex.exec(str);
                 }
