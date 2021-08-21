@@ -110,6 +110,7 @@ component:
     readMore: Baca selengkapnya
   reportDialog:
     title: Laporkan
+    collabing: Channel ini mungkin sedang berkolaborasi dengan salah satu anggota {org} atau salah satu vtuber favoritmu. Kamu dapat menonaktifkan fitur ini di pengaturan
     comments: Tindakan apa yang harus Holodex lakukan?
     success: Laporan telah dikirim, Terima Kasih!
     reasons:

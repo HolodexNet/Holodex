@@ -110,6 +110,7 @@ component:
     readMore: Daha fazla
   reportDialog:
     title: Şikayet et
+    collabing: Kanal, bir {org} üyesi veya favorilerinizden biri ile collab yapıyor olabilir. Bu özelliği ayarlardan kapatabilirsiniz
     comments: Holodex nasıl bir eylemde bulunmalı?
     success: Şikayer gönderildi, teşekkürler!
     reasons:

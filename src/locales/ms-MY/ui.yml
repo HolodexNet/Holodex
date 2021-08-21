@@ -110,6 +110,7 @@ component:
     readMore: Lihat selanjutnya
   reportDialog:
     title: Laporkan
+    collabing: Ada kemungkinan saluran ini bersiaran sama dengan ahli {org} atau mana-mana penggiat YouTube kegemaranmu. Saluran ini boleh disembunyikan di laman tetapan
     comments: Apakah tindakan selanjutnya?
     success: Terima kasih! Laporan telah dikirim.
     reasons:

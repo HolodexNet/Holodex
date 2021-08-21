@@ -110,6 +110,7 @@ component:
     readMore: Mehr anzeigen
   reportDialog:
     title: Melden
+    collabing: Dieser Kanal kollaboriert möglicherweise mit einem {org} Mitglied oder mit deinen Favoriten. Du kannst diese Funktion in den Einstellungen deaktivieren
     comments: Welche Maßnahmen sollte Holodex ergreifen?
     success: Bericht gesendet, vielen Dank!
     reasons:
