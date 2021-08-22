@@ -44,6 +44,9 @@ export default {
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];
         },
+        startTimeMillis() {
+            return Number(dayjs(this.video.start_actual || this.video.start_scheduled));
+        },
     },
     methods: {
         loadMessages(firstLoad = false, loadAll = false) {
@@ -81,6 +84,7 @@ export default {
             if (msg.is_owner) msg.prefix += "[Owner]";
             if (msg.is_vtuber) msg.prefix += "[Vtuber]";
             msg.timestamp = +msg.timestamp;
+            msg.relativeSeconds = (msg.timestamp - this.startTimeMillis) / 1000;
             msg.displayTime = this.utcToTimestamp(msg.timestamp);
             msg.key = msg.name + msg.timestamp + msg.message;
             // Check if there's any emojis represented as URLs formatted by backend
@@ -109,9 +113,7 @@ export default {
             return msg;
         },
         utcToTimestamp(utc) {
-            return formatDuration(
-                dayjs.utc(utc).diff(Number(dayjs(this.video.start_actual || this.video.start_scheduled))),
-            );
+            return formatDuration(dayjs.utc(utc).diff(this.startTimeMillis));
         },
     },
 };

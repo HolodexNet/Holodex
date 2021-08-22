@@ -84,27 +84,18 @@ function defaultState() {
  *     Configure Synchronized Modules & Mutations across tabs
  *------------------------* */
 const syncedModules = /^(?:playlist|settings|history)/;
-const syncedMutations = /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout|setAutoLayout))/;
+const syncedMutations = new Set(["resetState", "setUser", "setShowUpdatesDetail", "firstVisit", "firstVisitMugen", "favorites/setFavorites", "favorites/resetFavorites", "favorites/setLive", "music/addSong", "music/removeSong", "music/resetState", "music/clearPlaylist", "multiview/addPresetLayout", "multiview/removePresetLayout", "multiview/togglePresetAutoLayout", "multiview/setAutoLayout"]);
 
+const excludePersist = new Set(["favorites/setLive", "home/setLive", "music/setIsOpen", "setReportVideo", "setVideoCardMenu", "setActiveSockets"]);
 export default new Vuex.Store({
     plugins: [
         createPersistedState({
             key: "holodex-v2",
-            // eslint-disable-next-line no-unused-vars
-            reducer: (state, paths) => {
-                const o = { ...state };
-                o.music = { ...o.music };
-                o.activeSockets = 0;
-                // o.music.state = MUSIC_PLAYER_STATE.PLAYING; // don't start new tab playing music.
-                o.music.isOpen = false; // hide it
-                o.reportVideo = null;
-                o.videoCardMenu = null;
-                return o;
-            },
             getState: createMigrate(migrations, "migration.version"),
+            filter: (m) => !excludePersist.has(m.type),
         }),
         createMutationsSharer({
-            predicate: (mutation /* state */) => mutation.type.match(syncedModules) || mutation.type.match(syncedMutations), // channel & channels
+            predicate: (mutation /* state */) => mutation.type.match(syncedModules) || syncedMutations.has(mutation.type), // channel & channels
         }), // Share all mutations except historyPop/Push across tabs.
     ],
     state: defaultState(),

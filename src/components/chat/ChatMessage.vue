@@ -13,12 +13,12 @@
         {{ `${source.prefix} ${source.name}` }}:
       </span>
     </div>
-    <div class="tl-message">
+    <a class="tl-message" :data-time="source.relativeSeconds">
       <span v-if="source.timestamp" class="tl-caption mr-1">
         {{ source.displayTime }}
       </span>
       <span class="text--primary" v-html="source.message" />
-    </div>
+    </a>
     <v-dialog v-model="showBlockChannelDialog" width="500">
       <v-card>
         <v-card-title>{{ source.name }}</v-card-title>

@@ -159,6 +159,7 @@
             :current-time="currentTime"
             @videoUpdate="handleVideoUpdate"
             @historyLength="handleHistoryLength"
+            @timeJump="seekTo"
           />
           <template v-if="!isMobile">
             <WatchPlaylist v-model="playlistIndex" @playNext="playNextPlaylist" />

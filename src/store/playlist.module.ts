@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import Vue from "vue";
 import backendApi from "@/utils/backend-api";
-import { Playlist } from "@/utils/types";
+import type { Playlist } from "@/utils/types";
 
 const initialState = {
     active: {

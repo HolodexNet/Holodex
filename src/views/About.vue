@@ -94,7 +94,7 @@
       <v-col
         cols="12"
         md="4"
-        lg="5"
+        lg="4"
         xl="4"
       >
         <v-card>

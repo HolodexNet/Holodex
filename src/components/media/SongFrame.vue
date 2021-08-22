@@ -14,7 +14,7 @@
           playsinline: 1,
           controls: 1,
           disablekb: 0,
-          fs: 0,
+          fs: 1,
           modestbranding: 1,
           rel: 0,
           cc_load_policy: 0,
