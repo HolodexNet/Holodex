@@ -15,6 +15,7 @@
     </v-main>
     <PWAUpdate />
     <ReportDialog />
+    <InstallPrompt v-if="$store.state.isMobile" />
   </v-app>
 </template>
 

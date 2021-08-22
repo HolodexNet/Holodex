@@ -1,30 +1,34 @@
 <template>
-  <div v-if="showInstallPrompt" class="pa-2 primary">
-    <div class="d-flex align-center">
-      <img
-        src="https://holodex.net/img/icons/apple-touch-icon-152x152.png"
-        style="height: 40px; width: 40px; border-radius: 6px"
-      >
-      <div class="ml-2 text-subtitle-2">
-        {{ $t("component.installPrompt.title") }}
+  <div>
+    <v-snackbar
+      v-model="showInstallPrompt"
+      color="primary"
+      :timeout="-1"
+    >
+      <div class="d-flex align-center">
+        <img
+          src="https://holodex.net/img/icons/apple-touch-icon-152x152.png"
+          style="height: 40px; width: 40px; border-radius: 6px"
+        >
+        <div class="ml-2 text-caption my-2">
+          {{ $t("component.installPrompt.callToAction") }}
+        </div>
       </div>
-    </div>
-    <div class="text-caption my-2">
-      {{ $t("component.installPrompt.callToAction") }}
-    </div>
-    <div class="d-flex justify-end">
-      <v-btn
-        text
-        small
-        style="color: rgba(255, 255, 255, 0.7)"
-        @click="hideInstallPrompt"
-      >
-        {{ $t("component.installPrompt.notNowBtn") }}
-      </v-btn>
-      <v-btn small color="secondary" @click="install">
-        {{ $t("component.installPrompt.installBtn") }}
-      </v-btn>
-    </div>
+
+      <div class="d-flex justify-end">
+        <v-btn
+          text
+          small
+          style="color: rgba(255, 255, 255, 0.7)"
+          @click="hideInstallPrompt"
+        >
+          {{ $t("component.installPrompt.notNowBtn") }}
+        </v-btn>
+        <v-btn small color="secondary" @click="install">
+          {{ $t("component.installPrompt.installBtn") }}
+        </v-btn>
+      </div>
+    </v-snackbar>
     <v-dialog v-model="iOSInstallDialog" max-width="350">
       <v-card class="py-4">
         <div style="text-align: center">
@@ -46,16 +50,6 @@
             {{ $t("component.installPrompt.iOS.afterExportIcon") }}
           </div>
         </div>
-        <!-- <v-card-actions class="py-0">
-                    <v-spacer />
-                    <v-btn
-                        color="primary"
-                        text
-                        @click="iOSInstallDialog = false"
-                    >
-                        Close
-                    </v-btn>
-                </v-card-actions> -->
       </v-card>
     </v-dialog>
   </div>
@@ -74,15 +68,20 @@ export default {
         };
     },
     computed: {
-        showInstallPrompt() {
-            const promptWeekly = new Date().getTime() - this.$store.state.lastShownInstallPrompt > 1000 * 60 * 60 * 24 * 7;
-            if (this.isAppleDevice() && !this.isStandAlone() && promptWeekly) {
-                return true;
-            }
-            if (this.deferredPrompt && promptWeekly) {
-                return true;
-            }
-            return false;
+        showInstallPrompt: {
+            get() {
+                const promptWeekly = new Date().getTime() - this.$store.state.lastShownInstallPrompt > 1000 * 60 * 60 * 24 * 7;
+                if (this.isAppleDevice() && !this.isStandAlone() && promptWeekly) {
+                    return true;
+                }
+                if (this.deferredPrompt && promptWeekly) {
+                    return true;
+                }
+                return false;
+            },
+            set(val) {
+                if (!val) { this.$store.commit("installPromptShown"); }
+            },
         },
     },
     mounted() {
@@ -96,10 +95,6 @@ export default {
         window.addEventListener("appinstalled", () => {
             this.deferredPrompt = null;
         });
-
-        // this.$gtag.event("pwa:source", {
-        //     event_label: this.isStandAlone() ? "pwa" : "browser",
-        // });
     },
     methods: {
         async install() {
@@ -111,9 +106,6 @@ export default {
             } else {
                 this.iOSInstallDialog = true;
             }
-            // this.$gtag.event("pwa:prompt", {
-            //     event_label: "interacted",
-            // });
         },
         hideInstallPrompt() {
             this.$store.commit("installPromptShown");

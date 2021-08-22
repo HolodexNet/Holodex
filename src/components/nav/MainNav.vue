@@ -5,7 +5,7 @@
     <NavDrawer v-model="navDrawer" :pages="pages" :temporary="isMobile || isWatchPage">
       <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
       <template v-if="isMobile">
-        <InstallPrompt />
+        <!-- <InstallPrompt /> -->
         <user-card no-setting in-nav-drawer style="background-color: inherit" />
         <v-divider />
       </template>
@@ -175,7 +175,7 @@ import OrgSelector from "@/components/common/OrgSelector.vue";
 import UserCard from "@/components/user/UserCard.vue";
 import { mdiInfinity } from "@mdi/js";
 import { mapState } from "vuex";
-import InstallPrompt from "@/components/common/InstallPrompt.vue";
+// import InstallPrompt from "@/components/common/InstallPrompt.vue";
 import hideExtensionOnScroll from "@/mixins/hideExtensionOnScroll";
 import EditPlaylist from "@/components/playlist/EditPlaylist.vue";
 import ResponsiveMenu from "@/components/common/ResponsiveMenu.vue";
@@ -189,7 +189,7 @@ export default {
         BottomNav,
         UserCard,
         Logo,
-        InstallPrompt,
+        // InstallPrompt,
         MusicBar2: () => import("./MusicBar2.vue"),
         OrgSelector,
         EditPlaylist,
