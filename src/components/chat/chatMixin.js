@@ -90,7 +90,7 @@ export default {
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://")) {
                 // match a :HUMU:https://<url>
-                const regex = /(:\S+:)(https:\/\/(yt\d+\.ggpht\.com\/\S+-c-k-nd|www\.youtube\.com\/\S+\.svg))/gi;
+                const regex = /(\S+)(https:\/\/(yt\d+\.ggpht\.com\/\S+-c-k-nd|www\.youtube\.com\/\S+\.svg))/gi;
                 const str = msg.message;
                 // find first match
                 let match = regex.exec(str);
