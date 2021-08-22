@@ -8,13 +8,8 @@ const initialState = {
     lastLiveUpdate: 0,
 };
 
-const persistState = {
-    recentVideoFilter: "all",
-};
-
 export const state = {
     ...initialState,
-    ...persistState,
 };
 
 const getters = {};
@@ -59,9 +54,6 @@ const mutations = {
     setLive(state, live) {
         state.live = live;
         state.lastLiveUpdate = Date.now();
-    },
-    setRecentVideoFilter(state, filter) {
-        state.recentVideoFilter = filter;
     },
     resetState(state) {
         Object.assign(state, initialState);

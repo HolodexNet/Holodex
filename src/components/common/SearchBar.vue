@@ -133,7 +133,7 @@ import {
 } from "@mdi/js";
 import * as icons from "@/utils/icons";
 import api from "@/utils/backend-api";
-import { debounce } from "@/utils/functions";
+import { debounce } from "lodash";
 import { json2csvAsync, csv2jsonAsync } from "json-2-csv";
 
 export default {
@@ -219,7 +219,7 @@ export default {
                     this.fromApi = [...res.data, ...textQueries];
                 })
                 .catch((e) => console.log(e));
-        }, 500),
+        }, { wait: 500 }),
     },
     async mounted() {
         if (this.$route.query && this.$route.query.q) {

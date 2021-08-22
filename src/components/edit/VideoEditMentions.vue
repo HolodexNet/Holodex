@@ -56,7 +56,7 @@
 import { mdiAt } from "@mdi/js";
 import backendApi from "@/utils/backend-api";
 import { CHANNEL_TYPES } from "@/utils/consts";
-import { debounce } from "@/utils/functions";
+import { debounce } from "lodash";
 import ChannelList from "../channel/ChannelList.vue";
 
 export default {
@@ -103,7 +103,7 @@ export default {
                         disabled: this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id),
                     }));
                 });
-        }, 200),
+        }, { wait: 500 }),
     },
     mounted() {
         this.updateMentions();

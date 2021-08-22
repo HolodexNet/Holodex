@@ -91,23 +91,6 @@ export function formatCount(n, lang = "en") {
     return formatters[lang].format(num);
 }
 
-export function debounce(func, wait, immediate) {
-    let timeout;
-    // eslint-disable-next-line func-names
-    return function (...args) {
-        const context = this;
-        // eslint-disable-next-line func-names
-        const later = function () {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-        };
-        const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
-    };
-}
-
 export function decodeHTMLEntities(str) {
     return str.split("&amp;").join("&").split("&quot;").join('"');
 }

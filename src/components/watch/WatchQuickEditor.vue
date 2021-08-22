@@ -114,17 +114,10 @@
 
 <script lang="ts">
 import ChannelChip from "@/components/channel/ChannelChip.vue";
-// import ChannelInfo from "@/components/channel/ChannelInfo.vue";
-// import ChannelSocials from "@/components/channel/ChannelSocials.vue";
-// import ChannelImg from "@/components/channel/ChannelImg.vue";
-// import VideoDescription from "@/components/video/VideoDescription.vue";
-// import { getVideoThumbnails } from "@/utils/functions";
-// import TruncatedText from "@/components/common/TruncatedText.vue";
 import { mdiAt, mdiContentSave } from "@mdi/js";
-// import VideoSongs from "@/components/media/VideoEditSongs.vue";
 import backendApi from "@/utils/backend-api";
 import { CHANNEL_TYPES } from "@/utils/consts";
-import { debounce } from "@/utils/functions";
+import { debounce } from "lodash";
 
 export default {
     name: "WatchQuickEditor",
@@ -185,7 +178,7 @@ export default {
                         (d) => !(this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id)),
                     );
                 });
-        }, 400),
+        }, { wait: 400 }),
     },
     mounted() {
         this.updateMentions();

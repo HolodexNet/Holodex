@@ -1,5 +1,5 @@
 <script lang="ts">
-import { debounce } from "@/utils/functions";
+import { debounce } from "lodash";
 import VMenu from "vuetify/lib/components/VMenu/VMenu";
 
 export default {
@@ -29,7 +29,7 @@ export default {
         itemCount: debounce(function () {
             // console.log("huh it changed");
             this.onResize();
-        }, 500),
+        }, { wait: 500 }),
     },
 };
 </script>
