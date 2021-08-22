@@ -1,13 +1,17 @@
 # Holodex Changelog
 
 ### 2.17.3 Holodex [*August 21st, 2021*]
-(not released yet)
 ##### New Features
-- Placeholder
+- Clicking on Archive Translation jumps to time
 ##### Patches & Bugfixes
-- Placeholder
-
-
+- Hiding collabs setting works on both Home and Favorites now
+- Fixed Tldex icon issue with Youtube Gaming icons
+- Archive translation centers a little better
+- Can full screen music player again
+- Fixed videocard icon color in light mode
+- Fixed multiview hover shrinking (thanks MegamanZen#9804)
+- Fix misc errors (thanks Shiaupiau#0520)
+- Fixed reset all settings
 ### 2.17.2 Holodex [*August 2nd, 2021*]
 ##### New Features
 - Music player now has keyboard controls for `m`, `j`, `l`, `k` (Thanks @akiroz)
