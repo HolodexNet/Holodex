@@ -240,7 +240,7 @@ views:
       - 中
       - 小
     hideCollabStreamsLabel: 隱藏連動實況
-    hideCollabStreamsMsg: 於「我的收藏」頁面隱藏相關的連動實況
+    hideCollabStreamsMsg: 隱藏與目前團體成員相關的連動實況
     ignoredTopicsLabel: 隱藏指定內容標籤
     ignoredTopicsMsg: 在首頁與我的收藏頁面中隱藏含有下列內容標籤的影片
     theme: 佈景主題
