@@ -29,7 +29,7 @@ export default {
         itemCount: debounce(function () {
             // console.log("huh it changed");
             this.onResize();
-        }, { wait: 500 }),
+        }, 500),
     },
 };
 </script>

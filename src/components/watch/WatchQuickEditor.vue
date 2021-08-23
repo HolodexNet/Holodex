@@ -178,7 +178,7 @@ export default {
                         (d) => !(this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id)),
                     );
                 });
-        }, { wait: 400 }),
+        }, 400),
     },
     mounted() {
         this.updateMentions();

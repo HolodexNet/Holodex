@@ -102,7 +102,7 @@ const actions = {
                 }
             })
             .finally(() => commit("clearStagedFavorites"));
-    }, { wait: 2000 }),
+    }, 2000),
     async resetFavorites({ dispatch, commit, rootState }) {
         commit("resetState");
         if (rootState.userdata && rootState.userdata.jwt) {
