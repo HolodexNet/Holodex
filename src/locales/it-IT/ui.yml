@@ -47,6 +47,8 @@ component:
     copyLink: Copia il Link di Holodex
     premiere: PREMIЀRE
     googleCalendar: Aggiungi a Google Calendar
+    totalTLs: Numero di traduzioni nella chat
+    tlPresence: Traduttore attivo negli ultimi 30 min
   videoDescription:
     description: Descrizione
   description:

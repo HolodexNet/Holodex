@@ -20,7 +20,7 @@
       {{ $t("component.videoCard.edit") }}
     </v-list-item>
     <template v-if="video.type !== 'clip'">
-      <v-list-item :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`">
+      <v-list-item :to="`/multiview/AAUY${video.id}%2CUAEYchat`">
         <v-icon left>
           {{ icons.mdiViewDashboard }}
         </v-icon>
@@ -41,14 +41,24 @@
       </v-icon>
       {{ $t("component.reportDialog.title") }}
     </v-list-item>
+
+    <template v-if="$store.getters['isSuperuser']">
+      <!-- <v-list-item> -->
+      <v-lazy>
+        <watch-quick-editor :video="video" />
+      </v-lazy>
+      <!-- </v-list-item> -->
+    </template>
   </v-list>
 </template>
 
 <script>
 import { dayjs } from "@/utils/time";
 import copyToClipboard from "@/mixins/copyToClipboard";
+import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 
 export default {
+    components: { WatchQuickEditor },
     mixins: [copyToClipboard],
     props: {
         video: {
@@ -57,22 +67,16 @@ export default {
         },
     },
     methods: {
-        getChannelShortname(ch) {
-            return (
-                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_"))
-                || ch.name.split(/[/\s]/)[0].replace(",", "")
-            );
-        },
         // Open google calendar to add the time specified in the element
         openGoogleCalendar() {
             const startdate = this.video.start_scheduled;
-            const url1 = "https://www.google.com/calendar/render?action=TEMPLATE&text=";
+            const baseurl = "https://www.google.com/calendar/render?action=TEMPLATE&text=";
             const videoTitle = encodeURIComponent(this.video.title);
-            const url2 = "&dates=";
             const googleCalendarFormat = "YYYYMMDD[T]HHmmss";
             const eventStart = dayjs(startdate).format(googleCalendarFormat);
             const eventEnd = dayjs(startdate).add(1, "hour").format(googleCalendarFormat);
-            window.open(url1.concat(videoTitle, url2, eventStart, "/", eventEnd), "_blank");
+            const details = `<a href="${window.origin}/watch/${this.video.id}">Open Video</a>`;
+            window.open(baseurl.concat(videoTitle, "&dates=", eventStart, "/", eventEnd, "&details=", details), "_blank");
         },
         copyLink() {
             const link = `${window.origin}/watch/${this.video.id}`;

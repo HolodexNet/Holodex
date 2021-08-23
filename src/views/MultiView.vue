@@ -24,16 +24,22 @@
       }"
     >
       <template v-if="layout.length === 0">
-        <div style="max-width: 50%; display: inline-block">
+        <div v-if="!collapseToolbar" style="max-width: 50%; display: inline-block">
           <div style="display: inline-block; margin-right: 20px; margin-left: 10px">
             <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
             {{ $t("views.multiview.autoLayoutTip") }}
           </div>
         </div>
-        <div style="max-width: 50%; display: inline-block; float: right">
+        <div v-if="!collapseToolbar" style="max-width: 50%; display: inline-block; float: right">
           <div style="display: inline-block; margin-right: 10px">
             <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
             {{ $t("views.multiview.createLayoutTip") }}
+          </div>
+        </div>
+        <div v-if="collapseToolbar" style="max-width: 50%; display: inline-block; float: right">
+          <div style="display: inline-block; margin-right: 10px">
+            <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 95%; margin-top: 28px" />
+            {{ $t("views.multiview.openToolbarTip") }}
           </div>
         </div>
       </template>
@@ -376,7 +382,7 @@ export default {
                     try {
                         this.$gtag.event("init-from-link", {
                             event_category: "multiview",
-                            event_label: `cells:${parsed?.layout?.length}`,
+                            event_label: `cells:${parsed.layout?.length}`,
                         });
                         // eslint-disable-next-line no-empty
                     } catch {}

@@ -47,6 +47,8 @@ component:
     copyLink: Holodexでのリンクをコピー
     premiere: プレミア公開
     googleCalendar: Googleカレンダーに追加
+    totalTLs: ライブチャット翻訳の合計
+    tlPresence: 30分以内にアクティブな翻訳者
   videoDescription:
     description: 概要
   description:
@@ -217,6 +219,7 @@ views:
     scrollModeLabel: スクロールモード
     scrollModeMsg: スクロール/タップしてページをめくる
     resetAllSettings: すべての設定やデータをリセット
+    resetAllSettingsWarning: 全てのデータが失われます。続行しますか？
     clipLanguageSelection: '次の言語で切り抜きを表示する'
     tlLanguageSelection: 次の言語でライブチャット翻訳を表示する
     defaultPage: デフォルトページ
@@ -243,6 +246,8 @@ views:
     check_about_page: 案内ページで更新内容を確認できます
     nowSupportsMultiOrg: Holodexで他箱のライバーを視聴可能になりました!
     loginCallToAction: お気に入りを利用するにはログインしてください!
+  about:
+    add_my_channel: チャンネルのリクエスト
   watch:
     theaterMode: シアターモード
     mentionIconLabel: メンション
@@ -309,6 +314,7 @@ views:
     unmuteAll: 全てミュート解除
     autoLayoutTip: チャンネルをクリックすると自動でレイアウトされた状態で視聴できます
     createLayoutTip: セルを追加してオリジナルのレイアウトを作成するか、プリセットを使用してください
+    openToolbarTip: ツールバーを開いてマルチビューを開始
     preset:
       shareOnDiscord: >-
         なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
@@ -377,6 +383,8 @@ about:
     autoplayHeader: 自動再生されません！
     autoplayContent: ご利用中のブラウザでの自動再生を有効化方法について検索してください。
     musicPlayer: モバイルデバイスでは音楽プレーヤーがうまく動きません！
+    musicPlayerContent: >-
+      ほとんどのiOSデバイスでは、Holodexの音楽を再生しているときに画面をオフにしたり、Safariを閉じたりすることはできません。 この制限は、Android デバイスに適用されない場合があります(デバイスによって異なります)。より良い再生システムを作る方法をお考えでしたら、Discordにフィードバックをお願いします。
     videoLinkage: 動画が相当のVtuberに正しくリンクされていることを確認するにはどうすればよいですか?
     videoLinkageContent: >-
       全ての情報は動画概要欄から解析されます。生放送を切り抜きする場合は必ず元の生放送のURLを貼ってください。二次コンテンツ(例えばbilibiliから)を切り抜きする場合はその動画に関連するVtuberの公式YoutubeチャンネルのURLを貼ってください。どのVtuberのチャンネルともリンクしない場合、Holodexでは全ての切り抜きにリンク先としてHolodexの把握しているVtuberチャンネルが必要です。そのためリンクの無い切り抜きをHolodexで表示することができません。

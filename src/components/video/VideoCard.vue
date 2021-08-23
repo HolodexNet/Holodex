@@ -49,11 +49,11 @@
         <div class="d-flex flex-column align-end">
           <!-- Show music icon if songs exist -->
           <div v-if="data.songcount" class="video-duration">
-            <v-icon small>{{ icons.mdiMusic }}</v-icon>
+            <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
           </div>
           <!-- Show TL chat icon if recently active or has archive tl exist -->
           <div v-if="hasTLs" class="video-duration d-flex align-center" :title="tlIconTitle">
-            {{ tlLangInChat }} <v-icon small>{{ icons.tlChat }}</v-icon>
+            {{ tlLangInChat }} <v-icon small color="white">{{ icons.tlChat }}</v-icon>
           </div>
           <!-- Duration/Current live stream time -->
           <div
@@ -139,7 +139,11 @@
         </div>
       </div>
       <!-- Vertical dots menu -->
-      <v-menu bottom nudge-top="20px">
+      <v-menu
+        bottom
+        :close-on-content-click="false"
+        nudge-top="20px"
+      >
         <template #activator="{ on, attrs }">
           <v-btn
             icon

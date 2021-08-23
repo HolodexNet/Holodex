@@ -47,6 +47,7 @@ component:
     copyLink: Копировать ссылку
     premiere: ПРЕМЬЕРА
     googleCalendar: Добавить в календарь Google
+    tlPresence: Активный переводчик за последние полчаса
   videoDescription:
     description: Описание
   description:
@@ -106,6 +107,7 @@ component:
     readMore: Узнать больше
   reportDialog:
     title: Пожаловаться
+    comments: Что должен предпринять Holodex?
     success: Жалоба отправлена, спасибо!
     reasons:
       - Теги к видео неправильные

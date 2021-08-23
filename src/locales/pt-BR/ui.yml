@@ -47,6 +47,8 @@ component:
     copyLink: Copiar link Holodex
     premiere: ESTREIA
     googleCalendar: Adicionar ao Google Agenda
+    totalTLs: Total de tradutores no chat
+    tlPresence: Tradutor ativo nos últimos 30 min
   videoDescription:
     description: Descrição
   description:
@@ -106,6 +108,7 @@ component:
     readMore: Mostrar mais
   reportDialog:
     title: Reportar
+    comments: Que ações o Holodex deve tomar?
     success: Denuncia enviada, Obrigado!
     reasons:
       - Vídeo etiquetado incorretamente
@@ -113,6 +116,8 @@ component:
       - Inapropriado ou Viola as diretrizes de trabalho derivado
       - Outros
   thirdpartycookie:
+    explanation: >-
+      Pode ser difícil acessar / usar o chat do Youtube devido às políticas de <b>Cookie de Terceiros</b> rígidas ou aos cookies do <kbd>Youtube.com</kbd> bloqueados. <br /><br /> Impedir <kbd>Youtube.com</kbd> de bloquear Cookies de Terceiros, ou reduzir o nível de segurança / privacidade de cookies para <kbd>Holodex.net</kbd> pode corrigir isso. <br /><br /> Incluímos alguns sites que explicam como fazer isso.
     dialogTitle: Usando o Chat do Youtube no Holodex
     alertText: >-
       As configurações de privacidade do seu navegador está impossibilitando o Chat do Youtube de se conectar. Clique aqui para mais informações
@@ -122,6 +127,7 @@ component:
       export-playlist: Exportar Playlist
       new-playlist: Nova Playlist
       rename-playlist: Renomear Playlist
+      reset-unsaved: Redefinir mudanças não salvas
       delete-playlist: Excluir Playlist
       clear-playlist: Limpar Playlist
     save-error-not-logged-in: Você precisa estar logado para salvar Playlists
@@ -150,6 +156,7 @@ views:
   home:
     liveOrUpcomingHeading: Live / Próximas Transmissões
     recentVideosHeading: Vídeos Recentes
+    noStreams: Sem lives ou streams futuras no momento
     recentVideoToggles:
       all: Todos
       official: VODs
@@ -173,6 +180,11 @@ views:
     exportYTHeading: Instruções para salvar a Playlist no Youtube
     exportYTInstructions: >-
       <b class="red--text">Passo 1</b>: Abra a playlist no youtube, e altere a interface para o modo Miniplayer. <br /><br /> <b class="red--text">Passo 2</b>: Escolha qualquer vídeo e adicione-o à fila. <br /><br /> <b class="red--text">Passo 3</b>: A Playlist agora pode ser salva em sua conta clicando em Salvar.
+    sort:
+      dateaddedEarliestFirst: Data adicionado, do mais recente
+      dateaddedLatestFirst: Data adicionado, do mais antigo
+      dateuploadedLatestFirst: Data de envio, do mais antigo
+      dateuploadedEarliestFirst: Data de envio, do mais recente
   notFound:
     title: Conteúdo não encontrado
     back: Voltar para o Início
@@ -207,11 +219,13 @@ views:
     scrollModeLabel: Modo de Rolagem
     scrollModeMsg: Use rolar/tocar para navegar nas páginas
     resetAllSettings: Redefinir todas as configurações/dados
+    resetAllSettingsWarning: Perderás todos os dados. Continuar?
     clipLanguageSelection: 'Mostrar clipes nestes idiomas:'
     tlLanguageSelection: Ver Traduções no Chat nestes idiomas
     defaultPage: Página Padrão
     defaultPageMsg: >-
       Abra esta página por padrão quando visitar holodex.net, ou clicar no logotipo no canto superior esquerdo.
+    videoFeedSettings: Definições do feed de vídeos
     siteNavigationSettings: Navegação do site
     languageSettings: Idioma
     gridSizeLabel: Miniatura/Tamanho da Grade
@@ -223,13 +237,17 @@ views:
     hideCollabStreamsLabel: Ocultar Collab Streams 
     hideCollabStreamsMsg: Ocultar Streams que são Collab do seus Favoritos
     ignoredTopicsLabel: Tópicos Ignorados
+    ignoredTopicsMsg: Ocultar vídeos com esses tópicos das páginas Início e Favoritos
     theme: Tema
   app:
     update_available: Uma atualização está disponível
     update_btn: Atualizar
+    close_btn: Fechar
     check_about_page: Veja o que há de novo no Holodex acessando a página de Informações
     nowSupportsMultiOrg: Holodex agora suporta múltiplas organizações.
     loginCallToAction: Faça login para ter seus próprios favoritos!
+  about:
+    add_my_channel: Solicitação de canal
   watch:
     theaterMode: Modo Teatro
     mentionIconLabel: Menções
@@ -252,10 +270,13 @@ views:
           A transmissão ainda não começou, tente novamente dentro de 15 minutos após o início da transmissão
         connectedToChat: Conectado
         disconnectedToChat: Desconectado
+    removeFromPlaylist: Remover vídeo da lista atual
+    saveToPlaylist: Salvar vídeo na lista atual
   favorites:
     promptForAction: >-
       Crie uma lista com seus vtubers favoritos para ver clipes e lives mais recentes nesta página.
     manageFavorites: Gerenciar Favoritos
+    close: Fechar
     showall: Mostrar todos
   editor:
     needlogin: Você precisará fazer login para editar metadados de vídeo e música do Holodex.
@@ -291,21 +312,43 @@ views:
     addframe: Adicionar Célula
     muteAll: Silenciar Tudo
     unmuteAll: Desmutar Tudo
+    autoLayoutTip: Clique para assistir um canal usando um layout automático
+    createLayoutTip: Crie teu próprio layout adindo uma célula ou use um modelo
     preset:
       shareOnDiscord: >-
         Tem um layout legal para compartilhar? Use o botão compartilhar e nos informe no nosso <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
+      custom: Meus layouts
+      toggleAutoLayout: Alternar layout automático
+      remove: Excluir
       desktop: Desktop
       mobile: Mobile
+      autoLayout: Layout Automático
+    presetEditor:
+      title: Salvar Layout
+      name: Nome
+      autoLayout: Usar layout no modo automático
     video:
       selectLive: Selecionar Live
       addCustomVideo: Adicionar Vídeo
+    fullScreen: Tela Cheia
+    mediaControls: Controles de Mídia
+    mediaControlsEmpty: Vídeos que estão sendo reproduzidos aparecerão aqui
+  playlist:
+    playlist-is-modified: Não salvo
+    item-last-updated: 'Última Atualização:'
+    login-prompt: Faça login para salvar as listas e ter mais de uma
+    new-playlist-btn-label: Criar uma nova lista
+    page-heading: 'Suas listas:'
+    page-instruction: Clique numa lista para torná-la ativa.
+    change-loss-warning: Perderás mudanças não salvas. Continuar?
 time:
   soon: em breve
-  diff_future_date: Ao Vivo {0} ({1})
+  diff_future_date: Começa {0} ({1})
   distance_past_date: '{0}'
 editor:
   music:
     add: Adicionar
+    update: Atualizar
     permission: >-
       Você precisa ser um usuário com título de "Editor" ou superior para atualizar ou excluir  músicas existente. Use nosso <a class='white--text' href='/about'>discord</a> para notificar os editores sobre problemas ou abusos, ou candidate-se para se tornar um editor.
     titles:
@@ -363,6 +406,14 @@ about:
     Você pode criar uma issue no <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> ou contactar a equipe do Holodex no Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
     title: Creditos
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+        This is a fan made website and the content found on this website is owned by Cover corp and its partners. The site follows the guidelines set forth by Cover corp in their
+      - Contrato de Licença de Obra Derivada
   changelog:
     title: Mudanças
   news:

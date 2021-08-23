@@ -1,19 +1,21 @@
 # Holodex
+
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/RiceCakess/holodex/blob/master/LICENSE)
 [![Discord Chat](https://img.shields.io/discord/796190073271353385.svg)](https://discord.gg/jctkgHBt4b)
 [![Deploy to Prod](https://github.com/RiceCakess/holoclips/workflows/Deploy%20to%20production/badge.svg)](https://github.com/RiceCakess/holoclips/actions?query=workflow%3A%22Deploy+to+production%22)
 [![Crowdin](https://badges.crowdin.net/holodex/localized.svg)](https://crowdin.com/project/holodex)
 [![Twitter Follow](https://img.shields.io/twitter/follow/holodex?style=social)](https://twitter.com/holodex)
 
-
 ![holodex](https://github.com/RiceCakess/Holodex/blob/dev/public/img/intro-promo.jpg)
 
 ## Reporting a Bug/Feature Request
-* For bugs, please make sure to include a picture describing the issue (if applicable)
-* If the bug is urgent, please send us a message in the Discord server
-* Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) for what we're working on!
- 
+
+- For bugs, please make sure to include a picture describing the issue (if applicable)
+- If the bug is urgent, please send us a message in the Discord server
+- Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) for what we're working on!
+
 ## Setup for Development
+
 ```
 git clone git@github.com:RiceCakess/Holodex.git
 npm install
@@ -22,20 +24,24 @@ npm run serve
 ```
 
 ## Building
+
 ```
 npm run build
 # Analyzing build bundle size
 npm run analyze-build
 ```
+
 ## Contributing
+
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) for things being planned
 
 ## Project Structure
+
 ```
 docs    # Changelog, hosted Github Pages, modify CHANGELOG.md and run '$ npm run changelog' task to update.
 public  # Static resources
-src     
+src
 ├── components              # Vue components
 ├── locales                 # UI text translations for each languages
 ├── plugins                 # Vuetify, i18n and other plugin definitions
@@ -49,6 +55,7 @@ src
 ```
 
 ## Suggested VSCode Extensions
+
 ```
 antfu.i18n-ally
 irongeek.vscode-env
@@ -61,7 +68,8 @@ intellsmi.comment-translate
 ```
 
 ## Roadmap
-- [x] Watch Page refresh 
+
+- [x] Watch Page refresh
 - [x] Make repo public
 - [x] Add user logins
   - save favorites to database
@@ -70,9 +78,9 @@ intellsmi.comment-translate
   - Use tagging system?? or maybe just have a row indicating language
 - [x] Expand vtuber list
 - [ ] Updated tagging system
-  - User contributed tagging 
+  - User contributed tagging
   - Tag aliasing
   - Tag categories
 - [ ] public API / API key for user account
-- [x] live chat features / TL transcript 
+- [x] live chat features / TL transcript
 - [x] music player / radio / tagging songs in singing streams

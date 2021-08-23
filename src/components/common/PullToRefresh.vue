@@ -83,4 +83,59 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+/* pull to refresh skin */
+
+.ptr--ptr {
+    box-shadow: none !important;
+}
+
+.ptr--box {
+    padding: 0px !important;
+    justify-content: center;
+    display: flex;
+}
+
+/* icon size */
+.ptr--icon,
+.ptr--text > svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* rotate left arrow to be down arrow, micro bandwidth savings */
+.ptr--icon {
+    transform: rotate(90deg);
+}
+
+/* only display either icon or text */
+.ptr--ptr.ptr--refresh .ptr--content .ptr--icon {
+    display: none;
+}
+
+.ptr--text {
+    display: none;
+}
+
+/* rotate arrow when threshold reached */
+.ptr--ptr.ptr--release .ptr--content .ptr--icon {
+    transform: rotate(270deg);
+}
+
+/* show text with refresh spinner and animate */
+.ptr--ptr.ptr--refresh .ptr--content .ptr--text {
+    animation: spin 1.1s infinite linear;
+    display: block;
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+</style>

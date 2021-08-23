@@ -72,7 +72,7 @@ import {
     mdiCommentSearch,
 } from "@mdi/js";
 import * as icons from "@/utils/icons";
-import { debounce } from "@/utils/functions";
+import { debounce } from "lodash";
 // TODO(jprochazk): type declarations for this module
 import jsonp from "jsonp-es6";
 import { formatDuration } from "@/utils/time";
@@ -127,7 +127,7 @@ export default {
             const entropy = encodeURIComponent(val).length;
             if (entropy <= 2) return;
             this.getAutocomplete(val);
-        }, 500),
+        }, { wait: 500 }),
         query() {
             if (this.query) this.$emit("input", this.query);
         },

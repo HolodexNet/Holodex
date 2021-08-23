@@ -24,3 +24,6 @@ pnpm-debug.log*
 # vscode configurations (exclude extension declarations)
 .vscode/*
 !/.vscode/extensions.json
+
+# rollup-bundle-visualizer output
+stats.html

@@ -95,11 +95,11 @@
         cols="12"
         md="4"
         lg="4"
-        xl="3"
+        xl="4"
       >
         <v-card>
           <v-card-title>
-            <div id="changelog" class="text-h6">
+            <div class="text-h6">
               {{ $t("about.credits.title") }}
             </div>
           </v-card-title>

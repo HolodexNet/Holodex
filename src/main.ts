@@ -4,20 +4,16 @@ import VueMeta from "vue-meta";
 import VueI18n from "vue-i18n";
 import * as icons from "@/utils/icons";
 import LoadScript from "vue-plugin-load-script";
-
-// import VueSocketIOExt from "vue-socket.io-extended";
-// import { io, Manager } from "socket.io-client";
 import PortalVue from "portal-vue";
 import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import { i18n, vuetify } from "./plugins/vuetify";
 
-import "./registerServiceWorker";
-// import { API_BASE_URL } from "./utils/backend-api";
-
 Vue.config.productionTip = false;
-Vue.config.performance = true;
+Vue.config.devtools = window.location.hostname === "localhost";
+Vue.config.performance = ["localhost", "staging.holodex.net"].includes(window.location.hostname);
+
 Vue.use(
     VueGTag,
     {
@@ -27,9 +23,6 @@ Vue.use(
     },
     router,
 );
-// Vue.use(VueSimpleHeadful, {
-//     key: "metaInfo", // custom key for component option
-// });
 
 // Create a manager to use a custom path (due to reverse proxy)
 if (!(window as any).hideMeta) {

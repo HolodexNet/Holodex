@@ -38,7 +38,7 @@
     <portal to="expandedMessage" :disabled="!expanded" slim>
       <virtual-list
         ref="tlBody"
-        class="archive tl-body thin-scroll-bar pa-1 pa-lg-3"
+        class="archive tl-body thin-scroll-bar px-1 py-0 px-lg-3"
         :style="{
           'font-size': liveTlFontSize + 'px',
         }"
@@ -47,6 +47,7 @@
         :data-sources="tlHistory"
         :item-height="20"
         :item-class-add="activeClass"
+        @click.native="handleClick"
       />
     </portal>
   </v-card>
@@ -113,7 +114,8 @@ export default {
         curIndex(idx) {
             const ref = this.$refs.tlBody;
             ref.scrollToIndex(idx);
-            ref.scrollToOffset(ref.getOffset() - ref.getClientSize() / 2 + 10);
+            // Current offset - half the size of the viewport + 60px (average size of a message)
+            ref.scrollToOffset(ref.getOffset() - (ref.getClientSize() / 2) + 60);
         },
     },
     mounted() {
@@ -128,6 +130,12 @@ export default {
         },
         getKey(item) {
             return item.timestamp + item.message + item.name;
+        },
+        handleClick(e) {
+            if (e.target.matches(".tl-message, .tl-message *")) {
+                this.$emit("timeJump", +e.target.parentElement.getAttribute("data-time"), true, true);
+                e.preventDefault();
+            }
         },
     },
 };

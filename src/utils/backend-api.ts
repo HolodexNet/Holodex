@@ -1,11 +1,12 @@
-import axios, { AxiosResponse } from "axios";
 import { dayjs } from "@/utils/time";
+import axios, { AxiosResponse } from "axios";
 import querystring from "querystring";
 import { CHANNEL_URL_REGEX, VIDEO_URL_REGEX } from "./consts";
-import { Playlist, PlaylistList } from "./types";
+import type { Playlist, PlaylistList } from "./types";
 
+// Need full domain for socket.io to work!!
 export const API_BASE_URL = `${window.location.origin}/api`;
-export const SITE_BASE_URL = `${window.location.origin}/`;
+export const SITE_BASE_URL = `${window.location.origin}`;
 
 export const axiosInstance = (() => {
     const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
@@ -17,7 +18,7 @@ export default {
         return axiosInstance({ url: "orgs.json", baseURL: SITE_BASE_URL });
     },
     stats() {
-        return axiosInstance({ url: "/api/stats.json", baseURL: SITE_BASE_URL });
+        return axiosInstance({ url: "stats.json", baseURL: SITE_BASE_URL });
     },
     channels(query) {
         const q = querystring.stringify(query);
@@ -31,20 +32,25 @@ export default {
     live(query) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/live?${q}`).then((res) => res.data
-                // .concat(res.data.upcoming)
-                // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
-                .filter((live) => !(!live.start_actual && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h")))));
+            // .concat(res.data.upcoming)
+            // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
+            .filter(
+                (live) => !(
+                    !live.start_actual
+              && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))
+                ),
+            ));
     },
     channel(id) {
         return axiosInstance.get(`/channels/${id}`);
     },
     /**
-     * Fetches a video
-     * @param id the ID of the video
-     * @param lang the acceptable subtitle languages
-     * @param c whether to also provide comments, 1 to activate
-     * @returns
-     */
+   * Fetches a video
+   * @param id the ID of the video
+   * @param lang the acceptable subtitle languages
+   * @param c whether to also provide comments, 1 to activate
+   * @returns
+   */
     video(id: string, lang?: string, c?: 1) {
         const q = querystring.stringify({ lang, c });
         return axiosInstance.get(`/videos/${id}?${q}`);
@@ -64,7 +70,9 @@ export default {
             return axiosInstance.get(`/search/autocomplete?q=${channelId[1]}`);
         }
 
-        if (videoId) return { data: [{ type: "video url", value: `${videoId[5]}` }] };
+        if (videoId) {
+            return { data: [{ type: "video url", value: `${videoId[5]}` }] };
+        }
 
         return axiosInstance.get(`/search/autocomplete?q=${query}`);
     },
@@ -103,7 +111,7 @@ export default {
                 .get("/user/createKey", {
                     headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
                 })
-                // eslint-disable-next-line no-alert
+            // eslint-disable-next-line no-alert
                 .catch(() => alert("something went wrong creating your key..."))
         );
     },
@@ -119,17 +127,22 @@ export default {
         });
     },
     favoritesLive(jwt) {
-        // const q = querystring.stringify(query);
+    // const q = querystring.stringify(query);
         return axiosInstance
             .get("/users/live", {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             })
             .then((res) => res.data
-                    // .concat(res.data.upcoming)
-                    // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
-                    .filter((live) => !(!live.start_actual && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))))
-                    // get currently live and upcoming lives within the next 3 weeks
-                    .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))));
+                // .concat(res.data.upcoming)
+                // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
+                .filter(
+                    (live) => !(
+                        !live.start_actual
+                && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))
+                    ),
+                )
+                // get currently live and upcoming lives within the next 3 weeks
+                .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))));
     },
     patchFavorites(jwt, operations) {
         return axiosInstance.patch("/users/favorites", operations, {
@@ -137,7 +150,7 @@ export default {
         });
     },
     topics() {
-        // gets topics from backend
+    // gets topics from backend
         return axiosInstance.get("/topics");
     },
     topicSet(topicId, videoId, jwt) {
@@ -154,7 +167,11 @@ export default {
     },
     songListByVideo(channelId, videoId, allowCache) {
         const dt = allowCache ? "_" : Date.now();
-        return axiosInstance.post(`/songs/latest?c=${dt}`, { channel_id: channelId, video_id: videoId, limit: 999 });
+        return axiosInstance.post(`/songs/latest?c=${dt}`, {
+            channel_id: channelId,
+            video_id: videoId,
+            limit: 999,
+        });
     },
     tryCreateSong(songObj, jwt) {
         return axiosInstance.put("/songs", songObj, {
@@ -196,26 +213,30 @@ export default {
         );
     },
     /**
-     * Fetches song lists up to LIMIT count with offset. Always ordered by available_at date.
-     * @param {{org?, channel_id?, video_id?, q?}} condition one of the conditions
-     * @param {number} offset
-     * @param {number} limit
-     */
+   * Fetches song lists up to LIMIT count with offset. Always ordered by available_at date.
+   * @param {{org?, channel_id?, video_id?, q?}} condition one of the conditions
+   * @param {number} offset
+   * @param {number} limit
+   */
     songListByCondition(condition, offset, limit) {
         return axiosInstance.post("/songs/latest", { ...condition, offset, limit });
     },
     trackSongPlay(channelId, videoId, name) {
         const urlsafe = querystring.stringify({ n: name });
-        return axiosInstance.get(`/songs/record/${channelId}/${videoId}?${urlsafe}`);
+        return axiosInstance.get(
+            `/songs/record/${channelId}/${videoId}?${urlsafe}`,
+        );
     },
     /**
-     * Grabs top 20 songs from API.
-     * @param {*} org = org name
-     * @param {*} channelId = channel ID. only org name OR channel ID should be supplied, never both.
-     * @param {*} type type = 'w' for weekly, 'm' for monthly.
-     */
+   * Grabs top 20 songs from API.
+   * @param {*} org = org name
+   * @param {*} channelId = channel ID. only org name OR channel ID should be supplied, never both.
+   * @param {*} type type = 'w' for weekly, 'm' for monthly.
+   */
     topSongs(org, channelId, type) {
-        const q = querystring.stringify(org ? { org, type } : { channel_id: channelId, type });
+        const q = querystring.stringify(
+            org ? { org, type } : { channel_id: channelId, type },
+        );
         return axiosInstance.get(`/songs/top20?${q}`);
     },
     getPlaylistList(jwt: string) {
@@ -239,7 +260,7 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    reportVideo(id: string, body:Array<Object>, jwt: string) {
+    reportVideo(id: string, body: Array<Object>, jwt: string) {
         if (!id) throw new Error("Arg bad");
         return axiosInstance.post(`/reports/video/${id}`, body, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},

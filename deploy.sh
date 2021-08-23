@@ -10,3 +10,4 @@ npm ci
 
 npm run build
 
+cp -r dist/* /var/www/html/holodex.net/

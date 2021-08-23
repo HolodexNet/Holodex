@@ -39,61 +39,21 @@
             </v-icon>
           </v-btn>
         </template>
-        <v-list dense>
-          <v-list-item :href="`https://youtu.be/${video.id}`" target="_blank">
-            <v-icon left color="red">
-              {{ icons.mdiYoutube }}
-            </v-icon>
-            {{ $t("views.settings.redirectModeLabel") }}
-          </v-list-item>
-          <v-list-item @click.stop="copyLink">
-            <v-icon left>
-              {{ icons.mdiClipboardPlusOutline }}
-            </v-icon>
-            {{ $t("component.videoCard.copyLink") }}
-          </v-list-item>
-          <v-list-item
-            :disabled="video.type === 'clip'"
-            :to="`/multiview/AAUY${video.id}${getChannelShortname(video.channel)}%2CUAEYchat`"
-          >
-            <v-icon left :color="video.type === 'clip' ? 'grey' : ''">
-              {{ icons.mdiViewDashboard }}
-            </v-icon>
-            {{ $t("component.mainNav.multiview") }}
-          </v-list-item>
-          <v-list-item @click="$store.commit('setReportVideo', video)">
-            <v-icon left :color="video.type === 'clip' ? 'grey' : ''">
-              {{ icons.mdiFlag }}
-            </v-icon>
-            {{ $t("component.reportDialog.title") }}
-          </v-list-item>
-        </v-list>
+        <video-card-menu :video="video" />
       </v-menu>
     </div>
-    <v-snackbar
-      v-model="doneCopy"
-      app
-      :timeout="3000"
-      color="success"
-    >
-      {{ $t("component.videoCard.copiedToClipboard") }}
-      <template #action="{ attrs }">
-        <v-btn text v-bind="attrs" @click="doneCopy = false">
-          {{ $t("views.app.close_btn") }}
-        </v-btn>
-      </template>
-    </v-snackbar>
   </v-card>
 </template>
 
 <script lang="ts">
 import { mdiOpenInNew, mdiArrowLeft } from "@mdi/js";
-import copyToClipboard from "@/mixins/copyToClipboard";
+import VideoCardMenu from "@/components/common/VideoCardMenu.vue";
 
 export default {
     name: "WatchToolbar",
-    components: {},
-    mixins: [copyToClipboard],
+    components: {
+        VideoCardMenu,
+    },
     props: {
         video: {
             type: Object,
@@ -112,20 +72,11 @@ export default {
         };
     },
     computed: {
-        redirectMode() {
-            return this.$store.state.settings.redirectMode;
-        },
         hasSaved() {
             return this.$store.getters["playlist/contains"](this.video.id);
         },
     },
     methods: {
-        getChannelShortname(ch) {
-            return (
-                (ch.english_name && ch.english_name.split(/[/\s]/g).join("_"))
-                || ch.name.split(/[/\s]/)[0].replace(",", "")
-            );
-        },
         toggleSaved() {
             this.hasSaved
                 ? this.$store.commit("playlist/removeVideoByID", this.video.id)
@@ -133,10 +84,6 @@ export default {
         },
         goBack() {
             this.$router.replace(this.$route.meta.prevPath || "/");
-        },
-        copyLink() {
-            const link = `${window.origin}/watch/${this.video.id}`;
-            this.copyToClipboard(link);
         },
     },
 };

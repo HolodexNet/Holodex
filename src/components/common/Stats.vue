@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row v-if="s">
     <v-col cols="auto">
       <v-card class="stat">
         <div class="text-overline">
@@ -39,6 +39,19 @@
         </div>
       </v-card>
     </v-col>
+    <v-col cols="auto">
+      <v-card class="stat">
+        <div class="text-overline">
+          Songs
+        </div>
+        <div class="text-h3">
+          {{ s.totalSongs.count || 0 }}
+        </div>
+        <div class="green--text text-caption">
+          &ensp;
+        </div>
+      </v-card>
+    </v-col>
   </v-row>
 </template>
 
@@ -48,12 +61,12 @@ import backendApi from "@/utils/backend-api";
 export default {
     data() {
         return {
-            metrics: { statistics: {} },
+            metrics: {},
         };
     },
     computed: {
         s() {
-            return this.metrics.statistics || {};
+            return this.metrics.statistics;
         },
     },
     async mounted() {

@@ -109,20 +109,14 @@ import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
 import { dayjs } from "@/utils/time";
 import { mdiTuneVariant } from "@mdi/js";
-
-// function getChannelLiveAtTime(ch) {
-//     if (ch.videos && ch.videos[0]) {
-//         return dayjs(ch.videos[0].start_actual || ch.videos[0].start_scheduled).valueOf();
-//     }
-//     return null;
-// }
+import Settings from "@/views/Settings.vue";
 
 export default {
     name: "NavDrawer",
     components: {
         ChannelImg,
         ChannelInfo,
-        Settings: () => import("@/views/Settings.vue"),
+        Settings,
     },
     props: {
         pages: {
@@ -153,9 +147,9 @@ export default {
             return langs.find((x) => x.val === this.$store.state.settings.lang).display;
         },
         favorites() {
-            const fav = this.$store.state.favorites.favorites;
+            const fav = this.$store.state.favorites.favorites || [];
             try {
-                const favoritesSet = new Set(fav.map((x) => x.id));
+                const favoritesSet = this.$store.getters["favorites/favoriteChannelIDs"];
                 const lives: Array<any> = this.$store.state.favorites.live;
                 const updateNotice = this.$store.state.favorites.lastLiveUpdate;
                 console.debug(`Updating favs: ${updateNotice}`);
@@ -175,12 +169,16 @@ export default {
                 return [...Object.values(existingChs), ...extras];
             } catch (e) {
                 console.error(e);
+                try {
+                    return fav.map((ch) => ({
+                        channel: ch,
+                    }));
+                } catch (k) {
+                    console.error("fallback also failed LOL");
+                    console.error(k);
+                    return [];
+                }
             }
-
-            // fall back in case something fails above
-            return fav.map((ch) => ({
-                channel: ch,
-            }));
         },
         collapsedFavorites() {
             return !this.favoritesExpanded && this.favorites.length > 8 ? this.favorites.slice(0, 8) : this.favorites;

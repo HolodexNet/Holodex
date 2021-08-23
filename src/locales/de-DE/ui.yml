@@ -47,8 +47,12 @@ component:
     copyLink: Holodex-Link kopieren
     premiere: PREMIERE
     googleCalendar: Zu Google Kalender hinzufügen
+    totalTLs: Anzahl an Übersetzungen im Live-Chat
+    tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -106,6 +110,7 @@ component:
     readMore: Mehr anzeigen
   reportDialog:
     title: Melden
+    collabing: Dieser Kanal kollaboriert möglicherweise mit einem {org} Mitglied oder mit deinen Favoriten. Du kannst diese Funktion in den Einstellungen deaktivieren
     comments: Welche Maßnahmen sollte Holodex ergreifen?
     success: Bericht gesendet, vielen Dank!
     reasons:
@@ -137,6 +142,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -217,8 +223,9 @@ views:
     scrollModeLabel: Scroll-Modus
     scrollModeMsg: Blättern/Tippen zum Umblättern der Seiten verwenden
     resetAllSettings: Alle Einstellungen/Daten zurücksetzen
+    resetAllSettingsWarning: Du wirst all deine Daten verlieren. Fortfahren?
     clipLanguageSelection: 'Clips in diesen Sprachen anzeigen:'
-    tlLanguageSelection: Livechat-Übersetzung in diesen Sprachen anzeigen
+    tlLanguageSelection: Live-Chat-Übersetzungen in diesen Sprachen anzeigen
     defaultPage: Standardseite
     defaultPageMsg: >-
       Öffne diese Seite standardmäßig, wenn du holodex.net besuchst oder auf das Logo oben links klickst.
@@ -311,6 +318,7 @@ views:
     unmuteAll: Alle Stummschaltungen aufheben
     autoLayoutTip: Klicke auf einen Kanal, um im automatischen Layout-Modus zu schauen
     createLayoutTip: Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine Vorlage verwendest
+    openToolbarTip: Öffne die Symbolleiste, um Multiview zu verwenden
     preset:
       shareOnDiscord: >-
         Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
@@ -319,7 +327,7 @@ views:
       remove: Entfernen
       desktop: Desktop
       mobile: Mobil
-      autoLayout: AutoLayout
+      autoLayout: Auto-Layout
     presetEditor:
       title: Layout speichern
       name: Name
@@ -439,12 +447,12 @@ about:
   credits:
     title: Credits
     contents:
-      - Besonders möchte ich mich bedanken beim
+      - Insbesondere bedanken möchte ich mich beim
       - Team für ihre Arbeit an der
       - >-
-        Dank gebührt auch den Clippern dafür, dass sie den Überseebrüdern helfen! Bitte sieh sie dir an!
+        Dank gebührt auch den Clippern dafür, dass sie uns Überseebrüdern helfen! Bitte sieh sie dir an!
       - >-
-        Dies ist eine von Fans erstellte Website und die Inhalte dieser Website sind Eigentum von Cover Corp und seinen Partnern. Die Seite folgt den Richtlinien von Cover Corps
+        Diese Website wurde von Fans erstellt, ihre Inhalte sind Eigentum von Cover Corp und ihren Partnern. Die Seite folgt den Richtlinien von Cover Corps
       - Urheberrechtserklärung
   changelog:
     title: Änderungsverlauf

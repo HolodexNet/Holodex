@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable func-names */
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
@@ -11,6 +11,7 @@ import { sendTokenToExtension } from "@/utils/messaging";
 // import { dayjs } from "@/utils/time";
 
 import backendApi from "@/utils/backend-api";
+import { debounce } from "lodash";
 import home from "./home.module";
 import channel from "./channel.module";
 import channels from "./channels.module";
@@ -22,7 +23,6 @@ import multiview from "./multiview.module";
 import playlist from "./playlist.module";
 import history from "./history.module";
 import { migrations, VUEX_STATE_VERSION } from "./migrations";
-
 // import socket from "./socket.module";
 
 Vue.use(Vuex);
@@ -38,9 +38,6 @@ function defaultState() {
         showUpdateDetails: false,
         firstVisitMugen: true,
         lastShownInstallPrompt: 0,
-
-        TPCookieEnabled: false,
-        TPCookieAlertDismissed: false,
 
         // authorization
         userdata: {
@@ -84,27 +81,22 @@ function defaultState() {
  *     Configure Synchronized Modules & Mutations across tabs
  *------------------------* */
 const syncedModules = /^(?:playlist|settings|history)/;
-const syncedMutations = /^(?:resetState|setUser|setShowUpdatesDetail|firstVisit|firstVisitMugen|favorites\/setFavorites|favorites\/resetFavorites|favorites\/setLive|music\/(?:addSong|removeSong|resetState|clearPlaylist)|multiview\/(?:addPresetLayout|removePresetLayout|togglePresetAutoLayout|setAutoLayout))/;
+const syncedMutations = new Set(["resetState", "setUser", "setShowUpdatesDetail", "firstVisit", "firstVisitMugen", "favorites/setFavorites", "favorites/resetFavorites", "favorites/setLive", "music/addSong", "music/removeSong", "music/resetState", "music/clearPlaylist", "multiview/addPresetLayout", "multiview/removePresetLayout", "multiview/togglePresetAutoLayout", "multiview/setAutoLayout"]);
 
+const persistedPaths = ["playlist", "settings", "history", "migration", "multiview", "channels.cardView", "channels.sort", "currentOrg", "favorites.favorites", "lastShownInstallPrompt", "firstVisit", "firstVisitMugen", "music.playlist", "music.currentId", "music.mode", "orgFavorites", "showUpdateDetails", "userdata", "watch.showLiveChat", "watch.showTL", "watch.theaterMode", "currentGridSize"];
 export default new Vuex.Store({
     plugins: [
         createPersistedState({
             key: "holodex-v2",
-            // eslint-disable-next-line no-unused-vars
-            reducer: (state, paths) => {
-                const o = { ...state };
-                o.music = { ...o.music };
-                o.activeSockets = 0;
-                // o.music.state = MUSIC_PLAYER_STATE.PLAYING; // don't start new tab playing music.
-                o.music.isOpen = false; // hide it
-                o.reportVideo = null;
-                o.videoCardMenu = null;
-                return o;
-            },
+            paths: persistedPaths,
             getState: createMigrate(migrations, "migration.version"),
+            setState: debounce((key, state, storage) => {
+                storage.setItem(key, JSON.stringify(state));
+            // wait next tick
+            }, { wait: 0 }),
         }),
         createMutationsSharer({
-            predicate: (mutation /* state */) => mutation.type.match(syncedModules) || mutation.type.match(syncedMutations), // channel & channels
+            predicate: (mutation /* state */) => mutation.type.match(syncedModules) || syncedMutations.has(mutation.type), // channel & channels
         }), // Share all mutations except historyPop/Push across tabs.
     ],
     state: defaultState(),
@@ -121,6 +113,10 @@ export default new Vuex.Store({
                 default:
                     return icons.mdiGridLarge;
             }
+        },
+        isSuperuser(state) {
+            const role = state.userdata?.user?.role;
+            return role === "admin" || role === "editor";
         },
     },
     mutations: {
@@ -170,9 +166,6 @@ export default new Vuex.Store({
         },
         setTPCookieEnabled(state, enabled) {
             state.TPCookieEnabled = enabled;
-        },
-        setTPCookieAlertDismissed(state, dismissed) {
-            state.TPCookieAlertDismissed = dismissed;
         },
         setShowExtension(state, show) {
             state.showExtension = show;

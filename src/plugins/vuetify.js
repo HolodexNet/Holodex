@@ -4,8 +4,10 @@ import themeSet from "@/utils/themes";
 import VueI18n from "vue-i18n";
 
 import enTL from "@/locales/en/ui.yml";
-import vuetifyEn from "vuetify/es5/locale/en";
+import vuetifyEn from "vuetify/lib/locale/en";
 import { dayjs } from "@/utils/time";
+
+import * as VuetifyDirectives from "vuetify/lib/directives";
 
 // ====== i18n setup ======
 Vue.use(VueI18n);
@@ -206,5 +208,27 @@ export const config = {
 };
 
 Vue.use(Vuetify);
+
+// workaround for vuetify directives not being auto-loaded for some reason
+// if you remove this, you'll get warnings for e.g. `v-touch` not existing
+/** @param {string} value */
+const splitOnUpperCase = (value) => {
+    const out = [];
+    let fragment = "";
+    [...value].forEach((char, index) => {
+        if (index > 0 && char.toUpperCase() === char) {
+            out.push(fragment);
+            fragment = "";
+        }
+        fragment += char;
+    });
+    if (fragment.length > 0) out.push(fragment);
+    return out;
+};
+/** @param {string} value */
+const toKebabCase = (value) => splitOnUpperCase(value).map((v) => v.toLowerCase()).join("-");
+Object.keys(VuetifyDirectives).forEach((directive) => {
+    Vue.directive(toKebabCase(directive), VuetifyDirectives[directive]);
+});
 
 export const vuetify = new Vuetify(config);

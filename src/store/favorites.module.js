@@ -2,7 +2,7 @@
 import api from "@/utils/backend-api";
 import { sendFavoritesToExtension, sendTokenToExtension } from "@/utils/messaging";
 import Vue from "vue";
-import { debounce } from "@/utils/functions";
+import { debounce } from "lodash";
 import fdequal from "fast-deep-equal";
 
 const initialState = {
@@ -15,7 +15,6 @@ const initialState = {
 };
 const persistState = {
     favorites: [],
-    recentVideoFilter: "all",
 };
 
 export const state = {
@@ -26,7 +25,7 @@ export const state = {
 const getters = {
     isFavorited: (state) => (channelId) => state.stagedFavorites[channelId] === "add"
         || (state.favorites.find((f) => f.id === channelId) && state.stagedFavorites[channelId] !== "remove"),
-    favoriteChannelIDs: (state) => new Set(state.favorites.map((f) => f.id)),
+    favoriteChannelIDs: (state) => new Set(state?.favorites?.map((f) => f.id) || []),
 };
 
 const actions = {
@@ -103,7 +102,7 @@ const actions = {
                 }
             })
             .finally(() => commit("clearStagedFavorites"));
-    }, 2000),
+    }, { wait: 2000 }),
     async resetFavorites({ dispatch, commit, rootState }) {
         commit("resetState");
         if (rootState.userdata && rootState.userdata.jwt) {
@@ -135,9 +134,6 @@ const mutations = {
     setLive(state, live) {
         state.live = live;
         state.lastLiveUpdate = Date.now();
-    },
-    setRecentVideoFilter(state, filter) {
-        state.recentVideoFilter = filter;
     },
     setFavorites(state, favorites) {
         state.favorites = favorites;

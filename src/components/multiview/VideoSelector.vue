@@ -200,7 +200,7 @@
           :video="video"
           disable-default-click
           include-channel
-          style="max-width: 250px"
+          style="width: 250px"
         />
       </v-tooltip>
     </template>
@@ -263,10 +263,12 @@ export default {
         topFilteredLive() {
             // Filter out lives for top bar
             let count = 0;
+
             const filterConfig = {
                 ignoreBlock: false,
                 // only hide collabs when favorites tab
                 hideCollabs: this.shouldHideCollabs,
+                forOrg: this.isRealOrg && this.selectedOrg.name,
                 hideIgnoredTopics: true,
             };
             const filtered = this.live
@@ -291,7 +293,10 @@ export default {
             return this.active.videos;
         },
         shouldHideCollabs() {
-            return this.selectedOrg?.name === "Favorites" && this.$store.state.settings.hideCollabStreams;
+            return (this.selectedOrg?.name === "Favorites" || this.isRealOrg) && this.$store.state.settings.hideCollabStreams;
+        },
+        isRealOrg() {
+            return !["Favorites", "Playlist", "YouTubeURL", "TwitchURL"].includes(this.selectedOrg.name);
         },
     },
     watch: {
@@ -300,8 +305,7 @@ export default {
             if (this.selectedOrg.name === "Favorites") this.live = this.$store.state.favorites.live;
         },
         homeUpdateTick() {
-            const { name } = this.selectedOrg;
-            if (name !== "Favorites" && name !== "Playlist") this.live = this.$store.state.home.live;
+            if (this.isRealOrg) this.live = this.$store.state.home.live;
         },
         savedVideosList() {
             if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;

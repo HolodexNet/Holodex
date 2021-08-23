@@ -105,7 +105,7 @@ import {
     mdiCommentSearch,
 } from "@mdi/js";
 
-import { debounce } from "@/utils/functions";
+import { debounce } from "lodash";
 import backendApi from "@/utils/backend-api";
 import { csv2jsonAsync, json2csvAsync } from "json-2-csv";
 
@@ -161,7 +161,7 @@ export default {
 
             this.channelResults = [...res.data];
             this.channelLoading = false;
-        }, 200),
+        }, { wait: 200 }),
         async $route(to) {
             this.processQuery(await csv2jsonAsync(to.query.q));
         },

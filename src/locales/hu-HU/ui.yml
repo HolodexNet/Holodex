@@ -47,8 +47,12 @@ component:
     copyLink: Holodex link másolása
     premiere: Bemutató
     googleCalendar: Hozzáadás a Google naptárhoz
+    totalTLs: Összes élő chat fordítás
+    tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -106,6 +110,7 @@ component:
     readMore: Bővebben
   reportDialog:
     title: Bejelentés
+    collabing: Ez a csatorna kollaborálhat egy {org} taggal vagy a kedvenceiddel. Kikapcsolhatod ezt a funkciót a beállításokban
     comments: Mit kéne a Holodexnek tennie?
     success: Visszajelzés elküldve. Köszönjük!
     reasons:
@@ -137,6 +142,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -217,6 +223,7 @@ views:
     scrollModeLabel: Görgő mód
     scrollModeMsg: Görgetés/érintés használata lapozáshoz
     resetAllSettings: Minden beállítás/adat alaphelyzetbe állítása
+    resetAllSettingsWarning: Minden adatod el fog veszni. Folytatod?
     clipLanguageSelection: 'Klipek megjelenítése az alábbi nyelveken:'
     tlLanguageSelection: Élő chatek fordítása az alábbi nyelveken
     defaultPage: Alapértelmezett oldal
@@ -311,6 +318,7 @@ views:
     unmuteAll: Minden némítás visszavonása
     autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
     createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
+    openToolbarTip: Nyisd meg az eszköztárat a több képernyős nézet használatához
     preset:
       shareOnDiscord: >-
         Van egy jópofa elrendezésed? Használd a megosztás gombot és mutasd meg a <a href="https://discord.gg/jctkgHBt4b"> Discord szerverünkön</a>!

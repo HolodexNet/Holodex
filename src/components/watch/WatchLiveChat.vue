@@ -25,6 +25,7 @@
             : '',
       }"
       :current-time="currentTime"
+      @timeJump="time => $emit('timeJump', time)"
     />
     <LiveTranslations
       v-else-if="!isMugen && shouldConnectLiveTL"
