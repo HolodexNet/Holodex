@@ -23,6 +23,8 @@ export default ({ mode }) => {
                 customComponentResolvers: [VuetifyResolver()],
             }),
             VitePWA({
+                srcDir: "src",
+                filename: "sw.ts",
                 includeAssets: ["favicon.ico", "robots.txt", "img/icons/safari-pinned-tab.svg"],
                 manifest: {
                     // content of manifest
@@ -54,7 +56,8 @@ export default ({ mode }) => {
                 workbox: {
                     // NOTE: `vite-plugin-pwa` expects the service worker to be called `sw.js` for some reason.
                     // there is no way to change this.
-                    swDest: "./dist/sw.js",
+                    // swDest: "./dist/sw.js",
+                    navigateFallbackDenylist: [/^\/api/],
                     runtimeCaching: [
                         {
                             urlPattern: new RegExp(
