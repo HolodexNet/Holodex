@@ -10,4 +10,6 @@ npm ci
 
 npm run build
 
+rm -r /var/www/html/staging.holodex.net/*
+
 cp -r dist/* /var/www/html/staging.holodex.net/
