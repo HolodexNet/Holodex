@@ -113,9 +113,14 @@ export default {
         },
         curIndex(idx) {
             const ref = this.$refs.tlBody;
-            ref.scrollToIndex(idx);
-            // Current offset - half the size of the viewport + 60px (average size of a message)
-            ref.scrollToOffset(ref.getOffset() - (ref.getClientSize() / 2) + 60);
+            const idxSize = ref.virtual.sizes.get(idx) ?? 50;
+            const idxOffset = ref.virtual.getOffset(idx);
+            const nearBottom = idxOffset + ref.getClientSize() > ref.getScrollSize();
+            if (nearBottom) {
+                ref.scrollToBottom();
+            } else {
+                ref.scrollToOffset(idxOffset - (ref.getClientSize() / 2) + idxSize);
+            }
         },
     },
     mounted() {
