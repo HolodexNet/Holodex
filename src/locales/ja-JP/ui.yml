@@ -108,6 +108,7 @@ component:
     readMore: 続きを読む
   reportDialog:
     title: 問題を報告する
+    collabing: このチャンネルは {org} のメンバーまたはあなたのお気に入りとコラボしているかもしれません。この機能は設定から無効にできます。
     comments: Holodex はどのような対応をすべきですか？
     success: ご報告ありがとうございます。
     reasons:
@@ -393,6 +394,11 @@ about:
       あなたが出て行ってしまうことは本当に悲しいです(T_T) もし何か私ができることがあれば是非教えてください。その上で尚、削除の意志が堅ければDiscordでメッセージをください。
     favorite:
       title: お気に入りって何？
+      Contents:
+        - >-
+          お気に入りは、お気に入りのvtuberを見逃さないための機能です。ハートのアイコンをクリックすると、お気に入りのチャンネルを追加できます。
+        - >-
+          page. Please note that favoriting subbers is currently not supported, but you should still consider subscribing and supporting them in other ways!
       disappear:
         title: お気に入りリストが消えてしまいました/お気に入りに追加できません
       contents:
