@@ -10,6 +10,13 @@
     @dragleave="dragLeave"
     @dragenter="dragEnter"
   >
+    <v-overlay absolute :value="showDropOverlay">
+      <div>
+        <v-icon x-large>
+          {{ mdiSelectionEllipseArrowInside }}
+        </v-icon>
+      </div>
+    </v-overlay>
     <!-- When Cell has no content: show video picker -->
     <v-sheet v-if="!cellContent" style="height: 100%" class="d-flex flex-column pt-4">
       <!--================= No Content Mode ================-->
@@ -40,14 +47,6 @@
       </v-sheet>
       <CellControl :play-icon="icons.mdiPlay" class="mx-6 mb-6 mt-0 flex-grow-0" @delete="deleteCell" />
     </v-sheet>
-
-    <v-overlay absolute :value="showDropOverlay">
-      <div>
-        <v-icon x-large>
-          {{ mdiSelectionEllipseArrowInside }}
-        </v-icon>
-      </div>
-    </v-overlay>
     <!--=== Video/Chat iFrame based on type ===-->
     <template v-if="cellContent">
       <v-sheet

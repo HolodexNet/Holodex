@@ -81,13 +81,17 @@
         :is-draggable="item.isDraggable !== false"
         :is-resizable="item.isResizable !== false"
       >
-        <cell
+        <!-- <cell
           :ref="`cell`"
           :cell-width="columnWidth * item.w"
           :item="item"
           @showSelector="(id) => (showSelectorForId = id)"
           @delete="handleDelete"
-        />
+        /> -->
+        <cell-container :item="item">
+          <ChatCell v-if="layoutContent[item.i] && layoutContent[item.i].type === 'chat'" :item="item" :cell-width="columnWidth * item.w" />
+          <EmptyCell v-else :item="item" @showSelector="showSelectorForId = item.i" />
+        </cell-container>
       </grid-item>
     </grid-layout>
 
@@ -222,7 +226,9 @@ import Vue from "vue";
 import VueYoutube from "@/external/vue-youtube";
 
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
-import Cell from "@/components/multiview/Cell.vue";
+// import Cell from "@/components/multiview/Cell.vue";
+import EmptyCell from "@/components/multiview/EmptyCell.vue";
+import CellContainer from "@/components/multiview/CellContainer.vue";
 import PresetEditor from "@/components/multiview/PresetEditor.vue";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
 import MultiviewToolbar from "@/components/multiview/MultiviewToolbar.vue";
@@ -243,10 +249,12 @@ export default {
         GridItem,
         VideoSelector,
         PresetSelector,
-        Cell,
+        // Cell,
+        EmptyCell,
         PresetEditor,
         MultiviewToolbar,
         LayoutChangePrompt,
+        CellContainer,
     },
     mixins: [MultiviewLayoutMixin],
     metaInfo() {
@@ -257,7 +265,6 @@ export default {
             },
         };
     },
-
     data() {
         return {
             mdiCardPlus,
