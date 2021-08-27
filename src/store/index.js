@@ -93,7 +93,7 @@ export default new Vuex.Store({
             setState: debounce((key, state, storage) => {
                 storage.setItem(key, JSON.stringify(state));
             // wait next tick
-            }, { wait: 0 }),
+            }),
         }),
         createMutationsSharer({
             predicate: (mutation /* state */) => mutation.type.match(syncedModules) || syncedMutations.has(mutation.type), // channel & channels

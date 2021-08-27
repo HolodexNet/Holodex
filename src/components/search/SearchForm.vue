@@ -161,7 +161,7 @@ export default {
 
             this.channelResults = [...res.data];
             this.channelLoading = false;
-        }, { wait: 200 }),
+        }, 200),
         async $route(to) {
             this.processQuery(await csv2jsonAsync(to.query.q));
         },

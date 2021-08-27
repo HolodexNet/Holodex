@@ -127,7 +127,7 @@ export default {
             const entropy = encodeURIComponent(val).length;
             if (entropy <= 2) return;
             this.getAutocomplete(val);
-        }, { wait: 500 }),
+        }, 500),
         query() {
             if (this.query) this.$emit("input", this.query);
         },

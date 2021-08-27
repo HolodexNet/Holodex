@@ -103,7 +103,7 @@ export default {
                         disabled: this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id),
                     }));
                 });
-        }, { wait: 500 }),
+        }, 500),
     },
     mounted() {
         this.updateMentions();

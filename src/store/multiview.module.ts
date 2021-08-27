@@ -14,6 +14,8 @@ const initialState = {
 
 const persistedState = {
     autoLayout: getDesktopDefaults(),
+    ytUrlHistory: [],
+    twUrlHistory: [],
 };
 export const state = { ...initialState, ...persistedState };
 
@@ -145,6 +147,12 @@ const mutations = {
     },
     resetAutoLayout(state) {
         state.autoLayout = getDesktopDefaults();
+    },
+    addUrlHistory(state, { twitch = false, url }) {
+        const history = (twitch ? state.twUrlHistory : state.ytUrlHistory);
+        console.log(history.length, url, history);
+        if (history.length >= 8) history.shift();
+        history.push(url);
     },
 };
 

@@ -38,41 +38,14 @@
         md="9"
         lg="10"
       >
-        <!-- Custom YT Url should render different content -->
-        <template v-if="selectedOrg.name === 'YouTubeURL'">
-          <div class="text-h5">
+        <template v-if="isUrl">
+          <h4 class="pa-1">
             {{ $t("views.multiview.video.addCustomVideo") }}
-          </div>
-          <v-text-field
-            v-model="customURL"
-            label="Youtube Video Link"
-            hint="https://www.youtube.com/watch?v=..."
-            :error="customURLError"
+          </h4>
+          <custom-url-field
+            :twitch="selectedOrg.name === 'TwitchURL'"
+            @onSuccess="handleVideoClick"
           />
-          <v-btn
-            :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
-            @click="addCustomVideo"
-          >
-            <v-icon>{{ icons.mdiCheck }}</v-icon>
-          </v-btn>
-        </template>
-        <!-- Custom Twitch URL -->
-        <template v-else-if="selectedOrg.name === 'TwitchURL'">
-          <div class="text-h5">
-            {{ $t("views.multiview.video.addCustomVideo") }}
-          </div>
-          <v-text-field
-            v-model="customURL"
-            label="Twitch Channel Link"
-            hint="https://www.twitch.tv/..."
-            :error="customURLError"
-          />
-          <v-btn
-            :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
-            @click="addCustomVideo"
-          >
-            <v-icon>{{ icons.mdiCheck }}</v-icon>
-          </v-btn>
         </template>
         <!-- Favorites when not logged in -->
         <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
@@ -92,7 +65,7 @@
           </h4>
           <LoadingOverlay :is-loading="isLoading" :show-error="hasError" />
           <VideoCardList
-            :videos="modalFilteredLive"
+            :videos="baseFilteredLive"
             disable-default-click
             include-channel
             :cols="{
@@ -118,50 +91,20 @@
     <!-- Drop down -->
     <org-panel-picker horizontal @changed="handlePicker" />
     <v-icon
-      v-if="selectedOrg.name !== 'YouTubeURL' && selectedOrg.name !== 'TwitchURL'"
+      v-if="!isUrl"
       class="mr-2 ml-1"
       :class="{ 'refresh-spin': isLoading }"
       @click="loadSelection(true)"
     >
       {{ icons.mdiRefresh }}
     </v-icon>
-    <!-- Inline text input for custom yt url -->
-    <template v-if="selectedOrg.name === 'YouTubeURL'">
-      <v-text-field
-        v-model="customURL"
-        label="Youtube Video Link"
-        placeholder="https://www.youtube.com/watch?v=..."
-        :error="customURLError"
-        hide-details
-        solo
-        style="width: 100%"
+    <!-- Inline text input for custom url -->
+    <template v-if="isUrl">
+      <custom-url-field
+        :twitch="selectedOrg.name === 'TwitchURL'"
+        slim
+        @onSuccess="handleVideoClick"
       />
-      <v-btn
-        :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
-        icon
-        @click="addCustomVideo"
-      >
-        <v-icon>{{ icons.mdiCheck }}</v-icon>
-      </v-btn>
-    </template>
-    <!-- Inline text input for custom twitch url -->
-    <template v-else-if="selectedOrg.name === 'TwitchURL'">
-      <v-text-field
-        v-model="customURL"
-        label="Twitch Channel Link"
-        placeholder="https://www.twitch.tv/..."
-        :error="customURLError"
-        hide-details
-        solo
-        style="width: 100%"
-      />
-      <v-btn
-        :color="customURL && !customURLError ? 'green' : customURLError ? 'warning' : ''"
-        icon
-        @click="addCustomVideo"
-      >
-        <v-icon>{{ icons.mdiCheck }}</v-icon>
-      </v-btn>
     </template>
     <!-- Login prompt for favorites -->
     <template v-else-if="selectedOrg === 0 && !isLoggedIn">
@@ -213,7 +156,6 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import { dayjs } from "@/utils/time";
-import { getVideoIDFromUrl } from "@/utils/functions";
 import { mapGetters, mapState } from "vuex";
 import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
 import filterVideos from "@/mixins/filterVideos";
@@ -240,10 +182,6 @@ export default {
             selectedOrg: {},
             isLoading: false,
             hasError: false,
-
-            customURL: "",
-            customURLError: false,
-
             tick: Date.now(),
             ticker: null,
             refreshTimer: null,
@@ -254,16 +192,7 @@ export default {
         ...mapState("favorites", { favUpdateTick: "lastLiveUpdate" }),
         ...mapState("home", { homeUpdateTick: "lastLiveUpdate" }),
         ...mapState("playlist", ["active"]),
-        modalFilteredLive() {
-            return this.live.filter(
-                (l) => !this.activeVideos.find((v) => v.id === l.id)
-                    && !this.$store.getters["settings/blockedChannelIDs"].has(l.channel.id),
-            );
-        },
-        topFilteredLive() {
-            // Filter out lives for top bar
-            let count = 0;
-
+        baseFilteredLive() {
             const filterConfig = {
                 ignoreBlock: false,
                 // only hide collabs when favorites tab
@@ -271,20 +200,23 @@ export default {
                 forOrg: this.isRealOrg && this.selectedOrg.name,
                 hideIgnoredTopics: true,
             };
-            const filtered = this.live
-                .filter((l) => this.filterVideos(l, filterConfig))
-                .filter((l) => {
-                    count += 1;
-                    // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
-                    return (
-                        l.status === "live"
-                        || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m"))
-                        || (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
-                    );
-                })
+            return this.live.filter((l) => this.filterVideos(l, filterConfig));
+        },
+        topFilteredLive() {
+            // Filter out lives for top bar
+            let count = 0;
+            const limitCount = this.baseFilteredLive.filter((l) => {
+                count += 1;
+                // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
+                return (
+                    l.status === "live"
+                    || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m"))
+                    || (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
+                );
+            })
                 .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
 
-            return filtered;
+            return limitCount;
         },
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
@@ -297,6 +229,9 @@ export default {
         },
         isRealOrg() {
             return !["Favorites", "Playlist", "YouTubeURL", "TwitchURL"].includes(this.selectedOrg.name);
+        },
+        isUrl() {
+            return ["YouTubeURL", "TwitchURL"].includes(this.selectedOrg.name);
         },
     },
     watch: {
@@ -318,8 +253,8 @@ export default {
         },
     },
     mounted() {
-        // Start timer to update live time stamps
         this.setAutoRefresh();
+        // Start timer to update live time stamps
         this.ticker = setInterval(() => {
             this.tick = Date.now();
         }, 60000);
@@ -354,15 +289,6 @@ export default {
         },
         handleVideoClick(video) {
             this.$emit("videoClicked", video);
-        },
-        addCustomVideo() {
-            const content = getVideoIDFromUrl(this.customURL);
-            if (content && content.id) {
-                this.customURLError = false;
-                this.$emit("videoClicked", content);
-            } else {
-                this.customURLError = true;
-            }
         },
         // Load selected option
         loadSelection(force) {
@@ -402,7 +328,6 @@ export default {
             ev.dataTransfer.setData("application/json", JSON.stringify(video));
         },
         handlePicker(panel) {
-            // console.log(panel);
             if (this.selectedOrg === panel) return;
             this.selectedOrg = panel;
             this.loadSelection(true);

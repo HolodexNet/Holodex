@@ -219,7 +219,7 @@ export default {
                     this.fromApi = [...res.data, ...textQueries];
                 })
                 .catch((e) => console.log(e));
-        }, { wait: 500 }),
+        }, 500),
     },
     async mounted() {
         if (this.$route.query && this.$route.query.q) {

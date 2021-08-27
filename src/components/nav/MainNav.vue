@@ -279,12 +279,6 @@ export default {
                 },
             ];
         },
-        // getHeight() {
-        //     console.log(this.$vuetify.breakpoint.width);
-        //     // ^ very important, causes the function to link reactivity to width changes.
-        //     return Number.parseFloat(
-        //         getComputedStyle(document.documentElement).getPropertyValue("--sat")) / 1.5 + 64;
-        // },
         ...mapState(["firstVisit"]),
     },
     watch: {
