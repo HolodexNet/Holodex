@@ -153,6 +153,7 @@ export default {
             }
         },
         liveViewers() {
+            if (!this.video.live_viewers) return "";
             return (+this.video.live_viewers).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         liveViewerChange() {

@@ -17,7 +17,7 @@
       </div>
     </v-overlay>
     <slot />
-    <div class="dimensions text-body-2">
+    <div v-if="editMode" class="dimensions text-body-1">
       {{ item.w }} x {{ item.h }}
     </div>
   </v-sheet>
@@ -136,17 +136,19 @@ export default {
         flex-shrink: 1;
         max-height: 100%;
         height: 100%;
+        flex-direction: column;
     }
 
     .dimensions {
         position: absolute;
         bottom: 0;
+        right: 18px;
     }
 }
 
 .mv-cell.edit-mode {
     border: 1px solid var(--v-secondary-base) !important;
-    padding: 16px;
+    padding: 20px;
 }
 
 .vue-grid-item.vue-draggable-dragging .mv-cell,

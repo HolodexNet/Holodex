@@ -248,7 +248,6 @@ export default {
                     break;
                 case this.MESSAGE_TYPES.ERROR:
                     this.overlayMessage = "An unexpected error occured";
-                    // this.showOverlay = true;
                     this.tlLeave();
                     break;
                 default:

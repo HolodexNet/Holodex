@@ -1,6 +1,3 @@
-// import {
-//     mdiCardPlus, mdiMessage, mdiArrowLeftCircle,
-// } from "@mdi/js";
 import { mapState, mapGetters } from "vuex";
 
 export default {
@@ -16,17 +13,7 @@ export default {
         },
     },
     data() {
-        return {
-
-            // editMode: true,
-            // uniqueId: Date.now(),
-            // ytPlayer: null,
-            // twPlayer: null,
-            // toggleTL: false,
-            // toggleChat: true,
-            // chatScale: 1,
-            // playbackRate: 1,
-        };
+        return {};
     },
     computed: {
         ...mapGetters("multiview", ["activeVideos"]),

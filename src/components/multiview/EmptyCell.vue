@@ -1,6 +1,6 @@
 <template>
   <!-- When Cell has no content: show video picker -->
-  <v-sheet class="cell-content flex-column pt-4">
+  <v-sheet class="cell-content pt-4">
     <!--================= No Content Mode ================-->
     <div class="centered-btn">
       <v-btn
