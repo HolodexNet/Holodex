@@ -9,9 +9,10 @@
     }"
   >
     <span v-if="showYtChat" class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
+    <!-- Archive translations for videos not upcoming/live -->
     <ArchiveTranslations
       v-show="showTlChat"
-      v-if="video.status === 'past'"
+      v-if="isArchived"
       :video="video"
       :class="{
         'chat-overlay': fixedBottom || fixedRight,
@@ -22,6 +23,7 @@
       :current-time="currentTime"
       @timeJump="time => $emit('timeJump', time)"
     />
+    <!-- Live translations for upcoming/live videos -->
     <LiveTranslations
       v-else-if="firstTlConnect"
       v-show="showTlChat"
@@ -35,6 +37,7 @@
       @videoUpdate="handleVideoUpdate"
     />
 
+    <!-- Youtube scalable embedded window -->
     <div
       v-if="showYtChat"
       class="embedded-chat"
@@ -48,6 +51,7 @@
 <script lang="ts">
 import LiveTranslations from "@/components/chat/LiveTranslations.vue";
 import ArchiveTranslations from "@/components/chat/ArchiveTranslations.vue";
+
 // Contains Live Chat iframe and Chat TLs, can show either one at both at the same time
 export default {
     name: "WatchLiveChat",
@@ -108,6 +112,7 @@ export default {
             }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
         },
         scaledStyle() {
+            // Scale chat by scale %
             return this.scale !== 1 ? {
                 transform: `scale(${this.scale})`,
                 height: `${100 / this.scale}%`,
@@ -116,6 +121,7 @@ export default {
             } : {};
         },
         ytChatHeight() {
+            // Set height of chat if setting exists
             return this.$store.state.settings.liveTlWindowSize > 0
                 && this.showTlChat
                 && !this.fixedBottom
@@ -124,6 +130,7 @@ export default {
                 : "";
         },
         tlChatHeight() {
+            // Opposite of above
             return this.showYtChat
                 && this.$store.state.settings.liveTlWindowSize > 0
                 ? `${this.$store.state.settings.liveTlWindowSize}%`
@@ -135,6 +142,7 @@ export default {
     },
     watch: {
         showTlChat() {
+            // Lazy load socket before first v-show
             if (!this.firstTlConnect) this.firstTlConnect = true;
         },
     },

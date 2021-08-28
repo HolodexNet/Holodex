@@ -207,10 +207,10 @@ export default {
             let count = 0;
             const limitCount = this.baseFilteredLive.filter((l) => {
                 count += 1;
-                // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
+                // Select all live and streams within 2 hours, and expand to 6 hours if cnt < 8
                 return (
                     l.status === "live"
-                    || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m"))
+                    || dayjs().isAfter(dayjs(l.start_scheduled).subtract(2, "h"))
                     || (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                 );
             })

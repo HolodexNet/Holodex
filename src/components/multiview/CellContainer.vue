@@ -9,6 +9,7 @@
     @dragleave="dragLeave"
     @dragenter="dragEnter"
   >
+    <!-- Drop Overlay -->
     <v-overlay absolute :value="showDropOverlay">
       <div>
         <v-icon x-large>
@@ -16,7 +17,9 @@
         </v-icon>
       </div>
     </v-overlay>
+    <!-- Actual cell content -->
     <slot />
+    <!-- Edit mode size info -->
     <div v-if="editMode" class="dimensions text-body-1">
       {{ item.w }} x {{ item.h }}
     </div>
@@ -77,7 +80,7 @@ export default {
         drop(ev) {
             ev.preventDefault();
             this.showDropOverlay = false;
-
+            // Parse content in dataTransfer object, and insert video
             const json: string = ev.dataTransfer.getData("application/json");
             if (json) {
                 const video = JSON.parse(json);

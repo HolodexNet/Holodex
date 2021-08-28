@@ -41,7 +41,6 @@
         :key="'wlc' + activeVideos[currentTab || 0].id"
         v-model="chatStatus"
         :video="activeVideos[currentTab || 0]"
-        style="width: 100%; height: calc(100% - 32px)"
         fluid
         :scale="scale"
         :current-time="currentTime"
@@ -177,31 +176,14 @@ export default {
         },
     },
     watch: {
-        // activeVideos() {
-        //     if (this.currentTab >= this.activeVideos.length) {
-        //         this.currentTab = 0;
-        //     }
-        // },
         cellWidth() {
+            // Scale chat based on cell size
             this.checkScale();
         },
     },
     mounted() {
-        // this.currentTab = this.savedTab;
-        // this.timer = setInterval(() => {
-        //     // check if timer is needed for current video
-        //     if (this.currentContent?.video?.status === "past") {
-        //         this.currentTime = this.currentContent?.playerControls?.getCurrentTime();
-        //     }
-        // }, 1000);
-
-        // if (this.activeVideos.length > 1) {
-        //     const curTabs = Object.values(this.layoutContent)
-        //         .filter((l: Content) => l.type === "chat")
-        //         .map((l: Content) => l.currentTab ?? 0);
-        //     const newTab = curTabs.findIndex((current, index) => !curTabs.includes(index));
-        //     this.currentTab = newTab > 0 ? newTab : 0;
-        // }
+        // Chat is non paused by default
+        this.editMode = false;
     },
     methods: {
         checkScale() {
