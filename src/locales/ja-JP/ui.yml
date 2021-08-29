@@ -32,7 +32,6 @@ component:
     settings: 設定
     login: ログイン
     logout: ログアウト
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: アカウント設定
     music: 音楽
     multiview: マルチビュー
@@ -51,8 +50,6 @@ component:
     tlPresence: 30分以内にアクティブな翻訳者
   videoDescription:
     description: 概要
-  video:
-    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -88,7 +85,6 @@ component:
     weeklyTopPlaysHeader: 今週のトッププレイ
   songList:
     songTitle: 曲名
-    songCoveredBy: Covered by
     songDuration: 曲の長さ
     sangOnTime: 配信日時
   orgMusic:
@@ -142,7 +138,6 @@ views:
     collabs: コラボ
     about: 概要
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 登録者数
       group: 所属
@@ -151,7 +146,6 @@ views:
       clipCount: 切り抜き数
       org: 所属
     tabs:
-      Vtuber: Vtuber
       Subber: 切り抜きチャンネル
       Favorites: お気に入り
       Blocked: ブロック済み
@@ -352,7 +346,6 @@ views:
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'
-  distance_past_date: '{0}'
 editor:
   music:
     add: 追加
@@ -377,7 +370,6 @@ editor:
   enterMode: 動画を編集
 about:
   quicklinks: クイックリンク
-  discordBtn: Holodex Discord
   faq:
     title: よくある質問
     ytchatHeader: Youtubeチャットにログインできません！
