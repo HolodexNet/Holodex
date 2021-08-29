@@ -5,7 +5,6 @@ component:
     textBeforeTwitter: 'Ha ocurrido un error recuperando el contenido, por favor revisa Twitter '
     textAfterTwitter: ' O reporta el error a través de la'
     aboutPage: Página de información
-    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Inicia sesión para añadir a favoritos
     unfavoriteAllInGroup: Eliminar todo el grupo de favoritos
@@ -32,7 +31,6 @@ component:
     settings: Configuración
     login: Iniciar sesión
     logout: Cerrar sesión
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Gestionar cuenta
     music: Música
     multiview: Vista múltiple
@@ -60,12 +58,10 @@ component:
     type:
       channel: canal
       topic: tema
-      org: org
       titledesc: título/descripción
       comments: comentarios
       videourl: enlace
   relatedVideo:
-    clipsLabel: clips
     simulcastsLabel: transmisiones simultaneas
     refersLabel: referencias
     sourcesLabel: fuentes
@@ -114,7 +110,6 @@ component:
 views:
   channel:
     video: Vídeos
-    clips: Clips
     collabs: Colaboraciones
   channels:
     sortOptions:
@@ -125,7 +120,6 @@ views:
       clipCount: Número de clips
       org: Organización
     tabs:
-      Vtuber: Vtuber
       Subber: Traductor
     favoritesAreEmpty: '¡Tu lista de favoritos está vacía!'
     blockedAreEmpty: No has bloqueado ningún canal.
@@ -160,7 +154,6 @@ views:
       oldest: Más antiguos
     type:
       official: Oficial
-      clip: Clip
     unsupportedQuery: >-
       Por el momento la búsqueda de clips por <kbd>Tema</kbd> y <kbd>Organización</kbd> no está soportada. No se mostrará ningún <b>clip</b>.
     sortByLabel: Ordenar por
@@ -290,7 +283,6 @@ views:
 time:
   soon: Próximamente
   diff_future_date: Empieza {0} ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: Añadir
