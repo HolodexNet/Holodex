@@ -5,7 +5,6 @@ component:
     textBeforeTwitter: 'Произошла ошибка при получении данных, пожалуйста, проверьте Twitter '
     textAfterTwitter: ' или сообщите об ошибке через'
     aboutPage: О сайте
-    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Войдите, чтобы управлять избранным
     unfavoriteAllInGroup: Убрать всю группу из избранного
@@ -36,7 +35,6 @@ component:
     accountSettings: Настройки аккаунта
     music: Музыка
     multiview: Мультипросмотр
-    points: pts
     playlist: Плейлист
   videoCard:
     clips: '0 клипов | {n} клип | {n} клипа | {n} клипов'
@@ -342,7 +340,6 @@ views:
 time:
   soon: Скоро
   diff_future_date: Начнется {0} ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: Добавить
@@ -367,7 +364,6 @@ editor:
   enterMode: Редактировать видео
 about:
   quicklinks: Быстрые ссылки
-  discordBtn: Holodex Discord
   faq:
     title: Часто задаваемые вопросы
     ytchatHeader: Я не авторизован в чате YouTube!
