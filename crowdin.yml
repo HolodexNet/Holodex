@@ -1,3 +1,5 @@
 files:
   - source: /src/locales/en/ui.yml
     translation: /src/locales/%locale%/%original_file_name%
+  - source: /external/seo/en_US/seo.yml
+    translation: /external/seo/%locale%/%original_file_name%
