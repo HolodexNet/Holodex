@@ -49,6 +49,9 @@
               @ready="ready"
               @playing="playing"
               @ended="ended"
+
+              v-on="!hasLiveChat && { currentTime: handleCurrentTime }"
+              @volume="e => (volume = e)"
             />
           </template>
         </WatchFrame>
@@ -104,6 +107,7 @@
             </v-tooltip>
           </template>
         </WatchToolBar>
+        <v-slider v-model="currentVolume" />
         <WatchInfo
           v-if="!theaterMode"
           key="info"
@@ -209,21 +213,24 @@ export default {
             startTime: 0,
             mdiOpenInNew,
             mdiRectangleOutline,
-            hintConnectLiveTL: false,
-
-            // when live/upcoming = true, when archive = false
             fullScreen: false,
-
             playlistIndex: -1,
-
-            timer: null,
             currentTime: 0,
             player: null,
+            volume: 0,
         };
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
         ...syncState("watch", ["showTL", "showLiveChat"]),
+        currentVolume: {
+            get() {
+                return this.volume;
+            },
+            set(val) {
+                this.player.setVolume(val);
+            },
+        },
         chatStatus: {
             get() {
                 return {
@@ -247,6 +254,7 @@ export default {
             return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
         },
         hasLiveChat() {
+            // live chat exits for live/upcoming streams
             return this.video.type === "stream" && ["upcoming", "live"].includes(this.video.status);
         },
         hasLiveTL() {
@@ -306,9 +314,6 @@ export default {
             this.hintConnectLiveTL = true;
         }
     },
-    destroyed() {
-        if (this.timer) clearInterval(this.timer);
-    },
     methods: {
         init() {
             window.scrollTo(0, 0);
@@ -335,11 +340,6 @@ export default {
                 event_category: "video",
                 event_label: this.video.type,
             });
-            if (!this.timer) {
-                this.timer = setInterval(() => {
-                    this.currentTime = this.player.getCurrentTime();
-                }, 1000);
-            }
         },
         seekTo(time) {
             if (!this.player) return;
@@ -370,6 +370,9 @@ export default {
             this.video.live_viewers = update.live_viewers;
             this.video.status = update.status;
             this.video.start_actual = update.start_actual;
+        },
+        handleCurrentTime(time) {
+            this.currentTime = time;
         },
         toggleFullScreen() {
             if (!document.fullscreenElement) {

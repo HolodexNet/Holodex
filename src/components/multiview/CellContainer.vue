@@ -139,6 +139,7 @@ export default {
         flex-shrink: 1;
         max-height: 100%;
         height: 100%;
+        width: 100%;
         flex-direction: column;
     }
 
@@ -159,15 +160,4 @@ export default {
     pointer-events: none;
 }
 
-.mv-frame > div > iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.mv-frame {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
 </style>

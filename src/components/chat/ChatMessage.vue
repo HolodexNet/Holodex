@@ -3,6 +3,7 @@
     <div
       v-if="!hideAuthor"
       :class="{
+        'tl-caption': true,
         'primary--text': source.is_owner,
         'secondary--text': source.is_verified || source.is_moderator || source.is_vtuber,
       }"

@@ -1,5 +1,5 @@
 <template>
-  <div class="cell-content" style="width: 100%; height: 100%">
+  <div class="cell-content">
     <!-- Top channel switch select -->
     <div class="d-flex flex-row align-center py-1">
       <v-btn

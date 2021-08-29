@@ -7,10 +7,6 @@ export default {
             type: Object,
             required: true,
         },
-        cellWidth: {
-            type: Number,
-            default: 0,
-        },
     },
     data() {
         return {};
@@ -34,9 +30,6 @@ export default {
         },
         isVideo() {
             return this.cellContent?.type === "video";
-        },
-        isTwitchVideo() {
-            return this.cellContent?.video?.type === "twitch";
         },
         // muted: {
         //     get() {

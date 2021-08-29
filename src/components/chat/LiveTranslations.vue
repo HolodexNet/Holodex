@@ -12,8 +12,11 @@
       <div v-else class="pa-3">
         {{ overlayMessage }}
       </div>
-      <v-btn v-if="$socket.disconnected" @click="tlJoin()">
+      <v-btn v-if="$socket.disconnected" class="mr-2" @click="tlJoin()">
         {{ $t("views.watch.chat.retryBtn") }}
+      </v-btn>
+      <v-btn @click="showOverlay = false">
+        {{ $t("views.app.close_btn") }}
       </v-btn>
     </v-overlay>
     <v-card-subtitle class="py-1 d-flex justify-space-between">

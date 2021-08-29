@@ -19,31 +19,23 @@ export default {
         },
         height: {
             type: [Number, String],
-            default: 360,
+            default: 720,
         },
         width: {
             type: [Number, String],
-            default: 640,
-        },
-        resize: {
-            type: Boolean,
-            default: false,
-        },
-        resizeDelay: {
-            type: Number,
-            default: 100,
+            default: 1280,
         },
         nocookie: {
             type: Boolean,
             default: false,
         },
-        fitParent: {
-            type: Boolean,
-            default: true,
-        },
         mute: {
             type: Boolean,
             default: false,
+        },
+        refreshRate: {
+            type: Number,
+            default: 500,
         },
     },
     data() {
@@ -58,18 +50,16 @@ export default {
                 [BUFFERING]: "buffering",
                 [CUED]: "cued",
             },
-            resizeTimeout: null,
             elementId: `youtube-player-${pid}`,
+            updateTimer: null,
         };
     },
     computed: {
-        aspectRatio() {
-            return this.width / this.height;
-        },
     },
     methods: {
         playerReady(e) {
             this.setMute(this.mute);
+            this.initListeners();
             this.$emit("ready", e.target);
         },
         playerStateChange(e) {
@@ -105,17 +95,6 @@ export default {
 
             this.player.cueVideoById(params);
         },
-        resizeProportionally() {
-            this.player.getIframe().then((iframe) => {
-                const width = this.fitParent ? iframe.parentElement.offsetWidth : iframe.offsetWidth;
-                const height = width / this.aspectRatio;
-                this.player.setSize(width, height);
-            });
-        },
-        onResize() {
-            clearTimeout(this.resizeTimeout);
-            this.resizeTimeout = setTimeout(this.resizeProportionally, this.resizeDelay);
-        },
         setMute(value) {
             if (value && this.player) {
                 this.player.mute();
@@ -123,37 +102,37 @@ export default {
                 this.player.unMute();
             }
         },
+        initListeners() {
+            // Could consider using .sync two way prop, but ytPlayer makes it kind of makes it hard
+            const updateCurrentTime = this.$listeners.currentTime;
+            const updatePlaybackRate = this.$listeners.playbackRate;
+            const updateMute = this.$listeners.mute;
+            const updateVolume = this.$listeners.volume;
+            // Only start the loop if at least one listener is on
+            if(updateVolume || updateCurrentTime || updatePlaybackRate || updateMute)
+                this.updateTimer = setInterval(async () => {
+                    if (updateMute) this.$emit("mute", await this.player.isMuted());
+                    if (updatePlaybackRate) this.$emit("playbackRate", await this.player.getPlaybackRate());
+                    if (updateCurrentTime) this.$emit("currentTime", await this.player.getCurrentTime());
+                    if (updateVolume) this.$emit("volume", await this.player.getVolume());
+                }, this.refreshRate);
+        }
     },
     watch: {
         videoId: "updatePlayer",
         mute: "setMute",
-        resize(val) {
-            if (val) {
-                // window.addEventListener('resize', this.onResize)
-                // this.resizeProportionally()
-            } else {
-                // window.removeEventListener('resize', this.onResize)
-                // this.player.setSize(this.width, this.height)
-            }
-        },
-        // width (val) {
-        //   this.player.setSize(val, this.height)
-        // },
-        // height (val) {
-        //   this.player.setSize(this.width, val)
-        // }
     },
     beforeDestroy() {
         if (this.player !== null && this.player.destroy) {
             this.player.destroy();
             delete this.player;
         }
-
-        if (this.resize) {
-            //   window.removeEventListener('resize', this.onResize)
+        if(this.updateTimer) {
+            clearInterval(this.updateTimer);
+            this.updateTimer = null;
         }
     },
-    mounted() {
+    async mounted() {
         window.YTConfig = {
             host: "https://www.youtube.com/iframe_api",
         };
@@ -171,14 +150,14 @@ export default {
         this.player.on("ready", this.playerReady);
         this.player.on("stateChange", this.playerStateChange);
         this.player.on("error", this.playerError);
-
-        if (this.resize) {
-            //   window.addEventListener('resize', this.onResize)
-        }
-
-        if (this.fitParent) {
-            //   this.resizeProportionally()
-        }
+        // const iframeWindow = (await this.player.getIframe()).contentWindoww
+        // window.addEventListener("message", function(event) {
+        //     if (event.source === iframeWindow) {
+        //         console.log(event);
+        //         const data = JSON.parse(event.data);
+        //         console.log(data);
+        //     }
+        // });
     },
     render(h) {
         return h("div", [h("div", { attrs: { id: this.elementId } })]);
