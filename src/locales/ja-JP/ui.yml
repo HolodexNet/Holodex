@@ -51,6 +51,8 @@ component:
     tlPresence: 30分以内にアクティブな翻訳者
   videoDescription:
     description: 概要
+  video:
+    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -108,6 +110,7 @@ component:
     readMore: 続きを読む
   reportDialog:
     title: 問題を報告する
+    collabing: このチャンネルは {org} のメンバーまたはあなたのお気に入りとコラボしているかもしれません。この機能は設定から無効にできます。
     comments: Holodex はどのような対応をすべきですか？
     success: ご報告ありがとうございます。
     reasons:
@@ -139,6 +142,7 @@ views:
     collabs: コラボ
     about: 概要
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 登録者数
       group: 所属
@@ -393,6 +397,11 @@ about:
       あなたが出て行ってしまうことは本当に悲しいです(T_T) もし何か私ができることがあれば是非教えてください。その上で尚、削除の意志が堅ければDiscordでメッセージをください。
     favorite:
       title: お気に入りって何？
+      Contents:
+        - >-
+          お気に入りは、お気に入りのvtuberを見逃さないための機能です。ハートのアイコンをクリックすると、お気に入りのチャンネルを追加できます。
+        - >-
+          切り抜き動画投稿者のお気に入りは現在サポートされていません。チャンネル登録やその他の方法でのサポートをよろしくお願いします！
       disappear:
         title: お気に入りリストが消えてしまいました/お気に入りに追加できません
       contents:
@@ -405,7 +414,7 @@ about:
           現在誠意開発中です! それまではブラウザの「ホーム画面に追加」機能をお使いください。現在のウェブサイトもアプリであるかのように動作するように調整されています。
         android:
           - 'Android版Chrome: サイトに移動してから「︙」ボタンをタップ'
-          - on the top right and find "Add to Home Screen".
+          - '「ホーム画面に追加」が表示されます。'
         ios:
           - >-
             iOS版Safari: サイトに移動してから、共有ボタン「
@@ -425,6 +434,9 @@ about:
           で追加申請を送ってください。もしリストに名前があるのに動画が見つからない場合は、動画の説明に元動画のリンクがちゃんと掲載されていることを確認してください。
     feedback:
       title: holodexへのフィードバック/コントリビュートを行いたい
+      contents:
+        - >-
+          すべての手助けとアイデアとを歓迎します！現在のUIのみがオープンソースですが、UIとバックエンドのどちらについてもコントリビューション可能です。 バックエンドのソースにアクセスしたり、アイデアについてチャットしたりする場合は、Discordにてご連絡ください。
   gdpr: 私のデータはGDPRに基づいてどう扱われますか?
   gdprContent: >-
     Googleアナリティクスのデータは当サイトの解析のためにページの閲覧をトラッキングする目的でのみ使用されます。ログインすると、各ソーシャルメディアのアカウント名とIDがお気に入りと関連付けられます。また、このデータにはあなたのGoogleのメールアドレス、Discord ID、及びTwitterのハンドルネームが含まれる場合があります。
@@ -435,10 +447,10 @@ about:
   credits:
     title: クレジット
     contents:
-      - I would like to give big thanks to the
-      - team for their work on
+      - 心より感謝しています。
+      - チームの仕事に。
       - >-
-        Also to all the subbers for helping the overseas bros! Please check them out!
+        また、海外ニキを助けてくれた全ての切り抜き投稿者たちにも！ぜひチェックしてみてください！
       - >-
         当サイトは有志によって開発されたファンサービスであり、サイト上のコンテンツはカバー株式会社とそのパートナーが所有しています。当サイトはカバー株式会社の「二次創作ガイドライン」に沿って開発・運営されています。
       - 二次創作ガイドライン
