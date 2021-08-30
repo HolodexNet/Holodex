@@ -32,7 +32,6 @@ component:
     settings: 설정
     login: 로그인
     logout: 로그아웃
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: 계정 설정
     music: 음악
     multiview: 멀티뷰
@@ -51,8 +50,6 @@ component:
     tlPresence: 최근 30분 간 활동 중인 번역가
   videoDescription:
     description: 설명
-  video:
-    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -142,7 +139,6 @@ views:
     collabs: 콜라보
     about: 정보
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 구독자
       group: 그룹
@@ -352,7 +348,6 @@ views:
 time:
   soon: 예정
   diff_future_date: '{0} 시작 ({1})'
-  distance_past_date: '{0}'
 editor:
   music:
     add: 추가
@@ -377,9 +372,7 @@ editor:
   enterMode: 동영상 편집
 about:
   quicklinks: 빠른 연결
-  discordBtn: Holodex Discord
   faq:
-    title: FAQ
     ytchatHeader: YouTube 채팅에 로그인되지 않아요!
     ytchatContent: >-
       타사 쿠키 차단으로 알려진 보안 기능을 끄거나 이 웹사이트와 youtube.com을 타사 쿠키 차단에서 제외해주세요.
