@@ -1,9 +1,11 @@
 ---
 component:
   apiError:
+    title: Gomenasorry!
     textBeforeTwitter: 'Ocorreu um erro recuperando o conteúdo, verifique o twitter '
     textAfterTwitter: ' ou relate o erro por meio da '
     aboutPage: página de Informações
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Conecte-se para adicionar canais ao Favoritos
     unfavoriteAllInGroup: Remover todos desse grupo dos favoritos
@@ -28,10 +30,14 @@ component:
     about: Informações
     library: Biblioteca
     settings: Configurações
+    login: Login
     logout: Sair
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Configurações da Conta
     music: Música
     multiview: Multi Stream
+    points: pts
+    playlist: Playlist
   videoCard:
     clips: '{n} Clipes'
     watching: '{0} assistindo agora'
@@ -130,6 +136,7 @@ views:
     video: Vídeos
     clips: Clipes
     music: Músicas
+    collabs: Collabs
     about: Informações
   channels:
     sortOptions:
@@ -227,7 +234,7 @@ views:
       - Grande
       - Médio
       - Pequeno
-    hideCollabStreamsLabel: Ocultar Collab Streams
+    hideCollabStreamsLabel: Ocultar Collab Streams 
     hideCollabStreamsMsg: Ocultar Streams que são Collab do seus Favoritos
     ignoredTopicsLabel: Tópicos Ignorados
     ignoredTopicsMsg: Ocultar vídeos com esses tópicos das páginas Início e Favoritos
@@ -313,6 +320,8 @@ views:
       custom: Meus layouts
       toggleAutoLayout: Alternar layout automático
       remove: Excluir
+      desktop: Desktop
+      mobile: Mobile
       autoLayout: Layout Automático
     presetEditor:
       title: Salvar Layout
@@ -335,6 +344,7 @@ views:
 time:
   soon: em breve
   diff_future_date: Começa {0} ({1})
+  distance_past_date: '{0}'
 editor:
   music:
     add: Adicionar
