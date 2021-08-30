@@ -1,9 +1,11 @@
 ---
 component:
   apiError:
+    title: Gomenasorry!
     textBeforeTwitter: 'Il y a eu une erreur lors de la récupération du contenu, veuillez vérifier sur twitter '
     textAfterTwitter: ' ou signaler le bug via'
     aboutPage: À propos
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Veuillez-vous connecter pour ajouter à vos favoris
     unfavoriteAllInGroup: Supprimer tout les favoris du groupe
@@ -11,6 +13,7 @@ component:
   channelInfo:
     stats: Statistiques
     videoCount: '{0} Vidéos'
+    clipCount: '{n} Clips'
     subscriberCount: '{n} Abonnés'
     subscriberNA: Nombre d'abonnés indisponible
     totalViews: Vues
@@ -29,11 +32,14 @@ component:
     settings: Paramètres
     login: Se connecter
     logout: Se déconnecter
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Paramètres du compte
     music: Musique
     multiview: Multivue
     points: points
+    playlist: Playlist
   videoCard:
+    clips: '{n} Clips'
     watching: '{0} Visionnages'
     liveNow: En Direct
     edit: Modifier
@@ -41,6 +47,8 @@ component:
     copyLink: Copier le lien Holodex
     premiere: PREMIÈRE
     googleCalendar: Ajouter à Google Agenda
+  videoDescription:
+    description: Description
   description:
     showLess: Afficher Moins
     showMore: Afficher Plus
@@ -55,6 +63,7 @@ component:
     type:
       channel: chaine
       topic: sujet
+      org: org
       titledesc: titre/description
       comments: commentaires
       videourl: url de la vidéo
@@ -122,6 +131,7 @@ component:
 views:
   channel:
     video: Vidéos
+    clips: Clips
     music: Musique
     collabs: Collaborations
     about: À Propos
@@ -134,6 +144,7 @@ views:
       clipCount: Nombre de Clips
       org: Organisation
     tabs:
+      Vtuber: Vtuber
       Subber: Créateur de clip
       Favorites: Favoris
       Blocked: Bloqué
@@ -146,6 +157,7 @@ views:
     recentVideoToggles:
       all: Tout
       official: Archives
+      subber: Clips
   library:
     savedVideosTitle: Vidéos Sauvegardées
     createYtPlaylistButton: Créer une playlist YT ({0})
@@ -180,9 +192,11 @@ views:
     type:
       all: Tout
       official: Officiel
+      clip: Clip
     unsupportedQuery: >-
       Actuellement, la recherche de clips par <kbd>Sujet</kbd> et <kbd>Organisation</kbd> n'est pas supportée. Aucun <b>clips</b> n'apparaîtra.
     sortByLabel: Trier par
+    typeDropdownLabel: Type
   settings:
     title: Paramètres
     darkModeLabel: Thème Sombre
@@ -208,6 +222,7 @@ views:
     defaultPageMsg: >-
       Ouvrir cette page par défaut lorsque vous êtes sur holodex.net, ou en cliquant sur le logo en haut à gauche.
     videoFeedSettings: Paramètres du flux vidéo
+    siteNavigationSettings: Site/Navigation
     languageSettings: Langue
     gridSizeLabel: Miniature/Taille de la Grille
     gridSizeMsg: Change la taille des miniatures et de la grille de vidéo sur la page d'accueil et des favoris
@@ -229,6 +244,7 @@ views:
     loginCallToAction: Connectez-vous pour rassembler vos propres favoris !
   watch:
     theaterMode: Mode Cinéma
+    mentionIconLabel: MENTIONS
     chat:
       loading: Chargement du chat...
       hideTLBtn: Cacher les traductions
@@ -299,6 +315,7 @@ views:
       toggleAutoLayout: Activer/désactiver la disposition automatique
       remove: Supprimer
       desktop: Bureau
+      mobile: Mobile
       autoLayout: Disposition automatique
     presetEditor:
       title: Sauvegarder la disposition
@@ -324,6 +341,7 @@ views:
 time:
   soon: Bientôt
   diff_future_date: Commence {0} ({1})
+  distance_past_date: '{0}'
 editor:
   music:
     add: Ajouter
@@ -350,6 +368,7 @@ about:
   quicklinks: Raccourcis
   discordBtn: Discord Holodex
   faq:
+    title: FAQ
     ytchatHeader: Mon chat Youtube n'est pas connecté !
     ytchatContent: >-
       Veuillez désactiver le "blocage de cookies tiers", ou ajoutez en liste blanche holodex.net et youtube.com pour autoriser les cookies tiers.
