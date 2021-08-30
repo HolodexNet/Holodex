@@ -1,40 +1,52 @@
 <template>
   <div
     :key="`uid-${uniqueId}`"
-    class="cell-content mv-frame ma-auto"
-    :class="{ 'elevation-4': editMode }"
+    class="cell-content"
   >
-    <!-- Twitch Player -->
-    <VueTwitchPlayer
-      v-if="isTwitchVideo"
-      :channel="cellContent.id"
-      :plays-inline="true"
-      :mute="muted"
-      @ready="vidReady"
-      @ended="editMode = true"
-      @play="vidPlaying({ data: 1 })"
-      @pause="vidPlaying({ data: 2 })"
-      @error="editMode = true"
-    />
-    <!-- Youtube Player -->
-    <youtube
-      v-else
-      :video-id="cellContent.id"
-      :player-vars="{
-        playsinline: 1,
-      }"
-      :mute="muted"
-      @ready="vidReady"
-      @ended="editMode = true"
-      @playing="vidPlaying({ data: 1 })"
-      @paused="vidPlaying({ data: 2 })"
-      @cued="editMode = true"
-      @error="editMode = true"
+    <div
+      class="mv-frame ma-auto mb-1"
+      :class="{ 'elevation-4': editMode }"
+    >
+      <!-- Twitch Player -->
+      <VueTwitchPlayer
+        v-if="isTwitchVideo"
+        :channel="cellContent.id"
+        :plays-inline="true"
+        :mute="muted"
+        @ready="vidReady"
+        @ended="editMode = true"
+        @play="vidPlaying({ data: 1 })"
+        @pause="vidPlaying({ data: 2 })"
+        @error="editMode = true"
+      />
+      <!-- Youtube Player -->
+      <youtube
+        v-else
+        :video-id="cellContent.id"
+        :player-vars="{
+          playsinline: 1,
+        }"
+        :mute="muted"
+        @ready="vidReady"
+        @ended="editMode = true"
+        @playing="vidPlaying({ data: 1 })"
+        @paused="vidPlaying({ data: 2 })"
+        @cued="editMode = true"
+        @error="editMode = true"
 
-      @playbackRate="e => playbackRate = e"
-      @mute="e => muted = e"
+        @playbackRate="playbackRate = $event"
+        @mute="muted = $event"
+        @volume="volume = $event"
+      />
+    </div>
+    <cell-control
+      v-if="editMode"
+      :play-icon="icons.mdiPlay"
+      @playpause="setPlaying(true)"
+      @reset="uniqueId = Date.now()"
+      @back="resetCell"
+      @delete="deleteCell"
     />
-    <cell-control v-if="editMode" />
   </div>
 </template>
 
@@ -59,6 +71,7 @@ export default {
             ytPlayer: null,
             twPlayer: null,
             playbackRate: 1,
+            volume: 50,
         };
     },
     computed: {
@@ -92,7 +105,6 @@ export default {
             },
         },
         isFastFoward() {
-            console.log(this.playbackRate);
             return this.playbackRate !== 1;
         },
     },
@@ -117,11 +129,16 @@ export default {
         setMuted(val) {
             this.muted = val;
         },
+        setVolume(val) {
+            if (this.ytPlayer) this.ytPlayer.setVolume(val);
+        },
         togglePlaybackRate() {
             if (!this.ytPlayer) return;
-            // const realTimeRate = this.ytPlayer.getPlaybackRate();
-            // this.ytPlayer.setPlaybackRate(realTimeRate !== 1 ? 1 : 2);
             this.ytPlayer.setPlaybackRate(this.isFastFoward ? 1 : 2);
+        },
+        setPlaybackRate(val) {
+            if (!this.ytPlayer) return;
+            this.ytPlayer.setPlaybackRate(val);
         },
         vidPlaying(evt) {
             this.editMode = evt.data === 2;
@@ -135,11 +152,6 @@ export default {
                 this.twPlayer = evt;
             } else if (evt) {
                 this.ytPlayer = evt;
-                if (this.muted) {
-                    this.ytPlayer.mute();
-                } else {
-                    this.ytPlayer.unMute();
-                }
             }
         },
     },

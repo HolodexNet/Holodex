@@ -101,7 +101,12 @@
             :item="item"
             @delete="handleDelete"
           />
-          <EmptyCell v-else :item="item" @showSelector="showSelectorForId = item.i" />
+          <EmptyCell
+            v-else
+            :item="item"
+            @showSelector="showSelectorForId = item.i"
+            @delete="handleDelete"
+          />
         </cell-container>
       </grid-item>
     </grid-layout>

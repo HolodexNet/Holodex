@@ -206,6 +206,9 @@ export default {
 </script>
 
 <style>
+.tabbed-chat-select {
+  min-width: 0;
+}
 /* Jank shrink select to 28px height */
 .tabbed-chat-select.v-text-field--outlined > .v-input__control > .v-input__slot {
     min-height: 28px !important;
