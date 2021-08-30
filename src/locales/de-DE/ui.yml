@@ -1,15 +1,19 @@
 ---
 component:
   apiError:
+    title: Gomenasorry!
     textBeforeTwitter: 'Es ist ein Fehler beim Abrufen der Inhalte aufgetreten, bitte check Twitter '
     textAfterTwitter: ' oder melde den Fehler über die'
     aboutPage: Info-Seite
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Log dich ein um zu favorisieren
     unfavoriteAllInGroup: Alle in Gruppe entfavorisieren
     favoriteAllInGroup: Alle in Gruppe favorisieren
   channelInfo:
     stats: Statistik
+    videoCount: '{0} Videos'
+    clipCount: '{n} Clips'
     subscriberCount: '{n} Abonnenten'
     subscriberNA: Abonnentenzahl nicht verfügbar
     totalViews: Aufrufe insgesamt
@@ -28,21 +32,27 @@ component:
     settings: Einstellungen
     login: Einloggen
     logout: Ausloggen
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Kontoeinstellungen
     music: Musik
     multiview: Mehrfachansicht
     points: Pkte.
+    playlist: Playlist
   videoCard:
+    clips: '{n} Clips'
     watching: '{0} Zuschauer'
     liveNow: Jetzt Live
     edit: Bearbeiten
     copiedToClipboard: Link in die Zwischenablage kopiert.
     copyLink: Holodex-Link kopieren
+    premiere: PREMIERE
     googleCalendar: Zu Google Kalender hinzufügen
     totalTLs: Anzahl an Übersetzungen im Live-Chat
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -126,9 +136,13 @@ component:
     save-error-not-logged-in: Du musst eingeloggt sein, um Playlisten zu speichern
 views:
   channel:
+    video: Videos
+    clips: Clips
     music: Musik
+    collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -150,6 +164,7 @@ views:
     recentVideoToggles:
       all: Alle
       official: Archiv
+      subber: Clips
   library:
     savedVideosTitle: Gespeicherte Videos
     createYtPlaylistButton: YT-Playlist erstellen ({0})
@@ -184,6 +199,7 @@ views:
     type:
       all: Alle
       official: Offiziell
+      clip: Clip
     unsupportedQuery: >-
       Derzeit wird das Suchen von Clips nach <kbd>Thema</kbd> und <kbd>Organisation</kbd> nicht unterstützt. Es werden keine <b>Clips</b> angezeigt.
     sortByLabel: Sortieren nach
@@ -229,6 +245,7 @@ views:
     theme: Design
   app:
     update_available: Ein Update ist verfügbar
+    update_btn: Update
     close_btn: Schließen
     check_about_page: Besuche die Info-Seite um neue Änderungen zu sehen
     nowSupportsMultiOrg: Holodex unterstützt jetzt mehrere Organisationen.
@@ -294,6 +311,7 @@ views:
   multiview:
     confirmOverwrite: Vorhandenes Layout überschreiben?
     confirmOverwriteYes: Bestätigen
+    permalink: Permalink
     presets: Vorlagen
     addframe: Zelle hinzufügen
     muteAll: Alles stummschalten
@@ -307,10 +325,12 @@ views:
       custom: Meine Layouts
       toggleAutoLayout: Layout Automodus umschalten
       remove: Entfernen
+      desktop: Desktop
       mobile: Mobil
       autoLayout: Auto-Layout
     presetEditor:
       title: Layout speichern
+      name: Name
       autoLayout: Layout im Auto-Modus verwenden
     video:
       selectLive: Livestream auswählen
@@ -332,6 +352,7 @@ views:
 time:
   soon: bald
   diff_future_date: Beginnt {0} ({1})
+  distance_past_date: '{0}'
 editor:
   music:
     add: Hinzufügen
@@ -350,11 +371,13 @@ editor:
     trackNameInput: Titel
     originalArtistInput: Originaler Künstler
     testStart: Teste den Start
+    startInput: Start
     endInput: 'Dauer in Sekunden: (Ende @ {0})'
   exitMode: Bearbeitungsmodus verlassen
   enterMode: Video bearbeiten
 about:
   quicklinks: Kurzlinks
+  discordBtn: Holodex Discord
   faq:
     title: Häufig gestellte Fragen
     ytchatHeader: Mein Youtube-Chat ist nicht eingeloggt!
@@ -422,6 +445,7 @@ about:
   feedbackHtml: >-
     Du kannst einen Fehler im <a href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a> melden oder das Holodex Team auf Discord kontaktieren. <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
+    title: Credits
     contents:
       - Insbesondere bedanken möchte ich mich beim
       - Team für ihre Arbeit an der
