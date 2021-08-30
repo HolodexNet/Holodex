@@ -419,7 +419,6 @@ export default {
         },
         move(id, direction) {
             const playlist = this.$store.state.playlist.active;
-            console.log(playlist);
             const curIdx = playlist.videos.findIndex((elem) => elem.id === id);
             if (curIdx < 0) throw new Error("huh");
             let toIdx;

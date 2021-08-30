@@ -1,8 +1,8 @@
 <template>
-  <div style="width: 100%; height: 100%">
+  <div class="cell-content">
+    <!-- Top channel switch select -->
     <div class="d-flex flex-row align-center py-1">
       <v-btn
-        v-if="setShowChat"
         icon
         small
         class="mx-1"
@@ -19,7 +19,6 @@
         class="tabbed-chat-select mx-1"
       />
       <v-btn
-        v-if="setShowChat"
         icon
         small
         class="mx-1"
@@ -29,6 +28,7 @@
         <v-icon>{{ icons.mdiChevronRight }}</v-icon>
       </v-btn>
     </div>
+    <!-- Yt/Twitch Chat window -->
     <template v-if="activeVideos.length && currentTab >= 0">
       <iframe
         v-if="activeVideos[currentTab || 0].type === 'twitch'"
@@ -39,64 +39,108 @@
       <WatchLiveChat
         v-else
         :key="'wlc' + activeVideos[currentTab || 0].id"
+        v-model="chatStatus"
         :video="activeVideos[currentTab || 0]"
-        style="width: 100%; height: calc(100% - 32px)"
-        :show-t-l="showTL"
-        :hint-connect-live-t-l="hintConnectLiveTL"
-        :show-live-chat="setShowChat"
         fluid
         :scale="scale"
         :current-time="currentTime"
       />
     </template>
+    <div v-else style="height: 100%" />
+    <!-- Bottom tl/chat toggle controls -->
+    <v-sheet v-if="!editMode" class="cell-control">
+      <v-btn
+        x-small
+        width="50%"
+        @click="editMode = !editMode"
+      >
+        <v-icon small class="mr-1">
+          {{ icons.mdiPencil }}
+        </v-icon>{{ $t("component.videoCard.edit") }}
+      </v-btn>
+      <v-btn
+        width="25%"
+        :color="showYtChat ? 'primary' : ''"
+        x-small
+        @click="toggleYtChat"
+      >
+        <v-icon small class="mr-1">
+          {{ icons.ytChat }}
+        </v-icon>
+        <template v-if="cellWidth > 200">
+          Chat
+        </template>
+      </v-btn>
+      <v-btn
+        width="25%"
+        :color="showTlChat ? 'primary' : ''"
+        x-small
+        @click="toggleTlChat"
+      >
+        <v-icon small class="mr-1">
+          {{ icons.tlChat }}
+        </v-icon>
+        <template v-if="cellWidth > 200">
+          TL
+        </template>
+      </v-btn>
+    </v-sheet>
+    <!-- Edit mode cell controls -->
+    <CellControl
+      v-else
+      :play-icon="icons.mdiCheck"
+      @playpause="editMode = false"
+      @back="resetCell"
+      @delete="deleteCell"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
-import { Content } from "@/utils/mv-utils";
+import type { Content } from "@/utils/mv-utils";
 import { mapState } from "vuex";
+import CellMixin from "./CellMixin";
+import CellControl from "./CellControl.vue";
 
 export default {
-    name: "TabbedLiveChat",
+    name: "ChatCell",
     components: {
         WatchLiveChat,
+        CellControl,
     },
+    mixins: [CellMixin],
     props: {
-        activeVideos: {
-            type: Array,
+        item: {
+            type: Object,
             required: true,
         },
-        setShowTL: {
-            type: Boolean,
-            default: false,
-        },
-        setShowChat: {
-            type: Boolean,
-            default: false,
-        },
-        id: {
-            type: [String, Number],
-            required: true,
-        },
-        scale: {
+        cellWidth: {
             type: Number,
-            default: 1,
+            default: 0,
         },
     },
     data() {
         return {
-            // currentTab: 0,
-            showTL: false,
-            hintConnectLiveTL: false,
-            newTL: 0,
-
+            showTlChat: false,
+            showYtChat: true,
             currentTime: 0,
-            // timer: null,
-            // showLiveChat: true,
+            scale: 1,
         };
     },
     computed: {
+        chatStatus: {
+            get() {
+                return {
+                    showTlChat: this.showTlChat,
+                    showYtChat: this.showYtChat,
+                };
+            },
+            set(val: any) {
+                this.showTlChat = val.showTlChat;
+                this.showYtChat = val.showYtChat;
+            },
+        },
         ...mapState("multiview", ["layoutContent"]),
         currentContent() {
             if (!this.activeVideos[this.currentTab]) return null;
@@ -106,13 +150,11 @@ export default {
         },
         currentTab: {
             get() {
-                return this.layoutContent[this.id].currentTab ?? 0;
+                return this.layoutContent[this.item.i].currentTab ?? 0;
             },
             set(value) {
-                // const obj = this.layoutContent[this.id];
-                // obj.currentTab = val;
                 this.$store.commit("multiview/setLayoutContentWithKey", {
-                    id: this.id,
+                    id: this.item.i,
                     key: "currentTab",
                     value,
                 });
@@ -134,48 +176,39 @@ export default {
         },
     },
     watch: {
-        currentTab() {
-            // this.hintConnectLiveTL = false;
-            this.savedTab = this.currentTab;
-        },
-        setShowTL(nw) {
-            if (!this.hintConnectLiveTL) {
-                this.hintConnectLiveTL = true;
-                this.showTL = true;
-                return;
-            }
-            this.showTL = nw;
-        },
-        activeVideos() {
-            if (this.currentTab >= this.activeVideos.length) {
-                this.currentTab = 0;
-            }
+        cellWidth() {
+            // Scale chat based on cell size
+            this.checkScale();
         },
     },
     mounted() {
-        this.currentTab = this.savedTab;
-        // this.timer = setInterval(() => {
-        //     // check if timer is needed for current video
-        //     if (this.currentContent?.video?.status === "past") {
-        //         this.currentTime = this.currentContent?.playerControls?.getCurrentTime();
-        //     }
-        // }, 1000);
-
-        if (this.activeVideos.length > 1) {
-            const curTabs = Object.values(this.layoutContent)
-                .filter((l: Content) => l.type === "chat")
-                .map((l: Content) => l.currentTab ?? 0);
-            const newTab = curTabs.findIndex((current, index) => !curTabs.includes(index));
-            this.currentTab = newTab > 0 ? newTab : 0;
-        }
+        // Chat is non paused by default
+        this.editMode = false;
     },
-    beforeDestroy() {
-        if (this.timer) clearInterval(this.timer);
+    methods: {
+        checkScale() {
+            // width breakpoints where 150 < width < 200 => scale = 0.6
+            const widths = [150, 200, 250, 300, 350];
+            const scale = [0.5, 0.6, 0.75, 0.85, 1];
+            const idx = widths.findIndex((w) => this.cellWidth < w);
+            this.scale = idx >= 0 ? scale[idx] : 1;
+        },
+        toggleYtChat() {
+            this.showYtChat = !this.showYtChat;
+            if (!this.showYtChat) this.showTlChat = true;
+        },
+        toggleTlChat() {
+            this.showTlChat = !this.showTlChat;
+            if (!this.showTlChat) this.showYtChat = true;
+        },
     },
 };
 </script>
 
 <style>
+.tabbed-chat-select {
+  min-width: 0;
+}
 /* Jank shrink select to 28px height */
 .tabbed-chat-select.v-text-field--outlined > .v-input__control > .v-input__slot {
     min-height: 28px !important;

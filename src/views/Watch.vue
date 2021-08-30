@@ -49,6 +49,8 @@
               @ready="ready"
               @playing="playing"
               @ended="ended"
+
+              v-on="!hasLiveChat && { currentTime: handleCurrentTime }"
             />
           </template>
         </WatchFrame>
@@ -61,10 +63,9 @@
                   lg
                   :color="showTL ? 'primary' : ''"
                   v-bind="attrs"
-                  @click="toggleTL"
+                  @click="showTL = !showTL;"
                   v-on="on"
                 >
-                  <div v-if="newTL > 0" class="notification-sticker" />
                   <v-icon>
                     {{ icons.tlChat }}
                   </v-icon>
@@ -75,7 +76,7 @@
               }}</span>
             </v-tooltip>
             <v-btn
-              v-if="hasLiveChat && showLiveChatOverride"
+              v-if="hasLiveChat"
               icon
               lg
               :color="showLiveChat ? 'primary' : ''"
@@ -147,18 +148,12 @@
         <v-col :md="theaterMode ? 4 : 12" :lg="theaterMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
           <WatchLiveChat
             v-if="showChatWindow"
-            :key="'ytchat' + isMugen ? '4ANxvWIM3Bs' : video.id"
+            v-model="chatStatus"
             :video="video"
-            :mugen-id="isMugen && '4ANxvWIM3Bs' || ''"
             :fixed-right="isMobile && landscape"
             :fixed-bottom="isMobile && !landscape"
-            :show-t-l="showTL"
-            :hint-connect-live-t-l="hintConnectLiveTL"
-            :show-live-chat="showLiveChat"
-            :is-mugen="isMugen"
             :current-time="currentTime"
             @videoUpdate="handleVideoUpdate"
-            @historyLength="handleHistoryLength"
             @timeJump="seekTo"
           />
           <template v-if="!isMobile">
@@ -173,8 +168,7 @@
 </template>
 
 <script lang="ts">
-import VueYoutube from "@/external/vue-youtube";
-import Vue from "vue";
+import Youtube from "@/components/player/YoutubePlayer.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import WatchInfo from "@/components/watch/WatchInfo.vue";
 import WatchFrame from "@/components/watch/WatchFrame.vue";
@@ -190,8 +184,6 @@ import {
     mdiOpenInNew, mdiRectangleOutline,
 } from "@mdi/js";
 
-Vue.use(VueYoutube);
-
 export default {
     name: "Watch",
     metaInfo() {
@@ -200,6 +192,7 @@ export default {
         };
     },
     components: {
+        Youtube,
         LoadingOverlay,
         WatchInfo,
         WatchFrame,
@@ -216,33 +209,26 @@ export default {
             startTime: 0,
             mdiOpenInNew,
             mdiRectangleOutline,
-
-            // theaterMode: false,
-
-            // showTL: false,
-            hintConnectLiveTL: false,
-            newTL: 0,
-
-            // when live/upcoming = true, when archive = false
-            showLiveChatOverride: true,
             fullScreen: false,
-
             playlistIndex: -1,
-
-            timer: null,
             currentTime: 0,
             player: null,
         };
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
-        ...syncState("watch", ["showTL"]),
-        showLiveChat: {
+        ...syncState("watch", ["showTL", "showLiveChat"]),
+        chatStatus: {
             get() {
-                return this.$store.state.watch.showLiveChat && this.showLiveChatOverride;
+                return {
+                    showTlChat: this.showTL,
+                    showYtChat: this.showLiveChat && this.hasLiveChat,
+                };
             },
-            set(val) {
-                this.$store.commit("watch/setShowLiveChat", val);
+            set(val: any) {
+                console.log(val);
+                this.showTL = val.showTlChat;
+                this.showLiveChat = val.showYtChat;
             },
         },
         videoId() {
@@ -255,13 +241,14 @@ export default {
             return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
         },
         hasLiveChat() {
-            return this.isMugen || this.video.type === "stream";
+            // live chat exits for live/upcoming streams
+            return this.video.type === "stream" && ["upcoming", "live"].includes(this.video.status);
         },
         hasLiveTL() {
             return this.video.type === "stream";
         },
         showChatWindow() {
-            return this.hasLiveChat && (this.showLiveChat || this.showTL);
+            return (this.hasLiveChat && this.showLiveChat) || this.showTL;
         },
         isMugen() {
             return this.$route.name === "mugen-clips";
@@ -307,19 +294,12 @@ export default {
         "$route.query.v": function () {
             this.init();
         },
-        video() {
-            this.showLiveChatOverride = this.video.type === "stream"
-                && (["upcoming", "live"].includes(this.video.status) || !!(window as any).extensionSupport);
-        },
     },
     created() {
         this.init();
         if (this.showTL && !this.hintConnectLiveTL) {
             this.hintConnectLiveTL = true;
         }
-    },
-    destroyed() {
-        if (this.timer) clearInterval(this.timer);
     },
     methods: {
         init() {
@@ -347,11 +327,6 @@ export default {
                 event_category: "video",
                 event_label: this.video.type,
             });
-            if (!this.timer) {
-                this.timer = setInterval(() => {
-                    this.currentTime = this.player.getCurrentTime();
-                }, 1000);
-            }
         },
         seekTo(time) {
             if (!this.player) return;
@@ -383,6 +358,9 @@ export default {
             this.video.status = update.status;
             this.video.start_actual = update.start_actual;
         },
+        handleCurrentTime(time) {
+            this.currentTime = time;
+        },
         toggleFullScreen() {
             if (!document.fullscreenElement) {
                 this.fullScreen = true;
@@ -390,24 +368,6 @@ export default {
             } else if (document.exitFullscreen) {
                 document.exitFullscreen();
                 this.fullScreen = false;
-            }
-        },
-        toggleTL() {
-            // hintConnectLiveTL will initiate connection
-            // showTL toggle will show/hide without terminating connection
-            if (!this.hasLiveTL) return;
-
-            if (!this.hintConnectLiveTL) {
-                this.hintConnectLiveTL = true;
-                this.showTL = true;
-                return;
-            }
-            this.showTL = !this.showTL;
-            this.newTL = 0;
-        },
-        handleHistoryLength() {
-            if (!this.showTL) {
-                this.newTL += 1;
             }
         },
         ended() {

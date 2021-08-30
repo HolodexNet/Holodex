@@ -1,8 +1,9 @@
 <template>
   <div :ref="source.breakpoint && 'messageBreakpoint'">
     <div
-      class="tl-author"
+      v-if="!hideAuthor"
       :class="{
+        'tl-caption': true,
         'primary--text': source.is_owner,
         'secondary--text': source.is_verified || source.is_moderator || source.is_vtuber,
       }"
@@ -19,7 +20,7 @@
       </span>
       <span class="text--primary" v-html="source.message" />
     </a>
-    <v-dialog v-model="showBlockChannelDialog" width="500">
+    <v-dialog v-if="!hideAuthor" v-model="showBlockChannelDialog" width="500">
       <v-card>
         <v-card-title>{{ source.name }}</v-card-title>
         <v-card-text>
@@ -44,6 +45,9 @@ export default {
             type: Number,
             default: 0,
         },
+        hideAuthor: {
+            type: Boolean,
+        },
     },
     data() {
         return {
@@ -63,4 +67,16 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.theme--light .tl-caption {
+    color: hsla(0, 0%, 30%, 0.7);
+}
+.theme--dark .tl-caption {
+    color: hsla(0, 0%, 70%, 0.7);
+}
+
+.tl-body .tl-caption {
+    letter-spacing: 0.0333333333em !important;
+    font-size: 0.85em;
+}
+</style>

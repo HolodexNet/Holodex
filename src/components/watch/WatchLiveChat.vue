@@ -4,84 +4,64 @@
     :class="{
       'fixed-bottom': fixedBottom,
       'fixed-right': fixedRight,
-      'show-tl-overlay': !isMugen && shouldShowLiveTL,
-      fluid: fluid,
+      'show-tl-overlay': showTlChat,
+      'fluid': fluid,
     }"
   >
-    <span v-if="showLiveChat" class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
+    <span v-if="showYtChat" class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
+    <!-- Archive translations for videos not upcoming/live -->
     <ArchiveTranslations
-      v-show="shouldShowLiveTL"
-      v-if="video.status === 'past'"
+      v-show="showTlChat"
+      v-if="isArchived"
       :video="video"
       :class="{
         'chat-overlay': fixedBottom || fixedRight,
         'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
-        'tl-full-height': !showLiveChat,
+        'tl-full-height': !showYtChat,
       }"
-      :style="{
-        height:
-          showLiveChat && $store.state.settings.liveTlWindowSize > 0
-            ? $store.state.settings.liveTlWindowSize + '%'
-            : '',
-      }"
+      :style="{ height: ytChatHeight }"
       :current-time="currentTime"
       @timeJump="time => $emit('timeJump', time)"
     />
+    <!-- Live translations for upcoming/live videos -->
     <LiveTranslations
-      v-else-if="!isMugen && shouldConnectLiveTL"
-      v-show="shouldShowLiveTL"
+      v-else-if="firstTlConnect"
+      v-show="showTlChat"
       :video="video"
       :class="{
         'chat-overlay': fixedBottom || fixedRight,
         'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
-        'tl-full-height': !showLiveChat,
+        'tl-full-height': !showYtChat,
       }"
-      :style="{
-        height:
-          showLiveChat && $store.state.settings.liveTlWindowSize > 0
-            ? $store.state.settings.liveTlWindowSize + '%'
-            : '',
-      }"
+      :style="{ height: ytChatHeight }"
       @videoUpdate="handleVideoUpdate"
-      @historyLength="handleHistoryLength"
     />
 
+    <!-- Youtube scalable embedded window -->
     <div
-      v-if="showLiveChat"
+      v-if="showYtChat"
       class="embedded-chat"
-      :style="{
-        height:
-          $store.state.settings.liveTlWindowSize > 0 && shouldShowLiveTL && !fixedBottom && !fixedRight
-            ? 100 - $store.state.settings.liveTlWindowSize + '%'
-            : '',
-      }"
+      :style="{ height: tlChatHeight }"
     >
-      <iframe :src="liveChatUrl" frameborder="0" :style="scale !== 1 && scaledStyle" />
+      <iframe :src="liveChatUrl" frameborder="0" :style="scaledStyle" />
     </div>
-    <!-- <cookie-detect /> -->
   </v-sheet>
 </template>
 
 <script lang="ts">
-// import CookieDetect from "@/components/common/3PCookieDetect.vue";
 import LiveTranslations from "@/components/chat/LiveTranslations.vue";
 import ArchiveTranslations from "@/components/chat/ArchiveTranslations.vue";
+
 // Contains Live Chat iframe and Chat TLs, can show either one at both at the same time
 export default {
     name: "WatchLiveChat",
     components: {
         LiveTranslations,
         ArchiveTranslations,
-        // CookieDetect,
     },
     props: {
         video: {
             type: Object,
-            default: null,
-        },
-        mugenId: {
-            type: String,
-            required: false,
             default: null,
         },
         fixedBottom: {
@@ -96,22 +76,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        showLiveChat: {
-            type: Boolean,
-            default: true,
-        },
-        showTL: {
-            type: Boolean,
-            default: false,
-        },
-        hintConnectLiveTL: {
-            type: Boolean,
-            default: false,
-        },
-        isMugen: {
-            type: Boolean,
-            default: false,
-        },
         currentTime: {
             type: Number,
             default: 0,
@@ -120,31 +84,70 @@ export default {
             type: Number,
             default: 1,
         },
+        value: {
+            type: Object,
+            required: true,
+            default: () => ({
+                showTlChat: false,
+                showYtChat: true,
+            }),
+        },
+    },
+    data() {
+        return {
+            firstTlConnect: false,
+        };
     },
     computed: {
+        showTlChat() {
+            return this.value.showTlChat;
+        },
+        showYtChat() {
+            return this.value.showYtChat;
+        },
         liveChatUrl() {
-            if (!this.video && !this.videoId) return null;
-            return `https://www.youtube.com/live_chat?v=${this.mugenId ? this.mugenId : this.video.id}&embed_domain=${
+            if (!this.video) return null;
+            return `https://www.youtube.com/live_chat?v=${this.video.id}&embed_domain=${
                 window.location.hostname
             }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
         },
-        shouldConnectLiveTL() {
-            return this.hintConnectLiveTL;
-        },
-        shouldShowLiveTL() {
-            return this.showTL;
-        },
         scaledStyle() {
-            return {
+            // Scale chat by scale %
+            return this.scale !== 1 ? {
                 transform: `scale(${this.scale})`,
                 height: `${100 / this.scale}%`,
                 width: `${100 / this.scale}%`,
                 "transform-origin": "top left",
-            };
+            } : {};
         },
-        // hasNewTranslations() {
-        //     return (this.controlTL ? this.tl.new : this.newTL) > 0;
-        // },
+        ytChatHeight() {
+            // Set height of chat if setting exists
+            return this.$store.state.settings.liveTlWindowSize > 0
+                && this.showTlChat
+                && !this.fixedBottom
+                && !this.fixedRight
+                ? `${(100 - this.$store.state.settings.liveTlWindowSize)}%`
+                : "";
+        },
+        tlChatHeight() {
+            // Opposite of above
+            return this.showYtChat
+                && this.$store.state.settings.liveTlWindowSize > 0
+                ? `${this.$store.state.settings.liveTlWindowSize}%`
+                : "";
+        },
+        isArchived() {
+            return !["upcoming", "live"].includes(this.video.status);
+        },
+    },
+    watch: {
+        showTlChat() {
+            // Lazy load socket before first v-show
+            if (!this.firstTlConnect) this.firstTlConnect = true;
+        },
+    },
+    mounted() {
+        if (this.showTlChat) this.firstTlConnect = true;
     },
     methods: {
         handleVideoUpdate(update) {
