@@ -1,5 +1,10 @@
 # Holodex Changelog
-
+### 2.18.0 Holodex [*August 21st, 2021*]
+##### New Features
+- Custom Twitch and Youtube urls are saved in the history
+##### Patches & Bugfixes
+- Fixed Twitter login
+- Fixed search inputs too sensitive
 ### 2.17.3 Holodex [*August 21st, 2021*]
 ##### New Features
 - Clicking on Archive Translation jumps to time

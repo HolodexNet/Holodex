@@ -32,7 +32,6 @@ component:
     settings: Ayarlar
     login: Giriş
     logout: Çıkış
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Hesap ayarları
     music: Müzik
     multiview: Çoklu İzleme
@@ -51,8 +50,6 @@ component:
     tlPresence: Son 30 dakikada aktif çevirmen
   videoDescription:
     description: Açıklama
-  video:
-    comment: { }
   description:
     showLess: Daha az
     showMore: Daha çok
@@ -142,7 +139,6 @@ views:
     collabs: Collablar
     about: Hakkında
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Aboneler
       group: Grup
@@ -151,7 +147,6 @@ views:
       clipCount: Klip Sayısı
       org: Organizayson
     tabs:
-      Vtuber: Vtuber
       Subber: Altyazıcı
       Favorites: Favoriler
       Blocked: Engellenenler
@@ -352,7 +347,6 @@ views:
 time:
   soon: yakında
   diff_future_date: ' {0} ({1}) başlıyor'
-  distance_past_date: '{0}'
 editor:
   music:
     add: Ekle
@@ -431,7 +425,7 @@ about:
           Lütfen Kanallar sayfasında kanalınızın altyazıcı olarak listelendiğini kontrol edin, eğer değilse lütfen
         - bu formu doldurun
         - >-
-           ki sizi manuel olarak ekleyelim. Eğer zaten listede varsanız, lütfen video açıklamalarınızın doğru video/kanal linklerine sahip olduğundan emin olun.
+          ki sizi manuel olarak ekleyelim. Eğer zaten listede varsanız, lütfen video açıklamalarınızın doğru video/kanal linklerine sahip olduğundan emin olun.
     feedback:
       title: Bu projeye geri bildirimde/katkıda bulunmak istiyorum.
       contents:

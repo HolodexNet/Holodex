@@ -5,7 +5,6 @@ component:
     textBeforeTwitter: 'Terdapat ralat ketika mendapatkan kembali kandungan. Sila semak di Twitter'
     textAfterTwitter: ' atau laporkan ralat melalui'
     aboutPage: laman Perihal
-    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Pendaftaran diperlukan
     unfavoriteAllInGroup: Keluarkan seluruh ahli pecahan ini daripada Kegemaran
@@ -32,7 +31,6 @@ component:
     settings: Tetapan
     login: Daftar Masuk
     logout: Daftar Keluar
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Tetapan Akaun
     music: Muzik
     multiview: Berbilang Tontonan
@@ -51,8 +49,6 @@ component:
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -142,7 +138,6 @@ views:
     collabs: Kerjasama
     about: Perihal
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -352,7 +347,6 @@ views:
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: Tambah

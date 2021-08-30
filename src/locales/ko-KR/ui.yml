@@ -32,7 +32,6 @@ component:
     settings: 설정
     login: 로그인
     logout: 로그아웃
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: 계정 설정
     music: 음악
     multiview: 멀티뷰
@@ -108,6 +107,7 @@ component:
     readMore: 자세히 보기
   reportDialog:
     title: 신고
+    collabing: 이 채널은 즐겨찾기 중인 {org} 멤버와 콜라보 중일 수도 있습니다. 설정에서 이 기능을 끌 수 있어요
     comments: Holodex가 취해야 할 행동은 무엇인가요?
     success: 신고되었습니다. 감사합니다!
     reasons:
@@ -314,6 +314,7 @@ views:
     unmuteAll: 모두 음소거 해제
     autoLayoutTip: 채널을 클릭해서 자동 레이아웃 모드로 감상하기
     createLayoutTip: 셀 또는 프리셋을 활용해서 자신만의 레이아웃을 만들어보세요
+    openToolbarTip: 멀티뷰를 시작하려면 툴바를 여세요
     preset:
       shareOnDiscord: >-
         공유할 만한 멋있는 레이아웃이 있나요? 공유 버튼을 누른 후 우리의 <a href="https://discord.gg/jctkgHBt4b">Discord 서버</a>에 공유해주세요!
@@ -347,7 +348,6 @@ views:
 time:
   soon: 예정
   diff_future_date: '{0} 시작 ({1})'
-  distance_past_date: '{0}'
 editor:
   music:
     add: 추가
@@ -372,9 +372,7 @@ editor:
   enterMode: 동영상 편집
 about:
   quicklinks: 빠른 연결
-  discordBtn: Holodex Discord
   faq:
-    title: FAQ
     ytchatHeader: YouTube 채팅에 로그인되지 않아요!
     ytchatContent: >-
       타사 쿠키 차단으로 알려진 보안 기능을 끄거나 이 웹사이트와 youtube.com을 타사 쿠키 차단에서 제외해주세요.

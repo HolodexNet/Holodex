@@ -5,7 +5,6 @@ component:
     textBeforeTwitter: 'Ada kesalahan saat memuat konten, silahkan cek twitter '
     textAfterTwitter: ' atau laporkan hal ini melalui'
     aboutPage: halaman tentang
-    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Masuk untuk menambahkan favorit
     unfavoriteAllInGroup: Unfavoritkan semua dalam grup
@@ -32,12 +31,9 @@ component:
     settings: Pengaturan
     login: Masuk
     logout: Keluar
-    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Pengaturan Akun
     music: Musik
-    multiview: MultiView
     points: poin
-    playlist: Playlist
   videoCard:
     clips: '{n} Klip'
     watching: '{0} sedang menonton'
@@ -51,8 +47,6 @@ component:
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -67,7 +61,6 @@ component:
     type:
       channel: Saluran
       topic: topik
-      org: org
       titledesc: judul/desk
       comments: Komen
       videourl: url video
@@ -142,7 +135,6 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -151,8 +143,6 @@ views:
       clipCount: Jumlah Klip
       org: Organisasi
     tabs:
-      Vtuber: Vtuber
-      Subber: Subber
       Favorites: Favorit
       Blocked: Diblokir
     favoritesAreEmpty: Kamu tidak memiliki favorit!
@@ -172,7 +162,6 @@ views:
     deleteConfirmation: Apa kamu yakin ingin menghapus {0} video?
     deleteConfirmationOK: Hapus
     deleteConfirmationCancel: Batal
-    selectionReset: Reset
     selectionSelectAll: Pilih Semua
     emptyLibrary: Kamu tidak menyimpan video apapun!
     exportSelected: Ekspor yang dipilih ({0})
@@ -325,7 +314,6 @@ views:
       custom: Tataletak Saya
       toggleAutoLayout: Nyalakan/Matikan penggunaan tataletak ini pada otomatis
       remove: Hapus
-      desktop: Desktop
       mobile: Ponsel
       autoLayout: Tataletak Otomatis
     presetEditor:
@@ -352,7 +340,6 @@ views:
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
-  distance_past_date: '{0}'
 editor:
   music:
     add: Tambah
@@ -374,7 +361,6 @@ editor:
     startInput: Mulai
     endInput: 'Durasi dalam detik: (berakhir pd {0})'
   exitMode: Keluar dari Mode Edit
-  enterMode: Edit Video
 about:
   quicklinks: Tautan cepat
   discordBtn: Discord Holodex
