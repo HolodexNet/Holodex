@@ -48,7 +48,7 @@
           </v-list-item>
           <template v-if="value && $parent.$refs.videoCell && $parent.$refs.videoCell.length">
             <v-list-item
-              v-for="(cellState, index) in $parent.$refs.videoCell.filter(c => c.cellContent)"
+              v-for="(cellState, index) in cells"
               :key="index"
               two-line
               style="border-bottom: 1px gray solid"
@@ -130,6 +130,9 @@ export default {
             if (!this.mounted || !this.value || !cells || !cells.length) return 0;
             const vol = cells[0].volume;
             return cells.every((c) => c.volume === vol) ? vol : 0;
+        },
+        cells() {
+            return this.$parent.$refs.videoCell.filter((c) => c.video);
         },
     },
     mounted() {

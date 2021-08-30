@@ -283,7 +283,6 @@ export default {
         },
     },
     async mounted() {
-        console.log(this.$refs.videoCell);
         // Check if permalink layout is empty
         if (this.$route.params.layout) {
             // TODO: verify layout

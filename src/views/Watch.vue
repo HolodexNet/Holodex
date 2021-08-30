@@ -51,7 +51,6 @@
               @ended="ended"
 
               v-on="!hasLiveChat && { currentTime: handleCurrentTime }"
-              @volume="e => (volume = e)"
             />
           </template>
         </WatchFrame>
@@ -107,7 +106,6 @@
             </v-tooltip>
           </template>
         </WatchToolBar>
-        <v-slider v-model="currentVolume" />
         <WatchInfo
           v-if="!theaterMode"
           key="info"
@@ -170,8 +168,7 @@
 </template>
 
 <script lang="ts">
-import VueYoutube from "@/external/vue-youtube";
-import Vue from "vue";
+import Youtube from "@/components/player/YoutubePlayer.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import WatchInfo from "@/components/watch/WatchInfo.vue";
 import WatchFrame from "@/components/watch/WatchFrame.vue";
@@ -187,8 +184,6 @@ import {
     mdiOpenInNew, mdiRectangleOutline,
 } from "@mdi/js";
 
-Vue.use(VueYoutube);
-
 export default {
     name: "Watch",
     metaInfo() {
@@ -197,6 +192,7 @@ export default {
         };
     },
     components: {
+        Youtube,
         LoadingOverlay,
         WatchInfo,
         WatchFrame,
@@ -217,20 +213,11 @@ export default {
             playlistIndex: -1,
             currentTime: 0,
             player: null,
-            volume: 0,
         };
     },
     computed: {
         ...mapState("watch", ["video", "isLoading", "hasError"]),
         ...syncState("watch", ["showTL", "showLiveChat"]),
-        currentVolume: {
-            get() {
-                return this.volume;
-            },
-            set(val) {
-                this.player.setVolume(val);
-            },
-        },
         chatStatus: {
             get() {
                 return {

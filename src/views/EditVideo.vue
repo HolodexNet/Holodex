@@ -100,8 +100,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import VueYoutube from "@/external/vue-youtube";
+import Youtube from "@/components/player/YoutubePlayer.vue";
 
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import WatchInfo from "@/components/watch/WatchInfo.vue";
@@ -128,6 +127,7 @@ export default {
         VideoEditSongs,
         WatchComments,
         VideoEditMentions,
+        Youtube,
     },
     data() {
         return {
@@ -178,9 +178,6 @@ export default {
         currentTab() {
             this.initTab();
         },
-    },
-    created() {
-        Vue.use(VueYoutube);
     },
     mounted() {
         // Load specific tab if defined in the tab param

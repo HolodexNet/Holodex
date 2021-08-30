@@ -13,11 +13,13 @@
         :channel="cellContent.id"
         :plays-inline="true"
         :mute="muted"
-        @ready="vidReady"
+        @ready="onReady"
         @ended="editMode = true"
-        @play="vidPlaying({ data: 1 })"
-        @pause="vidPlaying({ data: 2 })"
+        @playing="onPlayPause(false)"
+        @paused="onPlayPause(true)"
         @error="editMode = true"
+        @mute="muted = $event"
+        @volume="volume = $event"
       />
       <!-- Youtube Player -->
       <youtube
@@ -27,10 +29,10 @@
           playsinline: 1,
         }"
         :mute="muted"
-        @ready="vidReady"
+        @ready="onReady"
         @ended="editMode = true"
-        @playing="vidPlaying({ data: 1 })"
-        @paused="vidPlaying({ data: 2 })"
+        @playing="onPlayPause(false)"
+        @paused="onPlayPause(true)"
         @cued="editMode = true"
         @error="editMode = true"
 
@@ -51,18 +53,17 @@
 </template>
 
 <script>
-import Vue from "vue";
-import VueYoutube from "@/external/vue-youtube";
+import Youtube from "../player/YoutubePlayer.vue";
 
 import CellMixin from "./CellMixin";
 import CellControl from "./CellControl.vue";
 
-Vue.use(VueYoutube);
 export default {
     name: "VideoCell",
     components: {
         CellControl,
-        VueTwitchPlayer: () => import("./TwitchPlayer.vue"),
+        VueTwitchPlayer: () => import("../player/TwitchPlayer.vue"),
+        Youtube,
     },
     mixins: [CellMixin],
     data() {
@@ -108,6 +109,15 @@ export default {
             return this.playbackRate !== 1;
         },
     },
+    watch: {
+        cellContent(nw, old) {
+            // Handles edge case where twitch player is getting destroyed without notifying
+            // This parent, leaving editMode desynced. Alternative is to use the same event @currentTime to sync up
+            if (nw.id !== old.id) this.editMode = true;
+            if (!this.isTwitchVideo) this.twPlayer = null;
+            else this.ytPlayer = null;
+        },
+    },
     mounted() {
         // When mounted, the video is paused, reset edit mode to sync up
         if (!this.editMode) this.editMode = true;
@@ -131,6 +141,7 @@ export default {
         },
         setVolume(val) {
             if (this.ytPlayer) this.ytPlayer.setVolume(val);
+            if (this.twPlayer) this.twPlayer.setVolume(val / 100);
         },
         togglePlaybackRate() {
             if (!this.ytPlayer) return;
@@ -140,18 +151,18 @@ export default {
             if (!this.ytPlayer) return;
             this.ytPlayer.setPlaybackRate(val);
         },
-        vidPlaying(evt) {
-            this.editMode = evt.data === 2;
-            if (evt.data === 2 && this.iOS() && this.ytPlayer) {
+        onPlayPause(paused = false) {
+            this.editMode = paused;
+            if (this.editMode && this.iOS() && this.ytPlayer) {
                 this.ytPlayer.mute();
                 this.muted = true;
             }
         },
-        vidReady(evt) {
-            if (evt && this.isTwitchVideo) {
-                this.twPlayer = evt;
-            } else if (evt) {
-                this.ytPlayer = evt;
+        onReady(player) {
+            if (player && this.isTwitchVideo) {
+                this.twPlayer = player;
+            } else if (player) {
+                this.ytPlayer = player;
             }
         },
     },
