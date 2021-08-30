@@ -1,6 +1,6 @@
 <template>
   <!-- When Cell has no content: show video picker -->
-  <v-sheet class="cell-content pt-4">
+  <div class="cell-content pt-4">
     <!--================= No Content Mode ================-->
     <div class="centered-btn">
       <v-btn
@@ -22,7 +22,7 @@
       </v-btn>
     </div>
     <CellControl :play-icon="icons.mdiPlay" class="mx-6 mb-6" @delete="deleteCell" />
-  </v-sheet>
+  </div>
 </template>
 
 <script class="ts">
@@ -49,7 +49,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .centered-btn {
     display: flex;
     flex-grow: 1;
@@ -58,5 +58,9 @@ export default {
     align-items: center;
     overflow: hidden;
     position: relative;
+
+    .v-btn {
+      color: white !important;
+    }
 }
 </style>

@@ -5,7 +5,7 @@
     flat
     style="width: 100%"
   >
-    <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
+    <v-overlay absolute :value="showOverlay || (!forceCloseOverlay && $socket.disconnected)" opacity="0.8">
       <div v-if="isLoading">
         {{ $t("views.watch.chat.loading") }}
       </div>
@@ -15,7 +15,7 @@
       <v-btn v-if="$socket.disconnected" class="mr-2" @click="tlJoin()">
         {{ $t("views.watch.chat.retryBtn") }}
       </v-btn>
-      <v-btn @click="showOverlay = false">
+      <v-btn @click="() => { forceCloseOverlay = true; showOverlay = false; }">
         {{ $t("views.app.close_btn") }}
       </v-btn>
     </v-overlay>
@@ -113,6 +113,7 @@ export default {
         return {
             overlayMessage: this.$t("views.watch.chat.loading"),
             showOverlay: false,
+            forceCloseOverlay: false,
             isLoading: true,
             success: false,
             selectedChannel: "",

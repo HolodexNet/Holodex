@@ -1,6 +1,7 @@
 <template>
   <v-sheet
     class="mv-cell"
+    rounded
     :class="{
       'edit-mode': editMode,
     }"

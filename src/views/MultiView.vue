@@ -424,31 +424,6 @@ export default {
                 document.exitFullscreen();
             }
         },
-        allCellAction(key) {
-            if (!this.$refs.cell) return;
-            const cells = this.$refs.cell.filter((c) => c.video);
-            const fns = {
-                play: () => {
-                    cells.forEach((c) => c.setPlaying(true));
-                },
-                pause: () => {
-                    cells.forEach((c) => c.setPlaying(false));
-                },
-                mute: () => {
-                    cells.forEach((c) => c.setMuted(true));
-                },
-                unmute: () => {
-                    cells.forEach((c) => c.setMuted(false));
-                },
-                refresh: () => {
-                    cells.forEach((c) => c.refresh());
-                },
-                sync: () => {
-                    cells.forEach((c) => c.trySync());
-                },
-            };
-            fns[key]();
-        },
     },
 };
 </script>

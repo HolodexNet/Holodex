@@ -48,7 +48,7 @@
     </template>
     <div v-else style="height: 100%" />
     <!-- Bottom tl/chat toggle controls -->
-    <v-sheet v-if="!editMode" class="cell-control">
+    <div v-if="!editMode">
       <v-btn
         x-small
         width="50%"
@@ -84,7 +84,7 @@
           TL
         </template>
       </v-btn>
-    </v-sheet>
+    </div>
     <!-- Edit mode cell controls -->
     <CellControl
       v-else
@@ -142,7 +142,7 @@ export default {
             },
         },
         ...mapState("multiview", ["layoutContent"]),
-        currentContent() {
+        currentVideoCell() {
             if (!this.activeVideos[this.currentTab]) return null;
             return Object.values(this.layoutContent).find(
                 (x: Content) => x.id === this.activeVideos[this.currentTab].id,
@@ -161,7 +161,7 @@ export default {
             },
         },
         twitchChatLink() {
-            return `https://www.twitch.tv/embed/${this.activeVideos[this.currentTab || 0].id}/chat?parent=${
+            return `https://www.twitch.tv/embed/${this.currentVideoCell.id}/chat?parent=${
                 window.location.hostname
             }${this.darkMode ? "&darkpopout" : ""}`;
         },
@@ -179,6 +179,21 @@ export default {
         cellWidth() {
             // Scale chat based on cell size
             this.checkScale();
+        },
+        activeVideos(nw, old) {
+            // Make sure chat stays the same when add channels
+            const oldVideo = old[this.currentTab];
+            const findNewTab = nw.findIndex((v) => oldVideo.id === v.id);
+            if (findNewTab > 0) {
+                this.currentTab = findNewTab;
+            } else {
+                this.currentTab = this.findNextOpenChat();
+            }
+        },
+        cellContent(nw) {
+            if (nw.type === "chat") {
+                this.editMode = false;
+            }
         },
     },
     mounted() {
@@ -200,6 +215,13 @@ export default {
         toggleTlChat() {
             this.showTlChat = !this.showTlChat;
             if (!this.showTlChat) this.showYtChat = true;
+        },
+        findNextOpenChat() {
+            const curTabs = Object.values(this.layoutContent)
+                .filter((l: Content) => l.type === "chat")
+                .map((l: Content) => l.currentTab ?? 0);
+            const newTab = curTabs.findIndex((current, index) => !curTabs.includes(index));
+            return newTab > 0 ? newTab : 0;
         },
     },
 };
