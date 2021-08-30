@@ -81,13 +81,6 @@
         :is-draggable="item.isDraggable !== false"
         :is-resizable="item.isResizable !== false"
       >
-        <!-- <cell
-          :ref="`cell`"
-          :cell-width="columnWidth * item.w"
-          :item="item"
-          @showSelector="(id) => (showSelectorForId = id)"
-          @delete="handleDelete"
-        /> -->
         <cell-container :item="item">
           <ChatCell
             v-if="layoutContent[item.i] && layoutContent[item.i].type === 'chat'"
