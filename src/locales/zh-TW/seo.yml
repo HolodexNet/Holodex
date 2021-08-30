@@ -1,1 +1,16 @@
 ---
+music:
+  title: '{{name}} 的原創與翻唱歌曲－Holodex'
+  description: >-
+    使用 Holodex 音樂播放功能來收聽 Vtuber 們的原創/翻唱歌曲。
+channel:
+  normal:
+    title: '{{name}} 的翻譯剪輯、音樂與連動實況－Holodex'
+    description: >-
+      將{{name}}的{{clip_count}}部剪輯與{{video_count}}片實況盡收眼底，將其加入您的Holodex收藏來即時取得最新動態。
+    descriptionWithTopic: >-
+      在 Holodex 上尋找 {{name}} 關於 {{topics}} 的實況。將{{clip_count}}部剪輯與{{video_count}}次實況一網打盡！
+  clip:
+    title: '{{name}} 總覽－Holodex'
+    description: >-
+      查看由{{name}}所製作的{{video_count}}部翻譯剪輯吧！

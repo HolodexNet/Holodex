@@ -1,9 +1,11 @@
 ---
 component:
   apiError:
+    title: Gomenasorry!
     textBeforeTwitter: 'Đã xảy ra lỗi khi truy xuất nội dung, vui lòng kiểm tra thông báo tại Twitter '
     textAfterTwitter: ' hoặc báo cáo lỗi qua'
     aboutPage: trang Giới thiệu
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Đăng nhập để thêm vào mục Yêu thích
     unfavoriteAllInGroup: Xoá tất cả khỏi mục Yêu thích
@@ -30,9 +32,12 @@ component:
     settings: Cài đặt
     login: Đăng nhập
     logout: Đăng xuất
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Cài đặt tài khoản
     music: Nhạc
+    multiview: MultiView
     points: điểm
+    playlist: Playlist
   videoCard:
     watching: '{0} người đang xem'
     liveNow: Đang trực tiếp
@@ -60,6 +65,7 @@ component:
       org: tổ chức
       titledesc: tiêu đề/mô tả
       comments: bình luận
+      videourl: video url
   relatedVideo:
     clipsLabel: clip
     simulcastsLabel: phát sóng cùng thời điểm
@@ -125,6 +131,9 @@ views:
       videoCount: Số lượng video
       clipCount: Số lượng clip
       org: Tổ chức
+    tabs:
+      Vtuber: Vtuber
+      Subber: Subber
     favoritesAreEmpty: Bạn chưa yêu thích kênh nào cả!
     blockedAreEmpty: Bạn không có kênh đã chặn nào.
   home:
@@ -145,6 +154,7 @@ views:
     emptyLibrary: Bạn không có video đã lưu nào!
     exportSelected: Xuất các mục được chọn ({0})
     exportYtPlaylist: YouTube Playlist
+    exportCsv: CSV File
     selectionSelect50: Chọn 50
     exportYTExplanation: >-
       Playlist Youtube được tạo bởi tính năng này sẽ <b>không công khai</b> (Unlisted) và có thể sẽ bị xoá bởi Youtube. <br /> Vì tính năng này của Youtube chưa được hoàn thiện, bạn cần phải làm những bước sau để lưu playlist Youtube <b>không công khai</b> này vào tài khoản.
@@ -165,6 +175,7 @@ views:
       oldest: Cũ nhất
     type:
       official: Chính thức
+      clip: Clip
     unsupportedQuery: >-
       Tìm kiếm clip dựa trên <kbd>Chủ đề</kbd> và <kbd>Tổ chức</kbd> hiện không được hỗ trợ. Sẽ không có <b>clip</b> nào được hiển thị.
     sortByLabel: Sắp xếp theo
@@ -280,6 +291,8 @@ views:
         Muốn chia sẻ bố cục của mình? Hãy sử dụng nút chia sẻ và liên hệ với chúng tôi trên <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
       custom: Bố cục của tôi
       toggleAutoLayout: Bật/tắt sử dụng bố cục này trong chế độ tự động
+      desktop: Desktop
+      mobile: Mobile
     presetEditor:
       title: Lưu bố cục
       name: Tên
@@ -302,6 +315,7 @@ views:
 time:
   soon: sớm
   diff_future_date: Bắt đầu {0} ({1})
+  distance_past_date: '{0}'
 editor:
   music:
     add: Thêm
@@ -325,7 +339,9 @@ editor:
   enterMode: Chỉnh sửa Video
 about:
   quicklinks: Liên kết nhanh
+  discordBtn: Holodex Discord
   faq:
+    title: FAQ
     ytchatHeader: Tôi không đăng nhập được YouTube Chat!
     ytchatContent: >-
       Vui lòng tắt tính năng chặn cookies bên thứ 3 trong trình duyệt, hoặc cho phép cookies của Holodex.net và YouTube.com được hoạt động vào mục Cho phép / Whitelist.

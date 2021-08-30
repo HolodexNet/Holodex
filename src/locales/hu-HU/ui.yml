@@ -1,9 +1,11 @@
 ---
 component:
   apiError:
+    title: Gomenasorry!
     textBeforeTwitter: 'Hiba történt a tartalmak visszakeresése során, kérlek nézd a Twittert '
     textAfterTwitter: ' vagy jelents a'
     aboutPage: Az oldalról
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Jelentkezz be, hogy hozzáadj kedvenceket
     unfavoriteAllInGroup: Minden csoport eltávolítása kedvencek közül
@@ -30,6 +32,7 @@ component:
     settings: Beállítások
     login: Bejelentkezés
     logout: Kijelentkezés
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Fiók beállításai
     music: Zene
     multiview: Több képernyős
@@ -48,6 +51,8 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -62,6 +67,7 @@ component:
     type:
       channel: csatorna
       topic: téma
+      org: org
       titledesc: cím/leírás
       comments: hozzászólások
       videourl: videó URL-címe
@@ -136,6 +142,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -144,6 +151,7 @@ views:
       clipCount: Klipek száma
       org: Szervezet
     tabs:
+      Vtuber: Vtuber
       Subber: Felirat készítő
       Favorites: Kedvencek
       Blocked: Letiltva
@@ -303,6 +311,7 @@ views:
   multiview:
     confirmOverwrite: Felülírod a meglévő elrendezést?
     confirmOverwriteYes: Megerősítés
+    permalink: Permalink
     presets: Előrendezések
     addframe: Cella hozzáadása
     muteAll: Minden némítása
@@ -343,6 +352,7 @@ views:
 time:
   soon: hamarosan
   diff_future_date: Indul {0} ({1})
+  distance_past_date: '{0}'
 editor:
   music:
     add: Hozzáadás
@@ -367,6 +377,7 @@ editor:
   enterMode: Videó szerkesztése
 about:
   quicklinks: Gyors elérés
+  discordBtn: Holodex Discord
   faq:
     title: GYIK
     ytchatHeader: A Youtube chatem nincs bejelentkezve!

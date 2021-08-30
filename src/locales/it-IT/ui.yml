@@ -5,6 +5,7 @@ component:
     textBeforeTwitter: 'Si è verificato un errore nel recupero del contenuto, per favore, controlla la pagina Twitter di '
     textAfterTwitter: ' o segnala un errore tramite il'
     aboutPage: Pagina delle Info
+    afterAboutPageHyperlink: .
   channelList:
     signInToFavorite: Accedi per aggiungere i preferiti
     unfavoriteAllInGroup: Rimuovi tutti i canali dalla lista dei preferiti
@@ -23,6 +24,7 @@ component:
     block: Blocca il contenuto di questo canale tramite Holodex
     blocked: Bloccati
   mainNav:
+    home: Home
     favorites: Preferiti
     channels: Canali
     about: Info
@@ -30,10 +32,12 @@ component:
     settings: Impostazioni
     login: Accedi
     logout: Esci
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Impostazioni dell'account
     music: Musica
     multiview: Multi-Stream
     points: punti
+    playlist: Playlist
   videoCard:
     clips: '{n} Clip'
     watching: '{0} stanno guardando'
@@ -61,6 +65,7 @@ component:
     type:
       channel: canale
       topic: argomento
+      org: org
       titledesc: titolo/descrizione
       comments: commenti
       videourl: url del video
@@ -142,6 +147,7 @@ views:
       clipCount: Numero di Clip
       org: Organizzazione
     tabs:
+      Vtuber: Vtuber
       Subber: Sottotitolatori
       Favorites: Preferiti
       Blocked: Bloccati
@@ -189,6 +195,7 @@ views:
     type:
       all: Tutti
       official: Ufficiale
+      clip: Clip
     unsupportedQuery: >-
       Attualmente non è supportata la ricerca di clip di un determinato <kbd>argomento</kbd> e di una determinata <kbd>Organizzazione</kbd>. Nessuna <b>clip</b> verrà mostrata.
     sortByLabel: Ordina per
@@ -312,7 +319,9 @@ views:
       custom: I miei Layout
       toggleAutoLayout: Attiva/disattiva l'uso dei layout in automatico
       remove: Elimina
+      desktop: Desktop
       mobile: Dispositivo mobile
+      autoLayout: AutoLayout
     presetEditor:
       title: Salva Layout
       name: Nome
@@ -337,6 +346,7 @@ views:
 time:
   soon: presto
   diff_future_date: Inizia {0} ({1})
+  distance_past_date: '{0}'
 editor:
   music:
     add: Aggiungi
