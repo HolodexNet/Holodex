@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import Youtube from "../player/YoutubePlayer.vue";
 
 import CellMixin from "./CellMixin";
@@ -126,22 +127,7 @@ export default {
         if (!this.editMode) this.editMode = true;
     },
     methods: {
-        muteOthers() {
-            if (!this.$store.state.multiview.muteOthers) return;
-            Object.keys(this.layoutContent).forEach((key) => {
-                if (key === `${this.item.i}`) {
-                    this.muted = false;
-                    return;
-                }
-                if (this.layoutContent[key]?.type === "video") {
-                    this.$store.commit("multiview/setLayoutContentWithKey", {
-                        id: key,
-                        key: "muted",
-                        value: true,
-                    });
-                }
-            });
-        },
+        ...mapMutations("multiview", ["muteOthers"]),
         refresh() {
             this.uniqueId = Date.now();
             this.editMode = true;
@@ -158,7 +144,7 @@ export default {
         setMuted(val) {
             if (val === this.muted) return;
             // Action was done through media controls or youtube player controls. Check to mute all
-            if (!val) this.muteOthers();
+            if (!val) this.muteOthers(this.item.i);
             this.muted = val;
         },
         setVolume(val) {
@@ -175,7 +161,7 @@ export default {
         },
         onPlayPause(paused = false) {
             this.editMode = paused;
-            if (this.firstPlay) { this.muteOthers(); this.firstPlay = false; }
+            if (this.firstPlay) { this.muteOthers(this.item.i); this.firstPlay = false; }
         },
         onReady(player) {
             // On play it should take focus to new stream

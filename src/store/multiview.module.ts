@@ -4,6 +4,7 @@ import {
  getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout,
 } from "@/utils/mv-utils";
 import Vue from "vue";
+import { debounce } from "lodash";
 
 const initialState = {
     layout: [],
@@ -161,11 +162,22 @@ const mutations = {
             Object.keys(state.layoutContent)
             .filter((key) => state.layoutContent[key]?.type === "video")
             .forEach((key, index) => {
-                console.log(key, index);
                 Vue.set(state.layoutContent[key], "muted", index !== 0);
             });
         }
     },
+    muteOthers: debounce((state, currentKey) => {
+        if (!state.muteOthers) return;
+        Object.keys(state.layoutContent).forEach((key) => {
+            if (key === `${currentKey}`) {
+                Vue.set(state.layoutContent[key], "muted", false);
+                return;
+            }
+            if (state.layoutContent[key]?.type === "video") {
+                Vue.set(state.layoutContent[key], "muted", true);
+            }
+        });
+    }, 0, { trailing: true }),
 };
 
 export default {
