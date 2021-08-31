@@ -107,7 +107,7 @@
       />
     </template>
     <!-- Login prompt for favorites -->
-    <template v-else-if="selectedOrg === 0 && !isLoggedIn">
+    <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
       <div class="flex d-flex flex-row align-center">
         <span class="" v-html="$t('views.app.loginCallToAction')" />
         <v-btn text :to="isLoggedIn ? '/channel' : '/login'">

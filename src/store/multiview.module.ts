@@ -16,6 +16,7 @@ const persistedState = {
     autoLayout: getDesktopDefaults(),
     ytUrlHistory: [],
     twUrlHistory: [],
+    muteOthers: false,
 };
 export const state = { ...initialState, ...persistedState };
 
@@ -150,9 +151,20 @@ const mutations = {
     },
     addUrlHistory(state, { twitch = false, url }) {
         const history = (twitch ? state.twUrlHistory : state.ytUrlHistory);
-        console.log(history.length, url, history);
         if (history.length >= 8) history.shift();
         history.push(url);
+    },
+    setMuteOthers(state, val) {
+        state.muteOthers = val;
+        // Setting is set to true, flip all but one to muted
+        if (val) {
+            Object.keys(state.layoutContent)
+            .filter((key) => state.layoutContent[key]?.type === "video")
+            .forEach((key, index) => {
+                console.log(key, index);
+                Vue.set(state.layoutContent[key], "muted", index !== 0);
+            });
+        }
     },
 };
 

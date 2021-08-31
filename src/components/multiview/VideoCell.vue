@@ -19,7 +19,7 @@
         @paused="onPlayPause(true)"
         @error="editMode = true"
         @mute="muted = $event"
-        @volume="volume = $event"
+        @volume="setMuted($event)"
       />
       <!-- Youtube Player -->
       <youtube
@@ -37,7 +37,7 @@
         @error="editMode = true"
 
         @playbackRate="playbackRate = $event"
-        @mute="muted = $event"
+        @mute="setMuted($event)"
         @volume="volume = $event"
       />
     </div>
@@ -73,6 +73,7 @@ export default {
             twPlayer: null,
             playbackRate: 1,
             volume: 50,
+            firstPlay: true,
         };
     },
     computed: {
@@ -85,11 +86,13 @@ export default {
                 return this.cellContent.muted;
             },
             set(value) {
-                this.$store.commit("multiview/setLayoutContentWithKey", {
-                    id: this.item.i,
-                    key: "muted",
-                    value,
-                });
+                if (value !== this.cellContent.muted) {
+                    this.$store.commit("multiview/setLayoutContentWithKey", {
+                        id: this.item.i,
+                        key: "muted",
+                        value,
+                    });
+                }
             },
         },
         video: {
@@ -123,6 +126,22 @@ export default {
         if (!this.editMode) this.editMode = true;
     },
     methods: {
+        muteOthers() {
+            if (!this.$store.state.multiview.muteOthers) return;
+            Object.keys(this.layoutContent).forEach((key) => {
+                if (key === `${this.item.i}`) {
+                    this.muted = false;
+                    return;
+                }
+                if (this.layoutContent[key]?.type === "video") {
+                    this.$store.commit("multiview/setLayoutContentWithKey", {
+                        id: key,
+                        key: "muted",
+                        value: true,
+                    });
+                }
+            });
+        },
         refresh() {
             this.uniqueId = Date.now();
             this.editMode = true;
@@ -137,6 +156,9 @@ export default {
             }
         },
         setMuted(val) {
+            if (val === this.muted) return;
+            // Action was done through media controls or youtube player controls. Check to mute all
+            if (!val) this.muteOthers();
             this.muted = val;
         },
         setVolume(val) {
@@ -153,12 +175,10 @@ export default {
         },
         onPlayPause(paused = false) {
             this.editMode = paused;
-            if (this.editMode && this.iOS() && this.ytPlayer) {
-                this.ytPlayer.mute();
-                this.muted = true;
-            }
+            if (this.firstPlay) { this.muteOthers(); this.firstPlay = false; }
         },
         onReady(player) {
+            // On play it should take focus to new stream
             if (player && this.isTwitchVideo) {
                 this.twPlayer = player;
             } else if (player) {

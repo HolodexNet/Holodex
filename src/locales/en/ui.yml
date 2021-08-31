@@ -340,6 +340,8 @@ views:
     addframe: Add Cell
     muteAll: Mute All
     unmuteAll: Unmute All
+    muteOthers: Mute Others
+    muteOthersDetail: Mute all but one stream
     autoLayoutTip: Click on a channel to start watching using auto layout mode
     createLayoutTip: Create your own layout by adding a cell, or using a preset
     openToolbarTip: Open the toolbar to start using multiview

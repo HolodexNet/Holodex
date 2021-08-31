@@ -3,8 +3,8 @@
     <v-card max-height="75vh" class="overflow-y-auto">
       <v-card-title> {{ $t("views.multiview.mediaControls") }} </v-card-title>
       <v-card-text class="d-flex flex-column justify-center align-center">
-        <v-list max-width="100%" width="100%">
-          <v-list-item single-line style="border-bottom: 1px gray solid">
+        <v-list width="100%" max-width="100%" class="media-controls-list">
+          <v-list-item single-line>
             <v-list-item-content>
               <v-list-item-action class="flex-row justify-center ma-0 mt-1 flex-wrap">
                 <v-btn icon @click="allCellAction('play')">
@@ -51,7 +51,6 @@
               v-for="(cellState, index) in cells"
               :key="index"
               two-line
-              style="border-bottom: 1px gray solid"
             >
               <v-list-item-avatar v-if="cellState.video.channel.photo" class="ma-0 mr-1">
                 <v-img :src="cellState.video.channel.photo" />
@@ -97,6 +96,14 @@
           <v-list-item v-else class="pa-2 justify-center">
             {{ $t("views.multiview.mediaControlsEmpty") }}
           </v-list-item>
+          <v-list-item single-line style="border: none">
+            <v-switch
+              v-model="muteOthers"
+              :label="$t('views.multiview.muteOthers')"
+              :hint="$t('views.multiview.muteOthersDetail')"
+              persistent-hint
+            />
+          </v-list-item>
         </v-list>
       </v-card-text>
     </v-card>
@@ -107,6 +114,8 @@
 import {
     mdiPause, mdiFastForward,
 } from "@mdi/js";
+import { mapState, mapGetters } from "vuex";
+import { syncState } from "@/utils/functions";
 
 export default {
     name: "MediaControls",
@@ -121,10 +130,13 @@ export default {
             mdiPause,
             mdiFastForward,
             mounted: false,
-            // allVolume: 0,
+            allButOne: true,
         };
     },
     computed: {
+        ...syncState("multiview", ["muteOthers"]),
+        ...mapGetters("multiview", ["activeVideos"]),
+        ...mapState("multiview", ["layoutContent"]),
         allVolume() {
             const cells = this.$parent.$refs.videoCell;
             if (!this.mounted || !this.value || !cells || !cells.length) return 0;
@@ -132,6 +144,7 @@ export default {
             return cells.every((c) => c.volume === vol) ? vol : 0;
         },
         cells() {
+            if (!this.mounted) return [];
             return this.$parent.$refs.videoCell.filter((c) => c.video);
         },
     },
@@ -139,6 +152,12 @@ export default {
         this.mounted = true;
     },
     methods: {
+        muteAllButOne() {
+            const firstUnmuted = this.cells.findIndex((c) => !c.muted);
+            this.cells.forEach((c, idx) => {
+                if (idx === firstUnmuted) c.setMuted(true);
+            });
+        },
         setAllVolume(val) {
             const cells = this.$parent.$refs.videoCell;
             if (!cells) return;
@@ -170,5 +189,9 @@ export default {
 .volume-slider {
   min-width: 32px;
   flex-basis: 32px;
+}
+
+.media-controls-list > .v-list-item {
+  border-bottom: 1px solid gray;
 }
 </style>
