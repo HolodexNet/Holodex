@@ -51,8 +51,6 @@ component:
     tlPresence: Son 30 dakikada aktif çevirmen
   videoDescription:
     description: Açıklama
-  video:
-    comment: { }
   description:
     showLess: Daha az
     showMore: Daha çok
@@ -142,7 +140,6 @@ views:
     collabs: Collablar
     about: Hakkında
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Aboneler
       group: Grup
