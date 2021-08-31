@@ -5,6 +5,7 @@ import ViteComponents, { VuetifyResolver } from "vite-plugin-components";
 import visualizer from "rollup-plugin-visualizer";
 import yaml from "@rollup/plugin-yaml";
 import { VitePWA } from "vite-plugin-pwa";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
 import path from "path";
 
 /**
@@ -18,6 +19,8 @@ export default ({ mode }) => {
     return defineConfig({
         plugins: [
             yaml(),
+            svelte({
+            }),
             createVuePlugin(),
             ViteComponents({
                 customComponentResolvers: [VuetifyResolver()],

@@ -5,6 +5,8 @@
     flat
     style="width: 100%"
   >
+    <LiveTL />
+  <!--
     <v-overlay absolute :value="showOverlay || (!forceCloseOverlay && $socket.disconnected)" opacity="0.8">
       <div v-if="isLoading">
         {{ $t("views.watch.chat.loading") }}
@@ -78,6 +80,7 @@
         </v-btn>
       </message-renderer>
     </portal>
+  -->
   </v-card>
 </template>
 
@@ -87,6 +90,8 @@ import { dayjs } from "@/utils/time";
 import VueSocketIOExt from "vue-socket.io-extended";
 import { Manager } from "socket.io-client";
 import Vue from "vue";
+import LiveTL from "@livetl/ui-components/components/Popout.svelte";
+import toVue from "svelte-adapter/vue";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
 import MessageRenderer from "./MessageRenderer.vue";
@@ -107,6 +112,7 @@ export default {
     components: {
         WatchLiveTranslationsSetting,
         MessageRenderer,
+        LiveTL: toVue(LiveTL),
     },
     mixins: [chatMixin],
     data() {
