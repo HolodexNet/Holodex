@@ -7,6 +7,7 @@ import yaml from "@rollup/plugin-yaml";
 import { VitePWA } from "vite-plugin-pwa";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import path from "path";
+import sveltePreprocess from "svelte-preprocess";
 
 /**
  * @param {{ mode: string, command: string }}
@@ -20,6 +21,9 @@ export default ({ mode }) => {
         plugins: [
             yaml(),
             svelte({
+                preprocess: [sveltePreprocess({
+                    typescript: true,
+                })],
             }),
             createVuePlugin(),
             ViteComponents({
