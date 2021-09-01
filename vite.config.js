@@ -8,6 +8,7 @@ import { VitePWA } from "vite-plugin-pwa";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import path from "path";
 import sveltePreprocess from "svelte-preprocess";
+import vitePluginString from "vite-plugin-string";
 
 /**
  * @param {{ mode: string, command: string }}
@@ -24,6 +25,14 @@ export default ({ mode }) => {
                 preprocess: [sveltePreprocess({
                     typescript: true,
                 })],
+            }),
+            vitePluginString({
+                include: [
+                    "node_modules/@livetl/ui-components/**",
+                ],
+                compress(code) {
+                    return code.replace(/const isAndroid = false;/gi, "const isAndroid = true;");
+                },
             }),
             createVuePlugin(),
             ViteComponents({
