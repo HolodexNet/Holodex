@@ -51,6 +51,8 @@ component:
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -140,6 +142,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -313,6 +316,8 @@ views:
     addframe: Zelle hinzufügen
     muteAll: Alles stummschalten
     unmuteAll: Alle Stummschaltungen aufheben
+    muteOthers: Andere stummschalten
+    muteOthersDetail: Alle außer einen Stream stummschalten
     autoLayoutTip: Klicke auf einen Kanal, um im automatischen Layout-Modus zu schauen
     createLayoutTip: Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine Vorlage verwendest
     openToolbarTip: Öffne die Symbolleiste, um Multiview zu verwenden
