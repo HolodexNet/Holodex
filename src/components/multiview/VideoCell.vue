@@ -10,32 +10,36 @@
       <!-- Twitch Player -->
       <VueTwitchPlayer
         v-if="isTwitchVideo"
+        ref="player"
         :channel="cellContent.id"
         :plays-inline="true"
         :mute="muted"
+        manual-update
         @ready="onReady"
         @ended="editMode = true"
         @playing="onPlayPause(false)"
         @paused="onPlayPause(true)"
         @error="editMode = true"
-        @mute="muted = $event"
-        @volume="setMuted($event)"
+        @mute="setMuted($event)"
+        @volume="volume = $event"
       />
       <!-- Youtube Player -->
       <youtube
         v-else
+        ref="player"
         :video-id="cellContent.id"
         :player-vars="{
           playsinline: 1,
         }"
         :mute="muted"
+        manual-update
         @ready="onReady"
         @ended="editMode = true"
         @playing="onPlayPause(false)"
         @paused="onPlayPause(true)"
+
         @cued="editMode = true"
         @error="editMode = true"
-
         @playbackRate="playbackRate = $event"
         @mute="setMuted($event)"
         @volume="volume = $event"
@@ -54,8 +58,8 @@
 
 <script>
 import { mapMutations } from "vuex";
+import { debounce } from "lodash";
 import Youtube from "../player/YoutubePlayer.vue";
-
 import CellMixin from "./CellMixin";
 import CellControl from "./CellControl.vue";
 
@@ -114,13 +118,14 @@ export default {
         },
     },
     watch: {
-        cellContent(nw, old) {
+        // eslint-disable-next-line func-names
+        cellContent: debounce(function (nw, old) {
             // Handles edge case where twitch player is getting destroyed without notifying
             // This parent, leaving editMode desynced. Alternative is to use the same event @currentTime to sync up
-            if (nw.id !== old.id) this.editMode = true;
+            if (nw.id !== old.id && !this.editMode) this.editMode = true;
             if (!this.isTwitchVideo) this.twPlayer = null;
             else this.ytPlayer = null;
-        },
+        }, 0, { trailing: true }),
     },
     mounted() {
         // When mounted, the video is paused, reset edit mode to sync up
@@ -150,6 +155,7 @@ export default {
         setVolume(val) {
             if (this.ytPlayer) this.ytPlayer.setVolume(val);
             if (this.twPlayer) this.twPlayer.setVolume(val / 100);
+            this.volume = val;
         },
         togglePlaybackRate() {
             if (!this.ytPlayer) return;
@@ -160,6 +166,7 @@ export default {
             this.ytPlayer.setPlaybackRate(val);
         },
         onPlayPause(paused = false) {
+            if (this.editMode === paused) return;
             this.editMode = paused;
             if (this.firstPlay) { this.muteOthers(this.item.i); this.firstPlay = false; }
         },
@@ -170,6 +177,13 @@ export default {
             } else if (player) {
                 this.ytPlayer = player;
             }
+        },
+        manualRefresh() {
+            if (!this.$refs.player) return;
+            this.$refs.player.updateListeners();
+        },
+        manualCheckMuted() {
+            this.muted = this.$refs.player.isMuted();
         },
     },
 };

@@ -148,6 +148,14 @@ export default {
             return this.$parent.$refs.videoCell.filter((c) => c.video);
         },
     },
+    watch: {
+        // Refresh player status when mediaControls is shown
+        value(val) {
+            if (val && this.mounted) {
+                this.cells.forEach((c) => c.manualRefresh());
+            }
+        },
+    },
     mounted() {
         this.mounted = true;
     },
