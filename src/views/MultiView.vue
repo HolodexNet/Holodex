@@ -447,9 +447,7 @@ export default {
 
     .edit-mode {
         padding: 5px;
-        .returnbtn {
-            margin-left: -17px !important;
-        }
+        padding-bottom: 20px;
     }
 }
 .open-mv-toolbar-btn {

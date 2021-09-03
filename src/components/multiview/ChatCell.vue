@@ -48,15 +48,19 @@
     </template>
     <div v-else style="height: 100%" />
     <!-- Bottom tl/chat toggle controls -->
-    <div v-if="!editMode">
+    <div v-if="!editMode" class="d-flex">
       <v-btn
         x-small
         width="50%"
+        class="flex-shrink-1"
         @click="editMode = !editMode"
       >
         <v-icon small class="mr-1">
           {{ icons.mdiPencil }}
-        </v-icon>{{ $t("component.videoCard.edit") }}
+        </v-icon>
+        <template v-if="cellWidth > 200">
+          {{ $t("component.videoCard.edit") }}
+        </template>
       </v-btn>
       <v-btn
         width="25%"
@@ -248,5 +252,9 @@ export default {
 .tabbed-chat-select .v-input__append-inner {
     margin: 0px;
     margin-top: 2px;
+}
+
+.chat-btns {
+  display: flex;
 }
 </style>
