@@ -182,8 +182,9 @@ export default {
             if (!this.$refs.player) return;
             this.$refs.player.updateListeners();
         },
-        manualCheckMuted() {
-            this.muted = this.$refs.player.isMuted();
+        async manualCheckMuted() {
+            if (!this.$refs.player) return;
+            this.setMuted(await this.$refs.player.isMuted());
         },
     },
 };
