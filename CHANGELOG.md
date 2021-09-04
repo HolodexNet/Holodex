@@ -1,10 +1,22 @@
 # Holodex Changelog
+
+### 2.18.1 Holodex [*August 21st, 2021*]
+##### New Features
+- Refactor of the Multiview Cells. "**Mute all but one stream**" option added to Multiview Media Controls.
+- MultiView precise volume control added to Media Controls
+##### Patches & Bugfixes
+- Fixing Search Engine viewing Holodex
+
+
+
 ### 2.18.0 Holodex [*August 21st, 2021*]
 ##### New Features
 - Custom Twitch and Youtube urls are saved in the history
 ##### Patches & Bugfixes
 - Fixed Twitter login
 - Fixed search inputs too sensitive
+
+
 ### 2.17.3 Holodex [*August 21st, 2021*]
 ##### New Features
 - Clicking on Archive Translation jumps to time
