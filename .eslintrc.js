@@ -66,6 +66,7 @@ module.exports = {
         "vue/html-indent": ["error", 2],
         "vue/require-default-prop": "off",
         "vue/script-setup-uses-vars": "off",
+        "object-curly-newline": "off",
     },
 
     ignorePatterns: ["src/external/**", "src/locales/**"],

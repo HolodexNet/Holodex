@@ -29,18 +29,18 @@
       </v-btn>
     </div>
     <!-- Yt/Twitch Chat window -->
-    <template v-if="activeVideos.length && currentTab >= 0">
+    <template v-if="currentVideo && currentTab >= 0">
       <iframe
-        v-if="activeVideos[currentTab || 0].type === 'twitch'"
+        v-if="currentVideo.type === 'twitch'"
         :src="twitchChatLink"
         style="width: 100%; height: calc(100% - 32px)"
         frameborder="0"
       />
       <WatchLiveChat
         v-else
-        :key="'wlc' + activeVideos[currentTab || 0].id"
+        :key="'wlc' + currentVideo.id"
         v-model="chatStatus"
-        :video="activeVideos[currentTab || 0]"
+        :video="currentVideo"
         fluid
         :scale="scale"
         :current-time="currentTime"
@@ -102,7 +102,6 @@
 
 <script lang="ts">
 import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
-import type { Content } from "@/utils/mv-utils";
 import { mapState } from "vuex";
 import CellMixin from "./CellMixin";
 import CellControl from "./CellControl.vue";
@@ -146,11 +145,9 @@ export default {
             },
         },
         ...mapState("multiview", ["layoutContent"]),
-        currentVideoCell() {
-            if (!this.activeVideos[this.currentTab]) return null;
-            return Object.values(this.layoutContent).find(
-                (x: Content) => x.id === this.activeVideos[this.currentTab].id,
-            );
+        currentVideo() {
+            if (!this.activeVideos.length || this.currentTab >= this.activeVideos.length) return null;
+            return this.activeVideos[this.currentTab] || this.activeVideos[0];
         },
         currentTab: {
             get() {
@@ -165,7 +162,7 @@ export default {
             },
         },
         twitchChatLink() {
-            return `https://www.twitch.tv/embed/${this.currentVideoCell.id}/chat?parent=${
+            return `https://www.twitch.tv/embed/${this.currentVideo.id}/chat?parent=${
                 window.location.hostname
             }${this.darkMode ? "&darkpopout" : ""}`;
         },
@@ -183,16 +180,6 @@ export default {
         cellWidth() {
             // Scale chat based on cell size
             this.checkScale();
-        },
-        activeVideos(nw, old) {
-            // Make sure chat stays the same when add channels
-            const oldVideo = old[this.currentTab];
-            const findNewTab = nw.findIndex((v) => oldVideo.id === v.id);
-            if (findNewTab > 0) {
-                this.currentTab = findNewTab;
-            } else {
-                this.currentTab = this.findNextOpenChat();
-            }
         },
         cellContent(nw) {
             if (nw.type === "chat") {
@@ -219,13 +206,6 @@ export default {
         toggleTlChat() {
             this.showTlChat = !this.showTlChat;
             if (!this.showTlChat) this.showYtChat = true;
-        },
-        findNextOpenChat() {
-            const curTabs = Object.values(this.layoutContent)
-                .filter((l: Content) => l.type === "chat")
-                .map((l: Content) => l.currentTab ?? 0);
-            const newTab = curTabs.findIndex((current, index) => !curTabs.includes(index));
-            return newTab > 0 ? newTab : 0;
         },
     },
 };

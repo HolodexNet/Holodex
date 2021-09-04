@@ -4,9 +4,8 @@ export interface Content {
     id: string;
     type: string;
     isTwitch?: Boolean;
-    video?: Object;
-    playerControls?: Object;
-    currentTab?: Number;
+    video?: any;
+    currentTab?: number;
 }
 
 const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.";
@@ -33,8 +32,8 @@ export function encodeLayout({ layout, contents, includeVideo = false }) {
 
             if (contents[item.i]) {
                 const {
- id, type, video, currentTab,
-} = contents[item.i];
+                    id, type, video, currentTab,
+                } = contents[item.i];
                 if (type === "chat") {
                     encodedBlock += `chat${currentTab || 0}`;
                 } else if (type === "video" && includeVideo) {
@@ -86,10 +85,10 @@ export function decodeLayout(encodedStr) {
         videoCellCount += 1;
         layoutItem.i = index;
         if (isChat) {
-            const currentTab = idOrChat.length === 5 ? Number(idOrChat[4]) : 0;
+            const currentTab = idOrChat.length === 5 ? Number(idOrChat[4]) : -1;
             parsedContent[index] = {
                 type: "chat",
-                currentTab,
+                ...(currentTab >= 0) && { currentTab },
             };
             videoCellCount -= 1;
         } else if (isTwitch) {
