@@ -58,7 +58,6 @@
 
 <script>
 import { mapMutations } from "vuex";
-import debounce from "lodash-es/debounce";
 import YoutubePlayer from "../player/YoutubePlayer.vue";
 import CellMixin from "./CellMixin";
 import CellControl from "./CellControl.vue";
@@ -118,14 +117,16 @@ export default {
         },
     },
     watch: {
-        // eslint-disable-next-line func-names
-        cellContent: debounce(function (nw, old) {
+        cellContent(nw, old) {
             // Handles edge case where twitch player is getting destroyed without notifying
             // This parent, leaving editMode desynced. Alternative is to use the same event @currentTime to sync up
             if (nw.id !== old.id && !this.editMode) this.editMode = true;
             if (!this.isTwitchVideo) this.twPlayer = null;
             else this.ytPlayer = null;
-        }, 0, { trailing: true }),
+
+            if (this.editMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
+            else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
+        },
     },
     mounted() {
         // When mounted, the video is paused, reset edit mode to sync up
@@ -147,7 +148,7 @@ export default {
             }
         },
         setMuted(val) {
-            if (val === this.muted) return;
+            if (val === !!this.muted) return;
             // Action was done through media controls or youtube player controls. Check to mute all
             if (!val) this.muteOthers(this.item.i);
             this.muted = val;
@@ -168,7 +169,10 @@ export default {
         onPlayPause(paused = false) {
             if (this.editMode === paused) return;
             this.editMode = paused;
-            if (this.firstPlay) { this.muteOthers(this.item.i); this.firstPlay = false; }
+            if (this.firstPlay && !paused) {
+                this.muteOthers(this.item.i);
+                this.firstPlay = false;
+            }
         },
         onReady(player) {
             // On play it should take focus to new stream

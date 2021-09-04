@@ -151,7 +151,7 @@ export default {
             // Bind the cell ref check to 'value', does not need to be used.
             // Reason: refs is not observable, therefore changes are not propogated up
             // eslint-disable-next-line no-unused-vars
-            const notUsed = this.value;
+            const notUsed = this.value || this.activeVideos;
             return this.$parent.$refs.videoCell.filter((c) => c.video);
         },
     },
