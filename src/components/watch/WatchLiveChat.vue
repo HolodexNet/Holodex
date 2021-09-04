@@ -19,7 +19,7 @@
         'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
         'tl-full-height': !showYtChat,
       }"
-      :style="{ height: ytChatHeight }"
+      :style="{ height: tlChatHeight }"
       :current-time="currentTime"
       @timeJump="time => $emit('timeJump', time)"
     />
@@ -33,7 +33,7 @@
         'chat-overlay-stickbottom': $store.state.settings.liveTlStickBottom,
         'tl-full-height': !showYtChat,
       }"
-      :style="{ height: ytChatHeight }"
+      :style="{ height: tlChatHeight }"
       @videoUpdate="handleVideoUpdate"
     />
 
@@ -41,7 +41,7 @@
     <div
       v-if="showYtChat"
       class="embedded-chat"
-      :style="{ height: tlChatHeight }"
+      :style="{ height: ytChatHeight }"
     >
       <iframe :src="liveChatUrl" frameborder="0" :style="scaledStyle" />
     </div>
