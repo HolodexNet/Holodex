@@ -13,11 +13,14 @@ const initialState = {
     presetLayout: [],
 };
 
+const isAppleDevice = navigator?.platform && ["iPhone", "iPad", "iPod"].includes(navigator.platform);
+
 const persistedState = {
     autoLayout: getDesktopDefaults(),
     ytUrlHistory: [],
     twUrlHistory: [],
-    muteOthers: false,
+    // Default true for iOS device
+    muteOthers: isAppleDevice,
 };
 export const state = { ...initialState, ...persistedState };
 
