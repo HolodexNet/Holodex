@@ -11,7 +11,7 @@ import { sendTokenToExtension } from "@/utils/messaging";
 // import { dayjs } from "@/utils/time";
 
 import backendApi from "@/utils/backend-api";
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 import home from "./home.module";
 import channel from "./channel.module";
 import channels from "./channels.module";

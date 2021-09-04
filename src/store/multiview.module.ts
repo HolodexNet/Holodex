@@ -4,7 +4,7 @@ import {
  getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout,
 } from "@/utils/mv-utils";
 import Vue from "vue";
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 
 const initialState = {
     layout: [],

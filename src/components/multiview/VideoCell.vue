@@ -58,7 +58,7 @@
 
 <script>
 import { mapMutations } from "vuex";
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 import Youtube from "../player/YoutubePlayer.vue";
 import CellMixin from "./CellMixin";
 import CellControl from "./CellControl.vue";

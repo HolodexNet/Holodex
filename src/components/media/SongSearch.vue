@@ -72,7 +72,7 @@ import {
     mdiCommentSearch,
 } from "@mdi/js";
 import * as icons from "@/utils/icons";
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 // TODO(jprochazk): type declarations for this module
 import jsonp from "jsonp-es6";
 import { formatDuration } from "@/utils/time";
