@@ -317,6 +317,8 @@ views:
     addframe: 增加新分割
     muteAll: 全部靜音
     unmuteAll: 全部取消靜音
+    muteOthers: 靜音其餘影片
+    muteOthersDetail: 僅啟用單一影片的聲音輸出
     autoLayoutTip: 點擊任意頻道即可使用自動排版模式觀看實況
     createLayoutTip: 增加新分割以創造專屬排版，亦能使用預設佈局
     openToolbarTip: 開啟控制欄以開始使用多窗工具

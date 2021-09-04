@@ -316,6 +316,8 @@ views:
     addframe: 셀 추가
     muteAll: 모두 음소거
     unmuteAll: 모두 음소거 해제
+    muteOthers: 다른 사람을 음소거
+    muteOthersDetail: 한 방송을 제외하고 모두 음소거
     autoLayoutTip: 채널을 클릭해서 자동 레이아웃 모드로 감상하기
     createLayoutTip: 셀 또는 프리셋을 활용해서 자신만의 레이아웃을 만들어보세요
     openToolbarTip: 멀티뷰를 시작하려면 툴바를 여세요
