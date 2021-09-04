@@ -25,12 +25,22 @@ import linkify from "vue-linkify";
 
 export default {
     name: "ChannelAbout",
+    metaInfo() {
+        const vm = this;
+        return {
+            title: `${vm.channelName} - ${vm.$t("views.channel.about")} - Holodex`,
+        };
+    },
     directives: {
         linkified: linkify,
     },
     computed: {
         channel() {
             return this.$store.state.channel.channel;
+        },
+        channelName() {
+            const prop = this.$store.state.settings.nameProperty;
+            return this.channel[prop] || this.channel.name;
         },
     },
 };

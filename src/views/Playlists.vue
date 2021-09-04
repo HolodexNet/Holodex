@@ -81,6 +81,14 @@ import { mapState } from "vuex";
 export default {
     name: "Playlists",
     components: {},
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("component.mainNav.playlist")} - Holodex`;
+            },
+        };
+    },
     data() {
         return {
             mdiFormatListText,

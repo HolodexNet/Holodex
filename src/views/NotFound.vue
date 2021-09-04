@@ -16,6 +16,14 @@
 <script lang="ts">
 export default {
     name: "NotFound",
+    metaInfo() {
+        return {
+            get title() {
+                return "404 Error - Holodex";
+            },
+        };
+    },
+
 };
 </script>
 

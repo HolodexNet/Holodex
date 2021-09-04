@@ -44,12 +44,12 @@ import { mapState } from "vuex";
 
 export default {
     name: "Channel",
-    metaInfo() {
-        const vm = this;
-        return {
-            title: vm.channelName ? `${vm.channelName} - Holodex` : "Loading...",
-        };
-    },
+    // metaInfo() {
+    //     const vm = this;
+    //     return {
+    //         title: vm.channelName ? `${vm.channelName} -  - Holodex` : "Loading...",
+    //     };
+    // },
     components: {
         ChannelSocials,
         ChannelInfo,
