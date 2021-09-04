@@ -147,12 +147,11 @@ export default {
             return cells.every((c) => c.volume === vol) ? vol : 0;
         },
         cells() {
-            if (!this.mounted || !this.$parent.$refs.videoCell) return [];
-            // Bind the cell ref check to 'value', does not need to be used.
-            // Reason: refs is not observable, therefore changes are not propogated up
-            // eslint-disable-next-line no-unused-vars
-            const notUsed = this.value || this.activeVideos;
-            return this.$parent.$refs.videoCell.filter((c) => c.video);
+            // Bind the cell ref recompute to value/activeVideos
+            // Reason: refs are not observable, therefore changes are not propogated up
+            const alwaysTrue = this.value || !this.value || this.activeVideos;
+            if (!this.$parent?.$refs?.videoCell) return [];
+            return alwaysTrue && this.$parent.$refs.videoCell.filter((c) => c.video);
         },
     },
     watch: {
