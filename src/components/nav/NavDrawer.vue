@@ -169,8 +169,8 @@ export default {
                 // Sort by name (either english or native)
                 extras.sort((a, b) => {
                     const prop = this.$store.state.settings.nameProperty;
-                    const name1 = a.channel[prop];
-                    const name2 = b.channel[prop];
+                    const name1 = a.channel[prop] || a.channel.name || "";
+                    const name2 = b.channel[prop] || b.channel.name || "";
                     return name1.localeCompare(name2);
                 });
                 return [...Object.values(existingChs), ...extras];
