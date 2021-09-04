@@ -2,7 +2,7 @@
 import api from "@/utils/backend-api";
 import { sendFavoritesToExtension, sendTokenToExtension } from "@/utils/messaging";
 import Vue from "vue";
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 import fdequal from "fast-deep-equal";
 
 const initialState = {

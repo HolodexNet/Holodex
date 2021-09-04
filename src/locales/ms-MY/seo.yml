@@ -1,0 +1,16 @@
+---
+music:
+  title: 'Nyanyian oleh {{english_name}} - Holodex'
+  description: >-
+    Siaran lagu dan nyanyian boleh didengari melalui pemain muzik Holodex. Siaran yang menampilkan lagu asli dan saduran ini telah diletakkan tag oleh kalangan peminat.
+channel:
+  normal:
+    title: 'Sedutan, Siaran, Muzik, Siaran Sama {{english_name}} - Holodex'
+    description: >-
+      Terdapat lebih {{clip_count}} buah sedutan dan {{video_count}} buah siaran/video bagi {{english_name}}. Tambahkan salurannya dalam senarai kegemaran anda supaya anda tidak ketinggalan apabila dia bersiaran langsung.
+    descriptionWithTopic: >-
+      Temui siaran {{ topics }} oleh {{english_name}}. Tonton {{clip_count}} buah sedutan, {{video_count}} buah siaran dan berbagai-bagai lagi kandungan lain di Holodex.
+  clip:
+    title: 'Ikhtisar {{english_name}} - Holodex'
+    description: >-
+      Terdapat lebih {{video_count}} buah sedutan yang dihasilkan oleh {{english_name}}.

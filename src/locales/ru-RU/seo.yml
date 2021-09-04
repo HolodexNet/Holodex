@@ -1,0 +1,17 @@
+---
+hello: world
+music:
+  title: '{{english_name}} Оригинальные песни и каверы - Holodex'
+  description: >-
+    Слушайте официальную музыку и караоке стримы, размеченные нашим сообществом через проигрыватель Holodex.
+channel:
+  normal:
+    title: '{{english_name}} Клипы, стримы, музыка и коллабы - Holodex'
+    description: >-
+      Найдите более {{clip_count}} клипов, {{video_count}} стримов от {{english_name}}. Узнайте, когда они начнут стримить, добавив их в избранное в Holodex.
+    descriptionWithTopic: >-
+      Найдите {{ topics }} стримы от {{english_name}}. Ознакомьтесь с {{clip_count}} клипов, {{video_count}} стримов и многим другим на Holodex.
+  clip:
+    title: '{{english_name}} Обзор - Holodex'
+    description: >-
+      Найдите более {{video_count}} клипов ваших любимых витуберов от {{english_name}}.

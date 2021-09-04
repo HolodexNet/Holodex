@@ -29,10 +29,13 @@
 </template>
 
 <script lang="ts">
+import Youtube from "@/components/player/YoutubePlayer.vue";
+
 export default {
     name: "SongFrame",
     components: {
         Keypress: () => import("vue-keypress"),
+        Youtube,
     },
     props: {
         playback: {

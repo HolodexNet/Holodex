@@ -107,7 +107,7 @@
       />
     </template>
     <!-- Login prompt for favorites -->
-    <template v-else-if="selectedOrg === 0 && !isLoggedIn">
+    <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
       <div class="flex d-flex flex-row align-center">
         <span class="" v-html="$t('views.app.loginCallToAction')" />
         <v-btn text :to="isLoggedIn ? '/channel' : '/login'">
@@ -207,10 +207,10 @@ export default {
             let count = 0;
             const limitCount = this.baseFilteredLive.filter((l) => {
                 count += 1;
-                // Select all live and streams within 30 mins, and expand to 6 hours if cnt < 5
+                // Select all live and streams within 2 hours, and expand to 6 hours if cnt < 8
                 return (
                     l.status === "live"
-                    || dayjs().isAfter(dayjs(l.start_scheduled).subtract(30, "m"))
+                    || dayjs().isAfter(dayjs(l.start_scheduled).subtract(2, "h"))
                     || (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                 );
             })

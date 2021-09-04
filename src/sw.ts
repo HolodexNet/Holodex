@@ -16,27 +16,27 @@ function waitFor(type: string, target: EventTarget): Promise<Event> {
     });
 }
 
-registerSW({
-    immediate: true,
-    onNeedRefresh: () => {
-        needsRefreshCallback();
-    },
-    onOfflineReady() {
-        offlineReadyCallback();
-    },
-    onRegistered(newReg) {
-        reg = newReg;
-        // check for sw updates at 1 hour intervals
-        newReg && setInterval(() => {
-            newReg.update();
-        }, SW_UPDATE_INTERVAL);
-    },
-    onRegisterError(err) {
-        console.log("Error during service worker registration:", err);
-    },
-});
-
 if ("serviceWorker" in navigator) {
+    registerSW({
+        immediate: true,
+        onNeedRefresh: () => {
+            needsRefreshCallback();
+        },
+        onOfflineReady() {
+            offlineReadyCallback();
+        },
+        onRegistered(newReg) {
+            reg = newReg;
+            // check for sw updates at 1 hour intervals
+            newReg && setInterval(() => {
+                newReg.update();
+            }, SW_UPDATE_INTERVAL);
+        },
+        onRegisterError(err) {
+            console.log("Error during service worker registration:", err);
+        },
+    });
+
     updateServiceWorkerFn = async (shouldReloadPage) => {
         if (reg && reg.waiting) {
             reg.waiting.postMessage({ type: "SKIP_WAITING" });

@@ -188,7 +188,6 @@ export default {
             this.$store.commit("playlist/addVideos", reversed);
         },
         logRelationClick(relation) {
-            console.log("log relation click");
             this.$gtag.event("sidebar-click", {
                 event_category: "video",
                 event_label: relation,

@@ -229,9 +229,6 @@
 <script lang="ts">
 import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
 
-import Vue from "vue";
-import VueYoutube from "@/external/vue-youtube";
-
 import { mapGetters, mapState } from "vuex";
 import backendApi from "@/utils/backend-api";
 import {
@@ -377,9 +374,6 @@ export default {
                 }, 500);
             }
         },
-    },
-    created() {
-        Vue.use(VueYoutube);
     },
     mounted() {
         window.addEventListener("blur", this.probableMouseClickInIFrame);

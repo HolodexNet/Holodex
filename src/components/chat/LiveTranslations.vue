@@ -5,15 +5,18 @@
     flat
     style="width: 100%"
   >
-    <v-overlay absolute :value="showOverlay || $socket.disconnected" opacity="0.8">
+    <v-overlay absolute :value="showOverlay || (!forceCloseOverlay && $socket.disconnected)" opacity="0.8">
       <div v-if="isLoading">
         {{ $t("views.watch.chat.loading") }}
       </div>
       <div v-else class="pa-3">
         {{ overlayMessage }}
       </div>
-      <v-btn v-if="$socket.disconnected" @click="tlJoin()">
+      <v-btn v-if="$socket.disconnected" class="mr-2" @click="tlJoin()">
         {{ $t("views.watch.chat.retryBtn") }}
+      </v-btn>
+      <v-btn @click="() => { forceCloseOverlay = true; showOverlay = false; }">
+        {{ $t("views.app.close_btn") }}
       </v-btn>
     </v-overlay>
     <v-card-subtitle class="py-1 d-flex justify-space-between">
@@ -51,44 +54,11 @@
     </v-card-subtitle>
     <v-divider />
     <portal to="expandedMessage" :disabled="!expanded" slim>
-      <v-card-text
+      <message-renderer
         ref="tlBody"
-        class="tl-body thin-scroll-bar pa-1 pa-lg-3"
-        :style="{
-          'font-size': liveTlFontSize + 'px',
-        }"
+        :tl-history="tlHistory"
+        :font-size="liveTlFontSize"
       >
-        <transition-group name="fade">
-          <template v-for="(item, index) in tlHistory">
-            <div :id="item.key" :key="item.key" :ref="item.breakpoint && 'messageBreakpoint'">
-              <div
-                v-if="
-                  index === 0 ||
-                    index === tlHistory.length - 1 ||
-                    item.name !== tlHistory[index - 1].name ||
-                    item.breakpoint
-                "
-                class="tl-caption"
-                :class="{
-                  'primary--text': item.is_owner,
-                  'secondary--text': item.is_verified || item.is_moderator || item.is_vtuber,
-                }"
-              >
-                <v-divider class="my-1" />
-                <span style="cursor: pointer" @click="selectedChannel = item.name">
-                  <v-icon x-small>{{ icons.mdiCog }}</v-icon>
-                  {{ `${item.prefix} ${item.name}` }}:
-                </span>
-              </div>
-              <div>
-                <span v-if="item.timestamp" class="tl-caption mr-1">
-                  {{ item.displayTime }}
-                </span>
-                <span class="text--primary" v-html="item.message" />
-              </div>
-            </div>
-          </template>
-        </transition-group>
         <v-btn
           v-if="!historyLoading"
           text
@@ -106,19 +76,8 @@
         >
           Load All
         </v-btn>
-      </v-card-text>
+      </message-renderer>
     </portal>
-
-    <v-dialog v-model="showBlockChannelDialog" width="500">
-      <v-card>
-        <v-card-title>{{ selectedChannel }}</v-card-title>
-        <v-card-text>
-          <v-btn @click="toggleBlockName(selectedChannel)">
-            {{ !blockedNames.has(selectedChannel) ? "Block Channel" : "Unblock" }}
-          </v-btn>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
   </v-card>
 </template>
 
@@ -130,12 +89,13 @@ import { Manager } from "socket.io-client";
 import Vue from "vue";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
+import MessageRenderer from "./MessageRenderer.vue";
 
 const manager = new Manager(API_BASE_URL, {
     reconnectionAttempts: 10,
     transports: ["websocket"],
     upgrade: false,
-    path: /* !import.meta.env.MODE === "dev" && */ "/api/socket.io/",
+    path: "/api/socket.io/",
     secure: true,
     autoConnect: false,
 });
@@ -146,12 +106,14 @@ export default {
     name: "LiveTranslations",
     components: {
         WatchLiveTranslationsSetting,
+        MessageRenderer,
     },
     mixins: [chatMixin],
     data() {
         return {
             overlayMessage: this.$t("views.watch.chat.loading"),
             showOverlay: false,
+            forceCloseOverlay: false,
             isLoading: true,
             success: false,
             selectedChannel: "",
@@ -231,9 +193,7 @@ export default {
             this.loadMessages(true);
         },
     },
-    created() {},
     mounted() {
-        // this.tlJoin();
         if (this.$socket.connected) {
             this.tlJoin();
         } else {
@@ -292,7 +252,6 @@ export default {
                     break;
                 case this.MESSAGE_TYPES.ERROR:
                     this.overlayMessage = "An unexpected error occured";
-                    // this.showOverlay = true;
                     this.tlLeave();
                     break;
                 default:
@@ -393,23 +352,4 @@ export default {
     flex-direction: column;
 }
 
-.theme--light .tl-caption {
-    color: hsla(0, 0%, 30%, 0.7);
-}
-.theme--dark .tl-caption {
-    color: hsla(0, 0%, 70%, 0.7);
-}
-
-.tl-body .tl-caption {
-    letter-spacing: 0.0333333333em !important;
-    font-size: 0.85em;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-    transition: all 0.4s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-}
 </style>

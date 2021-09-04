@@ -105,7 +105,7 @@ import {
     mdiCommentSearch,
 } from "@mdi/js";
 
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 import backendApi from "@/utils/backend-api";
 import { csv2jsonAsync, json2csvAsync } from "json-2-csv";
 

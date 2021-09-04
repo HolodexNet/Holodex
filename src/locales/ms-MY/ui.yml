@@ -139,7 +139,7 @@ views:
     video: Video
     clips: Sedutan
     music: Muzik
-    collabs: Kerjasama
+    collabs: Siaran sama
     about: Perihal
   channels:
     channelType: { }
@@ -316,6 +316,8 @@ views:
     addframe: Tambah Petak
     muteAll: Senyapkan Semua
     unmuteAll: Nyahsenyap Semua
+    muteOthers: Senyapkan siaran lain
+    muteOthersDetail: Cuma satu siaran yang tidak disenyapkan
     autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak kendiri
     createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
     openToolbarTip: Mulakan berbilang tontonan dengan membuka ruangan alat

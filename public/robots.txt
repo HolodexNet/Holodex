@@ -1,2 +1,9 @@
+User-agent: yandex
+Disallow: /watch/
+Disallow: /search
+Disallow: /edit/video/
+
 User-agent: *
-Disallow:
+Disallow: /edit/video/
+
+Sitemap: https://www.holodex.net/sitemap-index.xml.gz

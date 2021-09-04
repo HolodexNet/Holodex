@@ -153,6 +153,7 @@ export default {
             }
         },
         liveViewers() {
+            if (!this.video.live_viewers) return "";
             return (+this.video.live_viewers).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         liveViewerChange() {
@@ -211,7 +212,6 @@ export default {
         },
         handleClick(e) {
             if (e.target.matches(".comment-chip")) {
-                console.log("timejumping");
                 this.$emit("timeJump", e.target.getAttribute("data-time"));
                 e.preventDefault();
             }
