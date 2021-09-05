@@ -61,7 +61,7 @@ export default ({ mode }) => {
                     // NOTE: `vite-plugin-pwa` expects the service worker to be called `sw.js` for some reason.
                     // there is no way to change this.
                     swDest: "./dist/sw.js",
-                    navigateFallbackDenylist: [/^\/api/, /^\/assets/, /^\/img/, /^\/sitemap-.*/],
+                    navigateFallbackDenylist: [/^\/api/, /^\/assets/, /^\/img/, /^\/sitemap-.*/, /^.*\.js(\.map)?/, /^.*\.css/, /^.*\.manifest/],
                     runtimeCaching: [
                         {
                             urlPattern: new RegExp(
