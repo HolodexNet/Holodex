@@ -159,6 +159,7 @@ import { dayjs } from "@/utils/time";
 import { mapGetters, mapState } from "vuex";
 import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
 import filterVideos from "@/mixins/filterVideos";
+import CustomUrlField from "./CustomUrlField.vue";
 
 export default {
     name: "VideoSelector",
@@ -168,6 +169,7 @@ export default {
         LoadingOverlay,
         ChannelImg,
         OrgPanelPicker,
+        CustomUrlField,
     },
     mixins: [filterVideos],
     props: {
