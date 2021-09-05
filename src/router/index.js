@@ -29,21 +29,34 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: "/",
+        name: "home",
+        component: Home,
+        beforeEnter(to, from, next) {
+            // from.name === null when first load, check settings and redirect if necessary
+            if (!from.name && store.state.settings.defaultOpen !== "home") {
+                next(store.state.settings.defaultOpen);
+            } else {
+                next();
+            }
+        },
+    },
+    {
+        // Backwards compatibility with old home
+        path: "/home",
         redirect(to) {
             const { hash, params, query } = to;
             return {
-                name: store.state.settings.defaultOpen,
+                name: "home",
                 hash,
                 params,
                 query,
             };
-            // return { name: "home", hash, params, query };
         },
     },
     {
-        path: "/home",
-        name: "home",
-        component: Home,
+        path: "/favorites/",
+        name: "favorites",
+        component: Favorites,
     },
     {
         path: "/channel/:id",
@@ -69,12 +82,6 @@ const routes = [
                 name: "channel_music",
                 component: ChannelMusic,
             },
-
-            // {
-            //     path: "stats",
-            //     name: "channel_stats",
-            //     component: ChannelStats,
-            // },
             {
                 path: "",
                 name: "channel",
@@ -91,11 +98,6 @@ const routes = [
         path: "/music/",
         name: "music",
         component: OrgMusic,
-    },
-    {
-        path: "/favorites/",
-        name: "favorites",
-        component: Favorites,
     },
     {
         name: "watch",
