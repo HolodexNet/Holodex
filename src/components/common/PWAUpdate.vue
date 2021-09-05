@@ -67,13 +67,15 @@ export default {
             console.log("sw needs refresh");
             this.needRefresh = true;
         });
-    },
-    methods: {
-        async updateServiceWorker() {
-            console.log("update service worker");
-            await SW.updateServiceWorker();
+        SW.setControllerChangeCallback(() => {
             this.showUpdateDetails = true;
             window.location.reload();
+        });
+    },
+    methods: {
+        updateServiceWorker() {
+            console.log("update service worker");
+            SW.updateServiceWorker();
         },
     },
 };
