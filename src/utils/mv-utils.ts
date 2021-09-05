@@ -1,4 +1,4 @@
-import { LayoutItem } from "@/external/vue-grid-layout/src/helpers/utils";
+import type { LayoutItem } from "@/external/vue-grid-layout/src/helpers/utils";
 
 export interface Content {
     id: string;
