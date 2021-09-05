@@ -24,6 +24,7 @@ import MainNav from "@/components/nav/MainNav.vue";
 import ReportDialog from "@/components/common/ReportDialog.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
 import PWAUpdate from "@/components/common/PWAUpdate.vue";
+import InstallPrompt from "@/components/common/InstallPrompt.vue";
 import { loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
 
@@ -38,6 +39,7 @@ export default {
         ReportDialog,
         PullToRefresh,
         PWAUpdate,
+        InstallPrompt,
     },
     data() {
         return {

@@ -51,11 +51,9 @@
         <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
           <div class="pa-3">
             <div class="text-body-1 text-center" v-html="$t('views.favorites.promptForAction')" />
-            <center>
-              <v-btn :to="isLoggedIn ? '/channel' : '/login'">
-                {{ isLoggedIn ? $t("views.favorites.manageFavorites") : $t("component.mainNav.login") }}
-              </v-btn>
-            </center>
+            <v-btn :to="isLoggedIn ? '/channel' : '/login'">
+              {{ isLoggedIn ? $t("views.favorites.manageFavorites") : $t("component.mainNav.login") }}
+            </v-btn>
           </div>
         </template>
         <!-- Video Card List for normal content -->
@@ -159,6 +157,7 @@ import { dayjs } from "@/utils/time";
 import { mapGetters, mapState } from "vuex";
 import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
 import filterVideos from "@/mixins/filterVideos";
+import CustomUrlField from "./CustomUrlField.vue";
 
 export default {
     name: "VideoSelector",
@@ -168,6 +167,7 @@ export default {
         LoadingOverlay,
         ChannelImg,
         OrgPanelPicker,
+        CustomUrlField,
     },
     mixins: [filterVideos],
     props: {

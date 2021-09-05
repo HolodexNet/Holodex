@@ -36,6 +36,9 @@ module.exports = {
         "no-param-reassign": ["error", { props: false }],
         "no-restricted-syntax": "off",
         "no-await-in-loop": "off",
+        "vue/no-unregistered-components": ["error", {
+            ignorePatterns: ["v(\\-\\w+)+", "router-view", "portal(\\-\\w+)+"],
+        }],
         "no-unused-expressions": [
             "error",
             { allowShortCircuit: true, allowTernary: true },

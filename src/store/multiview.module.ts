@@ -13,7 +13,7 @@ const initialState = {
     presetLayout: [],
 };
 
-const isAppleDevice = navigator?.platform && ["iPhone", "iPad", "iPod"].includes(navigator.platform);
+const isAppleDevice = navigator?.platform ? ["iPhone", "iPad", "iPod"].includes(navigator.platform) : false;
 
 const persistedState = {
     autoLayout: getDesktopDefaults(),
