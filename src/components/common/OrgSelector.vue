@@ -176,7 +176,7 @@ export default {
     computed: {
         firstVisit: {
             get() {
-                return this.$store.state.firstVisit;
+                return this.$store.state.firstVisit && navigator.userAgent && !navigator.userAgent.includes("Googlebot");
             },
             set() {
                 return this.$store.commit("setVisited");
