@@ -58,6 +58,7 @@
         <v-list-item
           v-if="vid"
           :key="vid.id"
+          :class="{ 'v-list-item--active': $route.path.startsWith(`/channel/${vid.channel.id}`) }"
           @click="$router.push(`/channel/${vid.channel.id}`).catch(() => {})"
         >
           <v-list-item-avatar :size="30" :class="{ outlined: isLive(vid) }">

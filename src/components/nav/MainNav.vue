@@ -227,7 +227,7 @@ export default {
             return [
                 {
                     name: this.$t("component.mainNav.home"),
-                    path: "/home",
+                    path: "/",
                     icon: this.icons.mdiHome,
                 },
                 {
