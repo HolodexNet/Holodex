@@ -141,6 +141,7 @@ import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/
 import MediaControls from "@/components/multiview/MediaControls.vue";
 import EmptyCell from "@/components/multiview/EmptyCell.vue";
 import VideoCell from "@/components/multiview/VideoCell.vue";
+import ChatCell from "@/components/multiview/ChatCell.vue";
 import CellContainer from "@/components/multiview/CellContainer.vue";
 import PresetEditor from "@/components/multiview/PresetEditor.vue";
 import PresetSelector from "@/components/multiview/PresetSelector.vue";
@@ -164,6 +165,7 @@ export default {
         PresetSelector,
         VideoCell,
         EmptyCell,
+        ChatCell,
         PresetEditor,
         MultiviewToolbar,
         LayoutChangePrompt,
