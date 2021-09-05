@@ -21,6 +21,12 @@ export default ({ mode }) => {
             createVuePlugin(),
             ViteComponents({
                 customComponentResolvers: [VuetifyResolver()],
+                deep: false,
+                /**
+                 * Vite-Components removes need to import components by deepscanning the src/components folder
+                 * but is fairly dangerous in terms of how it figures out which to import. Since we are using
+                 * manual import processes, we only want ViteComponents for vuetify resolution.
+                */
             }),
             VitePWA({
                 includeAssets: ["favicon.ico", "robots.txt", "img/icons/safari-pinned-tab.svg"],
@@ -55,7 +61,7 @@ export default ({ mode }) => {
                     // NOTE: `vite-plugin-pwa` expects the service worker to be called `sw.js` for some reason.
                     // there is no way to change this.
                     swDest: "./dist/sw.js",
-                    navigateFallbackDenylist: [/^\/api/],
+                    navigateFallbackDenylist: [/^\/api/, /^\/assets/, /^\/img/, /^\/sitemap-.*/, /^.*\.js(\.map)?/, /^.*\.css/, /^.*\.webmanifest/],
                     runtimeCaching: [
                         {
                             urlPattern: new RegExp(
@@ -74,7 +80,7 @@ export default ({ mode }) => {
                         },
                         {
                             urlPattern: new RegExp(
-                                "https://yt3.ggpht.com/(a/|ytc/)(.*)=s(40|88)-c-k-c0x00ffffff-no-rj-mo(.*)",
+                                "https://yt3.ggpht.com/ytc/(.*)",
                             ),
                             handler: "CacheFirst",
                             options: {
