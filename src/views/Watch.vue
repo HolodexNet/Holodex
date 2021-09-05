@@ -226,7 +226,6 @@ export default {
                 };
             },
             set(val: any) {
-                console.log(val);
                 this.showTL = val.showTlChat;
                 this.showLiveChat = val.showYtChat;
             },
@@ -248,7 +247,7 @@ export default {
             return this.video.type === "stream";
         },
         showChatWindow() {
-            return (this.hasLiveChat && this.showLiveChat) || this.showTL;
+            return (this.hasLiveChat && this.showLiveChat) || (this.showTL && this.hasLiveTL);
         },
         isMugen() {
             return this.$route.name === "mugen-clips";
