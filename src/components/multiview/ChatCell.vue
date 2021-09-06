@@ -187,7 +187,7 @@ export default {
             }
         },
     },
-    mounted() {
+    created() {
         // Chat is non paused by default
         this.editMode = false;
     },

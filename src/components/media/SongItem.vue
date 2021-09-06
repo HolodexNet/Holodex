@@ -176,7 +176,6 @@ export default {
             return this.$store.state.settings.nameProperty;
         },
     },
-    mounted() {},
     methods: {
         secondsToHuman,
     },

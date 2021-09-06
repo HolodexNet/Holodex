@@ -48,14 +48,14 @@ export function localizedDayjs(time, lang) {
     // lang = dayjsName[lang] || lang;
     return dayjs(time);
 }
-export function formatDistance(time, lang = "en", $t, allowNegative = true) {
+export function formatDistance(time, lang = "en", $t, allowNegative = true, now = dayjs()) {
     let diff;
     if (!time) return "?";
-    const minutesdiff = dayjs().diff(time, "minutes");
+    const minutesdiff = now.diff(time, "minutes");
     if (Math.abs(minutesdiff) < 1) return $t("time.soon");
     if (!allowNegative && minutesdiff > 0) return $t("time.soon");
-    if (Math.abs(dayjs().diff(time, "days")) > 60) return localizedDayjs(time, lang).format("ll");
-    if (Math.abs(dayjs().diff(time, "hour")) > 23) {
+    if (Math.abs(now.diff(time, "days")) > 60) return localizedDayjs(time, lang).format("ll");
+    if (Math.abs(now.diff(time, "hour")) > 23) {
         return `${localizedDayjs(time, lang).format("l")} (${localizedDayjs(time, lang).format("LT")})`;
     }
     const timeObj = localizedDayjs(time, lang);

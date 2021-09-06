@@ -132,6 +132,7 @@ export default {
             mdiPause,
             mdiFastForward,
             timer: null,
+            mounted: false,
         };
     },
     computed: {
@@ -140,7 +141,7 @@ export default {
         ...mapState("multiview", ["layoutContent"]),
         allVolume() {
             const cells = this.$parent.$refs.videoCell;
-            if (!this.value || !cells || !cells.length) return 0;
+            if (!this.mounted || !this.value || !cells || !cells.length) return 0;
             // Check if all volume is the same, else return 0
             const vol = cells[0].volume;
             return cells.every((c) => c.volume === vol) ? vol : 0;
@@ -156,7 +157,7 @@ export default {
     watch: {
         // Refresh player status when mediaControls is shown
         value(val) {
-            if (val) {
+            if (val && this.mounted) {
                 this.cells.forEach((c) => c.manualRefresh());
             }
         },
@@ -169,6 +170,9 @@ export default {
                 if (this.cells) this.cells.forEach((c) => c.manualCheckMuted());
             }, 1000);
         }
+    },
+    mounted() {
+        this.mounted = true;
     },
     beforeDestroy() {
         if (this.timer) {

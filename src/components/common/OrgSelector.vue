@@ -221,7 +221,7 @@ export default {
             return this.$store.state.settings.darkMode;
         },
     },
-    async mounted() {
+    async created() {
         this.ORGS = [
             ...(this.hideAllVTubers ? [] : [{ name: "All Vtubers", short: "Vtuber", name_jp: null }]),
             ...(await backendApi.orgs()).data.sort(

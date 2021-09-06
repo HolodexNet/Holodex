@@ -280,6 +280,7 @@ export default {
                         this.lang,
                         this.$t.bind(this),
                         false, // allowNegative = false
+                        dayjs(this.now),
                     ); // upcoming videos don't get to be ("5 minutes ago")
                 case "live":
                     return this.$t("component.videoCard.liveNow");
@@ -352,7 +353,7 @@ export default {
     // created() {
     //     this.data = this.video || this.source;
     // },
-    mounted() {
+    created() {
         this.$store.getters["history/hasWatched"](this.data.id)
             .then((x) => {
                 if (x) this.hasWatched = true;
