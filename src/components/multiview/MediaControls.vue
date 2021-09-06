@@ -131,7 +131,6 @@ export default {
         return {
             mdiPause,
             mdiFastForward,
-            mounted: false,
             timer: null,
         };
     },
@@ -141,7 +140,7 @@ export default {
         ...mapState("multiview", ["layoutContent"]),
         allVolume() {
             const cells = this.$parent.$refs.videoCell;
-            if (!this.mounted || !this.value || !cells || !cells.length) return 0;
+            if (!this.value || !cells || !cells.length) return 0;
             // Check if all volume is the same, else return 0
             const vol = cells[0].volume;
             return cells.every((c) => c.volume === vol) ? vol : 0;
@@ -157,22 +156,23 @@ export default {
     watch: {
         // Refresh player status when mediaControls is shown
         value(val) {
-            if (val && this.mounted) {
+            if (val) {
                 this.cells.forEach((c) => c.manualRefresh());
             }
         },
     },
-    mounted() {
-        this.mounted = true;
+    created() {
         // Nothing else needs to be updated in an interval, except for checking for mute changes
         // Premature optimization.... probably
-        this.timer = setInterval(() => {
-            if (this.cells) this.cells.forEach((c) => c.manualCheckMuted());
-        }, 1000);
+        if (!this.timer) {
+            this.timer = setInterval(() => {
+                if (this.cells) this.cells.forEach((c) => c.manualCheckMuted());
+            }, 1000);
+        }
     },
     beforeDestroy() {
         if (this.timer) {
-            clearInterval(this.time);
+            clearInterval(this.timer);
         }
     },
     methods: {
