@@ -252,7 +252,7 @@ export default {
             }
         },
     },
-    mounted() {
+    created() {
         this.setAutoRefresh();
         // Start timer to update live time stamps
         this.ticker = setInterval(() => {

@@ -192,10 +192,12 @@ export default {
             return !this.favoritesExpanded && this.favorites.length > 8 ? this.favorites.slice(0, 8) : this.favorites;
         },
     },
-    mounted() {
-        this.ticker = setInterval(() => {
-            this.tick = Date.now();
-        }, 60000);
+    created() {
+        if (!this.ticker) {
+            this.ticker = setInterval(() => {
+                this.tick = Date.now();
+            }, 60000);
+        }
     },
     beforeDestroy() {
         if (this.ticker) clearInterval(this.ticker);

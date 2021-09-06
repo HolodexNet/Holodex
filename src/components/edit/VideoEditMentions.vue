@@ -105,7 +105,7 @@ export default {
                 });
         }, 500),
     },
-    mounted() {
+    created() {
         this.updateMentions();
     },
     methods: {
