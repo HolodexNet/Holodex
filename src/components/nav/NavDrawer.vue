@@ -206,8 +206,20 @@ export default {
         handlePageClick(page) {
             // reload the page if user clicks on the same tab
             page.path === this.$route.path && !this.$route.query.page
-                ? this.$router.go(0)
+                ? this.refresh()
                 : this.$router.push({ path: page.path });
+        },
+        async refresh() {
+            // here to fetch the data and rerender the contents.
+            // check if there's a handler on the sequence
+            const handledRefresh = await this.$store.dispatch("reloadCurrentPage", {
+                source: "ptr",
+                consumed: false,
+            });
+            // do default refresh if none
+            if (!handledRefresh.consumed) {
+                this.$router.go(0);
+            }
         },
         formatDurationUpcoming(ts) {
             const secs = dayjs(ts).diff(dayjs()) / 1000;
