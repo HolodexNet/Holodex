@@ -37,7 +37,7 @@ module.exports = {
         "no-restricted-syntax": "off",
         "no-await-in-loop": "off",
         "vue/no-unregistered-components": ["error", {
-            ignorePatterns: ["v(\\-\\w+)+", "router(\\-\\w+)+", "portal(\\-\\w+)+"],
+            ignorePatterns: ["v(\\-\\w+)+", "router(\\-\\w+)+", "portal"],
         }],
         "no-unused-expressions": [
             "error",
