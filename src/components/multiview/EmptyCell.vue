@@ -28,8 +28,12 @@
 <script class="ts">
 import { mdiCardPlus } from "@mdi/js";
 import CellMixin from "./CellMixin";
+import CellControl from "./CellControl.vue";
 
 export default {
+    components: {
+        CellControl,
+    },
     mixins: [CellMixin],
     data() {
         return {
