@@ -33,7 +33,7 @@ const routes = [
         component: Home,
         beforeEnter(to, from, next) {
             // from.name === null when first load, check settings and redirect if necessary
-            if (!from.name && store.state.settings.defaultOpen !== "home") {
+            if (!from.name && store.state.settings.defaultOpen !== "home" && to.fullPath === "/") {
                 next(store.state.settings.defaultOpen);
             } else {
                 next();
