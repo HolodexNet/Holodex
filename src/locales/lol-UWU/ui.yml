@@ -1,1 +1,140 @@
 ---
+component:
+  apiError:
+    title: Gomenasowwy!
+    textBeforeTwitter: 'Thewe was an ewwow wetwieving content, pwease check twittew '
+    textAfterTwitter: ' ow wepowt an ewwow thwough da'
+    aboutPage: About page
+    afterAboutPageHyperlink: .
+  channelList:
+    signInToFavorite: Sign in to favowite
+    unfavoriteAllInGroup: Unfavowite aww in gwoup
+    favoriteAllInGroup: Favowite aww in gwoup
+  channelInfo:
+    stats: Stats
+    videoCount: '{0} Bideos'
+    clipCount: '{n} Cwips'
+    subscriberCount: '{n} Subscwibews'
+    subscriberNA: Subscwibew count unavaiwabwe
+    totalViews: Totaw views
+  channelSocials:
+    addToFavorites: Add to favowites
+    removeFromFavorites: Remove fwom favowites
+    unblock: Unbwock dis channew
+    block: Bwock dis channew's content acwoss howodex
+    blocked: Bwocked
+  mainNav:
+    home: Home
+    favorites: Favowites
+    channels: Channews
+    about: About
+    library: Libwawy
+    settings: Settings
+    login: Login
+    logout: Logout
+    MugenClips: Mugencwips<sup>beta</sup>
+    accountSettings: Account settings
+    music: Music
+    multiview: Muwtiview
+    points: uwu
+    playlist: Pwaywist
+  videoCard:
+    clips: '{n} Cwips'
+    watching: '{0} Uwuing'
+    liveNow: Live now
+    edit: Edit
+    copiedToClipboard: Link copied to cwipboawd.
+    copyLink: Copy howodex link
+    premiere: PREMIERE
+    googleCalendar: Add to googwe cawendaw
+    totalTLs: Totaw wive chat tls
+    tlPresence: Active twanswatow in wast 30 mins
+  videoDescription:
+    description: Descwiption
+  description:
+    showLess: Show less
+    showMore: Show mowe
+  watch:
+    streamingFor: Stweaming fow {0}
+    nextUpInMugen: Next up
+    Comments:
+      title: Comments
+      all: Aww
+  playlist:
+    menu:
+      delete-playlist: Dewete pwaywist
+      clear-playlist: Cweaw pwaywist
+    save-error-not-logged-in: U need to be wogged in to save pwaywists
+views:
+  channel:
+    video: Bideos
+    clips: Cwips
+    music: Music
+    collabs: Cowwabs
+    about: About
+  channels:
+    sortOptions:
+      subscribers: Subscwibews
+      group: Gwoup
+      recentUpload: Recent upwoad
+      videoCount: Bideo count
+      clipCount: Cwip count
+      org: Owganization
+    tabs:
+      Vtuber: Vtubew
+      Subber: Subbew
+      Favorites: Favowites
+      Blocked: Bwocked
+    favoritesAreEmpty: U have no favowites!
+    blockedAreEmpty: U have no bwocked channews.
+  home:
+    liveOrUpcomingHeading: Live / upcoming
+    recentVideosHeading: Recent bideos
+    noStreams: No wive ow upcoming stweams at da moment
+    recentVideoToggles:
+      all: Aww
+      official: Awchive
+      subber: Cwips
+  library:
+    savedVideosTitle: Saved bideos
+    createYtPlaylistButton: Cweate yt pwaywist ({0})
+    deleteFromLibraryButton: Dewete ({0})
+    deleteConfirmation: Awe u suwe u wanna dewete {0} bideos?
+    deleteConfirmationOK: Dewete
+    deleteConfirmationCancel: Cancew
+    selectionReset: Reset
+    selectionSelectAll: Sewect aww
+    emptyLibrary: U have no saved bideos!
+    exportSelected: Expowt sewected ({0})
+    exportYtPlaylist: Youtube pwaywist
+    exportCsv: Csv fiwe
+    selectionSelect50: Sewect 50
+    exportYTExplanation: >-
+      Da youtube pwaywist cweated by dis featuwe ish <b>unwisted</b> and may be deweted by youtube. <br /> because youtube's featuwe incompweteness, u need to do da fowwowing to save da <b>unwisted</b> youtube pwaywist to youw account.
+    exportYTHeading: Saving youtube pwaywist instwuctions
+    exportYTInstructions: >-
+      <b class="red--text">Step 1</b>: pway da youtube pwaywist, and change da pwayew ui into mini-pwayew. <br /><br /> <b class="red--text">step 2</b>: pick any bideo and add it to da queue. <br /><br /> <b class="red--text">step 3</b>: da pwaywist ish now save-abwe. Cwick save to save it.
+    sort:
+      dateaddedEarliestFirst: Date added to libwawy, eawwiest fiwst
+      dateaddedLatestFirst: Date added to libwawy, watest fiwst
+      dateuploadedLatestFirst: Upwoad date, watest fiwst
+      dateuploadedEarliestFirst: Upwoad date, eawwiest fiwst
+  notFound:
+    title: Content not found
+    back: Retuwn home
+  search:
+    sort:
+      newest: Newest
+      oldest: Owdest
+  watch:
+    chat:
+      hideTLBtn: Hide tls
+      showTLBtn: Show tls
+      TLSettingsTitle: Tl settings
+      StickBottomSettingLabel: Stick bottom (mobiwe)
+      StickBottomSettingsDesc: Tl box sticks to da bottom of chat (defauwt stick to top on mobiwe)
+      showVerifiedMessages: Show vewified messages
+      showModeratorMessages: Show modewatow messages
+      tlFontSize: Font size
+      tlWindowSize: Tl box size (%), weave as 0% fow automatic
+      retryBtn: Retwy
