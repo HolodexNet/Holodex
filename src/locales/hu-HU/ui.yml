@@ -92,7 +92,7 @@ component:
     songDuration: Hossz
     sangOnTime: Énekelve
   orgMusic:
-    monthlyTopForOrg: Heti legjátszottabbak {0}-tól/től
+    monthlyTopForOrg: Havi legjátszottabbak {0}-tól/től
     weeklyTopForOrg: Heti legjátszottabbak {0}-tól/től
   installPrompt:
     title: Holodex telepítése
