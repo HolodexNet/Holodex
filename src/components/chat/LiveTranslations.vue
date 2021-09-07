@@ -96,6 +96,8 @@ import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
 import MessageRenderer from "./MessageRenderer.vue";
 
+console.log(WatchLiveTranslationsSetting, LiveTL);
+
 const manager = new Manager(API_BASE_URL, {
     reconnectionAttempts: 10,
     transports: ["websocket"],
