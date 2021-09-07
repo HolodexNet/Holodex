@@ -29,7 +29,7 @@
     "@interactjs/dev-tools": "^1.10.11",
     "@interactjs/interactjs": "^1.10.11",
     "@interactjs/modifiers": "^1.10.11",
-    "@livetl/ui-components": "0.0.9",
+    "@livetl/ui-components": "0.0.11",
     "@mdi/js": "^5.9.55",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.19",
     "axios": "^0.21.1",

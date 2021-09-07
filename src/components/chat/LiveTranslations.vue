@@ -95,8 +95,7 @@ import toVue from "svelte-adapter/vue";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
 import MessageRenderer from "./MessageRenderer.vue";
-
-console.log(WatchLiveTranslationsSetting, LiveTL);
+import "@livetl/ui-components/js/polyfills/chrome";
 
 const manager = new Manager(API_BASE_URL, {
     reconnectionAttempts: 10,
@@ -126,6 +125,35 @@ export default {
             success: false,
             selectedChannel: "",
         };
+    },
+    computed: {
+        connected() {
+            return this.$socket.connected;
+        },
+        showBlockChannelDialog: {
+            get() {
+                return this.selectedChannel;
+            },
+            set(val) {
+                if (!val) this.selectedChannel = "";
+            },
+        },
+    },
+    watch: {
+        liveTlLang(nw, old) {
+            this.switchLanguage(nw, old);
+        },
+        connected(nw) {
+            if (nw) {
+                this.isLoading = false;
+            }
+        },
+        liveTlShowVerified() {
+            this.loadMessages(true);
+        },
+        liveTlShowModerator() {
+            this.loadMessages(true);
+        },
     },
     sockets: {
         reconnect_attempt(attempt) {
@@ -172,36 +200,7 @@ export default {
             }
         },
     },
-    computed: {
-        connected() {
-            return this.$socket.connected;
-        },
-        showBlockChannelDialog: {
-            get() {
-                return this.selectedChannel;
-            },
-            set(val) {
-                if (!val) this.selectedChannel = "";
-            },
-        },
-    },
-    watch: {
-        liveTlLang(nw, old) {
-            this.switchLanguage(nw, old);
-        },
-        connected(nw) {
-            if (nw) {
-                this.isLoading = false;
-            }
-        },
-        liveTlShowVerified() {
-            this.loadMessages(true);
-        },
-        liveTlShowModerator() {
-            this.loadMessages(true);
-        },
-    },
-    mounted() {
+    async mounted() {
         if (this.$socket.connected) {
             this.tlJoin();
         } else {

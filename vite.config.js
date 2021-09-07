@@ -9,6 +9,7 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 import path from "path";
 import sveltePreprocess from "svelte-preprocess";
 import { replaceCodePlugin } from "vite-plugin-replace";
+import livetlManifest from "@livetl/ui-components/package-livetl.json";
 
 /**
  * @param {{ mode: string, command: string }}
@@ -31,6 +32,12 @@ export default ({ mode }) => {
                     {
                         from: /const isAndroid = false;/gi,
                         to: "const isAndroid = true;",
+                    },
+                    {
+                        from: /const MANIFEST_OBJECT = undefined;/gi,
+                        to: `const MANIFEST_OBJECT = ${JSON.stringify(
+                            livetlManifest,
+                        )};`,
                     },
                 ],
             }),
