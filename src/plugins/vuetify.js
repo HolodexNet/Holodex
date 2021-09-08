@@ -16,6 +16,7 @@ export const langs = [
     { val: "en", display: "English", credit: "@Holodex" },
     { val: "en-CA", display: "English (Canadian)", credit: "@Holodex" },
     { val: "en-GB", display: "English (British)", credit: "@Holodex" },
+    { val: "lol-UWU", display: "English (UwU)", credit: "Doubleturtle#3660" },
     { val: "ja", display: "日本語", credit: "Yourein#3960,Saginomiya#2353" },
     { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
     { val: "ko", display: "한국어", credit: "AlexKoala#0253" },
@@ -106,6 +107,10 @@ export const asyncLang = {
         await import("dayjs/locale/hu");
         return import("@/locales/hu-HU/ui.yml");
     },
+    "lol-UWU": async () => {
+        await import("dayjs/locale/en");
+        return import("@/locales/lol-UWU/ui.yml");
+    },
 };
 
 export const i18n = new VueI18n({
@@ -155,6 +160,7 @@ const dayjsName = {
     zh: "zh-tw",
     "es-ES": "es",
     pt: "pt-br",
+    "lol-UWU": "en",
 };
 
 function setI18nLanguage(lang) {
