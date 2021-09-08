@@ -59,6 +59,7 @@
               :dense="currentGridSize > 0"
               :hide-collabs="shouldHideCollabs"
               hide-ignored-topics
+              for-org="none"
             />
             <v-divider v-if="lives.length" class="my-3 secondary" />
             <VideoCardList
@@ -68,6 +69,7 @@
               :cols="colSizes"
               :dense="currentGridSize > 0"
               :hide-collabs="shouldHideCollabs"
+              for-org="none"
               hide-ignored-topics
             />
           </div>
@@ -97,6 +99,7 @@
                 :dense="currentGridSize > 0"
                 :hide-collabs="shouldHideCollabs"
                 hide-ignored-topics
+                for-org="none"
               />
               <!-- only show SkeletonCardList if it's loading -->
               <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />

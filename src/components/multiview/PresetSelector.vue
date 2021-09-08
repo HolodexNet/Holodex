@@ -2,104 +2,92 @@
   <v-card style="min-height: 90vh">
     <v-card-title>{{ $t("views.multiview.presets") }}</v-card-title>
     <v-card-text>
-      <v-tabs v-model="currentTab">
-        <v-tab>{{ $t("views.multiview.preset.custom") }}</v-tab>
+      <v-tabs v-model="currentTab" class="mb-2">
         <v-tab>{{ $t("views.multiview.preset.desktop") }}</v-tab>
+        <v-tab>{{ $t("views.multiview.preset.custom") }}</v-tab>
         <v-tab>{{ $t("views.multiview.preset.mobile") }}</v-tab>
-        <v-tab>{{ $t("views.multiview.preset.autoLayout") }}</v-tab>
-        <v-tab-item>
-          <v-row>
-            <template v-for="preset in decodedCustomPresets">
-              <v-col :key="preset.name" cols="auto" class="d-flex flex-column align-center">
-                <LayoutPreviewCard
-                  :preset="preset"
-                  custom
-                  :active="presetInAuto(preset)"
-                  @click="handleSelected(preset)"
-                >
-                  <template #post>
-                    <v-menu bottom nudge-top="20px">
-                      <template #activator="{ on }">
-                        <v-icon v-on="on" @click.stop.prevent>
-                          {{ icons.mdiDotsVertical }}
-                        </v-icon>
-                      </template>
-                      <v-list dense>
-                        <!-- <v-list-item @click="togglePresetAutoLayout(preset)"
-                                                    ><v-icon left>{{ mdiToggleSwitch }}</v-icon>
-                                                    {{ $t("views.multiview.preset.toggleAutoLayout") }}
-                                                </v-list-item> -->
-                        <v-list-item @click.stop="removePresetLayout(preset)">
-                          <v-icon left>
-                            {{ icons.mdiDelete }}
-                          </v-icon>
-                          {{ $t("views.multiview.preset.remove") }}
-                        </v-list-item>
-                      </v-list>
-                    </v-menu>
-                  </template>
-                </LayoutPreviewCard>
-              </v-col>
-            </template>
-          </v-row>
-        </v-tab-item>
-        <v-tab-item>
-          <v-row>
-            <template v-for="preset in decodedDesktopPresets">
-              <v-col :key="preset.name" cols="auto" class="d-flex flex-column align-center">
-                <LayoutPreviewCard
-                  :preset="preset"
-                  :active="presetInAuto(preset)"
-                  @click="handleSelected(preset)"
-                />
-              </v-col>
-            </template>
-          </v-row>
-        </v-tab-item>
-        <v-tab-item>
-          <v-row justify="space-around" align="center">
-            <template v-for="preset in decodedMobilePresets">
-              <v-col :key="preset.name" cols="auto" class="d-flex flex-column align-center">
-                <LayoutPreviewCard
-                  :preset="preset"
-                  :active="presetInAuto(preset)"
-                  @click="handleSelected(preset)"
-                />
-              </v-col>
-            </template>
-          </v-row>
-        </v-tab-item>
-        <v-tab-item>
-          <template v-for="(group, index) in desktopGroups">
-            <v-radio-group
-              :key="'preset-' + index"
-              v-model="autoLayout[index]"
-              column
-              hide-details
-            >
-              <v-card-subtitle v-if="index !== 0" class="text-body-1 pa-1">
-                {{ $t("component.channelInfo.videoCount", [index]) }}
-              </v-card-subtitle>
-
-              <v-row v-if="group" :key="'preset-list-' + index">
-                <template v-for="preset in group">
-                  <v-col :key="preset.name" cols="auto" class="d-flex flex-column align-center">
-                    <LayoutPreviewCard
-                      :preset="preset"
-                      :active="presetInAuto(preset)"
-                      @click="setAutoLayout(index, preset.id)"
-                    >
-                      <template #pre>
-                        <v-radio label="" :value="preset.id" class="ma-0" />
-                      </template>
-                    </LayoutPreviewCard>
-                  </v-col>
-                </template>
-              </v-row>
-            </v-radio-group>
-          </template>
-        </v-tab-item>
       </v-tabs>
+      <div v-if="currentTab === 0">
+        <v-btn :color="editAutoLayout ? 'primary' : ''" @click="editAutoLayout = !editAutoLayout">
+          <v-icon left>
+            {{ icons.mdiPencil }}
+          </v-icon>
+          {{ editAutoLayout ? "Done" : "Edit Autolayout" }}
+        </v-btn>
+        <template v-for="(group, index) in desktopGroups">
+          <v-radio-group
+            :key="'preset-' + index"
+            :value="autoLayout[index]"
+            column
+            hide-details
+            class="ma-0"
+          >
+            <v-card-subtitle v-if="index !== 0" class="text-body-1 pa-1">
+              {{ $t("component.channelInfo.videoCount", [index]) }}
+            </v-card-subtitle>
+            <v-row v-if="group" :key="'desktop-' + index">
+              <template v-for="preset in group">
+                <v-col :key="preset.name" cols="auto" class="pa-1">
+                  <LayoutPreviewCard
+                    v-if="!showCustom || (showCustom && preset.custom)"
+                    :preset="preset"
+                    :active="presetInAuto(preset)"
+                    @click="editAutoLayout ? setAutoLayout(index, preset.id) : handleSelected(preset)"
+                  >
+                    <template #pre>
+                      <v-radio
+                        v-show="editAutoLayout"
+                        label=""
+                        :value="preset.id"
+                        class="ma-0"
+                      />
+                    </template>
+                    <template v-if="preset.custom" #post>
+                      <v-menu bottom nudge-top="20px">
+                        <template #activator="{ on }">
+                          <v-icon style="position: absolute; right: 0;" v-on="on" @click.stop.prevent>
+                            {{ icons.mdiDotsVertical }}
+                          </v-icon>
+                        </template>
+                        <v-list dense>
+                          <v-list-item @click.stop="removePresetLayout(preset)">
+                            <v-icon left>
+                              {{ icons.mdiDelete }}
+                            </v-icon>
+                            {{ $t("views.multiview.preset.remove") }}
+                          </v-list-item>
+                        </v-list>
+                      </v-menu>
+                    </template>
+                  </LayoutPreviewCard>
+                </v-col>
+              </template>
+            </v-row>
+          </v-radio-group>
+        </template>
+      </div>
+      <v-row v-else-if="currentTab === 1">
+        <template v-for="preset in decodedCustomPresets">
+          <v-col :key="preset.name" cols="auto" class="d-flex flex-column align-center">
+            <LayoutPreviewCard
+              :preset="preset"
+              :active="presetInAuto(preset)"
+              @click="handleSelected(preset)"
+            />
+          </v-col>
+        </template>
+      </v-row>
+      <v-row v-else-if="currentTab === 2" justify="space-around" align="center">
+        <template v-for="preset in decodedMobilePresets">
+          <v-col :key="preset.name" cols="auto" class="d-flex flex-column align-center">
+            <LayoutPreviewCard
+              :preset="preset"
+              :active="presetInAuto(preset)"
+              @click="handleSelected(preset)"
+            />
+          </v-col>
+        </template>
+      </v-row>
     </v-card-text>
   </v-card>
 </template>
@@ -120,6 +108,8 @@ export default {
             mdiDotsVertical,
             mdiToggleSwitch,
             currentTab: 1,
+            editAutoLayout: false,
+            showCustom: false,
         };
     },
     computed: {
@@ -150,9 +140,6 @@ export default {
         removePresetLayout(preset) {
             this.$store.commit("multiview/removePresetLayout", preset.name);
         },
-        // togglePresetAutoLayout(preset) {
-        //     this.$store.commit("multiview/togglePresetAutoLayout", preset.name);
-        // },
         presetInAuto(preset) {
             return this.autoLayoutSet.has(preset.id);
         },
@@ -161,10 +148,6 @@ export default {
 </script>
 
 <style>
-.layout-btn:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
 .is-auto-layout {
     color: var(--v-anchor-base);
 }

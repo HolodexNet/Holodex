@@ -64,15 +64,13 @@ export default {
         isPreset(currentLayout) {
             // filter out any presets that dont match the amount of cells
             const toCompare = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
-
+            const comparable = toCompare.filter((preset) => preset.layout.length === currentLayout.length);
             // there's no presets with equal cells
-            if (toCompare.length === 0) return false;
+            if (comparable.length === 0) return false;
             const clone = [...currentLayout];
             clone.sort(sortLayout);
             // go through each preset, and check for full matching layouts
-            return toCompare
-                .filter((preset) => preset.layout.length === currentLayout.length)
-                .some((preset) => {
+            return comparable.some((preset) => {
                     for (let i = 0; i < currentLayout.length; i += 1) {
                         const presetCell = preset.layout[i];
                         const layoutCell = clone[i];

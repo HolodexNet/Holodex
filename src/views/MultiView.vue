@@ -397,7 +397,7 @@ export default {
                 event_category: "multiview",
             });
             this.setMultiview({
-                ...preset,
+                ...JSON.parse(JSON.stringify(preset)),
                 mergeContent: true,
             });
         },

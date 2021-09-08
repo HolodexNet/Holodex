@@ -138,6 +138,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        forOrg: {
+            type: String,
+            default: "",
+        },
         ignoreBlock: {
             type: Boolean,
             default: false,
@@ -162,6 +166,7 @@ export default {
                 ignoreBlock: this.ignoreBlock,
                 hideCollabs: this.hideCollabs,
                 hideIgnoredTopics: this.hideIgnoredTopics,
+                forOrg: this.forOrg,
             };
             if (this.limitRows <= 0 || this.expanded) {
                 return this.videos.filter((v) => this.filterVideos(v, filterConfig));
