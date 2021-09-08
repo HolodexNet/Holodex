@@ -51,9 +51,11 @@ const getters = {
     desktopGroups(state, getters) {
         const groups = [];
         const seen = new Set();
-        getters.decodedDesktopPresets.concat(getters.decodedCustomPresets).forEach((preset) => {
+        const customId = new Set(getters.decodedCustomPresets.map((p) => p.id));
+        getters.decodedCustomPresets.concat(getters.decodedDesktopPresets).forEach((preset) => {
             if (seen.has(preset.id)) return;
             seen.add(preset.id);
+            if (customId.has(preset.id)) preset.custom = true;
             if (!groups[preset.videoCellCount]) groups[preset.videoCellCount] = [];
             groups[preset.videoCellCount].push(preset);
         });
