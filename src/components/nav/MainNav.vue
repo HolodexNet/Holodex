@@ -39,7 +39,7 @@
           <v-icon>{{ icons.mdiMenu }}</v-icon>
         </v-app-bar-nav-icon>
         <v-toolbar-title style="overflow: visible" :class="{ 'pa-0': isMobile }">
-          <router-link to="/">
+          <router-link :to="{ name: $store.state.settings.defaultOpen || '/' }">
             <Logo
               v-if="!isMobile"
               width="24"
