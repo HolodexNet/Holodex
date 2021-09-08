@@ -1,6 +1,6 @@
 <template>
   <v-dialog :value="value" max-width="400" @input="$emit('input', $event)">
-    <v-card max-height="75vh" class="overflow-y-auto">
+    <v-card max-height="75vh" class="overflow-y-auto thin-scroll-bar">
       <v-card-title> {{ $t("views.multiview.mediaControls") }} </v-card-title>
       <v-card-text class="d-flex flex-column justify-center align-center">
         <v-list width="100%" max-width="100%" class="media-controls-list">
@@ -208,7 +208,7 @@ export default {
 <style>
 .volume-slider {
   /* min-width: 80px; */
-  flex-basis: 80px;
+  flex-basis: 75px;
   box-sizing: border-box;
 }
 

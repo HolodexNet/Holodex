@@ -47,6 +47,7 @@
         :data-sources="tlHistory"
         :item-height="20"
         :item-class-add="activeClass"
+        :keeps="50"
         @click.native="handleClick"
       />
     </portal>
