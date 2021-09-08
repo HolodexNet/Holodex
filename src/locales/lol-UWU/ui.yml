@@ -1,1 +1,462 @@
 ---
+component:
+  apiError:
+    title: Gomenasowwy!
+    textBeforeTwitter: 'Thewe was an ewwow wetwieving content, pwease check twittew '
+    textAfterTwitter: ' ow wepowt an ewwow thwough da'
+    aboutPage: About page
+    afterAboutPageHyperlink: .
+  channelList:
+    signInToFavorite: Sign in to favowite
+    unfavoriteAllInGroup: Unfavowite aww in gwoup
+    favoriteAllInGroup: Favowite aww in gwoup
+  channelInfo:
+    stats: Stats
+    videoCount: '{0} Bideos'
+    clipCount: '{n} Cwips'
+    subscriberCount: '{n} Subscwibews'
+    subscriberNA: Subscwibew count unavaiwabwe
+    totalViews: Totaw views
+  channelSocials:
+    addToFavorites: Add to favowites
+    removeFromFavorites: Remove fwom favowites
+    unblock: Unbwock dis channew
+    block: Bwock dis channew's content acwoss howodex
+    blocked: Bwocked
+  mainNav:
+    home: Home
+    favorites: Favowites
+    channels: Channews
+    about: About
+    library: Libwawy
+    settings: Settings
+    login: Login
+    logout: Logout
+    MugenClips: Mugencwips<sup>beta</sup>
+    accountSettings: Account settings
+    music: Music
+    multiview: Muwtiview
+    points: uwu
+    playlist: Pwaywist
+  videoCard:
+    clips: '{n} Cwips'
+    watching: '{0} Uwuing'
+    liveNow: Live now
+    edit: Edit
+    copiedToClipboard: Link copied to cwipboawd.
+    copyLink: Copy howodex link
+    premiere: PREMIERE
+    googleCalendar: Add to googwe cawendaw
+    totalTLs: Totaw wive chat tls
+    tlPresence: Active twanswatow in wast 30 mins
+  videoDescription:
+    description: Descwiption
+  video:
+    comment: { }
+  description:
+    showLess: Show less
+    showMore: Show mowe
+  watch:
+    streamingFor: Stweaming fow {0}
+    nextUpInMugen: Next up
+    Comments:
+      title: Comments
+      all: Aww
+  search:
+    searchLabel: Seawch
+    type:
+      channel: channew
+      topic: topic
+      org: owg
+      titledesc: titwe/desc
+      comments: comments
+      videourl: bideo uww
+  relatedVideo:
+    clipsLabel: cwips
+    simulcastsLabel: simuwcasts
+    refersLabel: wefews
+    sourcesLabel: souwces
+    songsLabel: songs
+    recommendationsLabel: wecommended
+  paginateLoad:
+    newer: Newew
+    older: Owdew
+  music:
+    clearPlaylist: Cweaw
+  channelMusic:
+    recentSongsHeader: Recent songs
+    weeklyTopPlaysHeader: Weekwy top pways
+  songList:
+    songTitle: Titwe
+    songCoveredBy: Covewed by
+    songDuration: Duwation
+    sangOnTime: Sang on
+  orgMusic:
+    monthlyTopForOrg: Monthwy top pways fow {0}
+    weeklyTopForOrg: Weekwy top pways fow {0}
+  installPrompt:
+    title: Instaww howodex
+    callToAction: Watching bideos on howodex wowks best when added to home scween
+    notNowBtn: Not now
+    installBtn: Instaww
+    iOS:
+      popup: Instaww howodex on ios
+      afterExportIcon: then 'add to home scween
+      beforeExportIcon: Tap
+  media:
+    remove: Remove
+  comment:
+    close: Cwose
+    readMore: Read mowe
+  reportDialog:
+    title: Repowt
+    collabing: Dis channew may be cowwabing with a {org} membew ow with youw favowites. U can disabwe dis featuwe thwough da settings
+    comments: Wat actions shouwd howodex take?
+    success: Repowt sent, thankies!
+    reasons:
+      - Bideo tagged incowwectwy
+      - Dangewouswy low quawity/misweading content
+      - Viowates da owg's dewivative wowk guidewines ow inappwopwiate
+      - Othew
+  thirdpartycookie:
+    explanation: >-
+      Because of how youw intewnet bwowsew wowks, some bwowsews with stwict <b>thiwd pawty cookie</b> powicies, ow those bwocking <kbd>youtube.com</kbd> cookies may find it difficuwt to wog into / use youtube chat. <br /><br /> u can fix dis by whitewisting <kbd>youtube.com</kbd> in thiwd pawty cookie bwockews, ow decweasing youw cookie secuwity / pwivacy wevew fow <kbd>howodex.net</kbd>. <br /><br /> we incwuded some websites that pwovide mowe infowmation on how to do dis.
+    dialogTitle: Using youtube chat on howodex
+    alertText: >-
+      Youw bwowsew pwivacy setting ish making it impossibwe to wog-in to youtube chat. Cwick hewe fow mowe info
+    neverShowAgain: Nevew show awewt again
+  playlist:
+    menu:
+      export-playlist: Expowt pwaywist
+      new-playlist: New pwaywist
+      rename-playlist: Rename pwaywist
+      reset-unsaved: Reset unsaved changes
+      delete-playlist: Dewete pwaywist
+      clear-playlist: Cweaw pwaywist
+    save-error-not-logged-in: U need to be wogged in to save pwaywists
+views:
+  channel:
+    video: Bideos
+    clips: Cwips
+    music: Music
+    collabs: Cowwabs
+    about: About
+  channels:
+    channelType: { }
+    sortOptions:
+      subscribers: Subscwibews
+      group: Gwoup
+      recentUpload: Recent upwoad
+      videoCount: Bideo count
+      clipCount: Cwip count
+      org: Owganization
+    tabs:
+      Vtuber: Vtubew
+      Subber: Subbew
+      Favorites: Favowites
+      Blocked: Bwocked
+    favoritesAreEmpty: U have no favowites!
+    blockedAreEmpty: U have no bwocked channews.
+  home:
+    liveOrUpcomingHeading: Live / upcoming
+    recentVideosHeading: Recent bideos
+    noStreams: No wive ow upcoming stweams at da moment
+    recentVideoToggles:
+      all: Aww
+      official: Awchive
+      subber: Cwips
+  library:
+    savedVideosTitle: Saved bideos
+    createYtPlaylistButton: Cweate yt pwaywist ({0})
+    deleteFromLibraryButton: Dewete ({0})
+    deleteConfirmation: Awe u suwe u wanna dewete {0} bideos?
+    deleteConfirmationOK: Dewete
+    deleteConfirmationCancel: Cancew
+    selectionReset: Reset
+    selectionSelectAll: Sewect aww
+    emptyLibrary: U have no saved bideos!
+    exportSelected: Expowt sewected ({0})
+    exportYtPlaylist: Youtube pwaywist
+    exportCsv: Csv fiwe
+    selectionSelect50: Sewect 50
+    exportYTExplanation: >-
+      Da youtube pwaywist cweated by dis featuwe ish <b>unwisted</b> and may be deweted by youtube. <br /> because youtube's featuwe incompweteness, u need to do da fowwowing to save da <b>unwisted</b> youtube pwaywist to youw account.
+    exportYTHeading: Saving youtube pwaywist instwuctions
+    exportYTInstructions: >-
+      <b class="red--text">Step 1</b>: pway da youtube pwaywist, and change da pwayew ui into mini-pwayew. <br /><br /> <b class="red--text">step 2</b>: pick any bideo and add it to da queue. <br /><br /> <b class="red--text">step 3</b>: da pwaywist ish now save-abwe. Cwick save to save it.
+    sort:
+      dateaddedEarliestFirst: Date added to libwawy, eawwiest fiwst
+      dateaddedLatestFirst: Date added to libwawy, watest fiwst
+      dateuploadedLatestFirst: Upwoad date, watest fiwst
+      dateuploadedEarliestFirst: Upwoad date, eawwiest fiwst
+  notFound:
+    title: Content not found
+    back: Retuwn home
+  search:
+    sort:
+      newest: Newest
+      oldest: Owdest
+    type:
+      all: Aww
+      official: Officiaw
+      clip: Cwip
+    unsupportedQuery: >-
+      Cuwwentwy seawching cwips by <kbd>topic</kbd> and <kbd>owganization</kbd> ish not suppowted. No <b>cwips</b> wiww show up.
+    sortByLabel: Sowt by
+    typeDropdownLabel: Type
+  settings:
+    title: Settings
+    darkModeLabel: Dawk mode
+    darkModeMsg: Changes da theme between wight mode and dawk mode
+    redirectModeLabel: Open on youtube
+    redirectModeMsg: >-
+      Cwicking on bideo thumbnaiws wiww open it in youtube, cwicking da bideo titwe wiww open on howodex
+    useEnglishNameLabel: Use engwish name
+    useEnglishNameMsg: Uses engwish wocawized names fow vtubew channews
+    hideVideoThumbnailsLabel: Hide bideo thumbnaiws
+    hideVideoThumbnailsMsg: >-
+      Hide bideo thumbnaiws, hewps speed up woading time and wess scwowwing on mobiwe
+    pushNotificationLabel: Push notifications (coming soon)
+    pushNotificationMsg: Enabwe push notification fow favowited channews
+    autoplayVideoLabel: Autopway bideo
+    autoplayVideoMsg: Enabwe automatic pwayback of bideos
+    scrollModeLabel: Scwoww mode
+    scrollModeMsg: Use scwoww/tap to tuwn pages
+    resetAllSettings: Reset aww settings/data
+    resetAllSettingsWarning: U wiww wose aww data. Continue?
+    clipLanguageSelection: 'See cwips in these languages:'
+    tlLanguageSelection: See wive-chat tl in these wanguages
+    defaultPage: Defauwt page
+    defaultPageMsg: >-
+      Open dis page by defauwt when visiting howodex.net, ow cwicking on da wogo top weft.
+    videoFeedSettings: Bideo feed settings
+    siteNavigationSettings: Site/navigation
+    languageSettings: Language
+    gridSizeLabel: Thumbnaiw/gwid size
+    gridSizeMsg: Change thumbnaiw/video gwid size on home/favowites page
+    gridSize:
+      - Lawge
+      - Medium
+      - Smaww
+    hideCollabStreamsLabel: Hide cowwab stweams
+    hideCollabStreamsMsg: Hide cowwab stweams fwom youw favowites feed
+    ignoredTopicsLabel: Ignowed topics
+    ignoredTopicsMsg: Hide bideos with these topics fwom da home and favowites pages
+    theme: Theme
+  app:
+    update_available: An update ish avaiwabwe
+    update_btn: Update
+    close_btn: Cwose
+    check_about_page: Visit da about page to see new changes
+    nowSupportsMultiOrg: Howodex now suppowts muwtipwe owganizations.
+    loginCallToAction: Login to gathew youw own favowites!
+  about:
+    add_my_channel: Channew request
+  watch:
+    theaterMode: Theatew mode
+    mentionIconLabel: MENTIONS
+    chat:
+      loading: Loading chat...
+      hideTLBtn: Hide tls
+      showTLBtn: Show tls
+      TLSettingsTitle: Tl settings
+      StickBottomSettingLabel: Stick bottom (mobiwe)
+      StickBottomSettingsDesc: Tl box sticks to da bottom of chat (defauwt stick to top on mobiwe)
+      showVerifiedMessages: Show vewified messages
+      showModeratorMessages: Show modewatow messages
+      tlFontSize: Font size
+      tlWindowSize: Tl box size (%), weave as 0% fow automatic
+      retryBtn: Retwy
+      status:
+        reconnecting: Auto reconnecting...
+        reconnectFailed: Couwd not weconnect
+        notLive: >-
+          Stweam ish not wive yet, pwease twy again when da stweam ish within 15 minutes of being wive
+        connectedToChat: Connected
+        disconnectedToChat: Disconnected
+    removeFromPlaylist: Remove bideo fwom cuwwent pwaywist
+    saveToPlaylist: Save bideo to cuwwent pwaywist
+  favorites:
+    promptForAction: >-
+      Cweate a wist of favowite vtubews and see theiw watest cwips and wives on dis page.
+    manageFavorites: Manage favowites
+    close: Cwose
+    showall: Show aww
+  editor:
+    needlogin: U'ww need to wogin to make edits to howodex bideo and song metadata.
+    changeTopic:
+      title: Change stweam topic
+      info: >-
+        Aww usews can assign topic to bideos, but onwy editows and admins can wemove and change da topic once set.
+      button: Save (may take 5 minutes to take effect)
+    channelMentions:
+      title: Channew mentions
+    sources:
+      title: Souwces/cwips (in devewopment)
+  login:
+    apikeyMsg: >-
+      U can use api key to quewy howodex api pwogwammaticawwy. Onwy one key pew account. Aftew getting a new key, da owd key wiww expiwe within 0-24 houws.
+    apikeyNew: Get new api key
+    ownedYtChannel: Owned youtube channew
+    futureYtcOwnerMessage: >-
+      In da futuwe, we pwan on pwoviding mowe sewvices to channew ownews wike editing metadata fow theiw own bideos.
+    linkAcc: Link anothew account
+    apikeyResetConfirm1: Awe u suwe u wanna weset youw api key?
+    apikeyResetConfirm2: Da owd api key wiww have 0-24 houws befowe expiwing. Reawwy weset?
+    apikeyResetNvm: Nothing intewesting happened.
+    with:
+      - Login with googwe
+      - Login with discowd
+      - Login with twittew
+  multiview:
+    confirmOverwrite: Ovewwwite cuwwent wayout?
+    confirmOverwriteYes: Confiwm
+    permalink: Pewmawink
+    presets: Pwesets
+    addframe: Add ceww
+    muteAll: Mute aww
+    unmuteAll: Unmute aww
+    muteOthers: Mute othews
+    muteOthersDetail: Mute aww but one stweam
+    autoLayoutTip: Cwick on a channew to stawt watching using auto wayout mode
+    createLayoutTip: Cweate youw own wayout by adding a ceww, ow using a pweset
+    openToolbarTip: Open da toowbaw to stawt using muwtiview
+    preset:
+      shareOnDiscord: >-
+        Have a coow wayout to shawe? use da shawe button and wet us know on ouw <a href="https://discord.gg/jctkgHBt4b">discowd sewvew</a>!
+      custom: My layouts
+      toggleAutoLayout: Toggwe use wayout in auto
+      remove: Dewete
+      desktop: Desktop
+      mobile: Mobiwe
+      autoLayout: Autolayout
+    presetEditor:
+      title: Save layout
+      name: Name
+      autoLayout: Use wayout in auto mode
+    video:
+      selectLive: Sewect live
+      addCustomVideo: Add custom bideo
+    fullScreen: Fuwwscween
+    mediaControls: Media contwows
+    mediaControlsEmpty: Bideos being pwayed wiww appeaw hewe
+  mugen:
+    welcome: >-
+      Wewcome to mugencwips! evewyone on dis page ish seeing da same wandomwy sewected engwish howowive cwip. Watch awong and chat with howowive fans fwom acwoss da wowwd. If u skip ahead and wanna be we-sync'd with evewyone, pwease wefwesh da page.
+  playlist:
+    playlist-is-modified: Not saved
+    item-last-updated: 'Last updated:'
+    login-prompt: Login to save pwaywists and have mowe than one pwaywist
+    new-playlist-btn-label: Cweate a new pwaywist
+    page-heading: 'Youw pwaywists:'
+    page-instruction: Cwick a pwaywist to set it as active.
+    change-loss-warning: U wiww wose unsaved changes. Continue?
+time:
+  soon: soon
+  diff_future_date: Stawts {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: Add
+    update: Update
+    permission: >-
+      U need to be an 'editow' usew wevew ow highew to update ow dewete existing songs. Pwease contact us on <a class='white--text' href='/about'>discowd</a> to notify editows of issues / abuse, ow appwy to become an editow.
+    titles:
+      addSong: 'Song metadata: add a new song'
+      songList: 'Song list : {0}'
+      help: Guide
+    itunesLookupPlaceholder: (optionaw) lookup on itunes
+    moveRight2s: Move wight 2s
+    testEnd: Test wisten stawting at 3 seconds befowe da end.
+    setToCurrentTime: Set to cuwwent time ({0})
+    moveLeft2s: Move weft 2s
+    trackNameInput: Twack name
+    originalArtistInput: Owiginaw awtist
+    testStart: Test da stawt
+    startInput: Stawt
+    endInput: 'Duwation in seconds: (end @ {0})'
+  exitMode: Exit edit mode
+  enterMode: Edit bideo
+about:
+  quicklinks: Quick links
+  discordBtn: Howodex discowd
+  faq:
+    title: Faq
+    ytchatHeader: My youtube chat ish not wogged in!
+    ytchatContent: >-
+      Pwease disabwe da bwowsew secuwity featuwe known as 3wd pawty cookies bwocking, ow whitewist dis website and youtube.com to awwow 3wd pawty cookies.
+    ytchatFirefox: Fiwefox instwuctions, othew bwowsews may be simiwaw.
+    autoplayHeader: Autopway isn't wowking!
+    autoplayContent: Pwease googwe how to enabwe autopway fow youw bwowsew.
+    musicPlayer: Music pwayew doesn't wowk weww on mobiwe devices!
+    musicPlayerContent: >-
+      Fow most ios devices, u cannot tuwn off da scween ow cwose safawi whiwe pwaying howodex music. Dis westwiction may ow may not appwy to andwoid devices (depends on device). Pwease give us feedback on discowd if u have any idea how to pwoduce a bettew pwayback system.
+    videoLinkage: How do me make suwe that bideos awe winked pwopewwy to vtubews?
+    videoLinkageContent: >-
+      Aww infowmation ish pawsed fwom da bideo descwiption. If u awe cwipping a stweam, pwease make suwe to wink da officiaw stweam. If u awe cwipping fan made content (eg. fwom biwibiwi), just make suwe to wink da officiaw youtube channews of wewevant vtubews. If u do not wink any vtubew channews, then we wiww not show that cwip on howodex, as aww cwips wequiwe winkage to a vtubew known to howodex.
+    quitHolodex: "Am a subbew and me wouwd wike to have my channew wemoved fwom howodex\\r\n"
+    quitHolodexContent: >-
+      Sad to see u go :(, pwease wet me know if thewe's any issue me can hewp u with. If u wouwd stiww wike to have it wemoved, pwease send us a message on discowd.
+    favorite:
+      title: Wat awe favowites?
+      Contents:
+        - >-
+          Favowites awe a way to stay on top of youw favowite vtubews, u can add youw favowite channews by cwicking da heawt icon on da
+        - >-
+          page. Pwease note that favowiting subbews ish cuwwentwy not suppowted, but u shouwd stiww considew subscwibing and suppowting them in othew ways!
+      disappear:
+        title: My favowites wist disappeawed / me cannot favowite
+      contents:
+        - >-
+          Pwease make suwe u awe wogged in and visit da channews favowites tab to fowce a wefwesh.
+    mobile:
+      title: Ish thewe an andwoid/ios app fow howodex?
+      content:
+        summary: >-
+          We awe wowking on it! in da mean time, pwease use da "add to home" featuwe on youw bwowsew. We have tuned it a wot to behave wike an app
+        android:
+          - 'Andwoid chwome: navigate to da site, cwick da thwee dots'
+          - on da top wight and find "add to home scween".
+        ios:
+          - >-
+            ios safawi: navigate to da site on youw phone, cwick da squawe with awwow pointing up
+          - at da bottom of safawi, and cwick "add to home scween"
+    MugenClips:
+      title: Wat ish mugencwips?
+      contents:
+        - >-
+          Mugencwips, ow infinite cwips, ish a watch awong pawty whewe peopwe on da site can watch a constantwy wotating vawiety of cwips upwoaded by da many community twanswation channews
+    subber:
+      title: Am a subbew and can't find my channew ow cwips on howodex
+      contents:
+        - >-
+          Pwease check on da channews page to see if u awe wisted as a subbew, if not pwease fiww out
+        - dis fowm
+        - >-
+          , and we wiww add u manuawwy. If u awe awweady on da wist, pwease make suwe youw bideo descwiptions have da cowwect youtube souwce/channew winks.
+    feedback:
+      title: Me have feedback/want to contwibute to dis pwoject
+      contents:
+        - >-
+          Aww hewp and ideas awe wewcome! da ui and backend awe both avaiwabwe fow contwibution, awthough onwy da ui ish open souwce cuwwentwy. Pwease contact us on discowd to gain access to backend souwce, ow simpwy chat about youw ideas.
+  gdpr: Gdpr and my data
+  gdprContent: >-
+    A googwe anawytics cookie ish used to twack pageviews fow ouw anawyticaw puwposes. Aftew wogin, we associate youw sociaw media account usewname and id with youw favowites. Dis data may incwude youw emaiw (fow googwe), discowd id, ow twittew handwe wespectivewy.
+  gdprDeletion: Fow dewetion of youw usew data, pwease contact us on discowd!
+  feedback: Feedback/bug repowts
+  feedbackHtml: >-
+    U can cweate an issue in da <a href="https://github.com/RiceCakess/Holodex/issues"> github issue twackew </a> ow find da howodex team on discowd <br /> <br /> reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/rice_cakess </a>
+  credits:
+    title: Cwedits
+    contents:
+      - Me wouwd wike to give big thankies to da
+      - team fow theiw wowk on
+      - >-
+        Awso to aww da subbews fow hewping da ovewseas bwos! pwease check them out!
+      - >-
+        Dis ish a fan made website and da content found on dis website ish owned by covew cowp and its pawtnews. Da site fowwows da guidewines set fowth by covew cowp in theiw
+      - Dewivative wowk license agweement
+  changelog:
+    title: Changewog
+  news:
+    title: News
