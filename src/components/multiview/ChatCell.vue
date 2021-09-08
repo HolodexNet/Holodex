@@ -190,6 +190,7 @@ export default {
     created() {
         // Chat is non paused by default
         this.editMode = false;
+        this.checkScale();
     },
     methods: {
         checkScale() {

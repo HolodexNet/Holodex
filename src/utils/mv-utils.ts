@@ -9,6 +9,9 @@ export interface Content {
 }
 
 const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.";
+
+export const sortLayout = (a, b) => a.x - b.x || a.y - b.y;
+
 /**
  * Encodes a layout array and contents to a compact URI
  * @param {{layout, contents, includeVideo?}} layout and layout contents
@@ -119,6 +122,7 @@ export function decodeLayout(encodedStr) {
         }
         parsedLayout.push(layoutItem);
     });
+    parsedLayout.sort(sortLayout);
     // console.log(parsedLayout, parsedContent);
     return {
         id: encodedStr,
