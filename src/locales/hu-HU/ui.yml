@@ -51,6 +51,8 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -90,7 +92,7 @@ component:
     songDuration: Hossz
     sangOnTime: Énekelve
   orgMusic:
-    monthlyTopForOrg: Heti legjátszottabbak {0}-tól/től
+    monthlyTopForOrg: Havi legjátszottabbak {0}-tól/től
     weeklyTopForOrg: Heti legjátszottabbak {0}-tól/től
   installPrompt:
     title: Holodex telepítése
@@ -140,6 +142,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -313,6 +316,8 @@ views:
     addframe: Cella hozzáadása
     muteAll: Minden némítása
     unmuteAll: Minden némítás visszavonása
+    muteOthers: Többi némítása
+    muteOthersDetail: Minden streamet -kivéve egyet- némít
     autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
     createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
     openToolbarTip: Nyisd meg az eszköztárat a több képernyős nézet használatához
