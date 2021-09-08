@@ -1,4 +1,4 @@
-import { Content, decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-utils";
+import { Content, decodeLayout, desktopPresets, mobilePresets, sortLayout } from "@/utils/mv-utils";
 import { mapGetters } from "vuex";
 
 export default {
@@ -67,14 +67,15 @@ export default {
 
             // there's no presets with equal cells
             if (toCompare.length === 0) return false;
-
+            const clone = [...currentLayout];
+            clone.sort(sortLayout);
             // go through each preset, and check for full matching layouts
             return toCompare
                 .filter((preset) => preset.layout.length === currentLayout.length)
                 .some((preset) => {
                     for (let i = 0; i < currentLayout.length; i += 1) {
                         const presetCell = preset.layout[i];
-                        const layoutCell = currentLayout[i];
+                        const layoutCell = clone[i];
                         if (
                             !(
                                 presetCell.x === layoutCell.x
