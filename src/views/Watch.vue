@@ -113,6 +113,7 @@
           @timeJump="seekTo"
         />
         <WatchQuickEditor v-if="!theaterMode && (role === 'admin' || role === 'editor')" :video="video" />
+        <WatchPlaylist v-if="isMobile" v-model="playlistIndex" @playNext="playNextPlaylist" />
         <!-- Mobile mode only sidebar -->
         <WatchSideBar v-if="isMobile" :video="video" @timeJump="seekTo" />
         <!-- Mobile mode Mugen -->
