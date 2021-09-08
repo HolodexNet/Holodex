@@ -77,10 +77,14 @@ export function getBannerImages(url) {
 }
 
 const formatters = {};
+const numberFormatAdjust = {
+    "lol-UWU": "en",
+};
 
 export function formatCount(n, lang = "en") {
-    if (!formatters[lang]) {
-        formatters[lang] = new Intl.NumberFormat(lang, {
+    const converted = numberFormatAdjust[lang] ?? lang;
+    if (!formatters[converted]) {
+        formatters[converted] = new Intl.NumberFormat(converted, {
             compactDisplay: "short",
             notation: "compact",
             maximumSignificantDigits: 3,
@@ -88,7 +92,7 @@ export function formatCount(n, lang = "en") {
     }
     let num = n;
     if (typeof n === "string") num = +n;
-    return formatters[lang].format(num);
+    return formatters[converted].format(num);
 }
 
 export function decodeHTMLEntities(str) {
