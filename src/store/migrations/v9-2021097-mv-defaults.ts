@@ -23,7 +23,7 @@ export default <IMigration>{
 
         // Replace old default with new default if unchanged
         const newAutoLayout = state.multiview.autoLayout.map((layout, index) => {
-            if (oldDefaults.length < index && layout === oldDefaults[index]) {
+            if (index < oldDefaults.length && layout === oldDefaults[index]) {
                 return newDefaults[index];
             }
             return layout;
