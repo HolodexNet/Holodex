@@ -1,6 +1,5 @@
 <template>
   <v-container
-    :id="'t' + randomId"
     class="py-0"
     style="position: relative"
     fluid
@@ -121,11 +120,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        // lazy: {
-        //     type: Boolean,
-        //     default: false,
-        // },
-        // to be used in conjunction with videoClicked event
         disableDefaultClick: {
             type: Boolean,
             default: false,
@@ -153,7 +147,6 @@ export default {
     data() {
         return {
             expanded: false,
-            randomId: Date.now(),
             ...{ mdiChevronUp, mdiChevronDown },
         };
     },
@@ -270,5 +263,9 @@ export default {
 .video-row.row--dense > .col,
 .row--dense > [class*="col-"] {
     padding: 6px 4px;
+}
+
+.video-row.row {
+    margin: 0 -12px;
 }
 </style>

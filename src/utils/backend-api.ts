@@ -15,7 +15,8 @@ export const axiosInstance = (() => {
 
 export default {
     orgs() {
-        return axiosInstance({ url: "orgs.json", baseURL: SITE_BASE_URL });
+        // Use fetch api to take advantage of pre-fetch
+        return fetch("orgs.json").then((r) => r.json());
     },
     stats() {
         return axiosInstance({ url: "stats.json", baseURL: SITE_BASE_URL });
