@@ -102,6 +102,19 @@ export default ({ mode }) => {
                                 },
                             },
                         },
+                        {
+                            urlPattern: new RegExp(`${API_BASE_URL}/(stats|orgs).json$`),
+                            handler: "CacheFirst",
+                            options: {
+                                cacheName: "holodex-statics",
+                                expiration: {
+                                    maxAgeSeconds: 10800,
+                                },
+                                cacheableResponse: {
+                                    statuses: [0, 200],
+                                },
+                            },
+                        },
                     ],
                     // workbox options for generateSW
                 },

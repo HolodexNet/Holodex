@@ -156,6 +156,7 @@ export default {
     },
     mounted() {
         this.$nextTick(this.updateSongs);
+        this.hidden.recommendations = (this.related.refers.length + this.related.clips.length + this.related.sources.length) >= 5;
     },
     methods: {
         relationI18N(relation) {
