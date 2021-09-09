@@ -209,62 +209,62 @@ export default {
 .video-col {
     display: flex;
     justify-content: center;
-}
 
-.video-1 {
-    padding-left: 0px;
-    padding-right: 0px;
-    width: 100%;
-    max-width: 100%;
-    flex-basis: 100%;
-}
+    &.video-1 {
+        padding-left: 0px;
+        padding-right: 0px;
+        width: 100%;
+        max-width: 100%;
+        flex-basis: 100%;
+    }
 
-.video-2 {
-    width: 50%;
-    max-width: 50%;
-    flex-basis: 50%;
-}
+    &.video-2 {
+        width: 50%;
+        max-width: 50%;
+        flex-basis: 50%;
+    }
 
-.video-3 {
-    width: 33.3%;
-    max-width: 33.3%;
-    flex-basis: 33.3%;
-}
+    &.video-3 {
+        width: 33.3%;
+        max-width: 33.3%;
+        flex-basis: 33.3%;
+    }
 
-.video-4 {
-    width: 25%;
-    max-width: 25%;
-    flex-basis: 25%;
-}
+    &.video-4 {
+        width: 25%;
+        max-width: 25%;
+        flex-basis: 25%;
+    }
 
-.video-5 {
-    width: 20%;
-    max-width: 20%;
-    flex-basis: 20%;
-}
+    &.video-5 {
+        width: 20%;
+        max-width: 20%;
+        flex-basis: 20%;
+    }
 
-.video-6 {
-    width: 16.666%;
-    max-width: 16.666%;
-    flex-basis: 16.666%;
-}
+    &.video-6 {
+        width: 16.666%;
+        max-width: 16.666%;
+        flex-basis: 16.666%;
+    }
 
-.video-7 {
-    width: 14.285%;
-    max-width: 14.285%;
-    flex-basis: 14.285%;
-}
+    &.video-7 {
+        width: 14.285%;
+        max-width: 14.285%;
+        flex-basis: 14.285%;
+    }
 
-.video-8 {
-    width: 12.5%;
-    max-width: 12.5%;
-    flex-basis: 12.5%;
-}
+    &.video-8 {
+        width: 12.5%;
+        max-width: 12.5%;
+        flex-basis: 12.5%;
+    }
 
-.video-12 {
-    width: 8.33%;
-    max-width: 8.33%;
-    flex-basis: 8.33%;
+    &.video-12 {
+        width: 8.33%;
+        max-width: 8.33%;
+        flex-basis: 8.33%;
+    }
 }
 // Increase vertical padding to accomadate collab border
 .video-row.row--dense > .col,
