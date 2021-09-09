@@ -13,7 +13,7 @@ const actions = {
     async fetchOrgs({ commit }) {
         commit("setOrgs", [
             ...(this.hideAllVTubers ? [] : [{ name: "All Vtubers", short: "Vtuber", name_jp: null }]),
-            ...(await api.orgs()).data.sort(
+            ...(await api.orgs()).sort(
                 (a, b) => a.name.toLowerCase().charCodeAt(0) - b.name.toLowerCase().charCodeAt(0),
             ),
         ]);
