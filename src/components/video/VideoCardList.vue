@@ -6,12 +6,12 @@
     fluid
   >
     <!-- Video Card grid rows -->
-    <v-row :dense="dense" class="video-row">
+    <div class="row video-row" :class="{'row--dense': dense}">
       <!-- Video Cards with custom grid size class based on breakpoint -->
-      <v-col
+      <div
         v-for="(video, index) in processedVideos"
         :key="`${index}-${video.id}`"
-        :class="['video-col', `video-${colSize}`, 'flex-column']"
+        :class="['video-col', `video-${colSize}`, 'flex-column', 'col']"
       >
         <VideoCard
           :video="video"
@@ -43,8 +43,8 @@
             <comment :comment="comment" :video-id="video.id" />
           </v-list-item>
         </v-list>
-      </v-col>
-    </v-row>
+      </div>
+    </div>
     <!-- Expand button/show more -->
     <div v-if="hasExpansion" class="text-center" style="width: 100%">
       <v-btn
