@@ -5,6 +5,8 @@
     flat
     style="width: 100%"
   >
+    <LiveTL />
+  <!--
     <v-card-subtitle class="py-1 d-flex justify-space-between">
       <div>TLdex [{{ liveTlLang }}]</div>
       <span>
@@ -50,21 +52,24 @@
         @click.native="handleClick"
       />
     </portal>
+  -->
   </v-card>
 </template>
 
 <script lang="ts">
 import { dayjs } from "@/utils/time";
-import VirtualList from "vue-virtual-scroll-list";
-import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
+// import VirtualList from "vue-virtual-scroll-list";
+// import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import ChatMessage from "./ChatMessage.vue";
 import chatMixin from "./chatMixin";
+import LiveTL from "./LiveTL.vue";
 
 export default {
     name: "ArchiveTranslations",
     components: {
-        WatchLiveTranslationsSetting,
-        VirtualList,
+        // WatchLiveTranslationsSetting,
+        // VirtualList,
+        LiveTL,
     },
     mixins: [chatMixin],
     props: {

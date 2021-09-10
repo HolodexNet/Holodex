@@ -5,7 +5,7 @@
     flat
     style="width: 100%"
   >
-    <iframe src="/livetl.html" style="width: 100%; height: 100%; border: none;" />
+    <LiveTL />
   <!--
     <v-overlay absolute :value="showOverlay || (!forceCloseOverlay && $socket.disconnected)" opacity="0.8">
       <div v-if="isLoading">
@@ -93,7 +93,7 @@ import Vue from "vue";
 // import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
 // import MessageRenderer from "./MessageRenderer.vue";
-import "@livetl/ui-components/js/polyfills/chrome";
+import LiveTL from "./LiveTL.vue";
 
 const manager = new Manager(API_BASE_URL, {
     reconnectionAttempts: 10,
@@ -111,6 +111,7 @@ export default {
     components: {
         // WatchLiveTranslationsSetting,
         // MessageRenderer,
+        LiveTL,
     },
     mixins: [chatMixin],
     data() {
