@@ -15,6 +15,7 @@ import postcssConfig from "./postcss.config";
 /**
  * @param {{ mode: string, command: string }}
  */
+
 export default ({ mode }) => {
     const env = { ...process.env, ...loadEnv(mode, process.cwd()) };
     const API_BASE_URL = env.VITE_API_BASE_URL ?? "https://staging.holodex.net";
@@ -26,9 +27,7 @@ export default ({ mode }) => {
             svelte({
                 preprocess: [sveltePreprocess({
                     typescript: true,
-                    postcss: {
-                        plugins: postcssConfig(),
-                    },
+                    postcss: postcssConfig,
                 })],
 
             }),
