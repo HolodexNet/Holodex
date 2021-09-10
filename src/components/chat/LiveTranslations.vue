@@ -5,7 +5,7 @@
     flat
     style="width: 100%"
   >
-    <LiveTL />
+    <iframe src="/livetl.html" style="width: 100%; height: 100%; border: none;" />
   <!--
     <v-overlay absolute :value="showOverlay || (!forceCloseOverlay && $socket.disconnected)" opacity="0.8">
       <div v-if="isLoading">
@@ -90,11 +90,9 @@ import { dayjs } from "@/utils/time";
 import VueSocketIOExt from "vue-socket.io-extended";
 import { Manager } from "socket.io-client";
 import Vue from "vue";
-import LiveTL from "@livetl/ui-components/components/Popout.svelte";
-import toVue from "svelte-adapter/vue";
-import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
+// import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
-import MessageRenderer from "./MessageRenderer.vue";
+// import MessageRenderer from "./MessageRenderer.vue";
 import "@livetl/ui-components/js/polyfills/chrome";
 
 const manager = new Manager(API_BASE_URL, {
@@ -111,9 +109,8 @@ Vue.use(VueSocketIOExt, manager.socket("/"));
 export default {
     name: "LiveTranslations",
     components: {
-        WatchLiveTranslationsSetting,
-        MessageRenderer,
-        LiveTL: toVue(LiveTL),
+        // WatchLiveTranslationsSetting,
+        // MessageRenderer,
     },
     mixins: [chatMixin],
     data() {

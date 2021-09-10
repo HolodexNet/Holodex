@@ -10,7 +10,7 @@ import path from "path";
 import sveltePreprocess from "svelte-preprocess";
 import { replaceCodePlugin } from "vite-plugin-replace";
 import livetlManifest from "@livetl/ui-components/meta/package.json";
-// import postcssConfig from "./postcss.config";
+import postcssConfig from "./postcss.config";
 
 /**
  * @param {{ mode: string, command: string }}
@@ -27,7 +27,7 @@ export default ({ mode }) => {
             svelte({
                 preprocess: [sveltePreprocess({
                     typescript: true,
-                    // postcss: postcssConfig,
+                    postcss: postcssConfig,
                 })],
             }),
             replaceCodePlugin({
