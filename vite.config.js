@@ -12,8 +12,8 @@ import path from "path";
  */
 export default ({ mode }) => {
     const env = { ...process.env, ...loadEnv(mode, process.cwd()) };
-    const API_BASE_URL = env.VITE_API_BASE_URL ?? "https://staging.holodex.net";
-    const REWRITE_API_ROUTES = !!env.VITE_REWRITE_API_ROUTES;
+    const API_BASE_URL = env.API_BASE_URL ?? "https://staging.holodex.net";
+    const REWRITE_API_ROUTES = !!env.REWRITE_API_ROUTES;
 
     return defineConfig({
         plugins: [
