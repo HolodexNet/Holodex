@@ -28,6 +28,13 @@
             {{ mdiAt }}
           </v-icon>
         </v-avatar>
+        <v-avatar rounded left size="40">
+          <v-btn icon @click.stop.prevent="showBlockChannelDialog = true">
+            <v-icon size="25" color="grey darken-2">
+              {{ icons.mdiDelete }}
+            </v-icon>
+          </v-btn>
+        </v-avatar>
         <template v-for="item in mentions">
           <ChannelChip :key="item.id + 'chip'" :channel="item" :size="60">
             <template #default>
@@ -56,14 +63,21 @@
           style="min-width: 300px"
         >
           <template #selection="selection">
-            <ChannelChip :key="selection.item.id + 'chip'" :channel="selection.item" :size="60">
+            <ChannelChip
+              :key="selection.item.id + 'chip'"
+              :channel="selection.item"
+              :size="60"
+            >
               <v-btn icon @click.stop.prevent="deleteMention(selection.item)">
                 <v-icon>{{ icons.mdiClose }}</v-icon>
               </v-btn>
             </ChannelChip>
           </template>
           <template #item="dropdownItem">
-            <v-list-item-content class="py-1 pt-1" @click.stop="addMention(dropdownItem.item)">
+            <v-list-item-content
+              class="py-1 pt-1"
+              @click.stop="addMention(dropdownItem.item)"
+            >
               <v-list-item-subtitle class="text--primary">
                 {{ getChannelName(dropdownItem.item) }}
               </v-list-item-subtitle>
@@ -83,7 +97,9 @@
             {{ icons.mdiAnimationPlay }}
           </v-icon>
         </v-avatar>
-        <span class="text-overline ml-3 text--disabled">{{ $t("component.search.type.topic") }}</span>
+        <span class="text-overline ml-3 text--disabled">{{
+          $t("component.search.type.topic")
+        }}</span>
         <v-autocomplete
           v-model="newTopic"
           :items="topics"
@@ -108,6 +124,36 @@
                     [ {{ showAllMentions ? "-" : "+" }} {{ mentions.length - 3 }} ]
                 </a> -->
       </v-col>
+      <v-dialog v-model="showBlockChannelDialog" width="600">
+        <v-card>
+          <v-card-title>Delete Mentions?</v-card-title>
+          <v-card-text v-if="isFetchingMentionsAPI">
+            <v-progress-circular :size="30" indeterminate />
+          </v-card-text>
+          <v-card-text v-else>
+            <v-btn
+              :style="{ marginRight: '10px' }"
+              :disabled="isFetchingMentionsAPI"
+              @click="deleteAllMentions()"
+            >
+              Yes, Please
+            </v-btn>
+            <v-btn
+              :style="{ marginRight: '10px' }"
+              :disabled="isFetchingMentionsAPI"
+              @click="deleteAllMentions(1)"
+            >
+              Keep the First
+            </v-btn>
+            <v-btn
+              :disabled="isFetchingMentionsAPI"
+              @click="deleteAllMentions(2)"
+            >
+              Keep the First Two
+            </v-btn>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
     </div>
   </v-card>
 </template>
@@ -123,12 +169,12 @@ export default {
     name: "WatchQuickEditor",
     components: {
         ChannelChip,
-        // ChannelInfo,
-        // ChannelSocials,
-        // ChannelImg,
-        // TruncatedText,
-        // VideoSongs,
-        // VideoDescription,
+    // ChannelInfo,
+    // ChannelSocials,
+    // ChannelImg,
+    // TruncatedText,
+    // VideoSongs,
+    // VideoDescription,
     },
     props: {
         video: {
@@ -154,6 +200,9 @@ export default {
 
             topics: [],
             newTopic: "",
+
+            showBlockChannelDialog: false,
+            isFetchingMentionsAPI: false,
         };
     },
     computed: {
@@ -175,7 +224,10 @@ export default {
                 })
                 .then(({ data }) => {
                     this.searchResults = data.filter(
-                        (d) => !(this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id)),
+                        (d) => !(
+                            this.video.channel.id === d.id
+                            || this.mentions.find((m) => m.id === d.id)
+                        ),
                     );
                 });
         }, 400),
@@ -203,16 +255,52 @@ export default {
             const prop = this.$store.state.settings.nameProperty;
             return channel[prop] || channel.name;
         },
-        deleteMention(channel) {
+        deleteAllMentions(start: number = 0) {
+            this.isFetchingMentionsAPI = true;
+            const channelIds = this.mentions.map((m) => m.id).slice(start);
             backendApi
-                .deleteMentions(this.video.id, [channel.id], this.$store.state.userdata.jwt)
+                .deleteMentions(
+                    this.video.id,
+                    channelIds,
+                    this.$store.state.userdata.jwt,
+                )
                 .then(({ data }) => {
                     if (!data) return;
                     this.showSuccess("Successfully deleted mention");
                     this.updateMentions();
                 })
                 .catch((e) => {
-                    this.showError((e.response && e.response.data.message) || e.message || "Error occured");
+                    this.showError(
+                        (e.response && e.response.data.message)
+                            || e.message
+                            || "Error occured",
+                    );
+                })
+                .finally(() => {
+                    this.showBlockChannelDialog = false;
+                    setTimeout(() => {
+                        this.isFetchingMentionsAPI = false;
+                    }, 1000);
+                });
+        },
+        deleteMention(channel) {
+            backendApi
+                .deleteMentions(
+                    this.video.id,
+                    [channel.id],
+                    this.$store.state.userdata.jwt,
+                )
+                .then(({ data }) => {
+                    if (!data) return;
+                    this.showSuccess("Successfully deleted mention");
+                    this.updateMentions();
+                })
+                .catch((e) => {
+                    this.showError(
+                        (e.response && e.response.data.message)
+                            || e.message
+                            || "Error occured",
+                    );
                 });
         },
         addMention(channel) {
@@ -225,7 +313,11 @@ export default {
                     this.updateMentions();
                 })
                 .catch((e) => {
-                    this.showError((e.response && e.response.data.message) || e.message || "Error occured");
+                    this.showError(
+                        (e.response && e.response.data.message)
+                            || e.message
+                            || "Error occured",
+                    );
                 });
         },
         showError(message) {
@@ -250,7 +342,11 @@ export default {
             }));
         },
         saveTopic() {
-            backendApi.topicSet(this.newTopic, this.video.id, this.$store.state.userdata.jwt);
+            backendApi.topicSet(
+                this.newTopic,
+                this.video.id,
+                this.$store.state.userdata.jwt,
+            );
             this.topic = this.newTopic;
         },
     },
@@ -259,22 +355,34 @@ export default {
 
 <style>
 .watch-card {
-    border: none !important;
-    box-shadow: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 .uploader-data-list {
-    flex-basis: auto;
-    flex-direction: column;
-    align-items: stretch;
-    margin-right: 12px;
+  flex-basis: auto;
+  flex-direction: column;
+  align-items: stretch;
+  margin-right: 12px;
 }
 #video-edit-btn {
-    font-size: 12px;
+  font-size: 12px;
 }
 .theme--dark .striped {
-    background: repeating-linear-gradient(45deg, #1111, #1111 10px, #1114 10px, #1114 20px);
+  background: repeating-linear-gradient(
+    45deg,
+    #1111,
+    #1111 10px,
+    #1114 10px,
+    #1114 20px
+  );
 }
 .theme--light .striped {
-    background: repeating-linear-gradient(45deg, #fffe, #fffe 10px, #fff1 10px, #fff1 20px);
+  background: repeating-linear-gradient(
+    45deg,
+    #fffe,
+    #fffe 10px,
+    #fff1 10px,
+    #fff1 20px
+  );
 }
 </style>
