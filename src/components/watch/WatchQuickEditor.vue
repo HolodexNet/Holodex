@@ -29,7 +29,7 @@
           </v-icon>
         </v-avatar>
         <v-avatar rounded left size="40">
-          <v-btn icon @click.stop.prevent="showBlockChannelDialog = true">
+          <v-btn icon @click.stop.prevent="showBulkEditDialog = true">
             <v-icon size="25" color="grey darken-2">
               {{ icons.mdiDelete }}
             </v-icon>
@@ -124,7 +124,7 @@
                     [ {{ showAllMentions ? "-" : "+" }} {{ mentions.length - 3 }} ]
                 </a> -->
       </v-col>
-      <v-dialog v-model="showBlockChannelDialog" width="600">
+      <v-dialog v-model="showBulkEditDialog" width="600">
         <v-card>
           <v-card-title>Delete Mentions?</v-card-title>
           <v-card-text v-if="isFetchingMentionsAPI">
@@ -201,7 +201,7 @@ export default {
             topics: [],
             newTopic: "",
 
-            showBlockChannelDialog: false,
+            showBulkEditDialog: false,
             isFetchingMentionsAPI: false,
         };
     },
@@ -277,7 +277,7 @@ export default {
                     );
                 })
                 .finally(() => {
-                    this.showBlockChannelDialog = false;
+                    this.showBulkEditDialog = false;
                     setTimeout(() => {
                         this.isFetchingMentionsAPI = false;
                     }, 1000);
