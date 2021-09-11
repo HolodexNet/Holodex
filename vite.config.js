@@ -150,6 +150,7 @@ export default ({ mode }) => {
             rollupOptions: {
                 input: {
                     main: path.resolve(__dirname, "index.html"),
+                    livetl: path.resolve(__dirname, "livetl.html"),
                     seo: path.resolve(__dirname, "seo.html"),
                 },
             },
