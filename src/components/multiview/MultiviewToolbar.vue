@@ -14,6 +14,7 @@
       :class="{ 'no-btn-text': $store.state.isMobile || true }"
     >
       <!-- Show toolbar btns that are not collapsible or not in collapsed state -->
+      <slot name="buttons" />
       <template
         v-for="(b, index) in buttons.filter((btn) => !btn.collapse || (!collapseButtons && btn.collapse))"
       >

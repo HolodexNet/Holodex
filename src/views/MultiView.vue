@@ -1,7 +1,9 @@
 <template>
   <div ref="fullscreen-content" style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }">
+    <portal :to="showPresetSelector ? 'preset-dialog' : 'preset-inline'">
+      <preset-selector :slim="!showPresetSelector" @selected="handlePresetClicked" @showAll="showPresetSelector = true" />
+    </portal>
     <!-- Floating tool bar -->
-    <!--  -->
     <MultiviewToolbar v-show="!collapseToolbar" v-model="collapseToolbar" :buttons="buttons">
       <template #left>
         <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
@@ -11,6 +13,22 @@
             {{ mdiCardPlus }}
           </v-icon>
         </v-btn>
+      </template>
+      <template #buttons>
+        <v-menu offset-y>
+          <template #activator="{ on, attrs }">
+            <v-btn
+              color="primary"
+              dark
+              v-bind="attrs"
+              icon
+              v-on="on"
+            >
+              <v-icon>{{ icons.mdiGridLarge, }}</v-icon>
+            </v-btn>
+          </template>
+          <portal-target v-if="!showPresetSelector" name="preset-inline" />
+        </v-menu>
       </template>
     </MultiviewToolbar>
 
@@ -111,7 +129,8 @@
 
     <!-- Preset Selector -->
     <v-dialog v-model="showPresetSelector" width="1000">
-      <PresetSelector @selected="handlePresetClicked" />
+      <!-- <PresetSelector @selected="handlePresetClicked" /> -->
+      <portal-target name="preset-dialog" />
     </v-dialog>
 
     <!-- Preset Editor -->
@@ -197,6 +216,7 @@ export default {
 
             collapseToolbar: false,
 
+            showPresetSelectorMenu: false,
             showPresetSelector: false,
             showPresetEditor: false,
             showMediaControls: false,
@@ -218,15 +238,15 @@ export default {
                     color: "red",
                     collapse: true,
                 },
-                {
-                    icon: this.icons.mdiGridLarge,
-                    tooltip: this.$t("views.multiview.presets"),
-                    onClick: () => {
-                        this.showPresetSelector = true;
-                    },
-                    color: "primary",
-                    collapse: true,
-                },
+                // {
+                //     icon: this.icons.mdiGridLarge,
+                //     tooltip: this.$t("views.multiview.presets"),
+                //     onClick: () => {
+                //         this.showPresetSelectorMenu = true;
+                //     },
+                //     color: "primary",
+                //     collapse: true,
+                // },
                 {
                     icon: mdiContentSave,
                     onClick: () => {
