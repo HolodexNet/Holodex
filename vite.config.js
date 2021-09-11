@@ -22,6 +22,9 @@ export default ({ mode }) => {
     const REWRITE_API_ROUTES = !!env.VITE_REWRITE_API_ROUTES;
 
     return defineConfig({
+        optimizeDeps: {
+            include: ["reconnecting-eventsource", "file-saver"],
+        },
         plugins: [
             yaml(),
             svelte({
