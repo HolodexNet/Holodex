@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-preview" :class="{ mobile: mobile, desktop: !mobile, 'theme--light': !$vuetify.theme.dark }">
+  <div class="layout-preview" :class="{ 'theme--light': !$vuetify.theme.dark }" :style="size">
     <template v-for="l in layout">
       <div :key="l.i" class="cell" :style="getStyle(l)">
         <span v-if="content && content[l.i] && content[l.i].type === 'chat'">💬</span>
@@ -23,6 +23,20 @@ export default {
         mobile: {
             type: Boolean,
             default: false,
+        },
+        scale: {
+            type: Number,
+            default: 1,
+        },
+    },
+    computed: {
+        size() {
+            const width = this.scale * (this.mobile ? 108 : 192);
+            const height = this.scale * (this.mobile ? 192 : 108);
+            return {
+                width: `${width}px`,
+                height: `${height}px`,
+            };
         },
     },
     methods: {
@@ -52,6 +66,8 @@ export default {
     display: inline-block;
     border: 2px solid #424242;
     background-color: #424242;
+    position: relative;
+    overflow: hidden;
 }
 
 .cell {
@@ -75,19 +91,5 @@ export default {
 .layout-preview.theme--light > .cell {
     border-color: #f5f5f5;
     background-color: #e0e0e0;
-}
-
-.desktop.layout-preview {
-    width: 192px;
-    height: 108px;
-    position: relative;
-    overflow: hidden;
-}
-
-.mobile.layout-preview {
-    width: 108px;
-    height: 192px;
-    position: relative;
-    overflow: hidden;
 }
 </style>
