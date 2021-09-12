@@ -32,6 +32,10 @@ export default ({ mode }) => {
                     typescript: true,
                     postcss: postcssConfig,
                 })],
+                compilerOptions: {
+                    dev: false,
+                },
+                hot: false,
             }),
             replaceCodePlugin({
                 replacements: [
