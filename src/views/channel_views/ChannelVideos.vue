@@ -38,11 +38,18 @@ export default {
             get title() {
                 let tab = "Videos";
                 switch (vm.type) {
-                    case "clips": tab = vm.$t("views.channel.clips"); break;
-                    case "collabs": tab = vm.$t("views.channel.collabs"); break;
-                    default: tab = vm.$t("views.channel.video");
+                    case "clips":
+                        tab = vm.$t("views.channel.clips");
+                        break;
+                    case "collabs":
+                        tab = vm.$t("views.channel.collabs");
+                        break;
+                    default:
+                        tab = vm.$t("views.channel.video");
                 }
-                return vm.channelName ? `${vm.channelName} - ${tab} - Holodex` : "Loading...";
+                return vm.channelName
+                    ? `${vm.channelName} - ${tab} - Holodex`
+                    : "Loading...";
             },
         };
     },
@@ -64,7 +71,10 @@ export default {
         ...mapState("channel", ["id", "channel"]),
         hasChannelInfo() {
             // get uploader name for videos not uploaded by current channel
-            return this.$route.name === "channel_clips" || this.$route.name === "channel_collabs";
+            return (
+                this.$route.name === "channel_clips"
+                || this.$route.name === "channel_collabs"
+            );
         },
         type() {
             switch (this.$route.name) {
@@ -96,6 +106,9 @@ export default {
                     query: {
                         ...(this.channel.type !== "subber" && {
                             lang: this.$store.state.settings.clipLangs.join(","),
+                        }),
+                        ...(this.type === "clips" && {
+                            status: "past",
                         }),
                         include: "clips,live_info",
                         limit,
