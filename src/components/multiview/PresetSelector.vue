@@ -10,9 +10,9 @@
       <div v-if="currentTab === 0">
         <v-btn :color="editAutoLayout ? 'primary' : ''" @click="editAutoLayout = !editAutoLayout">
           <v-icon left>
-            {{ icons.mdiPencil }}
+            {{ editAutoLayout ? icons.mdiCheck : icons.mdiPencil }}
           </v-icon>
-          {{ editAutoLayout ? "Done" : "Edit Autolayout" }}
+          {{ editAutoLayout ? $t("views.multiview.done") : $t("views.multiview.editAutoLayout") }}
         </v-btn>
         <template v-for="(group, index) in desktopGroups">
           <v-radio-group
@@ -92,9 +92,9 @@
   </v-card>
   <v-sheet v-else style="max-width: 550px; width: 80vw;" class="pa-2">
     <div class="text-body-1 d-flex justify-space-between align-center">
-      <span class="px-4">Change Layout</span>
+      <span class="px-4">{{ $t("views.multiview.changeLayout") }}</span>
       <v-btn text @click="$emit('showAll')">
-        Show All
+        {{ $t("views.favorites.showall") }}
       </v-btn>
     </div>
     <v-row class="ml-1">
@@ -151,7 +151,7 @@ export default {
         currentGroup() {
             if (this.$store.state.isMobile) return this.decodedMobilePresets;
             const layouts = (this.activeVideos.length < this.desktopGroups.length) && this.desktopGroups[this.activeVideos.length];
-            return (layouts && layouts.length) ? layouts : this.desktopGroups[1];
+            return layouts || this.desktopGroups[1];
         },
     },
     methods: {
