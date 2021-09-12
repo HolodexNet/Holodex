@@ -18,35 +18,96 @@
     </v-snackbar>
     <div class="d-flex justify-space-between flex-wrap align-center">
       <v-col cols="auto">
-        <v-avatar rounded left size="40">
+        <!-- <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiPencil }}
           </v-icon>
-        </v-avatar>
-        <v-avatar rounded left size="40">
+        </v-avatar> -->
+
+        <v-tooltip bottom>
+          <template #activator="{ on, attrs }">
+            <v-avatar
+              v-bind="attrs"
+              rounded
+              left
+              size="40"
+              v-on="on"
+            >
+              <v-btn icon @click.stop.prevent="applyDeleteMentions()">
+                <v-icon
+                  v-if="!isApplyingBulkEdit"
+                  size="25"
+                  color="grey darken-2"
+                >
+                  {{ icons.mdiContentSaveEdit }}
+                </v-icon>
+                <v-progress-circular
+                  v-else
+                  :size="25"
+                  indeterminate
+                />
+              </v-btn>
+            </v-avatar>
+          </template>
+          <span>Apply Changes</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template #activator="{ on, attrs }">
+            <v-avatar
+              v-bind="attrs"
+              rounded
+              left
+              size="40"
+              v-on="on"
+            >
+              <v-btn icon @click.stop.prevent="toggleMentionSelection()">
+                <v-icon v-if="isSelectedAll" size="25" color="grey darken-2">
+                  {{ icons.mdiSelectOff }}
+                </v-icon>
+                <v-icon v-else size="25" color="grey darken-2">
+                  {{ icons.mdiSelectAll }}
+                </v-icon>
+              </v-btn>
+            </v-avatar>
+          </template>
+          <span v-if="isSelectedAll">Deselect All</span>
+          <span v-else>Select All</span>
+        </v-tooltip>
+
+        <!-- <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
             {{ mdiAt }}
           </v-icon>
-        </v-avatar>
-        <v-avatar rounded left size="40">
-          <v-btn icon @click.stop.prevent="showBulkEditDialog = true">
-            <v-icon size="25" color="grey darken-2">
-              {{ icons.mdiDelete }}
-            </v-icon>
-          </v-btn>
-        </v-avatar>
+        </v-avatar> -->
+
         <template v-for="item in mentions">
-          <ChannelChip :key="item.id + 'chip'" :channel="item" :size="60">
+          <ChannelChip
+            :key="item.id + 'chip'"
+            :channel="item"
+            :size="60"
+            :close-delay="0"
+          >
             <template #default>
-              <v-overlay absolute>
-                <v-btn icon @click.stop.prevent="deleteMention(item)">
-                  <v-icon>{{ icons.mdiClose }}</v-icon>
+              <v-overlay v-if="isAddedToDeletionSet(item.id)" absolute>
+                <v-btn
+                  icon
+                  @click.stop.prevent="removeChannelFromDeletionSet(item.id)"
+                >
+                  <v-icon>{{ icons.mdiDelete }}</v-icon>
+                </v-btn>
+              </v-overlay>
+              <v-overlay v-else absolute :opacity="0">
+                <v-btn
+                  icon
+                  @click.stop.prevent="addChannelToDeletionSet(item.id)"
+                >
+                  <!-- <v-icon>{{ icons.mdiPinOutline }}</v-icon> -->
                 </v-btn>
               </v-overlay>
             </template>
           </ChannelChip>
         </template>
-
         <v-autocomplete
           v-model="fake"
           :search-input.sync="search"
@@ -124,36 +185,6 @@
                     [ {{ showAllMentions ? "-" : "+" }} {{ mentions.length - 3 }} ]
                 </a> -->
       </v-col>
-      <v-dialog v-model="showBulkEditDialog" width="600">
-        <v-card>
-          <v-card-title>Delete Mentions?</v-card-title>
-          <v-card-text v-if="isFetchingMentionsAPI">
-            <v-progress-circular :size="30" indeterminate />
-          </v-card-text>
-          <v-card-text v-else>
-            <v-btn
-              :style="{ marginRight: '10px' }"
-              :disabled="isFetchingMentionsAPI"
-              @click="deleteAllMentions()"
-            >
-              Yes, Please
-            </v-btn>
-            <v-btn
-              :style="{ marginRight: '10px' }"
-              :disabled="isFetchingMentionsAPI"
-              @click="deleteAllMentions(1)"
-            >
-              Keep the First
-            </v-btn>
-            <v-btn
-              :disabled="isFetchingMentionsAPI"
-              @click="deleteAllMentions(2)"
-            >
-              Keep the First Two
-            </v-btn>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
     </div>
   </v-card>
 </template>
@@ -201,8 +232,9 @@ export default {
             topics: [],
             newTopic: "",
 
-            showBulkEditDialog: false,
-            isFetchingMentionsAPI: false,
+            isSelectedAll: false,
+            isApplyingBulkEdit: false,
+            deletionSet: new Set(),
         };
     },
     computed: {
@@ -255,17 +287,45 @@ export default {
             const prop = this.$store.state.settings.nameProperty;
             return channel[prop] || channel.name;
         },
-        deleteAllMentions(start: number = 0) {
-            this.isFetchingMentionsAPI = true;
-            const channelIds = this.mentions.map((m) => m.id).slice(start);
+        isAddedToDeletionSet(id: string) {
+            return this.deletionSet.has(id);
+        },
+        addChannelToDeletionSet(id: string) {
+            this.deletionSet.add(id);
+            if (this.deletionSet.size === this.mentions.length) {
+                this.isSelectedAll = true;
+            }
+            this.$forceUpdate();
+        },
+        removeChannelFromDeletionSet(id: string) {
+            this.deletionSet.delete(id);
+            if (this.deletionSet.size === 0) {
+                this.isSelectedAll = false;
+            }
+            this.$forceUpdate();
+        },
+        toggleMentionSelection() {
+            this.isSelectedAll = !this.isSelectedAll;
+            if (this.isSelectedAll) {
+                this.mentions.forEach((mention) => this.deletionSet.add(mention.id));
+            } else {
+                this.deletionSet.clear();
+            }
+        },
+        applyDeleteMentions() {
+            this.isApplyingBulkEdit = true;
+            const ids = Array.from(this.deletionSet);
+            if (ids.length === 0) {
+                this.isApplyingBulkEdit = false;
+                return;
+            }
+
             backendApi
-                .deleteMentions(
-                    this.video.id,
-                    channelIds,
-                    this.$store.state.userdata.jwt,
-                )
+                .deleteMentions(this.video.id, ids, this.$store.state.userdata.jwt)
                 .then(({ data }) => {
                     if (!data) return;
+                    this.deletionSet.clear();
+                    this.isSelectedAll = false;
                     this.showSuccess("Successfully deleted mention");
                     this.updateMentions();
                 })
@@ -277,13 +337,12 @@ export default {
                     );
                 })
                 .finally(() => {
-                    this.showBulkEditDialog = false;
-                    setTimeout(() => {
-                        this.isFetchingMentionsAPI = false;
-                    }, 1000);
+                    this.isApplyingBulkEdit = false;
+                    this.$forceUpdate();
                 });
         },
         deleteMention(channel) {
+            this.removeChannelFromDeletionSet(channel.id);
             backendApi
                 .deleteMentions(
                     this.video.id,
