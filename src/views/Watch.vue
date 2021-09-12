@@ -313,6 +313,10 @@ export default {
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
                 this.$store.dispatch("history/addWatchedVideo", this.video);
+                // Check if there's at least 10 liveTls and open the tl panel
+                if (this.video?.live_tl_count?.[this.$store.state.settings.liveTlLang] > 10) {
+                    this.showTL = true;
+                }
             });
         },
         initMugen() {

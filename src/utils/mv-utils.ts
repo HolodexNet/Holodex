@@ -144,8 +144,8 @@ export function getEmptyCells({ layout, content }) {
 }
 
 export const desktopPresets = Object.freeze([
-    { layout: "AAYY", name: "1🎞️", default: 1 },
-    { layout: "AAUY,UAEYchat0", name: "Side Chat 1" },
+    { layout: "AAYY", name: "1🎞️" },
+    { layout: "AAUY,UAEYchat0", name: "Side Chat 1", default: 1 },
     { layout: "AAMY,MAMY", name: "2🎞️", default: 2 },
     { layout: "AARM,AMRM,RAHYchat", name: "Side Chat 2" },
     { layout: "AAOM,AMOM,OAFYchat,TAFYchat", name: "2🎞️, 2💬" },

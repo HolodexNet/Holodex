@@ -1,8 +1,5 @@
 <template>
   <div ref="fullscreen-content" style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }">
-    <portal :to="showPresetSelector ? 'preset-dialog' : 'preset-inline'">
-      <preset-selector :slim="!showPresetSelector" @selected="handlePresetClicked" @showAll="showPresetSelector = true" />
-    </portal>
     <!-- Floating tool bar -->
     <MultiviewToolbar v-show="!collapseToolbar" v-model="collapseToolbar" :buttons="buttons">
       <template #left>
@@ -27,7 +24,13 @@
               <v-icon>{{ icons.mdiGridLarge, }}</v-icon>
             </v-btn>
           </template>
-          <portal-target v-if="!showPresetSelector" name="preset-inline" />
+          <portal to="preset-dialog" :disabled="!showPresetSelector">
+            <preset-selector
+              :slim="!showPresetSelector"
+              @selected="handlePresetClicked"
+              @showAll="showPresetSelector = true"
+            />
+          </portal>
         </v-menu>
       </template>
     </MultiviewToolbar>
@@ -129,7 +132,6 @@
 
     <!-- Preset Selector -->
     <v-dialog v-model="showPresetSelector" width="1000">
-      <!-- <PresetSelector @selected="handlePresetClicked" /> -->
       <portal-target name="preset-dialog" />
     </v-dialog>
 
@@ -324,15 +326,14 @@ export default {
                             }
                         });
                     }
-                    // prompt overwrite with permalink, remove permalink if cancelled
+
                     try {
-                        this.$gtag.event("init-from-link", {
-                            event_category: "multiview",
-                            event_label: `cells:${parsed.layout?.length}`,
-                        });
+                        // Record link open for popularity metrics
+                        api.trackMultiviewLink(this.$route.params.layout).then(console.log).catch(console.error);
                         // eslint-disable-next-line no-empty
                     } catch {}
 
+                    // prompt overwrite with permalink, remove permalink if cancelled
                     this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
                 }
             } catch (e) {
