@@ -7,6 +7,9 @@ import yaml from "@rollup/plugin-yaml";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "path";
 
+// Bypass vite stuff and just load .env into process.env
+require("dotenv").config();
+
 /**
  * @param {{ mode: string, command: string }}
  */

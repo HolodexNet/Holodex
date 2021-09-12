@@ -16,7 +16,7 @@ export const axiosInstance = (() => {
 export default {
     orgs() {
         // Use fetch api to take advantage of pre-fetch
-        return fetch("orgs.json").then((r) => r.json());
+        return fetch(`${API_BASE_URL}/orgs.json`).then((r) => r.json());
     },
     stats() {
         return axiosInstance({ url: "stats.json", baseURL: SITE_BASE_URL });
@@ -266,5 +266,8 @@ export default {
         return axiosInstance.post(`/reports/video/${id}`, body, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
+    },
+    trackMultiviewLink(link) {
+        return axiosInstance.get(`/multiview/record/${link}`);
     },
 };
