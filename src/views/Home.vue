@@ -12,7 +12,7 @@
     }"
     fluid
     style="min-height: 100%"
-    class="d-flex flex-column pt-0"
+    class="d-flex flex-column"
   >
     <!-- Teleport tabs to nav extension slot -->
     <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
@@ -41,8 +41,10 @@
         <v-tab class="pa-2">
           {{ $t("views.home.recentVideoToggles.subber") }}
         </v-tab>
+        <portal-target v-if="!$vuetify.breakpoint.xs" name="date-selector" class=" v-tab ml-auto" />
       </v-tabs>
     </portal>
+
     <LoadingOverlay :is-loading="false" :show-error="hasError" />
     <div v-show="!hasError">
       <template v-if="tab === Tabs.LIVE_UPCOMING">
@@ -72,7 +74,50 @@
           {{ $t("views.home.noStreams") }}
         </div>
       </template>
+
       <template v-else>
+        <!-- Archive and Clips section -->
+        <v-col
+          v-show="!$vuetify.breakpoint.isXs"
+          xs="4"
+          sm="4"
+          style="display: flex; justify-content: flex-end;"
+          class="ma-0 pb-0"
+        >
+          <portal to="date-selector" :disabled="$vuetify.breakpoint.xs">
+            <v-menu
+              v-model="datePicker"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              left
+              min-width="auto"
+            >
+              <template #activator="{ on, attrs }">
+                <v-text-field
+                  v-model="toDate"
+                  label="Up to"
+                  :prepend-icon="mdiCalendarEnd"
+                  readonly
+                  hide-details
+                  dense
+                  regular
+                  clearable
+                  single-line
+                  style="opacity: 0.7; max-width: 190px;"
+                  suffix="UTC"
+                  v-bind="attrs"
+                  v-on="on"
+                />
+              </template>
+              <v-date-picker
+                v-model="toDate"
+                @input="datePicker = false"
+              />
+            </v-menu>
+          </portal>
+        </v-col>
+
         <keep-alive>
           <generic-list-loader
             v-slot="{ data, isLoading }"
@@ -110,6 +155,7 @@ import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 import isActive from "@/mixins/isActive";
+import { mdiCalendarEnd } from "@mdi/js";
 
 export default {
     name: "Home",
@@ -139,6 +185,10 @@ export default {
                 CLIPS: 2,
             }),
             refreshTimer: null,
+            datePicker: false,
+            toDate: null,
+
+            mdiCalendarEnd,
         };
     },
     computed: {
@@ -199,6 +249,9 @@ export default {
                 window.scrollTo(0, 0);
             });
             this.changeTab();
+        },
+        toDate() {
+            this.identifier = Date.now();
         },
     },
     created() {
@@ -276,6 +329,7 @@ export default {
                     org: this.$store.state.currentOrg.name,
                     lang: this.$store.state.settings.clipLangs.join(","),
                     paginated: !this.scrollMode,
+                    to: this.toDate ? this.toDate : undefined,
                     limit,
                     offset,
                 });

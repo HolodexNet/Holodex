@@ -44,6 +44,7 @@
           <v-tab class="pa-2">
             {{ $t("views.home.recentVideoToggles.subber") }}
           </v-tab>
+          <portal-target v-if="!$vuetify.breakpoint.xs" name="date-selector-fav" class=" v-tab ml-auto" />
         </v-tabs>
       </portal>
       <LoadingOverlay :is-loading="false" :show-error="hasError" />
@@ -81,6 +82,48 @@
           </div>
         </template>
         <template v-else>
+          <!-- Archive and Clips section -->
+          <v-col
+            v-show="!$vuetify.breakpoint.isXs"
+            xs="4"
+            sm="4"
+            style="display: flex; justify-content: flex-end;"
+            class="ma-0 pb-0"
+          >
+            <portal to="date-selector-fav" :disabled="$vuetify.breakpoint.xs">
+              <v-menu
+                v-model="datePicker"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                left
+                min-width="auto"
+              >
+                <template #activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="toDate"
+                    label="Up to"
+                    :prepend-icon="mdiCalendarEnd"
+                    readonly
+                    hide-details
+                    dense
+                    regular
+                    clearable
+                    single-line
+                    style="opacity: 0.7; max-width: 190px;"
+                    suffix="UTC"
+                    v-bind="attrs"
+                    v-on="on"
+                  />
+                </template>
+                <v-date-picker
+                  v-model="toDate"
+                  @input="datePicker = false"
+                />
+              </v-menu>
+            </portal>
+          </v-col>
+
           <keep-alive>
             <generic-list-loader
               v-slot="{ data, isLoading }"
@@ -133,6 +176,7 @@ import isActive from "@/mixins/isActive";
 import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
+import { mdiCalendarEnd } from "@mdi/js";
 
 export default {
     name: "Favorites",
@@ -162,6 +206,12 @@ export default {
                 ARCHIVE: 1,
                 CLIPS: 2,
             }),
+
+            datePicker: false,
+            toDate: null,
+
+            mdiCalendarEnd,
+
         };
     },
     computed: {
@@ -227,6 +277,10 @@ export default {
                 window.scrollTo(0, 0);
             });
         },
+        toDate() {
+            this.identifier = Date.now();
+        },
+
     },
     created() {
         this.init(true);
@@ -284,6 +338,7 @@ export default {
                         include: "clips",
                         lang: this.$store.state.settings.clipLangs.join(","),
                         paginated: !this.scrollMode,
+                        to: this.toDate ? this.toDate : undefined,
                         limit,
                         offset,
                     })
