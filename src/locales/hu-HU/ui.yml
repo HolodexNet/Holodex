@@ -51,6 +51,8 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -140,6 +142,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -337,6 +340,14 @@ views:
     fullScreen: Teljes képernyő
     mediaControls: Média vezérlők
     mediaControlsEmpty: A lejátszott videók itt fognak megjelenni
+    editAutoLayout: Auto-elrendezés szerkesztése
+    changeLayout: Elrendezés megváltoztatása
+    done: Kész
+    hints: Súgó
+    presetsHint: Nyisd meg az előrendezések menüt az elrendezések váltásához és auto-elrendezés beállításához
+    mediaControlsHint1: Használd a Média irányításokat, hogy némíts és összehangolj (
+    mediaControlsHint2: ) élő közvetítést
+    dragDropHint: Húzz streameket az eszköztárból a cellákhoz, hogy elrendezd a streameket
   mugen:
     welcome: >-
       Üdvözöllek a MugenClips-nél! Ezen az oldalon mindenki ugyan azt a véletlenszerűen kiválasztott angol Hololive klipet nézi. Együtt nézheted és chatelhetsz más Hololive rajongókkal az egész világon. Ha előretekersz és szeretnél újra egyidejűleg lenni a többiekkel, kérlek frissítsd az oldalt.
