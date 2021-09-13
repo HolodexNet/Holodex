@@ -1,6 +1,6 @@
 <template>
   <v-card-text
-    class="tl-body thin-scroll-bar pa-1 pa-lg-3"
+    class="tl-body pa-1 pa-lg-3"
     :style="{
       'font-size': fontSize + 'px',
     }"

@@ -37,22 +37,31 @@
     <meta name="msapplication-TileColor" content="#42a5f5">
     <!-- <link rel="preload" href="/orgs.json" as="fetch" crossorigin="anonymous"> -->
     <style>
-        .scroll-bar {
+        .scroll-bar, * {
             scrollbar-width: thin;
         }
 
-        .scroll-bar::-webkit-scrollbar {
+        .scroll-bar::-webkit-scrollbar, ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
 
-        .scroll-bar::-webkit-scrollbar-track {
-            background: rgba(116, 116, 116, 0.1);
+        .scroll-bar::-webkit-scrollbar-track, ::-webkit-scrollbar-track {
+            background: #181818;
         }
 
-        .scroll-bar::-webkit-scrollbar-thumb {
-            background: rgba(182, 182, 182, 0.4);
+        .scroll-bar::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
+            background: #575757;
         }
+
+        .theme--light ::-webkit-scrollbar-track {
+            background: #d6d6d6;
+        }
+
+        .theme--light ::-webkit-scrollbar-thumb {
+            background: #858585;
+        }
+        
     </style>
 </head>
 

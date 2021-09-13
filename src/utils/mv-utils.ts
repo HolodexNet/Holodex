@@ -81,6 +81,9 @@ export function decodeLayout(encodedStr) {
             x: 0,
             y: 0,
             i: index,
+            isDraggable: true,
+            isResizable: true,
+            moved: false,
         };
 
         xywh.split("").forEach((char, keyIndex) => {
