@@ -337,6 +337,7 @@ views:
     fullScreen: 전체 화면
     mediaControls: 미디어 제어
     mediaControlsEmpty: 재생되는 동영상이 여기에 표시됩니다
+    hints: 도움말
   mugen:
     welcome: >-
       MugenClips에 오신 것을 환영합니다! 이 페이지의 모든 사람은 무작위로 선택된 English Hololive 클립을 보고 있습니다. 전세계의 Hololive 팬들과 함께 시청하고 채팅하세요. 건너뛰고 모든 사람과 다시 동기화하려면 페이지를 새로고침하세요.
