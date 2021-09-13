@@ -1,4 +1,5 @@
 ---
+hello: world
 music:
   title: '{{name}} 的原創與翻唱歌曲－Holodex'
   description: >-

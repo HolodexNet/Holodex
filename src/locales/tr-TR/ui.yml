@@ -309,10 +309,11 @@ views:
     confirmOverwrite: Geçerli düzen sıfırlansın mı?
     confirmOverwriteYes: Onayla
     permalink: Sınırsız bağlantı
-    presets: Önceden ayarlanmışlar
+    presets: Düzenler
     addframe: Hücre Ekle
     muteAll: Tümünün Sesini Kapat
     unmuteAll: Tümünün Sesini Aç
+    muteOthersDetail: Bir yayın dışındaki yayınları sustur
     autoLayoutTip: Oto düzen modunu kullanmak için bir kanala tıklayın
     createLayoutTip: Hücre ekleyerek veya önceden ayarlanmış düzen kullanarak kendi düzeninizi oluşturun
     openToolbarTip: Çoklu izlemeye başlamak için araç çubuğunu açın
@@ -335,6 +336,13 @@ views:
     fullScreen: Tam Ekran
     mediaControls: Medya Kontrolleri
     mediaControlsEmpty: Oynatılan videolar burada gözükür
+    editAutoLayout: Oto-düzeni değiştir
+    changeLayout: Düzeni değiştir
+    done: Bitti
+    hints: İpuçları
+    presetsHint: Ön ayarlar menüsünü açarak seçili düzeni değiştirin veya otomatik kullanılacak düzenleri seçin
+    mediaControlsHint1: Medya kontrollerini kullanarak yayınların seslerini kapatın veya yayınları senkronize (
+    mediaControlsHint2: ) edin
   mugen:
     welcome: >-
       MugenClips'e Hoşgeldiniz! Bu sayfadaki herkes sizinle aynı rastgele seçilmiş klipleri görür. Dünya çapındaki Hololive hayranlarıyla birlikte izleyin ve sohbet edin. İleriye atlar ve herkesle tekrardan eşitlenmek isterseniz, lütfen sayfayı yenileyin.
