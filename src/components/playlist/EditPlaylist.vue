@@ -1,5 +1,5 @@
 <template>
-  <v-card width="400" class="nav-scroll thin-scroll-bar pl-2">
+  <v-card width="400" class="nav-scroll pl-2">
     <slot />
     <div class="pa-2">
       <playlist

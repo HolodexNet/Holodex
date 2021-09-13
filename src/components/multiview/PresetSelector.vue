@@ -90,7 +90,7 @@
       </v-row>
     </v-card-text>
   </v-card>
-  <v-sheet v-else style="max-width: 550px; width: 80vw;" class="pa-2">
+  <v-sheet v-else class="pa-2 preset-menu">
     <div class="text-body-1 d-flex justify-space-between align-center">
       <span class="px-4">{{ $t("views.multiview.changeLayout") }}</span>
       <v-btn text @click="$emit('showAll')">
@@ -138,7 +138,7 @@ export default {
         };
     },
     computed: {
-        ...mapState("multiview", ["presetLayout", "autoLayout"]),
+        ...mapState("multiview", ["presetLayout", "autoLayout", "activeVideos", "layout", "layoutContent"]),
         ...mapGetters("multiview", [
             "decodedCustomPresets",
             "decodedMobilePresets",
@@ -148,7 +148,12 @@ export default {
         autoLayoutSet() {
             return new Set(this.autoLayout);
         },
+        totalVideoCells() {
+            console.log("recompute");
+            return this.layout.filter((l) => !this.layoutContent[l.i] || this.layoutContent[l.i].type !== "chat").length;
+        },
         currentGroup() {
+            console.log(this.totalVideoCells);
             if (this.$store.state.isMobile) return this.decodedMobilePresets;
             const layouts = (this.activeVideos.length < this.desktopGroups.length) && this.desktopGroups[this.activeVideos.length];
             return layouts || this.desktopGroups[1];
@@ -175,5 +180,13 @@ export default {
 <style>
 .is-auto-layout {
     color: var(--v-anchor-base);
+}
+
+.preset-menu {
+  max-width: 550px;
+  width: 80vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>
