@@ -51,6 +51,8 @@ component:
     tlPresence: 최근 30분 간 활동 중인 번역가
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -140,6 +142,7 @@ views:
     collabs: 콜라보
     about: 정보
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 구독자
       group: 그룹
@@ -337,7 +340,14 @@ views:
     fullScreen: 전체 화면
     mediaControls: 미디어 제어
     mediaControlsEmpty: 재생되는 동영상이 여기에 표시됩니다
+    editAutoLayout: 자동 레이아웃 편집
+    changeLayout: 레이아웃 변경
+    done: 완료
     hints: 도움말
+    presetsHint: 프리셋 메뉴를 열어서 레이아웃을 바꾸고 자동 레이아웃을 설정하세요
+    mediaControlsHint1: 미디어 컨트롤을 사용하여 음소거와 라이브를 싱크 (
+    mediaControlsHint2: ) 하세요
+    dragDropHint: 툴바에서 셀로 방송을 드래그 앤 드롭하여 방송을 정리하세요
   mugen:
     welcome: >-
       MugenClips에 오신 것을 환영합니다! 이 페이지의 모든 사람은 무작위로 선택된 English Hololive 클립을 보고 있습니다. 전세계의 Hololive 팬들과 함께 시청하고 채팅하세요. 건너뛰고 모든 사람과 다시 동기화하려면 페이지를 새로고침하세요.
