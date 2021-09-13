@@ -8,8 +8,6 @@ import { VitePWA } from "vite-plugin-pwa";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import path from "path";
 import sveltePreprocess from "svelte-preprocess";
-import { replaceCodePlugin } from "vite-plugin-replace";
-import livetlManifest from "@livetl/ui-components/meta/package.json";
 import postcssConfig from "./postcss.config";
 
 /**
@@ -36,20 +34,6 @@ export default ({ mode }) => {
                     dev: false,
                 },
                 hot: false,
-            }),
-            replaceCodePlugin({
-                replacements: [
-                    {
-                        from: /const isAndroid = false;/gi,
-                        to: "const isAndroid = true;",
-                    },
-                    {
-                        from: /const MANIFEST_OBJECT = undefined;/gi,
-                        to: `const MANIFEST_OBJECT = ${JSON.stringify(
-                            livetlManifest,
-                        )};`,
-                    },
-                ],
             }),
             createVuePlugin(),
             ViteComponents({
