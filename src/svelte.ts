@@ -1,5 +1,5 @@
 // @ts-ignore
-import App from "@livetl/ui-components/components/Popout.svelte";
+import App from "@livetl/ui-components/components/Lite.svelte";
 import "smelte/src/tailwind.css";
 
 const app = new App({
