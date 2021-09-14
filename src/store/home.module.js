@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import api from "@/utils/backend-api";
+import { videoTemporalComparator } from "@/utils/functions";
 
 const initialState = {
     live: [],
@@ -29,6 +30,8 @@ const actions = {
                     org: rootState.currentOrg.name,
                 })
                 .then((res) => {
+                    res.sort(videoTemporalComparator);
+
                     commit("setLive", res);
                     commit("fetchEnd");
                 })

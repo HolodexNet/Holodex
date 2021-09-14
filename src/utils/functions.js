@@ -196,6 +196,15 @@ export function createSimpleMutation(variables) {
     return newMutations;
 }
 
+export function videoTemporalComparator(a, b) {
+    if (a.available_at === b.available_at) {
+        return a.id.localeCompare(b.id);
+    }
+    const dateA = new Date(a.available_at).getTime();
+    const dateB = new Date(b.available_at).getTime();
+    return dateA - dateB;
+}
+
 /**
  * Returns a layout content object by parsing URL
  * @param {String} url - A video url

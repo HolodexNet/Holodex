@@ -4,6 +4,7 @@ import { sendFavoritesToExtension, sendTokenToExtension } from "@/utils/messagin
 import Vue from "vue";
 import debounce from "lodash-es/debounce";
 import fdequal from "fast-deep-equal";
+import { videoTemporalComparator } from "@/utils/functions";
 
 const initialState = {
     live: [],
@@ -29,9 +30,10 @@ const getters = {
 };
 
 const actions = {
+
     fetchFavorites({
- commit, rootState, state, dispatch,
-}) {
+        commit, rootState, state, dispatch,
+    }) {
         return api
             .favorites(rootState.userdata.jwt)
             .then((res) => {
@@ -42,9 +44,10 @@ const actions = {
                 dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
             });
     },
+
     fetchLive({
- state, commit, rootState, dispatch,
-}, { force = false, minutes = 2 }) {
+        state, commit, rootState, dispatch,
+    }, { force = false, minutes = 2 }) {
         if (!(rootState.userdata && rootState.userdata.jwt) || (rootState.visibilityState === "hidden" && !force)) {
             return null;
         } // don't update.
@@ -58,14 +61,7 @@ const actions = {
             return api
                 .favoritesLive(rootState.userdata.jwt)
                 .then((res) => {
-                    res.sort((a, b) => {
-                        if (a.available_at === b.available_at) {
-                            return a.id - b.id;
-                        }
-                        const dateA = new Date(a.available_at).getTime();
-                        const dateB = new Date(b.available_at).getTime();
-                        return dateA - dateB;
-                    });
+                    res.sort(videoTemporalComparator);
                     commit("setLive", res);
                     commit("fetchEnd");
                 })
@@ -77,16 +73,19 @@ const actions = {
         }
         commit("resetErrors");
         return null;
-    }, // eslint-disable-next-line no-unused-vars
+    },
+
     updateFavorites: debounce(({
- state, commit, dispatch, rootState,
-}) => {
+        state, commit, dispatch, rootState,
+    }) => {
         const operations = Object.keys(state.stagedFavorites).map((key) => ({
             op: state.stagedFavorites[key],
             channel_id: key,
         }));
-        return api
-            .patchFavorites(rootState.userdata.jwt, operations)
+
+        if (operations.length === 0) return;
+
+        api.patchFavorites(rootState.userdata.jwt, operations)
             .catch((e) => {
                 console.error(e);
                 dispatch("loginVerify", null, { root: true }); // check if the user is actually logged in.
@@ -102,7 +101,8 @@ const actions = {
                 }
             })
             .finally(() => commit("clearStagedFavorites"));
-    }, 2000),
+        }, 2000),
+
     async resetFavorites({ dispatch, commit, rootState }) {
         commit("resetState");
         if (rootState.userdata && rootState.userdata.jwt) {

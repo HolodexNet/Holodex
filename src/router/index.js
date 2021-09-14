@@ -1,12 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import { loadLanguageAsync } from "@/plugins/vuetify";
-import Home from "../views/Home.vue";
+import HomeFave from "../views/HomeFave.vue";
 import store from "../store";
 
 const Channel = () => import("../views/Channel.vue");
 const Channels = () => import("../views/Channels.vue");
-const Favorites = () => import("../views/Favorites.vue");
 const ChannelVideos = () => import("../views/channel_views/ChannelVideos.vue");
 const ChannelAbout = () => import("../views/channel_views/ChannelAbout.vue");
 const ChannelMusic = () => import("../views/channel_views/ChannelMusic.vue");
@@ -30,7 +29,8 @@ const routes = [
     {
         path: "/",
         name: "home",
-        component: Home,
+        component: HomeFave,
+        props: { isFavPage: false },
         beforeEnter(to, from, next) {
             // from.name === null when first load, check settings and redirect if necessary
             if (!from.name && store.state.settings.defaultOpen !== "home" && to.fullPath === "/") {
@@ -56,7 +56,8 @@ const routes = [
     {
         path: "/favorites/",
         name: "favorites",
-        component: Favorites,
+        component: HomeFave,
+        props: { isFavPage: true },
     },
     {
         path: "/channel/:id",
