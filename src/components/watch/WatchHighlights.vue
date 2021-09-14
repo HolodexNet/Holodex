@@ -24,11 +24,12 @@
               </div>
             </template>
             <div class="highlight-comments">
-              <template v-for="c in b.comments">
+              {{ b.best }}
+              <!-- <template v-for="c in b.comments">
                 <div :key="c">
                   {{ c }}
                 </div>
-              </template>
+              </template> -->
             </div>
           </v-tooltip>
         </template>
@@ -107,14 +108,26 @@ export default {
                 if (t - currentBucket <= TIME_THRESHOLD) {
                     subBucket.push([t, comment]);
                 }
-                // only add the bucket if it has more than 0 result
+
                 if (subBucket.length >= MIN_COMMENTS) {
                     // select floor median has the display time
                     const median = subBucket[Math.floor(subBucket.length / 2)][0];
+
+                    // pick best comment to show
+                    const comments = subBucket.map((s) => s[1]);
+                    let best = comments
+                        .filter((c) => c.split(" ").length >= 2)
+                        // .filter((comment) => !/(plz)/.test(comment))
+                        .sort((a, b) => a.length - b.length)[0];
+                    /* eslint-disable-next-line */
+          if (!best) best = comments[0];
+                    if (best.length > 60) best = `${best.slice(0, 60)}...`;
+
                     buckets.push({
                         time: median,
                         count: subBucket.length,
-                        comments: subBucket.map((s) => s[1]),
+                        comments,
+                        best,
                         display: formatDuration(median * 1000),
                     });
                 }
@@ -141,9 +154,8 @@ export default {
 
                     // analyze comment
                     const text = match[4]
-                        ? decompose(match[4].trim()).join(" ")
+                        ? decompose(match[4]).join(" ").trim()
                         : undefined;
-
                     if (text) ts.push([time, text]);
 
                     match = COMMENT_TIMESTAMP_REGEX.exec(comment.message);
@@ -164,7 +176,7 @@ export default {
             };
         },
         computeTipStyle(ts: number, count: number) {
-            let width = 2;
+            const width = 2;
             let color = "rgb(74, 74, 74)";
             if (count > 1) {
                 color = "#ededed";
@@ -173,15 +185,12 @@ export default {
                 color = "darkorange";
             }
             if (count > 3) {
-                width = 3;
                 color = "orange";
             }
             if (count > 4) {
-                width = 4;
                 color = "#d05b5b";
             }
             if (count > 5) {
-                width = 5;
                 color = "red";
             }
             return {
@@ -198,6 +207,8 @@ export default {
 <style lang="scss">
 .highlight-container {
   padding: 12px;
+  height: 30px;
+  transition: all 0.2s ease-out;
 
   &:hover {
     .highlight-bar {
