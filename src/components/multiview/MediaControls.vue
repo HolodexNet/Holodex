@@ -37,6 +37,7 @@
                     {{ icons.mdiVolumeMute }}
                   </v-icon>
                 </v-btn>
+                <v-spacer />
                 <v-slider
                   class="volume-slider"
                   :value="allVolume"
@@ -66,6 +67,7 @@
                     </v-icon>
                   </v-btn>
                   <v-btn
+                    v-if="!cellState.isTwitchVideo"
                     icon
                     @click="cellState.togglePlaybackRate()"
                   >
@@ -88,6 +90,7 @@
                       {{ cellState.muted ? icons.mdiVolumeMute : icons.mdiVolumeHigh }}
                     </v-icon>
                   </v-btn>
+                  <v-spacer />
                   <v-slider :value="cellState.volume" class="volume-slider" @input="cellState.setVolume($event)" />
                 </v-list-item-action>
               </v-list-item-content>
@@ -126,11 +129,10 @@ export default {
     },
     data() {
         return {
-            showMediaControls: true,
             mdiPause,
             mdiFastForward,
+            timer: null,
             mounted: false,
-            allButOne: true,
         };
     },
     computed: {
@@ -140,28 +142,46 @@ export default {
         allVolume() {
             const cells = this.$parent.$refs.videoCell;
             if (!this.mounted || !this.value || !cells || !cells.length) return 0;
+            // Check if all volume is the same, else return 0
             const vol = cells[0].volume;
             return cells.every((c) => c.volume === vol) ? vol : 0;
         },
         cells() {
-            if (!this.mounted) return [];
-            return this.$parent.$refs.videoCell.filter((c) => c.video);
+            // Bind the cell ref recompute to value/activeVideos
+            // Reason: refs are not observable, therefore changes are not propogated up
+            const alwaysTrue = this.value || !this.value || this.activeVideos;
+            if (!this.$parent?.$refs?.videoCell) return [];
+            return alwaysTrue && this.$parent.$refs.videoCell.filter((c) => c.video);
         },
+    },
+    watch: {
+        // Refresh player status when mediaControls is shown
+        value(val) {
+            if (val && this.mounted) {
+                this.cells.forEach((c) => c.manualRefresh());
+            }
+        },
+    },
+    created() {
+        // Nothing else needs to be updated in an interval, except for checking for mute changes
+        // Premature optimization.... probably
+        if (!this.timer) {
+            this.timer = setInterval(() => {
+                if (this.cells) this.cells.forEach((c) => c.manualCheckMuted());
+            }, 1000);
+        }
     },
     mounted() {
         this.mounted = true;
     },
+    beforeDestroy() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    },
     methods: {
-        muteAllButOne() {
-            const firstUnmuted = this.cells.findIndex((c) => !c.muted);
-            this.cells.forEach((c, idx) => {
-                if (idx === firstUnmuted) c.setMuted(true);
-            });
-        },
         setAllVolume(val) {
-            const cells = this.$parent.$refs.videoCell;
-            if (!cells) return;
-            cells.forEach((c) => c.setVolume(val));
+            this.cells.forEach((c) => c.setVolume(val));
         },
         allCellAction(fnName) {
             if (!this.$parent.$refs.videoCell) return;
@@ -187,8 +207,9 @@ export default {
 
 <style>
 .volume-slider {
-  min-width: 32px;
-  flex-basis: 32px;
+  /* min-width: 80px; */
+  flex-basis: 75px;
+  box-sizing: border-box;
 }
 
 .media-controls-list > .v-list-item {

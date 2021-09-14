@@ -316,7 +316,9 @@ views:
     addframe: Tambah Petak
     muteAll: Senyapkan Semua
     unmuteAll: Nyahsenyap Semua
-    autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak kendiri
+    muteOthers: Senyapkan siaran lain
+    muteOthersDetail: Cuma satu siaran yang tidak disenyapkan
+    autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak suai kendiri
     createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
     openToolbarTip: Mulakan berbilang tontonan dengan membuka ruangan alat
     preset:
@@ -327,17 +329,25 @@ views:
       remove: Padamkan
       desktop: Peranti Atas Meja
       mobile: Peranti Mudah Alih
-      autoLayout: Tataletak Kendiri
+      autoLayout: Tataletak Suai Kendiri
     presetEditor:
       title: Simpan Tataletak
       name: Nama
-      autoLayout: Gunakan tataletak ini pada ragam kendiri
+      autoLayout: Gunakan tataletak ini pada ragam suai kendiri
     video:
       selectLive: Pilih Siaran Langsung
       addCustomVideo: Tambah Video Tersuai
     fullScreen: Skrin penuh
     mediaControls: Kawalan Bahantara
     mediaControlsEmpty: Ruangan ini menyenaraikan video yang dibuka
+    editAutoLayout: Sunting Tataletak Kendiri
+    changeLayout: Ubah Tataletak
+    done: Selesaikan
+    hints: Petunjuk
+    presetsHint: Ubah tataletak dan sesuaikan susunan tataletak kendiri di tetingkap tataletak
+    mediaControlsHint1: Senyap atau segerakkan (
+    mediaControlsHint2: ) video dengan Kawalan Bahantara
+    dragDropHint: Urus siaran langsung dengan menarik dan melepaskan siaran berkenaan dari ruangan alat ke petak masing-masing
   mugen:
     welcome: >-
       Selamat datang ke MugenClips! Laman ini mempertontonkan kepada semua orang sedutan Hololive berbahasa Inggeris yang sama secara rambang. Mari tonton bersama-sama sambil bersembang dengan peminat Hololive dari serata dunia. Sekiranya anda mahu kembali menonton bahagian yang sama dengan semua orang setelah melangkau sedutan terlebih dahulu, sila muatkan semula laman ini.

@@ -92,7 +92,7 @@ component:
     songDuration: Hossz
     sangOnTime: Énekelve
   orgMusic:
-    monthlyTopForOrg: Heti legjátszottabbak {0}-tól/től
+    monthlyTopForOrg: Havi legjátszottabbak {0}-tól/től
     weeklyTopForOrg: Heti legjátszottabbak {0}-tól/től
   installPrompt:
     title: Holodex telepítése
@@ -316,6 +316,8 @@ views:
     addframe: Cella hozzáadása
     muteAll: Minden némítása
     unmuteAll: Minden némítás visszavonása
+    muteOthers: Többi némítása
+    muteOthersDetail: Minden streamet -kivéve egyet- némít
     autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
     createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
     openToolbarTip: Nyisd meg az eszköztárat a több képernyős nézet használatához
@@ -338,6 +340,14 @@ views:
     fullScreen: Teljes képernyő
     mediaControls: Média vezérlők
     mediaControlsEmpty: A lejátszott videók itt fognak megjelenni
+    editAutoLayout: Auto-elrendezés szerkesztése
+    changeLayout: Elrendezés megváltoztatása
+    done: Kész
+    hints: Súgó
+    presetsHint: Nyisd meg az előrendezések menüt az elrendezések váltásához és auto-elrendezés beállításához
+    mediaControlsHint1: Használd a Média irányításokat, hogy némíts és összehangolj (
+    mediaControlsHint2: ) élő közvetítést
+    dragDropHint: Húzz streameket az eszköztárból a cellákhoz, hogy elrendezd a streameket
   mugen:
     welcome: >-
       Üdvözöllek a MugenClips-nél! Ezen az oldalon mindenki ugyan azt a véletlenszerűen kiválasztott angol Hololive klipet nézi. Együtt nézheted és chatelhetsz más Hololive rajongókkal az egész világon. Ha előretekersz és szeretnél újra egyidejűleg lenni a többiekkel, kérlek frissítsd az oldalt.

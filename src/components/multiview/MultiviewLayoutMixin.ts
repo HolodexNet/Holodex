@@ -1,4 +1,4 @@
-import { decodeLayout, desktopPresets, mobilePresets } from "@/utils/mv-utils";
+import { Content, decodeLayout, desktopPresets, mobilePresets, sortLayout } from "@/utils/mv-utils";
 import { mapGetters } from "vuex";
 
 export default {
@@ -64,17 +64,16 @@ export default {
         isPreset(currentLayout) {
             // filter out any presets that dont match the amount of cells
             const toCompare = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
-
+            const comparable = toCompare.filter((preset) => preset.layout.length === currentLayout.length);
             // there's no presets with equal cells
-            if (toCompare.length === 0) return false;
-
+            if (comparable.length === 0) return false;
+            const clone = [...currentLayout];
+            clone.sort(sortLayout);
             // go through each preset, and check for full matching layouts
-            return toCompare
-                .filter((preset) => preset.layout.length === currentLayout.length)
-                .some((preset) => {
+            return comparable.some((preset) => {
                     for (let i = 0; i < currentLayout.length; i += 1) {
                         const presetCell = preset.layout[i];
-                        const layoutCell = currentLayout[i];
+                        const layoutCell = clone[i];
                         if (
                             !(
                                 presetCell.x === layoutCell.x
@@ -107,6 +106,8 @@ export default {
                     this.setMultiview({
                         ...clonedLayout,
                         mergeContent: true,
+                        // Tell chat merging that a new video will be added
+                        hintAdd: true,
                     });
                     this.tryFillVideo(video);
                     return;
@@ -127,27 +128,67 @@ export default {
                 mergeContent: true,
             });
         },
-        setMultiview({ layout, content, mergeContent = false }) {
+        setMultiview({ layout, content, mergeContent = false, hintAdd = false }) {
+            /**
+            * Below contains the logic to merge an existing multiview layout to a new layout
+            * For videos it is a straight forward migrate to next layout as space permits
+            * For chat, it remaps the currentTab to point to the same video in the next layout
+            * additionally, new chats should point to a unique tab that isn't active.
+            */
             if (mergeContent) {
                 const contentsToMerge = {};
-                let currentIndex = 0;
-                const currentContent = Object.values(this.layoutContent).filter((o) => (o as any).type === "video");
-                // filter out already set items
-                layout
-                    .filter((item) => !content[item.i])
-                    .forEach((item) => {
-                        // fill until there's no more current videos
-                        if (currentIndex >= this.activeVideos.length) {
-                            return;
-                        }
-
+                let videoIndex = 0;
+                const currentVideos = Object.values(this.layoutContent as Content[]).filter((o) => o.type === "video");
+                const newVideoIdToIndex = {};
+                // Loop through the incoming layout, and fill with current content
+                layout.filter((item) => !content[item.i]).forEach((item) => {
+                    // For empty cells fill until there's no more current videos
+                    if (videoIndex < this.activeVideos.length) {
                         // get next video to fill this item's cell
                         const key = item.i;
-                        const c: any = currentContent[currentIndex];
+                        contentsToMerge[key] = currentVideos[videoIndex];
+                        // Infer next activeVideos to be used in auto chat tabbing below
+                        newVideoIdToIndex[currentVideos[videoIndex].video.id] = videoIndex;
+                        videoIndex += 1;
+                    }
+                });
 
-                        contentsToMerge[key] = c;
-                        currentIndex += 1;
-                    });
+                // Check what curent chats point to, to be remapped
+                const activeChatsAsVideoId = Object.values(this.layoutContent as Content[])
+                    .filter((o) => o.type === "chat")
+                    .map((o) => this.activeVideos[o.currentTab]?.id);
+                let chatIndex = 0;
+
+                // Create an array of possible currentTabs from 1 ... n
+                // Where n is videoIndex + the video about to be added
+                const maxVideoLength = hintAdd ? videoIndex + 1 : videoIndex;
+                const uniqueIndexes = new Set([...Array(maxVideoLength).keys()]);
+
+                layout.filter((item) => content[item.i] && content[item.i].type === "chat").forEach((item) => {
+                    // All current cells have been accounted for, start setting currentTabs based on what's still available
+                    if (chatIndex >= activeChatsAsVideoId.length) {
+                        // Find next index not already used
+                        const uniqueIndex = uniqueIndexes.values().next().value;
+                        content[item.i] = {
+                            ...content[item.i],
+                            currentTab: uniqueIndex,
+                        };
+                        // Remove from pool
+                        uniqueIndexes.delete(uniqueIndex);
+                        return;
+                    }
+
+                    // Remap the currentTab index to point to same video
+                    const videoId = activeChatsAsVideoId[chatIndex];
+                    content[item.i] = {
+                        ...content[item.i],
+                        currentTab: newVideoIdToIndex[videoId],
+                    };
+                    // Remove from the pool of uniqueindex if not already deleted
+                    uniqueIndexes.delete(newVideoIdToIndex[videoId]);
+                    chatIndex += 1;
+                });
+
                 // merge by key, prefer incoming content
                 const merged = {
                     ...contentsToMerge,

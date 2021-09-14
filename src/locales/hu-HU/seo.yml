@@ -1,1 +1,17 @@
 ---
+hello: világ
+music:
+  title: '{{english_name}} Eredeti és előadott dalok - Holodex'
+  description: >-
+    Hallgass hivatalos dalokat és karaoke streameket, a közösség által tagelve a Holodex zenelejátszóban.
+channel:
+  normal:
+    title: '{{english_name}} Klippek, Streamek, Zene és Kollaborációk - Holodex'
+    description: >-
+      Találhatsz {{clip_count}} klippet, {{video_count}} streamet {{english_name}}-tól/től. Add hozzá a Holodex kedvenceidhez, hogy értesülj róla amikor streamelnek.
+    descriptionWithTopic: >-
+      Találj {{ topics }} streameket {{english_name}}-tól/től. Zárkózz fel {{clip_count}} klippel, {{video_count}} streammel és egyebekkel a Holodex-en.
+  clip:
+    title: '{{english_name}} Áttekintés - Holodex'
+    description: >-
+      Találj több mint {{video_count}} videót a kedvenc vtuber-jeidtől {{english_name}}-tól/től.

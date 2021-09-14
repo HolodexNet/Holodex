@@ -316,6 +316,8 @@ views:
     addframe: Tambah Skema
     muteAll: Matikan Suara Semua Video
     unmuteAll: Nyalakan Suara Semua Video
+    muteOthers: Senyapkan yang lain
+    muteOthersDetail: Senyapkan semua kecuali satu siaran
     autoLayoutTip: Tekan channel untuk mulai menonton menggunakan mode tataletak otomatis
     createLayoutTip: Membuat tataletak kreasimu sendiri dengan menambahkan kolom, atau menggunakan preset
     openToolbarTip: Buka bilah alat untuk mulai menggunakan multiview
@@ -338,6 +340,14 @@ views:
     fullScreen: Layar Penuh
     mediaControls: Kontrol Media
     mediaControlsEmpty: Video yang diputar akan muncul disini
+    editAutoLayout: Mengubah Tataletak Otomatis
+    changeLayout: Ubah Tataletak
+    done: Selesai
+    hints: Petunjuk
+    presetsHint: Buka menu preset untuk mengganti tataletak dan mengubah tataletak otomatis
+    mediaControlsHint1: Gunakan Kontrol Media untuk menyinkronkan dan menyenyapkan (
+    mediaControlsHint2: ) siaran langsung
+    dragDropHint: Seret dan lepas siaran dari bilah alat ke kolom skema untuk mengatur siaran
   mugen:
     welcome: >-
       Selamat datang di MugenClips! Semua orang yang berada di halaman ini melihat klip hololive bahasa inggris yang sama yang dipilih secara acak. Menonton bareng dan mengobrol sesama fans Hololive dari seluruh penjuru dunia. jika kamu mempercepat klip dan ingin mensinkronkan kembali video dengan semua orang, tekan refresh pada halaman ini.

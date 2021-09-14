@@ -4,7 +4,7 @@
     app
     width="240"
     clipped
-    class="nav-scroll thin-scroll-bar"
+    class="nav-scroll"
     :temporary="temporary"
     style="padding-top: env(safe-area-inset-top); padding-left: calc(env(safe-area-inset-left) / 1.3)"
     @input="$emit('input', $event)"
@@ -58,6 +58,7 @@
         <v-list-item
           v-if="vid"
           :key="vid.id"
+          :class="{ 'v-list-item--active': $route.path.startsWith(`/channel/${vid.channel.id}`) }"
           @click="$router.push(`/channel/${vid.channel.id}`).catch(() => {})"
         >
           <v-list-item-avatar :size="30" :class="{ outlined: isLive(vid) }">
@@ -169,8 +170,8 @@ export default {
                 // Sort by name (either english or native)
                 extras.sort((a, b) => {
                     const prop = this.$store.state.settings.nameProperty;
-                    const name1 = a.channel[prop];
-                    const name2 = b.channel[prop];
+                    const name1 = a.channel[prop] || a.channel.name || "";
+                    const name2 = b.channel[prop] || b.channel.name || "";
                     return name1.localeCompare(name2);
                 });
                 return [...Object.values(existingChs), ...extras];
@@ -191,10 +192,12 @@ export default {
             return !this.favoritesExpanded && this.favorites.length > 8 ? this.favorites.slice(0, 8) : this.favorites;
         },
     },
-    mounted() {
-        this.ticker = setInterval(() => {
-            this.tick = Date.now();
-        }, 60000);
+    created() {
+        if (!this.ticker) {
+            this.ticker = setInterval(() => {
+                this.tick = Date.now();
+            }, 60000);
+        }
     },
     beforeDestroy() {
         if (this.ticker) clearInterval(this.ticker);
@@ -203,8 +206,20 @@ export default {
         handlePageClick(page) {
             // reload the page if user clicks on the same tab
             page.path === this.$route.path && !this.$route.query.page
-                ? this.$router.go(0)
+                ? this.refresh()
                 : this.$router.push({ path: page.path });
+        },
+        async refresh() {
+            // here to fetch the data and rerender the contents.
+            // check if there's a handler on the sequence
+            const handledRefresh = await this.$store.dispatch("reloadCurrentPage", {
+                source: "ptr",
+                consumed: false,
+            });
+            // do default refresh if none
+            if (!handledRefresh.consumed) {
+                this.$router.go(0);
+            }
         },
         formatDurationUpcoming(ts) {
             const secs = dayjs(ts).diff(dayjs()) / 1000;

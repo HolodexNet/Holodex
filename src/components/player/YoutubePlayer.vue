@@ -101,11 +101,8 @@ export default {
             this.player.cueVideoById(params);
         },
         setMute(value) {
-            if (value && this.player) {
-                this.player.mute();
-            } else {
-                this.player.unMute();
-            }
+            if (!this.player) return;
+            value ? this.player.mute() : this.player.unMute();
         },
         getCurrentTime() {
             return this.player.getCurrentTime();

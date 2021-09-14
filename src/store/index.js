@@ -11,7 +11,7 @@ import { sendTokenToExtension } from "@/utils/messaging";
 // import { dayjs } from "@/utils/time";
 
 import backendApi from "@/utils/backend-api";
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 import home from "./home.module";
 import channel from "./channel.module";
 import channels from "./channels.module";
@@ -22,6 +22,7 @@ import music from "./music.module";
 import multiview from "./multiview.module";
 import playlist from "./playlist.module";
 import history from "./history.module";
+import orgs from "./orgs.module";
 import { migrations, VUEX_STATE_VERSION } from "./migrations";
 // import socket from "./socket.module";
 
@@ -83,7 +84,7 @@ function defaultState() {
 const syncedModules = /^(?:playlist|settings|history)/;
 const syncedMutations = new Set(["resetState", "setUser", "setShowUpdatesDetail", "firstVisit", "firstVisitMugen", "favorites/setFavorites", "favorites/resetFavorites", "favorites/setLive", "music/addSong", "music/removeSong", "music/resetState", "music/clearPlaylist", "multiview/addPresetLayout", "multiview/removePresetLayout", "multiview/togglePresetAutoLayout", "multiview/setAutoLayout"]);
 
-const persistedPaths = ["playlist", "settings", "history", "migration", "multiview", "channels.cardView", "channels.sort", "currentOrg", "favorites.favorites", "lastShownInstallPrompt", "firstVisit", "firstVisitMugen", "music.playlist", "music.currentId", "music.mode", "orgFavorites", "showUpdateDetails", "userdata", "watch.showLiveChat", "watch.showTL", "watch.theaterMode", "currentGridSize"];
+const persistedPaths = ["orgs", "playlist", "settings", "history", "migration", "multiview", "channels.cardView", "channels.sort", "currentOrg", "favorites.favorites", "lastShownInstallPrompt", "firstVisit", "firstVisitMugen", "music.playlist", "music.currentId", "music.mode", "orgFavorites", "showUpdateDetails", "userdata", "watch.showLiveChat", "watch.showTL", "watch.theaterMode", "currentGridSize"];
 export default new Vuex.Store({
     plugins: [
         createPersistedState({
@@ -259,6 +260,7 @@ export default new Vuex.Store({
         multiview,
         playlist,
         history,
+        orgs,
         // socket,
     },
 });

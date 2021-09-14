@@ -7,7 +7,7 @@
     "build": "vite build --mode prod",
     "changelog": "changelog-to-html --outputDirectoryPath docs && generate-md --layout ./layouts/roryg-ghostwriter --input ./CHANGELOG.md --output ./docs",
     "preview": "vite preview",
-    "lint": "eslint --fix"
+    "lint": "eslint --fix 'src/**'"
   },
   "workspaces": [
     "src/external/vue-grid-layout"
@@ -29,7 +29,7 @@
     "@interactjs/dev-tools": "^1.10.11",
     "@interactjs/interactjs": "^1.10.11",
     "@interactjs/modifiers": "^1.10.11",
-    "@livetl/ui-components": "0.0.18",
+    "@livetl/ui-components": "0.0.19",
     "@mdi/js": "^5.9.55",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.19",
     "axios": "^0.21.1",
@@ -41,7 +41,7 @@
     "jsonp-es6": "^1.0.0",
     "jwt-decode": "^3.1.2",
     "kv-idb": "^1.1.0",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "oauth-open": "^1.0.4",
     "portal-vue": "^2.1.7",
     "register-service-worker": "^1.7.2",
@@ -93,10 +93,8 @@
     "svelte-preprocess": "^4.8.0",
     "typescript": "~4.2.4",
     "vite": "^2.4.4",
-    "vite-plugin-components": "^0.13.2",
-    "vite-plugin-pwa": "^0.9.3",
-    "vite-plugin-string": "^1.0.1",
-    "vite-plugin-vue2": "^1.7.3",
-    "vue-template-compiler": "^2.6.14"
+    "vite-plugin-components": "^0.13.3",
+    "vite-plugin-pwa": "^0.11.2",
+    "vite-plugin-vue2": "^1.8.1"
   }
 }

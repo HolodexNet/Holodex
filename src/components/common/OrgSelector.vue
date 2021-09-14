@@ -132,8 +132,8 @@
 </template>
 
 <script>
-import backendApi from "@/utils/backend-api";
-import { mapMutations } from "vuex";
+// import backendApi from "@/utils/backend-api";
+import { mapMutations, mapState } from "vuex";
 
 /**----------------------------------------------
  * *                   Org Selector
@@ -170,20 +170,20 @@ export default {
         return {
             showOrgDialog: false,
             search: "",
-            ORGS: [],
         };
     },
     computed: {
+        ...mapState("orgs", ["orgs"]),
         firstVisit: {
             get() {
-                return this.$store.state.firstVisit;
+                return this.$store.state.firstVisit && navigator.userAgent && !navigator.userAgent.includes("Googlebot");
             },
             set() {
                 return this.$store.commit("setVisited");
             },
         },
         sortedOrgs() {
-            let list = this.ORGS.slice();
+            let list = this.orgs.slice();
             if (this.search) {
                 list = list.filter((x) => x.name.toLowerCase().includes(this.search.toLowerCase()));
             }
@@ -221,13 +221,8 @@ export default {
             return this.$store.state.settings.darkMode;
         },
     },
-    async mounted() {
-        this.ORGS = [
-            ...(this.hideAllVTubers ? [] : [{ name: "All Vtubers", short: "Vtuber", name_jp: null }]),
-            ...(await backendApi.orgs()).data.sort(
-                (a, b) => a.name.toLowerCase().charCodeAt(0) - b.name.toLowerCase().charCodeAt(0),
-            ),
-        ];
+    async created() {
+        await this.$store.dispatch("orgs/fetchOrgs");
     },
     methods: {
         ...mapMutations(["toggleFavoriteOrg", "shiftOrgFavorites"]),

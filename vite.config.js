@@ -10,14 +10,17 @@ import path from "path";
 import sveltePreprocess from "svelte-preprocess";
 import postcssConfig from "./postcss.config";
 
+// Bypass vite stuff and just load .env into process.env
+require("dotenv").config();
+
 /**
  * @param {{ mode: string, command: string }}
  */
 
 export default ({ mode }) => {
     const env = { ...process.env, ...loadEnv(mode, process.cwd()) };
-    const API_BASE_URL = env.VITE_API_BASE_URL ?? "https://staging.holodex.net";
-    const REWRITE_API_ROUTES = !!env.VITE_REWRITE_API_ROUTES;
+    const API_BASE_URL = env.API_BASE_URL ?? "https://staging.holodex.net";
+    const REWRITE_API_ROUTES = !!env.REWRITE_API_ROUTES;
 
     return defineConfig({
         optimizeDeps: {
@@ -38,6 +41,12 @@ export default ({ mode }) => {
             createVuePlugin(),
             ViteComponents({
                 customComponentResolvers: [VuetifyResolver()],
+                deep: false,
+                /**
+                 * Vite-Components removes need to import components by deepscanning the src/components folder
+                 * but is fairly dangerous in terms of how it figures out which to import. Since we are using
+                 * manual import processes, we only want ViteComponents for vuetify resolution.
+                */
             }),
             VitePWA({
                 includeAssets: ["favicon.ico", "robots.txt", "img/icons/safari-pinned-tab.svg"],
@@ -60,19 +69,13 @@ export default ({ mode }) => {
                             sizes: "512x512",
                             type: "image/png",
                         },
-                        {
-                            src: "img/icons/android-chrome-512x512.png",
-                            sizes: "512x512",
-                            type: "image/png",
-                            purpose: "maskable",
-                        },
                     ],
                 },
                 workbox: {
                     // NOTE: `vite-plugin-pwa` expects the service worker to be called `sw.js` for some reason.
                     // there is no way to change this.
                     swDest: "./dist/sw.js",
-                    navigateFallbackDenylist: [/^\/api/],
+                    navigateFallbackDenylist: [/^\/api/, /^\/assets/, /^\/img/, /^\/sitemap-.*/, /^.*\.js(\.map)?/, /^.*\.css/, /^.*\.webmanifest/],
                     runtimeCaching: [
                         {
                             urlPattern: new RegExp(
@@ -91,7 +94,7 @@ export default ({ mode }) => {
                         },
                         {
                             urlPattern: new RegExp(
-                                "https://yt3.ggpht.com/(a/|ytc/)(.*)=s(40|88)-c-k-c0x00ffffff-no-rj-mo(.*)",
+                                "https://yt3.ggpht.com/ytc/(.*)",
                             ),
                             handler: "CacheFirst",
                             options: {
@@ -113,6 +116,19 @@ export default ({ mode }) => {
                                 expiration: {
                                     maxAgeSeconds: 10800,
                                     maxEntries: 1,
+                                },
+                                cacheableResponse: {
+                                    statuses: [0, 200],
+                                },
+                            },
+                        },
+                        {
+                            urlPattern: new RegExp(`${API_BASE_URL}/(stats|orgs).json$`),
+                            handler: "CacheFirst",
+                            options: {
+                                cacheName: "holodex-statics",
+                                expiration: {
+                                    maxAgeSeconds: 10800,
                                 },
                                 cacheableResponse: {
                                     statuses: [0, 200],

@@ -56,7 +56,7 @@
 import { mdiAt } from "@mdi/js";
 import backendApi from "@/utils/backend-api";
 import { CHANNEL_TYPES } from "@/utils/consts";
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 import ChannelList from "../channel/ChannelList.vue";
 
 export default {
@@ -105,7 +105,7 @@ export default {
                 });
         }, 500),
     },
-    mounted() {
+    created() {
         this.updateMentions();
     },
     methods: {

@@ -21,15 +21,19 @@
         <v-icon>{{ icons.ytChat }}</v-icon>
       </v-btn>
     </div>
-    <CellControl :play-icon="icons.mdiPlay" class="mx-6 mb-6" @delete="deleteCell" />
+    <CellControl :play-icon="icons.mdiPlay" class="mx-1 mb-2" @delete="deleteCell" />
   </div>
 </template>
 
 <script class="ts">
 import { mdiCardPlus } from "@mdi/js";
 import CellMixin from "./CellMixin";
+import CellControl from "./CellControl.vue";
 
 export default {
+    components: {
+        CellControl,
+    },
     mixins: [CellMixin],
     data() {
         return {

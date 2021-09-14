@@ -36,6 +36,9 @@ module.exports = {
         "no-param-reassign": ["error", { props: false }],
         "no-restricted-syntax": "off",
         "no-await-in-loop": "off",
+        "vue/no-unregistered-components": ["error", {
+            ignorePatterns: ["v(\\-\\w+)+", "router(\\-\\w+)+", "portal"],
+        }],
         "no-unused-expressions": [
             "error",
             { allowShortCircuit: true, allowTernary: true },
@@ -66,6 +69,7 @@ module.exports = {
         "vue/html-indent": ["error", 2],
         "vue/require-default-prop": "off",
         "vue/script-setup-uses-vars": "off",
+        "object-curly-newline": "off",
     },
 
     ignorePatterns: ["src/external/**", "src/locales/**"],

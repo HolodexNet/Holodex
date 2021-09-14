@@ -9,7 +9,7 @@
     top
     :nudge-top="size + 5"
     content-class="elevation-0"
-    close-delay="250"
+    :close-delay="closeDelay"
   >
     <template #activator="{ on: tooltip }">
       <v-avatar
@@ -68,10 +68,15 @@ export default {
             required: false,
             default: 60,
         },
-        // close: {
-        //     type: Boolean,
-        //     required: false,
-        // },
+        closeDelay: {
+            type: Number,
+            required: false,
+            default: 250,
+        },
+    // close: {
+    //     type: Boolean,
+    //     required: false,
+    // },
     },
     data() {
         return { isHover: false };
@@ -92,13 +97,13 @@ export default {
 
 <style>
 .channel-hover-tooltip {
-    background-color: rgba(58, 58, 58, 0.7);
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    padding: 0 8px 0 0;
-    margin-top: -3px;
-    max-height: 32px;
-    overflow: hidden;
+  background-color: rgba(58, 58, 58, 0.7);
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  padding: 0 8px 0 0;
+  margin-top: -3px;
+  max-height: 32px;
+  overflow: hidden;
 }
 </style>

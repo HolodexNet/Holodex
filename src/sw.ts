@@ -2,47 +2,43 @@
 // eslint-disable-next-line
 import { registerSW } from 'virtual:pwa-register'
 
-let updateServiceWorkerFn = async (shouldReloadPage: boolean) => {};
+let updateServiceWorkerFn = () => {};
 let needsRefreshCallback = () => {};
 let offlineReadyCallback = () => {};
+let controllerChangeCallback = () => {};
 let reg: ServiceWorkerRegistration | undefined;
 
 const SW_UPDATE_INTERVAL = 60 * 60 * 1000;
-function waitFor(type: string, target: EventTarget): Promise<Event> {
-    return new Promise((resolve) => {
-        target.addEventListener(type, (evt) => {
-            resolve(evt);
-        }, { once: true });
-    });
-}
-
-registerSW({
-    immediate: true,
-    onNeedRefresh: () => {
-        needsRefreshCallback();
-    },
-    onOfflineReady() {
-        offlineReadyCallback();
-    },
-    onRegistered(newReg) {
-        reg = newReg;
-        // check for sw updates at 1 hour intervals
-        newReg && setInterval(() => {
-            newReg.update();
-        }, SW_UPDATE_INTERVAL);
-    },
-    onRegisterError(err) {
-        console.log("Error during service worker registration:", err);
-    },
-});
 
 if ("serviceWorker" in navigator) {
-    updateServiceWorkerFn = async (shouldReloadPage) => {
+    registerSW({
+        immediate: true,
+        onNeedRefresh: () => {
+            needsRefreshCallback();
+        },
+        onOfflineReady() {
+            offlineReadyCallback();
+        },
+        onRegistered(newReg) {
+            reg = newReg;
+            // check for sw updates at 1 hour intervals
+            newReg && setInterval(() => {
+                newReg.update();
+            }, SW_UPDATE_INTERVAL);
+        },
+        onRegisterError(err) {
+            console.log("Error during service worker registration:", err);
+        },
+    });
+
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+        controllerChangeCallback();
+    });
+
+    updateServiceWorkerFn = () => {
         if (reg && reg.waiting) {
             reg.waiting.postMessage({ type: "SKIP_WAITING" });
         }
-        await waitFor("controllerchange", navigator.serviceWorker);
-        if (shouldReloadPage) window.location.reload();
     };
 }
 
@@ -52,5 +48,8 @@ export const setNeedsRefreshCallback = (value: () => void) => {
 export const setOfflineReadyCallback = (value: () => void) => {
     offlineReadyCallback = value;
 };
+export const setControllerChangeCallback = (value: () => void) => {
+    controllerChangeCallback = value;
+};
 export const getRegistration = () => reg;
-export const updateServiceWorker = (shouldReloadPage = true) => updateServiceWorkerFn(shouldReloadPage);
+export const updateServiceWorker = () => updateServiceWorkerFn();

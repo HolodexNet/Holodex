@@ -14,9 +14,14 @@ export default {
             type: Boolean,
             default: false,
         },
+        // interval to refresh currentTime/mute/playbackRate
         refreshRate: {
             type: Number,
             default: 500,
+        },
+        // Don't initialize interval
+        manualUpdate: {
+            type: Boolean,
         },
     },
     data() {
@@ -56,6 +61,7 @@ export default {
             /* no-op */
         },
         initListeners() {
+            if (this.manualUpdate) return;
             // Could consider using .sync two way prop, but ytPlayer makes it kind of makes it hard
             const updateCurrentTime = this.$listeners.currentTime;
             const updatePlaybackRate = this.$listeners.playbackRate;
@@ -63,13 +69,15 @@ export default {
             const updateVolume = this.$listeners.volume;
             // Only start the loop if at least one listener is on
             if (updateVolume || updateCurrentTime || updatePlaybackRate || updateMute) {
-                this.updateTimer = setInterval(async () => {
-                    if (updateMute) this.$emit("mute", await this.isMuted());
-                    if (updatePlaybackRate) this.$emit("playbackRate", await this.getPlaybackRate());
-                    if (updateCurrentTime) this.$emit("currentTime", await this.getCurrentTime());
-                    if (updateVolume) this.$emit("volume", await this.getVolume());
-                }, this.refreshRate);
+                this.updateTimer = setInterval(this.updateListeners, this.refreshRate);
             }
+        },
+        async updateListeners() {
+            const l = this.$listeners;
+            if (l.mute) this.$emit("mute", await this.isMuted());
+            if (l.playbackRate) this.$emit("playbackRate", await this.getPlaybackRate());
+            if (l.currentTime) this.$emit("currentTime", await this.getCurrentTime());
+            if (l.volume) this.$emit("volume", await this.getVolume());
         },
     },
 };

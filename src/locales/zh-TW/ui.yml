@@ -317,6 +317,8 @@ views:
     addframe: 增加新分割
     muteAll: 全部靜音
     unmuteAll: 全部取消靜音
+    muteOthers: 靜音其餘影片
+    muteOthersDetail: 僅啟用單一影片的聲音輸出
     autoLayoutTip: 點擊任意頻道即可使用自動排版模式觀看實況
     createLayoutTip: 增加新分割以創造專屬排版，亦能使用預設佈局
     openToolbarTip: 開啟控制欄以開始使用多窗工具
@@ -339,6 +341,14 @@ views:
     fullScreen: 全螢幕顯示
     mediaControls: 媒體控制面板
     mediaControlsEmpty: 加入任意影片後即會顯示控制按鈕
+    editAutoLayout: 自動排版設定
+    changeLayout: 變更版面配置
+    done: 儲存設定
+    hints: 使用小技巧
+    presetsHint: 開啟版面配置視窗來變更布局與自動排版模式的設定
+    mediaControlsHint1: 使用媒體控制面板來靜音或是同步 (
+    mediaControlsHint2: ) 複數實況
+    dragDropHint: 從置頂欄拖曳實況至不同分割來自訂顯示位置
   mugen:
     welcome: >-
       歡迎來到 MugenClips！所有使用者在本頁面都在同時隨機觀看同一段Hololive的英文剪輯！和其他Holo粉絲一起觀看一起聊天吧。如果您手動變更了時間軸但想再次與其他人同步進度的話，請重新整理此頁面。

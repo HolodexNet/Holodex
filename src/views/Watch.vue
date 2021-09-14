@@ -113,6 +113,7 @@
           @timeJump="seekTo"
         />
         <WatchQuickEditor v-if="!theaterMode && (role === 'admin' || role === 'editor')" :video="video" />
+        <WatchPlaylist v-if="isMobile" v-model="playlistIndex" @playNext="playNextPlaylist" />
         <!-- Mobile mode only sidebar -->
         <WatchSideBar v-if="isMobile" :video="video" @timeJump="seekTo" />
         <!-- Mobile mode Mugen -->
@@ -226,7 +227,6 @@ export default {
                 };
             },
             set(val: any) {
-                console.log(val);
                 this.showTL = val.showTlChat;
                 this.showLiveChat = val.showYtChat;
             },
@@ -248,7 +248,7 @@ export default {
             return this.video.type === "stream";
         },
         showChatWindow() {
-            return (this.hasLiveChat && this.showLiveChat) || this.showTL;
+            return (this.hasLiveChat && this.showLiveChat) || (this.showTL && this.hasLiveTL);
         },
         isMugen() {
             return this.$route.name === "mugen-clips";
@@ -313,6 +313,10 @@ export default {
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
                 this.$store.dispatch("history/addWatchedVideo", this.video);
+                // Check if there's at least 10 liveTls and open the tl panel
+                if (this.video?.live_tl_count?.[this.$store.state.settings.liveTlLang] > 10) {
+                    this.showTL = true;
+                }
             });
         },
         initMugen() {

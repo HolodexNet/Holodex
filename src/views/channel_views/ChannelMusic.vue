@@ -102,6 +102,12 @@ const PER_PAGE_ITEMS = 20;
 
 export default {
     name: "ChannelMusic",
+    metaInfo() {
+        const vm = this;
+        return {
+            title: `${vm.channelName} - ${vm.$t("views.channel.music")} - Holodex`,
+        };
+    },
     components: {
         SongItemCard,
         Carousel,
@@ -122,6 +128,10 @@ export default {
     computed: {
         channel() {
             return this.$store.state.channel.channel;
+        },
+        channelName() {
+            const prop = this.$store.state.settings.nameProperty;
+            return this.channel[prop] || this.channel.name;
         },
     },
     watch: {

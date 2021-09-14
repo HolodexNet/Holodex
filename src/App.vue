@@ -24,6 +24,7 @@ import MainNav from "@/components/nav/MainNav.vue";
 import ReportDialog from "@/components/common/ReportDialog.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
 import PWAUpdate from "@/components/common/PWAUpdate.vue";
+import InstallPrompt from "@/components/common/InstallPrompt.vue";
 import { loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
 
@@ -38,6 +39,7 @@ export default {
         ReportDialog,
         PullToRefresh,
         PWAUpdate,
+        InstallPrompt,
     },
     data() {
         return {
@@ -178,6 +180,7 @@ body {
     background: black;
     padding-left: min(calc(env(safe-area-inset-left)), 30px);
     padding-right: min(calc(env(safe-area-inset-right)), 30px);
+    scrollbar-width: thin;
 }
 .row {
     margin: 0px -12px;
@@ -185,22 +188,5 @@ body {
 .bump-bottom .v-main__wrap {
     /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
     padding-bottom: 140px;
-}
-
-.thin-scroll-bar {
-    scrollbar-width: thin;
-}
-
-.thin-scroll-bar::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-.thin-scroll-bar::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.thin-scroll-bar::-webkit-scrollbar-thumb {
-    background: rgba(182, 182, 182, 0.4);
 }
 </style>

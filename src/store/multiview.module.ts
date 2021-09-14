@@ -4,7 +4,7 @@ import {
  getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout,
 } from "@/utils/mv-utils";
 import Vue from "vue";
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 
 const initialState = {
     layout: [],
@@ -13,11 +13,14 @@ const initialState = {
     presetLayout: [],
 };
 
+const isAppleDevice = navigator?.platform ? ["iPhone", "iPad", "iPod"].includes(navigator.platform) : false;
+
 const persistedState = {
     autoLayout: getDesktopDefaults(),
     ytUrlHistory: [],
     twUrlHistory: [],
-    muteOthers: false,
+    // Default true for iOS device
+    muteOthers: isAppleDevice,
 };
 export const state = { ...initialState, ...persistedState };
 
@@ -48,9 +51,11 @@ const getters = {
     desktopGroups(state, getters) {
         const groups = [];
         const seen = new Set();
-        getters.decodedDesktopPresets.concat(getters.decodedCustomPresets).forEach((preset) => {
+        const customId = new Set(getters.decodedCustomPresets.map((p) => p.id));
+        getters.decodedCustomPresets.concat(getters.decodedDesktopPresets).forEach((preset) => {
             if (seen.has(preset.id)) return;
             seen.add(preset.id);
+            if (customId.has(preset.id)) preset.custom = true;
             if (!groups[preset.videoCellCount]) groups[preset.videoCellCount] = [];
             groups[preset.videoCellCount].push(preset);
         });
