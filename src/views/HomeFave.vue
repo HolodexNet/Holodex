@@ -96,9 +96,9 @@
           xs="4"
           sm="4"
           style="display: flex; justify-content: flex-end;"
-          class="ma-0 pb-0"
+          class="ma-0 pb-0 pt-0"
         >
-          <portal :to="`date-selector${isFavPage}`" :disabled="!isActive && $vuetify.breakpoint.xs">
+          <portal :to="`date-selector${isFavPage}`" :disabled="$vuetify.breakpoint.xs">
             <v-menu
               v-show="isActive"
               v-model="datePicker"
