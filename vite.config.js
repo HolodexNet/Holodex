@@ -123,7 +123,7 @@ export default ({ mode }) => {
                     // workbox options for generateSW
                 },
             }),
-            visualizer({ gzipSize: true }),
+            visualizer({ gzipSize: true, brotliSize: true }),
         ],
         resolve: {
             alias: [
