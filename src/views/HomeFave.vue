@@ -58,7 +58,7 @@
     </template>
 
     <LoadingOverlay :is-loading="false" :show-error="hasError" />
-    <div v-show="!hasError">
+    <div v-show="!hasError && !(isFavPage && !(isLoggedIn && favoriteChannelIDs.size > 0))">
       <template v-if="tab === Tabs.LIVE_UPCOMING">
         <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
         <div v-if="lives.length || upcoming.length">
@@ -118,8 +118,7 @@
                   regular
                   clearable
                   single-line
-                  style="opacity: 0.7; max-width: 190px;"
-                  suffix="UTC"
+                  style="opacity: 0.7; max-width: 170px;"
                   v-bind="attrs"
                   v-on="on"
                 />
@@ -173,6 +172,11 @@ import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
+import { localizedDayjs } from "@/utils/time";
+
+function localToUTC(date) {
+    return localizedDayjs(date).add(1, "day").toDate().toISOString();
+}
 
 export default {
     name: "HomeFave",
@@ -404,7 +408,7 @@ export default {
                     org: this.$store.state.currentOrg.name,
                     lang: this.$store.state.settings.clipLangs.join(","),
                     paginated: !this.scrollMode,
-                    to: this.toDate ? this.toDate : undefined,
+                    to: this.toDate ? localToUTC(this.toDate) : undefined,
                     limit,
                     offset,
                 });
