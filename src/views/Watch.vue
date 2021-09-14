@@ -1,11 +1,16 @@
 <template>
-  <LoadingOverlay v-if="isLoading || hasError" :is-loading="isLoading" :show-error="hasError" />
+  <LoadingOverlay
+    v-if="isLoading || hasError"
+    :is-loading="isLoading"
+    :show-error="hasError"
+  />
   <div
     v-else
     ref="watchFullscreen"
     style="overflow-y: auto"
     :style="{
-      'overflow-y': showChatWindow && isMobile && !landscape ? 'hidden' : 'auto',
+      'overflow-y':
+        showChatWindow && isMobile && !landscape ? 'hidden' : 'auto',
       'max-height': showChatWindow && isMobile && !landscape ? '100vh' : '',
     }"
   >
@@ -32,7 +37,8 @@
         class="d-inline-flex flex-shrink-1 flex-column py-0 pl-0"
         :md="theaterMode ? 12 : 9"
         :style="{
-          'padding-right': isMobile && showChatWindow && landscape ? '220px' : 0,
+          'padding-right':
+            isMobile && showChatWindow && landscape ? '220px' : 0,
           width: '100%',
         }"
       >
@@ -49,14 +55,13 @@
               @ready="ready"
               @playing="playing"
               @ended="ended"
-
               v-on="!hasLiveChat && { currentTime: handleCurrentTime }"
             />
           </template>
         </WatchFrame>
         <WatchHighlights
           v-if="comments.length && !theaterMode"
-          key="comments"
+          key="highlights"
           :comments="comments"
           :video="video"
           :limit="isMobile ? 5 : 0"
@@ -350,7 +355,10 @@ export default {
             this.$store.dispatch("watch/fetchVideo").then(() => {
                 this.$store.dispatch("history/addWatchedVideo", this.video);
                 // Check if there's at least 10 liveTls and open the tl panel
-                if (this.video?.live_tl_count?.[this.$store.state.settings.liveTlLang] > 10) {
+                if (
+                    this.video?.live_tl_count?.[this.$store.state.settings.liveTlLang]
+                    > 10
+                ) {
                     this.showTL = true;
                 }
             });
