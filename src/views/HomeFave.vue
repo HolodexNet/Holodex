@@ -41,7 +41,7 @@
         <v-tab class="pa-2">
           {{ $t("views.home.recentVideoToggles.subber") }}
         </v-tab>
-        <portal-target v-if="!$vuetify.breakpoint.xs" name="date-selector" class=" v-tab ml-auto" />
+        <portal-target v-if="!$vuetify.breakpoint.xs" :name="`date-selector${isFavPage}`" class=" v-tab ml-auto" />
       </v-tabs>
     </portal>
 
@@ -96,10 +96,11 @@
           xs="4"
           sm="4"
           style="display: flex; justify-content: flex-end;"
-          class="ma-0 pb-0"
+          class="ma-0 pb-0 pt-0"
         >
-          <portal to="date-selector" :disabled="$vuetify.breakpoint.xs">
+          <portal :to="`date-selector${isFavPage}`" :disabled="$vuetify.breakpoint.xs">
             <v-menu
+              v-show="isActive"
               v-model="datePicker"
               :close-on-content-click="false"
               transition="scale-transition"
