@@ -54,6 +54,14 @@
             />
           </template>
         </WatchFrame>
+        <WatchHighlights
+          v-if="comments.length && !theaterMode"
+          key="comments"
+          :comments="comments"
+          :video="video"
+          :limit="isMobile ? 5 : 0"
+          @timeJump="seekTo"
+        />
         <WatchToolBar :video="video" :no-back-button="!isMobile">
           <template #buttons>
             <v-tooltip v-if="hasLiveTL" bottom>
@@ -63,7 +71,7 @@
                   lg
                   :color="showTL ? 'primary' : ''"
                   v-bind="attrs"
-                  @click="showTL = !showTL;"
+                  @click="showTL = !showTL"
                   v-on="on"
                 >
                   <v-icon>
@@ -72,7 +80,9 @@
                 </v-btn>
               </template>
               <span>{{
-                showTL ? $t("views.watch.chat.hideTLBtn") : $t("views.watch.chat.showTLBtn")
+                showTL
+                  ? $t("views.watch.chat.hideTLBtn")
+                  : $t("views.watch.chat.showTLBtn")
               }}</span>
             </v-tooltip>
             <v-btn
@@ -112,8 +122,15 @@
           :video="video"
           @timeJump="seekTo"
         />
-        <WatchQuickEditor v-if="!theaterMode && (role === 'admin' || role === 'editor')" :video="video" />
-        <WatchPlaylist v-if="isMobile" v-model="playlistIndex" @playNext="playNextPlaylist" />
+        <WatchQuickEditor
+          v-if="!theaterMode && (role === 'admin' || role === 'editor')"
+          :video="video"
+        />
+        <WatchPlaylist
+          v-if="isMobile"
+          v-model="playlistIndex"
+          @playNext="playNextPlaylist"
+        />
         <!-- Mobile mode only sidebar -->
         <WatchSideBar v-if="isMobile" :video="video" @timeJump="seekTo" />
         <!-- Mobile mode Mugen -->
@@ -127,7 +144,10 @@
           @timeJump="seekTo"
         />
       </div>
-      <div class="related-videos pt-0 row ma-0" :class="{ 'sidebar-width': !isMobile && !theaterMode }">
+      <div
+        class="related-videos pt-0 row ma-0"
+        :class="{ 'sidebar-width': !isMobile && !theaterMode }"
+      >
         <v-col
           v-if="theaterMode"
           md="8"
@@ -135,7 +155,10 @@
           class="pa-0"
         >
           <WatchInfo key="info" :video="video" @timeJump="seekTo" />
-          <WatchQuickEditor v-if="role === 'admin' || role === 'editor'" :video="video" />
+          <WatchQuickEditor
+            v-if="role === 'admin' || role === 'editor'"
+            :video="video"
+          />
           <v-divider />
           <WatchComments
             v-if="comments.length"
@@ -146,7 +169,11 @@
             @timeJump="seekTo"
           />
         </v-col>
-        <v-col :md="theaterMode ? 4 : 12" :lg="theaterMode ? 3 : 12" class="py-0 pr-0 pl-0 pl-md-3">
+        <v-col
+          :md="theaterMode ? 4 : 12"
+          :lg="theaterMode ? 3 : 12"
+          class="py-0 pr-0 pl-0 pl-md-3"
+        >
           <WatchLiveChat
             v-if="showChatWindow"
             v-model="chatStatus"
@@ -158,7 +185,10 @@
             @timeJump="seekTo"
           />
           <template v-if="!isMobile">
-            <WatchPlaylist v-model="playlistIndex" @playNext="playNextPlaylist" />
+            <WatchPlaylist
+              v-model="playlistIndex"
+              @playNext="playNextPlaylist"
+            />
             <WatchMugen v-if="isMugen" @playNext="playNextMugen" />
             <WatchSideBar :video="video" @timeJump="seekTo" />
           </template>
@@ -176,14 +206,13 @@ import WatchFrame from "@/components/watch/WatchFrame.vue";
 import WatchSideBar from "@/components/watch/WatchSideBar.vue";
 import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
+import WatchHighlights from "@/components/watch/WatchHighlights.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
-import {
-    mdiOpenInNew, mdiRectangleOutline,
-} from "@mdi/js";
+import { mdiOpenInNew, mdiRectangleOutline } from "@mdi/js";
 
 export default {
     name: "Watch",
@@ -200,6 +229,7 @@ export default {
         WatchLiveChat,
         WatchSideBar,
         WatchComments,
+        WatchHighlights,
         WatchToolBar,
         WatchQuickEditor,
         WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
@@ -242,13 +272,19 @@ export default {
         },
         hasLiveChat() {
             // live chat exits for live/upcoming streams
-            return this.video.type === "stream" && ["upcoming", "live"].includes(this.video.status);
+            return (
+                this.video.type === "stream"
+                && ["upcoming", "live"].includes(this.video.status)
+            );
         },
         hasLiveTL() {
             return this.video.type === "stream";
         },
         showChatWindow() {
-            return (this.hasLiveChat && this.showLiveChat) || (this.showTL && this.hasLiveTL);
+            return (
+                (this.hasLiveChat && this.showLiveChat)
+                || (this.showTL && this.hasLiveTL)
+            );
         },
         isMugen() {
             return this.$route.name === "mugen-clips";
@@ -386,22 +422,22 @@ export default {
 
 <style>
 div.notification-sticker {
-    position: absolute;
-    top: 1px;
-    right: 2px;
-    border-radius: 4px;
-    width: 8px;
-    height: 8px;
-    background-color: rgb(230, 33, 23);
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  border-radius: 4px;
+  width: 8px;
+  height: 8px;
+  background-color: rgb(230, 33, 23);
 }
 
 .sidebar-width {
-    flex: 0 0 25%;
-    max-width: 25%;
-    min-width: 324px;
+  flex: 0 0 25%;
+  max-width: 25%;
+  min-width: 324px;
 }
 
 .min-sidebar-width {
-    min-width: 320px;
+  min-width: 320px;
 }
 </style>
