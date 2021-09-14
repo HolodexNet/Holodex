@@ -1,11 +1,11 @@
-// @ts-ignore
-import App from "@livetl/ui-components/components/Lite.svelte";
-import "smelte/src/tailwind.css";
+/* eslint-disable */
+// @ts-nocheck
 
-const app = new App({
-    target: document.body,
-    props: {
-    },
+import("smelte/src/tailwind.css");
+import("@livetl/ui-components/components/Lite.svelte").then((component) => {
+    new component.default({
+        target: document.body,
+        props: {
+        },
+    });
 });
-
-export default app;
