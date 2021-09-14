@@ -3,17 +3,27 @@
     <div class="highlight-container">
       <div class="highlight-bar">
         <template v-for="b in buckets">
-          <v-tooltip :key="b.display" bottom>
+          <v-tooltip
+            :key="b.display"
+            top
+            color="black"
+            transition="undefined"
+          >
             <template #activator="{ on, attrs }">
               <div
                 v-bind="attrs"
-                class="highlight-chip"
-                :style="computeStyle(b.time, b.count)"
-                @click.prevent="jump(b.time)"
+                class="highlight-item"
+                :style="computeItemStyle(b.time)"
                 v-on="on"
-              />
+                @click.prevent="jump(b.time)"
+              >
+                <div
+                  class="highlight-chip"
+                  :style="computeTipStyle(b.time, b.count)"
+                />
+              </div>
             </template>
-            <div>
+            <div class="highlight-comments">
               <template v-for="c in b.comments">
                 <div :key="c">
                   {{ c }}
@@ -28,16 +38,41 @@
 </template>
 
 <script lang="ts">
-// import Comment from "@/components/video/Comment.vue";
 import { formatDuration } from "@/utils/time";
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])([^\r\n]+)?/gm;
 
+function stopWord(word: string) {
+    return ![
+        "to",
+        "from",
+        "i",
+        "for",
+        "on",
+        "in",
+        "out",
+        "with",
+        "of",
+        "an",
+        "is",
+        "have",
+        "was",
+        "such",
+        "her",
+        "just",
+    ].includes(word.toLowerCase());
+}
+
+function decompose(input: string) {
+    return input
+        .replace(/[*',\-.\][()]/g, "")
+        .split(" ")
+        .filter(stopWord);
+}
+
 export default {
     name: "WatchHighlights",
-    components: {
-    // Comment,
-    },
+    components: {},
     props: {
         comments: {
             type: Array,
@@ -47,27 +82,14 @@ export default {
             type: Object,
             required: true,
         },
-        limit: {
-            type: Number,
-            required: false,
-            default: 3,
-        },
-        hideBuckets: {
-            type: Boolean,
-            default: false,
-        },
     },
     data() {
-        return {
-            //   currentFilter: -1,
-            //   expanded: false,
-        };
+        return {};
     },
     computed: {
         buckets() {
-            console.log(this.video.duration);
-            const TIME_THRESHOLD = 5;
-            const MIN_COMMENTS = 2;
+            const TIME_THRESHOLD = 10;
+            const MIN_COMMENTS = 1;
 
             const arr = this.groupedComments;
             arr.sort((a, b) => a[0] - b[0]);
@@ -101,7 +123,6 @@ export default {
                 subBucket = [];
                 subBucket.push([t, comment]);
             });
-            console.log(buckets);
             return buckets.sort((a, b) => a.time - b.time);
         },
         groupedComments() {
@@ -119,8 +140,12 @@ export default {
                     const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
 
                     // analyze comment
-                    const text = match[4] ? match[4].trim() : undefined;
+                    const text = match[4]
+                        ? decompose(match[4].trim()).join(" ")
+                        : undefined;
+
                     if (text) ts.push([time, text]);
+
                     match = COMMENT_TIMESTAMP_REGEX.exec(comment.message);
                 }
 
@@ -133,9 +158,17 @@ export default {
     },
     methods: {
         formatDuration,
-        computeStyle(ts: number, count: number) {
+        computeItemStyle(ts: number) {
+            return {
+                marginLeft: `${Math.floor((ts / this.video.duration) * 100)}%`,
+            };
+        },
+        computeTipStyle(ts: number, count: number) {
             let width = 2;
-            let color = "gray";
+            let color = "rgb(74, 74, 74)";
+            if (count > 1) {
+                color = "#ededed";
+            }
             if (count > 2) {
                 color = "darkorange";
             }
@@ -145,7 +178,7 @@ export default {
             }
             if (count > 4) {
                 width = 4;
-                color = "darkred";
+                color = "#d05b5b";
             }
             if (count > 5) {
                 width = 5;
@@ -153,7 +186,6 @@ export default {
             }
             return {
                 width: `${width}px`,
-                marginLeft: `${Math.floor((ts / this.video.duration) * 100)}%`,
                 backgroundColor: color,
             };
         },
@@ -162,54 +194,47 @@ export default {
         },
     },
 };
-
-// function decompose(input: string) {
-//   return input.replace(/['",]/, "").split(" ").filter(stopWord);
-// }
-
-// function stopWord(word: string) {
-//   return ![
-//     "to",
-//     "from",
-//     "i",
-//     "for",
-//     "on",
-//     "in",
-//     "out",
-//     "with",
-//     "of",
-//     "an",
-//     "is",
-//     "have",
-//     "was",
-//     "such",
-//     "her",
-//     "just",
-//   ].includes(word.toLowerCase());
-// }
 </script>
-<style>
-button.ts-btn.v-btn {
-  font-size: 11px;
-  padding: 0px 5px !important;
-  height: 25px !important;
-}
-
+<style lang="scss">
 .highlight-container {
   padding: 12px;
+
+  &:hover {
+    .highlight-bar {
+      height: 15px;
+    }
+  }
 }
 
 .highlight-bar {
   width: 100%;
-  height: 20px;
-  background: black;
-  display: flex;
+  height: 5px;
   position: relative;
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+}
+
+.highlight-item {
+  --marginSize: 4px;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  padding: 0 20px 0 var(--marginSize);
+  transform: translateX(calc(-1 * var(--marginSize)));
+  &:hover {
+    .highlight-chip {
+      transform: scaleX(2);
+    }
+  }
+}
+
+.highlight-comments {
+  margin-top: 2px;
 }
 
 .highlight-chip {
   height: 100%;
-  position: absolute;
-  /* margin-left: 0%; */
+  transform-origin: center;
+  transition: all 0.2s ease-out;
 }
 </style>
