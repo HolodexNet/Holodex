@@ -78,6 +78,8 @@ views:
     editAutoLayout: Oto reiouto ejito
     changeLayout: Reiouto change
     hints: Hint peko
+    mediaControlsHint1: Media Contororu use streaming mute and sync (
+    mediaControlsHint2: ) peko
 time:
   soon: will start
 editor:
