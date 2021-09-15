@@ -49,36 +49,39 @@ interface ParsedComment {
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])([^\r\n]+)?/gm;
 
-function removeStopWords(word: string) {
-    return ![
-        "to",
-        "from",
-        "i",
-        "for",
-        "on",
-        "in",
-        "out",
-        "with",
-        "of",
-        "an",
-        "is",
-        "have",
-        "was",
-        "such",
-        "her",
-        "just",
-    ].includes(word.toLowerCase());
+const STOP_WORDS = new Set([
+    "to",
+    "from",
+    "i",
+    "for",
+    "on",
+    "in",
+    "out",
+    "with",
+    "of",
+    "an",
+    "the",
+    "is",
+    "have",
+    "was",
+    "such",
+    "her",
+    "just",
+]);
+
+function removeStopWords(words: string) {
+    return words
+        .split(" ")
+        .filter((s) => !STOP_WORDS.has(s.toLowerCase()))
+        .join(" ");
 }
 
 function removePunctuations(input: string) {
-    return input.replace(/[*',\-.\][()、。]/g, "");
+    return input.replace(/[*,\-.\][()、。]/g, "");
 }
 
 function filterByWordCount(limit = 2) {
-    return (input: string) => input
-        .split(" ")
-        .filter((c) => c.length >= limit)
-        .join(" ");
+    return (input: string) => input.length >= limit;
 }
 
 function parseTimestampComments(message: string): ParsedComment[] {
@@ -118,7 +121,7 @@ export default {
     },
     computed: {
         buckets() {
-            const TIME_THRESHOLD = 10;
+            const TIME_THRESHOLD = 40;
             const MIN_BUCKET_SIZE = 1;
             const MIN_TIMESTAMP_OCCURENCE = 1;
 
@@ -154,22 +157,25 @@ export default {
 
                 if (subBucket.length >= MIN_BUCKET_SIZE) {
                     // select floor median has the display time
-                    const median = subBucket[Math.floor(subBucket.length / 2)].time;
+                    // const median = subBucket[Math.floor(subBucket.length / 2)].time;
+                    const th = Math.floor(subBucket.length / 3);
+                    const median = subBucket[th].time;
 
                     // pick best comment to show
                     const processed = subBucket
                         .sort((a, b) => b.occurence - a.occurence) // prioritize chapter comment
                         .map((s) => s.text) // ParsedComment -> string
                         .map(removePunctuations) // remove punctuations
-                        .filter(removeStopWords) // remove stop words
-                        .map(filterByWordCount(1)) // remove single word comments
-                        .map((c) => c.trim());
+                        .map(removeStopWords) // remove stop words
+                        .map((c) => c.trim())
+                        .filter((c) => c);
+                    if (processed.length === 0) return;
 
                     let best = processed[0];
-                    if (!best) {
-                        best = subBucket.sort((a, b) => a.text.length - b.text.length)[0]
-                            .text;
-                    }
+
+                    const stricter = processed.filter(filterByWordCount(1)); // remove single word comments
+                    if (stricter.length > 0) [best] = stricter;
+
                     if (best.length > 60) best = `${best.slice(0, 60)}...`;
 
                     buckets.push({
@@ -191,15 +197,15 @@ export default {
         formatDuration,
         computeItemStyle(ts: number) {
             return {
-                marginLeft: `${((ts / this.video.duration) * 100).toFixed(1)}%`,
+                marginLeft: `${Math.round((ts / this.video.duration) * 100)}%`,
             };
         },
         computeTipStyle(ts: number, count: number) {
-            const width = "2px";
+            let width = "1px";
             let color = "rgb(74, 74, 74)";
             if (count > 1) {
-                // width = "2px";
-                color = "#ededed";
+                width = "2px";
+                color = "rgb(164, 164, 164)";
             }
             if (count > 2) {
                 color = "darkorange";
@@ -246,13 +252,13 @@ export default {
 }
 
 .highlight-item {
-  --marginSize: 4px;
+  --marginSize: 3px;
   height: 100%;
   position: absolute;
   display: flex;
-  /* padding: 0 20px 0 var(--marginSize); */
-  padding: 0 20px 0 0;
-  /* transform: translateX(calc(-1 * var(--marginSize))); */
+  padding: 0 20px 0 var(--marginSize);
+  /* padding: 0 20px 0 0; */
+  transform: translateX(calc(-1 * var(--marginSize)));
   &:hover {
     .highlight-chip {
       transform: scaleX(2);
