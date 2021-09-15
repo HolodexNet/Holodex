@@ -167,8 +167,8 @@ export default {
                         .map((s) => s.text) // ParsedComment -> string
                         .map(removePunctuations) // remove punctuations
                         .map(removeStopWords) // remove stop words
-                        .map((c) => c.trim())
-                        .filter((c) => c);
+                        .map((c) => c.trim()) // strip white spaces
+                        .filter((c) => c.length > 1); // filter out clutter
                     if (processed.length === 0) return;
 
                     let best = processed[0];
