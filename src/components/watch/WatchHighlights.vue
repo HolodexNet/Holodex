@@ -43,8 +43,8 @@ import { formatDuration } from "@/utils/time";
 
 interface ParsedComment {
     time: number;
-    text?: string;
     occurence: number;
+    text?: string;
 }
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])([^\r\n]+)?/gm;
@@ -159,15 +159,16 @@ export default {
                     // pick best comment to show
                     const processed = subBucket
                         .sort((a, b) => b.occurence - a.occurence) // prioritize chapter comment
-                        .map((s) => s.text) // convert to text array
+                        .map((s) => s.text) // ParsedComment -> string
                         .map(removePunctuations) // remove punctuations
                         .filter(removeStopWords) // remove stop words
                         .map(filterByWordCount(1)) // remove single word comments
                         .map((c) => c.trim());
+
                     let best = processed[0];
-                    /* eslint-disable-next-line */
-          if (!best) { best = subBucket.sort((a, b) => a.text.length - b.text.length)[0]
-                        .text;
+                    if (!best) {
+                        best = subBucket.sort((a, b) => a.text.length - b.text.length)[0]
+                            .text;
                     }
                     if (best.length > 60) best = `${best.slice(0, 60)}...`;
 
@@ -194,10 +195,10 @@ export default {
             };
         },
         computeTipStyle(ts: number, count: number) {
-            let width = "1px";
+            const width = "2px";
             let color = "rgb(74, 74, 74)";
             if (count > 1) {
-                width = "2px";
+                // width = "2px";
                 color = "#ededed";
             }
             if (count > 2) {
