@@ -2,13 +2,14 @@ import { TL_LANGS, VIDEO_URL_REGEX, TWITCH_VIDEO_URL_REGEX } from "@/utils/const
 import { langs } from "@/plugins/vuetify";
 
 export function resizeChannelPhoto(photoUrl, size) {
+    const deviceSize = size * window.devicePixelRatio;
     const split = photoUrl.split("=s");
     // try to hit cache by using a common size
     let adjSize = 48;
-    if (size < 88 && size > 55) adjSize = 88;
-    else if (size <= 55) adjSize = 48;
+    if (deviceSize < 88 && deviceSize > 55) adjSize = 88;
+    else if (deviceSize <= 55) adjSize = 48;
     else adjSize = 176;
-    return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
+    return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj`;
 }
 
 export function getVideoThumbnails(ytVideoKey, useWebP) {
