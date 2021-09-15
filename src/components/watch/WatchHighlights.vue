@@ -41,9 +41,15 @@
 <script lang="ts">
 import { formatDuration } from "@/utils/time";
 
+interface ParsedComment {
+    time: number;
+    text?: string;
+    occurence: number;
+}
+
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])([^\r\n]+)?/gm;
 
-function stopWord(word: string) {
+function removeStopWords(word: string) {
     return ![
         "to",
         "from",
@@ -64,11 +70,34 @@ function stopWord(word: string) {
     ].includes(word.toLowerCase());
 }
 
-function decompose(input: string) {
-    return input
-        .replace(/[*',\-.\][()]/g, "")
+function removePunctuations(input: string) {
+    return input.replace(/[*',\-.\][()、。]/g, "");
+}
+
+function filterByWordCount(limit = 2) {
+    return (input: string) => input
         .split(" ")
-        .filter(stopWord);
+        .filter((c) => c.length >= limit)
+        .join(" ");
+}
+
+function parseTimestampComments(message: string): ParsedComment[] {
+    const pairs = [];
+    let match = COMMENT_TIMESTAMP_REGEX.exec(message);
+    while (match != null) {
+        const hr = match[1];
+        const min = match[2];
+        const sec = match[3];
+        const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
+
+        const text = match[4];
+
+        pairs.push({ time, text });
+
+        match = COMMENT_TIMESTAMP_REGEX.exec(message);
+    }
+    for (const pair of pairs) pair.occurence = pairs.length;
+    return pairs;
 }
 
 export default {
@@ -90,95 +119,85 @@ export default {
     computed: {
         buckets() {
             const TIME_THRESHOLD = 10;
-            const MIN_COMMENTS = 1;
+            const MIN_BUCKET_SIZE = 1;
+            const MIN_TIMESTAMP_OCCURENCE = 1;
 
-            const arr = this.groupedComments;
-            arr.sort((a, b) => a[0] - b[0]);
+            const parsed: ParsedComment[] = [];
+            for (const comment of this.comments) {
+                const pairs = parseTimestampComments(comment.message).filter(
+                    (pair) => pair.text,
+                );
+
+                if (pairs.length >= MIN_TIMESTAMP_OCCURENCE) {
+                    parsed.push(...pairs);
+                }
+            }
+
+            parsed.sort((a, b) => a.time - b.time);
 
             const buckets = [];
-
             let currentBucket = 0;
-            let subBucket = [];
-            arr.forEach(([t, comment], index) => {
+            let subBucket: ParsedComment[] = [];
+
+            parsed.forEach((comment, index) => {
                 // put into curent subbucket if time is within 10 secs
-                if (t - currentBucket <= TIME_THRESHOLD && index !== arr.length - 1) {
-                    subBucket.push([t, comment]);
+                if (
+                    comment.time - currentBucket <= TIME_THRESHOLD
+                    && index !== parsed.length - 1
+                ) {
+                    subBucket.push(comment);
                     return;
                 }
-                if (t - currentBucket <= TIME_THRESHOLD) {
-                    subBucket.push([t, comment]);
+                if (comment.time - currentBucket <= TIME_THRESHOLD) {
+                    subBucket.push(comment);
                 }
 
-                if (subBucket.length >= MIN_COMMENTS) {
+                if (subBucket.length >= MIN_BUCKET_SIZE) {
                     // select floor median has the display time
-                    const median = subBucket[Math.floor(subBucket.length / 2)][0];
+                    const median = subBucket[Math.floor(subBucket.length / 2)].time;
 
                     // pick best comment to show
-                    const comments = subBucket.map((s) => s[1]);
-                    let best = comments
-                        .filter((c) => c.split(" ").length >= 2)
-                        // .filter((comment) => !/(plz)/.test(comment))
-                        .sort((a, b) => a.length - b.length)[0];
+                    const processed = subBucket
+                        .sort((a, b) => b.occurence - a.occurence) // prioritize chapter comment
+                        .map((s) => s.text) // convert to text array
+                        .map(removePunctuations) // remove punctuations
+                        .filter(removeStopWords) // remove stop words
+                        .map(filterByWordCount(1)) // remove single word comments
+                        .map((c) => c.trim());
+                    let best = processed[0];
                     /* eslint-disable-next-line */
-          if (!best) best = comments[0];
+          if (!best) { best = subBucket.sort((a, b) => a.text.length - b.text.length)[0]
+                        .text;
+                    }
                     if (best.length > 60) best = `${best.slice(0, 60)}...`;
 
                     buckets.push({
                         time: median,
                         count: subBucket.length,
-                        comments,
                         best,
                         display: formatDuration(median * 1000),
                     });
                 }
                 // clear and set a new bucket
-                currentBucket = t;
+                currentBucket = comment.time;
                 subBucket = [];
-                subBucket.push([t, comment]);
+                subBucket.push(comment);
             });
             return buckets.sort((a, b) => a.time - b.time);
-        },
-        groupedComments() {
-            const MIN_TIMESTAMPS = 1;
-            const result = [];
-            for (const comment of this.comments) {
-                const ts = [];
-
-                let match = COMMENT_TIMESTAMP_REGEX.exec(comment.message);
-                while (match != null) {
-                    // analyze timestamp
-                    const hr = match[1];
-                    const min = match[2];
-                    const sec = match[3];
-                    const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
-
-                    // analyze comment
-                    const text = match[4]
-                        ? decompose(match[4]).join(" ").trim()
-                        : undefined;
-                    if (text) ts.push([time, text]);
-
-                    match = COMMENT_TIMESTAMP_REGEX.exec(comment.message);
-                }
-
-                if (ts.length >= MIN_TIMESTAMPS) {
-                    result.push(...ts);
-                }
-            }
-            return result;
         },
     },
     methods: {
         formatDuration,
         computeItemStyle(ts: number) {
             return {
-                marginLeft: `${Math.floor((ts / this.video.duration) * 100)}%`,
+                marginLeft: `${((ts / this.video.duration) * 100).toFixed(1)}%`,
             };
         },
         computeTipStyle(ts: number, count: number) {
-            const width = 2;
+            let width = "1px";
             let color = "rgb(74, 74, 74)";
             if (count > 1) {
+                width = "2px";
                 color = "#ededed";
             }
             if (count > 2) {
@@ -194,7 +213,7 @@ export default {
                 color = "red";
             }
             return {
-                width: `${width}px`,
+                width,
                 backgroundColor: color,
             };
         },
@@ -230,8 +249,9 @@ export default {
   height: 100%;
   position: absolute;
   display: flex;
-  padding: 0 20px 0 var(--marginSize);
-  transform: translateX(calc(-1 * var(--marginSize)));
+  /* padding: 0 20px 0 var(--marginSize); */
+  padding: 0 20px 0 0;
+  /* transform: translateX(calc(-1 * var(--marginSize))); */
   &:hover {
     .highlight-chip {
       transform: scaleX(2);
