@@ -8,7 +8,6 @@ export default {
     data() {
         return {
             mdiArrowExpand,
-            tlHistory: [],
             MESSAGE_TYPES: Object.freeze({
                 END: "end",
                 ERROR: "error",
@@ -21,6 +20,7 @@ export default {
             historyLoading: false,
             completed: false,
             limit: 20,
+            lastTimestamp: 0,
         };
     },
     props: {
@@ -34,16 +34,8 @@ export default {
             return this.$store.state.settings.lang;
         },
         ...syncState("settings", [
-            "liveTlStickBottom",
-            "liveTlLang",
-            "liveTlFontSize",
-            "liveTlShowVerified",
-            "liveTlShowModerator",
             "liveTlWindowSize",
         ]),
-        blockedNames() {
-            return this.$store.getters["settings/liveTlBlockedNames"];
-        },
         startTimeMillis() {
             return Number(dayjs(this.video.start_actual || this.video.start_scheduled));
         },
@@ -51,7 +43,7 @@ export default {
     methods: {
         loadMessages(firstLoad = false, loadAll = false) {
             this.historyLoading = true;
-            const lastTimestamp = !firstLoad && this.tlHistory[0].timestamp;
+            const lastTimestamp = !firstLoad && this.lastTimestamp;
             api.chatHistory(this.video.id, {
                 lang: this.liveTlLang,
                 ...(this.liveTlShowVerified && { verified: 1 }),
@@ -61,12 +53,8 @@ export default {
             })
                 .then(({ data }) => {
                     this.completed = data.length !== this.limit || loadAll;
-                    const filtered = data.filter((m) => !this.blockedNames.has(m.name));
-                    if (firstLoad) this.tlHistory = filtered.map(this.parseMessage);
-                    else this.tlHistory.unshift(...filtered.map(this.parseMessage));
-
-                    // Set last message as breakpoint, used for maintaing scrolling and styling
-                    if (this.tlHistory.length) this.tlHistory[0].breakpoint = true;
+                    const converted = data.map(this.parseMessage);
+                    // TODO LIVETL
                     this.curIndex = 0;
                 })
                 .catch((e) => {

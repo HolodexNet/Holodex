@@ -61,7 +61,6 @@
 import { dayjs } from "@/utils/time";
 // import VirtualList from "vue-virtual-scroll-list";
 // import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
-import ChatMessage from "./ChatMessage.vue";
 import chatMixin from "./chatMixin";
 import LiveTL from "./LiveTL.vue";
 

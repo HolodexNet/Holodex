@@ -154,10 +154,6 @@ export default {
             // bubble event to Watch view
             this.$emit("videoUpdate", update);
         },
-        handleHistoryLength(length) {
-            // in this case, bubble the event
-            this.$emit("historyLength", length);
-        },
     },
 };
 </script>

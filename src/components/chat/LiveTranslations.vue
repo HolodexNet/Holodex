@@ -5,8 +5,6 @@
     flat
     style="width: 100%"
   >
-    <LiveTL />
-  <!--
     <v-overlay absolute :value="showOverlay || (!forceCloseOverlay && $socket.disconnected)" opacity="0.8">
       <div v-if="isLoading">
         {{ $t("views.watch.chat.loading") }}
@@ -23,64 +21,15 @@
     </v-overlay>
     <v-card-subtitle class="py-1 d-flex justify-space-between">
       <div :class="connected ? 'green--text' : 'red--text'">
-        TLdex [{{ liveTlLang }}]
+        LiveTL [Lite]
       </div>
-      <span>
-        <v-dialog v-model="expanded" width="800">
-          <template #activator="{ on, attrs }">
-            <v-btn
-              icon
-              x-small
-              v-bind="attrs"
-              v-on="on"
-            >
-              <v-icon>
-                {{ mdiArrowExpand }}
-              </v-icon>
-            </v-btn>
-          </template>
-
-          <v-card>
-            <portal-target name="expandedMessage" class="d-flex tl-expanded" />
-            <v-divider />
-            <v-card-actions>
-              <v-spacer />
-              <v-btn text color="red" @click="expanded = false">
-                {{ $t("views.app.close_btn") }}
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <WatchLiveTranslationsSetting />
-      </span>
+      <WatchLiveTranslationsSetting />
     </v-card-subtitle>
     <v-divider />
-    <portal to="expandedMessage" :disabled="!expanded" slim>
-      <message-renderer
-        ref="tlBody"
-        :tl-history="tlHistory"
-        :font-size="liveTlFontSize"
-      >
-        <v-btn
-          v-if="!historyLoading"
-          text
-          color="primary"
-          :disabled="completed"
-          @click="loadMessages()"
-        >
-          {{ completed ? "Start of Messages" : "Load More" }}
-        </v-btn>
-        <v-btn
-          v-if="!completed && !historyLoading && expanded"
-          text
-          color="primary"
-          @click="loadMessages(false, true)"
-        >
-          Load All
-        </v-btn>
-      </message-renderer>
-    </portal>
-  -->
+    <LiveTL
+      :completed="completed"
+      :history-loading="historyLoading"
+    />
   </v-card>
 </template>
 
@@ -90,9 +39,8 @@ import { dayjs } from "@/utils/time";
 import VueSocketIOExt from "vue-socket.io-extended";
 import { Manager } from "socket.io-client";
 import Vue from "vue";
-// import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
+import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
-// import MessageRenderer from "./MessageRenderer.vue";
 import LiveTL from "./LiveTL.vue";
 
 const manager = new Manager(API_BASE_URL, {
@@ -109,8 +57,7 @@ Vue.use(VueSocketIOExt, manager.socket("/"));
 export default {
     name: "LiveTranslations",
     components: {
-        // WatchLiveTranslationsSetting,
-        // MessageRenderer,
+        WatchLiveTranslationsSetting,
         LiveTL,
     },
     mixins: [chatMixin],
@@ -219,9 +166,6 @@ export default {
         this.tlLeave();
     },
     methods: {
-        toggleBlockName(name) {
-            this.$store.commit("settings/toggleLiveTlBlocked", name);
-        },
         registerListener() {
             this.$socket.client.on(`${this.video.id}/${this.liveTlLang}`, this.handleMessage);
         },
@@ -242,8 +186,7 @@ export default {
                     || (msg.is_verified && this.liveTlShowVerified)
                 ) {
                     if (Math.abs(this.$refs.tlBody.scrollTop) <= 15) this.$refs.tlBody.scrollTo(0, 0);
-                    this.tlHistory.push(this.parseMessage(msg));
-                    this.$emit("historyLength", this.tlHistory.length);
+                    // this.tlHistory.push(this.parseMessage(msg));
                 }
                 return;
             }
