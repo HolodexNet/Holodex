@@ -16,7 +16,10 @@
       height="3"
       @change="progressChange"
     />
-    <div class="d-flex justify-space-between pa-2" :class="{ 'flex-column': $vuetify.breakpoint.xs }">
+    <div
+      class="d-flex justify-space-between pa-2"
+      :class="{ 'flex-column': $vuetify.breakpoint.xs }"
+    >
       <div class="player-controls d-flex align-center">
         <div>
           <v-btn
@@ -115,7 +118,10 @@
             </v-btn>
           </v-slide-x-transition>
         </div>
-        <div v-if="$vuetify.breakpoint.xs" style="display: flex; flex-direction: column; align-items: center">
+        <div
+          v-if="$vuetify.breakpoint.xs"
+          style="display: flex; flex-direction: column; align-items: center"
+        >
           <v-btn icon @click="closePlayer">
             <v-icon>{{ icons.mdiClose }}</v-icon>
           </v-btn>
@@ -130,7 +136,7 @@
           <div class="pr-2">
             <v-img
               v-if="song && song.art"
-              :src="song.art.replace('100x100', '50x50')"
+              :src="resizeArtwork(song.art, 50)"
               aspect-ratio="1"
               height="auto"
               width="50px"
@@ -148,7 +154,9 @@
               >
                 {{ song.channel[nameProperty] || song.channel.name }}
               </router-link>
-              <span class="text-subtitle-2 grey--text">({{ song.original_artist }})</span>
+              <span
+                class="text-subtitle-2 grey--text"
+              >({{ song.original_artist }})</span>
             </div>
           </div>
           <div class="music-more-btn">
@@ -194,7 +202,10 @@
       </transition>
       <!-- </> -->
 
-      <div v-if="$vuetify.breakpoint.smAndUp" class="playlist-buttons align-self-center">
+      <div
+        v-if="$vuetify.breakpoint.smAndUp"
+        class="playlist-buttons align-self-center"
+      >
         <v-btn
           icon
           large
@@ -231,6 +242,7 @@ import { MUSIC_PLAYBACK_MODE, MUSIC_PLAYER_STATE } from "@/utils/consts";
 
 import { mapGetters, mapState } from "vuex";
 import backendApi from "@/utils/backend-api";
+import { resizeArtwork } from "@/utils/functions";
 import {
     mdiPlay,
     mdiPause,
@@ -349,7 +361,7 @@ export default {
         },
         playlist(nw) {
             if (nw.length === 0) this.$store.commit("music/closeBar");
-            if (this.isOpen === false && nw.length === 0) this.$store.commit("music/openBar");
+            if (this.isOpen === false && nw.length === 0) { this.$store.commit("music/openBar"); }
         },
         currentSong: {
             deep: true,
@@ -382,10 +394,13 @@ export default {
         window.removeEventListener("blur", this.probableMouseClickInIFrame);
     },
     methods: {
+        resizeArtwork,
         // event handlers:
         // eslint-disable-next-line no-unused-vars
         songIsDone() {
-            console.log(`Received notice that song ${this.song.name} is done. Asking for next song.`);
+            console.log(
+                `Received notice that song ${this.song.name} is done. Asking for next song.`,
+            );
             this.$store.commit("music/nextSong", { isAuto: true });
         },
         songIsPlaying(player) {
@@ -400,7 +415,11 @@ export default {
              *  The Music Player is supposed to be PAUSED
              *  AND the play event is not triggered by the user.
              *------------------------* */
-            if (!this.isOpen || (this.state === MUSIC_PLAYER_STATE.PAUSED && this.allowPlayOverride === 0)) {
+            if (
+                !this.isOpen
+                || (this.state === MUSIC_PLAYER_STATE.PAUSED
+                    && this.allowPlayOverride === 0)
+            ) {
                 this.player.pauseVideo();
                 return;
             }
@@ -434,7 +453,10 @@ export default {
                     && this.player.getPlayerState() === -1
                 ) {
                     console.log("Patience is now 0, requesting next song forcibly.");
-                    this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
+                    this.$store.commit("music/nextSong", {
+                        isAuto: true,
+                        breakLoop: true,
+                    });
                     this.$store.commit("music/play");
                     this.patience = 70;
                 }
@@ -466,7 +488,9 @@ export default {
                 this.$store.commit("music/play");
                 return;
             }
-            console.log("Due to error, Window is visible, so we are entering patience countdown.");
+            console.log(
+                "Due to error, Window is visible, so we are entering patience countdown.",
+            );
         },
         songReady(evt) {
             console.log("Youtube Player is Ready");
@@ -485,8 +509,13 @@ export default {
                     self.patience = 120;
                     if (document.visibilityState === "hidden") {
                         // when document is hidden
-                        console.log("Window isn't in view, requesting continue to next song");
-                        this.$store.commit("music/nextSong", { isAuto: true, breakLoop: true });
+                        console.log(
+                            "Window isn't in view, requesting continue to next song",
+                        );
+                        this.$store.commit("music/nextSong", {
+                            isAuto: true,
+                            breakLoop: true,
+                        });
                         this.$store.commit("music/play");
                         return;
                     }
@@ -557,90 +586,90 @@ export default {
 </script>
 <style lang="scss">
 .theme--light .music-player-bar {
-    background: rgba(254, 253, 255, 0.95);
+  background: rgba(254, 253, 255, 0.95);
 }
 
 .theme--dark .music-player-bar {
-    background: rgba(41, 43, 49, 0.99);
+  background: rgba(41, 43, 49, 0.99);
 }
 
 .music-player-bar {
-    position: relative;
+  position: relative;
 
-    iframe {
-        border-radius: 4px;
-    }
+  iframe {
+    border-radius: 4px;
+  }
 }
 
 .single-line-clamp {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    white-space: initial;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  white-space: initial;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
 }
 
 .player-controls {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .player-controls .v-btn::before {
-    background-color: transparent;
+  background-color: transparent;
 }
 #songChannel {
-    text-decoration: none;
+  text-decoration: none;
 }
 .queue-btn {
-    transition: background-color 2s ease;
-    background-color: transparent !important;
-    &.added-animation {
-        animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-        background-color: #f06292 !important;
-    }
+  transition: background-color 2s ease;
+  background-color: transparent !important;
+  &.added-animation {
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    background-color: #f06292 !important;
+  }
 }
 
 .invisible .v-progress-circular__underlay {
-    stroke: transparent;
+  stroke: transparent;
 }
 
 .music-progress {
-    .v-slider {
-        cursor: pointer !important;
-    }
+  .v-slider {
+    cursor: pointer !important;
+  }
 
+  .v-slider__track-container {
+    transition: height 0.2s ease-out;
+  }
+
+  .v-slider:hover {
     .v-slider__track-container {
-        transition: height 0.2s ease-out;
+      height: 6px;
     }
-
-    .v-slider:hover {
-        .v-slider__track-container {
-            height: 6px;
-        }
-    }
+  }
 }
 
 @keyframes shake {
-    10%,
-    90% {
-        transform: translate3d(-1px, 0, 0);
-    }
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
 
-    20%,
-    80% {
-        transform: translate3d(2px, 0, 0);
-    }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
 
-    30%,
-    50%,
-    70% {
-        transform: translate3d(-4px, 0, 0);
-    }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
 
-    40%,
-    60% {
-        transform: translate3d(4px, 0, 0);
-    }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 </style>
