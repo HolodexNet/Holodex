@@ -49,25 +49,7 @@ interface ParsedComment {
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])([^\r\n]+)?/gm;
 
-const STOP_WORDS = new Set([
-    "to",
-    "from",
-    "i",
-    "for",
-    "on",
-    "in",
-    "out",
-    "with",
-    "of",
-    "an",
-    "the",
-    "is",
-    "have",
-    "was",
-    "such",
-    "her",
-    "just",
-]);
+const STOP_WORDS = new Set(["an", "the"]);
 
 function removeStopWords(words: string) {
     return words
@@ -81,7 +63,7 @@ function removePunctuations(input: string) {
 }
 
 function filterByWordCount(limit = 2) {
-    return (input: string) => input.length >= limit;
+    return (input: string) => input.split(" ").length >= limit;
 }
 
 function parseTimestampComments(message: string): ParsedComment[] {
@@ -163,27 +145,33 @@ export default {
 
                     // pick best comment to show
                     const processed = subBucket
-                        .sort((a, b) => b.occurence - a.occurence) // prioritize chapter comment
+                        .sort(
+                            (a, b) => b.occurence / b.text.length - a.occurence / a.text.length,
+                        ) // prioritize chapter comment
                         .map((s) => s.text) // ParsedComment -> string
                         .map(removePunctuations) // remove punctuations
                         .map(removeStopWords) // remove stop words
                         .map((c) => c.trim()) // strip white spaces
                         .filter((c) => c.length > 1); // filter out clutter
-                    if (processed.length === 0) return;
 
-                    let best = processed[0];
+                    if (processed.length > 0) {
+                        let best = processed[0];
 
-                    const stricter = processed.filter(filterByWordCount(1)); // remove single word comments
-                    if (stricter.length > 0) [best] = stricter;
+                        const stricter = processed
+                            .filter(filterByWordCount(2))
+                            .filter((c) => !/(?:clip\s?(?:it|this)|[!?]{3})/i.test(c));
+                        console.log(stricter);
+                        if (stricter.length > 0) [best] = stricter;
 
-                    if (best.length > 60) best = `${best.slice(0, 60)}...`;
-
-                    buckets.push({
-                        time: median,
-                        count: subBucket.length,
-                        best,
-                        display: formatDuration(median * 1000),
-                    });
+                        if (best.length > 60) best = `${best.slice(0, 60)}...`;
+                        console.log(best, processed);
+                        buckets.push({
+                            time: median,
+                            count: subBucket.length,
+                            best,
+                            display: formatDuration(median * 1000),
+                        });
+                    }
                 }
                 // clear and set a new bucket
                 currentBucket = comment.time;
