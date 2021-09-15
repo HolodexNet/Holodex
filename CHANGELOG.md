@@ -1,20 +1,31 @@
 # Holodex Changelog
 
+### Unreleased
+
+##### New features
+
+- Added Highlight Moments bar (@uetchy)
+
+##### Patches & Bugfixes
+
+- Support for Retina display (@uetchy)
+
 ### 2.19 Holodex [*September 13th, 2021*]
 ##### New Features
-- Added Multiview preset quick switch
-- Added some extra hints for lesser known multiview features
-- Added many new preset layouts extending to 16 videos
+- Added Multiview preset quick switch (@RiceCakess)
+- Added some extra hints for lesser known multiview features (@RiceCakess)
+- Added many new preset layouts extending to 16 videos (@sphinxrave)
 - Added language **`lol-UWU`** thanks to Doubleturtle ❤️❤️❤️. Due tuwu the expewimentaw natuwe of the **uwu** wanguage, we might have sowme bugs, so pwease wepowt thewm in the discowd. We'we wooking for twanslatows to wwork on the fowwowing wanguages:
    - **Spanish** (**es-ES** and **es-MX**)
    - **PEKO English** (please help translate Holodex peko!)
 
 ##### Patches & Bugfixes
-- Improved multiview cells and cell control.
-- Fixed logo ignoring default page setting
-- Added a bulk edit menu for Holodex editors. We're always looking for more editors, since we have grown beyond 800 vtubers. If you're passionate about helping your oshi organize clips and music about them, or just about data quality on Holodex in general, feel free to contribute as you are (users can add music and tag mentioned channels), but if you're finding yourself doing it a LOT, and would like tools/bots to make it even easier, come ask us to become an editor! If you're an editor already, join the discord!
-- Added ability to *filter by date* on the home and favorites screens.
-- Deleted clips no longer show up on VTuber's **Clips** Tab.
+- Improved multiview cells and cell control
+- Fixed logo ignoring default page setting 
+- Added a bulk edit menu for Holodex editors (@uetchy)
+   - We're always looking for more editors, since we have grown beyond 800 vtubers. If you're passionate about helping your oshi organize clips and music about them, or just about data quality on Holodex in general, feel free to contribute as you are (users can add music and tag mentioned channels), but if you're finding yourself doing it a LOT, and would like tools/bots to make it even easier, come ask us to become an editor! If you're an editor already, join the discord!
+- Added ability to *filter by date* on the home and favorites screens (@sphinxrave)
+- Deleted clips no longer show up on VTuber's **Clips** Tab (@uetchy)
 
 ### 2.18.1 Holodex [*September 4th, 2021*]
 ##### New Features
