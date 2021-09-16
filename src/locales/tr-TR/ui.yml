@@ -343,6 +343,7 @@ views:
     presetsHint: Ön ayarlar menüsünü açarak seçili düzeni değiştirin veya otomatik kullanılacak düzenleri seçin
     mediaControlsHint1: Medya kontrollerini kullanarak yayınların seslerini kapatın veya yayınları senkronize (
     mediaControlsHint2: ) edin
+    dragDropHint: Hücreleri organize etmek için yayınları araç çubuğundan sürükleyip bırakın
   mugen:
     welcome: >-
       MugenClips'e Hoşgeldiniz! Bu sayfadaki herkes sizinle aynı rastgele seçilmiş klipleri görür. Dünya çapındaki Hololive hayranlarıyla birlikte izleyin ve sohbet edin. İleriye atlar ve herkesle tekrardan eşitlenmek isterseniz, lütfen sayfayı yenileyin.
