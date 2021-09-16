@@ -51,6 +51,8 @@ component:
     tlPresence: Active twanswatow in wast 30 mins
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -140,6 +142,7 @@ views:
     collabs: Cowwabs
     about: About
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
@@ -337,6 +340,14 @@ views:
     fullScreen: Fuwwscween
     mediaControls: Media contwows
     mediaControlsEmpty: Bideos being pwayed wiww appeaw hewe
+    editAutoLayout: Edit auto layout
+    changeLayout: Change layout
+    done: Done
+    hints: Hints
+    presetsHint: Open pwesets menu to switch wayouts and configuwe auto wayout
+    mediaControlsHint1: Use media contwows to mute and sync (
+    mediaControlsHint2: ) wive stweams
+    dragDropHint: Dwag and dwop stweams fwom toowbaw to cewws to owganize stweams
   mugen:
     welcome: >-
       Wewcome to mugencwips! evewyone on dis page ish seeing da same wandomwy sewected engwish howowive cwip. Watch awong and chat with howowive fans fwom acwoss da wowwd. If u skip ahead and wanna be we-sync'd with evewyone, pwease wefwesh da page.
