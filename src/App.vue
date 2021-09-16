@@ -9,7 +9,10 @@
 
     <v-main style="transition: none">
       <PullToRefresh />
-      <keep-alive max="4" exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists,About">
+      <keep-alive
+        max="4"
+        exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists,About"
+      >
         <router-view :key="viewKey" />
       </keep-alive>
     </v-main>
@@ -86,6 +89,11 @@ export default {
                 this.$store.dispatch("favorites/fetchLive", { force: false, minutes: 5 });
             }
         },
+        // eslint-disable-next-line func-names
+        "$vuetify.theme.themes.dark": function () {
+            // set theme-color
+            this.syncThemeColor();
+        },
     },
     async created() {
         this.$store.commit("setVisiblityState", document.visibilityState);
@@ -96,6 +104,8 @@ export default {
 
         // set theme
         this.$vuetify.theme.dark = this.darkMode;
+        this.syncThemeColor();
+
         // set lang
         this.$i18n.locale = this.$store.state.settings.lang;
         this.$vuetify.lang.current = this.$store.state.settings.lang;
@@ -162,31 +172,35 @@ export default {
             }
             return Promise.reject(error);
         },
+        syncThemeColor() {
+            const themeColor = this.$vuetify.theme.themes.dark.secondary;
+            window.document.head.querySelector<HTMLMetaElement>("meta[name=theme-color]").content = themeColor;
+        },
     },
 };
 </script>
 <style>
 .no-decoration {
-    text-decoration: none;
-    color: inherit !important;
+  text-decoration: none;
+  color: inherit !important;
 }
 
 html {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 body {
-    overscroll-behavior-y: contain;
-    background: black;
-    padding-left: min(calc(env(safe-area-inset-left)), 30px);
-    padding-right: min(calc(env(safe-area-inset-right)), 30px);
-    scrollbar-width: thin;
+  overscroll-behavior-y: contain;
+  background: black;
+  padding-left: min(calc(env(safe-area-inset-left)), 30px);
+  padding-right: min(calc(env(safe-area-inset-right)), 30px);
+  scrollbar-width: thin;
 }
 .row {
-    margin: 0px -12px;
+  margin: 0px -12px;
 }
 .bump-bottom .v-main__wrap {
-    /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
-    padding-bottom: 140px;
+  /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
+  padding-bottom: 140px;
 }
 </style>
