@@ -63,13 +63,13 @@ export default {
             if (!this.channel.banner) {
                 return "";
             }
-            const { mobile, tablet, tv } = getBannerImages(this.channel.banner);
+            const { mobile, tablet, tv, banner } = getBannerImages(this.channel.banner);
             const banners = {
                 xs: mobile,
                 sm: tablet,
                 xl: tv,
             };
-            return banners[this.$vuetify.breakpoint.name] || tv;
+            return banners[this.$vuetify.breakpoint.name] || banner;
         },
         avatarSize() {
             switch (this.$vuetify.breakpoint.name) {

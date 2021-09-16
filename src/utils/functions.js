@@ -60,11 +60,11 @@ export function getLang(weblang) {
 export function getBannerImages(url) {
     const base = `${url.split("=")[0]}=`;
     return {
-        banner: `${base}w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
-        mobile: `${base}w640-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj`,
+        tablet: `${base}w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
+        mobile: `${base}w960-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj`,
         // bannerTabletLowImageUrl:
         //     "w1138-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
-        tablet: `${base}w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
+        banner: `${base}w2276-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
         // bannerTabletHdImageUrl:
         //     "w2276-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
         // bannerTabletExtraHdImageUrl:
@@ -77,7 +77,7 @@ export function getBannerImages(url) {
         //     "w1280-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj",
         // bannerMobileExtraHdImageUrl:
         //     "w1440-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj",
-        tv: `${base}w2120-fcrop64=1,00000000ffffffff-k-c0xffffffff-no-nd-rj`,
+        tv: `${base}w2560-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
         // bannerTvLowImageUrl:
         //     "w854-fcrop64=1,00000000ffffffff-k-c0xffffffff-no-nd-rj",
         // bannerTvMediumImageUrl:
