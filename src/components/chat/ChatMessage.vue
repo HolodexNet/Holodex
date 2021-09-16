@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { syncState } from "@/utils/functions";
+import { mapState } from "vuex";
 
 export default {
     name: "ChatMessage",
@@ -60,7 +60,7 @@ export default {
         };
     },
     computed: {
-        ...syncState("settings", [
+        ...mapState("settings", [
             "liveTlShowLocalTime",
         ]),
         blockedNames() {

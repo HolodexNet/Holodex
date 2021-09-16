@@ -29,27 +29,6 @@ dayjs.extend(relativeTime, {
     thresholds,
 });
 
-export function getDate(t) {
-    const d = new Date(t);
-    d.getDate();
-    return d.toLocaleDateString();
-}
-export function getTime(t) {
-    const d = new Date(t);
-    d.getDate();
-    return d.toLocaleTimeString();
-}
-export function getTimestamp(t) {
-    const d = new Date(t);
-    d.getDate();
-    return d.now();
-}
-export function getCurrentYear(t) {
-    const d = new Date(t);
-    d.getDate();
-    return d.getFullYear();
-}
-
 export function formatDuration(secs) {
     const negate = secs < 0;
     const timestamp = secs > 60 * 60 * 1000 ? dayjs.utc(Math.abs(secs)).format("H:mm:ss") : dayjs.utc(Math.abs(secs)).format("m:ss");

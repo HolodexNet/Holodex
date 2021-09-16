@@ -1,6 +1,6 @@
 // Loads store settings, exposes loadHistory and parseMessage function
 import api from "@/utils/backend-api";
-import { formatDuration, dayjs, getTime } from "@/utils/time";
+import { formatDuration, dayjs } from "@/utils/time";
 import { syncState } from "@/utils/functions";
 import { mdiArrowExpand } from "@mdi/js";
 
@@ -9,7 +9,6 @@ export default {
         return {
             mdiArrowExpand,
             tlHistory: [],
-           // rpHistory: [],
             MESSAGE_TYPES: Object.freeze({
                 END: "end",
                 ERROR: "error",
@@ -41,7 +40,6 @@ export default {
             "liveTlShowVerified",
             "liveTlShowModerator",
             "liveTlWindowSize",
-            "liveTlShowLocalTime",
         ]),
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];
@@ -78,49 +76,6 @@ export default {
                     this.historyLoading = false;
                 });
         },
-        /*
-        loadRpMessages(firstLoad = false, loadAll = false) {
-
-            this.historyLoading = true;
-            const lastTimestamp = !firstLoad && this.rpHistory[0].timestamp;
-            console.log("RplastTimestamp : "+lastTimestamp)
-            //---------This Line
-
-            api.chatRpHistory(this.video.id, {
-                lang: this.liveTlLang,
-                ...(this.liveTlShowVerified && { verified: 1 }),
-                moderator: this.liveTlShowModerator ? 1 : 0,
-                limit: loadAll ? 10000 : this.limit,
-                ...(lastTimestamp && { before: lastTimestamp }),
-            })
-
-            //---------End Line
-            api.chatRpHistory(this.video.id, {
-                lang: this.liveTlLang,
-                ...(this.liveTlShowVerified && { verified: 1 }),
-                moderator: this.liveTlShowModerator ? 1 : 0,
-                limit: loadAll ? 10000 : this.limit,
-                ...(lastTimestamp && { before: lastTimestamp }),
-            })
-                .then(({ data }) => {
-                    console.log("Rpdata : " + JSON.stringify(data))
-                    this.completed = data.length !== this.limit || loadAll;
-                    const filtered = data.filter((m) => !this.blockedNames.has(m.name));
-                    if (firstLoad) this.rpHistory = filtered.map(this.parseMessage);
-                    else this.rpHistory.unshift(...filtered.map(this.parseMessage));
-
-                    // Set last message as breakpoint, used for maintaing scrolling and styling
-                    if (this.rpHistory.length) this.rpHistory[0].breakpoint = true;
-                    this.curIndex = 0;
-                })
-                .catch((e) => {
-                    console.error(e);
-                })
-                .finally(() => {
-                    this.historyLoading = false;
-                });
-        },
-        */
         parseMessage(msg) {
             // Append title to author name
             msg.prefix = "";
@@ -156,15 +111,13 @@ export default {
                 processed += str.substring(curIndex, str.length);
                 msg.message = processed;
             }
-            // console.log("Msgdata : " + JSON.stringify(msg))
             return msg;
         },
         utcToTimestamp(utc) {
             return formatDuration(dayjs.utc(utc).diff(this.startTimeMillis));
         },
         realTimestamp(utc) {
-            const t = getTime(utc); // localizedFormat
-            return t;
+            return dayjs(utc.timestamp).format("LTS"); // localizedFormat
         },
     },
 };
