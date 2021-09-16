@@ -1,0 +1,16 @@
+hello: world
+music:
+  title: '{{english_name}} ออริจินอลและเพลงโคฟเวอร์ - Holodex'
+  description: >-
+    ฟังเพลงและสตรีมคาราโอเกะอย่างเป็นทางการที่แท็กโดยชุมชนของเราผ่านเครื่องเล่นเพลง Holodex
+channel:
+  normal:
+    title: '{{english_name}} คลิป สตรีม เพลง และการโคแลป - Holodex'
+    description: >-
+      ค้นพบกว่า {{clip_count}} คลิป, {{video_count}} สตรีมโดย {{english_name}}. รู้ว่าพวกเขาจะถ่ายทอดสดเมื่อใดโดยเพิ่มลงในรายการโปรด Holodex ของคุณ
+    descriptionWithTopic: >-
+      ค้นหา {{ topics }} สตรีมโดย {{english_name}}. ติดตาม {{clip_count}} คลิป, {{video_count}} สตรีม และอื่นๆอีกมากมายใน Holodex
+  clip:
+    title: '{{english_name}} ภาพรวม - Holodex'
+    description: >-
+      ค้นพบกว่า {{video_count}}คลิป vtubers ที่คุณชื่นชอบโดย {{english_name}}.
