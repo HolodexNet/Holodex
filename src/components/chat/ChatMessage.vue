@@ -15,8 +15,11 @@
       </span>
     </div>
     <a class="tl-message" :data-time="source.relativeSeconds">
-      <span v-if="source.timestamp" class="tl-caption mr-1">
+      <span v-if="source.timestamp&&!liveTlShowLocalTime" class="tl-caption mr-1">
         {{ source.displayTime }}
+      </span>
+      <span v-else-if="source.timestamp&&liveTlShowLocalTime" class="tl-caption mr-1">
+        {{ source.realTime }}
       </span>
       <span class="text--primary" v-html="source.message" />
     </a>
@@ -34,6 +37,8 @@
 </template>
 
 <script>
+import { syncState } from "@/utils/functions";
+
 export default {
     name: "ChatMessage",
     props: {
@@ -55,6 +60,9 @@ export default {
         };
     },
     computed: {
+        ...syncState("settings", [
+            "liveTlShowLocalTime",
+        ]),
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];
         },
