@@ -7,13 +7,16 @@ import yaml from "@rollup/plugin-yaml";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "path";
 
+// Bypass vite stuff and just load .env into process.env
+require("dotenv").config();
+
 /**
  * @param {{ mode: string, command: string }}
  */
 export default ({ mode }) => {
     const env = { ...process.env, ...loadEnv(mode, process.cwd()) };
-    const API_BASE_URL = env.VITE_API_BASE_URL ?? "https://staging.holodex.net";
-    const REWRITE_API_ROUTES = !!env.VITE_REWRITE_API_ROUTES;
+    const API_BASE_URL = env.API_BASE_URL ?? "https://staging.holodex.net";
+    const REWRITE_API_ROUTES = !!env.REWRITE_API_ROUTES;
 
     return defineConfig({
         plugins: [
@@ -96,6 +99,19 @@ export default ({ mode }) => {
                                 expiration: {
                                     maxAgeSeconds: 10800,
                                     maxEntries: 1,
+                                },
+                                cacheableResponse: {
+                                    statuses: [0, 200],
+                                },
+                            },
+                        },
+                        {
+                            urlPattern: new RegExp(`${API_BASE_URL}/(stats|orgs).json$`),
+                            handler: "CacheFirst",
+                            options: {
+                                cacheName: "holodex-statics",
+                                expiration: {
+                                    maxAgeSeconds: 10800,
                                 },
                                 cacheableResponse: {
                                     statuses: [0, 200],

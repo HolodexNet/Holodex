@@ -7,15 +7,14 @@
     "build": "vite build --mode prod",
     "changelog": "changelog-to-html --outputDirectoryPath docs && generate-md --layout ./layouts/roryg-ghostwriter --input ./CHANGELOG.md --output ./docs",
     "preview": "vite preview",
-    "lint": "eslint --fix src/**"
+    "lint": "eslint --fix 'src/**'"
   },
   "workspaces": [
     "src/external/vue-grid-layout"
   ],
   "lint-staged": {
     "*.{js,ts,vue}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "husky": {

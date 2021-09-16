@@ -366,6 +366,14 @@ views:
     fullScreen: Fullscreen
     mediaControls: Media Controls
     mediaControlsEmpty: Videos being played will appear here
+    editAutoLayout: Edit Auto Layout
+    changeLayout: Change Layout
+    done: Done
+    hints: Hints
+    presetsHint: Open presets menu to switch layouts and configure auto layout
+    mediaControlsHint1: Use Media Controls to mute and sync (
+    mediaControlsHint2: ) live streams
+    dragDropHint: Drag and drop streams from toolbar to cells to organize streams
   mugen:
     welcome: >-
       Welcome to MugenClips! Everyone on this page is seeing the same randomly

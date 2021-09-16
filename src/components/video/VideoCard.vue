@@ -11,14 +11,20 @@
     rel="noopener"
     draggable="true"
     style="position: relative"
-    @click.exact.prevent="(e) => (!redirectMode ? goToVideo(data.id) : goToYoutube(data.id))"
+    @click.exact.prevent="
+      (e) => (!redirectMode ? goToVideo(data.id) : goToYoutube(data.id))
+    "
     @dragstart="drag"
   >
     <!-- Video Image with Duration -->
     <div
       style="position: relative; width: 100%"
       class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
-      :style="horizontal && !shouldHideThumbnail && `background: url(${imageSrc}) center/cover;`"
+      :style="
+        horizontal &&
+          !shouldHideThumbnail &&
+          `background: url(${imageSrc}) center/cover;`
+      "
     >
       <!-- Image Overlay -->
       <div
@@ -52,8 +58,13 @@
             <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
           </div>
           <!-- Show TL chat icon if recently active or has archive tl exist -->
-          <div v-if="hasTLs" class="video-duration d-flex align-center" :title="tlIconTitle">
-            {{ tlLangInChat }} <v-icon small color="white">{{ icons.tlChat }}</v-icon>
+          <div
+            v-if="hasTLs"
+            class="video-duration d-flex align-center"
+            :title="tlIconTitle"
+          >
+            {{ tlLangInChat }}
+            <v-icon small color="white">{{ icons.tlChat }}</v-icon>
           </div>
           <!-- Duration/Current live stream time -->
           <div
@@ -73,7 +84,11 @@
         :transition="false"
         class="rounded"
       />
-      <v-img v-else-if="!horizontal && shouldHideThumbnail" width="100%" :aspect-ratio="60 / 9" />
+      <v-img
+        v-else-if="!horizontal && shouldHideThumbnail"
+        width="100%"
+        :aspect-ratio="60 / 9"
+      />
     </div>
     <a
       class="d-flex flex-row flex-grow-1 no-decoration"
@@ -96,7 +111,9 @@
           :class="['video-card-title ', { 'video-watched': hasWatched }]"
           :title="title"
           style="user-select: text"
-          :style="{ 'font-size': `${1 - $store.state.currentGridSize / 16}rem` }"
+          :style="{
+            'font-size': `${1 - $store.state.currentGridSize / 16}rem`,
+          }"
         >
           {{ title }}
         </div>
@@ -104,9 +121,14 @@
         <div v-if="includeChannel" class="channel-name video-card-subtitle">
           <a
             class="no-decoration"
-            :class="{ 'name-vtuber': data.type === 'stream' || data.channel.type === 'vtuber' }"
+            :class="{
+              'name-vtuber':
+                data.type === 'stream' || data.channel.type === 'vtuber',
+            }"
             :href="`/channel/${data.channel.id}`"
-            :title="data.channel.name + '\n' + (data.channel.english_name || '')"
+            :title="
+              data.channel.name + '\n' + (data.channel.english_name || '')
+            "
             @click.exact.stop.prevent="goToChannel(data.channel.id)"
           >
             {{ channelName }}
@@ -123,7 +145,9 @@
               {{
                 $tc(
                   "component.videoCard.clips",
-                  typeof data.clips === "object" ? data.clips.length : +data.clips,
+                  typeof data.clips === "object"
+                    ? data.clips.length
+                    : +data.clips
                 )
               }}
             </span>
@@ -131,19 +155,17 @@
           <template v-else-if="data.status === 'live' && data.live_viewers > 0">
             •
             {{
-              $tc("component.videoCard.watching", formatCount(data.live_viewers, lang), [
+              $tc(
+                "component.videoCard.watching",
                 formatCount(data.live_viewers, lang),
-              ])
+                [formatCount(data.live_viewers, lang)]
+              )
             }}
           </template>
         </div>
       </div>
       <!-- Vertical dots menu -->
-      <v-menu
-        bottom
-        :close-on-content-click="false"
-        nudge-top="20px"
-      >
+      <v-menu bottom :close-on-content-click="false" nudge-top="20px">
         <template #activator="{ on, attrs }">
           <v-btn
             icon
@@ -161,12 +183,19 @@
       </v-menu>
     </a>
     <!-- optional breaker object to row-break into a new row. -->
-    <v-list-item-action v-if="!!$slots.action || activePlaylistItem" class="video-card-item-actions">
+    <v-list-item-action
+      v-if="!!$slots.action || activePlaylistItem"
+      class="video-card-item-actions"
+    >
       <template v-if="activePlaylistItem">
         <button @click.stop.prevent="move(data.id, 'up')">
           <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
         </button>
-        <button @click.stop.prevent="$store.commit('playlist/removeVideoByID', data.id)">
+        <button
+          @click.stop.prevent="
+            $store.commit('playlist/removeVideoByID', data.id)
+          "
+        >
           <v-icon small> {{ icons.mdiDelete }} </v-icon>
         </button>
         <button @click.stop.prevent="move(data.id, 'down')">
@@ -179,9 +208,16 @@
 </template>
 
 <script lang="ts">
-import { formatCount, getVideoThumbnails, decodeHTMLEntities } from "@/utils/functions";
 import {
-    formatDuration, formatDistance, dayjs, localizedDayjs,
+    formatCount,
+    getVideoThumbnails,
+    decodeHTMLEntities,
+} from "@/utils/functions";
+import {
+    formatDuration,
+    formatDistance,
+    dayjs,
+    localizedDayjs,
 } from "@/utils/time";
 import * as icons from "@/utils/icons";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
@@ -285,14 +321,20 @@ export default {
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:
-                    return formatDistance(this.data.available_at, this.lang, this.$t.bind(this));
+                    return formatDistance(
+                        this.data.available_at,
+                        this.lang,
+                        this.$t.bind(this),
+                    );
             }
         },
         absoluteTimeString() {
             const ts = localizedDayjs(this.data.available_at, this.lang);
 
             const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
-            const ts2 = ts.tz("Asia/Tokyo").format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
+            const ts2 = ts
+                .tz("Asia/Tokyo")
+                .format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
             if (ts1 === ts2) {
                 return ts1;
             }
@@ -300,12 +342,16 @@ export default {
         },
         formattedDuration() {
             if (this.data.start_actual && this.data.status === "live") {
-                return this.formatDuration(dayjs(this.now).diff(dayjs(this.data.start_actual)));
+                return this.formatDuration(
+                    dayjs(this.now).diff(dayjs(this.data.start_actual)),
+                );
             }
             if (this.data.status === "upcoming" && this.data.duration) {
                 return this.$t("component.videoCard.premiere");
             }
-            return this.data.duration && this.formatDuration(this.data.duration * 1000);
+            return (
+                this.data.duration && this.formatDuration(this.data.duration * 1000)
+            );
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
@@ -313,7 +359,7 @@ export default {
             const srcs = getVideoThumbnails(this.data.id, useWebP);
             if (this.horizontal) return srcs.medium;
             if (this.colSize > 2 && this.colSize <= 8) {
-                return srcs.medium;
+                return window.devicePixelRatio > 1 ? srcs.standard : srcs.medium;
             }
             return srcs.standard;
         },
@@ -334,20 +380,28 @@ export default {
             return this.$store.state.isMobile;
         },
         watchLink() {
-            const q = this.parentPlaylistId ? `?playlist=${this.parentPlaylistId}` : "";
+            const q = this.parentPlaylistId
+                ? `?playlist=${this.parentPlaylistId}`
+                : "";
             return `/watch/${this.data.id}${q}`;
         },
         hasTLs() {
             const lang = this.$store.state.settings.liveTlLang;
-            return (this.data?.status === "past" && this.data?.live_tl_count?.[lang])
-                || this.data?.recent_live_tls?.includes(lang);
+            return (
+                (this.data?.status === "past" && this.data?.live_tl_count?.[lang])
+                || this.data?.recent_live_tls?.includes(lang)
+            );
         },
         tlLangInChat() {
             const lang = this.$store.state.settings.liveTlLang;
-            return this.hasTLs && this.data.status === "past" ? `${this.data.live_tl_count[lang]}` : "";
+            return this.hasTLs && this.data.status === "past"
+                ? `${this.data.live_tl_count[lang]}`
+                : "";
         },
         tlIconTitle() {
-            return this.data.status === "past" ? this.$t("component.videoCard.totalTLs") : this.$t("component.videoCard.tlPresence");
+            return this.data.status === "past"
+                ? this.$t("component.videoCard.totalTLs")
+                : this.$t("component.videoCard.tlPresence");
         },
     },
     // created() {
@@ -361,10 +415,10 @@ export default {
             .catch((err) => {
                 console.error(err);
             });
-        if (!this.updatecycle && this.data.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+        if (!this.updatecycle && this.data.status === "live") { this.updatecycle = setInterval(this.updateNow, 1000); }
     },
     activated() {
-        if (!this.updatecycle && this.data.status === "live") this.updatecycle = setInterval(this.updateNow, 1000);
+        if (!this.updatecycle && this.data.status === "live") { this.updatecycle = setInterval(this.updateNow, 1000); }
     },
     deactivated() {
         if (this.updatecycle) {
@@ -415,7 +469,10 @@ export default {
             this.now = Date.now();
         },
         drag(ev) {
-            ev.dataTransfer.setData("text", `https://holodex.net/watch/${this.data.id}`);
+            ev.dataTransfer.setData(
+                "text",
+                `https://holodex.net/watch/${this.data.id}`,
+            );
             ev.dataTransfer.setData("application/json", JSON.stringify(this.data));
         },
         move(id, direction) {
@@ -434,7 +491,7 @@ export default {
                     break;
             }
             if (toIdx < 0) throw new Error("can't move stuff before 0");
-            if (toIdx >= playlist.videos.length) throw new Error("can't move stuff to beyond the end");
+            if (toIdx >= playlist.videos.length) { throw new Error("can't move stuff to beyond the end"); }
             this.$store.commit("playlist/reorder", { from: curIdx, to: toIdx });
         },
     },
@@ -443,144 +500,144 @@ export default {
 
 <style scoped>
 .theme--light .video-watched {
-    color: var(--v-secondary-darken2) !important;
+  color: var(--v-secondary-darken2) !important;
 }
 
 .theme--dark .video-watched {
-    color: var(--v-secondary-lighten2) !important;
-    opacity: 0.6;
+  color: var(--v-secondary-lighten2) !important;
+  opacity: 0.6;
 }
 
 .video-card-fluid {
-    width: 100%;
+  width: 100%;
 }
 
 .text-live {
-    color: red;
+  color: red;
 }
 
 .video-card-title {
-    line-height: 1.2;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* https://css-tricks.com/almanac/properties/w/word-break/ */
-    word-break: break-all;
-    word-break: break-word;
+  line-height: 1.2;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* https://css-tricks.com/almanac/properties/w/word-break/ */
+  word-break: break-all;
+  word-break: break-word;
 
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    padding-right: 22px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  padding-right: 22px;
 }
 
 .channel-name {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    white-space: initial;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  white-space: initial;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
 }
 
 .channel-name > a:hover {
-    color: black !important;
+  color: black !important;
 }
 .theme--dark .channel-name > a:hover {
-    color: white !important;
+  color: white !important;
 }
 
 .video-card .hover-show {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .video-card:hover .hover-show {
-    visibility: visible;
+  visibility: visible;
 }
 
 .video-duration {
-    background-color: rgba(0, 0, 0, 0.8);
-    margin: 2px;
-    padding: 2px 5px;
-    text-align: center;
-    font-size: 0.8125rem;
-    letter-spacing: 0.025em;
-    line-height: 0.81rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  margin: 2px;
+  padding: 2px 5px;
+  text-align: center;
+  font-size: 0.8125rem;
+  letter-spacing: 0.025em;
+  line-height: 0.81rem;
 }
 .video-duration.video-duration-live {
-    background-color: rgba(148, 0, 0, 0.8);
+  background-color: rgba(148, 0, 0, 0.8);
 }
 
 .video-topic {
-    background-color: rgba(0, 0, 0, 0.8);
-    margin: 2px;
-    padding: 1px 5px;
-    text-align: center;
-    font-size: 0.8125rem;
-    letter-spacing: 0.025em;
-    text-transform: capitalize;
+  background-color: rgba(0, 0, 0, 0.8);
+  margin: 2px;
+  padding: 1px 5px;
+  text-align: center;
+  font-size: 0.8125rem;
+  letter-spacing: 0.025em;
+  text-transform: capitalize;
 }
 
 .video-card-action {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 2px;
-    margin: 2px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 2px;
+  margin: 2px;
 }
 
 .video-card-horizontal {
-    flex-direction: row !important;
+  flex-direction: row !important;
 }
 
 .video-card-horizontal > .video-thumbnail {
-    margin-right: 5px;
-    width: 150px !important;
+  margin-right: 5px;
+  width: 150px !important;
 }
 
 .name-vtuber {
-    color: #42a5f5 !important;
+  color: #42a5f5 !important;
 }
 
 .video-card-active {
-    /* primary color with opacity */
-    /* Used for Mugen Clips where one of the list videos are 'active' */
-    /* background-color: #f0629257; */
-    height: auto;
-    width: auto;
-    position: relative;
+  /* primary color with opacity */
+  /* Used for Mugen Clips where one of the list videos are 'active' */
+  /* background-color: #f0629257; */
+  height: auto;
+  width: auto;
+  position: relative;
 }
 
 .video-card-active::before {
-    content: "";
-    background-color: var(--v-primary-darken2);
-    background-size: cover;
-    position: absolute;
-    top: -1px;
-    right: -1px;
-    bottom: -1px;
-    left: -1px;
-    opacity: 0.15;
-    border-radius: 4px;
+  content: "";
+  background-color: var(--v-primary-darken2);
+  background-size: cover;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  opacity: 0.15;
+  border-radius: 4px;
 }
 
 .video-card-subtitle {
-    line-height: 1.2;
-    font-size: 0.875rem;
-    color: hsla(0, 0%, 100%, 0.7);
+  line-height: 1.2;
+  font-size: 0.875rem;
+  color: hsla(0, 0%, 100%, 0.7);
 }
 
 .theme--light .video-card-subtitle {
-    color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.6);
 }
 .video-card-menu {
-    position: absolute;
-    right: 0px;
-    display: inline-block;
-    top: 5px;
-    z-index: 1;
+  position: absolute;
+  right: 0px;
+  display: inline-block;
+  top: 5px;
+  z-index: 1;
 }
 </style>

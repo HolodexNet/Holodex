@@ -108,6 +108,7 @@ import {
 import debounce from "lodash-es/debounce";
 import backendApi from "@/utils/backend-api";
 import { csv2jsonAsync, json2csvAsync } from "json-2-csv";
+import { mapState } from "vuex";
 
 export default {
     data() {
@@ -136,6 +137,7 @@ export default {
         };
     },
     computed: {
+        ...mapState("orgs", ["orgs"]),
         channelResultsFinal() {
             return this.channelResults.concat(this.channels || []);
         },
@@ -176,10 +178,6 @@ export default {
         channelClearAPIResults() {
             this.channelSearch = undefined;
             this.channelResults = [];
-        },
-        async loadOrgs() {
-            if (this.orgs && this.orgs.length > 0) return;
-            this.orgs = (await backendApi.orgs()).data.map(({ name }) => name);
         },
         processQuery(queryArray) {
             /* [

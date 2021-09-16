@@ -18,7 +18,7 @@
         <v-img
           v-if="song.art"
           lazy-src
-          :src="song.art.replace('100x100', '200x200')"
+          :src="resizeArtwork(song.art, 200)"
           width="200px"
           aspect-ratio="1"
           class="rounded"
@@ -46,7 +46,11 @@
         <v-avatar v-if="showArtist" class="floating-avatar" size="60">
           <!-- <img src="https://via.placeholder.com/88x88"> -->
           <channel-img
-            :channel="{ photo: song.channel.photo, name: song.channel.name, id: song.channel_id }"
+            :channel="{
+              photo: song.channel.photo,
+              name: song.channel.name,
+              id: song.channel_id,
+            }"
             :size="60"
           />
         </v-avatar>
@@ -93,7 +97,11 @@
             {{ song.name }}
           </v-list-item-title>
           <v-list-item-subtitle class="text--caption song-artists">
-            <span v-if="$listeners.channel" class="song-clickable" @click.stop="$emit('channel', song)">
+            <span
+              v-if="$listeners.channel"
+              class="song-clickable"
+              @click.stop="$emit('channel', song)"
+            >
               {{ song.channel[nameProperty] || song.channel.name }}
             </span>
             <span v-else> {{ song.channel.name }} </span> <br>
@@ -108,6 +116,7 @@
 <script lang="ts">
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import { formatDistance } from "@/utils/time";
+import { resizeArtwork } from "@/utils/functions";
 
 export default {
     name: "SongItem",
@@ -161,75 +170,80 @@ export default {
             return u && u.user && u.user.role && u.user.role !== "user";
         },
         formattedTime() {
-            return formatDistance(this.song.available_at, this.$store.state.settings.lang, this.$t.bind(this));
+            return formatDistance(
+                this.song.available_at,
+                this.$store.state.settings.lang,
+                this.$t.bind(this),
+            );
         },
         nameProperty() {
             return this.$store.state.settings.nameProperty;
         },
     },
     mounted() {},
+    methods: { resizeArtwork },
 };
 </script>
 
 <style scoped lang="scss">
 .song-card-artwork {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    display: flex;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: flex;
 
-    .floating-avatar {
-        position: absolute;
-        z-index: 3;
-        left: 4px;
-        bottom: 4px;
-        border-radius: 50% 50% 50% 3px;
-        box-shadow: -1px 1px 1px #000;
-    }
-    .floating-avatar:hover {
-        bottom: 5px;
-        box-shadow: -1px 1px 3px #000;
-    }
+  .floating-avatar {
+    position: absolute;
+    z-index: 3;
+    left: 4px;
+    bottom: 4px;
+    border-radius: 50% 50% 50% 3px;
+    box-shadow: -1px 1px 1px #000;
+  }
+  .floating-avatar:hover {
+    bottom: 5px;
+    box-shadow: -1px 1px 3px #000;
+  }
 }
 .song-card-data {
-    position: absolute;
-    bottom: 3px;
-    right: 3px;
-    z-index: 30;
-    font-weight: 400;
-    background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  z-index: 30;
+  font-weight: 400;
+  background: rgba(0, 0, 0, 0.7);
 }
 .limit-width {
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* https://css-tricks.com/almanac/properties/w/word-break/ */
-    word-break: break-all;
-    word-break: break-word;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* https://css-tricks.com/almanac/properties/w/word-break/ */
+  word-break: break-all;
+  word-break: break-word;
 
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 
-    display: -webkit-box;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 
-    justify-content: left;
-    text-align: left;
+  justify-content: left;
+  text-align: left;
 }
 .song-clickable {
-    text-decoration: none;
+  text-decoration: none;
 }
 .song-clickable:hover {
-    text-decoration: underline;
-    background-color: rgba(120, 120, 120, 0.4);
+  text-decoration: underline;
+  background-color: rgba(120, 120, 120, 0.4);
 }
 .text--caption .muted {
-    opacity: 0.4;
+  opacity: 0.4;
 }
 .song-artists {
-    -webkit-line-clamp: 3;
+  -webkit-line-clamp: 3;
 }
 </style>

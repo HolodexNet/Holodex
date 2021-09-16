@@ -1,5 +1,5 @@
 <template>
-  <v-card style="min-height: 90vh">
+  <v-card v-if="!slim" style="min-height: 90vh">
     <v-card-title>{{ $t("views.multiview.presets") }}</v-card-title>
     <v-card-text>
       <v-tabs v-model="currentTab" class="mb-2">
@@ -10,9 +10,9 @@
       <div v-if="currentTab === 0">
         <v-btn :color="editAutoLayout ? 'primary' : ''" @click="editAutoLayout = !editAutoLayout">
           <v-icon left>
-            {{ icons.mdiPencil }}
+            {{ editAutoLayout ? icons.mdiCheck : icons.mdiPencil }}
           </v-icon>
-          {{ editAutoLayout ? "Done" : "Edit Autolayout" }}
+          {{ editAutoLayout ? $t("views.multiview.done") : $t("views.multiview.editAutoLayout") }}
         </v-btn>
         <template v-for="(group, index) in desktopGroups">
           <v-radio-group
@@ -90,6 +90,26 @@
       </v-row>
     </v-card-text>
   </v-card>
+  <v-sheet v-else class="pa-2 preset-menu">
+    <div class="text-body-1 d-flex justify-space-between align-center">
+      <span class="px-4">{{ $t("views.multiview.changeLayout") }}</span>
+      <v-btn text @click="$emit('showAll')">
+        {{ $t("views.favorites.showall") }}
+      </v-btn>
+    </div>
+    <v-row class="ml-1">
+      <template v-for="preset in currentGroup">
+        <v-col :key="preset.name" cols="auto" class="justify-center pa-1">
+          <LayoutPreviewCard
+            :scale="0.8"
+            :preset="preset"
+            :active="presetInAuto(preset)"
+            @click="handleSelected(preset)"
+          />
+        </v-col>
+      </template>
+    </v-row>
+  </v-sheet>
 </template>
 
 <script lang="ts">
@@ -103,31 +123,41 @@ export default {
     components: {
         LayoutPreviewCard,
     },
+    props: {
+        slim: {
+            type: Boolean,
+        },
+    },
     data() {
         return {
             mdiDotsVertical,
             mdiToggleSwitch,
-            currentTab: 1,
+            currentTab: 0,
             editAutoLayout: false,
             showCustom: false,
         };
     },
     computed: {
-        ...mapState("multiview", ["presetLayout", "autoLayout"]),
+        ...mapState("multiview", ["presetLayout", "autoLayout", "activeVideos", "layout", "layoutContent"]),
         ...mapGetters("multiview", [
             "decodedCustomPresets",
-            "decodedDesktopPresets",
             "decodedMobilePresets",
             "desktopGroups",
+            "activeVideos",
         ]),
         autoLayoutSet() {
             return new Set(this.autoLayout);
         },
-    },
-    mounted() {
-        // this.desktopPresets = sortPresets(this.desktopPresets);
-        // this.mobilePresets = sortPresets(this.mobilePresets);
-        if (this.presetLayout.length > 0) this.currentTab = 0;
+        totalVideoCells() {
+            console.log("recompute");
+            return this.layout.filter((l) => !this.layoutContent[l.i] || this.layoutContent[l.i].type !== "chat").length;
+        },
+        currentGroup() {
+            console.log(this.totalVideoCells);
+            if (this.$store.state.isMobile) return this.decodedMobilePresets;
+            const layouts = (this.activeVideos.length < this.desktopGroups.length) && this.desktopGroups[this.activeVideos.length];
+            return layouts || this.desktopGroups[1];
+        },
     },
     methods: {
         setAutoLayout(index, encodedLayout) {
@@ -150,5 +180,13 @@ export default {
 <style>
 .is-auto-layout {
     color: var(--v-anchor-base);
+}
+
+.preset-menu {
+  max-width: 550px;
+  width: 80vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>

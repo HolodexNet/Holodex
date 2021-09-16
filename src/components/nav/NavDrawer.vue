@@ -4,7 +4,7 @@
     app
     width="240"
     clipped
-    class="nav-scroll thin-scroll-bar"
+    class="nav-scroll"
     :temporary="temporary"
     style="padding-top: env(safe-area-inset-top); padding-left: calc(env(safe-area-inset-left) / 1.3)"
     @input="$emit('input', $event)"

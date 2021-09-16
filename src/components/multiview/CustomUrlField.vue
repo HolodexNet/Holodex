@@ -1,13 +1,13 @@
 <template>
   <v-autocomplete
     :search-input.sync="url"
-    :label="slim ? hint: label"
+    :label="slim ? hint : label"
     :hint="hint"
     :error="error"
     :hide-details="slim"
     :solo="slim"
     :append-outer-icon="icons.mdiCheck"
-    :color="url && !error ? 'green' : error ? 'warning' : ''"
+    :color="(url && !error) ? 'green' : (error ? 'warning' : '')"
     clearable
     disable-lookup
     hide-no-data
@@ -44,9 +44,8 @@ export default {
             return this.twitch ? "Twitch Channel Link" : "Youtube Video Link";
         },
         history() {
-            const mv = this.$store.state.multiview;
-            const history = this.twitch ? mv.twUrlHistory : mv.ytUrlHistory;
-            return history.reverse();
+            const hist = this.twitch ? this.$store.state.multiview.twUrlHistory : this.$store.state.multiview.ytUrlHistory;
+            return [...hist].reverse();
         },
     },
     watch: {

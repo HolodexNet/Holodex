@@ -3,7 +3,7 @@
     <v-app-bar-nav-icon @click="toggleMainNav" />
     <!-- Toolbar Live Video Selector -->
     <div
-      class="justify-start d-flex mv-toolbar-btn align-center thin-scroll-bar"
+      class="justify-start d-flex mv-toolbar-btn align-center"
       style="overflow-x: auto; overflow-y: hidden"
     >
       <slot name="left" />
@@ -14,6 +14,7 @@
       :class="{ 'no-btn-text': $store.state.isMobile || true }"
     >
       <!-- Show toolbar btns that are not collapsible or not in collapsed state -->
+      <slot name="buttons" />
       <template
         v-for="(b, index) in buttons.filter((btn) => !btn.collapse || (!collapseButtons && btn.collapse))"
       >
@@ -191,10 +192,10 @@ export default {
     width: 36px;
 }
 
-.mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-track {
+.mv-toolbar-btn::-webkit-scrollbar-track {
     background: rgba(99, 46, 46, 0.5);
 }
-.mv-toolbar-btn.thin-scroll-bar::-webkit-scrollbar-thumb {
+.mv-toolbar-btn::-webkit-scrollbar-thumb {
     background: #f06291a2;
 }
 .mv-toolbar {

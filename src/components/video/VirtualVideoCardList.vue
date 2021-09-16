@@ -4,7 +4,6 @@
   <virtual-list
     ref="virtualVideoList"
     style="overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain"
-    class="thin-scroll-bar"
     :style="{ height: computedHeight }"
     :data-key="'id'"
     :data-sources="videos"

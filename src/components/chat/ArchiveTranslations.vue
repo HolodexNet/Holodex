@@ -38,7 +38,7 @@
     <portal to="expandedMessage" :disabled="!expanded" slim>
       <virtual-list
         ref="tlBody"
-        class="archive tl-body thin-scroll-bar px-1 py-0 px-lg-3"
+        class="archive tl-body px-1 py-0 px-lg-3"
         :style="{
           'font-size': liveTlFontSize + 'px',
         }"

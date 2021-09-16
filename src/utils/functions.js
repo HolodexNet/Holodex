@@ -1,14 +1,25 @@
 import { TL_LANGS, VIDEO_URL_REGEX, TWITCH_VIDEO_URL_REGEX } from "@/utils/consts";
 import { langs } from "@/plugins/vuetify";
 
+export function resizeArtwork(artworkUrl, size = 400) {
+    // https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/9c/39/27/9c392780-3f34-d322-9dde-002618154f40/source/400x400bb.jpg
+    const adjustedSize = window.devicePixelRatio * size;
+    const match = /^https:\/\/(.+?)\.mzstatic\.com\/image\/thumb\/(.+?)\/source\//.exec(artworkUrl);
+    if (!match) return artworkUrl;
+    const serv = match[1];
+    const thumb = match[2];
+    return `https://${serv}.mzstatic.com/image/thumb/${thumb}/source/${adjustedSize}x${adjustedSize}bb.jpg`;
+}
+
 export function resizeChannelPhoto(photoUrl, size) {
+    const deviceSize = size * window.devicePixelRatio;
     const split = photoUrl.split("=s");
     // try to hit cache by using a common size
     let adjSize = 48;
-    if (size < 88 && size > 55) adjSize = 88;
-    else if (size <= 55) adjSize = 48;
+    if (deviceSize < 88 && deviceSize > 55) adjSize = 88;
+    else if (deviceSize <= 55) adjSize = 48;
     else adjSize = 176;
-    return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
+    return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj`;
 }
 
 export function getVideoThumbnails(ytVideoKey, useWebP) {
@@ -194,6 +205,15 @@ export function createSimpleMutation(variables) {
         };
     });
     return newMutations;
+}
+
+export function videoTemporalComparator(a, b) {
+    if (a.available_at === b.available_at) {
+        return a.id.localeCompare(b.id);
+    }
+    const dateA = new Date(a.available_at).getTime();
+    const dateB = new Date(b.available_at).getTime();
+    return dateA - dateB;
 }
 
 /**

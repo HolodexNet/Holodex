@@ -1,9 +1,96 @@
 ---
 component:
+  apiError:
+    title: Very very sorry!
+  channelInfo:
+    videoCount: '{0} Video'
+    clipCount: '{n} Kirinuki'
+  mainNav:
+    library: Raiburari
   comment:
     close: Peklose
+  reportDialog:
+    comments: What do next?
+    success: Send repolt thanks you!!!
 views:
+  channel:
+    music: Musik
+    collabs: Corabo
+  channels:
+    sortOptions:
+      subscribers: Doroku
+    tabs:
+      Vtuber: Vtuber
+  home:
+    recentVideoToggles:
+      official: Arcaib
+  library:
+    deleteConfirmation: Delete {0} video is ok?
+    deleteConfirmationOK: Yes delete
+    deleteConfirmationCancel: No no no
+    exportYtPlaylist: Youtube playlist
+  search:
+    type:
+      official: Oficial
+  settings:
+    useEnglishNameLabel: Engish nemu use
+    useEnglishNameMsg: VTuber chaneru use Engish nemu
+    hideVideoThumbnailsLabel: Samune no show
+    hideVideoThumbnailsMsg: >-
+      Video samune no show, so smartphone load time short, no long scroll
+    autoplayVideoLabel: Video play auto
+    languageSettings: Ranguige
+    gridSize:
+      - Big
+      - Not big, not small
+      - Small
+    hideCollabStreamsLabel: Corabo stream no show
+    theme: Tema
   app:
+    update_btn: Update
     close_btn: Peklose
+  watch:
+    chat:
+      tlFontSize: Font size
+      retryBtn: Try agen
+      status:
+        reconnecting: Conectting agen...
+        reconnectFailed: Conect is fail
+        notLive: >-
+          Strim still not start. Can comment 15 miniut befor stream start
+        connectedToChat: Is conect
   favorites:
     close: Peklose
+  login:
+    apikeyResetNvm: Something happund?
+    with:
+      - Googooru de login peko
+      - Disucodo de login peko
+      - Twitter de login peko
+  multiview:
+    confirmOverwriteYes: "Yes"
+    preset:
+      remove: Deret
+      desktop: Pasokon
+      mobile: Mobair
+    presetEditor:
+      name: Name
+    editAutoLayout: Oto reiouto ejito
+    changeLayout: Reiouto change
+    hints: Hint peko
+    mediaControlsHint1: Media Contororu use streaming mute and sync (
+    mediaControlsHint2: ) peko
+time:
+  soon: will start
+editor:
+  music:
+    add: Put song
+about:
+  faq:
+    autoplayHeader: AutoPlay not wolk!
+    favorite:
+      title: Favolite is what?
+    MugenClips:
+      title: MogenClips is what?
+  news:
+    title: New

@@ -1,7 +1,6 @@
 <template>
   <div ref="fullscreen-content" style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }">
     <!-- Floating tool bar -->
-    <!--  -->
     <MultiviewToolbar v-show="!collapseToolbar" v-model="collapseToolbar" :buttons="buttons">
       <template #left>
         <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
@@ -11,6 +10,28 @@
             {{ mdiCardPlus }}
           </v-icon>
         </v-btn>
+      </template>
+      <template #buttons>
+        <v-menu offset-y>
+          <template #activator="{ on, attrs }">
+            <v-btn
+              color="primary"
+              dark
+              v-bind="attrs"
+              icon
+              v-on="on"
+            >
+              <v-icon>{{ icons.mdiGridLarge }}</v-icon>
+            </v-btn>
+          </template>
+          <portal to="preset-dialog" :disabled="!showPresetSelector">
+            <preset-selector
+              :slim="!showPresetSelector"
+              @selected="handlePresetClicked"
+              @showAll="showPresetSelector = true"
+            />
+          </portal>
+        </v-menu>
       </template>
     </MultiviewToolbar>
 
@@ -40,6 +61,23 @@
           <div style="display: inline-block; margin-right: 10px">
             <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 95%; margin-top: 28px" />
             {{ $t("views.multiview.openToolbarTip") }}
+          </div>
+        </div>
+        <div style="padding-top: 10vh" class="d-flex justify-center">
+          <div class="hints">
+            <div class="text-h4">
+              {{ $t("views.multiview.hints") }}
+            </div>
+            <div>1. <v-icon>{{ icons.mdiGridLarge }}</v-icon> {{ $t("views.multiview.presetsHint") }}</div>
+            <!-- <div>2. <v-icon>{{ mdiContentSave }}</v-icon> Customize your experience by creating and saving layouts</div> -->
+            <div>
+              2.
+              <v-icon>{{ mdiTuneVertical }}</v-icon>
+              {{ $t("views.multiview.mediaControlsHint1") }}
+              <v-icon>{{ mdiFastForward }}</v-icon>
+              {{ $t("views.multiview.mediaControlsHint2") }}
+            </div>
+            <div>3. <v-icon>{{ mdiCardPlus }}</v-icon> {{ $t("views.multiview.dragDropHint") }}</div>
           </div>
         </div>
       </template>
@@ -111,7 +149,7 @@
 
     <!-- Preset Selector -->
     <v-dialog v-model="showPresetSelector" width="1000">
-      <PresetSelector @selected="handlePresetClicked" />
+      <portal-target name="preset-dialog" />
     </v-dialog>
 
     <!-- Preset Editor -->
@@ -186,6 +224,8 @@ export default {
             mdiCardPlus,
             mdiPause,
             mdiFastForward,
+            mdiTuneVertical,
+            mdiContentSave,
 
             showSelectorForId: -1,
 
@@ -197,6 +237,7 @@ export default {
 
             collapseToolbar: false,
 
+            showPresetSelectorMenu: false,
             showPresetSelector: false,
             showPresetEditor: false,
             showMediaControls: false,
@@ -218,15 +259,15 @@ export default {
                     color: "red",
                     collapse: true,
                 },
-                {
-                    icon: this.icons.mdiGridLarge,
-                    tooltip: this.$t("views.multiview.presets"),
-                    onClick: () => {
-                        this.showPresetSelector = true;
-                    },
-                    color: "primary",
-                    collapse: true,
-                },
+                // {
+                //     icon: this.icons.mdiGridLarge,
+                //     tooltip: this.$t("views.multiview.presets"),
+                //     onClick: () => {
+                //         this.showPresetSelectorMenu = true;
+                //     },
+                //     color: "primary",
+                //     collapse: true,
+                // },
                 {
                     icon: mdiContentSave,
                     onClick: () => {
@@ -304,15 +345,14 @@ export default {
                             }
                         });
                     }
-                    // prompt overwrite with permalink, remove permalink if cancelled
+
                     try {
-                        this.$gtag.event("init-from-link", {
-                            event_category: "multiview",
-                            event_label: `cells:${parsed.layout?.length}`,
-                        });
+                        // Record link open for popularity metrics
+                        api.trackMultiviewLink(this.$route.params.layout).then(console.log).catch(console.error);
                         // eslint-disable-next-line no-empty
                     } catch {}
 
+                    // prompt overwrite with permalink, remove permalink if cancelled
                     this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
                 }
             } catch (e) {
@@ -465,5 +505,11 @@ export default {
 
 .vue-grid-layout {
     transition: none;
+}
+
+.hints {
+    div {
+        margin-bottom: 10px;
+    }
 }
 </style>
