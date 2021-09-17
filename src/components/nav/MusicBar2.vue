@@ -12,9 +12,10 @@
     <v-slider
       class="music-progress"
       hide-details
-      :value="mathFloorTime"
-      :max="song.length"
-      thumb-label
+      :value="mathFloorTime()"
+      :min="0"
+      :max="songlength"
+      thumb-label="always"
       height="3"
       @change="progressChange"
     >
@@ -313,6 +314,8 @@ export default {
             mdiSkipPrevious,
             mdiPlaylistRemove,
 
+            songlength: 0,
+
             progress: 0,
             player: null,
             songProgressTimestamp: 0,
@@ -332,6 +335,7 @@ export default {
 
             showNavbar: true,
             lastScrollPosition: 0,
+            coolDown: 0,
         };
     },
     computed: {
@@ -466,6 +470,7 @@ export default {
         },
         songBuffering() {},
         mathFloorTime() {
+            console.log(`MathFloor : ${Math.floor(this.songProgressTimestamp)}`);
             return Math.floor(this.songProgressTimestamp);
         },
         timeFormat() {
@@ -527,6 +532,9 @@ export default {
         },
         songReady(evt) {
             console.log("Youtube Player is Ready");
+            const { start, end } = this.song;
+            this.songlength = end - start;
+            console.log(this.songlength);
             if (evt) {
                 this.player = evt;
             }
@@ -540,6 +548,7 @@ export default {
                     );
                     self.showPatience = true;
                     self.patience = 120;
+
                     if (document.visibilityState === "hidden") {
                         // when document is hidden
                         console.log(
@@ -581,12 +590,7 @@ export default {
         },
         progressChange(progress) {
             if (!this.song || !this.player) return;
-
-            const { start, end } = this.song;
-            const totalLength = end - start;
-            const percent = progress / 100;
-            const newOffsetTime = start + totalLength * percent;
-            this.player.seekTo(newOffsetTime);
+            this.player.seekTo(Math.floor(progress + 1));
         },
         prevButtonHandler() {
             if (this.progress > 5) {
@@ -619,7 +623,6 @@ export default {
         },
         onScroll() {
             const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-
             if (currentScrollPosition < 0) {
                 return;
             }
