@@ -1,4 +1,4 @@
-import { Content, decodeLayout, desktopPresets, mobilePresets, sortLayout } from "@/utils/mv-utils";
+import { Content, decodeLayout, sortLayout } from "@/utils/mv-utils";
 import { mapGetters } from "vuex";
 
 export default {
@@ -43,6 +43,7 @@ export default {
                     video,
                 },
             });
+            this.$store.dispatch("multiview/fetchVideoData");
         },
         findEmptyCell() {
             return this.layout.find((l) => !this.layoutContent[l.i]);
@@ -60,6 +61,7 @@ export default {
                         video,
                     },
                 });
+                this.$store.dispatch("multiview/fetchVideoData");
             }
             // TODO: snack bar saying no valid empty cells
         },
@@ -242,6 +244,7 @@ export default {
                 this.$store.commit("multiview/setLayoutContent", content);
             }
             this.$store.commit("multiview/setLayout", layout);
+            this.$store.dispatch("multiview/fetchVideoData");
         },
         findKeyByVideoId(id) {
             return Object.keys(this.layoutContent).find((k) => this.layoutContent[k].id === id);

@@ -118,6 +118,7 @@ export default {
                     video,
                 },
             });
+            this.$store.dispatch("multiview/fetchVideoData");
         },
     },
 };

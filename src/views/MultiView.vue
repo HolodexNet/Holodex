@@ -190,7 +190,7 @@ import VideoSelector from "@/components/multiview/VideoSelector.vue";
 import {
     mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical, mdiFastForward,
 } from "@mdi/js";
-import { Content, decodeLayout } from "@/utils/mv-utils";
+import { decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
 import api from "@/utils/backend-api";
 
@@ -325,27 +325,6 @@ export default {
             try {
                 const parsed = decodeLayout(this.$route.params.layout);
                 if (parsed.layout && parsed.content) {
-                    // Load missing video data from backend
-                    const { data } = await api.videos({
-                        include: "live_info",
-                        id: Object.values(parsed.content)
-                            .filter((x: Content) => x.type === "video" && (x.video as any).type !== "twitch")
-                            .map((x: Content) => x.id)
-                            .join(","),
-                    });
-                    if (data.length) {
-                        data.forEach((video) => {
-                            const matchingKey = Object.keys(parsed.content).find(
-                                (key) => parsed.content[key].id === video.id,
-                            );
-                            if (matchingKey) {
-                                parsed.content[matchingKey].video = video;
-                            } else {
-                                parsed.content[matchingKey].custom = true;
-                            }
-                        });
-                    }
-
                     try {
                         // Record link open for popularity metrics
                         api.trackMultiviewLink(this.$route.params.layout).then(console.log).catch(console.error);

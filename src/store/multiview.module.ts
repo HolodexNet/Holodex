@@ -1,8 +1,9 @@
 /* eslint-disable no-shadow */
 import { LayoutItem, getFirstCollision } from "@/external/vue-grid-layout/src/helpers/utils";
 import {
- getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout,
+ getDesktopDefaults, desktopPresets, mobilePresets, decodeLayout, Content,
 } from "@/utils/mv-utils";
+import api from "@/utils/backend-api";
 import Vue from "vue";
 import debounce from "lodash-es/debounce";
 
@@ -66,7 +67,27 @@ const getters = {
     },
 };
 
-const actions = {};
+const actions = {
+    fetchVideoData({ state, commit }) {
+        // Load missing video data from backend
+        const videoIds = new Set<string>(Object.values<Content>(state.layoutContent)
+            .filter((x) => x.type === "video" && x.video.type !== "twitch" && x.video.id === x.video.channel?.name && !x.video.noData)
+            .map((x) => x.video.id));
+        if (videoIds.size) {
+            api
+                .videos({
+                    include: "live_info",
+                    id: [...videoIds].join(","),
+                })
+                .then(({ data }) => {
+                    commit("setVideoData", data);
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
+        }
+    },
+};
 
 const mutations = {
     setLayout(state, layout) {
@@ -187,6 +208,20 @@ const mutations = {
             }
         });
     }, 0, { trailing: true }),
+    setVideoData(state, videos) {
+        videos.forEach((video) => {
+            Object.values<Content>(state.layoutContent).forEach((x) => {
+                if (x.video?.id === video.id) {
+                    x.video = video;
+                }
+            });
+        });
+        Object.values<Content>(state.layoutContent).forEach((x) => {
+            if (x.type === "video" && x.video.type !== "twitch" && x.video.id === x.video.channel?.name && !x.video.noData) {
+                x.video.noData = true;
+            }
+        });
+    },
 };
 
 export default {
