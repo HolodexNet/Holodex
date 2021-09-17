@@ -10,7 +10,7 @@
     content-class="music-player-bar"
   >
     <div
-      v-if="showNavbar"
+      v-if="showNavbar || pinNav"
       :class="minimise"
     >
       <v-slider
@@ -132,6 +132,9 @@
             <v-btn icon large @click="toggleSongFrameModality">
               <v-icon>{{ icons.mdiTheater }}</v-icon>
             </v-btn>
+            <v-btn icon large @click="togglePinNav">
+              <v-icon>{{ icons.mdiPinOutline }}</v-icon>
+            </v-btn>
           </div>
         </div>
         <!-- < v-scroll-y-transition mode="out-in"> -->
@@ -210,6 +213,15 @@
           v-if="$vuetify.breakpoint.smAndUp"
           class="playlist-buttons align-self-center"
         >
+          <v-btn
+            icon
+            large
+            :color="pinNav ? 'secondary lighten-2' : ''"
+            @click="togglePinNav"
+          >
+            <v-icon>{{ icons.mdiPinOutline }}</v-icon>
+          </v-btn>
+
           <v-btn
             icon
             large
@@ -313,6 +325,7 @@ export default {
             // playback state.
 
             isEmbedPlayerInBackground: false,
+            pinNav: false,
 
             showNavbar: true,
             lastScrollPosition: 0,
@@ -590,6 +603,9 @@ export default {
         },
         toggleSongFrameModality() {
             this.isEmbedPlayerInBackground = !this.isEmbedPlayerInBackground;
+        },
+        togglePinNav() {
+            this.pinNav = !this.pinNav;
         },
         onScroll() {
             const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
