@@ -25,6 +25,9 @@ const persistedState = {
 export const state = { ...initialState, ...persistedState };
 
 const getters = {
+    nonChatCellCount(state) {
+        return state.layout.reduce((a, c) => a + ((!state.layoutContent[c.i] || state.layoutContent[c.i]?.type === "video") ? 1 : 0), 0);
+    },
     activeVideos(state) {
         return state.layout
             .filter((item) => state.layoutContent[item.i] && state.layoutContent[item.i].type === "video")
@@ -84,7 +87,8 @@ const mutations = {
         // try to find a good location for it:
         let foundGoodSpot = false;
         for (let y = 0; !foundGoodSpot && y < 24; y += 1) {
-            for (let x = 0; !foundGoodSpot && x < 24 - 4; x += 1) {
+            for (let x = 0; !foundGoodSpot && x < 24 - 3; x += 1) {
+                console.log(x, Math.min(24 - x, 4));
                 newLayoutItem = {
                     x,
                     y,
@@ -102,10 +106,10 @@ const mutations = {
             }
         }
 
-        if (!newLayoutItem) {
+        if (!newLayoutItem || !foundGoodSpot) {
             newLayoutItem = {
                 x: 0,
-                y: 0, // puts it at the bottom
+                y: 24, // puts it at the bottom
                 w: 4,
                 h: 6,
                 i: state.index,

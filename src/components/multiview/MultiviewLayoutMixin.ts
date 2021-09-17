@@ -11,6 +11,7 @@ export default {
             "decodedDesktopPresets",
             "decodedMobilePresets",
             "desktopGroups",
+            "nonChatCellCount",
         ]),
         decodedAutoLayout() {
             return this.autoLayout
@@ -47,6 +48,7 @@ export default {
             return this.layout.find((l) => !this.layoutContent[l.i]);
         },
         tryFillVideo(video) {
+            if (!video) return;
             // try find empty cell
             const emptyCell = this.findEmptyCell();
             if (emptyCell) {
@@ -63,7 +65,7 @@ export default {
         },
         isPreset(currentLayout) {
             // filter out any presets that dont match the amount of cells
-            const toCompare = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
+            const toCompare = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout.concat(this.decodedDesktopPresets);
             const comparable = toCompare.filter((preset) => preset.layout.length === currentLayout.length);
             // there's no presets with equal cells
             if (comparable.length === 0) return false;
@@ -115,18 +117,59 @@ export default {
                 onConflict(clonedLayout);
             }
         },
-        deleteVideoAutoLayout(cellId) {
-            // Find and set to previous preset layout
+        addCellAutoLayout() {
+            // find layout with space for one more new video
             const presets = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
-            const newLayout = presets.find((preset) => preset.videoCellCount === this.activeVideos.length - 1)
-                ?? presets.find((preset) => preset.videoCellCount >= this.activeVideos.length - 1);
+            const newLayout = presets.find((preset) => preset.videoCellCount === this.nonChatCellCount + 1)
+                ?? presets.find((preset) => preset.videoCellCount >= this.nonChatCellCount + 1);
 
-            const clonedLayout = JSON.parse(JSON.stringify(newLayout));
-            this.$store.commit("multiview/deleteLayoutContent", cellId);
-            this.setMultiview({
-                ...clonedLayout,
-                mergeContent: true,
-            });
+            // found new layout
+            if (newLayout) {
+                // deep clone preset
+                const clonedLayout = JSON.parse(JSON.stringify(newLayout));
+
+                // if the current layout is a preset or empty, set next layout without prompting
+                if (!this.layout.length || this.isPreset(this.layout)) {
+                    this.setMultiview({
+                        ...clonedLayout,
+                        mergeContent: true,
+                        // Tell chat merging that a new video will be added
+                        hintAdd: false,
+                    });
+                    return;
+                }
+            }
+
+            this.addItem();
+        },
+        deleteVideoAutoLayout(id) {
+            if (this.isPreset(this.layout) && (this.layoutContent[id]?.type !== "chat")) {
+                // Clear everything if it's 1 video
+                if (this.nonChatCellCount === 1) {
+                    this.clearAllItems();
+                    return;
+                }
+
+                // Find and set to previous preset layout
+                const presets = this.isMobile ? this.decodedMobilePresets : this.decodedAutoLayout;
+                const newLayout = presets.find((preset) => preset.videoCellCount === this.nonChatCellCount - 1)
+                    ?? presets.find((preset) => preset.videoCellCount === this.nonChatCellCount - 1);
+
+                if (!newLayout) {
+                    // Can't downgrade layout, because step doesn't exist
+                    this.$store.commit("multiview/removeLayoutItem", id);
+                    return;
+                }
+
+                const clonedLayout = JSON.parse(JSON.stringify(newLayout));
+                this.setMultiview({
+                    ...clonedLayout,
+                    mergeContent: true,
+                });
+            } else {
+                // Default: delete item
+                this.$store.commit("multiview/removeLayoutItem", id);
+            }
         },
         setMultiview({ layout, content, mergeContent = false, hintAdd = false }) {
             /**

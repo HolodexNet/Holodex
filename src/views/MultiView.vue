@@ -249,7 +249,7 @@ export default {
                 {
                     icon: mdiViewGridPlus,
                     tooltip: this.$t("views.multiview.addframe"),
-                    onClick: this.addItem,
+                    onClick: this.addCellAutoLayout,
                     color: "green",
                 },
                 {
@@ -442,19 +442,7 @@ export default {
             });
         },
         handleDelete(id) {
-            // Check if preset and downgrade layout, if cell being deleted is video
-            if (this.isPreset(this.layout) && this.layoutContent[id] && this.layoutContent[id].type !== "chat") {
-                // Clear everything if it's 1 video 1 chat
-                if (this.activeVideos.length === 1) {
-                    this.clearAllItems();
-                    return;
-                }
-
-                this.deleteVideoAutoLayout(id);
-            } else {
-                // Default: delete item
-                this.$store.commit("multiview/removeLayoutItem", id);
-            }
+            this.deleteVideoAutoLayout(id);
         },
         onLayoutUpdated(newLayout) {
             this.$store.commit("multiview/setLayout", newLayout);
