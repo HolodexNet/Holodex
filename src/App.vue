@@ -3,8 +3,13 @@
     :style="{ background: $vuetify.theme.themes[darkMode ? 'dark' : 'light'].background }"
     :class="{ 'bump-bottom': $store.state.music.isOpen }"
   >
-    <portal-target name="music-playback-background" />
-
+    <div style="position:Absolute;" hide-details>
+      <div ref="moveTarget" class="moveWinddow" hide-details>
+        <movable class="innerWindow" target="moveTarget">
+          <portal-target name="music-playback-background" />
+        </movable>
+      </div>
+    </div>
     <MainNav />
 
     <v-main style="transition: none">
@@ -28,8 +33,12 @@ import ReportDialog from "@/components/common/ReportDialog.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
 import PWAUpdate from "@/components/common/PWAUpdate.vue";
 import InstallPrompt from "@/components/common/InstallPrompt.vue";
+import Vue from "vue";
+import movable from "v-movable";
 import { loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
+
+Vue.use(movable);
 
 export default {
     name: "App",
@@ -43,6 +52,7 @@ export default {
         PullToRefresh,
         PWAUpdate,
         InstallPrompt,
+        movable,
     },
     data() {
         return {

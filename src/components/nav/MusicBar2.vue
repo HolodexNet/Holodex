@@ -17,11 +17,11 @@
         min="0"
         :max="songlength"
         :thumb-label="true"
-        height="3"
+        height="15"
         @change="progressChange"
       >
-        <template #thumb-label="{ value }">
-          {{ timeFormat(value) }}
+        <template #thumb-label="{ vari }">
+          {{ timeFormat(vari) }}
         </template>
       </v-slider>
       <div
@@ -491,13 +491,13 @@ export default {
             this.coolDown = 0;
             this.showNavbar = true;
             this.MouseEnter = true;
-            console.log("Over");
+            // console.log("mouseOver");
         },
         mouseOut() {
             // dont turn to !this.MouseEnter cause it trigger multiple times in their child element too
             this.coolDown = 0;
             this.MouseEnter = false;
-            console.log("Out");
+            // console.log("mouseOut");
         },
         songProgress(time) {
             if (!this.song) {
