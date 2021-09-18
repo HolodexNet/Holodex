@@ -164,6 +164,7 @@ export default {
                 }
 
                 const clonedLayout = JSON.parse(JSON.stringify(newLayout));
+                this.$store.commit("multiview/deleteLayoutContent", id);
                 this.setMultiview({
                     ...clonedLayout,
                     mergeContent: true,
