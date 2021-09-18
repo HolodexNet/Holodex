@@ -19,7 +19,7 @@ export function resizeChannelPhoto(photoUrl, size) {
     if (deviceSize < 88 && deviceSize > 55) adjSize = 88;
     else if (deviceSize <= 55) adjSize = 48;
     else adjSize = 176;
-    return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj`;
+    return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
 }
 
 export function getVideoThumbnails(ytVideoKey, useWebP) {
