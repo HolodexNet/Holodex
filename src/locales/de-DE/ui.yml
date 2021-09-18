@@ -51,6 +51,8 @@ component:
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -140,6 +142,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -466,4 +469,6 @@ about:
   news:
     title: Neuigkeiten
   bookmarklet:
-    title: Lesezeichlein
+    title: Bookmarklets
+    description: >-
+      Zieh diese Bookmarklets in deine Lesezeichenleiste, um YouTube-Videos leichter in Holodex zu öffnen:
