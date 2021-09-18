@@ -455,3 +455,7 @@ about:
     title: 更新履歴
   news:
     title: ニュース
+  bookmarklet:
+    title: ブックマークレット
+    description: >-
+      これらのブックマークレットをブラウザのブックマークバーに追加しておくことで、YouTubeからHolodexにワンクリックで移動できるようになります:
