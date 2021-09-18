@@ -51,8 +51,6 @@ component:
     tlPresence: 過去半小時內有即時翻譯
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -142,7 +140,6 @@ views:
     collabs: 連動
     about: 簡介
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -313,7 +310,7 @@ views:
     confirmOverwrite: 確定覆蓋設定？
     confirmOverwriteYes: 確認
     permalink: 永久連結
-    presets: 預設佈局
+    presets: 版面配置
     addframe: 增加新分割
     muteAll: 全部靜音
     unmuteAll: 全部取消靜音
@@ -328,13 +325,13 @@ views:
       custom: 自訂佈局
       toggleAutoLayout: 是否納入自動調整模式
       remove: 刪除此佈局
-      desktop: 桌上型電腦佈局
-      mobile: 手機專用佈局
+      desktop: ＰＣ佈局
+      mobile: 手機佈局
       autoLayout: 自動排版模式
     presetEditor:
       title: 儲存目前佈局
       name: 佈局名稱
-      autoLayout: 在自動調整模式中啟用此佈局
+      autoLayout: 在自動排版模式中啟用此佈局
     video:
       selectLive: 選擇實況
       addCustomVideo: 添加指定YouTube影片
