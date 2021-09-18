@@ -13,13 +13,12 @@
     "src/external/vue-grid-layout"
   ],
   "lint-staged": {
-    "*.{js,ts,vue}": [
-      "eslint --fix"
-    ]
+    "*.{js,ts,vue}": ["eslint --fix"],
+    "CHANGELOG.md": ["npm run changelog --"]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx lint-staged && npm run changelog"
+      "pre-commit": "npx lint-staged"
     }
   },
   "dependencies": {
