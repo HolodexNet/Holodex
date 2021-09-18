@@ -3,6 +3,7 @@ component:
   apiError:
     title: Very very sorry!
   channelInfo:
+    stats: Stattz
     videoCount: '{0} Video'
     clipCount: '{n} Kirinuki'
     subscriberCount: '{n} Sabusukuraiba-'
@@ -30,29 +31,107 @@ component:
     liveNow: Raibu Now
     edit: Editto
     premiere: Premiar
+    googleCalendar: google calendar ni tuika
+  videoDescription:
+    description: setumei
+  description:
+    showMore: MOTTO
+  watch:
+    nextUpInMugen: NEXT!!
+    Comments:
+      title: komments
+      all: ALL
+  search:
+    searchLabel: Saach
+    type:
+      channel: channeru
+      topic: topic
+      org: soshiki
+      titledesc: titoru/setumei
+      comments: komments
+      videourl: video url
+  relatedVideo:
+    clipsLabel: kirinuki
+    sourcesLabel: soosu
+    songsLabel: song
+    recommendationsLabel: rikomendo
+  paginateLoad:
+    older: more old
+  music:
+    clearPlaylist: cliar
+  songList:
+    songTitle: Taitoru
+    songDuration: Dureision
+  installPrompt:
+    notNowBtn: NO NOW!!!
+    installBtn: Instol
+    iOS:
+      popup: iOS ni holodex instol
+      beforeExportIcon: tappu
+  media:
+    remove: rimubu
   comment:
     close: Peklose
+    readMore: read moar
   reportDialog:
+    title: riport
     comments: What do next?
     success: Send repolt thanks you!!!
+    reasons:
+      - Video tagged incorrectly
+      - Dangerously Low Quality/Misleading Content
+      - Violates the org's derivative work guidelines or inappropriate
+      - ader
+  thirdpartycookie:
+    dialogTitle: holodex in youtube chatto
+  playlist:
+    menu:
+      export-playlist: eksport playrisut
+      new-playlist: new pleylist
+      rename-playlist: name change
+      reset-unsaved: risett this
+      delete-playlist: pleylisto sakuzyo
 views:
   channel:
+    video: video
+    clips: kirinuki
     music: Musik
     collabs: Corabo
   channels:
     sortOptions:
       subscribers: Doroku
+      group: guruppu
+      videoCount: video caunt
+      clipCount: kirinuki caunt
+      org: soshiki
     tabs:
       Vtuber: Vtuber
+      Subber: kirinuki man
+      Favorites: feibarittu
+      Blocked: brokku ok
+    favoritesAreEmpty: NO FEIBARITTU!
   home:
+    liveOrUpcomingHeading: Live / Future
+    recentVideosHeading: saikin no video
     recentVideoToggles:
+      all: all
       official: Arcaib
+      subber: kirinuki
   library:
     deleteConfirmation: Delete {0} video is ok?
     deleteConfirmationOK: Yes delete
     deleteConfirmationCancel: No no no
+    selectionReset: risett
+    selectionSelectAll: all select
+    emptyLibrary: VIDEO NO!
     exportYtPlaylist: Youtube playlist
+    exportCsv: csv
+    selectionSelect50: 50 select
+  notFound:
+    back: home go
   search:
+    sort:
+      newest: motto new
     type:
       official: Oficial
   settings:
@@ -70,10 +149,18 @@ views:
     hideCollabStreamsLabel: Corabo stream no show
     theme: Tema
   app:
+    update_available: UPDATE OK
     update_btn: Update
     close_btn: Peklose
   watch:
+    theaterMode: siatarr mode
     chat:
+      loading: CHATTO ROODO NOW...
+      hideTLBtn: NO TL
+      showTLBtn: TL OK
+      TLSettingsTitle: TL settei
+      showVerifiedMessages: nice peopl show ok
+      showModeratorMessages: supana show ok
       tlFontSize: Font size
       retryBtn: Try agen
       status:
@@ -82,9 +169,19 @@ views:
         notLive: >-
           Strim still not start. Can comment 15 miniut befor stream start
         connectedToChat: Is conect
+        disconnectedToChat: connect down
   favorites:
+    manageFavorites: feibaritt manegi
     close: Peklose
+    showall: all show
+  editor:
+    changeTopic:
+      title: topikku change
+    channelMentions:
+      title: channel mension
   login:
+    apikeyNew: NEW API GIVE ME!!!!!!!
+    linkAcc: anoder accaunt link
     apikeyResetNvm: Something happund?
     with:
       - Googooru de login peko
@@ -92,28 +189,44 @@ views:
       - Twitter de login peko
   multiview:
     confirmOverwriteYes: "Yes"
+    permalink: paamarink
+    presets: purisettz
+    addframe: waku add
     preset:
+      custom: my laiauto
       remove: Deret
       desktop: Pasokon
       mobile: Mobair
+      autoLayout: AutoLeiauto
     presetEditor:
+      title: Leiauto hozon
       name: Name
     editAutoLayout: Oto reiouto ejito
     changeLayout: Reiouto change
     hints: Hint peko
     mediaControlsHint1: Media Contororu use streaming mute and sync (
     mediaControlsHint2: ) peko
+  playlist:
+    playlist-is-modified: NO SAVE
 time:
   soon: will start
 editor:
   music:
     add: Put song
+    titles:
+      help: HERUPU
+    trackNameInput: Music namae
+    originalArtistInput: Originaru Artist
+    startInput: Staato
 about:
   faq:
+    title: F●Q!!!
     autoplayHeader: AutoPlay not wolk!
     favorite:
       title: Favolite is what?
     MugenClips:
       title: MogenClips is what?
+  credits:
+    title: CREJITTZ
   news:
     title: New
