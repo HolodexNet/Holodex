@@ -5,8 +5,31 @@ component:
   channelInfo:
     videoCount: '{0} Video'
     clipCount: '{n} Kirinuki'
+    subscriberCount: '{n} Sabusukuraiba-'
+    totalViews: Saisei count
+  channelSocials:
+    addToFavorites: Feibaritto
+    unblock: No block this
   mainNav:
+    home: Ho-mu
+    favorites: Feibaritto
+    channels: Channeru
+    about: About
     library: Raiburari
+    settings: Settei
+    login: Rogu inn
+    logout: Rogu auto
+    accountSettings: Accounto settei
+    music: Musikku
+    multiview: MaruchiView
+    points: pointo
+    playlist: Purei list
+  videoCard:
+    clips: '{n} Kirinuki'
+    watching: '{0} nin miteru'
+    liveNow: Raibu Now
+    edit: Editto
+    premiere: Premiar
   comment:
     close: Peklose
   reportDialog:
