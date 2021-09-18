@@ -445,6 +445,9 @@ export default {
             this.player = player;
             this.showPatience = false;
             this.patience = 0;
+
+            const { start, end } = this.song;
+            this.songlength = end - start;
             /**-----------------------
              * *       INFO
              *  if: the bar is NOT OPEN
@@ -558,8 +561,6 @@ export default {
         },
         songReady(evt) {
             console.log("Youtube Player is Ready");
-            const { start, end } = this.song;
-            this.songlength = end - start;
             if (evt) {
                 this.player = evt;
             }
@@ -724,7 +725,7 @@ export default {
     }
   }
 
-.minimise {
+  .minimise {
   box-shadow: none;
   transform: translate3d(0, 100%, 0);
 }
