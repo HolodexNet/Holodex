@@ -20,8 +20,8 @@
         height="15"
         @change="progressChange"
       >
-        <template #thumb-label="{ vari }">
-          {{ timeFormat(vari) }}
+        <template #thumb-label="{ value }">
+          {{ timeFormat(value) }}
         </template>
       </v-slider>
       <div

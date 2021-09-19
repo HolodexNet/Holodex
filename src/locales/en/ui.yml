@@ -535,3 +535,7 @@ about:
     title: Changelog
   news:
     title: News
+  bookmarklet:
+    title: Bookmarklets
+    description: >-
+      Drag these bookmarklets to your bookmark bar to open YouTube watch page in Holodex easily:

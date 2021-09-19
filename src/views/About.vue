@@ -1,7 +1,13 @@
 <template>
-  <v-container key="aboutpg" class="pt-3">
+  <v-container
+    key="aboutpg"
+    class="pt-3"
+  >
     <v-row>
-      <v-col v-if="!$store.state.isMobile" cols="12">
+      <v-col
+        v-if="!$store.state.isMobile"
+        cols="12"
+      >
         <div class="text-h4">
           {{ $t("component.mainNav.about") }}
         </div>
@@ -41,7 +47,6 @@
               color="info white--text"
               block
               class="text-left mb-4"
-
               target="_blank"
               href="https://forms.gle/xkN4w8fyPr6YTGfx6"
             >
@@ -54,7 +59,6 @@
               color="indigo white--text"
               block
               class="text-left my-4"
-
               target="_blank"
               href="https://discord.gg/jctkgHBt4b"
             >
@@ -66,7 +70,6 @@
             <v-btn
               class="text-left my-4 white--text deep-purple"
               block
-
               target="_blank"
               href="https://github.com/RiceCakess/Holodex"
             >
@@ -78,7 +81,6 @@
             <v-btn
               class="text-left mt-4 white--text orange"
               block
-
               href="https://holodex.stoplight.io/"
               target="_blank"
             >
@@ -132,7 +134,10 @@
               {{ $t("about.faq.title") }}
             </div>
           </v-card-title>
-          <v-expansion-panels accordion focusable>
+          <v-expansion-panels
+            accordion
+            focusable
+          >
             <v-expansion-panel>
               <v-expansion-panel-header>
                 {{ $t("about.faq.ytchatHeader") }}
@@ -140,9 +145,7 @@
               <v-expansion-panel-content>
                 {{ $t("about.faq.ytchatContent") }}
                 <br>
-                <a
-                  href="https://support.mozilla.org/en-US/kb/third-party-cookies-firefox-tracking-protection?redirectslug=disable-third-party-cookies"
-                >
+                <a href="https://support.mozilla.org/en-US/kb/third-party-cookies-firefox-tracking-protection?redirectslug=disable-third-party-cookies">
                   {{ $t("about.faq.ytchatFirefox") }}
                 </a>
               </v-expansion-panel-content>
@@ -258,7 +261,10 @@
       <v-col>
         <v-card>
           <v-card-title>
-            <a class="text-h6" href="https://github.com/RiceCakess/Holodex/blob/dev/CHANGELOG.md">{{
+            <a
+              class="text-h6"
+              href="https://github.com/RiceCakess/Holodex/blob/dev/CHANGELOG.md"
+            >{{
               $t("about.changelog.title")
             }}</a>
           </v-card-title>
@@ -270,6 +276,37 @@
               style="height: 60vh; border: none; background: #eee"
             />
           </div>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col
+        cols="12"
+        md="4"
+        lg="4"
+        xl="4"
+      >
+        <v-card>
+          <v-card-title>
+            <div class="text-h6">
+              {{ $t("about.bookmarklet.title") }}
+            </div>
+          </v-card-title>
+          <v-card-text>
+            <p>{{ $t('about.bookmarklet.description') }}</p>
+            <v-btn
+              class="text-left mt-4 white--text"
+              href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&window.location.href='https://holodex.net/watch/'+v})()"
+            >
+              Open in Holodex
+            </v-btn>
+            <v-btn
+              class="text-left mt-4 white--text"
+              href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&window.location.href='https://staging.holodex.net/watch/'+v})()"
+            >
+              Open in Holodex Beta
+            </v-btn>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -316,6 +353,6 @@ export default {
 
 <style>
 .v-expansion-panel-content__wrap {
-    padding-top: 12px;
+  padding-top: 12px;
 }
 </style>

@@ -2,3 +2,6 @@
 hello: dünya
 music:
   title: '{{english_name}} Orijinal ve Cover Şarkıları - Holodex'
+channel:
+  clip:
+    title: '{{english_name}} - Holodex'

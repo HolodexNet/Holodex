@@ -132,16 +132,21 @@ export default {
 
 <style lang="scss">
 .song-player-container {
-    position:relative;
-    margin-left: auto;
-    margin-right: auto;
+    width: 356px;
+    position: fixed;
+    top: 80px;
+    right: 0;
+    margin: 0 10px 10px 0;
+    border-radius: 4px;
     overflow: hidden;
-    margin: 10px;
     z-index: 1000;
+
     .song-player {
         position: relative;
         padding-bottom: 56.25%;
-     }
+        /* padding-bottom: min(56.25%, calc(100vh - 120px)); */
+        /* width: 100%; */
+    }
 }
 
 .song-player-container-background {
@@ -149,26 +154,13 @@ export default {
     top: 0;
     right: 0;
     left: 0;
-    opacity: 0.1;
+    opacity: 0.3;
     height: 100vh;
-    z-index: -1000;
-    pointer-events: none;
 }
 
 .song-player iframe {
     position: absolute;
     width: 100%;
     height: 100%;
-}
-
-.moveWinddow {
-    width: 400px; //change size video here
-    position: absolute;
-    z-index: 1000;
-    background: #333;
-}
-.innerWindow {
-    background: rgb(149, 149, 255);
-    width:100%;
 }
 </style>
