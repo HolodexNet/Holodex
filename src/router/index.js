@@ -189,9 +189,21 @@ router.beforeEach((to, from, next) => {
 
     const actualLang = queryLang || lang;
     console.log(actualLang);
+
+    const queryOrg = to.query.org;
+    console.log(queryOrg);
+
+    if (queryOrg && store.state.currentOrg.name !== queryOrg) {
+        store.dispatch("orgs/fetchOrgs").then(() => {
+            console.log(queryOrg);
+            const overrideOrg = store.state.orgs.orgs.find((o) => o.name === queryOrg);
+            store.commit("setCurrentOrg", overrideOrg);
+        });
+    }
+
     if (actualLang !== "en") {
         Promise.all([loadLanguageAsync(actualLang)]).then(() => next());
-    } else next();
+    } else { next(); }
 });
 
 export default router;
