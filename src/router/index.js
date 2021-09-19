@@ -180,9 +180,17 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (!from.path.match("^/watch")) to.meta.prevPath = from.fullPath;
 
+    if (from.query.lang) {
+        to.query.lang = from.query.lang;
+    }
+    const queryLang = to.query.lang;
+
     const { lang } = store.state.settings;
-    if (lang !== "en") {
-        Promise.all([loadLanguageAsync(lang)]).then(() => next());
+
+    const actualLang = queryLang || lang;
+    console.log(actualLang);
+    if (actualLang !== "en") {
+        Promise.all([loadLanguageAsync(actualLang)]).then(() => next());
     } else next();
 });
 

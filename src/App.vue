@@ -65,17 +65,17 @@ export default {
         },
         lang() {
             // connected to the watch.lang hook below.
-            return this.$store.state.settings.lang;
+            return this.$route.query.lang || this.$store.state.settings.lang;
         },
     },
     watch: {
         darkMode() {
             this.$vuetify.theme.dark = this.darkMode;
         },
-        lang() {
+        lang(v) {
             // watches the computed.lang variable and updates vue I18N
             // import(`dayjs/locale/${this.lang}`) // ES 2015
-            loadLanguageAsync(this.$store.state.settings.lang);
+            loadLanguageAsync(v);
             // setDayjsLang(this.$store.state.settings.lang);
         },
         // watches change in breakpoint from vuetify and updates store
