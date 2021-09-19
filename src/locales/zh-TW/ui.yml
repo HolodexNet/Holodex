@@ -265,6 +265,7 @@ views:
       StickBottomSettingsDesc: 將翻譯留言置底於聊天室下方（預設置頂）
       showVerifiedMessages: 顯示已認證的使用者訊息
       showModeratorMessages: 顯示管理員訊息
+      showLocalTime: 顯示本地時間
       tlFontSize: 字體大小
       tlWindowSize: 翻譯聊天室大小(%) ，設置0%時會自動調整尺寸
       retryBtn: 重試
