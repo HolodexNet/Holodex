@@ -190,7 +190,7 @@ import VideoSelector from "@/components/multiview/VideoSelector.vue";
 import {
     mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical, mdiFastForward,
 } from "@mdi/js";
-import { Content, decodeLayout } from "@/utils/mv-utils";
+import { decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
 import api from "@/utils/backend-api";
 
@@ -249,7 +249,7 @@ export default {
                 {
                     icon: mdiViewGridPlus,
                     tooltip: this.$t("views.multiview.addframe"),
-                    onClick: this.addItem,
+                    onClick: this.addCellAutoLayout,
                     color: "green",
                 },
                 {
@@ -325,27 +325,6 @@ export default {
             try {
                 const parsed = decodeLayout(this.$route.params.layout);
                 if (parsed.layout && parsed.content) {
-                    // Load missing video data from backend
-                    const { data } = await api.videos({
-                        include: "live_info",
-                        id: Object.values(parsed.content)
-                            .filter((x: Content) => x.type === "video" && (x.video as any).type !== "twitch")
-                            .map((x: Content) => x.id)
-                            .join(","),
-                    });
-                    if (data.length) {
-                        data.forEach((video) => {
-                            const matchingKey = Object.keys(parsed.content).find(
-                                (key) => parsed.content[key].id === video.id,
-                            );
-                            if (matchingKey) {
-                                parsed.content[matchingKey].video = video;
-                            } else {
-                                parsed.content[matchingKey].custom = true;
-                            }
-                        });
-                    }
-
                     try {
                         // Record link open for popularity metrics
                         api.trackMultiviewLink(this.$route.params.layout).then(console.log).catch(console.error);
@@ -442,19 +421,7 @@ export default {
             });
         },
         handleDelete(id) {
-            // Check if preset and downgrade layout, if cell being deleted is video
-            if (this.isPreset(this.layout) && this.layoutContent[id] && this.layoutContent[id].type !== "chat") {
-                // Clear everything if it's 1 video 1 chat
-                if (this.activeVideos.length === 1) {
-                    this.clearAllItems();
-                    return;
-                }
-
-                this.deleteVideoAutoLayout(id);
-            } else {
-                // Default: delete item
-                this.$store.commit("multiview/removeLayoutItem", id);
-            }
+            this.deleteVideoAutoLayout(id);
         },
         onLayoutUpdated(newLayout) {
             this.$store.commit("multiview/setLayout", newLayout);

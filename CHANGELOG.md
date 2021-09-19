@@ -20,8 +20,8 @@
    - **PEKO English** (please help translate Holodex peko!)
 
 ##### Patches & Bugfixes
-- Improved multiview cells and cell control
-- Fixed logo ignoring default page setting 
+- Improved multiview cells and cell control (@RiceCakess)
+- Fixed logo ignoring default page setting (@RiceCakess)
 - Added a bulk edit menu for Holodex editors (@uetchy)
    - We're always looking for more editors, since we have grown beyond 800 vtubers. If you're passionate about helping your oshi organize clips and music about them, or just about data quality on Holodex in general, feel free to contribute as you are (users can add music and tag mentioned channels), but if you're finding yourself doing it a LOT, and would like tools/bots to make it even easier, come ask us to become an editor! If you're an editor already, join the discord!
 - Added ability to *filter by date* on the home and favorites screens (@sphinxrave)

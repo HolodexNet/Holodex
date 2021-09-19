@@ -51,8 +51,6 @@ component:
     tlPresence: 최근 30분 간 활동 중인 번역가
   videoDescription:
     description: 설명
-  video:
-    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -142,7 +140,6 @@ views:
     collabs: 콜라보
     about: 정보
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 구독자
       group: 그룹

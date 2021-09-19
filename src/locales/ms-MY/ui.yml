@@ -51,8 +51,6 @@ component:
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -142,7 +140,6 @@ views:
     collabs: Siaran sama
     about: Perihal
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -468,3 +465,5 @@ about:
     title: Catatan perubahan
   news:
     title: Berita
+  bookmarklet:
+    title: Penanda laman kecil

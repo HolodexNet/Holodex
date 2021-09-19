@@ -14,7 +14,7 @@ export default {
         editMode: {
             get() {
                 if (!this.layoutContent[this.item.i]) return false;
-                return this.layoutContent[this.item.i].editMode;
+                return this.layoutContent[this.item.i].editMode ?? true;
             },
             set(value) {
                 this.$store.commit("multiview/setLayoutContentWithKey", { id: this.item.i, key: "editMode", value });

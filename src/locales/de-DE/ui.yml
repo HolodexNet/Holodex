@@ -468,3 +468,7 @@ about:
     title: Änderungsverlauf
   news:
     title: Neuigkeiten
+  bookmarklet:
+    title: Bookmarklets
+    description: >-
+      Zieh diese Bookmarklets in deine Lesezeichenleiste, um YouTube-Videos leichter in Holodex zu öffnen:

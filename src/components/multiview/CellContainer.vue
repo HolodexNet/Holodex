@@ -97,6 +97,7 @@ export default {
                                 id: video.id,
                                 channel: {
                                     name: video.channel.name,
+                                    photo: video.channel.photo,
                                 },
                             },
                         },
@@ -117,6 +118,7 @@ export default {
                     video,
                 },
             });
+            this.$store.dispatch("multiview/fetchVideoData");
         },
     },
 };
