@@ -32,6 +32,7 @@ export const langs = [
     { val: "tr", display: "Türkçe", credit: "creeperkafasipw#1861" },
     { val: "vi", display: "Tiếng Việt", credit: "Pooh#6666,Dead xda member#4848" },
     { val: "hu", display: "Magyar", credit: "kuroihikikomori#3519" },
+    { val: "th", display: "ไทย", credit: "SnowNeko#0282" },
 ];
 
 export const asyncLang = {
@@ -110,6 +111,10 @@ export const asyncLang = {
     "lol-UWU": async () => {
         await import("dayjs/locale/en");
         return import("@/locales/lol-UWU/ui.yml");
+    },
+    async th() {
+        await import("dayjs/locale/th");
+        return import("@/locales/th-TH/ui.yml");
     },
 };
 
