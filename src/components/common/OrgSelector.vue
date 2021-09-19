@@ -221,8 +221,10 @@ export default {
             return this.$store.state.settings.darkMode;
         },
     },
-    async created() {
-        await this.$store.dispatch("orgs/fetchOrgs");
+    watch: {
+        showOrgDialog(v) {
+            if (v) this.$store.dispatch("orgs/fetchOrgs");
+        },
     },
     methods: {
         ...mapMutations(["toggleFavoriteOrg", "shiftOrgFavorites"]),
