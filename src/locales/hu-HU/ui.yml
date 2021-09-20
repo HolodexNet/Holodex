@@ -51,6 +51,8 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -140,6 +142,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -261,6 +264,7 @@ views:
       StickBottomSettingsDesc: Fordító doboz a chat aljához rögzítve (mobilon felül alapértelmezett)
       showVerifiedMessages: Igazolt felhasználók üzeneteinek megjelenítése
       showModeratorMessages: Moderátor üzenetek megjelenítése
+      showLocalTime: Helyi idők mutatása
       tlFontSize: Betű méret
       tlWindowSize: Fordító mérete (%), hagyd 0%-on automatához
       retryBtn: Újra
@@ -465,3 +469,7 @@ about:
     title: Változtatások
   news:
     title: Újdonságok
+  bookmarklet:
+    title: Könyvjelzők
+    description: >-
+      Húzd ezeket a könyvjelzőket a könyvjelző sávodba, hogy megnyiss egy YouTube oldalt Holodexen könnyedén:
