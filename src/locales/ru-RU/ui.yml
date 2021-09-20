@@ -456,3 +456,6 @@ about:
     title: Изменения
   news:
     title: Новости
+  bookmarklet:
+    description: >-
+      Перетащите эти закладки в панель закладок, чтобы легко открывать страницу просмотра YouTube в Holodex:
