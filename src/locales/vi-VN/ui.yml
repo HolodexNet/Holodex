@@ -39,6 +39,7 @@ component:
     points: điểm
     playlist: Playlist
   videoCard:
+    clips: '{n} Clip'
     watching: '{0} người đang xem'
     liveNow: Đang trực tiếp
     edit: Chỉnh sửa
@@ -118,6 +119,15 @@ component:
     alertText: >-
       Cài đặt quyền riêng tư của trình duyệt bạn đang sử dụng khiến bạn không thể đăng nhập vào Youtube Chat. Nhấn vào đây để tìm hiểu thêm
     neverShowAgain: Ngừng hiển thị các cảnh báo này
+  playlist:
+    menu:
+      export-playlist: Xuất danh sách
+      new-playlist: Danh sách mới
+      rename-playlist: Đổi tên danh sách
+      reset-unsaved: Huỷ các thay đổi chưa được lưu
+      delete-playlist: Xoá danh sách
+      clear-playlist: Xoá
+    save-error-not-logged-in: Bạn cần phải đăng nhập để lưu danh sách
 views:
   channel:
     video: Video
