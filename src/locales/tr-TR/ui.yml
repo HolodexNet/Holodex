@@ -313,6 +313,7 @@ views:
     addframe: Hücre Ekle
     muteAll: Tümünün Sesini Kapat
     unmuteAll: Tümünün Sesini Aç
+    muteOthers: Diğerlerini Sustur
     muteOthersDetail: Bir yayın dışındaki yayınları sustur
     autoLayoutTip: Oto düzen modunu kullanmak için bir kanala tıklayın
     createLayoutTip: Hücre ekleyerek veya önceden ayarlanmış düzen kullanarak kendi düzeninizi oluşturun
