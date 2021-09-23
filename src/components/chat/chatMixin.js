@@ -117,7 +117,7 @@ export default {
             return formatDuration(dayjs.utc(utc).diff(this.startTimeMillis));
         },
         realTimestamp(utc) {
-            return dayjs(utc.timestamp).format("LTS"); // localizedFormat
+            return dayjs(utc).format("LTS"); // localizedFormat
         },
     },
 };
