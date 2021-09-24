@@ -317,7 +317,6 @@
 import {
     mdiExportVariant, mdiGithub, mdiConsole, mdiAccountPlus,
 } from "@mdi/js";
-import * as icons from "@/utils/icons";
 import TwitterFeed from "@/components/common/TwitterFeed.vue";
 import Stats from "@/components/common/Stats.vue";
 
@@ -337,7 +336,6 @@ export default {
     },
     data() {
         return {
-            icons,
             mdiExportVariant,
             mdiGithub,
             mdiConsole,

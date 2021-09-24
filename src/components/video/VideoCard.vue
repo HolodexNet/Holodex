@@ -219,7 +219,6 @@ import {
     dayjs,
     localizedDayjs,
 } from "@/utils/time";
-import * as icons from "@/utils/icons";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */
 
@@ -292,7 +291,6 @@ export default {
         return {
             data: this.source || this.video,
             forceJPG: true,
-            icons,
             now: Date.now(),
             updatecycle: null,
             hasWatched: false,

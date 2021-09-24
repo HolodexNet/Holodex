@@ -131,7 +131,6 @@ import {
     mdiFilter,
     mdiCommentSearch,
 } from "@mdi/js";
-import * as icons from "@/utils/icons";
 import api from "@/utils/backend-api";
 import debounce from "lodash-es/debounce";
 import { json2csvAsync, csv2jsonAsync } from "json-2-csv";
@@ -151,7 +150,6 @@ export default {
     data() {
         return {
             query: [],
-            icons,
             mdiLabel,
             mdiAccountMultiple,
             mdiMagnifyPlusOutline,
