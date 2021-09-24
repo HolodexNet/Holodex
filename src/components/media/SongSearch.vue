@@ -71,7 +71,6 @@ import {
     mdiFilter,
     mdiCommentSearch,
 } from "@mdi/js";
-import * as icons from "@/utils/icons";
 import debounce from "lodash-es/debounce";
 // TODO(jprochazk): type declarations for this module
 import jsonp from "jsonp-es6";
@@ -99,7 +98,6 @@ export default {
     data() {
         return {
             query: this.value,
-            icons,
             mdiLabel,
             mdiAccountMultiple,
             mdiMagnifyPlusOutline,

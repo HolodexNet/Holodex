@@ -110,7 +110,6 @@ import VideoEditSongs from "@/components/edit/VideoEditSongs.vue";
 import VideoEditMentions from "@/components/edit/VideoEditMentions.vue";
 import { decodeHTMLEntities } from "@/utils/functions";
 // import { dayjs } from "@/utils/time";
-import * as icons from "@/utils/icons";
 import api from "@/utils/backend-api";
 
 export default {
@@ -136,7 +135,7 @@ export default {
             id: 0,
             video: null,
             startTime: 0,
-            icons,
+
             currentTab: 0,
             TABS: Object.freeze({
                 TOPIC: 0,

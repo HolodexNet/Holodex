@@ -96,7 +96,6 @@
 </template>
 
 <script lang="ts">
-import * as icons from "@/utils/icons";
 import backendApi from "@/utils/backend-api";
 
 export default {
@@ -111,9 +110,6 @@ export default {
             default: false,
         },
     },
-    data: () => ({
-        icons,
-    }),
     computed: {
         userdata() {
             return this.$store.state.userdata;
