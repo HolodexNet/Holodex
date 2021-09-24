@@ -53,8 +53,8 @@
               :key="index"
               two-line
             >
-              <v-list-item-avatar v-if="cellState.video.channel.photo" class="ma-0 mr-1">
-                <v-img :src="cellState.video.channel.photo" />
+              <v-list-item-avatar class="ma-0 mr-1">
+                <v-img :src="cellState.video.channel.id ? uiUrl + '/statics/channelImg/' + cellState.video.channel.id + '/100.png' : cellState.video.channel.photo " />
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title class="primary--text">
@@ -152,6 +152,9 @@ export default {
             const alwaysTrue = this.value || !this.value || this.activeVideos;
             if (!this.$parent?.$refs?.videoCell) return [];
             return alwaysTrue && this.$parent.$refs.videoCell.filter((c) => c.video);
+        },
+        uiUrl() {
+            return window.location.origin;
         },
     },
     watch: {

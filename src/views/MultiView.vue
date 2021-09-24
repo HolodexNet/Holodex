@@ -123,6 +123,7 @@
           <ChatCell
             v-if="layoutContent[item.i] && layoutContent[item.i].type === 'chat'"
             :item="item"
+            :tl="layoutContent[item.i].initAsTL"
             :cell-width="columnWidth * item.w"
             @delete="handleDelete"
           />

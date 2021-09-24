@@ -96,12 +96,14 @@ export default {
                                 custom: true,
                                 id: video.id,
                                 channel: {
+                                    id: video.channel.id,
                                     name: video.channel.name,
                                     photo: video.channel.photo,
                                 },
                             },
                         },
                     });
+                    this.$store.dispatch("multiview/fetchVideoData");
                 }
                 return;
             }

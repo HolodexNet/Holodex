@@ -71,7 +71,7 @@ const actions = {
     fetchVideoData({ state, commit }) {
         // Load missing video data from backend
         const videoIds = new Set<string>(Object.values<Content>(state.layoutContent)
-            .filter((x) => x.type === "video" && x.video.type !== "twitch" && x.video.id === x.video.channel?.name && !x.video.noData)
+            .filter((x) => x.type === "video" && x.video.type !== "twitch" && x.video.id === x.video.channel?.name && !(x?.video?.noData))
             .map((x) => x.video.id));
         if (videoIds.size) {
             api
@@ -209,6 +209,7 @@ const mutations = {
         });
     }, 0, { trailing: true }),
     setVideoData(state, videos) {
+        if (!videos) return;
         videos.forEach((video) => {
             Object.values<Content>(state.layoutContent).forEach((x) => {
                 if (x.video?.id === video.id) {

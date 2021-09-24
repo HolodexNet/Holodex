@@ -53,15 +53,7 @@ export default {
             // try find empty cell
             const emptyCell = this.findEmptyCell();
             if (emptyCell) {
-                this.$store.commit("multiview/setLayoutContentById", {
-                    id: emptyCell.i,
-                    content: {
-                        id: video.id,
-                        type: "video",
-                        video,
-                    },
-                });
-                this.$store.dispatch("multiview/fetchVideoData");
+                this.addVideoWithId(video, emptyCell.i);
             }
             // TODO: snack bar saying no valid empty cells
         },

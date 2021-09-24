@@ -4,29 +4,48 @@
     <!--================= No Content Mode ================-->
     <div class="centered-btn">
       <v-btn
-        class="mr-2"
+        class=""
         color="indigo darken-1"
         rounded-sm
         large
         @click="$emit('showSelector', item.i)"
       >
-        <v-icon>{{ mdiCardPlus }}</v-icon>
+        <v-icon left>
+          {{ mdiVideoPlus }}
+        </v-icon> {{ $t('views.multiview.video.selectLive') }}
       </v-btn>
-      <v-btn
-        color="teal darken-1"
-        rounded-sm
-        large
-        @click="setItemAsChat(item)"
-      >
-        <v-icon>{{ icons.ytChat }}</v-icon>
-      </v-btn>
+      <div class="mt-2">
+        <v-btn
+          class="mr-2"
+          color="teal darken-1"
+          rounded-sm
+          large
+          @click="setItemAsChat(item, false)"
+        >
+          <v-icon left>
+            {{ icons.ytChat }}
+          </v-icon>
+          Chat
+        </v-btn>
+        <v-btn
+          color="teal darken-1"
+          rounded-sm
+          large
+          @click="setItemAsChat(item, true)"
+        >
+          <v-icon left>
+            {{ icons.tlChat }}
+          </v-icon>
+          TL
+        </v-btn>
+      </div>
     </div>
     <CellControl :play-icon="icons.mdiPlay" class="mx-1 mb-2" @delete="deleteCell" />
   </div>
 </template>
 
 <script class="ts">
-import { mdiCardPlus } from "@mdi/js";
+import { mdiVideoPlus } from "@mdi/js";
 import CellMixin from "./CellMixin";
 import CellControl from "./CellControl.vue";
 
@@ -37,15 +56,16 @@ export default {
     mixins: [CellMixin],
     data() {
         return {
-            mdiCardPlus,
+            mdiVideoPlus,
         };
     },
     methods: {
-        setItemAsChat(item) {
+        setItemAsChat(item, initAsTL) {
             this.$store.commit("multiview/setLayoutContentById", {
                 id: item.i,
                 content: {
                     type: "chat",
+                    initAsTL,
                 },
             });
         },
@@ -62,6 +82,7 @@ export default {
     align-items: center;
     overflow: hidden;
     position: relative;
+    flex-direction: column;
 
     .v-btn {
       color: white !important;
