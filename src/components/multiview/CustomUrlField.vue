@@ -13,6 +13,7 @@
     hide-no-data
     :items="history"
     class="px-3"
+    @keyup.enter="handleSubmit"
     @click:append-outer="handleSubmit"
   />
 </template>
