@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueGTag from "vue-gtag";
 import VueMeta from "vue-meta";
 import VueI18n from "vue-i18n";
-// import * as icons from "@/utils/icons";
+import * as icons from "@/utils/icons";
 import LoadScript from "vue-plugin-load-script";
 import PortalVue from "portal-vue";
 import App from "./App.vue";
@@ -34,7 +34,7 @@ Vue.use(VueI18n);
 Vue.use(LoadScript);
 
 Vue.use(PortalVue);
-Vue.prototype.icons = import("@/utils/icons");
+Vue.prototype.icons = icons
 
 new Vue({
     i18n,
