@@ -13,7 +13,9 @@
         <portal-target name="slide-bar-top" />
       </div>
     </v-bottom-sheet>
+
     <!-- </> -->
+
     <v-bottom-sheet
       v-if="song"
       id="thisSheet"
@@ -231,7 +233,6 @@
               </div>
             </div>
           </transition>
-          <!-- </> -->
           <div
             v-if="$vuetify.breakpoint.smAndUp"
             class="playlist-buttons align-self-center"
@@ -248,7 +249,7 @@
             <v-btn
               icon
               large
-              :color="isEmbedPlayerInBackground ? 'secondary lighten-2' : ''"
+              :color="isEmbedPlayerInBackground ? ((isHidePlayer) ? ('primary lighten-2') : ('secondary lighten-2')) : ''"
               @click="toggleSongFrameModality"
             >
               <v-icon>{{ icons.mdiTheater }}</v-icon>
@@ -259,9 +260,9 @@
           </div>
         </div>
       </div>
-      <!-- </> -->
       <portal to="music-playback-background">
         <song-frame
+          v-show="!isHidePlayer"
           :playback="currentSong"
           :is-background="isEmbedPlayerInBackground"
           @playing="songIsPlaying"
@@ -352,14 +353,14 @@ export default {
             // playback state.
 
             isEmbedPlayerInBackground: false,
+            isHidePlayer: false,
             pinNav: false,
 
             showNavbar: true,
             isActiveBar: true,
             lastScrollPosition: 0,
-            timeCounter: 10, // First start Init at 10 sec
+            timeCounter: 10,
             counterEnable: true,
-            timeOut: null,
         };
     },
     computed: {
@@ -451,15 +452,13 @@ export default {
         },
         timeCounter() {
             if (this.timeCounter > 0 && this.counterEnable && !this.pinNav) {
-                this.timeOut = setTimeout(() => {
+                setTimeout(() => {
                     if (this.timeCounter > 0 && this.counterEnable) { this.timeCounter -= 1; }
                     if (this.timeCounter <= 0) {
                         this.showNavbar = false;
-                        // console.log("showNavbar : " +  this.showNavbar);
                     }
                 }, 1000);
             }
-            // console.log("Counter : " + value + " timeCounter : " + this.timeCounter);
         },
         counterEnable(value) {
             if (!this.pinNav) {
@@ -468,18 +467,14 @@ export default {
                         this.timeCounter -= 1;
                     }, 1000);
                 }
-                // console.log("counterEnable : " + value);
             }
         },
         showNavbar(value) {
-            console.log("--------ShowNavbar--------");
             if (!this.pinNav) {
                 if (value) {
-                    // console.log("Active")
                     this.$refs.sheet.isActive = true;
                     this.isActiveBar = true;
                 } else {
-                    // console.log("NoActive");
                     this.$refs.sheet.isActive = false;
                     this.isActiveBar = false;
                 }
@@ -557,14 +552,11 @@ export default {
             return Math.floor(this.songProgressTimestamp - this.songStartTimestamp);
         },
         timeFormat(value) {
-            console.log(`value : ${value}`);
             const Stringtime = formatDuration(value * 1000);
-            console.log(`Stringtime : ${Stringtime}`);
             return Stringtime;
         },
         mouseOver() {
             if (!this.pinNav) {
-                // console.log("mouseOver");
                 this.timeCounter = 5;
                 this.showNavbar = true;
                 this.counterEnable = false;
@@ -572,7 +564,6 @@ export default {
         },
         mouseOut() {
             if (!this.pinNav) {
-                // console.log("mouseOut");
                 this.counterEnable = true;
             }
         },
@@ -713,7 +704,14 @@ export default {
             this.allowPlayOverride = Date.now();
         },
         toggleSongFrameModality() {
-            this.isEmbedPlayerInBackground = !this.isEmbedPlayerInBackground;
+            if (this.isEmbedPlayerInBackground) {
+                if (this.isHidePlayer) {
+                    this.isEmbedPlayerInBackground = !this.isEmbedPlayerInBackground;
+                }
+                this.isHidePlayer = !this.isHidePlayer;
+            } else {
+                this.isEmbedPlayerInBackground = !this.isEmbedPlayerInBackground;
+            }
         },
         togglePinNav() {
             this.pinNav = !this.pinNav;
@@ -726,10 +724,7 @@ export default {
                 }
                 if (Math.abs(currentScrollPosition - this.lastScrollPosition) > 15) {
                     this.showNavbar = currentScrollPosition > this.lastScrollPosition;
-                    console.log(`showNavbar : ${this.showNavbar}`);
-                    console.log(`currentScrollPosition : ${currentScrollPosition} lastScrollPosition : ${this.lastScrollPosition} diff : ${currentScrollPosition - this.lastScrollPosition}`);
                     if (this.showNavbar) {
-                        console.log("showNavbar : TRUE");
                         this.timeCounter = 5;
                         this.counterEnable = true;
                     }
