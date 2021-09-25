@@ -1,5 +1,6 @@
 <template>
   <v-autocomplete
+    ref="vAutocompleteREF"
     :search-input.sync="url"
     :label="slim ? hint : label"
     :hint="hint"
@@ -13,6 +14,7 @@
     hide-no-data
     :items="history"
     class="px-3"
+    :menu-props="{ closeOnClick: true, closeOnContentClick: true,}"
     @keyup.enter="handleSubmit"
     @click:append-outer="handleSubmit"
   />
@@ -60,6 +62,7 @@ export default {
             const content = getVideoIDFromUrl(this.url);
             if (content && content.id) {
                 this.error = false;
+                this.$refs.vAutocompleteREF.isFocused = false; //  remove history selection bug cant close by itself
                 this.$emit("onSuccess", content);
                 if (!this.history.includes(this.url)) this.addHistory(this.url);
                 this.url = null;
