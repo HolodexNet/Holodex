@@ -1,6 +1,6 @@
 import type { LayoutItem } from "@/external/vue-grid-layout/src/helpers/utils";
 
-interface Content {
+export interface Content {
     id?: string;
     type: string;
     isTwitch?: Boolean;
