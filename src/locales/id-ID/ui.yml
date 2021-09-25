@@ -51,6 +51,8 @@ component:
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -140,6 +142,7 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -261,6 +264,7 @@ views:
       StickBottomSettingsDesc: Kolom Terjemahan akan disematkan dibawah kolom chat (pengaturan awal disematkan diatas pada tampilan HP)
       showVerifiedMessages: Menampilkan Pesan Pengguna yang Terverifikasi
       showModeratorMessages: Menampilkan Pesan Moderator
+      showLocalTime: Menampilkan Waktu Lokal
       tlFontSize: Ukuran Teks
       tlWindowSize: Ukuran Kotak Terjemahan (%), biarkan 0% untuk otomatis menyesuaikan
       retryBtn: Coba lagi
@@ -465,3 +469,7 @@ about:
     title: Log Perubahan
   news:
     title: Berita
+  bookmarklet:
+    title: Bookmarklet
+    description: >-
+      Seret bookmarklet ini ke bilah penanda pada browser kamu untuk dapat menonton YouTube di Holodex secara mudah:
