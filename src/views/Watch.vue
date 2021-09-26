@@ -60,7 +60,7 @@
           </template>
         </WatchFrame>
         <WatchHighlights
-          v-if="comments.length && !theaterMode"
+          v-if="comments.length && !theaterMode && ((!showTL || landscape) && isMobile)"
           key="highlights"
           :comments="comments"
           :video="video"
@@ -140,14 +140,16 @@
         <WatchSideBar v-if="isMobile" :video="video" @timeJump="seekTo" />
         <!-- Mobile mode Mugen -->
         <WatchMugen v-if="isMugen && isMobile" @playNext="playNextMugen" />
-        <WatchComments
-          v-if="comments.length && !theaterMode"
-          key="comments"
-          :comments="comments"
-          :video="video"
-          :limit="isMobile ? 5 : 0"
-          @timeJump="seekTo"
-        />
+        <v-lazy>
+          <WatchComments
+            v-if="comments.length && !theaterMode"
+            key="comments"
+            :comments="comments"
+            :video="video"
+            :limit="isMobile ? 5 : 0"
+            @timeJump="seekTo"
+          />
+        </v-lazy>
       </div>
       <div
         class="related-videos pt-0 row ma-0"

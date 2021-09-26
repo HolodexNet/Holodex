@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-sheet>
     <div class="highlight-container">
       <div class="highlight-bar">
         <template v-for="b in buckets">
@@ -25,17 +25,12 @@
             </template>
             <div class="highlight-comments">
               {{ b.best }}
-              <!-- <template v-for="c in b.comments">
-                <div :key="c">
-                  {{ c }}
-                </div>
-              </template> -->
             </div>
           </v-tooltip>
         </template>
       </div>
     </div>
-  </v-card>
+  </v-sheet>
 </template>
 
 <script lang="ts">
@@ -190,7 +185,7 @@ export default {
         },
         computeTipStyle(ts: number, count: number) {
             let width = "1px";
-            let color = "rgb(74, 74, 74)";
+            let color = "rgb(100, 100, 100)";
             if (count > 1) {
                 width = "2px";
                 color = "rgb(164, 164, 164)";
@@ -233,7 +228,7 @@ export default {
 
 .highlight-bar {
   width: 100%;
-  height: 5px;
+  height: 10px;
   position: relative;
   transition: all 0.2s ease-out;
   cursor: pointer;
