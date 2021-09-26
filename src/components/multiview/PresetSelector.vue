@@ -149,11 +149,9 @@ export default {
             return new Set(this.autoLayout);
         },
         totalVideoCells() {
-            console.log("recompute");
             return this.layout.filter((l) => !this.layoutContent[l.i] || this.layoutContent[l.i].type !== "chat").length;
         },
         currentGroup() {
-            console.log(this.totalVideoCells);
             if (this.$store.state.isMobile) return this.decodedMobilePresets;
             const layouts = (this.activeVideos.length < this.desktopGroups.length) && this.desktopGroups[this.activeVideos.length];
             return layouts || this.desktopGroups[1];

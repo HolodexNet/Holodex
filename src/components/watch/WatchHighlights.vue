@@ -155,11 +155,11 @@ export default {
                         const stricter = processed
                             .filter(filterByWordCount(2))
                             .filter((c) => !/(?:clip\s?(?:it|this)|[!?]{3})/i.test(c));
-                        console.log(stricter);
+                        // console.log(stricter);
                         if (stricter.length > 0) [best] = stricter;
 
                         if (best.length > 60) best = `${best.slice(0, 60)}...`;
-                        console.log(best, processed);
+                        // console.log(best, processed);
                         buckets.push({
                             time: median,
                             count: subBucket.length,
