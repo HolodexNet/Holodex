@@ -60,7 +60,7 @@
           </template>
         </WatchFrame>
         <WatchHighlights
-          v-if="comments.length && !theaterMode && ((!showTL || landscape) && isMobile)"
+          v-if="comments.length && !theaterMode && (!isMobile || !showTL || landscape)"
           key="highlights"
           :comments="comments"
           :video="video"

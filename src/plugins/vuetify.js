@@ -181,8 +181,6 @@ export function loadLanguageAsync(lang) {
         return Promise.resolve();
     }
 
-    console.log("changed language: ", lang);
-
     // If the language was already loaded
     if (loadedLanguages.includes(lang)) {
         return Promise.resolve(setI18nLanguage(lang));

@@ -111,7 +111,6 @@ const mutations = {
         let foundGoodSpot = false;
         for (let y = 0; !foundGoodSpot && y < 24; y += 1) {
             for (let x = 0; !foundGoodSpot && x < 24 - 3; x += 1) {
-                console.log(x, Math.min(24 - x, 4));
                 newLayoutItem = {
                     x,
                     y,

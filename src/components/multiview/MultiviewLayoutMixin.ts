@@ -51,9 +51,10 @@ export default {
         tryFillVideo(video) {
             if (!video) return;
             // try find empty cell
-            const emptyCell = this.findEmptyCell();
-            if (emptyCell) {
-                this.addVideoWithId(video, emptyCell.i);
+            const emptyCells = this.layout.filter((l) => !this.layoutContent[l.i]);
+            emptyCells.sort(sortLayout);
+            if (emptyCells.length) {
+                this.addVideoWithId(video, emptyCells[0].i);
             }
             // TODO: snack bar saying no valid empty cells
         },
