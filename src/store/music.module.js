@@ -6,8 +6,10 @@ const initialState = {
     playId: 0, // used to key the video so playing the same video can increase.
     lastNextSong: 0,
     playlist: [],
+    mugenlist: [],
     state: MUSIC_PLAYER_STATE.PAUSED,
     mode: MUSIC_PLAYBACK_MODE.LOOP,
+    mugen: false,
 
     isOpen: false,
     addedAnimation: false, // state keeping for bouncing the icon.
@@ -17,13 +19,23 @@ export const state = { ...initialState };
 
 const getters = {
     currentSong(state) {
-        if (state.playlist && state.playlist.length > 0 && state.currentId < state.playlist.length) {
-            return { playId: state.playId, sid: state.currentId, song: state.playlist[state.currentId] };
+        if (!state.mugen) {
+            if (state.playlist && state.playlist.length > 0 && state.currentId < state.playlist.length) {
+                return { playId: state.playId, sid: state.currentId, song: state.playlist[state.currentId] };
+            }
+        } else {
+            if (state.mugenlist && state.mugenlist.length > 0 && state.currentId < state.mugenlist.length) {
+                return { playId: state.playId, sid: state.currentId, song: state.mugenlist[state.currentId] };
+            }
+                setTimeout(() => ({ playId: state.playId, sid: state.currentId, song: state.mugenlist[state.currentId] }), 2000);
         }
         return null;
     },
     canPlay(state) {
-        return state.playlist.length > 0;
+        if (!state.mugen) {
+            return state.playlist.length > 0;
+        }
+            return state.mugenlist.length > 0;
     },
 };
 
@@ -44,22 +56,35 @@ const mutations = {
         state.isOpen = false;
     },
     addSong(state, song) {
-        if (Array.isArray(song)) state.playlist.push(...song);
-        else state.playlist.push(song);
-        // not sure why it started getting stuck.
-        if (state.currentId >= state.playlist.length) state.currentId = state.playlist.length - 1;
-        state.isOpen = true;
-        state.addedAnimation = true;
+        if (!state.mugen) {
+            if (Array.isArray(song)) state.playlist.push(...song);
+            else state.playlist.push(song);
+            // not sure why it started getting stuck.
+            if (state.currentId >= state.playlist.length) state.currentId = state.playlist.length - 1;
+            state.isOpen = true;
+            state.addedAnimation = true;
+        } else {
+            if (Array.isArray(song)) state.mugenlist.push(...song);
+            else state.mugenlist.push(song);
+            if (state.currentId >= state.mugenlist.length) state.currentId = state.mugenlist.length - 1;
+            state.isOpen = true;
+            state.addedAnimation = true;
+        }
     },
     removeSong(state, index) {
         if (index < state.currentId) state.currentId -= 1;
-        state.playlist.splice(index, 1);
+        if (!state.mugen) {
+            state.playlist.splice(index, 1);
+        } else {
+            state.mugenlist.splice(index, 1);
+        }
+
         if (state.playlist.length === 0) {
             // empty playlist
             Object.assign(state, initialState);
             return;
         }
-        if (state.currentId === index && state.currentId === state.playlist.length) {
+        if (state.currentId === index && state.currentId === state.playlist.length && !state.mugen) {
             state.playId += 1;
             // if the removed thing is the currently playing, normally it's okay - we'll just automatically
             // switch currentSong to NEXT song.
@@ -83,7 +108,7 @@ const mutations = {
                     return;
             }
         }
-        if (state.currentId === index) {
+        if (state.currentId === index && !state.mugen) {
             state.playId += 1;
             if (state.mode === MUSIC_PLAYBACK_MODE.SHUFFLE) {
                 state.currentId = Math.floor(Math.random() * state.playlist.length);
@@ -105,30 +130,37 @@ const mutations = {
         // will always move the playhead to a new song (or try to)
 
         state.lastNextSong = Date.now();
-        switch (mode) {
-            case MUSIC_PLAYBACK_MODE.NATURAL:
-            case MUSIC_PLAYBACK_MODE.LOOP:
-                /* next song naturally */
-                if (state.currentId + 1 === state.playlist.length) {
-                    if (mode === MUSIC_PLAYBACK_MODE.LOOP) {
-                        state.currentId = 0;
+
+        if (!state.mugen) {
+            switch (mode) {
+                case MUSIC_PLAYBACK_MODE.NATURAL:
+                case MUSIC_PLAYBACK_MODE.LOOP:
+                    /* next song naturally */
+                    if (state.currentId + 1 === state.playlist.length) {
+                        if (mode === MUSIC_PLAYBACK_MODE.LOOP) {
+                            state.currentId = 0;
+                            state.playId += 1;
+                        } else if (mode === MUSIC_PLAYBACK_MODE.NATURAL) state.state = MUSIC_PLAYER_STATE.PAUSED;
+                    } else {
+                        state.currentId += 1;
                         state.playId += 1;
-                    } else if (mode === MUSIC_PLAYBACK_MODE.NATURAL) state.state = MUSIC_PLAYER_STATE.PAUSED;
-                } else {
-                    state.currentId += 1;
+                        state.state = MUSIC_PLAYER_STATE.PLAYING;
+                    }
+                    return;
+                case MUSIC_PLAYBACK_MODE.LOOPONE:
                     state.playId += 1;
-                    state.state = MUSIC_PLAYER_STATE.PLAYING;
-                }
-                return;
-            case MUSIC_PLAYBACK_MODE.LOOPONE:
-                state.playId += 1;
-                // state.state = MUSIC_PLAYER_STATE.PAUSED;
-                return;
-            case MUSIC_PLAYBACK_MODE.SHUFFLE:
-                state.currentId = Math.floor(Math.random() * state.playlist.length);
-                state.playId += 1;
-                break;
-            default:
+                    // state.state = MUSIC_PLAYER_STATE.PAUSED;
+                    return;
+                case MUSIC_PLAYBACK_MODE.SHUFFLE:
+                    state.currentId = Math.floor(Math.random() * state.playlist.length);
+                    state.playId += 1;
+                    break;
+                default:
+            }
+        } else {
+            state.currentId += 1;
+            state.playId += 1;
+            state.state = MUSIC_PLAYER_STATE.PLAYING;
         }
     },
     prevSong(state) {
@@ -155,21 +187,25 @@ const mutations = {
         }
     },
     cycleMode(state) {
-        switch (state.mode) {
-            case MUSIC_PLAYBACK_MODE.NATURAL:
+        if (!state.mugen) {
+            switch (state.mode) {
+                case MUSIC_PLAYBACK_MODE.NATURAL:
+                    state.mode = MUSIC_PLAYBACK_MODE.LOOP;
+                    break;
+                case MUSIC_PLAYBACK_MODE.LOOP:
+                    state.mode = MUSIC_PLAYBACK_MODE.LOOPONE;
+                    break;
+                case MUSIC_PLAYBACK_MODE.LOOPONE:
+                    state.mode = MUSIC_PLAYBACK_MODE.SHUFFLE;
+                    break;
+                case MUSIC_PLAYBACK_MODE.SHUFFLE:
+                    state.mode = MUSIC_PLAYBACK_MODE.NATURAL;
+                    break;
+                default:
+                    state.mode = MUSIC_PLAYBACK_MODE.NATURAL;
+                }
+            } else {
                 state.mode = MUSIC_PLAYBACK_MODE.LOOP;
-                break;
-            case MUSIC_PLAYBACK_MODE.LOOP:
-                state.mode = MUSIC_PLAYBACK_MODE.LOOPONE;
-                break;
-            case MUSIC_PLAYBACK_MODE.LOOPONE:
-                state.mode = MUSIC_PLAYBACK_MODE.SHUFFLE;
-                break;
-            case MUSIC_PLAYBACK_MODE.SHUFFLE:
-                state.mode = MUSIC_PLAYBACK_MODE.NATURAL;
-                break;
-            default:
-                state.mode = MUSIC_PLAYBACK_MODE.NATURAL;
         }
     },
     play(state) {
@@ -187,11 +223,22 @@ const mutations = {
         state.addedAnimation = false;
     },
     clearPlaylist(state) {
-        state.playlist = [];
-        state.currentId = 0;
-        state.state = MUSIC_PLAYER_STATE.PAUSED;
-        state.isOpen = false;
-        state.playId += 1;
+        if (!state.mugen) {
+            state.playlist = [];
+            state.currentId = 0;
+            state.state = MUSIC_PLAYER_STATE.PAUSED;
+            state.isOpen = false;
+            state.playId += 1;
+        } else {
+            state.mugenlist = [];
+            state.currentId = 0;
+            state.playId += 1;
+            console.log("FinishclearPlaylist");
+        }
+    },
+    isMugen(state) {
+        state.mugen = !state.mugen;
+        console.log(`mugenStateChangeTo : ${state.mugen}`);
     },
 };
 
