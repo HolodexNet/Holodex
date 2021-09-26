@@ -57,7 +57,6 @@
                 icon
                 class="mx-1"
                 color="secondary"
-                :disabled="mugen"
                 @click="prevButtonHandler"
               >
                 <v-icon>{{ mdiSkipPrevious }}</v-icon>
@@ -93,7 +92,6 @@
                 icon
                 color="secondary"
                 class="mx-1"
-                :disabled="mugen"
                 @click="$store.commit('music/cycleMode')"
               >
                 <v-icon>{{ shuffleButtonIcon }}</v-icon>
@@ -108,7 +106,7 @@
                 min-width="30vw"
                 max-width="50vw"
                 max-height="50vh"
-                :item-count="mugen ? mugenlist.length : playlist.length "
+                :item-count="playlist.length"
               >
                 <template #activator="{ on }">
                   <v-btn
@@ -118,26 +116,21 @@
                     :class="{ 'added-animation': animateAdded }"
                     @animationend="animateAdded = false"
                     v-on="on"
-                    @click="queueMenuOpen = !queueMenuOpen && !mugen"
+                    @click="queueMenuOpen = !queueMenuOpen"
                   >
                     <v-icon color="secondary">
                       {{ icons.mdiPlaylistMusic }}
                     </v-icon>
-                    <div v-if="!mugen" class="secondary--text text--darken-2">
+                    <div class="secondary--text text--darken-2">
                       ({{ currentId + 1 }}/{{ playlist.length }})
-                    </div>
-                    <div v-if="mugen" class="secondary--text text--darken-2">
-                      <!--  ({{ currentId + 1 }}/{{ mugenlist.length }}) -->
-                      ( ∞ / ∞ )
                     </div>
                   </v-btn>
                 </template>
-                <song-playlist v-if="!mugen" :songs="playlist" :current-id="currentId" />
-                <!-- <song-playlist v-if="mugen" :songs="mugenlist" :current-id="currentId" /> -->
+                <song-playlist :songs="playlist" :current-id="currentId" />
               </ResponsiveMenu>
               <v-slide-x-transition>
                 <v-btn
-                  v-if="queueMenuOpen && !mugen"
+                  v-if="queueMenuOpen"
                   small
                   style="position: relative; margin-right: -60px"
                   elevation="0"
@@ -168,9 +161,6 @@
               </v-btn>
               <v-btn icon large @click="togglePinNav">
                 <v-icon>{{ icons.mdiPinOutline }}</v-icon>
-              </v-btn>
-              <v-btn icon large @click="toggleMugen">
-                <v-icon> {{ mdiInfinity }} </v-icon>
               </v-btn>
             </div>
           </div>
@@ -249,21 +239,11 @@
           >
             <v-btn
               icon
-              style="right: 25%"
-              large
-              :color="mugen ? 'secondary lighten-2' : '' "
-              @click="toggleMugen"
-            >
-              <v-icon> {{ mdiInfinity }} </v-icon>
-            </v-btn>
-
-            <v-btn
-              icon
               large
               :color="pinNav ? 'secondary lighten-2' : ''"
               @click="togglePinNav"
             >
-              <v-icon> {{ icons.mdiPinOutline }} </v-icon>
+              <v-icon>{{ icons.mdiPinOutline }}</v-icon>
             </v-btn>
 
             <v-btn
@@ -317,7 +297,6 @@ import {
     mdiRepeatOnce,
     mdiMicrophoneVariant,
     mdiPlaylistRemove,
-    mdiInfinity,
 } from "@mdi/js";
 
 import SongFrame from "../media/SongFrame.vue";
@@ -355,7 +334,6 @@ export default {
             mdiMicrophoneVariant,
             mdiSkipPrevious,
             mdiPlaylistRemove,
-            mdiInfinity,
 
             songlength: 0,
 
@@ -383,8 +361,6 @@ export default {
             lastScrollPosition: 0,
             timeCounter: 10,
             counterEnable: true,
-
-            totalSong: 0,
         };
     },
     computed: {
@@ -411,13 +387,11 @@ export default {
             "currentId",
             "playId",
             "playlist",
-            "mugenlist",
             "state",
             "mode",
             "addedAnimation",
             "isOpen",
             "lastNextSong",
-            "mugen",
         ]),
         ...mapGetters("music", ["currentSong", "canPlay"]),
         song() {
@@ -450,20 +424,8 @@ export default {
             }
         },
         playlist(nw) {
-            if (nw.length === 0 && !this.mugen) this.$store.commit("music/closeBar");
+            if (nw.length === 0) this.$store.commit("music/closeBar");
             if (this.isOpen === false && nw.length === 0) { this.$store.commit("music/openBar"); }
-        },
-        mugenlist(nw) {
-            if (this.isOpen === false && nw.length === 0) { this.$store.commit("music/openBar"); }
-            if (nw.length === 1) {
-                this.mugenGetSong();
-            }
-        },
-        currentId(value) {
-            if (this.mugen && value > 0) {
-                // console.log("remove Song")
-                this.$store.commit("music/removeSong", 0);
-            }
         },
         currentSong: {
             deep: true,
@@ -471,18 +433,6 @@ export default {
                 if (os != null && this.progress > 80 && this.progress < 105) {
                     const { song } = os;
                     // console.log("track song");
-                    backendApi
-                        .trackSongPlay(song.channel_id, song.video_id, song.name)
-                        .catch((err) => console.error(err));
-                    this.$gtag.event("fully-listen", {
-                        event_category: "music",
-                        event_label: song.channel.name,
-                    });
-                } else {
-                    // when toggle to MugenSong os will be NULL
-                    // when toggle back os will be lastest mugen
-                    const { song } = os;
-
                     backendApi
                         .trackSongPlay(song.channel_id, song.video_id, song.name)
                         .catch((err) => console.error(err));
@@ -525,7 +475,6 @@ export default {
                     this.$refs.sheet.isActive = true;
                     this.isActiveBar = true;
                 } else {
-                    // console.log(this.$refs.sheet)
                     this.$refs.sheet.isActive = false;
                     this.isActiveBar = false;
                 }
@@ -748,12 +697,8 @@ export default {
             }
 
             this.titleTransition = "scroll-y-reverse-transition";
-            this.progress = 0;
             this.$store.commit("music/nextSong", { breakLoop: true });
-            if (this.mugen) {
-                this.$store.commit("music/play");
-                this.player.playVideo();
-            }
+            this.progress = 0;
         },
         probableMouseClickInIFrame() {
             this.allowPlayOverride = Date.now();
@@ -770,46 +715,6 @@ export default {
         },
         togglePinNav() {
             this.pinNav = !this.pinNav;
-        },
-        async toggleMugen() {
-            this.$store.commit("music/isMugen");
-            if (this.mugen) {
-                this.$store.commit("music/cycleMode");
-                this.$store.commit("music/clearPlaylist");
-                this.progress = 0;
-                this.songProgressTimestamp = 0;
-                this.songStartTimestamp = 0;
-
-                const result: Array<Object> | { total?; offset?; items? } = await this.songList(0, 0);
-                this.totalSong = result.total;
-
-                this.mugenGetSong();
-            }
-        },
-        async mugenGetSong() {
-            const query = [];
-            for (let i = 0; i < 10; i += 1) {
-                const temp = await this.songList(Math.floor(Math.random() * (this.totalSong - 0)), 1);
-                query.push(temp.items[0]);
-            }
-            this.$store.commit("music/addSong", query);
-            console.log("Mugen get more song Complete!");
-        },
-        async songList(offset, limit) {
-            const currentOrg = "Hololive";
-            const res = await backendApi.songListByCondition(
-                {
-                    org: currentOrg,
-                    paginated: 1,
-                },
-                offset,
-                limit,
-            );
-            res.data.items = res.data.items.map((x) => ({
-                ...x,
-                id: x.video_id + x.name,
-            }));
-            return res.data;
         },
         onScroll() {
             if (!this.pinNav) {
