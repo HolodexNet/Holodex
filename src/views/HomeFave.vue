@@ -289,8 +289,14 @@ export default {
         },
         // eslint-disable-next-line func-names
         "$store.state.visibilityState": function () {
+            console.log("visibility state changed (in HomeFave)");
             if (this.isActive && this.$store.state.visibilityState === "visible") {
-                this.$store.dispatch("home/fetchLive", { force: false });
+                console.log("attempting refetching (if cadence allows)");
+                if (this.isFavPage) {
+                    this.$store.dispatch("favorites/fetchLive", { force: false });
+                } else {
+                    this.$store.dispatch("home/fetchLive", { force: false });
+                }
             }
         },
         tab() {
@@ -305,20 +311,24 @@ export default {
         },
     },
     created() {
+        console.log("Created, so adding refresh timer to HomeFav");
         this.init(true); // try updating favorites if it's actually favorites page.
         this.setAutoRefresh();
     },
     activated() {
+        console.log("Activated, so adding refresh timer to HomeFav");
         this.changeTab(true);
         this.setAutoRefresh();
     },
     deactivated() {
         if (this.refreshTimer) {
+            console.log("Navigating away, so deleting the refresh timer in HomeFav");
             clearInterval(this.refreshTimer);
             this.refreshTimer = null;
         }
     },
     beforeDestroy() {
+        console.log("Destroying, so deleting the refresh timer in HomeFav");
         if (this.refreshTimer) {
             clearInterval(this.refreshTimer);
             this.refreshTimer = null;
@@ -328,7 +338,11 @@ export default {
         setAutoRefresh() {
             if (this.refreshTimer) clearInterval(this.refreshTimer);
             this.refreshTimer = setInterval(() => {
-                this.$store.dispatch("home/fetchLive", { force: false });
+                if (this.isFavPage) {
+                    this.$store.dispatch("favorites/fetchLive", { force: false });
+                } else {
+                    this.$store.dispatch("home/fetchLive", { force: false });
+                }
             }, 2 * 60 * 1000);
         },
         changeTab(preservePage = true) {

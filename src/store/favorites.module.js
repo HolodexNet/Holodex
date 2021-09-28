@@ -52,6 +52,7 @@ const actions = {
         state, commit, rootState, dispatch,
     }, { force = false, minutes = 2 }) {
         if (!(rootState.userdata && rootState.userdata.jwt) || (rootState.visibilityState === "hidden" && !force)) {
+            console.log("[X] Fetch of Fave Live declined: window is hidden and not being forced, and user isn't logged in");
             return null;
         } // don't update.
         if (
@@ -60,6 +61,7 @@ const actions = {
             || !state.lastLiveUpdate
             || Date.now() - state.lastLiveUpdate > minutes * 60 * 1000
         ) {
+            console.log("[OK] Fetch of Fave Live executing");
             commit("fetchStart");
             return api
                 .favoritesLive(rootState.userdata.jwt)
@@ -74,6 +76,7 @@ const actions = {
                     commit("fetchError");
                 });
         }
+        console.log(`[X] Fetch of Fave Live declined: error + not forced + hasn't been ${minutes} minutes yet.`);
         commit("resetErrors");
         return null;
     },

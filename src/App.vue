@@ -85,6 +85,7 @@ export default {
         },
         // eslint-disable-next-line func-names
         "$store.state.visibilityState": function () {
+            console.log(`App became ${this.$store.state.visibilityState}`);
             if (this.$store.state.visibilityState === "visible") {
                 this.$store.dispatch("favorites/fetchLive", { force: false, minutes: 5 });
             }
