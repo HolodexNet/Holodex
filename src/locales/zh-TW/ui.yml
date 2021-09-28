@@ -265,6 +265,7 @@ views:
       StickBottomSettingsDesc: 將翻譯留言置底於聊天室下方（預設置頂）
       showVerifiedMessages: 顯示已認證的使用者訊息
       showModeratorMessages: 顯示管理員訊息
+      showLocalTime: 顯示本地時間
       tlFontSize: 字體大小
       tlWindowSize: 翻譯聊天室大小(%) ，設置0%時會自動調整尺寸
       retryBtn: 重試
@@ -313,7 +314,7 @@ views:
     confirmOverwrite: 確定覆蓋設定？
     confirmOverwriteYes: 確認
     permalink: 永久連結
-    presets: 預設佈局
+    presets: 版面配置
     addframe: 增加新分割
     muteAll: 全部靜音
     unmuteAll: 全部取消靜音
@@ -328,13 +329,13 @@ views:
       custom: 自訂佈局
       toggleAutoLayout: 是否納入自動調整模式
       remove: 刪除此佈局
-      desktop: 桌上型電腦佈局
-      mobile: 手機專用佈局
+      desktop: ＰＣ佈局
+      mobile: 手機佈局
       autoLayout: 自動排版模式
     presetEditor:
       title: 儲存目前佈局
       name: 佈局名稱
-      autoLayout: 在自動調整模式中啟用此佈局
+      autoLayout: 在自動排版模式中啟用此佈局
     video:
       selectLive: 選擇實況
       addCustomVideo: 添加指定YouTube影片
@@ -469,3 +470,7 @@ about:
     title: 更新紀錄
   news:
     title: 最新消息
+  bookmarklet:
+    title: 書籤跳轉功能
+    description: >-
+      將以下書籤腳本拖拉至您的瀏覽器書籤欄，能更輕鬆的從 YouTube 頁面快速跳轉至 Holodex 頁面

@@ -34,7 +34,7 @@ Vue.use(VueI18n);
 Vue.use(LoadScript);
 
 Vue.use(PortalVue);
-Vue.prototype.icons = icons;
+Vue.prototype.icons = icons
 
 new Vue({
     i18n,

@@ -122,11 +122,16 @@ export default {
             type: Number,
             default: 0,
         },
+        tl: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
     data() {
         return {
-            showTlChat: false,
-            showYtChat: true,
+            showTlChat: this.tl,
+            showYtChat: !this.tl,
             currentTime: 0,
             scale: 1,
         };

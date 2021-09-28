@@ -264,6 +264,7 @@ views:
       StickBottomSettingsDesc: Ruangan terjemahan diletakkan di bawah sembang (secara lalainya ruangan ini terletak di bahagian atas bagi peranti mudah alih)
       showVerifiedMessages: Paparkan Sembang Oleh Pengguna Yang Disahkan
       showModeratorMessages: Paparkan Sembang Oleh Penyederhana
+      showLocalTime: Paparkan Waktu Tempatan
       tlFontSize: Saiz Fon
       tlWindowSize: Peratusan (%) saiz ruangan terjemahan. 0% bagi perubahan saiz secara kendiri
       retryBtn: Cuba Lagi
@@ -468,3 +469,7 @@ about:
     title: Catatan perubahan
   news:
     title: Berita
+  bookmarklet:
+    title: Penanda laman kecil
+    description: >-
+      Cipta penanda laman kecil dengan menarik mana-mana penanda di bawah ke bar penanda laman. Anda boleh membuka laman tontonan video di Holodex dengan menekannya ketika di laman YouTube:

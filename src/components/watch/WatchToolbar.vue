@@ -1,5 +1,5 @@
 <template>
-  <v-card tile class="d-flex justify-space-between flex-wrap-reverse flex-sm-nowrap px-lg-4">
+  <v-sheet tile class="d-flex justify-space-between flex-wrap-reverse flex-sm-nowrap px-lg-4">
     <v-btn
       v-if="!noBackButton"
       icon
@@ -42,7 +42,7 @@
         <video-card-menu :video="video" />
       </v-menu>
     </div>
-  </v-card>
+  </v-sheet>
 </template>
 
 <script lang="ts">

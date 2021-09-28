@@ -4,7 +4,7 @@
       <v-container>
         <v-row class="px-3">
           <v-col cols="12">
-            <v-select
+            <v-autocomplete
               v-model="selectedOrgs"
               clearable
               solo-inverted
@@ -13,6 +13,7 @@
               chips
               deletable-chips
               :items="orgs"
+              item-text="name"
               :label="$t('component.search.type.org')"
               :prepend-icon="mdiAccountMultiple"
               @click="loadOrgs"
@@ -20,7 +21,7 @@
           </v-col>
 
           <v-col cols="12">
-            <v-select
+            <v-autocomplete
               v-model="topic"
               clearable
               :items="topics"
@@ -36,7 +37,9 @@
               v-model="channels"
               chips
               clearable
+              deletable-chips
               hide-details="auto"
+              hide-no-data
               :label="$t('component.search.type.channel')"
               :prepend-icon="icons.mdiYoutube"
               :loading="channelLoading"
@@ -46,7 +49,6 @@
               multiple
               solo-inverted
               item-color="secondary"
-              small-chips
               return-object
               @input="channelClearAPIResults"
             />
@@ -108,7 +110,6 @@ import {
 import debounce from "lodash-es/debounce";
 import backendApi from "@/utils/backend-api";
 import { csv2jsonAsync, json2csvAsync } from "json-2-csv";
-import { mapState } from "vuex";
 
 export default {
     data() {
@@ -119,8 +120,6 @@ export default {
             mdiTextSearch,
             mdiCommentSearch,
             mdiFilter,
-
-            orgs: [],
 
             selectedOrgs: undefined,
             topic: undefined,
@@ -137,7 +136,9 @@ export default {
         };
     },
     computed: {
-        ...mapState("orgs", ["orgs"]),
+        orgs() {
+            return this.$store.state.orgs.orgs.filter((x) => x.name !== "All Vtubers");
+        },
         channelResultsFinal() {
             return this.channelResults.concat(this.channels || []);
         },
@@ -178,6 +179,10 @@ export default {
         channelClearAPIResults() {
             this.channelSearch = undefined;
             this.channelResults = [];
+        },
+        loadOrgs() {
+            if (this.orgs && this.orgs.length > 0) return;
+            this.$store.dispatch("orgs/fetchOrgs");
         },
         processQuery(queryArray) {
             /* [

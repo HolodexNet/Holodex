@@ -63,12 +63,13 @@ export default {
             if (!this.channel.banner) {
                 return "";
             }
-            const { mobile, tablet } = getBannerImages(this.channel.banner);
+            const { mobile, tablet, tv, banner } = getBannerImages(this.channel.banner);
             const banners = {
                 xs: mobile,
                 sm: tablet,
+                xl: tv,
             };
-            return banners[this.$vuetify.breakpoint.name] || tablet;
+            return banners[this.$vuetify.breakpoint.name] || banner;
         },
         avatarSize() {
             switch (this.$vuetify.breakpoint.name) {
@@ -102,7 +103,10 @@ export default {
                     name: `${this.$t("views.channel.collabs")}`,
                     hide: this.channel.type === "subber",
                 },
-                { path: `/channel/${this.id}/about`, name: `${this.$t("views.channel.about")}` },
+                {
+                    path: `/channel/${this.id}/about`,
+                    name: `${this.$t("views.channel.about")}`,
+                },
                 // { path: `/channel/${this.channel_id}/stats`, name: "Stats" },
             ];
         },
@@ -133,26 +137,26 @@ export default {
 
 <style>
 .channel-container {
-    padding: 0;
+  padding: 0;
 }
 
 .channel-container > .v-card {
-    border-radius: 0;
-    /* margin-bottom: 1rem; */
+  border-radius: 0;
+  /* margin-bottom: 1rem; */
 }
 
 .v-list-item-horizontal {
-    flex-direction: row;
-    align-items: center;
-    margin-right: 0 !important;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 0 !important;
 }
 
 .channel-banner {
-    height: 100px; /* legacy device support */
-    height: calc(100vw / 6.2 - 1px);
+  height: 100px; /* legacy device support */
+  height: calc(100vw / 6.2 - 1px);
 }
 
 .v-slide-group__prev--disabled {
-    display: none !important;
+  display: none !important;
 }
 </style>

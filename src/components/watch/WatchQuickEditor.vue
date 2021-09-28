@@ -230,7 +230,7 @@ export default {
             mdiContentSave,
 
             topics: [],
-            newTopic: "",
+            newTopic: null,
 
             isSelectedAll: false,
             isApplyingBulkEdit: false,

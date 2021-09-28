@@ -31,6 +31,7 @@ const initialState = {
     liveTlFontSize: 14,
     liveTlShowVerified: true, // show verified messages
     liveTlShowModerator: true, // show moderator messages
+    liveTlShowLocalTime: false, // show client local time
     liveTlWindowSize: 0, // Default size, otherwise percentage height
     liveTlBlocked: [],
 
@@ -102,6 +103,7 @@ const mutations = {
         "liveTlFontSize",
         "liveTlShowVerified",
         "liveTlShowModerator",
+        "liveTlShowLocalTime",
         "liveTlWindowSize",
         "hideCollabStreams",
         "ignoredTopics",

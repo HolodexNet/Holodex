@@ -30,8 +30,9 @@ export const langs = [
     { val: "it", display: "Italiano", credit: "テオさん#0139" },
     { val: "fr", display: "Français", credit: "pinembour#7770,Derasiel △#0002" },
     { val: "tr", display: "Türkçe", credit: "creeperkafasipw#1861" },
-    { val: "vi", display: "Tiếng Việt", credit: "Pooh#6666,Dead xda member#4848" },
+    { val: "vi", display: "Tiếng Việt", credit: "Pooh#6666,Dead xda member#4848,#Hiraoka Yukio#3042" },
     { val: "hu", display: "Magyar", credit: "kuroihikikomori#3519" },
+    { val: "th", display: "ไทย", credit: "SnowNeko#0282" },
 ];
 
 export const asyncLang = {
@@ -111,6 +112,10 @@ export const asyncLang = {
         await import("dayjs/locale/en");
         return import("@/locales/lol-UWU/ui.yml");
     },
+    async th() {
+        await import("dayjs/locale/th");
+        return import("@/locales/th-TH/ui.yml");
+    },
 };
 
 export const i18n = new VueI18n({
@@ -173,7 +178,7 @@ function setI18nLanguage(lang) {
 export function loadLanguageAsync(lang) {
     // If the same language
     if (i18n.locale === lang) {
-        return Promise.resolve(setI18nLanguage(lang));
+        return Promise.resolve();
     }
 
     // If the language was already loaded

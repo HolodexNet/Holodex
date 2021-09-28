@@ -180,10 +180,24 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (!from.path.match("^/watch")) to.meta.prevPath = from.fullPath;
 
+    if (from.query.lang) {
+        to.query.lang = from.query.lang;
+    }
+    const queryLang = to.query.lang;
     const { lang } = store.state.settings;
-    if (lang !== "en") {
-        Promise.all([loadLanguageAsync(lang)]).then(() => next());
-    } else next();
+    const actualLang = queryLang || lang;
+    const queryOrg = to.query.org;
+
+    if (queryOrg && store.state.currentOrg.name !== queryOrg) {
+        store.dispatch("orgs/fetchOrgs").then(() => {
+            const overrideOrg = store.state.orgs.orgs.find((o) => o.name === queryOrg);
+            store.commit("setCurrentOrg", overrideOrg);
+        });
+    }
+
+    if (actualLang !== "en") {
+        loadLanguageAsync(actualLang).then(() => next());
+    } else { next(); }
 });
 
 export default router;

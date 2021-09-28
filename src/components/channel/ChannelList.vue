@@ -123,7 +123,6 @@
 </template>
 
 <script lang="ts">
-import * as icons from "@/utils/icons";
 import ChannelImg from "./ChannelImg.vue";
 import ChannelInfo from "./ChannelInfo.vue";
 import ChannelSocials from "./ChannelSocials.vue";
@@ -161,11 +160,6 @@ export default {
             type: Boolean,
             default: false,
         },
-    },
-    data() {
-        return {
-            icons,
-        };
     },
     computed: {
         isXs() {

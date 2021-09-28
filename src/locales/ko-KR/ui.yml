@@ -264,6 +264,7 @@ views:
       StickBottomSettingsDesc: 번역 상자는 채팅 하단에 고정 (모바일은 상단 고정)됩니다
       showVerifiedMessages: 인증된 사용자의 메시지 표시
       showModeratorMessages: 운영자 메시지 표시
+      showLocalTime: 로컬 시간 표시
       tlFontSize: 글꼴 크기
       tlWindowSize: 번역 상자 크기 (%), 0%로 하면 자동
       retryBtn: 재시도
@@ -468,3 +469,7 @@ about:
     title: 변경 사항
   news:
     title: 소식
+  bookmarklet:
+    title: 북마클릿
+    description: >-
+      이 북마클릿을 북마크 바에 드래그해서 YouTube 동영상 페이지에서 쉽게 Holodex를 여세요:

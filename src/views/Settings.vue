@@ -7,7 +7,7 @@
         </div>
       </v-col>
       <v-col :cols="slim ? 12 : currentCol">
-        <v-sheet class="settings-group">
+        <v-sheet class="settings-group" :class="{'my-0 py-0': slim}">
           <v-card-title class="py-1">
             <v-icon
               large
@@ -20,12 +20,14 @@
 
             <span class="text-h6 font-weight-light">{{ $t("views.settings.languageSettings") }}</span>
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="pb-0">
             <v-select
               v-model="language"
               :items="langs"
               item-value="val"
               :prepend-icon="icons.mdiTranslate"
+              :hint="'» ' + langs.find(x => x.val === language).credit"
+              persistent-hint
             >
               <template #item="{ item }">
                 <!-- {{item}} -->
@@ -38,9 +40,27 @@
                 <span class="primary--text" style="">{{ item.display }}</span>
               </template>
             </v-select>
+            <v-hover v-slot="{hover}">
+              <v-alert
+                v-if="overrideLanguage"
+                v-ripple
+                dense
+                block
+                prominent
+                :text="!hover"
+                color="orange accent-3"
+                elevation="10"
+                class="mt-3 mb-1"
+                :icon="mdiGestureTap"
+                style="cursor:pointer;"
+                @click="overrideLanguage = undefined"
+              >
+                Language is being overridden to <code>{{ langs.find(x => x.val === overrideLanguage).display }}</code>, click here to reset.
+              </v-alert>
+            </v-hover>
             <v-switch
               v-model="useEnName"
-              class="v-input--reverse v-input--expand mt-0"
+              class="v-input--reverse v-input--expand mt-2"
               inset
               prepend-icon=" "
               :label="$t('views.settings.useEnglishNameLabel')"
@@ -68,7 +88,7 @@
         </v-sheet>
       </v-col>
       <v-col :cols="slim ? 12 : currentCol">
-        <v-sheet class="settings-group">
+        <v-sheet class="settings-group" :class="{'my-0 py-0': slim}">
           <v-card-title class="py-1">
             <v-icon
               large
@@ -248,6 +268,7 @@ import {
     mdiHome,
     mdiEyeOff,
     mdiBookOpenPageVariantOutline,
+    mdiGestureTap,
 } from "@mdi/js";
 import { TL_LANGS } from "@/utils/consts";
 import themeSet from "@/utils/themes";
@@ -282,6 +303,7 @@ export default {
             mdiWeatherNight,
             mdiHome,
             mdiBookOpenPageVariantOutline,
+            mdiGestureTap,
             TL_LANGS,
 
             themeId: +localStorage.getItem("theme") || 0,
@@ -342,6 +364,25 @@ export default {
             },
             set(val) {
                 this.$store.commit("settings/setLanguage", val);
+                if (this.overrideLanguage) {
+                    // if a overriding language is present, force a reload to remove the override.
+                    this.overrideLanguage = undefined;
+                }
+            },
+        },
+        overrideLanguage: {
+            get() {
+                return this.$route.query.lang;
+            },
+            set(v) {
+                this.$route.query.lang = v;
+                const r = this.$router.resolve({
+                    name: this.$route.name, // put your route information in
+                    params: this.$route.params, // put your route information in
+                    query: this.$route.query, // put your route information in
+                    hash: this.$route.hash,
+                });
+                window.location.assign(r.href);
             },
         },
         clipLangs: {

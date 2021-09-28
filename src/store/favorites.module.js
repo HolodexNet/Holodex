@@ -34,6 +34,9 @@ const actions = {
     fetchFavorites({
         commit, rootState, state, dispatch,
     }) {
+        if (!(rootState.userdata && rootState.userdata.jwt)) {
+            return null;
+        } // don't update.
         return api
             .favorites(rootState.userdata.jwt)
             .then((res) => {

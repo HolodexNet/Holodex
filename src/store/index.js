@@ -5,7 +5,6 @@ import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import createMigrate from "vuex-persistedstate-migrate";
 import jwtDecode from "jwt-decode";
-import * as icons from "@/utils/icons";
 import { sendTokenToExtension } from "@/utils/messaging";
 
 // import { dayjs } from "@/utils/time";
@@ -108,11 +107,11 @@ export default new Vuex.Store({
         gridIcon(state) {
             switch (state.currentGridSize) {
                 case 1:
-                    return icons.mdiGrid;
+                    return Vue.icons.mdiGrid;
                 case 2:
-                    return icons.mdiSquareOutline;
+                    return Vue.icons.mdiSquareOutline;
                 default:
-                    return icons.mdiGridLarge;
+                    return Vue.icons.mdiGridLarge;
             }
         },
         isSuperuser(state) {

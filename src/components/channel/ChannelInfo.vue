@@ -23,14 +23,14 @@
     </v-list-item-subtitle>
     <v-list-item-subtitle v-if="channel.top_topics && channel.top_topics.length">
       🏆
-      <router-link
+      <a
         v-for="topic in channel.top_topics"
         :key="topic"
         class="topic-chip"
-        :to="searchQuery(topic)"
+        @click.exact.stop.prevent="searchTopic(topic)"
       >
         {{ topic }}
-      </router-link>
+      </a>
     </v-list-item-subtitle>
     <v-list-item-subtitle v-if="includeSocials">
       <ChannelSocials :channel="channel" />
@@ -41,6 +41,7 @@
 
 <script lang="ts">
 import { formatCount } from "@/utils/functions";
+import { json2csvAsync } from "json-2-csv";
 
 export default {
     components: {
@@ -90,8 +91,17 @@ export default {
     },
     methods: {
         formatCount,
-        searchQuery(topicId) {
-            return `/search?q=type,value,text%0Achannel,${this.channel.id},${this.channel.name}%0Atopic,${topicId},${topicId}`;
+        async searchTopic(topicId) {
+            const query = [
+                { type: "channel", value: this.channel.id, text: this.channel.name },
+                { type: "topic", value: topicId, text: topicId },
+            ];
+            this.$router.push({
+                path: "/search",
+                query: {
+                    q: await json2csvAsync(query),
+                },
+            });
         },
     },
 };

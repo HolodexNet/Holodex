@@ -169,8 +169,8 @@
 
 <script lang="ts">
 import VirtualVideoCardList from "@/components/video/VirtualVideoCardList.vue";
-import { Playlist } from "@/utils/types";
-import { PropType } from "vue";
+import type { Playlist } from "@/utils/types";
+import type { PropType } from "vue";
 import { json2csvAsync } from "json-2-csv";
 import {
     mdiContentSave, mdiFileDelimited, mdiChevronDoubleUp, mdiChevronDoubleDown,

@@ -264,6 +264,7 @@ views:
       StickBottomSettingsDesc: Übersetzungsbox wird unten am Chat angezeigt (Standard ist oben)
       showVerifiedMessages: Verifizierte Nachrichten anzeigen
       showModeratorMessages: Moderator-Nachrichten anzeigen
+      showLocalTime: Lokale Zeiten anzeigen
       tlFontSize: Schriftgröße
       tlWindowSize: Box Größe (in %), bei 0% belassen für automatisch
       retryBtn: Erneut versuchen
@@ -468,3 +469,7 @@ about:
     title: Änderungsverlauf
   news:
     title: Neuigkeiten
+  bookmarklet:
+    title: Bookmarklets
+    description: >-
+      Zieh diese Bookmarklets in deine Lesezeichenleiste, um YouTube-Videos leichter in Holodex zu öffnen:

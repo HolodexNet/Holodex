@@ -26,7 +26,6 @@
         :items="searchResults"
         hide-no-data
         clearable
-        chips
         label="Search Channels"
       />
       <v-btn @click="addMention(selectedChannel.id)">

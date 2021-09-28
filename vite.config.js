@@ -139,6 +139,15 @@ export default ({ mode }) => {
                     main: path.resolve(__dirname, "index.html"),
                     seo: path.resolve(__dirname, "seo.html"),
                 },
+                output: {
+                    compact: true,
+                    generatedCode: {
+                        arrowFunctions: true,
+                        constBindings: true,
+                        objectShorthand: true,
+                    },
+
+                },
             },
         },
         server: {
@@ -152,6 +161,11 @@ export default ({ mode }) => {
                     rewrite: (url) => (REWRITE_API_ROUTES ? url.replace(/^\/api/, "") : url),
                 },
                 "^/(stats|orgs).json$": {
+                    target: API_BASE_URL,
+                    changeOrigin: true,
+                    secure: false,
+                },
+                "/statics": {
                     target: API_BASE_URL,
                     changeOrigin: true,
                     secure: false,

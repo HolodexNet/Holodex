@@ -24,20 +24,33 @@
         :to="
           $route.path.includes('edit')
             ? `/watch/${video.id}`
-            : `/edit/video/${video.id}${video.type !== 'stream' ? '/mentions' : '/'}`
+            : `/edit/video/${video.id}${
+              video.type !== 'stream' ? '/mentions' : '/'
+            }`
         "
       >
-        {{ $route.path.includes("edit") ? $t("editor.exitMode") : $t("editor.enterMode") }}
+        {{
+          $route.path.includes("edit")
+            ? $t("editor.exitMode")
+            : $t("editor.enterMode")
+        }}
       </v-btn>
 
       {{ formattedTime }}
       <template v-if="video.status === 'live'">
         • {{ $t("component.videoCard.watching", [liveViewers]) }}
-        <span v-if="liveViewerChange" :class="liveViewerChange > 0 ? 'green--text' : 'red--text'">
+        <span
+          v-if="liveViewerChange"
+          :class="liveViewerChange > 0 ? 'green--text' : 'red--text'"
+        >
           ({{ (liveViewerChange > 0 ? "+ " : "") + liveViewerChange }})
         </span>
       </template>
-      <span v-show="video.topic_id" class="mx-1" style="text-transform: capitalize">
+      <span
+        v-show="video.topic_id"
+        class="mx-1"
+        style="text-transform: capitalize"
+      >
         • <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
         {{ video.topic_id }}
       </span>
@@ -91,14 +104,15 @@ import ChannelChip from "@/components/channel/ChannelChip.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
-// import VideoDescription from "@/components/video/VideoDescription.vue";
-import { getVideoThumbnails } from "@/utils/functions";
+
 import {
-    formatDuration, formatDistance, dayjs, localizedDayjs,
+    formatDuration,
+    formatDistance,
+    dayjs,
+    localizedDayjs,
 } from "@/utils/time";
 import TruncatedText from "@/components/common/TruncatedText.vue";
 import { mdiAt } from "@mdi/js";
-// import VideoSongs from "@/components/media/VideoEditSongs.vue";
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
 
@@ -110,8 +124,8 @@ export default {
         ChannelSocials,
         ChannelImg,
         TruncatedText,
-        // VideoSongs,
-        // VideoDescription,
+    // VideoSongs,
+    // VideoDescription,
     },
     props: {
         video: {
@@ -139,22 +153,27 @@ export default {
         lang() {
             return this.$store.state.settings.lang;
         },
-        thumbnail_src() {
-            return getVideoThumbnails(this.video.id).medium;
-        },
         formattedTime() {
             switch (this.video.status) {
                 case "upcoming":
-                    return this.formatDistance(this.video.start_scheduled, this.lang, this.$t.bind(this));
+                    return this.formatDistance(
+                        this.video.start_scheduled,
+                        this.lang,
+                        this.$t.bind(this),
+                    );
                 case "live":
                     return this.$t("component.watch.streamingFor", [this.elapsedTime]);
                 default:
-                    return localizedDayjs(this.video.available_at, this.lang).format("LLL");
+                    return localizedDayjs(this.video.available_at, this.lang).format(
+                        "LLL",
+                    );
             }
         },
         liveViewers() {
             if (!this.video.live_viewers) return "";
-            return (+this.video.live_viewers).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return (+this.video.live_viewers)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         liveViewerChange() {
             // if lastViewerCount is unset, then there is no change
@@ -165,17 +184,24 @@ export default {
             return this.video.mentions || [];
         },
         channelChips() {
-            return this.mentions.length > 3 && !this.showAllMentions ? this.mentions.slice(0, 3) : this.mentions;
+            return this.mentions.length > 3 && !this.showAllMentions
+                ? this.mentions.slice(0, 3)
+                : this.mentions;
         },
         processedMessage() {
             const decoder = document.createElement("div");
             decoder.innerHTML = this.video.description; // using browser assembly script to sanitize
             const sanitized = decoder.textContent;
-            const vidUrl = (this.$store.state.settings.redirectMode ? "https://youtu.be/" : "/watch/") + this.video.id;
-            return sanitized.replace(COMMENT_TIMESTAMP_REGEX, (match, hr, min, sec) => {
-                const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
-                return `<a class="comment-chip" href="${vidUrl}?t=${time}" data-time="${time}"> ${match} </a>`;
-            });
+            const vidUrl = (this.$store.state.settings.redirectMode
+                ? "https://youtu.be/"
+                : "/watch/") + this.video.id;
+            return sanitized.replace(
+                COMMENT_TIMESTAMP_REGEX,
+                (match, hr, min, sec) => {
+                    const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
+                    return `<a class="comment-chip" href="${vidUrl}?t=${time}" data-time="${time}"> ${match} </a>`;
+                },
+            );
         },
     },
     watch: {
@@ -206,7 +232,9 @@ export default {
             // }
             if (this.video.status === "live") {
                 this.timer = setInterval(() => {
-                    this.elapsedTime = this.formatDuration(dayjs().diff(dayjs(this.video.start_actual)));
+                    this.elapsedTime = this.formatDuration(
+                        dayjs().diff(dayjs(this.video.start_actual)),
+                    );
                 }, 1000);
             }
         },
@@ -222,16 +250,16 @@ export default {
 
 <style>
 .watch-card {
-    border: none !important;
-    box-shadow: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 .uploader-data-list {
-    flex-basis: auto;
-    flex-direction: column;
-    align-items: stretch;
-    margin-right: 12px;
+  flex-basis: auto;
+  flex-direction: column;
+  align-items: stretch;
+  margin-right: 12px;
 }
 #video-edit-btn {
-    font-size: 12px;
+  font-size: 12px;
 }
 </style>

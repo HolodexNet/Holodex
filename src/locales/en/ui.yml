@@ -281,6 +281,7 @@ views:
       StickBottomSettingsDesc: TL box sticks to the bottom of chat (default stick to top on mobile)
       showVerifiedMessages: Show Verified Messages
       showModeratorMessages: Show Moderator Messages
+      showLocalTime: Show Local Times
       tlFontSize: Font Size
       tlWindowSize: TL Box Size (%), leave as 0% for automatic
       retryBtn: Retry
@@ -534,3 +535,7 @@ about:
     title: Changelog
   news:
     title: News
+  bookmarklet:
+    title: Bookmarklets
+    description: >-
+      Drag these bookmarklets to your bookmark bar to open YouTube watch page in Holodex easily:

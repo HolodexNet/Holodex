@@ -86,6 +86,7 @@ export default {
             msg.timestamp = +msg.timestamp;
             msg.relativeSeconds = (msg.timestamp - this.startTimeMillis) / 1000;
             msg.displayTime = this.utcToTimestamp(msg.timestamp);
+            msg.realTime = this.realTimestamp(msg.timestamp);
             msg.key = msg.name + msg.timestamp + msg.message;
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://")) {
@@ -114,6 +115,9 @@ export default {
         },
         utcToTimestamp(utc) {
             return formatDuration(dayjs.utc(utc).diff(this.startTimeMillis));
+        },
+        realTimestamp(utc) {
+            return dayjs(utc).format("LTS"); // localizedFormat
         },
     },
 };

@@ -1,7 +1,7 @@
 import type { LayoutItem } from "@/external/vue-grid-layout/src/helpers/utils";
 
 export interface Content {
-    id: string;
+    id?: string;
     type: string;
     isTwitch?: Boolean;
     video?: any;
@@ -62,8 +62,8 @@ export function encodeLayout({ layout, contents, includeVideo = false }) {
  * @returns {{layout, content}} layout and layout contents as array and object
  */
 export function decodeLayout(encodedStr) {
-    const parsedLayout = [];
-    const parsedContent = {};
+    const parsedLayout: LayoutItem[] = [];
+    const parsedContent: Record<number, Content> = {};
     let videoCellCount = 0;
     const parts = encodedStr.split(",");
     parts.sort();
@@ -120,7 +120,7 @@ export function decodeLayout(encodedStr) {
                 video: {
                     id: idOrChat,
                     channel: {
-                        name: channelName,
+                        name: channelName || idOrChat,
                     },
                 },
             };

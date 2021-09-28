@@ -1,7 +1,7 @@
 import GridItem from "./GridItem.vue";
 import GridLayout from "./GridLayout.vue";
 import type Vue from "vue";
-import { VueConstructor } from "vue/types/umd";
+import type { VueConstructor } from "vue/types/umd";
 // import ResponsiveGridLayout from './ResponsiveGridLayout.vue';
 
 const VueGridLayout = {

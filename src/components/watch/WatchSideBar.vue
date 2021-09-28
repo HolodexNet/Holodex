@@ -96,6 +96,7 @@
 
 <script lang="ts">
 import VideoCardList from "@/components/video/VideoCardList.vue";
+import filterVideos from "@/mixins/filterVideos";
 import { mdiTimerOutline } from "@mdi/js";
 
 export default {
@@ -104,6 +105,7 @@ export default {
         VideoCardList,
         SongItem: () => import("@/components/media/SongItem.vue"),
     },
+    mixins: [filterVideos],
     props: {
         video: {
             type: Object,
@@ -184,7 +186,7 @@ export default {
             this.$store.commit("music/addSong", this.songList);
         },
         addToPlaylist(videos) {
-            const reversed = [...videos];
+            const reversed = [...videos].filter((v) => this.filterVideos(v, { hideIgnoredTopics: false }));
             reversed.reverse();
             this.$store.commit("playlist/addVideos", reversed);
         },

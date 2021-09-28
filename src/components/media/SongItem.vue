@@ -71,7 +71,7 @@
         </v-list-item-avatar>
       </v-hover>
       <v-list-item-content class="py-1 pt-1">
-        <v-list-item-subtitle class="text--primary text-subtitle-1">
+        <v-list-item-subtitle class="text-subtitle-1" :class="color">
           <a
             v-if="alwaysShowDeletion || (detailed && $listeners.remove && userCanDelete)"
             class="text-caption error--text float-right ml-1 song-clickable"
@@ -89,7 +89,7 @@
           </span>
         </v-list-item-subtitle>
 
-        <v-list-item-subtitle class="text--caption">
+        <v-list-item-subtitle class="text--caption" :class="color">
           <div class="float-right">
             <span v-if="showTime" class="muted">{{ formattedTime }}</span>
             {{ Math.floor((song.end - song.start) / 60) }}:{{
@@ -152,6 +152,10 @@ export default {
             type: String,
             default: null,
         },
+        color: {
+            type: String,
+            default: null,
+        },
     },
     data() {
         return {
@@ -202,6 +206,7 @@ export default {
 
     justify-content: left;
     text-align: left;
+    color: inherit;
 }
 .song-clickable {
     text-decoration: none;

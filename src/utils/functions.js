@@ -1,12 +1,23 @@
 import { TL_LANGS, VIDEO_URL_REGEX, TWITCH_VIDEO_URL_REGEX } from "@/utils/consts";
 import { langs } from "@/plugins/vuetify";
 
+export function resizeArtwork(artworkUrl, size = 400) {
+    // https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/9c/39/27/9c392780-3f34-d322-9dde-002618154f40/source/400x400bb.jpg
+    const adjustedSize = window.devicePixelRatio * size;
+    const match = /^https:\/\/(.+?)\.mzstatic\.com\/image\/thumb\/(.+?)\/source\//.exec(artworkUrl);
+    if (!match) return artworkUrl;
+    const serv = match[1];
+    const thumb = match[2];
+    return `https://${serv}.mzstatic.com/image/thumb/${thumb}/source/${adjustedSize}x${adjustedSize}bb.jpg`;
+}
+
 export function resizeChannelPhoto(photoUrl, size) {
+    const deviceSize = size * window.devicePixelRatio;
     const split = photoUrl.split("=s");
     // try to hit cache by using a common size
     let adjSize = 48;
-    if (size < 88 && size > 55) adjSize = 88;
-    else if (size <= 55) adjSize = 48;
+    if (deviceSize < 88 && deviceSize > 55) adjSize = 88;
+    else if (deviceSize <= 55) adjSize = 48;
     else adjSize = 176;
     return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
 }
@@ -49,11 +60,11 @@ export function getLang(weblang) {
 export function getBannerImages(url) {
     const base = `${url.split("=")[0]}=`;
     return {
-        banner: `${base}w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
-        mobile: `${base}w640-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj`,
+        tablet: `${base}w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
+        mobile: `${base}w960-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj`,
         // bannerTabletLowImageUrl:
         //     "w1138-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
-        tablet: `${base}w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
+        banner: `${base}w2276-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
         // bannerTabletHdImageUrl:
         //     "w2276-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
         // bannerTabletExtraHdImageUrl:
@@ -66,7 +77,7 @@ export function getBannerImages(url) {
         //     "w1280-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj",
         // bannerMobileExtraHdImageUrl:
         //     "w1440-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj",
-        tv: `${base}w2120-fcrop64=1,00000000ffffffff-k-c0xffffffff-no-nd-rj`,
+        tv: `${base}w2560-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj`,
         // bannerTvLowImageUrl:
         //     "w854-fcrop64=1,00000000ffffffff-k-c0xffffffff-no-nd-rj",
         // bannerTvMediumImageUrl:
