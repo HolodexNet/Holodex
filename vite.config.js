@@ -16,7 +16,6 @@ require("dotenv").config();
 export default ({ mode }) => {
     const env = { ...process.env, ...loadEnv(mode, process.cwd()) };
     const API_BASE_URL = env.API_BASE_URL ?? "https://staging.holodex.net";
-    const REWRITE_API_ROUTES = !!env.REWRITE_API_ROUTES;
 
     return defineConfig({
         plugins: [
@@ -26,13 +25,17 @@ export default ({ mode }) => {
                 customComponentResolvers: [VuetifyResolver()],
                 deep: false,
                 /**
-                 * Vite-Components removes need to import components by deepscanning the src/components folder
-                 * but is fairly dangerous in terms of how it figures out which to import. Since we are using
-                 * manual import processes, we only want ViteComponents for vuetify resolution.
-                */
+         * Vite-Components removes need to import components by deepscanning the src/components folder
+         * but is fairly dangerous in terms of how it figures out which to import. Since we are using
+         * manual import processes, we only want ViteComponents for vuetify resolution.
+         */
             }),
             VitePWA({
-                includeAssets: ["favicon.ico", "robots.txt", "img/icons/safari-pinned-tab.svg"],
+                includeAssets: [
+                    "favicon.ico",
+                    "robots.txt",
+                    "img/icons/safari-pinned-tab.svg",
+                ],
                 manifest: {
                     // content of manifest
                     display: "standalone",
@@ -58,7 +61,15 @@ export default ({ mode }) => {
                     // NOTE: `vite-plugin-pwa` expects the service worker to be called `sw.js` for some reason.
                     // there is no way to change this.
                     swDest: "./dist/sw.js",
-                    navigateFallbackDenylist: [/^\/api/, /^\/assets/, /^\/img/, /^\/sitemap-.*/, /^.*\.js(\.map)?/, /^.*\.css/, /^.*\.webmanifest/],
+                    navigateFallbackDenylist: [
+                        /^\/api/,
+                        /^\/assets/,
+                        /^\/img/,
+                        /^\/sitemap-.*/,
+                        /^.*\.js(\.map)?/,
+                        /^.*\.css/,
+                        /^.*\.webmanifest/,
+                    ],
                     runtimeCaching: [
                         {
                             urlPattern: new RegExp(
@@ -76,9 +87,7 @@ export default ({ mode }) => {
                             },
                         },
                         {
-                            urlPattern: new RegExp(
-                                "https://yt3.ggpht.com/ytc/(.*)",
-                            ),
+                            urlPattern: new RegExp("https://yt3.ggpht.com/ytc/(.*)"),
                             handler: "CacheFirst",
                             options: {
                                 cacheName: "channel-photo",
@@ -146,7 +155,6 @@ export default ({ mode }) => {
                         constBindings: true,
                         objectShorthand: true,
                     },
-
                 },
             },
         },
@@ -158,7 +166,6 @@ export default ({ mode }) => {
                     changeOrigin: true,
                     secure: false,
                     ws: true,
-                    rewrite: (url) => (REWRITE_API_ROUTES ? url.replace(/^\/api/, "") : url),
                 },
                 "^/(stats|orgs).json$": {
                     target: API_BASE_URL,
