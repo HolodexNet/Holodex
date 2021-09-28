@@ -147,7 +147,7 @@ export default {
                     const th = Math.floor(subBucket.length / 3);
                     const median = subBucket[th].time;
                     // Find matching song around timestamp
-                    const matchingSong = this.video.songs.find((song) => Math.abs(song.start - median) <= TIME_THRESHOLD);
+                    const matchingSong = this.video?.songs?.find((song) => Math.abs(song.start - median) <= TIME_THRESHOLD);
                     if (matchingSong) {
                         // Render song item instead of text
                         buckets.push({
