@@ -23,9 +23,15 @@
                 />
               </div>
             </template>
-            <div class="highlight-comments">
+            <div v-if="b.best" class="highlight-comments">
               {{ b.best }}
             </div>
+            <song-item
+              v-else-if="b.song"
+              :song="b.song"
+              style="max-width: 350px;"
+              color="white--text"
+            />
           </v-tooltip>
         </template>
       </div>
@@ -35,11 +41,13 @@
 
 <script lang="ts">
 import { formatDuration } from "@/utils/time";
+import SongItem from "../media/SongItem.vue";
 
 interface ParsedComment {
     time: number;
     occurence: number;
     text?: string;
+    song?: any;
 }
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])([^\r\n]+)?/gm;
@@ -82,7 +90,7 @@ function parseTimestampComments(message: string): ParsedComment[] {
 
 export default {
     name: "WatchHighlights",
-    components: {},
+    components: { SongItem },
     props: {
         comments: {
             type: Array,
@@ -131,41 +139,56 @@ export default {
                 if (comment.time - currentBucket <= TIME_THRESHOLD) {
                     subBucket.push(comment);
                 }
-
+                /**
+                * Process the bucket
+                */
                 if (subBucket.length >= MIN_BUCKET_SIZE) {
                     // select floor median has the display time
-                    // const median = subBucket[Math.floor(subBucket.length / 2)].time;
                     const th = Math.floor(subBucket.length / 3);
                     const median = subBucket[th].time;
-
-                    // pick best comment to show
-                    const processed = subBucket
-                        .sort(
-                            (a, b) => b.occurence / b.text.length - a.occurence / a.text.length,
-                        ) // prioritize chapter comment
-                        .map((s) => s.text) // ParsedComment -> string
-                        .map(removePunctuations) // remove punctuations
-                        .map(removeStopWords) // remove stop words
-                        .map((c) => c.trim()) // strip white spaces
-                        .filter((c) => c.length > 1); // filter out clutter
-
-                    if (processed.length > 0) {
-                        let best = processed[0];
-
-                        const stricter = processed
-                            .filter(filterByWordCount(2))
-                            .filter((c) => !/(?:clip\s?(?:it|this)|[!?]{3})/i.test(c));
-                        // console.log(stricter);
-                        if (stricter.length > 0) [best] = stricter;
-
-                        if (best.length > 60) best = `${best.slice(0, 60)}...`;
-                        // console.log(best, processed);
+                    // Find matching song around timestamp
+                    const matchingSong = this.video.songs.find((song) => Math.abs(song.start - median) <= TIME_THRESHOLD);
+                    if (matchingSong) {
+                        // Render song item instead of text
                         buckets.push({
                             time: median,
                             count: subBucket.length,
-                            best,
+                            song: {
+                                ...matchingSong,
+                                channel: this.video.channel,
+                            },
                             display: formatDuration(median * 1000),
                         });
+                    } else {
+                        // pick best comment to show
+                        const processed = subBucket
+                            .sort(
+                                (a, b) => b.occurence / b.text.length - a.occurence / a.text.length,
+                            ) // prioritize chapter comment
+                            .map((s) => s.text) // ParsedComment -> string
+                            .map(removePunctuations) // remove punctuations
+                            .map(removeStopWords) // remove stop words
+                            .map((c) => c.trim()) // strip white spaces
+                            .filter((c) => c.length > 1); // filter out clutter
+
+                        if (processed.length > 0) {
+                            let best = processed[0];
+
+                            const stricter = processed
+                                .filter(filterByWordCount(2))
+                                .filter((c) => !/(?:clip\s?(?:it|this)|[!?]{3})/i.test(c));
+                            // console.log(stricter);
+                            if (stricter.length > 0) [best] = stricter;
+
+                            if (best.length > 60) best = `${best.slice(0, 60)}...`;
+                            // console.log(best, processed);
+                            buckets.push({
+                                time: median,
+                                count: subBucket.length,
+                                best,
+                                display: formatDuration(median * 1000),
+                            });
+                        }
                     }
                 }
                 // clear and set a new bucket
