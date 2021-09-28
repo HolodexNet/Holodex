@@ -1,14 +1,19 @@
-# Holodex Changelog
 
 ### Unreleased
 
-##### New features
+### 2.20 Holodex [*September 27th, 2021*]
 
-- Added Highlight Moments bar (@uetchy)
-
+- Added Highlight Moments bar to watch page (@uetchy)
+- TLdex has option to show chat in local time (i.e. 4:23:15 PM) (@SnowNeko9)
+- Added bookmarklet in the About page (Add to bookmark bar to open Youtube videos in Holodex)
 ##### Patches & Bugfixes
 
 - Support for Retina display (@uetchy)
+- Fix channel icon missing in multiview controls (@stu43005)
+- Clicking on the Add cell button will cycle through auto layouts
+- Fixed add to playlist ignoring blocked channels (@stu43005)
+- Fixed advanced search orgs drop down
+- Adding multiview video always fills from the left now
 
 ### 2.19 Holodex [*September 13th, 2021*]
 ##### New Features
