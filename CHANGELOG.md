@@ -6,6 +6,8 @@
 - Added Highlight Moments bar to watch page (@uetchy)
 - TLdex has option to show chat in local time (i.e. 4:23:15 PM) (@SnowNeko9)
 - Added bookmarklet in the About page (Add to bookmark bar to open Youtube videos in Holodex)
+- Added Thai language (@SnowNeko9)
+
 ##### Patches & Bugfixes
 
 - Support for Retina display (@uetchy)
