@@ -2,6 +2,10 @@
 hello: dünya
 music:
   title: '{{english_name}} Orijinal ve Cover Şarkıları - Holodex'
+  description: >-
+    Holodex müzik oynatıcısı ile topluluk tarafından etiketlenen resmi müzikleri ve karaoke yayınlarını dinleyin.
 channel:
+  normal:
+    title: '{{english_name}} Klipleri, Yayınları, Müziği ve Collabları - Holodex'
   clip:
     title: '{{english_name}} - Holodex'
