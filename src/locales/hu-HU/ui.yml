@@ -51,6 +51,8 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -81,9 +83,11 @@ component:
     older: Régebbiek
   music:
     clearPlaylist: Törlés
+    trendingForOrg: Népszerű {0}-tól/től
   channelMusic:
     recentSongsHeader: Legújabb dalok
     weeklyTopPlaysHeader: Heti legjátszottabbak
+    trending: Legnépszerűbb
   songList:
     songTitle: Cím
     songCoveredBy: Előadó
@@ -141,6 +145,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
