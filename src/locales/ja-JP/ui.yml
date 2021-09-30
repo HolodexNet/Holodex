@@ -108,7 +108,8 @@ component:
     readMore: 続きを読む
   reportDialog:
     title: 問題を報告する
-    collabing: このチャンネルは {org} のメンバーまたはあなたのお気に入りとコラボしているかもしれません。この機能は設定から無効にできます。
+    collabing: >-
+      このチャンネルは {org} のメンバーまたはあなたのお気に入りとコラボしているかもしれません。この機能は設定から無効にできます。
     comments: Holodex はどのような対応をすべきですか？
     success: ご報告ありがとうございます。
     reasons:

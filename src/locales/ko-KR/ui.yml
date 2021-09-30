@@ -51,8 +51,6 @@ component:
     tlPresence: 최근 30분 간 활동 중인 번역가
   videoDescription:
     description: 설명
-  video:
-    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -110,7 +108,8 @@ component:
     readMore: 자세히 보기
   reportDialog:
     title: 신고
-    collabing: 이 채널은 즐겨찾기 중인 {org} 멤버와 콜라보 중일 수도 있습니다. 설정에서 이 기능을 끌 수 있어요
+    collabing: >-
+      이 채널은 즐겨찾기 중인 {org} 멤버와 콜라보 중일 수도 있습니다. 설정에서 이 기능을 끌 수 있어요
     comments: Holodex가 취해야 할 행동은 무엇인가요?
     success: 신고되었습니다. 감사합니다!
     reasons:
@@ -142,7 +141,6 @@ views:
     collabs: 콜라보
     about: 정보
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 구독자
       group: 그룹
@@ -472,4 +470,4 @@ about:
   bookmarklet:
     title: 북마클릿
     description: >-
-      이 북마클릿을 북마크 바에 드래그해서 YouTube 동영상 페이지에서 쉽게 Holodex를 여세요:
+      이 북마클릿을 북마크바에 드래그해서 YouTube 동영상 페이지에서 쉽게 Holodex를 여세요:
