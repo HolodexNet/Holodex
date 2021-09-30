@@ -108,7 +108,8 @@ component:
     readMore: Xem thêm
   reportDialog:
     title: Báo cáo
-    collabing: Kênh này có thể hợp tác với một thành viên {org} hoặc với những người yêu thích của bạn. Bạn có thể tắt tính năng này thông qua cài đặt
+    collabing: >-
+      Kênh này có thể hợp tác với một thành viên {org} hoặc với những người yêu thích của bạn. Bạn có thể tắt tính năng này thông qua cài đặt
     comments: Holodex nên thực hiện những hành động nào?
     success: Đã gửi báo cáo, cảm ơn bạn!
     reasons:
