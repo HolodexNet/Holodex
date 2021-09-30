@@ -22,7 +22,7 @@
       ref="sheet"
       :hide-overlay="true"
       persistent
-      no-click-animation-w
+      no-click-animation
       :value="isOpen"
       :retain-focus="false"
       transition="slide"
