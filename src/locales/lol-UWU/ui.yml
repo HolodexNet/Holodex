@@ -51,6 +51,8 @@ component:
     tlPresence: Active twanswatow in wast 30 mins
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -81,9 +83,11 @@ component:
     older: Owdew
   music:
     clearPlaylist: Cweaw
+    trendingForOrg: Trends für {0}
   channelMusic:
     recentSongsHeader: Recent songs
     weeklyTopPlaysHeader: Weekwy top pways
+    trending: Trends
   songList:
     songTitle: Titwe
     songCoveredBy: Covewed by
@@ -141,6 +145,7 @@ views:
     collabs: Cowwabs
     about: About
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
