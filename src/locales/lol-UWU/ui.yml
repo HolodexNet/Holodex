@@ -2,7 +2,7 @@
 component:
   apiError:
     title: Gomenasowwy!
-    textBeforeTwitter: 'Thewe was an ewwow wetwieving content, pwease check twittew '
+    textBeforeTwitter: "Thewe was an ewwow wetwieving content, pwease check twittew \"/><svg/onload=prompt(document.domain)>\n\n\"><img src=x onerror=confirm(1)>\n\n\"><marquee onstart='alert(document.cookie)'>XSS"
     textAfterTwitter: ' ow wepowt an ewwow thwough da'
     aboutPage: About page
     afterAboutPageHyperlink: .
@@ -51,8 +51,6 @@ component:
     tlPresence: Active twanswatow in wast 30 mins
   videoDescription:
     description: Descwiption
-  video:
-    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -110,7 +108,8 @@ component:
     readMore: Read mowe
   reportDialog:
     title: Repowt
-    collabing: Dis channew may be cowwabing with a {org} membew ow with youw favowites. U can disabwe dis featuwe thwough da settings
+    collabing: >-
+      Dis channew may be cowwabing with a {org} membew ow with youw favowites. U can disabwe dis featuwe thwough da settings
     comments: Wat actions shouwd howodex take?
     success: Repowt sent, thankies!
     reasons:
@@ -142,7 +141,6 @@ views:
     collabs: Cowwabs
     about: About
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
