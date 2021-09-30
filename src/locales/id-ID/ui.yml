@@ -51,8 +51,6 @@ component:
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -110,7 +108,8 @@ component:
     readMore: Baca selengkapnya
   reportDialog:
     title: Laporkan
-    collabing: Channel ini mungkin sedang berkolaborasi dengan salah satu anggota {org} atau salah satu vtuber favoritmu. Kamu dapat menonaktifkan fitur ini di pengaturan
+    collabing: >-
+      Channel ini mungkin sedang berkolaborasi dengan salah satu anggota {org} atau salah satu vtuber favoritmu. Kamu dapat menonaktifkan fitur ini di pengaturan
     comments: Tindakan apa yang harus Holodex lakukan?
     success: Laporan telah dikirim, Terima Kasih!
     reasons:
@@ -142,7 +141,6 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
