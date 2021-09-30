@@ -33,7 +33,7 @@ component:
     login: เข้าสู่ระบบ
     logout: ออกจากระบบ
     MugenClips: MugenClips<sup>beta</sup>
-    accountSettings: ตั้งค่าบีญชี
+    accountSettings: ตั้งค่าบัญชี
     music: เพลง
     multiview: MultiView
     points: แต้ม
