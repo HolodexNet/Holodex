@@ -4,64 +4,18 @@
       <v-col
         v-if="!isAllVTubers"
         cols="12"
-        class="mb-0 pa-0"
-        style="min-height: 404px"
-      >
-        <v-card-title>
-          <span class="text-lg-h5 mr-2">{{
-            $t("component.orgMusic.monthlyTopForOrg", [currentOrg.name])
-          }}</span>
-          <v-btn
-            fab
-            color="primary"
-            @click="
-              $store.commit('music/addSong', popularMonthlySongs);
-              $store.commit('music/openBar');
-            "
-          >
-            <v-icon> {{ icons.mdiPlaylistPlus }} </v-icon>
-          </v-btn>
-        </v-card-title>
-        <carousel
-          v-if="popularMonthlySongs.length"
-          :window-size="BREAKPOINTS[$vuetify.breakpoint.name]"
-          :item-width="220"
-          :item-count="popularMonthlySongs.length"
-        >
-          <template v-for="(song, idx) in popularMonthlySongs">
-            <song-item-card
-              :key="'clist3' + idx"
-              style="width: 200px; margin: 10px"
-              :song="song"
-              show-time
-              show-artist
-              :hover-icon="icons.mdiPlaylistMusic"
-              :artwork-hover-icon="icons.mdiPlay"
-              @play="$store.commit('music/addSong', song)"
-              @playNow="skipToSong"
-              @channel="$router.push({ path: `/channel/${song.channel_id}` })"
-            />
-          </template>
-          <v-icon v-if="popularMonthlySongs.length === 0" disabled>
-            {{ icons.mdiDatabaseOff }}
-          </v-icon>
-        </carousel>
-      </v-col>
-      <v-col
-        v-if="!isAllVTubers"
-        cols="12"
         class="my-0 pa-0"
         style="min-height: 404px"
       >
         <v-card-title>
           <span class="text-lg-h5 mr-2">
-            {{ $t("component.orgMusic.weeklyTopForOrg", [currentOrg.name]) }}
+            {{ $t("component.music.trendingForOrg", [currentOrg.name]) }}
           </span>
           <v-btn
             fab
             color="primary"
             @click="
-              $store.commit('music/addSong', popularWeeklySongs);
+              $store.commit('music/addSong', hotSongs);
               $store.commit('music/openBar');
             "
           >
@@ -69,12 +23,12 @@
           </v-btn>
         </v-card-title>
         <carousel
-          v-if="popularWeeklySongs.length"
+          v-if="hotSongs.length"
           :window-size="BREAKPOINTS[$vuetify.breakpoint.name]"
           :item-width="220"
-          :item-count="popularWeeklySongs.length"
+          :item-count="hotSongs.length"
         >
-          <template v-for="(song, idx) in popularWeeklySongs">
+          <template v-for="(song, idx) in hotSongs">
             <song-item-card
               :key="'clist4' + idx"
               style="width: 200px; margin: 10px"
@@ -88,7 +42,7 @@
               @channel="$router.push({ path: `/channel/${song.channel_id}` })"
             />
           </template>
-          <v-icon v-if="popularWeeklySongs.length === 0" disabled>
+          <v-icon v-if="hotSongs.length === 0" disabled>
             {{ icons.mdiDatabaseOff }}
           </v-icon>
         </carousel>
@@ -179,8 +133,7 @@ export default {
     },
     data() {
         return {
-            popularMonthlySongs: [],
-            popularWeeklySongs: [],
+            hotSongs: [],
 
             BREAKPOINTS,
             PER_PAGE_ITEMS,
@@ -205,11 +158,9 @@ export default {
     },
     methods: {
         async songsByPopular() {
-            const res1 = backendApi.topSongs(this.currentOrg.name, null, "m");
-            const res2 = backendApi.topSongs(this.currentOrg.name, null, "w");
+            const res2 = backendApi.hot(this.currentOrg.name, null);
 
-            this.popularMonthlySongs = (await res1).data;
-            this.popularWeeklySongs = (await res2).data;
+            this.hotSongs = (await res2).data;
         },
         skipToSong(song) {
             console.log(song);

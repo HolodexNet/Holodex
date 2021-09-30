@@ -230,15 +230,14 @@ export default {
     },
     /**
    * Grabs top 20 songs from API.
-   * @param {*} org = org name
-   * @param {*} channelId = channel ID. only org name OR channel ID should be supplied, never both.
-   * @param {*} type type = 'w' for weekly, 'm' for monthly.
+   * @param {string?} org = org name
+   * @param {string?} channelId = channel ID. only org name OR channel ID should be supplied, never both.
    */
-    topSongs(org, channelId, type) {
+    hot(org, channelId) {
         const q = querystring.stringify(
-            org ? { org, type } : { channel_id: channelId, type },
+            org ? { org } : { channel_id: channelId },
         );
-        return axiosInstance.get(`/songs/top20?${q}`);
+        return axiosInstance.get(`/songs/hot?${q}`);
     },
     getPlaylistList(jwt: string) {
         if (!jwt) throw new Error("Not authorized");

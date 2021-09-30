@@ -82,9 +82,11 @@ component:
     older: Older
   music:
     clearPlaylist: Clear
+    trendingForOrg: Trending for {0}
   channelMusic:
     recentSongsHeader: Recent Songs
     weeklyTopPlaysHeader: Weekly Top Plays
+    trending: Trending
   songList:
     songTitle: Title
     songCoveredBy: Covered by
@@ -109,7 +111,9 @@ component:
     readMore: Read more
   reportDialog:
     title: Report
-    collabing: This channel may be collabing with a {org} member or with your favorites. You can disable this feature through the settings
+    collabing: >-
+      This channel may be collabing with a {org} member or with your favorites.
+      You can disable this feature through the settings
     comments: What actions should Holodex take?
     success: Report sent, thank you!
     reasons:
@@ -538,4 +542,5 @@ about:
   bookmarklet:
     title: Bookmarklets
     description: >-
-      Drag these bookmarklets to your bookmark bar to open YouTube watch page in Holodex easily:
+      Drag these bookmarklets to your bookmark bar to open YouTube watch page in
+      Holodex easily:
