@@ -1,4 +1,5 @@
-import { Content, decodeLayout, sortLayout } from "@/utils/mv-utils";
+import type { Content } from "@/utils/mv-utils";
+import { decodeLayout, sortLayout } from "@/utils/mv-utils";
 import { mapGetters } from "vuex";
 
 export default {
