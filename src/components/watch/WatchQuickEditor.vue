@@ -13,10 +13,13 @@
       v-model="showSuccessAlert"
       color="success"
       dismissible
+      absolute
+      top
+      app
     >
       {{ successMessage }}
     </v-snackbar>
-    <div class="d-flex justify-space-between flex-wrap align-center">
+    <div class="d-flex justify-space-between flex-wrap align-top">
       <v-col cols="auto">
         <!-- <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
@@ -114,8 +117,7 @@
           :items="searchResults"
           hide-no-data
           multiple
-          chips
-          hide-details="auto"
+          hide-details
           :rules="[]"
           return-object
           item-value="id"
@@ -148,11 +150,11 @@
       </v-col>
       <v-divider vertical />
       <v-col v-if="video.type === 'stream'" cols="auto">
-        <v-avatar rounded left size="40">
+        <!-- <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiPencil }}
           </v-icon>
-        </v-avatar>
+        </v-avatar> -->
         <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiAnimationPlay }}
@@ -165,6 +167,7 @@
           v-model="newTopic"
           :items="topics"
           inline
+          hide-details
           label="Topic (leave empty to unset)"
           :append-outer-icon="mdiContentSave"
           @click="loadTopics"
@@ -263,6 +266,12 @@ export default {
                     );
                 });
         }, 400),
+        fake(nv: [any] | null) {
+            if (nv && nv.length && nv.length > 0) {
+                this.addMention(nv[0]);
+                this.fake = null;
+            }
+        },
     },
     mounted() {
         this.updateMentions();
