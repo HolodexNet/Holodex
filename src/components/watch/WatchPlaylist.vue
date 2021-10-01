@@ -13,8 +13,23 @@
         <v-card-title>
           {{ playlist.name }}
         </v-card-title>
-        <v-card-subtitle>{{ value + 1 }}/{{ videos.length }}</v-card-subtitle>
-        <v-divider />
+        <v-card-subtitle class="pb-2">
+          {{ value + 1 }}/{{ videos.length }}
+        </v-card-subtitle>
+        <v-btn
+          fab
+          absolute
+          right
+          color="primary darken-1"
+          elevation="5"
+          style="margin-top:-30px"
+          @click="nextVideo"
+        >
+          <v-icon style="transform:rotate(180deg);">
+            {{ icons.mdiArrowLeft }}
+          </v-icon>
+        </v-btn>
+        <v-divider class="elevation-3" />
         <VirtualVideoCardList
           :videos="videos"
           :playlist="playlist"
@@ -99,6 +114,9 @@ export default {
             const newIndex = this.videos.findIndex(({ id }) => id === currentId);
             // this.value = newIndex;
             this.$emit("input", newIndex);
+        },
+        nextVideo() {
+            if (this.videos[this.value + 1]) this.$emit("input", this.value + 1);
         },
         loadPlaylist(playlistId) {
             if (playlistId === this.active.id || playlistId === "local") {
