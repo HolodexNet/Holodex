@@ -51,6 +51,8 @@ component:
     tlPresence: Active twanswatow in wast 30 mins
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -135,6 +137,13 @@ component:
       delete-playlist: Dewete pwaywist
       clear-playlist: Cweaw pwaywist
     save-error-not-logged-in: U need to be wogged in to save pwaywists
+  ghostVideo:
+    discordCredit: 'Event data pwovided by {0} fwom:'
+    datasourceCredit: Event data fetched fwom {0} datasouwce.
+    botCredit: Event data pwovided via {0} datasouwce, cweated by {1}.
+    streamPageBtn: Stweam page
+    eventPageBtn: Event page
+    scheduledEvent: Scheduwed
 views:
   channel:
     video: Bideos
@@ -143,6 +152,7 @@ views:
     collabs: Cowwabs
     about: About
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
