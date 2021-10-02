@@ -51,8 +51,6 @@ component:
     tlPresence: Active twanswatow in wast 30 mins
   videoDescription:
     description: Descwiption
-  video:
-    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -145,7 +143,6 @@ views:
     collabs: Cowwabs
     about: About
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
