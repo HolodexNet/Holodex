@@ -66,6 +66,7 @@ export default ({ mode }) => {
                         /^\/assets/,
                         /^\/img/,
                         /^\/sitemap-.*/,
+                        /^\/statics.*/,
                         /^.*\.js(\.map)?/,
                         /^.*\.css/,
                         /^.*\.webmanifest/,
@@ -119,6 +120,19 @@ export default ({ mode }) => {
                             handler: "CacheFirst",
                             options: {
                                 cacheName: "holodex-statics",
+                                expiration: {
+                                    maxAgeSeconds: 10800,
+                                },
+                                cacheableResponse: {
+                                    statuses: [0, 200],
+                                },
+                            },
+                        },
+                        {
+                            urlPattern: new RegExp(`${API_BASE_URL}/statics/.*$`),
+                            handler: "CacheFirst",
+                            options: {
+                                cacheName: "holodex-statics-route",
                                 expiration: {
                                     maxAgeSeconds: 10800,
                                 },

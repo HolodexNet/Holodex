@@ -31,6 +31,7 @@ const actions = {
             commit("fetchStart");
             return api
                 .live({
+                    type: "ghost",
                     org: rootState.currentOrg.name,
                 })
                 .then((res) => {

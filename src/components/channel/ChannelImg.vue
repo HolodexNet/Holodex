@@ -22,6 +22,7 @@
       :height="size"
       class="d-block"
       :class="rounded && 'rounded-circle'"
+      @error="err=true"
     />
   </a>
 </template>
@@ -49,8 +50,15 @@ export default {
             default: false,
         },
     },
+    data() {
+        return { err: false };
+    },
     computed: {
         photo() {
+            if (this.err) {
+                const nearest = Math.min(Math.max(Math.ceil(this.size / 50) * 50, 50), 150);
+                return `/statics/channelImg/${this.channel.id}/${nearest}.png`;
+            }
             if (!this.channel.photo) return "";
             return resizeChannelPhoto(this.channel.photo, this.size);
         },

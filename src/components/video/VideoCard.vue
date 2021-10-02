@@ -12,7 +12,7 @@
     draggable="true"
     style="position: relative"
     @click.exact.prevent="
-      (e) => (!redirectMode ? goToVideo(data.id) : goToYoutube(data.id))
+      (e) => (isGhost? openGhost(): (!redirectMode ? goToVideo() : goToYoutube()))
     "
     @dragstart="drag"
   >
@@ -40,8 +40,9 @@
             {{ data.topic_id }}
           </div>
 
-          <!-- Check box for saved video -->
+          <!-- Check box for saved video (👻❌) -->
           <v-icon
+            v-if="!isGhost"
             :color="hasSaved ? 'primary' : 'white'"
             class="video-card-action rounded-tr-sm"
             :class="{ 'hover-show': !hasSaved && !isMobile }"
@@ -51,8 +52,8 @@
           </v-icon>
         </div>
 
-        <!-- Video duration/music indicator -->
-        <div class="d-flex flex-column align-end">
+        <!-- Video duration/music indicator (👻❌) -->
+        <div v-if="!isGhost" class="d-flex flex-column align-end">
           <!-- Show music icon if songs exist -->
           <div v-if="data.songcount" class="video-duration">
             <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
@@ -75,6 +76,14 @@
             {{ formattedDuration }}
           </div>
         </div>
+        <div v-else class="d-flex flex-column align-end ">
+          <!-- (👻✅) -->
+          <v-icon
+            class="video-duration rounded-sm "
+          >
+            {{ ghostIconMap[data.ghostType] }}
+          </v-icon>
+        </div>
       </div>
       <v-img
         v-if="!horizontal && !shouldHideThumbnail"
@@ -95,7 +104,7 @@
       style="height: 88px; position: relative"
       :href="watchLink"
       rel="noopener"
-      @click.exact.stop.prevent="goToVideo(data.id)"
+      @click.exact.stop.prevent="goToVideo()"
     >
       <!-- Channel icon -->
       <div
@@ -139,7 +148,8 @@
           <span :class="'text-' + data.status" :title="absoluteTimeString">
             {{ formattedTime }}
           </span>
-          <template v-if="data.clips && data.clips.length > 0">
+          <!-- (👻❌) -->
+          <template v-if="data.clips && data.clips.length > 0 && !isGhost">
             •
             <span class="primary--text">
               {{
@@ -204,6 +214,9 @@
       </template>
       <slot name="action" />
     </v-list-item-action>
+
+    <!-- 👻👻👻 GHOST MODAL 👻👻👻 -->
+    <ghost-card v-if="ghostOpen" v-model="ghostOpen" :video="data" />
   </a>
 </template>
 
@@ -219,6 +232,7 @@ import {
     dayjs,
     localizedDayjs,
 } from "@/utils/time";
+import { mdiBroadcast } from "@mdi/js";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */
 
@@ -226,6 +240,7 @@ export default {
     name: "VideoCard",
     components: {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
+        GhostCard: () => import("./GhostCard.vue"),
         VideoCardMenu,
     },
     props: {
@@ -294,9 +309,18 @@ export default {
             now: Date.now(),
             updatecycle: null,
             hasWatched: false,
+            ghostIconMap: {
+                event: (this as any).icons.mdiCalendar,
+                "scheduled-yt-stream": (this as any).icons.mdiYoutube,
+                "external-stream": mdiBroadcast,
+            },
+            ghostOpen: false,
         };
     },
     computed: {
+        isGhost() {
+            return this.data.type === "ghost";
+        },
         title() {
             if (!this.data.title) return "";
             return decodeHTMLEntities(this.data.title);
@@ -354,6 +378,11 @@ export default {
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
             const useWebP = this.$store.state.settings.canUseWebP && !this.forceJPG;
+            if (this.data.thumbnail) {
+                const enc = btoa(this.data.thumbnail);
+                const n = enc.replace("+", "-").replace("/", "_").replace(/=+$/, "");
+                return `/statics/thumbnail/default/${n}.jpg`;
+            }
             const srcs = getVideoThumbnails(this.data.id, useWebP);
             if (this.horizontal) return srcs.medium;
             if (this.colSize > 2 && this.colSize <= 8) {
@@ -442,6 +471,9 @@ export default {
                 : this.$store.commit("playlist/addVideo", this.data);
         },
         goToVideo() {
+            if (this.isGhost) {
+                this.openGhost(); return;
+            }
             this.$emit("videoClicked", this.data);
             if (this.disableDefaultClick) return;
             // On mobile, clicking on watch links should not increment browser history
@@ -451,6 +483,9 @@ export default {
             } else {
                 this.$router.push({ path: this.watchLink });
             }
+        },
+        openGhost() {
+            this.ghostOpen = true;
         },
         goToChannel() {
             this.$emit("videoClicked", this.data);

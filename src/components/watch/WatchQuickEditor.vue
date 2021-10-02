@@ -20,7 +20,7 @@
       {{ successMessage }}
     </v-snackbar>
     <div class="d-flex justify-space-between flex-wrap align-top">
-      <v-col cols="auto">
+      <v-col v-if="video.type != 'ghost'" cols="auto">
         <!-- <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiPencil }}
@@ -149,7 +149,7 @@
         </v-autocomplete>
       </v-col>
       <v-divider vertical />
-      <v-col v-if="video.type === 'stream'" cols="auto">
+      <v-col v-if="video.type === 'stream' || video.type === 'ghost'" cols="auto">
         <!-- <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiPencil }}
@@ -173,20 +173,6 @@
           @click="loadTopics"
           @click:append-outer="saveTopic"
         />
-        <!-- <v-avatar rounded left size="40" v-if="channelChips && channelChips.length > 0">
-                    <v-icon size="25" color="grey darken-2">{{ mdiAt }}</v-icon>
-                </v-avatar>
-                <template v-for="mention in channelChips">
-                    <ChannelChip :channel="mention" :key="mention.id" :size="60" />
-                </template>
-                <a
-                    @click="showAllMentions = !showAllMentions"
-                    style="white-space: pre"
-                    class="text-subtitle-2"
-                    v-if="mentions.length > 3"
-                >
-                    [ {{ showAllMentions ? "-" : "+" }} {{ mentions.length - 3 }} ]
-                </a> -->
       </v-col>
     </div>
   </v-card>
@@ -203,12 +189,6 @@ export default {
     name: "WatchQuickEditor",
     components: {
         ChannelChip,
-    // ChannelInfo,
-    // ChannelSocials,
-    // ChannelImg,
-    // TruncatedText,
-    // VideoSongs,
-    // VideoDescription,
     },
     props: {
         video: {

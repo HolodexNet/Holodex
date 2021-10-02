@@ -269,4 +269,7 @@ export default {
     trackMultiviewLink(link) {
         return axiosInstance.get(`/multiview/record/${link}`);
     },
+    discordServerInfo(inviteLink) {
+        return axiosInstance.get(`https://discord.com/api/v8/invites/${inviteLink}`)
+    },
 };

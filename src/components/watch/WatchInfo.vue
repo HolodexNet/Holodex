@@ -15,27 +15,28 @@
       </router-link>
     </v-card-title>
     <v-card-subtitle>
-      <v-btn
-        id="video-edit-btn"
-        text
-        x-small
-        color="primary"
-        class="float-right"
-        :to="
-          $route.path.includes('edit')
-            ? `/watch/${video.id}`
-            : `/edit/video/${video.id}${
-              video.type !== 'stream' ? '/mentions' : '/'
-            }`
-        "
-      >
-        {{
-          $route.path.includes("edit")
-            ? $t("editor.exitMode")
-            : $t("editor.enterMode")
-        }}
-      </v-btn>
-
+      <slot name="rightTitleAction">
+        <v-btn
+          id="video-edit-btn"
+          text
+          x-small
+          color="primary"
+          class="float-right"
+          :to="
+            $route.path.includes('edit')
+              ? `/watch/${video.id}`
+              : `/edit/video/${video.id}${
+                video.type !== 'stream' ? '/mentions' : '/'
+              }`
+          "
+        >
+          {{
+            $route.path.includes("edit")
+              ? $t("editor.exitMode")
+              : $t("editor.enterMode")
+          }}
+        </v-btn>
+      </slot>
       {{ formattedTime }}
       <template v-if="video.status === 'live'">
         • {{ $t("component.videoCard.watching", [liveViewers]) }}
@@ -64,7 +65,7 @@
             <v-list-item-avatar size="80">
               <ChannelImg :channel="video.channel" size="80" />
             </v-list-item-avatar>
-            <ChannelInfo :channel="video.channel" class="uploader-data-list" />
+            <ChannelInfo :channel="video.channel" class="uploader-data-list" :no-subscriber-count="noSubCount" />
             <ChannelSocials :channel="video.channel" />
           </v-list-item>
         </v-list>
@@ -93,9 +94,11 @@
         </a>
       </v-col>
     </div>
-    <v-card-text class="text-body-2" @click="handleClick">
-      <truncated-text :html="processedMessage" lines="4" />
-    </v-card-text>
+    <slot>
+      <v-card-text class="text-body-2" @click="handleClick">
+        <truncated-text :html="processedMessage" lines="4" />
+      </v-card-text>
+    </slot>
   </v-card>
 </template>
 
@@ -124,8 +127,6 @@ export default {
         ChannelSocials,
         ChannelImg,
         TruncatedText,
-    // VideoSongs,
-    // VideoDescription,
     },
     props: {
         video: {
@@ -134,6 +135,10 @@ export default {
             default: null,
         },
         noChips: {
+            type: Boolean,
+            default: false,
+        },
+        noSubCount: {
             type: Boolean,
             default: false,
         },

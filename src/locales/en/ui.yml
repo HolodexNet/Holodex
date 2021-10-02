@@ -144,6 +144,13 @@ component:
       delete-playlist: Delete Playlist
       clear-playlist: Clear playlist
     save-error-not-logged-in: You need to be logged in to save playlists
+  ghostVideo:
+    discordCredit: 'Event data provided by {0} from:'
+    datasourceCredit: Event data fetched from {0} datasource.
+    botCredit: Event data provided via {0} datasource, created by {1}.
+    streamPageBtn: Stream Page
+    eventPageBtn: Event Page
+    scheduledEvent: Scheduled
 views:
   channel:
     video: Videos
