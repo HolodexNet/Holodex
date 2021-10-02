@@ -51,6 +51,8 @@ component:
     tlPresence: 過去半小時內有即時翻譯
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -142,6 +144,8 @@ component:
     streamPageBtn: 實況頁面
     eventPageBtn: 活動頁面
     scheduledEvent: 已排定
+    editorCredit: 本活動由 Holodex編輯者 {0} 建立
+    creditTitleText: '感謝：'
 views:
   channel:
     video: 影片
@@ -150,6 +154,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
