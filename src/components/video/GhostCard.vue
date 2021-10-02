@@ -6,8 +6,6 @@
     @input="$listeners.input"
   >
     <v-sheet style="position:relative;">
-      <!-- <v-card> -->
-      <!-- https://imgproxy.evilmartians.com/Aci-sOo-F7BXOZNypMu2xFE5UpFTArNR4rciK8U-mbo/rs:fit:289:173/dpr:2/wm:0.5:soea:0:0:0.2/wmu:aHR0cHM6Ly9pbWdwcm94eS5uZXQvd2F0ZXJtYXJrLnN2Zw/plain/https:%2F%2Fwww.nasa.gov%2Fsites%2Fdefault%2Ffiles%2Fthumbnails%2Fimage%2Fpia22228.jpg -->
       <v-img v-if="video.thumbnail" :src="'/statics/thumbnail/maxres/'+enc(video.thumbnail)+'.jpg'" style="" />
       <v-img v-else max-height="130px" :src="`https://www.banner.yt/${video.channel_id || video.channel.id}/mobile`" />
       <v-sheet style="height:12px;" />
@@ -42,7 +40,7 @@
         </template>
         <v-list-item two-line class="text-body-2 pl-7 mt-n4" style="text-align: left;">
           <v-list-item-content>
-            <span>Credits:</span>
+            <span>{{ $t('component.ghostVideo.creditTitleText') }}</span>
             <span v-if="video.credits.discord && discordCredits && discordCredits.data">
               {{ $t('component.ghostVideo.discordCredit', [video.credits.discord.user]) }}
               <strong><a :href="`https://discord.gg/${video.credits.discord.link}`" style="display:inline-block;">
@@ -61,12 +59,12 @@
                 <v-icon small>{{ icons.mdiOpenInNew }}</v-icon>{{ video.credits.bot.link }}</a>
               </strong>
             </span>
+            <span v-if="video.credits.editor">
+              {{ $t('component.ghostVideo.editorCredit', [video.credits.editor.name]) }}
+            </span>
           </v-list-item-content>
         </v-list-item>
-        <!-- Empty div used to erase description -->
       </watch-info>
-
-      <!-- </v-card> -->
     </v-sheet>
   </v-dialog>
 </template>

@@ -151,6 +151,8 @@ component:
     streamPageBtn: Stream Page
     eventPageBtn: Event Page
     scheduledEvent: Scheduled
+    editorCredit: Event setup by Holodex editor {0}.
+    creditTitleText: 'Credits:'
 views:
   channel:
     video: Videos

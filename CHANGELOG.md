@@ -1,11 +1,23 @@
 
 ### Unreleased
+### Unreleased: 2.21 Holodex [*???*]
+- Altered Music Trending to use a more time sensitive Hot ranking (@uetchy)
+- Added future scheduling capacity to Holodex. This allows non-Youtube events and streams to show up in Home and Favorites. They will not persist in archives.
+   - Not archiving will reduce moderation complexity, as these are user contributed items
+   - We are still reliant on a YouTube based video+channel structure. There are currently no plans & developer human resource to go beyond YouTube support.
+
+##### Patches & Bugfixes
+- Fixed resizing code for music artwork (@Shiaupau)
+- Fixed the popping for MusicBar when it's pinned (@SnowNeko9)
+- Fixed various issues with avatars not displaying on the site.
+
 
 ### 2.20 Holodex [*September 27th, 2021*]
 - Added Highlight Moments bar to watch page (@uetchy)
 - TLdex has option to show chat in local time (i.e. 4:23:15 PM) (@SnowNeko9)
 - Added bookmarklet in the About page (Add to bookmark bar to open Youtube videos in Holodex)
 - Added Thai language (@SnowNeko9)
+- Music bar now autohides (@SnowNeko9)
 
 ##### Patches & Bugfixes
 - Support for Retina display (@uetchy)
