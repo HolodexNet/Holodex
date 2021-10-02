@@ -81,9 +81,11 @@ component:
     older: Älter
   music:
     clearPlaylist: Leeren
+    trendingForOrg: Trends für {0}
   channelMusic:
     recentSongsHeader: Aktuelle Songs
     weeklyTopPlaysHeader: Top-Songs der Woche
+    trending: Trends
   songList:
     songTitle: Titel
     songCoveredBy: Coverversion von
