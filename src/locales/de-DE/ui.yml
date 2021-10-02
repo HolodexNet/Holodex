@@ -51,6 +51,8 @@ component:
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -142,6 +144,7 @@ component:
     streamPageBtn: Stream-Seite
     eventPageBtn: Eventseite
     scheduledEvent: Geplant
+    editorCredit: Event-Setup von Holodex-Editor/in {0}.
     creditTitleText: 'Credits:'
 views:
   channel:
@@ -151,6 +154,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
