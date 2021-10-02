@@ -81,17 +81,19 @@ component:
     older: 較舊
   music:
     clearPlaylist: 清除播放清單
+    trendingForOrg: '{0} 現正熱門'
   channelMusic:
     recentSongsHeader: 近期新曲
-    weeklyTopPlaysHeader: 本週熱門
+    weeklyTopPlaysHeader: 本週最多播放
+    trending: 熱門歌曲
   songList:
     songTitle: 曲名
     songCoveredBy: 翻唱者
     songDuration: 歌曲長度
     sangOnTime: 演唱時間
   orgMusic:
-    monthlyTopForOrg: '{0} 本月熱門歌曲'
-    weeklyTopForOrg: '{0} 本週熱門歌曲'
+    monthlyTopForOrg: '{0} 本月最多播放'
+    weeklyTopForOrg: '{0} 本週最多播放'
   installPrompt:
     title: 安裝 Holodex
     callToAction: 將 Holodex 安裝至手機以獲得最佳使用體驗！

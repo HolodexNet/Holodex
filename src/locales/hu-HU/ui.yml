@@ -81,9 +81,11 @@ component:
     older: Régebbiek
   music:
     clearPlaylist: Törlés
+    trendingForOrg: Népszerű {0}-tól/től
   channelMusic:
     recentSongsHeader: Legújabb dalok
     weeklyTopPlaysHeader: Heti legjátszottabbak
+    trending: Legnépszerűbb
   songList:
     songTitle: Cím
     songCoveredBy: Előadó

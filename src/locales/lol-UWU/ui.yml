@@ -81,9 +81,11 @@ component:
     older: Owdew
   music:
     clearPlaylist: Cweaw
+    trendingForOrg: Trends für {0}
   channelMusic:
     recentSongsHeader: Recent songs
     weeklyTopPlaysHeader: Weekwy top pways
+    trending: Trends
   songList:
     songTitle: Titwe
     songCoveredBy: Covewed by
