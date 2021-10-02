@@ -51,6 +51,8 @@ component:
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -138,6 +140,7 @@ component:
   ghostVideo:
     discordCredit: 'Maklumat acara ihsan {0} dari:'
     datasourceCredit: Maklumat acara berpunca daripada {0}.
+    botCredit: Maklumat acara berpunca daripada {0} ihsan {1}.
     streamPageBtn: Laman Siaran Langsung
     eventPageBtn: Laman Acara
     scheduledEvent: Telah dijadualkan
@@ -149,6 +152,7 @@ views:
     collabs: Siaran sama
     about: Perihal
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
