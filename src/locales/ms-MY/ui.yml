@@ -135,6 +135,12 @@ component:
       delete-playlist: Hapuskan Senarai Main
       clear-playlist: Kosongkan senarai main
     save-error-not-logged-in: Log masuk agar senarai main boleh disimpan
+  ghostVideo:
+    discordCredit: 'Maklumat acara ihsan {0} dari:'
+    datasourceCredit: Maklumat acara berpunca daripada {0}.
+    streamPageBtn: Laman Siaran Langsung
+    eventPageBtn: Laman Acara
+    scheduledEvent: Telah dijadualkan
 views:
   channel:
     video: Video
