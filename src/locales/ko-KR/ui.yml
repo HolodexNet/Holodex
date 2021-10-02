@@ -81,9 +81,11 @@ component:
     older: 오래된순
   music:
     clearPlaylist: 초기화
+    trendingForOrg: '{0} 인기 차트'
   channelMusic:
     recentSongsHeader: 최근 노래
     weeklyTopPlaysHeader: 주간 최고 조회수
+    trending: 인기 차트
   songList:
     songTitle: 제목
     songCoveredBy: 커버 가수
