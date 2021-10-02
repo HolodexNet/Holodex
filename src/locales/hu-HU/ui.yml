@@ -51,8 +51,6 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -145,7 +143,6 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
