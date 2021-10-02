@@ -51,6 +51,8 @@ component:
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -135,6 +137,13 @@ component:
       delete-playlist: Hapus Playlist
       clear-playlist: Bersihkan Playlist
     save-error-not-logged-in: Kamu harus masuk untuk menyimpan playlist
+  ghostVideo:
+    discordCredit: 'Data acara disediakan oleh {0} dari:'
+    datasourceCredit: Data acara diambil dari sumber data {0}.
+    botCredit: Data acara disediakan melalui sumber data {0}, dibuat oleh {1}.
+    streamPageBtn: Halaman Siaran
+    eventPageBtn: Halaman Acara
+    scheduledEvent: Terjadwal
 views:
   channel:
     video: Video
@@ -143,6 +152,7 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
