@@ -142,6 +142,7 @@ component:
     streamPageBtn: Stream-Seite
     eventPageBtn: Eventseite
     scheduledEvent: Geplant
+    creditTitleText: 'Credits:'
 views:
   channel:
     video: Videos
