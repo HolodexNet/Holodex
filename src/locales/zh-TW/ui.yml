@@ -144,6 +144,8 @@ component:
     streamPageBtn: 實況頁面
     eventPageBtn: 活動頁面
     scheduledEvent: 已排定
+    editorCredit: 本活動由 Holodex編輯者 {0} 建立
+    creditTitleText: '感謝：'
 views:
   channel:
     video: 影片
