@@ -14,10 +14,21 @@
           </v-icon>
           {{ editAutoLayout ? $t("views.multiview.done") : $t("views.multiview.editAutoLayout") }}
         </v-btn>
+        <v-btn
+          v-if="editAutoLayout"
+          color="orange"
+          class="ml-1"
+          @click="$store.commit('multiview/resetAutoLayout')"
+        >
+          <v-icon left>
+            {{ icons.mdiRefresh }}
+          </v-icon>
+          {{ $t("views.library.selectionReset") }}
+        </v-btn>
         <template v-for="(group, index) in desktopGroups">
           <v-radio-group
             :key="'preset-' + index"
-            :value="autoLayout[index]"
+            :value="autoLayout[index] || 'None'"
             column
             hide-details
             class="ma-0"
@@ -26,6 +37,21 @@
               {{ $t("component.channelInfo.videoCount", [index]) }}
             </v-card-subtitle>
             <v-row v-if="group" :key="'desktop-' + index">
+              <v-col v-if="editAutoLayout" cols="auto" class="pa-1">
+                <LayoutPreviewCard
+                  :preset="{ layout: '', content: {} }"
+                >
+                  <template #pre>
+                    <v-radio
+                      v-show="editAutoLayout"
+                      label="None"
+                      value="None"
+                      class="ma-0"
+                      @click="setAutoLayout(index, null)"
+                    />
+                  </template>
+                </LayoutPreviewCard>
+              </v-col>
               <template v-for="preset in group">
                 <v-col :key="preset.name" cols="auto" class="pa-1">
                   <LayoutPreviewCard
@@ -166,6 +192,8 @@ export default {
             this.$emit("selected", preset);
         },
         removePresetLayout(preset) {
+            const presetIdx = this.autolayout.findIndex((l) => l === preset.id);
+            if (presetIdx >= 0) this.setAutoLayout(presetIdx, null);
             this.$store.commit("multiview/removePresetLayout", preset.name);
         },
         presetInAuto(preset) {

@@ -175,7 +175,7 @@ const mutations = {
         });
     },
     setAutoLayout(state, { index, encodedLayout }) {
-        if (!encodedLayout) return;
+        // if (!encodedLayout) return;
         Vue.set(state.autoLayout, index, encodedLayout);
     },
     resetAutoLayout(state) {
