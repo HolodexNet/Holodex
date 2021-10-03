@@ -1,11 +1,13 @@
 <template>
   <v-container
     v-touch="{
-      right: () => {
+      right: (e) => {
+        if(e.offsetX < 50) return;
         tab = Math.max(tab - 1, 0);
         changeTab(false);
       },
-      left: () => {
+      left: (e) => {
+        if(e.offsetX > -50) return;
         tab = Math.min(tab + 1, 2);
         changeTab(false);
       },
