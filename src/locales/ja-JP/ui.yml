@@ -133,6 +133,9 @@ component:
       delete-playlist: プレイリストを削除
       clear-playlist: プレイリストを初期化
     save-error-not-logged-in: プレイリストを保存するにはログインが必要です。
+  ghostVideo:
+    editorCredit: Holodex エディタ {0} によるイベントセットアップ。
+    creditTitleText: 'クレジット:'
 views:
   channel:
     video: 動画
