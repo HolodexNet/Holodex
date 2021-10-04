@@ -51,6 +51,8 @@ component:
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -142,6 +144,8 @@ component:
     streamPageBtn: Laman Siaran Langsung
     eventPageBtn: Laman Acara
     scheduledEvent: Telah dijadualkan
+    editorCredit: Persiapan acara disediakan oleh penyunting Holodex {0}.
+    creditTitleText: 'Penghargaan:'
 views:
   channel:
     video: Video
@@ -150,6 +154,7 @@ views:
     collabs: Siaran sama
     about: Perihal
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
