@@ -51,6 +51,8 @@ component:
     tlPresence: Active twanswatow in wast 30 mins
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -142,6 +144,8 @@ component:
     streamPageBtn: Stweam page
     eventPageBtn: Event page
     scheduledEvent: Scheduwed
+    editorCredit: Event setup by howodex editow {0}.
+    creditTitleText: 'Cwedits:'
 views:
   channel:
     video: Bideos
@@ -150,6 +154,7 @@ views:
     collabs: Cowwabs
     about: About
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
