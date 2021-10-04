@@ -55,7 +55,7 @@
               @ready="ready"
               @playing="playing"
               @ended="ended"
-              v-on="!hasLiveChat && { currentTime: handleCurrentTime }"
+              v-on="video.type === 'stream' && video.status === 'past' && { currentTime: handleCurrentTime }"
             />
           </template>
         </WatchFrame>
@@ -279,7 +279,8 @@ export default {
         },
         hasLiveChat() {
             // live chat exits for live/upcoming streams
-            return (
+            // @ts-ignore
+            return window.ARCHIVE_CHAT_OVERRIDE || (
                 this.video.type === "stream"
                 && ["upcoming", "live"].includes(this.video.status)
             );

@@ -43,7 +43,13 @@
       class="embedded-chat"
       :style="{ height: ytChatHeight }"
     >
-      <iframe :src="liveChatUrl" frameborder="0" :style="scaledStyle" />
+      <iframe
+        ref="ytChat"
+        :src="liveChatUrl"
+        frameborder="0"
+        :style="scaledStyle"
+        @load="updateFrameTime()"
+      />
     </div>
   </v-sheet>
 </template>
@@ -107,9 +113,17 @@ export default {
         },
         liveChatUrl() {
             if (!this.video) return null;
-            return `https://www.youtube.com/live_chat?v=${this.video.id}&embed_domain=${
-                window.location.hostname
-            }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
+            const query = {
+                v: this.video.id,
+                embed_domain: window.location.hostname,
+                dark_theme: this.$vuetify.theme.dark ? "1" : "0",
+                ...this.video.status === "past" && { c: this.video.channel.id },
+            };
+            const q = new URLSearchParams(query).toString();
+            if (this.video.status === "past") {
+                return `/live_chat_replay?${q}`;
+            }
+            return `https://www.youtube.com/live_chat?${q}`;
         },
         scaledStyle() {
             // Scale chat by scale %
@@ -145,6 +159,9 @@ export default {
             // Lazy load socket before first v-show
             if (!this.firstTlConnect) this.firstTlConnect = true;
         },
+        currentTime() {
+            this.updateFrameTime();
+        },
     },
     mounted() {
         if (this.showTlChat) this.firstTlConnect = true;
@@ -157,6 +174,11 @@ export default {
         handleHistoryLength(length) {
             // in this case, bubble the event
             this.$emit("historyLength", length);
+        },
+        updateFrameTime(t = this.currentTime) {
+            if (this.video.status === "past") {
+                this.$refs.ytChat?.contentWindow.postMessage({ "yt-player-video-progress": t }, "*");
+            }
         },
     },
 };
