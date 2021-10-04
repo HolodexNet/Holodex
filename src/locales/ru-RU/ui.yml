@@ -80,9 +80,11 @@ component:
     older: Старее
   music:
     clearPlaylist: Очистить
+    trendingForOrg: Популярное от {0}
   channelMusic:
     recentSongsHeader: Новые песни
     weeklyTopPlaysHeader: Самые прослушиваемые за неделю
+    trending: Популярное
   songList:
     songTitle: Название
     songCoveredBy: Автор кавера
