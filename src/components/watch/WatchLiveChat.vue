@@ -121,7 +121,7 @@ export default {
             };
             const q = new URLSearchParams(query).toString();
             if (this.video.status === "past") {
-                return `/live_chat_replay?${q}`;
+                return `https://www.youtube.com/redirect_replay_chat?${q}`;
             }
             return `https://www.youtube.com/live_chat?${q}`;
         },
