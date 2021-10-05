@@ -20,14 +20,7 @@
       {{ errorMessage }}
     </v-snackbar>
     <div class="d-flex flex-column my-2">
-      <v-autocomplete
-        v-model="selectedChannel"
-        :search-input.sync="search"
-        :items="searchResults"
-        hide-no-data
-        clearable
-        label="Search Channels"
-      />
+      <channel-autocomplete v-model="selectedChannel" />
       <v-btn @click="addMention(selectedChannel.id)">
         Add
       </v-btn>
@@ -54,13 +47,15 @@
 <script>
 import { mdiAt } from "@mdi/js";
 import backendApi from "@/utils/backend-api";
-import { CHANNEL_TYPES } from "@/utils/consts";
-import debounce from "lodash-es/debounce";
+import ChannelAutocomplete from "@/components/channel/ChannelAutocomplete.vue";
 import ChannelList from "../channel/ChannelList.vue";
 
 export default {
     name: "VideoEditMentions",
-    components: { ChannelList },
+    components: {
+        ChannelList,
+        ChannelAutocomplete,
+    },
     props: {
         video: {
             type: Object,
@@ -77,32 +72,8 @@ export default {
             errorMessage: "",
             successMessage: "",
             mdiAt,
-
             selectedChannel: null,
-            search: "",
-            searchResults: [],
         };
-    },
-    watch: {
-        // eslint-disable-next-line func-names
-        search: debounce(function () {
-            if (!this.search) {
-                this.searchResults = [];
-                return;
-            }
-            backendApi
-                .searchChannel({
-                    type: CHANNEL_TYPES.VTUBER,
-                    queryText: this.search,
-                })
-                .then(({ data }) => {
-                    this.searchResults = data.map((d) => ({
-                        text: this.getChannelName(d),
-                        value: d,
-                        disabled: this.video.channel.id === d.id || this.mentions.find((m) => m.id === d.id),
-                    }));
-                });
-        }, 500),
     },
     created() {
         this.updateMentions();

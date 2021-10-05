@@ -270,6 +270,15 @@ export default {
         return axiosInstance.get(`/multiview/record/${link}`);
     },
     discordServerInfo(inviteLink) {
-        return axiosInstance.get(`https://discord.com/api/v8/invites/${inviteLink}`)
+        return axiosInstance.get(`https://discord.com/api/v8/invites/${inviteLink}`);
+    },
+    addGhostStream(body, jwt) {
+        return axiosInstance.post(
+            "videos/ghost",
+            body,
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
+        );
     },
 };

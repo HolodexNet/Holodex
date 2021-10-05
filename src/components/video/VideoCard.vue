@@ -304,7 +304,6 @@ export default {
     },
     data() {
         return {
-            data: this.source || this.video,
             forceJPG: true,
             now: Date.now(),
             updatecycle: null,
@@ -318,6 +317,9 @@ export default {
         };
     },
     computed: {
+        data() {
+            return this.source || this.video;
+        },
         isGhost() {
             return this.data.type === "ghost";
         },

@@ -64,10 +64,11 @@
 <script>
 import { dayjs } from "@/utils/time";
 import copyToClipboard from "@/mixins/copyToClipboard";
-import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 
 export default {
-    components: { WatchQuickEditor },
+    components: {
+        WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),  
+    },
     mixins: [copyToClipboard],
     props: {
         video: {

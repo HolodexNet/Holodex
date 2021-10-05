@@ -98,7 +98,7 @@ export default {
         },
     },
     async mounted() {
-        this.discordCredits = await backendApi.discordServerInfo(this.video.credits.discord.link);
+        if (this.video?.credits?.discord) { this.discordCredits = await backendApi.discordServerInfo(this.video.credits.discord.link); }
     },
     methods: {
         enc(url) {

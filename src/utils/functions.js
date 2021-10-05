@@ -12,7 +12,7 @@ export function resizeArtwork(artworkUrl, size = 400) {
 }
 
 export function resizeChannelPhoto(photoUrl, size) {
-    const deviceSize = size * window.devicePixelRatio;
+    const deviceSize = size/* * window.devicePixelRatio */;
     const split = photoUrl.split("=s");
     // try to hit cache by using a common size
     let adjSize = 48;
