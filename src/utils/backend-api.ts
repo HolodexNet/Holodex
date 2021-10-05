@@ -272,9 +272,9 @@ export default {
     discordServerInfo(inviteLink) {
         return axiosInstance.get(`https://discord.com/api/v8/invites/${inviteLink}`);
     },
-    addGhostStream(body, jwt) {
+    addGhostStream(body, jwt, token) {
         return axiosInstance.post(
-            "videos/ghost",
+            `videos/ghost${token ? `?token=${token}` : ""}`,
             body,
             {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},

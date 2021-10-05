@@ -288,15 +288,16 @@ export default {
                     certainty: this.certainty,
                     credits,
                 };
-                const jwt = this.$store.state.userdata.jwt || this.$route.query?.token;
-                backendApi.addGhostStream({
+                const body = {
                     channel_id: this.channel.id,
                     title: titlePayload,
                     liveTime: this.availableAt,
                     duration: +this.duration,
-                }, jwt).then(() => {
-                    this.success = true;
-                })
+                };
+                backendApi.addGhostStream(body, this.$store.state.userdata?.jwt, this.$route.query?.token)
+                    .then(() => {
+                        this.success = true;
+                    })
                     .catch((e) => {
                         this.error = true;
                         this.errorMessage = e;
