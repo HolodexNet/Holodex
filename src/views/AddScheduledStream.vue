@@ -1,5 +1,9 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form
+    ref="form"
+    v-model="valid"
+    lazy-validation
+  >
     <v-container>
       <v-row>
         <v-col cols="8">
@@ -13,7 +17,11 @@
             <br>
             Your session expires: {{ expiresIn }}. Please refresh if it is about to expire
           </v-alert>
-          <v-alert v-else-if="!isEditor" type="error" text>
+          <v-alert
+            v-else-if="!isEditor"
+            type="error"
+            text
+          >
             You are not an editor or token has expired, please login or generate a new token using our bot
           </v-alert>
           <v-card>
@@ -25,7 +33,10 @@
                 :rules="[requiredRule]"
                 hint="Use a different name when being publicly credited"
               />
-              <channel-autocomplete v-model="channel" label="Channel" />
+              <channel-autocomplete
+                v-model="channel"
+                label="Channel"
+              />
               <v-text-field
                 v-model="videoTitle"
                 label="Video Title"
@@ -100,9 +111,7 @@
                         v-on="on"
                       />
                     </template>
-                    <v-date-picker
-                      v-model="liveDate"
-                    />
+                    <v-date-picker v-model="liveDate" />
                   </v-menu>
                 </v-col>
                 <v-col>
@@ -136,14 +145,24 @@
           </v-card>
         </v-col>
         <v-col cols="4">
-          <video-card :video="videoObj" include-channel />
+          <video-card
+            :video="videoObj"
+            include-channel
+          />
         </v-col>
       </v-row>
     </v-container>
-    <v-snackbar v-model="error" color="error">
+    <v-snackbar
+      v-model="error"
+      color="error"
+    >
       {{ errorMessage }}
     </v-snackbar>
-    <v-snackbar v-model="success" timeout="2000" color="success">
+    <v-snackbar
+      v-model="success"
+      timeout="2000"
+      color="success"
+    >
       Successfully added Ghost Stream
     </v-snackbar>
   </v-form>
@@ -295,7 +314,7 @@ export default {
                     channel_id: this.channel.id,
                     title: titlePayload,
                     liveTime: this.availableAt,
-                    duration: +this.duration,
+                    duration: (+this.duration) * 60, // convert min to sec
                 };
                 backendApi.addGhostStream(body, this.$store.state.userdata?.jwt, this.$route.query?.token)
                     .then(() => {
@@ -312,5 +331,4 @@ export default {
 </script>
 
 <style>
-
 </style>
