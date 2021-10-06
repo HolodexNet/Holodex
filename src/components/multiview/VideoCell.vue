@@ -182,12 +182,22 @@ export default {
             if (!this.ytPlayer) return;
             this.ytPlayer.setPlaybackRate(val);
         },
-        onPlayPause(paused = false) {
+        updatePausedState(paused = false) {
             if (this.editMode === paused) return;
             this.editMode = paused;
             if (this.firstPlay && !paused) {
                 this.muteOthers(this.item.i);
                 this.firstPlay = false;
+            }
+        },
+        onPlayPause(paused = false) {
+            if (this.video.status === "past") {
+                setTimeout(() => {
+                    const recheck = this.ytPlayer.getPlayerState() === 2;
+                    this.updatePausedState(recheck);
+                }, 200);
+            } else {
+                this.updatePausedState(paused);
             }
         },
         onReady(player) {
