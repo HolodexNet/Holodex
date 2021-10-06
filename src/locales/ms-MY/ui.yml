@@ -143,8 +143,8 @@ component:
     botCredit: Maklumat acara berpunca daripada {0} ihsan {1}.
     streamPageBtn: Laman Siaran Langsung
     eventPageBtn: Laman Acara
-    scheduledEvent: Telah dijadualkan
-    editorCredit: Persiapan acara disediakan oleh penyunting Holodex {0}.
+    scheduledEvent: Dalam rancangan
+    editorCredit: Laman acara disediakan oleh penyunting Holodex {0}.
     creditTitleText: 'Penghargaan:'
 views:
   channel:
