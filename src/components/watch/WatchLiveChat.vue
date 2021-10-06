@@ -112,7 +112,7 @@ export default {
             return this.value.showYtChat;
         },
         liveChatUrl() {
-            if (!this.video) return null;
+            if (!this.video || this.video.type !== "stream") return null;
             const query = {
                 v: this.video.id,
                 embed_domain: window.location.hostname,

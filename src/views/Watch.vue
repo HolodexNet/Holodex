@@ -182,7 +182,7 @@
           class="py-0 pr-0 pl-0 pl-md-3"
         >
           <WatchLiveChat
-            v-if="showChatWindow"
+            v-if="!isMugen && showChatWindow"
             v-model="chatStatus"
             :video="video"
             :fixed-right="isMobile && landscape"
