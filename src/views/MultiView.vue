@@ -374,10 +374,6 @@ export default {
             this.overwriteDialog = true;
         },
         handleToolbarClick(video) {
-            this.$gtag.event("video-added", {
-                event_category: "multiview",
-                event_label: video.type || "untyped",
-            });
             const hasEmptyCell = this.findEmptyCell();
             // more cells needed, increment to next preset with space
             if (!hasEmptyCell) {
@@ -413,9 +409,6 @@ export default {
         },
         handlePresetClicked(preset) {
             this.showPresetSelector = false;
-            this.$gtag.event("preset-clicked", {
-                event_category: "multiview",
-            });
             this.setMultiview({
                 ...JSON.parse(JSON.stringify(preset)),
                 mergeContent: true,
