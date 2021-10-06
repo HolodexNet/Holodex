@@ -236,6 +236,22 @@ export default {
             }
             return dayjs().toString();
         },
+        credits() {
+            if (!this.isEditor && !this.token) return null;
+            return this.isEditor
+                ? {
+                    editor: {
+                        name: this.creditName,
+                        user: this.$store.state.userdata.user.id,
+                    },
+                } : {
+                    discord: {
+                        name: this.token.name,
+                        link: this.token.link,
+                        user: this.token.user,
+                    },
+                };
+        },
         videoObj() {
             return {
                 title: this.videoTitle || "Example Title",
@@ -250,7 +266,7 @@ export default {
                 status: "upcoming",
                 start_scheduled: this.availableAt,
                 available_at: this.availableAt,
-                credits: {
+                credits: this.credits || {
                     discord: {
                         user: "Discord User",
                         link: "jctkgHBt4b",
@@ -266,19 +282,6 @@ export default {
     methods: {
         onSubmit() {
             if (this.$refs.form.validate() && (this.isEditor || (this.token && !this.expired))) {
-                const credits = this.isEditor
-                    ? {
-                        editor: {
-                            name: this.creditName,
-                            user: this.$store.state.userdata.user.id,
-                        },
-                    } : {
-                        discord: {
-                            name: this.token.name,
-                            link: this.token.link,
-                            user: this.token.user,
-                        },
-                    };
                 const titlePayload = {
                     name: this.videoTitle,
                     ...this.videoTitleJP && { jp_name: this.videoTitleJP },
@@ -286,7 +289,7 @@ export default {
                     thumbnail: this.thumbnail,
                     ghostType: this.ghostType,
                     certainty: this.certainty,
-                    credits,
+                    credits: this.credits,
                 };
                 const body = {
                     channel_id: this.channel.id,

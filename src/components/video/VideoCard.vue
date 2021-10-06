@@ -1,10 +1,11 @@
 <template>
   <a
-    class="video-card no-decoration d-flex flex-column"
+    class="video-card no-decoration d-flex"
     :class="{
       'video-card-fluid': fluid,
       'video-card-active': active,
       'video-card-horizontal': horizontal,
+      'flex-column': !horizontal,
     }"
     :target="redirectMode ? '_blank' : ''"
     :href="!redirectMode ? watchLink : `https://youtu.be/${data.id}`"
