@@ -137,6 +137,8 @@ component:
     save-error-not-logged-in: Oynatma listelerini kaydetmek için oturum açmanız gerekir
   placeholderVideo:
     streamPageBtn: Yayın Sayfası
+    eventPageBtn: Etkinlik Sayfası
+    scheduledEvent: Programlı
 views:
   channel:
     video: Videolar
