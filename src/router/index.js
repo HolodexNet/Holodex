@@ -22,7 +22,7 @@ const OrgMusic = () => import("../views/OrgMusic.vue");
 // const MugenClips = () => import("../views/MugenClips.vue");
 const MultiView = () => import("../views/MultiView.vue");
 const Playlists = () => import("../views/Playlists.vue");
-const AddScheduledStream = () => import("../views/AddScheduledStream.vue");
+const AddPlaceholderStream = () => import("../views/AddPlaceholderStream.vue");
 
 Vue.use(VueRouter);
 
@@ -112,9 +112,9 @@ const routes = [
         component: EditVideo,
     },
     {
-        name: "add_scheduled",
-        path: "/addScheduledStream",
-        component: AddScheduledStream,
+        name: "add_placeholder",
+        path: "/add_placeholder",
+        component: AddPlaceholderStream,
     },
     {
         name: "mugen-clips",

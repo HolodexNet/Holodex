@@ -135,7 +135,7 @@ component:
       delete-playlist: Hapuskan Senarai Main
       clear-playlist: Kosongkan senarai main
     save-error-not-logged-in: Log masuk agar senarai main boleh disimpan
-  ghostVideo:
+  placeholderVideo:
     discordCredit: 'Maklumat acara ihsan {0} dari:'
     datasourceCredit: Maklumat acara berpunca daripada {0}.
     botCredit: Maklumat acara berpunca daripada {0} ihsan {1}.

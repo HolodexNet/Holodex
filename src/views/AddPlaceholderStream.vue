@@ -67,8 +67,8 @@
               <v-row>
                 <v-col>
                   <v-select
-                    v-model="ghostType"
-                    :items="GHOST_TYPES"
+                    v-model="placeholderType"
+                    :items="PLACEHOLDER_TYPES"
                     label="Event Type"
                     required
                     :rules="[requiredRule]"
@@ -163,7 +163,7 @@
       timeout="2000"
       color="success"
     >
-      Successfully added Ghost Stream
+      Successfully added Placeholder Stream
     </v-snackbar>
   </v-form>
 </template>
@@ -189,13 +189,13 @@ export default {
             creditName: this.$store.state.userdata?.user?.username,
             sourceUrl: "",
             thumbnail: "",
-            ghostType: null,
+            placeholderType: null,
             certainty: "",
             liveDate: dayjs().format("YYYY-MM-DD"),
             liveTime: "",
             timezone: "JST",
             duration: 60,
-            GHOST_TYPES: [
+            PLACEHOLDER_TYPES: [
                 {
                     text: "Scheduled YT Stream",
                     value: "scheduled-yt-stream",
@@ -274,14 +274,14 @@ export default {
         videoObj() {
             return {
                 title: this.videoTitle || "Example Title",
-                ghostType: this.ghostType || "scheduled-yt-stream",
+                placeholderType: this.placeholderType || "scheduled-yt-stream",
                 channel: this.channel || {
                     id: "ExampleIdThatDoesntExist",
                     name: "Example Name",
                     name_jp: "Example JP Name",
                 },
                 thumbnail: this.thumbnail || "",
-                type: "ghost",
+                type: "placeholder",
                 status: "upcoming",
                 start_scheduled: this.availableAt,
                 available_at: this.availableAt,
@@ -306,7 +306,7 @@ export default {
                     ...this.videoTitleJP && { jp_name: this.videoTitleJP },
                     link: this.sourceUrl,
                     thumbnail: this.thumbnail,
-                    ghostType: this.ghostType,
+                    placeholderType: this.placeholderType,
                     certainty: this.certainty,
                     credits: this.credits,
                 };
@@ -316,7 +316,7 @@ export default {
                     liveTime: this.availableAt,
                     duration: (+this.duration) * 60, // convert min to sec
                 };
-                backendApi.addGhostStream(body, this.$store.state.userdata?.jwt, this.$route.query?.token)
+                backendApi.addPlaceholderStream(body, this.$store.state.userdata?.jwt, this.$route.query?.token)
                     .then(() => {
                         this.success = true;
                     })

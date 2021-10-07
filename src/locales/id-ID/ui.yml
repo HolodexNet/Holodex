@@ -135,7 +135,7 @@ component:
       delete-playlist: Hapus Playlist
       clear-playlist: Bersihkan Playlist
     save-error-not-logged-in: Kamu harus masuk untuk menyimpan playlist
-  ghostVideo:
+  placeholderVideo:
     discordCredit: 'Data acara disediakan oleh {0} dari:'
     datasourceCredit: Data acara diambil dari sumber data {0}.
     botCredit: Data acara disediakan melalui sumber data {0}, dibuat oleh {1}.

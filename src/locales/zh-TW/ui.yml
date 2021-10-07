@@ -137,7 +137,7 @@ component:
       delete-playlist: 刪除播放清單
       clear-playlist: 清空播放清單
     save-error-not-logged-in: 您需要登入後才能儲存播放清單
-  ghostVideo:
+  placeholderVideo:
     discordCredit: '活動資料由 {0} 提供，來源伺服器：'
     datasourceCredit: 活動資料擷取自 {0} 個不同來源
     botCredit: 活動資料由 {0} 個來源所提供，並由 {1} 創建

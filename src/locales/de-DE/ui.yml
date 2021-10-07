@@ -137,7 +137,7 @@ component:
       delete-playlist: Playlist löschen
       clear-playlist: Playlist leeren
     save-error-not-logged-in: Du musst eingeloggt sein, um Playlisten zu speichern
-  ghostVideo:
+  placeholderVideo:
     discordCredit: 'Eventdaten zur Verfügung gestellt von {0} von:'
     datasourceCredit: Eventdaten werden von {0} Datenquelle abgerufen.
     botCredit: Eventdaten über {0} Datenquelle zur Verfügung gestellt, erstellt von {1}.

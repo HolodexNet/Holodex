@@ -13,7 +13,7 @@
     draggable="true"
     style="position: relative"
     @click.exact.prevent="
-      (e) => (isGhost? openGhost(): (!redirectMode ? goToVideo() : goToYoutube()))
+      (e) => (isPlaceholder? openPlaceholder(): (!redirectMode ? goToVideo() : goToYoutube()))
     "
     @dragstart="drag"
   >
@@ -43,7 +43,7 @@
 
           <!-- Check box for saved video (👻❌) -->
           <v-icon
-            v-if="!isGhost"
+            v-if="!isPlaceholder"
             :color="hasSaved ? 'primary' : 'white'"
             class="video-card-action rounded-tr-sm"
             :class="{ 'hover-show': !hasSaved && !isMobile }"
@@ -54,7 +54,7 @@
         </div>
 
         <!-- Video duration/music indicator (👻❌) -->
-        <div v-if="!isGhost" class="d-flex flex-column align-end">
+        <div v-if="!isPlaceholder" class="d-flex flex-column align-end">
           <!-- Show music icon if songs exist -->
           <div v-if="data.songcount" class="video-duration">
             <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
@@ -82,7 +82,7 @@
           <v-icon
             class="video-duration rounded-sm "
           >
-            {{ ghostIconMap[data.ghostType] }}
+            {{ placeholderIconMap[data.placeholderType] }}
           </v-icon>
         </div>
       </div>
@@ -150,7 +150,7 @@
             {{ formattedTime }}
           </span>
           <!-- (👻❌) -->
-          <template v-if="data.clips && data.clips.length > 0 && !isGhost">
+          <template v-if="data.clips && data.clips.length > 0 && !isPlaceholder">
             •
             <span class="primary--text">
               {{
@@ -216,8 +216,8 @@
       <slot name="action" />
     </v-list-item-action>
 
-    <!-- 👻👻👻 GHOST MODAL 👻👻👻 -->
-    <ghost-card v-if="ghostOpen" v-model="ghostOpen" :video="data" />
+    <!-- 👻👻👻 Placeholder MODAL 👻👻👻 -->
+    <placeholder-card v-if="placeholderOpen" v-model="placeholderOpen" :video="data" />
   </a>
 </template>
 
@@ -241,7 +241,7 @@ export default {
     name: "VideoCard",
     components: {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
-        GhostCard: () => import("./GhostCard.vue"),
+        PlaceholderCard: () => import("./PlaceholderCard.vue"),
         VideoCardMenu,
     },
     props: {
@@ -309,20 +309,20 @@ export default {
             now: Date.now(),
             updatecycle: null,
             hasWatched: false,
-            ghostIconMap: {
+            placeholderIconMap: {
                 event: (this as any).icons.mdiCalendar,
                 "scheduled-yt-stream": (this as any).icons.mdiYoutube,
                 "external-stream": mdiBroadcast,
             },
-            ghostOpen: false,
+            placeholderOpen: false,
         };
     },
     computed: {
         data() {
             return this.source || this.video;
         },
-        isGhost() {
-            return this.data.type === "ghost";
+        isPlaceholder() {
+            return this.data.type === "placeholder";
         },
         title() {
             if (!this.data.title) return "";
@@ -474,8 +474,8 @@ export default {
                 : this.$store.commit("playlist/addVideo", this.data);
         },
         goToVideo() {
-            if (this.isGhost) {
-                this.openGhost(); return;
+            if (this.isPlaceholder) {
+                this.openPlaceholder(); return;
             }
             this.$emit("videoClicked", this.data);
             if (this.disableDefaultClick) return;
@@ -487,8 +487,8 @@ export default {
                 this.$router.push({ path: this.watchLink });
             }
         },
-        openGhost() {
-            this.ghostOpen = true;
+        openPlaceholder() {
+            this.placeholderOpen = true;
         },
         goToChannel() {
             this.$emit("videoClicked", this.data);
