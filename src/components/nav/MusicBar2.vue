@@ -162,6 +162,9 @@
               <v-btn icon large @click="togglePinNav">
                 <v-icon>{{ icons.mdiPinOutline }}</v-icon>
               </v-btn>
+              <v-btn icon large @click="hideMusicBar">
+                <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+              </v-btn>
             </div>
           </div>
           <transition :name="titleTransition" mode="out-in">
@@ -240,6 +243,13 @@
             <v-btn
               icon
               large
+              @click="hideMusicBar"
+            >
+              <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+            </v-btn>
+            <v-btn
+              icon
+              large
               :color="pinNav ? 'secondary lighten-2' : ''"
               @click="togglePinNav"
             >
@@ -275,6 +285,18 @@
         />
       </portal>
     </v-bottom-sheet>
+
+    <!-- Floating button to open music bar when collapsed -->
+    <v-btn
+      v-if="!showNavbar"
+      :class="isMobile ? 'open-mb-mobile-controls-btn' : 'open-mb-controls-btn'"
+      tile
+      small
+      color="secondary"
+      @click="showMusicBar"
+    >
+      <v-icon>{{ icons.mdiChevronUp }}</v-icon>
+    </v-btn>
   </div>
 </template>
 
@@ -297,6 +319,8 @@ import {
     mdiRepeatOnce,
     mdiMicrophoneVariant,
     mdiPlaylistRemove,
+    mdiChevronDown,
+    mdiChevronUp,
 } from "@mdi/js";
 
 import SongFrame from "../media/SongFrame.vue";
@@ -334,6 +358,8 @@ export default {
             mdiMicrophoneVariant,
             mdiSkipPrevious,
             mdiPlaylistRemove,
+            mdiChevronDown,
+            mdiChevronUp,
 
             songlength: 0,
 
@@ -558,13 +584,23 @@ export default {
         mouseOver() {
             if (!this.pinNav) {
                 this.timeCounter = 5;
-                this.showNavbar = true;
+                // this.showNavbar = true;
                 this.counterEnable = false;
             }
         },
         mouseOut() {
             if (!this.pinNav) {
                 this.counterEnable = true;
+            }
+        },
+        hideMusicBar() {
+            if (!this.pinNav) {
+                this.showNavbar = false;
+            }
+        },
+        showMusicBar() {
+            if (!this.pinNav) {
+                this.showNavbar = true;
             }
         },
         songProgress(time) {
@@ -723,7 +759,7 @@ export default {
                     return;
                 }
                 if (Math.abs(currentScrollPosition - this.lastScrollPosition) > 15) {
-                    this.showNavbar = currentScrollPosition > this.lastScrollPosition;
+                    // this.showNavbar = currentScrollPosition > this.lastScrollPosition;
                     if (this.showNavbar) {
                         this.timeCounter = 5;
                         this.counterEnable = true;
@@ -783,6 +819,22 @@ export default {
 
 .invisible .v-progress-circular__underlay {
   stroke: transparent;
+}
+
+.open-mb-controls-btn {
+    position: fixed;
+    bottom: 15px;
+    right: 0;
+    z-index: 10;
+    opacity: 0.5;
+}
+
+.open-mb-mobile-controls-btn {
+    position: fixed;
+    bottom: 50px;
+    right: 0;
+    z-index: 10;
+    opacity: 0.5;
 }
 
 .music-progress {
