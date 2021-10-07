@@ -51,8 +51,6 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -137,15 +135,6 @@ component:
       delete-playlist: Lejátszási lista törlése
       clear-playlist: Lejátszási lista kiürítése
     save-error-not-logged-in: A lejátszási lista mentéséhez be kell lépned a fiókodba
-  ghostVideo:
-    discordCredit: 'Esemény adat {0} által tőlük:'
-    datasourceCredit: Esemény adat elhozva {0} adatforrásból.
-    botCredit: Esemény adat {0} adatforrásból biztosítva, {1} által készítve.
-    streamPageBtn: Stream oldal
-    eventPageBtn: Esemény oldal
-    scheduledEvent: Beütemezve
-    editorCredit: Holodex szerkesztő által állított esemény {0}.
-    creditTitleText: 'Közreműködők:'
 views:
   channel:
     video: Videók
@@ -154,7 +143,6 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
