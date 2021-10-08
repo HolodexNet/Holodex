@@ -117,7 +117,12 @@
                 {{ icons.ytChat }}
               </v-icon>
             </v-btn>
-            <v-btn icon lg @click="toggleFullScreen">
+            <v-btn
+              v-if="!isIOS"
+              icon
+              lg
+              @click="toggleFullScreen"
+            >
               <v-icon>{{ icons.mdiFullscreen }}</v-icon>
             </v-btn>
             <v-tooltip v-if="!isMobile" bottom>
@@ -296,7 +301,10 @@ export default {
             return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
         },
         hasLiveChat() {
-            return this.video.type === "stream";
+            return this.video.type === "stream" && (
+                ["upcoming", "live"].includes(this.video.status)
+                || (this.video.status === "past" && !this.isIOS)
+            );
         },
         hasLiveTL() {
             return this.video.type === "stream";
@@ -344,6 +352,15 @@ export default {
         hasExtension() {
             // @ts-ignore
             return !!window.HOLODEX_PLUS_INSTALLED;
+        },
+        isIOS() {
+            return (
+                ["iPad Simulator", "iPhone Simulator", "iPod Simulator", "iPad", "iPhone", "iPod"].includes(
+                    navigator.platform,
+                )
+                // iPad on iOS 13 detection
+                || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+            );
         },
     },
     watch: {
