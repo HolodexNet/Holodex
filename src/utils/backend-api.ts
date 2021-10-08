@@ -127,10 +127,10 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    favoritesLive(jwt) {
+    favoritesLive({ includePlaceholder = false }, jwt) {
     // const q = querystring.stringify(query);
         return axiosInstance
-            .get("/users/live", {
+            .get(`/users/live?includePlaceholder=${includePlaceholder}`, {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             })
             .then((res) => res.data
