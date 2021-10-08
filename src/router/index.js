@@ -22,6 +22,7 @@ const OrgMusic = () => import("../views/OrgMusic.vue");
 // const MugenClips = () => import("../views/MugenClips.vue");
 const MultiView = () => import("../views/MultiView.vue");
 const Playlists = () => import("../views/Playlists.vue");
+const AddPlaceholderStream = () => import("../views/AddPlaceholderStream.vue");
 
 Vue.use(VueRouter);
 
@@ -109,6 +110,11 @@ const routes = [
         name: "edit_video",
         path: "/edit/video/:id/:tab?",
         component: EditVideo,
+    },
+    {
+        name: "add_placeholder",
+        path: "/add_placeholder",
+        component: AddPlaceholderStream,
     },
     {
         name: "mugen-clips",

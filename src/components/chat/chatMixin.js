@@ -45,7 +45,7 @@ export default {
             return this.$store.getters["settings/liveTlBlockedNames"];
         },
         startTimeMillis() {
-            return Number(dayjs(this.video.start_actual || this.video.start_scheduled));
+            return Number(dayjs(this.video.available_at));
         },
     },
     methods: {

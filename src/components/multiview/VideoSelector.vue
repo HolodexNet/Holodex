@@ -200,7 +200,7 @@ export default {
                 forOrg: this.isRealOrg && this.selectedOrg.name,
                 hideIgnoredTopics: true,
             };
-            return this.live.filter((l) => this.filterVideos(l, filterConfig));
+            return this.live.filter((l) => this.filterVideos(l, filterConfig) && l.type !== "placeholder");
         },
         topFilteredLive() {
             // Filter out lives for top bar

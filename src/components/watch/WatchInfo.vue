@@ -1,6 +1,9 @@
 <template>
   <v-card class="watch-card rounded-0">
-    <v-card-title class="pt-2" style="font-size: 1.125rem; font-weight: 400">
+    <v-card-title
+      class="pt-2"
+      style="font-size: 1.125rem; font-weight: 400"
+    >
       <span v-if="!$route.path.includes('edit')">
         {{ video.title }}
       </span>
@@ -52,8 +55,14 @@
         class="mx-1"
         style="text-transform: capitalize"
       >
-        • <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
-        {{ video.topic_id }}
+        • <a
+          href="/search"
+          style="text-decoration: none"
+          @click.prevent="goToSearchPage()"
+        >
+          <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
+          {{ video.topic_id }}
+        </a>
       </span>
       <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
     </v-card-subtitle>
@@ -63,9 +72,16 @@
         <v-list>
           <v-list-item>
             <v-list-item-avatar size="80">
-              <ChannelImg :channel="video.channel" size="80" />
+              <ChannelImg
+                :channel="video.channel"
+                size="80"
+              />
             </v-list-item-avatar>
-            <ChannelInfo :channel="video.channel" class="uploader-data-list" :no-subscriber-count="noSubCount" />
+            <ChannelInfo
+              :channel="video.channel"
+              class="uploader-data-list"
+              :no-subscriber-count="noSubCount"
+            />
             <ChannelSocials :channel="video.channel" />
           </v-list-item>
         </v-list>
@@ -77,12 +93,19 @@
           left
           size="40"
         >
-          <v-icon size="25" color="grey darken-2">
+          <v-icon
+            size="25"
+            color="grey darken-2"
+          >
             {{ mdiAt }}
           </v-icon>
         </v-avatar>
         <template v-for="mention in channelChips">
-          <ChannelChip :key="mention.id" :channel="mention" :size="60" />
+          <ChannelChip
+            :key="mention.id"
+            :channel="mention"
+            :size="60"
+          />
         </template>
         <a
           v-if="mentions.length > 3"
@@ -95,8 +118,14 @@
       </v-col>
     </div>
     <slot>
-      <v-card-text class="text-body-2" @click="handleClick">
-        <truncated-text :html="processedMessage" lines="4" />
+      <v-card-text
+        class="text-body-2"
+        @click="handleClick"
+      >
+        <truncated-text
+          :html="processedMessage"
+          lines="4"
+        />
       </v-card-text>
     </slot>
   </v-card>
@@ -248,6 +277,16 @@ export default {
                 this.$emit("timeJump", e.target.getAttribute("data-time"));
                 e.preventDefault();
             }
+        },
+        goToSearchPage() {
+            const topic = this.video.topic_id;
+            const capitalizedTopic = topic[0].toUpperCase() + topic.slice(1);
+            const { org } = this.video.channel;
+            let path = `/search?q=type,value,text%0Atopic,${topic},${capitalizedTopic}`;
+            if (org) {
+                path += `%0Aorg,${org},${org}`;
+            }
+            this.$router.push({ path });
         },
     },
 };

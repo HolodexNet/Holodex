@@ -20,13 +20,7 @@
       {{ successMessage }}
     </v-snackbar>
     <div class="d-flex justify-space-between flex-wrap align-top">
-      <v-col v-if="video.type != 'ghost'" cols="auto">
-        <!-- <v-avatar rounded left size="40">
-          <v-icon size="25" color="grey darken-2">
-            {{ icons.mdiPencil }}
-          </v-icon>
-        </v-avatar> -->
-
+      <v-col v-if="video.type !== 'placeholder'" cols="auto">
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <v-avatar
@@ -149,7 +143,7 @@
         </v-autocomplete>
       </v-col>
       <v-divider vertical />
-      <v-col v-if="video.type === 'stream' || video.type === 'ghost'" cols="auto">
+      <v-col v-if="video.type === 'stream' || video.type === 'placeholder'" cols="auto">
         <!-- <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiPencil }}

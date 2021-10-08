@@ -12,55 +12,55 @@
       <watch-info :video="video" no-sub-count>
         <template slot="rightTitleAction">
           <v-btn
-            v-if="video.ghostType === 'scheduled-yt-stream'"
+            v-if="video.placeholderType === 'scheduled-yt-stream'"
             large
             color="primary"
-            class="float-right ghost-punchout"
+            class="float-right placeholder-punchout"
             :href="video.link"
             target="_blank"
           >
             <v-icon left>
               {{ icons.mdiYoutube }}
             </v-icon>
-            {{ $t('component.ghostVideo.scheduledEvent') }}
+            {{ $t('component.placeholderVideo.scheduledEvent') }}
           </v-btn>
           <v-btn
             v-else
             large
             color="primary"
-            class="float-right ghost-punchout"
+            class="float-right placeholder-punchout"
             target="_blank"
             :href="video.link"
           >
             <v-icon left>
               {{ icons.mdiOpenInNew }}
             </v-icon>
-            {{ video.ghostType === 'external-stream' ? $t('component.ghostVideo.streamPageBtn') : $t('component.ghostVideo.eventPageBtn') }}
+            {{ video.placeholderType === 'external-stream' ? $t('component.placeholderVideo.streamPageBtn') : $t('component.placeholderVideo.eventPageBtn') }}
           </v-btn>
         </template>
         <v-list-item two-line class="text-body-2 pl-7 mt-n4" style="text-align: left;">
           <v-list-item-content>
-            <span>{{ $t('component.ghostVideo.creditTitleText') }}</span>
+            <span>{{ $t('component.placeholderVideo.creditTitleText') }}</span>
             <span v-if="video.credits.discord && discordCredits && discordCredits.data">
-              {{ $t('component.ghostVideo.discordCredit', [video.credits.discord.user]) }}
+              {{ $t('component.placeholderVideo.discordCredit', [video.credits.discord.user]) }}
               <strong><a :href="`https://discord.gg/${video.credits.discord.link}`" style="display:inline-block;">
                 <v-icon small color=""> {{ icons.mdiDiscord }}</v-icon>{{ discordCredits.data.guild.name }}</a>
               </strong>
             </span>
             <span v-if="video.credits.datasource">
-              {{ $t('component.ghostVideo.datasourceCredit', [video.credits.datasource.name]) }}
+              {{ $t('component.placeholderVideo.datasourceCredit', [video.credits.datasource.name]) }}
               <strong><a :href="video.credits.datasource.link">
                 <v-icon small>{{ icons.mdiOpenInNew }}</v-icon>{{ video.credits.datasource.link }}</a>
               </strong>
             </span>
             <span v-if="video.credits.bot">
-              {{ $t('component.ghostVideo.botCredit', [video.credits.bot.name, video.credits.bot.user]) }}
+              {{ $t('component.placeholderVideo.botCredit', [video.credits.bot.name, video.credits.bot.user]) }}
               <strong><a :href="video.credits.bot.link">
                 <v-icon small>{{ icons.mdiOpenInNew }}</v-icon>{{ video.credits.bot.link }}</a>
               </strong>
             </span>
             <span v-if="video.credits.editor">
-              {{ $t('component.ghostVideo.editorCredit', [video.credits.editor.name]) }}
+              {{ $t('component.placeholderVideo.editorCredit', [video.credits.editor.name]) }}
             </span>
           </v-list-item-content>
         </v-list-item>
@@ -98,7 +98,7 @@ export default {
         },
     },
     async mounted() {
-        this.discordCredits = await backendApi.discordServerInfo(this.video.credits.discord.link);
+        if (this.video?.credits?.discord) { this.discordCredits = await backendApi.discordServerInfo(this.video.credits.discord.link); }
     },
     methods: {
         enc(url) {
@@ -113,7 +113,7 @@ export default {
 </script>
 
 <style>
-.ghost-punchout {
+.placeholder-punchout {
     position: absolute;
     right: 20px;
     margin-top: 15px;

@@ -1,6 +1,6 @@
 <template>
   <v-list v-if="video" dense>
-    <template v-if="video.type != 'ghost'">
+    <template v-if="video.type !== 'placeholder'">
       <v-list-item target="_blank" :href="`https://youtu.be/${video.id}`" @click.stop>
         <v-icon left>
           {{ icons.mdiYoutube }}
@@ -37,7 +37,7 @@
       </v-list-item>
     </template>
     <template v-else>
-      <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGhostGoogleCalendar">
+      <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar">
         <v-icon left>
           {{ icons.mdiCalendar }}
         </v-icon>
@@ -64,10 +64,11 @@
 <script>
 import { dayjs } from "@/utils/time";
 import copyToClipboard from "@/mixins/copyToClipboard";
-import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 
 export default {
-    components: { WatchQuickEditor },
+    components: {
+        WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
+    },
     mixins: [copyToClipboard],
     props: {
         video: {

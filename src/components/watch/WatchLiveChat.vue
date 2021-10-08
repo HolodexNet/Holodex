@@ -8,7 +8,14 @@
       'fluid': fluid,
     }"
   >
-    <span v-if="showYtChat" class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
+    <span v-if="showYtChat" class="loading-text">
+      <div v-if="needExtension">
+        Archive chat does not work without the <router-link to="/extension">Holodex+ extension</router-link> or other third party extensions
+      </div>
+      <template v-else>
+        {{ $t("views.watch.chat.loading") }}
+      </template>
+    </span>
     <!-- Archive translations for videos not upcoming/live -->
     <ArchiveTranslations
       v-show="showTlChat"
@@ -39,11 +46,17 @@
 
     <!-- Youtube scalable embedded window -->
     <div
-      v-if="showYtChat"
+      v-if="showYtChat && !needExtension"
       class="embedded-chat"
       :style="{ height: ytChatHeight }"
     >
-      <iframe :src="liveChatUrl" frameborder="0" :style="scaledStyle" />
+      <iframe
+        ref="ytChat"
+        :src="liveChatUrl"
+        frameborder="0"
+        :style="scaledStyle"
+        @load="updateFrameTime()"
+      />
     </div>
   </v-sheet>
 </template>
@@ -96,6 +109,8 @@ export default {
     data() {
         return {
             firstTlConnect: false,
+            // @ts-ignore
+            needExtension: !window.ARCHIVE_CHAT_OVERRIDE && this.video.status === "past",
         };
     },
     computed: {
@@ -106,10 +121,18 @@ export default {
             return this.value.showYtChat;
         },
         liveChatUrl() {
-            if (!this.video) return null;
-            return `https://www.youtube.com/live_chat?v=${this.video.id}&embed_domain=${
-                window.location.hostname
-            }&dark_theme=${this.$vuetify.theme.dark ? 1 : 0}`;
+            if (!this.video || this.video.type !== "stream") return null;
+            const query = {
+                v: this.video.id,
+                embed_domain: window.location.hostname,
+                dark_theme: this.$vuetify.theme.dark ? "1" : "0",
+                ...this.video.status === "past" && { c: this.video.channel.id },
+            };
+            const q = new URLSearchParams(query).toString();
+            if (this.video.status === "past") {
+                return `https://www.youtube.com/redirect_replay_chat?${q}`;
+            }
+            return `https://www.youtube.com/live_chat?${q}`;
         },
         scaledStyle() {
             // Scale chat by scale %
@@ -145,6 +168,9 @@ export default {
             // Lazy load socket before first v-show
             if (!this.firstTlConnect) this.firstTlConnect = true;
         },
+        currentTime() {
+            this.updateFrameTime();
+        },
     },
     mounted() {
         if (this.showTlChat) this.firstTlConnect = true;
@@ -157,6 +183,11 @@ export default {
         handleHistoryLength(length) {
             // in this case, bubble the event
             this.$emit("historyLength", length);
+        },
+        updateFrameTime(t = this.currentTime) {
+            if (this.video.status === "past") {
+                this.$refs.ytChat?.contentWindow.postMessage({ "yt-player-video-progress": t }, "*");
+            }
         },
     },
 };

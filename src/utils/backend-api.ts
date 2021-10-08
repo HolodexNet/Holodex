@@ -127,10 +127,10 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    favoritesLive(jwt) {
+    favoritesLive({ includePlaceholder = false }, jwt) {
     // const q = querystring.stringify(query);
         return axiosInstance
-            .get("/users/live", {
+            .get(`/users/live?includePlaceholder=${includePlaceholder}`, {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             })
             .then((res) => res.data
@@ -270,6 +270,15 @@ export default {
         return axiosInstance.get(`/multiview/record/${link}`);
     },
     discordServerInfo(inviteLink) {
-        return axiosInstance.get(`https://discord.com/api/v8/invites/${inviteLink}`)
+        return axiosInstance.get(`https://discord.com/api/v8/invites/${inviteLink}`);
+    },
+    addPlaceholderStream(body, jwt, token) {
+        return axiosInstance.post(
+            `videos/placeholder${token ? `?token=${token}` : ""}`,
+            body,
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
+        );
     },
 };

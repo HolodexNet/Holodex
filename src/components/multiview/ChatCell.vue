@@ -132,7 +132,6 @@ export default {
         return {
             showTlChat: this.tl,
             showYtChat: !this.tl,
-            currentTime: 0,
             scale: 1,
         };
     },
@@ -179,6 +178,12 @@ export default {
                 text: video.channel.name.split(" ")[0],
                 value: index,
             }));
+        },
+        videoCellId() {
+            return Object.keys(this.layoutContent).find((key) => this.layoutContent[key].video === this.currentVideo);
+        },
+        currentTime() {
+            return this.layoutContent[this.videoCellId].currentTime || 0;
         },
     },
     watch: {

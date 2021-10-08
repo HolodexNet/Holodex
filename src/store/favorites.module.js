@@ -64,7 +64,7 @@ const actions = {
             console.log("[OK] Fetch of Fave Live executing");
             commit("fetchStart");
             return api
-                .favoritesLive(rootState.userdata.jwt)
+                .favoritesLive({ includePlaceholder: true }, rootState.userdata.jwt)
                 .then((res) => {
                     res.sort(videoTemporalComparator);
                     commit("setLive", res);
