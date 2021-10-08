@@ -8,7 +8,14 @@
       'fluid': fluid,
     }"
   >
-    <span v-if="showYtChat" class="loading-text">{{ $t("views.watch.chat.loading") }}</span>
+    <span v-if="showYtChat" class="loading-text">
+      <div v-if="needExtension">
+        Archive chat does not work without the <router-link to="/extension">Holodex+ extension</router-link> or other third party extensions
+      </div>
+      <template v-else>
+        {{ $t("views.watch.chat.loading") }}
+      </template>
+    </span>
     <!-- Archive translations for videos not upcoming/live -->
     <ArchiveTranslations
       v-show="showTlChat"
@@ -39,7 +46,7 @@
 
     <!-- Youtube scalable embedded window -->
     <div
-      v-if="showYtChat"
+      v-if="showYtChat && !needExtension"
       class="embedded-chat"
       :style="{ height: ytChatHeight }"
     >
@@ -102,6 +109,8 @@ export default {
     data() {
         return {
             firstTlConnect: false,
+            // @ts-ignore
+            needExtension: !window.ARCHIVE_CHAT_OVERRIDE && this.video.status === "past",
         };
     },
     computed: {
