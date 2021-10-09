@@ -51,6 +51,8 @@ component:
     tlPresence: Active twanswatow in wast 30 mins
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -135,6 +137,15 @@ component:
       delete-playlist: Dewete pwaywist
       clear-playlist: Cweaw pwaywist
     save-error-not-logged-in: U need to be wogged in to save pwaywists
+  placeholderVideo:
+    discordCredit: 'Event data pwovided by {0} fwom: {1}'
+    datasourceCredit: Event data fetched fwom {0} datasouwce.
+    botCredit: Event data pwovided via {0} datasouwce, cweated by {1}.
+    streamPageBtn: Stweam page
+    eventPageBtn: Event page
+    scheduledEvent: Scheduwed
+    editorCredit: Event setup by howodex editow {0}.
+    creditTitleText: 'Cwedits:'
 views:
   channel:
     video: Bideos
@@ -143,6 +154,7 @@ views:
     collabs: Cowwabs
     about: About
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
@@ -243,6 +255,7 @@ views:
     ignoredTopicsLabel: Ignowed topics
     ignoredTopicsMsg: Hide bideos with these topics fwom da home and favowites pages
     theme: Theme
+    moreSettings: Mowe settings
   app:
     update_available: An update ish avaiwabwe
     update_btn: Update
@@ -275,8 +288,10 @@ views:
           Stweam ish not wive yet, pwease twy again when da stweam ish within 15 minutes of being wive
         connectedToChat: Connected
         disconnectedToChat: Disconnected
+      archiveNeedExtension: Awchive chat does not wowk without da {0} extension ow othew thiwd pawty extensions.
     removeFromPlaylist: Remove bideo fwom cuwwent pwaywist
     saveToPlaylist: Save bideo to cuwwent pwaywist
+    likeOnYoutube: Like bideo on youtube
   favorites:
     promptForAction: >-
       Cweate a wist of favowite vtubews and see theiw watest cwips and wives on dis page.
@@ -360,6 +375,15 @@ views:
     page-heading: 'Youw pwaywists:'
     page-instruction: Cwick a pwaywist to set it as active.
     change-loss-warning: U wiww wose unsaved changes. Continue?
+  extension:
+    title: Howodex pwus extension
+    features: Featuwes
+    featureset:
+      one: Enabwes awchive live chat on watch and muwtiview
+      two: Awwows wiking bideos fwom howodex watch page
+      three: Fixes memowy weak in youtube's wive chat
+      four: >-
+        Fixes expewimentaw fwags on youtube pwayew (like disabwing muwtipwe stweams, waiting woom thumbnaiw not showing) and mowe!
 time:
   soon: soon
   diff_future_date: Stawts {0} ({1})
