@@ -145,7 +145,7 @@ component:
       clear-playlist: Clear playlist
     save-error-not-logged-in: You need to be logged in to save playlists
   placeholderVideo:
-    discordCredit: 'Event data provided by {0} from:'
+    discordCredit: 'Event data provided by {0} from: {1}'
     datasourceCredit: Event data fetched from {0} datasource.
     botCredit: Event data provided via {0} datasource, created by {1}.
     streamPageBtn: Stream Page

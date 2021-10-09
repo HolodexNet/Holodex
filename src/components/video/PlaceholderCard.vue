@@ -42,10 +42,16 @@
           <v-list-item-content>
             <span>{{ $t('component.placeholderVideo.creditTitleText') }}</span>
             <span v-if="video.credits.discord && discordCredits && discordCredits.data">
-              {{ $t('component.placeholderVideo.discordCredit', [video.credits.discord.user]) }}
-              <strong><a :href="`https://discord.gg/${video.credits.discord.link}`" style="display:inline-block;">
-                <v-icon small color=""> {{ icons.mdiDiscord }}</v-icon>{{ discordCredits.data.guild.name }}</a>
-              </strong>
+              <i18n path="component.placeholderVideo.discordCredit" :tag="false">
+                <template #0>
+                  {{ video.credits.discord.user }}
+                </template>
+                <template #1>
+                  <strong><a :href="`https://discord.gg/${video.credits.discord.link}`" style="display:inline-block;">
+                    <v-icon small color=""> {{ icons.mdiDiscord }}</v-icon>{{ discordCredits.data.guild.name }}</a>
+                  </strong>
+                </template>
+              </i18n>
             </span>
             <span v-if="video.credits.datasource">
               {{ $t('component.placeholderVideo.datasourceCredit', [video.credits.datasource.name]) }}

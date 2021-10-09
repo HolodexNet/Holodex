@@ -136,7 +136,7 @@ component:
       clear-playlist: Kosongkan senarai main
     save-error-not-logged-in: Log masuk agar senarai main boleh disimpan
   placeholderVideo:
-    discordCredit: 'Maklumat acara ihsan {0} dari:'
+    discordCredit: 'Maklumat acara ihsan {0} dari: {1}'
     datasourceCredit: Maklumat acara berpunca daripada {0}.
     botCredit: Maklumat acara berpunca daripada {0} ihsan {1}.
     streamPageBtn: Laman Siaran Langsung
