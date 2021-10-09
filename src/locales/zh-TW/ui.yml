@@ -51,6 +51,8 @@ component:
     tlPresence: 過去半小時內有即時翻譯
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -136,6 +138,7 @@ component:
       clear-playlist: 清空播放清單
     save-error-not-logged-in: 您需要登入後才能儲存播放清單
   placeholderVideo:
+    discordCredit: '活動資料由 {1} 伺服器的 {0} 提供'
     datasourceCredit: 活動資料擷取自 {0} 個不同來源
     botCredit: 活動資料由 {0} 個來源所提供，並由 {1} 創建
     streamPageBtn: 實況頁面
@@ -151,6 +154,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
