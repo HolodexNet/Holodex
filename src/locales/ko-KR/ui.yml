@@ -135,6 +135,12 @@ component:
       delete-playlist: 재생목록 삭제
       clear-playlist: 재생목록 지우기
     save-error-not-logged-in: 재생목록을 저장하려면 로그인해야 합니다
+  placeholderVideo:
+    discordCredit: '다음 사용자가 {0}에서 가져온 이벤트 데이터:'
+    datasourceCredit: '{0}에서 가져온 이벤트 데이터입니다.'
+    botCredit: '{1}님이 만들고 {0}에서 가져온 이벤트 데이터입니다.'
+    streamPageBtn: 방송 페이지
+    eventPageBtn: 이벤트 페이지
 views:
   channel:
     video: 동영상
