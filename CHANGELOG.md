@@ -1,6 +1,6 @@
-### Holodex Beta
+<!-- ### Holodex Beta -->
 
-<!-- ### 2.21 Holodex [*???*] -->
+### 2.21 Holodex [*Oct 10, 2021*]
 
 #### New
 
@@ -8,8 +8,11 @@
   - Not archiving will reduce moderation complexity, as these are user contributed items
   - We are still reliant on a YouTube based video+channel structure. There are currently no plans & developer human resource to go beyond YouTube support.
 - Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
-
-<!-- Holodex Plus: Chrome/Firefox extension that broadens watch experience on Holodex -->
+- [Holodex Plus](https://holodex.net/extension): Chrome/Firefox extension that improves watch experience on Holodex (@Relix, @RiceCakess)
+  - Enables Archive Live chat on Watch and Multiview
+  - Allows liking videos from Holodex watch page
+  - Fixes memory leak in Youtube's live chat
+  - Fixes experimental flags on Youtube player (Like disabling multiple streams, waiting room thumbnail not showing) and more!
 
 #### Improvements
 
@@ -21,6 +24,8 @@
 - Fixed resizing code for music artwork (@Shiaupau)
 - Fixed the popping for MusicBar when it's pinned (@SnowNeko9)
 - Fixed various issues with avatars not displaying on the site.
+
+--------
 
 ### 2.20 Holodex [*September 27th, 2021*]
 
