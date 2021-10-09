@@ -23,6 +23,7 @@ const OrgMusic = () => import("../views/OrgMusic.vue");
 const MultiView = () => import("../views/MultiView.vue");
 const Playlists = () => import("../views/Playlists.vue");
 const AddPlaceholderStream = () => import("../views/AddPlaceholderStream.vue");
+const Extension = () => import("../views/Extension.vue");
 
 Vue.use(VueRouter);
 
@@ -155,6 +156,11 @@ const routes = [
         name: "login",
         path: "/login",
         component: Login,
+    },
+    {
+        name: "extension",
+        path: "/extension",
+        component: Extension,
     },
     {
         path: "/404",

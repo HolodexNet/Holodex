@@ -8,13 +8,8 @@
       'fluid': fluid,
     }"
   >
-    <span v-if="showYtChat" class="loading-text">
-      <div v-if="needExtension">
-        Archive chat does not work without the <router-link to="/extension">Holodex+ extension</router-link> or other third party extensions
-      </div>
-      <template v-else>
-        {{ $t("views.watch.chat.loading") }}
-      </template>
+    <span v-if="showYtChat && !needExtension" class="loading-text">
+      {{ $t("views.watch.chat.loading") }}
     </span>
     <!-- Archive translations for videos not upcoming/live -->
     <ArchiveTranslations
@@ -57,6 +52,13 @@
         :style="scaledStyle"
         @load="updateFrameTime()"
       />
+    </div>
+    <div v-if="needExtension" class="pa-5">
+      Archive chat does not work without the
+      <router-link to="/extension">
+        Holodex+ extension
+      </router-link>
+      or other third party extensions
     </div>
   </v-sheet>
 </template>
