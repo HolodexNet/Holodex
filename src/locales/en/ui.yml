@@ -402,6 +402,16 @@ views:
     page-heading: 'Your Playlists:'
     page-instruction: Click a playlist to set it as active.
     change-loss-warning: You will lose unsaved changes. Continue?
+  extension:
+    title: Holodex Plus Extension
+    features: Features
+    featureset:
+      one: Enables Archive Live chat on Watch and Multiview
+      two: Allows liking videos from Holodex watch page
+      three: Fixes memory leak in Youtube's live chat
+      four: >-
+        Fixes experimental flags on Youtube player (Like disabling multiple
+        streams, waiting room thumbnail not showing) and more!
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})
