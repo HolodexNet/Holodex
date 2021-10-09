@@ -136,7 +136,7 @@ component:
       clear-playlist: Cweaw pwaywist
     save-error-not-logged-in: U need to be wogged in to save pwaywists
   placeholderVideo:
-    discordCredit: 'Event data pwovided by {0} fwom:'
+    discordCredit: 'Event data pwovided by {0} fwom: {1}'
     datasourceCredit: Event data fetched fwom {0} datasouwce.
     botCredit: Event data pwovided via {0} datasouwce, cweated by {1}.
     streamPageBtn: Stweam page

@@ -114,12 +114,10 @@ export const TL_LANGS = Object.freeze([
 // };
 
 export const companionExtensionId = "jkdnofimdhpbhdjbcdlgnccfjjkidlgp";
-export const HolodexPlusExtensionId = "nmphdojnihdbjlclfemcogplmglminoo";
 
 export const MESSAGE_TYPES = Object.freeze({
     TOKEN: "token",
     FAVORITES: "favorites",
-    LIKEREQUEST: "likerequest",
 });
 
 export const MAX_PLAYLIST_LENGTH = 500;

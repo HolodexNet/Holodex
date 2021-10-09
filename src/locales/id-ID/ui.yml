@@ -136,7 +136,7 @@ component:
       clear-playlist: Bersihkan Playlist
     save-error-not-logged-in: Kamu harus masuk untuk menyimpan playlist
   placeholderVideo:
-    discordCredit: 'Data acara disediakan oleh {0} dari:'
+    discordCredit: 'Data acara disediakan oleh {0} dari: {1}'
     datasourceCredit: Data acara diambil dari sumber data {0}.
     botCredit: Data acara disediakan melalui sumber data {0}, dibuat oleh {1}.
     streamPageBtn: Halaman Siaran
