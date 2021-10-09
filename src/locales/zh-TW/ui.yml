@@ -51,6 +51,8 @@ component:
     tlPresence: 過去半小時內有即時翻譯
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -152,6 +154,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -371,6 +374,15 @@ views:
     page-heading: '您的播放清單：'
     page-instruction: 點擊任一播放清單將其啟用
     change-loss-warning: 未儲存的變更將會遺失，確定要繼續嗎？
+  extension:
+    title: Holodex Plus 擴充功能
+    features: 特色功能
+    featureset:
+      one: 於多窗工具與影片頁面啟用存檔聊天室
+      two: 於 Holodex 觀看頁面啟用影片按讚功能
+      three: 修復 YouTube 實況聊天室的記憶體洩漏問題
+      four: >-
+        修復 YouTube 撥放器的實驗性功能（例：禁用多窗實況 / 實況等待室未顯示縮圖）
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
