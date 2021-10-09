@@ -303,7 +303,7 @@ export default {
         hasLiveChat() {
             return this.video.type === "stream" && (
                 ["upcoming", "live"].includes(this.video.status)
-                || (this.video.status === "past" && !this.isIOS)
+                || (this.video.status === "past" && !this.isMobile)
             );
         },
         hasLiveTL() {

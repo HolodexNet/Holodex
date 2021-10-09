@@ -44,6 +44,7 @@
         fluid
         :scale="scale"
         :current-time="currentTime"
+        @videoUpdate="handleVideoUpdate"
       />
     </template>
     <div v-else style="height: 100%" />
@@ -217,6 +218,16 @@ export default {
         toggleTlChat() {
             this.showTlChat = !this.showTlChat;
             if (!this.showTlChat) this.showYtChat = true;
+        },
+        handleVideoUpdate(update) {
+            const v = this.layoutContent[this.videoCellId].video;
+            if (v.status !== update.status || v.start_actual !== update.start_actual) {
+                this.$store.commit("multiview/setLayoutContentWithKey", {
+                    id: this.videoCellId,
+                    key: "video",
+                    value: { ...v, ...update },
+                });
+            }
         },
     },
 };
