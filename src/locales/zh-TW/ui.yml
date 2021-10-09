@@ -289,8 +289,10 @@ views:
           實況尚未開始，請於實況開始15分鐘後再行嘗試連線。
         connectedToChat: 已連線
         disconnectedToChat: 已失去連線
+      archiveNeedExtension: 若沒有安裝 {0} 或是第三方擴充功能，是無法啟用存檔實況聊天室功能的
     removeFromPlaylist: 將影片自當前播放清單移除
     saveToPlaylist: 將影片儲存至當前播放清單
+    likeOnYoutube: 於 YouTube 上對影片按讚
   favorites:
     promptForAction: >-
       創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
