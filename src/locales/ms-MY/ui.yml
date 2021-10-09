@@ -51,6 +51,8 @@ component:
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -152,6 +154,7 @@ views:
     collabs: Siaran sama
     about: Perihal
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -252,6 +255,7 @@ views:
     ignoredTopicsLabel: Topik Diketepikan
     ignoredTopicsMsg: Video yang bertopik berikut disembunyikan di laman Utama dan Kegemaran
     theme: Warna tema
+    moreSettings: Tetapan Lanjutan
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
@@ -284,8 +288,10 @@ views:
           Siaran langsung masih belum berlangsung. Cuba lagi apabila siaran berlangsung dalam masa 15 minit
         connectedToChat: Bersambung
         disconnectedToChat: Terputus
+      archiveNeedExtension: Ruangan sembang terarkib hanya berfungsi apabila pelanjutan/sambungan {0} atau mana-mana pelanjutan/sambungan pihak ketiga lain.
     removeFromPlaylist: Alih keluar video daripada senarai main semasa
     saveToPlaylist: Simpan video pada senarai main semasa
+    likeOnYoutube: Berikan tanda suka di YouTube
   favorites:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
@@ -369,6 +375,15 @@ views:
     page-heading: 'Senarai Main:'
     page-instruction: Hidupkan senarai main dengan menekannya.
     change-loss-warning: Perubahan yang tidak disimpan akan hilang. Teruskan juga?
+  extension:
+    title: Pelanjutan Tambahan Holodex
+    features: Ciri
+    featureset:
+      one: Menghidupkan arkib sembang di laman Tontonan dan Berbilang Tontonan
+      two: Memberikan fungsi suka video di laman tontonan Holodex
+      three: Memperbaiki bocoran ingatan ruangan sembang YouTube
+      four: >-
+        Memperbaiki bendera percubaan di pemain YouTube (Contoh: mematikan berbilang siaran, gambar kenit tidak dipaparkan ketika menunggu siaran) dan lain-lain lagi!
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})

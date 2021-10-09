@@ -41,7 +41,7 @@ component:
   videoCard:
     clips: '{n} Klip'
     watching: '{0} sedang menonton'
-    liveNow: Sedang Berlangsung
+    liveNow: Live Sekarang
     edit: Ubah
     copiedToClipboard: Tautan disalin ke clipboard.
     copyLink: Salin Tautan Holodex
@@ -51,6 +51,8 @@ component:
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -142,6 +144,8 @@ component:
     streamPageBtn: Halaman Siaran
     eventPageBtn: Halaman Acara
     scheduledEvent: Terjadwal
+    editorCredit: Persiapan Acara dibuat oleh Holodex editor {0}.
+    creditTitleText: 'Kredit:'
 views:
   channel:
     video: Video
@@ -150,6 +154,7 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -165,7 +170,7 @@ views:
     favoritesAreEmpty: Kamu tidak memiliki favorit!
     blockedAreEmpty: Kamu tidak memblokir channel manapun.
   home:
-    liveOrUpcomingHeading: Sedang Berlangsung / Akan Tayang
+    liveOrUpcomingHeading: Live Sekarang / Akan Tayang
     recentVideosHeading: Video Terkini
     noStreams: Saat ini tidak ada siaran yang sedang berlangsung atau akan tayang
     recentVideoToggles:
@@ -250,6 +255,7 @@ views:
     ignoredTopicsLabel: Topik yang Diabaikan
     ignoredTopicsMsg: Menyembunyikan video yang berkaitan dengan topik yang dipilih dari halaman Beranda dan Favorit
     theme: Tema
+    moreSettings: Pengaturan Lainnya
   app:
     update_available: Pembaharuan tersedia
     update_btn: Perbarui
@@ -282,8 +288,10 @@ views:
           Saat ini Streaming belum dimulai, coba lagi nanti setelah stream 15 menit dimulai
         connectedToChat: Terhubung
         disconnectedToChat: Terputus
+      archiveNeedExtension: Arsip obrolan tidak dapat bekerja tanpa ekstensi {0} atau ekstensi pihak ketiga lainnya.
     removeFromPlaylist: Hapus video dari playlist ini
     saveToPlaylist: Simpan video ke playlist ini
+    likeOnYoutube: Suka video ini di Youtube
   favorites:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada halaman ini.
@@ -367,6 +375,15 @@ views:
     page-heading: 'Playlist Kamu:'
     page-instruction: Klik playlist untuk menetapkannya sebagai aktif.
     change-loss-warning: Perubahan yang belum disimpan akan hilang. Lanjutkan?
+  extension:
+    title: Ekstensi Holodex Plus
+    features: Fitur
+    featureset:
+      one: Mengaktifkan Arsip Obrolan di halaman Tontonan dan Multiview
+      two: Memberikan fungsi suka video di halaman tontonan Holodex
+      three: Memperbaiki pembekakan memori dari kolom obrolan Youtube
+      four: >-
+        Memperbaiki flags eksperimental pada pemutar Youtube (Seperti menonaktifkan siaran multi, thumbnail ruang tunggu tidak tampil) dan masih banyak lagi!
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
