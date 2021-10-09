@@ -46,6 +46,7 @@
           <template #youtube>
             <youtube
               v-if="video.id"
+              ref="ytPlayer"
               :video-id="video.id"
               :player-vars="{
                 ...(timeOffset && { start: timeOffset }),
@@ -75,7 +76,7 @@
                   icon
                   lg
                   v-bind="attrs"
-                  @click="likeRequest(videoId)"
+                  @click="like()"
                   v-on="on"
                 >
                   <v-icon>
@@ -241,7 +242,6 @@ import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiRectangleOutline, mdiThumbUp } from "@mdi/js";
-import { likeRequest } from "@/utils/messaging";
 
 export default {
     name: "Watch",
@@ -461,7 +461,9 @@ export default {
                 this.playlistIndex += 1;
             }
         },
-        likeRequest,
+        like() {
+            this.$refs?.ytPlayer?.sendLikeEvent();
+        },
     },
 };
 </script>

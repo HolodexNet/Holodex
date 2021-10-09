@@ -116,6 +116,10 @@ export default {
         isMuted() {
             return this.player.isMuted();
         },
+        async sendLikeEvent() {
+            const iframe = await this.player.getIframe();
+            iframe.contentWindow.postMessage({ event: "likeVideo" }, "*");
+        },
     },
 };
 </script>
