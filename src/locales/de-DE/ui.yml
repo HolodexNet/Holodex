@@ -51,6 +51,8 @@ component:
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -152,6 +154,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -285,8 +288,10 @@ views:
           Der Stream ist noch nicht live. Bitte versuche es 15 Minuten vor Stream-Beginn erneut
         connectedToChat: Verbunden
         disconnectedToChat: Verbindung getrennt
+      archiveNeedExtension: Das Chatarchivieren funktioniert nicht ohne die {0} Erweiterung oder andere Erweiterungen Dritter.
     removeFromPlaylist: Video von aktueller Playlist entfernen
     saveToPlaylist: Video zu aktueller Playlist hinzufügen
+    likeOnYoutube: Video auf YouTube mit "Gefällt mir" markieren
   favorites:
     promptForAction: >-
       Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
@@ -370,6 +375,15 @@ views:
     page-heading: 'Deine Playlisten:'
     page-instruction: Klicke auf eine Playlist, um sie zu aktivieren.
     change-loss-warning: Ungespeicherte Änderungen gehen verloren. Fortfahren?
+  extension:
+    title: Holodex Plus Erweiterung
+    features: Eigenschaften
+    featureset:
+      one: Ermöglicht das Archivieren des Live-Chats für Streams in der normalen und in der Mehrfachansicht
+      two: Ermöglicht es, Videos direkt in Holodex mit "Gefällt mir" zu markieren
+      three: Behebt das Speicherleck in YouTubes Live-Chat
+      four: >-
+        Behebt experimentelle Flaggen im YouTube-Player (wie das Deaktivieren mehrerer Streams oder dass das Wartezimmer-Vorschaubild nicht angezeigt wird) und mehr!
 time:
   soon: bald
   diff_future_date: Beginnt {0} ({1})
