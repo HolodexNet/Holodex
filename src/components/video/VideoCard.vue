@@ -115,10 +115,10 @@
         <ChannelImg :channel="data.channel" rounded class="align-self-center" />
       </div>
       <!-- Three lines for title, channel, available time -->
-      <div class="d-flex flex-column my-1 justify-space-between">
+      <div class="d-flex flex-column flex-grow-1 video-card-lines">
         <!-- Video title -->
         <div
-          :class="['video-card-title ', { 'video-watched': hasWatched }]"
+          :class="['video-card-title ', { 'video-watched': hasWatched }, {'mt-2' : !horizontal}]"
           :title="title"
           style="user-select: text"
           :style="{
@@ -551,13 +551,24 @@ export default {
 .text-live {
   color: red;
 }
-
-.video-card-title {
+  /* https://css-tricks.com/almanac/properties/w/word-break/ */
+.video-card-lines div {
   line-height: 1.2;
+  padding-bottom: 0.2rem;
+}
+.video-card-title {
+  padding-bottom: 0.3rem !important;
+  line-height: 1.2rem !important;
+  max-height: 2.4rem;
+  /* height: 2.4rem; */
+  /* vertical-align: text-bottom;
+  justify-content: flex-end; */
+
+  /* position:relative; */
+
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* https://css-tricks.com/almanac/properties/w/word-break/ */
   word-break: break-all;
   word-break: break-word;
 
