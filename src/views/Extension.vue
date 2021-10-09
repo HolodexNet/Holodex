@@ -70,6 +70,14 @@ import {
 
 export default {
     name: "Extension",
+    metaInfo() {
+        const vm = this;
+        return {
+            get title() {
+                return `${vm.$t("views.extension.title")} - Holodex`;
+            },
+        };
+    },
     data() {
         return {
             mdiGithub,

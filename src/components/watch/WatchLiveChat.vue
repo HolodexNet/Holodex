@@ -54,11 +54,13 @@
       />
     </div>
     <div v-if="needExtension" class="pa-5">
-      Archive chat does not work without the
-      <router-link to="/extension">
-        Holodex+ extension
-      </router-link>
-      or other third party extensions
+      <i18n path="views.watch.chat.archiveNeedExtension" :tag="false">
+        <template #0>
+          <router-link to="/extension">
+            Holodex+
+          </router-link>
+        </template>
+      </i18n>
     </div>
   </v-sheet>
 </template>

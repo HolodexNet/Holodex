@@ -84,7 +84,7 @@
                   </v-icon>
                 </v-btn>
               </template>
-              Like video on Youtube
+              <span>{{ $t("views.watch.likeOnYoutube") }}</span>
             </v-tooltip>
             <v-tooltip v-if="hasLiveTL" bottom>
               <template #activator="{ on, attrs }">

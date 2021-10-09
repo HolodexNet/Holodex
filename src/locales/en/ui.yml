@@ -307,8 +307,10 @@ views:
           minutes of being live
         connectedToChat: Connected
         disconnectedToChat: Disconnected
+      archiveNeedExtension: Archive chat does not work without the {0} extension or other third party extensions.
     removeFromPlaylist: Remove video from current playlist
     saveToPlaylist: Save video to current playlist
+    likeOnYoutube: Like video on Youtube
   favorites:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on
