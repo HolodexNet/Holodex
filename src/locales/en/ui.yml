@@ -273,6 +273,7 @@ views:
     ignoredTopicsLabel: Ignored Topics
     ignoredTopicsMsg: Hide videos with these topics from the Home and Favorites pages
     theme: Theme
+    moreSettings: More Settings
   app:
     update_available: An update is available
     update_btn: Update
