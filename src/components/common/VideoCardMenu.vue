@@ -28,7 +28,7 @@
           {{ $t("component.mainNav.multiview") }}
         </v-list-item>
       </template>
-      <v-menu right absolute nudge-right>
+      <v-menu right absolute min-width="240">
         <template #activator="{on, attrs}">
           <v-list-item v-bind="attrs" v-on.stop="on">
             <v-icon left>
