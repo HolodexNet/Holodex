@@ -28,7 +28,20 @@
           {{ $t("component.mainNav.multiview") }}
         </v-list-item>
       </template>
-
+      <v-menu right absolute nudge-right>
+        <template #activator="{on, attrs}">
+          <v-list-item v-bind="attrs" v-on.stop="on">
+            <v-icon left>
+              {{ icons.mdiPlaylistPlus }}
+            </v-icon>
+            {{ $t("component.mainNav.playlist") }}
+            <v-icon right>
+              {{ icons.mdiChevronRight }}
+            </v-icon>
+          </v-list-item>
+        </template>
+        <video-quick-playlist :key="video.id+Date.now()" :video-id="video.id" :video="video" />
+      </v-menu>
       <v-list-item :class="doneCopy ? 'green lighten-2' : ''" @click.stop="copyLink">
         <v-icon left>
           {{ icons.mdiClipboardPlusOutline }}
@@ -64,10 +77,12 @@
 <script>
 import { dayjs } from "@/utils/time";
 import copyToClipboard from "@/mixins/copyToClipboard";
+import VideoQuickPlaylist from "@/components/playlist/VideoQuickPlaylist.vue";
 
 export default {
     components: {
         WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
+        VideoQuickPlaylist,
     },
     mixins: [copyToClipboard],
     props: {
