@@ -18,6 +18,7 @@
 
 - Altered Music Trending to use a more time sensitive Hot ranking (@uetchy, @sphinxrave)
 - Click a topic on the watch page to discover more stream/videos (@uetchy)
+- Dropdown menu on videos now allows you to add/remove them for all your playlists (@sphinxrave)
 
 ##### Patches & Bugfixes
 
