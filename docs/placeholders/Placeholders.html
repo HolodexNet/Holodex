@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Introduction:</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h3 id="introduction"><a class="header-link" href="#introduction"></a>Introduction:</h3>
+<p>Holodex Placeholder API is a special non-advertised API endpoint for second and third party services to communicate upcoming events into the Holodex Platform.</p>
+<ul class="list">
+<li><p>Holodex only supports Youtube Videos, but frequently Hololive is now making lots of external events: watchalongs on Twitch, Space, Twitcast, to more rare but important events like VARK and Concerts. But a full solution to support external events with automated crawlers is too complicated.</p>
+</li>
+<li><p>The solution should generalize to non-Hololive and be extensible as long as there is community interest in helping fellow fans.</p>
+</li>
+</ul>
+<h3 id="types"><a class="header-link" href="#types"></a>Types:</h3>
+<pre class="hljs"><code><span class="hljs-keyword">export</span> <span class="hljs-built_in">enum</span> PLACEHOLDER_TYPES {
+  YT_STREAM = <span class="hljs-string">&#x27;scheduled-yt-stream&#x27;</span>, 
+  <span class="hljs-comment">// example: Gawr Gura will probably have a youtube stream with this title/content </span>
+  EXTERNAL_STREAM = <span class="hljs-string">&#x27;external-stream&#x27;</span>, 
+  <span class="hljs-comment">// example: Pekora is having a watchalong on Twitch at this time.</span>
+  EVENT = <span class="hljs-string">&#x27;event&#x27;</span>, 
+  <span class="hljs-comment">// example: A concert is happening for Watame... here&#x27;s the link to buy tickets.</span>
+}
+
+<span class="hljs-comment">// Credits the user. See the PlaceholderCard.vue file in src/ how it&#x27;s displayed.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> PlaceholderCredit {
+  <span class="hljs-comment">//Removed Temporarily img?: string;</span>
+  link?: <span class="hljs-built_in">string</span>; <span class="hljs-comment">// for discord this is the invite code.</span>
+  name?: <span class="hljs-built_in">string</span>; <span class="hljs-comment">// for discord this is the guild ID</span>
+  user?: <span class="hljs-built_in">string</span>;
+}
+
+<span class="hljs-keyword">interface</span> PlaceholderTitlePayload {
+  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>;
+  jp_name: <span class="hljs-built_in">string</span>;
+  link: <span class="hljs-built_in">string</span>;
+  thumbnail: <span class="hljs-built_in">string</span>;
+  placeholderType: PLACEHOLDER_TYPES;
+  certainty: <span class="hljs-string">&#x27;certain&#x27;</span> | <span class="hljs-string">&#x27;likely&#x27;</span>;
+  credits: {
+    discord?: PlaceholderCredit;
+    datasource?: PlaceholderCredit;
+    bot?: PlaceholderCredit;
+    editor?: PlaceholderCredit;
+  };
+}
+
+<span class="hljs-comment">// Important: Send this in the body of the POST request.</span>
+<span class="hljs-keyword">interface</span> PlaceholderRequestBody {
+  <span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>; 
+  <span class="hljs-comment">// set the &lt;id&gt; field to UPDATE an existing Placeholder. Leave empty to create new placeholder.</span>
+  channel_id: <span class="hljs-built_in">string</span>;
+  title: PlaceholderTitlePayload;
+  liveTime: <span class="hljs-built_in">Date</span>;
+  <span class="hljs-comment">// ISO8601 format: see also https://stackoverflow.com/a/8405125</span>
+  duration: <span class="hljs-built_in">number</span> | <span class="hljs-literal">undefined</span>;
+  <span class="hljs-comment">// set the duration (in seconds) if you know of its approximate duration OR it&#x27;s currently LIVE. </span>
+  <span class="hljs-comment">// PLACEHOLDER_TYPES.EVENT / EXTERNAL_STREAM will go &#x27;live&#x27; on Holodex while: liveTime &lt; NOW() &lt; liveTime+duration</span>
+  <span class="hljs-comment">// PLACEHOLDER_TYPES.YT_STREAM will never go Live on Holodex, and disappear when liveTime &lt; Now()</span>
+}</code></pre><h3 id="responses"><a class="header-link" href="#responses"></a>Responses:</h3>
+<ul class="list">
+<li>A placeholder CREATION will fail if another placeholder is in the vicinity for that channel. Set an <code>id</code> to update the placeholder instead.</li>
+</ul>
+<p>Failure: Invalid fields will cause a 400/500 with a error message.</p>
+<p>Failure: when too close to another Placeholder, a failure object will be returned. You can use the returned object&#39;s <code>id</code> to perform an update instead.</p>
+<pre class="hljs"><code>STATUS <span class="hljs-number">200</span>
+{ error: &#x27;Failed - Another Placeholder already exists here.&#x27;, placeholder: {VIDEO OBJECT} }</code></pre><p>Success: returns the video object created.</p>
+<pre class="hljs"><code>STATUS <span class="hljs-number">200</span>
+[{id: XYZ, ...}]</code></pre><hr>
+<h3 id="example"><a class="header-link" href="#example"></a>Example:</h3>
+<pre class="hljs"><code>POST https:<span class="hljs-regexp">//</span>holodex.net<span class="hljs-regexp">/api/</span>v2<span class="hljs-regexp">/videos/</span>placeholder
+
+HEADERS: 
+    X-APIKEY: &lt;YOUR API KEY&gt;
+    CONTENT-TYPE: application/json
+
+BODY:
+{
+   <span class="hljs-string">&quot;channel_id&quot;</span>:<span class="hljs-string">&quot;UCqm3BQLlJfvkTsX_hvm0UmA&quot;</span>,
+   <span class="hljs-string">&quot;title&quot;</span>:{
+      <span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;Watame Night Fever\u0021\u0021 in Zepp Tokyo&quot;</span>,
+      <span class="hljs-string">&quot;jp_name&quot;</span>:<span class="hljs-string">&quot;わためぇ Night Fever\u0021\u0021 in Zepp Tokyo&quot;</span>,
+      <span class="hljs-string">&quot;link&quot;</span>:<span class="hljs-string">&quot;https://watame1stlive.hololive.tv/&quot;</span>,
+      <span class="hljs-string">&quot;thumbnail&quot;</span>:<span class="hljs-string">&quot;https://hololive.hololivepro.com/wp-content/uploads/2021/08/watame_event_wnf_img.png&quot;</span>,
+      <span class="hljs-string">&quot;placeholderType&quot;</span>:<span class="hljs-string">&quot;event&quot;</span>,
+      <span class="hljs-string">&quot;certainty&quot;</span>:<span class="hljs-string">&quot;certain&quot;</span>,
+      <span class="hljs-string">&quot;credits&quot;</span>:{
+         <span class="hljs-string">&quot;editor&quot;</span>:{
+            <span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;@Sphinxrave&quot;</span>,
+            <span class="hljs-string">&quot;user&quot;</span>:<span class="hljs-string">&quot;4&quot;</span>
+         }
+      }
+   },
+   <span class="hljs-string">&quot;liveTime&quot;</span>:<span class="hljs-string">&quot;2021-10-13T00:30:00.000Z&quot;</span>,
+   <span class="hljs-string">&quot;duration&quot;</span>:<span class="hljs-number">7200</span>
+}</code></pre>    </article>
+  </body>
+</html>
