@@ -51,6 +51,8 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -136,6 +138,8 @@ component:
       clear-playlist: Lejátszási lista kiürítése
     save-error-not-logged-in: A lejátszási lista mentéséhez be kell lépned a fiókodba
   placeholderVideo:
+    discordCredit: 'Esemény adat {0} által: {1}'
+    datasourceCredit: Esemény adat elhozva {0} adatforrásból.
     botCredit: Esemény adat {0} adatforrásból biztosítva, {1} által készítve.
     streamPageBtn: Stream oldal
     eventPageBtn: Esemény oldal
@@ -150,6 +154,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -283,8 +288,10 @@ views:
           Még nem indult el az adás, kérlek próbáld újra amikor a stream 15 percre van indulástól
         connectedToChat: Csatlakozva
         disconnectedToChat: Lecsatlakozva
+      archiveNeedExtension: Az archive chat nem működik a {0} bővítménnyel vagy más harmadik féltől származó bővítményekkel.
     removeFromPlaylist: Videó eltávolítása a lejátszási listából
     saveToPlaylist: Videó mentése a lejátszási listába
+    likeOnYoutube: Hüvelykujj Youtubeon
   favorites:
     promptForAction: >-
       Készíts egy listát a kedvenc vtuberjeidről és láthatod az legújabb klipjeiket és adásaikat ezen az oldalon.
@@ -368,6 +375,15 @@ views:
     page-heading: 'A lejátszási listád:'
     page-instruction: Kattints egy lejátszási listára, hogy aktiváld
     change-loss-warning: A mentetlen változtatások el fognak veszni. Folytatod?
+  extension:
+    title: Holodex Plus Bővítmény
+    features: Funkciók
+    featureset:
+      one: Engedélyezi a múltbéli streamek chatjét egyszerű és Többképernyős nézetben.
+      two: Engedélyezi a videók Kedvelt videók közé tételét. (Likeolás)
+      three: Megjavítja a memória folyást a Youtube élő csevegésében
+      four: >-
+        Megjavítja a kísérleti zászlókat Youtube lejátszóban (Például több stream kikapcsolása, várószoba indexképe nem látszódik) és még több!
 time:
   soon: hamarosan
   diff_future_date: Indul {0} ({1})
