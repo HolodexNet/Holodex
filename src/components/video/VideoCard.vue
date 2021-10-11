@@ -551,21 +551,17 @@ export default {
 
 .text-live {
   color: red;
+  font-weight: 500;
 }
   /* https://css-tricks.com/almanac/properties/w/word-break/ */
 .video-card-lines div {
   line-height: 1.2;
-  padding-bottom: 0.2rem;
+  /* padding-bottom: 0.2rem; */
+  margin-bottom: 2px;
 }
 .video-card-title {
-  padding-bottom: 0.3rem !important;
-  line-height: 1.2rem !important;
-  max-height: 2.4rem;
-  /* height: 2.4rem; */
-  /* vertical-align: text-bottom;
-  justify-content: flex-end; */
-
-  /* position:relative; */
+  line-height: 1.25rem !important;
+  max-height: 2.5rem;
 
   white-space: normal;
   overflow: hidden;
