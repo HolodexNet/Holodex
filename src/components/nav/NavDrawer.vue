@@ -29,6 +29,7 @@
           <!-- Quick Settings Popup -->
           <v-list-item-icon v-if="page.path === '/settings' && $vuetify.breakpoint.smAndUp">
             <v-menu
+              v-model="showSettings"
               :right="false"
               :nudge-right="-50"
               max-height="80vh"
@@ -40,7 +41,7 @@
                 </v-icon>
               </template>
               <v-card rounded="lg" class="py-n2 scrollable">
-                <settings slim />
+                <settings slim @close="showSettings = false" />
               </v-card>
             </v-menu>
           </v-list-item-icon>
@@ -138,6 +139,7 @@ export default {
             favoritesExpanded: false,
             tick: Date.now(),
             ticker: null,
+            showSettings: false,
 
             mdiTuneVariant,
         };

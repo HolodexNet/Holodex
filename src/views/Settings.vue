@@ -13,6 +13,8 @@
             class="float-right mt-n2"
             color="primary"
             text
+            href="/settings"
+            @click.stop.prevent="goToSettings($event)"
           >
             {{ $t('views.settings.moreSettings') }}
             <v-icon right small>
@@ -51,9 +53,11 @@
                 <span class="primary--text" style="">{{ item.display }}</span>
               </template>
             </v-select>
-            <v-hover v-slot="{hover}">
+            <v-hover
+              v-if="overrideLanguage"
+              v-slot="{hover}"
+            >
               <v-alert
-                v-if="overrideLanguage"
                 v-ripple
                 dense
                 block
@@ -448,6 +452,10 @@ export default {
         });
     },
     methods: {
+        goToSettings() {
+            this.$emit("close");
+            this.$router.push({ path: "/settings" });
+        },
         resetSettings() {
             // eslint-disable-next-line no-restricted-globals,no-alert
             if (confirm(this.$t("views.settings.resetAllSettingsWarning"))) {
