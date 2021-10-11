@@ -80,7 +80,8 @@
         <div v-else class="d-flex flex-column align-end ">
           <!-- (👻✅) -->
           <v-icon
-            class="video-duration rounded-sm "
+            color="white"
+            class="video-duration rounded-sm"
           >
             {{ placeholderIconMap[data.placeholderType] }}
           </v-icon>
