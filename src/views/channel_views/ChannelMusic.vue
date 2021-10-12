@@ -2,7 +2,7 @@
   <v-row>
     <v-col cols="12" style="min-height: 404px">
       <v-card-title>
-        <span class="text-h5 mr-3">{{ $t("component.channelMusic.weeklyTopPlaysHeader") }}</span>
+        <span class="text-h5 mr-3">{{ $t("component.channelMusic.trending") }}</span>
         <v-btn
           fab
           color="primary"
@@ -145,7 +145,7 @@ export default {
     },
     methods: {
         async songsByPopular() {
-            const { data } = await backendApi.topSongs(null, this.channel.id, "w");
+            const { data } = await backendApi.hot(null, this.channel.id);
             this.popularSongs = data;
         },
         skipToSong(song) {

@@ -78,6 +78,8 @@ export default {
             playbackRate: 1,
             volume: 50,
             firstPlay: true,
+
+            timer: null,
         };
     },
     computed: {
@@ -99,18 +101,24 @@ export default {
                 }
             },
         },
-        video: {
+        currentTime: {
             get() {
-                if (!this.cellContent) return null;
-                return this.cellContent.video;
+                if (!this.cellContent) return false;
+                return this.cellContent.currentTime;
             },
             set(value) {
-                this.$store.commit("multiview/setLayoutContentWithKey", {
-                    id: this.item.i,
-                    key: "video",
-                    value,
-                });
+                if (value !== this.cellContent.currentTime) {
+                    this.$store.commit("multiview/setLayoutContentWithKey", {
+                        id: this.item.i,
+                        key: "currentTime",
+                        value,
+                    });
+                }
             },
+        },
+        video() {
+            if (!this.cellContent) return null;
+            return this.cellContent.video;
         },
         isFastFoward() {
             return this.playbackRate !== 1;
@@ -127,10 +135,18 @@ export default {
             if (this.editMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
             else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
         },
+        // eslint-disable-next-line func-names
+        "video.id": function () {
+            this.setTimer();
+        },
     },
     mounted() {
         // When mounted, the video is paused, reset edit mode to sync up
         if (!this.editMode) this.editMode = true;
+        this.setTimer();
+    },
+    beforeDestroy() {
+        this.timer && clearInterval(this.timer);
     },
     methods: {
         ...mapMutations("multiview", ["muteOthers"]),
@@ -166,12 +182,22 @@ export default {
             if (!this.ytPlayer) return;
             this.ytPlayer.setPlaybackRate(val);
         },
-        onPlayPause(paused = false) {
+        updatePausedState(paused = false) {
             if (this.editMode === paused) return;
             this.editMode = paused;
             if (this.firstPlay && !paused) {
                 this.muteOthers(this.item.i);
                 this.firstPlay = false;
+            }
+        },
+        onPlayPause(paused = false) {
+            if (this.video.status === "past") {
+                setTimeout(() => {
+                    const recheck = this.ytPlayer.getPlayerState() === 2;
+                    this.updatePausedState(recheck);
+                }, 200);
+            } else {
+                this.updatePausedState(paused);
             }
         },
         onReady(player) {
@@ -191,6 +217,13 @@ export default {
             // synchronizes the muted state of the PLAYER within with the muted state of the CellContent
             if (!this.$refs.player) return;
             this.setMuted(await this.$refs.player.isMuted());
+        },
+        setTimer() {
+            if (this.timer) clearInterval(this.timer);
+            if (this.video.status !== "past") return;
+            this.timer = setInterval(async () => {
+                this.currentTime = await this.$refs.player.getCurrentTime();
+            }, 1000);
         },
     },
 };

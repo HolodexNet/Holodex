@@ -81,9 +81,11 @@ component:
     older: Daha eski
   music:
     clearPlaylist: Temizle
+    trendingForOrg: '{0} için trendler'
   channelMusic:
     recentSongsHeader: Son şarkılar
     weeklyTopPlaysHeader: Haftanın en çok dinlenenleri
+    trending: Trendler
   songList:
     songTitle: Başlık
     songCoveredBy: Söyleyen
@@ -108,7 +110,8 @@ component:
     readMore: Daha fazla
   reportDialog:
     title: Şikayet et
-    collabing: Kanal, bir {org} üyesi veya favorilerinizden biri ile collab yapıyor olabilir. Bu özelliği ayarlardan kapatabilirsiniz
+    collabing: >-
+      Kanal, bir {org} üyesi veya favorilerinizden biri ile collab yapıyor olabilir. Bu özelliği ayarlardan kapatabilirsiniz
     comments: Holodex nasıl bir eylemde bulunmalı?
     success: Şikayer gönderildi, teşekkürler!
     reasons:
@@ -132,6 +135,10 @@ component:
       delete-playlist: Oynatma Listesini Sil
       clear-playlist: Oynatma Listesini Temizle
     save-error-not-logged-in: Oynatma listelerini kaydetmek için oturum açmanız gerekir
+  placeholderVideo:
+    streamPageBtn: Yayın Sayfası
+    eventPageBtn: Etkinlik Sayfası
+    scheduledEvent: Programlı
 views:
   channel:
     video: Videolar

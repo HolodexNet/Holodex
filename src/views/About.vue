@@ -89,6 +89,16 @@
               </v-icon>
               API documentation
             </v-btn>
+            <v-btn
+              class="text-left mt-4 white--text green accent-4"
+              block
+              to="/extension"
+            >
+              <v-icon left>
+                {{ mdiPuzzleOutline }}
+              </v-icon>
+              {{ $t('views.extension.title') }}
+            </v-btn>
           </v-card-text>
         </v-card>
       </v-col>
@@ -315,7 +325,7 @@
 
 <script lang="ts">
 import {
-    mdiExportVariant, mdiGithub, mdiConsole, mdiAccountPlus,
+    mdiExportVariant, mdiGithub, mdiConsole, mdiAccountPlus, mdiPuzzleOutline,
 } from "@mdi/js";
 import TwitterFeed from "@/components/common/TwitterFeed.vue";
 import Stats from "@/components/common/Stats.vue";
@@ -337,6 +347,7 @@ export default {
     data() {
         return {
             mdiExportVariant,
+            mdiPuzzleOutline,
             mdiGithub,
             mdiConsole,
             mdiAccountPlus,

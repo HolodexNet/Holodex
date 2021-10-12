@@ -80,9 +80,11 @@ component:
     older: Старее
   music:
     clearPlaylist: Очистить
+    trendingForOrg: Популярное от {0}
   channelMusic:
     recentSongsHeader: Новые песни
     weeklyTopPlaysHeader: Самые прослушиваемые за неделю
+    trending: Популярное
   songList:
     songTitle: Название
     songCoveredBy: Автор кавера
@@ -107,7 +109,8 @@ component:
     readMore: Узнать больше
   reportDialog:
     title: Пожаловаться
-    collabing: Данный канал может коллабить с членом {org} или с каналом из вашего избранного. Вы можете отключить эту функцию в настройках
+    collabing: >-
+      Данный канал может коллабить с членом {org} или с каналом из вашего избранного. Вы можете отключить эту функцию в настройках
     comments: Что должен предпринять Holodex?
     success: Жалоба отправлена, спасибо!
     reasons:

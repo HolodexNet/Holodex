@@ -83,17 +83,19 @@ component:
     older: 較舊
   music:
     clearPlaylist: 清除播放清單
+    trendingForOrg: '{0} 現正熱門'
   channelMusic:
     recentSongsHeader: 近期新曲
-    weeklyTopPlaysHeader: 本週熱門
+    weeklyTopPlaysHeader: 本週最多播放
+    trending: 熱門歌曲
   songList:
     songTitle: 曲名
     songCoveredBy: 翻唱者
     songDuration: 歌曲長度
     sangOnTime: 演唱時間
   orgMusic:
-    monthlyTopForOrg: '{0} 本月熱門歌曲'
-    weeklyTopForOrg: '{0} 本週熱門歌曲'
+    monthlyTopForOrg: '{0} 本月最多播放'
+    weeklyTopForOrg: '{0} 本週最多播放'
   installPrompt:
     title: 安裝 Holodex
     callToAction: 將 Holodex 安裝至手機以獲得最佳使用體驗！
@@ -110,7 +112,8 @@ component:
     readMore: 顯示更多
   reportDialog:
     title: 檢舉
-    collabing: 此頻道可能正與 {org} 成員或是您所收藏的VTuber連動。您可於設定頁面關閉此顯示功能。
+    collabing: >-
+      此頻道可能正與 {org} 成員或是您所收藏的VTuber連動。您可於設定頁面關閉此顯示功能。
     comments: 您希望 Holodex 該如何處置此影片？
     success: 檢舉已送出，謝謝您
     reasons:
@@ -134,6 +137,15 @@ component:
       delete-playlist: 刪除播放清單
       clear-playlist: 清空播放清單
     save-error-not-logged-in: 您需要登入後才能儲存播放清單
+  placeholderVideo:
+    discordCredit: '活動資料由 {1} 伺服器的 {0} 提供'
+    datasourceCredit: 活動資料擷取自 {0} 個不同來源
+    botCredit: 活動資料由 {0} 個來源所提供，並由 {1} 創建
+    streamPageBtn: 實況頁面
+    eventPageBtn: 活動頁面
+    scheduledEvent: 已排定
+    editorCredit: 本活動由 Holodex編輯者 {0} 建立
+    creditTitleText: '感謝：'
 views:
   channel:
     video: 影片
@@ -244,6 +256,7 @@ views:
     ignoredTopicsLabel: 隱藏指定內容標籤
     ignoredTopicsMsg: 在首頁與我的收藏頁面中隱藏含有下列內容標籤的影片
     theme: 佈景主題
+    moreSettings: 更多設定
   app:
     update_available: 已取得更新
     update_btn: 更新
@@ -276,8 +289,10 @@ views:
           實況尚未開始，請於實況開始15分鐘後再行嘗試連線。
         connectedToChat: 已連線
         disconnectedToChat: 已失去連線
+      archiveNeedExtension: 若沒有安裝 {0} 或是第三方擴充功能，是無法啟用存檔實況聊天室功能的
     removeFromPlaylist: 將影片自當前播放清單移除
     saveToPlaylist: 將影片儲存至當前播放清單
+    likeOnYoutube: 於 YouTube 上對影片按讚
   favorites:
     promptForAction: >-
       創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
@@ -361,6 +376,15 @@ views:
     page-heading: '您的播放清單：'
     page-instruction: 點擊任一播放清單將其啟用
     change-loss-warning: 未儲存的變更將會遺失，確定要繼續嗎？
+  extension:
+    title: Holodex Plus 擴充功能
+    features: 特色功能
+    featureset:
+      one: 於多窗工具與影片頁面啟用存檔聊天室
+      two: 於 Holodex 觀看頁面啟用影片按讚功能
+      three: 修復 YouTube 實況聊天室的記憶體洩漏問題
+      four: >-
+        修復 YouTube 撥放器的實驗性功能（例：禁用多窗實況 / 實況等待室未顯示縮圖）
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})

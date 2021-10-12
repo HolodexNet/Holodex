@@ -46,6 +46,7 @@
           <template #youtube>
             <youtube
               v-if="video.id"
+              ref="ytPlayer"
               :video-id="video.id"
               :player-vars="{
                 ...(timeOffset && { start: timeOffset }),
@@ -55,7 +56,7 @@
               @ready="ready"
               @playing="playing"
               @ended="ended"
-              v-on="!hasLiveChat && { currentTime: handleCurrentTime }"
+              v-on="video.type === 'stream' && video.status === 'past' && { currentTime: handleCurrentTime }"
             />
           </template>
         </WatchFrame>
@@ -69,6 +70,22 @@
         />
         <WatchToolBar :video="video" :no-back-button="!isMobile">
           <template #buttons>
+            <v-tooltip v-if="hasExtension" bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  lg
+                  v-bind="attrs"
+                  @click="like()"
+                  v-on="on"
+                >
+                  <v-icon>
+                    {{ mdiThumbUp }}
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>{{ $t("views.watch.likeOnYoutube") }}</span>
+            </v-tooltip>
             <v-tooltip v-if="hasLiveTL" bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
@@ -101,7 +118,12 @@
                 {{ icons.ytChat }}
               </v-icon>
             </v-btn>
-            <v-btn icon lg @click="toggleFullScreen">
+            <v-btn
+              v-if="!isIOS"
+              icon
+              lg
+              @click="toggleFullScreen"
+            >
               <v-icon>{{ icons.mdiFullscreen }}</v-icon>
             </v-btn>
             <v-tooltip v-if="!isMobile" bottom>
@@ -182,7 +204,7 @@
           class="py-0 pr-0 pl-0 pl-md-3"
         >
           <WatchLiveChat
-            v-if="showChatWindow"
+            v-if="!isMugen && showChatWindow"
             v-model="chatStatus"
             :video="video"
             :fixed-right="isMobile && landscape"
@@ -219,7 +241,7 @@ import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiRectangleOutline } from "@mdi/js";
+import { mdiOpenInNew, mdiRectangleOutline, mdiThumbUp } from "@mdi/js";
 
 export default {
     name: "Watch",
@@ -247,6 +269,7 @@ export default {
             startTime: 0,
             mdiOpenInNew,
             mdiRectangleOutline,
+            mdiThumbUp,
             fullScreen: false,
             playlistIndex: -1,
             currentTime: 0,
@@ -278,10 +301,9 @@ export default {
             return (this.video.title && decodeHTMLEntities(this.video.title)) || "";
         },
         hasLiveChat() {
-            // live chat exits for live/upcoming streams
-            return (
-                this.video.type === "stream"
-                && ["upcoming", "live"].includes(this.video.status)
+            return this.video.type === "stream" && (
+                ["upcoming", "live"].includes(this.video.status)
+                || (this.video.status === "past" && !this.isMobile)
             );
         },
         hasLiveTL() {
@@ -326,6 +348,19 @@ export default {
         },
         role() {
             return this.$store.state.userdata?.user?.role;
+        },
+        hasExtension() {
+            // @ts-ignore
+            return !!window.HOLODEX_PLUS_INSTALLED;
+        },
+        isIOS() {
+            return (
+                ["iPad Simulator", "iPhone Simulator", "iPod Simulator", "iPad", "iPhone", "iPod"].includes(
+                    navigator.platform,
+                )
+                // iPad on iOS 13 detection
+                || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+            );
         },
     },
     watch: {
@@ -425,6 +460,9 @@ export default {
             if (this.playlistIndex >= 0) {
                 this.playlistIndex += 1;
             }
+        },
+        like() {
+            this.$refs?.ytPlayer?.sendLikeEvent();
         },
     },
 };

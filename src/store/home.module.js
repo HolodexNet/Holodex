@@ -17,16 +17,21 @@ const getters = {};
 
 const actions = {
     fetchLive({ state, commit, rootState }, { force = false, minutes = 5 }) {
-        if (rootState.visibilityState === "hidden" && !force) return null;
+        if (rootState.visibilityState === "hidden" && !force) {
+            console.log("[X] Fetch of Home Live declined: window is hidden and not being forced.");
+            return null;
+        }
         if (
             state.hasError
             || force
             || !state.lastLiveUpdate
             || Date.now() - state.lastLiveUpdate > minutes * 60 * 1000
         ) {
+            console.log("[OK] Fetch of Home Live executing");
             commit("fetchStart");
             return api
                 .live({
+                    type: "placeholder,stream",
                     org: rootState.currentOrg.name,
                 })
                 .then((res) => {
@@ -40,6 +45,7 @@ const actions = {
                     commit("fetchError");
                 });
         }
+        console.log(`[X] Fetch of Home Live declined: error + not forced + hasn't been ${minutes} minutes yet.`);
         return null;
     },
 };

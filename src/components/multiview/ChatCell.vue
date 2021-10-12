@@ -44,6 +44,7 @@
         fluid
         :scale="scale"
         :current-time="currentTime"
+        @videoUpdate="handleVideoUpdate"
       />
     </template>
     <div v-else style="height: 100%" />
@@ -132,7 +133,6 @@ export default {
         return {
             showTlChat: this.tl,
             showYtChat: !this.tl,
-            currentTime: 0,
             scale: 1,
         };
     },
@@ -180,6 +180,12 @@ export default {
                 value: index,
             }));
         },
+        videoCellId() {
+            return Object.keys(this.layoutContent).find((key) => this.layoutContent[key].video === this.currentVideo);
+        },
+        currentTime() {
+            return this.layoutContent[this.videoCellId].currentTime || 0;
+        },
     },
     watch: {
         cellWidth() {
@@ -212,6 +218,17 @@ export default {
         toggleTlChat() {
             this.showTlChat = !this.showTlChat;
             if (!this.showTlChat) this.showYtChat = true;
+        },
+        handleVideoUpdate(update) {
+            const v = this.layoutContent[this.videoCellId].video;
+            if (v.id !== update.id) return;
+            if (v.status !== update.status || v.start_actual !== update.start_actual) {
+                this.$store.commit("multiview/setLayoutContentWithKey", {
+                    id: this.videoCellId,
+                    key: "video",
+                    value: { ...v, ...update },
+                });
+            }
         },
     },
 };

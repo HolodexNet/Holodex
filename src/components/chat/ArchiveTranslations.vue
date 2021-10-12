@@ -55,7 +55,6 @@
 </template>
 
 <script lang="ts">
-import { dayjs } from "@/utils/time";
 import VirtualList from "vue-virtual-scroll-list";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import ChatMessage from "./ChatMessage.vue";
@@ -79,11 +78,6 @@ export default {
             ChatMessage,
             curIndex: 0,
         };
-    },
-    computed: {
-        startTimeUnix() {
-            return Number(dayjs(this.video.start_actual || this.video.start_scheduled));
-        },
     },
     watch: {
         liveTlLang() {
@@ -129,7 +123,7 @@ export default {
     },
     methods: {
         getRelativeSecs(index) {
-            return (this.tlHistory[index].timestamp - this.startTimeUnix) / 1000;
+            return (this.tlHistory[index].timestamp - this.startTimeMillis) / 1000;
         },
         activeClass(index) {
             return index === this.curIndex ? "active-message" : "";

@@ -13,17 +13,14 @@
       v-model="showSuccessAlert"
       color="success"
       dismissible
+      absolute
+      top
+      app
     >
       {{ successMessage }}
     </v-snackbar>
-    <div class="d-flex justify-space-between flex-wrap align-center">
-      <v-col cols="auto">
-        <!-- <v-avatar rounded left size="40">
-          <v-icon size="25" color="grey darken-2">
-            {{ icons.mdiPencil }}
-          </v-icon>
-        </v-avatar> -->
-
+    <div class="d-flex justify-space-between flex-wrap align-top">
+      <v-col v-if="video.type !== 'placeholder'" cols="auto">
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <v-avatar
@@ -114,8 +111,7 @@
           :items="searchResults"
           hide-no-data
           multiple
-          chips
-          hide-details="auto"
+          hide-details
           :rules="[]"
           return-object
           item-value="id"
@@ -147,12 +143,12 @@
         </v-autocomplete>
       </v-col>
       <v-divider vertical />
-      <v-col v-if="video.type === 'stream'" cols="auto">
-        <v-avatar rounded left size="40">
+      <v-col v-if="video.type === 'stream' || video.type === 'placeholder'" cols="auto">
+        <!-- <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiPencil }}
           </v-icon>
-        </v-avatar>
+        </v-avatar> -->
         <v-avatar rounded left size="40">
           <v-icon size="25" color="grey darken-2">
             {{ icons.mdiAnimationPlay }}
@@ -165,25 +161,12 @@
           v-model="newTopic"
           :items="topics"
           inline
+          hide-details
           label="Topic (leave empty to unset)"
           :append-outer-icon="mdiContentSave"
           @click="loadTopics"
           @click:append-outer="saveTopic"
         />
-        <!-- <v-avatar rounded left size="40" v-if="channelChips && channelChips.length > 0">
-                    <v-icon size="25" color="grey darken-2">{{ mdiAt }}</v-icon>
-                </v-avatar>
-                <template v-for="mention in channelChips">
-                    <ChannelChip :channel="mention" :key="mention.id" :size="60" />
-                </template>
-                <a
-                    @click="showAllMentions = !showAllMentions"
-                    style="white-space: pre"
-                    class="text-subtitle-2"
-                    v-if="mentions.length > 3"
-                >
-                    [ {{ showAllMentions ? "-" : "+" }} {{ mentions.length - 3 }} ]
-                </a> -->
       </v-col>
     </div>
   </v-card>
@@ -200,12 +183,6 @@ export default {
     name: "WatchQuickEditor",
     components: {
         ChannelChip,
-    // ChannelInfo,
-    // ChannelSocials,
-    // ChannelImg,
-    // TruncatedText,
-    // VideoSongs,
-    // VideoDescription,
     },
     props: {
         video: {
@@ -263,6 +240,12 @@ export default {
                     );
                 });
         }, 400),
+        fake(nv: [any] | null) {
+            if (nv && nv.length && nv.length > 0) {
+                this.addMention(nv[0]);
+                this.fake = null;
+            }
+        },
     },
     mounted() {
         this.updateMentions();

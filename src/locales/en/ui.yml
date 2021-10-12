@@ -82,9 +82,11 @@ component:
     older: Older
   music:
     clearPlaylist: Clear
+    trendingForOrg: Trending for {0}
   channelMusic:
     recentSongsHeader: Recent Songs
     weeklyTopPlaysHeader: Weekly Top Plays
+    trending: Trending
   songList:
     songTitle: Title
     songCoveredBy: Covered by
@@ -109,7 +111,9 @@ component:
     readMore: Read more
   reportDialog:
     title: Report
-    collabing: This channel may be collabing with a {org} member or with your favorites. You can disable this feature through the settings
+    collabing: >-
+      This channel may be collabing with a {org} member or with your favorites.
+      You can disable this feature through the settings
     comments: What actions should Holodex take?
     success: Report sent, thank you!
     reasons:
@@ -140,6 +144,15 @@ component:
       delete-playlist: Delete Playlist
       clear-playlist: Clear playlist
     save-error-not-logged-in: You need to be logged in to save playlists
+  placeholderVideo:
+    discordCredit: 'Event data provided by {0} from: {1}'
+    datasourceCredit: Event data fetched from {0} datasource.
+    botCredit: Event data provided via {0} datasource, created by {1}.
+    streamPageBtn: Stream Page
+    eventPageBtn: Event Page
+    scheduledEvent: Scheduled
+    editorCredit: Event setup by Holodex editor {0}.
+    creditTitleText: 'Credits:'
 views:
   channel:
     video: Videos
@@ -260,6 +273,7 @@ views:
     ignoredTopicsLabel: Ignored Topics
     ignoredTopicsMsg: Hide videos with these topics from the Home and Favorites pages
     theme: Theme
+    moreSettings: More Settings
   app:
     update_available: An update is available
     update_btn: Update
@@ -293,8 +307,10 @@ views:
           minutes of being live
         connectedToChat: Connected
         disconnectedToChat: Disconnected
+      archiveNeedExtension: Archive chat does not work without the {0} extension or other third party extensions.
     removeFromPlaylist: Remove video from current playlist
     saveToPlaylist: Save video to current playlist
+    likeOnYoutube: Like video on Youtube
   favorites:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on
@@ -388,6 +404,16 @@ views:
     page-heading: 'Your Playlists:'
     page-instruction: Click a playlist to set it as active.
     change-loss-warning: You will lose unsaved changes. Continue?
+  extension:
+    title: Holodex Plus Extension
+    features: Features
+    featureset:
+      one: Enables Archive Live chat on Watch and Multiview
+      two: Allows liking videos from Holodex watch page
+      three: Fixes memory leak in Youtube's live chat
+      four: >-
+        Fixes experimental flags on Youtube player (Like disabling multiple
+        streams, waiting room thumbnail not showing) and more!
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})
@@ -538,4 +564,5 @@ about:
   bookmarklet:
     title: Bookmarklets
     description: >-
-      Drag these bookmarklets to your bookmark bar to open YouTube watch page in Holodex easily:
+      Drag these bookmarklets to your bookmark bar to open YouTube watch page in
+      Holodex easily:

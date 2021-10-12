@@ -127,10 +127,10 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    favoritesLive(jwt) {
+    favoritesLive({ includePlaceholder = false }, jwt) {
     // const q = querystring.stringify(query);
         return axiosInstance
-            .get("/users/live", {
+            .get(`/users/live?includePlaceholder=${includePlaceholder}`, {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             })
             .then((res) => res.data
@@ -222,23 +222,30 @@ export default {
     songListByCondition(condition, offset, limit) {
         return axiosInstance.post("/songs/latest", { ...condition, offset, limit });
     },
-    trackSongPlay(channelId, videoId, name) {
+    trackSongPlay(channelId, videoId, name, jwt) {
         const urlsafe = querystring.stringify({ n: name });
         return axiosInstance.get(
             `/songs/record/${channelId}/${videoId}?${urlsafe}`,
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
         );
+    },
+    trackSong(id: Number|string, jwt: string|undefined) {
+        return axiosInstance.get(`/songs/record/${id}`, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
     },
     /**
    * Grabs top 20 songs from API.
-   * @param {*} org = org name
-   * @param {*} channelId = channel ID. only org name OR channel ID should be supplied, never both.
-   * @param {*} type type = 'w' for weekly, 'm' for monthly.
+   * @param {string?} org = org name
+   * @param {string?} channelId = channel ID. only org name OR channel ID should be supplied, never both.
    */
-    topSongs(org, channelId, type) {
+    hot(org, channelId) {
         const q = querystring.stringify(
-            org ? { org, type } : { channel_id: channelId, type },
+            org ? { org } : { channel_id: channelId },
         );
-        return axiosInstance.get(`/songs/top20?${q}`);
+        return axiosInstance.get(`/songs/hot?${q}`);
     },
     getPlaylistList(jwt: string) {
         if (!jwt) throw new Error("Not authorized");
@@ -270,4 +277,35 @@ export default {
     trackMultiviewLink(link) {
         return axiosInstance.get(`/multiview/record/${link}`);
     },
+    discordServerInfo(inviteLink) {
+        return axiosInstance.get(`https://discord.com/api/v8/invites/${inviteLink}`);
+    },
+    addPlaceholderStream(body, jwt, token) {
+        return axiosInstance.post(
+            `videos/placeholder${token ? `?token=${token}` : ""}`,
+            body,
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
+        );
+    },
+    getPlaylistState(videoId, jwt) {
+        return axiosInstance.get<{ id: number; name: string; contains: boolean }[]>(`/video-playlist/${videoId}`,
+        {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    addVideoToPlaylist(videoId, playlistId, jwt) {
+        return axiosInstance.put(`/video-playlist/${playlistId}/${videoId}`, null,
+        {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+    deleteVideoFromPlaylist(videoId, playlistId, jwt) {
+        return axiosInstance.delete(`/video-playlist/${playlistId}/${videoId}`,
+        {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
+    },
+
 };

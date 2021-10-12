@@ -1,40 +1,62 @@
 <template>
   <v-list v-if="video" dense>
-    <v-list-item target="_blank" :href="`https://youtu.be/${video.id}`" @click.stop>
-      <v-icon left>
-        {{ icons.mdiYoutube }}
-      </v-icon>
-      {{ $t("views.settings.redirectModeLabel") }}
-    </v-list-item>
-
-    <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar">
-      <v-icon left>
-        {{ icons.mdiCalendar }}
-      </v-icon>
-      {{ $t("component.videoCard.googleCalendar") }}
-    </v-list-item>
-    <v-list-item :to="`/edit/video/${video.id}${video.type !== 'stream' ? '/mentions' : '/'}`">
-      <v-icon left>
-        {{ icons.mdiPencil }}
-      </v-icon>
-      {{ $t("component.videoCard.edit") }}
-    </v-list-item>
-    <template v-if="video.type !== 'clip'">
-      <v-list-item :to="`/multiview/AAUY${video.id}%2CUAEYchat`">
+    <template v-if="video.type !== 'placeholder'">
+      <v-list-item target="_blank" :href="`https://youtu.be/${video.id}`" @click.stop>
         <v-icon left>
-          {{ icons.mdiViewDashboard }}
+          {{ icons.mdiYoutube }}
         </v-icon>
-        {{ $t("component.mainNav.multiview") }}
+        {{ $t("views.settings.redirectModeLabel") }}
+      </v-list-item>
+
+      <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar">
+        <v-icon left>
+          {{ icons.mdiCalendar }}
+        </v-icon>
+        {{ $t("component.videoCard.googleCalendar") }}
+      </v-list-item>
+      <v-list-item :to="`/edit/video/${video.id}${video.type !== 'stream' ? '/mentions' : '/'}`">
+        <v-icon left>
+          {{ icons.mdiPencil }}
+        </v-icon>
+        {{ $t("component.videoCard.edit") }}
+      </v-list-item>
+      <template v-if="video.type !== 'clip'">
+        <v-list-item :to="`/multiview/AAUY${video.id}%2CUAEYchat`">
+          <v-icon left>
+            {{ icons.mdiViewDashboard }}
+          </v-icon>
+          {{ $t("component.mainNav.multiview") }}
+        </v-list-item>
+      </template>
+      <v-menu right absolute min-width="240">
+        <template #activator="{on, attrs}">
+          <v-list-item v-bind="attrs" v-on.stop="on">
+            <v-icon left>
+              {{ icons.mdiPlaylistPlus }}
+            </v-icon>
+            {{ $t("component.mainNav.playlist") }}
+            <v-icon right>
+              {{ icons.mdiChevronRight }}
+            </v-icon>
+          </v-list-item>
+        </template>
+        <video-quick-playlist :key="video.id+Date.now()" :video-id="video.id" :video="video" />
+      </v-menu>
+      <v-list-item :class="doneCopy ? 'green lighten-2' : ''" @click.stop="copyLink">
+        <v-icon left>
+          {{ icons.mdiClipboardPlusOutline }}
+        </v-icon>
+        {{ $t("component.videoCard.copyLink") }}
       </v-list-item>
     </template>
-
-    <v-list-item :class="doneCopy ? 'green lighten-2' : ''" @click.stop="copyLink">
-      <v-icon left>
-        {{ icons.mdiClipboardPlusOutline }}
-      </v-icon>
-      {{ $t("component.videoCard.copyLink") }}
-    </v-list-item>
-
+    <template v-else>
+      <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar">
+        <v-icon left>
+          {{ icons.mdiCalendar }}
+        </v-icon>
+        {{ $t("component.videoCard.googleCalendar") }}
+      </v-list-item>
+    </template>
     <v-list-item @click="$store.commit('setReportVideo', video)">
       <v-icon left>
         {{ icons.mdiFlag }}
@@ -55,10 +77,13 @@
 <script>
 import { dayjs } from "@/utils/time";
 import copyToClipboard from "@/mixins/copyToClipboard";
-import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
+import VideoQuickPlaylist from "@/components/playlist/VideoQuickPlaylist.vue";
 
 export default {
-    components: { WatchQuickEditor },
+    components: {
+        WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
+        VideoQuickPlaylist,
+    },
     mixins: [copyToClipboard],
     props: {
         video: {

@@ -99,13 +99,13 @@
           <v-list-item-subtitle class="text--caption song-artists">
             <span
               v-if="$listeners.channel"
-              class="song-clickable"
+              class="song-clickable primary--text"
               @click.stop="$emit('channel', song)"
             >
               {{ song.channel[nameProperty] || song.channel.name }}
             </span>
-            <span v-else> {{ song.channel.name }} </span> <br>
-            <span class="primary--text"> / {{ song.original_artist }}</span>
+            <span v-else class="primary--text"> {{ song.channel[nameProperty] || song.channel.name }} </span> <br>
+            <span class="muted--text"> ‣ {{ song.original_artist }}</span>
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>

@@ -17,7 +17,7 @@
                      -->
   <v-card v-intersect="tryUpdateUser" flat>
     <v-list :dense="inNavDrawer" class="pb-0">
-      <v-list-item v-if="user">
+      <v-list-item v-if="user" :to="inNavDrawer?'/login':null">
         <v-list-item-avatar>
           <img
             :src="`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`"
@@ -58,8 +58,8 @@
         <v-list-item-title>{{ $t("component.mainNav.login") }}</v-list-item-title>
       </v-list-item>
 
-      <v-divider v-if="user" />
-      <v-list-item v-if="user" to="/login" link>
+      <v-divider v-if="user && !inNavDrawer" />
+      <v-list-item v-if="user && !inNavDrawer" to="/login" link>
         <v-list-item-icon>
           <v-icon>{{ icons.mdiAccountCircleOutline }}</v-icon>
         </v-list-item-icon>
@@ -80,7 +80,7 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item v-if="user" link @click.prevent="logout">
+      <v-list-item v-if="user && !inNavDrawer" link @click.prevent="logout">
         <v-list-item-icon>
           <v-icon>{{ icons.mdiLogoutVariant }}</v-icon>
         </v-list-item-icon>

@@ -16,7 +16,7 @@ require("dotenv").config();
 export default ({ mode }) => {
     const env = { ...process.env, ...loadEnv(mode, process.cwd()) };
     const API_BASE_URL = env.API_BASE_URL ?? "https://staging.holodex.net";
-
+    const REWRITE_API_ROUTES = !!env.REWRITE_API_ROUTES;
     return defineConfig({
         plugins: [
             yaml(),
@@ -66,6 +66,7 @@ export default ({ mode }) => {
                         /^\/assets/,
                         /^\/img/,
                         /^\/sitemap-.*/,
+                        /^\/statics.*/,
                         /^.*\.js(\.map)?/,
                         /^.*\.css/,
                         /^.*\.webmanifest/,
@@ -127,6 +128,19 @@ export default ({ mode }) => {
                                 },
                             },
                         },
+                        {
+                            urlPattern: new RegExp(`${API_BASE_URL}/statics/.*$`),
+                            handler: "CacheFirst",
+                            options: {
+                                cacheName: "holodex-statics-route",
+                                expiration: {
+                                    maxAgeSeconds: 10800,
+                                },
+                                cacheableResponse: {
+                                    statuses: [0, 200],
+                                },
+                            },
+                        },
                     ],
                     // workbox options for generateSW
                 },
@@ -166,6 +180,7 @@ export default ({ mode }) => {
                     changeOrigin: true,
                     secure: false,
                     ws: true,
+                    rewrite: (url) => (REWRITE_API_ROUTES ? url.replace(/^\/api/, "") : url),
                 },
                 "^/(stats|orgs).json$": {
                     target: API_BASE_URL,

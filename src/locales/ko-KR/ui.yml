@@ -83,9 +83,11 @@ component:
     older: 오래된순
   music:
     clearPlaylist: 초기화
+    trendingForOrg: '{0} 인기 차트'
   channelMusic:
     recentSongsHeader: 최근 노래
     weeklyTopPlaysHeader: 주간 최고 조회수
+    trending: 인기 차트
   songList:
     songTitle: 제목
     songCoveredBy: 커버 가수
@@ -110,7 +112,8 @@ component:
     readMore: 자세히 보기
   reportDialog:
     title: 신고
-    collabing: 이 채널은 즐겨찾기 중인 {org} 멤버와 콜라보 중일 수도 있습니다. 설정에서 이 기능을 끌 수 있어요
+    collabing: >-
+      이 채널은 즐겨찾기 중인 {org} 멤버와 콜라보 중일 수도 있습니다. 설정에서 이 기능을 끌 수 있어요
     comments: Holodex가 취해야 할 행동은 무엇인가요?
     success: 신고되었습니다. 감사합니다!
     reasons:
@@ -134,6 +137,15 @@ component:
       delete-playlist: 재생목록 삭제
       clear-playlist: 재생목록 지우기
     save-error-not-logged-in: 재생목록을 저장하려면 로그인해야 합니다
+  placeholderVideo:
+    discordCredit: '다음 사용자가 {0}에서 가져온 이벤트 데이터: {1}'
+    datasourceCredit: '{0}에서 가져온 이벤트 데이터입니다.'
+    botCredit: '{1}님이 만들고 {0}에서 가져온 이벤트 데이터입니다.'
+    streamPageBtn: 실시간 페이지
+    eventPageBtn: 이벤트 페이지
+    scheduledEvent: 예정
+    editorCredit: Holdex 에디터 {0}님이 설정한 이벤트입니다.
+    creditTitleText: '크레딧:'
 views:
   channel:
     video: 동영상
@@ -243,6 +255,7 @@ views:
     ignoredTopicsLabel: 무시된 주제
     ignoredTopicsMsg: 홈과 즐겨찾기 페이지에서 해당 주제의 동영상을 숨깁니다
     theme: 테마
+    moreSettings: 추가 설정
   app:
     update_available: 업데이트 가능
     update_btn: 업데이트
@@ -275,8 +288,10 @@ views:
           아직 방송이 시작되지 않았습니다. 방송이 시작된 후 15분 이내에 다시 시도해보세요
         connectedToChat: 연결됨
         disconnectedToChat: 연결 끊김
+      archiveNeedExtension: 아카이브 채팅은 {0} 확장 프로그램 또는 다른 서드파티 확장 프로그램 없이는 작동하지 않습니다.
     removeFromPlaylist: 현재 재생목록에서 동영상 제거
     saveToPlaylist: 현재 재생목록에 동영상 저장
+    likeOnYoutube: YouTube에서 동영상 좋아요하기
   favorites:
     promptForAction: >-
       이 페이지에서 좋아하는 버튜버 목록을 만들고 최신 클립과 삶을 확인해보세요.
@@ -360,6 +375,15 @@ views:
     page-heading: '내 재생목록:'
     page-instruction: 재생목록을 활성화하려면 클릭해주세요.
     change-loss-warning: 변경사항이 저장되지 않습니다. 계속하시겠습니까?
+  extension:
+    title: Holodex Plus 확장 프로그램
+    features: 기능
+    featureset:
+      one: 동영상 및 멀티뷰에서 아카이브 라이브 채팅 활성화
+      two: Holodex 동영상 페이지에서 동영상 연결 허용
+      three: Youtube 라이브 채팅에서의 메모리 누수 방지
+      four: >-
+        YouTube 플레이어의 실험적인 플래그 (예: 다중 방송 차단, 방송 대기 썸네일이 미표시되는 문제)등을 수정했으며 몇 가지 추가적인 기능들도 있습니다!
 time:
   soon: 예정
   diff_future_date: '{0} 시작 ({1})'
@@ -472,4 +496,4 @@ about:
   bookmarklet:
     title: 북마클릿
     description: >-
-      이 북마클릿을 북마크 바에 드래그해서 YouTube 동영상 페이지에서 쉽게 Holodex를 여세요:
+      이 북마클릿을 북마크바에 드래그해서 YouTube 동영상 페이지에서 쉽게 Holodex를 여세요:

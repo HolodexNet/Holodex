@@ -83,9 +83,11 @@ component:
     older: Lebih lama
   music:
     clearPlaylist: Kosongkan
+    trendingForOrg: Lagu hangat daripada {0}
   channelMusic:
     recentSongsHeader: Lagu Terkini
     weeklyTopPlaysHeader: Lagu Teratas Mingguan
+    trending: Lagu hangat
   songList:
     songTitle: Judul
     songCoveredBy: Dinyanyikan oleh
@@ -110,7 +112,8 @@ component:
     readMore: Lihat selanjutnya
   reportDialog:
     title: Laporkan
-    collabing: Ada kemungkinan saluran ini bersiaran sama dengan ahli {org} atau mana-mana penggiat YouTube kegemaranmu. Saluran ini boleh disembunyikan di laman tetapan
+    collabing: >-
+      Ada kemungkinan saluran ini bersiaran sama dengan ahli {org} atau mana-mana penggiat YouTube kegemaranmu. Saluran ini boleh disembunyikan di laman tetapan
     comments: Apakah tindakan selanjutnya?
     success: Terima kasih! Laporan telah dikirim.
     reasons:
@@ -134,6 +137,15 @@ component:
       delete-playlist: Hapuskan Senarai Main
       clear-playlist: Kosongkan senarai main
     save-error-not-logged-in: Log masuk agar senarai main boleh disimpan
+  placeholderVideo:
+    discordCredit: 'Maklumat acara ihsan {0} dari: {1}'
+    datasourceCredit: Maklumat acara berpunca daripada {0}.
+    botCredit: Maklumat acara berpunca daripada {0} ihsan {1}.
+    streamPageBtn: Laman Siaran Langsung
+    eventPageBtn: Laman Acara
+    scheduledEvent: Perancangan
+    editorCredit: Laman acara disediakan oleh penyunting Holodex {0}.
+    creditTitleText: 'Penghargaan:'
 views:
   channel:
     video: Video
@@ -243,6 +255,7 @@ views:
     ignoredTopicsLabel: Topik Diketepikan
     ignoredTopicsMsg: Video yang bertopik berikut disembunyikan di laman Utama dan Kegemaran
     theme: Warna tema
+    moreSettings: Tetapan Lanjutan
   app:
     update_available: Terdapat kemas kini baharu
     update_btn: Kemas Kini
@@ -275,8 +288,10 @@ views:
           Siaran langsung masih belum berlangsung. Cuba lagi apabila siaran berlangsung dalam masa 15 minit
         connectedToChat: Bersambung
         disconnectedToChat: Terputus
+      archiveNeedExtension: Ruangan sembang terarkib hanya berfungsi apabila pelanjutan/sambungan {0} atau mana-mana pelanjutan/sambungan pihak ketiga lain.
     removeFromPlaylist: Alih keluar video daripada senarai main semasa
     saveToPlaylist: Simpan video pada senarai main semasa
+    likeOnYoutube: Berikan tanda suka di YouTube
   favorites:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
@@ -360,6 +375,15 @@ views:
     page-heading: 'Senarai Main:'
     page-instruction: Hidupkan senarai main dengan menekannya.
     change-loss-warning: Perubahan yang tidak disimpan akan hilang. Teruskan juga?
+  extension:
+    title: Pelanjutan Tambahan Holodex
+    features: Ciri
+    featureset:
+      one: Menghidupkan arkib sembang di laman Tontonan dan Berbilang Tontonan
+      two: Memberikan fungsi suka video di laman tontonan Holodex
+      three: Memperbaiki bocoran ingatan ruangan sembang YouTube
+      four: >-
+        Memperbaiki bendera percubaan di pemain YouTube (Contoh: mematikan berbilang siaran, gambar kenit tidak dipaparkan ketika menunggu siaran) dan lain-lain lagi!
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
@@ -450,7 +474,7 @@ about:
           Kami amat mengalu-alukan sebarang bantuan dan saranan! Sumbangan bagi antara muka pengguna serta bahagian belakang laman adalah diterima namun buat masa ini hanya antara muka pengguna yang bersumber terbuka. Sila hubungi kami di Discord sekiranya anda mahu mencapai kod sumber bahagian belakang laman atau sekadar mahu memberi cadangan.
   gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
-    Sebuah cecikut Google Analytics digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
+    Sebuah cecikut Google Analitis digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
   gdprDeletion: Hubungi kami di Discord sekiranya anda ingin menghapuskan data pengguna anda!
   feedback: Maklum Balas dan Laporan Pepijat
   feedbackHtml: >-

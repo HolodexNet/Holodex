@@ -7,6 +7,7 @@
         class=""
         color="indigo darken-1"
         rounded-sm
+        width="190px"
         large
         @click="$emit('showSelector', item.i)"
       >
@@ -14,9 +15,9 @@
           {{ mdiVideoPlus }}
         </v-icon> {{ $t('views.multiview.video.selectLive') }}
       </v-btn>
-      <div class="mt-2">
+      <div class="mt-2 d-flex" style="max-width:190px;">
         <v-btn
-          class="mr-2"
+          class="mr-2 flex-shrink flex"
           color="teal darken-1"
           rounded-sm
           large
@@ -28,6 +29,7 @@
           Chat
         </v-btn>
         <v-btn
+          class="flex-shrink flex"
           color="teal darken-1"
           rounded-sm
           large

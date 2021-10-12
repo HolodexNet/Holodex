@@ -3,9 +3,9 @@
     <v-list-item-title style="align-self: flex-start">
       <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
         {{ channelName }}
-        <div class="text-body-2 text--secondary">
+        <small class="text--secondary text--org">
           {{ channel.org }} <span v-if="!noGroup && channel.group">• {{ channel.group }}</span>
-        </div>
+        </small>
       </router-link>
     </v-list-item-title>
     <v-list-item-subtitle>
@@ -131,5 +131,10 @@ export default {
 }
 .topic-chip:hover {
     background-color: var(--v-primary-base);
+}
+.text--org {
+  font-size:12px;
+  font-weight: 300;
+  display:block;
 }
 </style>

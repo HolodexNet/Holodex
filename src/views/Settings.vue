@@ -1,13 +1,26 @@
 <template>
-  <v-container :style="slim && 'width: 500px;'" :class="{ 'pa-0': slim }">
+  <v-container :style="slim && 'max-width: 80vw; width:500px;'" :class="{ 'pa-0': slim }">
     <v-row dense>
       <v-col v-if="!slim" cols="12">
-        <div class="text-h4 mb-4">
+        <div class="text-h4 mb-2 ml-5 mt-2">
           {{ $t("views.settings.title") }}
         </div>
       </v-col>
-      <v-col :cols="slim ? 12 : currentCol">
+      <v-col :cols="slim ? 12 : currentCol" :class="{'pt-3': slim}">
         <v-sheet class="settings-group" :class="{'my-0 py-0': slim}">
+          <v-btn
+            v-if="slim"
+            class="float-right mt-n2"
+            color="primary"
+            text
+            href="/settings"
+            @click.stop.prevent="goToSettings($event)"
+          >
+            {{ $t('views.settings.moreSettings') }}
+            <v-icon right small>
+              {{ icons.mdiChevronRight }}
+            </v-icon>
+          </v-btn>
           <v-card-title class="py-1">
             <v-icon
               large
@@ -40,9 +53,11 @@
                 <span class="primary--text" style="">{{ item.display }}</span>
               </template>
             </v-select>
-            <v-hover v-slot="{hover}">
+            <v-hover
+              v-if="overrideLanguage"
+              v-slot="{hover}"
+            >
               <v-alert
-                v-if="overrideLanguage"
                 v-ripple
                 dense
                 block
@@ -69,7 +84,7 @@
 
             <div class="mt-6 mb-4">
               <v-icon style="margin-right: 9px">
-                {{ mdiFilter }}
+                {{ mdiFilterOutline }}
               </v-icon>
               <span class="text-body-1">{{ $t("views.settings.clipLanguageSelection") }}</span>
             </div>
@@ -149,20 +164,6 @@
 
             <div class="mb-0 mt-6">
               <v-icon style="margin-right: 9px">
-                {{ mdiHome }}
-              </v-icon>
-              <span class="text-body-1">{{ $t("views.settings.defaultPage") }}</span>
-            </div>
-            <v-select
-              v-model="defaultOpen"
-              class="mt-n4"
-              prepend-icon=" "
-              :items="defaultOpenChoices"
-              :messages="$t('views.settings.defaultPageMsg')"
-            />
-
-            <div class="mb-0 mt-6">
-              <v-icon style="margin-right: 9px">
                 {{ icons.mdiGrid }}
               </v-icon>
               <span class="text-body-1">{{ $t("views.settings.gridSizeLabel") }}</span>
@@ -178,10 +179,28 @@
               ]"
               :messages="$t('views.settings.gridSizeMsg')"
             />
+          </v-card-text>
+        </v-sheet>
+        <v-sheet v-if="!slim" class="settings-group mt-2">
+          <v-card-text>
+            <div>
+              <v-icon style="margin-right: 9px">
+                {{ mdiHome }}
+              </v-icon>
+              <span class="text-body-1">{{ $t("views.settings.defaultPage") }}</span>
+            </div>
+            <v-select
+              v-model="defaultOpen"
+              class="mt-n4"
+              prepend-icon=" "
+              :items="defaultOpenChoices"
+              :messages="$t('views.settings.defaultPageMsg')"
+            />
+
             <v-switch
               v-model="scrollMode"
               class="v-input--reverse v-input--expand mt-6"
-              :prepend-icon="mdiBookOpenPageVariantOutline"
+              :prepend-icon="scrollMode? mdiArrowExpandVertical:mdiBookOpenPageVariantOutline"
               inset
               :label="$t('views.settings.scrollModeLabel')"
               :messages="$t('views.settings.scrollModeMsg')"
@@ -206,7 +225,7 @@
               left
               class="ml-n3"
             >
-              {{ icons.mdiAnimationPlay }}
+              {{ mdiFilterOutline }}
             </v-icon>
             <span class="text-h6 font-weight-light">{{ $t("views.settings.videoFeedSettings") }}</span>
           </v-card-title>
@@ -260,7 +279,7 @@
 <script lang="ts">
 import { langs } from "@/plugins/vuetify";
 import {
-    mdiFilter,
+    mdiFilterOutline,
     mdiEarth,
     mdiPalette,
     mdiCogBox,
@@ -268,6 +287,7 @@ import {
     mdiHome,
     mdiEyeOff,
     mdiBookOpenPageVariantOutline,
+    mdiArrowExpandVertical,
     mdiGestureTap,
 } from "@mdi/js";
 import { TL_LANGS } from "@/utils/consts";
@@ -295,7 +315,7 @@ export default {
     data() {
         return {
             langs,
-            mdiFilter,
+            mdiFilterOutline,
             mdiEarth,
             mdiPalette,
             mdiEyeOff,
@@ -303,6 +323,7 @@ export default {
             mdiWeatherNight,
             mdiHome,
             mdiBookOpenPageVariantOutline,
+            mdiArrowExpandVertical,
             mdiGestureTap,
             TL_LANGS,
 
@@ -431,6 +452,10 @@ export default {
         });
     },
     methods: {
+        goToSettings() {
+            this.$emit("close");
+            this.$router.push({ path: "/settings" });
+        },
         resetSettings() {
             // eslint-disable-next-line no-restricted-globals,no-alert
             if (confirm(this.$t("views.settings.resetAllSettingsWarning"))) {

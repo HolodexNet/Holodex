@@ -1,11 +1,13 @@
 <template>
   <v-container
     v-touch="{
-      right: () => {
+      right: (e) => {
+        if(e.offsetX < 50) return;
         tab = Math.max(tab - 1, 0);
         changeTab(false);
       },
-      left: () => {
+      left: (e) => {
+        if(e.offsetX > -50) return;
         tab = Math.min(tab + 1, 2);
         changeTab(false);
       },
@@ -173,10 +175,10 @@ import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
-import { localizedDayjs } from "@/utils/time";
+import { dayjs } from "@/utils/time";
 
-function localToUTC(date) {
-    return localizedDayjs(date).add(1, "day").toDate().toISOString();
+function nearestUTCDate(date) {
+    return date.add(1, "day").toDate().toISOString();
 }
 
 export default {
@@ -289,8 +291,14 @@ export default {
         },
         // eslint-disable-next-line func-names
         "$store.state.visibilityState": function () {
+            console.log("visibility state changed (in HomeFave)");
             if (this.isActive && this.$store.state.visibilityState === "visible") {
-                this.$store.dispatch("home/fetchLive", { force: false });
+                console.log("attempting refetching (if cadence allows)");
+                if (this.isFavPage) {
+                    this.$store.dispatch("favorites/fetchLive", { force: false });
+                } else {
+                    this.$store.dispatch("home/fetchLive", { force: false });
+                }
             }
         },
         tab() {
@@ -305,20 +313,24 @@ export default {
         },
     },
     created() {
+        console.log("Created, so adding refresh timer to HomeFav");
         this.init(true); // try updating favorites if it's actually favorites page.
         this.setAutoRefresh();
     },
     activated() {
+        console.log("Activated, so adding refresh timer to HomeFav");
         this.changeTab(true);
         this.setAutoRefresh();
     },
     deactivated() {
         if (this.refreshTimer) {
+            console.log("Navigating away, so deleting the refresh timer in HomeFav");
             clearInterval(this.refreshTimer);
             this.refreshTimer = null;
         }
     },
     beforeDestroy() {
+        console.log("Destroying, so deleting the refresh timer in HomeFav");
         if (this.refreshTimer) {
             clearInterval(this.refreshTimer);
             this.refreshTimer = null;
@@ -328,7 +340,11 @@ export default {
         setAutoRefresh() {
             if (this.refreshTimer) clearInterval(this.refreshTimer);
             this.refreshTimer = setInterval(() => {
-                this.$store.dispatch("home/fetchLive", { force: false });
+                if (this.isFavPage) {
+                    this.$store.dispatch("favorites/fetchLive", { force: false });
+                } else {
+                    this.$store.dispatch("home/fetchLive", { force: false });
+                }
             }, 2 * 60 * 1000);
         },
         changeTab(preservePage = true) {
@@ -383,12 +399,12 @@ export default {
                 return async (offset, limit) => {
                     const res = await backendApi
                         .favoritesVideos(this.$store.state.userdata.jwt, {
-                            status: "past",
+                            status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
                             ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
                             include: "clips",
                             lang: this.$store.state.settings.clipLangs.join(","),
                             paginated: !this.scrollMode,
-                            to: this.toDate ? this.toDate : undefined,
+                            to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
                             limit,
                             offset,
                         })
@@ -403,13 +419,13 @@ export default {
             // home page function
             return async (offset, limit) => {
                 const res = await backendApi.videos({
-                    status: "past",
+                    status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
                     ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
                     include: "clips",
                     org: this.$store.state.currentOrg.name,
                     lang: this.$store.state.settings.clipLangs.join(","),
                     paginated: !this.scrollMode,
-                    to: this.toDate ? localToUTC(this.toDate) : undefined,
+                    to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
                     limit,
                     offset,
                 });

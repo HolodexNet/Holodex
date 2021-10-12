@@ -1,6 +1,9 @@
 <template>
   <v-card class="watch-card rounded-0">
-    <v-card-title class="pt-2" style="font-size: 1.125rem; font-weight: 400">
+    <v-card-title
+      class="pt-2"
+      style="font-size: 1.125rem; font-weight: 400"
+    >
       <span v-if="!$route.path.includes('edit')">
         {{ video.title }}
       </span>
@@ -15,27 +18,28 @@
       </router-link>
     </v-card-title>
     <v-card-subtitle>
-      <v-btn
-        id="video-edit-btn"
-        text
-        x-small
-        color="primary"
-        class="float-right"
-        :to="
-          $route.path.includes('edit')
-            ? `/watch/${video.id}`
-            : `/edit/video/${video.id}${
-              video.type !== 'stream' ? '/mentions' : '/'
-            }`
-        "
-      >
-        {{
-          $route.path.includes("edit")
-            ? $t("editor.exitMode")
-            : $t("editor.enterMode")
-        }}
-      </v-btn>
-
+      <slot name="rightTitleAction">
+        <v-btn
+          id="video-edit-btn"
+          text
+          x-small
+          color="primary"
+          class="float-right"
+          :to="
+            $route.path.includes('edit')
+              ? `/watch/${video.id}`
+              : `/edit/video/${video.id}${
+                video.type !== 'stream' ? '/mentions' : '/'
+              }`
+          "
+        >
+          {{
+            $route.path.includes("edit")
+              ? $t("editor.exitMode")
+              : $t("editor.enterMode")
+          }}
+        </v-btn>
+      </slot>
       {{ formattedTime }}
       <template v-if="video.status === 'live'">
         • {{ $t("component.videoCard.watching", [liveViewers]) }}
@@ -51,8 +55,14 @@
         class="mx-1"
         style="text-transform: capitalize"
       >
-        • <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
-        {{ video.topic_id }}
+        • <a
+          href="/search"
+          style="text-decoration: none"
+          @click.prevent="goToSearchPage()"
+        >
+          <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
+          {{ video.topic_id }}
+        </a>
       </span>
       <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
     </v-card-subtitle>
@@ -62,9 +72,16 @@
         <v-list>
           <v-list-item>
             <v-list-item-avatar size="80">
-              <ChannelImg :channel="video.channel" size="80" />
+              <ChannelImg
+                :channel="video.channel"
+                size="80"
+              />
             </v-list-item-avatar>
-            <ChannelInfo :channel="video.channel" class="uploader-data-list" />
+            <ChannelInfo
+              :channel="video.channel"
+              class="uploader-data-list"
+              :no-subscriber-count="noSubCount"
+            />
             <ChannelSocials :channel="video.channel" />
           </v-list-item>
         </v-list>
@@ -76,12 +93,19 @@
           left
           size="40"
         >
-          <v-icon size="25" color="grey darken-2">
+          <v-icon
+            size="25"
+            color="grey darken-2"
+          >
             {{ mdiAt }}
           </v-icon>
         </v-avatar>
         <template v-for="mention in channelChips">
-          <ChannelChip :key="mention.id" :channel="mention" :size="60" />
+          <ChannelChip
+            :key="mention.id"
+            :channel="mention"
+            :size="60"
+          />
         </template>
         <a
           v-if="mentions.length > 3"
@@ -93,9 +117,17 @@
         </a>
       </v-col>
     </div>
-    <v-card-text class="text-body-2" @click="handleClick">
-      <truncated-text :html="processedMessage" lines="4" />
-    </v-card-text>
+    <slot>
+      <v-card-text
+        class="text-body-2"
+        @click="handleClick"
+      >
+        <truncated-text
+          :html="processedMessage"
+          lines="4"
+        />
+      </v-card-text>
+    </slot>
   </v-card>
 </template>
 
@@ -124,8 +156,6 @@ export default {
         ChannelSocials,
         ChannelImg,
         TruncatedText,
-    // VideoSongs,
-    // VideoDescription,
     },
     props: {
         video: {
@@ -134,6 +164,10 @@ export default {
             default: null,
         },
         noChips: {
+            type: Boolean,
+            default: false,
+        },
+        noSubCount: {
             type: Boolean,
             default: false,
         },
@@ -243,6 +277,16 @@ export default {
                 this.$emit("timeJump", e.target.getAttribute("data-time"));
                 e.preventDefault();
             }
+        },
+        goToSearchPage() {
+            const topic = this.video.topic_id;
+            const capitalizedTopic = topic[0].toUpperCase() + topic.slice(1);
+            const { org } = this.video.channel;
+            let path = `/search?q=type,value,text%0Atopic,${topic},${capitalizedTopic}`;
+            if (org) {
+                path += `%0Aorg,${org},${org}`;
+            }
+            this.$router.push({ path });
         },
     },
 };

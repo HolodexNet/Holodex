@@ -76,21 +76,22 @@
         <!-- Channel list -->
         <template v-for="(channel, index2) in group.items">
           <v-divider :key="'divider-' + index2" />
-          <v-list-item
-            v-if="channel"
-            :key="channel.id"
-            :to="`/channel/${channel.id}`"
-            style="padding: 0 16px"
-            three-line
-          >
-            <v-list-item-avatar size="55">
-              <ChannelImg :channel="channel" size="55" />
-            </v-list-item-avatar>
-            <ChannelInfo :channel="channel" :include-video-count="includeVideoCount" style="width: 80px">
-              <ChannelSocials v-if="isXs" :channel="channel" class="pa-0 justify-start" />
-            </ChannelInfo>
-            <ChannelSocials v-if="!isXs" :channel="channel" />
-          </v-list-item>
+          <v-lazy :key="channel.id" min-height="100">
+            <v-list-item
+              v-if="channel"
+              :to="`/channel/${channel.id}`"
+              style="padding: 0 16px"
+              three-line
+            >
+              <v-list-item-avatar size="55">
+                <ChannelImg :channel="channel" size="55" />
+              </v-list-item-avatar>
+              <ChannelInfo :channel="channel" :include-video-count="includeVideoCount" style="width: 80px">
+                <ChannelSocials v-if="isXs" :channel="channel" class="pa-0 justify-start" />
+              </ChannelInfo>
+              <ChannelSocials v-if="!isXs" :channel="channel" />
+            </v-list-item>
+          </v-lazy>
         </template>
       </v-list-group>
     </template>
@@ -99,25 +100,26 @@
   <v-list v-else class="pa-0">
     <template v-for="(channel, index) in channels">
       <v-divider :key="'divider-' + index" />
-      <v-list-item
-        v-if="channel"
-        :key="channel.id"
-        :to="`/channel/${channel.id}`"
-        style="padding: 0 16px"
-        three-line
-      >
-        <v-list-item-avatar size="55">
-          <ChannelImg :channel="channel" size="55" />
-        </v-list-item-avatar>
-        <ChannelInfo :channel="channel" :include-video-count="includeVideoCount">
-          <slot v-if="isXs" name="action" :channel="channel">
-            <ChannelSocials :channel="channel" class="pa-0 justify-start" :show-delete="showDelete" />
+      <v-lazy :key="channel.id" min-height="88">
+        <v-list-item
+          v-if="channel"
+          :to="`/channel/${channel.id}`"
+          style="padding: 0 16px"
+          three-line
+        >
+          <v-list-item-avatar size="55">
+            <ChannelImg :channel="channel" size="55" />
+          </v-list-item-avatar>
+          <ChannelInfo :channel="channel" :include-video-count="includeVideoCount">
+            <slot v-if="isXs" name="action" :channel="channel">
+              <ChannelSocials :channel="channel" class="pa-0 justify-start" :show-delete="showDelete" />
+            </slot>
+          </ChannelInfo>
+          <slot v-if="!isXs" name="action" :channel="channel">
+            <ChannelSocials :channel="channel" />
           </slot>
-        </ChannelInfo>
-        <slot v-if="!isXs" name="action" :channel="channel">
-          <ChannelSocials :channel="channel" />
-        </slot>
-      </v-list-item>
+        </v-list-item>
+      </v-lazy>
     </template>
   </v-list>
 </template>

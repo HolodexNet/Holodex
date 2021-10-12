@@ -1,10 +1,11 @@
 <template>
   <a
-    class="video-card no-decoration d-flex flex-column"
+    class="video-card no-decoration d-flex"
     :class="{
       'video-card-fluid': fluid,
       'video-card-active': active,
       'video-card-horizontal': horizontal,
+      'flex-column': !horizontal,
     }"
     :target="redirectMode ? '_blank' : ''"
     :href="!redirectMode ? watchLink : `https://youtu.be/${data.id}`"
@@ -12,7 +13,7 @@
     draggable="true"
     style="position: relative"
     @click.exact.prevent="
-      (e) => (!redirectMode ? goToVideo(data.id) : goToYoutube(data.id))
+      (e) => (isPlaceholder? openPlaceholder(): (!redirectMode ? goToVideo() : goToYoutube()))
     "
     @dragstart="drag"
   >
@@ -40,8 +41,9 @@
             {{ data.topic_id }}
           </div>
 
-          <!-- Check box for saved video -->
+          <!-- Check box for saved video (👻❌) -->
           <v-icon
+            v-if="!isPlaceholder"
             :color="hasSaved ? 'primary' : 'white'"
             class="video-card-action rounded-tr-sm"
             :class="{ 'hover-show': !hasSaved && !isMobile }"
@@ -51,8 +53,8 @@
           </v-icon>
         </div>
 
-        <!-- Video duration/music indicator -->
-        <div class="d-flex flex-column align-end">
+        <!-- Video duration/music indicator (👻❌) -->
+        <div v-if="!isPlaceholder" class="d-flex flex-column align-end">
           <!-- Show music icon if songs exist -->
           <div v-if="data.songcount" class="video-duration">
             <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
@@ -75,6 +77,15 @@
             {{ formattedDuration }}
           </div>
         </div>
+        <div v-else class="d-flex flex-column align-end ">
+          <!-- (👻✅) -->
+          <v-icon
+            color="white"
+            class="video-duration rounded-sm"
+          >
+            {{ placeholderIconMap[data.placeholderType] }}
+          </v-icon>
+        </div>
       </div>
       <v-img
         v-if="!horizontal && !shouldHideThumbnail"
@@ -91,11 +102,10 @@
       />
     </div>
     <a
-      class="d-flex flex-row flex-grow-1 no-decoration"
-      style="height: 88px; position: relative"
+      class="d-flex flex-row flex-grow-1 no-decoration video-card-text"
       :href="watchLink"
       rel="noopener"
-      @click.exact.stop.prevent="goToVideo(data.id)"
+      @click.exact.stop.prevent="goToVideo()"
     >
       <!-- Channel icon -->
       <div
@@ -105,10 +115,10 @@
         <ChannelImg :channel="data.channel" rounded class="align-self-center" />
       </div>
       <!-- Three lines for title, channel, available time -->
-      <div class="d-flex flex-column my-1 justify-space-between">
+      <div class="d-flex flex-column flex-grow-1 video-card-lines">
         <!-- Video title -->
         <div
-          :class="['video-card-title ', { 'video-watched': hasWatched }]"
+          :class="['video-card-title ', { 'video-watched': hasWatched }, {'mt-2' : !horizontal}]"
           :title="title"
           style="user-select: text"
           :style="{
@@ -139,7 +149,8 @@
           <span :class="'text-' + data.status" :title="absoluteTimeString">
             {{ formattedTime }}
           </span>
-          <template v-if="data.clips && data.clips.length > 0">
+          <!-- (👻❌) -->
+          <template v-if="data.clips && data.clips.length > 0 && !isPlaceholder">
             •
             <span class="primary--text">
               {{
@@ -204,6 +215,9 @@
       </template>
       <slot name="action" />
     </v-list-item-action>
+
+    <!-- 👻👻👻 Placeholder MODAL 👻👻👻 -->
+    <placeholder-card v-if="placeholderOpen" v-model="placeholderOpen" :video="data" />
   </a>
 </template>
 
@@ -219,6 +233,7 @@ import {
     dayjs,
     localizedDayjs,
 } from "@/utils/time";
+import { mdiBroadcast } from "@mdi/js";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */
 
@@ -226,6 +241,7 @@ export default {
     name: "VideoCard",
     components: {
         ChannelImg: () => import("@/components/channel/ChannelImg.vue"),
+        PlaceholderCard: () => import("./PlaceholderCard.vue"),
         VideoCardMenu,
     },
     props: {
@@ -289,14 +305,25 @@ export default {
     },
     data() {
         return {
-            data: this.source || this.video,
             forceJPG: true,
             now: Date.now(),
             updatecycle: null,
             hasWatched: false,
+            placeholderIconMap: {
+                event: (this as any).icons.mdiCalendar,
+                "scheduled-yt-stream": (this as any).icons.mdiYoutube,
+                "external-stream": mdiBroadcast,
+            },
+            placeholderOpen: false,
         };
     },
     computed: {
+        data() {
+            return this.source || this.video;
+        },
+        isPlaceholder() {
+            return this.data.type === "placeholder";
+        },
         title() {
             if (!this.data.title) return "";
             return decodeHTMLEntities(this.data.title);
@@ -354,6 +381,11 @@ export default {
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
             const useWebP = this.$store.state.settings.canUseWebP && !this.forceJPG;
+            if (this.data.thumbnail) {
+                const enc = btoa(this.data.thumbnail);
+                const n = enc.replace("+", "-").replace("/", "_").replace(/=+$/, "");
+                return `/statics/thumbnail/default/${n}.jpg`;
+            }
             const srcs = getVideoThumbnails(this.data.id, useWebP);
             if (this.horizontal) return srcs.medium;
             if (this.colSize > 2 && this.colSize <= 8) {
@@ -442,6 +474,9 @@ export default {
                 : this.$store.commit("playlist/addVideo", this.data);
         },
         goToVideo() {
+            if (this.isPlaceholder) {
+                this.openPlaceholder(); return;
+            }
             this.$emit("videoClicked", this.data);
             if (this.disableDefaultClick) return;
             // On mobile, clicking on watch links should not increment browser history
@@ -451,6 +486,9 @@ export default {
             } else {
                 this.$router.push({ path: this.watchLink });
             }
+        },
+        openPlaceholder() {
+            this.placeholderOpen = true;
         },
         goToChannel() {
             this.$emit("videoClicked", this.data);
@@ -512,14 +550,26 @@ export default {
 
 .text-live {
   color: red;
+  font-weight: 500;
+}
+.video-card-text {
+  min-height: 88px;
+  position: relative;
 }
 
-.video-card-title {
+/* https://css-tricks.com/almanac/properties/w/word-break/ */
+.video-card-lines div {
   line-height: 1.2;
+  /* padding-bottom: 0.2rem; */
+  margin-bottom: 2px;
+}
+.video-card-title {
+  line-height: 1.25rem !important;
+  max-height: 2.5rem;
+
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* https://css-tricks.com/almanac/properties/w/word-break/ */
   word-break: break-all;
   word-break: break-word;
 
