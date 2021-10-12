@@ -222,11 +222,19 @@ export default {
     songListByCondition(condition, offset, limit) {
         return axiosInstance.post("/songs/latest", { ...condition, offset, limit });
     },
-    trackSongPlay(channelId, videoId, name) {
+    trackSongPlay(channelId, videoId, name, jwt) {
         const urlsafe = querystring.stringify({ n: name });
         return axiosInstance.get(
             `/songs/record/${channelId}/${videoId}?${urlsafe}`,
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
         );
+    },
+    trackSong(id: Number|string, jwt: string|undefined) {
+        return axiosInstance.get(`/songs/record/${id}`, {
+            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+        });
     },
     /**
    * Grabs top 20 songs from API.
