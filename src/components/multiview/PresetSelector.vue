@@ -192,7 +192,7 @@ export default {
             this.$emit("selected", preset);
         },
         removePresetLayout(preset) {
-            const presetIdx = this.autolayout.findIndex((l) => l === preset.id);
+            const presetIdx = this.autoLayout.findIndex((l) => l === preset.id);
             if (presetIdx >= 0) this.setAutoLayout(presetIdx, null);
             this.$store.commit("multiview/removePresetLayout", preset.name);
         },
