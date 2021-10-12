@@ -102,8 +102,7 @@
       />
     </div>
     <a
-      class="d-flex flex-row flex-grow-1 no-decoration"
-      style="height: 88px; position: relative"
+      class="d-flex flex-row flex-grow-1 no-decoration video-card-text"
       :href="watchLink"
       rel="noopener"
       @click.exact.stop.prevent="goToVideo()"
@@ -553,7 +552,12 @@ export default {
   color: red;
   font-weight: 500;
 }
-  /* https://css-tricks.com/almanac/properties/w/word-break/ */
+.video-card-text {
+  min-height: 88px;
+  position: relative;
+}
+
+/* https://css-tricks.com/almanac/properties/w/word-break/ */
 .video-card-lines div {
   line-height: 1.2;
   /* padding-bottom: 0.2rem; */

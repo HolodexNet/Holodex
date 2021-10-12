@@ -221,6 +221,7 @@ export default {
         },
         handleVideoUpdate(update) {
             const v = this.layoutContent[this.videoCellId].video;
+            if (v.id !== update.id) return;
             if (v.status !== update.status || v.start_actual !== update.start_actual) {
                 this.$store.commit("multiview/setLayoutContentWithKey", {
                     id: this.videoCellId,
