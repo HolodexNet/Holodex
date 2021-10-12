@@ -433,9 +433,15 @@ export default {
                 if (os != null && this.progress > 80 && this.progress < 105) {
                     const { song } = os;
                     // console.log("track song");
-                    backendApi
-                        .trackSongPlay(song.channel_id, song.video_id, song.name)
-                        .catch((err) => console.error(err));
+                    if (song.id) {
+                        backendApi
+                            .trackSong(song.id, this.$store.state.userdata?.jwt)
+                            .catch((err) => console.error(err));
+                    } else {
+                        backendApi
+                            .trackSongPlay(song.channel_id, song.video_id, song.name, this.$store.state.userdata?.jwt)
+                            .catch((err) => console.error(err));
+                    }
                     this.$gtag.event("fully-listen", {
                         event_category: "music",
                         event_label: song.channel.name,
