@@ -1,5 +1,14 @@
 <!-- ### Holodex Beta -->
 
+### 2.21.1 Holodex [*Oct 12, 2021*]
+
+### Bugfixes
+- Placeholders will default to using the channel avatar if a thumbnail is not present.
+- Align cards to top for Video Cards (ty for report Angel)
+- Fix deleting Multiview Saved Preset Layouts.
+- MV archived chat should be more stable now. Themes are still screwed up for archived chat. (It follows your system color theme)
+- Misc. other fixes
+
 ### 2.21 Holodex [*Oct 10, 2021*]
 
 #### New
