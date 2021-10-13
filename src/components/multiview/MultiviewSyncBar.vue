@@ -109,7 +109,7 @@ export default {
         },
         currentSliderValue() {
             if (!this.videosWithOverlap.length) return 0;
-            const times = this.videosWithOverlap.map((v) => v.startTs + (this.currentProgress[v.id] / 100) * v.duration);
+            const times = this.videosWithOverlap.map((v) => (this.currentProgress[v.id] === "0.00" ? 0 : v.startTs + (this.currentProgress[v.id] / 100) * v.duration));
             const progress = Math.max(...times);
             // Stop slider from jumping while interacting, and getting updates from player
             return this.interacting ? this.interactValue : (((progress - this.minTs) / (this.maxTs - this.minTs)) * 100).toFixed(2);
