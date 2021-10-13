@@ -109,7 +109,10 @@ export default {
         },
         currentSliderValue() {
             if (!this.videosWithOverlap.length) return 0;
-            return this.interacting ? this.interactValue : (this.currentProgress[this.videosWithOverlap[0].id] || 0);
+            const times = this.videosWithOverlap.map((v) => v.startTs + (this.currentProgress[v.id] / 100) * v.duration);
+            const progress = Math.max(...times);
+            // Stop slider from jumping while interacting, and getting updates from player
+            return this.interacting ? this.interactValue : (((progress - this.minTs) / (this.maxTs - this.minTs)) * 100).toFixed(2);
         },
     },
     watch: {
@@ -141,11 +144,13 @@ export default {
                     if (isBefore) {
                         // cell.seekTo(0);
                         cell.setPlaying(false);
+                        cell.seekTo(0);
                         return;
                     }
                     if (isAfter) {
                         // cell.seekTo(olVideo.duration);
                         cell.setPlaying(false);
+                        cell.seekTo(olVideo.duration);
                         return;
                     }
                     cell.setPlaying(true);
