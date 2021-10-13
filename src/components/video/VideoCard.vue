@@ -386,6 +386,9 @@ export default {
                 const n = enc.replace("+", "-").replace("/", "_").replace(/=+$/, "");
                 return `/statics/thumbnail/default/${n}.jpg`;
             }
+            if (this.data.type === "placeholder") {
+                return `/statics/channelImg/${this.data.channel_id || this.data.channel.id}.png`;
+            }
             const srcs = getVideoThumbnails(this.data.id, useWebP);
             if (this.horizontal) return srcs.medium;
             if (this.colSize > 2 && this.colSize <= 8) {
