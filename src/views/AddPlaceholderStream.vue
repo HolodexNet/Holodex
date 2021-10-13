@@ -251,9 +251,9 @@ export default {
         },
         availableAt() {
             if (this.liveTime && this.timezone && this.liveDate) {
-                return dayjs(`${this.liveDate} ${this.liveTime}`).tz(this.timezone);
+                return dayjs.tz(`${this.liveDate} ${this.liveTime}`, this.timezone).toISOString();
             }
-            return dayjs().toString();
+            return dayjs().toISOString();
         },
         credits() {
             if (!this.isEditor && !this.token) return null;
