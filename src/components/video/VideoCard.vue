@@ -534,7 +534,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .theme--light .video-watched {
   color: var(--v-secondary-darken2) !important;
 }
@@ -616,9 +616,10 @@ export default {
   font-size: 0.8125rem;
   letter-spacing: 0.025em;
   line-height: 0.81rem;
-}
-.video-duration.video-duration-live {
-  background-color: rgba(148, 0, 0, 0.8);
+
+  &.video-duration-live {
+    background-color: rgba(148, 0, 0, 0.8);
+  }
 }
 
 .video-topic {
@@ -639,11 +640,17 @@ export default {
 
 .video-card-horizontal {
   flex-direction: row !important;
-}
 
-.video-card-horizontal > .video-thumbnail {
-  margin-right: 5px;
-  width: 150px !important;
+  .video-thumbnail {
+    margin-right: 5px;
+    width: 150px !important;
+  }
+
+  .video-card-text {
+    .video-card-lines {
+      justify-content: space-around;
+    }
+  }
 }
 
 .name-vtuber {
