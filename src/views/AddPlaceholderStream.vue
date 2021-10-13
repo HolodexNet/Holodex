@@ -88,7 +88,7 @@
                 <v-col>
                   <v-select
                     v-model="timezone"
-                    :items="['JST', 'PST', 'GMT']"
+                    :items="TIMEZONES"
                     label="Timezone"
                     required
                     :rules="[requiredRule, timeRule]"
@@ -193,7 +193,7 @@ export default {
             certainty: "",
             liveDate: dayjs().format("YYYY-MM-DD"),
             liveTime: "",
-            timezone: "JST",
+            timezone: "Asia/Tokyo",
             duration: 60,
             PLACEHOLDER_TYPES: [
                 {
@@ -217,6 +217,20 @@ export default {
                 {
                     text: "Likely",
                     value: "likely",
+                },
+            ],
+            TIMEZONES: [
+                {
+                    text: "JST",
+                    value: "Asia/Tokyo",
+                },
+                {
+                    text: "PST",
+                    value: "America/Los_Angeles",
+                },
+                {
+                    text: "GMT",
+                    value: "Etc/GMT",
                 },
             ],
             showDatePicker: false,
@@ -251,9 +265,9 @@ export default {
         },
         availableAt() {
             if (this.liveTime && this.timezone && this.liveDate) {
-                return dayjs(`${this.liveDate} ${this.liveTime}`).tz(this.timezone);
+                return dayjs.tz(`${this.liveDate} ${this.liveTime}`, this.timezone).toISOString();
             }
-            return dayjs().toString();
+            return dayjs().toISOString();
         },
         credits() {
             if (!this.isEditor && !this.token) return null;

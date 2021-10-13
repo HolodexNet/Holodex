@@ -176,7 +176,7 @@ export default {
         },
         channels() {
             return this.activeVideos.map((video, index) => ({
-                text: video.channel.name.split(" ")[0],
+                text: video.channel[this.$store.state.settings.nameProperty] || video.channel.name,
                 value: index,
             }));
         },

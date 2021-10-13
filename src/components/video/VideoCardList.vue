@@ -201,7 +201,7 @@ export default {
 <style lang="scss">
 .video-col {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 
     &.video-1 {
         padding-left: 0px;
