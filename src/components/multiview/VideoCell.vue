@@ -134,6 +134,7 @@ export default {
 
             if (this.editMode) this.$store.commit("multiview/unfreezeLayoutItem", this.item.i);
             else this.$store.commit("multiview/freezeLayoutItem", this.item.i);
+            this.setTimer();
         },
         // eslint-disable-next-line func-names
         "video.id": function () {
@@ -223,7 +224,7 @@ export default {
             if (this.video.status !== "past") return;
             this.timer = setInterval(async () => {
                 this.currentTime = await this.$refs.player.getCurrentTime();
-            }, 1000);
+            }, 200);
         },
     },
 };
