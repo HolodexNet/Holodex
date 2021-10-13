@@ -6,6 +6,7 @@
       'fixed-right': fixedRight,
       'show-tl-overlay': showTlChat,
       'fluid': fluid,
+      'mobile-live-chat': $store.state.isMobile,
     }"
   >
     <span v-if="showYtChat && !needExtension" class="loading-text">
