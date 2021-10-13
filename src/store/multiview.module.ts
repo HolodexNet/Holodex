@@ -8,6 +8,8 @@ import type { Content } from "@/utils/mv-utils";
 import api from "@/utils/backend-api";
 import Vue from "vue";
 import debounce from "lodash-es/debounce";
+import axios from "axios";
+import { CHANNEL_URL_REGEX } from "@/utils/consts";
 
 const initialState = {
     layout: [],
@@ -69,25 +71,44 @@ const getters = {
     },
 };
 
+const missingVideoDataFilter = (x) => x.type === "video" && x.video.type !== "twitch" && x.video.id === x.video.channel?.name && !(x?.video?.noData);
+
 const actions = {
-    fetchVideoData({ state, commit }) {
+    async fetchVideoData({ state, commit }) {
         // Load missing video data from backend
         const videoIds = new Set<string>(Object.values<Content>(state.layoutContent)
-            .filter((x) => x.type === "video" && x.video.type !== "twitch" && x.video.id === x.video.channel?.name && !(x?.video?.noData))
+            .filter(missingVideoDataFilter)
             .map((x) => x.video.id));
-        if (videoIds.size) {
-            api
-                .videos({
-                    include: "live_info",
-                    id: [...videoIds].join(","),
-                })
-                .then(({ data }) => {
-                    commit("setVideoData", data);
-                })
-                .catch((e) => {
-                    console.error(e);
-                });
-        }
+        // Nothing to do
+        if (!videoIds.size) return;
+        const { data } = await api.videos({
+            include: "live_info",
+            id: [...videoIds].join(","),
+        });
+        // Delete all the videos pulled from backend
+        data.forEach((video) => {
+            videoIds.delete(video.id);
+        });
+        // Fetch still missing video data from yt's oembed endpoint (only has limited data)
+        const results = await Promise.all([...videoIds].map((id) => {
+            const url = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}`;
+            return axios.get(url);
+        }));
+        const dataFromYt = results.map((res) => {
+            const { data, config } = res;
+            const channel = data.author_url.match(CHANNEL_URL_REGEX);
+            const channelId = channel.length >= 2 && channel[1];
+            const videoId = config.url.replace("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=", "");
+            return {
+                id: videoId,
+                title: data.title,
+                channel: {
+                    name: data.author_name,
+                    id: channelId || data.author_name,
+                },
+            };
+        });
+        commit("setVideoData", [...data, ...dataFromYt]);
     },
 };
 
@@ -218,11 +239,8 @@ const mutations = {
                 }
             });
         });
-        Object.values<Content>(state.layoutContent).forEach((x) => {
-            if (x.type === "video" && x.video.type !== "twitch" && x.video.id === x.video.channel?.name && !x.video.noData) {
-                x.video.noData = true;
-            }
-        });
+        // Mark videos still missing data, so it doesn't attempt to fetch again
+        Object.values<Content>(state.layoutContent).filter(missingVideoDataFilter).forEach((x) => { x.video.noData = true; });
     },
 };
 

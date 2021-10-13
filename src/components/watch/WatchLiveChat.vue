@@ -125,12 +125,12 @@ export default {
             return this.value.showYtChat;
         },
         liveChatUrl() {
-            if (!this.video || this.video.type !== "stream") return null;
+            if (!this.video) return null;
             const query = {
                 v: this.video.id,
                 embed_domain: window.location.hostname,
                 dark_theme: this.$vuetify.theme.dark ? "1" : "0",
-                ...this.video.status === "past" && { c: this.video.channel.id },
+                ...this.video.status === "past" && { c: this.video.channel?.id },
             };
             const q = new URLSearchParams(query).toString();
             if (this.video.status === "past") {
