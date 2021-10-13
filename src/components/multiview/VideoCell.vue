@@ -224,7 +224,10 @@ export default {
             if (this.video.status !== "past") return;
             this.timer = setInterval(async () => {
                 this.currentTime = await this.$refs.player.getCurrentTime();
-            }, 200);
+            }, 500);
+        },
+        seekTo(t) {
+            this.$refs.player.seekTo(t);
         },
     },
 };

@@ -116,6 +116,13 @@ export default {
         isMuted() {
             return this.player.isMuted();
         },
+        seekTo(t) {
+            this.player.seekTo(t);
+        },
+        setPlaying(playing) {
+            if (!this.player) return;
+            !playing ? this.player.pauseVideo() : this.player.playVideo();
+        },
         async sendLikeEvent() {
             const iframe = await this.player.getIframe();
             iframe.contentWindow.postMessage({ event: "likeVideo" }, "*");

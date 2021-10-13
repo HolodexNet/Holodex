@@ -131,7 +131,10 @@
       :default-overwrite="overwriteMerge"
       :layout-preview="overwriteLayoutPreview"
     />
+
     <media-controls v-model="showMediaControls" />
+
+    <MultiviewSyncBar v-model="showSyncBar" />
   </div>
 </template>
 
@@ -149,8 +152,9 @@ import MultiviewLayoutMixin from "@/components/multiview/MultiviewLayoutMixin";
 import LayoutChangePrompt from "@/components/multiview/LayoutChangePrompt.vue";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
 import MultiviewBackground from "@/components/multiview/MultiviewBackground.vue";
+import MultiviewSyncBar from "@/components/multiview/MultiviewSyncBar.vue";
 import {
-    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiTuneVertical,
+    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiTuneVertical, mdiTimerOutline,
 } from "@mdi/js";
 import { decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
@@ -172,6 +176,7 @@ export default {
         CellContainer,
         MediaControls,
         MultiviewBackground,
+        MultiviewSyncBar,
     },
     mixins: [MultiviewLayoutMixin],
     metaInfo() {
@@ -189,7 +194,7 @@ export default {
             mdiContentSave,
 
             showSelectorForId: -1,
-
+            showSyncBar: true,
             overwriteDialog: false, // whether to show the overwrite dialog.
             overwriteCancel: null, // callbacks that will be generated when needed.
             overwriteConfirm: null, // callbacks to be generated when needed.
@@ -243,6 +248,11 @@ export default {
                     tooltip: this.$t("views.multiview.fullScreen"),
                     collapse: true,
                 },
+                {
+                    icon: mdiTimerOutline,
+                    onClick: this.toggleSyncBar,
+                    tooltip: "Toggle Sync Bar",
+                },
             ]);
         },
         ...mapState("multiview", ["layout", "layoutContent", "presetLayout", "autoLayout"]),
@@ -260,7 +270,9 @@ export default {
             return this.$store.state.isMobile;
         },
         rowHeight() {
-            return (this.$vuetify.breakpoint.height - (this.collapseToolbar ? 0 : 64)) / 24.0;
+            return (this.$vuetify.breakpoint.height
+                - (this.collapseToolbar ? 0 : 64)
+                - (this.showSyncBar ? 64 : 0)) / 24.0;
         },
         columnWidth() {
             return this.$vuetify.breakpoint.width / 24.0;
@@ -376,6 +388,9 @@ export default {
             } else if (document.exitFullscreen) {
                 document.exitFullscreen();
             }
+        },
+        toggleSyncBar() {
+            this.showSyncBar = !this.showSyncBar;
         },
     },
 };

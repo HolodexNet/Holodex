@@ -120,6 +120,10 @@ export default {
         setMute(value) {
             this.player.setMuted(value);
         },
+        setPlaying(playing) {
+            if (!this.player) return;
+            !playing ? this.player.pause() : this.player.play();
+        },
     },
 };
 </script>
