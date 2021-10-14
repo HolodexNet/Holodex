@@ -49,8 +49,13 @@ component:
     googleCalendar: Zu Google Kalender hinzufügen
     totalTLs: Anzahl an Übersetzungen im Live-Chat
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
+    typeScheduledYT: Geplanter Stream
+    typeExternalStream: Externer Stream
+    typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -152,6 +157,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
