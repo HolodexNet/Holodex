@@ -49,8 +49,13 @@ component:
     googleCalendar: Tambahkan ke Kalender Google
     totalTLs: Jumlah Terjemahan Obrolan
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
+    typeScheduledYT: Stream Terjadwal
+    typeExternalStream: Stream Eksternal
+    typeEventPlaceholder: Acara Terjadwal
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -152,6 +157,7 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
