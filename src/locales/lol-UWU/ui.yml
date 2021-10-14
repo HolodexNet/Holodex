@@ -49,8 +49,13 @@ component:
     googleCalendar: Add to googwe cawendaw
     totalTLs: Totaw wive chat tls
     tlPresence: Active twanswatow in wast 30 mins
+    typeScheduledYT: Scheduwed stweam
+    typeExternalStream: Extewnaw stweam
+    typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -152,6 +157,7 @@ views:
     collabs: Cowwabs
     about: About
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
