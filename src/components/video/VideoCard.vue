@@ -79,12 +79,19 @@
         </div>
         <div v-else class="d-flex flex-column align-end ">
           <!-- (👻✅) -->
-          <v-icon
-            color="white"
-            class="video-duration rounded-sm"
-          >
-            {{ placeholderIconMap[data.placeholderType] }}
-          </v-icon>
+          <div class="video-duration">
+            <span v-if="data.placeholderType === 'scheduled-yt-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeScheduledYT') }}</span>
+            <span v-else-if="data.placeholderType === 'external-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeExternalStream') }}</span>
+            <span v-else-if="data.placeholderType === 'event'" class="hover-placeholder">{{ $t('component.videoCard.typeEventPlaceholder') }}</span>
+
+            <v-icon
+              color="white"
+              class="rounded-sm"
+            >
+              {{ placeholderIconMap[data.placeholderType] }}
+            </v-icon>
+          </div>
+
         </div>
       </div>
       <v-img
@@ -94,6 +101,7 @@
         width="100%"
         :transition="false"
         class="rounded"
+        :class="{'hover-opacity': data.placeholderType === 'scheduled-yt-stream'}"
       />
       <v-img
         v-else-if="!horizontal && shouldHideThumbnail"
@@ -609,6 +617,29 @@ export default {
 
 .video-card:hover .hover-show {
   visibility: visible;
+}
+
+.video-card .hover-placeholder {
+  visibility: hidden;
+  display: none;
+  line-height: 13px;
+  position: relative;
+  top: 1px;
+}
+
+.video-card:hover .hover-placeholder {
+  visibility: visible;
+  display: inline-block;
+  line-height: 13px;
+  position: relative;
+  top: 1px;
+}
+
+.video-card .hover-opacity {
+  opacity: 0.6;
+}
+.video-card:hover .hover-opacity {
+  opacity: 1.0;
 }
 
 .video-duration {

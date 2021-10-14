@@ -48,6 +48,9 @@ component:
     googleCalendar: Add to Google Calendar
     totalTLs: Total live chat TLs
     tlPresence: Active translator in last 30 mins
+    typeScheduledYT: Scheduled Stream
+    typeExternalStream: External Stream
+    typeEventPlaceholder: Scheduled Event
   videoDescription:
     description: Description
   video:
@@ -307,7 +310,9 @@ views:
           minutes of being live
         connectedToChat: Connected
         disconnectedToChat: Disconnected
-      archiveNeedExtension: Archive chat does not work without the {0} extension or other third party extensions.
+      archiveNeedExtension: >-
+        Archive chat does not work without the {0} extension or other third
+        party extensions.
     removeFromPlaylist: Remove video from current playlist
     saveToPlaylist: Save video to current playlist
     likeOnYoutube: Like video on Youtube
