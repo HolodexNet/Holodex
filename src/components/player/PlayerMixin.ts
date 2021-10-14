@@ -60,6 +60,9 @@ export default {
         isMuted() {
             /* no-op */
         },
+        setPlaying(playing) {
+            /* no-op */
+        },
         initListeners() {
             if (this.manualUpdate) return;
             // Could consider using .sync two way prop, but ytPlayer makes it kind of makes it hard

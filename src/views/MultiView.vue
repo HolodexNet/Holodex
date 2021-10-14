@@ -36,52 +36,13 @@
     </MultiviewToolbar>
 
     <!-- Multiview Cell Area Background -->
-    <div
-      class="mv-background"
-      :style="{
-        'background-size': `${columnWidth}px ${rowHeight}px`,
-        height: `calc(100% - ${collapseToolbar ? 0 : 64}px)`,
-        top: `${collapseToolbar ? 0 : 64}px`,
-      }"
-    >
-      <template v-if="layout.length === 0">
-        <div v-if="!collapseToolbar" style="max-width: 50%; display: inline-block">
-          <div style="display: inline-block; margin-right: 20px; margin-left: 10px">
-            <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
-            {{ $t("views.multiview.autoLayoutTip") }}
-          </div>
-        </div>
-        <div v-if="!collapseToolbar" style="max-width: 50%; display: inline-block; float: right">
-          <div style="display: inline-block; margin-right: 10px">
-            <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
-            {{ $t("views.multiview.createLayoutTip") }}
-          </div>
-        </div>
-        <div v-if="collapseToolbar" style="max-width: 50%; display: inline-block; float: right">
-          <div style="display: inline-block; margin-right: 10px">
-            <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 95%; margin-top: 28px" />
-            {{ $t("views.multiview.openToolbarTip") }}
-          </div>
-        </div>
-        <div style="padding-top: 10vh" class="d-flex justify-center">
-          <div class="hints">
-            <div class="text-h4">
-              {{ $t("views.multiview.hints") }}
-            </div>
-            <div>1. <v-icon>{{ icons.mdiGridLarge }}</v-icon> {{ $t("views.multiview.presetsHint") }}</div>
-            <!-- <div>2. <v-icon>{{ mdiContentSave }}</v-icon> Customize your experience by creating and saving layouts</div> -->
-            <div>
-              2.
-              <v-icon>{{ mdiTuneVertical }}</v-icon>
-              {{ $t("views.multiview.mediaControlsHint1") }}
-              <v-icon>{{ mdiFastForward }}</v-icon>
-              {{ $t("views.multiview.mediaControlsHint2") }}
-            </div>
-            <div>3. <v-icon>{{ mdiCardPlus }}</v-icon> {{ $t("views.multiview.dragDropHint") }}</div>
-          </div>
-        </div>
-      </template>
-    </div>
+    <multiview-background
+      :show-tips="layout.length === 0"
+      :column-width="columnWidth"
+      :row-height="rowHeight"
+      :collapse-toolbar="collapseToolbar"
+    />
+
     <!-- Floating button to open toolbar when collapsed -->
     <v-btn
       v-if="collapseToolbar"
@@ -170,13 +131,15 @@
       :default-overwrite="overwriteMerge"
       :layout-preview="overwriteLayoutPreview"
     />
+
     <media-controls v-model="showMediaControls" />
+
+    <MultiviewSyncBar v-model="showSyncBar" />
   </div>
 </template>
 
 <script lang="ts">
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
-// import Cell from "@/components/multiview/Cell.vue";
 import MediaControls from "@/components/multiview/MediaControls.vue";
 import EmptyCell from "@/components/multiview/EmptyCell.vue";
 import VideoCell from "@/components/multiview/VideoCell.vue";
@@ -188,8 +151,10 @@ import MultiviewToolbar from "@/components/multiview/MultiviewToolbar.vue";
 import MultiviewLayoutMixin from "@/components/multiview/MultiviewLayoutMixin";
 import LayoutChangePrompt from "@/components/multiview/LayoutChangePrompt.vue";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
+import MultiviewBackground from "@/components/multiview/MultiviewBackground.vue";
+import MultiviewSyncBar from "@/components/multiview/MultiviewSyncBar.vue";
 import {
-    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical, mdiFastForward,
+    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiTuneVertical, mdiTimerOutline,
 } from "@mdi/js";
 import { decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
@@ -210,6 +175,8 @@ export default {
         LayoutChangePrompt,
         CellContainer,
         MediaControls,
+        MultiviewBackground,
+        MultiviewSyncBar,
     },
     mixins: [MultiviewLayoutMixin],
     metaInfo() {
@@ -223,13 +190,11 @@ export default {
     data() {
         return {
             mdiCardPlus,
-            mdiPause,
-            mdiFastForward,
             mdiTuneVertical,
             mdiContentSave,
 
             showSelectorForId: -1,
-
+            showSyncBar: true,
             overwriteDialog: false, // whether to show the overwrite dialog.
             overwriteCancel: null, // callbacks that will be generated when needed.
             overwriteConfirm: null, // callbacks to be generated when needed.
@@ -260,15 +225,6 @@ export default {
                     color: "red",
                     collapse: true,
                 },
-                // {
-                //     icon: this.icons.mdiGridLarge,
-                //     tooltip: this.$t("views.multiview.presets"),
-                //     onClick: () => {
-                //         this.showPresetSelectorMenu = true;
-                //     },
-                //     color: "primary",
-                //     collapse: true,
-                // },
                 {
                     icon: mdiContentSave,
                     onClick: () => {
@@ -283,7 +239,6 @@ export default {
                     tooltip: this.$t("views.multiview.mediaControls"),
                     color: "orange",
                     onClick: () => {
-                        // this.setMuteAll(true);
                         this.showMediaControls = !this.showMediaControls;
                     },
                 },
@@ -292,6 +247,11 @@ export default {
                     onClick: this.toggleFullScreen,
                     tooltip: this.$t("views.multiview.fullScreen"),
                     collapse: true,
+                },
+                {
+                    icon: mdiTimerOutline,
+                    onClick: this.toggleSyncBar,
+                    tooltip: "Toggle Sync Bar",
                 },
             ]);
         },
@@ -310,7 +270,9 @@ export default {
             return this.$store.state.isMobile;
         },
         rowHeight() {
-            return (this.$vuetify.breakpoint.height - (this.collapseToolbar ? 0 : 64)) / 24.0;
+            return (this.$vuetify.breakpoint.height
+                - (this.collapseToolbar ? 0 : 64)
+                - (this.showSyncBar ? 64 : 0)) / 24.0;
         },
         columnWidth() {
             return this.$vuetify.breakpoint.width / 24.0;
@@ -427,19 +389,14 @@ export default {
                 document.exitFullscreen();
             }
         },
+        toggleSyncBar() {
+            this.showSyncBar = !this.showSyncBar;
+        },
     },
 };
 </script>
 
 <style lang="scss">
-.mv-background {
-    opacity: 0.75;
-    position: absolute;
-    width: 100%;
-    background-repeat: initial;
-    background-image: linear-gradient(to right, rgba(128, 128, 128, 0.15) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(128, 128, 128, 0.15) 1px, transparent 1px);
-}
 .mobile-helpers {
     -webkit-user-select: none;
     -khtml-user-select: none;
