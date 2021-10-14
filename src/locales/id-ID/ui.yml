@@ -51,8 +51,6 @@ component:
     tlPresence: Penerjemah aktif dalam 30 menit terakhir
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -154,7 +152,6 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -288,7 +285,8 @@ views:
           Saat ini Streaming belum dimulai, coba lagi nanti setelah stream 15 menit dimulai
         connectedToChat: Terhubung
         disconnectedToChat: Terputus
-      archiveNeedExtension: Arsip obrolan tidak dapat bekerja tanpa ekstensi {0} atau ekstensi pihak ketiga lainnya.
+      archiveNeedExtension: >-
+        Arsip obrolan tidak dapat bekerja tanpa ekstensi {0} atau ekstensi pihak ketiga lainnya.
     removeFromPlaylist: Hapus video dari playlist ini
     saveToPlaylist: Simpan video ke playlist ini
     likeOnYoutube: Suka video ini di Youtube
