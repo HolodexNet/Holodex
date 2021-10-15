@@ -1,32 +1,42 @@
 <template>
-  <v-sheet v-if="value" class="sync-bar pa-2 d-flex">
+  <v-sheet class="sync-bar pa-2 d-flex justify-center align-center">
     <div class="mr-2">
-      {{ currentSliderValue }} / 100
+      <v-btn icon @click="paused = !paused">
+        <v-icon large>
+          {{ paused ?icons.mdiPlay : mdiPause }}
+        </v-icon>
+      </v-btn>
     </div>
-    <div style="position: relative;" class="flex-grow-1">
-      <template v-for="(v, index) in progressOffsetAndWidths">
+    <div style="position: relative;" class="flex-grow-1 align-self-start">
+      <template v-for="(v) in progressOffsetAndWidths">
         <v-progress-linear
           :key="v.id"
-          style="position: absolute; z-index: 1;"
+          style="z-index: 1;"
           color="secondary"
           :style="{
-            left: (v.left*100).toFixed(2) + '%',
+            marginLeft: (v.offset*100).toFixed(2) + '%',
+            marginBottom: '2px',
             width: (v.width*100).toFixed(2) + '%',
-            top: (index*5) + 'px',
           }"
-          :value="(currentProgress && currentProgress[v.id]) || 0"
+          :value="currentTsByVideo[v.id] || 0"
         />
       </template>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        :value="currentSliderValue"
-        class="sync-slider"
-        step="0.01"
-        @change="onSliderChange"
-        @input="onInput"
-      >
+      <div class="slider-container">
+        <input
+          ref="syncSlider"
+          type="range"
+          min="0"
+          max="100"
+          :value="currentProgress"
+          class="sync-slider"
+          step="0.01"
+          @change="onSliderChange"
+          @input="onInput"
+        >
+        <div ref="timeTooltip" class="time-tooltip" :style="{ left: timerTooltipLeft + '%' }">
+          {{ timerTooltipText }}
+        </div>
+      </div>
     </div>
   </v-sheet>
 </template>
@@ -34,7 +44,12 @@
 <script lang="ts">
 import { mapState, mapGetters } from "vuex";
 import { dayjs } from "@/utils/time";
-import type { Content } from "@/utils/mv-utils";
+import Vue from "vue";
+import throttle from "lodash-es/throttle";
+
+import {
+    mdiPause, mdiFastForward,
+} from "@mdi/js";
 
 export default {
     name: "MultiviewSyncBar",
@@ -45,8 +60,18 @@ export default {
     },
     data() {
         return {
+            mdiPause,
+            mdiFastForward,
             interacting: false,
             interactValue: 0,
+
+            expectedTs: 0,
+            bufferTs: 0,
+            currentTs: 0,
+            paused: true,
+            currentTsByVideo: {},
+            currentSliderValue: 0,
+            timer: null,
         };
     },
     computed: {
@@ -94,53 +119,124 @@ export default {
             const totalTime = this.maxTs - this.minTs;
             return this.videosWithOverlap.map((v) => ({
                 id: v.id,
-                left: (v.startTs - this.minTs) / totalTime,
+                offset: (v.startTs - this.minTs) / totalTime,
                 width: (v.endTs - v.startTs) / totalTime,
             }));
         },
-        // eslint-disable-next-line func-names
         currentProgress() {
-            const progress = {};
-            this.videosWithOverlap.forEach((v) => {
-                const videoCellContent = Object.values<Content>(this.layoutContent).find((content) => content.id === v.id);
-                progress[v.id] = (((videoCellContent?.currentTime || 0) / v.duration) * 100).toFixed(2);
-            });
-            return progress;
+            return this.getPercentForTime(this.currentTs) * 100;
         },
-        currentSliderValue() {
-            if (!this.videosWithOverlap.length) return 0;
-            const times = this.videosWithOverlap.map((v) => (this.currentProgress[v.id] === "0.00" ? 0 : v.startTs + (this.currentProgress[v.id] / 100) * v.duration));
-            const progress = Math.max(...times);
-            // Stop slider from jumping while interacting, and getting updates from player
-            return this.interacting ? this.interactValue : (((progress - this.minTs) / (this.maxTs - this.minTs)) * 100).toFixed(2);
+        timerTooltipLeft() {
+            return this.interacting ? (this.getPercentForTime(this.bufferTs) * 100) : this.currentProgress;
+        },
+        timerTooltipText() {
+            return this.interacting ? dayjs.unix(this.bufferTs).format("LTS") : dayjs.unix(this.getTimeForPercent(this.currentProgress / 100)).format("LTS");
         },
     },
     watch: {
-        videosWithOverlap(val) {
-            if (!val.length) this.$emit("input", false);
-        },
-    },
-    methods: {
-        onSliderChange(e) {
-            this.setTime(e.target.value / 100);
-            this.interacting = false;
-        },
-        onInput(e) {
-            this.interacting = true;
-            this.interactValue = e.target.value;
-        },
-        setTime(percent) {
-            const ts = percent * (this.maxTs - this.minTs) + this.minTs;
+        // videosWithOverlap(val) {
+        //     if (!val.length) this.$emit("input", false);
+        // },
+        paused(pause) {
             this.$parent.$refs.videoCell
                 .forEach((cell) => {
                     const { video } = cell;
                     const olVideo = video && this.videosWithOverlap.find((v) => v.id === video.id);
-                    if (!video || !olVideo) return;
+                    if (olVideo && pause) cell.setPlaying(false);
+                    else this.setTime(this.currentTs);
+                });
+        },
+    },
+    mounted() {
+        this.$refs.syncSlider.addEventListener("mousemove", this.onMouseOver, false);
+        this.$refs.syncSlider.addEventListener("mouseout", this.onMouseLeave, false);
+        this.startTimer();
+    },
+    beforeDestroy() {
+        this.timer && clearInterval(this.timer);
+        this.$refs.syncSlider.removeEventListener("mousemove", this.onMouseOver);
+        this.$refs.syncSlider.removeEventListener("mouseout", this.onMouseLeave);
+    },
+    methods: {
+        onMouseOver: throttle(function (e) {
+            const offsetLeft = e.target.getBoundingClientRect().x;
+            // console.log(e.clientX, e.target.offsetLeft, e.target.clientWidth);
+            const percent = (e.clientX - offsetLeft) / e.target.clientWidth;
+            // this.$refs.timeTooltip.style.left = `${(e.clientX - offsetLeft)}px`;
+            this.bufferTs = this.getTimeForPercent(percent);
+            // this.$refs.timeTooltip.textContent = dayjs.unix(this.bufferTs).format("LTS");
+            this.interacting = true;
+        }, 10),
+        onMouseLeave(e) {
+            this.interacting = false;
+        },
+        onSliderChange(e) {
+            const ts = this.getTimeForPercent((e.target.value / 100));
+            this.setTime(ts);
+            this.interacting = false;
+            this.currentTs = this.getTimeForPercent(e.target.value / 100);
+        },
+        onInput(e) {
+            this.interacting = true;
+            this.interactValue = e.target.value;
+            // this.currentProgress = e.target.value;
+        },
+        getTimeForPercent(percent) {
+            return (percent * (this.maxTs - this.minTs)) + this.minTs;
+        },
+        getPercentForTime(ts) {
+            return (ts - this.minTs) / (this.maxTs - this.minTs);
+        },
+        getProgressPercentByAbsoluteTime(ts, video) {
+            return Math.min(100, Math.max(((ts - video.startTs) / (video.endTs - video.startTs)) * 100, 0));
+        },
+        sync() {
+            if (this.currentTs <= 0) this.currentTs = this.minTs;
+            const states = [];
+            const deltas = [];
+            this.$parent.$refs.videoCell
+                .forEach((cell) => {
+                    const { video, currentTime } = cell;
+                    // Find corresponding overlapping video
+                    const olVideo = video && this.videosWithOverlap.find((v) => v.id === video.id);
+                    if (!olVideo) return;
+
+                    // Update pervideo progress bar
+                    const percentProgress = ((currentTime / olVideo.duration) * 100).toFixed(2);
+                    Vue.set(this.currentTsByVideo, olVideo.id, percentProgress);
+
+                    // Calc delta times to keep things in sync
+                    const expectedDuration = this.currentTs - olVideo.startTs;
+                    const delta = Math.abs(expectedDuration - currentTime);
+                    const isBefore = expectedDuration < 0;
+                    const isAfter = expectedDuration / olVideo.duration > 1;
+                    deltas.push(delta);
+                    if (isBefore || isAfter) {
+                        cell.setPlaying(false);
+                        // Sync if current cell delta is over 2 seconds
+                    } else if (expectedDuration > 0 && delta > 2) {
+                        cell.setPlaying(!this.paused);
+                        cell.seekTo(expectedDuration);
+                    }
+                });
+            // Wait for all videos to exit buffering state to increment currentTs if not paused
+            if (!states.includes(3) && !this.paused) {
+                this.currentTs = Math.min(Math.max(this.currentTs + 0.5, this.minTs), this.maxTs);
+            }
+
+            console.log("deltas: ", deltas);
+        },
+        setTime(ts) {
+            this.$parent.$refs.videoCell
+                .forEach((cell) => {
+                    const { video } = cell;
+                    const olVideo = video && this.videosWithOverlap.find((v) => v.id === video.id);
+                    if (!olVideo) return;
 
                     const currentTime = ts - olVideo.startTs;
                     const isBefore = currentTime < 0;
                     const isAfter = currentTime / olVideo.duration > 1;
-                    // console.log(currentTime, isBefore, isAfter);
+                    console.log(currentTime, isBefore, isAfter);
                     if (isBefore) {
                         // cell.seekTo(0);
                         cell.setPlaying(false);
@@ -150,27 +246,31 @@ export default {
                     if (isAfter) {
                         // cell.seekTo(olVideo.duration);
                         cell.setPlaying(false);
-                        cell.seekTo(olVideo.duration);
+                        cell.seekTo(olVideo.duration - 1);
                         return;
                     }
-                    cell.setPlaying(true);
-                    if (!isBefore || !isAfter) cell.seekTo(currentTime);
+                    cell.setPlaying(!this.paused);
+                    cell.seekTo(currentTime);
                 });
+        },
+        startTimer() {
+            if (this.timer) clearInterval(this.timer);
+            this.timer = setInterval(this.sync, 500);
         },
     },
 };
 </script>
 
-<style>
+<style lang="scss">
 .sync-bar {
     width: 100%;
     height: 64px;
     position: absolute;
     /* bottom: 0; */
 }
-
 .sync-slider {
   position: absolute;
+  top: 0;
   z-index: 20;
   -webkit-appearance: none;  /* Override default CSS styles */
   appearance: none;
@@ -181,6 +281,14 @@ export default {
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: .2s; /* 0.2 seconds transition on hover */
   transition: opacity .2s;
+}
+.time-tooltip {
+    position: absolute;
+    // height: 50px;
+    // border-left: 2px solid green;
+    opacity: 0.7;
+    z-index: 10;
+    top: -20px;
 }
 .sync-slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */

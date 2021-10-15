@@ -134,7 +134,7 @@
 
     <media-controls v-model="showMediaControls" />
 
-    <MultiviewSyncBar v-model="showSyncBar" />
+    <MultiviewSyncBar v-if="showSyncBar" />
   </div>
 </template>
 
