@@ -143,7 +143,7 @@ component:
   placeholderVideo:
     discordCredit: 'Maklumat acara ihsan {0} dari: {1}'
     datasourceCredit: Maklumat acara berpunca daripada {0}.
-    botCredit: Maklumat acara berpunca daripada {0} ihsan {1}.
+    botCredit: Maklumat acara disediakan melalui {0} hasil ciptaan {1}.
     streamPageBtn: Laman Siaran Langsung
     eventPageBtn: Laman Acara
     scheduledEvent: Perancangan
