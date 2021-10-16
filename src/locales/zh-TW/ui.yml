@@ -141,9 +141,9 @@ component:
       clear-playlist: 清空播放清單
     save-error-not-logged-in: 您需要登入後才能儲存播放清單
   placeholderVideo:
-    discordCredit: '活動資料由 {1} 伺服器的 {0} 提供'
-    datasourceCredit: 活動資料擷取自 {0} 個不同來源
-    botCredit: 活動資料由 {0} 個來源所提供，並由 {1} 創建
+    discordCredit: '本活動資料由 {1} 伺服器的 {0} 所提供'
+    datasourceCredit: 本活動資料出自 {0} BOT
+    botCredit: 本活動資料由 {1} 依照 {0} BOT 所提供之資料建立
     streamPageBtn: 實況頁面
     eventPageBtn: 活動頁面
     scheduledEvent: 已排定
