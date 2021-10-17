@@ -49,8 +49,13 @@ component:
     googleCalendar: Google Calendar에 추가
     totalTLs: 전체 실시간 채팅 TL
     tlPresence: 최근 30분 간 활동 중인 번역가
+    typeScheduledYT: 예정된 스트리밍
+    typeExternalStream: 외부 스트리밍
+    typeEventPlaceholder: 예정된 이벤트
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -142,7 +147,7 @@ component:
     streamPageBtn: 실시간 페이지
     eventPageBtn: 이벤트 페이지
     scheduledEvent: 예정
-    editorCredit: Holdex 에디터 {0}님이 설정한 이벤트입니다.
+    editorCredit: Holodex 에디터 {0}님이 설정한 이벤트입니다.
     creditTitleText: '크레딧:'
 views:
   channel:
@@ -152,6 +157,7 @@ views:
     collabs: 콜라보
     about: 정보
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 구독자
       group: 그룹
