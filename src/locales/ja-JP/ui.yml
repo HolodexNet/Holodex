@@ -350,6 +350,8 @@ views:
     page-heading: 'プレイリスト:'
     page-instruction: プレイリストをクリックすると、アクティブに設定されます。
     change-loss-warning: 保存されていない変更は失われます。続行しますか？
+  extension:
+    features: 機能
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'
