@@ -49,6 +49,9 @@ component:
     googleCalendar: Zu Google Kalender hinzufügen
     totalTLs: Anzahl an Übersetzungen im Live-Chat
     tlPresence: Aktiver Übersetzer in den letzten 30 Minuten
+    typeScheduledYT: Geplanter Stream
+    typeExternalStream: Externer Stream
+    typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
   video:
@@ -288,7 +291,8 @@ views:
           Der Stream ist noch nicht live. Bitte versuche es 15 Minuten vor Stream-Beginn erneut
         connectedToChat: Verbunden
         disconnectedToChat: Verbindung getrennt
-      archiveNeedExtension: Das Chatarchivieren funktioniert nicht ohne die {0} Erweiterung oder andere Erweiterungen Dritter.
+      archiveNeedExtension: >-
+        Das Chatarchivieren funktioniert nicht ohne die {0} Erweiterung oder andere Erweiterungen Dritter.
     removeFromPlaylist: Video von aktueller Playlist entfernen
     saveToPlaylist: Video zu aktueller Playlist hinzufügen
     likeOnYoutube: Video auf YouTube mit "Gefällt mir" markieren

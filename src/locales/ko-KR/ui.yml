@@ -49,6 +49,9 @@ component:
     googleCalendar: Google Calendar에 추가
     totalTLs: 전체 실시간 채팅 TL
     tlPresence: 최근 30분 간 활동 중인 번역가
+    typeScheduledYT: 예정된 스트리밍
+    typeExternalStream: 외부 스트리밍
+    typeEventPlaceholder: 예정된 이벤트
   videoDescription:
     description: 설명
   video:
@@ -144,7 +147,7 @@ component:
     streamPageBtn: 실시간 페이지
     eventPageBtn: 이벤트 페이지
     scheduledEvent: 예정
-    editorCredit: Holdex 에디터 {0}님이 설정한 이벤트입니다.
+    editorCredit: Holodex 에디터 {0}님이 설정한 이벤트입니다.
     creditTitleText: '크레딧:'
 views:
   channel:
@@ -288,7 +291,8 @@ views:
           아직 방송이 시작되지 않았습니다. 방송이 시작된 후 15분 이내에 다시 시도해보세요
         connectedToChat: 연결됨
         disconnectedToChat: 연결 끊김
-      archiveNeedExtension: 아카이브 채팅은 {0} 확장 프로그램 또는 다른 서드파티 확장 프로그램 없이는 작동하지 않습니다.
+      archiveNeedExtension: >-
+        아카이브 채팅은 {0} 확장 프로그램 또는 다른 서드파티 확장 프로그램 없이는 작동하지 않습니다.
     removeFromPlaylist: 현재 재생목록에서 동영상 제거
     saveToPlaylist: 현재 재생목록에 동영상 저장
     likeOnYoutube: YouTube에서 동영상 좋아요하기
@@ -351,7 +355,7 @@ views:
       name: 이름
       autoLayout: 자동 모드로 레이아웃 사용하기
     video:
-      selectLive: 방송 선택하기
+      selectLive: 방송 선택
       addCustomVideo: 사용자 지정 동영상 추가
     fullScreen: 전체 화면
     mediaControls: 미디어 제어

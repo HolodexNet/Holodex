@@ -272,7 +272,8 @@ views:
           配信はまだ開始されてないです。チャットは配信の予定時刻の15分前から使用可能になります。
         connectedToChat: 接続されました
         disconnectedToChat: 切断しました
-      archiveNeedExtension: アーカイブチャットは {0} 拡張機能または他のサードパーティ拡張機能なしでは動作しません。
+      archiveNeedExtension: >-
+        アーカイブチャットは {0} 拡張機能または他のサードパーティ拡張機能なしでは動作しません。
     removeFromPlaylist: 現在のプレイリストから動画を削除
     saveToPlaylist: 現在のプレイリストに動画を保存
     likeOnYoutube: YouTubeで動画に高評価を付ける
@@ -349,6 +350,8 @@ views:
     page-heading: 'プレイリスト:'
     page-instruction: プレイリストをクリックすると、アクティブに設定されます。
     change-loss-warning: 保存されていない変更は失われます。続行しますか？
+  extension:
+    features: 機能
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'

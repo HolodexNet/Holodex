@@ -49,6 +49,9 @@ component:
     googleCalendar: Add to googwe cawendaw
     totalTLs: Totaw wive chat tls
     tlPresence: Active twanswatow in wast 30 mins
+    typeScheduledYT: Scheduwed stweam
+    typeExternalStream: Extewnaw stweam
+    typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
   video:
@@ -288,7 +291,8 @@ views:
           Stweam ish not wive yet, pwease twy again when da stweam ish within 15 minutes of being wive
         connectedToChat: Connected
         disconnectedToChat: Disconnected
-      archiveNeedExtension: Awchive chat does not wowk without da {0} extension ow othew thiwd pawty extensions.
+      archiveNeedExtension: >-
+        Awchive chat does not wowk without da {0} extension ow othew thiwd pawty extensions.
     removeFromPlaylist: Remove bideo fwom cuwwent pwaywist
     saveToPlaylist: Save bideo to cuwwent pwaywist
     likeOnYoutube: Like bideo on youtube

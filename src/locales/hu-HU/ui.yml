@@ -51,8 +51,6 @@ component:
     tlPresence: Aktív fordító az utolsó 30 percben
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -154,7 +152,6 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -288,7 +285,8 @@ views:
           Még nem indult el az adás, kérlek próbáld újra amikor a stream 15 percre van indulástól
         connectedToChat: Csatlakozva
         disconnectedToChat: Lecsatlakozva
-      archiveNeedExtension: Az archive chat nem működik a {0} bővítménnyel vagy más harmadik féltől származó bővítményekkel.
+      archiveNeedExtension: >-
+        Az archive chat nem működik a {0} bővítménnyel vagy más harmadik féltől származó bővítményekkel.
     removeFromPlaylist: Videó eltávolítása a lejátszási listából
     saveToPlaylist: Videó mentése a lejátszási listába
     likeOnYoutube: Hüvelykujj Youtubeon

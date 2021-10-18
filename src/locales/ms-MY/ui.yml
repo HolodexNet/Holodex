@@ -49,6 +49,9 @@ component:
     googleCalendar: Tambahkan ke Kalendar Google
     totalTLs: Jumlah terjemahan sembang langsung
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
+    typeScheduledYT: Siaran Terancang
+    typeExternalStream: Siaran Luar
+    typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
   video:
@@ -140,7 +143,7 @@ component:
   placeholderVideo:
     discordCredit: 'Maklumat acara ihsan {0} dari: {1}'
     datasourceCredit: Maklumat acara berpunca daripada {0}.
-    botCredit: Maklumat acara berpunca daripada {0} ihsan {1}.
+    botCredit: Maklumat acara disediakan melalui {0} hasil ciptaan {1}.
     streamPageBtn: Laman Siaran Langsung
     eventPageBtn: Laman Acara
     scheduledEvent: Perancangan
@@ -288,7 +291,8 @@ views:
           Siaran langsung masih belum berlangsung. Cuba lagi apabila siaran berlangsung dalam masa 15 minit
         connectedToChat: Bersambung
         disconnectedToChat: Terputus
-      archiveNeedExtension: Ruangan sembang terarkib hanya berfungsi apabila pelanjutan/sambungan {0} atau mana-mana pelanjutan/sambungan pihak ketiga lain.
+      archiveNeedExtension: >-
+        Ruangan sembang terarkib hanya berfungsi apabila pelanjutan/sambungan {0} atau mana-mana pelanjutan/sambungan pihak ketiga lain.
     removeFromPlaylist: Alih keluar video daripada senarai main semasa
     saveToPlaylist: Simpan video pada senarai main semasa
     likeOnYoutube: Berikan tanda suka di YouTube
