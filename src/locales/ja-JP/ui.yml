@@ -351,6 +351,7 @@ views:
     page-instruction: プレイリストをクリックすると、アクティブに設定されます。
     change-loss-warning: 保存されていない変更は失われます。続行しますか？
   extension:
+    title: Holodex Plus 拡張機能
     features: 機能
 time:
   soon: まもなく開始
