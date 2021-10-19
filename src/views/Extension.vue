@@ -43,18 +43,6 @@
                   class="rounded-lg"
                 />
               </a>
-              <v-btn
-                class="white--text deep-purple rounded-lg mx-1"
-                target="_blank"
-                href="https://github.com/HolodexNet/Holodex-Plus"
-                :height="50"
-                title="Github Download"
-              >
-                <v-icon left large>
-                  {{ mdiGithub }}
-                </v-icon>
-                Install <br> from Github
-              </v-btn>
             </div>
           </v-col>
         </v-row>
@@ -64,10 +52,6 @@
 </template>
 
 <script>
-import {
-    mdiGithub,
-} from "@mdi/js";
-
 export default {
     name: "Extension",
     metaInfo() {
@@ -76,11 +60,6 @@ export default {
             get title() {
                 return `${vm.$t("views.extension.title")} - Holodex`;
             },
-        };
-    },
-    data() {
-        return {
-            mdiGithub,
         };
     },
 };
