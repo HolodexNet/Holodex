@@ -366,7 +366,7 @@ views:
     hints: Súgó
     presetsHint: Nyisd meg az előrendezések menüt az elrendezések váltásához és auto-elrendezés beállításához
     mediaControlsHint1: Használd a Média irányításokat, hogy némíts és összehangolj (
-    mediaControlsHint2: ) élő közvetítést
+    mediaControlsHint2: ) élő közvetítéseket
     dragDropHint: Húzz streameket az eszköztárból a cellákhoz, hogy elrendezd a streameket
   mugen:
     welcome: >-
