@@ -49,8 +49,13 @@ component:
     googleCalendar: Hozzáadás a Google naptárhoz
     totalTLs: Összes élő chat fordítás
     tlPresence: Aktív fordító az utolsó 30 percben
+    typeScheduledYT: Beütemezett stream
+    typeExternalStream: Külső Stream
+    typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -152,6 +157,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
