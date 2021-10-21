@@ -49,6 +49,9 @@ component:
     googleCalendar: Googleカレンダーに追加
     totalTLs: ライブチャット翻訳の合計
     tlPresence: 30分以内にアクティブな翻訳者
+    typeScheduledYT: 予定されている配信
+    typeExternalStream: 外部配信
+    typeEventPlaceholder: 予定されたイベント
   videoDescription:
     description: 概要
   description:
@@ -133,6 +136,15 @@ component:
       delete-playlist: プレイリストを削除
       clear-playlist: プレイリストを初期化
     save-error-not-logged-in: プレイリストを保存するにはログインが必要です。
+  placeholderVideo:
+    discordCredit: 'このイベントデータは {1} の {0} によって提供されました。'
+    datasourceCredit: このイベントデータは {0} データソースから取得しました。
+    botCredit: このイベントデータは {0} が作成した {1} データソースを通じて提供されました。
+    streamPageBtn: 配信ページ
+    eventPageBtn: イベントページ
+    scheduledEvent: スケジュール済み
+    editorCredit: このイベントは Holodex エディターの {0} がセットアップしました。
+    creditTitleText: 'クレジット:'
 views:
   channel:
     video: 動画
@@ -238,9 +250,10 @@ views:
       - 小
     hideCollabStreamsLabel: コラボ配信を表示しない
     hideCollabStreamsMsg: お気に入りページでコラボ配信を非表示にします
-    ignoredTopicsLabel: 除外されたトピック
+    ignoredTopicsLabel: 除外するトピック
     ignoredTopicsMsg: これらのトピックの動画はホームとお気に入りに表示されなくなります
     theme: テーマ
+    moreSettings: その他の設定
   app:
     update_available: ページの更新を利用可能です
     update_btn: アップデート
@@ -262,6 +275,7 @@ views:
       StickBottomSettingsDesc: 翻訳を画面下部に固定して表示します(デフォルトでは画面上部に表示します)
       showVerifiedMessages: 確認済みのユーザーのメッセージを表示
       showModeratorMessages: モデレータによるメッセージを表示
+      showLocalTime: ローカル時刻を表示
       tlFontSize: フォントサイズ
       tlWindowSize: 翻訳済みのボックスサイズ (%)、自動で0%に設定されます
       retryBtn: リトライ
@@ -317,6 +331,8 @@ views:
     addframe: セルを追加
     muteAll: 全てミュート
     unmuteAll: 全てミュート解除
+    muteOthers: 他をミュート
+    muteOthersDetail: 1つの配信以外をすべてミュートにする
     autoLayoutTip: チャンネルをクリックすると自動でレイアウトされた状態で視聴できます
     createLayoutTip: セルを追加してオリジナルのレイアウトを作成するか、プリセットを使用してください
     openToolbarTip: ツールバーを開いてマルチビューを開始
@@ -339,6 +355,14 @@ views:
     fullScreen: フルスクリーン
     mediaControls: メディアコントロール
     mediaControlsEmpty: 再生中の動画はここに表示されます
+    editAutoLayout: 自動レイアウトを編集
+    changeLayout: レイアウトを変更
+    done: 完了
+    hints: ヒント
+    presetsHint: プリセットメニューを開くとレイアウトを切り替えたり自動レイアウトについて設定したりできます
+    mediaControlsHint1: メディアコントロールを使うとライブストリームのミュートや同期 (
+    mediaControlsHint2: ) ができます
+    dragDropHint: ツールバーからセルに配信をドラッグ&ドロップして配信を整理します
   mugen:
     welcome: >-
       MugenClipsへようこそ！このページでは全員がランダムに選択されたホロライブの英訳切り抜きを見ています。世界中のホロライブのファンと一緒に見て、チャットしましょう。 先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
@@ -351,7 +375,14 @@ views:
     page-instruction: プレイリストをクリックすると、アクティブに設定されます。
     change-loss-warning: 保存されていない変更は失われます。続行しますか？
   extension:
+    title: Holodex Plus 拡張機能
     features: 機能
+    featureset:
+      one: 視聴ページとマルチビューでアーカイブのライブチャットが表示可能に
+      two: Holodex の視聴ページから動画を高く評価することが可能に
+      three: Youtube のライブチャットのメモリリークを修正
+      four: >-
+        Youtube プレイヤーの実験的フラグ (複数の配信を再生できない、待合室のサムネイルが表示されない) を修正、などなど!
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'

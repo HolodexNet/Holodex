@@ -49,8 +49,13 @@ component:
     googleCalendar: Hozzáadás a Google naptárhoz
     totalTLs: Összes élő chat fordítás
     tlPresence: Aktív fordító az utolsó 30 percben
+    typeScheduledYT: Beütemezett stream
+    typeExternalStream: Külső Stream
+    typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -152,6 +157,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -360,7 +366,7 @@ views:
     hints: Súgó
     presetsHint: Nyisd meg az előrendezések menüt az elrendezések váltásához és auto-elrendezés beállításához
     mediaControlsHint1: Használd a Média irányításokat, hogy némíts és összehangolj (
-    mediaControlsHint2: ) élő közvetítést
+    mediaControlsHint2: ) élő közvetítéseket
     dragDropHint: Húzz streameket az eszköztárból a cellákhoz, hogy elrendezd a streameket
   mugen:
     welcome: >-
