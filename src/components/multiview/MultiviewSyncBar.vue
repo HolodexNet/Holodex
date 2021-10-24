@@ -1,40 +1,65 @@
 <template>
-  <v-sheet class="sync-bar pa-2 d-flex justify-center align-center">
-    <div class="mr-2">
-      <v-btn icon @click="paused = !paused">
-        <v-icon large>
-          {{ paused ?icons.mdiPlay : mdiPause }}
-        </v-icon>
-      </v-btn>
-    </div>
-    <div style="position: relative;" class="flex-grow-1 align-self-start">
-      <template v-for="(v) in progressOffsetAndWidths">
-        <v-progress-linear
-          :key="v.id"
-          style="z-index: 1;"
-          color="secondary"
-          :style="{
-            marginLeft: (v.offset*100).toFixed(2) + '%',
-            marginBottom: '2px',
-            width: (v.width*100).toFixed(2) + '%',
-          }"
-          :value="currentTsByVideo[v.id] || 0"
-        />
-      </template>
-      <div class="slider-container">
-        <input
-          ref="syncSlider"
-          type="range"
-          min="0"
-          max="100"
-          :value="currentProgress"
-          class="sync-slider"
-          step="0.01"
-          @change="onSliderChange"
-          @input="onInput"
-        >
-        <div ref="timeTooltip" class="time-tooltip" :style="{ left: timerTooltipLeft + '%' }">
-          {{ timerTooltipText }}
+  <v-sheet class="sync-bar pa-2" elevation="8">
+    <div class="d-flex justify-center align-center">
+      <div class="mr-2">
+        <v-btn icon @click="paused = !paused">
+          <v-icon large>
+            {{ paused ?icons.mdiPlay : mdiPause }}
+          </v-icon>
+        </v-btn>
+        <div v-if="minTs" class="text-center">
+          {{ currentDuration }}
+          <br>
+          <span style="border-top: 1px solid; padding-top: 2px"> {{ totalDuration }} </span>
+        </div>
+      </div>
+      <div class="flex-grow-1 align-self-start" style="position: relative">
+        <div class="time-tooltip-wrapper">
+          <div
+            v-show="hovering"
+            class="time-tooltip"
+            :style="{ marginLeft: timeTooltipLeft }"
+          >
+            {{ timeTooltipText }}
+          </div>
+        </div>
+        <div style="overflow-y: scroll; overflow-x: hidden; height: 80px" class="pr-2">
+          <div style="position: relative">
+            <div ref="syncSlider" class="slider-container">
+              <input
+                type="range"
+                min="0"
+                max="100"
+                :value="currentProgress"
+                class="sync-slider"
+                step="0.01"
+                @change="onSliderChange"
+                @input="onInput"
+              >
+            </div>
+            <template v-for="(v) in splitProgressBarData">
+              <div :key="v.id" class="d-flex align-center my-1">
+                <channel-img
+                  :channel="v.channel"
+                  :size="24"
+                  class="px-1"
+                  rounded
+                />
+                <div class="flex">
+                  <v-progress-linear
+                    style="z-index: 1;"
+                    color="secondary"
+                    :style="{
+                      marginLeft: (v.offset*100).toFixed(2) + '%',
+                      width: (v.width*100).toFixed(2) + '%',
+                      height: '8px',
+                    }"
+                    :value="currentProgressByVideo[v.id] || 0"
+                  />
+                </div>
+              </div>
+            </template>
+          </div>
         </div>
       </div>
     </div>
@@ -43,35 +68,33 @@
 
 <script lang="ts">
 import { mapState, mapGetters } from "vuex";
-import { dayjs } from "@/utils/time";
+import { formatDuration, dayjs } from "@/utils/time";
 import Vue from "vue";
 import throttle from "lodash-es/throttle";
 
 import {
     mdiPause, mdiFastForward,
 } from "@mdi/js";
+import ChannelImg from "../channel/ChannelImg.vue";
 
 export default {
     name: "MultiviewSyncBar",
-    props: {
-        value: {
-            type: Boolean,
-        },
-    },
+    components: { ChannelImg },
     data() {
         return {
             mdiPause,
             mdiFastForward,
             interacting: false,
-            interactValue: 0,
-
-            expectedTs: 0,
-            bufferTs: 0,
+            hovering: false,
+            hoverTs: 0,
+            timeTooltipLeft: 0,
+            timeTooltipText: "",
             currentTs: 0,
             paused: true,
-            currentTsByVideo: {},
+            currentProgressByVideo: {},
             currentSliderValue: 0,
             timer: null,
+            firstPlay: true,
         };
     },
     computed: {
@@ -110,33 +133,33 @@ export default {
             return ol;
         },
         minTs() {
+            if (!this.videosWithOverlap.length) return 0;
             return Math.min(...this.videosWithOverlap.map((v) => v.startTs));
         },
         maxTs() {
+            if (!this.videosWithOverlap.length) return 0;
             return Math.max(...this.videosWithOverlap.map((v) => v.endTs));
         },
-        progressOffsetAndWidths() {
+        splitProgressBarData() {
             const totalTime = this.maxTs - this.minTs;
             return this.videosWithOverlap.map((v) => ({
                 id: v.id,
+                channel: v.channel,
                 offset: (v.startTs - this.minTs) / totalTime,
                 width: (v.endTs - v.startTs) / totalTime,
             }));
         },
         currentProgress() {
-            return this.getPercentForTime(this.currentTs) * 100;
+            return this.getPercentForTime(this.currentTs);
         },
-        timerTooltipLeft() {
-            return this.interacting ? (this.getPercentForTime(this.bufferTs) * 100) : this.currentProgress;
+        currentDuration() {
+            return formatDuration(Math.round(this.currentTs - this.minTs) * 1000);
         },
-        timerTooltipText() {
-            return this.interacting ? dayjs.unix(this.bufferTs).format("LTS") : dayjs.unix(this.getTimeForPercent(this.currentProgress / 100)).format("LTS");
+        totalDuration() {
+            return formatDuration((this.maxTs - this.minTs) * 1000);
         },
     },
     watch: {
-        // videosWithOverlap(val) {
-        //     if (!val.length) this.$emit("input", false);
-        // },
         paused(pause) {
             this.$parent.$refs.videoCell
                 .forEach((cell) => {
@@ -148,52 +171,61 @@ export default {
         },
     },
     mounted() {
+        this.$refs.syncSlider.addEventListener("mouseenter", this.onMouseEnter, false);
         this.$refs.syncSlider.addEventListener("mousemove", this.onMouseOver, false);
         this.$refs.syncSlider.addEventListener("mouseout", this.onMouseLeave, false);
         this.startTimer();
     },
     beforeDestroy() {
         this.timer && clearInterval(this.timer);
+        this.$refs.syncSlider.removeEventListener("mouseenter", this.onMouseEnter);
         this.$refs.syncSlider.removeEventListener("mousemove", this.onMouseOver);
         this.$refs.syncSlider.removeEventListener("mouseout", this.onMouseLeave);
     },
     methods: {
+        onMouseEnter() {
+            this.hovering = true;
+        },
+        // eslint-disable-next-line func-names
         onMouseOver: throttle(function (e) {
             const offsetLeft = e.target.getBoundingClientRect().x;
-            // console.log(e.clientX, e.target.offsetLeft, e.target.clientWidth);
-            const percent = (e.clientX - offsetLeft) / e.target.clientWidth;
-            // this.$refs.timeTooltip.style.left = `${(e.clientX - offsetLeft)}px`;
-            this.bufferTs = this.getTimeForPercent(percent);
-            // this.$refs.timeTooltip.textContent = dayjs.unix(this.bufferTs).format("LTS");
-            this.interacting = true;
+            const percent = ((e.clientX - offsetLeft) / e.target.clientWidth) * 100;
+            if (!(percent >= 0 && percent <= 100)) return;
+            this.hoverTs = this.getTimeForPercent(percent);
+            this.timeTooltipLeft = `${percent}%`;
+            this.timeTooltipText = `${this.formatUnixTime(this.hoverTs)}\n${formatDuration((this.hoverTs - this.minTs) * 1000)}/${this.totalDuration}`;
         }, 10),
-        onMouseLeave(e) {
-            this.interacting = false;
+        onMouseLeave() {
+            this.hovering = false;
         },
         onSliderChange(e) {
-            const ts = this.getTimeForPercent((e.target.value / 100));
+            const ts = this.getTimeForPercent((e.target.value));
             this.setTime(ts);
-            this.interacting = false;
-            this.currentTs = this.getTimeForPercent(e.target.value / 100);
+            this.currentTs = this.getTimeForPercent(e.target.value);
         },
         onInput(e) {
             this.interacting = true;
             this.interactValue = e.target.value;
-            // this.currentProgress = e.target.value;
         },
         getTimeForPercent(percent) {
-            return (percent * (this.maxTs - this.minTs)) + this.minTs;
+            return ((percent / 100) * (this.maxTs - this.minTs)) + this.minTs;
         },
         getPercentForTime(ts) {
-            return (ts - this.minTs) / (this.maxTs - this.minTs);
+            return ((ts - this.minTs) / (this.maxTs - this.minTs)) * 100;
         },
         getProgressPercentByAbsoluteTime(ts, video) {
             return Math.min(100, Math.max(((ts - video.startTs) / (video.endTs - video.startTs)) * 100, 0));
         },
         sync() {
-            if (this.currentTs <= 0) this.currentTs = this.minTs;
+            if (!this.$parent?.$refs?.videoCell) return;
+            // Find start time if first initialization
+            if (this.currentTs <= 0) {
+                this.currentTs = this.findStartTime();
+            }
+            // current player states
             const states = [];
-            const deltas = [];
+            // current video deltas (diff between currentTs/true time)
+            // const deltas = [];
             this.$parent.$refs.videoCell
                 .forEach((cell) => {
                     const { video, currentTime } = cell;
@@ -202,15 +234,15 @@ export default {
                     if (!olVideo) return;
 
                     // Update pervideo progress bar
-                    const percentProgress = ((currentTime / olVideo.duration) * 100).toFixed(2);
-                    Vue.set(this.currentTsByVideo, olVideo.id, percentProgress);
+                    const percentProgress = this.currentTs > olVideo.endTs ? 100 : ((currentTime / olVideo.duration) * 100).toFixed(2);
+                    Vue.set(this.currentProgressByVideo, olVideo.id, percentProgress);
 
                     // Calc delta times to keep things in sync
                     const expectedDuration = this.currentTs - olVideo.startTs;
                     const delta = Math.abs(expectedDuration - currentTime);
                     const isBefore = expectedDuration < 0;
                     const isAfter = expectedDuration / olVideo.duration > 1;
-                    deltas.push(delta);
+                    // deltas.push(delta);
                     if (isBefore || isAfter) {
                         cell.setPlaying(false);
                         // Sync if current cell delta is over 2 seconds
@@ -219,13 +251,36 @@ export default {
                         cell.seekTo(expectedDuration);
                     }
                 });
-            // Wait for all videos to exit buffering state to increment currentTs if not paused
+            // Wait for all videos to exit buffering state (3) to increment currentTs, if not paused
             if (!states.includes(3) && !this.paused) {
                 this.currentTs = Math.min(Math.max(this.currentTs + 0.5, this.minTs), this.maxTs);
             }
-
-            console.log("deltas: ", deltas);
+            // console.log("deltas: ", deltas);
         },
+        // Find a start time from current player times or use minTs
+        findStartTime() {
+            const times = [];
+            if (!this.$parent?.$refs?.videoCell) return 0;
+            this.$parent.$refs.videoCell
+                .forEach((cell, index) => {
+                    const { video, currentTime } = cell;
+                    // Find corresponding overlapping video
+                    const olVideo = video && this.videosWithOverlap.find((v) => v.id === video.id);
+                    if (!olVideo) return;
+                    const t = currentTime + olVideo.startTs;
+                    // Find times that is within 2 seconds of other videos
+                    if (index === 0 || Math.abs(times[index - 1] - t) < 2000) {
+                        times.push(t);
+                    }
+                });
+            // Return average if all the times are close
+            if (times.length === this.videosWithOverlap.length) {
+                return times.reduce((a, c) => a + c) / times.length;
+            }
+            // Use minTs as start time
+            return this.minTs;
+        },
+        // Set to a certain timestamp
         setTime(ts) {
             this.$parent.$refs.videoCell
                 .forEach((cell) => {
@@ -236,18 +291,15 @@ export default {
                     const currentTime = ts - olVideo.startTs;
                     const isBefore = currentTime < 0;
                     const isAfter = currentTime / olVideo.duration > 1;
-                    console.log(currentTime, isBefore, isAfter);
-                    if (isBefore) {
-                        // cell.seekTo(0);
+                    if (isBefore || isAfter) {
                         cell.setPlaying(false);
-                        cell.seekTo(0);
+                        cell.seekTo(isBefore ? 0 : olVideo.duration - 1);
                         return;
                     }
-                    if (isAfter) {
-                        // cell.seekTo(olVideo.duration);
-                        cell.setPlaying(false);
-                        cell.seekTo(olVideo.duration - 1);
-                        return;
+
+                    if (this.firstPlay) {
+                        this.paused = false;
+                        this.firstPlay = false;
                     }
                     cell.setPlaying(!this.paused);
                     cell.seekTo(currentTime);
@@ -257,46 +309,81 @@ export default {
             if (this.timer) clearInterval(this.timer);
             this.timer = setInterval(this.sync, 500);
         },
+        formatUnixTime(ts) {
+            return dayjs.unix(ts).format("LTS");
+        },
+        formatDuration,
     },
 };
 </script>
 
 <style lang="scss">
+$slider-left-offset: 32px;
+$slider-right-offset: 8px;
+$slider-height: 90px;
+
 .sync-bar {
     width: 100%;
-    height: 64px;
+    min-height: 64px;
     position: absolute;
-    /* bottom: 0; */
+    bottom: 0;
+}
+.slider-container {
+    position: sticky;
+    margin-top: -$slider-height;
+    left: $slider-left-offset;
+    top: 0;
+    width: calc(100% - #{$slider-left-offset});
+    height: 100%;
+    z-index: 10;
 }
 .sync-slider {
-  position: absolute;
-  top: 0;
-  z-index: 20;
-  -webkit-appearance: none;  /* Override default CSS styles */
+  -webkit-appearance: none;
   appearance: none;
-  width: 100%; /* Full-width */
-  height: 50px; /* Specified height */
-  background: none; /* Grey background */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  width: 100%;
+  height: 100%;
+  background: none;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
   transition: opacity .2s;
 }
-.time-tooltip {
+
+.time-tooltip-wrapper {
     position: absolute;
-    // height: 50px;
-    // border-left: 2px solid green;
+    margin-left: $slider-left-offset;
+    width: calc(100% - #{$slider-right-offset} - #{$slider-left-offset});
+    z-index: 5;
+    top: -30px;
+}
+.time-tooltip {
+    display: inline-block;
+    white-space: pre;
+    text-align: center;
     opacity: 0.7;
-    z-index: 10;
-    top: -20px;
+    background: black;
+    padding: 4px;
+    border-radius: 0.25em;
+    transform: translate(-50%, -50%);
 }
 .sync-slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
   width: 3px; /* Set a specific slider handle width */
-  height: 50px; /* Slider handle height */
+  height: 80px; /* Slider handle height */
   background: var(--v-primary-base); /* Green background */
+  top: 0;
   cursor: pointer; /* Cursor on hover */
-  opacity: 0.7;
+  opacity: 0.8;
+  display: flex;
+}
+.static-ts-text {
+    position: absolute;
+    bottom: -10px;
+    height: 100%;
+    border-style: 1px solid white;
+    display: flex;
+    align-items: flex-end;
+    z-index: 10;
 }
 </style>

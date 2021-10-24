@@ -272,7 +272,7 @@ export default {
         rowHeight() {
             return (this.$vuetify.breakpoint.height
                 - (this.collapseToolbar ? 0 : 64)
-                - (this.showSyncBar ? 64 : 0)) / 24.0;
+                - (this.showSyncBar ? 100 : 0)) / 24.0;
         },
         columnWidth() {
             return this.$vuetify.breakpoint.width / 24.0;
