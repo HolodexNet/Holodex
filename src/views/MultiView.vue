@@ -154,7 +154,7 @@ import VideoSelector from "@/components/multiview/VideoSelector.vue";
 import MultiviewBackground from "@/components/multiview/MultiviewBackground.vue";
 import MultiviewSyncBar from "@/components/multiview/MultiviewSyncBar.vue";
 import {
-    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiTuneVertical, mdiTimerOutline,
+    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiTuneVertical, mdiSync,
 } from "@mdi/js";
 import { decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
@@ -249,7 +249,7 @@ export default {
                     collapse: true,
                 },
                 {
-                    icon: mdiTimerOutline,
+                    icon: mdiSync,
                     onClick: this.toggleSyncBar,
                     tooltip: "Toggle Sync Bar",
                 },
