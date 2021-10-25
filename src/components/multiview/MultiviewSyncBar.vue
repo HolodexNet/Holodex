@@ -1,16 +1,33 @@
 <template>
-  <v-sheet class="sync-bar d-flex justify-center align-center pa-2" elevation="8">
-    <div class="mr-2 d-flex align-center flex-column justify-space-between" style="height: 100%; width: 120px">
+  <v-sheet class="sync-bar d-flex justify-center align-center pa-2">
+    <div class="mr-2 d-flex align-center flex-column" style="height: 100%; width: 120px">
       <!-- Left side play button time cluster -->
-      <v-btn icon @click="paused = !paused">
-        <v-icon large>
-          {{ paused ?icons.mdiPlay : mdiPause }}
-        </v-icon>
-      </v-btn>
-      <div v-if="minTs" class="text-center">
+      <div v-if="minTs" class="text-center text-body-2">
         {{ currentDuration }}
         /
         {{ totalDuration }}
+      </div>
+      <div class="d-flex justify-space-between align-center">
+        <v-btn icon @click="setTime(currentTs - 10)">
+          <v-icon>
+            {{ mdiRewind10 }}
+          </v-icon>
+        </v-btn>
+        <v-btn icon @click="paused = !paused">
+          <v-icon large>
+            {{ paused ?icons.mdiPlay : mdiPause }}
+          </v-icon>
+        </v-btn>
+        <v-btn icon @click="setTime(currentTs + 10)">
+          <v-icon>
+            {{ mdiFastForward10 }}
+          </v-icon>
+        </v-btn>
+      </div>
+      <div>
+        <v-btn icon @click="showConfiguration = !showConfiguration">
+          <v-icon> {{ icons.mdiCog }} </v-icon>
+        </v-btn>
       </div>
     </div>
     <!-- Main slider and progress -->
@@ -49,6 +66,8 @@
                 :size="24"
                 class="px-1"
                 rounded
+                no-link
+                no-alt
               />
               <!-- IMPORTANT flex, this makes left: x% correspond to the correct dimensions-->
               <!-- If you see the slider desync with progress bars, make sure x% is accurate to the slider-container -->
@@ -69,6 +88,42 @@
         </div>
       </div>
     </div>
+    <v-dialog v-model="showConfiguration" max-width="25vw">
+      <v-card>
+        <v-card-title>Configure</v-card-title>
+        <v-card-text>
+          <template v-for="v in overlapVideos">
+            <div :key="v.id" class="d-flex justify-space-between my-1">
+              <channel-img
+                :channel="v.channel"
+                :size="40"
+                rounded
+                no-link
+                no-alt
+              />
+              <div class="d-flex align-center">
+                <v-btn elevation="1" @click="changeOffset(v.id, -100)">
+                  -100
+                </v-btn>
+                <v-text-field
+                  label="Offset"
+                  outlined
+                  dense
+                  hide-details
+                  :value="offsets[v.id] || '0'"
+                  type="number"
+                  suffix="ms"
+                  @input="offsets[v.id] = +$event"
+                />
+                <v-btn elevation="1" @click="changeOffset(v.id, 100)">
+                  +100
+                </v-btn>
+              </div>
+            </div>
+          </template>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-sheet>
 </template>
 
@@ -79,7 +134,7 @@ import Vue from "vue";
 import throttle from "lodash-es/throttle";
 
 import {
-    mdiPause, mdiFastForward,
+    mdiPause, mdiFastForward10, mdiRewind10,
 } from "@mdi/js";
 import ChannelImg from "../channel/ChannelImg.vue";
 
@@ -89,7 +144,8 @@ export default {
     data() {
         return {
             mdiPause,
-            mdiFastForward,
+            mdiFastForward10,
+            mdiRewind10,
             paused: true,
             hovering: false,
             hoverTs: 0,
@@ -99,6 +155,8 @@ export default {
             timeTooltipText: "",
             timer: null,
             firstPlay: true,
+            showConfiguration: false,
+            offsets: {},
         };
     },
     computed: {
@@ -196,8 +254,10 @@ export default {
         // eslint-disable-next-line func-names
         onMouseOver: throttle(function (e) {
             const offsetLeft = e.target.getBoundingClientRect().x;
+            // Get x percentage that the mouse is hoveirng on
             const percent = ((e.clientX - offsetLeft) / e.target.clientWidth) * 100;
             if (!(percent >= 0 && percent <= 100)) return;
+            // Show a tooltip of this percent
             this.hoverTs = this.getTimeForPercent(percent);
             this.timeTooltipLeft = `${percent}%`;
             this.timeTooltipText = `${this.formatUnixTime(this.hoverTs)}\n${formatDuration((this.hoverTs - this.minTs) * 1000)}/${this.totalDuration}`;
@@ -243,7 +303,7 @@ export default {
                     Vue.set(this.currentProgressByVideo, olVideo.id, percentProgress);
 
                     // Calc delta times to keep things in sync
-                    const expectedDuration = this.currentTs - olVideo.startTs;
+                    const expectedDuration = this.currentTs - olVideo.startTs + (this.offsets[olVideo.id] ?? 0) / 1000;
                     const delta = Math.abs(expectedDuration - currentTime);
                     const isBefore = expectedDuration < 0;
                     const isAfter = expectedDuration / olVideo.duration > 1;
@@ -290,16 +350,16 @@ export default {
             return firstOverlap;
         },
         // Set to a certain timestamp
-        setTime(ts) {
+        setTime(ts, forceCurrentTs = true) {
             this.$parent.$refs.videoCell
                 .forEach((cell) => {
                     const { video } = cell;
                     const olVideo = video && this.overlapVideos.find((v) => v.id === video.id);
                     if (!olVideo) return;
 
-                    const currentTime = ts - olVideo.startTs;
-                    const isBefore = currentTime < 0;
-                    const isAfter = currentTime / olVideo.duration > 1;
+                    const nextTime = ts - olVideo.startTs;
+                    const isBefore = nextTime < 0;
+                    const isAfter = nextTime / olVideo.duration > 1;
                     if (isBefore || isAfter) {
                         cell.setPlaying(false);
                         cell.seekTo(isBefore ? 0 : olVideo.duration - 1);
@@ -311,8 +371,9 @@ export default {
                         this.firstPlay = false;
                     }
                     cell.setPlaying(!this.paused);
-                    cell.seekTo(currentTime);
+                    cell.seekTo(nextTime);
                 });
+            if (forceCurrentTs) { this.currentTs = ts; }
         },
         startTimer() {
             if (this.timer) clearInterval(this.timer);
@@ -320,6 +381,9 @@ export default {
         },
         formatUnixTime(ts) {
             return dayjs.unix(ts).format("LTS");
+        },
+        changeOffset(id, value) {
+            Vue.set(this.offsets, id, (this.offsets[id] ?? 0) + value);
         },
         formatDuration,
     },
@@ -339,6 +403,7 @@ $slider-height: 90px;
     height: 102px;
     position: absolute;
     bottom: 0;
+    box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%) !important;
 }
 .progressSlider {
     overflow-y: scroll; overflow-x: hidden; height: $slider-height
@@ -403,6 +468,7 @@ $slider-height: 90px;
     text-align: center;
     opacity: 0.7;
     background: black;
+    color: white;
     padding: 4px;
     border-radius: 0.25em;
     transform: translate(-50%, -50%);
