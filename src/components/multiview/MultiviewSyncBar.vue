@@ -344,7 +344,7 @@ export default {
                 });
             // Return average if all the times are close
             if (times.length === this.overlapVideos.length) {
-                return times.reduce((a, c) => a + c) / times.length;
+                return times.reduce((a, c) => a + c, 0) / times.length;
             }
             // Use first overlapping time as start time
             return firstOverlap;
