@@ -92,6 +92,7 @@
       <v-card>
         <v-card-title>Configure</v-card-title>
         <v-card-text>
+          Configure per video time offsets to align streams with VODs that are desynced (technical issue, deleted parts, etc)
           <template v-for="v in overlapVideos">
             <div :key="v.id" class="d-flex justify-space-between my-1">
               <channel-img
@@ -102,8 +103,8 @@
                 no-alt
               />
               <div class="d-flex align-center">
-                <v-btn elevation="1" @click="changeOffset(v.id, -100)">
-                  -100
+                <v-btn elevation="1" @click="changeOffset(v.id, -0.5)">
+                  -0.5
                 </v-btn>
                 <v-text-field
                   label="Offset"
@@ -112,11 +113,11 @@
                   hide-details
                   :value="offsets[v.id] || '0'"
                   type="number"
-                  suffix="ms"
+                  suffix="sec"
                   @input="offsets[v.id] = +$event"
                 />
-                <v-btn elevation="1" @click="changeOffset(v.id, 100)">
-                  +100
+                <v-btn elevation="1" @click="changeOffset(v.id, 0.5)">
+                  +0.5
                 </v-btn>
               </div>
             </div>
@@ -303,7 +304,7 @@ export default {
                     Vue.set(this.currentProgressByVideo, olVideo.id, percentProgress);
 
                     // Calc delta times to keep things in sync
-                    const expectedDuration = this.currentTs - olVideo.startTs + (this.offsets[olVideo.id] ?? 0) / 1000;
+                    const expectedDuration = this.currentTs - olVideo.startTs + (this.offsets[olVideo.id] ?? 0);
                     const delta = Math.abs(expectedDuration - currentTime);
                     const isBefore = expectedDuration < 0;
                     const isAfter = expectedDuration / olVideo.duration > 1;
