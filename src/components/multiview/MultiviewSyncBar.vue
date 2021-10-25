@@ -55,7 +55,7 @@
               :value="currentProgress"
               class="sync-slider"
               step="0.01"
-              @change="onSliderChange"
+              @input="onSliderInput"
             >
           </div>
           <!-- List of progress bars with icons -->
@@ -147,6 +147,7 @@ export default {
             mdiPause,
             mdiFastForward10,
             mdiRewind10,
+
             paused: true,
             hovering: false,
             hoverTs: 0,
@@ -266,11 +267,12 @@ export default {
         onMouseLeave() {
             this.hovering = false;
         },
-        onSliderChange(e) {
+        // eslint-disable-next-line func-names
+        onSliderInput: throttle(function (e) {
+            // onChange event is less reliable than input event, causing weird bounce back effect
             const ts = this.getTimeForPercent((e.target.value));
             this.setTime(ts);
-            this.currentTs = this.getTimeForPercent(e.target.value);
-        },
+        }, 50),
         getTimeForPercent(percent) {
             return ((percent / 100) * (this.maxTs - this.minTs)) + this.minTs;
         },
@@ -282,6 +284,7 @@ export default {
         },
         sync() {
             if (!this.$parent?.$refs?.videoCell) return;
+
             // Find start time if first initialization
             if (this.currentTs <= 0) {
                 this.currentTs = this.findStartTime();
@@ -351,7 +354,8 @@ export default {
             return firstOverlap;
         },
         // Set to a certain timestamp
-        setTime(ts, forceCurrentTs = true) {
+        setTime(ts) {
+            this.currentTs = ts;
             this.$parent.$refs.videoCell
                 .forEach((cell) => {
                     const { video } = cell;
@@ -374,7 +378,6 @@ export default {
                     cell.setPlaying(!this.paused);
                     cell.seekTo(nextTime);
                 });
-            if (forceCurrentTs) { this.currentTs = ts; }
         },
         startTimer() {
             if (this.timer) clearInterval(this.timer);

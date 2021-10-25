@@ -403,7 +403,7 @@ export default {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-bottom: env(safe-area-inset-bottom);
+    // margin-bottom: env(safe-area-inset-bottom);
 
     .edit-mode {
         padding: 5px;
