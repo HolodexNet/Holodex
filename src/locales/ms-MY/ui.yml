@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -155,6 +157,7 @@ views:
     collabs: Siaran sama
     about: Perihal
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -369,6 +372,7 @@ views:
     sync:
       noStreamsToSync: 'Tiada siaran yang boleh disegerakkan. Pastikan terdapat dua buah siaran (cth: siaran karyasama) yang bertindan masa langsungnya'
       syncSettings: Tetapan Penyegerakan
+      syncSettingsDetail: Penyegerakan video adalah berdasarkan masa mula siaran. Sekiranya terdapat bahagian video yang terpotong akibat dialih keluar atau masalah teknik, penyegerakannya lari. Sejajarkan video secara sendiri dengan menggunakan penyelaras
   mugen:
     welcome: >-
       Selamat datang ke MugenClips! Laman ini mempertontonkan kepada semua orang sedutan Hololive berbahasa Inggeris yang sama secara rambang. Mari tonton bersama-sama sambil bersembang dengan peminat Hololive dari serata dunia. Sekiranya anda mahu kembali menonton bahagian yang sama dengan semua orang setelah melangkau sedutan terlebih dahulu, sila muatkan semula laman ini.
