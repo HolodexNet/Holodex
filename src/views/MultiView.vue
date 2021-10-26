@@ -203,7 +203,7 @@ export default {
             mdiContentSave,
 
             showSelectorForId: -1,
-            showSyncBar: true,
+            showSyncBar: false,
             overwriteDialog: false, // whether to show the overwrite dialog.
             overwriteCancel: null, // callbacks that will be generated when needed.
             overwriteConfirm: null, // callbacks to be generated when needed.
@@ -261,7 +261,7 @@ export default {
                     icon: mdiSync,
                     onClick: this.toggleSyncBar,
                     color: "deep-purple lighten-2",
-                    tooltip: "Progress Sync",
+                    tooltip: this.$t("views.multiview.progressSync"),
                 },
             ]);
         },
