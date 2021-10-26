@@ -338,6 +338,7 @@ views:
     autoLayoutTip: Tekan channel untuk mulai menonton menggunakan mode tataletak otomatis
     createLayoutTip: Membuat tataletak kreasimu sendiri dengan menambahkan kolom, atau menggunakan preset
     openToolbarTip: Buka bilah alat untuk mulai menggunakan multiview
+    progressSync: Proses Sinkronisasi
     preset:
       shareOnDiscord: >-
         Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!
@@ -365,6 +366,9 @@ views:
     mediaControlsHint1: Gunakan Kontrol Media untuk menyinkronkan dan menyenyapkan (
     mediaControlsHint2: ) siaran langsung
     dragDropHint: Seret dan lepas siaran dari bilah alat ke kolom skema untuk mengatur siaran
+    sync:
+      noStreamsToSync: Tidak ada stream untuk disinkronkan, mohon buka dua arsip (misalnya. stream kolaborasi)
+      syncSettings: Pengaturan Sinkronisasi
   mugen:
     welcome: >-
       Selamat datang di MugenClips! Semua orang yang berada di halaman ini melihat klip hololive bahasa inggris yang sama yang dipilih secara acak. Menonton bareng dan mengobrol sesama fans Hololive dari seluruh penjuru dunia. jika kamu mempercepat klip dan ingin mensinkronkan kembali video dengan semua orang, tekan refresh pada halaman ini.
