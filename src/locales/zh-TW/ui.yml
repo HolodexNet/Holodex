@@ -339,6 +339,7 @@ views:
     autoLayoutTip: 點擊任意頻道即可使用自動排版模式觀看實況
     createLayoutTip: 增加新分割以創造專屬排版，亦能使用預設佈局
     openToolbarTip: 開啟控制欄以開始使用多窗工具
+    progressSync: 存檔同步
     preset:
       shareOnDiscord: >-
         想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
@@ -366,6 +367,8 @@ views:
     mediaControlsHint1: 使用媒體控制面板來靜音或是同步 (
     mediaControlsHint2: ) 複數實況
     dragDropHint: 從置頂欄拖曳實況至不同分割來自訂顯示位置
+    sync:
+      syncSettings: 同步設定
   mugen:
     welcome: >-
       歡迎來到 MugenClips！所有使用者在本頁面都在同時隨機觀看同一段Hololive的英文剪輯！和其他Holo粉絲一起觀看一起聊天吧。如果您手動變更了時間軸但想再次與其他人同步進度的話，請重新整理此頁面。
