@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -155,6 +157,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -368,7 +371,9 @@ views:
     mediaControlsHint2: ) 複數實況
     dragDropHint: 從置頂欄拖曳實況至不同分割來自訂顯示位置
     sync:
+      noStreamsToSync: 沒有影片可供同步，請開啟複數且實況時間點重疊的影片存檔（例如多視角的連動實況）
       syncSettings: 同步設定
+      syncSettingsDetail: 本功能基於實況的開始時間進行同步，有可能因實況途中經歷的技術問題/移除片段的部分而失效，請使用手動調整功能來同步此類存檔
   mugen:
     welcome: >-
       歡迎來到 MugenClips！所有使用者在本頁面都在同時隨機觀看同一段Hololive的英文剪輯！和其他Holo粉絲一起觀看一起聊天吧。如果您手動變更了時間軸但想再次與其他人同步進度的話，請重新整理此頁面。
