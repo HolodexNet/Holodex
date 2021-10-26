@@ -336,6 +336,7 @@ views:
     autoLayoutTip: チャンネルをクリックすると自動でレイアウトされた状態で視聴できます
     createLayoutTip: セルを追加してオリジナルのレイアウトを作成するか、プリセットを使用してください
     openToolbarTip: ツールバーを開いてマルチビューを開始
+    progressSync: 進行の同期
     preset:
       shareOnDiscord: >-
         なにか良いレイアウトが思いついたら私達の <a href="https://discord.gg/jctkgHBt4b">Discordサーバー</a>でお知らせください!
@@ -363,6 +364,10 @@ views:
     mediaControlsHint1: メディアコントロールを使うとライブストリームのミュートや同期 (
     mediaControlsHint2: ) ができます
     dragDropHint: ツールバーからセルに配信をドラッグ&ドロップして配信を整理します
+    sync:
+      noStreamsToSync: 同期すべき配信がありません。配信時刻が重なるアーカイブ (例：コラボ配信) を2つ開いてください。
+      syncSettings: 同期設定
+      syncSettingsDetail: 動画は配信開始時刻に基づいて同期され、配信途中に技術的な問題や削除された部分があるときには同期を解除することができます。 オフセットを使えば動画を手動で揃えられます
   mugen:
     welcome: >-
       MugenClipsへようこそ！このページでは全員がランダムに選択されたホロライブの英訳切り抜きを見ています。世界中のホロライブのファンと一緒に見て、チャットしましょう。 先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
