@@ -338,6 +338,7 @@ views:
     autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak suai kendiri
     createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
     openToolbarTip: Mulakan berbilang tontonan dengan membuka ruangan alat
+    progressSync: Penyegerakan Siaran
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
@@ -365,6 +366,9 @@ views:
     mediaControlsHint1: Senyap atau segerakkan (
     mediaControlsHint2: ) video dengan Kawalan Bahantara
     dragDropHint: Urus siaran langsung dengan menarik dan melepaskan siaran berkenaan dari ruangan alat ke petak masing-masing
+    sync:
+      noStreamsToSync: 'Tiada siaran yang boleh disegerakkan. Pastikan terdapat dua buah siaran (cth: siaran karyasama) yang bertindan masa langsungnya'
+      syncSettings: Tetapan Penyegerakan
   mugen:
     welcome: >-
       Selamat datang ke MugenClips! Laman ini mempertontonkan kepada semua orang sedutan Hololive berbahasa Inggeris yang sama secara rambang. Mari tonton bersama-sama sambil bersembang dengan peminat Hololive dari serata dunia. Sekiranya anda mahu kembali menonton bahagian yang sama dengan semua orang setelah melangkau sedutan terlebih dahulu, sila muatkan semula laman ini.
