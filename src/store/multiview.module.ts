@@ -26,6 +26,7 @@ const persistedState = {
     twUrlHistory: [],
     // Default true for iOS device
     muteOthers: isAppleDevice,
+    syncOffsets: {},
 };
 export const state = { ...initialState, ...persistedState };
 
@@ -241,6 +242,9 @@ const mutations = {
         });
         // Mark videos still missing data, so it doesn't attempt to fetch again
         Object.values<Content>(state.layoutContent).filter(missingVideoDataFilter).forEach((x) => { x.video.noData = true; });
+    },
+    setSyncOffsets(state, { id, value }) {
+        Vue.set(state.syncOffsets, id, value);
     },
 };
 

@@ -395,6 +395,11 @@ views:
     mediaControlsHint1: Use Media Controls to mute and sync (
     mediaControlsHint2: ) live streams
     dragDropHint: Drag and drop streams from toolbar to cells to organize streams
+    copeidToClipboard: Copied to clipboard
+    sync:
+      noStreamsToSync: No streams to sync, please open two overlapping archives (eg. collab streams)
+      syncSettings: Sync Settings
+      syncSettingsDetail: Videos are synced based on the stream start time, and can desync due to mid stream technical issues or deleted portions. Use offsets to manually align videos
   mugen:
     welcome: >-
       Welcome to MugenClips! Everyone on this page is seeing the same randomly

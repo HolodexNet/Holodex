@@ -26,11 +26,6 @@
       </div>
       <div>
         <v-btn icon @click="showConfiguration = !showConfiguration">
-          <v-icon>
-            {{ icons.mdiChevronLeft }}
-          </v-icon>
-        </v-btn>
-        <v-btn icon @click="showConfiguration = !showConfiguration">
           <v-icon small>
             {{ icons.mdiCog }}
           </v-icon>
@@ -57,7 +52,7 @@
       <!-- Container with overflow scroll -->
       <div class="progressSlider pr-2">
         <div v-if="!hasVideosToSync">
-          No archive streams are available to sync
+          {{ $t("views.multiview.sync.noStreamsToSync") }}
         </div>
         <div v-show="hasVideosToSync" style="position: relative">
           <!-- Slider -->
@@ -105,10 +100,9 @@
     </div>
     <v-dialog v-model="showConfiguration" max-width="450px">
       <v-card>
-        <v-card-title>Sync Settings</v-card-title>
+        <v-card-title>{{ $t("views.multiview.sync.syncSettings") }}</v-card-title>
         <v-card-text>
-          Videos are synced based on the stream start time, and can desync due to mid stream technical issues or deleted portions.
-          Use offsets to manually align videos
+          {{ $t("views.multiview.sync.syncSettingsDetail") }}
           <template v-for="v in overlapVideos">
             <div :key="v.id" class="d-flex justify-space-between my-1">
               <channel-img
@@ -119,7 +113,7 @@
                 no-alt
               />
               <div class="d-flex align-center">
-                <v-btn elevation="1" @click="changeOffset(v.id, -0.5)">
+                <v-btn elevation="1" @click="setOffset(v.id, (offsets[v.id] || 0) - 0.5)">
                   -0.5
                 </v-btn>
                 <v-text-field
@@ -130,9 +124,9 @@
                   :value="offsets[v.id] || '0'"
                   type="number"
                   suffix="sec"
-                  @input="offsets[v.id] = +$event"
+                  @input="setOffset(v.id, +$event)"
                 />
-                <v-btn elevation="1" @click="changeOffset(v.id, 0.5)">
+                <v-btn elevation="1" @click="setOffset(v.id, (offsets[v.id] || 0) + 0.5)">
                   +0.5
                 </v-btn>
               </div>
@@ -142,7 +136,7 @@
       </v-card>
     </v-dialog>
     <v-snackbar v-model="doneCopy" color="success">
-      Link Copied
+      {{ $t("views.multiview.copiedToClipboard") }}
     </v-snackbar>
   </v-sheet>
 </template>
@@ -153,7 +147,6 @@ import { formatDuration, dayjs } from "@/utils/time";
 import Vue from "vue";
 import throttle from "lodash-es/throttle";
 import copyToClipboard from "@/mixins/copyToClipboard";
-import querystring from "querystring";
 import {
     mdiPause, mdiFastForward10, mdiRewind10, mdiLinkVariant,
 } from "@mdi/js";
@@ -181,8 +174,8 @@ export default {
             timer: null,
             firstPlay: true,
             showConfiguration: false,
-            offsets: {},
             showCopyDialog: false,
+            ignoreRoute: false,
         };
     },
     computed: {
@@ -251,19 +244,20 @@ export default {
         },
 
         routeCurrentTs() {
-            return this.$route.query.currentTs;
+            return this.$route.query.t;
         },
         routeOffsets() {
             return this.$route.query.offsets?.split(",");
         },
-        // offsets() {
-        //     if (this.routeOffsets && this.overlapVideos.length) {
-        //         return this.overlapVideos.map((v, index) => ({
-        //             [v.id]: this.routeOffsets[index],
-        //         })).reduce((a, c) => ({ ...a, ...c }), {});
-        //     }
-        //     return {};
-        // },
+        offsets() {
+            const local = this.$store.state.multiview.syncOffsets;
+            if (this.routeOffsets && this.overlapVideos.length) {
+                return this.overlapVideos.map((v, index) => ({
+                    [v.id]: local[v.id] || +this.routeOffsets[index],
+                })).reduce((a, c) => ({ ...a, ...c }), {});
+            }
+            return local;
+        },
     },
     watch: {
         paused(pause) {
@@ -429,17 +423,22 @@ export default {
         formatUnixTime(ts) {
             return dayjs.unix(ts).format("LTS");
         },
-        changeOffset(id, value) {
-            Vue.set(this.offsets, id, (this.offsets[id] ?? 0) + value);
+        setOffset(id, value) {
+            this.$store.commit("multiview/setSyncOffsets", { id, value });
         },
         onShareClick() {
-            const layoutParam = encodeLayout({
-                layout: this.layout,
-                contents: this.layoutContent,
-                includeVideo: true,
-            });
-
-            this.copyToClipboard(`${window.origin}/multiview/${layoutParam}`);
+            const layoutParam = encodeURIComponent(
+                encodeLayout({
+                    layout: this.layout,
+                    contents: this.layoutContent,
+                    includeVideo: true,
+                }),
+            );
+            const params = new URLSearchParams();
+            if (this.currentTs) params.append("t", String(Math.round(this.currentTs)));
+            const offsetArr = this.overlapVideos.map((v) => this.offsets[v.id] ?? 0);
+            if (offsetArr.find((o) => +o)) params.append("offsets", offsetArr.join(","));
+            this.copyToClipboard(`${window.origin}/multiview/${layoutParam}${params.toString() ? `?${params.toString()}` : ""}`);
         },
         formatDuration,
     },
