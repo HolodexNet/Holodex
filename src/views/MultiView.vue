@@ -1,5 +1,10 @@
 <template>
-  <div ref="fullscreen-content" style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }">
+  <div
+    ref="fullscreen-content"
+    style="width: 100%; height: 100%"
+    :class="{ 'mobile-helpers': $store.state.isMobile }"
+    class="d-flex flex-column"
+  >
     <!-- Floating tool bar -->
     <MultiviewToolbar v-show="!collapseToolbar" v-model="collapseToolbar" :buttons="buttons">
       <template #left>
@@ -34,15 +39,19 @@
         </v-menu>
       </template>
     </MultiviewToolbar>
-
     <!-- Multiview Cell Area Background -->
     <multiview-background
       :show-tips="layout.length === 0"
       :column-width="columnWidth"
       :row-height="rowHeight"
       :collapse-toolbar="collapseToolbar"
+      :style="{
+        'background-size': `${columnWidth}px ${rowHeight}px`,
+        height: `calc(100% - ${collapseToolbar ? 0 : 64}px - ${showSyncBar ? 100 : 0}px)`,
+        top: `${collapseToolbar ? 0 : 64}px`,
+      }"
     />
-
+    <v-spacer />
     <!-- Floating button to open toolbar when collapsed -->
     <v-btn
       v-if="collapseToolbar"
@@ -54,6 +63,7 @@
     >
       <v-icon>{{ icons.mdiChevronDown }}</v-icon>
     </v-btn>
+
     <!-- Grid Layout -->
     <!-- rowHeight = 100vh/colNum, makes layout consistent across different heights -->
     <grid-layout
@@ -133,7 +143,6 @@
     />
 
     <media-controls v-model="showMediaControls" />
-
     <MultiviewSyncBar v-if="showSyncBar" />
   </div>
 </template>
@@ -251,7 +260,8 @@ export default {
                 {
                     icon: mdiSync,
                     onClick: this.toggleSyncBar,
-                    tooltip: "Toggle Sync Bar",
+                    color: "deep-purple lighten-2",
+                    tooltip: "Progress Sync",
                 },
             ]);
         },
@@ -404,7 +414,6 @@ export default {
     -ms-user-select: none;
     user-select: none;
     // margin-bottom: env(safe-area-inset-bottom);
-
     .edit-mode {
         padding: 5px;
         padding-bottom: 20px;

@@ -26,7 +26,19 @@
       </div>
       <div>
         <v-btn icon @click="showConfiguration = !showConfiguration">
-          <v-icon> {{ icons.mdiCog }} </v-icon>
+          <v-icon>
+            {{ icons.mdiChevronLeft }}
+          </v-icon>
+        </v-btn>
+        <v-btn icon @click="showConfiguration = !showConfiguration">
+          <v-icon small>
+            {{ icons.mdiCog }}
+          </v-icon>
+        </v-btn>
+        <v-btn icon @click="onShareClick">
+          <v-icon small>
+            {{ mdiLinkVariant }}
+          </v-icon>
         </v-btn>
       </div>
     </div>
@@ -44,7 +56,10 @@
       </div>
       <!-- Container with overflow scroll -->
       <div class="progressSlider pr-2">
-        <div style="position: relative">
+        <div v-if="!hasVideosToSync">
+          No archive streams are available to sync
+        </div>
+        <div v-show="hasVideosToSync" style="position: relative">
           <!-- Slider -->
           <div ref="sliderContainer" class="slider-container">
             <input
@@ -88,11 +103,12 @@
         </div>
       </div>
     </div>
-    <v-dialog v-model="showConfiguration" max-width="25vw">
+    <v-dialog v-model="showConfiguration" max-width="450px">
       <v-card>
-        <v-card-title>Configure</v-card-title>
+        <v-card-title>Sync Settings</v-card-title>
         <v-card-text>
-          Configure per video time offsets to align streams with VODs that are desynced (technical issue, deleted parts, etc)
+          Videos are synced based on the stream start time, and can desync due to mid stream technical issues or deleted portions.
+          Use offsets to manually align videos
           <template v-for="v in overlapVideos">
             <div :key="v.id" class="d-flex justify-space-between my-1">
               <channel-img
@@ -125,6 +141,9 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="doneCopy" color="success">
+      Link Copied
+    </v-snackbar>
   </v-sheet>
 </template>
 
@@ -133,20 +152,24 @@ import { mapState, mapGetters } from "vuex";
 import { formatDuration, dayjs } from "@/utils/time";
 import Vue from "vue";
 import throttle from "lodash-es/throttle";
-
+import copyToClipboard from "@/mixins/copyToClipboard";
+import querystring from "querystring";
 import {
-    mdiPause, mdiFastForward10, mdiRewind10,
+    mdiPause, mdiFastForward10, mdiRewind10, mdiLinkVariant,
 } from "@mdi/js";
+import { encodeLayout } from "@/utils/mv-utils";
 import ChannelImg from "../channel/ChannelImg.vue";
 
 export default {
     name: "MultiviewSyncBar",
     components: { ChannelImg },
+    mixins: [copyToClipboard],
     data() {
         return {
             mdiPause,
             mdiFastForward10,
             mdiRewind10,
+            mdiLinkVariant,
 
             paused: true,
             hovering: false,
@@ -159,6 +182,7 @@ export default {
             firstPlay: true,
             showConfiguration: false,
             offsets: {},
+            showCopyDialog: false,
         };
     },
     computed: {
@@ -197,11 +221,11 @@ export default {
             return ol;
         },
         minTs() {
-            if (!this.overlapVideos.length) return 0;
+            if (!this.hasVideosToSync) return 0;
             return Math.min(...this.overlapVideos.map((v) => v.startTs));
         },
         maxTs() {
-            if (!this.overlapVideos.length) return 0;
+            if (!this.hasVideosToSync) return 0;
             return Math.max(...this.overlapVideos.map((v) => v.endTs));
         },
         splitProgressBarData() {
@@ -222,6 +246,24 @@ export default {
         totalDuration() {
             return formatDuration((this.maxTs - this.minTs) * 1000);
         },
+        hasVideosToSync() {
+            return this.overlapVideos.length > 1;
+        },
+
+        routeCurrentTs() {
+            return this.$route.query.currentTs;
+        },
+        routeOffsets() {
+            return this.$route.query.offsets?.split(",");
+        },
+        // offsets() {
+        //     if (this.routeOffsets && this.overlapVideos.length) {
+        //         return this.overlapVideos.map((v, index) => ({
+        //             [v.id]: this.routeOffsets[index],
+        //         })).reduce((a, c) => ({ ...a, ...c }), {});
+        //     }
+        //     return {};
+        // },
     },
     watch: {
         paused(pause) {
@@ -235,13 +277,13 @@ export default {
         },
     },
     mounted() {
+        this.startTimer();
         this.$refs.sliderContainer.addEventListener("mouseenter", this.onMouseEnter, false);
         this.$refs.sliderContainer.addEventListener("mousemove", this.onMouseOver, false);
         this.$refs.sliderContainer.addEventListener("mouseout", this.onMouseLeave, false);
         // Stops Firefox scroll behavior on slider
         // eslint-disable-next-line func-names
         this.$refs.slider.addEventListener("mousewheel", function () { this.blur(); }, false);
-        this.startTimer();
     },
     beforeDestroy() {
         this.timer && clearInterval(this.timer);
@@ -283,10 +325,10 @@ export default {
             return Math.min(100, Math.max(((ts - video.startTs) / (video.endTs - video.startTs)) * 100, 0));
         },
         sync() {
-            if (!this.$parent?.$refs?.videoCell) return;
+            if (!this.$parent?.$refs?.videoCell || !this.hasVideosToSync) return;
 
             // Find start time if first initialization
-            if (this.currentTs <= 0) {
+            if (this.currentTs <= 0 || this.currentTs < this.minTs || this.currentTs > this.maxTs) {
                 this.currentTs = this.findStartTime();
             }
             // Max second desync, before it forces resync
@@ -328,6 +370,7 @@ export default {
         },
         // Find a start time from current player times or use minTs
         findStartTime() {
+            if (this.routeCurrentTs) return +this.routeCurrentTs;
             const times = [];
             let firstOverlap = this.minTs;
             if (!this.$parent?.$refs?.videoCell) return this.minTs;
@@ -389,6 +432,15 @@ export default {
         changeOffset(id, value) {
             Vue.set(this.offsets, id, (this.offsets[id] ?? 0) + value);
         },
+        onShareClick() {
+            const layoutParam = encodeLayout({
+                layout: this.layout,
+                contents: this.layoutContent,
+                includeVideo: true,
+            });
+
+            this.copyToClipboard(`${window.origin}/multiview/${layoutParam}`);
+        },
         formatDuration,
     },
 };
@@ -404,8 +456,8 @@ $slider-height: 90px;
 
 .sync-bar {
     width: 100%;
-    height: 102px;
-    position: absolute;
+    height: 100px;
+    position: sticky;
     bottom: 0;
     box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%) !important;
 }
@@ -419,7 +471,7 @@ $slider-height: 90px;
     top: 0;
     width: calc(100% - #{$slider-left-offset});
     height: $slider-height;
-    z-index: 10;
+    z-index: 5;
     border: none;
 }
 .sync-slider {

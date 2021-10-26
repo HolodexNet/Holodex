@@ -1,11 +1,6 @@
 <template>
   <div
     class="mv-background"
-    :style="{
-      'background-size': `${columnWidth}px ${rowHeight}px`,
-      height: `calc(100% - ${collapseToolbar ? 0 : 64}px)`,
-      top: `${collapseToolbar ? 0 : 64}px`,
-    }"
   >
     <template v-if="showTips">
       <div v-if="!collapseToolbar" style="max-width: 50%; display: inline-block">
@@ -55,14 +50,6 @@ import {
 export default {
     name: "MultiviewBackground",
     props: {
-        columnWidth: {
-            type: Number,
-            default: 80,
-        },
-        rowHeight: {
-            type: Number,
-            default: 42,
-        },
         collapseToolbar: {
             type: Boolean,
             default: false,
