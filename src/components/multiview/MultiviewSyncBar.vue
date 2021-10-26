@@ -136,7 +136,7 @@
       </v-card>
     </v-dialog>
     <v-snackbar v-model="doneCopy" color="success">
-      {{ $t("views.multiview.copiedToClipboard") }}
+      {{ $t("component.videoCard.copiedToClipboard") }}
     </v-snackbar>
   </v-sheet>
 </template>
