@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -157,7 +155,6 @@ views:
     collabs: 連動
     about: 簡介
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -342,7 +339,6 @@ views:
     autoLayoutTip: 點擊任意頻道即可使用自動排版模式觀看實況
     createLayoutTip: 增加新分割以創造專屬排版，亦能使用預設佈局
     openToolbarTip: 開啟控制欄以開始使用多窗工具
-    progressSync: 存檔同步
     preset:
       shareOnDiscord: >-
         想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
@@ -371,7 +367,6 @@ views:
     mediaControlsHint2: ) 複數實況
     dragDropHint: 從置頂欄拖曳實況至不同分割來自訂顯示位置
     sync:
-      noStreamsToSync: 沒有影片可供同步，請開啟複數且實況時間點重疊的影片存檔（例如多視角的連動實況）
       syncSettings: 同步設定
       syncSettingsDetail: 本功能基於實況的開始時間進行同步，有可能因實況途中經歷的技術問題/移除片段的部分而失效，請使用手動調整功能來同步此類存檔
   mugen:
