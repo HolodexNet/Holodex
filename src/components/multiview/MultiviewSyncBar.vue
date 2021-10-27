@@ -52,7 +52,7 @@
       <!-- Container with overflow scroll -->
       <div class="progressSlider pr-2">
         <div v-if="!hasVideosToSync">
-          {{ $t("views.multiview.sync.noStreamsToSync") }}
+          {{ $t("views.multiview.sync.nothingToSync") }}
         </div>
         <div v-show="hasVideosToSync" style="position: relative">
           <!-- Slider -->

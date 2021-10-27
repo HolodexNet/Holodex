@@ -261,7 +261,7 @@ export default {
                     icon: mdiSync,
                     onClick: this.toggleSyncBar,
                     color: "deep-purple lighten-2",
-                    tooltip: this.$t("views.multiview.progressSync"),
+                    tooltip: this.$t("views.multiview.archiveSync"),
                 },
             ]);
         },
