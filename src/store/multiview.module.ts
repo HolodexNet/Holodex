@@ -75,10 +75,10 @@ const getters = {
 const missingVideoDataFilter = (x) => x.type === "video" && x.video.type !== "twitch" && x.video.id === x.video.channel?.name && !(x?.video?.noData);
 const videoIsLiveFilter = (x) => x?.video?.status === "live";
 const actions = {
-    async fetchVideoData({ state, commit }, { refreshLive = false }) {
+    async fetchVideoData({ state, commit }, options: { refreshLive: boolean } | undefined) {
         // Load missing video data from backend
         const videoIds = new Set<string>(Object.values<Content>(state.layoutContent)
-            .filter((x) => missingVideoDataFilter(x) || (refreshLive && videoIsLiveFilter(x)))
+            .filter((x) => missingVideoDataFilter(x) || (options?.refreshLive && videoIsLiveFilter(x)))
             .map((x) => x.video.id));
         // Nothing to do
         if (!videoIds.size) return;

@@ -63,6 +63,7 @@ export default {
             height: this.height,
             videoId: this.videoId,
             playerVars: this.playerVars,
+            origin: window.origin,
         });
 
         this.player.on("ready", (e) => this.playerReady(e.target));
