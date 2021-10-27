@@ -341,6 +341,7 @@ views:
     autoLayoutTip: Klicke auf einen Kanal, um im automatischen Layout-Modus zu schauen
     createLayoutTip: Erstelle dein eigenes Layout, indem du eine Zelle hinzufügst oder eine Vorlage verwendest
     openToolbarTip: Öffne die Symbolleiste, um Multiview zu verwenden
+    archiveSync: Archiv-Synchronisierung
     preset:
       shareOnDiscord: >-
         Hast du ein cooles Layout, das du teilen möchtest? Benutze den Teilen-Button und lass es uns wissen auf unserem <a href="https://discord.gg/jctkgHBt4b">Discord server</a>!
@@ -368,6 +369,10 @@ views:
     mediaControlsHint1: Benutze Mediensteuerelemente, um Streams zu muten und zu synchronisieren (
     mediaControlsHint2: )
     dragDropHint: Bewege Streams per Drag-and-Drop aus der Symbolleiste in Zellen, um sie zu organisieren
+    sync:
+      nothingToSync: Nichts zu synchronisieren, bitte öffne zwei überlappende Archive (z.B. Kollaborations-Streams)
+      syncSettings: Synchronisierungseinstellungen
+      syncSettingsDetail: Videos werden basierend auf der Startzeit der Streams synchronisiert und können aufgrund technischer Probleme oder gelöschter Abschnitte desynchronisiert werden. Verwende Offsets, um Videos manuell anzugleichen
   mugen:
     welcome: >-
       Willkommen bei MugenClips! Auf dieser Seite sehen alle den gleichen zufällig ausgewählten englischen Hololive-Clip. Schaue mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du vorgespult hast, aber wieder mit allen synchronisiert werden möchtest, lade die Seite bitte neu.

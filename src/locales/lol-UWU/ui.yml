@@ -341,6 +341,7 @@ views:
     autoLayoutTip: Cwick on a channew to stawt watching using auto wayout mode
     createLayoutTip: Cweate youw own wayout by adding a ceww, ow using a pweset
     openToolbarTip: Open da toowbaw to stawt using muwtiview
+    archiveSync: Awchive sync
     preset:
       shareOnDiscord: >-
         Have a coow wayout to shawe? use da shawe button and wet us know on ouw <a href="https://discord.gg/jctkgHBt4b">discowd sewvew</a>!
@@ -368,6 +369,10 @@ views:
     mediaControlsHint1: Use media contwows to mute and sync (
     mediaControlsHint2: ) wive stweams
     dragDropHint: Dwag and dwop stweams fwom toowbaw to cewws to owganize stweams
+    sync:
+      nothingToSync: Nothing to sync, pwease open two ovewwapping awchives (eg. cowwab stweams)
+      syncSettings: Sync settings
+      syncSettingsDetail: Bideos awe synced based on da stweam stawt time, and can desync due to mid stweam technicaw issues ow deweted powtions. Use offsets to manuawwy awign bideos
   mugen:
     welcome: >-
       Wewcome to mugencwips! evewyone on dis page ish seeing da same wandomwy sewected engwish howowive cwip. Watch awong and chat with howowive fans fwom acwoss da wowwd. If u skip ahead and wanna be we-sync'd with evewyone, pwease wefwesh da page.

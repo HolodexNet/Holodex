@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Acara Terjadwal
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -157,7 +155,6 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -365,9 +362,12 @@ views:
     done: Selesai
     hints: Petunjuk
     presetsHint: Buka menu preset untuk mengganti tataletak dan mengubah tataletak otomatis
-    mediaControlsHint1: Gunakan Kontrol Media untuk menyinkronkan dan menyenyapkan (
+    mediaControlsHint1: Gunakan Kontrol Media untuk mensenyapkan dan menyinkronkan (
     mediaControlsHint2: ) siaran langsung
     dragDropHint: Seret dan lepas siaran dari bilah alat ke kolom skema untuk mengatur siaran
+    sync:
+      syncSettings: Pengaturan Sinkronisasi
+      syncSettingsDetail: Video di sinkronkan berdasarkan waktu mulai stream, dan dapat desinkron di tengah - tengah stream ketika ada masalah teknis atau porsi sebagian stream di hapus/di cut. Gunakan offset untuk penyelarasan video secara manual
   mugen:
     welcome: >-
       Selamat datang di MugenClips! Semua orang yang berada di halaman ini melihat klip hololive bahasa inggris yang sama yang dipilih secara acak. Menonton bareng dan mengobrol sesama fans Hololive dari seluruh penjuru dunia. jika kamu mempercepat klip dan ingin mensinkronkan kembali video dengan semua orang, tekan refresh pada halaman ini.
