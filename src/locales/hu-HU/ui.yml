@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -155,6 +157,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -338,6 +341,7 @@ views:
     autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
     createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
     openToolbarTip: Nyisd meg az eszköztárat a több képernyős nézet használatához
+    archiveSync: Archív szinkronizáció
     preset:
       shareOnDiscord: >-
         Van egy jópofa elrendezésed? Használd a megosztás gombot és mutasd meg a <a href="https://discord.gg/jctkgHBt4b"> Discord szerverünkön</a>!
@@ -366,7 +370,9 @@ views:
     mediaControlsHint2: ) élő közvetítéseket
     dragDropHint: Húzz streameket az eszköztárból a cellákhoz, hogy elrendezd a streameket
     sync:
+      nothingToSync: Nincs mit szinkronba tenni, nyiss meg legalább 2 streamet (pl. collab streameket)
       syncSettings: Szinkronizálási beállítások
+      syncSettingsDetail: A videók a stream indulása ideje szerint vannak szinkronizálva, viszont a közbeni technikai gondok és/vagy törölt részletek miatt elcsúszhatnak. Használj offset-eket, hogy manuálisan állítsd a videókat
   mugen:
     welcome: >-
       Üdvözöllek a MugenClips-nél! Ezen az oldalon mindenki ugyan azt a véletlenszerűen kiválasztott angol Hololive klipet nézi. Együtt nézheted és chatelhetsz más Hololive rajongókkal az egész világon. Ha előretekersz és szeretnél újra egyidejűleg lenni a többiekkel, kérlek frissítsd az oldalt.
