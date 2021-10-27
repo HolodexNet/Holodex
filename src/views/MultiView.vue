@@ -311,6 +311,11 @@ export default {
                 console.error(e);
                 console.log("invalid layout");
             }
+
+            // Show sync bar if query contains t= or offsets=
+            if (this.$route.query.t || this.$route.query.offsets) {
+                this.showSyncBar = true;
+            }
         }
     },
     methods: {

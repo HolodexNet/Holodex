@@ -242,7 +242,6 @@ export default {
         hasVideosToSync() {
             return this.overlapVideos.length > 1;
         },
-
         routeCurrentTs() {
             return this.$route.query.t;
         },
