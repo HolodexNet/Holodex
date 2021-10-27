@@ -304,8 +304,9 @@ export default {
                         // eslint-disable-next-line no-empty
                     } catch {}
 
-                    // prompt overwrite with permalink, remove permalink if cancelled
-                    this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
+                    // prompt overwrite with permalink, remove permalink if cancelled, use history.pushState for silent update
+                    // eslint-disable-next-line no-restricted-globals
+                    this.promptLayoutChange(parsed, null, () => history.pushState({}, "", "/multiview"));
                 }
             } catch (e) {
                 console.error(e);
@@ -316,6 +317,8 @@ export default {
             if (this.$route.query.t || this.$route.query.offsets) {
                 this.showSyncBar = true;
             }
+        } else {
+            this.$store.dispatch("multiview/fetchVideoData", { refreshLive: true });
         }
     },
     methods: {
