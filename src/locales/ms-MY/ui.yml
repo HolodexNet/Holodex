@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -157,7 +155,6 @@ views:
     collabs: Siaran sama
     about: Perihal
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -341,7 +338,6 @@ views:
     autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak suai kendiri
     createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
     openToolbarTip: Mulakan berbilang tontonan dengan membuka ruangan alat
-    progressSync: Penyegerakan Siaran
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
@@ -370,7 +366,6 @@ views:
     mediaControlsHint2: ) video dengan Kawalan Bahantara
     dragDropHint: Urus siaran langsung dengan menarik dan melepaskan siaran berkenaan dari ruangan alat ke petak masing-masing
     sync:
-      noStreamsToSync: 'Tiada siaran yang boleh disegerakkan. Pastikan terdapat dua buah siaran (cth: siaran karyasama) yang bertindan masa langsungnya'
       syncSettings: Tetapan Penyegerakan
       syncSettingsDetail: Penyegerakan video adalah berdasarkan masa mula siaran. Sekiranya terdapat bahagian video yang terpotong akibat dialih keluar atau masalah teknik, penyegerakannya lari. Sejajarkan video secara sendiri dengan menggunakan penyelaras
   mugen:
