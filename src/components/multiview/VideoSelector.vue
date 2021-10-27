@@ -32,6 +32,7 @@
         <org-panel-picker @changed="handlePicker" />
       </v-col>
       <v-col
+        ref="container"
         class="video-list"
         cols="12"
         sm="8"
@@ -61,22 +62,34 @@
           <h4 class="pa-1">
             {{ selectedOrg.name }}
           </h4>
-          <LoadingOverlay :is-loading="isLoading" :show-error="hasError" />
+          <div class="d-flex flex-row">
+            <v-btn-toggle v-model="tab" dense>
+              <v-btn :value="0">
+                {{ $t("views.home.liveOrUpcomingHeading") }}
+              </v-btn>
+              <v-btn :value="1">
+                {{ $t("views.home.recentVideoToggles.official") }}
+              </v-btn>
+            </v-btn-toggle>
+            <portal-target name="date-selector-multiview" class="v-tab ml-auto" />
+          </div>
           <VideoCardList
-            :videos="baseFilteredLive"
-            disable-default-click
+            v-if="selectedOrg.name === 'Playlist'"
+            :videos="savedVideosList"
             include-channel
-            :cols="{
-              xs: 1,
-              sm: 1,
-              md: 2,
-              lg: 4,
-              xl: 5,
-            }"
-            :horizontal="$vuetify.breakpoint.mdAndDown"
+            horizontal
             dense
-            hide-ignored-topics
-            :hide-collabs="shouldHideCollabs"
+            disable-default-click
+            @videoClicked="handleVideoClick"
+          />
+          <ConnectedVideoList
+            v-else
+            :tab="tab"
+            :is-fav-page="selectedOrg.name === 'Favorites'"
+            hide-placeholder
+            disable-default-click
+            dense
+            date-portal-name="date-selector-multiview"
             @videoClicked="handleVideoClick"
           />
           <div class="d-block" style="height: 120px" />
@@ -151,7 +164,8 @@
 <script lang="ts">
 import VideoCard from "@/components/video/VideoCard.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
-import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
+import ConnectedVideoList from "@/components/video/ConnectedVideoList.vue";
+// import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import { dayjs } from "@/utils/time";
 import { mapGetters, mapState } from "vuex";
@@ -164,7 +178,8 @@ export default {
     components: {
         VideoCard,
         VideoCardList,
-        LoadingOverlay,
+        ConnectedVideoList,
+        // LoadingOverlay,
         ChannelImg,
         OrgPanelPicker,
         CustomUrlField,
@@ -174,6 +189,10 @@ export default {
         horizontal: {
             type: Boolean,
             default: false,
+        },
+        isActive: {
+            type: Boolean,
+            default: true,
         },
     },
     data() {
@@ -185,6 +204,7 @@ export default {
             tick: Date.now(),
             ticker: null,
             refreshTimer: null,
+            tab: 0,
         };
     },
     computed: {
@@ -199,6 +219,7 @@ export default {
                 hideCollabs: this.shouldHideCollabs,
                 forOrg: this.isRealOrg && this.selectedOrg.name,
                 hideIgnoredTopics: true,
+                hidePlaceholder: true,
             };
             return this.live.filter((l) => this.filterVideos(l, filterConfig) && l.type !== "placeholder");
         },
@@ -242,14 +263,17 @@ export default {
         homeUpdateTick() {
             if (this.isRealOrg) this.live = this.$store.state.home.live;
         },
-        savedVideosList() {
-            if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;
-        },
+        // savedVideosList() {
+        //     if (this.selectedOrg.name === "Playlist") this.live = this.active.videos;
+        // },
         // eslint-disable-next-line func-names
         "$store.state.visibilityState": function () {
             if (this.$store.state.visibilityState === "visible") {
                 this.loadSelection();
             }
+        },
+        isActive(nw) {
+            if (nw) this.loadSelection();
         },
     },
     created() {
@@ -292,6 +316,8 @@ export default {
         },
         // Load selected option
         loadSelection(force) {
+            // Stop caring about changes if hidden
+            if (!this.isActive) return;
             this.isLoading = false;
             this.hasError = false;
             // Do nothing for custom URLs
@@ -331,6 +357,7 @@ export default {
             if (this.selectedOrg === panel) return;
             this.selectedOrg = panel;
             this.loadSelection(true);
+            if (this.$refs.container) this.$refs.container.scrollTop = 0;
         },
     },
 };

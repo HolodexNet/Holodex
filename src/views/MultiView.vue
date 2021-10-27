@@ -116,7 +116,7 @@
 
     <!-- Video Selector -->
     <v-dialog v-model="showVideoSelector" min-width="75vw">
-      <VideoSelector @videoClicked="handleVideoClicked" />
+      <VideoSelector :is-active="showVideoSelector" @videoClicked="handleVideoClicked" />
     </v-dialog>
 
     <!-- Preset Selector -->

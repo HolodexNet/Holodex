@@ -60,126 +60,21 @@
     </template>
 
     <LoadingOverlay :is-loading="false" :show-error="hasError" />
-    <div v-show="!hasError && !(isFavPage && !(isLoggedIn && favoriteChannelIDs.size > 0))">
-      <template v-if="tab === Tabs.LIVE_UPCOMING">
-        <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
-        <div v-if="lives.length || upcoming.length">
-          <VideoCardList
-            :videos="lives"
-            include-channel
-            :include-avatar="shouldIncludeAvatar"
-            :cols="colSizes"
-            :dense="currentGridSize > 0"
-            hide-ignored-topics
-            :for-org="isFavPage?'none':null"
-            :hide-collabs="shouldHideCollabs"
-          />
-          <v-divider v-if="lives.length" class="my-3 secondary" />
-          <VideoCardList
-            :videos="upcoming"
-            include-channel
-            :include-avatar="shouldIncludeAvatar"
-            :cols="colSizes"
-            :dense="currentGridSize > 0"
-            hide-ignored-topics
-            :for-org="isFavPage?'none':null"
-            :hide-collabs="shouldHideCollabs"
-          />
-        </div>
-        <div v-show="!isLoading && lives.length == 0 && upcoming.length == 0" class="ma-auto pa-5 text-center">
-          {{ $t("views.home.noStreams") }}
-        </div>
-      </template>
-
-      <template v-else>
-        <!-- Archive and Clips section -->
-        <v-col
-          v-show="!$vuetify.breakpoint.isXs"
-          xs="4"
-          sm="4"
-          style="display: flex; justify-content: flex-end;"
-          class="ma-0 pb-0 pt-0"
-        >
-          <portal :to="`date-selector${isFavPage}`" :disabled="$vuetify.breakpoint.xs">
-            <v-menu
-              v-show="isActive"
-              v-model="datePicker"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              left
-              min-width="auto"
-            >
-              <template #activator="{ on, attrs }">
-                <v-text-field
-                  v-model="toDate"
-                  label="Up to"
-                  :prepend-icon="mdiCalendarEnd"
-                  readonly
-                  hide-details
-                  dense
-                  regular
-                  clearable
-                  single-line
-                  style="opacity: 0.7; max-width: 170px;"
-                  v-bind="attrs"
-                  v-on="on"
-                />
-              </template>
-              <v-date-picker
-                v-model="toDate"
-                @input="datePicker = false"
-              />
-            </v-menu>
-          </portal>
-        </v-col>
-
-        <keep-alive>
-          <generic-list-loader
-            v-slot="{ data, isLoading: lod }"
-            :key="'vlx-' + tab + identifier + isFavPage"
-            :infinite-load="scrollMode"
-            :paginate="!scrollMode"
-            :per-page="pageLength"
-            :load-fn="getLoadFn()"
-          >
-            <!-- only keep VideoCardList rendered if scrollMode OR it's not loading. -->
-            <VideoCardList
-              v-show="scrollMode || !lod"
-              :videos="data"
-              include-channel
-              :cols="colSizes"
-              :dense="currentGridSize > 0"
-              hide-ignored-topics
-              :hide-collabs="shouldHideCollabs"
-              :for-org="isFavPage?'none':null"
-            />
-            <!-- only show SkeletonCardList if it's loading -->
-            <SkeletonCardList v-if="lod" :cols="colSizes" :dense="currentGridSize > 0" />
-          </generic-list-loader>
-        </keep-alive>
-      </template>
-    </div>
+    <connected-video-list
+      ref="videoList"
+      :is-fav-page="isFavPage"
+      :tab="tab"
+      :is-active="isActive"
+    />
   </v-container>
 </template>
 
 <script lang="ts">
 import { mapState, mapGetters } from "vuex";
-import { mdiCalendarEnd } from "@mdi/js";
-
 import reloadable from "@/mixins/reloadable";
 import isActive from "@/mixins/isActive";
-import backendApi from "@/utils/backend-api";
-
-import GenericListLoader from "@/components/video/GenericListLoader.vue";
-import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
-import VideoCardList from "@/components/video/VideoCardList.vue";
+import ConnectedVideoList from "@/components/video/ConnectedVideoList.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
-import { dayjs } from "@/utils/time";
-
-function nearestUTCDate(date) {
-    return date.add(1, "day").toDate().toISOString();
-}
 
 export default {
     name: "HomeFave",
@@ -193,10 +88,8 @@ export default {
         };
     },
     components: {
-        VideoCardList,
         LoadingOverlay,
-        GenericListLoader,
-        SkeletonCardList,
+        ConnectedVideoList,
     },
     mixins: [reloadable, isActive],
     props: {
@@ -207,8 +100,6 @@ export default {
     },
     data() {
         return {
-            identifier: Date.now(),
-            pageLength: 24,
             tab: 0,
             Tabs: Object.freeze({
                 LIVE_UPCOMING: 0,
@@ -216,10 +107,6 @@ export default {
                 CLIPS: 2,
             }),
             refreshTimer: null,
-            datePicker: false,
-            toDate: null,
-
-            mdiCalendarEnd,
         };
     },
     computed: {
@@ -237,35 +124,6 @@ export default {
         },
         hasError() {
             return this.isFavPage ? this.f_hasError : this.h_hasError;
-        },
-        scrollMode() {
-            return this.$store.state.settings.scrollMode;
-        },
-        currentGridSize: {
-            get() {
-                return this.$store.state.currentGridSize;
-            },
-            set(val) {
-                this.$store.commit("setCurrentGridSize", val);
-            },
-        },
-        colSizes() {
-            return {
-                xs: 1 + this.currentGridSize,
-                sm: 2 + this.currentGridSize,
-                md: 3 + this.currentGridSize,
-                lg: 4 + this.currentGridSize,
-                xl: 5 + this.currentGridSize,
-            };
-        },
-        shouldIncludeAvatar() {
-            if (this.$vuetify.breakpoint.md && this.currentGridSize > 1) return false;
-            if (this.$vuetify.breakpoint.sm && this.currentGridSize > 0) return false;
-            if (this.$vuetify.breakpoint.xs && this.currentGridSize > 0) return false;
-            return true;
-        },
-        shouldHideCollabs() {
-            return this.tab !== this.Tabs.CLIPS && this.$store.state.settings.hideCollabStreams && (this.isFavPage ? true : this.$store.state.currentOrg.name !== "All Vtubers");
         },
         lives() {
             return this.live.filter((v) => v.status === "live");
@@ -307,9 +165,6 @@ export default {
                 window.scrollTo(0, 0);
             });
             this.changeTab();
-        },
-        toDate() {
-            this.identifier = Date.now();
         },
     },
     created() {
@@ -366,18 +221,8 @@ export default {
                     // Navigation duplication error expected, catch it and move on
                 });
         },
-        init(updateFavorites) {
-            if (this.isFavPage) {
-                if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
-                if (this.favoriteChannelIDs.size > 0 && this.isLoggedIn) {
-                    this.$store.dispatch("favorites/fetchLive", { force: true, minutes: 2 });
-                }
-            } else {
-                this.$store.commit("home/resetState");
-                this.$store.dispatch("home/fetchLive", { force: true });
-            }
-            this.identifier = Date.now();
-
+        // updateFavorites
+        init(updateFavorites = false) {
             switch (this.$route.hash) {
                 case "#archive":
                     this.tab = this.Tabs.ARCHIVE;
@@ -389,48 +234,11 @@ export default {
                     this.tab = this.Tabs.LIVE_UPCOMING;
                     break;
             }
+            this.$refs.videoList?.init(updateFavorites);
         },
         // called from mixin, simulate reload
         reload() {
             this.init();
-        },
-        getLoadFn() {
-            if (this.isFavPage) {
-                return async (offset, limit) => {
-                    const res = await backendApi
-                        .favoritesVideos(this.$store.state.userdata.jwt, {
-                            status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                            ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                            include: "clips",
-                            lang: this.$store.state.settings.clipLangs.join(","),
-                            paginated: !this.scrollMode,
-                            to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
-                            limit,
-                            offset,
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                            this.$store.dispatch("loginVerify"); // check if the user is actually logged in.
-                            throw err;
-                        });
-                    return res.data;
-                };
-            }
-            // home page function
-            return async (offset, limit) => {
-                const res = await backendApi.videos({
-                    status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                    ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                    include: "clips",
-                    org: this.$store.state.currentOrg.name,
-                    lang: this.$store.state.settings.clipLangs.join(","),
-                    paginated: !this.scrollMode,
-                    to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
-                    limit,
-                    offset,
-                });
-                return res.data;
-            };
         },
     },
 };

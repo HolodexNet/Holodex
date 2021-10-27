@@ -5,6 +5,7 @@ export default {
             hideCollabs = false,
             hideIgnoredTopics = true,
             forOrg = "",
+            hidePlaceholder = false,
         }) {
             const blockedChannels = this.$store.getters["settings/blockedChannelIDs"];
             const ignoredTopics = this.$store.getters["settings/ignoredTopics"];
@@ -25,6 +26,10 @@ export default {
 
             if (hideIgnoredTopics) {
                 keep &&= !ignoredTopics.has(v.topic_id);
+            }
+
+            if (hidePlaceholder) {
+                keep &&= v.type !== "placeholder";
             }
 
             return keep;

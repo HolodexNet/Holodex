@@ -132,6 +132,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        hidePlaceholder: {
+            type: Boolean,
+            default: false,
+        },
         forOrg: {
             type: String,
             default: "",
@@ -142,6 +146,7 @@ export default {
         },
         showComments: {
             type: Boolean,
+            default: false,
         },
     },
     data() {
@@ -159,6 +164,7 @@ export default {
                 ignoreBlock: this.ignoreBlock,
                 hideCollabs: this.hideCollabs,
                 hideIgnoredTopics: this.hideIgnoredTopics,
+                hidePlaceholder: this.hidePlaceholder,
                 forOrg: this.forOrg,
             };
             if (this.limitRows <= 0 || this.expanded) {
