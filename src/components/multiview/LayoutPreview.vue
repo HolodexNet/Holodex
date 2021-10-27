@@ -1,7 +1,7 @@
 <template>
   <div class="layout-preview" :class="{ 'theme--light': !$vuetify.theme.dark }" :style="size">
     <template v-for="l in layout">
-      <div :key="l.i" class="cell" :style="getStyle(l)">
+      <div :key="l.i" class="layout-preview-cell" :style="getStyle(l)">
         <span v-if="content && content[l.i] && content[l.i].type === 'chat'">💬</span>
       </div>
     </template>
@@ -61,16 +61,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .layout-preview {
-    display: inline-block;
+    /* display: inline-block; */
     border: 2px solid #424242;
     background-color: #424242;
     position: relative;
     overflow: hidden;
 }
 
-.cell {
+.layout-preview-cell {
     position: absolute;
     border: 2px solid #424242;
     background-color: #9e9e9e;

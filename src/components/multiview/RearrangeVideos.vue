@@ -1,12 +1,20 @@
 <template>
-  <v-card max-height="75vh" class="overflow-y-auto">
+  <v-card>
     <v-card-title> Rearrange Videos </v-card-title>
     <v-card-text>
-      <div class="layout-preview" :class="{ 'theme--light': !$vuetify.theme.dark }" :style="size">
-        <template v-for="l in layout">
+      <div
+        ref="container"
+        class="layout-preview ma-auto"
+        :class="{ 'theme--light': !$vuetify.theme.dark }"
+        :style=" {
+          width: `${size.width}px`,
+          height: `${size.height}px`,
+        }"
+      >
+        <template v-for="(l, idx) in layout">
           <div
             :key="l.i"
-            class="cell"
+            class="layout-preview-cell"
             :style="getStyle(l)"
             @dragover="onDragOver"
             @drop="onDrop($event, l.i)"
@@ -15,12 +23,19 @@
               v-if="content && content[l.i]"
               draggable
               class="pa-3 grabbable"
-              @dragstart="onDragStart($event, l.i)"
+              :style="{
+                opacity: draggingIdx !== idx ? 1 : 0
+              }"
+              @dragstart="onDragStart($event, idx)"
+              @dragend="draggingIdx = -1"
+              @touchstart="onTouchStart($event, idx)"
+              @touchend="onTouchEnd($event, idx)"
+              @touchmove="onTouchMove($event, idx)"
+              @touchcancel="draggingIdx = -1"
             >
-              <span v-if="content[l.i].type === 'chat'">
-
-                <v-icon>{{ icons.ytChat }}</v-icon>
-              </span>
+              <v-icon v-if="content[l.i].type === 'chat'" x-large>
+                {{ icons.ytChat }}
+              </v-icon>
               <channel-img
                 v-if="content[l.i].type === 'video'"
                 :channel="content[l.i].video.channel"
@@ -30,6 +45,22 @@
             </div>
           </div>
         </template>
+        <div
+          v-if="draggingIdx >= 0 && isTouch"
+          style="position: absolute; touch-action: none"
+          :style="draggableIconPos"
+        >
+          <span v-if="touchMoveContent.type === 'chat'">
+
+            <v-icon x-large>{{ icons.ytChat }}</v-icon>
+          </span>
+          <channel-img
+            v-if="touchMoveContent.type === 'video'"
+            :channel="touchMoveContent.video.channel"
+            no-link
+            rounded
+          />
+        </div>
       </div>
     </v-card-text>
   </v-card>
@@ -42,27 +73,58 @@ import ChannelImg from "../channel/ChannelImg.vue";
 export default {
     name: "RearrangeVideos",
     components: { ChannelImg },
+    data() {
+        return {
+            draggableIconPos: {
+                left: 0,
+                top: 0,
+            },
+            draggingIdx: -1,
+            isTouch: false,
+        };
+    },
     computed: {
         ...mapState("multiview", ["layout"]),
         ...mapState("multiview", { content: "layoutContent" }),
+        touchMoveContent() {
+            if (this.draggingIdx >= 0) return this.content[this.layout[this.draggingIdx].i];
+            return null;
+        },
         size() {
-            // const width = this.scale * (this.mobile ? 108 : 192);
-            // const height = this.scale * (this.mobile ? 192 : 108);
-            const width = 192 * 2;
-            const height = 108 * 2;
-            return {
-                width: `${width}px`,
-                height: `${height}px`,
-            };
+            const width = 2 * (this.$vuetify.breakpoint.xs ? 108 : 192);
+            const height = 2 * (this.$vuetify.breakpoint.xs ? 192 : 108);
+            return { width, height };
         },
     },
-    mounted() {
-
-    },
     methods: {
+        onTouchStart(e, idx) {
+            this.draggingIdx = idx;
+            this.onTouchMove(e);
+            this.isTouch = true;
+        },
+        onTouchMove(e) {
+            const { x, y } = this.getRelativePoint(e.changedTouches[0]);
+            this.draggableIconPos.left = `${x}px`;
+            this.draggableIconPos.top = `${y}px`;
+        },
+        onTouchEnd(e, startIdx) {
+            // x & y are relative to the clicked element
+            const { x, y } = this.getRelativePoint(e.changedTouches[0]);
+            const { width, height } = this.size;
+            // Scale to the 24x24 grid
+            const unitX = x / (width / 24);
+            const unitY = y / (height / 24);
+            // Find intersecting cell
+            const dropCell = this.layout.find((l) => unitX >= l.x && unitX < (l.x + l.w) && unitY >= l.y && unitY < (l.y + l.h));
+            if (dropCell) {
+                this.$store.commit("multiview/swapGridPosition", { id1: startIdx, id2: dropCell.i });
+            }
+            this.draggingIdx = -1;
+        },
         onDragStart(e, idx) {
-            console.log(e, idx);
             e.dataTransfer.setData("index", idx);
+            this.draggingIdx = idx;
+            this.isTouch = false;
         },
         onDragOver(e) {
             e.preventDefault();
@@ -72,6 +134,13 @@ export default {
             const startIdx = e.dataTransfer.getData("index");
             console.log(dropIdx, +startIdx);
             this.$store.commit("multiview/swapGridPosition", { id1: startIdx, id2: dropIdx });
+        },
+        getRelativePoint(touch) {
+            const br = this.$refs.container.getBoundingClientRect();
+            // x & y are relative to the clicked element
+            const x = touch.clientX - br.left;
+            const y = touch.clientY - br.top;
+            return { x, y };
         },
         getStyle(l) {
             // viewport is constricted to 24 cols and 24 rows
@@ -96,37 +165,5 @@ export default {
 <style>
 .grabbable *, .grabbable *:hover, .grabbable *:active {
     cursor: move !important; /* fallback if grab cursor is unsupported */
-}
-</style>
-<style scoped>
-.layout-preview {
-    display: inline-block;
-    border: 2px solid #424242;
-    background-color: #424242;
-    position: relative;
-    overflow: hidden;
-}
-
-.cell {
-    position: absolute;
-    border: 2px solid #424242;
-    background-color: #9e9e9e;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.layout-preview.theme--light > .cell > span {
-    color: black;
-}
-
-.layout-preview.theme--light {
-    border-color: #f5f5f5;
-    background-color: #f5f5f5;
-}
-.layout-preview.theme--light > .cell {
-    border-color: #f5f5f5;
-    background-color: #e0e0e0;
 }
 </style>

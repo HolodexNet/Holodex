@@ -125,7 +125,7 @@
     </v-dialog>
 
     <!-- Preset Editor -->
-    <v-dialog v-model="showPresetEditor" width="500">
+    <v-dialog v-model="showPresetEditor">
       <PresetEditor
         v-if="showPresetEditor"
         :layout="layout"
