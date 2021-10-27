@@ -142,6 +142,10 @@
       :layout-preview="overwriteLayoutPreview"
     />
 
+    <v-dialog v-model="showRearrangeVideos" width="500">
+      <rearrange-videos />
+    </v-dialog>
+
     <media-controls v-model="showMediaControls" />
     <MultiviewSyncBar v-if="showSyncBar" />
   </div>
@@ -168,6 +172,7 @@ import {
 import { decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
 import api from "@/utils/backend-api";
+import RearrangeVideos from "@/components/multiview/RearrangeVideos.vue";
 
 export default {
     name: "MultiView",
@@ -186,6 +191,7 @@ export default {
         MediaControls,
         MultiviewBackground,
         MultiviewSyncBar,
+        RearrangeVideos,
     },
     mixins: [MultiviewLayoutMixin],
     metaInfo() {
@@ -204,6 +210,7 @@ export default {
 
             showSelectorForId: -1,
             showSyncBar: false,
+            showRearrangeVideos: true,
             overwriteDialog: false, // whether to show the overwrite dialog.
             overwriteCancel: null, // callbacks that will be generated when needed.
             overwriteConfirm: null, // callbacks to be generated when needed.
@@ -237,7 +244,8 @@ export default {
                 {
                     icon: mdiContentSave,
                     onClick: () => {
-                        this.showPresetEditor = true;
+                        // this.showPresetEditor = true;
+                        this.showRearrangeVideos = !this.showRearrangeVideos;
                     },
                     tooltip: this.$t("views.multiview.presetEditor.title"),
                     color: "secondary",

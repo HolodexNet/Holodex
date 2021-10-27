@@ -246,6 +246,12 @@ const mutations = {
     setSyncOffsets(state, { id, value }) {
         Vue.set(state.syncOffsets, id, value);
     },
+    swapGridPosition(state, { id1, id2 }) {
+        const { x: tX, y: tY, w: tW, h: tH } = state.layout[id1];
+        const { x, y, w, h } = state.layout[id2];
+        Object.assign(state.layout[id1], { ...state.layout[id1], x, y, w, h });
+        Object.assign(state.layout[id2], { ...state.layout[id2], x: tX, y: tY, w: tW, h: tH });
+    },
 };
 
 export default {
