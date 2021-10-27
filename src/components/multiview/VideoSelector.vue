@@ -62,7 +62,7 @@
           <h4 class="pa-1">
             {{ selectedOrg.name }}
           </h4>
-          <div class="d-flex flex-row">
+          <div v-if="selectedOrg.name !== 'Playlist'" class="d-flex flex-row">
             <v-btn-toggle v-model="tab" dense>
               <v-btn :value="0">
                 {{ $t("views.home.liveOrUpcomingHeading") }}
