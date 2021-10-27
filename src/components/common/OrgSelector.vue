@@ -33,26 +33,13 @@
                 class="primary--text"
                 :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
               >dex</span>
-              <v-tooltip
-                v-model="firstVisit"
-                right
-                bottom
-                z-index="120"
-                content-class="first-visit-tooltip"
+              <v-icon
+                size="30"
+                class="change-org-icon"
+                :class="{ 'rotate-180': activator.attrs['aria-expanded'] === 'true' }"
               >
-                <template #activator="{}">
-                  <v-icon
-                    size="30"
-                    class="change-org-icon"
-                    :class="{ 'rotate-180': activator.attrs['aria-expanded'] === 'true' }"
-                    v-on="activator.on"
-                  >
-                    {{ icons.mdiMenuDown }}
-                  </v-icon>
-                </template>
-                <div>{{ $t("views.app.nowSupportsMultiOrg") }}</div>
-                <div>{{ $t("views.app.loginCallToAction") }}</div>
-              </v-tooltip>
+                {{ icons.mdiMenuDown }}
+              </v-icon>
             </div>
           </slot>
         </template>
