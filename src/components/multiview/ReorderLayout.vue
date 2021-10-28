@@ -1,10 +1,11 @@
 <template>
   <v-card>
-    <v-card-title> Rearrange Videos </v-card-title>
+    <v-card-title> {{ $t("views.multiview.reorderLayout") }} </v-card-title>
     <v-card-text>
+      {{ $t("views.multiview.reorderLayoutDetail") }}
       <div
         ref="container"
-        class="layout-preview ma-auto"
+        class="layout-preview ma-auto mt-2"
         :class="{ 'theme--light': !$vuetify.theme.dark }"
         :style=" {
           width: `${size.width}px`,
@@ -27,13 +28,12 @@
                 opacity: draggingIdx !== idx ? 1 : 0
               }"
               @dragstart="onDragStart($event, idx)"
-              @dragend="draggingIdx = -1"
               @touchstart="onTouchStart($event, idx)"
               @touchend="onTouchEnd($event, idx)"
               @touchmove="onTouchMove($event, idx)"
               @touchcancel="draggingIdx = -1"
             >
-              <v-icon v-if="content[l.i].type === 'chat'" x-large>
+              <v-icon v-if="content[l.i].type === 'chat'" large>
                 {{ icons.ytChat }}
               </v-icon>
               <channel-img
@@ -46,13 +46,12 @@
           </div>
         </template>
         <div
-          v-if="draggingIdx >= 0 && isTouch"
+          v-if="draggingIdx >= 0"
           style="position: absolute; touch-action: none"
           :style="draggableIconPos"
         >
           <span v-if="touchMoveContent.type === 'chat'">
-
-            <v-icon x-large>{{ icons.ytChat }}</v-icon>
+            <v-icon large>{{ icons.ytChat }}</v-icon>
           </span>
           <channel-img
             v-if="touchMoveContent.type === 'video'"
@@ -80,7 +79,6 @@ export default {
                 top: 0,
             },
             draggingIdx: -1,
-            isTouch: false,
         };
     },
     computed: {
@@ -100,7 +98,6 @@ export default {
         onTouchStart(e, idx) {
             this.draggingIdx = idx;
             this.onTouchMove(e);
-            this.isTouch = true;
         },
         onTouchMove(e) {
             const { x, y } = this.getRelativePoint(e.changedTouches[0]);
@@ -123,8 +120,6 @@ export default {
         },
         onDragStart(e, idx) {
             e.dataTransfer.setData("index", idx);
-            this.draggingIdx = idx;
-            this.isTouch = false;
         },
         onDragOver(e) {
             e.preventDefault();
@@ -163,7 +158,7 @@ export default {
 };
 </script>
 <style>
-.grabbable *, .grabbable *:hover, .grabbable *:active {
+.grabbable, .grabbable *, .grabbable *:hover, .grabbable *:active {
     cursor: move !important; /* fallback if grab cursor is unsupported */
 }
 </style>

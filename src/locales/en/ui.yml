@@ -396,6 +396,9 @@ views:
     mediaControlsHint1: Use Media Controls to mute and sync (
     mediaControlsHint2: ) live streams
     dragDropHint: Drag and drop streams from toolbar to cells to organize streams
+    reorderHint: Use Reorder Layout menu to change video/chat positions
+    reorderLayout: Reorder Layout
+    reorderLayoutDetail: Drag and drop icons to the desired position
     sync:
       nothingToSync: Nothing to sync, please open two overlapping archives (eg. collab streams)
       syncSettings: Sync Settings

@@ -142,8 +142,8 @@
       :layout-preview="overwriteLayoutPreview"
     />
 
-    <v-dialog v-model="showRearrangeVideos" width="500">
-      <rearrange-videos />
+    <v-dialog v-model="showReorderVideos" width="500">
+      <ReorderLayout />
     </v-dialog>
 
     <media-controls v-model="showMediaControls" />
@@ -165,14 +165,15 @@ import MultiviewLayoutMixin from "@/components/multiview/MultiviewLayoutMixin";
 import LayoutChangePrompt from "@/components/multiview/LayoutChangePrompt.vue";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
 import MultiviewBackground from "@/components/multiview/MultiviewBackground.vue";
-import MultiviewSyncBar from "@/components/multiview/MultiviewSyncBar.vue";
+import ReorderLayout from "@/components/multiview/ReorderLayout.vue";
 import {
     mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiTuneVertical, mdiSync,
 } from "@mdi/js";
 import { decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
 import api from "@/utils/backend-api";
-import RearrangeVideos from "@/components/multiview/RearrangeVideos.vue";
+
+export const reorderIcon = "M2 2h8.8v8.8H2V2Zm11.3 11.3H22V22h-8.8v-8.8Zm4.6-10.9a.6.6 0 0 0-1 0l-3.9 4a.6.6 0 1 0 .9.9l3.5-3.6L21 7.3a.6.6 0 0 0 .8-1l-4-4Zm.1 10V2.8h-1.2v9.6H18ZM5.7 21.6c.3.3.7.3 1 0l3.9-4a.6.6 0 1 0-.9-.9l-3.5 3.6-3.6-3.6a.6.6 0 1 0-.9 1l4 4Zm-.2-10v9.6h1.3v-9.6H5.5Z";
 
 export default {
     name: "MultiView",
@@ -190,8 +191,8 @@ export default {
         CellContainer,
         MediaControls,
         MultiviewBackground,
-        MultiviewSyncBar,
-        RearrangeVideos,
+        MultiviewSyncBar: () => import("@/components/multiview/MultiviewSyncBar.vue"),
+        ReorderLayout,
     },
     mixins: [MultiviewLayoutMixin],
     metaInfo() {
@@ -210,7 +211,7 @@ export default {
 
             showSelectorForId: -1,
             showSyncBar: false,
-            showRearrangeVideos: true,
+            showReorderVideos: true,
             overwriteDialog: false, // whether to show the overwrite dialog.
             overwriteCancel: null, // callbacks that will be generated when needed.
             overwriteConfirm: null, // callbacks to be generated when needed.
@@ -270,6 +271,14 @@ export default {
                     onClick: this.toggleSyncBar,
                     color: "deep-purple lighten-2",
                     tooltip: this.$t("views.multiview.archiveSync"),
+                },
+                {
+                    icon: reorderIcon,
+                    onClick: () => {
+                        this.showReorderVideos = !this.showReorderVideos;
+                    },
+                    color: "indigo",
+                    tooltip: this.$t("views.multiview.reorderLayout"),
                 },
             ]);
         },

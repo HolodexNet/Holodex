@@ -36,6 +36,7 @@
             {{ $t("views.multiview.mediaControlsHint2") }}
           </div>
           <div>3. <v-icon>{{ mdiCardPlus }}</v-icon> {{ $t("views.multiview.dragDropHint") }}</div>
+          <div>4. <v-icon>{{ reorderIcon }}</v-icon> {{ $t("views.multiview.reorderHint") }}</div>
         </div>
       </div>
     </template>
@@ -46,6 +47,7 @@
 import {
     mdiCardPlus, mdiTuneVertical, mdiFastForward,
 } from "@mdi/js";
+import { reorderIcon } from "@/views/MultiView.vue";
 
 export default {
     name: "MultiviewBackground",
@@ -61,6 +63,7 @@ export default {
     },
     data() {
         return {
+            reorderIcon,
             mdiCardPlus,
             mdiFastForward,
             mdiTuneVertical,
