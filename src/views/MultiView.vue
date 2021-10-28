@@ -50,7 +50,6 @@
         top: `${collapseToolbar ? 0 : 64}px`,
       }"
     />
-    <v-spacer />
     <!-- Floating button to open toolbar when collapsed -->
     <v-btn
       v-if="collapseToolbar"
@@ -146,7 +145,7 @@
     </v-dialog>
 
     <media-controls v-model="showMediaControls" />
-    <MultiviewSyncBar v-if="showSyncBar" />
+    <MultiviewSyncBar v-if="showSyncBar" class="mt-auto" />
   </div>
 </template>
 
@@ -434,7 +433,6 @@ export default {
 .multiview {
     width: 100%;
     height: 100%;
-    height: calc(100% - env(safe-area-inset-bottom));
 }
 .mobile-helpers {
     -webkit-user-select: none;
