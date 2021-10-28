@@ -364,6 +364,9 @@ views:
     mediaControlsHint1: メディアコントロールを使うとライブストリームのミュートや同期 (
     mediaControlsHint2: ) ができます
     dragDropHint: ツールバーからセルに配信をドラッグ&ドロップして配信を整理します
+    reorderHint: 動画/チャットの位置を変更するには、レイアウトの並べ替えメニューを使用します
+    reorderLayout: レイアウトの並べ替え
+    reorderLayoutDetail: アイコンを目的の位置にドラッグ&ドロップします
     sync:
       nothingToSync: 同期するものがありません。配信時刻が重なるアーカイブ (例：コラボ配信) を2つ開いてください。
       syncSettings: 同期設定
