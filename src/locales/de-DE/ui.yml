@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
-  video:
-    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -157,7 +155,6 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe

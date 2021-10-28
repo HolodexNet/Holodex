@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terjadwal
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -155,6 +157,7 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -338,6 +341,7 @@ views:
     autoLayoutTip: Tekan channel untuk mulai menonton menggunakan mode tataletak otomatis
     createLayoutTip: Membuat tataletak kreasimu sendiri dengan menambahkan kolom, atau menggunakan preset
     openToolbarTip: Buka bilah alat untuk mulai menggunakan multiview
+    archiveSync: Sinkronisasi Arsip
     preset:
       shareOnDiscord: >-
         Punya usulan tataletak yang keren untuk dibagikan? Gunakan tombol buat tautan dan beritahu di <a href="https://discord.gg/jctkgHBt4b">Server Discord</a> kami!
@@ -365,7 +369,11 @@ views:
     mediaControlsHint1: Gunakan Kontrol Media untuk mensenyapkan dan menyinkronkan (
     mediaControlsHint2: ) siaran langsung
     dragDropHint: Seret dan lepas siaran dari bilah alat ke kolom skema untuk mengatur siaran
+    reorderHint: Gunakan menu Tata Ulang untuk mengganti posisi video/chat
+    reorderLayout: Tata Ulang
+    reorderLayoutDetail: Seret dan lepas ikon ke posisi yang diinginkan
     sync:
+      nothingToSync: Tidak ada apapun untuk di sinkronkan, mohon buka dua arsip (misalnya. stream kolaborasi)
       syncSettings: Pengaturan Sinkronisasi
       syncSettingsDetail: Video di sinkronkan berdasarkan waktu mulai stream, dan dapat desinkron di tengah - tengah stream ketika ada masalah teknis atau porsi sebagian stream di hapus/di cut. Gunakan offset untuk penyelarasan video secara manual
   mugen:
