@@ -49,8 +49,8 @@ component:
     googleCalendar: Google Calendar에 추가
     totalTLs: 전체 실시간 채팅 TL
     tlPresence: 최근 30분 간 활동 중인 번역가
-    typeScheduledYT: 예정된 스트리밍
-    typeExternalStream: 외부 스트리밍
+    typeScheduledYT: 예정된 방송
+    typeExternalStream: 외부 방송
     typeEventPlaceholder: 예정된 이벤트
   videoDescription:
     description: 설명
@@ -341,7 +341,7 @@ views:
     autoLayoutTip: 채널을 클릭해서 자동 레이아웃 모드로 감상하기
     createLayoutTip: 셀 또는 프리셋을 활용해서 자신만의 레이아웃을 만들어보세요
     openToolbarTip: 멀티뷰를 시작하려면 툴바를 여세요
-    archiveSync: 아카이브 싱크
+    archiveSync: 아카이브 동기화
     preset:
       shareOnDiscord: >-
         공유할 만한 멋있는 레이아웃이 있나요? 공유 버튼을 누른 후 우리의 <a href="https://discord.gg/jctkgHBt4b">Discord 서버</a>에 공유해주세요!
