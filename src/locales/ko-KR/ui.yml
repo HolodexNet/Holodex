@@ -341,7 +341,7 @@ views:
     autoLayoutTip: 채널을 클릭해서 자동 레이아웃 모드로 감상하기
     createLayoutTip: 셀 또는 프리셋을 활용해서 자신만의 레이아웃을 만들어보세요
     openToolbarTip: 멀티뷰를 시작하려면 툴바를 여세요
-    archiveSync: 아카이브 동기화
+    archiveSync: 아카이브 싱크
     preset:
       shareOnDiscord: >-
         공유할 만한 멋있는 레이아웃이 있나요? 공유 버튼을 누른 후 우리의 <a href="https://discord.gg/jctkgHBt4b">Discord 서버</a>에 공유해주세요!
@@ -373,7 +373,7 @@ views:
     reorderLayout: 레이아웃 재정렬
     reorderLayoutDetail: 아이콘을 원하는 위치로 끌어다 놓아주세요
     sync:
-      nothingToSync: '싱크를 맞출 것이 존재하지 않습니다. 방송 시간이 겹치는 두 개의 아카이브 영상을 열어주세요. (예: 콜라보 방송)'
+      nothingToSync: '싱크할 대상이 없습니다. 방송 시간이 겹치는 두 개의 아카이브 영상을 열어주세요 (예: 콜라보 방송)'
       syncSettings: 싱크 설정
       syncSettingsDetail: 영상의 싱크는 스트림 시작 시간을 기준으로 맞춰지며, 스트리밍 도중 기술적인 문제나 삭제된 부분이 있을 때는 싱크를 해제할 수 있습니다. 오프셋을 사용하여 싱크를 수동으로 조절해 주세요.
   mugen:
