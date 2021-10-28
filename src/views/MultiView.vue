@@ -260,8 +260,7 @@ export default {
                 {
                     icon: mdiContentSave,
                     onClick: () => {
-                        // this.showPresetEditor = true;
-                        this.showRearrangeVideos = !this.showRearrangeVideos;
+                        this.showPresetEditor = true;
                     },
                     tooltip: this.$t("views.multiview.presetEditor.title"),
                     color: "secondary",
