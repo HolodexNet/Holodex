@@ -115,17 +115,17 @@
     </grid-layout>
 
     <!-- Video Selector -->
-    <v-dialog v-model="showVideoSelector" min-width="75vw">
+    <v-dialog v-model="showVideoSelector" min-width="75vw" scrollable>
       <VideoSelector :is-active="showVideoSelector" @videoClicked="handleVideoClicked" />
     </v-dialog>
 
     <!-- Preset Selector -->
-    <v-dialog v-model="showPresetSelector" width="1000">
+    <v-dialog v-model="showPresetSelector" width="1000" scrollable>
       <portal-target name="preset-dialog" />
     </v-dialog>
 
     <!-- Preset Editor -->
-    <v-dialog v-model="showPresetEditor">
+    <v-dialog v-model="showPresetEditor" scrollable>
       <PresetEditor
         v-if="showPresetEditor"
         :layout="layout"
@@ -142,8 +142,8 @@
       :layout-preview="overwriteLayoutPreview"
     />
 
-    <v-dialog v-model="showReorderVideos" width="500">
-      <ReorderLayout />
+    <v-dialog v-model="showReorderLayout" width="500" scrollable>
+      <ReorderLayout :is-active="showReorderLayout" />
     </v-dialog>
 
     <media-controls v-model="showMediaControls" />
@@ -211,7 +211,7 @@ export default {
 
             showSelectorForId: -1,
             showSyncBar: false,
-            showReorderVideos: true,
+            showReorderLayout: false,
             overwriteDialog: false, // whether to show the overwrite dialog.
             overwriteCancel: null, // callbacks that will be generated when needed.
             overwriteConfirm: null, // callbacks to be generated when needed.
@@ -275,7 +275,7 @@ export default {
                 {
                     icon: reorderIcon,
                     onClick: () => {
-                        this.showReorderVideos = !this.showReorderVideos;
+                        this.showReorderLayout = !this.showReorderLayout;
                     },
                     color: "indigo lighten-1",
                     tooltip: this.$t("views.multiview.reorderLayout"),

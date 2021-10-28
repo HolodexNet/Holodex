@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card v-if="isActive">
     <v-card-title> {{ $t("views.multiview.reorderLayout") }} </v-card-title>
     <v-card-text>
       {{ $t("views.multiview.reorderLayoutDetail") }}
@@ -85,6 +85,12 @@ import ChannelImg from "../channel/ChannelImg.vue";
 export default {
     name: "RearrangeVideos",
     components: { ChannelImg },
+    props: {
+        isActive: {
+            type: Boolean,
+            default: true,
+        },
+    },
     data() {
         return {
             mdiTwitch,
@@ -110,15 +116,18 @@ export default {
     },
     methods: {
         onTouchStart(e, idx) {
+            e.preventDefault();
             this.draggingIdx = idx;
             this.onTouchMove(e);
         },
         onTouchMove(e) {
+            e.preventDefault();
             const { x, y } = this.getRelativePoint(e.changedTouches[0]);
             this.draggableIconPos.left = `${x}px`;
             this.draggableIconPos.top = `${y}px`;
         },
         onTouchEnd(e, startIdx) {
+            e.preventDefault();
             // x & y are relative to the clicked element
             const { x, y } = this.getRelativePoint(e.changedTouches[0]);
             const { width, height } = this.size;
@@ -141,7 +150,6 @@ export default {
         onDrop(e, dropIdx) {
             e.preventDefault();
             const startIdx = e.dataTransfer.getData("index");
-            console.log(dropIdx, +startIdx);
             this.$store.commit("multiview/swapGridPosition", { id1: startIdx, id2: dropIdx });
         },
         getRelativePoint(touch) {
