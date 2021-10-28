@@ -6,7 +6,9 @@
 ### New
 
 - Archive Sync, open the archive sync bar to automatically sync archives on multiview (@RiceCakess)
-- Multiview video picker has access to past archives (@RiceCakess)
+  - Use Sync settings to adjust timings for streams that are not perfectly in sync
+  - Share link with current time and offsets embedded
+- Multiview video picker has access to archives (@RiceCakess)
 - Reorder Layout menu allows swapping video/chat positions without interruption (@RiceCakess)
 - Channels page can sort by recently added (@RiceCakess)
 #### Improvements
