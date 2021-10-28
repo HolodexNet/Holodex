@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -155,6 +157,7 @@ views:
     collabs: Siaran sama
     about: Perihal
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Langganan
       group: Pecahan
@@ -366,6 +369,9 @@ views:
     mediaControlsHint1: Senyap atau segerakkan (
     mediaControlsHint2: ) video dengan Kawalan Bahantara
     dragDropHint: Urus siaran langsung dengan menarik dan melepaskan siaran berkenaan dari ruangan alat ke petak masing-masing
+    reorderHint: Ubah kedudukan video atau sembang langsung dengan menggunakan pilihan Susun Semula Tataletak
+    reorderLayout: Susun Semula Tataletak
+    reorderLayoutDetail: Tarik dan lepaskan arca ke kedudukan yang diingini
     sync:
       nothingToSync: 'Tiada apa-apa yang boleh disegerakkan. Pastikan terdapat dua buah siaran (cth: siaran karyasama) yang bertindan masa langsungnya'
       syncSettings: Tetapan Penyegerakan
