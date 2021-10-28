@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -155,6 +157,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -367,6 +370,9 @@ views:
     mediaControlsHint1: 使用媒體控制面板來靜音或是同步 (
     mediaControlsHint2: ) 複數實況
     dragDropHint: 從置頂欄拖曳實況至不同分割來自訂顯示位置
+    reorderHint: 使用佈局調整面板來快速更改影片/聊天室位置
+    reorderLayout: 佈局調整面板
+    reorderLayoutDetail: 拖曳圖示以重新配置分割
     sync:
       nothingToSync: 沒有影片可供同步，請開啟複數且實況時間點重疊的影片存檔（例如多視角的連動實況）
       syncSettings: 同步設定
