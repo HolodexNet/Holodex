@@ -36,8 +36,14 @@
               <v-icon v-if="content[l.i].type === 'chat'" large>
                 {{ icons.ytChat }}
               </v-icon>
+              <v-icon
+                v-if="content[l.i].type === 'video' && content[l.i].video.type === 'twitch'"
+                large
+              >
+                {{ mdiTwitch }}
+              </v-icon>
               <channel-img
-                v-if="content[l.i].type === 'video'"
+                v-else-if="content[l.i].type === 'video'"
                 :channel="content[l.i].video.channel"
                 no-link
                 rounded
@@ -50,11 +56,17 @@
           style="position: absolute; touch-action: none"
           :style="draggableIconPos"
         >
-          <span v-if="touchMoveContent.type === 'chat'">
-            <v-icon large>{{ icons.ytChat }}</v-icon>
-          </span>
+          <v-icon v-if="touchMoveContent.type === 'chat'" large>
+            {{ icons.ytChat }}
+          </v-icon>
+          <v-icon
+            v-if="touchMoveContent.type === 'video' && touchMoveContent.video.type === 'twitch'"
+            large
+          >
+            {{ mdiTwitch }}
+          </v-icon>
           <channel-img
-            v-if="touchMoveContent.type === 'video'"
+            v-else-if="touchMoveContent.type === 'video'"
             :channel="touchMoveContent.video.channel"
             no-link
             rounded
@@ -67,6 +79,7 @@
 
 <script lang="ts">
 import { mapState } from "vuex";
+import { mdiTwitch } from "@mdi/js";
 import ChannelImg from "../channel/ChannelImg.vue";
 
 export default {
@@ -74,6 +87,7 @@ export default {
     components: { ChannelImg },
     data() {
         return {
+            mdiTwitch,
             draggableIconPos: {
                 left: 0,
                 top: 0,

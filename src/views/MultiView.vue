@@ -277,7 +277,7 @@ export default {
                     onClick: () => {
                         this.showReorderVideos = !this.showReorderVideos;
                     },
-                    color: "indigo",
+                    color: "indigo lighten-1",
                     tooltip: this.$t("views.multiview.reorderLayout"),
                 },
             ]);
