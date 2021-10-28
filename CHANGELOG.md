@@ -1,6 +1,17 @@
 ### Holodex Beta
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
+### 2.22 Holodex [*Oct 27, 2021*]
+
+### New
+
+- Archive Sync, open the archive sync bar to automatically sync archives on multiview (@RiceCakess)
+- Multiview video picker has access to past archives (@RiceCakess)
+- Reorder Layout menu allows swapping video/chat positions without interruption (@RiceCakess)
+- Channels page can sort by recently added (@RiceCakess)
+#### Improvements
+
+- Placeholder streams have slight opacity and light up with info on hover (@sphinxrave)
 
 ### 2.21.1 Holodex [*Oct 12, 2021*]
 

@@ -235,11 +235,27 @@ export default {
                     color: "green",
                 },
                 {
-                    icon: this.icons.mdiDelete,
-                    tooltip: this.$t("component.music.clearPlaylist"),
-                    onClick: this.clearAllItems,
-                    color: "red",
-                    collapse: true,
+                    icon: mdiTuneVertical,
+                    tooltip: this.$t("views.multiview.mediaControls"),
+                    color: "orange",
+                    onClick: () => {
+                        this.showMediaControls = !this.showMediaControls;
+                    },
+                },
+                {
+                    icon: reorderIcon,
+                    onClick: () => {
+                        this.showReorderLayout = !this.showReorderLayout;
+                    },
+                    color: "indigo lighten-1",
+                    tooltip: this.$t("views.multiview.reorderLayout"),
+                },
+                {
+                    icon: mdiSync,
+                    onClick: this.toggleSyncBar,
+                    color: "deep-purple lighten-2",
+                    tooltip: this.$t("views.multiview.archiveSync"),
+                    collapse: this.$vuetify.breakpoint.xs,
                 },
                 {
                     icon: mdiContentSave,
@@ -252,32 +268,17 @@ export default {
                     collapse: true,
                 },
                 {
-                    icon: mdiTuneVertical,
-                    tooltip: this.$t("views.multiview.mediaControls"),
-                    color: "orange",
-                    onClick: () => {
-                        this.showMediaControls = !this.showMediaControls;
-                    },
+                    icon: this.icons.mdiDelete,
+                    tooltip: this.$t("component.music.clearPlaylist"),
+                    onClick: this.clearAllItems,
+                    color: "red",
+                    collapse: true,
                 },
                 {
                     icon: this.icons.mdiFullscreen,
                     onClick: this.toggleFullScreen,
                     tooltip: this.$t("views.multiview.fullScreen"),
                     collapse: true,
-                },
-                {
-                    icon: mdiSync,
-                    onClick: this.toggleSyncBar,
-                    color: "deep-purple lighten-2",
-                    tooltip: this.$t("views.multiview.archiveSync"),
-                },
-                {
-                    icon: reorderIcon,
-                    onClick: () => {
-                        this.showReorderLayout = !this.showReorderLayout;
-                    },
-                    color: "indigo lighten-1",
-                    tooltip: this.$t("views.multiview.reorderLayout"),
                 },
             ]);
         },
