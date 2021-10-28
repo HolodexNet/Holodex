@@ -1,9 +1,8 @@
 <template>
   <div
     ref="fullscreen-content"
-    style="width: 100%; height: 100%"
     :class="{ 'mobile-helpers': $store.state.isMobile }"
-    class="d-flex flex-column"
+    class="d-flex flex-column multiview"
   >
     <!-- Floating tool bar -->
     <MultiviewToolbar v-show="!collapseToolbar" v-model="collapseToolbar" :buttons="buttons">
@@ -432,6 +431,11 @@ export default {
 </script>
 
 <style lang="scss">
+.multiview {
+    width: 100%;
+    height: 100%;
+    height: calc(100% - env(safe-area-inset-bottom));
+}
 .mobile-helpers {
     -webkit-user-select: none;
     -khtml-user-select: none;
