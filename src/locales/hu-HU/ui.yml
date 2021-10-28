@@ -49,10 +49,11 @@ component:
     googleCalendar: Hozzáadás a Google naptárhoz
     totalTLs: Összes élő chat fordítás
     tlPresence: Aktív fordító az utolsó 30 percben
+    typeScheduledYT: Beütemezett stream
+    typeExternalStream: Külső Stream
+    typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -154,7 +155,6 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -288,7 +288,8 @@ views:
           Még nem indult el az adás, kérlek próbáld újra amikor a stream 15 percre van indulástól
         connectedToChat: Csatlakozva
         disconnectedToChat: Lecsatlakozva
-      archiveNeedExtension: Az archive chat nem működik a {0} bővítménnyel vagy más harmadik féltől származó bővítményekkel.
+      archiveNeedExtension: >-
+        Az archive chat nem működik a {0} bővítménnyel vagy más harmadik féltől származó bővítményekkel.
     removeFromPlaylist: Videó eltávolítása a lejátszási listából
     saveToPlaylist: Videó mentése a lejátszási listába
     likeOnYoutube: Hüvelykujj Youtubeon
@@ -337,6 +338,7 @@ views:
     autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
     createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
     openToolbarTip: Nyisd meg az eszköztárat a több képernyős nézet használatához
+    archiveSync: Archív szinkronizáció
     preset:
       shareOnDiscord: >-
         Van egy jópofa elrendezésed? Használd a megosztás gombot és mutasd meg a <a href="https://discord.gg/jctkgHBt4b"> Discord szerverünkön</a>!
@@ -362,8 +364,12 @@ views:
     hints: Súgó
     presetsHint: Nyisd meg az előrendezések menüt az elrendezések váltásához és auto-elrendezés beállításához
     mediaControlsHint1: Használd a Média irányításokat, hogy némíts és összehangolj (
-    mediaControlsHint2: ) élő közvetítést
+    mediaControlsHint2: ) élő közvetítéseket
     dragDropHint: Húzz streameket az eszköztárból a cellákhoz, hogy elrendezd a streameket
+    sync:
+      nothingToSync: Nincs mit szinkronba tenni, nyiss meg legalább 2 streamet (pl. collab streameket)
+      syncSettings: Szinkronizálási beállítások
+      syncSettingsDetail: A videók a stream indulása ideje szerint vannak szinkronizálva, viszont a közbeni technikai gondok és/vagy törölt részletek miatt elcsúszhatnak. Használj offset-eket, hogy manuálisan állítsd a videókat
   mugen:
     welcome: >-
       Üdvözöllek a MugenClips-nél! Ezen az oldalon mindenki ugyan azt a véletlenszerűen kiválasztott angol Hololive klipet nézi. Együtt nézheted és chatelhetsz más Hololive rajongókkal az egész világon. Ha előretekersz és szeretnél újra egyidejűleg lenni a többiekkel, kérlek frissítsd az oldalt.

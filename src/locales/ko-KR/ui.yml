@@ -49,6 +49,9 @@ component:
     googleCalendar: Google Calendar에 추가
     totalTLs: 전체 실시간 채팅 TL
     tlPresence: 최근 30분 간 활동 중인 번역가
+    typeScheduledYT: 예정된 스트리밍
+    typeExternalStream: 외부 스트리밍
+    typeEventPlaceholder: 예정된 이벤트
   videoDescription:
     description: 설명
   video:
@@ -144,7 +147,7 @@ component:
     streamPageBtn: 실시간 페이지
     eventPageBtn: 이벤트 페이지
     scheduledEvent: 예정
-    editorCredit: Holdex 에디터 {0}님이 설정한 이벤트입니다.
+    editorCredit: Holodex 에디터 {0}님이 설정한 이벤트입니다.
     creditTitleText: '크레딧:'
 views:
   channel:
@@ -288,7 +291,8 @@ views:
           아직 방송이 시작되지 않았습니다. 방송이 시작된 후 15분 이내에 다시 시도해보세요
         connectedToChat: 연결됨
         disconnectedToChat: 연결 끊김
-      archiveNeedExtension: 아카이브 채팅은 {0} 확장 프로그램 또는 다른 서드파티 확장 프로그램 없이는 작동하지 않습니다.
+      archiveNeedExtension: >-
+        아카이브 채팅은 {0} 확장 프로그램 또는 다른 서드파티 확장 프로그램 없이는 작동하지 않습니다.
     removeFromPlaylist: 현재 재생목록에서 동영상 제거
     saveToPlaylist: 현재 재생목록에 동영상 저장
     likeOnYoutube: YouTube에서 동영상 좋아요하기
@@ -337,6 +341,7 @@ views:
     autoLayoutTip: 채널을 클릭해서 자동 레이아웃 모드로 감상하기
     createLayoutTip: 셀 또는 프리셋을 활용해서 자신만의 레이아웃을 만들어보세요
     openToolbarTip: 멀티뷰를 시작하려면 툴바를 여세요
+    archiveSync: 아카이브 싱크
     preset:
       shareOnDiscord: >-
         공유할 만한 멋있는 레이아웃이 있나요? 공유 버튼을 누른 후 우리의 <a href="https://discord.gg/jctkgHBt4b">Discord 서버</a>에 공유해주세요!
@@ -351,7 +356,7 @@ views:
       name: 이름
       autoLayout: 자동 모드로 레이아웃 사용하기
     video:
-      selectLive: 방송 선택하기
+      selectLive: 방송 선택
       addCustomVideo: 사용자 지정 동영상 추가
     fullScreen: 전체 화면
     mediaControls: 미디어 제어
@@ -364,6 +369,13 @@ views:
     mediaControlsHint1: 미디어 컨트롤을 사용하여 음소거와 라이브를 싱크 (
     mediaControlsHint2: ) 하세요
     dragDropHint: 툴바에서 셀로 방송을 드래그 앤 드롭하여 방송을 정리하세요
+    reorderHint: 레이아웃 재정렬 기능을 사용하여 영상 및 채팅창의 위치를 바꿀 수 있습니다
+    reorderLayout: 레이아웃 재정렬
+    reorderLayoutDetail: 아이콘을 원하는 위치로 끌어다 놓아주세요
+    sync:
+      nothingToSync: '싱크를 맞출 것이 존재하지 않습니다. 방송 시간이 겹치는 두 개의 아카이브 영상을 열어주세요. (예: 콜라보 방송)'
+      syncSettings: 싱크 설정
+      syncSettingsDetail: 영상의 싱크는 스트림 시작 시간을 기준으로 맞춰지며, 스트리밍 도중 기술적인 문제나 삭제된 부분이 있을 때는 싱크를 해제할 수 있습니다. 오프셋을 사용하여 싱크를 수동으로 조절해 주세요.
   mugen:
     welcome: >-
       MugenClips에 오신 것을 환영합니다! 이 페이지의 모든 사람은 무작위로 선택된 English Hololive 클립을 보고 있습니다. 전세계의 Hololive 팬들과 함께 시청하고 채팅하세요. 건너뛰고 모든 사람과 다시 동기화하려면 페이지를 새로고침하세요.

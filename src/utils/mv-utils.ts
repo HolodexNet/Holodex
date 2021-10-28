@@ -6,6 +6,7 @@ export interface Content {
     isTwitch?: Boolean;
     video?: any;
     currentTab?: number;
+    currentTime?: number;
 }
 
 const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.";

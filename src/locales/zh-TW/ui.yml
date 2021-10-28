@@ -49,6 +49,9 @@ component:
     googleCalendar: 新增至 Google 日曆
     totalTLs: 聊天室即時翻譯數
     tlPresence: 過去半小時內有即時翻譯
+    typeScheduledYT: 已排定實況
+    typeExternalStream: 外部實況
+    typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
   video:
@@ -138,9 +141,9 @@ component:
       clear-playlist: 清空播放清單
     save-error-not-logged-in: 您需要登入後才能儲存播放清單
   placeholderVideo:
-    discordCredit: '活動資料由 {1} 伺服器的 {0} 提供'
-    datasourceCredit: 活動資料擷取自 {0} 個不同來源
-    botCredit: 活動資料由 {0} 個來源所提供，並由 {1} 創建
+    discordCredit: '本活動資料由 {1} 伺服器的 {0} 所提供'
+    datasourceCredit: 本活動資料出自 {0} BOT
+    botCredit: 本活動資料由 {1} 依照 {0} BOT 所提供之資料建立
     streamPageBtn: 實況頁面
     eventPageBtn: 活動頁面
     scheduledEvent: 已排定
@@ -289,7 +292,8 @@ views:
           實況尚未開始，請於實況開始15分鐘後再行嘗試連線。
         connectedToChat: 已連線
         disconnectedToChat: 已失去連線
-      archiveNeedExtension: 若沒有安裝 {0} 或是第三方擴充功能，是無法啟用存檔實況聊天室功能的
+      archiveNeedExtension: >-
+        若沒有安裝 {0} 或是第三方擴充功能，是無法啟用存檔實況聊天室功能的
     removeFromPlaylist: 將影片自當前播放清單移除
     saveToPlaylist: 將影片儲存至當前播放清單
     likeOnYoutube: 於 YouTube 上對影片按讚
@@ -338,6 +342,7 @@ views:
     autoLayoutTip: 點擊任意頻道即可使用自動排版模式觀看實況
     createLayoutTip: 增加新分割以創造專屬排版，亦能使用預設佈局
     openToolbarTip: 開啟控制欄以開始使用多窗工具
+    archiveSync: 存檔同步
     preset:
       shareOnDiscord: >-
         想到了什麼很棒的分割方式嗎？將該分割佈局的永久連結分享至我們的 <a href="https://discord.gg/jctkgHBt4b">Discord伺服器</a> 吧！
@@ -365,6 +370,13 @@ views:
     mediaControlsHint1: 使用媒體控制面板來靜音或是同步 (
     mediaControlsHint2: ) 複數實況
     dragDropHint: 從置頂欄拖曳實況至不同分割來自訂顯示位置
+    reorderHint: 使用佈局調整面板來快速更改影片/聊天室位置
+    reorderLayout: 佈局調整面板
+    reorderLayoutDetail: 拖曳圖示以重新配置分割
+    sync:
+      nothingToSync: 沒有影片可供同步，請開啟複數且實況時間點重疊的影片存檔（例如多視角的連動實況）
+      syncSettings: 同步設定
+      syncSettingsDetail: 本功能基於實況的開始時間進行同步，有可能因實況途中經歷的技術問題/移除片段的部分而失效，請使用手動調整功能來同步此類存檔
   mugen:
     welcome: >-
       歡迎來到 MugenClips！所有使用者在本頁面都在同時隨機觀看同一段Hololive的英文剪輯！和其他Holo粉絲一起觀看一起聊天吧。如果您手動變更了時間軸但想再次與其他人同步進度的話，請重新整理此頁面。

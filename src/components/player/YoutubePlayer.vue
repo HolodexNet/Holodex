@@ -63,6 +63,7 @@ export default {
             height: this.height,
             videoId: this.videoId,
             playerVars: this.playerVars,
+            origin: window.origin,
         });
 
         this.player.on("ready", (e) => this.playerReady(e.target));
@@ -115,6 +116,13 @@ export default {
         },
         isMuted() {
             return this.player.isMuted();
+        },
+        seekTo(t) {
+            this.player.seekTo(t);
+        },
+        setPlaying(playing) {
+            if (!this.player) return;
+            !playing ? this.player.pauseVideo() : this.player.playVideo();
         },
         async sendLikeEvent() {
             const iframe = await this.player.getIframe();

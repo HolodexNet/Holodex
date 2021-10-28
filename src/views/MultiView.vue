@@ -1,5 +1,9 @@
 <template>
-  <div ref="fullscreen-content" style="width: 100%" :class="{ 'mobile-helpers': $store.state.isMobile }">
+  <div
+    ref="fullscreen-content"
+    :class="{ 'mobile-helpers': $store.state.isMobile }"
+    class="d-flex flex-column multiview"
+  >
     <!-- Floating tool bar -->
     <MultiviewToolbar v-show="!collapseToolbar" v-model="collapseToolbar" :buttons="buttons">
       <template #left>
@@ -34,54 +38,19 @@
         </v-menu>
       </template>
     </MultiviewToolbar>
-
     <!-- Multiview Cell Area Background -->
-    <div
-      class="mv-background"
+    <multiview-background
+      :show-tips="layout.length === 0"
+      :column-width="columnWidth"
+      :row-height="rowHeight"
+      :collapse-toolbar="collapseToolbar"
       :style="{
         'background-size': `${columnWidth}px ${rowHeight}px`,
-        height: `calc(100% - ${collapseToolbar ? 0 : 64}px)`,
+        height: `calc(100% - ${collapseToolbar ? 0 : 64}px - ${showSyncBar ? 100 : 0}px)`,
         top: `${collapseToolbar ? 0 : 64}px`,
       }"
-    >
-      <template v-if="layout.length === 0">
-        <div v-if="!collapseToolbar" style="max-width: 50%; display: inline-block">
-          <div style="display: inline-block; margin-right: 20px; margin-left: 10px">
-            <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
-            {{ $t("views.multiview.autoLayoutTip") }}
-          </div>
-        </div>
-        <div v-if="!collapseToolbar" style="max-width: 50%; display: inline-block; float: right">
-          <div style="display: inline-block; margin-right: 10px">
-            <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 50%" />
-            {{ $t("views.multiview.createLayoutTip") }}
-          </div>
-        </div>
-        <div v-if="collapseToolbar" style="max-width: 50%; display: inline-block; float: right">
-          <div style="display: inline-block; margin-right: 10px">
-            <div style="height: 10vh; border: 1px solid gray; width: 1px; margin-left: 95%; margin-top: 28px" />
-            {{ $t("views.multiview.openToolbarTip") }}
-          </div>
-        </div>
-        <div style="padding-top: 10vh" class="d-flex justify-center">
-          <div class="hints">
-            <div class="text-h4">
-              {{ $t("views.multiview.hints") }}
-            </div>
-            <div>1. <v-icon>{{ icons.mdiGridLarge }}</v-icon> {{ $t("views.multiview.presetsHint") }}</div>
-            <!-- <div>2. <v-icon>{{ mdiContentSave }}</v-icon> Customize your experience by creating and saving layouts</div> -->
-            <div>
-              2.
-              <v-icon>{{ mdiTuneVertical }}</v-icon>
-              {{ $t("views.multiview.mediaControlsHint1") }}
-              <v-icon>{{ mdiFastForward }}</v-icon>
-              {{ $t("views.multiview.mediaControlsHint2") }}
-            </div>
-            <div>3. <v-icon>{{ mdiCardPlus }}</v-icon> {{ $t("views.multiview.dragDropHint") }}</div>
-          </div>
-        </div>
-      </template>
-    </div>
+    />
+    <v-spacer />
     <!-- Floating button to open toolbar when collapsed -->
     <v-btn
       v-if="collapseToolbar"
@@ -93,6 +62,7 @@
     >
       <v-icon>{{ icons.mdiChevronDown }}</v-icon>
     </v-btn>
+
     <!-- Grid Layout -->
     <!-- rowHeight = 100vh/colNum, makes layout consistent across different heights -->
     <grid-layout
@@ -144,17 +114,17 @@
     </grid-layout>
 
     <!-- Video Selector -->
-    <v-dialog v-model="showVideoSelector" min-width="75vw">
-      <VideoSelector @videoClicked="handleVideoClicked" />
+    <v-dialog v-model="showVideoSelector" min-width="75vw" scrollable>
+      <VideoSelector :is-active="showVideoSelector" @videoClicked="handleVideoClicked" />
     </v-dialog>
 
     <!-- Preset Selector -->
-    <v-dialog v-model="showPresetSelector" width="1000">
+    <v-dialog v-model="showPresetSelector" width="1000" scrollable>
       <portal-target name="preset-dialog" />
     </v-dialog>
 
     <!-- Preset Editor -->
-    <v-dialog v-model="showPresetEditor" width="500">
+    <v-dialog v-model="showPresetEditor" scrollable>
       <PresetEditor
         v-if="showPresetEditor"
         :layout="layout"
@@ -170,13 +140,18 @@
       :default-overwrite="overwriteMerge"
       :layout-preview="overwriteLayoutPreview"
     />
+
+    <v-dialog v-model="showReorderLayout" width="500" scrollable>
+      <ReorderLayout :is-active="showReorderLayout" />
+    </v-dialog>
+
     <media-controls v-model="showMediaControls" />
+    <MultiviewSyncBar v-if="showSyncBar" />
   </div>
 </template>
 
 <script lang="ts">
 import { GridLayout, GridItem } from "@/external/vue-grid-layout/src/components/index";
-// import Cell from "@/components/multiview/Cell.vue";
 import MediaControls from "@/components/multiview/MediaControls.vue";
 import EmptyCell from "@/components/multiview/EmptyCell.vue";
 import VideoCell from "@/components/multiview/VideoCell.vue";
@@ -188,12 +163,16 @@ import MultiviewToolbar from "@/components/multiview/MultiviewToolbar.vue";
 import MultiviewLayoutMixin from "@/components/multiview/MultiviewLayoutMixin";
 import LayoutChangePrompt from "@/components/multiview/LayoutChangePrompt.vue";
 import VideoSelector from "@/components/multiview/VideoSelector.vue";
+import MultiviewBackground from "@/components/multiview/MultiviewBackground.vue";
+import ReorderLayout from "@/components/multiview/ReorderLayout.vue";
 import {
-    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiPause, mdiTuneVertical, mdiFastForward,
+    mdiViewGridPlus, mdiCardPlus, mdiContentSave, mdiTuneVertical, mdiSync,
 } from "@mdi/js";
 import { decodeLayout } from "@/utils/mv-utils";
 import { mapState, mapGetters } from "vuex";
 import api from "@/utils/backend-api";
+
+export const reorderIcon = "M2 2h8.8v8.8H2V2Zm11.3 11.3H22V22h-8.8v-8.8Zm4.6-10.9a.6.6 0 0 0-1 0l-3.9 4a.6.6 0 1 0 .9.9l3.5-3.6L21 7.3a.6.6 0 0 0 .8-1l-4-4Zm.1 10V2.8h-1.2v9.6H18ZM5.7 21.6c.3.3.7.3 1 0l3.9-4a.6.6 0 1 0-.9-.9l-3.5 3.6-3.6-3.6a.6.6 0 1 0-.9 1l4 4Zm-.2-10v9.6h1.3v-9.6H5.5Z";
 
 export default {
     name: "MultiView",
@@ -210,6 +189,9 @@ export default {
         LayoutChangePrompt,
         CellContainer,
         MediaControls,
+        MultiviewBackground,
+        MultiviewSyncBar: () => import("@/components/multiview/MultiviewSyncBar.vue"),
+        ReorderLayout,
     },
     mixins: [MultiviewLayoutMixin],
     metaInfo() {
@@ -223,13 +205,12 @@ export default {
     data() {
         return {
             mdiCardPlus,
-            mdiPause,
-            mdiFastForward,
             mdiTuneVertical,
             mdiContentSave,
 
             showSelectorForId: -1,
-
+            showSyncBar: false,
+            showReorderLayout: false,
             overwriteDialog: false, // whether to show the overwrite dialog.
             overwriteCancel: null, // callbacks that will be generated when needed.
             overwriteConfirm: null, // callbacks to be generated when needed.
@@ -254,21 +235,28 @@ export default {
                     color: "green",
                 },
                 {
-                    icon: this.icons.mdiDelete,
-                    tooltip: this.$t("component.music.clearPlaylist"),
-                    onClick: this.clearAllItems,
-                    color: "red",
-                    collapse: true,
+                    icon: mdiTuneVertical,
+                    tooltip: this.$t("views.multiview.mediaControls"),
+                    color: "orange",
+                    onClick: () => {
+                        this.showMediaControls = !this.showMediaControls;
+                    },
                 },
-                // {
-                //     icon: this.icons.mdiGridLarge,
-                //     tooltip: this.$t("views.multiview.presets"),
-                //     onClick: () => {
-                //         this.showPresetSelectorMenu = true;
-                //     },
-                //     color: "primary",
-                //     collapse: true,
-                // },
+                {
+                    icon: reorderIcon,
+                    onClick: () => {
+                        this.showReorderLayout = !this.showReorderLayout;
+                    },
+                    color: "indigo lighten-1",
+                    tooltip: this.$t("views.multiview.reorderLayout"),
+                },
+                {
+                    icon: mdiSync,
+                    onClick: this.toggleSyncBar,
+                    color: "deep-purple lighten-2",
+                    tooltip: this.$t("views.multiview.archiveSync"),
+                    collapse: this.$vuetify.breakpoint.xs,
+                },
                 {
                     icon: mdiContentSave,
                     onClick: () => {
@@ -279,13 +267,11 @@ export default {
                     collapse: true,
                 },
                 {
-                    icon: mdiTuneVertical,
-                    tooltip: this.$t("views.multiview.mediaControls"),
-                    color: "orange",
-                    onClick: () => {
-                        // this.setMuteAll(true);
-                        this.showMediaControls = !this.showMediaControls;
-                    },
+                    icon: this.icons.mdiDelete,
+                    tooltip: this.$t("component.music.clearPlaylist"),
+                    onClick: this.clearAllItems,
+                    color: "red",
+                    collapse: true,
                 },
                 {
                     icon: this.icons.mdiFullscreen,
@@ -310,7 +296,9 @@ export default {
             return this.$store.state.isMobile;
         },
         rowHeight() {
-            return (this.$vuetify.breakpoint.height - (this.collapseToolbar ? 0 : 64)) / 24.0;
+            return (this.$vuetify.breakpoint.height
+                - (this.collapseToolbar ? 0 : 64)
+                - (this.showSyncBar ? 100 : 0)) / 24.0;
         },
         columnWidth() {
             return this.$vuetify.breakpoint.width / 24.0;
@@ -332,13 +320,21 @@ export default {
                         // eslint-disable-next-line no-empty
                     } catch {}
 
-                    // prompt overwrite with permalink, remove permalink if cancelled
-                    this.promptLayoutChange(parsed, null, () => this.$router.replace({ path: "/multiview" }));
+                    // prompt overwrite with permalink, remove permalink if cancelled, use history.pushState for silent update
+                    // eslint-disable-next-line no-restricted-globals
+                    this.promptLayoutChange(parsed, null, () => history.pushState({}, "", "/multiview"));
                 }
             } catch (e) {
                 console.error(e);
                 console.log("invalid layout");
             }
+
+            // Show sync bar if query contains t= or offsets=
+            if (this.$route.query.t || this.$route.query.offsets) {
+                this.showSyncBar = true;
+            }
+        } else {
+            this.$store.dispatch("multiview/fetchVideoData", { refreshLive: true });
         }
     },
     methods: {
@@ -427,18 +423,18 @@ export default {
                 document.exitFullscreen();
             }
         },
+        toggleSyncBar() {
+            this.showSyncBar = !this.showSyncBar;
+        },
     },
 };
 </script>
 
 <style lang="scss">
-.mv-background {
-    opacity: 0.75;
-    position: absolute;
+.multiview {
     width: 100%;
-    background-repeat: initial;
-    background-image: linear-gradient(to right, rgba(128, 128, 128, 0.15) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(128, 128, 128, 0.15) 1px, transparent 1px);
+    height: 100%;
+    height: calc(100% - env(safe-area-inset-bottom));
 }
 .mobile-helpers {
     -webkit-user-select: none;
@@ -446,8 +442,7 @@ export default {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-bottom: env(safe-area-inset-bottom);
-
+    // margin-bottom: env(safe-area-inset-bottom);
     .edit-mode {
         padding: 5px;
         padding-bottom: 20px;

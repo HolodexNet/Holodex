@@ -29,9 +29,9 @@ dayjs.extend(relativeTime, {
     thresholds,
 });
 
-export function formatDuration(secs) {
-    const negate = secs < 0;
-    const timestamp = secs > 60 * 60 * 1000 ? dayjs.utc(Math.abs(secs)).format("H:mm:ss") : dayjs.utc(Math.abs(secs)).format("m:ss");
+export function formatDuration(millisecs) {
+    const negate = millisecs < 0;
+    const timestamp = millisecs > 60 * 60 * 1000 ? dayjs.utc(Math.abs(millisecs)).format("H:mm:ss") : dayjs.utc(Math.abs(millisecs)).format("m:ss");
     return `${negate ? "-" : ""}${timestamp}`;
 }
 

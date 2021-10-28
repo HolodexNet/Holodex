@@ -26,6 +26,7 @@ const persistedState = {
     twUrlHistory: [],
     // Default true for iOS device
     muteOthers: isAppleDevice,
+    syncOffsets: {},
 };
 export const state = { ...initialState, ...persistedState };
 
@@ -72,12 +73,12 @@ const getters = {
 };
 
 const missingVideoDataFilter = (x) => x.type === "video" && x.video.type !== "twitch" && x.video.id === x.video.channel?.name && !(x?.video?.noData);
-
+const videoIsLiveFilter = (x) => x?.video?.status === "live";
 const actions = {
-    async fetchVideoData({ state, commit }) {
+    async fetchVideoData({ state, commit }, options: { refreshLive: boolean } | undefined) {
         // Load missing video data from backend
         const videoIds = new Set<string>(Object.values<Content>(state.layoutContent)
-            .filter(missingVideoDataFilter)
+            .filter((x) => missingVideoDataFilter(x) || (options?.refreshLive && videoIsLiveFilter(x)))
             .map((x) => x.video.id));
         // Nothing to do
         if (!videoIds.size) return;
@@ -241,6 +242,15 @@ const mutations = {
         });
         // Mark videos still missing data, so it doesn't attempt to fetch again
         Object.values<Content>(state.layoutContent).filter(missingVideoDataFilter).forEach((x) => { x.video.noData = true; });
+    },
+    setSyncOffsets(state, { id, value }) {
+        Vue.set(state.syncOffsets, id, value);
+    },
+    swapGridPosition(state, { id1, id2 }) {
+        const { x: tX, y: tY, w: tW, h: tH } = state.layout[id1];
+        const { x, y, w, h } = state.layout[id2];
+        Object.assign(state.layout[id1], { ...state.layout[id1], x, y, w, h });
+        Object.assign(state.layout[id2], { ...state.layout[id2], x: tX, y: tY, w: tW, h: tH });
     },
 };
 

@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar class="mv-toolbar" style="right: 0" height="64">
+  <v-toolbar class="mv-toolbar flex-grow-0" style="right: 0;" height="64">
     <v-app-bar-nav-icon @click="toggleMainNav" />
     <!-- Toolbar Live Video Selector -->
     <div
@@ -16,7 +16,7 @@
       <!-- Show toolbar btns that are not collapsible or not in collapsed state -->
       <slot name="buttons" />
       <template
-        v-for="(b, index) in buttons.filter((btn) => !btn.collapse || (!collapseButtons && btn.collapse))"
+        v-for="(b, index) in buttons.filter((btn) => !btn.collapse)"
       >
         <!-- Create btn with tooltip -->
         <v-tooltip
@@ -87,7 +87,6 @@
       <v-menu offset-y>
         <template #activator="{ on, attrs }">
           <v-btn
-            v-show="collapseButtons"
             v-bind="attrs"
             icon
             v-on="on"
@@ -143,9 +142,6 @@ export default {
     },
     computed: {
         ...mapState("multiview", ["layout", "layoutContent", "presetLayout"]),
-        collapseButtons() {
-            return this.$vuetify.breakpoint.smAndDown;
-        },
         exportURL() {
             if (!this.shareDialog) return "";
             const layoutParam = `/${encodeURIComponent(

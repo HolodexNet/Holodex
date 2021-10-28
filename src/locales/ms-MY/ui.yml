@@ -49,6 +49,9 @@ component:
     googleCalendar: Tambahkan ke Kalendar Google
     totalTLs: Jumlah terjemahan sembang langsung
     tlPresence: Penerjemah yang masih bergiat 30 minit lalu
+    typeScheduledYT: Siaran Terancang
+    typeExternalStream: Siaran Luar
+    typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
   video:
@@ -140,7 +143,7 @@ component:
   placeholderVideo:
     discordCredit: 'Maklumat acara ihsan {0} dari: {1}'
     datasourceCredit: Maklumat acara berpunca daripada {0}.
-    botCredit: Maklumat acara berpunca daripada {0} ihsan {1}.
+    botCredit: Maklumat acara disediakan melalui {0} hasil ciptaan {1}.
     streamPageBtn: Laman Siaran Langsung
     eventPageBtn: Laman Acara
     scheduledEvent: Perancangan
@@ -288,7 +291,8 @@ views:
           Siaran langsung masih belum berlangsung. Cuba lagi apabila siaran berlangsung dalam masa 15 minit
         connectedToChat: Bersambung
         disconnectedToChat: Terputus
-      archiveNeedExtension: Ruangan sembang terarkib hanya berfungsi apabila pelanjutan/sambungan {0} atau mana-mana pelanjutan/sambungan pihak ketiga lain.
+      archiveNeedExtension: >-
+        Ruangan sembang terarkib hanya berfungsi apabila pelanjutan/sambungan {0} atau mana-mana pelanjutan/sambungan pihak ketiga lain.
     removeFromPlaylist: Alih keluar video daripada senarai main semasa
     saveToPlaylist: Simpan video pada senarai main semasa
     likeOnYoutube: Berikan tanda suka di YouTube
@@ -337,6 +341,7 @@ views:
     autoLayoutTip: Tekan pada mana-mana saluran bagi memulakan tontonan menggunakan ragam tataletak suai kendiri
     createLayoutTip: Perbuat tataletak ciptaanmu sendiri dengan menambahkan petak atau menggunakan tataletak tersedia
     openToolbarTip: Mulakan berbilang tontonan dengan membuka ruangan alat
+    archiveSync: Penyegerakan Arkib
     preset:
       shareOnDiscord: >-
         Mahu berkongsi tataletak yang hebat? Kongsikan bersama kami di <a href="https://discord.gg/jctkgHBt4b">pelayan Discord</a> kami!
@@ -364,6 +369,13 @@ views:
     mediaControlsHint1: Senyap atau segerakkan (
     mediaControlsHint2: ) video dengan Kawalan Bahantara
     dragDropHint: Urus siaran langsung dengan menarik dan melepaskan siaran berkenaan dari ruangan alat ke petak masing-masing
+    reorderHint: Ubah kedudukan video atau sembang langsung dengan menggunakan pilihan Susun Semula Tataletak
+    reorderLayout: Susun Semula Tataletak
+    reorderLayoutDetail: Tarik dan lepaskan arca ke kedudukan yang diingini
+    sync:
+      nothingToSync: 'Tiada apa-apa yang boleh disegerakkan. Pastikan terdapat dua buah siaran (cth: siaran karyasama) yang bertindan masa langsungnya'
+      syncSettings: Tetapan Penyegerakan
+      syncSettingsDetail: Penyegerakan video adalah berdasarkan masa mula siaran. Sekiranya terdapat bahagian video yang terpotong akibat dialih keluar atau masalah teknik, penyegerakannya lari. Sejajarkan video secara sendiri dengan menggunakan penyelaras
   mugen:
     welcome: >-
       Selamat datang ke MugenClips! Laman ini mempertontonkan kepada semua orang sedutan Hololive berbahasa Inggeris yang sama secara rambang. Mari tonton bersama-sama sambil bersembang dengan peminat Hololive dari serata dunia. Sekiranya anda mahu kembali menonton bahagian yang sama dengan semua orang setelah melangkau sedutan terlebih dahulu, sila muatkan semula laman ini.

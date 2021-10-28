@@ -49,10 +49,11 @@ component:
     googleCalendar: Add to googwe cawendaw
     totalTLs: Totaw wive chat tls
     tlPresence: Active twanswatow in wast 30 mins
+    typeScheduledYT: Scheduwed stweam
+    typeExternalStream: Extewnaw stweam
+    typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
-  video:
-    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -154,7 +155,6 @@ views:
     collabs: Cowwabs
     about: About
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
@@ -288,7 +288,8 @@ views:
           Stweam ish not wive yet, pwease twy again when da stweam ish within 15 minutes of being wive
         connectedToChat: Connected
         disconnectedToChat: Disconnected
-      archiveNeedExtension: Awchive chat does not wowk without da {0} extension ow othew thiwd pawty extensions.
+      archiveNeedExtension: >-
+        Awchive chat does not wowk without da {0} extension ow othew thiwd pawty extensions.
     removeFromPlaylist: Remove bideo fwom cuwwent pwaywist
     saveToPlaylist: Save bideo to cuwwent pwaywist
     likeOnYoutube: Like bideo on youtube
@@ -337,6 +338,7 @@ views:
     autoLayoutTip: Cwick on a channew to stawt watching using auto wayout mode
     createLayoutTip: Cweate youw own wayout by adding a ceww, ow using a pweset
     openToolbarTip: Open da toowbaw to stawt using muwtiview
+    archiveSync: Awchive sync
     preset:
       shareOnDiscord: >-
         Have a coow wayout to shawe? use da shawe button and wet us know on ouw <a href="https://discord.gg/jctkgHBt4b">discowd sewvew</a>!
@@ -364,6 +366,10 @@ views:
     mediaControlsHint1: Use media contwows to mute and sync (
     mediaControlsHint2: ) wive stweams
     dragDropHint: Dwag and dwop stweams fwom toowbaw to cewws to owganize stweams
+    sync:
+      nothingToSync: Nothing to sync, pwease open two ovewwapping awchives (eg. cowwab stweams)
+      syncSettings: Sync settings
+      syncSettingsDetail: Bideos awe synced based on da stweam stawt time, and can desync due to mid stweam technicaw issues ow deweted powtions. Use offsets to manuawwy awign bideos
   mugen:
     welcome: >-
       Wewcome to mugencwips! evewyone on dis page ish seeing da same wandomwy sewected engwish howowive cwip. Watch awong and chat with howowive fans fwom acwoss da wowwd. If u skip ahead and wanna be we-sync'd with evewyone, pwease wefwesh da page.

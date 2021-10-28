@@ -201,6 +201,16 @@ export default {
                             },
                         ]
                         : []),
+                    ...(this.category === this.Tabs.VTUBER || this.category === this.Tabs.SUBBER
+                        ? [{
+                            text: "Recently Added",
+                            value: "recently_added",
+                            query_value: {
+                                sort: "created_at",
+                                order: "desc",
+                            },
+                        }]
+                        : []),
                 ];
                 /* eslint-enable indent */
             },
