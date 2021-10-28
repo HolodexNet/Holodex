@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -155,6 +157,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -366,6 +369,9 @@ views:
     mediaControlsHint1: Benutze Mediensteuerelemente, um Streams zu muten und zu synchronisieren (
     mediaControlsHint2: )
     dragDropHint: Bewege Streams per Drag-and-Drop aus der Symbolleiste in Zellen, um sie zu organisieren
+    reorderHint: Benutze das Layout-umordnen-Menü, um Video/Chat-Positionen abzuändern
+    reorderLayout: Layout umordnen
+    reorderLayoutDetail: Verschiebe die Symbole per Drag-and-Drop an die gewünschte Position
     sync:
       nothingToSync: Nichts zu synchronisieren, bitte öffne zwei überlappende Archive (z.B. Kollaborations-Streams)
       syncSettings: Synchronisierungseinstellungen
