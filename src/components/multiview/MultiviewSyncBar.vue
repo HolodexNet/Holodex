@@ -252,7 +252,7 @@ export default {
             const local = this.$store.state.multiview.syncOffsets;
             if (this.routeOffsets && this.overlapVideos.length) {
                 return this.overlapVideos.map((v, index) => ({
-                    [v.id]: local[v.id] || +this.routeOffsets[index],
+                    [v.id]: local[v.id] ?? +this.routeOffsets[index],
                 })).reduce((a, c) => ({ ...a, ...c }), {});
             }
             return local;
