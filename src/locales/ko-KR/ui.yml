@@ -49,8 +49,8 @@ component:
     googleCalendar: Google Calendar에 추가
     totalTLs: 전체 실시간 채팅 TL
     tlPresence: 최근 30분 간 활동 중인 번역가
-    typeScheduledYT: 예정된 스트리밍
-    typeExternalStream: 외부 스트리밍
+    typeScheduledYT: 예정된 방송
+    typeExternalStream: 외부 방송
     typeEventPlaceholder: 예정된 이벤트
   videoDescription:
     description: 설명
@@ -373,7 +373,7 @@ views:
     reorderLayout: 레이아웃 재정렬
     reorderLayoutDetail: 아이콘을 원하는 위치로 끌어다 놓아주세요
     sync:
-      nothingToSync: '싱크를 맞출 것이 존재하지 않습니다. 방송 시간이 겹치는 두 개의 아카이브 영상을 열어주세요. (예: 콜라보 방송)'
+      nothingToSync: '싱크할 대상이 없습니다. 방송 시간이 겹치는 두 개의 아카이브 영상을 열어주세요 (예: 콜라보 방송)'
       syncSettings: 싱크 설정
       syncSettingsDetail: 영상의 싱크는 스트림 시작 시간을 기준으로 맞춰지며, 스트리밍 도중 기술적인 문제나 삭제된 부분이 있을 때는 싱크를 해제할 수 있습니다. 오프셋을 사용하여 싱크를 수동으로 조절해 주세요.
   mugen:

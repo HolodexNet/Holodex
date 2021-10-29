@@ -50,7 +50,6 @@
         top: `${collapseToolbar ? 0 : 64}px`,
       }"
     />
-    <v-spacer />
     <!-- Floating button to open toolbar when collapsed -->
     <v-btn
       v-if="collapseToolbar"
@@ -146,7 +145,7 @@
     </v-dialog>
 
     <media-controls v-model="showMediaControls" />
-    <MultiviewSyncBar v-if="showSyncBar" />
+    <MultiviewSyncBar v-if="showSyncBar" class="mt-auto" />
   </div>
 </template>
 
@@ -264,20 +263,20 @@ export default {
                     },
                     tooltip: this.$t("views.multiview.presetEditor.title"),
                     color: "secondary",
-                    collapse: true,
+                    collapse: this.$vuetify.breakpoint.mdAndDown,
                 },
                 {
                     icon: this.icons.mdiDelete,
                     tooltip: this.$t("component.music.clearPlaylist"),
                     onClick: this.clearAllItems,
                     color: "red",
-                    collapse: true,
+                    collapse: this.$vuetify.breakpoint.smAndDown,
                 },
                 {
                     icon: this.icons.mdiFullscreen,
                     onClick: this.toggleFullScreen,
                     tooltip: this.$t("views.multiview.fullScreen"),
-                    collapse: true,
+                    collapse: this.$vuetify.breakpoint.mdAndDown,
                 },
             ]);
         },
@@ -434,7 +433,6 @@ export default {
 .multiview {
     width: 100%;
     height: 100%;
-    height: calc(100% - env(safe-area-inset-bottom));
 }
 .mobile-helpers {
     -webkit-user-select: none;
