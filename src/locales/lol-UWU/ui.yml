@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -155,6 +157,7 @@ views:
     collabs: Cowwabs
     about: About
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
@@ -366,6 +369,9 @@ views:
     mediaControlsHint1: Use media contwows to mute and sync (
     mediaControlsHint2: ) wive stweams
     dragDropHint: Dwag and dwop stweams fwom toowbaw to cewws to owganize stweams
+    reorderHint: Use reowdew layout menu to change bideo/chat positions
+    reorderLayout: Reowdew layout
+    reorderLayoutDetail: Dwag and dwop icons to da desiwed position
     sync:
       nothingToSync: Nothing to sync, pwease open two ovewwapping awchives (eg. cowwab stweams)
       syncSettings: Sync settings
