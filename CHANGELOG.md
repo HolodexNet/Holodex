@@ -1,6 +1,14 @@
 ### Holodex Beta
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
+
+### 2.22.1 Holodex [*Oct 27, 2021*]
+
+### Bugfixes & improvements
+- Fixed cells getting pushed down on multiview in certain cases
+- Buttons show/collapse into three dots depending on screen size
+- Video card text spacing fixed
+
 ### 2.22 Holodex [*Oct 27, 2021*]
 
 ### New
