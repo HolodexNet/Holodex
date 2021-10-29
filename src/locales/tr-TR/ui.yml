@@ -49,6 +49,9 @@ component:
     googleCalendar: Google Takvim'e Ekle
     totalTLs: Toplam canlı sohbet çevirileri
     tlPresence: Son 30 dakikada aktif çevirmen
+    typeScheduledYT: Planlı Yayın
+    typeExternalStream: Harici Yayın
+    typeEventPlaceholder: Planlı Etkinlik
   videoDescription:
     description: Açıklama
   description:
@@ -136,9 +139,14 @@ component:
       clear-playlist: Oynatma Listesini Temizle
     save-error-not-logged-in: Oynatma listelerini kaydetmek için oturum açmanız gerekir
   placeholderVideo:
+    discordCredit: 'Etkinlik bilgisi {1}''den {0} tarafından temin edilmiştir'
+    datasourceCredit: Etkinlik bilgisi {0} kaynağından alındı.
+    botCredit: Etkinlik bilgisi {0} kaynağından alındı, {1} tarafından oluşturuldu.
     streamPageBtn: Yayın Sayfası
     eventPageBtn: Etkinlik Sayfası
     scheduledEvent: Programlı
+    editorCredit: Etkinlik {0} Holodex editörü tarafından kuruldu.
+    creditTitleText: 'Teşekkürler:'
 views:
   channel:
     video: Videolar
@@ -247,6 +255,7 @@ views:
     ignoredTopicsLabel: Yok Sayılan Konular
     ignoredTopicsMsg: Ana Sayfadan ve Favorilerden seçili konulara sahip videolar kaldırılır
     theme: Tema
+    moreSettings: Daha Fazla Ayar
   app:
     update_available: Bir güncelleme mevcut
     update_btn: Güncelle
@@ -268,6 +277,7 @@ views:
       StickBottomSettingsDesc: Çeviri kutusu sohbetin Altına sabitlenir (mobilde varsayılan olarak yukarı sabitlenir)
       showVerifiedMessages: Doğrulanmış Mesajları Göster
       showModeratorMessages: Moderatör Mesajlarını Göster
+      showLocalTime: Yerel saatleri göster
       tlFontSize: Yazı Tipi Büyüklüğü
       tlWindowSize: Çeviri kutusu büyüklüğü (%), otomatik için %0 olarak bırakın
       retryBtn: Yeniden Dene
@@ -278,8 +288,11 @@ views:
           Yayın daha canlı değil, lütfen yayın başladıktan 15 dakika sonra tekrar deneyin.
         connectedToChat: Bağlandı
         disconnectedToChat: Bağlantı kesildi
+      archiveNeedExtension: >-
+        Arşiv sohbeti {0} eklentisi veya diğer üçüncü taraf eklentileri olmadan çalışmaz.
     removeFromPlaylist: Videoyu mevcut oynatma listesinden çıkar
     saveToPlaylist: Videoyu mevcut oynatma listesine ekle
+    likeOnYoutube: Videoyu Youtube'da beğen
   favorites:
     promptForAction: >-
       Favori VTuberlarının bir listesini oluştur ve en son kliplerini ve yayınlarını bu sayfada görüntüle
@@ -325,6 +338,7 @@ views:
     autoLayoutTip: Oto düzen modunu kullanmak için bir kanala tıklayın
     createLayoutTip: Hücre ekleyerek veya önceden ayarlanmış düzen kullanarak kendi düzeninizi oluşturun
     openToolbarTip: Çoklu izlemeye başlamak için araç çubuğunu açın
+    archiveSync: Arşiv senkronizasyonu
     preset:
       shareOnDiscord: >-
         Paylaşmak istediğin harika bir düzenin mi var? Paylaş butonunu kullanıp <a href="https://discord.gg/jctkgHBt4b">Discord sunucumuzda</a> bizimle paylaş!
@@ -352,6 +366,11 @@ views:
     mediaControlsHint1: Medya kontrollerini kullanarak yayınların seslerini kapatın veya yayınları senkronize (
     mediaControlsHint2: ) edin
     dragDropHint: Hücreleri organize etmek için yayınları araç çubuğundan sürükleyip bırakın
+    reorderHint: Video/sohbet pozisyonlarını değiştirmek için Düzeni Sırala menüsünü kullanabilirsiniz
+    reorderLayout: Düzeni Sırala
+    reorderLayoutDetail: Simgeleri istenilen pozisyonlara sürükleyip bırakın
+    sync:
+      nothingToSync: Senkronize edilecek bir şey yok. Lütfen örtüşen iki tane arşiv açın (ör. collab yayınları)
   mugen:
     welcome: >-
       MugenClips'e Hoşgeldiniz! Bu sayfadaki herkes sizinle aynı rastgele seçilmiş klipleri görür. Dünya çapındaki Hololive hayranlarıyla birlikte izleyin ve sohbet edin. İleriye atlar ve herkesle tekrardan eşitlenmek isterseniz, lütfen sayfayı yenileyin.
