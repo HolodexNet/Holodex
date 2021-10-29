@@ -49,6 +49,7 @@ component:
     googleCalendar: Google Takvim'e Ekle
     totalTLs: Toplam canlı sohbet çevirileri
     tlPresence: Son 30 dakikada aktif çevirmen
+    typeScheduledYT: Planlı yayın
   videoDescription:
     description: Açıklama
   description:
