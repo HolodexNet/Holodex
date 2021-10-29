@@ -87,6 +87,7 @@
       <v-menu offset-y>
         <template #activator="{ on, attrs }">
           <v-btn
+            v-show="collapseButtons.length"
             v-bind="attrs"
             icon
             v-on="on"
@@ -95,7 +96,7 @@
           </v-btn>
         </template>
         <v-list dense>
-          <template v-for="(b, index) in buttons.filter((btn) => btn.collapse)">
+          <template v-for="(b, index) in collapseButtons">
             <v-list-item
               :key="`mv-collapsed-${index}`"
               block
@@ -160,6 +161,10 @@ export default {
             set(value) {
                 this.$emit("input", value);
             },
+        },
+        collapseButtons() {
+            console.log(this.buttons.filter((btn) => btn.collapse));
+            return this.buttons.filter((btn) => btn.collapse);
         },
     },
     methods: {

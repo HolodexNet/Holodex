@@ -263,20 +263,20 @@ export default {
                     },
                     tooltip: this.$t("views.multiview.presetEditor.title"),
                     color: "secondary",
-                    collapse: true,
+                    collapse: this.$vuetify.breakpoint.mdAndDown,
                 },
                 {
                     icon: this.icons.mdiDelete,
                     tooltip: this.$t("component.music.clearPlaylist"),
                     onClick: this.clearAllItems,
                     color: "red",
-                    collapse: true,
+                    collapse: this.$vuetify.breakpoint.smAndDown,
                 },
                 {
                     icon: this.icons.mdiFullscreen,
                     onClick: this.toggleFullScreen,
                     tooltip: this.$t("views.multiview.fullScreen"),
-                    collapse: true,
+                    collapse: this.$vuetify.breakpoint.mdAndDown,
                 },
             ]);
         },

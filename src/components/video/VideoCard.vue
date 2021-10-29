@@ -123,7 +123,7 @@
         <ChannelImg :channel="data.channel" rounded class="align-self-center" />
       </div>
       <!-- Three lines for title, channel, available time -->
-      <div class="d-flex flex-column flex-grow-1 video-card-lines">
+      <div class="d-flex flex-column flex-grow-1 video-card-lines justify-space-around">
         <!-- Video title -->
         <div
           :class="['video-card-title ', { 'video-watched': hasWatched }, {'mt-2' : !horizontal}]"

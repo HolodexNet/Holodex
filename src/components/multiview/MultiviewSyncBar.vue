@@ -174,8 +174,6 @@ export default {
             timer: null,
             firstPlay: true,
             showConfiguration: false,
-            showCopyDialog: false,
-            ignoreRoute: false,
         };
     },
     computed: {
