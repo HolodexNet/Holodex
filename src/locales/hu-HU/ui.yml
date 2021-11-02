@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -155,6 +157,7 @@ views:
     collabs: Vendég
     about: Leírás
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -366,6 +369,9 @@ views:
     mediaControlsHint1: Használd a Média irányításokat, hogy némíts és összehangolj (
     mediaControlsHint2: ) élő közvetítéseket
     dragDropHint: Húzz streameket az eszköztárból a cellákhoz, hogy elrendezd a streameket
+    reorderHint: Használd a Kiosztás átrendezése gombot, hogy megcserélje a chat és videó pozícióját
+    reorderLayout: Kiosztás átrendezése
+    reorderLayoutDetail: Húzz ikonokat a kívánt pozícióba
     sync:
       nothingToSync: Nincs mit szinkronba tenni, nyiss meg legalább 2 streamet (pl. collab streameket)
       syncSettings: Szinkronizálási beállítások
