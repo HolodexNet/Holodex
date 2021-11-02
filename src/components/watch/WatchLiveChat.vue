@@ -15,7 +15,7 @@
     <!-- Archive translations for videos not upcoming/live -->
     <ArchiveTranslations
       v-show="showTlChat"
-      v-if="isArchived"
+      v-if="isArchived && showTlChat"
       :video="video"
       :class="{
         'chat-overlay': fixedBottom || fixedRight,
