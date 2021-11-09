@@ -48,7 +48,6 @@
         v-if="channelLink"
         class="popup"
         icon
-        target="_blank"
         :to="`/channel/${item.channel_id}/music`"
         @click.stop
       >
@@ -70,7 +69,6 @@
         class="popup"
         icon
         small
-        target="_blank"
         :href="`/watch/${item.video_id}?t=${item.start}`"
         @click.stop
       >
@@ -82,7 +80,6 @@
         class="popup"
         small
         icon
-        target="_blank"
         :href="`/edit/video/${item.video_id}/music`"
         @click.stop
       >

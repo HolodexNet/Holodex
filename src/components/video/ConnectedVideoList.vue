@@ -211,7 +211,9 @@ export default {
             return this.live.filter((v) => v.status === "live");
         },
         upcoming() {
-            return this.live.filter((v) => v.status === "upcoming");
+            const upcoming = this.live.filter((v) => v.status === "upcoming");
+            upcoming.sort((v1, v2) => v1.available_at === v2.available_at && (v1.type === "placeholder" ? 1 : -1));
+            return upcoming;
         },
         portalName() {
             return this.datePortalName || `date-selector${this.isFavPage}`;
