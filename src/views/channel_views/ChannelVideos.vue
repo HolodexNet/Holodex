@@ -110,6 +110,9 @@ export default {
                         ...(this.type === "clips" && {
                             status: "past",
                         }),
+                        ...(this.type === "videos" && {
+                            type: "stream,placeholder",
+                        }),
                         include: "clips,live_info",
                         limit,
                         offset,
