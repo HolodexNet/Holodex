@@ -178,7 +178,9 @@ export default {
             if (mergeContent) {
                 const contentsToMerge = {};
                 let videoIndex = 0;
-                const currentVideos = Object.values(this.layoutContent as Content[]).filter((o) => o.type === "video");
+                const sorted = [...this.layout.filter((l) => this.layoutContent[l.i]?.type === "video")];
+                sorted.sort(sortLayout);
+                const currentVideos = sorted.map((l) => this.layoutContent[l.i]);
                 const newVideoIdToIndex = {};
                 // Loop through the incoming layout, and fill with current content
                 layout.filter((item) => !content[item.i]).forEach((item) => {
