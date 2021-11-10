@@ -1,6 +1,6 @@
 <template>
   <!-- Render with opaque response for cache if size is lte 40 -->
-  <a :href="!noLink && `/channel/${channel.id}`" v-on="!noLink && { 'click.exact.stop.prevent': goToChannel }">
+  <a :href="!noLink && `/channel/${channel.id}`" @click.exact.prevent="goToChannel">
     <v-lazy
       tag="img"
       :src="photo"
@@ -57,7 +57,9 @@ export default {
         },
     },
     methods: {
-        goToChannel() {
+        goToChannel(e) {
+            if (this.noLink) return;
+            e.stopImmediatePropagation();
             this.$router.push({ path: `/channel/${this.channel.id}` });
         },
     },

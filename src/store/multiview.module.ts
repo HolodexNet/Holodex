@@ -80,6 +80,7 @@ const actions = {
         const videoIds = new Set<string>(Object.values<Content>(state.layoutContent)
             .filter((x) => missingVideoDataFilter(x) || (options?.refreshLive && videoIsLiveFilter(x)))
             .map((x) => x.video.id));
+        console.log("Refreshing video data", videoIds, Object.values(state.layoutContent));
         // Nothing to do
         if (!videoIds.size) return;
         const { data } = await api.videos({

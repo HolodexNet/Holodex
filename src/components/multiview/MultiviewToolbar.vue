@@ -163,7 +163,6 @@ export default {
             },
         },
         collapseButtons() {
-            console.log(this.buttons.filter((btn) => btn.collapse));
             return this.buttons.filter((btn) => btn.collapse);
         },
     },

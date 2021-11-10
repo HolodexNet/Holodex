@@ -15,13 +15,15 @@ export default {
             "nonChatCellCount",
         ]),
         decodedAutoLayout() {
-            return this.autoLayout
+            const autoLayouts = this.autoLayout
                 .filter((l) => l)
                 .map((preset) => ({
                     // convert original encoded to id
                     id: preset.layout,
                     ...decodeLayout(preset),
                 }));
+                // autoLayouts.forEach((a) => a.layout.sort(sortLayout));
+                return autoLayouts;
         },
     },
     methods: {
@@ -69,6 +71,7 @@ export default {
             clone.sort(sortLayout);
             // go through each preset, and check for full matching layouts
             return comparable.some((preset) => {
+                    preset.layout.sort(sortLayout);
                     for (let i = 0; i < currentLayout.length; i += 1) {
                         const presetCell = preset.layout[i];
                         const layoutCell = clone[i];
@@ -178,6 +181,9 @@ export default {
             if (mergeContent) {
                 const contentsToMerge = {};
                 let videoIndex = 0;
+                // const sorted = [...this.layout.filter((l) => this.layoutContent[l.i]?.type === "video")];
+                // sorted.sort(sortLayout);
+                // const currentVideos = sorted.map((l) => this.layoutContent[l.i]);
                 const currentVideos = Object.values(this.layoutContent as Content[]).filter((o) => o.type === "video");
                 const newVideoIdToIndex = {};
                 // Loop through the incoming layout, and fill with current content
