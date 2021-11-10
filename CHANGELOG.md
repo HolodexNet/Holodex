@@ -2,6 +2,14 @@
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
+### 2.22.2 Holodex [*Nov 9th, 2021*]
+
+### Bugfixes & improvements
+- Fixed an issue from today's maintenance causing constant errors
+- Channel page shows placeholder events
+- Clicking on channel img will open channel page again
+- Placeholders are sorted after real streams in the same time
+
 ### 2.22.1 Holodex [*Oct 27, 2021*]
 
 ### Bugfixes & improvements
