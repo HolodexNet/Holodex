@@ -25,6 +25,12 @@
 <script lang="ts">
 export default {
     name: "ApiErrorMessage",
+    mounted() {
+        // Temporarily nuke these 301 caches
+        fetch(`https://holodex.net/api/v2/live?type=placeholder%2Cstream&org=${this.$store.state.currentOrg.name}`, { method: "post" }).then(() => {});
+        fetch("https://holodex.net/api/v2/users/live?includePlaceholder=true", { method: "post" }).then(() => {});
+        fetch("https://holodex.net/api/v2/users/favorites", { method: "post" }).then(() => {});
+    },
 };
 </script>
 
