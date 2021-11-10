@@ -162,7 +162,8 @@ export default {
                     description: "No Response Received",
                     fatal: true,
                 });
-                console.error(error.request);
+                console.error(error);
+                fetch(error.config.url, { method: "post" }).then(() => {});
             } else {
                 // Something happened in setting up the request that triggered an Error
                 this.$gtag.exception({
