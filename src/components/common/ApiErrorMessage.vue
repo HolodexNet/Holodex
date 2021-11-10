@@ -8,11 +8,9 @@
         {{ $t("component.apiError.textBeforeTwitter") }}
         (<a href="https://twitter.com/holodex" rel="noopener noreferrer"> @holodex </a>)
         {{ $t("component.apiError.textAfterTwitter") }}
-        <router-link to="/about">
-          {{ $t("component.apiError.aboutPage") }}
-        </router-link>
-        {{ $t("component.apiError.afterAboutPageHyperlink") }}
-
+        <a href="https://discord.gg/jctkgHBt4b">Discord</a>{{ $t("component.apiError.afterAboutPageHyperlink") }}
+        <br>
+        Tip: Hard Refresh/Clear Cache: <code>CTRL + SHIFT + R</code>
         <br>
         <v-btn @click="$store.dispatch('logout')">
           {{ $t("component.mainNav.logout") }}
