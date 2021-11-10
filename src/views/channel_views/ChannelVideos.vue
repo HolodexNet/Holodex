@@ -106,12 +106,10 @@ export default {
                     query: {
                         ...(this.channel.type !== "subber" && {
                             lang: this.$store.state.settings.clipLangs.join(","),
+                            type: "stream,placeholder",
                         }),
                         ...(this.type === "clips" && {
                             status: "past",
-                        }),
-                        ...(this.type === "videos" && {
-                            type: "stream,placeholder",
                         }),
                         include: "clips,live_info",
                         limit,
