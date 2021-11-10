@@ -73,7 +73,7 @@ const getters = {
 };
 
 const missingVideoDataFilter = (x) => x.type === "video" && x.video.type !== "twitch" && x.video.id === x.video.channel?.name && !(x?.video?.noData);
-const videoIsLiveFilter = (x) => x?.video?.status === "live";
+const videoIsLiveFilter = (x) => x?.video?.status === "live" || x?.video?.status === "upcoming";
 const actions = {
     async fetchVideoData({ state, commit }, options: { refreshLive: boolean } | undefined) {
         // Load missing video data from backend
