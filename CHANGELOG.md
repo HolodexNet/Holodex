@@ -2,6 +2,14 @@
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
+### 2.22.3 Holodex [*Nov 10th, 2021*]
+
+### Hotfix
+- Fixed Open on Youtube blank screen for older iOS devices
+- Fixed live video sorting for Safari
+- Fixed clips not showing up on clipper channel pages
+- More fixes to cache issue from yesterday
+
 ### 2.22.2 Holodex [*Nov 9th, 2021*]
 
 ### Bugfixes & improvements

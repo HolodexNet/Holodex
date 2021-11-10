@@ -212,7 +212,13 @@ export default {
         },
         upcoming() {
             const upcoming = this.live.filter((v) => v.status === "upcoming");
-            upcoming.sort((v1, v2) => v1.available_at === v2.available_at && (v1.type === "placeholder" ? 1 : -1));
+            upcoming.sort((v1, v2) => {
+                if (v1.available_at !== v2.available_at) return 0;
+                const v1IsPlaceholder = v1.type === "placeholder";
+                const v2IsPlaceholder = v2.type === "placeholder";
+                if (v1IsPlaceholder && v2IsPlaceholder) return 0;
+                return v1IsPlaceholder ? 1 : -1;
+            });
             return upcoming;
         },
         portalName() {

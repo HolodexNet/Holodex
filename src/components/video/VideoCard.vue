@@ -8,13 +8,11 @@
       'flex-column': !horizontal,
     }"
     :target="redirectMode ? '_blank' : ''"
-    :href="!redirectMode ? watchLink : `https://youtu.be/${data.id}`"
+    :href="href"
     rel="noopener"
     draggable="true"
     style="position: relative"
-    @click.exact.prevent="
-      (e) => (isPlaceholder? openPlaceholder(): (!redirectMode ? goToVideo() : goToYoutube()))
-    "
+    @click.exact="onThumbnailClicked"
     @dragstart="drag"
   >
     <!-- Video Image with Duration -->
@@ -444,6 +442,10 @@ export default {
                 ? this.$t("component.videoCard.totalTLs")
                 : this.$t("component.videoCard.tlPresence");
         },
+        href() {
+            if (this.isPlaceholder) return undefined;
+            return this.redirectMode ? `https://youtu.be/${this.data.id}` : this.watchLink;
+        },
     },
     // created() {
     //     this.data = this.video || this.source;
@@ -496,6 +498,12 @@ export default {
                 this.$router.replace({ path: this.watchLink });
             } else {
                 this.$router.push({ path: this.watchLink });
+            }
+        },
+        onThumbnailClicked(e) {
+            if (this.isPlaceholder || !this.redirectMode) {
+                e.preventDefault();
+                this.goToVideo();
             }
         },
         openPlaceholder() {
