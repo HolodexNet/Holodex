@@ -163,7 +163,6 @@ export default {
                     fatal: true,
                 });
                 console.error(error);
-                fetch(error.config.url, { method: "post" }).then(() => {});
             } else {
                 // Something happened in setting up the request that triggered an Error
                 this.$gtag.exception({
@@ -172,6 +171,8 @@ export default {
                 });
                 console.error("Error", error.message);
             }
+            // Force clear cache
+            fetch(error.config.url, { method: "post" }).then(() => {});
             return Promise.reject(error);
         },
         syncThemeColor() {

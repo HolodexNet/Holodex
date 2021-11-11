@@ -104,7 +104,11 @@ export default {
             .get("/user/check", {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             })
-            .catch(() => false);
+            .catch(() => {
+                // 301 Cache bust
+                fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
+                return false;
+            });
     },
     resetAPIKey(jwt) {
         return (
