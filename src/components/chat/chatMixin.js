@@ -78,11 +78,11 @@ export default {
         },
         parseMessage(msg) {
             // Append title to author name
-            msg.prefix = "";
-            if (msg.is_moderator) msg.prefix += "[Mod]";
-            if (msg.is_verified) msg.prefix += "[Verified]";
-            if (msg.is_owner) msg.prefix += "[Owner]";
-            if (msg.is_vtuber) msg.prefix += "[Vtuber]";
+            // msg.prefix = "";
+            // if (msg.is_moderator) msg.prefix += "[Mod]";
+            // if (msg.is_verified) msg.prefix += "✓";
+            // if (msg.is_owner) msg.prefix += "[Owner]";
+            // if (msg.is_vtuber) msg.prefix += "[Vtuber]";
             msg.timestamp = +msg.timestamp;
             msg.relativeSeconds = (msg.timestamp - this.startTimeMillis) / 1000;
             msg.displayTime = this.utcToTimestamp(msg.timestamp);

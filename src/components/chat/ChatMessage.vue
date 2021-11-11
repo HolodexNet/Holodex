@@ -1,15 +1,15 @@
 <template>
   <div class="d-flex flex-row" :class="{ 'with-author': !hideAuthor}">
-    <div v-if="source.is_vtuber" style="min-width: 28px;">
+    <div v-if="source.is_vtuber && source.channel_id" style="min-width: 28px;" class="mx-1">
       <channel-img
-        v-if="source.channel_id && !hideAuthor"
+        v-if="!hideAuthor"
         class="align-self-center"
         :channel="{ id: source.channel_id, name: source.name }"
         :size="28"
         rounded
       />
     </div>
-    <div style="flex-basis: 100%;" class="ml-2">
+    <div style="flex-basis: 100%;">
       <div
         v-if="!hideAuthor"
         :class="{
@@ -18,10 +18,13 @@
           'secondary--text': source.is_verified || source.is_moderator || source.is_vtuber,
         }"
       >
-        <!-- <v-divider class="my-1" /> -->
-        <span style="cursor: pointer" @click="showBlockChannelDialog = true">
+        <span class="tl-name" @click="showBlockChannelDialog = true">
+          <!-- <span v-if="source.is_owner">👑</span> -->
+          <span v-if="source.is_vtuber">[Vtuber]</span>
+          <span v-if="source.is_moderator">[Mod]</span>
+          {{ `${source.name}` }}
+          <span v-if="source.is_verified" style="font-weight: 800">✓</span>:
           <v-icon x-small>{{ icons.mdiCog }}</v-icon>
-          {{ `${source.name}` }}:
         </span>
       </div>
       <a class="tl-message" :data-time="source.relativeSeconds">
@@ -40,6 +43,7 @@
             :href="`https://youtube.com/channel/${source.channel_id}`"
             target="_blank"
             class="mr-1"
+            color="red"
           >
             <v-icon>
               {{ icons.mdiYoutube }}
@@ -50,6 +54,7 @@
             :href="`https://holodex.net/channel/${source.channel_id}`"
             target="_blank"
             class="mr-1"
+            color="secondary"
           >
             Holodex
           </v-btn>
@@ -116,9 +121,20 @@ export default {
     font-size: 0.85em;
 }
 
+.tl-name {
+  cursor: pointer;
+}
+.tl-name .v-icon {
+  opacity: 0;
+}
+
+.tl-name:hover .v-icon {
+  opacity: 1;
+}
+
 .with-author {
-  border-top: 1px solid rgba(256,256,256,0.3);
+  border-top: 1px solid #ffffff1f;
   margin-top: 4px;
-  padding-top: 2px;
+  padding-top: 4px;
 }
 </style>
