@@ -27,6 +27,7 @@
       <YoutubePlayer
         v-else
         ref="player"
+        :key="cellContent.id"
         :video-id="cellContent.id"
         :player-vars="{
           playsinline: 1,

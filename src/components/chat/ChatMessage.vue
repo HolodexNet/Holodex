@@ -1,8 +1,8 @@
 <template>
-  <div class="d-flex flex-row" :class="{ 'with-author': !hideAuthor}">
+  <div class="d-flex flex-row" :class="{ 'with-author': !hideAuthor && !source.shouldHideAuthor}">
     <div v-if="source.is_vtuber && source.channel_id" style="min-width: 28px;" class="mx-1">
       <channel-img
-        v-if="!hideAuthor"
+        v-if="!hideAuthor && !source.shouldHideAuthor"
         class="align-self-center"
         :channel="{ id: source.channel_id, name: source.name }"
         :size="28"
@@ -11,7 +11,7 @@
     </div>
     <div style="flex-basis: 100%;">
       <div
-        v-if="!hideAuthor"
+        v-if="!hideAuthor && !source.shouldHideAuthor"
         :class="{
           'tl-caption': true,
           'primary--text': source.is_owner,
@@ -22,6 +22,7 @@
           <!-- <span v-if="source.is_owner">👑</span> -->
           <span v-if="source.is_vtuber">[Vtuber]</span>
           <span v-if="source.is_moderator">[Mod]</span>
+          <span v-if="source.source">{{ source.source }} - </span>
           {{ `${source.name}` }}
           <span v-if="source.is_verified" style="font-weight: 800">✓</span>:
           <v-icon x-small>{{ icons.mdiCog }}</v-icon>
@@ -34,7 +35,7 @@
         <span class="text--primary" v-html="source.message" />
       </a>
     </div>
-    <v-dialog v-if="!hideAuthor" v-model="showBlockChannelDialog" width="500">
+    <v-dialog v-if="!hideAuthor && !source.shouldHideAuthor" v-model="showBlockChannelDialog" width="500">
       <v-card>
         <v-card-title>{{ source.name }}</v-card-title>
         <v-card-text>

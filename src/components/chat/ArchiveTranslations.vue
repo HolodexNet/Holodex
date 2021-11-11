@@ -44,7 +44,7 @@
         }"
         :data-component="ChatMessage"
         :data-key="getKey"
-        :data-sources="tlHistory"
+        :data-sources="dividedTLs"
         :item-height="20"
         :item-class-add="activeClass"
         :keeps="50"
@@ -78,6 +78,17 @@ export default {
             ChatMessage,
             curIndex: 0,
         };
+    },
+    computed: {
+        dividedTLs() {
+            this.tlHistory.forEach((item, index, arr) => {
+                item.shouldHideAuthor = index > 0 && (!(index === 0
+                    || index === arr.length - 1
+                    || item.name !== arr[index - 1].name
+                    || !!item.breakpoint));
+            });
+            return this.tlHistory;
+        },
     },
     watch: {
         liveTlLang() {
@@ -165,7 +176,7 @@ export default {
     background-color: var(--v-primary-base);
     opacity: 0.25;
     width: calc(100%);
-    height: calc(100% + 5px);
+    height: calc(100%);
     background-size: cover;
     position: absolute;
     top: -1px;
