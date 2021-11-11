@@ -1,28 +1,34 @@
 <template>
-  <div :ref="source.breakpoint && 'messageBreakpoint'">
-    <div
-      v-if="!hideAuthor"
-      :class="{
-        'tl-caption': true,
-        'primary--text': source.is_owner,
-        'secondary--text': source.is_verified || source.is_moderator || source.is_vtuber,
-      }"
-    >
-      <v-divider class="my-1" />
-      <span style="cursor: pointer" @click="showBlockChannelDialog = true">
-        <v-icon x-small>{{ icons.mdiCog }}</v-icon>
-        {{ `${source.prefix} ${source.name}` }}:
-      </span>
+  <div class="d-flex flex-row" :class="{ 'with-author': !hideAuthor}">
+    <channel-img
+      v-if="source.channel_id && source.is_vtuber"
+      class="align-self-center"
+      :channel="{ id: source.channel_id, name: source.name }"
+      :size="32"
+      rounded
+    />
+    <div style="flex-basis: 100%;" class="ml-2">
+      <div
+        v-if="!hideAuthor"
+        :class="{
+          'tl-caption': true,
+          'primary--text': source.is_owner,
+          'secondary--text': source.is_verified || source.is_moderator || source.is_vtuber,
+        }"
+      >
+        <!-- <v-divider class="my-1" /> -->
+        <span style="cursor: pointer" @click="showBlockChannelDialog = true">
+          <v-icon x-small>{{ icons.mdiCog }}</v-icon>
+          {{ `${source.name}` }}:
+        </span>
+      </div>
+      <a class="tl-message" :data-time="source.relativeSeconds">
+        <span v-if="source.timestamp" class="tl-caption mr-1">
+          {{ liveTlShowLocalTime ? source.realTime : source.displayTime }}
+        </span>
+        <span class="text--primary" v-html="source.message" />
+      </a>
     </div>
-    <a class="tl-message" :data-time="source.relativeSeconds">
-      <span v-if="source.timestamp&&!liveTlShowLocalTime" class="tl-caption mr-1">
-        {{ source.displayTime }}
-      </span>
-      <span v-else-if="source.timestamp&&liveTlShowLocalTime" class="tl-caption mr-1">
-        {{ source.realTime }}
-      </span>
-      <span class="text--primary" v-html="source.message" />
-    </a>
     <v-dialog v-if="!hideAuthor" v-model="showBlockChannelDialog" width="500">
       <v-card>
         <v-card-title>{{ source.name }}</v-card-title>
@@ -36,11 +42,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { mapState } from "vuex";
+import ChannelImg from "../channel/ChannelImg.vue";
 
 export default {
     name: "ChatMessage",
+    components: { ChannelImg },
     props: {
         source: {
             type: Object,
@@ -86,5 +94,11 @@ export default {
 .tl-body .tl-caption {
     letter-spacing: 0.0333333333em !important;
     font-size: 0.85em;
+}
+
+.with-author {
+  border-top: 1px solid rgba(256,256,256,0.3);
+  margin-top: 4px;
+  padding-top: 2px;
 }
 </style>

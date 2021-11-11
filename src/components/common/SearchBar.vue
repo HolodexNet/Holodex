@@ -102,18 +102,16 @@
       </div>
     </template>
     <template #append-outer>
-      <v-btn large class="ml-1 append-btn" @click="commitSearch">
+      <v-btn class="ml-1 append-btn" @click="commitSearch">
         <v-icon
           key="searchbtn"
-          large
           color="secondary"
           v-text="icons.mdiMagnify"
         />
       </v-btn>
-      <v-btn large class="ml-1 append-btn" @click="goToOrToggleAdvanced">
+      <v-btn class="ml-1 append-btn" @click="goToOrToggleAdvanced">
         <v-icon
           key="advanced"
-          large
           color="secondary"
           v-text="mdiFilter"
         />
@@ -348,7 +346,7 @@ export default {
 
     &.v-input > .v-input__control {
         height: auto !important;
-        min-height: 47px !important;
+        // min-height: 47px !important;
     }
 
     input {
@@ -356,7 +354,7 @@ export default {
     }
 
     &.v-input--dense > .v-input__append-outer {
-        min-height: 47px !important;
+        // min-height: 47px !important;
         min-width: 38px;
         height: 100%;
         margin: 0 !important;
@@ -364,9 +362,9 @@ export default {
         border-radius: inherit;
 
         .append-btn {
-            min-height: 46px;
-            min-width: 49px;
-            max-width: 49px;
+            min-height: 40px;
+            min-width: 45px;
+            max-width: 45px;
         }
     }
 
