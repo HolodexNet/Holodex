@@ -71,9 +71,10 @@ export default {
             clone.sort(sortLayout);
             // go through each preset, and check for full matching layouts
             return comparable.some((preset) => {
-                    preset.layout.sort(sortLayout);
+                    const clonePreset = [...preset.layout];
+                    clonePreset.sort(sortLayout);
                     for (let i = 0; i < currentLayout.length; i += 1) {
-                        const presetCell = preset.layout[i];
+                        const presetCell = clonePreset[i];
                         const layoutCell = clone[i];
                         if (
                             !(
@@ -181,9 +182,6 @@ export default {
             if (mergeContent) {
                 const contentsToMerge = {};
                 let videoIndex = 0;
-                // const sorted = [...this.layout.filter((l) => this.layoutContent[l.i]?.type === "video")];
-                // sorted.sort(sortLayout);
-                // const currentVideos = sorted.map((l) => this.layoutContent[l.i]);
                 const currentVideos = Object.values(this.layoutContent as Content[]).filter((o) => o.type === "video");
                 const newVideoIdToIndex = {};
                 // Loop through the incoming layout, and fill with current content
