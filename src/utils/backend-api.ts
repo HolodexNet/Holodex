@@ -106,7 +106,7 @@ export default {
             })
             .catch(() => {
                 // 301 Cache bust
-                fetch("/user/check", { method: "post" }).then(() => {});
+                fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
                 return false;
             });
     },
