@@ -1,12 +1,14 @@
 <template>
   <div class="d-flex flex-row" :class="{ 'with-author': !hideAuthor}">
-    <channel-img
-      v-if="source.channel_id && source.is_vtuber"
-      class="align-self-center"
-      :channel="{ id: source.channel_id, name: source.name }"
-      :size="32"
-      rounded
-    />
+    <div v-if="source.is_vtuber" style="min-width: 28px;">
+      <channel-img
+        v-if="source.channel_id && !hideAuthor"
+        class="align-self-center"
+        :channel="{ id: source.channel_id, name: source.name }"
+        :size="28"
+        rounded
+      />
+    </div>
     <div style="flex-basis: 100%;" class="ml-2">
       <div
         v-if="!hideAuthor"
@@ -33,6 +35,24 @@
       <v-card>
         <v-card-title>{{ source.name }}</v-card-title>
         <v-card-text>
+          <v-btn
+            v-if="source.channel_id"
+            :href="`https://youtube.com/channel/${source.channel_id}`"
+            target="_blank"
+            class="mr-1"
+          >
+            <v-icon>
+              {{ icons.mdiYoutube }}
+            </v-icon> Youtube
+          </v-btn>
+          <v-btn
+            v-if="source.channel_id && source.is_vtuber"
+            :href="`https://holodex.net/channel/${source.channel_id}`"
+            target="_blank"
+            class="mr-1"
+          >
+            Holodex
+          </v-btn>
           <v-btn @click="toggleBlockName(source.name)">
             {{ !blockedNames.has(source.name) ? "Block Channel" : "Unblock" }}
           </v-btn>
