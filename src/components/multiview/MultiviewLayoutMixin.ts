@@ -15,15 +15,13 @@ export default {
             "nonChatCellCount",
         ]),
         decodedAutoLayout() {
-            const autoLayouts = this.autoLayout
+            return this.autoLayout
                 .filter((l) => l)
                 .map((preset) => ({
                     // convert original encoded to id
                     id: preset.layout,
                     ...decodeLayout(preset),
                 }));
-                // autoLayouts.forEach((a) => a.layout.sort(sortLayout));
-                return autoLayouts;
         },
     },
     methods: {
@@ -71,10 +69,8 @@ export default {
             clone.sort(sortLayout);
             // go through each preset, and check for full matching layouts
             return comparable.some((preset) => {
-                    const clonePreset = [...preset.layout];
-                    clonePreset.sort(sortLayout);
                     for (let i = 0; i < currentLayout.length; i += 1) {
-                        const presetCell = clonePreset[i];
+                        const presetCell = preset.layout[i];
                         const layoutCell = clone[i];
                         if (
                             !(
