@@ -104,7 +104,11 @@ export default {
             .get("/user/check", {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             })
-            .catch(() => false);
+            .catch(() => {
+                // 301 Cache bust
+                fetch("/user/check", { method: "post" }).then(() => {});
+                return false;
+            });
     },
     resetAPIKey(jwt) {
         return (
