@@ -94,12 +94,6 @@ export default {
         liveTlLang() {
             this.loadMessages(true, true);
         },
-        liveTlShowVerified() {
-            this.loadMessages(true, true);
-        },
-        liveTlShowModerator() {
-            this.loadMessages(true, true);
-        },
         currentTime(time) {
             if (!this.tlHistory.length) return;
             const cur = this.getRelativeSecs(this.curIndex);
