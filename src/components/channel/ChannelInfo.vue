@@ -3,10 +3,12 @@
     <v-list-item-title style="align-self: flex-start">
       <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
         {{ channelName }}
-        <small class="text--secondary text--org">
-          {{ channel.org }} <span v-if="!noGroup && channel.group">• {{ channel.group }}</span>
-        </small>
       </router-link>
+      <small style="width:auto;">
+        <router-link :to="`/channel?org=${channel.org}`" class="no-decoration text--org">
+          {{ channel.org + ((!noGroup && channel.group) ? " / " + channel.group : '') }}
+        </router-link>
+      </small>
     </v-list-item-title>
     <v-list-item-subtitle>
       <template v-if="!noSubscriberCount">
@@ -136,5 +138,9 @@ export default {
   font-size:12px;
   font-weight: 300;
   display:block;
+  opacity: 0.7;
+}
+.text--org:hover {
+  opacity: 1.0;
 }
 </style>
