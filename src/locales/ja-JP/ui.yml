@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 予定されたイベント
   videoDescription:
     description: 概要
+  video:
+    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -155,6 +157,7 @@ views:
     collabs: コラボ
     about: 概要
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 登録者数
       group: 所属
@@ -277,6 +280,7 @@ views:
       StickBottomSettingsDesc: 翻訳を画面下部に固定して表示します(デフォルトでは画面上部に表示します)
       showVerifiedMessages: 確認済みのユーザーのメッセージを表示
       showModeratorMessages: モデレータによるメッセージを表示
+      showVtuberMessages: Vtuberのメッセージを表示
       showLocalTime: ローカル時刻を表示
       tlFontSize: フォントサイズ
       tlWindowSize: 翻訳済みのボックスサイズ (%)、自動で0%に設定されます
