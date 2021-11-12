@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terjadwal
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -155,6 +157,7 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
@@ -277,6 +280,7 @@ views:
       StickBottomSettingsDesc: Kolom Terjemahan akan disematkan dibawah kolom chat (pengaturan awal disematkan diatas pada tampilan HP)
       showVerifiedMessages: Menampilkan Pesan Pengguna yang Terverifikasi
       showModeratorMessages: Menampilkan Pesan Moderator
+      showVtuberMessages: Menampilkan Pesan Vtuber
       showLocalTime: Menampilkan Waktu Lokal
       tlFontSize: Ukuran Teks
       tlWindowSize: Ukuran Kotak Terjemahan (%), biarkan 0% untuk otomatis menyesuaikan
