@@ -31,6 +31,7 @@ const initialState = {
     liveTlFontSize: 14,
     liveTlShowVerified: true, // show verified messages
     liveTlShowModerator: true, // show moderator messages
+    liveTlShowVtuber: true, // show vtuber messages
     liveTlShowLocalTime: false, // show client local time
     liveTlWindowSize: 0, // Default size, otherwise percentage height
     liveTlBlocked: [],
@@ -107,6 +108,7 @@ const mutations = {
         "liveTlWindowSize",
         "hideCollabStreams",
         "ignoredTopics",
+        "liveTlShowVtuber",
     ]),
     resetState(state) {
         Object.assign(state, initialState);

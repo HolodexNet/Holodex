@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-row" :class="{ 'with-author': !hideAuthor && !source.shouldHideAuthor}">
-    <div v-if="source.is_vtuber && source.channel_id" style="min-width: 28px;" class="mx-1">
+    <div v-if="source.is_vtuber && source.channel_id" style="min-width: 28px;" class="mr-2">
       <channel-img
         v-if="!hideAuthor && !source.shouldHideAuthor"
         class="align-self-center"
@@ -15,17 +15,15 @@
         :class="{
           'tl-caption': true,
           'primary--text': source.is_owner,
-          'secondary--text': source.is_verified || source.is_moderator || source.is_vtuber,
+          'secondary--text': !source.is_owner && (source.is_verified || source.is_moderator || source.is_vtuber),
         }"
       >
         <span class="tl-name" @click="showBlockChannelDialog = true">
           <!-- <span v-if="source.is_owner">👑</span> -->
           <span v-if="source.is_vtuber">[Vtuber]</span>
           <span v-if="source.is_moderator">[Mod]</span>
-          <span v-if="source.source">{{ source.source }} - </span>
-          {{ `${source.name}` }}
-          <span v-if="source.is_verified" style="font-weight: 800">✓</span>:
-          <v-icon x-small>{{ icons.mdiCog }}</v-icon>
+          <span v-if="source.source">{{ source.source }} - </span>{{ source.name }}<span v-if="source.is_verified" style="font-weight: 800"> ✓</span>:
+          <v-icon x-small style="position: absolute; margin-top: 2px; margin-left: 1px;">{{ icons.mdiCog }}</v-icon>
         </span>
       </div>
       <a class="tl-message" :data-time="source.relativeSeconds">

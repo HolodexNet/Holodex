@@ -40,6 +40,7 @@ export default {
             "liveTlShowVerified",
             "liveTlShowModerator",
             "liveTlWindowSize",
+            "liveTlShowVtuber",
         ]),
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];
@@ -54,8 +55,9 @@ export default {
             const lastTimestamp = !firstLoad && this.tlHistory[0].timestamp;
             api.chatHistory(this.video.id, {
                 lang: this.liveTlLang,
-                ...(this.liveTlShowVerified && { verified: 1 }),
-                moderator: this.liveTlShowModerator ? 1 : 0,
+                verified: this.liveTlShowVerified,
+                moderator: this.liveTlShowModerator,
+                vtuber: this.liveTlShowVtuber,
                 limit: loadAll ? 10000 : this.limit,
                 ...(lastTimestamp && { before: lastTimestamp }),
             })

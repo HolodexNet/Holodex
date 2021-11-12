@@ -233,6 +233,7 @@ export default {
                     msg.is_tl
                     || msg.is_vtuber
                     || msg.is_owner
+                    || (msg.is_vtuber && this.liveTlShowVtuber)
                     || (msg.is_moderator && this.liveTlShowModerator)
                     || (msg.is_verified && this.liveTlShowVerified)
                 ) {
@@ -331,7 +332,7 @@ export default {
     height: calc(100% - 32px);
     display: flex;
     flex-direction: column-reverse;
-    line-height: 1.25em;
+    line-height: 1.35;
     letter-spacing: 0.0178571429em !important;
 }
 
