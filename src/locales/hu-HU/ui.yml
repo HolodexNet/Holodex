@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -154,10 +152,9 @@ views:
     video: Videók
     clips: Klipek
     music: Zene
-    collabs: Vendég
+    collabs: Collabok
     about: Leírás
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Feliratkozó
       group: Csoport
@@ -253,8 +250,8 @@ views:
       - Nagy
       - Közepes
       - Kicsi
-    hideCollabStreamsLabel: Vendég streamek elrejtése
-    hideCollabStreamsMsg: Vendég streamek elrejtése a kedvencek közül
+    hideCollabStreamsLabel: Collab streamek elrejtése
+    hideCollabStreamsMsg: Collab streamek elrejtése a kedvencek közül
     ignoredTopicsLabel: Figyelmen kívül hagyott témák
     ignoredTopicsMsg: Elrejti a Kezdőlapból és a Kedvencekből a videókat ebben a témában
     theme: Téma
