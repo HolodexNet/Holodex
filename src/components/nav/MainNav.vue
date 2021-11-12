@@ -238,7 +238,7 @@ export default {
                 },
                 {
                     name: this.$t("component.mainNav.channels"),
-                    path: "/channel",
+                    path: `/channel?org=${this.$store.state.currentOrg.name}`,
                     icon: this.icons.mdiAccountBoxMultiple,
                 },
                 {
