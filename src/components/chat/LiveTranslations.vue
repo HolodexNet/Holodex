@@ -190,12 +190,6 @@ export default {
                 this.isLoading = false;
             }
         },
-        liveTlShowVerified() {
-            this.loadMessages(true);
-        },
-        liveTlShowModerator() {
-            this.loadMessages(true);
-        },
     },
     mounted() {
         if (this.$socket.connected) {

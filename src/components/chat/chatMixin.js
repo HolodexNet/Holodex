@@ -49,6 +49,17 @@ export default {
             return Number(dayjs(this.video.available_at));
         },
     },
+    watch: {
+        liveTlShowVerified() {
+            this.loadMessages(true, true);
+        },
+        liveTlShowModerator() {
+            this.loadMessages(true, true);
+        },
+        liveTlShowVtuber() {
+            this.loadMessages(true, true);
+        },
+    },
     methods: {
         loadMessages(firstLoad = false, loadAll = false) {
             this.historyLoading = true;
