@@ -29,7 +29,7 @@
       clipped-right
       flat
       extension-height="36"
-      height="50"
+      height="56"
     >
       <!--=============================== Top Bar (Regular View) =============================-->
 
@@ -333,7 +333,7 @@ export default {
     margin-top: env(safe-area-inset-top, 0px) !important;
 }
 #top-bar.v-toolbar--extended {
-    height: 50px !important;
+    height: 56px !important;
 }
 
 .fade-enter-active,
