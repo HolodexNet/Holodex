@@ -40,6 +40,7 @@ export default {
             "liveTlShowVerified",
             "liveTlShowModerator",
             "liveTlWindowSize",
+            "liveTlShowVtuber",
         ]),
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];
@@ -54,8 +55,9 @@ export default {
             const lastTimestamp = !firstLoad && this.tlHistory[0].timestamp;
             api.chatHistory(this.video.id, {
                 lang: this.liveTlLang,
-                ...(this.liveTlShowVerified && { verified: 1 }),
-                moderator: this.liveTlShowModerator ? 1 : 0,
+                verified: this.liveTlShowVerified,
+                moderator: this.liveTlShowModerator,
+                vtuber: this.liveTlShowVtuber,
                 limit: loadAll ? 10000 : this.limit,
                 ...(lastTimestamp && { before: lastTimestamp }),
             })
@@ -78,11 +80,11 @@ export default {
         },
         parseMessage(msg) {
             // Append title to author name
-            msg.prefix = "";
-            if (msg.is_moderator) msg.prefix += "[Mod]";
-            if (msg.is_verified) msg.prefix += "[Verified]";
-            if (msg.is_owner) msg.prefix += "[Owner]";
-            if (msg.is_vtuber) msg.prefix += "[Vtuber]";
+            // msg.prefix = "";
+            // if (msg.is_moderator) msg.prefix += "[Mod]";
+            // if (msg.is_verified) msg.prefix += "✓";
+            // if (msg.is_owner) msg.prefix += "[Owner]";
+            // if (msg.is_vtuber) msg.prefix += "[Vtuber]";
             msg.timestamp = +msg.timestamp;
             msg.relativeSeconds = (msg.timestamp - this.startTimeMillis) / 1000;
             msg.displayTime = this.utcToTimestamp(msg.timestamp);

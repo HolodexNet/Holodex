@@ -10,9 +10,9 @@ export interface Content {
 }
 
 const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.";
-
-// export const sortLayout = (a, b) => a.y - b.y || a.x - b.x;
 export const sortLayout = (a, b) => a.x - b.x || a.y - b.y;
+// export const sortLayout = (a, b) => a.y - b.y || a.x - b.x;
+
 /**
  * Encodes a layout array and contents to a compact URI
  * @param {{layout, contents, includeVideo?}} layout and layout contents
@@ -67,6 +67,7 @@ export function decodeLayout(encodedStr) {
     const parsedContent: Record<number, Content> = {};
     let videoCellCount = 0;
     const parts = encodedStr.split(",");
+    parts.sort(); // DO NOT TOUCH THIS LINE
     parts.forEach((str, index) => {
         const xywh = str.substring(0, 4);
         const idOrChat = str.substring(4, 15);
@@ -127,7 +128,7 @@ export function decodeLayout(encodedStr) {
         }
         parsedLayout.push(layoutItem);
     });
-
+    // parsedLayout.sort(sortLayout);
     return {
         id: encodedStr,
         layout: parsedLayout,

@@ -40,6 +40,7 @@
             hide-details
           />
           <v-switch v-model="liveTlShowModerator" :label="$t('views.watch.chat.showModeratorMessages')" hide-details />
+          <v-switch v-model="liveTlShowVtuber" :label="$t('views.watch.chat.showVtuberMessages')" hide-details />
           <v-switch v-model="liveTlShowLocalTime" :label="$t('views.watch.chat.showLocalTime')" />
           <v-btn @click="showBlockedList = true">
             Edit Blocked List
@@ -113,6 +114,7 @@ export default {
             "liveTlShowModerator",
             "liveTlWindowSize",
             "liveTlShowLocalTime",
+            "liveTlShowVtuber",
         ]),
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];

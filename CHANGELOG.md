@@ -2,6 +2,18 @@
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
+### 2.23 Holodex [*Nov 11th, 2021*]
+
+### New
+
+- Added TLdex vtuber chat messages setting (Filter messages if it's in Holodex's Vtuber database)
+
+### Bugfixes & improvements
+- Fixed Multiview sometimes duplicating wrong stream
+- Shrink top navigation bar slightly
+- TLdex chat now shows channel icons for vtubers in chat
+- Clicking on TLdex channel name will show links for YT or Holodex (if it exists)
+
 ### 2.22.3 Holodex [*Nov 10th, 2021*]
 
 ### Hotfix

@@ -2,7 +2,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import createMutationsSharer from "vuex-shared-mutations";
+// import createMutationsSharer from "vuex-shared-mutations";
 import createMigrate from "vuex-persistedstate-migrate";
 import jwtDecode from "jwt-decode";
 import { sendTokenToExtension } from "@/utils/messaging";
@@ -80,8 +80,8 @@ function defaultState() {
 /**-----------------------
  *     Configure Synchronized Modules & Mutations across tabs
  *------------------------* */
-const syncedModules = /^(?:playlist|settings|history)/;
-const syncedMutations = new Set(["resetState", "setUser", "setShowUpdatesDetail", "firstVisit", "firstVisitMugen", "favorites/setFavorites", "favorites/resetFavorites", "favorites/setLive", "music/addSong", "music/removeSong", "music/resetState", "music/clearPlaylist", "multiview/addPresetLayout", "multiview/removePresetLayout", "multiview/togglePresetAutoLayout", "multiview/setAutoLayout"]);
+// const syncedModules = /^(?:playlist|settings|history)/;
+// const syncedMutations = new Set(["resetState", "setUser", "setShowUpdatesDetail", "firstVisit", "firstVisitMugen", "favorites/setFavorites", "favorites/resetFavorites", "favorites/setLive", "music/addSong", "music/removeSong", "music/resetState", "music/clearPlaylist", "multiview/addPresetLayout", "multiview/removePresetLayout", "multiview/togglePresetAutoLayout", "multiview/setAutoLayout"]);
 
 const persistedPaths = ["orgs", "playlist", "settings", "history", "migration", "multiview", "channels.cardView", "channels.sort", "currentOrg", "favorites.favorites", "lastShownInstallPrompt", "firstVisit", "firstVisitMugen", "music.playlist", "music.currentId", "music.mode", "orgFavorites", "showUpdateDetails", "userdata", "watch.showLiveChat", "watch.showTL", "watch.theaterMode", "currentGridSize"];
 export default new Vuex.Store({
@@ -95,9 +95,9 @@ export default new Vuex.Store({
             // wait next tick
             }),
         }),
-        createMutationsSharer({
-            predicate: (mutation /* state */) => mutation.type.match(syncedModules) || syncedMutations.has(mutation.type), // channel & channels
-        }), // Share all mutations except historyPop/Push across tabs.
+        // createMutationsSharer({
+        //     predicate: (mutation /* state */) => mutation.type.match(syncedModules) || syncedMutations.has(mutation.type), // channel & channels
+        // }), // Share all mutations except historyPop/Push across tabs.
     ],
     state: defaultState(),
     getters: {

@@ -29,6 +29,7 @@
       clipped-right
       flat
       extension-height="36"
+      height="56"
     >
       <!--=============================== Top Bar (Regular View) =============================-->
 

@@ -298,6 +298,7 @@ views:
       StickBottomSettingsDesc: TL box sticks to the bottom of chat (default stick to top on mobile)
       showVerifiedMessages: Show Verified Messages
       showModeratorMessages: Show Moderator Messages
+      showVtuberMessages: Show Vtuber Messages
       showLocalTime: Show Local Times
       tlFontSize: Font Size
       tlWindowSize: TL Box Size (%), leave as 0% for automatic
