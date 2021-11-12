@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: 予定されたイベント
   videoDescription:
     description: 概要
-  video:
-    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -157,7 +155,6 @@ views:
     collabs: コラボ
     about: 概要
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 登録者数
       group: 所属
