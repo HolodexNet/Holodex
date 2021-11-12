@@ -10,9 +10,9 @@
 
 ### Bugfixes & improvements
 - Fixed Multiview sometimes duplicating wrong stream
-- Shrink top bar slightly
-- Chat now shows channel icons for vtubers in chat
-- Clicking on channel will show links for YT or Holodex (if it exists)
+- Shrink top navigation bar slightly
+- TLdex chat now shows channel icons for vtubers in chat
+- Clicking on TLdex channel name will show links for YT or Holodex (if it exists)
 
 ### 2.22.3 Holodex [*Nov 10th, 2021*]
 
