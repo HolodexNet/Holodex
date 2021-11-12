@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
-  video:
-    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -157,7 +155,6 @@ views:
     collabs: Cowwabs
     about: About
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
@@ -239,14 +236,14 @@ views:
     scrollModeMsg: Use scwoww/tap to tuwn pages
     resetAllSettings: Reset aww settings/data
     resetAllSettingsWarning: U wiww wose aww data. Continue?
-    clipLanguageSelection: 'See cwips in these languages:'
+    clipLanguageSelection: 'See cwips in these wanguages:'
     tlLanguageSelection: See wive-chat tl in these wanguages
     defaultPage: Defauwt page
     defaultPageMsg: >-
       Open dis page by defauwt when visiting howodex.net, ow cwicking on da wogo top weft.
     videoFeedSettings: Bideo feed settings
     siteNavigationSettings: Site/navigation
-    languageSettings: Language
+    languageSettings: Wanguage
     gridSizeLabel: Thumbnaiw/gwid size
     gridSizeMsg: Change thumbnaiw/video gwid size on home/favowites page
     gridSize:
