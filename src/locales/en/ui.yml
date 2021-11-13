@@ -164,7 +164,6 @@ views:
     collabs: Collabs
     about: About
   channels:
-    channelType: {}
     sortOptions:
       subscribers: Subscribers
       group: Group
