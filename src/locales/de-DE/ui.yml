@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -155,6 +157,7 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
+    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -277,6 +280,7 @@ views:
       StickBottomSettingsDesc: Übersetzungsbox wird unten am Chat angezeigt (Standard ist oben)
       showVerifiedMessages: Verifizierte Nachrichten anzeigen
       showModeratorMessages: Moderator-Nachrichten anzeigen
+      showVtuberMessages: VTuber-Nachrichten anzeigen
       showLocalTime: Lokale Zeiten anzeigen
       tlFontSize: Schriftgröße
       tlWindowSize: Box Größe (in %), bei 0% belassen für automatisch

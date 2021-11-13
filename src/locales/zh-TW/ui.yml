@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -155,6 +157,7 @@ views:
     collabs: 連動
     about: 簡介
   channels:
+    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -278,6 +281,7 @@ views:
       StickBottomSettingsDesc: 將翻譯留言置底於聊天室下方（預設置頂）
       showVerifiedMessages: 顯示已認證的使用者訊息
       showModeratorMessages: 顯示管理員訊息
+      showVtuberMessages: 顯示Vtuber的留言
       showLocalTime: 顯示本地時間
       tlFontSize: 字體大小
       tlWindowSize: 翻譯聊天室大小(%) ，設置0%時會自動調整尺寸
