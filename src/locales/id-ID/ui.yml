@@ -157,7 +157,6 @@ views:
     collabs: Kolaborasi
     about: Tentang
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscriber
       group: Grup
