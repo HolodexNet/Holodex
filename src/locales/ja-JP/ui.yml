@@ -157,7 +157,6 @@ views:
     collabs: コラボ
     about: 概要
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 登録者数
       group: 所属
