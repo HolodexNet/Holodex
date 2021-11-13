@@ -11,7 +11,7 @@
     <v-snackbar
       v-if="successMessage"
       v-model="showSuccessAlert"
-      color="success"
+      color="green"
       dismissible
       absolute
       top
@@ -388,7 +388,9 @@ export default {
                 this.newTopic,
                 this.video.id,
                 this.$store.state.userdata.jwt,
-            );
+            ).then(() => {
+                this.showSuccess(`Updated Topic to ${this.newTopic}`);
+            });
             this.topic = this.newTopic;
         },
     },
