@@ -277,6 +277,7 @@ views:
       StickBottomSettingsDesc: Çeviri kutusu sohbetin Altına sabitlenir (mobilde varsayılan olarak yukarı sabitlenir)
       showVerifiedMessages: Doğrulanmış Mesajları Göster
       showModeratorMessages: Moderatör Mesajlarını Göster
+      showVtuberMessages: Vtuber Mesajlarını Görüntüle
       showLocalTime: Yerel saatleri göster
       tlFontSize: Yazı Tipi Büyüklüğü
       tlWindowSize: Çeviri kutusu büyüklüğü (%), otomatik için %0 olarak bırakın
@@ -372,6 +373,9 @@ views:
     sync:
       nothingToSync: >-
         Senkronize edilecek bir şey yok. Lütfen örtüşen iki tane arşiv açın (ör. collab yayınları)
+      syncSettings: Senkronizasyon Ayarları
+      syncSettingsDetail: >-
+        Videolar yayının başlama zamanına göre senkronize edilir ve yayın sırası teknik aksaklıklar veya silinmiş kısımlar nedeniyle desenkronize olabilir. Videoları el ile hizalamak için offsetleri kullanın
   mugen:
     welcome: >-
       MugenClips'e Hoşgeldiniz! Bu sayfadaki herkes sizinle aynı rastgele seçilmiş klipleri görür. Dünya çapındaki Hololive hayranlarıyla birlikte izleyin ve sohbet edin. İleriye atlar ve herkesle tekrardan eşitlenmek isterseniz, lütfen sayfayı yenileyin.
@@ -383,6 +387,13 @@ views:
     page-heading: 'Oynatma Listeleriniz:'
     page-instruction: Etkin olarak seçmek istediğiniz oynatma listesine tıklayın.
     change-loss-warning: Kaydedilmemiş değişiklikleri kaybedeceksiniz. Devam edilsin mi?
+  extension:
+    title: Holodex Plus Eklentisi
+    features: Özellikler
+    featureset:
+      one: İzleme ve Çoklu İzleme sayfalarında Arşivlenmiş Yayın Sohbetini etkinleştirir
+      two: Holodex izleme sayfasından videoların beğenilmesini mümkün kılar
+      three: Youtube'un yayın sohbetindeki bellek sızıntısını düzeltir
 time:
   soon: yakında
   diff_future_date: ' {0} ({1}) başlıyor'
@@ -407,6 +418,7 @@ editor:
     testStart: Başı test et
     startInput: Başlangıc
     endInput: 'Saniye olarak süre: (bitiş {0})'
+    inheritItunesMusic: 'Süreyi iTunes ile Ayarla: {0}'
   exitMode: Düzenleme modundan çık
   enterMode: Düzenle
 about:
