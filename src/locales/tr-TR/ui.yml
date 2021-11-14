@@ -370,7 +370,8 @@ views:
     reorderLayout: Düzeni Sırala
     reorderLayoutDetail: Simgeleri istenilen pozisyonlara sürükleyip bırakın
     sync:
-      nothingToSync: Senkronize edilecek bir şey yok. Lütfen örtüşen iki tane arşiv açın (ör. collab yayınları)
+      nothingToSync: >-
+        Senkronize edilecek bir şey yok. Lütfen örtüşen iki tane arşiv açın (ör. collab yayınları)
   mugen:
     welcome: >-
       MugenClips'e Hoşgeldiniz! Bu sayfadaki herkes sizinle aynı rastgele seçilmiş klipleri görür. Dünya çapındaki Hololive hayranlarıyla birlikte izleyin ve sohbet edin. İleriye atlar ve herkesle tekrardan eşitlenmek isterseniz, lütfen sayfayı yenileyin.
