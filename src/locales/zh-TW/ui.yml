@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -421,6 +423,7 @@ editor:
     testStart: 測試起始點
     startInput: 起始時間
     endInput: '總播放秒數（結束於 @ {0}）'
+    inheritItunesMusic: '使用 iTunes 上的資料設定音樂長度：{0}'
   exitMode: 離開編輯模式
   enterMode: 編輯影片資料
 about:
