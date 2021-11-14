@@ -20,7 +20,7 @@
       {{ successMessage }}
     </v-snackbar>
     <div class="d-flex justify-space-between flex-wrap align-top">
-      <v-col v-if="video.type !== 'placeholder'" cols="auto">
+      <v-col cols="auto">
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <v-avatar
