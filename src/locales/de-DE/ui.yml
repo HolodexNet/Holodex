@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -420,6 +422,7 @@ editor:
     testStart: Teste den Start
     startInput: Start
     endInput: 'Dauer in Sekunden: (Ende @ {0})'
+    inheritItunesMusic: 'Dauer via iTunes festlegen: {0}'
   exitMode: Bearbeitungsmodus verlassen
   enterMode: Video bearbeiten
 about:
