@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -277,6 +279,7 @@ views:
       StickBottomSettingsDesc: Tl box sticks to da bottom of chat (defauwt stick to top on mobiwe)
       showVerifiedMessages: Show vewified messages
       showModeratorMessages: Show modewatow messages
+      showVtuberMessages: Show vtubew messages
       showLocalTime: Show locaw times
       tlFontSize: Font size
       tlWindowSize: Tl box size (%), weave as 0% fow automatic
@@ -419,6 +422,7 @@ editor:
     testStart: Test da stawt
     startInput: Stawt
     endInput: 'Duwation in seconds: (end @ {0})'
+    inheritItunesMusic: 'Set duwation via itunes: {0}'
   exitMode: Exit edit mode
   enterMode: Edit bideo
 about:
