@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 예정된 이벤트
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -277,6 +279,7 @@ views:
       StickBottomSettingsDesc: 번역 상자는 채팅 하단에 고정 (모바일은 상단 고정)됩니다
       showVerifiedMessages: 인증된 사용자의 메시지 표시
       showModeratorMessages: 운영자 메시지 표시
+      showVtuberMessages: 버튜버의 메시지 표시
       showLocalTime: 로컬 시간 표시
       tlFontSize: 글꼴 크기
       tlWindowSize: 번역 상자 크기 (%), 0%로 하면 자동
@@ -419,6 +422,7 @@ editor:
     testStart: 시작 위치 확인
     startInput: 시작
     endInput: '총 재생시간: ({0}에 종료됨)'
+    inheritItunesMusic: 'iTunes로 길이 설정: {0}'
   exitMode: 편집 모드 나가기
   enterMode: 동영상 편집
 about:
