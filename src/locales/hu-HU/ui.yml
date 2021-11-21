@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -420,6 +422,7 @@ editor:
     testStart: Indítás tesztelése
     startInput: Indítás
     endInput: 'Hossz másodpercekben: (vége @ {0})'
+    inheritItunesMusic: 'Időtartam beállítása iTunes-al: {0}'
   exitMode: Kilépés a szerkesztő módból
   enterMode: Videó szerkesztése
 about:
