@@ -52,7 +52,7 @@ export default {
    * @param c whether to also provide comments, 1 to activate
    * @returns
    */
-    video(id: string, lang?: string, c?: 1) {
+    video(id: string, lang?: string, c?: Number) {
         const q = querystring.stringify({ lang, c });
         return axiosInstance.get(`/videos/${id}?${q}`);
     },

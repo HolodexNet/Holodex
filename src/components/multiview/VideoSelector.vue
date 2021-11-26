@@ -86,7 +86,7 @@
             v-else
             :tab="tab"
             :is-fav-page="selectedOrg.name === 'Favorites'"
-            hide-placeholder
+            :hide-placeholder="hidePlaceholders"
             disable-default-click
             dense
             date-portal-name="date-selector-multiview"
@@ -194,6 +194,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        hidePlaceholders: {
+            default: true,
+            type: Boolean,
+        },
     },
     data() {
         return {
@@ -219,9 +223,9 @@ export default {
                 hideCollabs: this.shouldHideCollabs,
                 forOrg: this.isRealOrg && this.selectedOrg.name,
                 hideIgnoredTopics: true,
-                hidePlaceholder: true,
+                hidePlaceholder: this.hidePlaceholders,
             };
-            return this.live.filter((l) => this.filterVideos(l, filterConfig) && l.type !== "placeholder");
+            return this.live.filter((l) => this.filterVideos(l, filterConfig));
         },
         topFilteredLive() {
             // Filter out lives for top bar

@@ -331,6 +331,14 @@ export default {
             return this.data.type === "placeholder";
         },
         title() {
+            if (this.isPlaceholder) {
+                if (this.$store.state.settings.nameProperty === "english_name") {
+                    const title = this.data.title ?? this.data.jp_name ?? "";
+                    return decodeHTMLEntities(title);
+                }
+                const title = this.data.jp_name ?? this.data.title ?? "";
+                return decodeHTMLEntities(title);
+            }
             if (!this.data.title) return "";
             return decodeHTMLEntities(this.data.title);
         },
@@ -370,6 +378,9 @@ export default {
                 return ts1;
             }
             return `${ts1}\n${ts2}`;
+        },
+        videoTitle() {
+            return this.title;
         },
         formattedDuration() {
             if (this.data.start_actual && this.data.status === "live") {
@@ -487,10 +498,10 @@ export default {
                 : this.$store.commit("playlist/addVideo", this.data);
         },
         goToVideo() {
+            this.$emit("videoClicked", this.data);
             if (this.isPlaceholder) {
                 this.openPlaceholder(); return;
             }
-            this.$emit("videoClicked", this.data);
             if (this.disableDefaultClick) return;
             // On mobile, clicking on watch links should not increment browser history
             // Back button will always return to the originating video list in one click
