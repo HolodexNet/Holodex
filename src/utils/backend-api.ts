@@ -38,7 +38,7 @@ export default {
             .filter(
                 (live) => !(
                     !live.start_actual
-              && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))
+                    && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))
                 ),
             ));
     },
@@ -104,11 +104,9 @@ export default {
             .get("/user/check", {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             })
-            .catch(() => {
-                // 301 Cache bust
-                fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
-                return false;
-            });
+            .catch(() => false);
+        // 301 Cache bust
+        // fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
     },
     resetAPIKey(jwt) {
         return (
@@ -116,7 +114,7 @@ export default {
                 .get("/user/createKey", {
                     headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
                 })
-            // eslint-disable-next-line no-alert
+                // eslint-disable-next-line no-alert
                 .catch(() => alert("something went wrong creating your key..."))
         );
     },
@@ -132,7 +130,7 @@ export default {
         });
     },
     favoritesLive({ includePlaceholder = false }, jwt) {
-    // const q = querystring.stringify(query);
+        // const q = querystring.stringify(query);
         return axiosInstance
             .get(`/users/live?includePlaceholder=${includePlaceholder}`, {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
@@ -143,7 +141,7 @@ export default {
                 .filter(
                     (live) => !(
                         !live.start_actual
-                && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))
+                        && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))
                     ),
                 )
                 // get currently live and upcoming lives within the next 3 weeks
@@ -155,7 +153,7 @@ export default {
         });
     },
     topics() {
-    // gets topics from backend
+        // gets topics from backend
         return axiosInstance.get("/topics");
     },
     topicSet(topicId, videoId, jwt) {
@@ -235,7 +233,7 @@ export default {
             },
         );
     },
-    trackSong(id: Number|string, jwt: string|undefined) {
+    trackSong(id: Number | string, jwt: string | undefined) {
         return axiosInstance.get(`/songs/record/${id}`, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
@@ -295,21 +293,21 @@ export default {
     },
     getPlaylistState(videoId, jwt) {
         return axiosInstance.get<{ id: number; name: string; contains: boolean }[]>(`/video-playlist/${videoId}`,
-        {
-            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-        });
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            });
     },
     addVideoToPlaylist(videoId, playlistId, jwt) {
         return axiosInstance.put(`/video-playlist/${playlistId}/${videoId}`, null,
-        {
-            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-        });
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            });
     },
     deleteVideoFromPlaylist(videoId, playlistId, jwt) {
         return axiosInstance.delete(`/video-playlist/${playlistId}/${videoId}`,
-        {
-            headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-        });
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            });
     },
 
 };
