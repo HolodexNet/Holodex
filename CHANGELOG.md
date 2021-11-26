@@ -6,7 +6,7 @@
 
 ### Minor changes
 - Groups now show up on Channel Pages
-- You can now navigate to Org specific channel pages and link them, such as [Hololive Channels](/channel?org=Hololive)
+- You can now navigate to Org specific channel pages and link them, such as [Hololive Channels](https://holodex.net/channel?org=Hololive)
 - Better music editing for tagging Karaoke Streams, you'll love it.
 ![img](https://cdn.discordapp.com/attachments/801760512907935764/909550397507653663/unknown.png)
 - Placeholders now have mentions.
