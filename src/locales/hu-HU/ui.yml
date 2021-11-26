@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -277,6 +279,7 @@ views:
       StickBottomSettingsDesc: Fordító doboz a chat aljához rögzítve (mobilon felül alapértelmezett)
       showVerifiedMessages: Igazolt felhasználók üzeneteinek megjelenítése
       showModeratorMessages: Moderátor üzenetek megjelenítése
+      showVtuberMessages: Vtuber üzenetek megjelenítése
       showLocalTime: Helyi idők mutatása
       tlFontSize: Betű méret
       tlWindowSize: Fordító mérete (%), hagyd 0%-on automatához
@@ -370,9 +373,11 @@ views:
     reorderLayout: Kiosztás átrendezése
     reorderLayoutDetail: Húzz ikonokat a kívánt pozícióba
     sync:
-      nothingToSync: Nincs mit szinkronba tenni, nyiss meg legalább 2 streamet (pl. collab streameket)
+      nothingToSync: >-
+        Nincs mit szinkronba tenni, nyiss meg legalább 2 streamet (pl. collab streameket)
       syncSettings: Szinkronizálási beállítások
-      syncSettingsDetail: A videók a stream indulása ideje szerint vannak szinkronizálva, viszont a közbeni technikai gondok és/vagy törölt részletek miatt elcsúszhatnak. Használj offset-eket, hogy manuálisan állítsd a videókat
+      syncSettingsDetail: >-
+        A videók a stream indulása ideje szerint vannak szinkronizálva, viszont a közbeni technikai gondok és/vagy törölt részletek miatt elcsúszhatnak. Használj offset-eket, hogy manuálisan állítsd a videókat
   mugen:
     welcome: >-
       Üdvözöllek a MugenClips-nél! Ezen az oldalon mindenki ugyan azt a véletlenszerűen kiválasztott angol Hololive klipet nézi. Együtt nézheted és chatelhetsz más Hololive rajongókkal az egész világon. Ha előretekersz és szeretnél újra egyidejűleg lenni a többiekkel, kérlek frissítsd az oldalt.
@@ -417,6 +422,7 @@ editor:
     testStart: Indítás tesztelése
     startInput: Indítás
     endInput: 'Hossz másodpercekben: (vége @ {0})'
+    inheritItunesMusic: 'Időtartam beállítása iTunes-al: {0}'
   exitMode: Kilépés a szerkesztő módból
   enterMode: Videó szerkesztése
 about:

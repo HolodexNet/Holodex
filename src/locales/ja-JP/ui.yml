@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: 予定されたイベント
   videoDescription:
     description: 概要
-  video:
-    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -373,9 +371,11 @@ views:
     reorderLayout: レイアウトの並べ替え
     reorderLayoutDetail: アイコンを目的の位置にドラッグ&ドロップします
     sync:
-      nothingToSync: 同期するものがありません。配信時刻が重なるアーカイブ (例：コラボ配信) を2つ開いてください。
+      nothingToSync: >-
+        同期するものがありません。配信時刻が重なるアーカイブ (例：コラボ配信) を2つ開いてください。
       syncSettings: 同期設定
-      syncSettingsDetail: 動画は配信開始時刻に基づいて同期され、配信途中に技術的な問題や削除された部分があるときには同期を解除することができます。 オフセットを使えば動画を手動で揃えられます
+      syncSettingsDetail: >-
+        動画は配信開始時刻に基づいて同期され、配信途中に技術的な問題や削除された部分があるときには同期を解除することができます。 オフセットを使えば動画を手動で揃えられます
   mugen:
     welcome: >-
       MugenClipsへようこそ！このページでは全員がランダムに選択されたホロライブの英訳切り抜きを見ています。世界中のホロライブのファンと一緒に見て、チャットしましょう。 先に進んだ後にもう一度全員と同期したい場合は、ページを更新してください。
