@@ -105,9 +105,13 @@
                       <v-text-field
                         v-model="liveDate"
                         label="Date"
-                        readonly
                         v-bind="attrs"
                         :rules="[requiredRule, timeRule]"
+                        hint="YYYY-MM-DD"
+                        :append-icon="icons.mdiPlusBox"
+                        :prepend-inner-icon="mdiMinusBox"
+                        @click:append="changeDate(1, 'day')"
+                        @click:prepend-inner="changeDate(-1, 'day')"
                         v-on="on"
                       />
                     </template>
@@ -121,6 +125,10 @@
                     type="time"
                     required
                     :rules="[requiredRule, timeRule]"
+                    :append-icon="icons.mdiPlusBox"
+                    :prepend-inner-icon="mdiMinusBox"
+                    @click:append="changeDate(1, 'hour')"
+                    @click:prepend-inner="changeDate(-1, 'hour')"
                   />
                 </v-col>
                 <v-col>
@@ -174,6 +182,7 @@ import { dayjs } from "@/utils/time";
 import VideoCard from "@/components/video/VideoCard.vue";
 import jwtDecode from "jwt-decode";
 import backendApi from "@/utils/backend-api";
+import { mdiMinusBox } from "@mdi/js";
 
 export default {
     components: {
@@ -182,6 +191,8 @@ export default {
     },
     data() {
         return {
+            mdiMinusBox,
+
             valid: false,
             channel: null,
             videoTitle: "",
@@ -338,6 +349,15 @@ export default {
                         this.error = true;
                         this.errorMessage = e;
                     });
+            }
+        },
+        changeDate(amount, unit) {
+            if (unit === "hour") {
+                // hour
+                this.liveTime = dayjs(`${this.liveDate} ${this.liveTime}`).add(amount, unit).format("HH:mm");
+            } else {
+                // day
+                this.liveDate = dayjs(this.liveDate).add(amount, unit).format("YYYY-MM-DD");
             }
         },
     },

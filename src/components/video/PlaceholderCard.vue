@@ -9,7 +9,7 @@
       <v-img v-if="video.thumbnail" :src="'/statics/thumbnail/maxres/'+enc(video.thumbnail)+'.jpg'" style="" />
       <v-img v-else max-height="130px" :src="`https://www.banner.yt/${video.channel_id || video.channel.id}/mobile`" />
       <v-sheet style="height:12px;" />
-      <watch-info :video="video" no-sub-count>
+      <watch-info :video="videoWithMentions" no-sub-count>
         <template slot="rightTitleAction">
           <v-btn
             v-if="video.placeholderType === 'scheduled-yt-stream'"
@@ -96,15 +96,20 @@ export default {
     data() {
         return {
             discordCredits: {},
+            mentions: [],
         };
     },
     computed: {
         isTooSmall() {
             return this.$vuetify.breakpoint.width < 700;
         },
+        videoWithMentions() {
+            return { ...this.video, mentions: this.mentions };
+        },
     },
     async mounted() {
         if (this.video?.credits?.discord) { this.discordCredits = await backendApi.discordServerInfo(this.video.credits.discord.link); }
+        this.updateMentions();
     },
     methods: {
         enc(url) {
@@ -112,6 +117,14 @@ export default {
             const n = enc.replace("+", "-").replace("/", "_").replace(/=+$/, "");
             // console.log(`https://staging.holodex.net/thumbnail/maxres/${n}.jpg`);
             return n;
+        },
+        updateMentions() {
+            backendApi
+                .getMentions(this.video.id)
+                .then(({ data }) => {
+                    // this.isLoading = false;
+                    this.mentions = data;
+                });
         },
     },
 

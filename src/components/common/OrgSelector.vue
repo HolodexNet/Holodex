@@ -192,6 +192,8 @@ export default {
             set(val) {
                 this.$emit("changed", val);
                 if (this.$route.name === "favorites") this.$router.push({ name: "home" });
+                if (this.$route.query.org) this.$router.replace({ query: { org: val.name } });
+
                 return this.$store.commit("setCurrentOrg", val);
             },
         },

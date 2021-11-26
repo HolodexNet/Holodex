@@ -41,7 +41,7 @@
         </v-btn>
       </slot>
       {{ formattedTime }}
-      <template v-if="video.status === 'live'">
+      <template v-if="video.status === 'live' && liveViewers">
         • {{ $t("component.videoCard.watching", [liveViewers]) }}
         <span
           v-if="liveViewerChange"
@@ -145,6 +145,7 @@ import {
 } from "@/utils/time";
 import TruncatedText from "@/components/common/TruncatedText.vue";
 import { mdiAt } from "@mdi/js";
+import { formatCount } from "@/utils/functions";
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
 
@@ -205,9 +206,7 @@ export default {
         },
         liveViewers() {
             if (!this.video.live_viewers) return "";
-            return (+this.video.live_viewers)
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return formatCount(+this.video.live_viewers, this.lang);
         },
         liveViewerChange() {
             // if lastViewerCount is unset, then there is no change

@@ -11,7 +11,7 @@
     <v-snackbar
       v-if="successMessage"
       v-model="showSuccessAlert"
-      color="success"
+      color="green"
       dismissible
       absolute
       top
@@ -20,7 +20,7 @@
       {{ successMessage }}
     </v-snackbar>
     <div class="d-flex justify-space-between flex-wrap align-top">
-      <v-col v-if="video.type !== 'placeholder'" cols="auto">
+      <v-col cols="auto">
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <v-avatar
@@ -388,7 +388,9 @@ export default {
                 this.newTopic,
                 this.video.id,
                 this.$store.state.userdata.jwt,
-            );
+            ).then(() => {
+                this.showSuccess(`Updated Topic to ${this.newTopic}`);
+            });
             this.topic = this.newTopic;
         },
     },

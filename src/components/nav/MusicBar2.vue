@@ -439,7 +439,7 @@ export default {
                             .catch((err) => console.error(err));
                     } else {
                         backendApi
-                            .trackSongPlay(song.channel_id, song.video_id, song.name, this.$store.state.userdata?.jwt)
+                            .trackSongPlay(song.channel_id ?? song.channel?.id, song.video_id, song.name, this.$store.state.userdata?.jwt)
                             .catch((err) => console.error(err));
                     }
                     this.$gtag.event("fully-listen", {

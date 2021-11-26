@@ -7,6 +7,8 @@ music:
 channel:
   normal:
     title: '{{english_name}} Klipleri, Yayınları, Müziği ve Collabları - Holodex'
+    description: >-
+      {{english_name}} tarfından {{clip_count}}'ten fazla klibi ve {{video_count}} kadar yayını bulun. Ne zaman yayına başlayacaklarını onları Holodex favorilerinize ekleyerek bilin.
     descriptionWithTopic: >-
       {{english_name}} tarafından yapılan {{ topics }} yayınlarını bulun. Holodex ile {{clip_count}} klipe, {{video_count}} yayına ve çok daha fazlasına yetişin.
   clip:

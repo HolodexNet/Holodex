@@ -157,7 +157,6 @@ views:
     collabs: Collabs
     about: Kanalinfo
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Abonnenten
       group: Gruppe
@@ -280,6 +279,7 @@ views:
       StickBottomSettingsDesc: Übersetzungsbox wird unten am Chat angezeigt (Standard ist oben)
       showVerifiedMessages: Verifizierte Nachrichten anzeigen
       showModeratorMessages: Moderator-Nachrichten anzeigen
+      showVtuberMessages: VTuber-Nachrichten anzeigen
       showLocalTime: Lokale Zeiten anzeigen
       tlFontSize: Schriftgröße
       tlWindowSize: Box Größe (in %), bei 0% belassen für automatisch
@@ -373,9 +373,11 @@ views:
     reorderLayout: Layout umordnen
     reorderLayoutDetail: Verschiebe die Symbole per Drag-and-Drop an die gewünschte Position
     sync:
-      nothingToSync: Nichts zu synchronisieren, bitte öffne zwei überlappende Archive (z.B. Kollaborations-Streams)
+      nothingToSync: >-
+        Nichts zu synchronisieren, bitte öffne zwei überlappende Archive (z.B. Kollaborations-Streams)
       syncSettings: Synchronisierungseinstellungen
-      syncSettingsDetail: Videos werden basierend auf der Startzeit der Streams synchronisiert und können aufgrund technischer Probleme oder gelöschter Abschnitte desynchronisiert werden. Verwende Offsets, um Videos manuell anzugleichen
+      syncSettingsDetail: >-
+        Videos werden basierend auf der Startzeit der Streams synchronisiert und können aufgrund technischer Probleme oder gelöschter Abschnitte desynchronisiert werden. Verwende Offsets, um Videos manuell anzugleichen
   mugen:
     welcome: >-
       Willkommen bei MugenClips! Auf dieser Seite sehen alle den gleichen zufällig ausgewählten englischen Hololive-Clip. Schaue mit und chatte mit anderen Hololive-Fans aus der ganzen Welt. Wenn du vorgespult hast, aber wieder mit allen synchronisiert werden möchtest, lade die Seite bitte neu.
@@ -420,6 +422,7 @@ editor:
     testStart: Teste den Start
     startInput: Start
     endInput: 'Dauer in Sekunden: (Ende @ {0})'
+    inheritItunesMusic: 'Dauer via iTunes festlegen: {0}'
   exitMode: Bearbeitungsmodus verlassen
   enterMode: Video bearbeiten
 about:

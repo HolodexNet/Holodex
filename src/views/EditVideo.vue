@@ -242,7 +242,7 @@ export default {
             if (this.player) {
                 this.timer = setInterval(() => {
                     this.currentTime = this.player.getCurrentTime();
-                }, 1000);
+                }, 200);
             }
         },
     },

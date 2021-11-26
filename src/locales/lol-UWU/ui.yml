@@ -157,7 +157,6 @@ views:
     collabs: Cowwabs
     about: About
   channels:
-    channelType: { }
     sortOptions:
       subscribers: Subscwibews
       group: Gwoup
@@ -239,14 +238,14 @@ views:
     scrollModeMsg: Use scwoww/tap to tuwn pages
     resetAllSettings: Reset aww settings/data
     resetAllSettingsWarning: U wiww wose aww data. Continue?
-    clipLanguageSelection: 'See cwips in these languages:'
+    clipLanguageSelection: 'See cwips in these wanguages:'
     tlLanguageSelection: See wive-chat tl in these wanguages
     defaultPage: Defauwt page
     defaultPageMsg: >-
       Open dis page by defauwt when visiting howodex.net, ow cwicking on da wogo top weft.
     videoFeedSettings: Bideo feed settings
     siteNavigationSettings: Site/navigation
-    languageSettings: Language
+    languageSettings: Wanguage
     gridSizeLabel: Thumbnaiw/gwid size
     gridSizeMsg: Change thumbnaiw/video gwid size on home/favowites page
     gridSize:
@@ -280,6 +279,7 @@ views:
       StickBottomSettingsDesc: Tl box sticks to da bottom of chat (defauwt stick to top on mobiwe)
       showVerifiedMessages: Show vewified messages
       showModeratorMessages: Show modewatow messages
+      showVtuberMessages: Show vtubew messages
       showLocalTime: Show locaw times
       tlFontSize: Font size
       tlWindowSize: Tl box size (%), weave as 0% fow automatic
@@ -373,9 +373,11 @@ views:
     reorderLayout: Reowdew layout
     reorderLayoutDetail: Dwag and dwop icons to da desiwed position
     sync:
-      nothingToSync: Nothing to sync, pwease open two ovewwapping awchives (eg. cowwab stweams)
+      nothingToSync: >-
+        Nothing to sync, pwease open two ovewwapping awchives (eg. cowwab stweams)
       syncSettings: Sync settings
-      syncSettingsDetail: Bideos awe synced based on da stweam stawt time, and can desync due to mid stweam technicaw issues ow deweted powtions. Use offsets to manuawwy awign bideos
+      syncSettingsDetail: >-
+        Bideos awe synced based on da stweam stawt time, and can desync due to mid stweam technicaw issues ow deweted powtions. Use offsets to manuawwy awign bideos
   mugen:
     welcome: >-
       Wewcome to mugencwips! evewyone on dis page ish seeing da same wandomwy sewected engwish howowive cwip. Watch awong and chat with howowive fans fwom acwoss da wowwd. If u skip ahead and wanna be we-sync'd with evewyone, pwease wefwesh da page.
@@ -420,6 +422,7 @@ editor:
     testStart: Test da stawt
     startInput: Stawt
     endInput: 'Duwation in seconds: (end @ {0})'
+    inheritItunesMusic: 'Set duwation via itunes: {0}'
   exitMode: Exit edit mode
   enterMode: Edit bideo
 about:

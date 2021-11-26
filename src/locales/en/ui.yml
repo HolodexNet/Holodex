@@ -164,7 +164,6 @@ views:
     collabs: Collabs
     about: About
   channels:
-    channelType: {}
     sortOptions:
       subscribers: Subscribers
       group: Group
@@ -401,9 +400,14 @@ views:
     reorderLayout: Reorder Layout
     reorderLayoutDetail: Drag and drop icons to the desired position
     sync:
-      nothingToSync: Nothing to sync, please open two overlapping archives (eg. collab streams)
+      nothingToSync: >-
+        Nothing to sync, please open two overlapping archives (eg. collab
+        streams)
       syncSettings: Sync Settings
-      syncSettingsDetail: Videos are synced based on the stream start time, and can desync due to mid stream technical issues or deleted portions. Use offsets to manually align videos
+      syncSettingsDetail: >-
+        Videos are synced based on the stream start time, and can desync due to
+        mid stream technical issues or deleted portions. Use offsets to manually
+        align videos
   mugen:
     welcome: >-
       Welcome to MugenClips! Everyone on this page is seeing the same randomly
@@ -455,6 +459,7 @@ editor:
     testStart: Test the start
     startInput: Start
     endInput: 'Duration in seconds: (end @ {0})'
+    inheritItunesMusic: 'Set Duration via iTunes: {0}'
   exitMode: Exit Edit Mode
   enterMode: Edit Video
 about:

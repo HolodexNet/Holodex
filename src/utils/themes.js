@@ -136,7 +136,7 @@ export default [
             dark: {
                 background: "#121212",
                 primary: "#a8d6fc",
-                secondary: "#3c3a97 ",
+                secondary: "#3c3a97",
                 success: "#16f7a5",
             },
             light: {

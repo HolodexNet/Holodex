@@ -2,6 +2,17 @@
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
+### 2.24 Holodex [*Nov 26th, 2021*]
+
+### Minor changes
+- Groups now show up on Channel Pages
+- You can now navigate to Org specific channel pages and link them, such as [Hololive Channels](/channel?org=Hololive)
+- Better music editing for tagging Karaoke Streams, you'll love it.
+![img](https://cdn.discordapp.com/attachments/801760512907935764/909550397507653663/unknown.png)
+- Placeholders now have mentions.
+
+
+
 ### 2.23 Holodex [*Nov 11th, 2021*]
 
 ### New

@@ -121,6 +121,7 @@ export default {
     },
     sockets: {
         reconnect_attempt(attempt) {
+            console.log("[TLdex] Reconnecting...");
             const vm = this as any;
             vm.overlayMessage = `${this.$t("views.watch.chat.status.reconnecting")} ${attempt}/10`;
         },
@@ -129,14 +130,17 @@ export default {
             vm.overlayMessage = this.$t("views.watch.chat.status.reconnectFailed");
         },
         connect_error() {
+            console.error("[TLdex] Connect Errored...");
             const vm = this as any;
             vm.overlayMessage = this.$t("views.watch.chat.status.reconnectFailed");
         },
         connect() {
+            console.log("[TLdex] Connected...");
             const vm = this as any;
             vm.tlJoin();
         },
         disconnect() {
+            console.log("[TLdex] Disconnected...");
             const vm = this as any;
             vm.tlLeave();
         },
@@ -185,12 +189,6 @@ export default {
             if (nw) {
                 this.isLoading = false;
             }
-        },
-        liveTlShowVerified() {
-            this.loadMessages(true);
-        },
-        liveTlShowModerator() {
-            this.loadMessages(true);
         },
     },
     mounted() {
@@ -280,11 +278,14 @@ export default {
             // only disconnect and derement socket if it succeeded
             if (vm.success) {
                 vm.$store.commit("decrementActiveSockets");
+                console.log("[TLdex] Decrement sockets...");
                 // Check if there's another listener depending on this subscription, unsub if not
                 if (vm.$socket.client.listeners(`${this.video.id}/${this.liveTlLang}`).length <= 1) {
+                    console.log(`[TLdex] Trying to unsubscribe from chat ${vm.video.id} ${vm.liveTlLang}...`);
                     vm.$socket.client.emit("unsubscribe", { video_id: vm.video.id, lang: vm.liveTlLang });
                 }
                 vm.unregisterListener();
+                console.log(`[TLdex] Unregistered listeners for ${vm.video.id} ${vm.liveTlLang}...`);
                 vm.$store.dispatch("checkActiveSockets");
                 // Reset for immediate reconnects
                 vm.success = false;

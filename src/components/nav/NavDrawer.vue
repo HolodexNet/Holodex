@@ -17,7 +17,7 @@
           :key="page.name"
           link
           :href="page.path"
-          :class="{ 'v-list-item--active': $route.path === page.path }"
+          :class="{ 'v-list-item--active': $route.fullPath === page.path }"
           @click.prevent="handlePageClick(page)"
         >
           <v-list-item-icon>

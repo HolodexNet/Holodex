@@ -157,7 +157,6 @@ views:
     collabs: 連動
     about: 簡介
   channels:
-    channelType: { }
     sortOptions:
       subscribers: 訂閱者數
       group: 所屬團體
@@ -281,6 +280,7 @@ views:
       StickBottomSettingsDesc: 將翻譯留言置底於聊天室下方（預設置頂）
       showVerifiedMessages: 顯示已認證的使用者訊息
       showModeratorMessages: 顯示管理員訊息
+      showVtuberMessages: 顯示Vtuber的留言
       showLocalTime: 顯示本地時間
       tlFontSize: 字體大小
       tlWindowSize: 翻譯聊天室大小(%) ，設置0%時會自動調整尺寸
@@ -374,9 +374,11 @@ views:
     reorderLayout: 佈局調整面板
     reorderLayoutDetail: 拖曳圖示以重新配置分割
     sync:
-      nothingToSync: 沒有影片可供同步，請開啟複數且實況時間點重疊的影片存檔（例如多視角的連動實況）
+      nothingToSync: >-
+        沒有影片可供同步，請開啟複數且實況時間點重疊的影片存檔（例如多視角的連動實況）
       syncSettings: 同步設定
-      syncSettingsDetail: 本功能基於實況的開始時間進行同步，有可能因實況途中經歷的技術問題/移除片段的部分而失效，請使用手動調整功能來同步此類存檔
+      syncSettingsDetail: >-
+        本功能基於實況的開始時間進行同步，有可能因實況途中經歷的技術問題/移除片段的部分而失效，請使用手動調整功能來同步此類存檔
   mugen:
     welcome: >-
       歡迎來到 MugenClips！所有使用者在本頁面都在同時隨機觀看同一段Hololive的英文剪輯！和其他Holo粉絲一起觀看一起聊天吧。如果您手動變更了時間軸但想再次與其他人同步進度的話，請重新整理此頁面。
@@ -421,6 +423,7 @@ editor:
     testStart: 測試起始點
     startInput: 起始時間
     endInput: '總播放秒數（結束於 @ {0}）'
+    inheritItunesMusic: '使用 iTunes 上的資料設定音樂長度：{0}'
   exitMode: 離開編輯模式
   enterMode: 編輯影片資料
 about:

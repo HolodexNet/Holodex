@@ -172,7 +172,7 @@ export default {
                 console.error("Error", error.message);
             }
             // Force clear cache
-            fetch(error.config.url, { method: "post" }).then(() => {});
+            // fetch(error.config.url, { method: "post" }).then(() => {});
             return Promise.reject(error);
         },
         syncThemeColor() {

@@ -92,137 +92,164 @@
         sm="6"
         md="6"
         lg="6"
-        class="d-flex align-justify"
+        class=""
       >
-        <v-tooltip bottom>
-          <template #activator="{ on }">
-            <button
-              class="tweak-btn"
-              v-on="on"
-              @click="
-                current.start -= 2;
-                current.end -= 2;
-                currentStartTime = secondsToHuman(current.start);
-              "
-            >
-              <v-icon small>
-                {{ icons.mdiChevronLeft }}
-              </v-icon>
-              2s
-            </button>
-          </template>
-          <span>{{ $t("editor.music.moveLeft2s") }}</span>
-        </v-tooltip>
+        <div class="d-flex align-justify">
+          <v-tooltip bottom>
+            <template #activator="{ on }">
+              <button
+                class="tweak-btn"
+                v-on="on"
+                @click="
+                  current.start -= 2;
+                  current.end -= 2;
+                  currentStartTime = secondsToHuman(current.start);
+                "
+              >
+                <v-icon small>
+                  {{ icons.mdiChevronLeft }}
+                </v-icon>
+                2s
+              </button>
+            </template>
+            <span>{{ $t("editor.music.moveLeft2s") }}</span>
+          </v-tooltip>
 
-        <v-tooltip bottom>
-          <template #activator="{ on }">
-            <button class="tweak-btn red" v-on="on" @click="currentStartTime = secondsToHuman(currentTime)">
-              <v-icon>{{ mdiTimerOutline }}</v-icon>
-            </button>
-          </template>
-          <span>{{ $t("editor.music.setToCurrentTime", [secondsToHuman(currentTime)]) }}</span>
-        </v-tooltip>
+          <v-tooltip bottom>
+            <template #activator="{ on }">
+              <button class="tweak-btn red" v-on="on" @click="currentStartTime = secondsToHuman(currentTime)">
+                <v-icon>{{ mdiTimerOutline }}</v-icon>
+              </button>
+            </template>
+            <span>{{ $t("editor.music.setToCurrentTime", [secondsToHuman(currentTime)]) }}</span>
+          </v-tooltip>
 
-        <v-text-field
-          v-model="currentStartTime"
-          outlined
-          :label="$t('editor.music.startInput')"
-          placeholder="12:31"
-          hide-details="auto"
-          :rules="[checkStartTime]"
-          validate-on-blur
-          class="tweak-input"
+          <v-text-field
+            v-model="currentStartTime"
+            outlined
+            :label="$t('editor.music.startInput')"
+            placeholder="12:31"
+            hide-details="auto"
+            :rules="[checkStartTime]"
+            validate-on-blur
+            class="tweak-input"
+          />
+          <v-tooltip bottom>
+            <template #activator="{ on }">
+              <button class="tweak-btn" v-on="on" @click="$emit('timeJump', current.start, true)">
+                <v-icon>{{ mdiDebugStepOver }}</v-icon>
+              </button>
+            </template>
+            <span>{{ $t("editor.music.testStart") }}</span>
+          </v-tooltip>
+
+          <v-tooltip bottom>
+            <template #activator="{ on }">
+              <button
+                class="tweak-btn"
+                v-on="on"
+                @click="
+                  current.start += 2;
+                  current.end += 2;
+                  currentStartTime = secondsToHuman(current.start);
+                "
+              >
+                2s<v-icon small>
+                  {{ icons.mdiChevronRight }}
+                </v-icon>
+              </button>
+            </template>
+            <span>{{ $t("editor.music.moveRight2s") }}</span>
+          </v-tooltip>
+        </div>
+        <!-- <v-row> -->
+        <relative-timestamp-editor
+          :value="Number(current.start)"
+          :test="currentTime"
+          @input="(x) => { current.start = x; currentStartTime = secondsToHuman(x); $emit('timeJump', current.start, true)}"
+          @test="$emit('timeJump', current.start, true) "
         />
-        <v-tooltip bottom>
-          <template #activator="{ on }">
-            <button class="tweak-btn" v-on="on" @click="$emit('timeJump', current.start, true)">
-              <v-icon>{{ mdiDebugStepOver }}</v-icon>
-            </button>
-          </template>
-          <span>{{ $t("editor.music.testStart") }}</span>
-        </v-tooltip>
-
-        <v-tooltip bottom>
-          <template #activator="{ on }">
-            <button
-              class="tweak-btn"
-              v-on="on"
-              @click="
-                current.start += 2;
-                current.end += 2;
-                currentStartTime = secondsToHuman(current.start);
-              "
-            >
-              2s<v-icon small>
-                {{ icons.mdiChevronRight }}
-              </v-icon>
-            </button>
-          </template>
-          <span>{{ $t("editor.music.moveRight2s") }}</span>
-        </v-tooltip>
+        <!-- </v-row> -->
       </v-col>
       <v-col
         cols="12"
         sm="6"
         md="6"
         lg="6"
-        class="d-flex align-justify"
       >
-        <v-tooltip bottom>
-          <template #activator="{ on }">
-            <button class="tweak-btn" v-on="on" @click="current.end -= 2">
-              <v-icon small>
-                {{ icons.mdiChevronLeft }}
-              </v-icon>
-              2s
-            </button>
-          </template>
-          <span>{{ $t("editor.music.moveLeft2s") }}</span>
-        </v-tooltip>
+        <div class="d-flex align-justify">
+          <v-tooltip bottom>
+            <template #activator="{ on }">
+              <button class="tweak-btn" v-on="on" @click="current.end -= 2">
+                <v-icon small>
+                  {{ icons.mdiChevronLeft }}
+                </v-icon>
+                2s
+              </button>
+            </template>
+            <span>{{ $t("editor.music.moveLeft2s") }}</span>
+          </v-tooltip>
 
-        <v-tooltip bottom>
-          <template #activator="{ on }">
-            <button class="tweak-btn red" v-on="on" @click="currentEndTime = secondsToHuman(currentTime)">
-              <v-icon>{{ mdiTimerOutline }}</v-icon>
-            </button>
-          </template>
-          <span>{{ $t("editor.music.setToCurrentTime", [secondsToHuman(currentTime)]) }}</span>
-        </v-tooltip>
+          <v-tooltip bottom>
+            <template #activator="{ on }">
+              <button class="tweak-btn red" v-on="on" @click="currentEndTime = secondsToHuman(currentTime)">
+                <v-icon>{{ mdiTimerOutline }}</v-icon>
+              </button>
+            </template>
+            <span>{{ $t("editor.music.setToCurrentTime", [secondsToHuman(currentTime)]) }}</span>
+          </v-tooltip>
 
-        <v-text-field
-          v-model="currentEndTime"
-          outlined
-          :label="$t('editor.music.endInput', [secondsToHuman(current.end)])"
-          placeholder="312"
-          hide-details="auto"
-          :rules="[checkEndTime]"
-          validate-on-blur
-          class="tweak-input"
+          <v-tooltip v-if="current.song && current.song.trackTimeMillis" bottom>
+            <template #activator="{ on }">
+              <button class="tweak-btn red" v-on="on" @click="currentEndTime = `+${Math.ceil(current.song.trackTimeMillis / 1000)}`">
+                <v-icon>{{ mdiTimelinePlusOutline }}</v-icon>
+              </button>
+            </template>
+            <span>{{ $t("editor.music.inheritItunesMusic", [`+${Math.ceil(current.song.trackTimeMillis / 1000)}`]) }}</span>
+          </v-tooltip>
+
+          <v-text-field
+            v-model="currentEndTime"
+            outlined
+            :label="$t('editor.music.endInput', [secondsToHuman(current.end)])"
+            placeholder="312"
+            hide-details="auto"
+            :rules="[checkEndTime]"
+            validate-on-blur
+            class="tweak-input"
+          />
+
+          <v-tooltip bottom>
+            <template #activator="{ on }">
+              <button
+                class="tweak-btn"
+                v-on="on"
+                @click="$emit('timeJump', Math.max(current.end - 3, 0), true)"
+              >
+                <v-icon>{{ mdiEarHearing }}</v-icon>
+              </button>
+            </template>
+            <span>{{ $t("editor.music.testEnd") }}</span>
+          </v-tooltip>
+
+          <v-tooltip bottom>
+            <template #activator="{ on }">
+              <button class="tweak-btn" v-on="on" @click="current.end += 2">
+                2s<v-icon small>
+                  {{ icons.mdiChevronRight }}
+                </v-icon>
+              </button>
+            </template>
+            <span>{{ $t("editor.music.moveRight2s") }}</span>
+          </v-tooltip>
+        </div>
+        <relative-timestamp-editor
+          :value="Number(current.end)"
+          :up-to="true"
+          :test="currentTime"
+          @input="(x) => { current.end = x; currentEndTime = secondsToHuman(x); $emit('timeJump', current.end - 3, true)}"
+          @test="$emit('timeJump', current.end - 3, true) "
         />
-
-        <v-tooltip bottom>
-          <template #activator="{ on }">
-            <button
-              class="tweak-btn"
-              v-on="on"
-              @click="$emit('timeJump', Math.max(current.end - 3, 0), true)"
-            >
-              <v-icon>{{ mdiEarHearing }}</v-icon>
-            </button>
-          </template>
-          <span>{{ $t("editor.music.testEnd") }}</span>
-        </v-tooltip>
-
-        <v-tooltip bottom>
-          <template #activator="{ on }">
-            <button class="tweak-btn" v-on="on" @click="current.end += 2">
-              2s<v-icon small>
-                {{ icons.mdiChevronRight }}
-              </v-icon>
-            </button>
-          </template>
-          <span>{{ $t("editor.music.moveRight2s") }}</span>
-        </v-tooltip>
       </v-col>
       <v-col cols="4" sm="6" md="8">
         <v-btn
@@ -306,7 +333,7 @@
 
 <script lang="ts">
 import {
-    mdiEarHearing, mdiRestore, mdiTimerOutline, mdiDebugStepOver,
+    mdiEarHearing, mdiRestore, mdiTimerOutline, mdiDebugStepOver, mdiTimelinePlusOutline,
 } from "@mdi/js";
 import Vue from "vue";
 
@@ -314,6 +341,7 @@ import backendApi from "@/utils/backend-api";
 import { secondsToHuman } from "@/utils/time";
 import SongSearch from "../media/SongSearch.vue";
 import SongItem from "../media/SongItem.vue";
+import RelativeTimestampEditor from "./RelativeTimestampEditor.vue";
 
 function humanToSeconds(str) {
     const p = str.split(":");
@@ -377,6 +405,7 @@ export default {
     components: {
         SongSearch,
         SongItem,
+        RelativeTimestampEditor,
     },
     props: {
         video: {
@@ -395,6 +424,7 @@ export default {
             mdiRestore,
             mdiTimerOutline,
             mdiDebugStepOver,
+            mdiTimelinePlusOutline,
             current: getEmptySong(this.video),
             songList: [],
 
@@ -471,7 +501,9 @@ export default {
                 self.current.itunesid = item.trackId;
                 self.current.name = item.trackName;
                 self.current.original_artist = item.artistName;
-                self.currentEndTime = `+${Math.ceil(item.trackTimeMillis / 1000)}`;
+                if (!self.current.end || self.current.end < 10 || self.current.end < (self.current.start + 10)) {
+                    self.currentEndTime = `+${Math.ceil(item.trackTimeMillis / 1000)}`;
+                }
                 self.current.amUrl = item.trackViewUrl;
                 self.current.art = item.artworkUrl100;
             } else {
