@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -277,6 +279,7 @@ views:
       StickBottomSettingsDesc: Ruangan terjemahan diletakkan di bawah sembang (secara lalainya ruangan ini terletak di bahagian atas bagi peranti mudah alih)
       showVerifiedMessages: Paparkan Sembang Oleh Pengguna Yang Disahkan
       showModeratorMessages: Paparkan Sembang Oleh Penyederhana
+      showVtuberMessages: Paparkan Sembang oleh Penggiyut Maya
       showLocalTime: Paparkan Waktu Tempatan
       tlFontSize: Saiz Fon
       tlWindowSize: Peratusan (%) saiz ruangan terjemahan. 0% bagi perubahan saiz secara kendiri
@@ -419,6 +422,7 @@ editor:
     testStart: Semak masa mula
     startInput: Masa Mula
     endInput: 'Tempoh (saat): (tamat pada {0})'
+    inheritItunesMusic: 'Gunakan tempoh berdasarkan iTunes: {0}'
   exitMode: Selesaikan Suntingan
   enterMode: Sunting Video
 about:
