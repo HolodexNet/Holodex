@@ -63,13 +63,13 @@ export default {
     methods: {
         loadMessages(firstLoad = false, loadAll = false) {
             this.historyLoading = true;
-            const lastTimestamp = !firstLoad && this.tlHistory[0].timestamp;
+            const lastTimestamp = !firstLoad && this.tlHistory[0]?.timestamp;
             api.chatHistory(this.video.id, {
                 lang: this.liveTlLang,
                 verified: this.liveTlShowVerified,
                 moderator: this.liveTlShowModerator,
                 vtuber: this.liveTlShowVtuber,
-                limit: loadAll ? 10000 : this.limit,
+                limit: loadAll ? 100000 : this.limit,
                 ...(lastTimestamp && { before: lastTimestamp }),
             })
                 .then(({ data }) => {

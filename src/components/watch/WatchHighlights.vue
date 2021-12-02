@@ -1,6 +1,6 @@
 <template>
   <v-sheet>
-    <div class="highlight-container">
+    <div v-if="buckets.length > 0" class="highlight-container">
       <div class="highlight-bar">
         <template v-for="b in buckets">
           <v-tooltip

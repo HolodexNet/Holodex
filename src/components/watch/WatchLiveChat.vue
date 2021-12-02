@@ -225,7 +225,7 @@ export default {
 
 /* Desktop */
 .watch-live-chat {
-    height: 600px;
+    // height: 600px;
     min-height: calc((75vw - 24px) * 0.5625);
     min-height: min(calc((75vw - 24px) * 0.5625), calc(100vh - 120px));
     border: solid 1px rgba(255, 255, 255, 0.1);
