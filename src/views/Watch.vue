@@ -45,7 +45,7 @@
           v-on="video.type === 'stream' && video.status === 'past' && { currentTime: handleCurrentTime }"
         />
         <WatchHighlights
-          v-if="comments.length && !theaterMode && (!isMobile || !showTL)"
+          v-if="comments.length && (!isMobile || !showTL)"
           key="highlights"
           :comments="comments"
           :video="video"
@@ -120,7 +120,7 @@
           </template>
         </WatchToolBar>
         <WatchInfo key="info" :video="video" @timeJump="seekTo" />
-        <!-- <v-lazy>
+        <v-lazy>
           <WatchComments
             v-if="comments.length && !theaterMode"
             key="comments"
@@ -129,13 +129,13 @@
             :limit="isMobile ? 5 : 0"
             @timeJump="seekTo"
           />
-        </v-lazy> -->
+        </v-lazy>
       </div>
     </div>
     <WatchLiveChat
       v-if="!isMugen && showChatWindow"
       v-model="chatStatus"
-      class="sidebar chat"
+      class="sidebar chat d-flex flex-column"
       :video="video"
       :current-time="currentTime"
       @videoUpdate="handleVideoUpdate"
@@ -155,7 +155,7 @@ import WatchMentions from "@/components/watch/WatchMentions.vue";
 import WatchHighlights from "@/components/watch/WatchHighlights.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
-
+import WatchComments from "@/components/watch/WatchComments.vue";
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiDockRight, mdiThumbUp } from "@mdi/js";
@@ -178,6 +178,7 @@ export default {
         WatchHighlights,
         WatchToolBar,
         WatchQuickEditor,
+        WatchComments,
         WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
         WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
     },
@@ -394,8 +395,6 @@ export default {
 }
 
 .sidebar {
-  /* flex: 0 0 25%; */
-  /* max-width: 25%; */
   flex-basis: 340px;
   width: 100%;
   min-width: 340px;
@@ -405,6 +404,7 @@ export default {
   .left {
     height: calc(100vh - 56px);
     overflow-y: auto;
+    scrollbar-width: none;
   }
 
   .left::-webkit-scrollbar {
@@ -414,6 +414,7 @@ export default {
   &.mobile .left {
     height: 100vh;
   }
+
   &.theater-mode .left .sidebar {
     order: 2;
   }
@@ -421,15 +422,53 @@ export default {
   &.theater-mode .left {
     flex-direction: column;
   }
+  /* mobile TL overlay */
+
+  // Mobile mode tl should overlay on top
+  &.mobile .chat .tl-overlay {
+    width: 100%;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+  }
+
+  // Mobile mode height is 100% with tl overlay
+  &.mobile .chat .embedded-chat {
+    height: 100% !important;
+  }
+  &.mobile .chat .tl-overlay {
+    height: 50%;
+  }
+
+  // Stick bottom setting for tl overlay
+  &.mobile .chat .tl-overlay.stick-bottom {
+    bottom: 0;
+    top: initial;
+  }
+  /* END  mobile TL overlay */
 
   @media (orientation: landscape) {
     .chat {
       position: sticky;
       top: 0px;
+      height: calc(100vh - 56px);
+    }
+
+    &.mobile .chat {
+      min-width: 220px !important;
+      height: 100vh;
+    }
+
+    &.mobile .chat > .embedded-chat > iframe {
+      transform: scale(0.75);
+      transform-origin: top left;
+      height: 133%;
+      width: 133%;
     }
   }
 
   @media (orientation: portrait) {
+    // Default portrait mode position/height for desktop
     .chat {
       position: fixed;
       bottom: 0px;
@@ -443,6 +482,7 @@ export default {
       height: calc((100% - 36px - 56px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
     }
 
+    // Mobile has no top nav, update height calc
     &.mobile .chat {
       height: calc(100% - 36px - 100vw * 0.5625);
       /* iOS 11.2 and later */
