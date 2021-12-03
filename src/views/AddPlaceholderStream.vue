@@ -170,7 +170,7 @@
                 color="primary"
                 @click="onSubmit"
               >
-                Submit
+                {{ id ? 'Submit Placeholder Modification' : 'Create new Placeholder' }}
               </v-btn>
             </v-card-text>
           </v-card>
