@@ -24,7 +24,7 @@
         'secondary darken-1': darkMode,
         'primary lighten-1': !darkMode,
       }"
-      :app="!isWatchPage"
+      :app="!(isMobile && isWatchPage) && !isMultiView"
       clipped-left
       clipped-right
       flat

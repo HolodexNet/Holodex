@@ -6,62 +6,46 @@
   />
   <div
     v-else
-    ref="watchFullscreen"
-    style="overflow-y: auto"
-    :style="{
-      'overflow-y':
-        showChatWindow && isMobile && !landscape ? 'hidden' : 'auto',
-      'max-height': showChatWindow && isMobile && !landscape ? '100vh' : '',
+    class="d-flex flex-row watch-layout"
+    :class="{
+      'mobile': isMobile,
+      'theater-mode': theaterMode || $vuetify.breakpoint.mdAndDown
     }"
   >
-    <!-- Mugen info message -->
-    <v-alert
-      v-if="isMugen"
-      v-model="firstVisitMugen"
-      dense
-      text
-      type="info"
-      dismissible
-    >
-      {{ $t("views.mugen.welcome") }}
-    </v-alert>
-
     <div
-      class="d-flex flex-column pa-md-3"
-      :class="{
-        'flex-nowrap': !theaterMode,
-        'flex-sm-row': !theaterMode,
-      }"
+      class="d-flex flex-grow-1 left"
     >
-      <div
-        class="d-inline-flex flex-shrink-1 flex-column py-0 pl-0"
-        :md="theaterMode ? 12 : 9"
-        :style="{
-          'padding-right':
-            isMobile && showChatWindow && landscape ? '220px' : 0,
-          width: '100%',
-        }"
-      >
-        <WatchFrame :video="video" :fluid="isMobile">
-          <template #youtube>
-            <youtube
-              v-if="video.id"
-              ref="ytPlayer"
-              :video-id="video.id"
-              :player-vars="{
-                ...(timeOffset && { start: timeOffset }),
-                autoplay: isMugen || isPlaylist ? 1 : 0,
-                playsinline: 1,
-              }"
-              @ready="ready"
-              @playing="playing"
-              @ended="ended"
-              v-on="video.type === 'stream' && video.status === 'past' && { currentTime: handleCurrentTime }"
-            />
-          </template>
-        </WatchFrame>
+      <div class="d-flex sidebar flex-column">
+        <WatchMentions v-if="video.mentions && video.mentions.length" :video="video" />
+        <!-- <WatchQuickEditor
+          v-if="role === 'admin' || role === 'editor'"
+          :video="video"
+        /> -->
+        <WatchPlaylist
+          v-model="playlistIndex"
+          @playNext="playNextPlaylist"
+        />
+        <WatchMugen v-if="isMugen && isMobile" @playNext="playNextMugen" />
+        <WatchSideBar :video="video" @timeJump="seekTo" />
+      </div>
+      <div class="d-flex flex-column flex-grow-1">
+        <youtube
+          v-if="video.id"
+          ref="ytPlayer"
+          class="video"
+          :video-id="video.id"
+          :player-vars="{
+            ...(timeOffset && { start: timeOffset }),
+            autoplay: isMugen || isPlaylist ? 1 : 0,
+            playsinline: 1,
+          }"
+          @ready="ready"
+          @playing="playing"
+          @ended="ended"
+          v-on="video.type === 'stream' && video.status === 'past' && { currentTime: handleCurrentTime }"
+        />
         <WatchHighlights
-          v-if="comments.length && !theaterMode && (!isMobile || !showTL || landscape)"
+          v-if="comments.length && !theaterMode && (!isMobile || !showTL)"
           key="highlights"
           :comments="comments"
           :video="video"
@@ -118,14 +102,6 @@
                 {{ icons.ytChat }}
               </v-icon>
             </v-btn>
-            <v-btn
-              v-if="!isIOS"
-              icon
-              lg
-              @click="toggleFullScreen"
-            >
-              <v-icon>{{ icons.mdiFullscreen }}</v-icon>
-            </v-btn>
             <v-tooltip v-if="!isMobile" bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
@@ -136,33 +112,15 @@
                   @click="theaterMode = !theaterMode"
                   v-on="on"
                 >
-                  <v-icon>{{ mdiRectangleOutline }}</v-icon>
+                  <v-icon>{{ mdiDockRight }}</v-icon>
                 </v-btn>
               </template>
               <span>{{ $t("views.watch.theaterMode") }}</span>
             </v-tooltip>
           </template>
         </WatchToolBar>
-        <WatchInfo
-          v-if="!theaterMode"
-          key="info"
-          :video="video"
-          @timeJump="seekTo"
-        />
-        <WatchQuickEditor
-          v-if="!theaterMode && (role === 'admin' || role === 'editor')"
-          :video="video"
-        />
-        <WatchPlaylist
-          v-if="isMobile"
-          v-model="playlistIndex"
-          @playNext="playNextPlaylist"
-        />
-        <!-- Mobile mode only sidebar -->
-        <WatchSideBar v-if="isMobile" :video="video" @timeJump="seekTo" />
-        <!-- Mobile mode Mugen -->
-        <WatchMugen v-if="isMugen && isMobile" @playNext="playNextMugen" />
-        <v-lazy>
+        <WatchInfo key="info" :video="video" @timeJump="seekTo" />
+        <!-- <v-lazy>
           <WatchComments
             v-if="comments.length && !theaterMode"
             key="comments"
@@ -171,59 +129,18 @@
             :limit="isMobile ? 5 : 0"
             @timeJump="seekTo"
           />
-        </v-lazy>
-      </div>
-      <div
-        class="related-videos pt-0 row ma-0"
-        :class="{ 'sidebar-width': !isMobile && !theaterMode }"
-      >
-        <v-col
-          v-if="theaterMode"
-          md="8"
-          lg="9"
-          class="pa-0"
-        >
-          <WatchInfo key="info" :video="video" @timeJump="seekTo" />
-          <WatchQuickEditor
-            v-if="role === 'admin' || role === 'editor'"
-            :video="video"
-          />
-          <v-divider />
-          <WatchComments
-            v-if="comments.length"
-            key="comments"
-            :comments="comments"
-            :video="video"
-            :limit="isMobile ? 5 : 0"
-            @timeJump="seekTo"
-          />
-        </v-col>
-        <v-col
-          :md="theaterMode ? 4 : 12"
-          :lg="theaterMode ? 3 : 12"
-          class="py-0 pr-0 pl-0 pl-md-3"
-        >
-          <WatchLiveChat
-            v-if="!isMugen && showChatWindow"
-            v-model="chatStatus"
-            :video="video"
-            :fixed-right="isMobile && landscape"
-            :fixed-bottom="isMobile && !landscape"
-            :current-time="currentTime"
-            @videoUpdate="handleVideoUpdate"
-            @timeJump="seekTo"
-          />
-          <template v-if="!isMobile">
-            <WatchPlaylist
-              v-model="playlistIndex"
-              @playNext="playNextPlaylist"
-            />
-            <WatchMugen v-if="isMugen" @playNext="playNextMugen" />
-            <WatchSideBar :video="video" @timeJump="seekTo" />
-          </template>
-        </v-col>
+        </v-lazy> -->
       </div>
     </div>
+    <WatchLiveChat
+      v-if="!isMugen && showChatWindow"
+      v-model="chatStatus"
+      class="sidebar chat"
+      :video="video"
+      :current-time="currentTime"
+      @videoUpdate="handleVideoUpdate"
+      @timeJump="seekTo"
+    />
   </div>
 </template>
 
@@ -231,17 +148,17 @@
 import Youtube from "@/components/player/YoutubePlayer.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import WatchInfo from "@/components/watch/WatchInfo.vue";
-import WatchFrame from "@/components/watch/WatchFrame.vue";
+// import WatchFrame from "@/components/watch/WatchFrame.vue";
 import WatchSideBar from "@/components/watch/WatchSideBar.vue";
 import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
-import WatchComments from "@/components/watch/WatchComments.vue";
+import WatchMentions from "@/components/watch/WatchMentions.vue";
 import WatchHighlights from "@/components/watch/WatchHighlights.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiRectangleOutline, mdiThumbUp } from "@mdi/js";
+import { mdiOpenInNew, mdiDockRight, mdiThumbUp } from "@mdi/js";
 
 export default {
     name: "Watch",
@@ -254,10 +171,10 @@ export default {
         Youtube,
         LoadingOverlay,
         WatchInfo,
-        WatchFrame,
+        // WatchFrame,
         WatchLiveChat,
         WatchSideBar,
-        WatchComments,
+        WatchMentions,
         WatchHighlights,
         WatchToolBar,
         WatchQuickEditor,
@@ -268,9 +185,8 @@ export default {
         return {
             startTime: 0,
             mdiOpenInNew,
-            mdiRectangleOutline,
+            mdiDockRight,
             mdiThumbUp,
-            fullScreen: false,
             playlistIndex: -1,
             currentTime: 0,
             player: null,
@@ -321,9 +237,6 @@ export default {
         isMobile() {
             return this.$store.state.isMobile;
         },
-        landscape() {
-            return this.$vuetify.breakpoint.width >= 568;
-        },
         theaterMode: {
             get() {
                 return this.$store.state.watch.theaterMode && !this.isMobile;
@@ -361,6 +274,13 @@ export default {
                 // iPad on iOS 13 detection
                 || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
             );
+        },
+        chatStyle() {
+            return {
+                // position: "sticky",
+                top: this.isMobile ? "0" : "56px",
+                height: `calc(100vh - ${this.isMobile ? "0px" : "56px"})`,
+            };
         },
     },
     watch: {
@@ -446,15 +366,6 @@ export default {
         handleCurrentTime(time) {
             this.currentTime = time;
         },
-        toggleFullScreen() {
-            if (!document.fullscreenElement) {
-                this.fullScreen = true;
-                this.$refs.watchFullscreen.requestFullscreen();
-            } else if (document.exitFullscreen) {
-                document.exitFullscreen();
-                this.fullScreen = false;
-            }
-        },
         ended() {
             // if playlistIndex is set to -1 we aren't playing playlists.
             if (this.playlistIndex >= 0) {
@@ -468,24 +379,75 @@ export default {
 };
 </script>
 
-<style>
-div.notification-sticker {
-  position: absolute;
-  top: 1px;
-  right: 2px;
-  border-radius: 4px;
-  width: 8px;
-  height: 8px;
-  background-color: rgb(230, 33, 23);
+<style lang="scss">
+.video {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-bottom: min(56.25%, calc(100vh - 92px));
+    width: 100%;
 }
 
-.sidebar-width {
-  flex: 0 0 25%;
-  max-width: 25%;
-  min-width: 324px;
+.video > iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
-.min-sidebar-width {
-  min-width: 320px;
+.sidebar {
+  /* flex: 0 0 25%; */
+  /* max-width: 25%; */
+  flex-basis: 340px;
+  width: 100%;
+  min-width: 340px;
+}
+
+.watch-layout {
+  .left {
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+
+  .left::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.mobile .left {
+    height: 100vh;
+  }
+  &.theater-mode .left .sidebar {
+    order: 2;
+  }
+
+  &.theater-mode .left {
+    flex-direction: column;
+  }
+
+  @media (orientation: landscape) {
+    .chat {
+      position: sticky;
+      top: 0px;
+    }
+  }
+
+  @media (orientation: portrait) {
+    .chat {
+      position: fixed;
+      bottom: 0px;
+      width: 100%;
+      z-index: 10;
+      padding-bottom: 0;
+      padding-bottom: calc(env(safe-area-inset-bottom) / 1.75);
+
+      height: calc(100% - 36px - 56px - 100vw * 0.5625);
+      /* iOS 11.2 and later */
+      height: calc((100% - 36px - 56px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
+    }
+
+    &.mobile .chat {
+      height: calc(100% - 36px - 100vw * 0.5625);
+      /* iOS 11.2 and later */
+      height: calc((100% - 36px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
+    }
+  }
 }
 </style>
