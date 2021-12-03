@@ -9,18 +9,29 @@
     class="d-flex flex-row watch-layout"
     :class="{
       'mobile': isMobile,
-      'theater-mode': theaterMode || $vuetify.breakpoint.mdAndDown
+      'theater-mode': theaterMode || $vuetify.breakpoint.mdAndDown,
+      'full-height': theaterMode,
     }"
   >
+    <KeyPress
+      key-event="keyup"
+      :multiple-keys="altTHotKey"
+      @success="theaterMode = !theaterMode"
+    />
+    <KeyPress
+      key-event="keyup"
+      :key-code="27"
+      @success="theaterMode = false"
+    />
     <div
       class="d-flex flex-grow-1 left"
     >
       <div class="d-flex sidebar flex-column">
         <WatchMentions v-if="video.mentions && video.mentions.length" :video="video" />
-        <!-- <WatchQuickEditor
+        <WatchQuickEditor
           v-if="role === 'admin' || role === 'editor'"
           :video="video"
-        /> -->
+        />
         <WatchPlaylist
           v-model="playlistIndex"
           @playNext="playNextPlaylist"
@@ -181,6 +192,7 @@ export default {
         WatchComments,
         WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
         WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
+        KeyPress: () => import("vue-keypress"),
     },
     data() {
         return {
@@ -191,6 +203,14 @@ export default {
             playlistIndex: -1,
             currentTime: 0,
             player: null,
+            altTHotKey: [
+                {
+                    keyCode: 84, // T
+                    modifiers: ["alt"],
+                    preventDefault: false,
+                },
+            ],
+
         };
     },
     computed: {
@@ -417,6 +437,16 @@ export default {
 
   &.theater-mode .left .sidebar {
     order: 2;
+  }
+
+  &.full-height:not(.mobile) {
+    margin-top: -56px;
+    position: absolute;
+    z-index: 10;
+    height: 100vh;
+    .left, .chat {
+      height: 100vh;
+    }
   }
 
   &.theater-mode .left {
