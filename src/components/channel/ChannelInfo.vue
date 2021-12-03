@@ -4,7 +4,7 @@
       <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
         {{ channelName }}
       </router-link>
-      <small style="width:auto;">
+      <small v-show="channel.org" style="width:auto;">
         <router-link :to="`/channel?org=${channel.org}`" class="no-decoration text--org">
           {{ channel.org + ((!noGroup && channel.group) ? " / " + channel.group : '') }}
         </router-link>
