@@ -97,6 +97,7 @@ export default {
                 .sort((a, b) => a.times.length - b.times.length);
         },
         groupedComments() {
+            const { duration } = this.video;
             return this.comments.map((c) => {
                 // console.log(c);
                 let match = COMMENT_TIMESTAMP_REGEX.exec(c.message);
@@ -106,7 +107,7 @@ export default {
                     const min = match[2];
                     const sec = match[3];
                     const time = Number(hr ?? 0) * 3600 + Number(min) * 60 + Number(sec);
-                    times.add(time);
+                    if (time < duration) { times.add(time); }
                     match = COMMENT_TIMESTAMP_REGEX.exec(c.message);
                 }
                 c.times = Array.from(times);
