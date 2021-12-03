@@ -157,6 +157,7 @@
         <span class="text-overline ml-3 text--disabled">{{
           $t("component.search.type.topic")
         }}</span>
+        <span class="primary--text text-overline "> {{ currentTopic }} </span>
         <v-autocomplete
           v-model="newTopic"
           :items="topics"
@@ -208,7 +209,7 @@ export default {
 
             topics: [],
             newTopic: null,
-
+            currentTopic: null,
             isSelectedAll: false,
             isApplyingBulkEdit: false,
             deletionSet: new Set(),
@@ -249,9 +250,15 @@ export default {
     },
     mounted() {
         this.updateMentions();
+        this.updateCurrentTopic();
     },
     beforeDestroy() {},
     methods: {
+        updateCurrentTopic() {
+            backendApi.getVideoTopic(this.video.id).then(({ data }) => {
+                this.currentTopic = data.topic_id;
+            });
+        },
         updateMentions() {
             backendApi
                 .getMentions(this.video.id)

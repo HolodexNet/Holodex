@@ -152,6 +152,9 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
+    getVideoTopic(videoId) {
+        return axiosInstance.get(`/videos/${videoId}/topic`);
+    },
     topics() {
         // gets topics from backend
         return axiosInstance.get("/topics");
