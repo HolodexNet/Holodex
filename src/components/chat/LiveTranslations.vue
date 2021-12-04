@@ -191,7 +191,12 @@ export default {
             const buffer = this.tlHistory.slice(-2);
             return buffer.filter((m) => {
                 const displayTime = (m.message.length * (65 / 1000)) + 1.8;
-                return this.currentTime >= m.relativeSeconds && this.currentTime < m.relativeSeconds + displayTime;
+                // Use receivedAt and Date.now for consistency, since live streams can have many forms of delay
+                // We just want to display messages for a certain period of time after they are received
+                const receivedRelativeSec = m.receivedAt ? (m.receivedAt - this.startTimeMillis) / 1000 : m.relativeSeconds;
+                const curTime = (Date.now() - this.startTimeMillis) / 1000;
+                // Bind updates to currentTime (pausing video will pause overlay)
+                return this.currentTime && curTime >= receivedRelativeSec && curTime < receivedRelativeSec + displayTime;
             });
         },
     },
@@ -250,6 +255,8 @@ export default {
                     || (msg.is_verified && this.liveTlShowVerified)
                 ) {
                     if (Math.abs(this.$refs.tlBody.scrollTop) <= 15) this.$refs.tlBody.scrollTo(0, 0);
+                    const parsedMessage = this.parseMessage(msg);
+                    parsedMessage.receivedAt = Date.now();
                     this.tlHistory.push(this.parseMessage(msg));
                     this.$emit("historyLength", this.tlHistory.length);
                 }
