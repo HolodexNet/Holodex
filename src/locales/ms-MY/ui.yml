@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -268,15 +266,12 @@ views:
   about:
     add_my_channel: Memohon Penambahan Saluran
   watch:
-    theaterMode: Mod Teater
     mentionIconLabel: MENYEBUT
     chat:
       loading: Sedang Memuat Sembang...
       hideTLBtn: Sembunyikan Terjemahan
       showTLBtn: Paparkan Terjemahan
       TLSettingsTitle: Tetapan Terjemahan
-      StickBottomSettingLabel: Letakkan di Bawah (peranti mudah alih)
-      StickBottomSettingsDesc: Ruangan terjemahan diletakkan di bawah sembang (secara lalainya ruangan ini terletak di bahagian atas bagi peranti mudah alih)
       showVerifiedMessages: Paparkan Sembang Oleh Pengguna Yang Disahkan
       showModeratorMessages: Paparkan Sembang Oleh Penyederhana
       showVtuberMessages: Paparkan Sembang oleh Penggiyut Maya
