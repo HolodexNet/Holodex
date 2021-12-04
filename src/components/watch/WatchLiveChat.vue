@@ -179,10 +179,6 @@ export default {
             // bubble event to Watch view
             this.$emit("videoUpdate", update);
         },
-        handleHistoryLength(length) {
-            // in this case, bubble the event
-            this.$emit("historyLength", length);
-        },
         updateFrameTime(t = this.currentTime) {
             if (this.video.status === "past") {
                 this.$refs.ytChat?.contentWindow.postMessage({ "yt-player-video-progress": t }, "*");

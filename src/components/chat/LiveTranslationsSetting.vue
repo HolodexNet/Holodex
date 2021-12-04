@@ -46,9 +46,11 @@
           <v-switch
             v-model="liveTlShowSubtitle"
             :label="$t('views.watch.chat.showSubtitle')"
+            hide-details
           />
           <v-switch
             v-model="liveTlStickBottom"
+            class="mb-1"
             :label="$t('views.watch.chat.StickBottomSettingLabel')"
             :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
           />

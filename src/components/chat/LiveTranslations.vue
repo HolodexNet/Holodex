@@ -223,6 +223,11 @@ export default {
                 this.isLoading = false;
             }
         },
+        tlHistory() {
+            this.$nextTick(() => {
+                this.scrollBottom();
+            });
+        },
     },
     mounted() {
         if (this.$socket.connected) {
@@ -230,16 +235,6 @@ export default {
         } else {
             this.initSocket();
         }
-        // Test string
-        // setInterval(() => {
-        //     const msg = {
-        //         name: "test 1",
-        //         message: "But it’s no Pokemon, it’s just a very hyped Tako. :_MMT:https://yt3.ggpht.com/vjsrafxnve6TZhRGbmoVEGpn8VWUAYoT_uin2tBO6R4hoFfAakNTE9V9TD8fq3cAp0ZO4jM03pI=w48-h48-c-k-nd It seems to be very hyped for tomorrow’s fashINA show… almost too hyped that it has barely sleep :_MMT:https://yt3.ggpht.com/vjsrafxnve6TZhRGbmoVEGpn8VWUAYoT_uin2tBO6R4hoFfAakNTE9V9TD8fq3cAp0ZO4jM03pI=w48-h48-c-k-nd ",
-        //         timestamp: Date.now()
-        //     };
-        //     if (Math.abs(this.$refs.tlBody.scrollTop) <= 1) this.$refs.tlBody.scrollTo(0, 0);
-        //     this.tlHistory.push(this.parseMessage(msg));
-        // }, 1000)
     },
     beforeDestroy() {
         this.tlLeave();
@@ -268,11 +263,10 @@ export default {
                     || (msg.is_moderator && this.liveTlShowModerator)
                     || (msg.is_verified && this.liveTlShowVerified)
                 ) {
-                    if (Math.abs(this.$refs.tlBody.scrollTop) <= 15) this.$refs.tlBody.scrollTo(0, 0);
                     const parsedMessage = this.parseMessage(msg);
                     parsedMessage.receivedAt = Date.now();
                     this.tlHistory.push(this.parseMessage(msg));
-                    this.$emit("historyLength", this.tlHistory.length);
+                    this.scrollBottom();
                 }
                 return;
             }
@@ -353,6 +347,9 @@ export default {
             }
             return true;
         },
+        scrollBottom() {
+            this.$refs.tlBody.scrollToBottom();
+        },
     },
 };
 </script>
@@ -367,7 +364,7 @@ export default {
     overscroll-behavior: contain;
     height: calc(100% - 32px);
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     line-height: 1.35;
     letter-spacing: 0.0178571429em !important;
 }
