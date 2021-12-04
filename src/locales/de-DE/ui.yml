@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
-  video:
-    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -268,15 +266,12 @@ views:
   about:
     add_my_channel: Kanalanfrage
   watch:
-    theaterMode: Theatermodus
     mentionIconLabel: Erwähnungen
     chat:
       loading: Chat wird geladen...
       hideTLBtn: Übersetzungen ausblenden
       showTLBtn: Übersetzungen anzeigen
       TLSettingsTitle: Übersetzungseinstellungen
-      StickBottomSettingLabel: Unten anzeigen (mobil)
-      StickBottomSettingsDesc: Übersetzungsbox wird unten am Chat angezeigt (Standard ist oben)
       showVerifiedMessages: Verifizierte Nachrichten anzeigen
       showModeratorMessages: Moderator-Nachrichten anzeigen
       showVtuberMessages: VTuber-Nachrichten anzeigen
