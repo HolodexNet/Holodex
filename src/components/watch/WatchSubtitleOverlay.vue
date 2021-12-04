@@ -6,7 +6,14 @@
         :key="msg.id"
         class="text-center mb-1"
       >
-        <span style="background: rgba(0,0,0,0.75);" class="px-2"> {{ msg.message }} </span>
+        <div
+          v-if="!msg.is_tl"
+          class="subtitle-name"
+          :class="msg.is_owner ? 'primary--text' : 'secondary--text'"
+        >
+          {{ msg.name }} :
+        </div>
+        <span class="subtitle-text" v-html="msg.message" />
       </div>
     </span>
   </div>
@@ -28,9 +35,22 @@ export default {
 .overlay {
   position: absolute;
   bottom: 42px;
-  font-size: 16px;
-  font-size: max(1.5vw, 16px);
   width: 90%;
   margin-left: 5%;
+}
+
+.subtitle-text {
+    font-size: 16px;
+    font-size: max(1.5vw, 16px);
+    word-wrap: break-word;
+    box-shadow: 10px 0 0 rgba(0,0,0,0.75), -10px 0 0 rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.75);
+}
+.subtitle-name {
+  font-size: 16px;
+  font-size: max(1vw, 16px);
+  padding: 0 8px;
+  background: rgba(0,0,0,0.75);
+  margin-bottom: -.3rem;
 }
 </style>

@@ -32,7 +32,7 @@
           :title="$t('views.watch.chat.showSubtitle')"
           @click="liveTlShowSubtitle = !liveTlShowSubtitle"
         >
-          <v-icon :color="liveTlShowSubtitle && 'primary'">
+          <v-icon :color="liveTlShowSubtitle ? 'primary' :''">
             {{ mdiSubtitlesOutline }}
           </v-icon>
         </v-btn>
@@ -201,7 +201,7 @@ export default {
             },
         },
         toDisplay() {
-            if (!this.tlHistory.length || this.liveTlShowSubtitle) return [];
+            if (!this.tlHistory.length || !this.liveTlShowSubtitle) return [];
             const buffer = this.tlHistory.slice(-2);
             return buffer.filter((m) => {
                 const displayTime = (m.message.length * (65 / 1000)) + 1.8;

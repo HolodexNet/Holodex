@@ -16,7 +16,7 @@
           title="Show Subtitle"
           @click="liveTlShowSubtitle = !liveTlShowSubtitle"
         >
-          <v-icon :color="liveTlShowSubtitle && 'primary'">
+          <v-icon :color="liveTlShowSubtitle ? 'primary' :''">
             {{ mdiSubtitlesOutline }}
           </v-icon>
         </v-btn>
@@ -100,7 +100,7 @@ export default {
             return this.tlHistory;
         },
         toDisplay() {
-            if (!this.tlHistory.length || this.liveTlShowSubtitle) return [];
+            if (!this.tlHistory.length || !this.liveTlShowSubtitle) return [];
             const startIdx = Math.max(this.curIndex - 1, 0);
             // Grab previous and current message
             const buffer = this.tlHistory.slice(startIdx, startIdx + 2);
