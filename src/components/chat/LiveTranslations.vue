@@ -24,12 +24,26 @@
         TLdex [{{ liveTlLang }}]
       </div>
       <span>
+        <v-btn
+          v-if="!hideSubtitleButton"
+          icon
+          x-small
+          class="mr-1"
+          :title="$t('views.watch.chat.showSubtitle')"
+          @click="liveTlShowSubtitle = !liveTlShowSubtitle"
+        >
+          <v-icon :color="liveTlShowSubtitle && 'primary'">
+            {{ mdiSubtitlesOutline }}
+          </v-icon>
+        </v-btn>
         <v-dialog v-model="expanded" width="800">
           <template #activator="{ on, attrs }">
             <v-btn
               icon
               x-small
               v-bind="attrs"
+              class="mr-1"
+              :title="$t('views.watch.chat.expandTL')"
               v-on="on"
             >
               <v-icon>
@@ -66,7 +80,7 @@
           :disabled="completed"
           @click="loadMessages()"
         >
-          {{ completed ? "Start of Messages" : "Load More" }}
+          {{ completed ? $t('views.watch.chat.tlStart') : $t('component.description.showMore') }}
         </v-btn>
         <v-btn
           v-if="!completed && !historyLoading && expanded"
@@ -79,7 +93,7 @@
       </message-renderer>
     </portal>
 
-    <portal :to="`${video.id}-overlay`">
+    <portal v-if="liveTlShowSubtitle" :to="`${video.id}-overlay`">
       <WatchSubtitleOverlay :messages="toDisplay" />
     </portal>
   </v-card>
@@ -187,7 +201,7 @@ export default {
             },
         },
         toDisplay() {
-            if (!this.tlHistory.length) return [];
+            if (!this.tlHistory.length || this.liveTlShowSubtitle) return [];
             const buffer = this.tlHistory.slice(-2);
             return buffer.filter((m) => {
                 const displayTime = (m.message.length * (65 / 1000)) + 1.8;

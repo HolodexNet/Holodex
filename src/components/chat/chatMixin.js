@@ -2,12 +2,13 @@
 import api from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
 import { syncState } from "@/utils/functions";
-import { mdiArrowExpand } from "@mdi/js";
+import { mdiArrowExpand, mdiSubtitlesOutline } from "@mdi/js";
 
 export default {
     data() {
         return {
             mdiArrowExpand,
+            mdiSubtitlesOutline,
             tlHistory: [],
             MESSAGE_TYPES: Object.freeze({
                 END: "end",
@@ -32,6 +33,9 @@ export default {
             type: Number,
             default: 0,
         },
+        hideSubtitleButton: {
+            type: Boolean,
+        },
     },
     computed: {
         lang() {
@@ -45,6 +49,7 @@ export default {
             "liveTlShowModerator",
             "liveTlWindowSize",
             "liveTlShowVtuber",
+            "liveTlShowSubtitle",
         ]),
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];

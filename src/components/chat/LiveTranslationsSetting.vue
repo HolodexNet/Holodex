@@ -5,6 +5,7 @@
         icon
         x-small
         v-bind="attrs"
+        :title="$t('views.watch.chat.TLSettingsTitle')"
         v-on="on"
       >
         <v-icon>
@@ -41,7 +42,16 @@
           />
           <v-switch v-model="liveTlShowModerator" :label="$t('views.watch.chat.showModeratorMessages')" hide-details />
           <v-switch v-model="liveTlShowVtuber" :label="$t('views.watch.chat.showVtuberMessages')" hide-details />
-          <v-switch v-model="liveTlShowLocalTime" :label="$t('views.watch.chat.showLocalTime')" />
+          <v-switch v-model="liveTlShowLocalTime" :label="$t('views.watch.chat.showLocalTime')" hide-details />
+          <v-switch
+            v-model="liveTlShowSubtitle"
+            :label="$t('views.watch.chat.showSubtitle')"
+          />
+          <v-switch
+            v-model="liveTlStickBottom"
+            :label="$t('views.watch.chat.StickBottomSettingLabel')"
+            :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
+          />
           <v-btn @click="showBlockedList = true">
             Edit Blocked List
           </v-btn>
@@ -67,11 +77,6 @@
               %
             </template>
           </v-combobox>
-          <v-switch
-            v-model="liveTlStickBottom"
-            :label="$t('views.watch.chat.StickBottomSettingLabel')"
-            :messages="$t('views.watch.chat.StickBottomSettingsDesc')"
-          />
         </template>
         <template v-else>
           <v-list style="max-height: 300px; overflow: auto">
@@ -115,6 +120,7 @@ export default {
             "liveTlWindowSize",
             "liveTlShowLocalTime",
             "liveTlShowVtuber",
+            "liveTlShowSubtitle",
         ]),
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];

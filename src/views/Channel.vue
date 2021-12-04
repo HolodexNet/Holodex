@@ -39,7 +39,7 @@ import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
-import { getBannerImages } from "@/utils/functions";
+import { getBannerImages, getChannelPhoto } from "@/utils/functions";
 import { mapState } from "vuex";
 
 export default {
@@ -118,7 +118,7 @@ export default {
             return this.channel?.description?.substr(0, 100);
         },
         metaImage() {
-            return this.channel.photo;
+            return getChannelPhoto(this.channel);
         },
     },
     created() {

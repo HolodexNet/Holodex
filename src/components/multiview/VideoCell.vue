@@ -48,8 +48,6 @@
     </div>
     <cell-control
       v-if="editMode"
-      :play-icon="icons.mdiPlay"
-      @playpause="setPlaying(true)"
       @reset="uniqueId = Date.now()"
       @back="resetCell"
       @delete="deleteCell"

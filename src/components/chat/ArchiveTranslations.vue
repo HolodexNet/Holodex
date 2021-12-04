@@ -8,6 +8,18 @@
     <v-card-subtitle class="py-1 d-flex justify-space-between">
       <div>TLdex [{{ liveTlLang }}]</div>
       <span>
+        <v-btn
+          v-if="!hideSubtitleButton"
+          icon
+          x-small
+          class="mr-1"
+          title="Show Subtitle"
+          @click="liveTlShowSubtitle = !liveTlShowSubtitle"
+        >
+          <v-icon :color="liveTlShowSubtitle && 'primary'">
+            {{ mdiSubtitlesOutline }}
+          </v-icon>
+        </v-btn>
         <v-dialog v-model="expanded" width="800">
           <template #activator="{ on, attrs }">
             <v-btn
@@ -21,7 +33,6 @@
               </v-icon>
             </v-btn>
           </template>
-
           <v-card>
             <portal-target name="expandedMessage" class="d-flex tl-expanded" />
             <v-divider />
@@ -51,7 +62,7 @@
         @click.native="handleClick"
       />
     </portal>
-    <portal :to="`${video.id}-overlay`">
+    <portal v-if="liveTlShowSubtitle" :to="`${video.id}-overlay`">
       <WatchSubtitleOverlay :messages="toDisplay" />
     </portal>
   </v-card>
@@ -89,7 +100,7 @@ export default {
             return this.tlHistory;
         },
         toDisplay() {
-            if (!this.tlHistory.length) return [];
+            if (!this.tlHistory.length || this.liveTlShowSubtitle) return [];
             const startIdx = Math.max(this.curIndex - 1, 0);
             // Grab previous and current message
             const buffer = this.tlHistory.slice(startIdx, startIdx + 2);

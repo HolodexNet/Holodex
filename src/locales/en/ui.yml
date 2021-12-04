@@ -286,15 +286,18 @@ views:
   about:
     add_my_channel: Channel Request
   watch:
-    theaterMode: Theater Mode
+    theaterMode: Theater Mode (alt + t)
     mentionIconLabel: MENTIONS
     chat:
       loading: Loading Chat...
       hideTLBtn: Hide TLs
       showTLBtn: Show TLs
       TLSettingsTitle: TL Settings
-      StickBottomSettingLabel: Stick Bottom (mobile)
-      StickBottomSettingsDesc: TL box sticks to the bottom of chat (default stick to top on mobile)
+      showSubtitle: Show Subtitle
+      expandTL: Expand TLdex
+      tlStart: Start of Messages
+      StickBottomSettingLabel: Stick Bottom
+      StickBottomSettingsDesc: TL box placed below Youtube Chat
       showVerifiedMessages: Show Verified Messages
       showModeratorMessages: Show Moderator Messages
       showVtuberMessages: Show Vtuber Messages

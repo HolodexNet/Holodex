@@ -22,6 +22,7 @@
       }"
       :style="{ height: tlChatHeight }"
       :current-time="currentTime"
+      :hide-subtitle-button="hideSubtitleButton"
       @timeJump="time => $emit('timeJump', time)"
     />
     <!-- Live translations for upcoming/live videos -->
@@ -36,6 +37,7 @@
       }"
       :style="{ height: tlChatHeight }"
       :current-time="currentTime"
+      :hide-subtitle-button="hideSubtitleButton"
       @videoUpdate="handleVideoUpdate"
     />
     <!--  -->
@@ -101,6 +103,7 @@ export default {
                 showYtChat: true,
             }),
         },
+        hideSubtitleButton: Boolean,
     },
     data() {
         return {

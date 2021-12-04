@@ -34,6 +34,7 @@ const initialState = {
     liveTlShowVtuber: true, // show vtuber messages
     liveTlShowLocalTime: false, // show client local time
     liveTlWindowSize: 0, // Default size, otherwise percentage height
+    liveTlShowSubtitle: true, // Default size, otherwise percentage height
     liveTlBlocked: [],
 
     blockedChannels: [],
@@ -109,6 +110,7 @@ const mutations = {
         "hideCollabStreams",
         "ignoredTopics",
         "liveTlShowVtuber",
+        "liveTlShowSubtitle",
     ]),
     resetState(state) {
         Object.assign(state, initialState);

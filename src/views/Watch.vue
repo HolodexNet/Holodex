@@ -10,7 +10,7 @@
     :class="{
       'mobile': isMobile,
       'theater-mode': theaterMode || $vuetify.breakpoint.mdAndDown,
-      'full-height': theaterMode,
+      'full-height': theaterMode && !isMobile,
     }"
   >
     <KeyPress
