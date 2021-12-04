@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
-  video:
-    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -268,15 +266,12 @@ views:
   about:
     add_my_channel: Channew request
   watch:
-    theaterMode: Theatew mode
     mentionIconLabel: MENTIONS
     chat:
       loading: Loading chat...
       hideTLBtn: Hide tls
       showTLBtn: Show tls
       TLSettingsTitle: Tl settings
-      StickBottomSettingLabel: Stick bottom (mobiwe)
-      StickBottomSettingsDesc: Tl box sticks to da bottom of chat (defauwt stick to top on mobiwe)
       showVerifiedMessages: Show vewified messages
       showModeratorMessages: Show modewatow messages
       showVtuberMessages: Show vtubew messages
