@@ -28,6 +28,10 @@ export default {
             type: Object,
             required: false,
         },
+        currentTime: {
+            type: Number,
+            default: 0,
+        },
     },
     computed: {
         lang() {
@@ -90,12 +94,6 @@ export default {
                 });
         },
         parseMessage(msg) {
-            // Append title to author name
-            // msg.prefix = "";
-            // if (msg.is_moderator) msg.prefix += "[Mod]";
-            // if (msg.is_verified) msg.prefix += "✓";
-            // if (msg.is_owner) msg.prefix += "[Owner]";
-            // if (msg.is_vtuber) msg.prefix += "[Vtuber]";
             msg.timestamp = +msg.timestamp;
             msg.relativeSeconds = (msg.timestamp - this.startTimeMillis) / 1000;
             msg.displayTime = this.utcToTimestamp(msg.timestamp);
@@ -127,7 +125,8 @@ export default {
             return msg;
         },
         utcToTimestamp(utc) {
-            return formatDuration(dayjs.utc(utc).diff(this.startTimeMillis));
+            const millisDiff = dayjs.utc(utc).diff(this.startTimeMillis);
+            return (Math.sign(millisDiff) < 0 ? "-" : "") + formatDuration(Math.abs(millisDiff));
         },
         realTimestamp(utc) {
             return dayjs(utc).format("LTS"); // localizedFormat

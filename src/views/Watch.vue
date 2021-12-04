@@ -27,11 +27,11 @@
       class="d-flex flex-grow-1 left"
     >
       <div class="d-flex sidebar flex-column">
-        <WatchMentions v-if="video.mentions && video.mentions.length" :video="video" />
         <WatchQuickEditor
           v-if="role === 'admin' || role === 'editor'"
           :video="video"
         />
+        <WatchMentions v-if="video.mentions && video.mentions.length" :video="video" />
         <WatchPlaylist
           v-model="playlistIndex"
           @playNext="playNextPlaylist"
@@ -40,21 +40,25 @@
         <WatchSideBar :video="video" @timeJump="seekTo" />
       </div>
       <div class="d-flex flex-column flex-grow-1">
-        <youtube
-          v-if="video.id"
-          ref="ytPlayer"
-          class="video"
-          :video-id="video.id"
-          :player-vars="{
-            ...(timeOffset && { start: timeOffset }),
-            autoplay: isMugen || isPlaylist ? 1 : 0,
-            playsinline: 1,
-          }"
-          @ready="ready"
-          @playing="playing"
-          @ended="ended"
-          v-on="video.type === 'stream' && video.status === 'past' && { currentTime: handleCurrentTime }"
-        />
+        <div style="position: relative">
+          <youtube
+            v-if="video.id"
+            ref="ytPlayer"
+            class="video"
+            :video-id="video.id"
+            :player-vars="{
+              ...(timeOffset && { start: timeOffset }),
+              autoplay: isMugen || isPlaylist ? 1 : 0,
+              playsinline: 1,
+            }"
+            @ready="ready"
+            @playing="playing"
+            @ended="ended"
+            @currentTime="handleCurrentTime"
+          />
+          <!-- <WatchVideoOverlay :video="video" /> -->
+          <portal-target :name="`${video.id}-overlay`" />
+        </div>
         <WatchHighlights
           v-if="comments.length && (!isMobile || !showTL)"
           key="highlights"
@@ -165,7 +169,6 @@ import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import WatchMentions from "@/components/watch/WatchMentions.vue";
 import WatchHighlights from "@/components/watch/WatchHighlights.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
-import WatchQuickEditor from "@/components/watch/WatchQuickEditor.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
@@ -182,14 +185,13 @@ export default {
         Youtube,
         LoadingOverlay,
         WatchInfo,
-        // WatchFrame,
         WatchLiveChat,
         WatchSideBar,
         WatchMentions,
         WatchHighlights,
         WatchToolBar,
-        WatchQuickEditor,
         WatchComments,
+        WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
         WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
         WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
         KeyPress: () => import("vue-keypress"),
@@ -444,6 +446,7 @@ export default {
     position: absolute;
     z-index: 10;
     height: 100vh;
+    width: 100%;
     .left, .chat {
       height: 100vh;
     }
