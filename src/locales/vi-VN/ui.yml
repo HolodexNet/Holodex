@@ -251,15 +251,12 @@ views:
   about:
     add_my_channel: Yêu cầu thêm kênh
   watch:
-    theaterMode: Chế độ Rạp chiếu phim
     mentionIconLabel: ĐỀ CẬP
     chat:
       loading: Đang tải Chat...
       hideTLBtn: Ẩn dịch trực tiếp
       showTLBtn: Hiện dịch trực tiếp
       TLSettingsTitle: Cài đặt dịch trực tiếp
-      StickBottomSettingLabel: Đặt dưới cùng (di động)
-      StickBottomSettingsDesc: Di chuyển hộp thoại dịch trực tiếp xuống phía dưới chat (mặc định hiển thị ở phía trên cho các thiết bị điện thoại di động)
       showVerifiedMessages: Hiển thị tin nhắn từ các kênh Verified
       showModeratorMessages: Hiển thị tin nhắn từ Moderator
       tlFontSize: Cỡ chữ
