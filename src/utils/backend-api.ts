@@ -68,14 +68,16 @@ export default {
         const videoId = query.match(VIDEO_URL_REGEX);
 
         if (channelId && !channelId[0].includes("/c/")) {
-            return axiosInstance.get(`/search/autocomplete?q=${channelId[1]}`);
+            const q = querystring.stringify({ q: channelId[1] });
+            return axiosInstance.get(`/search/autocomplete?${q}`);
         }
 
         if (videoId) {
             return { data: [{ type: "video url", value: `${videoId[5]}` }] };
         }
 
-        return axiosInstance.get(`/search/autocomplete?q=${query}`);
+        const q = querystring.stringify({ q: query });
+        return axiosInstance.get(`/search/autocomplete?${q}`);
     },
     searchVideo(queryObject) {
         return axiosInstance.post("/search/videoSearch", queryObject);
