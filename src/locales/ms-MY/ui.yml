@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -274,12 +276,15 @@ views:
       showTLBtn: Paparkan Terjemahan
       TLSettingsTitle: Tetapan Terjemahan
       showSubtitle: Paparkan Sari Kata
+      expandTL: Kembangkan Ruangan Terjemahan
+      tlStart: Permulaan Pesanan
       StickBottomSettingLabel: Letakkan di Bawah
+      StickBottomSettingsDesc: Letakkan terjemahan di bawah ruangan sembang YouTube
       showVerifiedMessages: Paparkan Sembang Oleh Pengguna Yang Disahkan
       showModeratorMessages: Paparkan Sembang Oleh Penyederhana
       showVtuberMessages: Paparkan Sembang oleh Penggiyut Maya
       showLocalTime: Paparkan Waktu Tempatan
-      tlFontSize: Saiz Fon
+      tlFontSize: Ukuran Pasuan
       tlWindowSize: Peratusan (%) saiz ruangan terjemahan. 0% bagi perubahan saiz secara kendiri
       retryBtn: Cuba Lagi
       status:
