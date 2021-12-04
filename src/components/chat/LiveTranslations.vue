@@ -191,7 +191,8 @@ export default {
             const buffer = this.tlHistory.slice(-2);
             return buffer.filter((m) => {
                 const displayTime = (m.message.length * (65 / 1000)) + 1.8;
-                return this.currentTime >= m.relativeSeconds && this.currentTime < m.relativeSeconds + displayTime;
+                const relativeSeconds = m.receivedAt ? (m.receivedAt - this.startTimeMillis) / 1000 : m.relativeSeconds;
+                return this.currentTime >= relativeSeconds && this.currentTime < relativeSeconds + displayTime;
             });
         },
     },
@@ -250,6 +251,8 @@ export default {
                     || (msg.is_verified && this.liveTlShowVerified)
                 ) {
                     if (Math.abs(this.$refs.tlBody.scrollTop) <= 15) this.$refs.tlBody.scrollTo(0, 0);
+                    const parsedMessage = this.parseMessage(msg);
+                    parsedMessage.receivedAt = Date.now();
                     this.tlHistory.push(this.parseMessage(msg));
                     this.$emit("historyLength", this.tlHistory.length);
                 }
