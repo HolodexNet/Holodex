@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -274,6 +276,10 @@ views:
       showTLBtn: Übersetzungen anzeigen
       TLSettingsTitle: Übersetzungseinstellungen
       showSubtitle: Untertitel anzeigen
+      expandTL: TLdex aufklappen
+      tlStart: Beginn der Nachrichten
+      StickBottomSettingLabel: Unten anzeigen
+      StickBottomSettingsDesc: TL-Box unter YouTube-Chat
       showVerifiedMessages: Verifizierte Nachrichten anzeigen
       showModeratorMessages: Moderator-Nachrichten anzeigen
       showVtuberMessages: VTuber-Nachrichten anzeigen
