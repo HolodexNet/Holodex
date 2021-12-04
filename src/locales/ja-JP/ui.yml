@@ -266,15 +266,12 @@ views:
   about:
     add_my_channel: チャンネルのリクエスト
   watch:
-    theaterMode: シアターモード
     mentionIconLabel: メンション
     chat:
       loading: チャットを読み込み中
       hideTLBtn: 翻訳を非表示
       showTLBtn: 翻訳を表示
       TLSettingsTitle: 翻訳設定
-      StickBottomSettingLabel: 下部に固定(モバイルのみ)
-      StickBottomSettingsDesc: 翻訳を画面下部に固定して表示します(デフォルトでは画面上部に表示します)
       showVerifiedMessages: 確認済みのユーザーのメッセージを表示
       showModeratorMessages: モデレータによるメッセージを表示
       showVtuberMessages: Vtuberのメッセージを表示
