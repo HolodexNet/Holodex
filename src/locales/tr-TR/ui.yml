@@ -266,15 +266,12 @@ views:
   about:
     add_my_channel: Kanal Talebi
   watch:
-    theaterMode: Tiyatro Modu
     mentionIconLabel: Söz edilenler
     chat:
       loading: Sohbet yükleniyor...
       hideTLBtn: Çevirileri gizle
       showTLBtn: Çevirileri göster
       TLSettingsTitle: Çeviri Ayarları
-      StickBottomSettingLabel: Aşağıya Sabitle (mobil cihazlar)
-      StickBottomSettingsDesc: Çeviri kutusu sohbetin Altına sabitlenir (mobilde varsayılan olarak yukarı sabitlenir)
       showVerifiedMessages: Doğrulanmış Mesajları Göster
       showModeratorMessages: Moderatör Mesajlarını Göster
       showVtuberMessages: Vtuber Mesajlarını Görüntüle
