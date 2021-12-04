@@ -78,6 +78,10 @@
         </v-btn>
       </message-renderer>
     </portal>
+
+    <portal :to="`${video.id}-overlay`">
+      <WatchSubtitleOverlay :messages="toDisplay" />
+    </portal>
   </v-card>
 </template>
 
@@ -90,6 +94,7 @@ import Vue from "vue";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
 import MessageRenderer from "./MessageRenderer.vue";
+import WatchSubtitleOverlay from "../watch/WatchSubtitleOverlay.vue";
 
 const manager = new Manager(API_BASE_URL, {
     reconnectionAttempts: 10,
@@ -107,6 +112,7 @@ export default {
     components: {
         WatchLiveTranslationsSetting,
         MessageRenderer,
+        WatchSubtitleOverlay,
     },
     mixins: [chatMixin],
     data() {
@@ -179,6 +185,14 @@ export default {
             set(val) {
                 if (!val) this.selectedChannel = "";
             },
+        },
+        toDisplay() {
+            if (!this.tlHistory.length) return [];
+            const buffer = this.tlHistory.slice(-2);
+            return buffer.filter((m) => {
+                const displayTime = (m.message.length * (65 / 1000)) + 1.8;
+                return this.currentTime >= m.relativeSeconds && this.currentTime < m.relativeSeconds + displayTime;
+            });
         },
     },
     watch: {

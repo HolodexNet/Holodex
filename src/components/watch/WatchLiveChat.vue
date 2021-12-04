@@ -35,6 +35,7 @@
         'tl-full-height': !showYtChat,
       }"
       :style="{ height: tlChatHeight }"
+      :current-time="currentTime"
       @videoUpdate="handleVideoUpdate"
     />
     <!--  -->
@@ -240,7 +241,7 @@ export default {
 
     &.tl-full-height {
         position: absolute;
-        height: 100%;
+        height: 100% !important;
         max-height: 100%;
         padding-bottom: 0;
         padding-bottom: calc(env(safe-area-inset-bottom) / 1.75);
