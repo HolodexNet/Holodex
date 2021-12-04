@@ -94,7 +94,7 @@ component:
     weeklyTopForOrg: Top lượt nghe trong tuần của {0}
   installPrompt:
     title: Cài đặt Holodex
-    callToAction: Xem video trên Holodex sẽ hoạt động tốt nhất khi được thêm vào màn hình chính
+    callToAction: Holodex đem lại trải nghiệm tốt nhất nếu bạn thêm trang vào màn hình chính
     notNowBtn: Không phải lúc này
     installBtn: Cài đặt
     iOS:
