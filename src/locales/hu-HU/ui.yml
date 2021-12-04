@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -268,15 +266,12 @@ views:
   about:
     add_my_channel: Csatorna igénylés
   watch:
-    theaterMode: Mozi mód
     mentionIconLabel: EMLÍTÉSEK
     chat:
       loading: Chat betöltése...
       hideTLBtn: Fordítások elrejtése
       showTLBtn: Fordítások megjelenítése
       TLSettingsTitle: Fordítás beállítások
-      StickBottomSettingLabel: Alsó sáv (mobilon)
-      StickBottomSettingsDesc: Fordító doboz a chat aljához rögzítve (mobilon felül alapértelmezett)
       showVerifiedMessages: Igazolt felhasználók üzeneteinek megjelenítése
       showModeratorMessages: Moderátor üzenetek megjelenítése
       showVtuberMessages: Vtuber üzenetek megjelenítése
