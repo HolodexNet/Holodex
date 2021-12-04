@@ -191,8 +191,12 @@ export default {
             const buffer = this.tlHistory.slice(-2);
             return buffer.filter((m) => {
                 const displayTime = (m.message.length * (65 / 1000)) + 1.8;
-                const relativeSeconds = m.receivedAt ? (m.receivedAt - this.startTimeMillis) / 1000 : m.relativeSeconds;
-                return this.currentTime >= relativeSeconds && this.currentTime < relativeSeconds + displayTime;
+                // Use receivedAt and Date.now for consistency, since live streams can have many forms of delay
+                // We just want to display messages for a certain period of time after they are received
+                const receivedRelativeSec = m.receivedAt ? (m.receivedAt - this.startTimeMillis) / 1000 : m.relativeSeconds;
+                const curTime = (Date.now() - this.startTimeMillis) / 1000;
+                // Bind updates to currentTime (pausing video will pause overlay)
+                return this.currentTime && curTime >= receivedRelativeSec && curTime < receivedRelativeSec + displayTime;
             });
         },
     },
