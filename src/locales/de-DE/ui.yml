@@ -266,12 +266,14 @@ views:
   about:
     add_my_channel: Kanalanfrage
   watch:
+    theaterMode: Theatermodus (Alt + T)
     mentionIconLabel: Erwähnungen
     chat:
       loading: Chat wird geladen...
       hideTLBtn: Übersetzungen ausblenden
       showTLBtn: Übersetzungen anzeigen
       TLSettingsTitle: Übersetzungseinstellungen
+      showSubtitle: Untertitel anzeigen
       showVerifiedMessages: Verifizierte Nachrichten anzeigen
       showModeratorMessages: Moderator-Nachrichten anzeigen
       showVtuberMessages: VTuber-Nachrichten anzeigen
