@@ -98,6 +98,7 @@
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import filterVideos from "@/mixins/filterVideos";
 import { mdiTimerOutline } from "@mdi/js";
+import { videoTemporalComparator } from "@/utils/functions";
 
 export default {
     name: "WatchSideBar",
@@ -131,12 +132,13 @@ export default {
         //     return Object.values(this.related).map(r => r.length).reduce((a, b) => a+b);
         // }
         related() {
+            const clips = (this.video.clips
+                && this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)))
+                || [];
+            clips.sort(videoTemporalComparator).reverse();
             return {
                 simulcasts: this.video.simulcasts || [],
-                clips:
-                    (this.video.clips
-                        && this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)))
-                    || [],
+                clips,
                 sources: this.video.sources || [],
                 refers: this.video.refers || [],
                 recommendations: (this.video.recommendations && this.video.recommendations.slice(0, 10)) || [],
