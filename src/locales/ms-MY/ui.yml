@@ -266,12 +266,15 @@ views:
   about:
     add_my_channel: Memohon Penambahan Saluran
   watch:
+    theaterMode: Mod Teater (alt + t)
     mentionIconLabel: MENYEBUT
     chat:
       loading: Sedang Memuat Sembang...
       hideTLBtn: Sembunyikan Terjemahan
       showTLBtn: Paparkan Terjemahan
       TLSettingsTitle: Tetapan Terjemahan
+      showSubtitle: Paparkan Sari Kata
+      StickBottomSettingLabel: Letakkan di Bawah
       showVerifiedMessages: Paparkan Sembang Oleh Pengguna Yang Disahkan
       showModeratorMessages: Paparkan Sembang Oleh Penyederhana
       showVtuberMessages: Paparkan Sembang oleh Penggiyut Maya
