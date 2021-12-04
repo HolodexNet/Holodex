@@ -47,7 +47,7 @@
           <!-- <img src="https://via.placeholder.com/88x88"> -->
           <channel-img
             :channel="{
-              photo: song.channel.photo,
+              photo: getChannelPhoto(song.channel_id, 50),
               name: song.channel.name,
               id: song.channel_id,
             }"
@@ -116,7 +116,7 @@
 <script lang="ts">
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import { formatDistance } from "@/utils/time";
-import { resizeArtwork } from "@/utils/functions";
+import { getChannelPhoto, resizeArtwork } from "@/utils/functions";
 
 export default {
     name: "SongItem",
@@ -181,7 +181,7 @@ export default {
         },
     },
     mounted() {},
-    methods: { resizeArtwork },
+    methods: { resizeArtwork, getChannelPhoto },
 };
 </script>
 

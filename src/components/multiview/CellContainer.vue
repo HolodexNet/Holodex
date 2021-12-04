@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { getVideoIDFromUrl } from "@/utils/functions";
+import { getChannelPhoto, getVideoIDFromUrl } from "@/utils/functions";
 import {
     mdiSelectionEllipseArrowInside,
 } from "@mdi/js";
@@ -98,7 +98,7 @@ export default {
                                 channel: {
                                     id: video.channel.id,
                                     name: video.channel.name,
-                                    photo: video.channel.photo,
+                                    photo: getChannelPhoto(video.channel.id),
                                 },
                             },
                         },

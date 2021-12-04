@@ -54,7 +54,7 @@
               two-line
             >
               <v-list-item-avatar class="ma-0 mr-1">
-                <v-img :src="cellState.video.channel.id ? uiUrl + '/statics/channelImg/' + cellState.video.channel.id + '/100.png' : cellState.video.channel.photo " />
+                <v-img :src="cellState.video.channel.id ? getChannelPhoto(cellState.video.channel.id) : ''" />
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title class="primary--text">
@@ -118,7 +118,7 @@ import {
     mdiPause, mdiFastForward,
 } from "@mdi/js";
 import { mapState, mapGetters } from "vuex";
-import { syncState } from "@/utils/functions";
+import { getChannelPhoto, syncState } from "@/utils/functions";
 
 export default {
     name: "MediaControls",
@@ -183,6 +183,7 @@ export default {
         }
     },
     methods: {
+        getChannelPhoto,
         setAllVolume(val) {
             this.cells.forEach((c) => c.setVolume(val));
         },

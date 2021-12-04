@@ -22,6 +22,11 @@ export function resizeChannelPhoto(photoUrl, size) {
     return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
 }
 
+export function getChannelPhoto(channelId, size = 100) {
+    const nearest = Math.min(Math.max(Math.ceil(size / 50) * 50, 50), 150);
+    return `/statics/channelImg/${channelId}/${nearest}.png`;
+}
+
 export function getVideoThumbnails(ytVideoKey, useWebP) {
     const base = useWebP ? "https://i.ytimg.com/vi_webp" : "https://i.ytimg.com/vi";
     const ext = useWebP ? "webp" : "jpg";

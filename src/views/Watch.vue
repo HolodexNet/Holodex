@@ -268,14 +268,6 @@ export default {
                 return this.$store.commit("watch/setTheaterMode", val);
             },
         },
-        firstVisitMugen: {
-            get() {
-                return this.$store.state.firstVisitMugen;
-            },
-            set() {
-                return this.$store.commit("setVisitedMugen");
-            },
-        },
         comments() {
             return this.video.comments || [];
         },
@@ -288,15 +280,6 @@ export default {
         hasExtension() {
             // @ts-ignore
             return !!window.HOLODEX_PLUS_INSTALLED;
-        },
-        isIOS() {
-            return (
-                ["iPad Simulator", "iPhone Simulator", "iPod Simulator", "iPad", "iPhone", "iPod"].includes(
-                    navigator.platform,
-                )
-                // iPad on iOS 13 detection
-                || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-            );
         },
         chatStyle() {
             return {
@@ -461,7 +444,7 @@ export default {
   &.mobile .chat .tl-overlay {
     width: 100%;
     position: absolute;
-    z-index: 3;
+    z-index: 5;
     top: 0;
   }
 
