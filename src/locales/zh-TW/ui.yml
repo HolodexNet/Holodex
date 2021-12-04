@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -269,15 +267,12 @@ views:
   about:
     add_my_channel: 將我的頻道加入Holodex
   watch:
-    theaterMode: 劇院模式
     mentionIconLabel: 提及人物
     chat:
       loading: 載入聊天室中
       hideTLBtn: 隱藏翻譯
       showTLBtn: 顯示翻譯
       TLSettingsTitle: 翻譯設定
-      StickBottomSettingLabel: 置底留言（手機專用）
-      StickBottomSettingsDesc: 將翻譯留言置底於聊天室下方（預設置頂）
       showVerifiedMessages: 顯示已認證的使用者訊息
       showModeratorMessages: 顯示管理員訊息
       showVtuberMessages: 顯示Vtuber的留言
