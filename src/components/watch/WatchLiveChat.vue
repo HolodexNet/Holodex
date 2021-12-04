@@ -69,14 +69,13 @@
 
 <script lang="ts">
 import LiveTranslations from "@/components/chat/LiveTranslations.vue";
-import ArchiveTranslations from "@/components/chat/ArchiveTranslations.vue";
 
 // Contains Live Chat iframe and Chat TLs, can show either one at both at the same time
 export default {
     name: "WatchLiveChat",
     components: {
         LiveTranslations,
-        ArchiveTranslations,
+        ArchiveTranslations: () => import("@/components/chat/ArchiveTranslations.vue"),
     },
     props: {
         video: {
@@ -191,7 +190,7 @@ export default {
 <style lang="scss">
 .watch-live-chat.mobile-live-chat {
     margin-right: 0px; /*calc(env(safe-area-inset-right) - 15px)*/
-    margin-right: calc(env(safe-area-inset-right) / 2);
+    // margin-right: calc(env(safe-area-inset-right) / 2);
 }
 
 /* center pre loading text */
