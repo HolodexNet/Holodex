@@ -265,7 +265,7 @@ export default {
                 ) {
                     const parsedMessage = this.parseMessage(msg);
                     parsedMessage.receivedAt = Date.now();
-                    this.tlHistory.push(this.parseMessage(msg));
+                    this.tlHistory.push(parsedMessage);
                     this.scrollBottom();
                 }
                 return;
