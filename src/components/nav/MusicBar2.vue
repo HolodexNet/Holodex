@@ -434,13 +434,26 @@ export default {
                     const { song } = os;
                     // console.log("track song");
                     if (song.id) {
+                        // current
                         backendApi
                             .trackSong(song.id, this.$store.state.userdata?.jwt)
                             .catch((err) => console.error(err));
-                    } else {
+                    } else if (song.channel_id || song.channel?.id) {
+                        // fallback
                         backendApi
                             .trackSongPlay(song.channel_id ?? song.channel?.id, song.video_id, song.name, this.$store.state.userdata?.jwt)
                             .catch((err) => console.error(err));
+                    } else if (os.channel_id && os.video_id) {
+                        // double fallback ?
+                        backendApi
+                            .trackSongPlay(os?.channel_id ?? os?.channel?.id, os?.video_id, os?.name, this.$store.state.userdata?.jwt)
+                            .catch((err) => console.error(err));
+                    } else {
+                        // triple fallback
+                        this.$gtag.event("report-bug", {
+                            event_category: "music",
+                            event_label: JSON.stringify(os),
+                        });
                     }
                     this.$gtag.event("fully-listen", {
                         event_category: "music",
