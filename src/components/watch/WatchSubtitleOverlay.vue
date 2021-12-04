@@ -4,14 +4,14 @@
       <div
         v-for="msg in messages"
         :key="msg.id"
-        class="text-center mb-1"
+        class="text-center"
       >
         <div
           v-if="!msg.is_tl"
           class="subtitle-name"
           :class="msg.is_owner ? 'primary--text' : 'secondary--text'"
         >
-          {{ msg.name }} :
+          <span>{{ msg.name }} :</span>
         </div>
         <span class="subtitle-text" v-html="msg.message" />
       </div>
@@ -34,9 +34,10 @@ export default {
 <style scoped>
 .overlay {
   position: absolute;
-  bottom: 42px;
-  width: 90%;
-  margin-left: 5%;
+  bottom: 48px;
+  bottom: min(48px, 10%);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .subtitle-text {
@@ -49,8 +50,11 @@ export default {
 .subtitle-name {
   font-size: 16px;
   font-size: max(1vw, 16px);
-  padding: 0 8px;
-  background: rgba(0,0,0,0.75);
   margin-bottom: -.3rem;
+}
+
+.subtitle-name span {
+  background: rgba(0,0,0,0.75);
+  padding: 0 8px;
 }
 </style>

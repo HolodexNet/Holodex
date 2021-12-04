@@ -13,7 +13,7 @@
           icon
           x-small
           class="mr-1"
-          title="Show Subtitle"
+          :title="$t('views.watch.chat.showSubtitle')"
           @click="liveTlShowSubtitle = !liveTlShowSubtitle"
         >
           <v-icon :color="liveTlShowSubtitle ? 'primary' :''">
@@ -26,6 +26,7 @@
               icon
               x-small
               v-bind="attrs"
+              :title="$t('views.watch.chat.expandTL')"
               v-on="on"
             >
               <v-icon>
