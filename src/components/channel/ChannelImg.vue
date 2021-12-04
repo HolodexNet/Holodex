@@ -1,6 +1,6 @@
 <template>
   <!-- Render with opaque response for cache if size is lte 40 -->
-  <a :href="!noLink && `/channel/${channel.id}`" @click.exact.prevent="goToChannel">
+  <a v-if="!err" :href="!noLink && `/channel/${channel.id}`" @click.exact.prevent="goToChannel">
     <v-lazy
       tag="img"
       :src="photo"
@@ -11,8 +11,19 @@
       :height="size"
       class="d-block"
       :class="rounded && 'rounded-circle'"
+      @error="err = true"
     />
   </a>
+  <v-avatar
+    v-else
+    color="secondary"
+    :width="size"
+    :title="channel.name"
+  >
+    <v-icon>
+      {{ icons.mdiAccountCircleOutline }}
+    </v-icon>
+  </v-avatar>
 </template>
 
 <script lang="ts">
@@ -41,6 +52,11 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    data() {
+        return {
+            err: false,
+        };
     },
     computed: {
         photo() {
