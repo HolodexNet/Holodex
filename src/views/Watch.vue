@@ -67,7 +67,7 @@
           :limit="isMobile ? 5 : 0"
           @timeJump="seekTo"
         />
-        <WatchToolBar :video="video" :no-back-button="!isMobile">
+        <WatchToolBar :video="video" :no-back-button="!isMobile && !theaterMode">
           <template #buttons>
             <v-tooltip v-if="hasExtension" bottom>
               <template #activator="{ on, attrs }">
@@ -84,6 +84,21 @@
                 </v-btn>
               </template>
               <span>{{ $t("views.watch.likeOnYoutube") }}</span>
+            </v-tooltip>
+            <v-tooltip v-if="!isMobile" bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  lg
+                  :color="theaterMode ? 'primary' : ''"
+                  v-bind="attrs"
+                  @click="theaterMode = !theaterMode"
+                  v-on="on"
+                >
+                  <v-icon>{{ mdiDockLeft }}</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ $t("views.watch.theaterMode") }}</span>
             </v-tooltip>
             <v-tooltip v-if="hasLiveTL" bottom>
               <template #activator="{ on, attrs }">
@@ -117,21 +132,6 @@
                 {{ icons.ytChat }}
               </v-icon>
             </v-btn>
-            <v-tooltip v-if="!isMobile" bottom>
-              <template #activator="{ on, attrs }">
-                <v-btn
-                  icon
-                  lg
-                  :color="theaterMode ? 'primary' : ''"
-                  v-bind="attrs"
-                  @click="theaterMode = !theaterMode"
-                  v-on="on"
-                >
-                  <v-icon>{{ mdiDockRight }}</v-icon>
-                </v-btn>
-              </template>
-              <span>{{ $t("views.watch.theaterMode") }}</span>
-            </v-tooltip>
           </template>
         </WatchToolBar>
         <WatchInfo key="info" :video="video" @timeJump="seekTo" />
@@ -172,7 +172,7 @@ import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiDockRight, mdiThumbUp } from "@mdi/js";
+import { mdiOpenInNew, mdiDockLeft, mdiThumbUp } from "@mdi/js";
 
 export default {
     name: "Watch",
@@ -200,7 +200,7 @@ export default {
         return {
             startTime: 0,
             mdiOpenInNew,
-            mdiDockRight,
+            mdiDockLeft,
             mdiThumbUp,
             playlistIndex: -1,
             currentTime: 0,
