@@ -200,7 +200,7 @@ export default {
             playlistIndex: -1,
             currentTime: 0,
             player: null,
-            theaterInteracted: false,
+            theaterMode: false,
             altTHotKey: [
                 {
                     keyCode: 84, // T
@@ -256,15 +256,6 @@ export default {
         isMobile() {
             return this.$store.state.isMobile;
         },
-        theaterMode: {
-            get() {
-                return (this.hasLiveTL && !this.theaterInteracted) || (this.$store.state.watch.theaterMode && !this.isMobile);
-            },
-            set(val) {
-                this.theaterInteracted = true;
-                return this.$store.commit("watch/setTheaterMode", val);
-            },
-        },
         comments() {
             return this.video.comments || [];
         },
@@ -307,13 +298,7 @@ export default {
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
                 this.$store.dispatch("history/addWatchedVideo", this.video);
-                // Check if there's at least 10 liveTls and open the tl panel
-                if (
-                    this.video?.live_tl_count?.[this.$store.state.settings.liveTlLang]
-                    > 10
-                ) {
-                    this.showTL = true;
-                }
+                this.theaterMode = ["live", "upcoming"].includes(this.video.status);
             });
         },
         initMugen() {
