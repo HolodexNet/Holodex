@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -79,6 +81,7 @@ component:
     sourcesLabel: souwces
     songsLabel: songs
     recommendationsLabel: wecommended
+    sameSourceClips: Fwom da same stweams
   paginateLoad:
     newer: Newew
     older: Owdew
