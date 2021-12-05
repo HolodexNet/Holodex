@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -79,6 +81,7 @@ component:
     sourcesLabel: Quellen
     songsLabel: Songs
     recommendationsLabel: Empfehlungen
+    sameSourceClips: Von den gleichen Streams
   paginateLoad:
     newer: Neuer
     older: Älter
