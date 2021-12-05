@@ -124,6 +124,7 @@ export default {
                 sources: false,
                 recommendations: false,
                 songs: false,
+                same_source_clips: false,
             },
         };
     },
@@ -141,6 +142,7 @@ export default {
                 clips,
                 sources: this.video.sources || [],
                 refers: this.video.refers || [],
+                same_source_clips: (this.video.same_source_clips && this.video.same_source_clips.slice(0, 10)) || [],
                 recommendations: (this.video.recommendations && this.video.recommendations.slice(0, 10)) || [],
             };
         },
@@ -160,7 +162,9 @@ export default {
     },
     mounted() {
         this.$nextTick(this.updateSongs);
-        this.hidden.recommendations = (this.related.refers.length + this.related.clips.length + this.related.sources.length) >= 5;
+    },
+    created() {
+        this.hidden.recommendations = (this.related.refers.length + this.related.clips.length + this.related.sources.length + this.related.same_source_clips.length) >= 5;
     },
     methods: {
         relationI18N(relation) {
@@ -177,6 +181,8 @@ export default {
                     return this.$t("component.relatedVideo.recommendationsLabel");
                 case "songs":
                     return this.$t("component.relatedVideo.songsLabel");
+                case "same_source_clips":
+                    return this.$t("component.relatedVideo.sameSourceClips");
                 default:
                     return "";
             }
