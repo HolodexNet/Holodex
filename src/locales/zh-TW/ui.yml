@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -79,6 +81,7 @@ component:
     sourcesLabel: 剪輯來源
     songsLabel: 歌曲
     recommendationsLabel: 推薦影片
+    sameSourceClips: 相同剪輯來源
   paginateLoad:
     newer: 較新
     older: 較舊
