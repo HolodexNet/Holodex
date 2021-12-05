@@ -86,9 +86,36 @@
           </v-list-item>
         </v-list>
       </v-col>
-      <!-- <v-col cols="auto">
-
-      </v-col> -->
+      <v-col cols="auto">
+        <v-avatar
+          v-if="channelChips && channelChips.length > 0"
+          rounded
+          left
+          size="40"
+        >
+          <v-icon
+            size="25"
+            color="grey darken-2"
+          >
+            {{ mdiAt }}
+          </v-icon>
+        </v-avatar>
+        <template v-for="mention in channelChips">
+          <ChannelChip
+            :key="mention.id"
+            :channel="mention"
+            :size="60"
+          />
+        </template>
+        <a
+          v-if="mentions.length > 3"
+          style="white-space: pre"
+          class="text-subtitle-2"
+          @click="showAllMentions = !showAllMentions"
+        >
+          [ {{ showAllMentions ? "-" : "+" }} {{ mentions.length - 3 }} ]
+        </a>
+      </v-col>
     </div>
     <slot>
       <v-card-text
@@ -105,6 +132,7 @@
 </template>
 
 <script lang="ts">
+import ChannelChip from "@/components/channel/ChannelChip.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import ChannelSocials from "@/components/channel/ChannelSocials.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
@@ -116,6 +144,7 @@ import {
     localizedDayjs,
 } from "@/utils/time";
 import TruncatedText from "@/components/common/TruncatedText.vue";
+import { mdiAt } from "@mdi/js";
 import { formatCount } from "@/utils/functions";
 
 const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/gm;
@@ -123,6 +152,7 @@ const COMMENT_TIMESTAMP_REGEX = /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/g
 export default {
     name: "WatchInfo",
     components: {
+        ChannelChip,
         ChannelInfo,
         ChannelSocials,
         ChannelImg,
@@ -148,7 +178,9 @@ export default {
             timer: null,
             elapsedTime: 0,
             editMode: false,
+            showAllMentions: false,
             lastViewerCount: -1,
+            mdiAt,
         };
     },
     computed: {
@@ -179,6 +211,14 @@ export default {
             // if lastViewerCount is unset, then there is no change
             if (this.lastViewerCount < 0) return 0;
             return this.video.live_viewers - this.lastViewerCount;
+        },
+        mentions() {
+            return this.video.mentions || [];
+        },
+        channelChips() {
+            return this.mentions.length > 3 && !this.showAllMentions
+                ? this.mentions.slice(0, 3)
+                : this.mentions;
         },
         processedMessage() {
             const decoder = document.createElement("div");

@@ -9,29 +9,26 @@
     class="d-flex flex-row watch-layout"
     :class="{
       'mobile': isMobile,
-      'theater-mode': theaterMode || $vuetify.breakpoint.mdAndDown,
-      'full-height': theaterMode && !isMobile,
+      'theater-mode': theaterMode || $vuetify.breakpoint.mdAndDown
     }"
   >
     <KeyPress
       key-event="keyup"
       :multiple-keys="altTHotKey"
-      @success="theaterMode = !theaterMode"
+      @success="toggleTheaterMode"
     />
     <KeyPress
       key-event="keyup"
       :key-code="27"
       @success="theaterMode = false"
     />
-    <div
-      class="d-flex flex-grow-1 left"
-    >
+    <div ref="watchLayout" class="d-flex flex-grow-1 left">
       <div class="d-flex sidebar flex-column">
         <WatchQuickEditor
           v-if="role === 'admin' || role === 'editor'"
           :video="video"
         />
-        <WatchMentions v-if="video.mentions && video.mentions.length" :video="video" />
+        <!-- <WatchMentions v-if="video.mentions && video.mentions.length" :video="video" /> -->
         <WatchPlaylist
           v-model="playlistIndex"
           @playNext="playNextPlaylist"
@@ -67,7 +64,7 @@
           :limit="isMobile ? 5 : 0"
           @timeJump="seekTo"
         />
-        <WatchToolBar :video="video" :no-back-button="!isMobile && !theaterMode">
+        <WatchToolBar :video="video">
           <template #buttons>
             <v-tooltip v-if="hasExtension" bottom>
               <template #activator="{ on, attrs }">
@@ -92,7 +89,7 @@
                   lg
                   :color="theaterMode ? 'primary' : ''"
                   v-bind="attrs"
-                  @click="theaterMode = !theaterMode"
+                  @click="toggleTheaterMode"
                   v-on="on"
                 >
                   <v-icon>{{ mdiDockLeft }}</v-icon>
@@ -137,7 +134,7 @@
         <WatchInfo key="info" :video="video" @timeJump="seekTo" />
         <v-lazy>
           <WatchComments
-            v-if="comments.length && !theaterMode"
+            v-if="comments.length"
             key="comments"
             :comments="comments"
             :video="video"
@@ -205,6 +202,7 @@ export default {
             playlistIndex: -1,
             currentTime: 0,
             player: null,
+            theaterInteracted: false,
             altTHotKey: [
                 {
                     keyCode: 84, // T
@@ -280,13 +278,6 @@ export default {
         hasExtension() {
             // @ts-ignore
             return !!window.HOLODEX_PLUS_INSTALLED;
-        },
-        chatStyle() {
-            return {
-                // position: "sticky",
-                top: this.isMobile ? "0" : "56px",
-                height: `calc(100vh - ${this.isMobile ? "0px" : "56px"})`,
-            };
         },
     },
     watch: {
@@ -378,6 +369,12 @@ export default {
                 this.playlistIndex += 1;
             }
         },
+        toggleTheaterMode() {
+            this.theaterMode = !this.theaterMode;
+            this.$nextTick(() => {
+                this.$refs.watchLayout.scrollTop = 0;
+            });
+        },
         like() {
             this.$refs?.ytPlayer?.sendLikeEvent();
         },
@@ -422,17 +419,6 @@ export default {
 
   &.theater-mode .left .sidebar {
     order: 2;
-  }
-
-  &.full-height:not(.mobile) {
-    margin-top: -56px;
-    position: absolute;
-    z-index: 10;
-    height: 100vh;
-    width: 100%;
-    .left, .chat {
-      height: 100vh;
-    }
   }
 
   &.theater-mode .left {
