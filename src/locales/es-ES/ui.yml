@@ -207,15 +207,12 @@ views:
     nowSupportsMultiOrg: Holodex ahora soporta múltiples organizaciones.
     loginCallToAction: '¡Inicia sesión para crear tu propia lista de favoritos!'
   watch:
-    theaterMode: Modo Cine
     mentionIconLabel: MENCIONES
     chat:
       loading: Cargando chat...
       hideTLBtn: Ocultar traducciones
       showTLBtn: Mostrar traducciones
       TLSettingsTitle: Ajustes de traducción
-      StickBottomSettingLabel: Colocar abajo (móviles)
-      StickBottomSettingsDesc: El cuadro de traducciones aparece en la parte inferior del chat (por defecto arriba en móviles)
       showVerifiedMessages: Mostar mensajes verificados
       showModeratorMessages: Mostar mensajes del moderador
       tlFontSize: Tamaño de la fuente

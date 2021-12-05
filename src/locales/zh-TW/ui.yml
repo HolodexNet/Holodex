@@ -269,15 +269,18 @@ views:
   about:
     add_my_channel: 將我的頻道加入Holodex
   watch:
-    theaterMode: 劇院模式
+    theaterMode: 劇院模式 (Alt+T)
     mentionIconLabel: 提及人物
     chat:
       loading: 載入聊天室中
       hideTLBtn: 隱藏翻譯
       showTLBtn: 顯示翻譯
       TLSettingsTitle: 翻譯設定
-      StickBottomSettingLabel: 置底留言（手機專用）
-      StickBottomSettingsDesc: 將翻譯留言置底於聊天室下方（預設置頂）
+      showSubtitle: 顯示社群翻譯字幕
+      expandTL: 展開社群翻譯聊天室
+      tlStart: 訊息起始處
+      StickBottomSettingLabel: 翻譯留言置底
+      StickBottomSettingsDesc: 將社群翻譯放置於預設聊天室下方
       showVerifiedMessages: 顯示已認證的使用者訊息
       showModeratorMessages: 顯示管理員訊息
       showVtuberMessages: 顯示Vtuber的留言

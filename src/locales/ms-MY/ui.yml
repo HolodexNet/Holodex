@@ -268,20 +268,23 @@ views:
   about:
     add_my_channel: Memohon Penambahan Saluran
   watch:
-    theaterMode: Mod Teater
+    theaterMode: Mod Teater (alt + t)
     mentionIconLabel: MENYEBUT
     chat:
       loading: Sedang Memuat Sembang...
       hideTLBtn: Sembunyikan Terjemahan
       showTLBtn: Paparkan Terjemahan
       TLSettingsTitle: Tetapan Terjemahan
-      StickBottomSettingLabel: Letakkan di Bawah (peranti mudah alih)
-      StickBottomSettingsDesc: Ruangan terjemahan diletakkan di bawah sembang (secara lalainya ruangan ini terletak di bahagian atas bagi peranti mudah alih)
+      showSubtitle: Paparkan Sari Kata
+      expandTL: Kembangkan Ruangan Terjemahan
+      tlStart: Permulaan Pesanan
+      StickBottomSettingLabel: Letakkan di Bawah
+      StickBottomSettingsDesc: Letakkan terjemahan di bawah ruangan sembang YouTube
       showVerifiedMessages: Paparkan Sembang Oleh Pengguna Yang Disahkan
       showModeratorMessages: Paparkan Sembang Oleh Penyederhana
       showVtuberMessages: Paparkan Sembang oleh Penggiyut Maya
       showLocalTime: Paparkan Waktu Tempatan
-      tlFontSize: Saiz Fon
+      tlFontSize: Ukuran Pasuan
       tlWindowSize: Peratusan (%) saiz ruangan terjemahan. 0% bagi perubahan saiz secara kendiri
       retryBtn: Cuba Lagi
       status:

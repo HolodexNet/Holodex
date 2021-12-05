@@ -252,15 +252,12 @@ views:
   about:
     add_my_channel: Запрос на добавление канала
   watch:
-    theaterMode: Широкий экран
     mentionIconLabel: УПОМИНАНИЯ
     chat:
       loading: Загрузка чата...
       hideTLBtn: Скрыть переводы
       showTLBtn: Показывать перевод
       TLSettingsTitle: Настройки перевода
-      StickBottomSettingLabel: Привязать к низу (для мобильных)
-      StickBottomSettingsDesc: TL чат привязывается к низу чата (по умолчанию на мобильных - к верху)
       showVerifiedMessages: Показать сообщ. от вериф. пользователей
       showModeratorMessages: Показывать сообщения от модераторов
       showLocalTime: Показывать местное время

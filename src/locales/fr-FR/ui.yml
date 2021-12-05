@@ -243,15 +243,12 @@ views:
     nowSupportsMultiOrg: Holodex supporte maintenant de nombreuses organisations.
     loginCallToAction: Connectez-vous pour rassembler vos propres favoris !
   watch:
-    theaterMode: Mode Cinéma
     mentionIconLabel: MENTIONS
     chat:
       loading: Chargement du chat...
       hideTLBtn: Cacher les traductions
       showTLBtn: Afficher les traductions
       TLSettingsTitle: Paramètres des traductions
-      StickBottomSettingLabel: Voir ci-dessous (mobile)
-      StickBottomSettingsDesc: La fenêtre de traduction est en bas du chat (par défaut en haut sur mobile)
       showVerifiedMessages: Afficher les messages vérifiés
       showModeratorMessages: Afficher les messages des modérateurs
       tlFontSize: Taille de la police

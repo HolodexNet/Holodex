@@ -266,15 +266,12 @@ views:
   about:
     add_my_channel: Mengajukan Channel
   watch:
-    theaterMode: Mode Teater
     mentionIconLabel: MENTION
     chat:
       loading: Memuat Chat...
       hideTLBtn: Sembunyikan Terjemahan
       showTLBtn: Tampilkan Terjemahan
       TLSettingsTitle: Pengaturan Terjemahan
-      StickBottomSettingLabel: Sematkan dibawah (HP)
-      StickBottomSettingsDesc: Kolom Terjemahan akan disematkan dibawah kolom chat (pengaturan awal disematkan diatas pada tampilan HP)
       showVerifiedMessages: Menampilkan Pesan Pengguna yang Terverifikasi
       showModeratorMessages: Menampilkan Pesan Moderator
       showVtuberMessages: Menampilkan Pesan Vtuber
