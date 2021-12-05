@@ -2,9 +2,23 @@
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
+### 2.25 Holodex [*Dec 5th, 2021*]
+
+#### New
+- Slightly changed layout in watch pages, Chat and TLdex box now sticks to the right when turned on.
+- TL and other TLDex lines show up as subtitles.
+![img](https://cdn.discordapp.com/attachments/811229830783303720/917157643968200864/unknown.png)
+
+#### Minor changes
+- Placeholders now use Japanese titles if set
+- Fix bug in Watch page where incorrect timestamping results in wild buckets.
+- MultiView Sync Bar can be opened with 1 video
+- You can now modify Placeholders
+
+
 ### 2.24 Holodex [*Nov 26th, 2021*]
 
-### Minor changes
+#### Minor changes
 - Groups now show up on Channel Pages
 - You can now navigate to Org specific channel pages and link them, such as [Hololive Channels](https://holodex.net/channel?org=Hololive)
 - Better music editing for tagging Karaoke Streams, you'll love it.
@@ -15,11 +29,11 @@
 
 ### 2.23 Holodex [*Nov 11th, 2021*]
 
-### New
+#### New
 
 - Added TLdex vtuber chat messages setting (Filter messages if it's in Holodex's Vtuber database)
 
-### Bugfixes & improvements
+#### Bugfixes & improvements
 - Fixed Multiview sometimes duplicating wrong stream
 - Shrink top navigation bar slightly
 - TLdex chat now shows channel icons for vtubers in chat
@@ -27,7 +41,7 @@
 
 ### 2.22.3 Holodex [*Nov 10th, 2021*]
 
-### Hotfix
+#### Hotfix
 - Fixed Open on Youtube blank screen for older iOS devices
 - Fixed live video sorting for Safari
 - Fixed clips not showing up on clipper channel pages
@@ -35,7 +49,7 @@
 
 ### 2.22.2 Holodex [*Nov 9th, 2021*]
 
-### Bugfixes & improvements
+#### Bugfixes & improvements
 - Fixed an issue from today's maintenance causing constant errors
 - Channel page shows placeholder events
 - Clicking on channel img will open channel page again
@@ -43,14 +57,14 @@
 
 ### 2.22.1 Holodex [*Oct 27, 2021*]
 
-### Bugfixes & improvements
+#### Bugfixes & improvements
 - Fixed cells getting pushed down on multiview in certain cases
 - Buttons show/collapse into three dots depending on screen size
 - Video card text spacing fixed
 
 ### 2.22 Holodex [*Oct 27, 2021*]
 
-### New
+#### New
 
 - Archive Sync, open the archive sync bar to automatically sync archives on multiview (@RiceCakess)
   - Use Sync settings to adjust timings for streams that are not perfectly in sync
@@ -64,7 +78,7 @@
 
 ### 2.21.1 Holodex [*Oct 12, 2021*]
 
-### Bugfixes
+#### Bugfixes
 
 - Placeholders will default to using the channel avatar if a thumbnail is not present.
 - Align cards to top for Video Cards (ty for report Angel)

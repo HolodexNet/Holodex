@@ -347,6 +347,11 @@ export default {
             };
         },
     },
+    watch: {
+        tab(nv) {
+            if (nv === 0) this.id = "";
+        },
+    },
     async mounted() {
         if (this.token?.link) { this.discordCredits = await backendApi.discordServerInfo(this.token.link); }
     },
