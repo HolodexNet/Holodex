@@ -81,6 +81,7 @@ component:
     sourcesLabel: souwces
     songsLabel: songs
     recommendationsLabel: wecommended
+    sameSourceClips: Fwom da same stweams
   paginateLoad:
     newer: Newew
     older: Owdew

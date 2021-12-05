@@ -81,6 +81,7 @@ component:
     sourcesLabel: Quellen
     songsLabel: Songs
     recommendationsLabel: Empfehlungen
+    sameSourceClips: Von den gleichen Streams
   paginateLoad:
     newer: Neuer
     older: Älter

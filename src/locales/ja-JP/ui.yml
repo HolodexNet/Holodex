@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 予定されたイベント
   videoDescription:
     description: 概要
+  video:
+    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -79,6 +81,7 @@ component:
     sourcesLabel: 本編
     songsLabel: 楽曲
     recommendationsLabel: おすすめ
+    sameSourceClips: 同じ配信から
   paginateLoad:
     newer: 次
     older: 前
@@ -275,6 +278,7 @@ views:
       TLSettingsTitle: 翻訳設定
       showSubtitle: 字幕を表示
       expandTL: TLdex を広げる
+      tlStart: メッセージの始まり
       StickBottomSettingLabel: 下部に固定
       StickBottomSettingsDesc: 翻訳を Youtube チャットの下に配置します
       showVerifiedMessages: 確認済みのユーザーのメッセージを表示
@@ -422,6 +426,7 @@ editor:
     testStart: 開始位置を確認
     startInput: 開始位置
     endInput: '再生時間(秒) ({0}に終了)'
+    inheritItunesMusic: 'iTunesでの再生時間を設定: {0}'
   exitMode: 編集モードを終了
   enterMode: 動画を編集
 about:
