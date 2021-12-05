@@ -163,7 +163,6 @@ import WatchInfo from "@/components/watch/WatchInfo.vue";
 // import WatchFrame from "@/components/watch/WatchFrame.vue";
 import WatchSideBar from "@/components/watch/WatchSideBar.vue";
 import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
-import WatchMentions from "@/components/watch/WatchMentions.vue";
 import WatchHighlights from "@/components/watch/WatchHighlights.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
@@ -184,7 +183,6 @@ export default {
         WatchInfo,
         WatchLiveChat,
         WatchSideBar,
-        WatchMentions,
         WatchHighlights,
         WatchToolBar,
         WatchComments,
@@ -260,9 +258,10 @@ export default {
         },
         theaterMode: {
             get() {
-                return this.$store.state.watch.theaterMode && !this.isMobile;
+                return (this.hasLiveTL && !this.theaterInteracted) || (this.$store.state.watch.theaterMode && !this.isMobile);
             },
             set(val) {
+                this.theaterInteracted = true;
                 return this.$store.commit("watch/setTheaterMode", val);
             },
         },
