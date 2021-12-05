@@ -36,8 +36,8 @@ export default {
   position: absolute;
   bottom: 48px;
   bottom: min(48px, 10%);
-  left: 50%;
-  transform: translateX(-50%);
+  width: 90%;
+  margin-left: 5%;
 }
 
 .subtitle-text {

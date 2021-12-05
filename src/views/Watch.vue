@@ -374,6 +374,10 @@ export default {
     width: 100%;
 }
 
+.mobile .video {
+  padding-bottom: min(56.25%, calc(100vh - 36px));
+}
+
 .video > iframe {
     position: absolute;
     width: 100%;
