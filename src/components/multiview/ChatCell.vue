@@ -44,7 +44,7 @@
         fluid
         :scale="scale"
         :current-time="currentTime"
-        :hide-subtitle-button="true"
+        :use-local-subtitle-toggle="true"
         @videoUpdate="handleVideoUpdate"
       />
     </template>

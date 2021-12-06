@@ -18,10 +18,11 @@ export default {
                 UPDATE: "update",
             }),
             expanded: false,
-
             historyLoading: false,
             completed: false,
             limit: 20,
+
+            subtitleToggle: true,
         };
     },
     props: {
@@ -33,7 +34,8 @@ export default {
             type: Number,
             default: 0,
         },
-        hideSubtitleButton: {
+        // For multiview
+        useLocalSubtitleToggle: {
             type: Boolean,
         },
     },
@@ -51,6 +53,14 @@ export default {
             "liveTlShowVtuber",
             "liveTlShowSubtitle",
         ]),
+        showSubtitle: {
+            get() {
+                return this.useLocalSubtitleToggle ? this.subtitleToggle : this.liveTlShowSubtitle;
+            },
+            set(val) {
+                this.useLocalSubtitleToggle ? this.subtitleToggle = val : this.liveTlShowSubtitle = val;
+            },
+        },
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];
         },
@@ -68,6 +78,9 @@ export default {
         liveTlShowVtuber() {
             this.loadMessages(true, true);
         },
+    },
+    mounted() {
+        this.showSubtitle = this.liveTlShowSubtitle;
     },
     methods: {
         loadMessages(firstLoad = false, loadAll = false) {

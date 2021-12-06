@@ -25,14 +25,13 @@
       </div>
       <span>
         <v-btn
-          v-if="!hideSubtitleButton"
           icon
           x-small
           class="mr-1"
           :title="$t('views.watch.chat.showSubtitle')"
-          @click="liveTlShowSubtitle = !liveTlShowSubtitle"
+          @click="showSubtitle = !showSubtitle"
         >
-          <v-icon :color="liveTlShowSubtitle ? 'primary' :''">
+          <v-icon :color="showSubtitle ? 'primary' :''">
             {{ mdiSubtitlesOutline }}
           </v-icon>
         </v-btn>
@@ -93,7 +92,7 @@
       </message-renderer>
     </portal>
 
-    <portal v-if="liveTlShowSubtitle" :to="`${video.id}-overlay`">
+    <portal v-if="showSubtitle" :to="`${video.id}-overlay`">
       <WatchSubtitleOverlay :messages="toDisplay" />
     </portal>
   </v-card>
@@ -201,7 +200,7 @@ export default {
             },
         },
         toDisplay() {
-            if (!this.tlHistory.length || !this.liveTlShowSubtitle) return [];
+            if (!this.tlHistory.length || !this.showSubtitle) return [];
             const buffer = this.tlHistory.slice(-2);
             return buffer.filter((m) => {
                 const displayTime = (m.message.length * (65 / 1000)) + 1.8;
@@ -225,7 +224,7 @@ export default {
         },
         tlHistory() {
             this.$nextTick(() => {
-                this.scrollBottom();
+                this.$refs.tlBody.scrollToBottom();
             });
         },
     },
@@ -266,7 +265,6 @@ export default {
                     const parsedMessage = this.parseMessage(msg);
                     parsedMessage.receivedAt = Date.now();
                     this.tlHistory.push(parsedMessage);
-                    this.scrollBottom();
                 }
                 return;
             }
@@ -347,9 +345,6 @@ export default {
             }
             return true;
         },
-        scrollBottom() {
-            this.$refs.tlBody.scrollToBottom();
-        },
     },
 };
 </script>
@@ -364,7 +359,7 @@ export default {
     overscroll-behavior: contain;
     height: calc(100% - 32px);
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     line-height: 1.35;
     letter-spacing: 0.0178571429em !important;
 }

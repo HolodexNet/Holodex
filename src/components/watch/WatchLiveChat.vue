@@ -22,7 +22,7 @@
       }"
       :style="{ height: tlChatHeight }"
       :current-time="currentTime"
-      :hide-subtitle-button="hideSubtitleButton"
+      :use-local-subtitle-toggle="useLocalSubtitleToggle"
       @timeJump="time => $emit('timeJump', time)"
     />
     <!-- Live translations for upcoming/live videos -->
@@ -37,7 +37,7 @@
       }"
       :style="{ height: tlChatHeight }"
       :current-time="currentTime"
-      :hide-subtitle-button="hideSubtitleButton"
+      :use-local-subtitle-toggle="useLocalSubtitleToggle"
       @videoUpdate="handleVideoUpdate"
     />
     <!--  -->
@@ -102,7 +102,7 @@ export default {
                 showYtChat: true,
             }),
         },
-        hideSubtitleButton: Boolean,
+        useLocalSubtitleToggle: Boolean,
     },
     data() {
         return {
@@ -216,6 +216,8 @@ export default {
     min-height: min(calc((75vw - 24px) * 0.5625), calc(100vh - 120px));
     border: solid 1px rgba(255, 255, 255, 0.1);
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .watch-live-chat.fluid {

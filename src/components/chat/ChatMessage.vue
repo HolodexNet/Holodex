@@ -120,6 +120,10 @@ export default {
     font-size: 0.85em;
 }
 
+.tl-name, .tl-message {
+  word-break: break-word;
+}
+
 .tl-name {
   cursor: pointer;
 }

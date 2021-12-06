@@ -6,8 +6,6 @@
       'font-size': fontSize + 'px',
     }"
   >
-    <!-- Slot for adding a Load More button on top of Messages -->
-    <slot />
     <transition-group name="fade">
       <template v-for="(item, index) in tlHistory">
         <chat-message
@@ -17,6 +15,9 @@
         />
       </template>
     </transition-group>
+    <!-- Slot for adding a Load More button on top of Messages -->
+    <slot />
+    Zero Position: {{ zeroPos }}
   </v-card-text>
 </template>
 
@@ -36,6 +37,15 @@ export default {
             default: 14,
         },
     },
+    data() {
+        return {
+            zeroPos: 0,
+        };
+    },
+    mounted() {
+        // Store the zero position which is sometimes negative on certain browser/conditions
+        this.zeroPos = this.$refs.tlBody.scrollTop;
+    },
     methods: {
         hideAuthor(item, index) {
             return !(index === 0
@@ -44,15 +54,9 @@ export default {
                 || !!item.breakpoint);
         },
         scrollToBottom() {
-            // Scroll bottom without animation
-            if (this.$refs.tlBody.scrollTop === 0) {
-                this.$refs.tlBody.scrollTop = this.$refs.tlBody.scrollHeight;
-                return;
+            if (Math.abs(this.$refs.tlBody.scrollTop) <= 10) {
+                this.$refs.tlBody.scrollTop = this.zeroPos;
             }
-            this.$refs.tlBody.scrollTo({
-                top: this.$refs.tlBody.scrollHeight,
-                behavior: "smooth",
-            });
         },
     },
 };

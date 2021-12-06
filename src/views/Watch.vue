@@ -147,7 +147,7 @@
     <WatchLiveChat
       v-if="!isMugen && showChatWindow"
       v-model="chatStatus"
-      class="sidebar chat d-flex flex-column"
+      class="sidebar chat"
       :video="video"
       :current-time="currentTime"
       @videoUpdate="handleVideoUpdate"

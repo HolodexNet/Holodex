@@ -9,14 +9,13 @@
       <div>TLdex [{{ liveTlLang }}]</div>
       <span>
         <v-btn
-          v-if="!hideSubtitleButton"
           icon
           x-small
           class="mr-1"
           :title="$t('views.watch.chat.showSubtitle')"
-          @click="liveTlShowSubtitle = !liveTlShowSubtitle"
+          @click="showSubtitle = !showSubtitle"
         >
-          <v-icon :color="liveTlShowSubtitle ? 'primary' :''">
+          <v-icon :color="showSubtitle ? 'primary' :''">
             {{ mdiSubtitlesOutline }}
           </v-icon>
         </v-btn>
@@ -63,7 +62,7 @@
         @click.native="handleClick"
       />
     </portal>
-    <portal v-if="liveTlShowSubtitle" :to="`${video.id}-overlay`">
+    <portal v-if="showSubtitle" :to="`${video.id}-overlay`">
       <WatchSubtitleOverlay :messages="toDisplay" />
     </portal>
   </v-card>
@@ -101,7 +100,7 @@ export default {
             return this.tlHistory;
         },
         toDisplay() {
-            if (!this.tlHistory.length || !this.liveTlShowSubtitle) return [];
+            if (!this.tlHistory.length || !this.showSubtitle) return [];
             const startIdx = Math.max(this.curIndex - 1, 0);
             // Grab previous and current message
             const buffer = this.tlHistory.slice(startIdx, startIdx + 2);

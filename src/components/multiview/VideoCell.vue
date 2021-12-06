@@ -45,6 +45,7 @@
         @mute="setMuted($event)"
         @volume="volume = $event"
       />
+      <portal-target :name="`${video.id}-overlay`" />
     </div>
     <cell-control
       v-if="editMode"
@@ -220,7 +221,7 @@ export default {
         },
         setTimer() {
             if (this.timer) clearInterval(this.timer);
-            if (this.video.status !== "past") return;
+            // if (this.video.status !== "past") return;
             this.timer = setInterval(async () => {
                 this.currentTime = await this.$refs.player.getCurrentTime();
             }, 500);
