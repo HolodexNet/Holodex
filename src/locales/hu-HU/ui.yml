@@ -77,7 +77,7 @@ component:
   relatedVideo:
     clipsLabel: klipek
     simulcastsLabel: közvetítések
-    refersLabel: utalás
+    refersLabel: utal
     sourcesLabel: források
     songsLabel: dalok
     recommendationsLabel: ajánlott
