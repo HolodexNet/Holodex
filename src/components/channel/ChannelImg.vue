@@ -6,7 +6,6 @@
       :src="photo"
       crossorigin="anonymous"
       loading="lazy"
-      :alt="!noAlt && `${channel.name}'s profile picture`"
       :width="size"
       :height="size"
       class="d-block"
@@ -18,7 +17,9 @@
     v-else
     color="secondary"
     :width="size"
+    :height="size"
     :title="channel.name"
+    style="min-width: 0px"
   >
     <v-icon>
       {{ icons.mdiAccountCircleOutline }}
