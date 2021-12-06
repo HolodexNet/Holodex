@@ -266,12 +266,16 @@ views:
   about:
     add_my_channel: Kanal Talebi
   watch:
+    theaterMode: Tiyatro Modu (alt + t)
     mentionIconLabel: Söz edilenler
     chat:
       loading: Sohbet yükleniyor...
       hideTLBtn: Çevirileri gizle
       showTLBtn: Çevirileri göster
       TLSettingsTitle: Çeviri Ayarları
+      showSubtitle: Altyazıyı göster
+      expandTL: TLdex'i genişlet
+      tlStart: Mesajların başı
       showVerifiedMessages: Doğrulanmış Mesajları Göster
       showModeratorMessages: Moderatör Mesajlarını Göster
       showVtuberMessages: Vtuber Mesajlarını Görüntüle
