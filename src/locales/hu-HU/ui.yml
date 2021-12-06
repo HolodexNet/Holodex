@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -79,6 +81,7 @@ component:
     sourcesLabel: források
     songsLabel: dalok
     recommendationsLabel: ajánlott
+    sameSourceClips: Ugyan abból a streamből
   paginateLoad:
     newer: Újabbak
     older: Régebbiek
@@ -266,12 +269,18 @@ views:
   about:
     add_my_channel: Csatorna igénylés
   watch:
+    theaterMode: Mozi mód (alt + t)
     mentionIconLabel: EMLÍTÉSEK
     chat:
       loading: Chat betöltése...
       hideTLBtn: Fordítások elrejtése
       showTLBtn: Fordítások megjelenítése
       TLSettingsTitle: Fordítás beállítások
+      showSubtitle: Feliratok megjelenítése
+      expandTL: TLdex kiterjesztése
+      tlStart: Üzenetek kezdete
+      StickBottomSettingLabel: Alulra rögzítés
+      StickBottomSettingsDesc: A fordító doboz Youtube chat alá helyezése
       showVerifiedMessages: Igazolt felhasználók üzeneteinek megjelenítése
       showModeratorMessages: Moderátor üzenetek megjelenítése
       showVtuberMessages: Vtuber üzenetek megjelenítése
