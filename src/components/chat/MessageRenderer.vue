@@ -1,5 +1,6 @@
 <template>
   <v-card-text
+    id="scroll-target"
     ref="tlBody"
     class="tl-body pa-1 pa-lg-3"
     :style="{
@@ -17,7 +18,7 @@
     </transition-group>
     <!-- Slot for adding a Load More button on top of Messages -->
     <slot />
-    Zero Position: {{ zeroPos }}
+    <span v-scroll:#scroll-target="onScroll" style="position: absolute; top: 10px">Position: {{ pos }} </span>
   </v-card-text>
 </template>
 
@@ -40,6 +41,7 @@ export default {
     data() {
         return {
             zeroPos: 0,
+            pos: 0,
         };
     },
     mounted() {
@@ -57,6 +59,10 @@ export default {
             if (Math.abs(this.$refs.tlBody.scrollTop) <= 10) {
                 this.$refs.tlBody.scrollTop = this.zeroPos;
             }
+        },
+        onScroll(e) {
+            this.pos = e.target.scrollTop;
+            console.log(e.target.scrollTop);
         },
     },
 };
