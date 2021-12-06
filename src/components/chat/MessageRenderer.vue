@@ -6,6 +6,7 @@
       'font-size': fontSize + 'px',
     }"
   >
+    <!-- Slot for adding a Load More button on top of Messages -->
     <slot />
     <transition-group name="fade">
       <template v-for="(item, index) in tlHistory">

@@ -84,8 +84,7 @@
                 label="Thumbnail Image"
                 placeholder="https://imgur.com/..."
                 type="url"
-                required
-                :rules="[requiredRule, linkRule]"
+                :rules="[linkRule]"
               />
               <v-row class="my-n2 py-0">
                 <v-col>
@@ -362,7 +361,7 @@ export default {
                     name: this.videoTitle,
                     ...this.videoTitleJP && { jp_name: this.videoTitleJP },
                     link: this.sourceUrl,
-                    thumbnail: this.thumbnail,
+                    ...this.thumbnail && { thumbnail: this.thumbnail },
                     placeholderType: this.placeholderType,
                     certainty: this.certainty,
                     credits: this.credits,
