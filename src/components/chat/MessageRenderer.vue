@@ -18,7 +18,6 @@
     </transition-group>
     <!-- Slot for adding a Load More button on top of Messages -->
     <slot />
-    <span v-scroll:#scroll-target="onScroll" style="position: absolute; top: 10px">Position: {{ pos }} </span>
   </v-card-text>
 </template>
 
@@ -38,16 +37,6 @@ export default {
             default: 14,
         },
     },
-    data() {
-        return {
-            zeroPos: 0,
-            pos: 0,
-        };
-    },
-    mounted() {
-        // Store the zero position which is sometimes negative on certain browser/conditions
-        this.zeroPos = this.$refs.tlBody.scrollTop;
-    },
     methods: {
         hideAuthor(item, index) {
             return !(index === 0
@@ -56,13 +45,10 @@ export default {
                 || !!item.breakpoint);
         },
         scrollToBottom() {
-            if (Math.abs(this.$refs.tlBody.scrollTop) <= 10) {
-                this.$refs.tlBody.scrollTop = this.zeroPos;
+            // console.log(Math.abs(this.$refs.tlBody.clientHeight), this.$refs.tlBody.clientHeight * 0.15);
+            if (Math.abs(this.$refs.tlBody.scrollTop) <= this.$refs.tlBody.clientHeight * 0.15) {
+                this.$refs.tlBody.scrollTop = 1;
             }
-        },
-        onScroll(e) {
-            this.pos = e.target.scrollTop;
-            console.log(e.target.scrollTop);
         },
     },
 };
