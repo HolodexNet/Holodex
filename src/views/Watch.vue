@@ -9,7 +9,8 @@
     class="d-flex flex-row watch-layout"
     :class="{
       'mobile': isMobile,
-      'theater-mode': theaterMode || $vuetify.breakpoint.mdAndDown
+      'theater-mode': theaterMode || $vuetify.breakpoint.mdAndDown,
+      'show-chat': !isMugen && showChatWindow,
     }"
   >
     <KeyPress
@@ -458,6 +459,9 @@ export default {
   }
 
   @media (orientation: portrait) {
+    &.show-chat .left {
+      overflow-y: hidden;
+    }
     // Default portrait mode position/height for desktop
     .chat {
       position: fixed;
