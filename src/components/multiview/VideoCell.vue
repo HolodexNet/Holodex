@@ -45,7 +45,7 @@
         @mute="setMuted($event)"
         @volume="volume = $event"
       />
-      <portal-target :name="`${video.id}-overlay`" />
+      <portal-target :name="`${video.id}-overlay`" style="font-size: 18px;" />
     </div>
     <cell-control
       v-if="editMode"

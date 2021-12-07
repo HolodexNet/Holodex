@@ -41,15 +41,13 @@ export default {
 }
 
 .subtitle-text {
-    font-size: 16px;
-    font-size: max(1.5vw, 16px);
     word-wrap: break-word;
     box-shadow: 10px 0 0 rgba(0,0,0,0.75), -10px 0 0 rgba(0,0,0,0.75);
     background: rgba(0,0,0,0.75);
 }
 .subtitle-name {
   font-size: 16px;
-  font-size: max(1vw, 16px);
+  font-size: max(1vw, 20px);
   margin-bottom: -.3rem;
 }
 

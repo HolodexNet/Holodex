@@ -55,7 +55,7 @@
             @currentTime="handleCurrentTime"
           />
           <!-- <WatchVideoOverlay :video="video" /> -->
-          <portal-target :name="`${video.id}-overlay`" />
+          <portal-target :name="`${video.id}-overlay`" style="font-size: 16px; font-size: max(1.5vw, 16px);" />
         </div>
         <WatchHighlights
           v-if="comments.length && (!isMobile || !showTL)"

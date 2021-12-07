@@ -234,18 +234,6 @@ export default {
         } else {
             this.initSocket();
         }
-
-        // Test string
-        setInterval(() => {
-            const msg = {
-                name: "test 1",
-                // message: "But it’s no Pokemon, it’s just a very hyped Tako. :_MMT:https://yt3.ggpht.com/vjsrafxnve6TZhRGbmoVEGpn8VWUAYoT_uin2tBO6R4hoFfAakNTE9V9TD8fq3cAp0ZO4jM03pI=w48-h48-c-k-nd It seems to be very hyped for tomorrow’s fashINA show… almost too hyped that it has barely sleep :_MMT:https://yt3.ggpht.com/vjsrafxnve6TZhRGbmoVEGpn8VWUAYoT_uin2tBO6R4hoFfAakNTE9V9TD8fq3cAp0ZO4jM03pI=w48-h48-c-k-nd ",
-                message: `TEST: ${Date.now()}`,
-                timestamp: Date.now(),
-            };
-            // if (Math.abs(this.$refs.tlBody.scrollTop) <= 1) this.$refs.tlBody.scrollTo(0, 0);
-            this.tlHistory.push(this.parseMessage(msg));
-        }, 3000);
     },
     beforeDestroy() {
         this.tlLeave();
