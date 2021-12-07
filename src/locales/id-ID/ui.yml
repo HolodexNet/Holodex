@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terjadwal
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -79,6 +81,7 @@ component:
     sourcesLabel: Sumber
     songsLabel: lagu
     recommendationsLabel: rekomendasi
+    sameSourceClips: Dari siaran yang sama
   paginateLoad:
     newer: Terbaru
     older: Terlama
@@ -266,15 +269,18 @@ views:
   about:
     add_my_channel: Mengajukan Channel
   watch:
-    theaterMode: Mode Teater
+    theaterMode: Mode Teater (alt + t)
     mentionIconLabel: MENTION
     chat:
       loading: Memuat Chat...
       hideTLBtn: Sembunyikan Terjemahan
       showTLBtn: Tampilkan Terjemahan
       TLSettingsTitle: Pengaturan Terjemahan
-      StickBottomSettingLabel: Sematkan dibawah (HP)
-      StickBottomSettingsDesc: Kolom Terjemahan akan disematkan dibawah kolom chat (pengaturan awal disematkan diatas pada tampilan HP)
+      showSubtitle: Menampilkan Takarir
+      expandTL: Menampilkan kolom TLdex
+      tlStart: Pesan Awal
+      StickBottomSettingLabel: Sematkan Dibawah
+      StickBottomSettingsDesc: Kolom TL akan diletakkan dibawah Chat Youtube
       showVerifiedMessages: Menampilkan Pesan Pengguna yang Terverifikasi
       showModeratorMessages: Menampilkan Pesan Moderator
       showVtuberMessages: Menampilkan Pesan Vtuber
@@ -420,6 +426,7 @@ editor:
     testStart: Uji awal mulai
     startInput: Mulai
     endInput: 'Durasi dalam detik: (berakhir pd {0})'
+    inheritItunesMusic: 'Setel Durasi via iTunes: {0}'
   exitMode: Keluar dari Mode Edit
   enterMode: Edit Video
 about:

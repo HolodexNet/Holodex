@@ -98,6 +98,7 @@
 import VideoCardList from "@/components/video/VideoCardList.vue";
 import filterVideos from "@/mixins/filterVideos";
 import { mdiTimerOutline } from "@mdi/js";
+import { videoTemporalComparator } from "@/utils/functions";
 
 export default {
     name: "WatchSideBar",
@@ -123,6 +124,7 @@ export default {
                 sources: false,
                 recommendations: false,
                 songs: false,
+                same_source_clips: false,
             },
         };
     },
@@ -131,14 +133,16 @@ export default {
         //     return Object.values(this.related).map(r => r.length).reduce((a, b) => a+b);
         // }
         related() {
+            const clips = (this.video.clips
+                && this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)))
+                || [];
+            clips.sort(videoTemporalComparator).reverse();
             return {
                 simulcasts: this.video.simulcasts || [],
-                clips:
-                    (this.video.clips
-                        && this.video.clips.filter((x) => this.$store.state.settings.clipLangs.includes(x.lang)))
-                    || [],
+                clips,
                 sources: this.video.sources || [],
                 refers: this.video.refers || [],
+                same_source_clips: (this.video.same_source_clips && this.video.same_source_clips.slice(0, 10)) || [],
                 recommendations: (this.video.recommendations && this.video.recommendations.slice(0, 10)) || [],
             };
         },
@@ -158,7 +162,9 @@ export default {
     },
     mounted() {
         this.$nextTick(this.updateSongs);
-        this.hidden.recommendations = (this.related.refers.length + this.related.clips.length + this.related.sources.length) >= 5;
+    },
+    created() {
+        this.hidden.recommendations = (this.related.refers.length + this.related.clips.length + this.related.sources.length + this.related.same_source_clips.length) >= 5;
     },
     methods: {
         relationI18N(relation) {
@@ -175,6 +181,8 @@ export default {
                     return this.$t("component.relatedVideo.recommendationsLabel");
                 case "songs":
                     return this.$t("component.relatedVideo.songsLabel");
+                case "same_source_clips":
+                    return this.$t("component.relatedVideo.sameSourceClips");
                 default:
                     return "";
             }

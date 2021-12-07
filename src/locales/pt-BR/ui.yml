@@ -249,15 +249,12 @@ views:
   about:
     add_my_channel: Solicitação de canal
   watch:
-    theaterMode: Modo Teatro
     mentionIconLabel: Menções
     chat:
       loading: Carregando o Chat...
       hideTLBtn: Esconder Traduções
       showTLBtn: Mostrar Traduções
       TLSettingsTitle: Configurações de tradução
-      StickBottomSettingLabel: Manter no Rodapé (Celulares)
-      StickBottomSettingsDesc: A caixa tradução ficara na parte inferior do Chat (Fica no topo por padrão)
       showVerifiedMessages: Mostrar Mensagens Verificadas
       showModeratorMessages: Mostrar Mensagens de Moderadores
       tlFontSize: Tamanho da Fonte

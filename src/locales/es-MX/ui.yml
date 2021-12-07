@@ -168,15 +168,12 @@ views:
     nowSupportsMultiOrg: Holodex ahora soporta multiples organizaciones.
     loginCallToAction: '¡Inicia sesión para reunir tus propios favoritos!'
   watch:
-    theaterMode: Modo Cine
     mentionIconLabel: MENCIONES
     chat:
       loading: Cargando el chat...
       hideTLBtn: Esconder TLs
       showTLBtn: Mostrar TLs
       TLSettingsTitle: Opciones de TL
-      StickBottomSettingLabel: Pegar abajo (Mobiles)
-      StickBottomSettingsDesc: TL box se pega abajo del chat (por defecto se pega arriba en mobiles)
       retryBtn: Reintentar
       status:
         reconnecting: Reconectando automaticamente...

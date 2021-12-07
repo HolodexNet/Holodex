@@ -87,6 +87,7 @@
         :i="item.i"
         :is-draggable="item.isDraggable !== false"
         :is-resizable="item.isResizable !== false"
+        :style="showReorderLayout && {'pointer-events': 'none'}"
       >
         <cell-container :item="item">
           <ChatCell

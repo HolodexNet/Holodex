@@ -1,5 +1,7 @@
 <template>
   <v-card-text
+    id="scroll-target"
+    ref="tlBody"
     class="tl-body pa-1 pa-lg-3"
     :style="{
       'font-size': fontSize + 'px',
@@ -14,6 +16,7 @@
         />
       </template>
     </transition-group>
+    <!-- Slot for adding a Load More button on top of Messages -->
     <slot />
   </v-card-text>
 </template>
@@ -40,6 +43,11 @@ export default {
                 || index === this.tlHistory.length - 1
                 || item.name !== this.tlHistory[index - 1].name
                 || !!item.breakpoint);
+        },
+        scrollToBottom() {
+            if (Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight) <= 0.05 && this.$refs.tlBody.scrollTop < 0) {
+                this.$refs.tlBody.scrollTop = 1;
+            }
         },
     },
 };

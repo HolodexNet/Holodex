@@ -24,12 +24,25 @@
         TLdex [{{ liveTlLang }}]
       </div>
       <span>
+        <v-btn
+          icon
+          x-small
+          class="mr-1"
+          :title="$t('views.watch.chat.showSubtitle')"
+          @click="showSubtitle = !showSubtitle"
+        >
+          <v-icon :color="showSubtitle ? 'primary' :''">
+            {{ mdiSubtitlesOutline }}
+          </v-icon>
+        </v-btn>
         <v-dialog v-model="expanded" width="800">
           <template #activator="{ on, attrs }">
             <v-btn
               icon
               x-small
               v-bind="attrs"
+              class="mr-1"
+              :title="$t('views.watch.chat.expandTL')"
               v-on="on"
             >
               <v-icon>
@@ -66,7 +79,7 @@
           :disabled="completed"
           @click="loadMessages()"
         >
-          {{ completed ? "Start of Messages" : "Load More" }}
+          {{ completed ? $t('views.watch.chat.tlStart') : $t('component.description.showMore') }}
         </v-btn>
         <v-btn
           v-if="!completed && !historyLoading && expanded"
@@ -77,6 +90,10 @@
           Load All
         </v-btn>
       </message-renderer>
+    </portal>
+
+    <portal v-if="showSubtitle" :to="`${video.id}-overlay`">
+      <WatchSubtitleOverlay :messages="toDisplay" />
     </portal>
   </v-card>
 </template>
@@ -90,6 +107,7 @@ import Vue from "vue";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import chatMixin from "./chatMixin";
 import MessageRenderer from "./MessageRenderer.vue";
+import WatchSubtitleOverlay from "../watch/WatchSubtitleOverlay.vue";
 
 const manager = new Manager(API_BASE_URL, {
     reconnectionAttempts: 10,
@@ -107,6 +125,7 @@ export default {
     components: {
         WatchLiveTranslationsSetting,
         MessageRenderer,
+        WatchSubtitleOverlay,
     },
     mixins: [chatMixin],
     data() {
@@ -180,6 +199,19 @@ export default {
                 if (!val) this.selectedChannel = "";
             },
         },
+        toDisplay() {
+            if (!this.tlHistory.length || !this.showSubtitle) return [];
+            const buffer = this.tlHistory.slice(-2);
+            return buffer.filter((m) => {
+                const displayTime = (m.message.length * (65 / 1000)) + 1.8;
+                // Use receivedAt and Date.now for consistency, since live streams can have many forms of delay
+                // We just want to display messages for a certain period of time after they are received
+                const receivedRelativeSec = m.receivedAt ? (m.receivedAt - this.startTimeMillis) / 1000 : m.relativeSeconds;
+                const curTime = (Date.now() - this.startTimeMillis) / 1000;
+                // Bind updates to currentTime (pausing video will pause overlay)
+                return this.currentTime && curTime >= receivedRelativeSec && curTime < receivedRelativeSec + displayTime;
+            });
+        },
     },
     watch: {
         liveTlLang(nw, old) {
@@ -190,6 +222,11 @@ export default {
                 this.isLoading = false;
             }
         },
+        tlHistory() {
+            this.$nextTick(() => {
+                this.$refs.tlBody.scrollToBottom();
+            });
+        },
     },
     mounted() {
         if (this.$socket.connected) {
@@ -197,16 +234,6 @@ export default {
         } else {
             this.initSocket();
         }
-        // Test string
-        // setInterval(() => {
-        //     const msg = {
-        //         name: "test 1",
-        //         message: "But it’s no Pokemon, it’s just a very hyped Tako. :_MMT:https://yt3.ggpht.com/vjsrafxnve6TZhRGbmoVEGpn8VWUAYoT_uin2tBO6R4hoFfAakNTE9V9TD8fq3cAp0ZO4jM03pI=w48-h48-c-k-nd It seems to be very hyped for tomorrow’s fashINA show… almost too hyped that it has barely sleep :_MMT:https://yt3.ggpht.com/vjsrafxnve6TZhRGbmoVEGpn8VWUAYoT_uin2tBO6R4hoFfAakNTE9V9TD8fq3cAp0ZO4jM03pI=w48-h48-c-k-nd ",
-        //         timestamp: Date.now()
-        //     };
-        //     if (Math.abs(this.$refs.tlBody.scrollTop) <= 1) this.$refs.tlBody.scrollTo(0, 0);
-        //     this.tlHistory.push(this.parseMessage(msg));
-        // }, 1000)
     },
     beforeDestroy() {
         this.tlLeave();
@@ -235,9 +262,9 @@ export default {
                     || (msg.is_moderator && this.liveTlShowModerator)
                     || (msg.is_verified && this.liveTlShowVerified)
                 ) {
-                    if (Math.abs(this.$refs.tlBody.scrollTop) <= 15) this.$refs.tlBody.scrollTo(0, 0);
-                    this.tlHistory.push(this.parseMessage(msg));
-                    this.$emit("historyLength", this.tlHistory.length);
+                    const parsedMessage = this.parseMessage(msg);
+                    parsedMessage.receivedAt = Date.now();
+                    this.tlHistory.push(parsedMessage);
                 }
                 return;
             }

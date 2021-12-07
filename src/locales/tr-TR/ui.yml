@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Planlı Etkinlik
   videoDescription:
     description: Açıklama
+  video:
+    comment: { }
   description:
     showLess: Daha az
     showMore: Daha çok
@@ -79,6 +81,7 @@ component:
     sourcesLabel: kaynaklar
     songsLabel: şarkılar
     recommendationsLabel: önerilenler
+    sameSourceClips: Aynı yayınlardan
   paginateLoad:
     newer: Daha yeni
     older: Daha eski
@@ -266,15 +269,18 @@ views:
   about:
     add_my_channel: Kanal Talebi
   watch:
-    theaterMode: Tiyatro Modu
+    theaterMode: Tiyatro Modu (alt + t)
     mentionIconLabel: Söz edilenler
     chat:
       loading: Sohbet yükleniyor...
       hideTLBtn: Çevirileri gizle
       showTLBtn: Çevirileri göster
       TLSettingsTitle: Çeviri Ayarları
-      StickBottomSettingLabel: Aşağıya Sabitle (mobil cihazlar)
-      StickBottomSettingsDesc: Çeviri kutusu sohbetin Altına sabitlenir (mobilde varsayılan olarak yukarı sabitlenir)
+      showSubtitle: Altyazıyı göster
+      expandTL: TLdex'i genişlet
+      tlStart: Mesajların başı
+      StickBottomSettingLabel: Alta Yapıştır
+      StickBottomSettingsDesc: Altyazı kutusunu Youtube Sohbetinin altına yerleştir
       showVerifiedMessages: Doğrulanmış Mesajları Göster
       showModeratorMessages: Moderatör Mesajlarını Göster
       showVtuberMessages: Vtuber Mesajlarını Görüntüle
@@ -394,6 +400,8 @@ views:
       one: İzleme ve Çoklu İzleme sayfalarında Arşivlenmiş Yayın Sohbetini etkinleştirir
       two: Holodex izleme sayfasından videoların beğenilmesini mümkün kılar
       three: Youtube'un yayın sohbetindeki bellek sızıntısını düzeltir
+      four: >-
+        Youtube oynatıcısının deneysel özelliklerini düzeltir (Çoklu yayınları devre dışı kalması, bekleme odası küçük resminin görünmemesi) ve daha fazlası!
 time:
   soon: yakında
   diff_future_date: ' {0} ({1}) başlıyor'

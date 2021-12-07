@@ -238,7 +238,7 @@ export default {
             return formatDuration((this.maxTs - this.minTs) * 1000);
         },
         hasVideosToSync() {
-            return this.overlapVideos.length > 1;
+            return this.overlapVideos.length >= 1;
         },
         routeCurrentTs() {
             return this.$route.query.t;

@@ -248,15 +248,12 @@ views:
   about:
     add_my_channel: Richiesta di aggiunta del Canale
   watch:
-    theaterMode: Modalità Cinema
     mentionIconLabel: MENZIONI
     chat:
       loading: Caricamento della Chat...
       hideTLBtn: Nascondi le Traduzioni
       showTLBtn: Mostra le Traduzioni
       TLSettingsTitle: Impostazioni delle Traduzioni
-      StickBottomSettingLabel: Fissa in basso (dispositivo mobile)
-      StickBottomSettingsDesc: Fissa sotto la chat il box traduzione (di base è fissato in alto sui dispositivi mobili)
       showVerifiedMessages: Mostra Messaggi Verificati
       showModeratorMessages: Mostra Messaggi dei Moderatori
       tlFontSize: Dimensione Carattere

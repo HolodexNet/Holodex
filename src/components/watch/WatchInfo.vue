@@ -180,7 +180,6 @@ export default {
             editMode: false,
             showAllMentions: false,
             lastViewerCount: -1,
-
             mdiAt,
         };
     },

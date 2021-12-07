@@ -26,6 +26,7 @@
             v-if="video && video.comments && video.comments.length"
             key="comments"
             hide-buckets
+            default-expanded
             :comments="video.comments"
             :video="video"
             :limit="$store.state.isMobile ? 5 : 0"

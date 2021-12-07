@@ -81,6 +81,7 @@ component:
     sourcesLabel: souwces
     songsLabel: songs
     recommendationsLabel: wecommended
+    sameSourceClips: Fwom da same stweams
   paginateLoad:
     newer: Newew
     older: Owdew
@@ -268,15 +269,18 @@ views:
   about:
     add_my_channel: Channew request
   watch:
-    theaterMode: Theatew mode
+    theaterMode: Theatew mode (alt + t)
     mentionIconLabel: MENTIONS
     chat:
       loading: Loading chat...
       hideTLBtn: Hide tls
       showTLBtn: Show tls
       TLSettingsTitle: Tl settings
-      StickBottomSettingLabel: Stick bottom (mobiwe)
-      StickBottomSettingsDesc: Tl box sticks to da bottom of chat (defauwt stick to top on mobiwe)
+      showSubtitle: Show subtitwe
+      expandTL: Expand tldex
+      tlStart: Stawt of messages
+      StickBottomSettingLabel: Stick bottom
+      StickBottomSettingsDesc: Tl box pwaced bewow youtube chat
       showVerifiedMessages: Show vewified messages
       showModeratorMessages: Show modewatow messages
       showVtuberMessages: Show vtubew messages

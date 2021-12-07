@@ -45,11 +45,10 @@
         @mute="setMuted($event)"
         @volume="volume = $event"
       />
+      <portal-target :name="`${video.id}-overlay`" style="font-size: 18px;" />
     </div>
     <cell-control
       v-if="editMode"
-      :play-icon="icons.mdiPlay"
-      @playpause="setPlaying(true)"
       @reset="uniqueId = Date.now()"
       @back="resetCell"
       @delete="deleteCell"
@@ -222,7 +221,7 @@ export default {
         },
         setTimer() {
             if (this.timer) clearInterval(this.timer);
-            if (this.video.status !== "past") return;
+            // if (this.video.status !== "past") return;
             this.timer = setInterval(async () => {
                 this.currentTime = await this.$refs.player.getCurrentTime();
             }, 500);

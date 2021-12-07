@@ -2,11 +2,28 @@
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
+### 2.25 Holodex [*Dec 6th, 2021*]
+
+#### New
+- Updated watch page layout to better use of space, let us know what you think!
+- Added "Clips from the same streams" to the side bar
+- Added on screen subtitles in watch and multiview, as long as TLdex is open
+![img](https://cdn.discordapp.com/attachments/811229830783303720/917157643968200864/unknown.png)
+
+#### Minor changes
+- Placeholders now use Japanese titles if set
+- Fix bug in Watch page where incorrect timestamping results in wild buckets.
+- MultiView Sync Bar can be opened with 1 video
+- Editors can modify Placeholders
+- Fixed TLs not snapping to the bototm on iOS devices
+- Channel icons should disappear less often, and show a placeholder when it fails
+- Clips sorted by most recent on streams
+
 ### 2.24 Holodex [*Nov 26th, 2021*]
 
-### Minor changes
+#### Minor changes
 - Groups now show up on Channel Pages
-- You can now navigate to Org specific channel pages and link them, such as [Hololive Channels](/channel?org=Hololive)
+- You can now navigate to Org specific channel pages and link them, such as [Hololive Channels](https://holodex.net/channel?org=Hololive)
 - Better music editing for tagging Karaoke Streams, you'll love it.
 ![img](https://cdn.discordapp.com/attachments/801760512907935764/909550397507653663/unknown.png)
 - Placeholders now have mentions.
@@ -15,11 +32,11 @@
 
 ### 2.23 Holodex [*Nov 11th, 2021*]
 
-### New
+#### New
 
 - Added TLdex vtuber chat messages setting (Filter messages if it's in Holodex's Vtuber database)
 
-### Bugfixes & improvements
+#### Bugfixes & improvements
 - Fixed Multiview sometimes duplicating wrong stream
 - Shrink top navigation bar slightly
 - TLdex chat now shows channel icons for vtubers in chat
@@ -27,7 +44,7 @@
 
 ### 2.22.3 Holodex [*Nov 10th, 2021*]
 
-### Hotfix
+#### Hotfix
 - Fixed Open on Youtube blank screen for older iOS devices
 - Fixed live video sorting for Safari
 - Fixed clips not showing up on clipper channel pages
@@ -35,7 +52,7 @@
 
 ### 2.22.2 Holodex [*Nov 9th, 2021*]
 
-### Bugfixes & improvements
+#### Bugfixes & improvements
 - Fixed an issue from today's maintenance causing constant errors
 - Channel page shows placeholder events
 - Clicking on channel img will open channel page again
@@ -43,14 +60,14 @@
 
 ### 2.22.1 Holodex [*Oct 27, 2021*]
 
-### Bugfixes & improvements
+#### Bugfixes & improvements
 - Fixed cells getting pushed down on multiview in certain cases
 - Buttons show/collapse into three dots depending on screen size
 - Video card text spacing fixed
 
 ### 2.22 Holodex [*Oct 27, 2021*]
 
-### New
+#### New
 
 - Archive Sync, open the archive sync bar to automatically sync archives on multiview (@RiceCakess)
   - Use Sync settings to adjust timings for streams that are not perfectly in sync
@@ -64,7 +81,7 @@
 
 ### 2.21.1 Holodex [*Oct 12, 2021*]
 
-### Bugfixes
+#### Bugfixes
 
 - Placeholders will default to using the channel avatar if a thumbnail is not present.
 - Align cards to top for Video Cards (ty for report Angel)

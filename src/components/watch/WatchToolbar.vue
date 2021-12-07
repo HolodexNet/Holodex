@@ -1,13 +1,5 @@
 <template>
   <v-sheet tile class="d-flex justify-space-between flex-wrap-reverse flex-sm-nowrap px-lg-4">
-    <v-btn
-      v-if="!noBackButton"
-      icon
-      lg
-      @click="goBack()"
-    >
-      <v-icon>{{ mdiArrowLeft }}</v-icon>
-    </v-btn>
     <div class="watch-btn-group ml-auto d-flex">
       <slot name="buttons" />
       <v-tooltip bottom>
@@ -59,10 +51,6 @@ export default {
             type: Object,
             required: true,
         },
-        noBackButton: {
-            type: Boolean,
-            default: false,
-        },
     },
     data() {
         return {
@@ -81,9 +69,6 @@ export default {
             this.hasSaved
                 ? this.$store.commit("playlist/removeVideoByID", this.video.id)
                 : this.$store.commit("playlist/addVideo", this.video);
-        },
-        goBack() {
-            this.$router.replace(this.$route.meta.prevPath || "/");
         },
     },
 };

@@ -2,12 +2,13 @@
 import api from "@/utils/backend-api";
 import { formatDuration, dayjs } from "@/utils/time";
 import { syncState } from "@/utils/functions";
-import { mdiArrowExpand } from "@mdi/js";
+import { mdiArrowExpand, mdiSubtitlesOutline } from "@mdi/js";
 
 export default {
     data() {
         return {
             mdiArrowExpand,
+            mdiSubtitlesOutline,
             tlHistory: [],
             MESSAGE_TYPES: Object.freeze({
                 END: "end",
@@ -17,16 +18,25 @@ export default {
                 UPDATE: "update",
             }),
             expanded: false,
-
             historyLoading: false,
             completed: false,
             limit: 20,
+
+            subtitleToggle: true,
         };
     },
     props: {
         video: {
             type: Object,
             required: false,
+        },
+        currentTime: {
+            type: Number,
+            default: 0,
+        },
+        // For multiview
+        useLocalSubtitleToggle: {
+            type: Boolean,
         },
     },
     computed: {
@@ -41,7 +51,16 @@ export default {
             "liveTlShowModerator",
             "liveTlWindowSize",
             "liveTlShowVtuber",
+            "liveTlShowSubtitle",
         ]),
+        showSubtitle: {
+            get() {
+                return this.useLocalSubtitleToggle ? this.subtitleToggle : this.liveTlShowSubtitle;
+            },
+            set(val) {
+                this.useLocalSubtitleToggle ? this.subtitleToggle = val : this.liveTlShowSubtitle = val;
+            },
+        },
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];
         },
@@ -60,16 +79,19 @@ export default {
             this.loadMessages(true, true);
         },
     },
+    mounted() {
+        this.showSubtitle = this.liveTlShowSubtitle;
+    },
     methods: {
         loadMessages(firstLoad = false, loadAll = false) {
             this.historyLoading = true;
-            const lastTimestamp = !firstLoad && this.tlHistory[0].timestamp;
+            const lastTimestamp = !firstLoad && this.tlHistory[0]?.timestamp;
             api.chatHistory(this.video.id, {
                 lang: this.liveTlLang,
                 verified: this.liveTlShowVerified,
                 moderator: this.liveTlShowModerator,
                 vtuber: this.liveTlShowVtuber,
-                limit: loadAll ? 10000 : this.limit,
+                limit: loadAll ? 100000 : this.limit,
                 ...(lastTimestamp && { before: lastTimestamp }),
             })
                 .then(({ data }) => {
@@ -90,12 +112,6 @@ export default {
                 });
         },
         parseMessage(msg) {
-            // Append title to author name
-            // msg.prefix = "";
-            // if (msg.is_moderator) msg.prefix += "[Mod]";
-            // if (msg.is_verified) msg.prefix += "✓";
-            // if (msg.is_owner) msg.prefix += "[Owner]";
-            // if (msg.is_vtuber) msg.prefix += "[Vtuber]";
             msg.timestamp = +msg.timestamp;
             msg.relativeSeconds = (msg.timestamp - this.startTimeMillis) / 1000;
             msg.displayTime = this.utcToTimestamp(msg.timestamp);
@@ -127,7 +143,8 @@ export default {
             return msg;
         },
         utcToTimestamp(utc) {
-            return formatDuration(dayjs.utc(utc).diff(this.startTimeMillis));
+            const millisDiff = dayjs.utc(utc).diff(this.startTimeMillis);
+            return (Math.sign(millisDiff) < 0 ? "-" : "") + formatDuration(Math.abs(millisDiff));
         },
         realTimestamp(utc) {
             return dayjs(utc).format("LTS"); // localizedFormat

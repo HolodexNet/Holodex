@@ -8,12 +8,24 @@
     <v-card-subtitle class="py-1 d-flex justify-space-between">
       <div>TLdex [{{ liveTlLang }}]</div>
       <span>
+        <v-btn
+          icon
+          x-small
+          class="mr-1"
+          :title="$t('views.watch.chat.showSubtitle')"
+          @click="showSubtitle = !showSubtitle"
+        >
+          <v-icon :color="showSubtitle ? 'primary' :''">
+            {{ mdiSubtitlesOutline }}
+          </v-icon>
+        </v-btn>
         <v-dialog v-model="expanded" width="800">
           <template #activator="{ on, attrs }">
             <v-btn
               icon
               x-small
               v-bind="attrs"
+              :title="$t('views.watch.chat.expandTL')"
               v-on="on"
             >
               <v-icon>
@@ -21,7 +33,6 @@
               </v-icon>
             </v-btn>
           </template>
-
           <v-card>
             <portal-target name="expandedMessage" class="d-flex tl-expanded" />
             <v-divider />
@@ -51,6 +62,9 @@
         @click.native="handleClick"
       />
     </portal>
+    <portal v-if="showSubtitle" :to="`${video.id}-overlay`">
+      <WatchSubtitleOverlay :messages="toDisplay" />
+    </portal>
   </v-card>
 </template>
 
@@ -59,20 +73,16 @@ import VirtualList from "vue-virtual-scroll-list";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import ChatMessage from "./ChatMessage.vue";
 import chatMixin from "./chatMixin";
+import WatchSubtitleOverlay from "../watch/WatchSubtitleOverlay.vue";
 
 export default {
     name: "ArchiveTranslations",
     components: {
         WatchLiveTranslationsSetting,
         VirtualList,
+        WatchSubtitleOverlay,
     },
     mixins: [chatMixin],
-    props: {
-        currentTime: {
-            type: Number,
-            default: 0,
-        },
-    },
     data() {
         return {
             ChatMessage,
@@ -89,6 +99,16 @@ export default {
             });
             return this.tlHistory;
         },
+        toDisplay() {
+            if (!this.tlHistory.length || !this.showSubtitle) return [];
+            const startIdx = Math.max(this.curIndex - 1, 0);
+            // Grab previous and current message
+            const buffer = this.tlHistory.slice(startIdx, startIdx + 2);
+            return buffer.filter((m) => {
+                const displayTime = (m.message.length * (65 / 1000)) + 1.8;
+                return this.currentTime >= m.relativeSeconds && this.currentTime < m.relativeSeconds + displayTime;
+            });
+        },
     },
     watch: {
         liveTlLang() {
@@ -96,7 +116,7 @@ export default {
         },
         currentTime(time) {
             if (!this.tlHistory.length) return;
-            const cur = this.getRelativeSecs(this.curIndex);
+            const cur = this.tlHistory[this.curIndex].relativeSeconds;
             // time jumped forward too fast, or backwards. Exhaustive search for next spot
 
             const startIndex = time < cur ? 0 : this.curIndex;
@@ -105,31 +125,20 @@ export default {
                     this.curIndex = this.tlHistory.length - 1;
                     return;
                 }
-                if (time <= this.getRelativeSecs(i)) {
+                if (time <= this.tlHistory[i].relativeSeconds) {
                     this.curIndex = Math.max(i - 1, 0);
                     return;
                 }
             }
         },
         curIndex(idx) {
-            const ref = this.$refs.tlBody;
-            const idxSize = ref.virtual.sizes.get(idx) ?? 50;
-            const idxOffset = ref.virtual.getOffset(idx);
-            const nearBottom = idxOffset + ref.getClientSize() > ref.getScrollSize();
-            if (nearBottom) {
-                ref.scrollToBottom();
-            } else {
-                ref.scrollToOffset(idxOffset - (ref.getClientSize() / 2) + idxSize);
-            }
+            this.scrollToIndex(idx);
         },
     },
     created() {
         this.loadMessages(true, true);
     },
     methods: {
-        getRelativeSecs(index) {
-            return (this.tlHistory[index].timestamp - this.startTimeMillis) / 1000;
-        },
         activeClass(index) {
             return index === this.curIndex ? "active-message" : "";
         },
@@ -140,6 +149,18 @@ export default {
             if (e.target.matches(".tl-message, .tl-message *")) {
                 this.$emit("timeJump", +e.target.parentElement.getAttribute("data-time"), true, true);
                 e.preventDefault();
+            }
+        },
+
+        scrollToIndex(idx) {
+            const ref = this.$refs.tlBody;
+            const idxSize = ref.virtual.sizes.get(idx) ?? 50;
+            const idxOffset = ref.virtual.getOffset(idx);
+            const nearBottom = idxOffset + ref.getClientSize() > ref.getScrollSize();
+            if (nearBottom) {
+                ref.scrollToBottom();
+            } else {
+                ref.scrollToOffset(idxOffset - (ref.getClientSize() / 2) + idxSize);
             }
         },
     },

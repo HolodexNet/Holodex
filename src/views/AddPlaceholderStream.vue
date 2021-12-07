@@ -33,6 +33,29 @@
                 :rules="[requiredRule]"
                 hint="Use a different name when being publicly credited"
               />
+              <v-tabs v-model="tab" icons-and-text class="mb-4">
+                <v-tab>New <v-icon>{{ icons.mdiPlusBox }}</v-icon></v-tab>
+                <v-tab>Existing <v-icon>{{ icons.mdiPencil }}</v-icon></v-tab>
+              </v-tabs>
+
+              <v-slide-y-transition group>
+                <v-text-field
+                  v-if="tab === 1"
+                  key="x921a"
+                  v-model="id"
+                  label="Placeholder ID (11 characters)"
+                  :append-outer-icon="icons.mdiCheck"
+                  clearable
+                  @click:append-outer="loadExistingPlaceholder(id)"
+                />
+
+                <video-selector
+                  v-if="tab === 1 && !id"
+                  key="x921b"
+                  :hide-placeholders="false"
+                  @videoClicked="(video) => {id = video.id; loadExistingPlaceholder(id)}"
+                />
+              </v-slide-y-transition>
               <channel-autocomplete
                 v-model="channel"
                 label="Channel"
@@ -61,10 +84,9 @@
                 label="Thumbnail Image"
                 placeholder="https://imgur.com/..."
                 type="url"
-                required
-                :rules="[requiredRule, linkRule]"
+                :rules="[linkRule]"
               />
-              <v-row>
+              <v-row class="my-n2 py-0">
                 <v-col>
                   <v-select
                     v-model="placeholderType"
@@ -84,7 +106,7 @@
                   />
                 </v-col>
               </v-row>
-              <v-row>
+              <v-row class="mt-n3 py-0">
                 <v-col>
                   <v-select
                     v-model="timezone"
@@ -147,7 +169,7 @@
                 color="primary"
                 @click="onSubmit"
               >
-                Submit
+                {{ id ? 'Submit Placeholder Modification' : 'Create new Placeholder' }}
               </v-btn>
             </v-card-text>
           </v-card>
@@ -176,23 +198,27 @@
   </v-form>
 </template>
 
-<script>
+<script lang="ts">
 import ChannelAutocomplete from "@/components/channel/ChannelAutocomplete.vue";
 import { dayjs } from "@/utils/time";
 import VideoCard from "@/components/video/VideoCard.vue";
 import jwtDecode from "jwt-decode";
 import backendApi from "@/utils/backend-api";
 import { mdiMinusBox } from "@mdi/js";
+import VideoSelector from "@/components/multiview/VideoSelector.vue";
 
 export default {
     components: {
         ChannelAutocomplete,
         VideoCard,
+        VideoSelector,
     },
     data() {
         return {
             mdiMinusBox,
 
+            tab: 0,
+            id: "",
             valid: false,
             channel: null,
             videoTitle: "",
@@ -302,8 +328,8 @@ export default {
                 placeholderType: this.placeholderType || "scheduled-yt-stream",
                 channel: this.channel || {
                     id: "ExampleIdThatDoesntExist",
-                    name: "Example Name",
-                    name_jp: "Example JP Name",
+                    name: "<CHANNEL>",
+                    english_name: "<CHANNEL>",
                 },
                 thumbnail: this.thumbnail || "",
                 type: "placeholder",
@@ -320,6 +346,11 @@ export default {
             };
         },
     },
+    watch: {
+        tab(nv) {
+            if (nv === 0) this.id = "";
+        },
+    },
     async mounted() {
         if (this.token?.link) { this.discordCredits = await backendApi.discordServerInfo(this.token.link); }
     },
@@ -330,7 +361,7 @@ export default {
                     name: this.videoTitle,
                     ...this.videoTitleJP && { jp_name: this.videoTitleJP },
                     link: this.sourceUrl,
-                    thumbnail: this.thumbnail,
+                    ...this.thumbnail && { thumbnail: this.thumbnail },
                     placeholderType: this.placeholderType,
                     certainty: this.certainty,
                     credits: this.credits,
@@ -340,7 +371,9 @@ export default {
                     title: titlePayload,
                     liveTime: this.availableAt,
                     duration: (+this.duration) * 60, // convert min to sec
+                    id: undefined,
                 };
+                if (this.id) body.id = this.id;
                 backendApi.addPlaceholderStream(body, this.$store.state.userdata?.jwt, this.$route.query?.token)
                     .then(() => {
                         this.success = true;
@@ -349,6 +382,9 @@ export default {
                         this.error = true;
                         this.errorMessage = e;
                     });
+            } else {
+                this.error = true;
+                this.errorMessage = "You're not a valid Holodex Editor, or your discord-generated placeholder creation link has expired";
             }
         },
         changeDate(amount, unit) {
@@ -359,6 +395,23 @@ export default {
                 // day
                 this.liveDate = dayjs(this.liveDate).add(amount, unit).format("YYYY-MM-DD");
             }
+        },
+        async loadExistingPlaceholder(id: string) {
+            const video = (await backendApi.video(id, undefined, 0)).data;
+            console.log(video);
+
+            this.videoTitle = video.title;
+            this.videoTitleJP = video.jp_name;
+            this.sourceUrl = video.link;
+            this.thumbnail = video.thumbnail;
+            this.placeholderType = video.placeholderType;
+            this.timezone = "Asia/Tokyo";
+            const vt = dayjs(video.start_scheduled).tz(this.timezone);
+            this.liveDate = vt.format("YYYY-MM-DD");
+            this.liveTime = vt.format("HH:mm");
+            this.duration = video.duration / 60;
+            this.certainty = video.certainty;
+            this.$set(this, "channel", video.channel);
         },
     },
 };

@@ -81,6 +81,7 @@ component:
     sourcesLabel: 출처
     songsLabel: 노래
     recommendationsLabel: 추천
+    sameSourceClips: 동일 방송
   paginateLoad:
     newer: 최신순
     older: 오래된순
@@ -268,15 +269,18 @@ views:
   about:
     add_my_channel: 채널 요청
   watch:
-    theaterMode: 영화관 모드
+    theaterMode: 영화관 모드 (alt + t)
     mentionIconLabel: 언급
     chat:
       loading: 채팅을 불러오는 중...
       hideTLBtn: 번역 숨기기
       showTLBtn: 번역 표시
       TLSettingsTitle: 번역 설정
-      StickBottomSettingLabel: 하단 고정 (모바일)
-      StickBottomSettingsDesc: 번역 상자는 채팅 하단에 고정 (모바일은 상단 고정)됩니다
+      showSubtitle: 자막 표시
+      expandTL: TLdex 확장
+      tlStart: 메시지 시작
+      StickBottomSettingLabel: 하단 고정
+      StickBottomSettingsDesc: TL 상자는 YouTube 채팅 아래에 표시됩니다
       showVerifiedMessages: 인증된 사용자의 메시지 표시
       showModeratorMessages: 운영자 메시지 표시
       showVtuberMessages: 버튜버의 메시지 표시

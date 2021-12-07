@@ -134,7 +134,8 @@ export default ({ mode }) => {
                             options: {
                                 cacheName: "holodex-statics-route",
                                 expiration: {
-                                    maxAgeSeconds: 10800,
+                                    maxAgeSeconds: 86400,
+                                    purgeOnQuotaError: true,
                                 },
                                 cacheableResponse: {
                                     statuses: [0, 200],

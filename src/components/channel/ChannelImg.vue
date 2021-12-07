@@ -1,23 +1,34 @@
 <template>
   <!-- Render with opaque response for cache if size is lte 40 -->
-  <a :href="!noLink && `/channel/${channel.id}`" @click.exact.prevent="goToChannel">
+  <a v-if="!err" :href="!noLink && `/channel/${channel.id}`" @click.exact.prevent="goToChannel">
     <v-lazy
       tag="img"
       :src="photo"
       crossorigin="anonymous"
       loading="lazy"
-      :alt="!noAlt && `${channel.name}'s profile picture`"
       :width="size"
       :height="size"
       class="d-block"
       :class="rounded && 'rounded-circle'"
-      @error="err=true"
+      @error="err = true"
     />
   </a>
+  <v-avatar
+    v-else
+    color="secondary"
+    :width="size"
+    :height="size"
+    :title="channel.name"
+    style="min-width: 0px"
+  >
+    <v-icon>
+      {{ icons.mdiAccountCircleOutline }}
+    </v-icon>
+  </v-avatar>
 </template>
 
 <script lang="ts">
-import { resizeChannelPhoto } from "@/utils/functions";
+import { getChannelPhoto } from "@/utils/functions";
 
 export default {
     name: "ChannelImg",
@@ -44,16 +55,13 @@ export default {
         },
     },
     data() {
-        return { err: false };
+        return {
+            err: false,
+        };
     },
     computed: {
         photo() {
-            if (this.err) {
-                const nearest = Math.min(Math.max(Math.ceil(this.size / 50) * 50, 50), 150);
-                return `/statics/channelImg/${this.channel.id}/${nearest}.png`;
-            }
-            if (!this.channel.photo) return "";
-            return resizeChannelPhoto(this.channel.photo, this.size);
+            return getChannelPhoto(this.channel.id, this.size);
         },
     },
     methods: {

@@ -52,7 +52,7 @@ export default {
    * @param c whether to also provide comments, 1 to activate
    * @returns
    */
-    video(id: string, lang?: string, c?: 1) {
+    video(id: string, lang?: string, c?: Number) {
         const q = querystring.stringify({ lang, c });
         return axiosInstance.get(`/videos/${id}?${q}`);
     },
@@ -68,14 +68,16 @@ export default {
         const videoId = query.match(VIDEO_URL_REGEX);
 
         if (channelId && !channelId[0].includes("/c/")) {
-            return axiosInstance.get(`/search/autocomplete?q=${channelId[1]}`);
+            const q = querystring.stringify({ q: channelId[1] });
+            return axiosInstance.get(`/search/autocomplete?${q}`);
         }
 
         if (videoId) {
             return { data: [{ type: "video url", value: `${videoId[5]}` }] };
         }
 
-        return axiosInstance.get(`/search/autocomplete?q=${query}`);
+        const q = querystring.stringify({ q: query });
+        return axiosInstance.get(`/search/autocomplete?${q}`);
     },
     searchVideo(queryObject) {
         return axiosInstance.post("/search/videoSearch", queryObject);
@@ -151,6 +153,9 @@ export default {
         return axiosInstance.patch("/users/favorites", operations, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
+    },
+    getVideoTopic(videoId) {
+        return axiosInstance.get(`/videos/${videoId}/topic`);
     },
     topics() {
         // gets topics from backend

@@ -1,6 +1,6 @@
 <template>
   <v-sheet>
-    <div class="highlight-container">
+    <div v-if="buckets.length > 0" class="highlight-container">
       <div class="highlight-bar">
         <template v-for="b in buckets">
           <v-tooltip
@@ -69,7 +69,7 @@ function filterByWordCount(limit = 2) {
     return (input: string) => input.split(" ").length >= limit;
 }
 
-function parseTimestampComments(message: string): ParsedComment[] {
+function parseTimestampComments(message: string, videoDuration: Number): ParsedComment[] {
     const pairs = [];
     let match = COMMENT_TIMESTAMP_REGEX.exec(message);
     while (match != null) {
@@ -80,7 +80,9 @@ function parseTimestampComments(message: string): ParsedComment[] {
 
         const text = match[4];
 
-        pairs.push({ time, text });
+        if (time < videoDuration) {
+            pairs.push({ time, text });
+        }
 
         match = COMMENT_TIMESTAMP_REGEX.exec(message);
     }
@@ -112,7 +114,7 @@ export default {
 
             const parsed: ParsedComment[] = [];
             for (const comment of this.comments) {
-                const pairs = parseTimestampComments(comment.message).filter(
+                const pairs = parseTimestampComments(comment.message, this.video.duration).filter(
                     (pair) => pair.text,
                 );
 
