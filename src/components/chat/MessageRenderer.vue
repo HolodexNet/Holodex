@@ -45,8 +45,7 @@ export default {
                 || !!item.breakpoint);
         },
         scrollToBottom() {
-            // console.log(Math.abs(this.$refs.tlBody.clientHeight), this.$refs.tlBody.clientHeight * 0.15);
-            if (Math.abs(this.$refs.tlBody.scrollTop) <= this.$refs.tlBody.clientHeight * 0.15) {
+            if (Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight) <= 0.05 && this.$refs.tlBody.scrollTop < 0) {
                 this.$refs.tlBody.scrollTop = 1;
             }
         },
