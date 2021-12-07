@@ -2,19 +2,22 @@
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
-### 2.25 Holodex [*Dec 5th, 2021*]
+### 2.25 Holodex [*Dec 6th, 2021*]
 
 #### New
-- Slightly changed layout in watch pages, Chat and TLdex box now sticks to the right when turned on.
-- TL and other TLDex lines show up as subtitles.
+- Updated watch page layout to better use of space, let us know what you think!
+- Added "Clips from the same streams" to the side bar
+- Added on screen subtitles in watch and multiview, as long as TLdex is open
 ![img](https://cdn.discordapp.com/attachments/811229830783303720/917157643968200864/unknown.png)
 
 #### Minor changes
 - Placeholders now use Japanese titles if set
 - Fix bug in Watch page where incorrect timestamping results in wild buckets.
 - MultiView Sync Bar can be opened with 1 video
-- You can now modify Placeholders
-
+- Editors can modify Placeholders
+- Fixed TLs not snapping to the bototm on iOS devices
+- Channel icons should disappear less often, and show a placeholder when it fails
+- Clips sorted by most recent on streams
 
 ### 2.24 Holodex [*Nov 26th, 2021*]
 
