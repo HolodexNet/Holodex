@@ -19,6 +19,7 @@
     </transition-group>
     <!-- Slot for adding a Load More button on top of Messages -->
     <slot />
+    <span v-scroll:#scroll-target="(e) => { pos = e.target.scrollTop }" style="position: absolute; top: 10px">Position: {{ pos }} </span>
   </v-card-text>
 </template>
 
@@ -37,6 +38,11 @@ export default {
             type: Number,
             default: 14,
         },
+    },
+    data() {
+        return {
+            pos: 0,
+        };
     },
     methods: {
         hideAuthor(item, index) {
