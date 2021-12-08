@@ -371,7 +371,7 @@ export default {
     overscroll-behavior: contain;
     height: calc(100% - 32px);
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     line-height: 1.35;
     letter-spacing: 0.0178571429em !important;
 }

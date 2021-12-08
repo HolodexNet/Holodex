@@ -8,7 +8,9 @@
     }"
   >
     <div ref="start" />
-    <transition-group name="fade">
+    <span class="tl-body-wrap">
+      <!-- Slot for adding a Load More button on top of Messages -->
+      <slot />
       <template v-for="(item, index) in tlHistory">
         <chat-message
           :key="item.key"
@@ -16,10 +18,8 @@
           :hide-author="hideAuthor(item, index)"
         />
       </template>
-    </transition-group>
-    <!-- Slot for adding a Load More button on top of Messages -->
-    <slot />
-    <span v-scroll:#scroll-target="(e) => { pos = e.target.scrollTop }" style="position: absolute; top: 10px">Position: {{ pos }}, {{ pos2 }} , {{ posEnd }}  {{ ratio }} </span>
+    </span>
+    <!-- <span v-scroll:#scroll-target="(e) => { pos = e.target.scrollTop }" style="position: absolute; top: 10px">Position: {{ pos }}, {{ pos2 }} , {{ posEnd }}  {{ ratio }} </span> -->
   </v-card-text>
 </template>
 
@@ -55,15 +55,15 @@ export default {
                 || !!item.breakpoint);
         },
         scrollToBottom() {
-            console.log("scroll");
-            this.pos2 = this.$refs.tlBody.scrollTop;
-            this.ratio = Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight).toFixed(2);
-            if (Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight) <= 0.15) {
-                this.$nextTick(() => {
-                    this.$refs.start.scrollIntoView({ behavior: "smooth" });
-                    this.posEnd = this.$refs.tlBody.scrollTop;
-                });
-            }
+            // console.log("scroll");
+            // this.pos2 = this.$refs.tlBody.scrollTop;
+            // this.ratio = Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight).toFixed(2);
+            // if (Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight) <= 0.15) {
+            //     this.$nextTick(() => {
+            //         this.$refs.start.scrollIntoView({ behavior: "smooth" });
+            //         this.posEnd = this.$refs.tlBody.scrollTop;
+            //     });
+            // }
         },
     },
 };
@@ -76,5 +76,9 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
+}
+
+.tl-body, .tl-body-wrap {
+  transform: scale(1,-1);
 }
 </style>
