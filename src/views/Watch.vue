@@ -426,6 +426,10 @@ export default {
     .left, .chat {
       height: 100vh;
     }
+
+    .video {
+      height: calc(100vh - 36px);
+    }
   }
 
   /* mobile TL overlay */
