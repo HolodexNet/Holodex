@@ -1,16 +1,13 @@
 <template>
   <v-card-text
-    id="scroll-target"
     ref="tlBody"
     class="tl-body pa-1 pa-lg-3"
     :style="{
       'font-size': fontSize + 'px',
     }"
+    :class="{'ios-safari-reverse-fix': checkIOS() }"
   >
-    <div ref="start" />
-    <span class="tl-body-wrap">
-      <!-- Slot for adding a Load More button on top of Messages -->
-      <slot />
+    <transition-group name="fade" :class="{'ios-safari-reverse-fix': checkIOS() }">
       <template v-for="(item, index) in tlHistory">
         <chat-message
           :key="item.key"
@@ -18,12 +15,16 @@
           :hide-author="hideAuthor(item, index)"
         />
       </template>
-    </span>
-    <!-- <span v-scroll:#scroll-target="(e) => { pos = e.target.scrollTop }" style="position: absolute; top: 10px">Position: {{ pos }}, {{ pos2 }} , {{ posEnd }}  {{ ratio }} </span> -->
+    </transition-group>
+    <!-- Slot for adding a Load More button on top of Messages -->
+    <div class="text-center" :class="{'ios-safari-reverse-fix': checkIOS() }">
+      <slot />
+    </div>
   </v-card-text>
 </template>
 
 <script>
+import { checkIOS } from "@/utils/functions";
 import ChatMessage from "./ChatMessage.vue";
 
 export default {
@@ -39,15 +40,8 @@ export default {
             default: 14,
         },
     },
-    data() {
-        return {
-            pos: 0,
-            pos2: 0,
-            posEnd: 0,
-            ratio: 0,
-        };
-    },
     methods: {
+        checkIOS,
         hideAuthor(item, index) {
             return !(index === 0
                 || index === this.tlHistory.length - 1
@@ -55,15 +49,9 @@ export default {
                 || !!item.breakpoint);
         },
         scrollToBottom() {
-            // console.log("scroll");
-            // this.pos2 = this.$refs.tlBody.scrollTop;
-            // this.ratio = Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight).toFixed(2);
-            // if (Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight) <= 0.15) {
-            //     this.$nextTick(() => {
-            //         this.$refs.start.scrollIntoView({ behavior: "smooth" });
-            //         this.posEnd = this.$refs.tlBody.scrollTop;
-            //     });
-            // }
+            if (Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight) <= 0.15) {
+                this.$refs.tlBody.scrollTop = 0;
+            }
         },
     },
 };
@@ -78,7 +66,8 @@ export default {
     opacity: 0;
 }
 
-.tl-body, .tl-body-wrap {
+.ios-safari-reverse-fix {
   transform: scale(1,-1);
+  flex-direction: column !important;
 }
 </style>
