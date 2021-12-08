@@ -245,7 +245,7 @@ export default {
         height: 100% !important;
         max-height: 100%;
         padding-bottom: 0;
-        // padding-bottom: calc(env(safe-area-inset-bottom) / 1.75);
+        padding-bottom: calc(env(safe-area-inset-bottom) / 1.75);
     }
 }
 
