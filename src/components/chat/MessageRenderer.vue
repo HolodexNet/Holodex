@@ -46,8 +46,10 @@ export default {
                 || !!item.breakpoint);
         },
         scrollToBottom() {
-            if (Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight) <= 0.1) {
-                this.$refs.start.scrollIntoView();
+            if (Math.abs(this.$refs.tlBody.scrollTop / this.$refs.tlBody.scrollHeight) <= 0.15) {
+                this.$nextTick(() => {
+                    this.$refs.start.scrollIntoView({ behavior: "smooth" });
+                });
             }
         },
     },
