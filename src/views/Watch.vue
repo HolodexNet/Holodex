@@ -488,11 +488,11 @@ export default {
       width: 100%;
       z-index: 10;
       padding-bottom: 0;
-      padding-bottom: calc(env(safe-area-inset-bottom) / 1.75);
+      // padding-bottom: calc(env(safe-area-inset-bottom) / 1.75);
 
       height: calc(100% - 36px - 56px - 100vw * 0.5625);
       /* iOS 11.2 and later */
-      height: calc((100% - 36px - 56px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
+      // height: calc((100% - 36px - 56px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
     }
 
     // Mobile has no top nav, update height calc
