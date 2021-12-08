@@ -141,8 +141,8 @@ export default {
                 simulcasts: this.video.simulcasts || [],
                 clips,
                 sources: this.video.sources || [],
-                refers: this.video.refers || [],
                 same_source_clips: (this.video.same_source_clips && this.video.same_source_clips.slice(0, 10)) || [],
+                refers: this.video.refers || [],
                 recommendations: (this.video.recommendations && this.video.recommendations.slice(0, 10)) || [],
             };
         },

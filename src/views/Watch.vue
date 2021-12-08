@@ -9,34 +9,22 @@
     class="d-flex flex-row watch-layout"
     :class="{
       'mobile': isMobile,
-      'theater-mode': theaterMode || $vuetify.breakpoint.mdAndDown,
+      'theater-mode': video.type === 'stream' || $vuetify.breakpoint.mdAndDown,
       'show-chat': !isMugen && showChatWindow,
+      'full-height': theaterMode
     }"
   >
-    <KeyPress
+    <!-- <KeyPress
       key-event="keyup"
       :multiple-keys="altTHotKey"
       @success="toggleTheaterMode"
-    />
+    /> -->
     <KeyPress
       key-event="keyup"
       :key-code="27"
       @success="theaterMode = false"
     />
     <div ref="watchLayout" class="d-flex flex-grow-1 left">
-      <div class="d-flex sidebar flex-column">
-        <WatchQuickEditor
-          v-if="role === 'admin' || role === 'editor'"
-          :video="video"
-        />
-        <!-- <WatchMentions v-if="video.mentions && video.mentions.length" :video="video" /> -->
-        <WatchPlaylist
-          v-model="playlistIndex"
-          @playNext="playNextPlaylist"
-        />
-        <WatchMugen v-if="isMugen && isMobile" @playNext="playNextMugen" />
-        <WatchSideBar :video="video" @timeJump="seekTo" />
-      </div>
       <div class="d-flex flex-column flex-grow-1">
         <div style="position: relative">
           <youtube
@@ -143,6 +131,20 @@
             @timeJump="seekTo"
           />
         </v-lazy>
+      </div>
+
+      <div class="d-flex sidebar flex-column">
+        <WatchQuickEditor
+          v-if="role === 'admin' || role === 'editor'"
+          :video="video"
+        />
+        <!-- <WatchMentions v-if="video.mentions && video.mentions.length" :video="video" /> -->
+        <WatchPlaylist
+          v-model="playlistIndex"
+          @playNext="playNextPlaylist"
+        />
+        <WatchMugen v-if="isMugen && isMobile" @playNext="playNextMugen" />
+        <WatchSideBar :video="video" @timeJump="seekTo" />
       </div>
     </div>
     <WatchLiveChat
@@ -299,7 +301,7 @@ export default {
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
                 this.$store.dispatch("history/addWatchedVideo", this.video);
-                this.theaterMode = ["live", "upcoming"].includes(this.video.status);
+                // this.theaterMode = ["live", "upcoming"].includes(this.video.status);
             });
         },
         initMugen() {
@@ -413,6 +415,23 @@ export default {
   &.theater-mode .left {
     flex-direction: column;
   }
+
+  &.full-height:not(.mobile) {
+    margin-top: -56px;
+    position: absolute;
+    z-index: 10;
+    height: 100vh;
+    width: 100%;
+    background: var(--v-background-base);
+    .left, .chat {
+      height: 100vh;
+    }
+
+    .video {
+      height: calc(100vh - 36px);
+    }
+  }
+
   /* mobile TL overlay */
 
   // Mobile mode tl should overlay on top
