@@ -456,7 +456,7 @@ export default {
     }
   }
 
-  @media (orientation: portrait) {
+  @media (orientation: portrait) and (max-width: 959px) {
     &.show-chat .left {
       overflow-y: hidden;
     }

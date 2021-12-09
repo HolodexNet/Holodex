@@ -59,7 +59,5 @@ export default {
 </script>
 
 <style>
-ul .language {
-  color: black;
-}
+
 </style>
