@@ -53,7 +53,7 @@
           :limit="isMobile ? 5 : 0"
           @timeJump="seekTo"
         />
-        <WatchToolBar :video="video">
+        <WatchToolBar :video="video" :no-back-button="!isMobile">
           <template #buttons>
             <v-tooltip v-if="hasExtension" bottom>
               <template #activator="{ on, attrs }">
