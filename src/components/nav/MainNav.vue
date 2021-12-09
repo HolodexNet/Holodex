@@ -211,7 +211,7 @@ export default {
             return this.$store.state.settings.darkMode;
         },
         isWatchPage() {
-            return ["watch_id", "watch", "mugen-clips", "edit_video", "multiview"].includes(this.$route.name);
+            return ["watch_id", "watch", "edit_video", "multiview"].includes(this.$route.name);
         },
         isMultiView() {
             return this.$route.name === "multiview";
@@ -257,12 +257,6 @@ export default {
                     name: this.$t("component.mainNav.music"),
                     path: "/music",
                     icon: this.icons.mdiMusic,
-                    collapsible: true,
-                },
-                {
-                    name: this.$t("component.mainNav.MugenClips"),
-                    path: "/infinite",
-                    icon: mdiInfinity,
                     collapsible: true,
                     divider: true,
                 },

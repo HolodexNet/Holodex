@@ -128,7 +128,6 @@ export default {
 }
 .video-card-active {
     /* primary color with opacity */
-    /* Used for Mugen Clips where one of the list videos are 'active' */
     /* background-color: #f0629257; */
     height: auto;
     width: auto;

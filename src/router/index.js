@@ -19,7 +19,6 @@ const NotFound = () => import("../views/NotFound.vue");
 const Login = () => import("../views/Login.vue");
 const EditVideo = () => import("../views/EditVideo.vue");
 const OrgMusic = () => import("../views/OrgMusic.vue");
-// const MugenClips = () => import("../views/MugenClips.vue");
 const MultiView = () => import("../views/MultiView.vue");
 const Playlists = () => import("../views/Playlists.vue");
 const AddPlaceholderStream = () => import("../views/AddPlaceholderStream.vue");
@@ -116,11 +115,6 @@ const routes = [
         name: "add_placeholder",
         path: "/add_placeholder",
         component: AddPlaceholderStream,
-    },
-    {
-        name: "mugen-clips",
-        path: "/infinite",
-        component: Watch,
     },
     {
         name: "multiview",

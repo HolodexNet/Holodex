@@ -10,7 +10,7 @@
     :class="{
       'mobile': isMobile,
       'theater-mode': video.type === 'stream' || $vuetify.breakpoint.mdAndDown,
-      'show-chat': !isMugen && showChatWindow,
+      'show-chat': showChatWindow,
       'full-height': theaterMode
     }"
   >
@@ -34,7 +34,7 @@
             :video-id="video.id"
             :player-vars="{
               ...(timeOffset && { start: timeOffset }),
-              autoplay: isMugen || isPlaylist ? 1 : 0,
+              autoplay: isPlaylist ? 1 : 0,
               playsinline: 1,
             }"
             @ready="ready"
@@ -53,7 +53,7 @@
           :limit="isMobile ? 5 : 0"
           @timeJump="seekTo"
         />
-        <WatchToolBar :video="video">
+        <WatchToolBar :video="video" :no-back-button="!isMobile">
           <template #buttons>
             <v-tooltip v-if="hasExtension" bottom>
               <template #activator="{ on, attrs }">
@@ -143,12 +143,11 @@
           v-model="playlistIndex"
           @playNext="playNextPlaylist"
         />
-        <WatchMugen v-if="isMugen && isMobile" @playNext="playNextMugen" />
         <WatchSideBar :video="video" @timeJump="seekTo" />
       </div>
     </div>
     <WatchLiveChat
-      v-if="!isMugen && showChatWindow"
+      v-if="showChatWindow"
       v-model="chatStatus"
       class="sidebar chat"
       :video="video"
@@ -163,7 +162,6 @@
 import Youtube from "@/components/player/YoutubePlayer.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import WatchInfo from "@/components/watch/WatchInfo.vue";
-// import WatchFrame from "@/components/watch/WatchFrame.vue";
 import WatchSideBar from "@/components/watch/WatchSideBar.vue";
 import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import WatchHighlights from "@/components/watch/WatchHighlights.vue";
@@ -190,7 +188,6 @@ export default {
         WatchToolBar,
         WatchComments,
         WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
-        WatchMugen: () => import("@/components/watch/WatchMugen.vue"),
         WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
         KeyPress: () => import("vue-keypress"),
     },
@@ -253,9 +250,6 @@ export default {
                 || (this.showTL && this.hasLiveTL)
             );
         },
-        isMugen() {
-            return this.$route.name === "mugen-clips";
-        },
         isMobile() {
             return this.$store.state.isMobile;
         },
@@ -293,20 +287,12 @@ export default {
         init() {
             window.scrollTo(0, 0);
             this.startTime = 0;
-            if (this.isMugen) {
-                this.initMugen();
-                return;
-            }
             this.$store.commit("watch/resetState");
             this.$store.commit("watch/setId", this.videoId);
             this.$store.dispatch("watch/fetchVideo").then(() => {
                 this.$store.dispatch("history/addWatchedVideo", this.video);
                 // this.theaterMode = ["live", "upcoming"].includes(this.video.status);
             });
-        },
-        initMugen() {
-            this.$store.commit("watch/resetState");
-            this.$store.commit("watch/fetchEnd");
         },
         ready(event) {
             this.player = event;
@@ -322,13 +308,6 @@ export default {
             window.scrollTo(0, 0);
             this.player.seekTo(time);
             this.player.playVideo();
-        },
-        playNextMugen({ video, timeOffset = 0 }) {
-            this.$gtag.event("mugen-next", {
-                event_category: "video",
-            });
-            this.$store.commit("watch/setVideo", video);
-            this.startTime = timeOffset;
         },
         playNextPlaylist({ video }) {
             this.$gtag.event("playlist-next", {
@@ -477,7 +456,7 @@ export default {
     }
   }
 
-  @media (orientation: portrait) {
+  @media (orientation: portrait) and (max-width: 959px) {
     &.show-chat .left {
       overflow-y: hidden;
     }

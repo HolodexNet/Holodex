@@ -45,7 +45,7 @@ export default {
     },
     computed: {
         isWatchPage() {
-            return ["watch_id", "watch", "mugen-clips", "edit_video", "multiview"].includes(this.$route.name);
+            return ["watch_id", "watch", "edit_video", "multiview"].includes(this.$route.name);
         },
     },
     methods: {
