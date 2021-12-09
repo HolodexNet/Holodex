@@ -2,6 +2,11 @@
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
+### 2.25.1 Holodex [*Dec 8th, 2021*]
+#### Minor changes
+- Updated watch layout based on feedback, we are still open to more feedback and tweaks!
+- Second fix to iOS TLs not sticking to the bottom
+
 ### 2.25 Holodex [*Dec 6th, 2021*]
 
 #### New

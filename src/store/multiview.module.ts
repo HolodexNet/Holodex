@@ -10,6 +10,7 @@ import Vue from "vue";
 import debounce from "lodash-es/debounce";
 import axios from "axios";
 import { CHANNEL_URL_REGEX } from "@/utils/consts";
+import { checkIOS } from "@/utils/functions";
 
 const initialState = {
     layout: [],
@@ -18,7 +19,7 @@ const initialState = {
     presetLayout: [],
 };
 
-const isAppleDevice = navigator?.platform ? ["iPhone", "iPad", "iPod"].includes(navigator.platform) : false;
+const isAppleDevice = navigator?.platform ? checkIOS() : false;
 
 const persistedState = {
     autoLayout: getDesktopDefaults(),
