@@ -59,6 +59,9 @@ component:
     older: more old
   music:
     clearPlaylist: cliar
+    trendingForOrg: Torendingu fowa {0}
+  channelMusic:
+    trending: Torendingu
   songList:
     songTitle: Taitoru
     songDuration: Dureision
@@ -91,6 +94,8 @@ component:
       rename-playlist: name change
       reset-unsaved: risett this
       delete-playlist: pleylisto sakuzyo
+  placeholderVideo:
+    streamPageBtn: Stream Pej
 views:
   channel:
     video: video
@@ -169,6 +174,7 @@ views:
           Strim still not start. Can comment 15 miniut befor stream start
         connectedToChat: Is conect
         disconnectedToChat: connect down
+    likeOnYoutube: Like bideo oan Yuchubu
   favorites:
     manageFavorites: feibaritt manegi
     close: Peklose
@@ -202,11 +208,15 @@ views:
       name: Name
     editAutoLayout: Oto reiouto ejito
     changeLayout: Reiouto change
+    done: Ogey
     hints: Hint peko
     mediaControlsHint1: Media Contororu use streaming mute and sync (
     mediaControlsHint2: ) peko
   playlist:
     playlist-is-modified: NO SAVE
+  extension:
+    title: Holodeksu Purasu Eksutenshon
+    features: Ficha
 time:
   soon: will start
 editor:
