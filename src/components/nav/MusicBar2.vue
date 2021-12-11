@@ -435,9 +435,17 @@ export default {
                     // console.log("track song");
                     if (song.id) {
                         // current
-                        backendApi
-                            .trackSong(song.id, this.$store.state.userdata?.jwt)
-                            .catch((err) => console.error(err));
+                        if (Number.isNaN(song.id)) {
+                            // i don't think I can track it.
+                            this.$gtag.event("report-bug-nan", {
+                                event_category: "music",
+                                event_label: `${song.name} ${song.video_id}`,
+                            });
+                        } else {
+                            backendApi
+                                .trackSong(song.id, this.$store.state.userdata?.jwt)
+                                .catch((err) => console.error(err));
+                        }
                     } else if (song.channel_id || song.channel?.id) {
                         // fallback
                         backendApi
