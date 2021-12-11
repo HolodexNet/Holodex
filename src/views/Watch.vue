@@ -458,7 +458,7 @@ export default {
 
   @media (orientation: portrait) and (max-width: 959px) {
     &.show-chat .left {
-      overflow-y: hidden;
+      padding-bottom: calc((100vh - 36px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));;
     }
     // Default portrait mode position/height for desktop
     .chat {
