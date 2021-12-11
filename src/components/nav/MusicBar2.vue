@@ -433,19 +433,11 @@ export default {
                 if (os != null && this.progress > 80 && this.progress < 105) {
                     const { song } = os;
                     // console.log("track song");
-                    if (song.id) {
+                    if (song.id && !Number.isNaN(song.id)) {
                         // current
-                        if (Number.isNaN(song.id)) {
-                            // i don't think I can track it.
-                            this.$gtag.event("report-bug-nan", {
-                                event_category: "music",
-                                event_label: `${song.name} ${song.video_id}`,
-                            });
-                        } else {
-                            backendApi
-                                .trackSong(song.id, this.$store.state.userdata?.jwt)
-                                .catch((err) => console.error(err));
-                        }
+                        backendApi
+                            .trackSong(song.id, this.$store.state.userdata?.jwt)
+                            .catch((err) => console.error(err));
                     } else if (song.channel_id || song.channel?.id) {
                         // fallback
                         backendApi
