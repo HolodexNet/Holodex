@@ -1,8 +1,8 @@
 <template>
   <v-sheet>
-    <div v-if="buckets.length > 0" class="highlight-container">
+    <div v-if="bucketsFiltered.length > 0" class="highlight-container">
       <div class="highlight-bar">
-        <template v-for="b in buckets">
+        <template v-for="b in bucketsFiltered">
           <v-tooltip
             :key="b.display"
             top
@@ -19,7 +19,7 @@
               >
                 <div
                   class="highlight-chip"
-                  :style="computeTipStyle(b.time, b.count)"
+                  :style="computeTipStyle(b)"
                 />
               </div>
             </template>
@@ -102,6 +102,10 @@ export default {
             type: Object,
             required: true,
         },
+        limit: {
+            type: Number,
+            default: 0,
+        },
     },
     data() {
         return {};
@@ -150,18 +154,7 @@ export default {
                     const median = subBucket[th].time;
                     // Find matching song around timestamp
                     const matchingSong = this.video?.songs?.find((song) => Math.abs(song.start - median) <= TIME_THRESHOLD);
-                    if (matchingSong) {
-                        // Render song item instead of text
-                        buckets.push({
-                            time: median,
-                            count: subBucket.length,
-                            song: {
-                                ...matchingSong,
-                                channel: this.video.channel,
-                            },
-                            display: formatDuration(median * 1000),
-                        });
-                    } else {
+                    if (!matchingSong) {
                         // pick best comment to show
                         const processed = subBucket
                             .sort(
@@ -198,7 +191,33 @@ export default {
                 subBucket = [];
                 subBucket.push(comment);
             });
-            return buckets.sort((a, b) => a.time - b.time);
+
+            // Render song item instead of text
+            buckets.push(...this.video.songs?.map((song) => ({
+                time: song.start,
+                count: subBucket.length,
+                song: {
+                    ...song,
+                    channel: this.video.channel,
+                },
+                display: formatDuration(song.start * 1000),
+            })));
+            return buckets;
+        },
+        bucketsFiltered() {
+            if (this.limit) {
+                const buckets = [...this.buckets];
+                let cnt = 0;
+                return buckets.filter((b) => {
+                    if (b.song) return true;
+                    if (cnt < this.limit) {
+                        cnt += 1;
+                        return true;
+                    }
+                    return false;
+                });
+            }
+            return this.buckets;
         },
     },
     methods: {
@@ -208,9 +227,14 @@ export default {
                 marginLeft: `${Math.round((ts / this.video.duration) * 100)}%`,
             };
         },
-        computeTipStyle(ts: number, count: number) {
+        computeTipStyle(bucket) {
+            const { count } = bucket;
             let width = "1px";
             let color = "rgb(100, 100, 100)";
+            if (bucket.song) {
+                width = "3px";
+                color = "var(--v-primary-base)";
+            }
             if (count > 1) {
                 width = "2px";
                 color = "rgb(164, 164, 164)";

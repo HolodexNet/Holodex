@@ -46,11 +46,11 @@
           <portal-target :name="`${video.id}-overlay`" style="font-size: 16px; font-size: max(1.5vw, 16px);" />
         </div>
         <WatchHighlights
-          v-if="comments.length && (!isMobile || !showTL)"
+          v-if="(comments.length || video.songcount) && (!isMobile || !showTL)"
           key="highlights"
           :comments="comments"
           :video="video"
-          :limit="isMobile ? 5 : 0"
+          :limit="isMobile ? 8 : 0"
           @timeJump="seekTo"
         />
         <WatchToolBar :video="video" :no-back-button="!isMobile">
@@ -121,9 +121,8 @@
           </template>
         </WatchToolBar>
         <WatchInfo key="info" :video="video" @timeJump="seekTo" />
-        <v-lazy>
+        <v-lazy v-if="comments.length">
           <WatchComments
-            v-if="comments.length"
             key="comments"
             :comments="comments"
             :video="video"
