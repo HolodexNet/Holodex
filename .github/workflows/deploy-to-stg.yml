@@ -17,3 +17,18 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         script: /opt/holodex/deploy-staging.sh
+    - name: Deploy staging box
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: 222
+        script-stop: true
+        script: |
+          cd /opt/staging_web || { echo "No directory found"; exit 1; } 
+          git pull origin dev
+          npm ci
+          npm run build
+          rm -r /var/www/html/staging.holodex.net/*
+          cp -r dist/* /var/www/html/staging.holodex.net/

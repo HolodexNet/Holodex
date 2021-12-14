@@ -17,6 +17,21 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         script: /opt/holoclips/deploy.sh
+    - name: Deploy production box
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: 222
+        script-stop: true
+        script: |
+          cd /opt/prod_web || { echo "No directory found"; exit 1; } 
+          git pull origin master
+          npm ci
+          npm run build
+          rm -r /var/www/html/holodex.net/*
+          cp -r dist/* /var/www/html/holodex.net/
     - name: Purge Cloudflare Cache
       uses: indiesdev/curl@v1
       with:
