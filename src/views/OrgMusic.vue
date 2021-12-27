@@ -181,10 +181,6 @@ export default {
                     offset,
                     limit,
                 );
-                res.data.items = res.data.items.map((x) => ({
-                    ...x,
-                    id: x.video_id + x.name,
-                }));
                 return res.data;
             };
         },

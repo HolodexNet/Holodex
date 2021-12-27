@@ -174,11 +174,11 @@ export default {
         return axiosInstance.get("/rotation");
     },
     songListByVideo(channelId, videoId, allowCache) {
-        const dt = allowCache ? "_" : Date.now();
+        const dt = allowCache ? "_" : Math.floor(Math.random() * 100);
         return axiosInstance.post(`/songs/latest?c=${dt}`, {
             channel_id: channelId,
             video_id: videoId,
-            limit: 999,
+            limit: 100,
         });
     },
     tryCreateSong(songObj, jwt) {
