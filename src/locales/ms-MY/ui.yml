@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -79,6 +81,7 @@ component:
     sourcesLabel: daripada
     songsLabel: lagu
     recommendationsLabel: disyorkan
+    sameSourceClips: Daripada siaran yang sama
   paginateLoad:
     newer: Lebih baharu
     older: Lebih lama
