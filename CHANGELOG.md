@@ -5,7 +5,7 @@
 ### 2.25.2 Holodex [*Dec 28th, 2021*]
 💬 From the developers:
 
-> Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you got a solid grasp of *React* and don't need micromanaging, we want your help! 
+> Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you are experienced in *React* (Hooks and Functional Components), and don't need micromanaging, we want your help! We are currently close to alpha testing, but quite far from a polished product.
 
 #### Minor changes
 - Fixed some bugs regarding malformed comment layout or picking up longer-than-the-video timestamps in comments.
