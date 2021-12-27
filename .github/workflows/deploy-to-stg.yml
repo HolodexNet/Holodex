@@ -16,7 +16,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
-        script-stop: true
+        script_stop: true
         script: |
           cd /opt/staging_web || { echo "No directory found"; exit 1; } 
           git pull origin dev
