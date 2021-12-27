@@ -433,7 +433,7 @@ export default {
                 if (os != null && this.progress > 80 && this.progress < 105) {
                     const { song } = os;
                     // console.log("track song");
-                    if (song.id) {
+                    if (song.id && !Number.isNaN(Number(song.id))) {
                         // current
                         backendApi
                             .trackSong(song.id, this.$store.state.userdata?.jwt)

@@ -2,6 +2,15 @@
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
+### 2.25.2 Holodex [*Dec 28th, 2021*]
+💬 From the developers:
+
+> Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you are experienced in *React* (Hooks and Functional Components), and don't need micromanaging, we want your help! We are currently close to alpha testing, but quite far from a polished product.
+
+#### Minor changes
+- Fixed some bugs regarding malformed comment layout or picking up longer-than-the-video timestamps in comments.
+- Fixed a bug with music playlist not really tracking playback properly.
+
 ### 2.25.1 Holodex [*Dec 8th, 2021*]
 #### Minor changes
 - Updated watch layout based on feedback, we are still open to more feedback and tweaks!

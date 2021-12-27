@@ -25,10 +25,10 @@ export default ({ mode }) => {
                 customComponentResolvers: [VuetifyResolver()],
                 deep: false,
                 /**
-         * Vite-Components removes need to import components by deepscanning the src/components folder
-         * but is fairly dangerous in terms of how it figures out which to import. Since we are using
-         * manual import processes, we only want ViteComponents for vuetify resolution.
-         */
+                 * Vite-Components removes need to import components by deepscanning the src/components folder
+                 * but is fairly dangerous in terms of how it figures out which to import. Since we are using
+                 * manual import processes, we only want ViteComponents for vuetify resolution.
+                 */
             }),
             VitePWA({
                 includeAssets: [
@@ -170,6 +170,19 @@ export default ({ mode }) => {
                         constBindings: true,
                         objectShorthand: true,
                     },
+                    manualChunks: (id) => {
+                        if (id.includes("node_modules")) {
+                            if (id.includes("vuetify")) {
+                                return "vendor_vuetify";
+                            }
+                            if (id.includes("vue")) {
+                                return "vendor_vue";
+                            }
+
+                            return "vendor"; // all other package goes here
+                        }
+                    },
+
                 },
             },
         },

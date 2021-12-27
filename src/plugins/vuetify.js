@@ -31,7 +31,7 @@ export const langs = [
     { val: "fr", display: "Français", credit: "pinembour#7770,Derasiel △#0002" },
     { val: "tr", display: "Türkçe", credit: "creeperkafasipw#1861" },
     { val: "vi", display: "Tiếng Việt", credit: "Pooh#6666,Dead xda member#4848,#Hiraoka Yukio#3042" },
-    { val: "hu", display: "Magyar", credit: "kuroihikikomori#3519" },
+    { val: "hu", display: "Magyar", credit: "kuroihikikomori#7216" },
     { val: "th", display: "ไทย", credit: "SnowNeko#0282" },
 ];
 
