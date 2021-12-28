@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
-  video:
-    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
