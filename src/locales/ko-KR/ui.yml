@@ -3,7 +3,7 @@ component:
   apiError:
     title: 고멘나소리!
     textBeforeTwitter: '콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 '
-    textAfterTwitter: '를 확인하거나'
+    textAfterTwitter: ' 을 확인하거나'
     aboutPage: 정보 페이지
     afterAboutPageHyperlink: 에 오류를 제보해주세요.
   channelList:
@@ -12,9 +12,9 @@ component:
     favoriteAllInGroup: 소속된 모두를 즐겨찾기
   channelInfo:
     stats: 통계
-    videoCount: '{0} 동영상'
-    clipCount: '{n} 클립'
-    subscriberCount: '{n} 구독자'
+    videoCount: '동영상 {0}개'
+    clipCount: '클립 {n}개'
+    subscriberCount: '구독자 {n}명'
     subscriberNA: 구독자 수를 확인할 수 없음
     totalViews: 총 조회수
   channelSocials:
@@ -39,23 +39,21 @@ component:
     points: 포인트
     playlist: 재생목록
   videoCard:
-    clips: '{n} 클립'
+    clips: '클립 {n}개'
     watching: '{0}명 시청 중'
-    liveNow: 실시간 스트리밍 중
+    liveNow: 실시간 방송 중
     edit: 편집
     copiedToClipboard: 링크를 클립보드에 복사했습니다.
     copyLink: Holodex 링크 복사
     premiere: 최초 공개
     googleCalendar: Google Calendar에 추가
     totalTLs: 전체 실시간 채팅 TL
-    tlPresence: 최근 30분 간 활동 중인 번역가
+    tlPresence: 최근 30분간 활동 중인 번역가
     typeScheduledYT: 예정된 방송
     typeExternalStream: 외부 방송
     typeEventPlaceholder: 예정된 이벤트
   videoDescription:
     description: 설명
-  video:
-    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -76,7 +74,7 @@ component:
       videourl: 동영상 URL
   relatedVideo:
     clipsLabel: 클립
-    simulcastsLabel: 동시 재생
+    simulcastsLabel: 동시 방송
     refersLabel: 관련 영상
     sourcesLabel: 출처
     songsLabel: 노래
@@ -107,8 +105,8 @@ component:
     installBtn: 설치
     iOS:
       popup: iOS에 Holodex 설치하기
-      afterExportIcon: 홈 화면에 추가
-      beforeExportIcon: 탭
+      afterExportIcon: 를 누르고 홈 화면에 추가를 선택하세요.
+      beforeExportIcon: 공유
   media:
     remove: 삭제
   comment:
@@ -164,7 +162,7 @@ views:
       recentUpload: 최근 업로드
       videoCount: 동영상 수
       clipCount: 클립 수
-      org: 조직
+      org: 소속
     tabs:
       Vtuber: 버튜버
       Subber: 키리누키
@@ -195,7 +193,7 @@ views:
     exportCsv: CSV 파일
     selectionSelect50: 50개 선택
     exportYTExplanation: >-
-      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 떄문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
+      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 때문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
     exportYTHeading: YouTube 재생목록을 저장하는 방법
     exportYTInstructions: >-
       <b class="red--text">1단계</b>: YouTube 재생목록을 재생한 다음 미니 플레이어로 플레이어 UI를 변경하세요. <br /><br /> <b class="red--text">2단계</b>: 아무 동영상이나 고른 다음 대기열에 추가하세요. <br /><br /> <b class="red--text">3단계</b>: 이제 재생목록을 저장할 수 있습니다. 저장하려면 저장을 눌러주세요.
@@ -504,9 +502,9 @@ about:
       - 팀
       - '에게 다음의 작업물에 대해서 감사의 말씀을 드립니다:'
       - >-
-        또한 다른 나라에 있는 키리누키 여러분들에게도 감사의 말은 전합니다! 확인해보세요!
+        또한 다른 나라에 있는 키리누키 여러분들에게도 감사의 말을 전합니다! 확인해보세요!
       - >-
-        이것은 팬이 만든 웹사이트이며 이 웹사이트에 있는 콘텐츠는 Cover 주식회사 및 그 파트너의 소유입니다. 이 사이트는 Cover 주식회사의 2차 창작 가이드라인을 준수합니다.
+        이 웹사이트는 팬이 제작한 웹사이트이며 이 웹사이트에 있는 콘텐츠는 Cover 주식회사 및 파트너사의 소유입니다. 이 사이트는 Cover 주식회사의 2차 창작 가이드라인을 준수합니다.
       - 확인하기
   changelog:
     title: 변경 사항
