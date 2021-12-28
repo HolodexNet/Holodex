@@ -253,6 +253,14 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
+              <v-expansion-panel-header>
+                {{ $t("about.faq.support.title") }}
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <div v-html="$t('about.faq.support.contents.0')" />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
               <v-expansion-panel-header> {{ $t("about.gdpr") }} </v-expansion-panel-header>
               <v-expansion-panel-content>
                 {{ $t("about.gdprContent") }}
