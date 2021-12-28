@@ -193,7 +193,7 @@ export default {
             });
 
             // Render song item instead of text
-            buckets.push(...this.video.songs?.map((song) => ({
+            buckets.push(...(this.video.songs?.map((song) => ({
                 time: song.start,
                 count: subBucket.length,
                 song: {
@@ -201,7 +201,7 @@ export default {
                     channel: this.video.channel,
                 },
                 display: formatDuration(song.start * 1000),
-            })));
+            })) || []));
             return buckets;
         },
         bucketsFiltered() {

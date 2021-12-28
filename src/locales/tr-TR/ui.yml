@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Planlı Etkinlik
   videoDescription:
     description: Açıklama
-  video:
-    comment: { }
   description:
     showLess: Daha az
     showMore: Daha çok

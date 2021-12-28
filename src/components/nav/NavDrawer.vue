@@ -2,7 +2,7 @@
   <v-navigation-drawer
     :value="value"
     app
-    width="240"
+    width="220"
     clipped
     class="nav-scroll"
     :temporary="temporary"
@@ -84,23 +84,32 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item>
+      <v-list-item dense>
         <router-link to="/channel" style="font-size: 0.825rem" class="ma-auto">
           {{ $t("views.favorites.manageFavorites") }}
         </router-link>
       </v-list-item>
-      <v-list-item>
-        <router-link to="/settings" style="font-size: 0.825rem" class="ma-auto">
-          <v-icon small>
-            {{ icons.mdiEarth }}
-          </v-icon>
-          <span class="px-1">{{ language }}</span>
-          <v-icon small>
-            {{ icons.mdiMessageCogOutline }}
-          </v-icon>
-        </router-link>
-      </v-list-item>
     </v-list>
+    <br>
+    <v-sheet id="bottom-bar" dense class="grey--text mt-auto mb-0">
+      <a href="https://twitter.com/holodex" title="Twitter">
+        <v-icon small color="#1DA1F2">{{ icons.mdiTwitter }}</v-icon>
+      </a>
+      <a class="mx-2" title="Support holodex (Ko-fi)" href="https://ko-fi.com/holodex">
+        <v-icon small color="#FF5E5B">M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z</v-icon>
+      </a>
+      <span>
+        <small class="one-liner" style="font-size: 0.7rem;">© 2020 Holodex</small>
+      </span>
+
+      <v-icon x-small color="grey" class="ml-auto">
+        {{ icons.mdiEarth }}
+      </v-icon>
+      <router-link to="/settings" class=" one-liner">
+        <small class="pl-1" style="font-size: 0.7rem">{{ language }}</small>
+      </router-link>
+    </v-sheet>
+
     <!-- </v-list> -->
   </v-navigation-drawer>
 </template>
@@ -110,7 +119,7 @@ import ChannelImg from "@/components/channel/ChannelImg.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
 import { dayjs } from "@/utils/time";
-import { mdiTuneVariant } from "@mdi/js";
+import { mdiTuneVariant, mdiPatreon } from "@mdi/js";
 import Settings from "@/views/Settings.vue";
 
 export default {
@@ -142,6 +151,7 @@ export default {
             showSettings: false,
 
             mdiTuneVariant,
+            mdiPatreon,
         };
     },
     computed: {
@@ -241,6 +251,31 @@ export default {
 </script>
 
 <style>
+#bottom-bar {
+  font-size: 0.8rem;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: var(--v-background-lighten1);
+  align-items: center;
+  display: flex;
+  padding: 3px 16px;
+  /* box-shadow: 0px -1px 0px 1px #00000077; */
+  border-top: 1px solid var(--v-background-lighten2);
+}
+
+.one-liner {
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: clip;
+  word-break: break-all;
+
+  display: -webkit-inline-box;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
 .nav-scroll > .v-navigation-drawer__content {
     scrollbar-width: thin; /* firefox fall back */
 }
@@ -270,6 +305,7 @@ export default {
 
 .nav-scroll > .v-navigation-drawer__content {
     overflow-y: hidden !important;
+    background-color: var(--v-background-lighten1);
 }
 
 .outlined {

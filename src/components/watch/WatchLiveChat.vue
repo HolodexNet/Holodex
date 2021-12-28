@@ -12,34 +12,52 @@
     </span>
     <!-- Archive translations for videos not upcoming/live -->
     <!-- 'chat-overlay': fixedBottom || fixedRight, -->
-    <ArchiveTranslations
-      v-show="showTlChat"
-      v-if="isArchived && showTlChat"
-      :video="video"
-      :class="{
-        'stick-bottom': $store.state.settings.liveTlStickBottom,
-        'tl-full-height': !showYtChat,
-      }"
-      :style="{ height: tlChatHeight }"
-      :current-time="currentTime"
-      :use-local-subtitle-toggle="useLocalSubtitleToggle"
-      @timeJump="time => $emit('timeJump', time)"
-    />
-    <!-- Live translations for upcoming/live videos -->
-    <!-- 'chat-overlay': fixedBottom || fixedRight, -->
-    <LiveTranslations
-      v-else-if="firstTlConnect"
-      v-show="showTlChat"
-      :video="video"
-      :class="{
-        'stick-bottom': $store.state.settings.liveTlStickBottom,
-        'tl-full-height': !showYtChat,
-      }"
-      :style="{ height: tlChatHeight }"
-      :current-time="currentTime"
-      :use-local-subtitle-toggle="useLocalSubtitleToggle"
-      @videoUpdate="handleVideoUpdate"
-    />
+    <template v-if="canShowTLChat && showTlChat">
+      <ArchiveTranslations
+        v-show="showTlChat"
+        v-if="isArchived && showTlChat"
+        :video="video"
+        :class="{
+          'stick-bottom': $store.state.settings.liveTlStickBottom,
+          'tl-full-height': !showYtChat,
+        }"
+        :style="{ height: tlChatHeight }"
+        :current-time="currentTime"
+        :use-local-subtitle-toggle="useLocalSubtitleToggle"
+        @timeJump="time => $emit('timeJump', time)"
+      />
+      <!-- Live translations for upcoming/live videos -->
+      <!-- 'chat-overlay': fixedBottom || fixedRight, -->
+      <LiveTranslations
+        v-else-if="firstTlConnect"
+        v-show="showTlChat"
+        :video="video"
+        :class="{
+          'stick-bottom': $store.state.settings.liveTlStickBottom,
+          'tl-full-height': !showYtChat,
+        }"
+        :style="{ height: tlChatHeight }"
+        :current-time="currentTime"
+        :use-local-subtitle-toggle="useLocalSubtitleToggle"
+        @videoUpdate="handleVideoUpdate"
+      />
+    </template>
+    <template v-else-if="showTlChat">
+      <v-card
+        class="text-body-2 tl-overlay"
+      >
+        <v-card-text
+          :class="{
+            'stick-bottom': $store.state.settings.liveTlStickBottom,
+            'tl-full-height': !showYtChat,
+          }"
+          class="tl-body"
+          :style="{ height: tlChatHeight }"
+        >
+          This video is members only, please play the video to see TLdex and translations.
+        </v-card-text>
+      </v-card>
+    </template>
     <!--  -->
     <!-- Youtube scalable embedded window -->
     <div
@@ -112,6 +130,10 @@ export default {
         };
     },
     computed: {
+        canShowTLChat() {
+            console.log(this.currentTime, this.video.topic_id);
+            return (this.video.topic_id === "membersonly" && this.currentTime > 0) || (this.video.topic_id !== "membersonly");
+        },
         showTlChat() {
             return this.value.showTlChat;
         },

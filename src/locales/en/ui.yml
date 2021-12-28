@@ -554,6 +554,20 @@ about:
           for contribution, although only the UI is open source currently.
           Please contact us on discord to gain access to backend source, or
           simply chat about your ideas.
+    support:
+      title: How do I support Holodex?
+      contents:
+        '0': >-
+          Our self-hosted server is a 28-core 60GB RAM machine that take about
+          $60 USD / mo to run, and we're looking to expanding more and more in
+          our feature set, so we've started a <a
+          href="https://ko-fi.com/holodex">Ko-fi</a> to cover Server costs. (We
+          also have a <a href="https://www.patreon.com/holodex">Patreon</a>, but
+          we like the Ko-fi better.)<br /><br />You can also support Holodex by
+          giving us feedback and supportive messages on twitter, helping us
+          translate via <a href="https://crwd.in/holodex">Crowdin</a>, as well
+          as contributing to our data store of songs. Even timing a stream for
+          funny parts, and commenting that on the original stream is great help!
   gdpr: GDPR and my data
   gdprContent: >-
     A Google Analytics cookie is used to track pageviews for our analytical
