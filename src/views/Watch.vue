@@ -11,7 +11,8 @@
       'mobile': isMobile,
       'theater-mode': video.type === 'stream' || $vuetify.breakpoint.mdAndDown,
       'show-chat': showChatWindow,
-      'full-height': theaterMode
+      'full-height': theaterMode,
+      'show-highlights-bar': showHighlightsBar
     }"
   >
     <!-- <KeyPress
@@ -46,7 +47,7 @@
           <portal-target :name="`${video.id}-overlay`" style="font-size: 16px; font-size: max(1.5vw, 16px);" />
         </div>
         <WatchHighlights
-          v-if="(comments.length || video.songcount) && (!isMobile || !showTL)"
+          v-if="showHighlightsBar"
           key="highlights"
           :comments="comments"
           :video="video"
@@ -265,6 +266,9 @@ export default {
             // @ts-ignore
             return !!window.HOLODEX_PLUS_INSTALLED;
         },
+        showHighlightsBar() {
+            return (this.comments.length || this.video.songcount) && (!this.isMobile || !this.showTL);
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -348,11 +352,21 @@ export default {
 </script>
 
 <style lang="scss">
+$nav-bar-height: 56px;
+$controls-height: 36px;
+$highlights-height: 30px;
+$title-info-height: 64px;
+
 .video {
     position: relative;
     padding-bottom: 56.25%;
-    padding-bottom: min(56.25%, calc(100vh - 92px));
+    padding-bottom: min(56.25%, calc(100vh - #{$nav-bar-height} - #{$controls-height} - #{$title-info-height}));
     width: 100%;
+}
+
+/* Video with highlights bar */
+.show-highlights-bar .video {
+    padding-bottom: min(56.25%, calc(100vh - #{$nav-bar-height} - #{$controls-height} - #{$title-info-height} - #{$highlights-height}));
 }
 
 .mobile .video {
@@ -373,7 +387,7 @@ export default {
 
 .watch-layout {
   .left {
-    height: calc(100vh - 56px);
+    height: calc(100vh - #{$nav-bar-height});
     overflow-y: auto;
     scrollbar-width: none;
   }
@@ -395,7 +409,7 @@ export default {
   }
 
   &.full-height:not(.mobile) {
-    margin-top: -56px;
+    margin-top: -#{$nav-bar-height};
     position: absolute;
     z-index: 10;
     height: 100vh;
@@ -406,7 +420,14 @@ export default {
     }
 
     .video {
-      height: calc(100vh - 36px);
+      height: calc(100vh - #{$controls-height});
+    }
+
+    /* When highlights bar might be shown */
+    &.show-highlights-bar {
+      .video {
+        height: calc(100vh - #{$controls-height} - #{$highlights-height});
+      }
     }
   }
 
@@ -439,7 +460,8 @@ export default {
     .chat {
       position: sticky;
       top: 0px;
-      height: calc(100vh - 56px);
+      /* Full height chat on the right */
+      height: calc(100vh - #{$nav-bar-height});
     }
 
     &.mobile .chat {
@@ -456,9 +478,6 @@ export default {
   }
 
   @media (orientation: portrait) and (max-width: 959px) {
-    &.show-chat .left {
-      padding-bottom: calc((100vh - 36px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));;
-    }
     // Default portrait mode position/height for desktop
     .chat {
       position: fixed;
@@ -467,17 +486,22 @@ export default {
       z-index: 10;
       padding-bottom: 0;
       padding-bottom: calc(env(safe-area-inset-bottom) / 1.75);
-
-      height: calc(100% - 36px - 56px - 100vw * 0.5625);
+      /* floating chat height = total height - controls height - top bar height - height of video */
+      height: calc(100% - #{$controls-height} - #{$nav-bar-height} - 100vw * 0.5625);
       /* iOS 11.2 and later */
-      height: calc((100% - 36px - 56px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
+      height: calc((100% - #{$controls-height} - #{$nav-bar-height} - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
     }
 
     // Mobile has no top nav, update height calc
     &.mobile .chat {
-      height: calc(100% - 36px - 100vw * 0.5625);
+      height: calc(100% - #{$controls-height} - 100vw * 0.5625);
       /* iOS 11.2 and later */
-      height: calc((100% - 36px - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
+      height: calc((100% - #{$controls-height} - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
+    }
+
+    &.show-chat .left {
+      /* Add padding to allow scrolling up in the small viewer window */
+      padding-bottom: calc((100vh - #{$controls-height} - 100vw * 0.5625) - env(safe-area-inset-top, 0px));
     }
   }
 }
