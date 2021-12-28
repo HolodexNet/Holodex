@@ -12,7 +12,7 @@
     </span>
     <!-- Archive translations for videos not upcoming/live -->
     <!-- 'chat-overlay': fixedBottom || fixedRight, -->
-    <template v-if="canShowTLChat">
+    <template v-if="canShowTLChat && showTlChat">
       <ArchiveTranslations
         v-show="showTlChat"
         v-if="isArchived && showTlChat"
@@ -42,7 +42,7 @@
         @videoUpdate="handleVideoUpdate"
       />
     </template>
-    <template v-else>
+    <template v-else-if="showTlChat">
       <div class="pa-2">
         This video is members only, please play the video to see TLdex and translations.
       </div>
