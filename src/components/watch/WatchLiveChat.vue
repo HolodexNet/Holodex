@@ -43,9 +43,22 @@
       />
     </template>
     <template v-else-if="showTlChat">
-      <div class="pa-2">
-        This video is members only, please play the video to see TLdex and translations.
-      </div>
+      <v-card
+        class="text-body-2 tl-overlay"
+      >
+        <v-card-text>
+          <div
+            :class="{
+              'stick-bottom': $store.state.settings.liveTlStickBottom,
+              'tl-full-height': !showYtChat,
+            }"
+            class="tl-body"
+            :style="{ height: tlChatHeight }"
+          >
+            This video is members only, please play the video to see TLdex and translations.
+          </div>
+        </v-card-text>
+      </v-card>
     </template>
     <!--  -->
     <!-- Youtube scalable embedded window -->
