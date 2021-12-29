@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 예정된 이벤트
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -491,6 +493,9 @@ about:
           모든 도움과 아이디어를 환영합니다! UI와 백엔드 모두에 기여하실 수 있으며, UI는 현재 오픈 소스입니다. 백엔드 소스에 접근하려면 Discord를 통해서 권한을 얻으시거나 단순히 아이디어를 채팅으로 전달해주셔도 됩니다.
     support:
       title: Holodex를 어떻게 지원하나요?
+      contents:
+        '0': >-
+          저희의 자체 호스팅 서버는 운영비가 월 60달러인 28코어 60GB 램 서버로, 기능들을 점점 더 확장하려고 하여 서버 비용을 충당하기 위해 <a href="https://ko-fi.com/holodex">Ko-fi</a>를 시작했습니다. (<a href="https://www.patreon.com/holodex">Patreon</a>도 있지만, 저희는 Ko-fi를 더 선호합니다.)<br /><br />또한 트위터에 피드백과 응원의 메시지를 보내주시고, <a href="https://crwd.in/holodex">Crowdin</a>을 통해 번역을 도우실 뿐만 아니라, 음악 데이터 저장소에도 기여함으로써 Holodex를 지원할 수 있습니다. 심지어 스트림에서 재미있는 부분의 시간을 지정하여, 지정한 시간을 원래 스트림 댓글에 다는 것만으로도 큰 도움이 됩니다!
   gdpr: GDPR과 내 데이터
   gdprContent: >-
     Google Analytics 쿠키는 페이지뷰 추적을 위해 분석 목적으로 사용됩니다. 로그인 이후에 우리는 소셜 미디어 계정 사용자명과 아이디를 즐겨찾기와 연결시킵니다. 이 데이터에는 (Google) 이메일, Discord ID, 또는 Twitter 아이디가 포함될 수 있습니다.
