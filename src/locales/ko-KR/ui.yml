@@ -489,6 +489,8 @@ about:
       contents:
         - >-
           모든 도움과 아이디어를 환영합니다! UI와 백엔드 모두에 기여하실 수 있으며, UI는 현재 오픈 소스입니다. 백엔드 소스에 접근하려면 Discord를 통해서 권한을 얻으시거나 단순히 아이디어를 채팅으로 전달해주셔도 됩니다.
+    support:
+      title: Holodex를 어떻게 지원하나요?
   gdpr: GDPR과 내 데이터
   gdprContent: >-
     Google Analytics 쿠키는 페이지뷰 추적을 위해 분석 목적으로 사용됩니다. 로그인 이후에 우리는 소셜 미디어 계정 사용자명과 아이디를 즐겨찾기와 연결시킵니다. 이 데이터에는 (Google) 이메일, Discord ID, 또는 Twitter 아이디가 포함될 수 있습니다.
