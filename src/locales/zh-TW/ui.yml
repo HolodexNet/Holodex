@@ -496,7 +496,7 @@ about:
       title: 有任何管道可對 Holodex 表達支持嗎？
       contents:
         '0': >-
-          我們的網站是架於一台有著28核與60GB記憶體的伺服器上，運作成本大概是每月60美元（約1700台幣），我們未來希望在網站上加入更多的功能，因此我們建立了一個 <a href="https://ko-fi.com/holodex">Ko-fi 贊助計畫</a>來用於支付伺服器的運作費用（我們之前也有一個相同用途的 <a href="https://www.patreon.com/holodex">Patreon</a>，但 Ko-fi 對我們來說更加方便）<br /><br />除此之外．在Twitter上給我們支持與鼓勵，抑是給我們任何的意見回饋也是對我們的一種支持！更甚者，你也能在<a href="https://crwd.in/holodex">Crowdin</a>上幫助我們進行使用者介面的翻譯、在影片資料分頁協助我們進行Vtuber音樂資料的建立、在實況底下留言標註有趣的片段對我們來說都是很大的幫助！
+          我們的網站是架於一台有著28核心處理器與60GB記憶體的自架伺服器上，運作成本大概是每月60美元（約1700台幣），並且未來希望在網站上加入更多的功能，因此我們建立了一個 <a href="https://ko-fi.com/holodex">Ko-fi 贊助計畫</a>來用於支付伺服器的運作費用（我們之前也有一個相同用途的 <a href="https://www.patreon.com/holodex">Patreon</a>，但 Ko-fi 對我們來說更加方便）<br /><br />除此之外．在Twitter上給我們支持與鼓勵，抑是給我們任何的意見回饋也是對我們的一種支持！更甚者，你也能在<a href="https://crwd.in/holodex">Crowdin</a>上幫助我們進行使用者介面的翻譯、在影片資料分頁協助我們進行Vtuber音樂資料的建立、在實況底下留言標註有趣的片段對我們來說都是很大的幫助！
   gdpr: 關於GDPR與我的資料
   gdprContent: >-
     我們僅使用「Google分析」的cookie來追蹤每頁的瀏覽人數並分析資料。當您登入後，我們會將您社群媒體帳號的帳號名稱/ID與網站收藏庫的內容綁定。記錄下的內容可能包括您的電子郵件（Google帳號）、Discord ID，或是Twitter帳號。
