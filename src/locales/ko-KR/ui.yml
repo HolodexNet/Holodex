@@ -195,7 +195,7 @@ views:
     exportCsv: CSV 파일
     selectionSelect50: 50개 선택
     exportYTExplanation: >-
-      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 때문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
+      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 떄문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
     exportYTHeading: YouTube 재생목록을 저장하는 방법
     exportYTInstructions: >-
       <b class="red--text">1단계</b>: YouTube 재생목록을 재생한 다음 미니 플레이어로 플레이어 UI를 변경하세요. <br /><br /> <b class="red--text">2단계</b>: 아무 동영상이나 고른 다음 대기열에 추가하세요. <br /><br /> <b class="red--text">3단계</b>: 이제 재생목록을 저장할 수 있습니다. 저장하려면 저장을 눌러주세요.
@@ -248,7 +248,7 @@ views:
     siteNavigationSettings: 사이트/메뉴
     languageSettings: 언어
     gridSizeLabel: 미리보기/그리드 크기
-    gridSizeMsg: 홈/즐겨찾기 페이지에서 미리보기/동영상 그리드 크기 변경
+    gridSizeMsg: 홈/즐겨찾기 페이지에 있는 미리보기/동영상 그리드 크기를 변경합니다
     gridSize:
       - 크게
       - 중간
