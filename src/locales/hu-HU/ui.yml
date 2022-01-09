@@ -489,6 +489,8 @@ about:
       contents:
         - >-
           Minden segítséget és ötletet szívesen fogadunk! Az UI és a Backend egyaránt elérhető, hozzájárulhatsz, viszont jelenleg csak a UI nyílt forráskódú. Kérlek vedd fel a kapcsolatot velünk Discord-on, hogy hozzáférést kapj a backend forráshoz, vagy csak chatelj az ötleteidről.
+    support:
+      title: Hogyan tudom támogatni a Holodex-et?
   gdpr: GDPR és az adataim
   gdprContent: >-
     Egy Google Analytics cookiet használunk, hogy nyomon tartsuk az oldal látogatóit, kizárólag elemzési célokkal. Bejelentkezés után társítjuk a közösségi fiókod felhasználónevét és ID-jét a kedvenceiddel. Ez az adat lehet az e-mail címed (Google), Discord ID vagy a Twittered illően kezelve.
