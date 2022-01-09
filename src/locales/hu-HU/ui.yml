@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -491,6 +493,9 @@ about:
           Minden segítséget és ötletet szívesen fogadunk! Az UI és a Backend egyaránt elérhető, hozzájárulhatsz, viszont jelenleg csak a UI nyílt forráskódú. Kérlek vedd fel a kapcsolatot velünk Discord-on, hogy hozzáférést kapj a backend forráshoz, vagy csak chatelj az ötleteidről.
     support:
       title: Hogyan tudom támogatni a Holodex-et?
+      contents:
+        '0': >-
+          Az általunk hosztolt szerver egy 28 magos, 60 GB RAM-os gépezet, ami havonta kb. $60 USD (19000 HUF) költséggel jár, valamint szeretnénk további funkciókkal bővíteni az oldalt, ezért indítottunk egy <a href="https://ko-fi.com/holodex">Ko-fi-t</a> a szerver költségeinek fedezése érdekében. (<a href="https://www.patreon.com/holodex">Patreonunk</a> is van, de a Ko-fi-t jobban szeretjük.)<br /><br />A támogatásod kifejezheted visszajelzésekkel és biztató üzenetekkel Twitteren, hozzájárulással a fordítócsapat munkáihoz <a href="https://crwd.in/holodex">Crowdin-on</a>, valamint hozzátéve a dal adatbázisunk bővítésével. (Streamekből kiszerkesztve egy-egy időintervallumot) Akár csak egy stream alá kommentelve megjelölni a vicces jeleneteket is egy nagy segítség!
   gdpr: GDPR és az adataim
   gdprContent: >-
     Egy Google Analytics cookiet használunk, hogy nyomon tartsuk az oldal látogatóit, kizárólag elemzési célokkal. Bejelentkezés után társítjuk a közösségi fiókod felhasználónevét és ID-jét a kedvenceiddel. Ez az adat lehet az e-mail címed (Google), Discord ID vagy a Twittered illően kezelve.
