@@ -95,6 +95,7 @@ export function getBannerImages(url) {
 const formatters = {};
 const numberFormatAdjust = {
     "lol-UWU": "en",
+    "lol-PEKO": "en",
 };
 
 export function formatCount(n, lang = "en") {

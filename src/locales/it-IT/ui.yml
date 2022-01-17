@@ -1,7 +1,7 @@
 ---
 component:
   apiError:
-    title: Gomennasorry!
+    title: Gomennascusa!
     textBeforeTwitter: 'Si è verificato un errore nel recupero del contenuto, per favore, controlla la pagina Twitter di '
     textAfterTwitter: ' o segnala un errore tramite il'
     aboutPage: Pagina delle Info
@@ -108,6 +108,8 @@ component:
     readMore: Leggi tutto
   reportDialog:
     title: Segnala
+    collabing: >-
+      Questo canale potrebbe collaborare con un membro {org} o con i tuoi preferiti. Puoi disabilitare questa funzione tramite le impostazioni
     comments: Quali azioni dovrebbe prendere Holodex?
     success: Grazie per il tuo feedback!
     reasons:
@@ -219,6 +221,7 @@ views:
     scrollModeLabel: Modalità Scorrimento
     scrollModeMsg: Usa lo scorrimento o un tocco per cambiare pagina
     resetAllSettings: Reimposta le Impostazioni predefinite
+    resetAllSettingsWarning: Perderai tutti i dati. Vuoi Continuare?
     clipLanguageSelection: 'Vedi Clip in queste lingue:'
     tlLanguageSelection: Vedi la traduzione automatica "live-chat TL" in queste lingue
     defaultPage: Pagina Predefinita
@@ -310,6 +313,7 @@ views:
     unmuteAll: Riattiva Volume
     autoLayoutTip: Clicca su un canale per iniziare a guardare usando la modalità layout automatico
     createLayoutTip: Crea il tuo layout aggiungendo una cella, o usando un preset
+    openToolbarTip: Apri la barra degli strumenti per iniziare a usare multiview
     preset:
       shareOnDiscord: >-
         Hai un bel layout da condividerci? Usa il pulsante condividi e facci sapere sul nostro <a href="https://discord.gg/jctkgHBt4b">Server Discord</a>!

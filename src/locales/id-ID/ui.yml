@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terjadwal
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -489,6 +491,11 @@ about:
       contents:
         - >-
           Semua bantuan dan ide dipersilahkan! UI dan Backend tersedia untuk kontribusi, meskipun untuk saat ini hanya UI yang open source. Hubungi kami di discord untuk mendapatkan akses ke sumber backend, atau simpel dengan utarakan idemu di chat.
+    support:
+      title: Bagaimana cara saya membantu Holodex?
+      contents:
+        '0': >-
+          Perangkat Server Hostingan kami sendiri memiliki 28-core disertai dengan 60GB RAM yang membutuhkan kisaran $60 USD (sekitar ±Rp 855.000) / bulan untuk tetap berjalan, dan kami ingin memperluas lebih banyak fitur-fitur yang akan kami sajikan nantinya, oleh karena itu kami membuka <a href="https://ko-fi.com/holodex">Ko-fi</a> untuk membantu biaya jalannya server. (Kami juga memiliki <a href="https://www.patreon.com/holodex">Patreon</a>, tapi kami lebih menyarankan Ko-fi.)<br /><br />Kamu juga dapat membantu Holodex dengan memberi kami pesan penyemangat dan saran pada twitter kami, membantu menerjemahkan via <a href="https://crwd.in/holodex">Crowdin</a>, atau dengan berkontribusi ke penyimpanan data lagu kami. bahkan dengan memberi timestamp pada stream aslinya untuk bagian yang menarik juga sangat membantu!
   gdpr: GDPR dan data saya
   gdprContent: >-
     Cookie Google Analytics digunakan untuk melacak tampilan halaman untuk tujuan analitis kami. Setelah login, kami mengaitkan nama pengguna dan ID akun media sosial dengan favorit kamu. Data ini mungkin termasuk alamat Email (untuk Google), ID Discord, atau Twitter kamu.

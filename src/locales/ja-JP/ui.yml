@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 予定されたイベント
   videoDescription:
     description: 概要
+  video:
+    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -489,6 +491,11 @@ about:
       contents:
         - >-
           すべての手助けとアイデアを歓迎します! 現在はUIのみがオープンソースですが、UIとバックエンドのどちらについてもコントリビューション可能です。 バックエンドのソースにアクセスしたい場合、また単にご自身のアイデアについてチャットしたい場合も、Discordにてご連絡ください。
+    support:
+      title: Holodexを応援するにはどうすればいいですか?
+      contents:
+        '0': >-
+          私たちのセルフホストサーバーは28コア60GB RAMのマシンで、運用に月約60ドルがかかりますが、私たちは機能セットをどんどん拡張していきたいと考えているので、サーバーコストをカバーするために<a href="https://ko-fi.com/holodex">Ko-fi</a>を開始しました。(<a href="https://www.patreon.com/holodex">Patreon</a>もありますが、Ko-fiの方が気に入っています。)<br /><br />また、Twitterでフィードバックや応援メッセージを送ったり、<a href="https://crwd.in/holodex">Crowdin</a>で翻訳を助けたり、楽曲のデータストアに貢献したりすることでもHolodexをサポートすることができます。配信の面白いところのタイミングを計って、それを元の配信にコメントするだけでも、大きな助けになりますよ!
   gdpr: 私のデータはGDPRに基づいてどう扱われますか?
   gdprContent: >-
     Googleアナリティクスのデータは当サイトの解析のためにページの閲覧をトラッキングする目的でのみ使用されます。ログインすると、各ソーシャルメディアのアカウント名とIDがお気に入りと関連付けられます。また、このデータにはあなたのGoogleのメールアドレス、Discord ID、及びTwitterのハンドルネームが含まれる場合があります。

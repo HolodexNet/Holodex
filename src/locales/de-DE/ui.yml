@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -489,6 +491,11 @@ about:
       contents:
         - >-
           Alle Helfer und Ideen sind willkommen! Die Benutzeroberfläche und das Backend sind für Beiträge verfügbar, obwohl derzeit nur die UI Open Source ist. Bitte kontaktiere uns auf Discord, um Zugang zur Backend-Quelle zu erhalten oder einfach nur über deine Ideen zu chatten.
+    support:
+      title: Wie kann ich Holodex unterstützen?
+      contents:
+        '0': >-
+          Unser selbst-gehosteter Server ist eine 28-Kern Maschine mit 60GB RAM, für welche Instandhaltungskosten von circa $60 USD pro Monat anfallen. Da wir unsere Features immer weiter expandieren, haben wir ein <a href="https://ko-fi.com/holodex">Ko-fi</a> angelegt, um die Serverkosten zu decken. (<a href="https://www.patreon.com/holodex">Patreon</a> haben wir auch, aber Ko-fi gefällt uns besser.)<br /><br />Du kannst uns außerdem mit Feedback und Tweets unterstützen, uns mit der Übersetzung der Webseite via <a href="https://crwd.in/holodex">Crowdin</a> helfen, oder zu unserem Song-Datenspeicher beitragen. Selbst das Kommentieren von Zeitstempeln lustiger Momente in den Stream-Kommentaren ist schon sehr hilfreich!
   gdpr: DSGVO und meine Daten
   gdprContent: >-
     Ein Google-Analytics-Cookie wird verwendet, um Seitenaufrufe für unsere analytischen Zwecke zu verfolgen. Nach dem Login verknüpfen wir deinen Benutzernamen und die ID deines Social Media Accounts mit deinen Favoriten. Diese Daten können deine E-Mail (für Google), deine Discord-ID oder dein Twitter-Handle beinhalten.

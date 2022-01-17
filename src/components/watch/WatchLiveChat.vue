@@ -131,7 +131,6 @@ export default {
     },
     computed: {
         canShowTLChat() {
-            console.log(this.currentTime, this.video.topic_id);
             return (this.video.topic_id === "membersonly" && this.currentTime > 0) || (this.video.topic_id !== "membersonly");
         },
         showTlChat() {
