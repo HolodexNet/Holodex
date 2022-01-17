@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -489,6 +491,11 @@ about:
       contents:
         - >-
           Kami amat mengalu-alukan sebarang bantuan dan saranan! Sumbangan bagi antara muka pengguna serta bahagian belakang laman adalah diterima namun buat masa ini hanya antara muka pengguna yang bersumber terbuka. Sila hubungi kami di Discord sekiranya anda mahu mencapai kod sumber bahagian belakang laman atau sekadar mahu memberi cadangan.
+    support:
+      title: Bagaimana cara saya membantu Holodex?
+      contents:
+        '0': >-
+          Perkakas yang merumahkan laman kami secara sendiri ini mempunyai RAM sebanyak 60GB dengan 28 teras serta memakan belanja sebanyak 60 dolar AS (kira-kira RM250 / B$80 / S$80 / Rp 850.000) per bulan. Tambahan lagi, kami merancang mahu mengembangkan ciri-ciri yang disediakan. Oleh itu, kami sedang menerima sumbangan daripada para pengunjung melalui <a href="https://ko-fi.com/holodex">Ko-fi</a> demi menampung pembiayaan pelayan kami. (Sumbangan juga boleh diberikan melalui <a href="https://www.patreon.com/holodex">Patreon</a>, namun kami lebih menggemari Ko-fi.)<br /><br />Sumbangan lain yang diterima termasuklah maklum balas dan kata-kata semangat di Twitter, penerjemahan laman melalui <a href="https://crwd.in/holodex">Crowdin</a> dan juga sumbangan simpanan data lagu. Sekecil-kecil sumbangan pun amatlah dihargai! Contohnya, menghitung detik-detik yang menarik dan menghiburkan lalu meletakkan ulasan bercap masa di siaran asal.
   gdpr: Adakah data saya dikendalikan sejajar dengan Peraturan Perlindungan Data Umum?
   gdprContent: >-
     Sebuah cecikut Google Analitis digunakan bagi mengesan bilangan kunjungan laman untuk tujuan-tujuan pencerakinan. Akaun yang berdaftar dengan akaun media sosial dan pengecamnya dikaitkan dengan kandungan kegemaran anda. Data ini boleh merangkumi e-mel Google, pengecam Discord atau nama kendalian Twitter.
