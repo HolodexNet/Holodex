@@ -1,6 +1,15 @@
 ### Holodex Beta
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
+### 2.25.3 Holodex [*Jan 16, 2022*]
+💬:
+> Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you are experienced in *React* (Hooks and Functional Components), and don't need micromanaging, we want your help! We are currently close to beta testing.
+
+#### Minor changes
+- Adds PEKO English to the languages list, it might not be very easy to understand, but she's trying her best!
+- Internal changes to prepare for Musicdex release.
+
+
 ### 2.25.2 Holodex [*Dec 28th, 2021*]
 💬:
 > Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you are experienced in *React* (Hooks and Functional Components), and don't need micromanaging, we want your help! We are currently close to alpha testing, but quite far from a polished product.
