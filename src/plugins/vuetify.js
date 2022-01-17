@@ -17,6 +17,7 @@ export const langs = [
     { val: "en-CA", display: "English (Canadian)", credit: "@Holodex" },
     { val: "en-GB", display: "English (British)", credit: "@Holodex" },
     { val: "lol-UWU", display: "English (UwU)", credit: "Doubleturtle#3660" },
+    { val: "lol-PEKO", display: "English (PEKO)", credit: "Doubleturtle#3660" },
     { val: "ja", display: "日本語", credit: "Yourein#3960,Saginomiya#2353" },
     { val: "zh", display: "繁體中文", credit: "angel84326#7887" },
     { val: "ko", display: "한국어", credit: "AlexKoala#0253" },

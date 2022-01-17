@@ -16,10 +16,10 @@ export const axiosInstance = (() => {
 export default {
     orgs() {
         // Use fetch api to take advantage of pre-fetch
-        return fetch(`${SITE_BASE_URL}/orgs.json`).then((r) => r.json());
+        return fetch(`${SITE_BASE_URL}/statics/orgs.json`).then((r) => r.json());
     },
     stats() {
-        return axiosInstance({ url: "stats.json", baseURL: SITE_BASE_URL });
+        return axiosInstance({ url: "/statics/stats.json", baseURL: SITE_BASE_URL });
     },
     channels(query) {
         const q = querystring.stringify(query);
