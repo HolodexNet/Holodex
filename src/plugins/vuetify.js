@@ -113,6 +113,10 @@ export const asyncLang = {
         await import("dayjs/locale/en");
         return import("@/locales/lol-UWU/ui.yml");
     },
+    "lol-PEKO": async () => {
+        await import("dayjs/locale/en");
+        return import("@/locales/lol-PEKO/ui.yml");
+    },
     async th() {
         await import("dayjs/locale/th");
         return import("@/locales/th-TH/ui.yml");
@@ -167,6 +171,7 @@ const dayjsName = {
     "es-ES": "es",
     pt: "pt-br",
     "lol-UWU": "en",
+    "lol-PEKO": "en",
 };
 
 function setI18nLanguage(lang) {
