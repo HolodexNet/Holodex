@@ -6,7 +6,7 @@
     @input="$listeners.input"
   >
     <v-sheet style="position:relative;">
-      <v-img v-if="video.thumbnail" :src="'/statics/thumbnail/maxres/'+enc(video.thumbnail)+'.jpg'" style="" />
+      <v-img v-if="video.thumbnail" :src="'/statics/thumbnail/maxres/'+enc(video.thumbnail)+'.jpg'" :aspect-ratio="16/9" />
       <v-img v-else max-height="130px" :src="`https://www.banner.yt/${video.channel_id || video.channel.id}/mobile`" />
       <v-sheet style="height:12px;" />
       <watch-info :video="videoWithMentions" no-sub-count>

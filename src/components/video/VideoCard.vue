@@ -518,6 +518,11 @@ export default {
             }
         },
         onThumbnailClicked(e) {
+            if (this.isPlaceholder && this.data.placeholderType === "external-stream" && this.data.link) {
+                e.preventDefault();
+                window.open(this.data.link, "_blank", "noopener");
+                return;
+            }
             if (this.isPlaceholder || !this.redirectMode) {
                 e.preventDefault();
                 this.goToVideo();
