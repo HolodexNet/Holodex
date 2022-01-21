@@ -182,7 +182,12 @@
         </div>
       </div>
       <!-- Vertical dots menu -->
-      <v-menu bottom :close-on-content-click="false" nudge-top="20px">
+      <v-menu
+        v-model="showMenu"
+        bottom
+        :close-on-content-click="false"
+        nudge-top="20px"
+      >
         <template #activator="{ on, attrs }">
           <v-btn
             icon
@@ -196,7 +201,7 @@
             <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
           </v-btn>
         </template>
-        <video-card-menu :video="data" />
+        <video-card-menu :video="data" @closeMenu="showMenu = false" />
       </v-menu>
     </a>
     <!-- optional breaker object to row-break into a new row. -->
@@ -321,6 +326,7 @@ export default {
                 "external-stream": mdiBroadcast,
             },
             placeholderOpen: false,
+            showMenu: false,
         };
     },
     computed: {
