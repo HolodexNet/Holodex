@@ -55,7 +55,7 @@
     "vue-keypress": "^2.1.1",
     "vue-linkify": "^1.0.1",
     "vue-meta": "^2.4.0",
-    "vue-plugin-load-script": "^1.3.5",
+    "vue-plugin-load-script": "^2.1.0",
     "vue-router": "^3.5.3",
     "vue-socket.io-extended": "^4.2.0",
     "vue-virtual-scroll-list": "^2.3.3",
