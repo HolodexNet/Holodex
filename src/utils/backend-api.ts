@@ -297,22 +297,29 @@ export default {
         );
     },
     getPlaylistState(videoId, jwt) {
-        return axiosInstance.get<{ id: number; name: string; contains: boolean }[]>(`/video-playlist/${videoId}`,
+        return axiosInstance.get<{ id: number; name: string; contains: boolean }[]>(
+`/video-playlist/${videoId}`,
             {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-            });
+            },
+);
     },
     addVideoToPlaylist(videoId, playlistId, jwt) {
-        return axiosInstance.put(`/video-playlist/${playlistId}/${videoId}`, null,
-            {
+        return axiosInstance.put(
+`/video-playlist/${playlistId}/${videoId}`,
+null,
+{
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-            });
+            },
+);
     },
     deleteVideoFromPlaylist(videoId, playlistId, jwt) {
-        return axiosInstance.delete(`/video-playlist/${playlistId}/${videoId}`,
+        return axiosInstance.delete(
+`/video-playlist/${playlistId}/${videoId}`,
             {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-            });
+            },
+);
     },
 
 };

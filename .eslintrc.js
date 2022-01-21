@@ -59,10 +59,7 @@ module.exports = {
         "vue/max-attributes-per-line": [
             "error",
             {
-                singleline: {
-                    max: 3,
-                    allowFirstLine: true,
-                },
+                singleline: 3,
             },
         ],
         "nonblock-statement-body-position": ["warn", "any"],

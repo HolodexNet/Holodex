@@ -48,7 +48,7 @@ export function localizedDayjs(time, lang) {
     // lang = dayjsName[lang] || lang;
     return dayjs(time);
 }
-export function formatDistance(time, lang = "en", $t, allowNegative = true, now = dayjs()) {
+export function formatDistance(time, lang, $t, allowNegative = true, now = dayjs()) {
     let diff;
     if (!time) return "?";
     const minutesdiff = now.diff(time, "minutes");

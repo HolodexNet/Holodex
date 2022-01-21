@@ -92,7 +92,7 @@
 </template>
 
 <script lang="ts">
-import { formatDistance, formatDuration, localizedDayjs } from "@/utils/time";
+import { formatDuration, localizedDayjs } from "@/utils/time";
 import { mapState, mapGetters } from "vuex";
 import SongItem from "./SongItem.vue";
 
@@ -184,7 +184,6 @@ export default {
         ...mapGetters("music", ["currentSong"]),
     },
     methods: {
-        formatDistance,
         formatDuration,
         formatDate(dt) {
             return localizedDayjs(dt, this.$store.state.settings.lang).format("l");

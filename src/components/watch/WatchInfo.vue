@@ -190,7 +190,7 @@ export default {
         formattedTime() {
             switch (this.video.status) {
                 case "upcoming":
-                    return this.formatDistance(
+                    return formatDistance(
                         this.video.start_scheduled,
                         this.lang,
                         this.$t.bind(this),
@@ -254,7 +254,6 @@ export default {
     },
     methods: {
         formatDuration,
-        formatDistance,
         setTimer() {
             if (this.timer) clearInterval(this.timer);
             // if(this.video.status === "live" || this.video.status === "upcoming") {
