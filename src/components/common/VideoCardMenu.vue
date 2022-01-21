@@ -93,13 +93,14 @@ export default {
     },
     methods: {
         // Open google calendar to add the time specified in the element
+        // Uses UTC time since the calendar may be in a different time zone
         openGoogleCalendar() {
             const startdate = this.video.start_scheduled;
             const baseurl = "https://www.google.com/calendar/render?action=TEMPLATE&text=";
             const videoTitle = encodeURIComponent(this.video.title);
-            const googleCalendarFormat = "YYYYMMDD[T]HHmmss";
-            const eventStart = dayjs(startdate).format(googleCalendarFormat);
-            const eventEnd = dayjs(startdate).add(1, "hour").format(googleCalendarFormat);
+            const googleCalendarFormat = "YYYYMMDD[T]HHmmss[Z]"; // "Z" suffix for UTC time
+            const eventStart = dayjs.utc(startdate).format(googleCalendarFormat);
+            const eventEnd = dayjs.utc(startdate).add(1, "hour").format(googleCalendarFormat);
             const details = `<a href="${window.origin}/watch/${this.video.id}">Open Video</a>`;
             window.open(baseurl.concat(videoTitle, "&dates=", eventStart, "/", eventEnd, "&details=", details), "_blank");
         },
