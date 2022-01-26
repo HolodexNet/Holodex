@@ -85,7 +85,7 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.2.2",
     "markdown-styles": "^3.2.0",
-    "rollup": "^2.64.0",
+    "rollup": "^2.66.1",
     "rollup-plugin-visualizer": "^5.5.4",
     "sass": "^1.32.13",
     "typescript": "~4.5.5",
