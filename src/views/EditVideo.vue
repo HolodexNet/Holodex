@@ -123,7 +123,7 @@ import { decodeHTMLEntities } from "@/utils/functions";
 import api from "@/utils/backend-api";
 
 export default {
-    name: "Watch",
+    name: "EditVideo",
     metaInfo() {
         return {
             title: this.title,

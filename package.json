@@ -70,8 +70,8 @@
   "devDependencies": {
     "@rollup/plugin-yaml": "^3.1.0",
     "@types/chrome": "^0.0.176",
-    "@typescript-eslint/eslint-plugin": "^5.10.0",
-    "@typescript-eslint/parser": "^5.10.0",
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.1",
     "@vue/eslint-config-typescript": "^10.0.0",
     "babel-plugin-lodash": "^3.3.4",
     "changelog-to-html": "^0.6.0",
@@ -92,6 +92,6 @@
     "vite": "^2.7.13",
     "vite-plugin-components": "^0.13.3",
     "vite-plugin-pwa": "^0.11.13",
-    "vite-plugin-vue2": "^1.9.2"
+    "vite-plugin-vue2": "^1.9.3"
   }
 }
