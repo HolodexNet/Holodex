@@ -42,6 +42,15 @@
         />
         <v-row fluid>
           <v-tabs v-model="currentTab">
+            <v-btn
+              text
+              class="mt-auto mb-auto"
+              :title="$t('editor.exitMode')"
+              icon
+              @click="$router.go(-1);"
+            >
+              <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
+            </v-btn>
             <v-tab :disabled="video.type !== 'stream'">
               {{ $t("component.search.type.topic") }}
             </v-tab>

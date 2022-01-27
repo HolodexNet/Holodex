@@ -199,7 +199,7 @@ body {
   padding-right: min(calc(env(safe-area-inset-right)), 30px);
   scrollbar-width: thin;
 }
-.row {
+div.row {
   margin: 0px -12px;
 }
 .bump-bottom .v-main__wrap {
