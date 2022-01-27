@@ -224,7 +224,7 @@
               <button
                 class="tweak-btn"
                 v-on="on"
-                @click="$emit('timeJump', Math.max(current.end - 3, 0), true)"
+                @click="$emit('timeJump', Math.max(current.end - 3, 0), true, false, current.end)"
               >
                 <v-icon>{{ mdiEarHearing }}</v-icon>
               </button>
@@ -247,8 +247,8 @@
           :value="Number(current.end)"
           :up-to="true"
           :test="currentTime"
-          @input="(x) => { current.end = x; currentEndTime = secondsToHuman(x); $emit('timeJump', current.end - 3, true)}"
-          @test="$emit('timeJump', current.end - 3, true) "
+          @input="(x) => { current.end = x; currentEndTime = secondsToHuman(x); $emit('timeJump', current.end - 3, true, false, current.end)}"
+          @test="$emit('timeJump', current.end - 3, true, false, current.end)"
         />
       </v-col>
       <v-col cols="4" sm="6" md="8">
@@ -385,7 +385,7 @@ function getEmptySong(video) {
         song: null, // itunes song object (ephemeral, not always present)
         itunesid: null,
         start: 0,
-        end: 0,
+        end: 10,
         name: "",
         original_artist: "",
         amUrl: null,

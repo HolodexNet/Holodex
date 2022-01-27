@@ -159,6 +159,8 @@ export default {
 
             timer: null,
             currentTime: 0,
+
+            stopAt: null,
         };
     },
     computed: {
@@ -213,9 +215,11 @@ export default {
             this.player = event;
             this.setTimer();
         },
-        seekTo(time, playNow, updateStartTime) {
+        seekTo(time, playNow, updateStartTime, stopPlayingAt) {
             if (!this.player) return;
             this.player.seekTo(time);
+            console.log("stop at: ", time, playNow, updateStartTime, stopPlayingAt);
+            this.stopAt = stopPlayingAt;
             if (playNow) this.player.playVideo();
             if (updateStartTime && this.currentTab === this.TABS.MUSIC) {
                 this.$refs.musicEditor && this.$refs.musicEditor.setStartTime(time);
@@ -252,6 +256,10 @@ export default {
             if (this.player) {
                 this.timer = setInterval(() => {
                     this.currentTime = this.player.getCurrentTime();
+                    if (this.stopAt && this.currentTime > this.stopAt) {
+                        this.player.pauseVideo();
+                        this.stopAt = undefined;
+                    }
                 }, 200);
             }
         },

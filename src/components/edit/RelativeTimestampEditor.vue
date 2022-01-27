@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-btn
+  <div :class="'rel-ts '+(upTo?'rel-end':'rel-start')">
+    <!-- <v-btn
       fab
       color="green"
       x-small
@@ -8,10 +8,11 @@
       @click="$emit('test')"
     >
       <v-icon>{{ icons.mdiPlay }}</v-icon>
-    </v-btn>
+    </v-btn> -->
     <v-progress-linear
-      color="green accent-3"
-      :value="(Number(test) - min) * 100.0 / (max - min)"
+      color="red accent-3"
+      background-color="grey accent-2"
+      :value="((Number(test) - min) * 100.0) / (max - min)"
       class="ts-progress"
     />
     <v-slider
@@ -19,23 +20,26 @@
       :min="min"
       :max="max"
       height="12px"
-      class="mb-2"
-      :track-color="!upTo?'red':'gray accent-1'"
-      :color="!upTo?'gray accent-1':'red'"
+      class="mb-2 rel-slider"
+      :track-color="!upTo ? 'rel-fgC' : 'rel-bgC'"
+      :color="!upTo ? 'rel-bgC' : 'rel-fgC'"
       thumb-color="red"
-      hide-details
+      thumb-label="always"
+      tick-size="3px"
       ticks="always"
-      @change="(x) => newVal = x"
+      @change="(x) => (newVal = x)"
       @end="setNewValue"
     >
-      <template #thumb-label="{ value:cv }">
-        {{ cv-value }}
+      <template #thumb-label="{ value: cv }">
+        {{ cv === value ? formatDuration(value*1000) : ((cv - value) > 0 ? '+' : '')+(cv - value)+'s' }}
       </template>
     </v-slider>
   </div>
 </template>
 
 <script>
+import { formatDuration } from "@/utils/time";
+
 export default {
     name: "TsEditor",
     props: {
@@ -56,8 +60,12 @@ export default {
         return { newVal: this.value };
     },
     computed: {
-        min() { return this.value - 4; },
-        max() { return this.value + 4; },
+        min() {
+            return this.value - 4;
+        },
+        max() {
+            return this.value + 4;
+        },
     },
     methods: {
         setNewValue(n) {
@@ -65,20 +73,108 @@ export default {
             console.log(n);
             this.$emit("input", this.newVal);
         },
+        formatDuration,
     },
 };
 </script>
 
-<style>
+<style lang="scss">
 .ts-progress {
-    margin: 20px 8px -10px 8px;
-    display: flex;
-    width: auto !important;
-    align-items: flex-start;
+  margin: 20px 8px 6px 8px;
+  display: flex;
+  width: auto !important;
+  align-items: flex-start;
 }
 .ts-try-play {
-    position: absolute;
-    z-index: 1;
-    margin-top:-14px;
+  position: absolute;
+  z-index: 1;
+  margin-top: -14px;
 }
+
+.rel-ts {
+  margin-left: -10px;
+  margin-right: -10px;
+
+  .slider {
+    margin-top: 12px;
+  }
+
+  .v-slider__track-container {
+    height: 20px;
+
+    .rel-bgC {
+      background-color: #5555;
+    }
+    .rel-fgC {
+      background: -moz-linear-gradient(
+        top,
+        rgb(138, 168, 54) 0%,
+        rgb(71, 112, 32) 100%
+      );
+      background: -webkit-gradient(
+        left top,
+        left bottom,
+        color-stop(0%, rgb(138, 168, 54)),
+        color-stop(100%, rgb(71, 112, 32))
+      );
+      background: -webkit-linear-gradient(
+        top,
+        rgb(138, 168, 54) 0%,
+        rgb(71, 112, 32) 100%
+      );
+      background: -o-linear-gradient(
+        top,
+        rgb(138, 168, 54) 0%,
+        rgb(71, 112, 32) 100%
+      );
+      background: -ms-linear-gradient(
+        top,
+        rgb(138, 168, 54) 0%,
+        rgb(71, 112, 32) 100%
+      );
+      background: linear-gradient(
+        to bottom,
+        rgb(138, 168, 54) 0%,
+        rgb(71, 112, 32) 100%
+      );
+    }
+  }
+  .v-slider__ticks-container {
+    height: 20px;
+    cursor: col-resize;
+
+    .v-slider__tick {
+      height: 12px !important;
+      top: 4px !important;
+    }
+  }
+
+  .v-slider__thumb-container {
+    cursor: e-resize;
+
+    .v-slider__thumb {
+      clip-path: polygon(12% 0%, 80% 0%, 80% 100%, 12% 100%, 44% 74%, 44% 26%);
+      border-radius: 0;
+      height: 21px;
+      &:hover {
+        background: rgb(230, 158, 158) !important;
+      }
+    }
+  }
+
+  &.rel-start .v-slider__thumb{
+    transform: rotate(180deg);
+    transform-origin: 6px 5.5px;
+  }
+
+  &.rel-end {
+    .v-slider__tick--filled {
+      background-color:rgba(0, 0, 0, 0.5) !important;
+    }
+    .v-slider__tick:not(.v-slider__tick--filled) {
+      background-color:rgba(255, 255, 255, 0.5) !important;
+    }
+  }
+}
+
 </style>
