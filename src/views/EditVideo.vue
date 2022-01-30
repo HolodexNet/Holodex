@@ -22,6 +22,7 @@
           </template>
         </WatchFrame>
         <div v-if="video.comments.length" class="comment-scroller">
+          <CommentSongParser :comments="video.comments" @selectSongCandidate="selectSongCandidate" @timeJump="seekToTimeRange" />
           <WatchComments
             v-if="video && video.comments && video.comments.length"
             key="comments"
@@ -118,6 +119,7 @@ import WatchFrame from "@/components/watch/WatchFrame.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import VideoEditSongs from "@/components/edit/VideoEditSongs.vue";
 import VideoEditMentions from "@/components/edit/VideoEditMentions.vue";
+import CommentSongParser from "@/components/media/CommentSongParser.vue";
 import { decodeHTMLEntities } from "@/utils/functions";
 // import { dayjs } from "@/utils/time";
 import api from "@/utils/backend-api";
@@ -137,6 +139,7 @@ export default {
         WatchComments,
         VideoEditMentions,
         Youtube,
+        CommentSongParser,
     },
     data() {
         return {
@@ -226,6 +229,9 @@ export default {
                 // document.getElementById("musicEditor").scrollIntoView();
             }
         },
+        seekToTimeRange(time, endtime) {
+            this.seekTo(time);
+        },
         fetchVideo() {
             if (!this.id) throw new Error("Invalid id");
             this.isLoading = true;
@@ -262,6 +268,9 @@ export default {
                     }
                 }, 200);
             }
+        },
+        selectSongCandidate(candidate) {
+            console.log(candidate);
         },
     },
 };

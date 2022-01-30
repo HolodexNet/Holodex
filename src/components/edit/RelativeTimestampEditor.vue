@@ -1,5 +1,5 @@
 <template>
-  <div :class="'rel-ts '+(upTo?'rel-end':'rel-start')">
+  <div :class="'rel-ts '+(upTo?'rel-end':'rel-start') +' mb-4'">
     <!-- <v-btn
       fab
       color="green"
@@ -26,6 +26,7 @@
       thumb-color="red"
       thumb-label="always"
       tick-size="3px"
+      hide-details
       ticks="always"
       @change="(x) => (newVal = x)"
       @end="setNewValue"
@@ -61,10 +62,10 @@ export default {
     },
     computed: {
         min() {
-            return this.value - 4;
+            return Math.max(0, this.value - 6);
         },
         max() {
-            return this.value + 4;
+            return Math.max(0, this.value + 6);
         },
     },
     methods: {
@@ -153,11 +154,22 @@ export default {
     cursor: e-resize;
 
     .v-slider__thumb {
-      clip-path: polygon(12% 0%, 80% 0%, 80% 100%, 12% 100%, 44% 74%, 44% 26%);
+      clip-path: polygon(12% 0%, 84% 0%, 84% 100%, 12% 100%, 42% 74%, 42% 26%);
       border-radius: 0;
-      height: 21px;
+      height: 22px;
       &:hover {
         background: rgb(230, 158, 158) !important;
+      }
+    }
+    .v-slider__thumb-label-container .v-slider__thumb-label {
+      transform: translate(-50%, 26px) !important;
+      width: auto !important;
+      height: 14px !important;
+      border-radius: 3px;
+      padding: 4px;
+
+      & * {
+        transform: unset !important;
       }
     }
   }

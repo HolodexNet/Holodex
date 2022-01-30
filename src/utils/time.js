@@ -71,7 +71,7 @@ export function formatDistance(time, lang, $t, allowNegative = true, now = dayjs
 }
 
 export function secondsToHuman(s) {
-    console.log(s);
+    // console.log(s);
     return new Date(s * 1000).toISOString().substr(11, 8);
 }
 
