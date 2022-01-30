@@ -1,5 +1,5 @@
 <template>
-  <div :class="'rel-ts '+(upTo?'rel-end':'rel-start') +' mb-4 pt-4'">
+  <div :class="'rel-ts '+(upTo?'rel-end':'rel-start') +' mb-4'">
     <!-- <v-btn
       fab
       color="green"
@@ -9,14 +9,21 @@
     >
       <v-icon>{{ icons.mdiPlay }}</v-icon>
     </v-btn> -->
-    <v-progress-linear
-      color="red accent-3"
-      background-color="grey accent-2"
-      :value="((Number(test) - min) * 100.0) / (max - min)"
-      class="ts-progress"
-    />
-    <div class="rel-current" style="">
-      Play from here
+    <div
+      ref="tl"
+      class="timeline"
+      @mousemove="hover"
+      @click="tryPlay"
+    >
+      <v-progress-linear
+        color="red accent-3"
+        background-color="grey accent-2"
+        :value="((Number(test) - min) * 100.0) / (max - min)"
+        class="ts-progress"
+      />
+      <div class="rel-current" :style="'left: '+mousex+'px'">
+        Play from here
+      </div>
     </div>
     <v-slider
       :value="value"
@@ -61,7 +68,7 @@ export default {
         },
     },
     data() {
-        return { newVal: this.value };
+        return { newVal: this.value, mousex: 0 };
     },
     computed: {
         min() {
@@ -78,6 +85,16 @@ export default {
             this.$emit("input", this.newVal);
         },
         formatDuration,
+        hover(e) {
+            this.mousex = e.clientX;
+        },
+        tryPlay(e) {
+            const x = e.clientX;
+            const { left, width } = this.$refs.tl.getBoundingClientRect();
+            const value = ((x - left) / width) * (this.max - this.min) + this.min;
+            // console.log(value);
+            this.$emit("seekTo", value);
+        },
     },
 };
 </script>
@@ -99,13 +116,27 @@ export default {
   margin-left: -10px;
   margin-right: -10px;
 
-  &:hover .rel-current {
+  .timeline {
+    padding-top: 20px;
+    cursor:pointer;
+  }
+  .timeline:hover .rel-current {
     display: block;
   }
   .rel-current {
     display: none;
+    font-size: 9px;
+    border-left: 1px solid #aaa;
+    height: 20px;
+    position: absolute;
+    margin-top: -23px;
+    pointer-events: none;
+    padding-left: 5px;
   }
 
+  .timeline .v-progress-linear {
+    margin-top: 0px !important;
+  }
   .slider {
     margin-top: 12px;
   }

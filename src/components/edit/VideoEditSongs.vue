@@ -130,7 +130,8 @@
           :value="Number(current.start)"
           :test="currentTime"
           @input="(x) => { current.start = x; currentStartTime = secondsToHuman(x); $emit('timeJump', current.start, true)}"
-          @test="$emit('timeJump', current.start, true) "
+          @test="$emit('timeJump', current.start, true)"
+          @seekTo="(x) => $emit('timeJump', x, true)"
         />
         <!-- </v-row> -->
       </v-col>
@@ -198,6 +199,7 @@
           :test="currentTime"
           @input="(x) => { current.end = x; currentEndTime = secondsToHuman(x); $emit('timeJump', current.end - 3, true, false, current.end)}"
           @test="$emit('timeJump', current.end - 3, true, false, current.end)"
+          @seekTo="(x) => $emit('timeJump', x, true)"
         />
       </v-col>
       <v-col cols="4" sm="6" md="8">
