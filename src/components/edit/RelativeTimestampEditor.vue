@@ -1,5 +1,5 @@
 <template>
-  <div :class="'rel-ts '+(upTo?'rel-end':'rel-start') +' mb-4'">
+  <div :class="'rel-ts '+(upTo?'rel-end':'rel-start') +' mb-4 pt-4'">
     <!-- <v-btn
       fab
       color="green"
@@ -15,6 +15,9 @@
       :value="((Number(test) - min) * 100.0) / (max - min)"
       class="ts-progress"
     />
+    <div class="rel-current" style="">
+      Play from here
+    </div>
     <v-slider
       :value="value"
       :min="min"
@@ -95,6 +98,13 @@ export default {
 .rel-ts {
   margin-left: -10px;
   margin-right: -10px;
+
+  &:hover .rel-current {
+    display: block;
+  }
+  .rel-current {
+    display: none;
+  }
 
   .slider {
     margin-top: 12px;
