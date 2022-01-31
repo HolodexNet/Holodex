@@ -118,7 +118,11 @@
         v-if="includeChannel && includeAvatar && !horizontal && data.channel"
         class="d-flex align-self-center mx-2 flex-column d-flex"
       >
-        <ChannelImg :channel="data.channel" rounded class="align-self-center" />
+        <ChannelImg
+          :channel="data.channel"
+          rounded
+          class="align-self-center"
+        />
       </div>
       <!-- Three lines for title, channel, available time -->
       <div class="d-flex flex-column flex-grow-1 video-card-lines justify-space-around">
@@ -142,9 +146,10 @@
                 data.type === 'stream' || data.channel.type === 'vtuber',
             }"
             :href="`/channel/${data.channel.id}`"
-            :title="
-              data.channel.name + '\n' + (data.channel.english_name || '')
-            "
+            :title=" data.channel.name +
+              (data.channel.english_name ? `\nEN: ${data.channel.english_name}` : '') +
+              (data.channel.org ? `\n> ${data.channel.org}` : '') +
+              (data.channel.group ? `\n> ${data.channel.group}` : '') "
             @click.exact.stop.prevent="goToChannel(data.channel.id)"
           >
             {{ channelName }}
