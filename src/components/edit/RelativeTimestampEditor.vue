@@ -127,7 +127,7 @@ export default {
   .rel-current {
     display: none;
     font-size: 9px;
-    border-left: 1px solid #aaa;
+    border-left: 2px solid #aaa;
     height: 20px;
     position: absolute;
     margin-top: -23px;
