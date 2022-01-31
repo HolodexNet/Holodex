@@ -117,6 +117,25 @@ export default {
                         paginated: true,
                     },
                 });
+                if (res.data.sort) {
+                    // bubble live videos to the top of the sorting stack.
+                    res.data.sort((a, b) => {
+                        if (a.status !== b.status) {
+                            if (a.status === "live") return -1;
+                            if (b.status === "live") return 1;
+                        }
+                        return a.available_at - b.available_at;
+                    });
+                } else if (res.data.items.sort) {
+                    // bubble live videos to the top of the sorting stack.
+                    res.data.items.sort((a, b) => {
+                        if (a.status !== b.status) {
+                            if (a.status === "live") return -1;
+                            if (b.status === "live") return 1;
+                        }
+                        return a.available_at - b.available_at;
+                    });
+                }
                 return res.data;
             };
         },
