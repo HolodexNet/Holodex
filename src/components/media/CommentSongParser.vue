@@ -20,6 +20,15 @@
             >{{ token }}</v-chip>
           </a>
           <div v-if="idx === searchResultIdx">
+            <div style="width: 100%; justify-content:flex-end; display: flex; flex-direction:row; ">
+              <v-btn
+                icon
+                x-small
+                @click="searchResultIdx = -1"
+              >
+                <v-icon>{{ icons.mdiClose }}</v-icon>
+              </v-btn>
+            </div>
             <h5 class="grey darken-2 rounded px-2">
               Pick either iTunes result
             </h5>
