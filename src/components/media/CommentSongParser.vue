@@ -118,8 +118,8 @@ export default {
                             start_time: capgroupToSecs(g.s_h, g.s_m, g.s_s),
                             end_human: `${g.e_h ? `${g.e_h}:` : ""}${g.e_m}:${g.e_s}`,
                             end_time: capgroupToSecs(g.e_h, g.e_m, g.e_s),
-                            tokens: [g.pre, g.mid, g.post].join(" / ").split(/[|\-/.()]|by/).map((a) => a.trim())
-                                .filter((x) => x.length > 1) };
+                            tokens: [g.pre, g.mid, g.post].join(" / ").split(/[|\-/.()]|by/).map((a) => a.trim()),
+                };
                 console.log(x);
                 return x;
             });
