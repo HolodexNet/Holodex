@@ -6,17 +6,17 @@
       </v-expansion-panel-header>
       <v-expansion-panel-content>
         <h5>1: Click on Searchable Component</h5>
-        <div v-for="(x,idx) in selection" :key="'s'+x.index">
+        <div v-for="(timeframe,idx) in selection" :key="'s'+timeframe.index">
           <a href="#">
-            <v-chip outlined label>[{{ x.start_human + (x.end_time?'\t- '+x.end_time : '\t- ?') }}]</v-chip>
+            <v-chip outlined label @click="$emit('songSelected', timeframe)">[{{ timeframe.start_human + (timeframe.end_time?'\t- '+timeframe.end_human : '\t- ?') }}]</v-chip>
             <v-chip
-              v-for="(token,tokenidx) in x.tokens"
-              :key="'s'+x.index+'t'+tokenidx"
+              v-for="(token,tokenidx) in timeframe.tokens"
+              :key="'s'+timeframe.index+'t'+tokenidx"
               class="ma-1"
               outlined
               label
               href="#"
-              @click="tryLooking(x,token, idx)"
+              @click="tryLooking(timeframe,token, idx)"
             >{{ token }}</v-chip>
           </a>
           <div v-if="idx === searchResultIdx">
@@ -24,7 +24,7 @@
               Pick either iTunes result
             </h5>
             <v-list>
-              <v-list-item v-for="x in searchResult" :key="'itn'+x.trackId">
+              <v-list-item v-for="x in searchResult" :key="'itn'+x.trackId" @click="$emit('songSelected', timeframe, x)">
                 <v-list-item-avatar tile>
                   <v-img :src="x.artworkUrl100" />
                 </v-list-item-avatar>
@@ -43,7 +43,7 @@
               Or pick existing Musicdex Track:
             </h5>
             <v-list>
-              <v-list-item v-for="x in searchResultMD" :key="'mdx'+x.trackId">
+              <v-list-item v-for="(x,a) in searchResultMD" :key="'mdx'+x.trackId+'.'+a" @click="$emit('songSelected', timeframe, x)">
                 <v-list-item-avatar tile>
                   <v-img :src="x.artworkUrl100" />
                 </v-list-item-avatar>
@@ -76,7 +76,7 @@ const TS_PARSING_REGEX = /(?<pre>.*?)(?:(?<s_h>[0-5]?[0-9]):)?(?<s_m>[0-5]?[0-9]
 
 function capgroupToSecs(h, m, s) {
     if (!h && !m && !s) return undefined;
-    return (h || 0) * 3600 + (m || 0) * 60 + (s || 0);
+    return +(h || 0) * 3600 + +(m || 0) * 60 + +(s || 0);
 }
 export default {
     props: { comments: { type: Array, required: true } },
@@ -107,6 +107,7 @@ export default {
                 const x = { index,
                             start_human: `${g.s_h ? `${g.s_h}:` : ""}${g.s_m}:${g.s_s}`,
                             start_time: capgroupToSecs(g.s_h, g.s_m, g.s_s),
+                            end_human: `${g.e_h ? `${g.e_h}:` : ""}${g.e_m}:${g.e_s}`,
                             end_time: capgroupToSecs(g.e_h, g.e_m, g.e_s),
                             tokens: [g.pre, g.mid, g.post].join(" / ").split(/[|\-/.()]|by/).map((a) => a.trim())
                                 .filter((x) => x.length > 1) };

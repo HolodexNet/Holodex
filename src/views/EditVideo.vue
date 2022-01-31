@@ -22,7 +22,11 @@
           </template>
         </WatchFrame>
         <div v-if="video.comments.length" class="comment-scroller">
-          <CommentSongParser :comments="video.comments" @selectSongCandidate="selectSongCandidate" @timeJump="seekToTimeRange" />
+          <CommentSongParser
+            v-if="currentTab === 1"
+            :comments="video.comments"
+            @songSelected="selectSongCandidate"
+          />
           <WatchComments
             v-if="video && video.comments && video.comments.length"
             key="comments"
@@ -229,9 +233,6 @@ export default {
                 // document.getElementById("musicEditor").scrollIntoView();
             }
         },
-        seekToTimeRange(time, endtime) {
-            this.seekTo(time);
-        },
         fetchVideo() {
             if (!this.id) throw new Error("Invalid id");
             this.isLoading = true;
@@ -269,8 +270,12 @@ export default {
                 }, 200);
             }
         },
-        selectSongCandidate(candidate) {
-            console.log(candidate);
+        selectSongCandidate(timeframe, songdata) {
+            // timeframe has start_time and end_time plus tokens
+            // songdata is the same as the selection output from a itunes dropdown. If song data is undefined, then the user only clicked on a timeframe.
+            console.log(timeframe, songdata);
+            this.$refs.musicEditor?.setSongCandidate(timeframe, songdata);
+            this.seekTo(timeframe.start_time, true);
         },
     },
 };

@@ -445,6 +445,14 @@ export default {
             const self = this as any;
             self.currentStartTime = secondsToHuman(seconds);
         },
+        setSongCandidate(timeframe, songcandidate) {
+            const self = this as any;
+            console.log(JSON.stringify(timeframe));
+            self.current.start = timeframe.start_time;
+            self.currentStartTime = secondsToHuman(timeframe.start_time);
+            if (songcandidate) self.processSearch(songcandidate);
+            if (timeframe.end_time) self.current.end = timeframe.end_time;
+        },
         formatDuration,
         processSearch(item) {
             // console.log(item);
