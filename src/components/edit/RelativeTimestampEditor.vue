@@ -45,6 +45,7 @@
         {{ cv === value ? formatDuration(value*1000) : ((cv - value) > 0 ? '+' : '')+(cv - value)+'s' }}
       </template>
     </v-slider>
+    <span class="showOnHover float-right font-weight-light" style="font-size: 12px;">Click to test, drag to change time.</span>
   </div>
 </template>
 
@@ -117,7 +118,7 @@ export default {
   margin-right: -10px;
 
   .timeline {
-    padding-top: 20px;
+    padding-top: 25px;
     cursor:pointer;
   }
   .timeline:hover .rel-current {
@@ -132,6 +133,13 @@ export default {
     margin-top: -23px;
     pointer-events: none;
     padding-left: 5px;
+  }
+
+  &:hover .showOnHover {
+    opacity: 0.7;
+  }
+  .showOnHover {
+    opacity: 0;
   }
 
   .timeline .v-progress-linear {
