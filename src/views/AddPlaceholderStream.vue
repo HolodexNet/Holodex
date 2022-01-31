@@ -6,7 +6,14 @@
   >
     <v-container>
       <v-row>
-        <v-col cols="8">
+        <v-col md="3" sm="8" cols="10">
+          <video-card
+            :video="videoObj"
+            include-channel
+          />
+        </v-col>
+
+        <v-col md="9" cols="12">
           <v-alert
             v-if="!isEditor && (token && !expired)"
             class="mb-2 pa-2"
@@ -173,12 +180,6 @@
               </v-btn>
             </v-card-text>
           </v-card>
-        </v-col>
-        <v-col cols="4">
-          <video-card
-            :video="videoObj"
-            include-channel
-          />
         </v-col>
       </v-row>
     </v-container>
