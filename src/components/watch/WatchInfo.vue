@@ -5,7 +5,11 @@
       style="font-size: 1.125rem; font-weight: 400"
     >
       <span v-if="!$route.path.includes('edit')">
-        {{ video.title }}
+        {{ video.jp_name ?
+          ($store.state.settings.nameProperty === 'english_name' ?
+            video.title || video.jp_name
+            : (video.jp_name || video.title))
+          : video.title }}
       </span>
 
       <router-link
