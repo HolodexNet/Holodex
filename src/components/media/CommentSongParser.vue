@@ -7,8 +7,10 @@
       <v-expansion-panel-content>
         <h5>1: Click on Searchable Component</h5>
         <div v-for="(timeframe,idx) in selection" :key="'s'+timeframe.index">
-          <a href="#">
-            <v-chip outlined label @click="$emit('songSelected', timeframe)">[{{ timeframe.start_human + (timeframe.end_time?'\t- '+timeframe.end_human : '\t- ?') }}]</v-chip>
+          <div>
+            <v-chip outlined label @click="$emit('songSelected', timeframe)">
+              [{{ timeframe.start_human + (timeframe.end_time?'\t- '+timeframe.end_human : '\t- ?') }}]
+            </v-chip>
             <v-chip
               v-for="(token,tokenidx) in timeframe.tokens"
               :key="'s'+timeframe.index+'t'+tokenidx"
@@ -17,8 +19,10 @@
               label
               href="#"
               @click="tryLooking(timeframe,token, idx)"
-            >{{ token }}</v-chip>
-          </a>
+            >
+              {{ token }}
+            </v-chip>
+          </div>
           <div v-if="idx === searchResultIdx">
             <div style="width: 100%; justify-content:flex-end; display: flex; flex-direction:row; ">
               <v-btn
