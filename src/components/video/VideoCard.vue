@@ -699,6 +699,9 @@ export default {
   font-size: 0.8125rem;
   letter-spacing: 0.025em;
   text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .video-card-action {
