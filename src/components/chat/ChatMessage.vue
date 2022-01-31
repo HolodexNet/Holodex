@@ -28,7 +28,7 @@
       </div>
       <a class="tl-message" :data-time="source.relativeSeconds">
         <span v-if="source.timestamp" class="tl-caption mr-1">
-          {{ liveTlShowLocalTime ? source.realTime : source.displayTime }}
+          {{ liveTlShowLocalTime ? realTime : displayTime }}
         </span>
         <span class="text--primary" v-html="source.message" />
       </a>
@@ -68,7 +68,16 @@
 
 <script lang="ts">
 import { mapState } from "vuex";
+import { dayjs, formatDuration } from "@/utils/time";
 import ChannelImg from "../channel/ChannelImg.vue";
+
+function timeDiff(relativeSeconds) {
+    const millisDiff = relativeSeconds * 1000;
+    return (Math.sign(millisDiff) < 0 ? "-" : "") + formatDuration(Math.abs(millisDiff));
+}
+function realTimestamp(utc) {
+    return dayjs(utc).format("LTS"); // localizedFormat
+}
 
 export default {
     name: "ChatMessage",
@@ -92,6 +101,12 @@ export default {
         };
     },
     computed: {
+        realTime() {
+            return realTimestamp(this.source.timestamp);
+        },
+        displayTime() {
+            return timeDiff(this.source.relativeSeconds);
+        },
         ...mapState("settings", [
             "liveTlShowLocalTime",
         ]),

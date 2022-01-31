@@ -114,8 +114,6 @@ export default {
         parseMessage(msg) {
             msg.timestamp = +msg.timestamp;
             msg.relativeSeconds = (msg.timestamp - this.startTimeMillis) / 1000;
-            msg.displayTime = this.utcToTimestamp(msg.timestamp);
-            msg.realTime = this.realTimestamp(msg.timestamp);
             msg.key = msg.name + msg.timestamp + msg.message;
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://") && !msg.message.includes("<img")) {
@@ -124,13 +122,6 @@ export default {
                 msg.message = msg.message.replace(regex, '<img src="$2" alt="$1" style="width: auto; height: 1.3em; vertical-align: middle;" />');
             }
             return msg;
-        },
-        utcToTimestamp(utc) {
-            const millisDiff = dayjs.utc(utc).diff(this.startTimeMillis);
-            return (Math.sign(millisDiff) < 0 ? "-" : "") + formatDuration(Math.abs(millisDiff));
-        },
-        realTimestamp(utc) {
-            return dayjs(utc).format("LTS"); // localizedFormat
         },
     },
 };
