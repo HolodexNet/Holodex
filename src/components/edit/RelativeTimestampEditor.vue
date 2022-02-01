@@ -21,7 +21,7 @@
         :value="((Number(test) - min) * 100.0) / (max - min)"
         class="ts-progress"
       />
-      <div class="rel-current" :style="'left: '+mousex+'px'">
+      <div class="rel-current" :style="'transform: translateX('+mousex+'px);'">
         Play from here
       </div>
     </div>
@@ -123,14 +123,17 @@ export default {
   }
   .timeline:hover .rel-current {
     display: block;
+    opacity: 1;
   }
   .rel-current {
-    display: none;
+    display: block;
+    opacity: 0;
     font-size: 9px;
     border-left: 2px solid #aaa;
     height: 20px;
     position: absolute;
     margin-top: -23px;
+    left: 0;
     pointer-events: none;
     padding-left: 5px;
   }
@@ -156,32 +159,6 @@ export default {
       background-color: #5555;
     }
     .rel-fgC {
-      background: -moz-linear-gradient(
-        top,
-        rgb(138, 168, 54) 0%,
-        rgb(71, 112, 32) 100%
-      );
-      background: -webkit-gradient(
-        left top,
-        left bottom,
-        color-stop(0%, rgb(138, 168, 54)),
-        color-stop(100%, rgb(71, 112, 32))
-      );
-      background: -webkit-linear-gradient(
-        top,
-        rgb(138, 168, 54) 0%,
-        rgb(71, 112, 32) 100%
-      );
-      background: -o-linear-gradient(
-        top,
-        rgb(138, 168, 54) 0%,
-        rgb(71, 112, 32) 100%
-      );
-      background: -ms-linear-gradient(
-        top,
-        rgb(138, 168, 54) 0%,
-        rgb(71, 112, 32) 100%
-      );
       background: linear-gradient(
         to bottom,
         rgb(138, 168, 54) 0%,

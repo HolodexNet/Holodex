@@ -98,7 +98,7 @@
           <v-tooltip bottom>
             <template #activator="{ on }">
               <button class="tweak-btn red" v-on="on" @click="currentStartTime = secondsToHuman(currentTime)">
-                <v-icon style="transform: rotate(90deg);" left>
+                <v-icon style="transform: rotate(90deg);">
                   {{ mdiAltimeter }}
                 </v-icon>{{ formatDuration(currentTime * 1000) }}
               </button>
@@ -150,7 +150,7 @@
                 v-on="on"
                 @click="currentEndTime = secondsToHuman(currentTime); $emit('timeJump', currentTime - 3, true, false, currentTime)"
               >
-                <v-icon style="transform: rotate(90deg);" left>
+                <v-icon style="transform: rotate(90deg);">
                   {{ mdiAltimeter }}
                 </v-icon>{{ formatDuration((currentTime) * 1000) }}
               </button>
@@ -160,8 +160,13 @@
 
           <v-tooltip v-if="current.song && current.song.trackTimeMillis" bottom>
             <template #activator="{ on }">
-              <button class="tweak-btn" v-on="on" @click="currentEndTime = `+${Math.ceil(current.song.trackTimeMillis / 1000)}`; $emit('timeJump', current.start + current.song.trackTimeMillis / 1000 - 3, true, false, current.start + current.song.trackTimeMillis / 1000)">
-                <v-icon left>
+              <button
+                class="tweak-btn red"
+                v-on="on"
+                @click="currentEndTime = `+${Math.ceil(current.song.trackTimeMillis / 1000)}`;
+                        $emit('timeJump', current.start + current.song.trackTimeMillis / 1000 - 3, true, false, current.start + current.song.trackTimeMillis / 1000)"
+              >
+                <v-icon>
                   {{ mdiTimelinePlusOutline }}
                 </v-icon>{{ formatDuration((current.start * 1000 + current.song.trackTimeMillis)) }}
               </button>
@@ -576,6 +581,9 @@ button.tweak-btn {
     margin: 1px 2px;
     padding: 5px;
     min-width: 50px;
+    width: 70px;
+    font-family: monospace;
+    font-size: 12px;
 }
 .tweak-input {
     margin-left: 2px !important;
