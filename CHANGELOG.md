@@ -1,9 +1,27 @@
 ### Holodex Beta
 
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
-### 2.25.3 Holodex [*Jan 16, 2022*]
+
+### 2.26 Holodex [*Jan 31, 2022*]
 💬:
-> Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you are experienced in *React* (Hooks and Functional Components), and don't need micromanaging, we want your help! We are currently close to beta testing.
+> Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you are experienced in *React* (Hooks and Functional Components), and don't need micromanaging, we want your help! We are preparing for beta test. Stay tuned
+
+💬:
+> Happy Lunar New Year, and much thanks to all the editors and developers for their hard work!
+
+#### Minor changes
+- Modifies the "Add Music" menu for video edit pages. You should find it incredibly easy to label music.
+- Archive TL can now be temporally adjusted using the power of Kronii.
+- Sorted Live frames above other (even future) frames on Streamers' channel pages. 
+- Video Grid sizes are now applicable to also Channel pages.
+
+#### Bugfixes:
+- Github/@Ailre contributed a nice PR [#532](https://github.com/RiceCakess/Holodex/pull/532) for those really long video topics on mobile (Thank you!)
+- Placeholders now properly use JP titles (if available) if you have Use English Names turned off.
+
+
+
+### 2.25.3 Holodex [*Jan 16, 2022*]
 
 #### Minor changes
 - Adds PEKO English to the languages list, it might not be very easy to understand, but she's trying her best!
@@ -11,8 +29,6 @@
 
 
 ### 2.25.2 Holodex [*Dec 28th, 2021*]
-💬:
-> Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you are experienced in *React* (Hooks and Functional Components), and don't need micromanaging, we want your help! We are currently close to alpha testing, but quite far from a polished product.
 
 #### Minor changes
 - Fixed a bug with TLdex showing up on Membersonly streams. Now it only shows up if you can play it.
