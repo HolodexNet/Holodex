@@ -31,7 +31,7 @@ if (!(window as any).hideMeta) {
     });
 }
 Vue.use(VueI18n);
-Vue.use(LoadScript);
+Vue.use(LoadScript as any);
 
 Vue.use(PortalVue);
 Vue.prototype.icons = icons;

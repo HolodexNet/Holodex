@@ -10,7 +10,7 @@
     "importHelpers": true,
     "moduleResolution": "node",
     "allowJs": true,
-    "importsNotUsedAsValues": "error",
+//    "importsNotUsedAsValues": "error",
     "skipLibCheck": true,
     // TODO: work towards enabling this
     // "strictNullChecks": true,
