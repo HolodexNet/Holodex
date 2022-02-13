@@ -71,30 +71,33 @@ export default {
     watch: {
     },
     methods: {
+        formatDistanceUpcoming(video) {
+            const allowNegative = false; // upcoming videos don't get to be ("5 minutes ago")
+            return formatDistance(
+                video.start_scheduled || video.available_at,
+                this.lang,
+                this.$t.bind(this),
+                allowNegative,
+                dayjs(this.now),
+            );
+        },
+        formatDistanceDefault(video) {
+            return formatDistance(
+                video.available_at,
+                this.lang,
+                this.$t.bind(this),
+            );
+        },
         formattedTime(video) {
             switch (video.status) {
-                    // print relative time in hours if less than 24 hours,
-                    // print full date if greater than 24 hours
                 case "upcoming":
-                    return formatDistance(
-                        video.start_scheduled || video.available_at,
-                        this.lang,
-                        this.$t.bind(this),
-                        false, // allowNegative = false
-                        dayjs(this.now),
-                    ); // upcoming videos don't get to be ("5 minutes ago")
+                    return this.formatDistanceUpcoming(video);
                 case "live":
                     return this.$t("component.videoCard.liveNow");
                 default:
-                    return video.status
-                    return formatDistance(
-                        video.available_at,
-                        this.lang,
-                        this.$t.bind(this),
-                    );
+                    return this.formatDistanceDefault(video);
             }
         }
-
     },
 };
 </script>
