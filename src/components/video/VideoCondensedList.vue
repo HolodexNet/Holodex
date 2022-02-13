@@ -151,7 +151,6 @@ a.condensed-video {
 
 .condensed-col-title {
     max-width: 100%;
-    padding-right: 40px;
     flex-grow: 1;
 }
 
@@ -163,7 +162,7 @@ a.condensed-video {
     color: red;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     .condensed-video-list {
         margin-top: 12px;
     }
@@ -176,8 +175,17 @@ a.condensed-video {
         width: 25%;
     }
 
+    .condensed-col-channel-name {
+        white-space: normal;
+        flex-grow: 1;
+    }
+
     .condensed-col-title {
-        width: 50%;
+        display: none;
+    }
+
+    .condensed-col-status {
+        min-width: 50%;
     }
 }
 
