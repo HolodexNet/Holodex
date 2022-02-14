@@ -81,12 +81,12 @@
             <span v-if="data.placeholderType === 'scheduled-yt-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeScheduledYT') }}</span>
             <span v-else-if="data.placeholderType === 'external-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeExternalStream') }}</span>
             <span v-else-if="data.placeholderType === 'event'" class="hover-placeholder">{{ $t('component.videoCard.typeEventPlaceholder') }}</span>
-
             <v-icon
               color="white"
               class="rounded-sm"
             >
-              {{ placeholderIconMap[data.placeholderType] }}
+
+              {{ twitchPlaceholder ? mdiTwitch : placeholderIconMap[data.placeholderType] }}
             </v-icon>
           </div>
 
@@ -249,7 +249,7 @@ import {
     dayjs,
     localizedDayjs,
 } from "@/utils/time";
-import { mdiBroadcast } from "@mdi/js";
+import { mdiBroadcast, mdiTwitch } from "@mdi/js";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */
 
@@ -325,6 +325,7 @@ export default {
             now: Date.now(),
             updatecycle: null,
             hasWatched: false,
+            mdiTwitch,
             placeholderIconMap: {
                 event: (this as any).icons.mdiCalendar,
                 "scheduled-yt-stream": (this as any).icons.mdiYoutube,
@@ -467,6 +468,9 @@ export default {
         href() {
             if (this.isPlaceholder) return undefined;
             return this.redirectMode ? `https://youtu.be/${this.data.id}` : this.watchLink;
+        },
+        twitchPlaceholder() {
+            return this.data.link?.includes("twitch.tv");
         },
     },
     // created() {

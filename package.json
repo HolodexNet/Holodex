@@ -7,7 +7,8 @@
     "build": "vite build --mode prod",
     "changelog": "changelog-to-html --outputDirectoryPath docs && generate-md --layout ./resources/roryg-ghostwriter --input ./CHANGELOG.md --output ./docs",
     "preview": "vite preview",
-    "lint": "eslint --fix src/"
+    "lint": "eslint --fix src/",
+    "prepare": "husky install"
   },
   "workspaces": [
     "src/external/vue-grid-layout"
@@ -19,11 +20,6 @@
     "CHANGELOG.md": [
       "npm run changelog --"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx lint-staged"
-    }
   },
   "dependencies": {
     "@interactjs/actions": "^1.10.11",
@@ -49,6 +45,7 @@
     "string-similarity": "^4.0.4",
     "v-google-translate": "^0.1.10",
     "vue": "^2.6.14",
+    "vue-eslint-parser": "^8.2.0",
     "vue-google-oauth2": "^1.5.8",
     "vue-gtag": "^1.16.1",
     "vue-i18n": "^8.27.0",
@@ -82,7 +79,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-vue": "^8.4.0",
     "eslint-webpack-plugin": "^3.1.1",
-    "husky": "^7.0.4",
+    "husky": "^7.0.0",
     "lint-staged": "^12.3.2",
     "markdown-styles": "^3.2.0",
     "rollup": "^2.66.1",
