@@ -2,15 +2,13 @@
     <div class="condensed-video-list">
         <a :href="`/watch/${video.id}`" class="condensed-video" v-for="video of videos">
             <div class="condensed-col-image">
-                <ChannelImg :channel="video.channel" rounded class="align-self-center" />
-            </div>
-            <div class="condensed-col condensed-col-channel-name">
-                <a :href="`/channel/${video.channel.id}`">
-                    {{ video.channel.english_name }}
-                </a>
+                <ChannelImg :channel="video.channel" rounded />
             </div>
             <div class="condensed-col condensed-col-title">
                 {{ video.title }}
+                <div class="condensed-col-status-mobile" v-bind:class="{ 'text-live': video.status === 'live' }">
+                    {{ formattedTime(video) }}
+                </div>
             </div>
             <div class="condensed-col condensed-col-status" v-bind:class="{ 'text-live': video.status === 'live' }">
                 {{ formattedTime(video) }}
@@ -107,6 +105,7 @@ a.condensed-video {
     display: flex;
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-right: 10px;
 
     width: 100%;
 
@@ -129,13 +128,11 @@ a.condensed-video {
 .condensed-col-status {
     min-width: 265px;
     text-align: right;
-    padding-right: 10px;
 }
 
 .condensed-col-image {
-    width: calc(40px + 8px);
+    width: calc(40px + 12px);
     padding-left: 10px;
-    padding-right: 10px;
 }
 
 .condensed-col-title {
@@ -143,38 +140,35 @@ a.condensed-video {
     flex-grow: 1;
 }
 
-.condensed-col-channel-name {
-    white-space: nowrap;
-}
-
 .text-live {
     color: red;
 }
 
-@media only screen and (max-width: 700px) {
+.condensed-col-status-mobile {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
     .condensed-video-list {
         margin-top: 0;
     }
 
-    .condensed-col-image, .condensed-col-organization {
+    .condensed-col-organization {
         display: none;
     }
 
     .condensed-col {
-        width: 25%;
-    }
-
-    .condensed-col-channel-name {
-        white-space: normal;
-        flex-grow: 1;
-    }
-
-    .condensed-col-title {
-        display: none;
+        width: default;
+        line-height: inherit;
     }
 
     .condensed-col-status {
-        min-width: 50%;
+        display: none;
+    }
+
+    .condensed-col-status-mobile {
+        display: block;
+        margin-top: 1rem;
     }
 }
 
