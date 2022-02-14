@@ -1,6 +1,5 @@
 <template>
     <div class="condensed-video-list">
-        <h2>{{ $t('views.home.liveOrUpcomingHeading') }}</h2>
         <a :href="`/watch/${video.id}`" class="condensed-video" v-for="video of videos">
             <div class="condensed-col-image">
                 <ChannelImg :channel="video.channel" rounded class="align-self-center" />
@@ -95,18 +94,8 @@ export default {
 
 .condensed-video-list {
     margin: auto;
-    margin-top: 8px;
+    margin-top: 12px;
     max-width: 1200px;
-
-    h2 {
-        margin-bottom: 10px;
-        margin-left: 10px;
-        line-height: 1.5;
-        font-weight: 500;
-        font-size: 1.125rem;
-        opacity: 0.55;
-        text-transform: uppercase;
-    }
 }
 
 a.condensed-video {
@@ -164,7 +153,7 @@ a.condensed-video {
 
 @media only screen and (max-width: 700px) {
     .condensed-video-list {
-        margin-top: 12px;
+        margin-top: 0;
     }
 
     .condensed-col-image, .condensed-col-organization {
