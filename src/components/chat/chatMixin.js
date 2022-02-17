@@ -1,6 +1,6 @@
 // Loads store settings, exposes loadHistory and parseMessage function
 import api from "@/utils/backend-api";
-import { formatDuration, dayjs } from "@/utils/time";
+import { dayjs } from "@/utils/time";
 import { syncState } from "@/utils/functions";
 import { mdiArrowExpand, mdiSubtitlesOutline } from "@mdi/js";
 
@@ -96,9 +96,8 @@ export default {
             })
                 .then(({ data }) => {
                     this.completed = data.length !== this.limit || loadAll;
-                    const filtered = data.filter((m) => !this.blockedNames.has(m.name));
-                    if (firstLoad) this.tlHistory = filtered.map(this.parseMessage);
-                    else this.tlHistory.unshift(...filtered.map(this.parseMessage));
+                    if (firstLoad) this.tlHistory = data.map(this.parseMessage);
+                    else this.tlHistory.unshift(...data.map(this.parseMessage));
 
                     // Set last message as breakpoint, used for maintaing scrolling and styling
                     if (this.tlHistory.length) this.tlHistory[0].breakpoint = true;

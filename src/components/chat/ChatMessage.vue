@@ -23,7 +23,7 @@
           <span v-if="source.is_vtuber">[Vtuber]</span>
           <span v-if="source.is_moderator">[Mod]</span>
           <span v-if="source.source">{{ source.source }} - </span> {{ source.name }}<span v-if="source.is_verified" style="font-weight: 800"> ✓</span>:
-          <v-icon x-small style="margin-top: -2px; margin-left: 1px;">{{ icons.mdiCog }}</v-icon>
+          <v-icon x-small style="margin-top: 2px; margin-left: 1px; position: absolute">{{ icons.mdiCog }}</v-icon>
         </span>
       </div>
       <a class="tl-message" :data-time="source.relativeSeconds">

@@ -118,7 +118,8 @@ export default {
     computed: {
         dividedTLs() {
             const self = this;
-            return this.tlHistory.map((item, index, arr) => {
+            const filtered = this.tlHistory.filter((m) => !this.blockedNames.has(m.name));
+            return filtered.map((item, index, arr) => {
                 const shouldHideAuthor = index > 0 && (!(index === 0
                     || index === arr.length - 1
                     || item.name !== arr[index - 1].name
