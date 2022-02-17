@@ -236,7 +236,7 @@ export default {
                 hideCollabs: this.shouldHideCollabs,
                 forOrg: this.isRealOrg && this.selectedOrg.name,
                 hideIgnoredTopics: true,
-                // hidePlaceholder: this.hidePlaceholders,
+                hidePlaceholder: this.hidePlaceholders,
             };
             const isTwitchPlaceholder = (v) => (v.type === "placeholder" && v.link?.includes("twitch.tv"));
             return this.live.filter((l) => this.filterVideos(l, filterConfig) || (this.hidePlaceholders && isTwitchPlaceholder(l)));
