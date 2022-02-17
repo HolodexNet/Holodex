@@ -146,7 +146,7 @@
             <div
               v-if="video && video.link"
               class="live-badge purple"
-              style="left: 0; width: 18px"
+              style="left: 0; width: 20px"
             >
               <v-icon small>
                 {{ mdiTwitch }}
