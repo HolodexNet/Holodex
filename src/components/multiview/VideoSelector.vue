@@ -86,7 +86,8 @@
             v-else
             :tab="tab"
             :is-fav-page="selectedOrg.name === 'Favorites'"
-            :hide-placeholder="hidePlaceholders"
+            :hide-placeholder="false"
+            :live-content="baseFilteredLive"
             disable-default-click
             dense
             date-portal-name="date-selector-multiview"
@@ -142,6 +143,16 @@
             v-on="on"
             @dragstart="(ev) => dragVideo(ev, video)"
           >
+            <div
+              v-if="video && video.link"
+              class="live-badge purple"
+              style="left: 0; width: 18px"
+            >
+              <v-icon small>
+                {{ mdiTwitch }}
+              </v-icon>
+            </div>
+
             <div :key="'lvbg' + tick" class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
               {{ formatDurationLive(video) }}
             </div>
@@ -171,6 +182,7 @@ import { dayjs } from "@/utils/time";
 import { mapGetters, mapState } from "vuex";
 import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
 import filterVideos from "@/mixins/filterVideos";
+import { mdiTwitch } from "@mdi/js";
 import CustomUrlField from "./CustomUrlField.vue";
 
 export default {
@@ -209,6 +221,7 @@ export default {
             ticker: null,
             refreshTimer: null,
             tab: 0,
+            mdiTwitch,
         };
     },
     computed: {
@@ -223,9 +236,10 @@ export default {
                 hideCollabs: this.shouldHideCollabs,
                 forOrg: this.isRealOrg && this.selectedOrg.name,
                 hideIgnoredTopics: true,
-                hidePlaceholder: this.hidePlaceholders,
+                // hidePlaceholder: this.hidePlaceholders,
             };
-            return this.live.filter((l) => this.filterVideos(l, filterConfig));
+            const isTwitchPlaceholder = (v) => (v.type === "placeholder" && v.link?.includes("twitch.tv"));
+            return this.live.filter((l) => this.filterVideos(l, filterConfig) || (this.hidePlaceholders && isTwitchPlaceholder(l)));
         },
         topFilteredLive() {
             // Filter out lives for top bar
@@ -239,7 +253,7 @@ export default {
                     || (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                 );
             })
-                .filter((l) => !this.activeVideos.find((v) => v.id === l.id));
+                .filter((l) => !this.activeVideos.find((v) => v.id === l.id || v.link === l.link));
 
             return limitCount;
         },

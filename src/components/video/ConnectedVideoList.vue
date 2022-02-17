@@ -131,6 +131,10 @@ export default {
         SkeletonCardList,
     },
     props: {
+        liveContent: {
+            type: Array,
+            default: null,
+        },
         isFavPage: {
             type: Boolean,
             default: false,
@@ -170,7 +174,8 @@ export default {
             return this.$store.getters.isLoggedIn;
         },
         live() {
-            return this.isFavPage ? this.f_live : this.h_live;
+            // Bypass store and use prop provided data for live
+            return (this.liveContent?.length && this.liveContent) || (this.isFavPage ? this.f_live : this.h_live);
         },
         isLoading() {
             return this.isFavPage ? this.f_isLoading : this.h_isLoading;
@@ -251,7 +256,8 @@ export default {
                 if (this.favoriteChannelIDs.size > 0 && this.isLoggedIn) {
                     this.$store.dispatch("favorites/fetchLive", { force: true, minutes: 2 });
                 }
-            } else {
+            } else if (!this.liveContent?.length) {
+                console.log("init dispatching fetch");
                 this.$store.commit("home/resetState");
                 this.$store.dispatch("home/fetchLive", { force: true });
             }
