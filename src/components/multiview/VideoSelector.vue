@@ -239,9 +239,11 @@ export default {
                 hidePlaceholder: this.hidePlaceholders,
             };
             const isTwitchPlaceholder = (v) => (v.type === "placeholder" && v.link?.includes("twitch.tv"));
+            console.log(this.live.filter((l) => !(this.filterVideos(l, filterConfig) || (this.hidePlaceholders && isTwitchPlaceholder(l)))));
             return this.live.filter((l) => this.filterVideos(l, filterConfig) || (this.hidePlaceholders && isTwitchPlaceholder(l)));
         },
         topFilteredLive() {
+            console.log(this.baseFilteredLive);
             // Filter out lives for top bar
             let count = 0;
             const limitCount = this.baseFilteredLive.filter((l) => {
@@ -253,7 +255,7 @@ export default {
                     || (count < 8 && dayjs().isAfter(dayjs(l.start_scheduled).subtract(6, "h")))
                 );
             })
-                .filter((l) => !this.activeVideos.find((v) => v.id === l.id || v.link === l.link));
+                .filter((l) => !this.activeVideos.find((v) => v.id === l.id || (v.link && l.link && v.link === l.link)));
 
             return limitCount;
         },
