@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terjadwal
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
