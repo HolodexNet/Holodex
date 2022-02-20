@@ -25,6 +25,7 @@ const initialState = {
     nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
     hideCollabStreams: false,
     ignoredTopics: [],
+    homeListView: false,
 
     // Live TL Window Settings
     liveTlStickBottom: false,
@@ -113,6 +114,7 @@ const mutations = {
         "liveTlShowVtuber",
         "liveTlShowSubtitle",
         "hidePlaceholder",
+        "homeListView",
     ]),
     resetState(state) {
         Object.assign(state, initialState);

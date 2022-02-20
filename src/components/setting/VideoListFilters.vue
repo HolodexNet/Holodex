@@ -29,14 +29,14 @@
       :messages="$t('views.settings.hideVideoThumbnailsMsg')"
       hide-details
     />
-    <v-switch
+    <!-- <v-switch
       v-model="hideThumbnail"
       class="v-input--reverse v-input--expand"
       inset
       :label="$t('views.settings.hideVideoThumbnailsLabel')"
       :messages="$t('views.settings.hideVideoThumbnailsMsg')"
       hide-details
-    />
+    /> -->
   </div>
 </template>
 
@@ -61,7 +61,7 @@ export default {
         ...syncState("settings", [
             "hideCollabStreams",
             "ignoredTopics",
-            "hideThumbnail",
+            // "hideThumbnail",
             "hidePlaceholder",
         ]),
         ignoredTopics: {

@@ -65,6 +65,13 @@
             <video-list-filters />
           </v-sheet>
         </v-menu>
+        <v-btn
+          text
+          icon
+          @click="toggleDisplayMode"
+        >
+          <v-icon>{{ displayIcon }}</v-icon>
+        </v-btn>
       </portal>
     </v-col>
     <template v-if="tab === Tabs.LIVE_UPCOMING">
@@ -77,6 +84,7 @@
           :cols="colSizes"
           :dense="currentGridSize > 0"
           :filter-config="filterConfig"
+          :horizontal="homeListView"
           v-bind="$attrs"
           v-on="$listeners"
         />
@@ -88,6 +96,7 @@
           :cols="colSizes"
           :dense="currentGridSize > 0"
           :filter-config="filterConfig"
+          :horizontal="homeListView"
           v-bind="$attrs"
           v-on="$listeners"
         />
@@ -116,6 +125,7 @@
             :dense="currentGridSize > 0"
             :filter-config="filterConfig"
             v-bind="$attrs"
+            :horizontal="homeListView"
             v-on="$listeners"
           />
           <!-- only show SkeletonCardList if it's loading -->
@@ -136,7 +146,8 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 // import VideoCondensedList from "@/components/video/VideoCondensedList.vue";
 // import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { dayjs } from "@/utils/time";
-import { mdiCalendarEnd, mdiFilterVariant } from "@mdi/js";
+import { mdiCalendarEnd, mdiFilterVariant, mdiFormatListBulleted } from "@mdi/js";
+import { syncState } from "@/utils/functions";
 import VideoListFilters from "../setting/VideoListFilters.vue";
 
 function nearestUTCDate(date) {
@@ -179,6 +190,7 @@ export default {
         return {
             mdiCalendarEnd,
             mdiFilterVariant,
+            mdiFormatListBulleted,
             identifier: Date.now(),
             pageLength: 24,
             Tabs: Object.freeze({
@@ -203,6 +215,7 @@ export default {
         };
     },
     computed: {
+        ...syncState("settings", ["homeListView"]),
         ...mapState("home", { h_live: "live", h_isLoading: "isLoading", h_hasError: "hasError" }),
         ...mapState("favorites", { f_live: "live", f_isLoading: "isLoading", f_hasError: "hasError" }),
         ...mapGetters("favorites", ["favoriteChannelIDs"]),
@@ -275,6 +288,18 @@ export default {
                 hidePlaceholder: this.$store.state.settings.hidePlaceholder,
             };
         },
+
+        displayIcon() {
+            switch (true) {
+                case this.homeListView: return mdiFormatListBulleted;
+                case this.currentGridSize === 1:
+                    return this.icons.mdiGrid;
+                case this.currentGridSize === 2:
+                    return this.icons.mdiSquareOutline;
+                default:
+                    return this.icons.mdiGridLarge;
+            }
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -296,6 +321,20 @@ export default {
         this.init(true); // try updating favorites if it's actually favorites page.
     },
     methods: {
+        toggleDisplayMode() {
+            if (this.homeListView) {
+                this.homeListView = false;
+                this.currentGridSize = 0;
+                return;
+            }
+
+            if (this.currentGridSize === 2) {
+                this.homeListView = true;
+                return;
+            }
+
+            this.currentGridSize += 1;
+        },
         init(updateFavorites) {
             if (this.isFavPage) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");

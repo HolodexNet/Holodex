@@ -20,8 +20,7 @@ export default {
             }
 
             if (hideCollabs) {
-                keep &&= favoriteChannels.has(channelId)
-                || (v.channel.org === org);
+                keep &&= (v.channel.org === org) || favoriteChannels.has(channelId);
             }
 
             if (hideIgnoredTopics) {
