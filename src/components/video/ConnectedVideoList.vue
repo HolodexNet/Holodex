@@ -84,7 +84,7 @@
           :cols="colSizes"
           :dense="currentGridSize > 0"
           :filter-config="filterConfig"
-          :horizontal="homeListView"
+          :dense-list="homeListView"
           v-bind="$attrs"
           v-on="$listeners"
         />
@@ -96,7 +96,7 @@
           :cols="colSizes"
           :dense="currentGridSize > 0"
           :filter-config="filterConfig"
-          :horizontal="homeListView"
+          :dense-list="homeListView"
           v-bind="$attrs"
           v-on="$listeners"
         />
@@ -351,16 +351,19 @@ export default {
             this.init();
         },
         getLoadFn() {
+            const query = {
+                status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
+                ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
+                include: "clips",
+                lang: this.$store.state.settings.clipLangs.join(","),
+                paginated: !this.scrollMode,
+                to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
+            };
             if (this.isFavPage) {
                 return async (offset, limit) => {
                     const res = await backendApi
                         .favoritesVideos(this.$store.state.userdata.jwt, {
-                            status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                            ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                            include: "clips",
-                            lang: this.$store.state.settings.clipLangs.join(","),
-                            paginated: !this.scrollMode,
-                            to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
+                            ...query,
                             limit,
                             offset,
                         })
@@ -375,13 +378,8 @@ export default {
             // home page function
             return async (offset, limit) => {
                 const res = await backendApi.videos({
-                    status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                    ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                    include: "clips",
+                    ...query,
                     org: this.$store.state.currentOrg.name,
-                    lang: this.$store.state.settings.clipLangs.join(","),
-                    paginated: !this.scrollMode,
-                    to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
                     limit,
                     offset,
                 });

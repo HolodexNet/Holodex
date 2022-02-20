@@ -5,7 +5,7 @@
     fluid
   >
     <!-- Video Card grid rows -->
-    <div class="row video-row" :class="{'row--dense': dense}">
+    <div class="row video-row" :class="{'row--dense': dense, 'video-row-list': denseList}">
       <!-- Video Cards with custom grid size class based on breakpoint -->
       <div
         v-for="(video, index) in processedVideos"
@@ -21,6 +21,7 @@
           :col-size="colSize"
           :active="video.id === activeId"
           :disable-default-click="disableDefaultClick"
+          :dense-list="denseList"
           :hide-thumbnail="shouldHideThumbnail"
           @videoClicked="handleVideoClick"
         >
@@ -80,6 +81,10 @@ export default {
             required: false,
             type: Boolean,
         },
+        denseList: {
+            required: false,
+            type: Boolean,
+        },
         cols: {
             type: Object,
             default: () => ({
@@ -129,7 +134,7 @@ export default {
             return this.sortFn ? filtered.map(this.sortFn) : filtered;
         },
         colSize() {
-            if (this.horizontal) return 1;
+            if (this.horizontal || this.denseList) return 1;
             return this.cols[this.$vuetify.breakpoint.name];
         },
         isMobile() {
@@ -226,5 +231,9 @@ export default {
 
 .video-row.row {
     margin: 0 -12px;
+}
+
+.video-row-list .video-col {
+    border-bottom: 1px solid var(--v-background-lighten1);
 }
 </style>

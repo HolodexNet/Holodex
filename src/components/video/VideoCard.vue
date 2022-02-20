@@ -5,7 +5,8 @@
       'video-card-fluid': fluid,
       'video-card-active': active,
       'video-card-horizontal': horizontal,
-      'flex-column': !horizontal,
+      'video-card-list': denseList,
+      'flex-column': !horizontal && !denseList,
     }"
     :target="redirectMode ? '_blank' : ''"
     :href="href"
@@ -17,6 +18,7 @@
   >
     <!-- Video Image with Duration -->
     <div
+      v-if="!denseList"
       style="position: relative; width: 100%"
       class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
       :style="
@@ -115,7 +117,7 @@
     >
       <!-- Channel icon -->
       <div
-        v-if="includeChannel && includeAvatar && !horizontal && data.channel"
+        v-if="denseList || (includeChannel && includeAvatar && !horizontal && data.channel)"
         class="d-flex align-self-center mx-2 flex-column d-flex"
       >
         <ChannelImg
@@ -125,7 +127,7 @@
         />
       </div>
       <!-- Three lines for title, channel, available time -->
-      <div class="d-flex flex-column flex-grow-1 video-card-lines justify-space-around">
+      <div class="d-flex video-card-lines flex-column">
         <!-- Video title -->
         <div
           :class="['video-card-title ', { 'video-watched': hasWatched }, {'mt-2' : !horizontal}]"
@@ -317,6 +319,10 @@ export default {
         parentPlaylistId: {
             type: [Number, String],
             default: null,
+        },
+        denseList: {
+            type: Boolean,
+            required: false,
         },
     },
     data() {
@@ -612,6 +618,8 @@ export default {
   line-height: 1.2;
   /* padding-bottom: 0.2rem; */
   margin-bottom: 2px;
+  flex-grow: 1;
+  justify-content: space-around;
 }
 .video-card-title {
   line-height: 1.25rem !important;
@@ -725,6 +733,36 @@ export default {
   .video-card-text {
     .video-card-lines {
       justify-content: space-around;
+    }
+  }
+}
+
+.video-card-list {
+  flex-direction: row !important;
+  .video-card-text {
+    min-height: auto;
+    align-items: center;
+    .video-card-lines {
+      margin-right: 40px;
+      flex-direction: row !important;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: flex-start;
+      .video-card-title {
+        flex-basis: 50%;
+      }
+      .channel-name.video-card-subtitle {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        flex-basis: 200px;
+      }
+      .video-card-subtitle:last-of-type {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        flex-basis: 150px;
+      }
     }
   }
 }
