@@ -1,5 +1,71 @@
 <template>
   <div v-show="!hasError && !(isFavPage && !(isLoggedIn && favoriteChannelIDs.size > 0))">
+    <v-col
+      v-show="!$vuetify.breakpoint.isXs"
+      xs="4"
+      sm="4"
+      style="display: flex; justify-content: flex-end;"
+      class="ma-0 pb-0 pt-0"
+    >
+      <portal :to="portalName" :disabled="$vuetify.breakpoint.xs">
+        <!-- <v-menu
+          v-show="isActive"
+          v-model="datePicker"
+          :close-on-content-click="false"
+          offset-y
+          left
+          min-width="auto"
+        >
+          <template #activator="{ on, attrs }">
+            <v-text-field
+              v-model="toDate"
+              label="Up to"
+              :prepend-icon="mdiCalendarEnd"
+              readonly
+              hide-details
+              dense
+              regular
+              clearable
+              single-line
+              style="opacity: 0.7; max-width: 170px;"
+              v-bind="attrs"
+              v-on="on"
+            />
+          </template>
+          <v-date-picker
+            v-model="toDate"
+            @input="datePicker = false"
+          />
+        </v-menu> -->
+        <v-menu
+          v-show="isActive"
+          v-model="datePicker"
+          :close-on-content-click="false"
+          offset-y
+          left
+          min-width="auto"
+        >
+          <template #activator="{ on, attrs }">
+            <v-btn
+              text
+              icon
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>{{ mdiFilterVariant }}</v-icon>
+            </v-btn>
+          </template>
+          <video-list-filters style="max-width: 400px" />
+        </v-menu>
+
+        <!-- <v-btn
+          text
+          icon
+        >
+          <v-icon>{{ icons.mdiCog }}</v-icon>
+        </v-btn> -->
+      </portal>
+    </v-col>
     <template v-if="tab === Tabs.LIVE_UPCOMING">
       <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
       <div v-if="lives.length || upcoming.length">
@@ -9,9 +75,7 @@
           :include-avatar="shouldIncludeAvatar"
           :cols="colSizes"
           :dense="currentGridSize > 0"
-          hide-ignored-topics
-          :for-org="isFavPage?'none':null"
-          :hide-collabs="shouldHideCollabs"
+          :filter-config="filterConfig"
           v-bind="$attrs"
           v-on="$listeners"
         />
@@ -22,9 +86,7 @@
           :include-avatar="shouldIncludeAvatar"
           :cols="colSizes"
           :dense="currentGridSize > 0"
-          hide-ignored-topics
-          :for-org="isFavPage?'none':null"
-          :hide-collabs="shouldHideCollabs"
+          :filter-config="filterConfig"
           v-bind="$attrs"
           v-on="$listeners"
         />
@@ -35,48 +97,6 @@
     </template>
 
     <template v-else>
-      <!-- Archive and Clips section -->
-      <v-col
-        v-show="!$vuetify.breakpoint.isXs"
-        xs="4"
-        sm="4"
-        style="display: flex; justify-content: flex-end;"
-        class="ma-0 pb-0 pt-0"
-      >
-        <portal :to="portalName" :disabled="$vuetify.breakpoint.xs">
-          <v-menu
-            v-show="isActive"
-            v-model="datePicker"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            left
-            min-width="auto"
-          >
-            <template #activator="{ on, attrs }">
-              <v-text-field
-                v-model="toDate"
-                label="Up to"
-                :prepend-icon="mdiCalendarEnd"
-                readonly
-                hide-details
-                dense
-                regular
-                clearable
-                single-line
-                style="opacity: 0.7; max-width: 170px;"
-                v-bind="attrs"
-                v-on="on"
-              />
-            </template>
-            <v-date-picker
-              v-model="toDate"
-              @input="datePicker = false"
-            />
-          </v-menu>
-        </portal>
-      </v-col>
-
       <keep-alive>
         <generic-list-loader
           v-slot="{ data, isLoading: lod }"
@@ -93,9 +113,7 @@
             include-channel
             :cols="colSizes"
             :dense="currentGridSize > 0"
-            hide-ignored-topics
-            :hide-collabs="shouldHideCollabs"
-            :for-org="isFavPage?'none':null"
+            :filter-config="filterConfig"
             v-bind="$attrs"
             v-on="$listeners"
           />
@@ -116,7 +134,8 @@ import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
 // import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { dayjs } from "@/utils/time";
-import { mdiCalendarEnd } from "@mdi/js";
+import { mdiCalendarEnd, mdiFilterVariant } from "@mdi/js";
+import VideoListFilters from "../setting/VideoListFilters.vue";
 
 function nearestUTCDate(date) {
     return date.add(1, "day").toDate().toISOString();
@@ -129,6 +148,7 @@ export default {
         // LoadingOverlay,
         GenericListLoader,
         SkeletonCardList,
+        VideoListFilters,
     },
     props: {
         liveContent: {
@@ -155,6 +175,7 @@ export default {
     data() {
         return {
             mdiCalendarEnd,
+            mdiFilterVariant,
             identifier: Date.now(),
             pageLength: 24,
             Tabs: Object.freeze({
@@ -228,6 +249,13 @@ export default {
         },
         portalName() {
             return this.datePortalName || `date-selector${this.isFavPage}`;
+        },
+        filterConfig() {
+            return {
+                forOrg: this.isFavPage ? "none" : null,
+                hideCollabs: this.shouldHideCollabs,
+                hidePlaceholder: this.$store.state.settings.hidePlaceholder,
+            };
         },
     },
     watch: {

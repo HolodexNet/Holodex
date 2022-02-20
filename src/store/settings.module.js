@@ -21,6 +21,7 @@ const initialState = {
     autoplayVideo: false,
     scrollMode: true,
     hideThumbnail: false,
+    hidePlaceholder: false,
     nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
     hideCollabStreams: false,
     ignoredTopics: [],
@@ -111,6 +112,7 @@ const mutations = {
         "ignoredTopics",
         "liveTlShowVtuber",
         "liveTlShowSubtitle",
+        "hidePlaceholder",
     ]),
     resetState(state) {
         Object.assign(state, initialState);

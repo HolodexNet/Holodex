@@ -239,11 +239,9 @@ export default {
                 hidePlaceholder: this.hidePlaceholders,
             };
             const isTwitchPlaceholder = (v) => (v.type === "placeholder" && v.link?.includes("twitch.tv"));
-            console.log(this.live.filter((l) => !(this.filterVideos(l, filterConfig) || (this.hidePlaceholders && isTwitchPlaceholder(l)))));
             return this.live.filter((l) => this.filterVideos(l, filterConfig) || (this.hidePlaceholders && isTwitchPlaceholder(l)));
         },
         topFilteredLive() {
-            console.log(this.baseFilteredLive);
             // Filter out lives for top bar
             let count = 0;
             const limitCount = this.baseFilteredLive.filter((l) => {
