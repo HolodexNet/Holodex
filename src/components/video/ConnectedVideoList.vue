@@ -8,38 +8,7 @@
       class="ma-0 pb-0 pt-0"
     >
       <portal :to="portalName" :disabled="$vuetify.breakpoint.xs">
-        <!-- <v-menu
-          v-show="isActive"
-          v-model="datePicker"
-          :close-on-content-click="false"
-          offset-y
-          left
-          min-width="auto"
-        >
-          <template #activator="{ on, attrs }">
-            <v-text-field
-              v-model="toDate"
-              label="Up to"
-              :prepend-icon="mdiCalendarEnd"
-              readonly
-              hide-details
-              dense
-              regular
-              clearable
-              single-line
-              style="opacity: 0.7; max-width: 170px;"
-              v-bind="attrs"
-              v-on="on"
-            />
-          </template>
-          <v-date-picker
-            v-model="toDate"
-            @input="datePicker = false"
-          />
-        </v-menu> -->
         <v-menu
-          v-show="isActive"
-          v-model="datePicker"
           :close-on-content-click="false"
           offset-y
           left
@@ -55,15 +24,47 @@
               <v-icon>{{ mdiFilterVariant }}</v-icon>
             </v-btn>
           </template>
-          <video-list-filters style="max-width: 400px" />
+          <v-sheet
+            class="pa-6"
+            rounded="none"
+            border-color="primary"
+            style="max-width: 400px;"
+          >
+            <v-select
+              v-model="sortBy"
+              label="Sort By"
+              :items="sortOptions"
+              hide-details
+            />
+            <v-menu
+              v-show="isActive"
+              v-model="datePicker"
+              :close-on-content-click="false"
+              offset-y
+              offset-x
+              left
+              min-width="auto"
+            >
+              <template #activator="{ on, attrs }">
+                <v-text-field
+                  v-model="toDate"
+                  label="Uploaded Before"
+                  readonly
+                  hide-details
+                  regular
+                  clearable
+                  v-bind="attrs"
+                  v-on="on"
+                />
+              </template>
+              <v-date-picker
+                v-model="toDate"
+                @input="datePicker = false"
+              />
+            </v-menu>
+            <video-list-filters />
+          </v-sheet>
         </v-menu>
-
-        <!-- <v-btn
-          text
-          icon
-        >
-          <v-icon>{{ icons.mdiCog }}</v-icon>
-        </v-btn> -->
       </portal>
     </v-col>
     <template v-if="tab === Tabs.LIVE_UPCOMING">
@@ -185,6 +186,17 @@ export default {
             }),
             datePicker: false,
             toDate: null,
+            sortBy: "latest",
+            sortOptions: [
+                {
+                    text: "Latest",
+                    value: "latest",
+                },
+                {
+                    text: "Most Viewers",
+                    value: "viewers",
+                },
+            ],
         };
     },
     computed: {
@@ -195,8 +207,11 @@ export default {
             return this.$store.getters.isLoggedIn;
         },
         live() {
-            // Bypass store and use prop provided data for live
-            return (this.liveContent?.length && this.liveContent) || (this.isFavPage ? this.f_live : this.h_live);
+            let live = (this.liveContent?.length && this.liveContent) || (this.isFavPage ? this.f_live : this.h_live);
+            if (this.sortBy === "viewers") {
+                live = [...live].sort((a, b) => b.live_viewers - a.live_viewers);
+            }
+            return live;
         },
         isLoading() {
             return this.isFavPage ? this.f_isLoading : this.h_isLoading;
@@ -285,7 +300,6 @@ export default {
                     this.$store.dispatch("favorites/fetchLive", { force: true, minutes: 2 });
                 }
             } else if (!this.liveContent?.length) {
-                console.log("init dispatching fetch");
                 this.$store.commit("home/resetState");
                 this.$store.dispatch("home/fetchLive", { force: true });
             }

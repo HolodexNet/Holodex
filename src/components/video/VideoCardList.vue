@@ -107,26 +107,9 @@ export default {
             type: Object,
             default: () => {},
         },
-        // hideCollabs: {
-        //     type: Boolean,
-        //     default: false,
-        // },
-        // hideIgnoredTopics: {
-        //     type: Boolean,
-        //     default: false,
-        // },
-        // hidePlaceholder: {
-        //     type: Boolean,
-        //     default: false,
-        // },
-        // forOrg: {
-        //     type: String,
-        //     default: "",
-        // },
-        // ignoreBlock: {
-        //     type: Boolean,
-        //     default: false,
-        // },
+        sortFn: {
+            type: Function,
+        },
         showComments: {
             type: Boolean,
             default: false,
@@ -142,7 +125,8 @@ export default {
                 hidePlaceholder: false,
                 ...this.filterConfig,
             };
-            return this.videos.filter((v) => this.filterVideos(v, config));
+            const filtered = this.videos.filter((v) => this.filterVideos(v, config));
+            return this.sortFn ? filtered.map(this.sortFn) : filtered;
         },
         colSize() {
             if (this.horizontal) return 1;

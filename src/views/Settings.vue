@@ -217,7 +217,22 @@
         </v-sheet>
       </v-col>
       <v-col v-if="!slim">
-        <video-list-filters />
+        <v-sheet class="settings-group">
+          <v-card-title class="py-1">
+            <v-icon
+              large
+              disabled
+              left
+              class="ml-n3"
+            >
+              {{ mdiFilterOutline }}
+            </v-icon>
+            <span class="text-h6 font-weight-light">{{ $t("views.settings.videoFeedSettings") }}</span>
+          </v-card-title>
+          <v-card-text>
+            <video-list-filters />
+          </v-card-text>
+        </v-sheet>
       </v-col>
     </v-row>
   </v-container>

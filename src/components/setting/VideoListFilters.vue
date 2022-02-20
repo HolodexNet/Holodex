@@ -1,58 +1,43 @@
 <template>
-  <v-sheet class="settings-group">
-    <!-- <v-card-title class="py-1">
-        <v-icon
-          large
-          disabled
-          left
-          class="ml-n3"
-        >
-          {{ mdiFilterOutline }}
-        </v-icon>
-        <span class="text-h6 font-weight-light">{{ $t("views.settings.videoFeedSettings") }}</span>
-      </v-card-title> -->
-    <v-card-text>
-      <v-switch
-        v-model="hideCollabStreams"
-        :prepend-icon="mdiEyeOff"
-        class="v-input--reverse v-input--expand mt-0"
-        inset
-        :label="$t('views.settings.hideCollabStreamsLabel')"
-        :messages="$t('views.settings.hideCollabStreamsMsg')"
-      />
-
-      <v-autocomplete
-        v-model="ignoredTopics"
-        :items="topics"
-        prepend-icon=" "
-        multiple
-        chips
-        clearable
-        deletable-chips
-        :label="$t('views.settings.ignoredTopicsLabel')"
-        :hint="$t('views.settings.ignoredTopicsMsg')"
-        persistent-hint
-      />
-
-      <v-switch
-        v-model="hideThumbnail"
-        prepend-icon=" "
-        class="v-input--reverse v-input--expand"
-        inset
-        :label="$t('views.settings.hideVideoThumbnailsLabel')"
-        :messages="$t('views.settings.hideVideoThumbnailsMsg')"
-      />
-
-      <v-switch
-        v-model="hidePlaceholder"
-        prepend-icon=" "
-        class="v-input--reverse v-input--expand"
-        inset
-        label="hidePlaceholder"
-        :messages="$t('views.settings.hideVideoThumbnailsMsg')"
-      />
-    </v-card-text>
-  </v-sheet>
+  <div>
+    <slot />
+    <v-autocomplete
+      v-model="ignoredTopics"
+      :items="topics"
+      multiple
+      chips
+      clearable
+      deletable-chips
+      :label="$t('views.settings.ignoredTopicsLabel')"
+      :hint="$t('views.settings.ignoredTopicsMsg')"
+      persistent-hint
+      hide-details
+    />
+    <v-switch
+      v-model="hideCollabStreams"
+      class="v-input--reverse v-input--expand"
+      inset
+      :label="$t('views.settings.hideCollabStreamsLabel')"
+      :messages="$t('views.settings.hideCollabStreamsMsg')"
+      hide-details
+    />
+    <v-switch
+      v-model="hidePlaceholder"
+      class="v-input--reverse v-input--expand"
+      inset
+      label="hidePlaceholder"
+      :messages="$t('views.settings.hideVideoThumbnailsMsg')"
+      hide-details
+    />
+    <v-switch
+      v-model="hideThumbnail"
+      class="v-input--reverse v-input--expand"
+      inset
+      :label="$t('views.settings.hideVideoThumbnailsLabel')"
+      :messages="$t('views.settings.hideVideoThumbnailsMsg')"
+      hide-details
+    />
+  </div>
 </template>
 
 <script lang="ts">
