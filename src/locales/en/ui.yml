@@ -187,6 +187,7 @@ views:
       all: All
       official: Archive
       subber: Clips
+      list: List
   library:
     savedVideosTitle: Saved Videos
     createYtPlaylistButton: Create YT Playlist ({0})

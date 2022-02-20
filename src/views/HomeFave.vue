@@ -43,6 +43,9 @@
         <v-tab class="pa-2">
           {{ $t("views.home.recentVideoToggles.subber") }}
         </v-tab>
+        <v-tab class="pa-2">
+          {{ $t("views.home.recentVideoToggles.list") }}
+        </v-tab>
         <portal-target v-if="!$vuetify.breakpoint.xs" :name="`date-selector${isFavPage}`" class=" v-tab ml-auto" />
       </v-tabs>
     </portal>
@@ -105,6 +108,7 @@ export default {
                 LIVE_UPCOMING: 0,
                 ARCHIVE: 1,
                 CLIPS: 2,
+                LIST: 3,
             }),
             refreshTimer: null,
         };
@@ -208,6 +212,7 @@ export default {
                 0: "",
                 1: "archive",
                 2: "clips",
+                3: "list",
             };
             this.$router
                 .replace({
@@ -229,6 +234,9 @@ export default {
                     break;
                 case "#clips":
                     this.tab = this.Tabs.CLIPS;
+                    break;
+                case "#list":
+                    this.tab = this.Tabs.LIST;
                     break;
                 default:
                     this.tab = this.Tabs.LIVE_UPCOMING;

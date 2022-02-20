@@ -97,6 +97,12 @@
       </div>
     </template>
 
+    <template v-if="tab === Tabs.LIST">
+        <VideoCondensedList
+            :videos="[...lives, ...upcoming]"
+        />
+    </template>
+
     <template v-else>
       <keep-alive>
         <generic-list-loader
@@ -133,6 +139,7 @@ import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
+import VideoCondensedList from "@/components/video/VideoCondensedList.vue";
 // import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { dayjs } from "@/utils/time";
 import { mdiCalendarEnd, mdiFilterVariant } from "@mdi/js";
@@ -146,6 +153,7 @@ export default {
     name: "ConnectedVideoList",
     components: {
         VideoCardList,
+        VideoCondensedList,
         // LoadingOverlay,
         GenericListLoader,
         SkeletonCardList,
@@ -183,6 +191,7 @@ export default {
                 LIVE_UPCOMING: 0,
                 ARCHIVE: 1,
                 CLIPS: 2,
+                LIST: 3,
             }),
             datePicker: false,
             toDate: null,
