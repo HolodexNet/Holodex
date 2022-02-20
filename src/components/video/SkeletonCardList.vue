@@ -5,7 +5,7 @@
       <v-col
         v-for="(video, index) in processedVideos"
         :key="`${index}-${video.id}`"
-        :class="['video-col', `video-${colSize}`]"
+        :class="['video-skeleton', 'video-col', `video-${colSize}`]"
       >
         <!-- Render skeleton items when data hasn't loaded yet -->
         <div v-if="horizontal || denseList" class="flex-grow-1">
@@ -17,7 +17,7 @@
         <div v-else style="position: relative; width: 100%; padding-bottom: calc(56.25% + 88px)">
           <v-skeleton-loader
             type="image, list-item-avatar-three-line"
-            style="position: absolute; width: 100%; height: 100%"
+            style="position: absolute; width: 100%; height: 100%;"
             boilerplate
           />
         </div>
@@ -86,11 +86,17 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-::v-deep .v-skeleton-loader.v-skeleton-loader--is-loading {
+<style lang="scss">
+.video-skeleton .v-skeleton-loader.v-skeleton-loader--is-loading {
     .v-skeleton-loader__image {
         height: 56.25%;
         width: 100%;
+    }
+}
+
+.video-skeleton .v-skeleton-loader {
+     .v-skeleton-loader__list-item-avatar-three-line, .v-skeleton-loader__list-item-avatar {
+        background: transparent;
     }
 }
 </style>
