@@ -43,9 +43,6 @@
         <v-tab class="pa-2">
           {{ $t("views.home.recentVideoToggles.subber") }}
         </v-tab>
-        <v-tab class="pa-2">
-          {{ $t("views.home.recentVideoToggles.list") }}
-        </v-tab>
         <portal-target v-if="!$vuetify.breakpoint.xs" :name="`date-selector${isFavPage}`" class=" v-tab ml-auto" />
       </v-tabs>
     </portal>
