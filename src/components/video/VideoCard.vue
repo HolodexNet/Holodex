@@ -130,7 +130,7 @@
       <div class="d-flex video-card-lines flex-column">
         <!-- Video title -->
         <div
-          :class="['video-card-title ', { 'video-watched': hasWatched }, {'mt-2' : !horizontal}]"
+          :class="['video-card-title ', { 'video-watched': hasWatched }, {'mt-2' : !horizontal && !denseList}]"
           :title="title"
           style="user-select: text"
           :style="{

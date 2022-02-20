@@ -1,6 +1,6 @@
 <template>
   <v-container class="py-0" style="position: relative" fluid>
-    <v-row :dense="dense">
+    <v-row :dense="dense || horizontal || denseList">
       <!-- Video Cards with custom grid size class based on breakpoint -->
       <v-col
         v-for="(video, index) in processedVideos"
@@ -8,7 +8,13 @@
         :class="['video-col', `video-${colSize}`]"
       >
         <!-- Render skeleton items when data hasn't loaded yet -->
-        <div style="position: relative; width: 100%; padding-bottom: calc(56.25% + 88px)">
+        <div v-if="horizontal || denseList" class="flex-grow-1">
+          <v-skeleton-loader
+            :type="denseList ? 'list-item-avatar' : 'list-item-avatar-three-line'"
+            boilerplate
+          />
+        </div>
+        <div v-else style="position: relative; width: 100%; padding-bottom: calc(56.25% + 88px)">
           <v-skeleton-loader
             type="image, list-item-avatar-three-line"
             style="position: absolute; width: 100%; height: 100%"
@@ -28,6 +34,9 @@ export default {
             required: false,
             type: Boolean,
         },
+        denseList: {
+            type: Boolean,
+        },
         cols: {
             type: Object,
             default: () => ({
@@ -37,11 +46,6 @@ export default {
                 lg: 6,
                 xl: 8,
             }),
-        },
-        limitRows: {
-            required: false,
-            type: Number,
-            default: 0,
         },
         dense: {
             type: Boolean,
@@ -65,13 +69,12 @@ export default {
     computed: {
         processedVideos() {
             const currentTime = new Date();
-            const size = this.limitRows ? this.limitRows * this.colSize : this.expectedSize;
-            return [...new Array(size)].map((el, index) => ({
+            return [...new Array(this.expectedSize)].map((el, index) => ({
                 id: +currentTime + index,
             }));
         },
         colSize() {
-            if (this.horizontal) return 1;
+            if (this.horizontal || this.denseList) return 1;
             return this.cols[this.$vuetify.breakpoint.name];
         },
     },

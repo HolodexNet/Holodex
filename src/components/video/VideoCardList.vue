@@ -5,7 +5,7 @@
     fluid
   >
     <!-- Video Card grid rows -->
-    <div class="row video-row" :class="{'row--dense': dense, 'video-row-list': denseList}">
+    <div class="row video-row" :class="{'row--dense': dense || denseList || horizontal, 'video-row-list': denseList}">
       <!-- Video Cards with custom grid size class based on breakpoint -->
       <div
         v-for="(video, index) in processedVideos"

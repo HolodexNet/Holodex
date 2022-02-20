@@ -84,7 +84,8 @@
           :cols="colSizes"
           :dense="currentGridSize > 0"
           :filter-config="filterConfig"
-          :dense-list="homeListView"
+          :dense-list="homeViewMode === 'denseList'"
+          :horizontal="homeViewMode === 'list'"
           v-bind="$attrs"
           v-on="$listeners"
         />
@@ -96,7 +97,8 @@
           :cols="colSizes"
           :dense="currentGridSize > 0"
           :filter-config="filterConfig"
-          :dense-list="homeListView"
+          :dense-list="homeViewMode === 'denseList'"
+          :horizontal="homeViewMode === 'list'"
           v-bind="$attrs"
           v-on="$listeners"
         />
@@ -125,11 +127,18 @@
             :dense="currentGridSize > 0"
             :filter-config="filterConfig"
             v-bind="$attrs"
-            :horizontal="homeListView"
+            :dense-list="homeViewMode === 'denseList'"
+            :horizontal="homeViewMode === 'list'"
             v-on="$listeners"
           />
           <!-- only show SkeletonCardList if it's loading -->
-          <SkeletonCardList v-if="lod" :cols="colSizes" :dense="currentGridSize > 0" />
+          <SkeletonCardList
+            v-if="lod"
+            :cols="colSizes"
+            :dense="currentGridSize > 0"
+            :dense-list="homeViewMode === 'denseList'"
+            :horizontal="homeViewMode === 'list'"
+          />
         </generic-list-loader>
       </keep-alive>
     </template>
@@ -146,7 +155,7 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 // import VideoCondensedList from "@/components/video/VideoCondensedList.vue";
 // import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { dayjs } from "@/utils/time";
-import { mdiCalendarEnd, mdiFilterVariant, mdiFormatListBulleted } from "@mdi/js";
+import { mdiCalendarEnd, mdiFilterVariant, mdiFormatListBulleted, mdiViewList } from "@mdi/js";
 import { syncState } from "@/utils/functions";
 import VideoListFilters from "../setting/VideoListFilters.vue";
 
@@ -191,6 +200,7 @@ export default {
             mdiCalendarEnd,
             mdiFilterVariant,
             mdiFormatListBulleted,
+            mdiViewList,
             identifier: Date.now(),
             pageLength: 24,
             Tabs: Object.freeze({
@@ -215,7 +225,7 @@ export default {
         };
     },
     computed: {
-        ...syncState("settings", ["homeListView"]),
+        ...syncState("settings", ["homeViewMode"]),
         ...mapState("home", { h_live: "live", h_isLoading: "isLoading", h_hasError: "hasError" }),
         ...mapState("favorites", { f_live: "live", f_isLoading: "isLoading", f_hasError: "hasError" }),
         ...mapGetters("favorites", ["favoriteChannelIDs"]),
@@ -291,11 +301,12 @@ export default {
 
         displayIcon() {
             switch (true) {
-                case this.homeListView: return mdiFormatListBulleted;
+                case this.homeViewMode === "list": return mdiFormatListBulleted;
+                case this.homeViewMode === "denseList": return this.icons.mdiSquareOutline;
                 case this.currentGridSize === 1:
                     return this.icons.mdiGrid;
                 case this.currentGridSize === 2:
-                    return this.icons.mdiSquareOutline;
+                    return mdiViewList;
                 default:
                     return this.icons.mdiGridLarge;
             }
@@ -322,18 +333,15 @@ export default {
     },
     methods: {
         toggleDisplayMode() {
-            if (this.homeListView) {
-                this.homeListView = false;
+            const viewModes = ["grid", "list", "denseList"];
+            const nextViewMode = viewModes[(viewModes.indexOf(this.homeViewMode) + 1) % viewModes.length];
+
+            if (this.homeViewMode === "grid" && this.currentGridSize < 2) {
+                this.currentGridSize += 1;
+            } else {
+                this.homeViewMode = nextViewMode;
                 this.currentGridSize = 0;
-                return;
             }
-
-            if (this.currentGridSize === 2) {
-                this.homeListView = true;
-                return;
-            }
-
-            this.currentGridSize += 1;
         },
         init(updateFavorites) {
             if (this.isFavPage) {
