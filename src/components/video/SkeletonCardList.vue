@@ -87,6 +87,12 @@ export default {
 </script>
 
 <style lang="scss">
+.video-skeleton .v-skeleton-loader.v-skeleton-loader--is-loading {
+    .v-skeleton-loader__image {
+        height: calc(100% - 88px);
+        width: 100%;
+    }
+}
 
 .video-skeleton .v-skeleton-loader {
      .v-skeleton-loader__list-item-avatar-three-line, .v-skeleton-loader__list-item-avatar {

@@ -7,7 +7,7 @@
       style="display: flex; justify-content: flex-end;"
       class="ma-0 pb-0 pt-0"
     >
-      <portal :to="portalName" :disabled="$vuetify.breakpoint.xs">
+      <portal :to="portalName" :disabled="$vuetify.breakpoint.xs" class="justify-space-between d-flex flex-grow-1 mx-n2">
         <v-menu
           :close-on-content-click="false"
           offset-y
