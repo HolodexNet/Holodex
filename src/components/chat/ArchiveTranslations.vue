@@ -12,19 +12,19 @@
           icon
           x-small
           class="mr-1"
-          title="-5s"
+          title="-2s"
           @click="timeOffset -= 2000"
         >
           <v-icon>
             {{ mdiTransferLeft }}
           </v-icon>
         </v-btn>
-        <code class="mr-1">{{ timeOffset / 1000 }}</code>
+        <code class="mr-1">{{ `${timeOffset >= 0 ? "+" : ""}${timeOffset / 1000}s` }}</code>
         <v-btn
           icon
           x-small
           class="mr-1"
-          title="+5s"
+          title="+2s"
           @click="timeOffset += 2000"
         >
           <v-icon>
