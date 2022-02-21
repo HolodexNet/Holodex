@@ -143,8 +143,15 @@ export default {
         this.updateMentions();
     },
     methods: {
-        deletePlaceholder() {
-            await backendApi.deletePlaceholder(this.video.id, this.$store.state.userdata.jwt);
+        async deletePlaceholder() {
+            try {
+                await backendApi.deletePlaceholder(this.video.id, this.$store.state.userdata.jwt);
+                // eslint-disable-next-line no-alert
+                alert("Successfully deleted, probably.");
+            } catch (e) {
+                // eslint-disable-next-line no-alert
+                alert("Failed to delete");
+            }
         },
         enc(url) {
             const enc = btoa(url);
