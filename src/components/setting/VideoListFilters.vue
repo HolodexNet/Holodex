@@ -25,7 +25,7 @@
       v-model="hidePlaceholder"
       class="v-input--reverse v-input--expand"
       inset
-      label="hidePlaceholder"
+      :label="$t('views.settings.hidePlaceholderStreams')"
       :messages="$t('views.settings.hideVideoThumbnailsMsg')"
       hide-details
     />

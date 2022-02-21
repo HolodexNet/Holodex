@@ -12,7 +12,8 @@
           :close-on-content-click="false"
           offset-y
           left
-          min-width="auto"
+          min-width="300px"
+          max-width="300px"
         >
           <template #activator="{ on, attrs }">
             <v-btn
@@ -28,9 +29,10 @@
             class="pa-6"
             rounded="none"
             border-color="primary"
-            style="max-width: 400px;"
           >
+            <span class="font-weight-medium">{{ $t("views.settings.videoFeedSettings") }}</span>
             <v-select
+              v-if="tab === Tabs.LIVE_UPCOMING"
               v-model="sortBy"
               label="Sort By"
               :items="sortOptions"
@@ -38,6 +40,7 @@
             />
             <v-menu
               v-show="isActive"
+              v-if="tab !== Tabs.LIVE_UPCOMING"
               v-model="datePicker"
               :close-on-content-click="false"
               offset-y
@@ -78,7 +81,7 @@
       <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
       <div v-if="lives.length || upcoming.length">
         <VideoCardList
-          :videos="lives"
+          :videos="homeViewMode === 'grid' ? lives : live"
           include-channel
           :include-avatar="shouldIncludeAvatar"
           :cols="colSizes"
@@ -89,19 +92,21 @@
           v-bind="$attrs"
           v-on="$listeners"
         />
-        <v-divider v-if="lives.length" class="my-3 secondary" />
-        <VideoCardList
-          :videos="upcoming"
-          include-channel
-          :include-avatar="shouldIncludeAvatar"
-          :cols="colSizes"
-          :dense="currentGridSize > 0"
-          :filter-config="filterConfig"
-          :dense-list="homeViewMode === 'denseList'"
-          :horizontal="homeViewMode === 'list'"
-          v-bind="$attrs"
-          v-on="$listeners"
-        />
+        <template v-if="homeViewMode === 'grid'">
+          <v-divider v-if="lives.length" class="my-3 secondary" />
+          <VideoCardList
+            :videos="upcoming"
+            include-channel
+            :include-avatar="shouldIncludeAvatar"
+            :cols="colSizes"
+            :dense="currentGridSize > 0"
+            :filter-config="filterConfig"
+            :dense-list="homeViewMode === 'denseList'"
+            :horizontal="homeViewMode === 'list'"
+            v-bind="$attrs"
+            v-on="$listeners"
+          />
+        </template>
       </div>
       <div v-show="!isLoading && lives.length == 0 && upcoming.length == 0" class="ma-auto pa-5 text-center">
         {{ $t("views.home.noStreams") }}
