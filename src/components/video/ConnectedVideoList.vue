@@ -4,7 +4,6 @@
       v-show="!$vuetify.breakpoint.isXs"
       xs="4"
       sm="4"
-      style="display: flex; justify-content: flex-end;"
       class="ma-0 pb-0 pt-0"
     >
       <portal :to="portalName" :disabled="$vuetify.breakpoint.xs" class="justify-space-between d-flex flex-grow-1 mx-n2">
@@ -30,7 +29,6 @@
             rounded="none"
             border-color="primary"
           >
-            <span class="font-weight-medium">{{ $t("views.settings.videoFeedSettings") }}</span>
             <v-select
               v-if="tab === Tabs.LIVE_UPCOMING"
               v-model="sortBy"

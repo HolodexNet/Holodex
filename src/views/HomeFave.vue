@@ -17,7 +17,7 @@
     class="d-flex flex-column"
   >
     <!-- Teleport tabs to nav extension slot -->
-    <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive">
+    <portal to="mainNavExt" :disabled="!$vuetify.breakpoint.xs || !isActive" style="position: sticky; top: 56px; z-index: 10">
       <v-tabs
         v-model="tab"
         :centered="$vuetify.breakpoint.xs"
