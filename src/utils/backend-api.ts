@@ -296,6 +296,14 @@ export default {
             },
         );
     },
+    deletePlaceholderStream(videoId, jwt, token) {
+        return axiosInstance.delete(
+            `videos/placeholder/${videoId}`,
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
+        );
+    },
     getPlaylistState(videoId, jwt) {
         return axiosInstance.get<{ id: number; name: string; contains: boolean }[]>(
 `/video-playlist/${videoId}`,
