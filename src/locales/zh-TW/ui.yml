@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -254,6 +256,7 @@ views:
       - 小
     hideCollabStreamsLabel: 隱藏連動實況
     hideCollabStreamsMsg: 隱藏與目前團體成員相關的連動實況
+    hidePlaceholderStreams: 隱藏社群協力的活動/實況資訊卡
     ignoredTopicsLabel: 隱藏指定內容標籤
     ignoredTopicsMsg: 在首頁與我的收藏頁面中隱藏含有下列內容標籤的影片
     theme: 佈景主題
