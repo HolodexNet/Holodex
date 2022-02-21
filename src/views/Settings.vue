@@ -164,7 +164,7 @@
 
             <div class="mb-0 mt-6">
               <v-icon style="margin-right: 9px">
-                {{ icons.mdiGrid }}
+                {{ icons.mdiViewGrid }}
               </v-icon>
               <span class="text-body-1">{{ $t("views.settings.gridSizeLabel") }}</span>
             </div>

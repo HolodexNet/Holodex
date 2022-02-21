@@ -305,13 +305,13 @@ export default {
         displayIcon() {
             switch (true) {
                 case this.homeViewMode === "list": return mdiFormatListBulleted;
-                case this.homeViewMode === "denseList": return this.icons.mdiSquareOutline;
+                case this.homeViewMode === "denseList": return this.icons.mdiViewGrid;
                 case this.currentGridSize === 1:
-                    return this.icons.mdiGrid;
+                    return this.icons.mdiViewComfy;
                 case this.currentGridSize === 2:
                     return mdiViewList;
                 default:
-                    return this.icons.mdiGridLarge;
+                    return this.icons.mdiViewModule;
             }
         },
     },
