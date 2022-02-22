@@ -81,6 +81,9 @@
         >
           {{ completed ? $t('views.watch.chat.tlStart') : $t('component.description.showMore') }}
         </v-btn>
+        <div v-if="tlHistory.length - filteredMessages.length > 0" class="text-caption">
+          {{ tlHistory.length - filteredMessages.length }} Blocked Messages
+        </div>
         <v-btn
           v-if="!completed && !historyLoading && expanded"
           text
