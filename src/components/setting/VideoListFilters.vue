@@ -12,6 +12,8 @@
       :hint="$t('views.settings.ignoredTopicsMsg')"
       persistent-hint
       hide-details
+      :loading="topicsLoading"
+      @focus="fetchTopics"
     />
     <v-switch
       v-model="hideCollabStreams"
@@ -55,6 +57,7 @@ export default {
             mdiFilterOutline,
             mdiEyeOff,
             topics: [],
+            topicsLoading: false,
         };
     },
     computed: {
@@ -73,10 +76,15 @@ export default {
             },
         },
     },
-    async mounted() {
-        backendApi.topics().then(({ data }) => {
-            this.topics = data.map(({ id, count }) => ({ value: id, text: `${id} (${count})` }));
-        });
+    methods: {
+        async fetchTopics() {
+            if (!this.topics.length) {
+                this.topicsLoading = true;
+                const { data } = await backendApi.topics();
+                this.topics = data.map(({ id, count }) => ({ value: id, text: `${id} (${count})` }));
+                this.topicsLoading = false;
+            }
+        },
     },
 };
 </script>
