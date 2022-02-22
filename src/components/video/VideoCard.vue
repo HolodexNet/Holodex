@@ -748,19 +748,14 @@ export default {
       flex-wrap: wrap;
       width: 100%;
       justify-content: flex-start;
+      align-items: center;
       .video-card-title {
         flex-basis: 50%;
       }
       .channel-name.video-card-subtitle {
-        display: flex;
-        justify-content: start;
-        align-items: center;
         flex-basis: 200px;
       }
       .video-card-subtitle:last-of-type {
-        display: flex;
-        justify-content: start;
-        align-items: center;
         flex-basis: 150px;
       }
     }
