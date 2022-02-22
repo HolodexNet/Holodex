@@ -255,6 +255,7 @@ views:
       - 작게
     hideCollabStreamsLabel: 콜라보 방송 숨기기
     hideCollabStreamsMsg: 즐겨찾기 피드에서 콜라보 방송을 숨깁니다
+    hidePlaceholderStreams: 플레이스홀더 방송 숨기기
     ignoredTopicsLabel: 무시된 주제
     ignoredTopicsMsg: 홈과 즐겨찾기 페이지에서 해당 주제의 동영상을 숨깁니다
     theme: 테마

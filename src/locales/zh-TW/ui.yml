@@ -118,7 +118,7 @@ component:
     title: 檢舉
     collabing: >-
       此頻道可能正與 {org} 成員或是您所收藏的VTuber連動。您可於設定頁面關閉此顯示功能。
-    comments: 您希望 Holodex 該如何處置此影片？
+    comments: 請於此處簡略描述您檢舉該影片的原因
     success: 檢舉已送出，謝謝您
     reasons:
       - 影片標籤錯誤
@@ -256,6 +256,7 @@ views:
       - 小
     hideCollabStreamsLabel: 隱藏連動實況
     hideCollabStreamsMsg: 隱藏與目前團體成員相關的連動實況
+    hidePlaceholderStreams: 隱藏社群協力的活動/實況資訊卡
     ignoredTopicsLabel: 隱藏指定內容標籤
     ignoredTopicsMsg: 在首頁與我的收藏頁面中隱藏含有下列內容標籤的影片
     theme: 佈景主題
