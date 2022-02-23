@@ -8,6 +8,8 @@
 
 ![holodex](https://github.com/RiceCakess/Holodex/blob/dev/public/img/intro-promo.jpg)
 
+## [Changelog](https://github.com/HolodexNet/Holodex/blob/dev/docs/CHANGELOG.md)
+
 ## Reporting a Bug/Feature Request
 
 - For bugs, please make sure to include a picture describing the issue (if applicable)
@@ -39,7 +41,7 @@ Check out the [Project Board](https://github.com/RiceCakess/Holodex/projects) fo
 ## Project Structure
 
 ```
-docs    # Changelog, hosted Github Pages, modify CHANGELOG.md and run '$ npm run changelog' task to update.
+docs    # Changelog, hosted on Github Pages
 public  # Static resources
 src
 ├── components              # Vue components
@@ -52,19 +54,6 @@ src
 ├── utils                   # Utility declarations
 ├── views                   # Vue Page defintions
 └── App.vue                 # Main entry point, sets up router-view
-```
-
-## Suggested VSCode Extensions
-
-```
-antfu.i18n-ally
-irongeek.vscode-env
-jpruliere.env-autocomplete
-lukas-tr.materialdesignicons-intellisense
-octref.vetur
-jcbuisson.vue
-dbaeumer.vscode-eslint
-intellsmi.comment-translate
 ```
 
 ## Roadmap
