@@ -28,6 +28,7 @@
 - Placeholders now properly use JP titles (if available) if you have Use English Names turned off.
 - Fix TLdex not loading more messages
 - Fix multiview tldex not updating
+- Fix time rounding issue with multiview and video cards
 
 
 

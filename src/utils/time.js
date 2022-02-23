@@ -75,4 +75,11 @@ export function secondsToHuman(s) {
     return new Date(s * 1000).toISOString().substr(11, 8);
 }
 
+export function formatDurationShort(secs) {
+    if (secs < 0) return "0m";
+    const h = secs / (60 * 60);
+    const m = (secs % (60 * 60)) / 60;
+    return h >= 1 ? `${Math.ceil(h)}h` : `${Math.round(m)}m`;
+}
+
 export { dayjs };

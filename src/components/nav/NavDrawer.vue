@@ -67,8 +67,7 @@
           </v-list-item-avatar>
           <ChannelInfo :channel="vid.channel" no-subscriber-count no-group />
           <v-list-item-action-text v-if="vid.id" :key="'liveclock' + vid.id + tick">
-            <span v-if="isLive(vid)" class="ch-live">●</span>
-            <span v-else class="ch-upcoming">
+            <span :class="isLive(vid) ? 'ch-live' : 'ch-upcoming'">
               {{ formatDurationUpcoming(vid.available_at) }}
             </span>
           </v-list-item-action-text>
@@ -118,7 +117,7 @@
 import ChannelImg from "@/components/channel/ChannelImg.vue";
 import ChannelInfo from "@/components/channel/ChannelInfo.vue";
 import { langs } from "@/plugins/vuetify";
-import { dayjs } from "@/utils/time";
+import { dayjs, formatDurationShort } from "@/utils/time";
 import { mdiTuneVariant, mdiPatreon } from "@mdi/js";
 import Settings from "@/views/Settings.vue";
 
@@ -235,12 +234,7 @@ export default {
         },
         formatDurationUpcoming(ts) {
             const secs = dayjs(ts).diff(dayjs()) / 1000;
-            if (secs > 0) {
-                const h = Math.floor(secs / (60 * 60));
-                const m = Math.floor((secs % (60 * 60)) / 60);
-                return h ? `${h}h` : `${m}m`;
-            }
-            return "●";
+            return formatDurationShort(Math.abs(secs));
         },
         isLive(video) {
             return video.status === "live";
@@ -313,7 +307,7 @@ export default {
     box-shadow: 0 0 0 2px red, 0 0 4px 3px rgba(255, 0, 0, 0.56);
 }
 .ch-live {
-    font-size: large;
+    /* font-size: large; */
     color: red;
 }
 .ch-upcoming {

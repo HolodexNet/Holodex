@@ -178,7 +178,7 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 import ConnectedVideoList from "@/components/video/ConnectedVideoList.vue";
 // import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import ChannelImg from "@/components/channel/ChannelImg.vue";
-import { dayjs } from "@/utils/time";
+import { dayjs, formatDurationShort } from "@/utils/time";
 import { mapGetters, mapState } from "vuex";
 import OrgPanelPicker from "@/components/multiview/OrgPanelPicker.vue";
 import filterVideos from "@/mixins/filterVideos";
@@ -317,17 +317,10 @@ export default {
         },
         // Returns a short hand form of time (ie. 33m, 2h)
         formatDurationLive(video) {
-            const now = dayjs();
             const scheduled = dayjs(video.start_actual || video.start_scheduled);
             // use start_actual or start_scheduled if it has one
-            const secs = now.isAfter(scheduled)
-                ? dayjs(/* this.now */).diff(dayjs(video.start_actual)) / 1000
-                : scheduled.diff(dayjs()) / 1000;
-
-            const h = Math.floor(secs / (60 * 60));
-            const m = Math.floor((secs % (60 * 60)) / 60);
-            if (secs < 0) return "0m";
-            return h ? `${h}h` : `${m}m`;
+            const secs = dayjs(scheduled).diff(dayjs()) / 1000;
+            return formatDurationShort(Math.abs(secs));
         },
         handleVideoClick(video) {
             this.$emit("videoClicked", video);
