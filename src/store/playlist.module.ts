@@ -37,7 +37,7 @@ const mutations = {
     },
     addVideo(state, video) {
         if (state.active.videos.findIndex((x) => x.id === video.id) >= 0) return;
-        state.active.videos.unshift(video);
+        state.active.videos.push(video);
         state.isSaved = false;
     },
     addVideos(state, videos) {
@@ -45,7 +45,7 @@ const mutations = {
         videos.forEach((video) => {
             if (ids.has(video.id)) return;
             ids.add(video.id);
-            state.active.videos.unshift(video);
+            state.active.videos.push(video);
             state.isSaved = false;
         });
     },

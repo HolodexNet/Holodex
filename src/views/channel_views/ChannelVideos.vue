@@ -10,7 +10,7 @@
       v-show="!isLoading"
       :videos="data"
       :include-channel="hasChannelInfo"
-      :cols="cols"
+      :cols="colSizes"
       dense
     />
     <!-- Render skeleton items when data hasn't loaded yet -->
@@ -58,16 +58,28 @@ export default {
         return {
             identifier: +new Date(),
             pageLength: 24,
-            cols: Object.freeze({
-                xs: 1,
-                sm: 3,
-                md: 4,
-                lg: 5,
-                xl: 6,
-            }),
         };
     },
     computed: {
+        currentGridSize: {
+            get() {
+                return this.$store.state.currentGridSize;
+            },
+            set(val) {
+                this.$store.commit("setCurrentGridSize", val);
+            },
+        },
+
+        colSizes() {
+            return {
+                xs: 1 + this.currentGridSize,
+                sm: 2 + this.currentGridSize,
+                md: 3 + this.currentGridSize,
+                lg: 4 + this.currentGridSize,
+                xl: 5 + this.currentGridSize,
+            };
+        },
+
         ...mapState("channel", ["id", "channel"]),
         hasChannelInfo() {
             // get uploader name for videos not uploaded by current channel
@@ -117,6 +129,25 @@ export default {
                         paginated: true,
                     },
                 });
+                if (res.data.sort) {
+                    // bubble live videos to the top of the sorting stack.
+                    res.data.sort((a, b) => {
+                        if (a.status !== b.status) {
+                            if (a.status === "live") return -1;
+                            if (b.status === "live") return 1;
+                        }
+                        return a.available_at - b.available_at;
+                    });
+                } else if (res.data.items.sort) {
+                    // bubble live videos to the top of the sorting stack.
+                    res.data.items.sort((a, b) => {
+                        if (a.status !== b.status) {
+                            if (a.status === "live") return -1;
+                            if (b.status === "live") return 1;
+                        }
+                        return a.available_at - b.available_at;
+                    });
+                }
                 return res.data;
             };
         },

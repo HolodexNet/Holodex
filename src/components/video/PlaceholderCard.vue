@@ -6,10 +6,41 @@
     @input="$listeners.input"
   >
     <v-sheet style="position:relative;">
-      <v-img v-if="video.thumbnail" :src="'/statics/thumbnail/maxres/'+enc(video.thumbnail)+'.jpg'" style="" />
+      <v-img v-if="video.thumbnail" :src="'/statics/thumbnail/maxres/'+enc(video.thumbnail)+'.jpg'" :aspect-ratio="16/9" />
       <v-img v-else max-height="130px" :src="`https://www.banner.yt/${video.channel_id || video.channel.id}/mobile`" />
-      <v-sheet style="height:12px;" />
       <watch-info :video="videoWithMentions" no-sub-count>
+        <template v-if="$store.state.userdata.user && $store.state.userdata.user.role !== 'user'">
+          <code class="text-h6">{{ video.id }}</code>
+          <v-dialog
+            max-width="290"
+          >
+            <template #activator="{ on, attrs }">
+              <v-btn
+                color="red"
+                class="ma-2"
+                v-bind="attrs"
+                @click="deletePlaceholder"
+                v-on="on"
+              >
+                Delete
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>Are you sure?</v-card-title>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn
+                  color="primary"
+                  text
+                  @click="deletePlaceholder"
+                >
+                  Delete
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </template>
+        <v-sheet style="height:12px;" />
         <template slot="rightTitleAction">
           <v-btn
             v-if="video.placeholderType === 'scheduled-yt-stream'"
@@ -112,6 +143,16 @@ export default {
         this.updateMentions();
     },
     methods: {
+        async deletePlaceholder() {
+            try {
+                await backendApi.deletePlaceholder(this.video.id, this.$store.state.userdata.jwt);
+                // eslint-disable-next-line no-alert
+                alert("Successfully deleted, probably.");
+            } catch (e) {
+                // eslint-disable-next-line no-alert
+                alert("Failed to delete");
+            }
+        },
         enc(url) {
             const enc = btoa(url);
             const n = enc.replace("+", "-").replace("/", "_").replace(/=+$/, "");

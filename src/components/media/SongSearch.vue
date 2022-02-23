@@ -51,7 +51,16 @@
             🎵 {{ x.item.trackName }} [{{ formatDuration(x.item.trackTimeMillis) }}]
           </v-list-item-subtitle>
           <v-list-item-subtitle class="text--caption">
-            🎤 {{ x.item.artistName }} / {{ x.item.collectionName }} / {{ x.item.releaseDate ? x.item.releaseDate.slice(0, 7) : "" }}
+            🎤 {{ x.item.artistName }} {{ x.item.collectionName && (' / ' + x.item.collectionName) }} {{ x.item.releaseDate ? ' / '+x.item.releaseDate.slice(0, 7) : "" }}
+            <v-chip
+              x-small
+              outlined
+              label
+              class="ml-1 px-1"
+              style="opacity:0.5"
+            >
+              {{ x.item.src }}
+            </v-chip>
           </v-list-item-subtitle>
         </v-list-item-content>
       </div>
@@ -77,6 +86,7 @@ import jsonp from "jsonp-es6";
 import { formatDuration } from "@/utils/time";
 // TODO(jprochazk): type declarations for this module
 import { compareTwoStrings } from "string-similarity";
+import { axiosInstance } from "@/utils/backend-api";
 
 export default {
     name: "SongSearch",
@@ -134,8 +144,7 @@ export default {
         formatDuration,
         async getAutocomplete(query) {
             this.isLoading = true;
-            const res = await this.searchAutocomplete(query, "ja_jp");
-            const resEn = await this.searchAutocomplete(query, "en_us");
+            const [md, res, resEn] = await Promise.all([this.searchMusicdex(query), this.searchAutocomplete(query, "ja_jp"), this.searchAutocomplete(query, "en_us")]);
             const lookupEn = resEn.results || [];
             console.log(lookupEn);
             const fnLookupFn = (id, name) => {
@@ -147,7 +156,7 @@ export default {
             };
             if (res && res.results) {
                 console.log(res.results);
-                this.fromApi = res.results.map(
+                this.fromApi = [...md.slice(3), ...res.results.map(
                     ({
                         trackId,
                         collectionName,
@@ -166,11 +175,12 @@ export default {
                         trackName: fnLookupFn(trackId, trackName),
                         artworkUrl100,
                         trackViewUrl,
+                        src: "iTunes",
                     }),
-                );
+                )];
             }
             this.isLoading = false;
-            console.log(res);
+            // console.log(res);
             return res;
         },
         async searchAutocomplete(query, lang = "ja_jp") {
@@ -182,6 +192,24 @@ export default {
                 lang,
             });
         },
+        async searchMusicdex(query) {
+            try {
+                const resp = await axiosInstance({ url: "https://staging.holodex.net/api/v2/musicdex/search", method: "POST", data: { q: query } });
+                return resp?.data?.hits?.map(({ document }) => ({
+                    trackId: document.itunesid,
+                    artistName: document.original_artist,
+                    trackName: document.name,
+                    trackTimeMillis: (document.end - document.start) * 1000,
+                    trackViewUrl: document.amUrl,
+                    artworkUrl100: document.art,
+                    src: "Musicdex",
+                })) || [];
+            } catch (e) {
+                console.error(e);
+                return [];
+            }
+        },
+
         onInput() {
             this.search = null;
             this.fromApi = [];

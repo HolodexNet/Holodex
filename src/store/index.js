@@ -104,16 +104,6 @@ export default new Vuex.Store({
         isLoggedIn(state) {
             return state.userdata?.jwt;
         },
-        gridIcon(state) {
-            switch (state.currentGridSize) {
-                case 1:
-                    return Vue.icons.mdiGrid;
-                case 2:
-                    return Vue.icons.mdiSquareOutline;
-                default:
-                    return Vue.icons.mdiGridLarge;
-            }
-        },
         isSuperuser(state) {
             const role = state.userdata?.user?.role;
             return role === "admin" || role === "editor";

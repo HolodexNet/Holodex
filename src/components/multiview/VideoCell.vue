@@ -192,7 +192,7 @@ export default {
             }
         },
         onPlayPause(paused = false) {
-            if (this.video.status === "past") {
+            if (this.ytPlayer && this.video.status === "past") {
                 setTimeout(() => {
                     const recheck = this.ytPlayer.getPlayerState() === 2;
                     this.updatePausedState(recheck);

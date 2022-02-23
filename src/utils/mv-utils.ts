@@ -105,7 +105,6 @@ export function decodeLayout(encodedStr) {
             parsedContent[index] = {
                 type: "video",
                 id: twitchChannel,
-                isTwitch: true,
                 video: {
                     id: twitchChannel,
                     type: "twitch",

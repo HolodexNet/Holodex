@@ -255,6 +255,7 @@ views:
       - Klein
     hideCollabStreamsLabel: Collab-Streams ausblenden
     hideCollabStreamsMsg: Collab-Streams in deinem Favoriten-Feed ausblenden
+    hidePlaceholderStreams: Platzhalter-Streams ausblenden
     ignoredTopicsLabel: Ignorierte Themen
     ignoredTopicsMsg: Videos mit diesen Themen von der Startseite und deinen Favoriten ausblenden
     theme: Design

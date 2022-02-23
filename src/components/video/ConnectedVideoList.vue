@@ -1,33 +1,110 @@
 <template>
   <div v-show="!hasError && !(isFavPage && !(isLoggedIn && favoriteChannelIDs.size > 0))">
+    <v-col
+      v-show="!$vuetify.breakpoint.isXs"
+      xs="4"
+      sm="4"
+      class="ma-0 pb-0 pt-0"
+    >
+      <portal :to="portalName" :disabled="$vuetify.breakpoint.xs" class="justify-space-between d-flex flex-grow-1 mx-n2">
+        <v-menu
+          :close-on-content-click="false"
+          offset-y
+          left
+          min-width="300px"
+          max-width="300px"
+        >
+          <template #activator="{ on, attrs }">
+            <v-btn
+              text
+              icon
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>{{ mdiFilterVariant }}</v-icon>
+            </v-btn>
+          </template>
+          <v-sheet
+            class="pa-6"
+            rounded="none"
+            border-color="primary"
+          >
+            <v-select
+              v-if="tab === Tabs.LIVE_UPCOMING"
+              v-model="sortBy"
+              label="Sort By"
+              :items="sortOptions"
+              hide-details
+            />
+            <v-menu
+              v-show="isActive"
+              v-if="tab !== Tabs.LIVE_UPCOMING"
+              v-model="datePicker"
+              :close-on-content-click="false"
+              offset-y
+              offset-x
+              left
+              min-width="auto"
+            >
+              <template #activator="{ on, attrs }">
+                <v-text-field
+                  v-model="toDate"
+                  label="Uploaded Before"
+                  readonly
+                  hide-details
+                  regular
+                  clearable
+                  v-bind="attrs"
+                  v-on="on"
+                />
+              </template>
+              <v-date-picker
+                v-model="toDate"
+                @input="datePicker = false"
+              />
+            </v-menu>
+            <video-list-filters />
+          </v-sheet>
+        </v-menu>
+        <v-btn
+          text
+          icon
+          @click="toggleDisplayMode"
+        >
+          <v-icon>{{ displayIcon }}</v-icon>
+        </v-btn>
+      </portal>
+    </v-col>
     <template v-if="tab === Tabs.LIVE_UPCOMING">
       <SkeletonCardList v-if="isLoading" :cols="colSizes" :dense="currentGridSize > 0" />
       <div v-if="lives.length || upcoming.length">
         <VideoCardList
-          :videos="lives"
+          :videos="homeViewMode === 'grid' ? lives : live"
           include-channel
           :include-avatar="shouldIncludeAvatar"
           :cols="colSizes"
           :dense="currentGridSize > 0"
-          hide-ignored-topics
-          :for-org="isFavPage?'none':null"
-          :hide-collabs="shouldHideCollabs"
+          :filter-config="filterConfig"
+          :dense-list="homeViewMode === 'denseList'"
+          :horizontal="homeViewMode === 'list'"
           v-bind="$attrs"
           v-on="$listeners"
         />
-        <v-divider v-if="lives.length" class="my-3 secondary" />
-        <VideoCardList
-          :videos="upcoming"
-          include-channel
-          :include-avatar="shouldIncludeAvatar"
-          :cols="colSizes"
-          :dense="currentGridSize > 0"
-          hide-ignored-topics
-          :for-org="isFavPage?'none':null"
-          :hide-collabs="shouldHideCollabs"
-          v-bind="$attrs"
-          v-on="$listeners"
-        />
+        <template v-if="homeViewMode === 'grid'">
+          <v-divider v-if="lives.length" class="my-3 secondary" />
+          <VideoCardList
+            :videos="upcoming"
+            include-channel
+            :include-avatar="shouldIncludeAvatar"
+            :cols="colSizes"
+            :dense="currentGridSize > 0"
+            :filter-config="filterConfig"
+            :dense-list="homeViewMode === 'denseList'"
+            :horizontal="homeViewMode === 'list'"
+            v-bind="$attrs"
+            v-on="$listeners"
+          />
+        </template>
       </div>
       <div v-show="!isLoading && lives.length == 0 && upcoming.length == 0" class="ma-auto pa-5 text-center">
         {{ $t("views.home.noStreams") }}
@@ -35,48 +112,6 @@
     </template>
 
     <template v-else>
-      <!-- Archive and Clips section -->
-      <v-col
-        v-show="!$vuetify.breakpoint.isXs"
-        xs="4"
-        sm="4"
-        style="display: flex; justify-content: flex-end;"
-        class="ma-0 pb-0 pt-0"
-      >
-        <portal :to="portalName" :disabled="$vuetify.breakpoint.xs">
-          <v-menu
-            v-show="isActive"
-            v-model="datePicker"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            left
-            min-width="auto"
-          >
-            <template #activator="{ on, attrs }">
-              <v-text-field
-                v-model="toDate"
-                label="Up to"
-                :prepend-icon="mdiCalendarEnd"
-                readonly
-                hide-details
-                dense
-                regular
-                clearable
-                single-line
-                style="opacity: 0.7; max-width: 170px;"
-                v-bind="attrs"
-                v-on="on"
-              />
-            </template>
-            <v-date-picker
-              v-model="toDate"
-              @input="datePicker = false"
-            />
-          </v-menu>
-        </portal>
-      </v-col>
-
       <keep-alive>
         <generic-list-loader
           v-slot="{ data, isLoading: lod }"
@@ -93,14 +128,20 @@
             include-channel
             :cols="colSizes"
             :dense="currentGridSize > 0"
-            hide-ignored-topics
-            :hide-collabs="shouldHideCollabs"
-            :for-org="isFavPage?'none':null"
+            :filter-config="filterConfig"
             v-bind="$attrs"
+            :dense-list="homeViewMode === 'denseList'"
+            :horizontal="homeViewMode === 'list'"
             v-on="$listeners"
           />
           <!-- only show SkeletonCardList if it's loading -->
-          <SkeletonCardList v-if="lod" :cols="colSizes" :dense="currentGridSize > 0" />
+          <SkeletonCardList
+            v-if="lod"
+            :cols="colSizes"
+            :dense="currentGridSize > 0"
+            :dense-list="homeViewMode === 'denseList'"
+            :horizontal="homeViewMode === 'list'"
+          />
         </generic-list-loader>
       </keep-alive>
     </template>
@@ -114,9 +155,12 @@ import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
+// import VideoCondensedList from "@/components/video/VideoCondensedList.vue";
 // import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { dayjs } from "@/utils/time";
-import { mdiCalendarEnd } from "@mdi/js";
+import { mdiCalendarEnd, mdiFilterVariant, mdiFormatListBulleted, mdiViewList } from "@mdi/js";
+import { syncState } from "@/utils/functions";
+import VideoListFilters from "../setting/VideoListFilters.vue";
 
 function nearestUTCDate(date) {
     return date.add(1, "day").toDate().toISOString();
@@ -126,11 +170,17 @@ export default {
     name: "ConnectedVideoList",
     components: {
         VideoCardList,
+        // VideoCondensedList,
         // LoadingOverlay,
         GenericListLoader,
         SkeletonCardList,
+        VideoListFilters,
     },
     props: {
+        liveContent: {
+            type: Array,
+            default: null,
+        },
         isFavPage: {
             type: Boolean,
             default: false,
@@ -151,18 +201,34 @@ export default {
     data() {
         return {
             mdiCalendarEnd,
+            mdiFilterVariant,
+            mdiFormatListBulleted,
+            mdiViewList,
             identifier: Date.now(),
             pageLength: 24,
             Tabs: Object.freeze({
                 LIVE_UPCOMING: 0,
                 ARCHIVE: 1,
                 CLIPS: 2,
+                // LIST: 3,
             }),
             datePicker: false,
             toDate: null,
+            sortBy: "latest",
+            sortOptions: [
+                {
+                    text: "Latest",
+                    value: "latest",
+                },
+                {
+                    text: "Most Viewers",
+                    value: "viewers",
+                },
+            ],
         };
     },
     computed: {
+        ...syncState("settings", ["homeViewMode"]),
         ...mapState("home", { h_live: "live", h_isLoading: "isLoading", h_hasError: "hasError" }),
         ...mapState("favorites", { f_live: "live", f_isLoading: "isLoading", f_hasError: "hasError" }),
         ...mapGetters("favorites", ["favoriteChannelIDs"]),
@@ -170,7 +236,11 @@ export default {
             return this.$store.getters.isLoggedIn;
         },
         live() {
-            return this.isFavPage ? this.f_live : this.h_live;
+            let live = (this.liveContent?.length && this.liveContent) || (this.isFavPage ? this.f_live : this.h_live);
+            if (this.sortBy === "viewers") {
+                live = [...live].sort((a, b) => b.live_viewers - a.live_viewers);
+            }
+            return live;
         },
         isLoading() {
             return this.isFavPage ? this.f_isLoading : this.h_isLoading;
@@ -224,6 +294,26 @@ export default {
         portalName() {
             return this.datePortalName || `date-selector${this.isFavPage}`;
         },
+        filterConfig() {
+            return {
+                forOrg: this.isFavPage ? "none" : null,
+                hideCollabs: this.shouldHideCollabs,
+                hidePlaceholder: this.$store.state.settings.hidePlaceholder,
+            };
+        },
+
+        displayIcon() {
+            switch (true) {
+                case this.homeViewMode === "list": return mdiFormatListBulleted;
+                case this.homeViewMode === "denseList": return this.icons.mdiViewGrid;
+                case this.currentGridSize === 1:
+                    return this.icons.mdiViewComfy;
+                case this.currentGridSize === 2:
+                    return mdiViewList;
+                default:
+                    return this.icons.mdiViewModule;
+            }
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -245,13 +335,24 @@ export default {
         this.init(true); // try updating favorites if it's actually favorites page.
     },
     methods: {
+        toggleDisplayMode() {
+            const viewModes = ["grid", "list", "denseList"];
+            const nextViewMode = viewModes[(viewModes.indexOf(this.homeViewMode) + 1) % viewModes.length];
+
+            if (this.homeViewMode === "grid" && this.currentGridSize < 2) {
+                this.currentGridSize += 1;
+            } else {
+                this.homeViewMode = nextViewMode;
+                this.currentGridSize = 0;
+            }
+        },
         init(updateFavorites) {
             if (this.isFavPage) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
                 if (this.favoriteChannelIDs.size > 0 && this.isLoggedIn) {
                     this.$store.dispatch("favorites/fetchLive", { force: true, minutes: 2 });
                 }
-            } else {
+            } else if (!this.liveContent?.length) {
                 this.$store.commit("home/resetState");
                 this.$store.dispatch("home/fetchLive", { force: true });
             }
@@ -261,16 +362,19 @@ export default {
             this.init();
         },
         getLoadFn() {
+            const query = {
+                status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
+                ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
+                include: "clips",
+                lang: this.$store.state.settings.clipLangs.join(","),
+                paginated: !this.scrollMode,
+                to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
+            };
             if (this.isFavPage) {
                 return async (offset, limit) => {
                     const res = await backendApi
                         .favoritesVideos(this.$store.state.userdata.jwt, {
-                            status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                            ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                            include: "clips",
-                            lang: this.$store.state.settings.clipLangs.join(","),
-                            paginated: !this.scrollMode,
-                            to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
+                            ...query,
                             limit,
                             offset,
                         })
@@ -285,13 +389,8 @@ export default {
             // home page function
             return async (offset, limit) => {
                 const res = await backendApi.videos({
-                    status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                    ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                    include: "clips",
+                    ...query,
                     org: this.$store.state.currentOrg.name,
-                    lang: this.$store.state.settings.clipLangs.join(","),
-                    paginated: !this.scrollMode,
-                    to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
                     limit,
                     offset,
                 });

@@ -164,7 +164,7 @@
 
             <div class="mb-0 mt-6">
               <v-icon style="margin-right: 9px">
-                {{ icons.mdiGrid }}
+                {{ icons.mdiViewGrid }}
               </v-icon>
               <span class="text-body-1">{{ $t("views.settings.gridSizeLabel") }}</span>
             </div>
@@ -230,47 +230,9 @@
             <span class="text-h6 font-weight-light">{{ $t("views.settings.videoFeedSettings") }}</span>
           </v-card-title>
           <v-card-text>
-            <v-switch
-              v-model="hideCollabStreams"
-              :prepend-icon="mdiEyeOff"
-              class="v-input--reverse v-input--expand"
-              inset
-              :label="$t('views.settings.hideCollabStreamsLabel')"
-              :messages="$t('views.settings.hideCollabStreamsMsg')"
-            />
-
-            <v-autocomplete
-              v-model="ignoredTopics"
-              :items="topics"
-              prepend-icon=" "
-              multiple
-              chips
-              clearable
-              deletable-chips
-              :label="$t('views.settings.ignoredTopicsLabel')"
-              :hint="$t('views.settings.ignoredTopicsMsg')"
-              persistent-hint
-            />
-
-            <v-switch
-              v-model="hideThumbnail"
-              prepend-icon=" "
-              class="v-input--reverse v-input--expand"
-              inset
-              :label="$t('views.settings.hideVideoThumbnailsLabel')"
-              :messages="$t('views.settings.hideVideoThumbnailsMsg')"
-            />
+            <video-list-filters />
           </v-card-text>
         </v-sheet>
-        <br v-if="!slim">
-        <v-btn
-          v-if="!slim"
-          block
-          color="warning"
-          @click="resetSettings"
-        >
-          {{ $t("views.settings.resetAllSettings") }}
-        </v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -295,9 +257,14 @@ import themeSet from "@/utils/themes";
 import { syncState } from "@/utils/functions";
 import Vue from "vue";
 import backendApi from "@/utils/backend-api";
+import VideoListFilters from "@/components/setting/VideoListFilters.vue";
 
 export default {
+    // eslint-disable-next-line vue/multi-word-component-names
     name: "Settings",
+    components: {
+        VideoListFilters,
+    },
     metaInfo() {
         const vm = this;
         return {
@@ -343,7 +310,6 @@ export default {
                     value: "multiview",
                 },
             ]),
-            topics: [],
         };
     },
     computed: {
@@ -352,10 +318,7 @@ export default {
             "redirectMode",
             "autoplayVideo",
             "scrollMode",
-            "hideThumbnail",
             "defaultOpen",
-            "hideCollabStreams",
-            "ignoredTopics",
         ]),
         currentCol() {
             if (this.$vuetify.breakpoint.smAndDown) return 12;
@@ -413,14 +376,6 @@ export default {
             set(val: any[]) {
                 // sort array to increase cache hit rate
                 this.$store.commit("settings/setClipLangs", val.sort());
-            },
-        },
-        ignoredTopics: {
-            get() {
-                return this.$store.state.settings.ignoredTopics;
-            },
-            set(val: any[]) {
-                this.$store.commit("settings/setIgnoredTopics", val.sort());
             },
         },
         theme() {

@@ -69,7 +69,7 @@
     <portal to="expandedMessage" :disabled="!expanded" slim>
       <message-renderer
         ref="tlBody"
-        :tl-history="tlHistory"
+        :tl-history="filteredMessages"
         :font-size="liveTlFontSize"
       >
         <v-btn
@@ -81,6 +81,9 @@
         >
           {{ completed ? $t('views.watch.chat.tlStart') : $t('component.description.showMore') }}
         </v-btn>
+        <div v-if="tlHistory.length - filteredMessages.length > 0" class="text-caption">
+          {{ tlHistory.length - filteredMessages.length }} Blocked Messages
+        </div>
         <v-btn
           v-if="!completed && !historyLoading && expanded"
           text
@@ -200,8 +203,8 @@ export default {
             },
         },
         toDisplay() {
-            if (!this.tlHistory.length || !this.showSubtitle) return [];
-            const buffer = this.tlHistory.slice(-2);
+            if (!this.filteredMessages.length || !this.showSubtitle) return [];
+            const buffer = this.filteredMessages.slice(-2);
             return buffer.filter((m) => {
                 const displayTime = (m.message.length * (65 / 1000)) + 1.8;
                 // Use receivedAt and Date.now for consistency, since live streams can have many forms of delay
@@ -211,6 +214,12 @@ export default {
                 // Bind updates to currentTime (pausing video will pause overlay)
                 return this.currentTime && curTime >= receivedRelativeSec && curTime < receivedRelativeSec + displayTime;
             });
+        },
+        blockedNames() {
+            return this.$store.getters["settings/liveTlBlockedNames"];
+        },
+        filteredMessages() {
+            return this.tlHistory.filter((m) => !this.blockedNames.has(m.name));
         },
     },
     watch: {

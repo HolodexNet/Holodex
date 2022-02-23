@@ -491,6 +491,9 @@ about:
           Tüm yardım ve fikirlere açığız! Hem Arayüzümüz hem de Backend'imiz katkıda bulunmaya açık olmasına rağmen şu anda sadece Arayüzümüz açık kaynaklıdır. Backend'imize erişim sağlamak için lütfen Discord üzerinden bizimle iletişime geçin veya fikirlerimiz hakkında sohbet edin.
     support:
       title: Holodex'e nasıl destek olabilirim?
+      contents:
+        '0': >-
+          Kendi kendine barındırılan sunucumuz, çalıştırması aylık yaklaşık 60$ USD tutan, 28 çekirdeğe ve 60GB ram'e sahip bir makine. Özelliklerimizi daha da genişletmeyi iple çekiyoruz ve bu yüzden sunucu ücretlerini kaplamak için bir <a href="https://ko-fi.com/holodex">Ko-Fi</a> başlattık. (<a href="https://www.patreon.com/holodex">Patreon</a>'umuz da var ama Ko-Fi tercihimiz.) <br /><br />Holodex'i desteklemek için ayrıca Twitter'dan bize geri bildirim ve destekleyici mesajlar gönderebilir, <a href="https://crwd.in/holodex">Crowdin</a> üzerinden çevirilerimize yardımcı olabilir veya şarkı veri depomuza katkıda bulunabilirsiniz. Bir yayının komik kısımlarını bulup asıl yayının yorumlarına eklemek bile büyük bir yardım!
   gdpr: GVKY ve verilerim
   gdprContent: >-
     Analitik amaçlarımız için sayfa görüntülemelerini takip etmek için bir Google Analitics çerezi kullanıyoruz. Girişten sonra, sosyal medya hesabı kullanıcı adınızı ve ID'nizi favorilerinizle ilişkilendiriyoruz. Bu verilere her biri ayrı olarak Email adresiniz (Google için), Discord ID'niz veya Twitter kullanıcı adınız dahil olabilir.

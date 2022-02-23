@@ -5,7 +5,8 @@
       'video-card-fluid': fluid,
       'video-card-active': active,
       'video-card-horizontal': horizontal,
-      'flex-column': !horizontal,
+      'video-card-list': denseList,
+      'flex-column': !horizontal && !denseList,
     }"
     :target="redirectMode ? '_blank' : ''"
     :href="href"
@@ -17,6 +18,7 @@
   >
     <!-- Video Image with Duration -->
     <div
+      v-if="!denseList"
       style="position: relative; width: 100%"
       class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
       :style="
@@ -81,12 +83,12 @@
             <span v-if="data.placeholderType === 'scheduled-yt-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeScheduledYT') }}</span>
             <span v-else-if="data.placeholderType === 'external-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeExternalStream') }}</span>
             <span v-else-if="data.placeholderType === 'event'" class="hover-placeholder">{{ $t('component.videoCard.typeEventPlaceholder') }}</span>
-
             <v-icon
               color="white"
               class="rounded-sm"
             >
-              {{ placeholderIconMap[data.placeholderType] }}
+
+              {{ twitchPlaceholder ? mdiTwitch : placeholderIconMap[data.placeholderType] }}
             </v-icon>
           </div>
 
@@ -115,16 +117,20 @@
     >
       <!-- Channel icon -->
       <div
-        v-if="includeChannel && includeAvatar && !horizontal && data.channel"
+        v-if="denseList || (includeChannel && includeAvatar && !horizontal && data.channel)"
         class="d-flex align-self-center mx-2 flex-column d-flex"
       >
-        <ChannelImg :channel="data.channel" rounded class="align-self-center" />
+        <ChannelImg
+          :channel="data.channel"
+          rounded
+          class="align-self-center"
+        />
       </div>
       <!-- Three lines for title, channel, available time -->
-      <div class="d-flex flex-column flex-grow-1 video-card-lines justify-space-around">
+      <div class="d-flex video-card-lines flex-column">
         <!-- Video title -->
         <div
-          :class="['video-card-title ', { 'video-watched': hasWatched }, {'mt-2' : !horizontal}]"
+          :class="['video-card-title ', { 'video-watched': hasWatched }, {'mt-2' : !horizontal && !denseList}]"
           :title="title"
           style="user-select: text"
           :style="{
@@ -142,9 +148,10 @@
                 data.type === 'stream' || data.channel.type === 'vtuber',
             }"
             :href="`/channel/${data.channel.id}`"
-            :title="
-              data.channel.name + '\n' + (data.channel.english_name || '')
-            "
+            :title=" data.channel.name +
+              (data.channel.english_name ? `\nEN: ${data.channel.english_name}` : '') +
+              (data.channel.org ? `\n> ${data.channel.org}` : '') +
+              (data.channel.group ? `\n> ${data.channel.group}` : '') "
             @click.exact.stop.prevent="goToChannel(data.channel.id)"
           >
             {{ channelName }}
@@ -182,7 +189,12 @@
         </div>
       </div>
       <!-- Vertical dots menu -->
-      <v-menu bottom :close-on-content-click="false" nudge-top="20px">
+      <v-menu
+        v-model="showMenu"
+        bottom
+        :close-on-content-click="false"
+        nudge-top="20px"
+      >
         <template #activator="{ on, attrs }">
           <v-btn
             icon
@@ -196,7 +208,7 @@
             <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
           </v-btn>
         </template>
-        <video-card-menu :video="data" />
+        <video-card-menu :video="data" @closeMenu="showMenu = false" />
       </v-menu>
     </a>
     <!-- optional breaker object to row-break into a new row. -->
@@ -239,7 +251,7 @@ import {
     dayjs,
     localizedDayjs,
 } from "@/utils/time";
-import { mdiBroadcast } from "@mdi/js";
+import { mdiBroadcast, mdiTwitch } from "@mdi/js";
 import VideoCardMenu from "../common/VideoCardMenu.vue";
 /* eslint-disable no-unused-vars */
 
@@ -308,6 +320,10 @@ export default {
             type: [Number, String],
             default: null,
         },
+        denseList: {
+            type: Boolean,
+            required: false,
+        },
     },
     data() {
         return {
@@ -315,12 +331,14 @@ export default {
             now: Date.now(),
             updatecycle: null,
             hasWatched: false,
+            mdiTwitch,
             placeholderIconMap: {
                 event: (this as any).icons.mdiCalendar,
                 "scheduled-yt-stream": (this as any).icons.mdiYoutube,
                 "external-stream": mdiBroadcast,
             },
             placeholderOpen: false,
+            showMenu: false,
         };
     },
     computed: {
@@ -457,6 +475,9 @@ export default {
             if (this.isPlaceholder) return undefined;
             return this.redirectMode ? `https://youtu.be/${this.data.id}` : this.watchLink;
         },
+        twitchPlaceholder() {
+            return this.data.link?.includes("twitch.tv");
+        },
     },
     // created() {
     //     this.data = this.video || this.source;
@@ -512,6 +533,11 @@ export default {
             }
         },
         onThumbnailClicked(e) {
+            if (this.isPlaceholder && this.data.placeholderType === "external-stream" && this.data.link) {
+                e.preventDefault();
+                window.open(this.data.link, "_blank", "noopener");
+                return;
+            }
             if (this.isPlaceholder || !this.redirectMode) {
                 e.preventDefault();
                 this.goToVideo();
@@ -592,6 +618,8 @@ export default {
   line-height: 1.2;
   /* padding-bottom: 0.2rem; */
   margin-bottom: 2px;
+  flex-grow: 1;
+  justify-content: space-around;
 }
 .video-card-title {
   line-height: 1.25rem !important;
@@ -683,6 +711,9 @@ export default {
   font-size: 0.8125rem;
   letter-spacing: 0.025em;
   text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .video-card-action {
@@ -702,6 +733,31 @@ export default {
   .video-card-text {
     .video-card-lines {
       justify-content: space-around;
+    }
+  }
+}
+
+.video-card-list {
+  flex-direction: row !important;
+  .video-card-text {
+    min-height: auto;
+    align-items: center;
+    .video-card-lines {
+      margin-right: 40px;
+      flex-direction: row !important;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: flex-start;
+      align-items: center;
+      .video-card-title {
+        flex-basis: 50%;
+      }
+      .channel-name.video-card-subtitle {
+        flex-basis: 200px;
+      }
+      .video-card-subtitle:last-of-type {
+        flex-basis: 150px;
+      }
     }
   }
 }

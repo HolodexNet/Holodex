@@ -21,9 +21,12 @@ const initialState = {
     autoplayVideo: false,
     scrollMode: true,
     hideThumbnail: false,
+    hidePlaceholder: false,
     nameProperty: englishNamePrefs.has(lang) ? "english_name" : "name",
     hideCollabStreams: false,
     ignoredTopics: [],
+    // Valid values: "grid" | "list" | "denseList"
+    homeViewMode: "grid",
 
     // Live TL Window Settings
     liveTlStickBottom: false,
@@ -111,6 +114,8 @@ const mutations = {
         "ignoredTopics",
         "liveTlShowVtuber",
         "liveTlShowSubtitle",
+        "hidePlaceholder",
+        "homeViewMode",
     ]),
     resetState(state) {
         Object.assign(state, initialState);

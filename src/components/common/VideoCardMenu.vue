@@ -1,14 +1,14 @@
 <template>
   <v-list v-if="video" dense>
     <template v-if="video.type !== 'placeholder'">
-      <v-list-item target="_blank" :href="`https://youtu.be/${video.id}`" @click.stop>
+      <v-list-item target="_blank" :href="`https://youtu.be/${video.id}`" @click.stop="closeMenu()">
         <v-icon left>
           {{ icons.mdiYoutube }}
         </v-icon>
         {{ $t("views.settings.redirectModeLabel") }}
       </v-list-item>
 
-      <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar">
+      <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar(); closeMenu()">
         <v-icon left>
           {{ icons.mdiCalendar }}
         </v-icon>
@@ -42,7 +42,7 @@
         </template>
         <video-quick-playlist :key="video.id+Date.now()" :video-id="video.id" :video="video" />
       </v-menu>
-      <v-list-item :class="doneCopy ? 'green lighten-2' : ''" @click.stop="copyLink">
+      <v-list-item :class="doneCopy ? 'green lighten-2' : ''" @click.stop="copyLink(); closeMenu()">
         <v-icon left>
           {{ icons.mdiClipboardPlusOutline }}
         </v-icon>
@@ -50,14 +50,14 @@
       </v-list-item>
     </template>
     <template v-else>
-      <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar">
+      <v-list-item v-if="video.status === 'upcoming'" @click.prevent.stop="openGoogleCalendar(); closeMenu()">
         <v-icon left>
           {{ icons.mdiCalendar }}
         </v-icon>
         {{ $t("component.videoCard.googleCalendar") }}
       </v-list-item>
     </template>
-    <v-list-item @click="$store.commit('setReportVideo', video)">
+    <v-list-item @click="$store.commit('setReportVideo', video); closeMenu()">
       <v-icon left>
         {{ icons.mdiFlag }}
       </v-icon>
@@ -93,19 +93,23 @@ export default {
     },
     methods: {
         // Open google calendar to add the time specified in the element
+        // Uses UTC time since the calendar may be in a different time zone
         openGoogleCalendar() {
             const startdate = this.video.start_scheduled;
             const baseurl = "https://www.google.com/calendar/render?action=TEMPLATE&text=";
             const videoTitle = encodeURIComponent(this.video.title);
-            const googleCalendarFormat = "YYYYMMDD[T]HHmmss";
-            const eventStart = dayjs(startdate).format(googleCalendarFormat);
-            const eventEnd = dayjs(startdate).add(1, "hour").format(googleCalendarFormat);
+            const googleCalendarFormat = "YYYYMMDD[T]HHmmss[Z]"; // "Z" suffix for UTC time
+            const eventStart = dayjs.utc(startdate).format(googleCalendarFormat);
+            const eventEnd = dayjs.utc(startdate).add(1, "hour").format(googleCalendarFormat);
             const details = `<a href="${window.origin}/watch/${this.video.id}">Open Video</a>`;
             window.open(baseurl.concat(videoTitle, "&dates=", eventStart, "/", eventEnd, "&details=", details), "_blank");
         },
         copyLink() {
             const link = `${window.origin}/watch/${this.video.id}`;
             this.copyToClipboard(link);
+        },
+        closeMenu() {
+            this.$emit("closeMenu");
         },
     },
 };

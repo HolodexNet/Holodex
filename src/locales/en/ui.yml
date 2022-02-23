@@ -273,6 +273,7 @@ views:
       - Small
     hideCollabStreamsLabel: Hide Collab Streams
     hideCollabStreamsMsg: Hide collab streams from your favorites feed
+    hidePlaceholderStreams: Hide Placeholder Streams
     ignoredTopicsLabel: Ignored Topics
     ignoredTopicsMsg: Hide videos with these topics from the Home and Favorites pages
     theme: Theme

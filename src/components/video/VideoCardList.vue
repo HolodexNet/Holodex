@@ -5,7 +5,7 @@
     fluid
   >
     <!-- Video Card grid rows -->
-    <div class="row video-row" :class="{'row--dense': dense}">
+    <div class="row video-row" :class="{'row--dense': dense || denseList || horizontal, 'video-row-list': denseList}">
       <!-- Video Cards with custom grid size class based on breakpoint -->
       <div
         v-for="(video, index) in processedVideos"
@@ -21,6 +21,7 @@
           :col-size="colSize"
           :active="video.id === activeId"
           :disable-default-click="disableDefaultClick"
+          :dense-list="denseList"
           :hide-thumbnail="shouldHideThumbnail"
           @videoClicked="handleVideoClick"
         >
@@ -44,28 +45,12 @@
         </v-list>
       </div>
     </div>
-    <!-- Expand button/show more -->
-    <div v-if="hasExpansion" class="text-center" style="width: 100%">
-      <v-btn
-        v-if="hasExpansion"
-        ref="expandBtn"
-        :text="!isMobile"
-        color="primary"
-        @click="expanded = !expanded"
-      >
-        {{ expanded ? $t("component.description.showLess") : $t("component.description.showMore") }}
-        <v-icon>
-          {{ expanded ? mdiChevronUp : mdiChevronDown }}
-        </v-icon>
-      </v-btn>
-    </div>
   </v-container>
 </template>
 
 <script lang="ts">
 import VideoCard from "@/components/video/VideoCard.vue";
 import filterVideos from "@/mixins/filterVideos";
-import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
 export default {
     name: "VideoCardList",
@@ -96,6 +81,10 @@ export default {
             required: false,
             type: Boolean,
         },
+        denseList: {
+            required: false,
+            type: Boolean,
+        },
         cols: {
             type: Object,
             default: () => ({
@@ -105,11 +94,6 @@ export default {
                 lg: 6,
                 xl: 8,
             }),
-        },
-        limitRows: {
-            required: false,
-            type: Number,
-            default: 0,
         },
         activeId: {
             required: false,
@@ -124,59 +108,33 @@ export default {
             type: Boolean,
             default: false,
         },
-        hideCollabs: {
-            type: Boolean,
-            default: false,
+        filterConfig: {
+            type: Object,
+            default: () => {},
         },
-        hideIgnoredTopics: {
-            type: Boolean,
-            default: false,
-        },
-        hidePlaceholder: {
-            type: Boolean,
-            default: false,
-        },
-        forOrg: {
-            type: String,
-            default: "",
-        },
-        ignoreBlock: {
-            type: Boolean,
-            default: false,
+        sortFn: {
+            type: Function,
         },
         showComments: {
             type: Boolean,
             default: false,
         },
     },
-    data() {
-        return {
-            expanded: false,
-            ...{ mdiChevronUp, mdiChevronDown },
-        };
-    },
     computed: {
-        hasExpansion() {
-            return this.limitRows > 0 && this.videos.length > this.limitRows * this.colSize;
-        },
         processedVideos() {
-            const filterConfig = {
-                ignoreBlock: this.ignoreBlock,
-                hideCollabs: this.hideCollabs,
-                hideIgnoredTopics: this.hideIgnoredTopics,
-                hidePlaceholder: this.hidePlaceholder,
-                forOrg: this.forOrg,
+            const config = {
+                ignoreBlock: false,
+                hideCollabs: false,
+                hideIgnoredTopics: true,
+                forOrg: "",
+                hidePlaceholder: false,
+                ...this.filterConfig,
             };
-            if (this.limitRows <= 0 || this.expanded) {
-                return this.videos.filter((v) => this.filterVideos(v, filterConfig));
-            }
-            return this.videos
-                .slice(0)
-                .splice(0, this.limitRows * this.colSize)
-                .filter((v) => this.filterVideos(v, filterConfig));
+            const filtered = this.videos.filter((v) => this.filterVideos(v, config));
+            return this.sortFn ? filtered.map(this.sortFn) : filtered;
         },
         colSize() {
-            if (this.horizontal) return 1;
+            if (this.horizontal || this.denseList) return 1;
             return this.cols[this.$vuetify.breakpoint.name];
         },
         isMobile() {
@@ -273,5 +231,9 @@ export default {
 
 .video-row.row {
     margin: 0 -12px;
+}
+
+.video-row-list .video-col {
+    border-bottom: 1px solid var(--v-background-lighten1);
 }
 </style>

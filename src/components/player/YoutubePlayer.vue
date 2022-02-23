@@ -15,7 +15,7 @@ const CUED = 5;
 
 let pid = 1;
 export default {
-    name: "Youtube",
+    name: "YoutubePlayer",
     mixins: [PlayerMixin],
     props: {
         videoId: String,
@@ -106,7 +106,7 @@ export default {
             value ? this.player.mute() : this.player.unMute();
         },
         getCurrentTime() {
-            return this.player.getCurrentTime();
+            return this.player?.getCurrentTime();
         },
         getPlaybackRate() {
             return this.player.getPlaybackRate();

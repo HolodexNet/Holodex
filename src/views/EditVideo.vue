@@ -22,6 +22,11 @@
           </template>
         </WatchFrame>
         <div v-if="video.comments.length" class="comment-scroller">
+          <CommentSongParser
+            v-if="currentTab === 1"
+            :comments="video.comments"
+            @songSelected="selectSongCandidate"
+          />
           <WatchComments
             v-if="video && video.comments && video.comments.length"
             key="comments"
@@ -42,6 +47,15 @@
         />
         <v-row fluid>
           <v-tabs v-model="currentTab">
+            <v-btn
+              text
+              class="mt-auto mb-auto"
+              :title="$t('editor.exitMode')"
+              icon
+              @click="$router.go(-1);"
+            >
+              <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
+            </v-btn>
             <v-tab :disabled="video.type !== 'stream'">
               {{ $t("component.search.type.topic") }}
             </v-tab>
@@ -109,12 +123,13 @@ import WatchFrame from "@/components/watch/WatchFrame.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import VideoEditSongs from "@/components/edit/VideoEditSongs.vue";
 import VideoEditMentions from "@/components/edit/VideoEditMentions.vue";
+import CommentSongParser from "@/components/media/CommentSongParser.vue";
 import { decodeHTMLEntities } from "@/utils/functions";
 // import { dayjs } from "@/utils/time";
 import api from "@/utils/backend-api";
 
 export default {
-    name: "Watch",
+    name: "EditVideo",
     metaInfo() {
         return {
             title: this.title,
@@ -128,6 +143,7 @@ export default {
         WatchComments,
         VideoEditMentions,
         Youtube,
+        CommentSongParser,
     },
     data() {
         return {
@@ -150,6 +166,8 @@ export default {
 
             timer: null,
             currentTime: 0,
+
+            stopAt: null,
         };
     },
     computed: {
@@ -204,9 +222,11 @@ export default {
             this.player = event;
             this.setTimer();
         },
-        seekTo(time, playNow, updateStartTime) {
+        seekTo(time, playNow, updateStartTime, stopPlayingAt) {
             if (!this.player) return;
             this.player.seekTo(time);
+            console.log("stop at: ", time, playNow, updateStartTime, stopPlayingAt);
+            this.stopAt = stopPlayingAt;
             if (playNow) this.player.playVideo();
             if (updateStartTime && this.currentTab === this.TABS.MUSIC) {
                 this.$refs.musicEditor && this.$refs.musicEditor.setStartTime(time);
@@ -243,8 +263,19 @@ export default {
             if (this.player) {
                 this.timer = setInterval(() => {
                     this.currentTime = this.player.getCurrentTime();
+                    if (this.stopAt && this.currentTime > this.stopAt) {
+                        this.player.pauseVideo();
+                        this.stopAt = undefined;
+                    }
                 }, 200);
             }
+        },
+        selectSongCandidate(timeframe, songdata) {
+            // timeframe has start_time and end_time plus tokens
+            // songdata is the same as the selection output from a itunes dropdown. If song data is undefined, then the user only clicked on a timeframe.
+            console.log(timeframe, songdata);
+            this.$refs.musicEditor?.setSongCandidate(timeframe, songdata);
+            this.seekTo(timeframe.start_time, true);
         },
     },
 };

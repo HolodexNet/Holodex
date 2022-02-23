@@ -20,6 +20,7 @@ module.exports = {
         sourceType: "module",
     },
     rules: {
+        camelcase: "off",
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
         "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
         quotes: ["error", "double", { avoidEscape: true }],
@@ -59,10 +60,7 @@ module.exports = {
         "vue/max-attributes-per-line": [
             "error",
             {
-                singleline: {
-                    max: 3,
-                    allowFirstLine: true,
-                },
+                singleline: 3,
             },
         ],
         "nonblock-statement-body-position": ["warn", "any"],
@@ -70,6 +68,7 @@ module.exports = {
         "vue/require-default-prop": "off",
         "vue/script-setup-uses-vars": "off",
         "object-curly-newline": "off",
+        "vue/multi-word-component-names": "off",
     },
 
     ignorePatterns: ["src/external/**", "src/locales/**"],

@@ -1,6 +1,14 @@
 <template>
   <!-- Render with opaque response for cache if size is lte 40 -->
-  <a v-if="!err" :href="!noLink && `/channel/${channel.id}`" @click.exact.prevent="goToChannel">
+  <a
+    v-if="!err"
+    :href="!noLink && `/channel/${channel.id}`"
+    :title=" channel.name +
+      (channel.english_name ? `\nEN: ${channel.english_name}` : '') +
+      (channel.org ? `\n> ${channel.org}` : '') +
+      (channel.group ? `\n> ${channel.group}` : '') "
+    @click.exact.prevent="goToChannel"
+  >
     <v-lazy
       tag="img"
       :src="photo"

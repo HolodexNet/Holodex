@@ -1,6 +1,6 @@
 // Loads store settings, exposes loadHistory and parseMessage function
 import api from "@/utils/backend-api";
-import { formatDuration, dayjs } from "@/utils/time";
+import { dayjs } from "@/utils/time";
 import { syncState } from "@/utils/functions";
 import { mdiArrowExpand, mdiSubtitlesOutline } from "@mdi/js";
 
@@ -96,9 +96,8 @@ export default {
             })
                 .then(({ data }) => {
                     this.completed = data.length !== this.limit || loadAll;
-                    const filtered = data.filter((m) => !this.blockedNames.has(m.name));
-                    if (firstLoad) this.tlHistory = filtered.map(this.parseMessage);
-                    else this.tlHistory.unshift(...filtered.map(this.parseMessage));
+                    if (firstLoad) this.tlHistory = data.map(this.parseMessage);
+                    else this.tlHistory.unshift(...data.map(this.parseMessage));
 
                     // Set last message as breakpoint, used for maintaing scrolling and styling
                     if (this.tlHistory.length) this.tlHistory[0].breakpoint = true;
@@ -114,40 +113,14 @@ export default {
         parseMessage(msg) {
             msg.timestamp = +msg.timestamp;
             msg.relativeSeconds = (msg.timestamp - this.startTimeMillis) / 1000;
-            msg.displayTime = this.utcToTimestamp(msg.timestamp);
-            msg.realTime = this.realTimestamp(msg.timestamp);
             msg.key = msg.name + msg.timestamp + msg.message;
             // Check if there's any emojis represented as URLs formatted by backend
-            if (msg.message.includes("https://")) {
+            if (msg.message.includes("https://") && !msg.message.includes("<img")) {
                 // match a :HUMU:https://<url>
                 const regex = /(\S+)(https:\/\/(yt\d+\.ggpht\.com\/\S+-c-k-nd|www\.youtube\.com\/\S+\.svg))/gi;
-                const str = msg.message;
-                // find first match
-                let match = regex.exec(str);
-                let processed = "";
-                let curIndex = 0;
-                // iterate until no matches remain
-                while (match != null) {
-                    const { index } = match;
-                    // replace all strings between indexes with img src
-                    processed += str.substring(curIndex, index);
-                    processed += `<img src="${match[2].replace("=w48-h48-c-k-nd", "=w24-h24-c-k-nd")}" alt="${
-                        match[1]
-                    }" style="width: auto; height: 1.3em; vertical-align: middle;" />`;
-                    curIndex = index + match[0].length;
-                    match = regex.exec(str);
-                }
-                processed += str.substring(curIndex, str.length);
-                msg.message = processed;
+                msg.message = msg.message.replace(regex, '<img src="$2" alt="$1" style="width: auto; height: 1.3em; vertical-align: middle;" />');
             }
             return msg;
-        },
-        utcToTimestamp(utc) {
-            const millisDiff = dayjs.utc(utc).diff(this.startTimeMillis);
-            return (Math.sign(millisDiff) < 0 ? "-" : "") + formatDuration(Math.abs(millisDiff));
-        },
-        realTimestamp(utc) {
-            return dayjs(utc).format("LTS"); // localizedFormat
         },
     },
 };

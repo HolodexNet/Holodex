@@ -28,10 +28,11 @@
 </template>
 
 <script lang="ts">
-import { getChannelPhoto, getVideoIDFromUrl } from "@/utils/functions";
+import { getVideoIDFromUrl } from "@/utils/functions";
 import {
     mdiSelectionEllipseArrowInside,
 } from "@mdi/js";
+import { TWITCH_VIDEO_URL_REGEX } from "@/utils/consts";
 
 export default {
     props: {
@@ -87,20 +88,22 @@ export default {
                 const video = JSON.parse(json);
 
                 if (video.id.length === 11 && video.channel.name) {
+                    let v = video;
+                    if (video.type === "placeholder") {
+                        const twitchChannel = video.link.match(TWITCH_VIDEO_URL_REGEX)?.[1];
+                        if (!twitchChannel) return;
+                        v = {
+                            ...video,
+                            id: twitchChannel,
+                            type: "twitch",
+                        };
+                    }
                     this.$store.commit("multiview/setLayoutContentById", {
                         id: this.item.i,
                         content: {
                             type: "video",
-                            id: video.id,
-                            video: {
-                                custom: true,
-                                id: video.id,
-                                channel: {
-                                    id: video.channel.id,
-                                    name: video.channel.name,
-                                    photo: getChannelPhoto(video.channel.id),
-                                },
-                            },
+                            id: v.id,
+                            video: v,
                         },
                     });
                     this.$store.dispatch("multiview/fetchVideoData");

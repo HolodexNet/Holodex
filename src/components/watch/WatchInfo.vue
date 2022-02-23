@@ -5,7 +5,11 @@
       style="font-size: 1.125rem; font-weight: 400"
     >
       <span v-if="!$route.path.includes('edit')">
-        {{ video.title }}
+        {{ video.jp_name ?
+          ($store.state.settings.nameProperty === 'english_name' ?
+            video.title || video.jp_name
+            : (video.jp_name || video.title))
+          : video.title }}
       </span>
 
       <router-link
@@ -190,7 +194,7 @@ export default {
         formattedTime() {
             switch (this.video.status) {
                 case "upcoming":
-                    return this.formatDistance(
+                    return formatDistance(
                         this.video.start_scheduled,
                         this.lang,
                         this.$t.bind(this),
@@ -254,7 +258,6 @@ export default {
     },
     methods: {
         formatDuration,
-        formatDistance,
         setTimer() {
             if (this.timer) clearInterval(this.timer);
             // if(this.video.status === "live" || this.video.status === "upcoming") {

@@ -12,6 +12,29 @@
           icon
           x-small
           class="mr-1"
+          title="-2s"
+          @click="timeOffset -= 2000"
+        >
+          <v-icon>
+            {{ mdiTransferLeft }}
+          </v-icon>
+        </v-btn>
+        <code class="mr-1">{{ `${timeOffset >= 0 ? "+" : ""}${timeOffset / 1000}s` }}</code>
+        <v-btn
+          icon
+          x-small
+          class="mr-1"
+          title="+2s"
+          @click="timeOffset += 2000"
+        >
+          <v-icon>
+            {{ mdiTransferRight }}
+          </v-icon>
+        </v-btn>
+        <v-btn
+          icon
+          x-small
+          class="mr-1"
           :title="$t('views.watch.chat.showSubtitle')"
           @click="showSubtitle = !showSubtitle"
         >
@@ -70,6 +93,7 @@
 
 <script lang="ts">
 import VirtualList from "vue-virtual-scroll-list";
+import { mdiTransferRight, mdiTransferLeft } from "@mdi/js";
 import WatchLiveTranslationsSetting from "./LiveTranslationsSetting.vue";
 import ChatMessage from "./ChatMessage.vue";
 import chatMixin from "./chatMixin";
@@ -87,23 +111,30 @@ export default {
         return {
             ChatMessage,
             curIndex: 0,
-        };
+            timeOffset: 0, // for offsetting archive TL
+            mdiTransferRight,
+            mdiTransferLeft };
     },
     computed: {
         dividedTLs() {
-            this.tlHistory.forEach((item, index, arr) => {
-                item.shouldHideAuthor = index > 0 && (!(index === 0
+            const self = this;
+            const filtered = this.tlHistory.filter((m) => !this.blockedNames.has(m.name));
+            return filtered.map((item, index, arr) => {
+                const shouldHideAuthor = index > 0 && (!(index === 0
                     || index === arr.length - 1
                     || item.name !== arr[index - 1].name
                     || !!item.breakpoint));
+                // timestamp is in milliseconds.
+                const newtime = item.timestamp + self.timeOffset;
+                const relativeSeconds = item.relativeSeconds + (self.timeOffset / 1000);
+                return { ...item, shouldHideAuthor, relativeSeconds, timestamp: newtime };
             });
-            return this.tlHistory;
         },
         toDisplay() {
-            if (!this.tlHistory.length || !this.showSubtitle) return [];
+            if (!this.dividedTLs.length || !this.showSubtitle) return [];
             const startIdx = Math.max(this.curIndex - 1, 0);
             // Grab previous and current message
-            const buffer = this.tlHistory.slice(startIdx, startIdx + 2);
+            const buffer = this.dividedTLs.slice(startIdx, startIdx + 2);
             return buffer.filter((m) => {
                 const displayTime = (m.message.length * (65 / 1000)) + 1.8;
                 return this.currentTime >= m.relativeSeconds && this.currentTime < m.relativeSeconds + displayTime;
@@ -115,17 +146,17 @@ export default {
             this.loadMessages(true, true);
         },
         currentTime(time) {
-            if (!this.tlHistory.length) return;
-            const cur = this.tlHistory[this.curIndex].relativeSeconds;
+            if (!this.dividedTLs.length) return;
+            const cur = this.dividedTLs[this.curIndex].relativeSeconds;
             // time jumped forward too fast, or backwards. Exhaustive search for next spot
 
             const startIndex = time < cur ? 0 : this.curIndex;
             for (let i = startIndex; i < this.tlHistory.length; i += 1) {
-                if (i === this.tlHistory.length - 1) {
-                    this.curIndex = this.tlHistory.length - 1;
+                if (i === this.dividedTLs.length - 1) {
+                    this.curIndex = this.dividedTLs.length - 1;
                     return;
                 }
-                if (time <= this.tlHistory[i].relativeSeconds) {
+                if (time <= this.dividedTLs[i].relativeSeconds) {
                     this.curIndex = Math.max(i - 1, 0);
                     return;
                 }

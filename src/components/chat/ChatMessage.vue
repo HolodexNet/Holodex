@@ -23,12 +23,12 @@
           <span v-if="source.is_vtuber">[Vtuber]</span>
           <span v-if="source.is_moderator">[Mod]</span>
           <span v-if="source.source">{{ source.source }} - </span> {{ source.name }}<span v-if="source.is_verified" style="font-weight: 800"> ✓</span>:
-          <v-icon x-small style="margin-top: -2px; margin-left: 1px;">{{ icons.mdiCog }}</v-icon>
+          <v-icon x-small style="margin-top: 2px; position: absolute; width: 11px">{{ icons.mdiCog }}</v-icon>
         </span>
       </div>
       <a class="tl-message" :data-time="source.relativeSeconds">
         <span v-if="source.timestamp" class="tl-caption mr-1">
-          {{ liveTlShowLocalTime ? source.realTime : source.displayTime }}
+          {{ liveTlShowLocalTime ? realTime : displayTime }}
         </span>
         <span class="text--primary" v-html="source.message" />
       </a>
@@ -68,7 +68,16 @@
 
 <script lang="ts">
 import { mapState } from "vuex";
+import { dayjs, formatDuration } from "@/utils/time";
 import ChannelImg from "../channel/ChannelImg.vue";
+
+function timeDiff(relativeSeconds) {
+    const millisDiff = relativeSeconds * 1000;
+    return (Math.sign(millisDiff) < 0 ? "-" : "") + formatDuration(Math.abs(millisDiff));
+}
+function realTimestamp(utc) {
+    return dayjs(utc).format("LTS"); // localizedFormat
+}
 
 export default {
     name: "ChatMessage",
@@ -92,6 +101,12 @@ export default {
         };
     },
     computed: {
+        realTime() {
+            return realTimestamp(this.source.timestamp);
+        },
+        displayTime() {
+            return timeDiff(this.source.relativeSeconds);
+        },
         ...mapState("settings", [
             "liveTlShowLocalTime",
         ]),
