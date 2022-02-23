@@ -17,9 +17,6 @@
   "lint-staged": {
     "*.{js,ts,vue}": [
       "eslint --fix"
-    ],
-    "CHANGELOG.md": [
-      "npm run changelog --"
     ]
   },
   "dependencies": {
