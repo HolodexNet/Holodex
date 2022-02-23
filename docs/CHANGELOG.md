@@ -1,5 +1,6 @@
-### Holodex Beta
+### Changelog
 
+#### Unreleased
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
 ### 2.26 Holodex [*Feb 21, 2022*]
