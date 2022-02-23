@@ -68,6 +68,7 @@ module.exports = {
         "vue/require-default-prop": "off",
         "vue/script-setup-uses-vars": "off",
         "object-curly-newline": "off",
+        "vue/multi-word-component-names": "off",
     },
 
     ignorePatterns: ["src/external/**", "src/locales/**"],

@@ -275,7 +275,7 @@
           <v-card-title>
             <a
               class="text-h6"
-              href="https://github.com/RiceCakess/Holodex/blob/dev/CHANGELOG.md"
+              href="https://github.com/RiceCakess/Holodex/blob/dev/docs/CHANGELOG.md"
             >{{
               $t("about.changelog.title")
             }}</a>
