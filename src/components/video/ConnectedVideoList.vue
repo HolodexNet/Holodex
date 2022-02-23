@@ -238,7 +238,7 @@ export default {
         live() {
             let live = (this.liveContent?.length && this.liveContent) || (this.isFavPage ? this.f_live : this.h_live);
             if (this.sortBy === "viewers") {
-                live = [...live].sort((a, b) => b.live_viewers - a.live_viewers);
+                live = [...live].sort((a, b) => (b.live_viewers || 0) - (a.live_viewers || 0));
             }
             return live;
         },
