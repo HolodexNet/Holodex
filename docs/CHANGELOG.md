@@ -13,6 +13,7 @@
 - Added button to home page to change view type from small, medium, large grid, list and condensed list
 - Added filter menu on home page, and sort by most live viewers
 - Added global option to hide placeholders
+
 #### Minor changes
 - Modifies the "Add Music" menu for video edit pages. You should find it incredibly easy to label music.
 - Archive TL can now be temporally adjusted using the power of Kronii. (Offset TL timestamps to show up earlier/later)
@@ -21,6 +22,7 @@
 - Clicking on a twitch placeholder thumbnail opens to twitch and has it's own icon
 - Home page tabs stick while scrolling
 - TLdex shows blocked message count
+
 #### Bugfixes:
 - Github/@Ailre contributed a nice PR [#532](https://github.com/RiceCakess/Holodex/pull/532) for those really long video topics on mobile (Thank you!)
 - Placeholders now properly use JP titles (if available) if you have Use English Names turned off.
