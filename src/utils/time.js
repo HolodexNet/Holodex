@@ -31,8 +31,14 @@ dayjs.extend(relativeTime, {
 
 export function formatDuration(millisecs) {
     const negate = millisecs < 0;
-    const timestamp = millisecs > 60 * 60 * 1000 ? dayjs.utc(Math.abs(millisecs)).format("H:mm:ss") : dayjs.utc(Math.abs(millisecs)).format("m:ss");
-    return `${negate ? "-" : ""}${timestamp}`;
+    const secs = millisecs / 1000;
+    const h = Math.floor(secs / (60 * 60));
+    const m = Math.floor((secs % (60 * 60)) / 60);
+    const s = Math.floor((secs % (60 * 60)) % 60);
+    const hStr = h ? `${h}:` : "";
+    const mStr = String(m).padStart(h ? 2 : 1, "0");
+    const sStr = String(s).padStart(2, "0");
+    return `${negate ? "-" : ""}${hStr}${mStr}:${sStr}`;
 }
 
 // eslint-disable-next-line no-unused-vars
