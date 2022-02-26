@@ -218,6 +218,8 @@ export default new Vuex.Store({
                     await dispatch("logout");
                 } else {
                     sendTokenToExtension(state.userdata.jwt);
+                    // Set cookie for all holodex sub domains
+                    document.cookie = `HOLODEX_JWT=${state.userdata.jwt};expires=${(new Date(exp * 1000)).toUTCString()};domain=.holodex.net;path=/`;
                 }
             }
             // do nothing.
