@@ -12,6 +12,7 @@
         <template v-if="$store.state.userdata.user && $store.state.userdata.user.role !== 'user'">
           <code class="text-h6">{{ video.id }}</code>
           <v-dialog
+            v-model="showDeleteConfirm"
             max-width="290"
           >
             <template #activator="{ on, attrs }">
@@ -19,7 +20,6 @@
                 color="red"
                 class="ma-2"
                 v-bind="attrs"
-                @click="deletePlaceholder"
                 v-on="on"
               >
                 Delete
@@ -128,6 +128,7 @@ export default {
         return {
             discordCredits: {},
             mentions: [],
+            showDeleteConfirm: false,
         };
     },
     computed: {
@@ -145,13 +146,16 @@ export default {
     methods: {
         async deletePlaceholder() {
             try {
-                await backendApi.deletePlaceholder(this.video.id, this.$store.state.userdata.jwt);
+                await backendApi.deletePlaceholderStream(this.video.id, this.$store.state.userdata.jwt);
                 // eslint-disable-next-line no-alert
                 alert("Successfully deleted, probably.");
             } catch (e) {
+                console.log(e);
                 // eslint-disable-next-line no-alert
                 alert("Failed to delete");
             }
+
+            this.showDeleteConfirm = false;
         },
         enc(url) {
             const enc = btoa(url);
