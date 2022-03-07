@@ -255,7 +255,7 @@ views:
       - Kicsi
     hideCollabStreamsLabel: Collab streamek elrejtése
     hideCollabStreamsMsg: Collab streamek elrejtése a kedvencek közül
-    hidePlaceholderStreams: Helyfoglaló streamek (későbbiek és freechat) elrejtése
+    hidePlaceholderStreams: Tervezett streamek elrejtése
     ignoredTopicsLabel: Figyelmen kívül hagyott témák
     ignoredTopicsMsg: Elrejti a Kezdőlapból és a Kedvencekből a videókat ebben a témában
     theme: Téma
