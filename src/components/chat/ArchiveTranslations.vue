@@ -126,8 +126,8 @@ export default {
                     || !!item.breakpoint));
                 // timestamp is in milliseconds.
                 const newtime = item.timestamp + self.timeOffset;
-                const relativeSeconds = item.relativeSeconds + (self.timeOffset / 1000);
-                return { ...item, shouldHideAuthor, relativeSeconds, timestamp: newtime };
+                const relativeMs = item.relativeMs + self.timeOffset;
+                return { ...item, shouldHideAuthor, relativeMs, timestamp: newtime };
             });
         },
         toDisplay() {
@@ -136,8 +136,8 @@ export default {
             // Grab previous and current message
             const buffer = this.dividedTLs.slice(startIdx, startIdx + 2);
             return buffer.filter((m) => {
-                const displayTime = (m.message.length * (65 / 1000)) + 1.8;
-                return this.currentTime >= m.relativeSeconds && this.currentTime < m.relativeSeconds + displayTime;
+                const displayTime = +m.duration ?? (m.message.length * 65 + 1800);
+                return this.currentTime * 1000 >= m.relativeMs && this.currentTime * 1000 < m.relativeMs + displayTime;
             });
         },
     },
@@ -147,7 +147,8 @@ export default {
         },
         currentTime(time) {
             if (!this.dividedTLs.length) return;
-            const cur = this.dividedTLs[this.curIndex].relativeSeconds;
+            const msTime = time * 1000;
+            const cur = this.dividedTLs[this.curIndex].relativeMs;
             // time jumped forward too fast, or backwards. Exhaustive search for next spot
 
             const startIndex = time < cur ? 0 : this.curIndex;
@@ -156,7 +157,7 @@ export default {
                     this.curIndex = this.dividedTLs.length - 1;
                     return;
                 }
-                if (time <= this.dividedTLs[i].relativeSeconds) {
+                if (msTime <= this.dividedTLs[i].relativeMs) {
                     this.curIndex = Math.max(i - 1, 0);
                     return;
                 }

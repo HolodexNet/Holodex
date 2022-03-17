@@ -112,7 +112,7 @@ export default {
         },
         parseMessage(msg) {
             msg.timestamp = +msg.timestamp;
-            msg.relativeSeconds = (msg.timestamp - this.startTimeMillis) / 1000;
+            msg.relativeMs = (msg.timestamp - this.startTimeMillis);
             msg.key = msg.name + msg.timestamp + msg.message;
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://") && !msg.message.includes("<img")) {

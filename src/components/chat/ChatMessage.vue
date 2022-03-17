@@ -26,7 +26,7 @@
           <v-icon x-small style="margin-top: 2px; position: absolute; width: 11px">{{ icons.mdiCog }}</v-icon>
         </span>
       </div>
-      <a class="tl-message" :data-time="source.relativeSeconds">
+      <a class="tl-message" :data-time="source.relativeMs/1000">
         <span v-if="source.timestamp" class="tl-caption mr-1">
           {{ liveTlShowLocalTime ? realTime : displayTime }}
         </span>
@@ -71,10 +71,6 @@ import { mapState } from "vuex";
 import { dayjs, formatDuration } from "@/utils/time";
 import ChannelImg from "../channel/ChannelImg.vue";
 
-function timeDiff(relativeSeconds) {
-    const millisDiff = relativeSeconds * 1000;
-    return (Math.sign(millisDiff) < 0 ? "-" : "") + formatDuration(Math.abs(millisDiff));
-}
 function realTimestamp(utc) {
     return dayjs(utc).format("LTS"); // localizedFormat
 }
@@ -105,7 +101,7 @@ export default {
             return realTimestamp(this.source.timestamp);
         },
         displayTime() {
-            return timeDiff(this.source.relativeSeconds);
+            return (Math.sign(this.source.relativeMs) < 0 ? "-" : "") + formatDuration(Math.abs(this.source.relativeMs));
         },
         ...mapState("settings", [
             "liveTlShowLocalTime",
