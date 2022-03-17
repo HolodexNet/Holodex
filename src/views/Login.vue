@@ -126,16 +126,13 @@ export default {
     mounted() {},
     methods: {
         async loginGoogle({ credential }) {
-            console.log(credential);
-            // const authCode = await this.$gAuth.getAuthCode();
             const resp = await api.login(this.$store.state.userdata.jwt, credential, "google");
-            console.log(resp);
             this.$store.commit("setUser", resp.data);
-            // this.$gtag.event("login", {
-            //     event_label: "google",
-            // });
+            this.$gtag.event("login", {
+                event_label: "google",
+            });
 
-            // this.$store.dispatch("favorites/resetFavorites");
+            this.$store.dispatch("favorites/resetFavorites");
         },
         async loginDiscord() {
             // redirect location:
