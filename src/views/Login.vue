@@ -6,42 +6,34 @@
       <v-card-subtitle class="justify-center">
         {{ userdata.user ? $t("views.login.linkAcc") : $t("component.mainNav.login") }}
       </v-card-subtitle>
-      <v-card-text class="d-flex flex-column">
-        <v-btn
-          v-if="!userdata.user || !userdata.user.google_id"
-          class="my-3"
-          color="red accent-2"
-          @click.prevent="loginGoogle"
-        >
-          <v-icon left>
-            {{ icons.mdiGoogle }}
-          </v-icon>
-          {{ $t("views.login.with.0") }}
-        </v-btn>
-        <v-btn
-          v-if="!userdata.user || !userdata.user.discord_id"
-          class="my-3"
-          color="indigo"
-          @click.prevent="loginDiscord"
-        >
-          <v-icon left>
-            {{ icons.mdiDiscord }}
-          </v-icon>
+      <v-card-text class="d-flex flex-column align-center">
+        <div class="d-flex flex-column" style="max-width: 400px; width: 100%">
+          <google-sign-in-button v-if="!userdata.user || !userdata.user.discord_id" @onCredentialResponse="loginGoogle" />
+          <v-btn
+            v-if="!userdata.user || !userdata.user.discord_id"
+            class="my-3 pl-2"
+            color="indigo"
+            @click="loginDiscord"
+          >
+            <v-icon class="mr-auto">
+              {{ icons.mdiDiscord }}
+            </v-icon>
 
-          {{ $t("views.login.with.1") }}
-        </v-btn>
-        <v-btn
-          v-if="!userdata.user || !userdata.user.twitter_id"
-          class="my-3"
-          color="blue lighten-1"
-          @click.prevent="loginTwitter"
-        >
-          <v-icon left>
-            {{ icons.mdiTwitter }}
-          </v-icon>
+            <span class="mr-auto">{{ $t("views.login.with.1") }}</span>
+          </v-btn>
+          <v-btn
+            v-if="!userdata.user || !userdata.user.twitter_id"
+            class="my-3 pl-2"
+            color="blue lighten-1"
+            @click="loginTwitter"
+          >
+            <v-icon class="mr-auto">
+              {{ icons.mdiTwitter }}
+            </v-icon>
 
-          {{ $t("views.login.with.2") }}
-        </v-btn>
+            <span class="mr-auto">{{ $t("views.login.with.2") }}</span>
+          </v-btn>
+        </div>
       </v-card-text>
       <v-divider />
       <v-card-text v-if="userdata.user">
@@ -101,21 +93,11 @@
 </template>
 
 <script lang="ts">
-import GAuth from "vue-google-oauth2";
 import open from "oauth-open";
 import api from "@/utils/backend-api";
-import Vue from "vue";
 import UserCard from "@/components/user/UserCard.vue";
 import copyToClipboard from "@/mixins/copyToClipboard";
-
-const gauthOption = {
-    clientId: "275540829388-87s7f9v2ht3ih51ah0tjkqng8pd8bqo2.apps.googleusercontent.com",
-    scope: "https://www.googleapis.com/auth/userinfo.email",
-    // scope: "openid",
-    prompt: "select_account",
-    fetch_basic_profile: false,
-};
-Vue.use(GAuth, gauthOption);
+import GoogleSignInButton from "@/components/common/GoogleSignInButton.vue";
 
 const apiURI = "/api";
 // the fact this URI is invalid doesn't matter,
@@ -131,7 +113,7 @@ export default {
             },
         };
     },
-    components: { UserCard },
+    components: { UserCard, GoogleSignInButton },
     mixins: [copyToClipboard],
     data() {
         return {};
@@ -143,16 +125,17 @@ export default {
     },
     mounted() {},
     methods: {
-        async loginGoogle() {
-            const authCode = await this.$gAuth.getAuthCode();
-            const resp = await api.login(this.$store.state.userdata.jwt, authCode, "google");
-            // console.log(resp);
+        async loginGoogle({ credential }) {
+            console.log(credential);
+            // const authCode = await this.$gAuth.getAuthCode();
+            const resp = await api.login(this.$store.state.userdata.jwt, credential, "google");
+            console.log(resp);
             this.$store.commit("setUser", resp.data);
-            this.$gtag.event("login", {
-                event_label: "google",
-            });
+            // this.$gtag.event("login", {
+            //     event_label: "google",
+            // });
 
-            this.$store.dispatch("favorites/resetFavorites");
+            // this.$store.dispatch("favorites/resetFavorites");
         },
         async loginDiscord() {
             // redirect location:

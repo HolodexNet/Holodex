@@ -8,7 +8,7 @@ let offlineReadyCallback = () => {};
 let controllerChangeCallback = () => {};
 let reg: ServiceWorkerRegistration | undefined;
 
-const SW_UPDATE_INTERVAL = 60 * 60 * 1000;
+const SW_UPDATE_INTERVAL = 15 * 60 * 1000;
 
 if ("serviceWorker" in navigator) {
     registerSW({
