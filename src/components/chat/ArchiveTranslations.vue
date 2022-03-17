@@ -136,7 +136,7 @@ export default {
             // Grab previous and current message
             const buffer = this.dividedTLs.slice(startIdx, startIdx + 2);
             return buffer.filter((m) => {
-                const displayTime = +m.duration ?? (m.message.length * 65 + 1800);
+                const displayTime = +m.duration || (m.message.length * 65 + 1800);
                 return this.currentTime * 1000 >= m.relativeMs && this.currentTime * 1000 < m.relativeMs + displayTime;
             });
         },
