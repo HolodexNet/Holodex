@@ -8,7 +8,6 @@ const Channel = () => import("../views/Channel.vue");
 const Channels = () => import("../views/Channels.vue");
 const ChannelVideos = () => import("../views/channel_views/ChannelVideos.vue");
 const ChannelAbout = () => import("../views/channel_views/ChannelAbout.vue");
-const ChannelMusic = () => import("../views/channel_views/ChannelMusic.vue");
 const Watch = () => import("../views/Watch.vue");
 const About = () => import("../views/About.vue");
 const Search = () => import("../views/Search.vue");
@@ -18,7 +17,6 @@ const Settings = () => import("../views/Settings.vue");
 const NotFound = () => import("../views/NotFound.vue");
 const Login = () => import("../views/Login.vue");
 const EditVideo = () => import("../views/EditVideo.vue");
-const OrgMusic = () => import("../views/OrgMusic.vue");
 const MultiView = () => import("../views/MultiView.vue");
 const Playlists = () => import("../views/Playlists.vue");
 const AddPlaceholderStream = () => import("../views/AddPlaceholderStream.vue");
@@ -79,11 +77,11 @@ const routes = [
                 name: "channel_about",
                 component: ChannelAbout,
             },
-            {
-                path: "music",
-                name: "channel_music",
-                component: ChannelMusic,
-            },
+            // {
+            //     path: "https://music-staging.holodex.net/channel/",
+            //     name: "channel_music",
+            //     component: ChannelMusic,
+            // },
             {
                 path: "",
                 name: "channel",
@@ -95,11 +93,6 @@ const routes = [
         path: "/channel/",
         name: "channels",
         component: Channels,
-    },
-    {
-        path: "/music/",
-        name: "music",
-        component: OrgMusic,
     },
     {
         name: "watch",

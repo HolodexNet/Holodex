@@ -421,7 +421,6 @@ export default {
                 this.$store.commit("watch/resetState");
                 this.$store.commit("settings/resetState");
                 this.$store.commit("favorites/resetState");
-                this.$store.commit("music/resetState");
                 this.$store.commit("multiview/resetState");
                 this.$store.commit("playlist/resetState");
                 this.$store.commit("history/resetState");

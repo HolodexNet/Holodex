@@ -18,7 +18,7 @@
           link
           :href="page.path"
           :class="{ 'v-list-item--active': $route.fullPath === page.path }"
-          @click.prevent="handlePageClick(page)"
+          @click="(e) => handlePageClick(page, e)"
         >
           <v-list-item-icon>
             <v-icon>{{ page.icon }}</v-icon>
@@ -214,8 +214,10 @@ export default {
         if (this.ticker) clearInterval(this.ticker);
     },
     methods: {
-        handlePageClick(page) {
+        handlePageClick(page, event) {
             // reload the page if user clicks on the same tab
+            if (page.path.startsWith("https://")) return;
+            event.preventDefault();
             page.path === this.$route.path && !this.$route.query.page
                 ? this.refresh()
                 : this.$router.push({ path: page.path });

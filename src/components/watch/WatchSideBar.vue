@@ -22,7 +22,7 @@
           class="mr-2"
           @click="addToMusicPlaylist"
         >
-          <v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon>
+          <v-icon small> {{ icons.mdiMusic }} </v-icon>
         </v-btn>
       </span>
       <!-- Match the same structure as VideoCardList -->
@@ -191,7 +191,8 @@ export default {
             this.hidden[relation] = !this.hidden[relation];
         },
         addToMusicPlaylist() {
-            this.$store.commit("music/addSong", this.songList);
+            const musicdexURL = window.location.origin === "https://holodex.net" ? "https://music.holodex.net/" : "https://music-staging.holodex.net/";
+            window.open(`${musicdexURL}video/${this.video.id}`, "_blank");
         },
         addToPlaylist(videos) {
             const reversed = [...videos].filter((v) => this.filterVideos(v, { hideIgnoredTopics: false }));

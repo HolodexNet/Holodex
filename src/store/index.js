@@ -17,7 +17,6 @@ import channels from "./channels.module";
 import watch from "./watch.module";
 import settings from "./settings.module";
 import favorites from "./favorites.module";
-import music from "./music.module";
 import multiview from "./multiview.module";
 import playlist from "./playlist.module";
 import history from "./history.module";
@@ -81,9 +80,9 @@ function defaultState() {
  *     Configure Synchronized Modules & Mutations across tabs
  *------------------------* */
 const syncedModules = /^(?:playlist|settings|history)/;
-const syncedMutations = new Set(["resetState", "setUser", "setShowUpdatesDetail", "firstVisit", "firstVisitMugen", "favorites/setFavorites", "favorites/resetFavorites", "favorites/setLive", "music/addSong", "music/removeSong", "music/resetState", "music/clearPlaylist", "multiview/addPresetLayout", "multiview/removePresetLayout", "multiview/togglePresetAutoLayout", "multiview/setAutoLayout"]);
+const syncedMutations = new Set(["resetState", "setUser", "setShowUpdatesDetail", "firstVisit", "firstVisitMugen", "favorites/setFavorites", "favorites/resetFavorites", "favorites/setLive", "multiview/addPresetLayout", "multiview/removePresetLayout", "multiview/togglePresetAutoLayout", "multiview/setAutoLayout"]);
 
-const persistedPaths = ["orgs", "playlist", "settings", "history", "migration", "multiview", "channels.cardView", "channels.sort", "currentOrg", "favorites.favorites", "lastShownInstallPrompt", "firstVisit", "firstVisitMugen", "music.playlist", "music.currentId", "music.mode", "orgFavorites", "showUpdateDetails", "userdata", "watch.showLiveChat", "watch.showTL", "watch.theaterMode", "currentGridSize"];
+const persistedPaths = ["orgs", "playlist", "settings", "history", "migration", "multiview", "channels.cardView", "channels.sort", "currentOrg", "favorites.favorites", "lastShownInstallPrompt", "firstVisit", "firstVisitMugen", "orgFavorites", "showUpdateDetails", "userdata", "watch.showLiveChat", "watch.showTL", "watch.theaterMode", "currentGridSize"];
 export default new Vuex.Store({
     plugins: [
         createPersistedState({
@@ -92,7 +91,7 @@ export default new Vuex.Store({
             getState: createMigrate(migrations, "migration.version"),
             setState: debounce((key, state, storage) => {
                 storage.setItem(key, JSON.stringify(state));
-            // wait next tick
+                // wait next tick
             }),
         }),
         createMutationsSharer({
@@ -247,7 +246,6 @@ export default new Vuex.Store({
         watch,
         settings,
         favorites,
-        music,
         multiview,
         playlist,
         history,

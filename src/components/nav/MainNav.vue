@@ -15,7 +15,7 @@
     <BottomNav v-if="isMobile" :pages="pages.filter((page) => !page.collapsible)" :active="!isWatchPage" />
     <!--* bottom bar --->
     <!-- <music-bar></music-bar> -->
-    <MusicBar2 v-if="$store.state.music.isOpen" />
+    <!-- <MusicBar2 v-if="$store.state.music.isOpen" /> -->
 
     <v-app-bar
       v-show="!(isMobile && isWatchPage) && !isMultiView"
@@ -54,16 +54,14 @@
 
         <!--================= Account [👤] Button (Desktop Only) ================-->
 
-        <v-slide-y-transition>
-          <v-btn
-            v-if="!isMobile && $store.state.music.playlist.length > 0 && !$store.state.music.isOpen"
-            icon
-            class="music-bar-open-btn"
-            @click="$store.commit('music/openBar')"
-          >
-            <v-icon>{{ icons.mdiMusic }}</v-icon>
-          </v-btn>
-        </v-slide-y-transition>
+        <v-btn
+          v-if="!isMobile"
+          icon
+          class="music-bar-open-btn"
+          @click="() => {}"
+        >
+          <v-icon>{{ icons.mdiMusic }}</v-icon>
+        </v-btn>
         <ResponsiveMenu
           :close-on-content-click="false"
           offset-y
@@ -189,7 +187,6 @@ export default {
         UserCard,
         Logo,
         // InstallPrompt,
-        MusicBar2: () => import("./MusicBar2.vue"),
         OrgSelector,
         EditPlaylist,
         ResponsiveMenu,
@@ -223,6 +220,8 @@ export default {
             },
         },
         pages() {
+            const musicdexURL = window.location.origin === "https://holodex.net" ? "https://music.holodex.net" : "https://music-staging.holodex.net/";
+
             return [
                 {
                     name: this.$t("component.mainNav.home"),
@@ -252,8 +251,8 @@ export default {
                     collapsible: true,
                 },
                 {
-                    name: this.$t("component.mainNav.music"),
-                    path: "/music",
+                    name: "Musicdex",
+                    path: musicdexURL,
                     icon: this.icons.mdiMusic,
                     collapsible: true,
                     divider: true,
@@ -335,12 +334,6 @@ export default {
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
-}
-
-.music-bar-open-btn {
-    animation-timing-function: ease-in-out;
-    animation: fadein 5s;
-    animation-iteration-count: 1;
 }
 
 .main-playlist-border {

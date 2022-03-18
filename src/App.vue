@@ -1,7 +1,6 @@
 <template>
   <v-app
     :style="{ background: $vuetify.theme.themes[darkMode ? 'dark' : 'light'].background }"
-    :class="{ 'bump-bottom': $store.state.music.isOpen }"
   >
     <portal-target name="music-playback-background" />
 
@@ -201,9 +200,5 @@ body {
 }
 div.row {
   margin: 0px -12px;
-}
-.bump-bottom .v-main__wrap {
-  /* a bit of janky bottom spacing to allow all clients to scroll to bottom */
-  padding-bottom: 140px;
 }
 </style>
