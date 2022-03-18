@@ -206,10 +206,10 @@ export default {
             if (!this.filteredMessages.length || !this.showSubtitle) return [];
             const buffer = this.filteredMessages.slice(-2);
             return buffer.filter((m) => {
-                const displayTime = (m.message.length * (65 / 1000)) + 1.8;
+                const displayTime = +m.duration || (m.message.length * 65 + 1800);
                 // Use receivedAt and Date.now for consistency, since live streams can have many forms of delay
                 // We just want to display messages for a certain period of time after they are received
-                const receivedRelativeSec = m.receivedAt ? (m.receivedAt - this.startTimeMillis) / 1000 : m.relativeSeconds;
+                const receivedRelativeSec = m.receivedAt ? (m.receivedAt - this.startTimeMillis) : m.relativeMs;
                 const curTime = (Date.now() - this.startTimeMillis) / 1000;
                 // Bind updates to currentTime (pausing video will pause overlay)
                 return this.currentTime && curTime >= receivedRelativeSec && curTime < receivedRelativeSec + displayTime;
