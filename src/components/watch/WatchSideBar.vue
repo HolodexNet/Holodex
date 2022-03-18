@@ -160,9 +160,9 @@ export default {
             return [];
         },
     },
-    mounted() {
-        this.$nextTick(this.updateSongs);
-    },
+    // mounted() {
+    //     this.$nextTick(this.updateSongs);
+    // },
     created() {
         this.hidden.recommendations = (this.related.refers.length + this.related.clips.length + this.related.sources.length + this.related.same_source_clips.length) >= 5;
     },
