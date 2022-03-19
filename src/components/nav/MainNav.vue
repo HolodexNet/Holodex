@@ -176,6 +176,7 @@ import { mapState } from "vuex";
 import hideExtensionOnScroll from "@/mixins/hideExtensionOnScroll";
 import EditPlaylist from "@/components/playlist/EditPlaylist.vue";
 import ResponsiveMenu from "@/components/common/ResponsiveMenu.vue";
+import { musicdexURL } from "@/utils/consts";
 import NavDrawer from "./NavDrawer.vue";
 import BottomNav from "./BottomNav.vue";
 
@@ -220,8 +221,6 @@ export default {
             },
         },
         pages() {
-            const musicdexURL = window.location.origin === "https://holodex.net" ? "https://music.holodex.net" : "https://music-staging.holodex.net/";
-
             return [
                 {
                     name: this.$t("component.mainNav.home"),
@@ -253,7 +252,7 @@ export default {
                 {
                     name: "Musicdex",
                     path: musicdexURL,
-                    icon: this.icons.mdiMusic,
+                    // icon: this.icons.mdiMusic,
                     collapsible: true,
                     divider: true,
                 },

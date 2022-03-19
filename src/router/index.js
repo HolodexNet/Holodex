@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import { loadLanguageAsync } from "@/plugins/vuetify";
+import { musicdexURL } from "@/utils/consts";
 import HomeFave from "../views/HomeFave.vue";
 import store from "../store";
 
@@ -77,11 +78,13 @@ const routes = [
                 name: "channel_about",
                 component: ChannelAbout,
             },
-            // {
-            //     path: "https://music-staging.holodex.net/channel/",
-            //     name: "channel_music",
-            //     component: ChannelMusic,
-            // },
+            {
+                path: "music",
+                name: "channel_music",
+                beforeEnter(to) {
+                    window.location.replace(`${musicdexURL}/channel/${to.params.id}`);
+                },
+            },
             {
                 path: "",
                 name: "channel",
