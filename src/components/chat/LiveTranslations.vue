@@ -210,7 +210,7 @@ export default {
                 // Use receivedAt and Date.now for consistency, since live streams can have many forms of delay
                 // We just want to display messages for a certain period of time after they are received
                 const receivedRelativeSec = m.receivedAt ? (m.receivedAt - this.startTimeMillis) : m.relativeMs;
-                const curTime = (Date.now() - this.startTimeMillis) / 1000;
+                const curTime = (Date.now() - this.startTimeMillis);
                 // Bind updates to currentTime (pausing video will pause overlay)
                 return this.currentTime && curTime >= receivedRelativeSec && curTime < receivedRelativeSec + displayTime;
             });
