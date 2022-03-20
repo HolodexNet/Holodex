@@ -5,11 +5,11 @@
     max-width="980"
     @input="$listeners.input"
   >
-    <v-sheet style="position:relative;">
-      <v-img v-if="video.thumbnail" :src="'/statics/thumbnail/maxres/'+enc(video.thumbnail)+'.jpg'" :aspect-ratio="16/9" />
-      <v-img v-else max-height="130px" :src="`https://www.banner.yt/${video.channel_id || video.channel.id}/mobile`" />
+    <v-sheet style="position: relative;">
+      <img v-if="video.thumbnail" :src="'/statics/thumbnail/maxres/'+enc(video.thumbnail)+'.jpg'" class="placeholder-img">
+
       <watch-info :video="videoWithMentions" no-sub-count>
-        <template v-if="$store.state.userdata.user && $store.state.userdata.user.role !== 'user'">
+        <div v-if="$store.state.userdata.user && $store.state.userdata.user.role !== 'user'" class="pl-6">
           <code class="text-h6">{{ video.id }}</code>
           <v-dialog
             v-model="showDeleteConfirm"
@@ -39,7 +39,7 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-        </template>
+        </div>
         <v-sheet style="height:12px;" />
         <template slot="rightTitleAction">
           <v-btn
@@ -182,5 +182,11 @@ export default {
     right: 20px;
     margin-top: 15px;
     z-index: 30;
+}
+.placeholder-img {
+  object-fit: contain;
+  width: 100%;height: 500px;
+  background: black;
+  max-height: 50vh;
 }
 </style>
