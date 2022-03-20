@@ -14,8 +14,6 @@
     <!--* nav drawer is for the left --->
     <BottomNav v-if="isMobile" :pages="pages.filter((page) => !page.collapsible)" :active="!isWatchPage" />
     <!--* bottom bar --->
-    <!-- <music-bar></music-bar> -->
-    <!-- <MusicBar2 v-if="$store.state.music.isOpen" /> -->
 
     <v-app-bar
       v-show="!(isMobile && isWatchPage) && !isMultiView"

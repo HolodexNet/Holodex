@@ -2,8 +2,6 @@
   <v-app
     :style="{ background: $vuetify.theme.themes[darkMode ? 'dark' : 'light'].background }"
   >
-    <portal-target name="music-playback-background" />
-
     <MainNav />
 
     <v-main style="transition: none">

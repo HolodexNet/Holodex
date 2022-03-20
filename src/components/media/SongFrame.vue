@@ -60,10 +60,6 @@ export default {
         },
     },
     watch: {
-        // shouldAutoPlay() {
-        //     maybe $store.state.settings.autoplayVideo ? probably not.
-        //     return this.$store.state.music.state === MUSIC_PLAYER_STATE.PLAYING ? 1 : 0;
-        // }
         playback: {
             deep: true,
             handler: "nextSong",

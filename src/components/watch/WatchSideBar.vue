@@ -99,6 +99,7 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 import filterVideos from "@/mixins/filterVideos";
 import { mdiTimerOutline } from "@mdi/js";
 import { videoTemporalComparator } from "@/utils/functions";
+import { musicdexURL } from "@/utils/consts";
 
 export default {
     name: "WatchSideBar",
@@ -191,7 +192,6 @@ export default {
             this.hidden[relation] = !this.hidden[relation];
         },
         addToMusicPlaylist() {
-            const musicdexURL = window.location.origin === "https://holodex.net" ? "https://music.holodex.net/" : "https://music-staging.holodex.net/";
             window.open(`${musicdexURL}video/${this.video.id}`, "_blank");
         },
         addToPlaylist(videos) {
