@@ -13,7 +13,8 @@
         >
           <span>{{ msg.name }} :</span>
         </div>
-        <span class="subtitle-text" v-html="msg.message" />
+        <span v-if="msg.parsed" class="subtitle-text" v-html="msg.parsed" />
+        <span v-else class="subtitle-text">{{ msg.message }}</span>
       </div>
     </span>
   </div>
@@ -44,6 +45,7 @@ export default {
     word-wrap: break-word;
     box-shadow: 10px 0 0 rgba(0,0,0,0.75), -10px 0 0 rgba(0,0,0,0.75);
     background: rgba(0,0,0,0.75);
+    white-space: pre;
 }
 .subtitle-name {
   font-size: 16px;
