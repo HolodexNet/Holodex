@@ -30,7 +30,8 @@
         <span v-if="source.timestamp" class="tl-caption mr-1">
           {{ liveTlShowLocalTime ? realTime : displayTime }}
         </span>
-        <span class="text--primary" v-html="source.message" />
+        <span v-if="source.parsed" class="text--primary" v-html="source.parsed" />
+        <span v-else class="text--primary">{{ source.message }}</span>
       </a>
     </div>
     <v-dialog v-if="!hideAuthor && !source.shouldHideAuthor" v-model="showBlockChannelDialog" width="500">
@@ -150,5 +151,12 @@ export default {
   border-top: 1px solid #ffffff1f;
   margin-top: 4px;
   padding-top: 4px;
+}
+
+/* Emojis */
+.tl-message img {
+  width: auto;
+  height: 1.3em;
+  vertical-align: middle;
 }
 </style>

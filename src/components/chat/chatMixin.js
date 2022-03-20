@@ -115,10 +115,10 @@ export default {
             msg.relativeMs = (msg.timestamp - this.startTimeMillis);
             msg.key = msg.name + msg.timestamp + msg.message;
             // Check if there's any emojis represented as URLs formatted by backend
-            if (msg.message.includes("https://") && !msg.message.includes("<img")) {
+            if (msg.message.includes("https://") && !msg.parsed) {
                 // match a :HUMU:https://<url>
-                const regex = /(\S+)(https:\/\/(yt\d+\.ggpht\.com\/\S+-c-k-nd|www\.youtube\.com\/\S+\.svg))/gi;
-                msg.message = msg.message.replace(regex, '<img src="$2" alt="$1" style="width: auto; height: 1.3em; vertical-align: middle;" />');
+                const regex = /(\S+)(https:\/\/(yt\d+\.ggpht\.com\/[a-zA-Z0-9_\-=/]+-c-k-nd|www\.youtube\.com\/[a-zA-Z0-9_\-=/]+\.svg))/gi;
+                msg.parsed = msg.message.replace(/<([^>]*)>/g, "($1)").replace(regex, '<img src="$2" />');
             }
             return msg;
         },
