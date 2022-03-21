@@ -532,7 +532,7 @@ export default {
                 message: this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
                 cc: this.profile[this.profileIdx].useCC ? this.profile[this.profileIdx].CC : "",
                 oc: this.profile[this.profileIdx].useOC ? this.profile[this.profileIdx].OC : "",
-                source: "USER",
+                source: "user",
             }).then(({ status, data }) => {
                 if (status !== 200) {
                     console.log(`ERR : ${data}`);

@@ -331,7 +331,7 @@ export default {
     },
     postTL(videoID, apiKey, langCode, body) {
         return axiosInstance.post(
-            `https://(staging).holodex.net/api/v2/videos/${videoID}/chats?lang=${langCode}`,
+            `https://holodex.net/api/v2/videos/${videoID}/chats?lang=${langCode}`,
             body,
             {
                 headers: apiKey ? { "X-APIKEY": apiKey } : {},
