@@ -23,6 +23,8 @@ const Playlists = () => import("../views/Playlists.vue");
 const AddPlaceholderStream = () => import("../views/AddPlaceholderStream.vue");
 const Extension = () => import("../views/Extension.vue");
 
+const TLClient = () => import("../views/TLClient.vue");
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -151,6 +153,11 @@ const routes = [
         name: "extension",
         path: "/extension",
         component: Extension,
+    },
+    {
+        name: "tlclient",
+        path: "/tlclient",
+        component: TLClient,
     },
     {
         path: "/404",

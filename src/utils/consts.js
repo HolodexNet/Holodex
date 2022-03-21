@@ -64,6 +64,20 @@ export const VIDEO_URL_REGEX = /((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.co
 
 export const TWITCH_VIDEO_URL_REGEX = /(?:https:\/\/)?twitch\.tv\/([\w\-_]*)/i;
 
+export const TWITCH_UNLIVE_VIDEO_URL_REGEX = /(?:https:\/\/)?twitch\.tv\/videos\/([\w\-_]*)/i;
+
+export const TWITCAST_VIDEO_URL_REGEX = /(?:https:\/\/)?twitcasting\.tv\/(.*)/i;
+
+export const TWITCAST_UNLIVE_VIDEO_URL_REGEX = /(?:https:\/\/)?twitcasting\.tv\/(.*)\/movie\/([\w\-_]*)/i;
+
+export const NICONICO_VIDEO_URL_REGEX = /(?:https:\/\/)?live\.nicovideo\.jp\/watch\/([\w\-_]*)/i;
+
+export const NICONICO_UNLIVE_VIDEO_URL_REGEX = /(?:https:\/\/)?nicovideo\.jp\/watch\/([\w\-_]*)/i;
+
+export const BILIBILI_VIDEO_URL_REGEX = /(?:https:\/\/)?live\.bilibili\.com\/([\w\-_]*)/i;
+
+export const BILIBILI_UNLIVE_VIDEO_URL_REGEX = /(?:https:\/\/)?bilibili\.com\/video\/([\w\-_]*)/i;
+
 export const TL_LANGS = Object.freeze([
     {
         text: "English",

@@ -1,4 +1,15 @@
-import { TL_LANGS, VIDEO_URL_REGEX, TWITCH_VIDEO_URL_REGEX } from "@/utils/consts";
+import { TL_LANGS,
+    VIDEO_URL_REGEX,
+    TWITCH_VIDEO_URL_REGEX,
+    TWITCH_UNLIVE_VIDEO_URL_REGEX,
+    TWITCAST_VIDEO_URL_REGEX,
+    TWITCAST_UNLIVE_VIDEO_URL_REGEX,
+    NICONICO_VIDEO_URL_REGEX,
+    NICONICO_UNLIVE_VIDEO_URL_REGEX,
+    BILIBILI_VIDEO_URL_REGEX,
+    BILIBILI_UNLIVE_VIDEO_URL_REGEX,
+} from "@/utils/consts";
+
 import { langs } from "@/plugins/vuetify";
 
 export function resizeArtwork(artworkUrl, size = 400) {
@@ -227,7 +238,7 @@ export function videoTemporalComparator(a, b) {
  * @param {String} url - A video url
  * @returns {Object}
  */
-export function getVideoIDFromUrl(url) {
+ export function getVideoIDFromUrl(url) {
     if (VIDEO_URL_REGEX.test(url)) {
         const match = url.match(VIDEO_URL_REGEX);
         if (match && match[5] && match[5].length === 11) {
@@ -237,6 +248,16 @@ export function getVideoIDFromUrl(url) {
                 channel: {
                     name: match[5],
                 },
+            };
+        }
+    }
+    if (TWITCH_UNLIVE_VIDEO_URL_REGEX.test(url)) {
+        const match = url.match(TWITCH_UNLIVE_VIDEO_URL_REGEX);
+        if (match && match[1]) {
+            return {
+                id: match[1],
+                type: "twitch_vod",
+                custom: true,
             };
         }
     }
@@ -253,6 +274,79 @@ export function getVideoIDFromUrl(url) {
             };
         }
     }
+    if (TWITCAST_UNLIVE_VIDEO_URL_REGEX.test(url)) {
+        const match = url.match(TWITCAST_UNLIVE_VIDEO_URL_REGEX);
+        if (match && match[1] && match[2]) {
+            return {
+                id: match[2],
+                type: "twitcast_vod",
+                custom: true,
+                channel: {
+                    name: match[1],
+                },
+            };
+        }
+    }
+    if (TWITCAST_VIDEO_URL_REGEX.test(url)) {
+        const match = url.match(TWITCAST_VIDEO_URL_REGEX);
+        if (match && match[1]) {
+            return {
+                id: match[1],
+                type: "twitcast",
+                custom: true,
+                channel: {
+                    name: match[1],
+                },
+            };
+        }
+    }
+    if (NICONICO_VIDEO_URL_REGEX.test(url)) {
+        const match = url.match(NICONICO_VIDEO_URL_REGEX);
+        if (match && match[1]) {
+            return {
+                id: match[1],
+                type: "niconico",
+                custom: true,
+                channel: {
+                    name: match[1],
+                },
+            };
+        }
+    }
+    if (NICONICO_UNLIVE_VIDEO_URL_REGEX.test(url)) {
+        const match = url.match(NICONICO_UNLIVE_VIDEO_URL_REGEX);
+        if (match && match[1]) {
+            return {
+                id: match[1],
+                type: "niconico_vod",
+                custom: true,
+            };
+        }
+    }
+    if (BILIBILI_VIDEO_URL_REGEX.test(url)) {
+        const match = url.match(BILIBILI_VIDEO_URL_REGEX);
+        if (match && match[1]) {
+            return {
+                id: match[1],
+                type: "bilibili",
+                custom: true,
+                channel: {
+                    name: match[1],
+                },
+            };
+        }
+    }
+    if (BILIBILI_UNLIVE_VIDEO_URL_REGEX.test(url)) {
+        const match = url.match(BILIBILI_UNLIVE_VIDEO_URL_REGEX);
+        if (match && match[1]) {
+            return {
+                id: match[1],
+                type: "bilibili_vod",
+                custom: true,
+            };
+        }
+    }
+
     return undefined;
 }
 
