@@ -49,6 +49,9 @@ component:
     googleCalendar: Agregar al Calendario de Google
     totalTLs: Total de traductores en el chat en vivo
     tlPresence: Traductor activo en los últimos 30 min
+    typeScheduledYT: Directo programado
+    typeExternalStream: Directo externo
+    typeEventPlaceholder: Evento programado
   videoDescription:
     description: Descripción
   description:
@@ -76,14 +79,17 @@ component:
     sourcesLabel: fuentes
     songsLabel: canciones
     recommendationsLabel: recomendado
+    sameSourceClips: De los mismos directos
   paginateLoad:
     newer: Más recientes
     older: Más antiguas
   music:
     clearPlaylist: Limpiar
+    trendingForOrg: Tendencias para {0}
   channelMusic:
     recentSongsHeader: Canciones Recientes
     weeklyTopPlaysHeader: Mas Reproducciones Semanales
+    trending: Tendencias
   songList:
     songTitle: Titulo
     songCoveredBy: Interpretado por
@@ -133,6 +139,15 @@ component:
       delete-playlist: Borrar lista de reproducción
       clear-playlist: Limpiar lista de reproducción
     save-error-not-logged-in: Necesitas iniciar sesión para guardar listas de reproduccion
+  placeholderVideo:
+    discordCredit: 'Datos del evento proporiconados por {0} desde: {1}'
+    datasourceCredit: Datos del evento obtenidos de la fuente de datos de {0}.
+    botCredit: Datos del evento proporcionados a través de la fuente de datos de {0}, creado por {1}.
+    streamPageBtn: Página de Directos
+    eventPageBtn: Página de eventos
+    scheduledEvent: Programado
+    editorCredit: Configuración de eventos por el editor de Holodex {0}.
+    creditTitleText: 'Créditos:'
 views:
   channel:
     video: Videos
@@ -238,9 +253,11 @@ views:
       - Chico
     hideCollabStreamsLabel: Ocultar directos de colaboración
     hideCollabStreamsMsg: Ocultar los directos de colaboracion de tu página de favoritos
+    hidePlaceholderStreams: Ocultar directos de marcador de posición
     ignoredTopicsLabel: Temas Ignorados
     ignoredTopicsMsg: Ocultar los videos con estos temas de las páginas Inicio y Favoritos
     theme: Tema
+    moreSettings: Más ajustes
   app:
     update_available: Una actualización está disponible
     update_btn: Actualizar
@@ -251,14 +268,21 @@ views:
   about:
     add_my_channel: Solicitud de canal
   watch:
+    theaterMode: Modo teatro (alt + t)
     mentionIconLabel: MENCIONES
     chat:
       loading: Cargando el chat...
       hideTLBtn: Esconder TLs
       showTLBtn: Mostrar TLs
       TLSettingsTitle: Opciones de TL
+      showSubtitle: Mostrar subtítulo
+      expandTL: Expandir TLdex
+      tlStart: Inicio de Mensajes
+      StickBottomSettingsDesc: TL box colocada debajo del chat de Youtube
       showVerifiedMessages: Mostrar mensajes verificados
       showModeratorMessages: Mostrar mensajes de moderador
+      showVtuberMessages: Mostrar mensajes de Vtuber
+      showLocalTime: Mostrar hora local
       tlFontSize: Tamaño de la fuente
       retryBtn: Reintentar
       status:
@@ -268,8 +292,11 @@ views:
           La transmisión aún no está activa, por favor inténtalo de nuevo cuando falter 15 minutos para comenzar
         connectedToChat: Conectado
         disconnectedToChat: Sin conexión
+      archiveNeedExtension: >-
+        El archivo del chat no funciona sin la extensión {0} o otras extensiones de terceros.
     removeFromPlaylist: Remover video de la lista de reproducción actual
     saveToPlaylist: Guardar video a la lista de reproducción actual
+    likeOnYoutube: Dar me gusta al video en Youtube
   favorites:
     promptForAction: >-
       Crea una lista de tus vtubers favoritos y mira sus ultimos clips y directos en esta pagina.
@@ -282,8 +309,11 @@ views:
       title: Cambiar tema del directo
       info: >-
         Todos los usuarios pueden asignar un tema a los videos, pero sólo los editores y administradores pueden remover y cambiar el tema una vez establecido.
+      button: Guardar (Puede tardar 5 minutos en tener efecto)
     channelMentions:
       title: Menciones a canales
+    sources:
+      title: Fuentes/Clips (en desarrollo)
   login:
     apikeyMsg: >-
       Puedes usar la clave de API para consultar Holodex API programaticamente. Solo una clave por cuenta. Después de conseguir una nueva clave, la clave antigua expirará entre 0-24 horas.
@@ -295,27 +325,80 @@ views:
     apikeyResetConfirm1: '¿Estas seguro de que quieres reiniciar tu clave de API?'
     apikeyResetConfirm2: La clave de API tendrá 0-24 horas antes de expirar. ¿En verdad reiniciar?
     apikeyResetNvm: No sucedió nada.
+    with:
+      - Iniciar sesión con Google
+      - Iniciar sesión con Discord
+      - Iniciar sesión con Twitter
   multiview:
     confirmOverwrite: '¿Sobreescribir el diseño existente?'
     confirmOverwriteYes: Confirmar
     permalink: Enlace Permanente
     presets: Configuraciones
     addframe: Añadir Celda
+    muteAll: Silenciar todo
+    unmuteAll: Desilenciar todo
+    muteOthers: Silenciar a otros
+    muteOthersDetail: Silenciar a todos menos un directo
+    autoLayoutTip: Presiona en un canal para empezar a ver usando el modo de diseño automático
+    createLayoutTip: Crea tu propio diseño añadiendo una celda, o usando una plantilla
+    openToolbarTip: Abre la barra de herramientas para empezar a usar la multivista
+    archiveSync: Sincronización de Archivo
     preset:
       shareOnDiscord: >-
         ¿Tienes un diseño genial para compartir? ¡Usa el botón de compartir y háznoslo saber en nuestro <a href="https://discord.gg/jctkgHBt4b">servidor de Discord</a>!
+      custom: Mis diseños
+      toggleAutoLayout: Activar usar diseño en automático
+      remove: Borrar
       desktop: Escritorio
       mobile: Móvil
+      autoLayout: Diseño automático
+    presetEditor:
+      title: Guardar diseño
+      name: Nombre
+      autoLayout: Usar diseño en modo automático
     video:
       selectLive: Seleccionar Directo
       addCustomVideo: Añadir video personalizado
+    fullScreen: Pantalla completa
+    mediaControls: Controles multimedia
+    mediaControlsEmpty: Los videos que estén siendo reproducidos aparecerán aquí
+    editAutoLayout: Ediitar diseño automático
+    changeLayout: Cambiar diseño
+    done: Hecho
+    hints: Sugerencias
+    presetsHint: Abre el menú de plantillas para cambiar diseños y configurar el diseño automático
+    mediaControlsHint1: Usa los controles multimedia para silenciar y sincronizar (
+    mediaControlsHint2: ) directos
+    dragDropHint: Arrastra y suelta directos de la barra de herramientas hacia las celdad para organizar los directos
+    reorderHint: Usa el menú de reorganizar diseño para cambiar las posiciones del video/chat
+    reorderLayout: Reorganizar diseño
+    reorderLayoutDetail: Arrastra y suelta iconos a la posicion deseada
+    sync:
+      nothingToSync: >-
+        Nada para sincronizar, por favor abre dos archivos superpuestos (ej. directos de colaboración)
+      syncSettings: Sincronizar ajustes
+      syncSettingsDetail: >-
+        Los videos estan sincronizados basándose en la hora de inicio del directo, y pueden desincronizarse debido a dificultades técnincas en medio del directo o porciones eliminadas. Usa el offset para alinear los videos manualmente
+  mugen:
+    welcome: >-
+      ¡Bienvenido a Mugenclips! Todos en esta página estan viendo el mismo clip de Hololive en Inglés elegido aleatoriamente. Mira y habla con los fans de Hololive alrededor del mundo. Si adelantas y quieres volver a sincronizarte con todos, por favor reinicia la página.
   playlist:
+    playlist-is-modified: No guardado
     item-last-updated: 'Última actualización:'
     login-prompt: Inicia sesión para guardar listas de reproducción y para tener mas de una lista
     new-playlist-btn-label: Crear una nueva lista de reproducción
     page-heading: 'Tus listas de reproducción:'
     page-instruction: Presiona una lista de reproducción para marcarla como activa.
     change-loss-warning: Perderás los cambios no guardados. ¿Continuar?
+  extension:
+    title: Extension Holodex Plus
+    features: Características
+    featureset:
+      one: Activa el Archivo del chat en vivo en Ver y Multivista
+      two: Permite dar me gusta a videos de la página de ver de Holodex
+      three: Arregla la pérdida de memoria en el chat en vivo de Youtube
+      four: >-
+        Arregla las banderas experimentales en el reproductor de Youtube (Como desactivar múltiples directos, la miniatura de la sala de espera no mostrándose) y más!
 time:
   soon: Proximamente
   diff_future_date: Inicia {0} ({1})
@@ -340,6 +423,7 @@ editor:
     testStart: Probar el inicio
     startInput: Iniciar
     endInput: 'Duración en segundos: (termina en {0})'
+    inheritItunesMusic: 'Establecer duracion vía iTunes: {0}'
   exitMode: Salir del modo de edición
   enterMode: Editar video
 about:
@@ -404,6 +488,11 @@ about:
       contents:
         - >-
           ¡Todas las ideas y ayuda son bienvenidas! La UI y el Backend estan disponibles para contribuir, aunque solo la UI es de código abierto actualmente. Por favor contáctanos en discord para tener acceso a la fuente del backend, o simplemente habla sobre tus ideas.
+    support:
+      title: '¿Como apoyo a Holodex?'
+      contents:
+        '0': >-
+          Nuestro servidor auto-alojado es una máquina de 28 núcleos con 60GB de RAM que toma aproximadamente 60 dólares al mes para funcionar, y estamos buscando expandir más y más en nuestro set de características, así que empezamos un <a href="https://ko-fi.com/holodex">Ko-fi</a> para cubrir los gastos del servidor. (También tenemos un <a href="https://www.patreon.com/holodex">Patreon</a>, pero preferimos Ko-fi.)<br /><br />También puedes apoyar a Holodex por medio de tu opinión y mensajes de apoyo en twitter, ayudándonos a traducir via <a href="https://crwd.in/holodex">Crowdin</a>, y también contribuyendo a nuestro almacén de datos de canciones. ¡Incluso haciendo timing en un directo para momentos divertidos, y comentando eso en el directo original es de gran ayuda!
   gdpr: GDPR y mis datos
   gdprContent: >-
     Una cookie de Google Analytics se utiliza para rastrear visitas a la pagina para propósitos analíticos. Después de iniciar sesión asociamos su nombre de usuario y ID de la cuenta de redes sociales con sus favoritos. Estos datos pueden incluir tu correo electrónico (para Google), Discord ID o Twitter respectivamente.
@@ -425,3 +514,7 @@ about:
     title: Lista de cambios
   news:
     title: Noticias
+  bookmarklet:
+    title: Marcadores
+    description: >-
+      Arrastra estos marcadores a tu barra de marcadores para abrir la página de ver de YouTube en Holodex fácilmente:
