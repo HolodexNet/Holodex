@@ -63,7 +63,7 @@
                   lg
                   v-bind="attrs"
                   v-on="on"
-                  @click="openTlClient"
+                  @click="openTlClient()"
                 >
                   <v-icon>
                     {{ mdiTypewriter }}
@@ -79,7 +79,7 @@
                   lg
                   v-bind="attrs"
                   v-on="on"
-                  @click="showUpload = true"
+                  @click="scriptUploadPanel()"
                 >
                   <v-icon>
                     {{ mdiClipboardArrowUpOutline }}
@@ -406,6 +406,13 @@ export default {
         openTlClient() {
             if (this.$store.state.userdata?.user) {
                 this.$router.push({ path: "/tlclient", query: { video: `YT_${this.video.id}` } });
+            } else {
+                this.$router.push({ path: "/login" });
+            }
+        },
+        scriptUploadPanel() {
+            if (this.$store.state.userdata?.user) {
+                this.showUpload = true;
             } else {
                 this.$router.push({ path: "/login" });
             }

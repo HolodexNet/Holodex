@@ -13,6 +13,14 @@
           @change="fileChange"
         />
         <v-card-text>{{ notifText }}</v-card-text>
+        <v-select
+          v-model="TLLang"
+          :items="TL_LANGS"
+          :item-text="item => item.text + ' (' + item.value + ')'"
+          item-value="value"
+          label="TL Language"
+          return-object
+        />
         <v-simple-table
           v-if="entries.length > 0"
           fixed-header
@@ -65,6 +73,8 @@
 <script>
 import { mdiFileDocument } from "@mdi/js";
 import Entrytr from "@/components/scriptupload/Entrytr.vue";
+import backendApi from "@/utils/backend-api";
+import { TL_LANGS } from "@/utils/consts";
 
 export default {
     components: {
@@ -76,11 +86,13 @@ export default {
     },
     data() {
         return {
+            TL_LANGS,
             mdiFileDocument,
             parsed: false,
             entries: [],
             profileContainer: [],
             notifText: "",
+            TLLang: TL_LANGS[0],
         };
     },
     computed: {
@@ -91,6 +103,9 @@ export default {
             set(value) {
                 this.$emit("input", value);
             },
+        },
+        userdata() {
+            return this.$store.state.userdata;
         },
     },
     methods: {
@@ -595,7 +610,35 @@ export default {
             }
         },
         sendData() {
-            console.log(this.entries);
+            if (!this.video.start_actual) {
+                this.notifText = "ERR no video start_actual information";
+                return;
+            }
+            const videoActualStartMilis = Date.parse(this.video.start_actual);
+            backendApi.postBulkTL(
+                this.video.id,
+                this.userdata.user.api_key,
+                this.TLLang.value,
+                this.entries.map((e) => {
+                    e.message = e.message.trim();
+                    e.timestamp += videoActualStartMilis;
+                    return ({
+                        ...e,
+                        name: this.userdata.user.id,
+                        source: "user",
+                    });
+                }),
+            ).then(({ status, data }) => {
+                if (status === 200) {
+                    this.parsed = false;
+                    this.entries = [];
+                    this.show = false;
+                } else {
+                    console.log(`ERR : ${data}`);
+                }
+            }).catch((err) => {
+                console.log(`ERR : ${err}`);
+            });
         },
     },
 };

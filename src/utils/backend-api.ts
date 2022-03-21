@@ -338,4 +338,13 @@ export default {
             },
         );
     },
+    postBulkTL(videoID, apiKey, langCode, body) {
+        return axiosInstance.post(
+            `https://holodex.net/api/v2/videos/${videoID}/chatsBulk?lang=${langCode}`,
+            body,
+            {
+                headers: apiKey ? { "X-APIKEY": apiKey } : {},
+            },
+        );
+    },
 };
