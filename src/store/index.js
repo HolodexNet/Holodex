@@ -21,6 +21,7 @@ import multiview from "./multiview.module";
 import playlist from "./playlist.module";
 import history from "./history.module";
 import orgs from "./orgs.module";
+import tlclient from "./tlclient.module";
 import { migrations, VUEX_STATE_VERSION } from "./migrations";
 // import socket from "./socket.module";
 
@@ -250,6 +251,7 @@ export default new Vuex.Store({
         playlist,
         history,
         orgs,
+        tlclient,
         // socket,
     },
 });

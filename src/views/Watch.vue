@@ -56,6 +56,22 @@
         />
         <WatchToolBar :video="video" :no-back-button="!isMobile">
           <template #buttons>
+            <v-tooltip v-if="hasLiveChat" bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  lg
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="openTlClient"
+                >
+                  <v-icon>
+                    {{ mdiTypewriter }}
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>Open TL client</span>
+            </v-tooltip>
             <v-tooltip v-if="hasExtension" bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
@@ -169,7 +185,7 @@ import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiDockLeft, mdiThumbUp } from "@mdi/js";
+import { mdiOpenInNew, mdiDockLeft, mdiThumbUp, mdiTypewriter } from "@mdi/js";
 
 export default {
     name: "Watch",
@@ -197,6 +213,7 @@ export default {
             mdiOpenInNew,
             mdiDockLeft,
             mdiThumbUp,
+            mdiTypewriter,
             playlistIndex: -1,
             currentTime: 0,
             player: null,
@@ -346,6 +363,13 @@ export default {
         },
         like() {
             this.$refs?.ytPlayer?.sendLikeEvent();
+        },
+        openTlClient() {
+            if (this.$store.state.userdata?.user) {
+                this.$router.push({ path: "/tlclient", query: { video: `YT_${this.video.id}` } });
+            } else {
+                this.$router.push({ path: "/login" });
+            }
         },
     },
 };

@@ -60,7 +60,7 @@
         Menu
       </v-btn>
       <div class="d-flex align-stretch flex-row" style="height:100%" @click="menuBool = false">
-        <v-card class="d-flex flex-column grow" height="100%;" width="auto">
+        <v-card class="d-flex flex-column grow" height="100%;" :width="activeChat.length < 2 ? '50%' : '30%'">
           <v-card
             v-if="vidPlayer"
             height="50%"
@@ -74,18 +74,16 @@
             />
           </v-card>
           <v-divider />
-          <v-card class="d-flex flex-column ChatOuterContainer grow" height="100%;" width="auto">
-            <v-container class="ChatInnerContainer d-flex flex-column">
-              <EnhancedEntry
-                v-for="(dt, index) in entries"
-                :key="index"
-                :time="dt.Time"
-                :stext="dt.SText"
-                :cc="dt.CC"
-                :oc="dt.OC"
-              />
-            </v-container>
-          </v-card>
+          <TLChatPanel
+            v-if="!isLoading && !hasError"
+            :video="video"
+            :class="{
+              'stick-bottom': $store.state.settings.liveTlStickBottom,
+              'tl-full-height': false,
+            }"
+            style="height: 300px;"
+            :use-local-subtitle-toggle="false"
+          />
           <v-card v-if="profileDisplay" class="ProfileListCard d-flex flex-column">
             <span v-for="(prf, index) in profile" :key="index"><span v-if="index === profileIdx">> </span>{{ (index + 1) + '. ' + prf.Name }}</span>
           </v-card>
@@ -318,7 +316,7 @@
             return-object
             @change="localPrefix = '[' + TLLang.value + '] '"
           />
-          <v-text-field v-model="mainStreamLink" label="Main Stream Link" />
+          <v-text-field v-model="mainStreamLink" readonly label="Main Stream Link" />
           <v-card-title>Collab Links</v-card-title>
           <v-text-field
             v-for="(AuxLink, index) in collabLinks"
@@ -380,11 +378,12 @@
 </template>
 
 <script lang="ts">
-import EnhancedEntry from "@/components/tlclient/EnhancedEntry.vue";
+import TLChatPanel from "@/components/tlclient/TLChatPanel.vue";
 import { TL_LANGS } from "@/utils/consts";
 import { mdiPlusCircle, mdiMinusCircle, mdiCloseCircle } from "@mdi/js";
 import { getVideoIDFromUrl } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
+import { mapState } from "vuex";
 
 export default {
     name: "Tlclient",
@@ -396,7 +395,7 @@ export default {
         };
     },
     components: {
-        EnhancedEntry,
+        TLChatPanel,
     },
     data() {
         return {
@@ -406,7 +405,6 @@ export default {
             mdiCloseCircle,
             menuBool: false,
             firstLoad: true,
-            entries: [],
             profile: [{
                 Name: "Default",
                 Prefix: "",
@@ -447,6 +445,7 @@ export default {
         };
     },
     computed: {
+        ...mapState("tlclient", ["video", "isLoading", "hasError"]),
         textStyle() {
             return {
                 "-webkit-text-fill-color": (this.profile[this.profileIdx].CC === "") ? "unset" : this.profile[this.profileIdx].CC,
@@ -467,9 +466,17 @@ export default {
         },
     },
     mounted() {
-        this.checkLoginValidity();
+        this.init();
     },
     methods: {
+        init() {
+            this.firstLoad = true;
+            this.modalNexus = true;
+            this.modalMode = 3;
+            this.unloadVideo();
+            this.unloadAll();
+            this.checkLoginValidity();
+        },
         IFrameLoaded(event, target: string) {
             for (let i = 0; i < this.activeChat.length; i += 1) {
                 if (this.activeChat[i].text === target) {
@@ -496,14 +503,7 @@ export default {
             }
         },
         addEntry() {
-            this.entries.push({
-                Time: Date.now(),
-                SText: this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
-                CC: this.profile[this.profileIdx].useCC ? this.profile[this.profileIdx].CC : "",
-                OC: this.profile[this.profileIdx].useOC ? this.profile[this.profileIdx].OC : "",
-            });
-
-            // SEND TO HOLODEX += 1
+            // SEND TO HOLODEX +
             this.activeChat.forEach((e) => {
                 switch (e.text.slice(0, 3)) {
                     case "YT_":
@@ -526,29 +526,19 @@ export default {
             });
 
             // SEND TO API
-            backendApi.postTL({
-                time: Date.now(),
-                text: this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
+            backendApi.postTL(this.video.id, this.userdata.user.api_key, this.TLLang.value, {
+                name: this.userdata.user.id,
+                timestamp: Date.now(),
+                message: this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
                 cc: this.profile[this.profileIdx].useCC ? this.profile[this.profileIdx].CC : "",
                 oc: this.profile[this.profileIdx].useOC ? this.profile[this.profileIdx].OC : "",
+                source: "USER",
             }).then(({ status, data }) => {
-                if (status === 200) {
-                    // console.log("SENT!");
-                } else {
-                    this.entries.push({
-                        Time: Date.now(),
-                        SText: `ERR : ${data}`,
-                        CC: "",
-                        OC: "",
-                    });
+                if (status !== 200) {
+                    console.log(`ERR : ${data}`);
                 }
-            }).catch(() => {
-                this.entries.push({
-                    Time: Date.now(),
-                    SText: "FAILED SENDING TO DATABASE",
-                    CC: "",
-                    OC: "",
-                });
+            }).catch((err) => {
+                console.log(`ERR : ${err}`);
             });
 
             this.inputString = "";
@@ -564,6 +554,15 @@ export default {
             }
         },
         settingOKClick() {
+            const parseVideoID = getVideoIDFromUrl(this.mainStreamLink);
+            if (!parseVideoID) {
+                return;
+            }
+
+            this.$store.commit("tlclient/resetState");
+            this.$store.commit("tlclient/setId", parseVideoID.id);
+            this.$store.dispatch("tlclient/fetchVideo");
+
             this.modalNexus = false;
             if (this.firstLoad) {
                 this.loadChat(this.mainStreamLink);
@@ -949,14 +948,6 @@ export default {
   top:0px;
   left:0px;
   z-index: 1;
-}
-.ChatOuterContainer{
-  overflow-y: auto;
-}
-.ChatInnerContainer{
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
 }
 .ColourButton {
   margin-top: 19px;
