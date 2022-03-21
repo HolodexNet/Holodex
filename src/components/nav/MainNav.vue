@@ -205,7 +205,7 @@ export default {
             return this.$store.state.settings.darkMode;
         },
         isWatchPage() {
-            return ["watch_id", "watch", "edit_video", "multiview"].includes(this.$route.name);
+            return ["watch_id", "watch", "edit_video", "multiview", "tlclient"].includes(this.$route.name);
         },
         isMultiView() {
             return this.$route.name === "multiview";

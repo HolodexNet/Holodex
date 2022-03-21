@@ -56,7 +56,7 @@
         />
         <WatchToolBar :video="video" :no-back-button="!isMobile">
           <template #buttons>
-            <v-tooltip v-if="hasLiveChat" bottom>
+            <v-tooltip v-if="isLive" bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
                   icon
@@ -71,6 +71,22 @@
                 </v-btn>
               </template>
               <span>Open TL client</span>
+            </v-tooltip>
+            <v-tooltip v-if="isPast" bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  lg
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="showUpload = true"
+                >
+                  <v-icon>
+                    {{ mdiClipboardArrowUpOutline }}
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>Upload TL script</span>
             </v-tooltip>
             <v-tooltip v-if="hasExtension" bottom>
               <template #activator="{ on, attrs }">
@@ -171,6 +187,7 @@
       @videoUpdate="handleVideoUpdate"
       @timeJump="seekTo"
     />
+    <UploadScriptPanel v-model="showUpload" :video="video" />
   </div>
 </template>
 
@@ -183,9 +200,10 @@ import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import WatchHighlights from "@/components/watch/WatchHighlights.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
+import UploadScriptPanel from "@/components/scriptupload/UploadScriptPanel.vue";
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiDockLeft, mdiThumbUp, mdiTypewriter } from "@mdi/js";
+import { mdiOpenInNew, mdiDockLeft, mdiThumbUp, mdiTypewriter, mdiClipboardArrowUpOutline } from "@mdi/js";
 
 export default {
     name: "Watch",
@@ -203,6 +221,7 @@ export default {
         WatchHighlights,
         WatchToolBar,
         WatchComments,
+        UploadScriptPanel,
         WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
         WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
         KeyPress: () => import("vue-keypress"),
@@ -214,10 +233,12 @@ export default {
             mdiDockLeft,
             mdiThumbUp,
             mdiTypewriter,
+            mdiClipboardArrowUpOutline,
             playlistIndex: -1,
             currentTime: 0,
             player: null,
             theaterMode: false,
+            showUpload: false,
             altTHotKey: [
                 {
                     keyCode: 84, // T
@@ -285,6 +306,24 @@ export default {
         },
         showHighlightsBar() {
             return (this.comments.length || this.video.songcount) && (!this.isMobile || !this.showTL);
+        },
+        isLive() {
+            if (!this.video) {
+                return false;
+            }
+            if (this.video.status === "live") {
+                return true;
+            }
+            return false;
+        },
+        isPast() {
+            if (!this.video) {
+                return false;
+            }
+            if (this.video.status === "past") {
+                return true;
+            }
+            return false;
         },
     },
     watch: {
