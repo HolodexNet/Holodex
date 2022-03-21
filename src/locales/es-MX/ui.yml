@@ -11,6 +11,7 @@ component:
     unfavoriteAllInGroup: Desmarcar todos como favoritos
     favoriteAllInGroup: Marcar todo en el grupo como favorito
   channelInfo:
+    stats: Estadísticas
     videoCount: '{0} Videos'
     clipCount: '{n} Clips'
     subscriberCount: '{n} Subscriptores'
@@ -35,13 +36,17 @@ component:
     accountSettings: Ajustes de Cuenta
     music: Música
     multiview: Vista Múltiple
+    points: ptos
+    playlist: Lista de Reproducción
   videoCard:
+    clips: '{n} Clips'
     watching: '{0} Mirando'
     liveNow: En Vivo
     edit: Editar
     copiedToClipboard: Link copiado al portapapeles.
     copyLink: Copiar link de Holodex
     premiere: ESTRENO
+    googleCalendar: Agregar al Calendario de Google
   videoDescription:
     description: Descripción
   description:
