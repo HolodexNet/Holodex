@@ -1,114 +1,116 @@
 <template>
-  <a
-    class="video-card no-decoration d-flex"
-    :class="{
-      'video-card-fluid': fluid,
-      'video-card-active': active,
-      'video-card-horizontal': horizontal,
-      'video-card-list': denseList,
-      'flex-column': !horizontal && !denseList,
-    }"
-    :target="redirectMode ? '_blank' : ''"
-    :href="href"
-    rel="noopener"
-    draggable="true"
-    style="position: relative"
-    @click.exact="onThumbnailClicked"
-    @dragstart="drag"
-  >
-    <!-- Video Image with Duration -->
-    <div
-      v-if="!denseList"
-      style="position: relative; width: 100%"
-      class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
-      :style="
-        horizontal &&
-          !shouldHideThumbnail &&
-          `background: url(${imageSrc}) center/cover;`
-      "
+  <div>
+    <a
+      class="video-card no-decoration d-flex"
+      :class="{
+        'video-card-fluid': fluid,
+        'video-card-active': active,
+        'video-card-horizontal': horizontal,
+        'video-card-list': denseList,
+        'flex-column': !horizontal && !denseList,
+      }"
+      :target="redirectMode ? '_blank' : ''"
+      :href="href"
+      rel="noopener"
+      draggable="true"
+      style="position: relative"
+      @click.exact="onThumbnailClicked"
+      @dragstart="drag"
     >
-      <!-- Image Overlay -->
+      <!-- Video Image with Duration -->
       <div
-        class="video-card-overlay d-flex justify-space-between flex-column"
-        style="height: 100%; position: absolute; width: 100%; z-index: 1"
+        v-if="!denseList"
+        style="position: relative; width: 100%"
+        class="video-thumbnail white--text rounded flex-shrink-0 d-flex"
+        :style="
+          horizontal &&
+            !shouldHideThumbnail &&
+            `background: url(${imageSrc}) center/cover;`
+        "
       >
-        <div class="d-flex justify-space-between align-start">
-          <!-- Topic Id display -->
-          <div
-            class="video-topic rounded-tl-sm"
-            :style="{ visibility: data.topic_id ? 'visible' : 'hidden' }"
-          >
-            {{ data.topic_id }}
-          </div>
-
-          <!-- Check box for saved video (👻❌) -->
-          <v-icon
-            v-if="!isPlaceholder"
-            :color="hasSaved ? 'primary' : 'white'"
-            class="video-card-action rounded-tr-sm"
-            :class="{ 'hover-show': !hasSaved && !isMobile }"
-            @click.prevent.stop="toggleSaved($event)"
-          >
-            {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
-          </v-icon>
-        </div>
-
-        <!-- Video duration/music indicator (👻❌) -->
-        <div v-if="!isPlaceholder" class="d-flex flex-column align-end">
-          <!-- Show music icon if songs exist -->
-          <div v-if="data.songcount" class="video-duration">
-            <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
-          </div>
-          <!-- Show TL chat icon if recently active or has archive tl exist -->
-          <div
-            v-if="hasTLs"
-            class="video-duration d-flex align-center"
-            :title="tlIconTitle"
-          >
-            {{ tlLangInChat }}
-            <v-icon small color="white">{{ icons.tlChat }}</v-icon>
-          </div>
-          <!-- Duration/Current live stream time -->
-          <div
-            v-if="data.duration > 0 || data.start_actual"
-            class="video-duration rounded-br-sm"
-            :class="data.status === 'live' && 'video-duration-live'"
-          >
-            {{ formattedDuration }}
-          </div>
-        </div>
-        <div v-else class="d-flex flex-column align-end ">
-          <!-- (👻✅) -->
-          <div class="video-duration">
-            <span v-if="data.placeholderType === 'scheduled-yt-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeScheduledYT') }}</span>
-            <span v-else-if="data.placeholderType === 'external-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeExternalStream') }}</span>
-            <span v-else-if="data.placeholderType === 'event'" class="hover-placeholder">{{ $t('component.videoCard.typeEventPlaceholder') }}</span>
-            <v-icon
-              color="white"
-              class="rounded-sm"
+        <!-- Image Overlay -->
+        <div
+          class="video-card-overlay d-flex justify-space-between flex-column"
+          style="height: 100%; position: absolute; width: 100%; z-index: 1"
+        >
+          <div class="d-flex justify-space-between align-start">
+            <!-- Topic Id display -->
+            <div
+              class="video-topic rounded-tl-sm"
+              :style="{ visibility: data.topic_id ? 'visible' : 'hidden' }"
             >
+              {{ data.topic_id }}
+            </div>
 
-              {{ twitchPlaceholder ? mdiTwitch : placeholderIconMap[data.placeholderType] }}
+            <!-- Check box for saved video (👻❌) -->
+            <v-icon
+              v-if="!isPlaceholder"
+              :color="hasSaved ? 'primary' : 'white'"
+              class="video-card-action rounded-tr-sm"
+              :class="{ 'hover-show': !hasSaved && !isMobile }"
+              @click.prevent.stop="toggleSaved($event)"
+            >
+              {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
             </v-icon>
           </div>
 
+          <!-- Video duration/music indicator (👻❌) -->
+          <div v-if="!isPlaceholder" class="d-flex flex-column align-end">
+            <!-- Show music icon if songs exist -->
+            <div v-if="data.songcount" class="video-duration">
+              <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
+            </div>
+            <!-- Show TL chat icon if recently active or has archive tl exist -->
+            <div
+              v-if="hasTLs"
+              class="video-duration d-flex align-center"
+              :title="tlIconTitle"
+            >
+              {{ tlLangInChat }}
+              <v-icon small color="white">{{ icons.tlChat }}</v-icon>
+            </div>
+            <!-- Duration/Current live stream time -->
+            <div
+              v-if="data.duration > 0 || data.start_actual"
+              class="video-duration rounded-br-sm"
+              :class="data.status === 'live' && 'video-duration-live'"
+            >
+              {{ formattedDuration }}
+            </div>
+          </div>
+          <div v-else class="d-flex flex-column align-end ">
+            <!-- (👻✅) -->
+            <div class="video-duration">
+              <span v-if="data.placeholderType === 'scheduled-yt-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeScheduledYT') }}</span>
+              <span v-else-if="data.placeholderType === 'external-stream'" class="hover-placeholder">{{ $t('component.videoCard.typeExternalStream') }}</span>
+              <span v-else-if="data.placeholderType === 'event'" class="hover-placeholder">{{ $t('component.videoCard.typeEventPlaceholder') }}</span>
+              <v-icon
+                color="white"
+                class="rounded-sm"
+              >
+
+                {{ twitchPlaceholder ? mdiTwitch : placeholderIconMap[data.placeholderType] }}
+              </v-icon>
+            </div>
+
+          </div>
         </div>
+        <v-img
+          v-if="!horizontal && !shouldHideThumbnail"
+          :src="imageSrc"
+          :aspect-ratio="16 / 9"
+          width="100%"
+          :transition="false"
+          class="rounded"
+          :class="{'hover-opacity': data.placeholderType === 'scheduled-yt-stream'}"
+        />
+        <v-img
+          v-else-if="!horizontal && shouldHideThumbnail"
+          width="100%"
+          :aspect-ratio="60 / 9"
+        />
       </div>
-      <v-img
-        v-if="!horizontal && !shouldHideThumbnail"
-        :src="imageSrc"
-        :aspect-ratio="16 / 9"
-        width="100%"
-        :transition="false"
-        class="rounded"
-        :class="{'hover-opacity': data.placeholderType === 'scheduled-yt-stream'}"
-      />
-      <v-img
-        v-else-if="!horizontal && shouldHideThumbnail"
-        width="100%"
-        :aspect-ratio="60 / 9"
-      />
-    </div>
+    </a>
     <a
       class="d-flex flex-row flex-grow-1 no-decoration video-card-text"
       :href="watchLink"
@@ -236,7 +238,7 @@
 
     <!-- 👻👻👻 Placeholder MODAL 👻👻👻 -->
     <placeholder-card v-if="placeholderOpen" v-model="placeholderOpen" :video="data" />
-  </a>
+  </div>
 </template>
 
 <script lang="ts">
@@ -739,7 +741,6 @@ export default {
 
 .video-card-list {
   flex-direction: row !important;
-  min-height: 40px;
   .video-card-text {
     min-height: auto;
     align-items: center;
