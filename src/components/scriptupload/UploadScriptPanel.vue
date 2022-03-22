@@ -5,7 +5,9 @@
         <v-card-title>
           Upload Script
         </v-card-title>
+        <v-card-subtitle>{{ 'TL will be uploaded under username : ' + userdata.user.username }}</v-card-subtitle>
         <v-file-input
+          ref="fileInput"
           accept=".ass, .TTML, .srt"
           :prepend-icon="mdiFileDocument"
           outlined
@@ -107,6 +109,14 @@ export default {
         userdata() {
             return this.$store.state.userdata;
         },
+    },
+    beforeUpdate() {
+        if (!this.show) {
+            this.$refs.fileInput.reset();
+            this.parse = false;
+            this.notifText = "";
+            this.entries = [];
+        }
     },
     methods: {
         fileChange(e) {
@@ -624,7 +634,7 @@ export default {
                     e.timestamp += videoActualStartMilis;
                     return ({
                         ...e,
-                        name: this.userdata.user.id,
+                        name: this.userdata.user.username,
                         source: "user",
                     });
                 }),

@@ -307,6 +307,7 @@
           <v-card-title>
             Setting
           </v-card-title>
+          <v-card-subtitle>{{ 'TL will be uploaded under username : ' + userdata.user.username }}</v-card-subtitle>
           <v-select
             v-model="TLLang"
             :items="TL_LANGS"
@@ -465,6 +466,14 @@ export default {
             return this.$store.state.userdata.user;
         },
     },
+    watch: {
+        // eslint-disable-next-line func-names
+        "$route.params.video": function () {
+            if (this.$route.query.video) {
+                this.init();
+            }
+        },
+    },
     mounted() {
         this.init();
     },
@@ -527,7 +536,7 @@ export default {
 
             // SEND TO API
             backendApi.postTL(this.video.id, this.userdata.user.api_key, this.TLLang.value, {
-                name: this.userdata.user.id,
+                name: this.userdata.user.username,
                 timestamp: Date.now(),
                 message: this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
                 cc: this.profile[this.profileIdx].useCC ? this.profile[this.profileIdx].CC : "",

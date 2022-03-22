@@ -311,7 +311,7 @@ export default {
             if (!this.video) {
                 return false;
             }
-            if (this.video.status === "live") {
+            if ((this.video.status === "live") || (Date.parse(this.video.start_scheduled) < Date.now())) {
                 return true;
             }
             return false;

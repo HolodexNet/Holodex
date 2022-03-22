@@ -110,6 +110,17 @@ export default {
         // 301 Cache bust
         // fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
     },
+    changeUsername(jwt, newUsername): Promise<false | AxiosResponse<any>> {
+        return axiosInstance
+            .post(
+"/user",
+            { name: newUsername },
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
+)
+            .catch(() => false);
+    },
     resetAPIKey(jwt) {
         return (
             axiosInstance
