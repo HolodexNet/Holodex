@@ -356,6 +356,16 @@ export function videoTemporalComparator(a, b) {
     return undefined;
 }
 
+export function videoCodeParser(videoCode) {
+    switch (videoCode.slice(0, 3)) {
+        case "YT_":
+            return (`https://www.youtube.com/watch?v=${videoCode.slice(3)}`);
+
+        default:
+            return (videoCode);
+    }
+}
+
 export function checkIOS() {
     return (
         ["iPad Simulator", "iPhone Simulator", "iPod Simulator", "iPad", "iPhone", "iPod"].includes(

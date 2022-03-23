@@ -249,7 +249,6 @@
       3 Setting
       4 Load Chat
       5 Unload Chat ALL
-      6 Login Check
     -->
     <v-dialog
       v-model="modalNexus"
@@ -385,7 +384,7 @@
 import TLChatPanel from "@/components/tlclient/TLChatPanel.vue";
 import { TL_LANGS } from "@/utils/consts";
 import { mdiPlusCircle, mdiMinusCircle, mdiCloseCircle } from "@mdi/js";
-import { getVideoIDFromUrl } from "@/utils/functions";
+import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { mapState } from "vuex";
 
@@ -468,11 +467,14 @@ export default {
         user() {
             return this.$store.state.userdata.user;
         },
+        collabLinkIDs() {
+            return (this.collabLink.map((e) => (getVideoIDFromUrl(e))));
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
         "$route.query.video": function () {
-            if (this.$route.query.video) {
+            if ((this.$route.name === "tlclient") && this.$route.query.video) {
                 this.init();
             }
         },
@@ -485,6 +487,7 @@ export default {
             this.firstLoad = true;
             this.modalNexus = true;
             this.modalMode = 3;
+            this.collabLink = [];
             this.unloadVideo();
             this.unloadAll();
             this.checkLoginValidity();
@@ -537,20 +540,34 @@ export default {
                 }
             });
 
-            // SEND TO API
-            backendApi.postTL(this.video.id, this.userdata.user.api_key, this.TLLang.value, {
+            const bodydt = {
                 name: this.userdata.user.username,
                 timestamp: Date.now(),
                 message: this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
                 cc: this.profile[this.profileIdx].useCC ? this.profile[this.profileIdx].CC : "",
                 oc: this.profile[this.profileIdx].useOC ? this.profile[this.profileIdx].OC : "",
                 source: "user",
-            }).then(({ status, data }) => {
+            };
+
+            // SEND TO API
+            backendApi.postTL(this.video.id, this.userdata.user.api_key, this.TLLang.value, bodydt).then(({ status, data }) => {
                 if (status !== 200) {
                     console.log(`ERR : ${data}`);
                 }
             }).catch((err) => {
                 console.log(`ERR : ${err}`);
+            });
+
+            this.collabLinkIDs.forEach((e) => {
+                if (e && e.id) {
+                    backendApi.postTL(e.id, this.userdata.user.api_key, this.TLLang.value, bodydt).then(({ status, data }) => {
+                        if (status !== 200) {
+                            console.log(`ERR : ${data}`);
+                        }
+                    }).catch((err) => {
+                        console.log(`ERR : ${err}`);
+                    });
+                }
             });
 
             this.inputString = "";
@@ -936,17 +953,8 @@ export default {
             } else if (check.data && check.data.id) {
                 this.$store.commit("setUser", { user: check.data, jwt: this.userdata.jwt });
                 if (this.$route.query.video) {
-                    this.mainStreamLink = this.queryParser(this.$route.query.video);
+                    this.mainStreamLink = videoCodeParser(this.$route.query.video);
                 }
-            }
-        },
-        queryParser(queryVideo: string) {
-            switch (queryVideo.slice(0, 3)) {
-                case "YT_":
-                    return (`https://www.youtube.com/watch?v=${queryVideo.slice(3)}`);
-
-                default:
-                    return (queryVideo);
             }
         },
         changeUsernameClick() {

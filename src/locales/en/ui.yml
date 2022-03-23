@@ -321,8 +321,9 @@ views:
     removeFromPlaylist: Remove video from current playlist
     saveToPlaylist: Save video to current playlist
     likeOnYoutube: Like video on Youtube
-    openClient: Open TL client
-    uploadScript: Upload TL script
+    openClient: Open TL Client
+    openScriptEditor: Open Script Editor
+    uploadScript: Upload TL Script
     uploadPanel:
       title: Upload Script
       usernameText: TL will be uploaded under username
@@ -491,6 +492,19 @@ views:
     pangram: The quick brown fox jumps over the lazy dog
     cancelBtn: Cancel
     okBtn: Ok
+  scriptEditor:
+    table:
+      headerStart: Start
+      headerEnd: End
+      headerProfile: Profile
+      headerText: Text
+      setAsStart: Set as start
+      shiftCurrentTime: Shift to current time
+      deleteEntry: Delete entry
+    loadVideoPanel: 
+      title: Load Video
+      inputLabel: Stream Link
+    setStartTitle: Set selected entry as start, all the previous entries will be deleted.
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})

@@ -24,6 +24,7 @@ const AddPlaceholderStream = () => import("../views/AddPlaceholderStream.vue");
 const Extension = () => import("../views/Extension.vue");
 
 const TLClient = () => import("../views/TLClient.vue");
+const TLScriptEditor = () => import("../views/TLScriptEditor.vue");
 
 Vue.use(VueRouter);
 
@@ -158,6 +159,11 @@ const routes = [
         name: "tlclient",
         path: "/tlclient",
         component: TLClient,
+    },
+    {
+        name: "scripteditor",
+        path: "/scripteditor",
+        component: TLScriptEditor,
     },
     {
         path: "/404",

@@ -56,7 +56,7 @@
         />
         <WatchToolBar :video="video" :no-back-button="!isMobile">
           <template #buttons>
-            <v-tooltip v-if="isLive" bottom>
+            <v-tooltip bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
                   icon
@@ -70,7 +70,7 @@
                   </v-icon>
                 </v-btn>
               </template>
-              <span>{{ $t("views.watch.openClient") }}</span>
+              <span>{{ isLive ? $t("views.watch.openClient") : $t("views.watch.openScriptEditor") }}</span>
             </v-tooltip>
             <v-tooltip v-if="isPast" bottom>
               <template #activator="{ on, attrs }">
@@ -408,7 +408,11 @@ export default {
         },
         openTlClient() {
             if (this.$store.state.userdata?.user) {
-                this.$router.push({ path: "/tlclient", query: { video: `YT_${this.video.id}` } });
+                if (this.isLive) {
+                    this.$router.push({ path: "/tlclient", query: { video: `YT_${this.video.id}` } });
+                } else {
+                    this.$router.push({ path: "/scripteditor", query: { video: `YT_${this.video.id}` } });
+                }
             } else {
                 this.$router.push({ path: "/login" });
             }
