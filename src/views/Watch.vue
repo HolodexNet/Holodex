@@ -70,7 +70,7 @@
                   </v-icon>
                 </v-btn>
               </template>
-              <span>Open TL client</span>
+              <span>{{ $t("views.watch.openClient") }}</span>
             </v-tooltip>
             <v-tooltip v-if="isPast" bottom>
               <template #activator="{ on, attrs }">
@@ -86,7 +86,7 @@
                   </v-icon>
                 </v-btn>
               </template>
-              <span>Upload TL script</span>
+              <span>{{ $t("views.watch.uploadScript") }}</span>
             </v-tooltip>
             <v-tooltip v-if="hasExtension" bottom>
               <template #activator="{ on, attrs }">
@@ -309,6 +309,9 @@ export default {
         },
         isLive() {
             if (!this.video) {
+                return false;
+            }
+            if (this.video.status === "past") {
                 return false;
             }
             if ((this.video.status === "live") || (Date.parse(this.video.start_scheduled) < Date.now())) {

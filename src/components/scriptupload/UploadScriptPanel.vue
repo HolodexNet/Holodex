@@ -3,9 +3,12 @@
     <v-card elevation="5">
       <v-container>
         <v-card-title>
-          Upload Script
+          {{ $t("views.watch.uploadPanel.title") }}
         </v-card-title>
-        <v-card-subtitle>{{ 'TL will be uploaded under username : ' + userdata.user.username }}</v-card-subtitle>
+        <v-card-subtitle>
+          {{ $t("views.watch.uploadPanel.usernameText") + ' : ' + userdata.user.username + ' ' }}
+          <a style="text-decoration: underline; font-size: 0.7em" @click="changeUsernameClick()">{{ $t("views.watch.uploadPanel.usernameChange") }}</a>
+        </v-card-subtitle>
         <v-file-input
           ref="fileInput"
           accept=".ass, .TTML, .srt"
@@ -20,7 +23,7 @@
           :items="TL_LANGS"
           :item-text="item => item.text + ' (' + item.value + ')'"
           item-value="value"
-          label="TL Language"
+          :label="$t(&quot;views.watch.uploadPanel.tlLang&quot;)"
           return-object
         />
         <v-simple-table
@@ -33,13 +36,13 @@
           <thead>
             <tr>
               <th class="text-left">
-                Start
+                {{ $t("views.watch.uploadPanel.headerStart") }}
               </th>
               <th class="text-left">
-                End
+                {{ $t("views.watch.uploadPanel.headerEnd") }}
               </th>
               <th class="text-left" style="width: 100%">
-                Text
+                {{ $t("views.watch.uploadPanel.headerText") }}
               </th>
             </tr>
           </thead>
@@ -60,11 +63,11 @@
 
         <v-card-actions>
           <v-btn @click="show=false">
-            Cancel
+            {{ $t("views.watch.uploadPanel.cancelBtn") }}
           </v-btn>
 
           <v-btn style="margin-left:auto" :disabled="!parsed" @click="sendData()">
-            Ok
+            {{ $t("views.watch.uploadPanel.okBtn") }}
           </v-btn>
         </v-card-actions>
       </v-container>
@@ -119,6 +122,9 @@ export default {
         }
     },
     methods: {
+        changeUsernameClick() {
+            this.$router.push({ path: "/login" });
+        },
         fileChange(e) {
             this.parsed = false;
             this.entries = [];
@@ -127,7 +133,7 @@ export default {
             if (!e) {
                 return;
             }
-            this.notifText = "Parsing file...";
+            this.notifText = this.$t("views.watch.uploadPanel.notifTextParsing");
             const reader = new FileReader();
 
             if ((/\.ass$/i).test(e.name)) {
@@ -146,7 +152,7 @@ export default {
                 };
                 reader.readAsText(e);
             } else {
-                this.notifText = "Unrecognized file extension.";
+                this.notifText = this.$t("views.watch.uploadPanel.notifTextErrExt");
             }
         },
         parseAss(dataFeed) {
@@ -208,7 +214,7 @@ export default {
             }
 
             if (fail) {
-                this.notifText = "UNABLE TO PARSE THE FILE (FILE CORRUPTED?)";
+                this.notifText = this.$t("views.watch.uploadPanel.notifTextErr");
                 return;
             }
             fail = true;
@@ -290,7 +296,7 @@ export default {
             }
 
             if (fail) {
-                this.notifText = "UNABLE TO PARSE THE FILE (FILE CORRUPTED?)";
+                this.notifText = this.$t("views.watch.uploadPanel.notifTextErr");
             } else {
                 this.notifText = `Parsed ASS file, ${this.profileContainer.length} profiles, ${this.entries.length} Entries.`;
                 this.parsed = true;
@@ -371,7 +377,7 @@ export default {
             }
 
             if (fail) {
-                this.notifText = "UNABLE TO PARSE THE FILE (FILE CORRUPTED?)";
+                this.notifText = this.$t("views.watch.uploadPanel.notifTextErr");
                 return;
             }
             fail = true;
@@ -507,7 +513,7 @@ export default {
             }
 
             if (fail) {
-                this.notifText = "UNABLE TO PARSE THE FILE (FILE CORRUPTED?)";
+                this.notifText = this.$t("views.watch.uploadPanel.notifTextErr");
             } else {
                 this.notifText = `Parsed TTML file, ${this.profileContainer.length} colour profiles, ${this.entries.length} Entries.`;
                 this.parsed = true;

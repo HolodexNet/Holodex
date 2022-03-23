@@ -1,6 +1,7 @@
 import { TL_LANGS,
     VIDEO_URL_REGEX,
     TWITCH_VIDEO_URL_REGEX,
+    /*
     TWITCH_UNLIVE_VIDEO_URL_REGEX,
     TWITCAST_VIDEO_URL_REGEX,
     TWITCAST_UNLIVE_VIDEO_URL_REGEX,
@@ -8,6 +9,7 @@ import { TL_LANGS,
     NICONICO_UNLIVE_VIDEO_URL_REGEX,
     BILIBILI_VIDEO_URL_REGEX,
     BILIBILI_UNLIVE_VIDEO_URL_REGEX,
+    */
 } from "@/utils/consts";
 
 import { langs } from "@/plugins/vuetify";
@@ -251,6 +253,7 @@ export function videoTemporalComparator(a, b) {
             };
         }
     }
+    /*
     if (TWITCH_UNLIVE_VIDEO_URL_REGEX.test(url)) {
         const match = url.match(TWITCH_UNLIVE_VIDEO_URL_REGEX);
         if (match && match[1]) {
@@ -261,6 +264,7 @@ export function videoTemporalComparator(a, b) {
             };
         }
     }
+    */
     if (TWITCH_VIDEO_URL_REGEX.test(url)) {
         const match = url.match(TWITCH_VIDEO_URL_REGEX);
         if (match && match[1]) {
@@ -274,6 +278,7 @@ export function videoTemporalComparator(a, b) {
             };
         }
     }
+    /*
     if (TWITCAST_UNLIVE_VIDEO_URL_REGEX.test(url)) {
         const match = url.match(TWITCAST_UNLIVE_VIDEO_URL_REGEX);
         if (match && match[1] && match[2]) {
@@ -346,6 +351,7 @@ export function videoTemporalComparator(a, b) {
             };
         }
     }
+    */
 
     return undefined;
 }

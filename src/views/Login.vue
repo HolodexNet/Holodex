@@ -39,7 +39,7 @@
 
       <template v-if="userdata.user">
         <v-card-text>
-          <span class="text-subtitle-2 mb-1 d-inline-block">Username</span>
+          <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.username") }}</span>
           <v-card-text class="d-flex flex-row align-center">
             <v-text-field
               v-model="usernameInput"
@@ -165,16 +165,16 @@ export default {
         usernameInputBtnText() {
             switch (this.usernameInputMode) {
                 case 0:
-                    return "Change";
+                    return (this.$t("views.login.usernameBtn.0"));
 
                 case 1:
-                    return "Confirm";
+                    return (this.$t("views.login.usernameBtn.1"));
 
                 case 2:
-                    return "Save";
+                    return (this.$t("views.login.usernameBtn.2"));
 
                 default:
-                    return "Change";
+                    return (this.$t("views.login.usernameBtn.0"));
             }
         },
     },

@@ -321,6 +321,21 @@ views:
     removeFromPlaylist: Remove video from current playlist
     saveToPlaylist: Save video to current playlist
     likeOnYoutube: Like video on Youtube
+    openClient: Open TL client
+    uploadScript: Upload TL script
+    uploadPanel:
+      title: Upload Script
+      usernameText: TL will be uploaded under username
+      usernameChange: Change
+      tlLang: TL Language
+      headerStart: Start
+      headerEnd: End
+      headerText: Text
+      cancelBtn: Cancel
+      okBtn: Ok
+      notifTextErr: UNABLE TO PARSE THE FILE (FILE CORRUPTED?)
+      notifTextParsing: Parsing file...
+      notifTextErrExt: Unrecognized file extension.
   favorites:
     promptForAction: >-
       Create a list of favorite vtubers and see their latest clips and lives on
@@ -359,6 +374,11 @@ views:
       - Login with Google
       - Login with Discord
       - Login with Twitter
+    username: Username
+    usernameBtn:
+      - Change
+      - Confirm
+      - Save
   multiview:
     confirmOverwrite: Overwrite current layout?
     confirmOverwriteYes: Confirm
@@ -437,6 +457,40 @@ views:
       four: >-
         Fixes experimental flags on Youtube player (Like disabling multiple
         streams, waiting room thumbnail not showing) and more!
+  tlClient:
+    menu:
+      title: Menu
+      setting: Setting
+      loadVideo: Load Video
+      unloadVideo: Unload Video
+      loadChat: Load Chat
+      unloadChat: Unload Chat
+    tlControl:
+      enterBtn: Enter
+      prefix: Prefix
+      suffix: Suffix
+      fontColour: Font Colour
+      outlineColour: Outline Colour
+      localPrefix: Local Prefix
+      addProfile: Add Profile
+      removeProfile: Remove Profile
+      shiftUp: Shift Up
+      shiftDown: Shift Down
+    addProfilePanel:
+      title: Add New Profile
+      inputLabel: Profile Name
+    settingPanel:
+      title: Setting
+      mainStreamLink: Main Stream Link
+      collabLink: Collab Links
+    removeProfileTitle: Confirm remove profile
+    loadChatPanel:
+      title: Load Chat
+      inputLabel: Stream Link
+    unloadChatTitle: Unload ALL active chat?
+    pangram: The quick brown fox jumps over the lazy dog
+    cancelBtn: Cancel
+    okBtn: Ok
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})

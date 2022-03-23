@@ -10,7 +10,7 @@
           color="secondary"
           @click="modalMode = 3; modalNexus = true"
         >
-          Setting
+          {{ $t("views.tlClient.menu.setting") }}
         </v-btn>
         <v-divider
           vertical
@@ -21,7 +21,7 @@
           color="secondary"
           @click="loadVideo()"
         >
-          Load Video
+          {{ $t("views.tlClient.menu.loadVideo") }}
         </v-btn>
         <v-btn
           elevation="4"
@@ -29,7 +29,7 @@
           style="margin-left: 5px; margin-right:5px"
           @click="unloadVideo()"
         >
-          Unload Video
+          {{ $t("views.tlClient.menu.unloadVideo") }}
         </v-btn>
 
         <v-btn
@@ -37,7 +37,7 @@
           color="secondary"
           @click="modalMode = 4; modalNexus = true; activeURLStream = '';"
         >
-          Load Chat
+          {{ $t("views.tlClient.menu.loadChat") }}
         </v-btn>
         <v-btn
           elevation="4"
@@ -45,7 +45,7 @@
           style="margin-left:5px"
           @click="modalMode = 5; modalNexus = true"
         >
-          Unload Chat
+          {{ $t("views.tlClient.menu.unloadChat") }}
         </v-btn>
       </v-container>
     </v-card>
@@ -57,7 +57,7 @@
         small
         @click="menuBool = !menuBool"
       >
-        Menu
+        {{ $t("views.tlClient.menu.title") }}
       </v-btn>
       <div class="d-flex align-stretch flex-row" style="height:100%" @click="menuBool = false">
         <v-card class="d-flex flex-column grow" height="100%;" :width="activeChat.length < 2 ? '50%' : '30%'">
@@ -140,14 +140,14 @@
             @keypress.enter="addEntry()"
           />
           <v-btn style="margin-left:10px" @click="addEntry()">
-            Enter
+            {{ $t("views.tlClient.tlControl.enterBtn") }}
           </v-btn>
         </v-row>
         <v-row class="align-stretch">
           <v-col cols="2">
             <v-text-field
               v-model="profile[profileIdx].Prefix"
-              label="Prefix"
+              :label="$t('views.tlClient.tlControl.prefix')"
               dense
               rounded
               outlined
@@ -156,7 +156,7 @@
           <v-col cols="2">
             <v-text-field
               v-model="profile[profileIdx].Suffix"
-              label="Suffix"
+              :label="$t('views.tlClient.tlControl.suffix')"
               dense
               rounded
               outlined
@@ -166,7 +166,7 @@
           <v-checkbox
             v-model="profile[profileIdx].useCC"
             class="shrink"
-            label="Font Colour : "
+            :label="$t('views.tlClient.tlControl.fontColour') + ' : '"
             hide-details
           />
           <v-btn
@@ -179,7 +179,7 @@
           </v-btn>
           <v-checkbox
             v-model="profile[profileIdx].useOC"
-            label="Outline Colour : "
+            :label="$t('views.tlClient.tlControl.outlineColour') + ' : '"
             hide-details
           />
           <v-btn
@@ -194,7 +194,7 @@
           <v-col cols="2" style="margin-left:auto">
             <v-text-field
               v-model="localPrefix"
-              label="Prefix"
+              :label="$t('views.tlClient.tlControl.localPrefix')"
               dense
               rounded
               outlined
@@ -203,16 +203,16 @@
         </v-row>
         <v-row>
           <v-btn style="margin-right:5px" @click="modalMode = 1; modalNexus = true; addProfileNameString = 'Profile ' + profile.length;">
-            Add Profile
+            {{ $t("views.tlClient.tlControl.addProfile") }}
           </v-btn>
           <v-btn style="margin-right:5px" @click="modalMode = 2; modalNexus = true">
-            Remove Profile
+            {{ $t("views.tlClient.tlControl.removeProfile") }}
           </v-btn>
           <v-btn style="margin-right:5px" @click="shiftProfileUp()">
-            Shift Up
+            {{ $t("views.tlClient.tlControl.shiftUp") }}
           </v-btn>
           <v-btn @click="shiftProfileDown()">
-            Shift Down
+            {{ $t("views.tlClient.tlControl.shiftDown") }}
           </v-btn>
         </v-row>
       </v-container>
@@ -228,15 +228,15 @@
         <v-color-picker v-if="colourPick === 1" v-model="profile[profileIdx].CC" />
         <v-color-picker v-else-if="colourPick === 2" v-model="profile[profileIdx].OC" />
         <v-card-title :style="textStyle" style="font-weight:bold;">
-          The quick brown fox jumps over the lazy dog
+          {{ $t("views.tlClient.pangram") }}
         </v-card-title>
         <v-card-actions>
           <v-btn @click="colourPickerClose();">
-            Cancel
+            {{ $t("views.tlClient.cancelBtn") }}
           </v-btn>
 
           <v-btn style="margin-left:auto" @click="colourPickerOK()">
-            Ok
+            {{ $t("views.tlClient.okBtn") }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -261,23 +261,23 @@
       <v-card v-if="modalMode === 1">
         <v-container>
           <v-card-title>
-            Add New Profile.
+            {{ $t("views.tlClient.addProfilePanel.title") }}
           </v-card-title>
           <v-text-field
             v-model="addProfileNameString"
-            label="Profile Name"
-            placeholder="Profile Name"
+            :label="$t('views.tlClient.addProfilePanel.inputLabel')"
+            :placeholder="$t('views.tlClient.addProfilePanel.inputLabel')"
             dense
             rounded
             outlined
           />
           <v-card-actions>
             <v-btn @click="modalNexus = false">
-              Cancel
+              {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
             <v-btn style="margin-left:auto" @click="addProfile()">
-              Ok
+              {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
         </v-container>
@@ -287,15 +287,15 @@
       <v-card v-if="modalMode === 2">
         <v-container>
           <v-card-title>
-            Confirm remove profile {{ profile[profileIdx].Name }}.
+            {{ $t("views.tlClient.removeProfileTitle") + ' ' + profile[profileIdx].Name }}.
           </v-card-title>
           <v-card-actions>
             <v-btn @click="modalNexus = false">
-              Cancel
+              {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
             <v-btn style="margin-left:auto" @click="deleteProfile()">
-              Ok
+              {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
         </v-container>
@@ -305,20 +305,23 @@
       <v-card v-if="modalMode === 3">
         <v-container>
           <v-card-title>
-            Setting
+            {{ $t("views.tlClient.settingPanel.title") }}
           </v-card-title>
-          <v-card-subtitle>{{ 'TL will be uploaded under username : ' + userdata.user.username }}</v-card-subtitle>
+          <v-card-subtitle>
+            {{ $t("views.watch.uploadPanel.usernameText") + ' : ' + userdata.user.username + ' ' }}
+            <a style="text-decoration: underline; font-size: 0.7em" @click="changeUsernameClick()">{{ $t("views.watch.uploadPanel.usernameChange") }}</a>
+          </v-card-subtitle>
           <v-select
             v-model="TLLang"
             :items="TL_LANGS"
             :item-text="item => item.text + ' (' + item.value + ')'"
             item-value="value"
-            label="TL Language"
+            :label="$t(&quot;views.watch.uploadPanel.tlLang&quot;)"
             return-object
             @change="localPrefix = '[' + TLLang.value + '] '"
           />
-          <v-text-field v-model="mainStreamLink" readonly label="Main Stream Link" />
-          <v-card-title>Collab Links</v-card-title>
+          <v-text-field v-model="mainStreamLink" readonly :label="$t(&quot;views.tlClient.settingPanel.mainStreamLink&quot;)" />
+          <v-card-title>{{ $t("views.tlClient.settingPanel.collabLink") }}</v-card-title>
           <v-text-field
             v-for="(AuxLink, index) in collabLinks"
             :key="index"
@@ -331,7 +334,7 @@
           />
           <v-card-actions class="d-flex flex-row justify-center">
             <v-btn @click="settingOKClick()">
-              Ok
+              {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
         </v-container>
@@ -341,16 +344,16 @@
       <v-card v-if="modalMode === 4">
         <v-container>
           <v-card-title>
-            Load chat
+            {{ $t("views.tlClient.loadChatPanel.title") }}
           </v-card-title>
-          <v-text-field v-model="activeURLStream" label="Stream Link" />
+          <v-text-field v-model="activeURLStream" :label="$t(&quot;views.tlClient.loadChatPanel.inputLabel&quot;)" />
           <v-card-actions>
             <v-btn @click="modalNexus = false">
-              Cancel
+              {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
             <v-btn style="margin-left:auto" @click="loadChat(activeURLStream); modalNexus = false;">
-              Ok
+              {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
         </v-container>
@@ -360,15 +363,15 @@
       <v-card v-if="modalMode === 5">
         <v-container>
           <v-card-title>
-            Unload ALL active chat?
+            {{ $t("views.tlClient.unloadChatTitle") }}
           </v-card-title>
           <v-card-actions>
             <v-btn @click="modalNexus = false">
-              Cancel
+              {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
             <v-btn style="margin-left:auto" @click="unloadAll(); modalNexus = false;">
-              Ok
+              {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
         </v-container>
@@ -468,7 +471,7 @@ export default {
     },
     watch: {
         // eslint-disable-next-line func-names
-        "$route.params.video": function () {
+        "$route.query.video": function () {
             if (this.$route.query.video) {
                 this.init();
             }
@@ -945,6 +948,9 @@ export default {
                 default:
                     return (queryVideo);
             }
+        },
+        changeUsernameClick() {
+            this.$router.push({ path: "/login" });
         },
     },
 };
