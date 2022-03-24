@@ -539,9 +539,10 @@ export default {
             player: null,
             IFOrigin: "",
             // ---- TIMER CONTROLLER ----
+            timerActive: false,
+            timerMode: 0,
+            defaultRefreshRate: 1000 / 30,
             timerTime: 0,
-            timerDelegate: undefined,
-            timeSaddle: Date.now(),
             refreshRate: 33,
             trackerPause: true,
             // ---- TIMELINE ----
@@ -837,6 +838,38 @@ export default {
             }
         },
         // ----------------------- TIMER CONTROLLER -----------------------
+        proceedTimer(lastTime: number) {
+            const nowFreeze = Date.now();
+            if (!this.timerActive) {
+                return;
+            }
+
+            switch (this.timerMode) {
+                case 0: {
+                    if (nowFreeze - lastTime < 1000) {
+                        this.timerTime += nowFreeze - lastTime;
+                    }
+                    this.scrollCalculator();
+                    break;
+                }
+
+                case 1: {
+                    this.timerTime = this.player.getCurrentTime() * 1000;
+                    this.scrollCalculator();
+                    break;
+                }
+
+                default:
+                    return;
+            }
+            if (nowFreeze - lastTime < this.refreshRate) {
+                setTimeout(() => {
+                    this.proceedTimer(nowFreeze);
+                }, this.refreshRate - nowFreeze + lastTime);
+            } else {
+                this.proceedTimer(nowFreeze);
+            }
+        },
         timerTimeStart() {
             if (this.vidPlayer) {
                 switch (this.vidType) {
@@ -874,15 +907,11 @@ export default {
                         this.player.playVideo();
                         break;
                 }
-            } else if (!this.timerDelegate) {
-                this.timeSaddle = Date.now();
-                this.timerDelegate = setInterval(() => {
-                    if (Date.now() - this.timeSaddle < 1000) {
-                        this.timerTime += Date.now() - this.timeSaddle;
-                    }
-                    this.timeSaddle = Date.now();
-                    this.scrollCalculator();
-                }, this.refreshRate);
+            } else if (!this.timerActive) {
+                this.timerMode = 0;
+                this.refreshRate = this.defaultRefreshRate;
+                this.timerActive = true;
+                this.proceedTimer(Date.now());
             }
         },
         timerTimeStop() {
@@ -922,9 +951,8 @@ export default {
                         this.player.pauseVideo();
                         break;
                 }
-            } else if (this.timerDelegate) {
-                clearInterval(this.timerDelegate);
-                this.timerDelegate = undefined;
+            } else if (this.timerActive) {
+                this.timerActive = false;
             }
         },
         seekVideo(time:number) {
@@ -1025,7 +1053,7 @@ export default {
                         }
                         break;
                 }
-            } else if (this.timerDelegate) {
+            } else if (this.timerActive) {
                 this.timerTimeStop();
             } else {
                 this.timerTimeStart();
@@ -1145,9 +1173,8 @@ export default {
                 const PlayerDiv = document.getElementById("player");
                 if (PlayerDiv) {
                     clearInterval(checker);
-                    if (this.timerDelegate) {
-                        clearInterval(this.timerDelegate);
-                        this.timerDelegate = undefined;
+                    if (this.timerActive) {
+                        this.timerActive = false;
                     }
                     const StreamURL = getVideoIDFromUrl(this.activeURLStream);
                     if (StreamURL) {
@@ -1197,9 +1224,8 @@ export default {
         },
         unloadVideo() {
             this.vidPlayer = false;
-            if (this.timerDelegate) {
-                clearInterval(this.timerDelegate);
-                this.timerDelegate = undefined;
+            if (this.timerActive) {
+                this.timerActive = false;
             }
 
             if (this.vidIframeEle) {
@@ -1405,14 +1431,12 @@ export default {
             this.startTrackerYT();
         },
         startTrackerYT(): void {
-            if (this.timerDelegate) {
-                clearInterval(this.timerDelegate);
-                this.timerDelegate = undefined;
+            this.timerMode = 1;
+            this.refreshRate = 100;
+            if (!this.timerActive) {
+                this.timerActive = true;
+                this.proceedTimer(Date.now());
             }
-            this.timerDelegate = setInterval(() => {
-                this.timerTime = this.player.getCurrentTime() * 1000;
-                this.scrollCalculator();
-            }, 100);
         },
         //= ================  YT  =================
 
@@ -1471,19 +1495,12 @@ export default {
             });
         },
         startTWTracker() {
-            this.trackerPause = true;
-            if (this.timerDelegate) {
-                clearInterval(this.timerDelegate);
+            this.timerMode = 0;
+            this.refreshRate = this.defaultRefreshRate;
+            if (!this.timerActive) {
+                this.timerActive = true;
+                this.proceedTimer(Date.now());
             }
-
-            this.timeSaddle = Date.now();
-            this.timerDelegate = setInterval(() => {
-                if ((Date.now() - this.timeSaddle < 1000) && (!this.trackerPause)) {
-                    this.timerTime += Date.now() - this.timeSaddle;
-                }
-                this.timeSaddle = Date.now();
-                this.scrollCalculator();
-            }, this.refreshRate);
         },
         //= ================  TW  =================
 
@@ -1582,7 +1599,7 @@ export default {
                                 ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
                                 ctx.stroke();
 
-                                ctx.fillText(this.secToTimestring(x / 10 + i * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                                ctx.fillText(this.secToTimeString(x / 10 + i * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
                             }
 
                             ctx.restore();
@@ -1594,7 +1611,7 @@ export default {
                                     ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
                                     ctx.stroke();
 
-                                    ctx.fillText(this.secToTimestring(x / 10 + i * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                                    ctx.fillText(this.secToTimeString(x / 10 + i * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
                                 } else {
                                     ctx.beginPath();
                                     ctx.moveTo((x * this.secToPx) / 10, 0);
@@ -1612,7 +1629,7 @@ export default {
                                     ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
                                     ctx.stroke();
 
-                                    ctx.fillText(this.secToTimestring(x / 10 + i * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                                    ctx.fillText(this.secToTimeString(x / 10 + i * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
                                 } else if (x % 2 === 0) {
                                     ctx.beginPath();
                                     ctx.moveTo((x * this.secToPx) / 10, 0);
@@ -1638,7 +1655,7 @@ export default {
             }
             return (((this.entries[this.timecardIdx[index]].Time - this.entries[this.timecardIdx[index - 1]].Time - this.entries[this.timecardIdx[index - 1]].Duration) / 1000) * this.secToPx);
         },
-        secToTimestring(secInput: number, msOutput: boolean = true, Full: boolean = false): string {
+        secToTimeString(secInput: number, msOutput: boolean = true, Full: boolean = false): string {
             let Sec = secInput;
             let MS:string = Math.floor((Sec % 1) * 100).toString();
             if (MS.length === 1) {
@@ -1736,7 +1753,7 @@ export default {
                         ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
                         ctx.stroke();
 
-                        ctx.fillText(this.SectoTimestring(x / 10 + 2 * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                        ctx.fillText(this.secToTimeString(x / 10 + 2 * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
                     } else if (x % 2 === 0) {
                         ctx.beginPath();
                         ctx.moveTo((x * this.secToPx) / 10, 0);
@@ -1786,7 +1803,7 @@ export default {
                         ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
                         ctx.stroke();
 
-                        ctx.fillText(this.SectoTimestring(x / 10 + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                        ctx.fillText(this.secToTimeString(x / 10 + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
                     } else if (x % 2 === 0) {
                         ctx.beginPath();
                         ctx.moveTo((x * this.secToPx) / 10, 0);
