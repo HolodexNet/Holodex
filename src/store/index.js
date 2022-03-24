@@ -134,8 +134,8 @@ export default new Vuex.Store({
         setUser(state, { user, jwt }) {
             Vue.set(state.userdata, "user", user);
             state.userdata.jwt = jwt;
-             // Set cookie for all holodex sub domains
-             setCookieJWT(jwt);
+            // Set cookie for all holodex sub domains
+            setCookieJWT(jwt);
         },
         setVisited(state) {
             state.firstVisit = false;

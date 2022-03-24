@@ -14,6 +14,14 @@ export const sendFavoritesToExtension = (favorites: any[]): void => {
 };
 
 export const setCookieJWT = (jwt: string) => {
-    const { exp } = jwtDecode(jwt) as any;
-    document.cookie = `HOLODEX_JWT=${jwt};expires=${(new Date(exp * 1000)).toUTCString()};domain=.holodex.net;path=/`;
+    try {
+        if (jwt) {
+            const { exp } = jwtDecode(jwt) as any;
+            document.cookie = `HOLODEX_JWT=${jwt};expires=${(new Date(exp * 1000)).toUTCString()};domain=.holodex.net;path=/`;
+        } else {
+            document.cookie = "HOLODEX_JWT=;-1;domain=.holodex.net;path=/";
+        }
+    } catch (e) {
+        console.warn("Failed to clear Holodex Token cookie");
+    }
 };
