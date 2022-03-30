@@ -22,7 +22,7 @@
           class="mr-2"
           @click="addToMusicPlaylist"
         >
-          <v-icon small> {{ icons.mdiPlaylistPlus }} </v-icon>
+          <v-icon small> {{ icons.mdiMusic }} </v-icon>
         </v-btn>
       </span>
       <!-- Match the same structure as VideoCardList -->
@@ -99,6 +99,7 @@ import VideoCardList from "@/components/video/VideoCardList.vue";
 import filterVideos from "@/mixins/filterVideos";
 import { mdiTimerOutline } from "@mdi/js";
 import { videoTemporalComparator } from "@/utils/functions";
+import { musicdexURL } from "@/utils/consts";
 
 export default {
     name: "WatchSideBar",
@@ -160,9 +161,9 @@ export default {
             return [];
         },
     },
-    mounted() {
-        this.$nextTick(this.updateSongs);
-    },
+    // mounted() {
+    //     this.$nextTick(this.updateSongs);
+    // },
     created() {
         this.hidden.recommendations = (this.related.refers.length + this.related.clips.length + this.related.sources.length + this.related.same_source_clips.length) >= 5;
     },
@@ -191,7 +192,7 @@ export default {
             this.hidden[relation] = !this.hidden[relation];
         },
         addToMusicPlaylist() {
-            this.$store.commit("music/addSong", this.songList);
+            window.open(`${musicdexURL}video/${this.video.id}`, "_blank");
         },
         addToPlaylist(videos) {
             const reversed = [...videos].filter((v) => this.filterVideos(v, { hideIgnoredTopics: false }));

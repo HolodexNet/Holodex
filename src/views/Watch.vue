@@ -325,6 +325,7 @@ export default {
             });
         },
         handleVideoUpdate(update) {
+            if (!update?.status || !update?.start_actual) return;
             this.video.live_viewers = update.live_viewers;
             this.video.status = update.status;
             this.video.start_actual = update.start_actual;

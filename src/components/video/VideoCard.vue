@@ -739,6 +739,7 @@ export default {
 
 .video-card-list {
   flex-direction: row !important;
+  min-height: 40px;
   .video-card-text {
     min-height: auto;
     align-items: center;

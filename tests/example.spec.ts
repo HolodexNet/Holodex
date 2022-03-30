@@ -1,5 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
-import music from "../src/store/music.module";
+// import music from "../src/store/music.module";
 /*
 import watch from "@/store/watch.module";
 import Stats from "@/components/common/Stats.vue";
@@ -24,7 +24,7 @@ describe("example", () => {
     expect(SearchBar.data().isLoading).toEqual(false);
     */
     const state = {};
-    music.mutations.openBar(state);
-    expect(state).toEqual({ isOpen: true });
+    // music.mutations.openBar(state);
+    // expect(state).toEqual({ isOpen: true });
   });
 });

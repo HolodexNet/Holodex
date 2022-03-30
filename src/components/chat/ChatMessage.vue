@@ -26,11 +26,12 @@
           <v-icon x-small style="margin-top: 2px; position: absolute; width: 11px">{{ icons.mdiCog }}</v-icon>
         </span>
       </div>
-      <a class="tl-message" :data-time="source.relativeSeconds">
+      <a class="tl-message" :data-time="source.relativeMs/1000">
         <span v-if="source.timestamp" class="tl-caption mr-1">
           {{ liveTlShowLocalTime ? realTime : displayTime }}
         </span>
-        <span class="text--primary" v-html="source.message" />
+        <span v-if="source.parsed" class="text--primary" v-html="source.parsed" />
+        <span v-else class="text--primary">{{ source.message }}</span>
       </a>
     </div>
     <v-dialog v-if="!hideAuthor && !source.shouldHideAuthor" v-model="showBlockChannelDialog" width="500">
@@ -71,10 +72,6 @@ import { mapState } from "vuex";
 import { dayjs, formatDuration } from "@/utils/time";
 import ChannelImg from "../channel/ChannelImg.vue";
 
-function timeDiff(relativeSeconds) {
-    const millisDiff = relativeSeconds * 1000;
-    return (Math.sign(millisDiff) < 0 ? "-" : "") + formatDuration(Math.abs(millisDiff));
-}
 function realTimestamp(utc) {
     return dayjs(utc).format("LTS"); // localizedFormat
 }
@@ -105,7 +102,7 @@ export default {
             return realTimestamp(this.source.timestamp);
         },
         displayTime() {
-            return timeDiff(this.source.relativeSeconds);
+            return (Math.sign(this.source.relativeMs) < 0 ? "-" : "") + formatDuration(Math.abs(this.source.relativeMs));
         },
         ...mapState("settings", [
             "liveTlShowLocalTime",
@@ -154,5 +151,12 @@ export default {
   border-top: 1px solid #ffffff1f;
   margin-top: 4px;
   padding-top: 4px;
+}
+
+/* Emojis */
+.tl-message img {
+  width: auto;
+  height: 1.3em;
+  vertical-align: middle;
 }
 </style>

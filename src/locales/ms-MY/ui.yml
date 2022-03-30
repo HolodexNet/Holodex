@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -253,6 +255,7 @@ views:
       - Kecil
     hideCollabStreamsLabel: Sembunyikan Siaran Sama
     hideCollabStreamsMsg: Sembunyikan siaran sama di laman Kegemaran
+    hidePlaceholderStreams: Sembunyikan Siaran Sementara
     ignoredTopicsLabel: Topik Diketepikan
     ignoredTopicsMsg: Video yang bertopik berikut disembunyikan di laman Utama dan Kegemaran
     theme: Warna tema

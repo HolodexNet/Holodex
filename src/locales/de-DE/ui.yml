@@ -79,7 +79,7 @@ component:
     simulcastsLabel: Simulcasts
     refersLabel: Verweise
     sourcesLabel: Quellen
-    songsLabel: Songs
+    songsLabel: Lieder
     recommendationsLabel: Empfehlungen
     sameSourceClips: Von den gleichen Streams
   paginateLoad:
@@ -89,17 +89,17 @@ component:
     clearPlaylist: Leeren
     trendingForOrg: Trends für {0}
   channelMusic:
-    recentSongsHeader: Aktuelle Songs
-    weeklyTopPlaysHeader: Top-Songs der Woche
+    recentSongsHeader: Aktuelle Lieder
+    weeklyTopPlaysHeader: Top-Lieder der Woche
     trending: Trends
   songList:
     songTitle: Titel
-    songCoveredBy: Coverversion von
+    songCoveredBy: Cover-Version von
     songDuration: Dauer
     sangOnTime: Gesungen am
   orgMusic:
-    monthlyTopForOrg: Top-Songs des Monats von {0}
-    weeklyTopForOrg: Top-Songs der Woche von {0}
+    monthlyTopForOrg: Top-Lieder des Monats von {0}
+    weeklyTopForOrg: Top-Lieder der Woche von {0}
   installPrompt:
     title: Holodex installieren
     callToAction: Das Anschauen von Videos auf Holodex funktioniert am besten, wenn du es zu deinem Startbildschirm hinzugefügst
@@ -300,7 +300,7 @@ views:
         Das Chatarchivieren funktioniert nicht ohne die {0} Erweiterung oder andere Erweiterungen Dritter.
     removeFromPlaylist: Video von aktueller Playlist entfernen
     saveToPlaylist: Video zu aktueller Playlist hinzufügen
-    likeOnYoutube: Video auf YouTube mit "Gefällt mir" markieren
+    likeOnYoutube: Video auf YouTube mit "Mag ich" markieren
   favorites:
     promptForAction: >-
       Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
@@ -308,7 +308,7 @@ views:
     close: Schließen
     showall: Alle anzeigen
   editor:
-    needlogin: Du musst dich einloggen, um Änderungen an Video-/Song-Metadaten in Holodex vorzunehmen.
+    needlogin: Du musst dich einloggen, um Änderungen an Video-/Lied-Metadaten in Holodex vorzunehmen.
     changeTopic:
       title: Stream-Thema ändern
       info: >-
@@ -412,10 +412,10 @@ editor:
     add: Hinzufügen
     update: Aktualisieren
     permission: >-
-      Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
+      Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Lieder zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
     titles:
-      addSong: 'Song-Metadaten: Neuen Song hinzufügen'
-      songList: 'Songliste : {0}'
+      addSong: 'Lied-Metadaten: Neues Lied hinzufügen'
+      songList: 'Liederliste : {0}'
       help: Anleitung
     itunesLookupPlaceholder: (Optional) Suche auf iTunes
     moveRight2s: Nach rechts 2s
@@ -423,7 +423,7 @@ editor:
     setToCurrentTime: Auf aktuelle Zeit setzen ({0})
     moveLeft2s: Nach links 2s
     trackNameInput: Titel
-    originalArtistInput: Originaler Künstler
+    originalArtistInput: Original-Interpret
     testStart: Teste den Start
     startInput: Start
     endInput: 'Dauer in Sekunden: (Ende @ {0})'
@@ -496,7 +496,7 @@ about:
       title: Wie kann ich Holodex unterstützen?
       contents:
         '0': >-
-          Unser selbst-gehosteter Server ist eine 28-Kern Maschine mit 60GB RAM, für welche Instandhaltungskosten von circa $60 USD pro Monat anfallen. Da wir unsere Features immer weiter expandieren, haben wir ein <a href="https://ko-fi.com/holodex">Ko-fi</a> angelegt, um die Serverkosten zu decken. (<a href="https://www.patreon.com/holodex">Patreon</a> haben wir auch, aber Ko-fi gefällt uns besser.)<br /><br />Du kannst uns außerdem mit Feedback und Tweets unterstützen, uns mit der Übersetzung der Webseite via <a href="https://crwd.in/holodex">Crowdin</a> helfen, oder zu unserem Song-Datenspeicher beitragen. Selbst das Kommentieren von Zeitstempeln lustiger Momente in den Stream-Kommentaren ist schon sehr hilfreich!
+          Unser selbst-gehosteter Server ist eine 28-Kern Maschine mit 60GB RAM, für welche Instandhaltungskosten von circa $60 USD pro Monat anfallen. Da wir mehr und mehr Features hinzufügen, haben wir ein <a href="https://ko-fi.com/holodex">Ko-fi</a> angelegt, um die Serverkosten zu decken. (<a href="https://www.patreon.com/holodex">Patreon</a> haben wir auch, aber Ko-fi gefällt uns besser.)<br /><br />Du kannst uns außerdem mit Feedback und Tweets unterstützen, uns mit der Übersetzung der Webseite via <a href="https://crwd.in/holodex">Crowdin</a> helfen, oder zu unserem Lied-Datenspeicher beitragen. Selbst das Kommentieren von Zeitstempeln lustiger Momente in den Stream-Kommentaren ist schon sehr hilfreich!
   gdpr: DSGVO und meine Daten
   gdprContent: >-
     Ein Google-Analytics-Cookie wird verwendet, um Seitenaufrufe für unsere analytischen Zwecke zu verfolgen. Nach dem Login verknüpfen wir deinen Benutzernamen und die ID deines Social Media Accounts mit deinen Favoriten. Diese Daten können deine E-Mail (für Google), deine Discord-ID oder dein Twitter-Handle beinhalten.

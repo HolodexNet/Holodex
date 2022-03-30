@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-escape,max-len */
+export const musicdexURL = window.location.origin === "https://holodex.net" ? "https://music.holodex.net" : "https://music-staging.holodex.net";
 
 export const CHANNEL_TYPES = Object.freeze({
     VTUBER: "vtuber",

@@ -1,1 +1,17 @@
 ---
+hello: mundo
+music:
+  title: '{{english_name}} Canciones y Covers originales - Holodex'
+  description: >-
+    Escucha a los directos oficiales de música y karaoke etiquetados por nuestra comunidad a través del reproductor de música de Holodex.
+channel:
+  normal:
+    title: '{{english_name}} Clips, Directos, Música y Colaboraciones - Holodex'
+    description: >-
+      Encuentra más de {{clip_count}} clips, {{video_count}} directos por {{english_name}}. Averigua cuando harán directos añadiendolos a tus favoritos de Holodex.
+    descriptionWithTopic: >-
+      Encuentra directos de {{ topics }} por {{english_name}}. Mantente al día con {{clip_count}} clips, {{video_count}} directos y más en Holodex.
+  clip:
+    title: '{{english_name}} Resumen - Holodex'
+    description: >-
+      Encuentra más de {{video_count}} clips de tus vtubers favoritas por {{english_name}}.

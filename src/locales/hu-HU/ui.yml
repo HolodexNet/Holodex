@@ -35,7 +35,7 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Fiók beállításai
     music: Zene
-    multiview: Több képernyős
+    multiview: MultiView
     points: pont
     playlist: Lejátszási lista
   videoCard:
@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -253,6 +255,7 @@ views:
       - Kicsi
     hideCollabStreamsLabel: Collab streamek elrejtése
     hideCollabStreamsMsg: Collab streamek elrejtése a kedvencek közül
+    hidePlaceholderStreams: Tervezett streamek elrejtése
     ignoredTopicsLabel: Figyelmen kívül hagyott témák
     ignoredTopicsMsg: Elrejti a Kezdőlapból és a Kedvencekből a videókat ebben a témában
     theme: Téma
@@ -342,7 +345,7 @@ views:
     muteOthersDetail: Minden streamet -kivéve egyet- némít
     autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
     createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
-    openToolbarTip: Nyisd meg az eszköztárat a több képernyős nézet használatához
+    openToolbarTip: Nyisd meg az eszköztárat a MultiView használatához
     archiveSync: Archív szinkronizáció
     preset:
       shareOnDiscord: >-

@@ -263,10 +263,10 @@ export default {
             if (this.player) {
                 this.timer = setInterval(() => {
                     this.currentTime = this.player.getCurrentTime();
-                    if (this.stopAt && this.currentTime > this.stopAt) {
-                        this.player.pauseVideo();
-                        this.stopAt = undefined;
-                    }
+                    // if (this.stopAt && this.currentTime > this.stopAt) {
+                    //     this.player.pauseVideo();
+                    //     this.stopAt = undefined;
+                    // }
                 }, 200);
             }
         },

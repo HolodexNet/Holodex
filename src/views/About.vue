@@ -180,15 +180,6 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
-              <v-expansion-panel-header>
-                {{ $t("about.faq.musicPlayer") }}
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <div v-html="$t('about.faq.musicPlayerContent')" />
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-
-            <v-expansion-panel>
               <v-expansion-panel-header> {{ $t("about.faq.mobile.title") }} </v-expansion-panel-header>
               <v-expansion-panel-content>
                 {{ $t("about.faq.mobile.content.summary") }}

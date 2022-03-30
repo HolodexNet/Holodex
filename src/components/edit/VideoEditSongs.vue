@@ -341,7 +341,7 @@ function getEmptySong(video) {
         song: null, // itunes song object (ephemeral, not always present)
         itunesid: null,
         start: 0,
-        end: 10,
+        end: 12,
         name: "",
         original_artist: "",
         amUrl: null,
@@ -433,7 +433,7 @@ export default {
             },
         },
         canSave() {
-            return this.current.end - this.current.start > 0 && this.current.name;
+            return this.current.end - this.current.start > 13 && this.current.name;
         },
         addOrUpdate() {
             if (this.songList.find((m) => m.name === this.current.name)) {

@@ -5,13 +5,14 @@
     max-width="980"
     @input="$listeners.input"
   >
-    <v-sheet style="position:relative;">
-      <v-img v-if="video.thumbnail" :src="'/statics/thumbnail/maxres/'+enc(video.thumbnail)+'.jpg'" :aspect-ratio="16/9" />
-      <v-img v-else max-height="130px" :src="`https://www.banner.yt/${video.channel_id || video.channel.id}/mobile`" />
+    <v-sheet style="position: relative;">
+      <img v-if="video.thumbnail" :src="'/statics/thumbnail/maxres/'+enc(video.thumbnail)+'.jpg'" class="placeholder-img">
+
       <watch-info :video="videoWithMentions" no-sub-count>
-        <template v-if="$store.state.userdata.user && $store.state.userdata.user.role !== 'user'">
+        <div v-if="$store.state.userdata.user && $store.state.userdata.user.role !== 'user'" class="pl-6">
           <code class="text-h6">{{ video.id }}</code>
           <v-dialog
+            v-model="showDeleteConfirm"
             max-width="290"
           >
             <template #activator="{ on, attrs }">
@@ -19,7 +20,6 @@
                 color="red"
                 class="ma-2"
                 v-bind="attrs"
-                @click="deletePlaceholder"
                 v-on="on"
               >
                 Delete
@@ -39,7 +39,7 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-        </template>
+        </div>
         <v-sheet style="height:12px;" />
         <template slot="rightTitleAction">
           <v-btn
@@ -128,6 +128,7 @@ export default {
         return {
             discordCredits: {},
             mentions: [],
+            showDeleteConfirm: false,
         };
     },
     computed: {
@@ -145,13 +146,16 @@ export default {
     methods: {
         async deletePlaceholder() {
             try {
-                await backendApi.deletePlaceholder(this.video.id, this.$store.state.userdata.jwt);
+                await backendApi.deletePlaceholderStream(this.video.id, this.$store.state.userdata.jwt);
                 // eslint-disable-next-line no-alert
                 alert("Successfully deleted, probably.");
             } catch (e) {
+                console.log(e);
                 // eslint-disable-next-line no-alert
                 alert("Failed to delete");
             }
+
+            this.showDeleteConfirm = false;
         },
         enc(url) {
             const enc = btoa(url);
@@ -178,5 +182,11 @@ export default {
     right: 20px;
     margin-top: 15px;
     z-index: 30;
+}
+.placeholder-img {
+  object-fit: contain;
+  width: 100%;height: 500px;
+  background: black;
+  max-height: 50vh;
 }
 </style>
