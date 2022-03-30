@@ -123,6 +123,9 @@ export const asyncLang = {
     },
 };
 
+const PEKO_EN = " peko";
+const PEKO_JP = "ぺこ";
+
 export const i18n = new VueI18n({
     locale: "en", // Set locale
     fallbackLocale: "en",
@@ -159,6 +162,13 @@ export const i18n = new VueI18n({
 
             return choicesLength < 4 ? 2 : 3;
         },
+    },
+    postTranslation(str) {
+        let peko = PEKO_EN;
+        if (this.locale === "ja" || this.locale === "zh" || this.locale === "ko") {
+            peko = PEKO_JP;
+        }
+        return Math.random() > 0.9 ? str + peko : str;
     },
 });
 
