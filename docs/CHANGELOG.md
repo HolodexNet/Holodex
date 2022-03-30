@@ -3,6 +3,24 @@
 #### Unreleased
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
 
+### 2.27 Holodex & Musicdex [*March 30th, 2022*]
+
+It's been a whole month since our last update! There's a ton of changes, a ton of new vtubers, and we're so excited to finally release this update.
+
+#### New Features
+- **Musicdex is released**! Please [check it out](https://music.holodex.net/). We'd like to thank the main designers **Madekuji-san** & **Uetchy** for the wonderful UX design direction.
+  - Localization Credits:
+    - JP: Saginomiya & ぴーまん
+    - Indonesian: alcyneous
+    - Hungarian: kuroihikikomori
+    - Chinese: あんきゅう/angel84326 & Shiaupiau
+    - Korean: AlexKoala
+    - German: Doubleturtle
+
+- TLdex Crawler has been massively upgraded, there should be fewer dropped TLs. As Holodex grew to encompass over a thousand channels it became harder and harder to monitor all the Youtube chatter on the old architecture.
+
+- With new features surely there's a ton of new bugs, let us know how you feel on twitter and discord.
+
 ### 2.26 Holodex [*Feb 21, 2022*]
 💬:
 > Dev team's busy working on **Musicdex**, a site specifically designed for listening to music similar to our holodex.net/music feature. If you are experienced in *React* (Hooks and Functional Components), and don't need micromanaging, we want your help! We are preparing for beta test. Stay tuned
