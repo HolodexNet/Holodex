@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -253,6 +255,7 @@ views:
       - Smaww
     hideCollabStreamsLabel: Hide cowwab stweams
     hideCollabStreamsMsg: Hide cowwab stweams fwom youw favowites feed
+    hidePlaceholderStreams: Hide pwacehowdew stweams
     ignoredTopicsLabel: Ignowed topics
     ignoredTopicsMsg: Hide bideos with these topics fwom da home and favowites pages
     theme: Theme
