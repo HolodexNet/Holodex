@@ -127,7 +127,6 @@ export default {
         const params = new URL(window.location.href).searchParams;
         const service = params.get("service");
         const jwt = params.get("jwt");
-        console.log(service, jwt);
         if (service === "twitter" && jwt) {
             const twitterTempJWT = jwt;
             const resp = await api.login(this.$store.state.userdata.jwt, twitterTempJWT, "twitter");
