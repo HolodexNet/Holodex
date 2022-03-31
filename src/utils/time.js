@@ -17,7 +17,7 @@ const thresholds = [
     { l: "m", r: 1 },
     { l: "mm", r: 59, d: "minute" },
     { l: "h", r: 1 },
-    { l: "hh", r: 23, d: "hour" },
+    { l: "hh", r: 24, d: "hour" },
     { l: "d", r: 1 },
     { l: "dd", r: 29, d: "day" },
     { l: "M", r: 1 },
@@ -60,7 +60,7 @@ export function formatDistance(time, lang, $t, allowNegative = true, now = dayjs
     const minutesdiff = now.diff(time, "minutes");
     if (Math.abs(minutesdiff) < 1) return $t("time.soon");
     if (!allowNegative && minutesdiff > 0) return $t("time.soon");
-    if (Math.abs(now.diff(time, "days")) > 60) return localizedDayjs(time, lang).format("ll");
+    // if (Math.abs(now.diff(time, "days")) > 60) return localizedDayjs(time, lang).format("ll");
     if (Math.abs(now.diff(time, "hour")) > 23) {
         return `${localizedDayjs(time, lang).format("l")} (${localizedDayjs(time, lang).format("LT")})`;
     }

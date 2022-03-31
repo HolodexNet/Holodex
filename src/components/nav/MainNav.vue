@@ -52,14 +52,6 @@
 
         <!--================= Account [👤] Button (Desktop Only) ================-->
 
-        <v-btn
-          v-if="!isMobile"
-          icon
-          class="music-bar-open-btn"
-          @click="() => {}"
-        >
-          <v-icon>{{ icons.mdiMusic }}</v-icon>
-        </v-btn>
         <ResponsiveMenu
           :close-on-content-click="false"
           offset-y

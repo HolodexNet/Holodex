@@ -99,7 +99,7 @@
     </v-row>
   </v-card>
   <!-- Horizontal view for tool bar -->
-  <div v-else class="d-flex flex-row align-center">
+  <div v-else class="d-flex flex-row align-center" style="overflow-x:hidden">
     <!-- Drop down -->
     <org-panel-picker horizontal @changed="handlePicker" />
     <v-icon
@@ -129,45 +129,52 @@
     </template>
     <!-- Channel icons -->
     <template v-else>
-      <v-tooltip
-        v-for="video in topFilteredLive"
-        :key="video.id"
-        transition="v-fade-transition"
-        bottom
+      <div
+        ref="videosBar"
+        style="overflow-x:scroll;overflow-y:hidden;"
+        class="flex d-flex flex-shrink-1"
+        @wheel="scrollHandler"
       >
-        <template #activator="{ on, attrs }">
-          <div
-            v-bind="attrs"
-            style="position: relative; margin-right: 3px; cursor: pointer"
-            draggable="true"
-            v-on="on"
-            @dragstart="(ev) => dragVideo(ev, video)"
-          >
+        <v-tooltip
+          v-for="video in topFilteredLive"
+          :key="video.id"
+          transition="v-fade-transition"
+          bottom
+        >
+          <template #activator="{ on, attrs }">
             <div
-              v-if="video && video.link"
-              class="live-badge purple"
-              style="left: 0; width: 20px"
+              v-bind="attrs"
+              style="position: relative; margin-right: 3px; cursor: pointer"
+              draggable="true"
+              v-on="on"
+              @dragstart="(ev) => dragVideo(ev, video)"
             >
-              <v-icon small>
-                {{ mdiTwitch }}
-              </v-icon>
-            </div>
+              <div
+                v-if="video && video.link"
+                class="live-badge purple"
+                style="left: 0; width: 20px"
+              >
+                <v-icon small>
+                  {{ mdiTwitch }}
+                </v-icon>
+              </div>
 
-            <div :key="'lvbg' + tick" class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
-              {{ formatDurationLive(video) }}
+              <div :key="'lvbg' + tick" class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
+                {{ formatDurationLive(video) }}
+              </div>
+              <v-avatar size="50" @click="handleVideoClick(video)">
+                <ChannelImg :channel="video.channel" :size="50" no-link />
+              </v-avatar>
             </div>
-            <v-avatar size="50" @click="handleVideoClick(video)">
-              <ChannelImg :channel="video.channel" :size="50" no-link />
-            </v-avatar>
-          </div>
-        </template>
-        <VideoCard
-          :video="video"
-          disable-default-click
-          include-channel
-          style="width: 250px"
-        />
-      </v-tooltip>
+          </template>
+          <VideoCard
+            :video="video"
+            disable-default-click
+            include-channel
+            style="width: 250px"
+          />
+        </v-tooltip>
+      </div>
     </template>
   </div>
 </template>
@@ -309,6 +316,9 @@ export default {
         }
     },
     methods: {
+        scrollHandler(e) {
+            this.$refs.videosBar.scrollLeft += Math.max(-53, Math.min(53, e.deltaY));
+        },
         setAutoRefresh() {
             if (this.refreshTimer) clearInterval(this.refreshTimer);
             this.refreshTimer = setInterval(() => {
