@@ -307,7 +307,7 @@
               class="text-left mt-4 white--text grey"
               href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://staging.holodex.net/watch/'+v)})()"
             >
-              Open in Holodex Beta
+              Open in Holodex Staging
             </v-btn>
           </v-card-text>
         </v-card>
