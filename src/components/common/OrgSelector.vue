@@ -32,7 +32,7 @@
                 ref="dexBtn"
                 class="primary--text"
                 :class="{ 'text--lighten-2': darkMode, 'text--darken-4': !darkMode }"
-              >dex</span>
+              >peko</span>
               <v-icon
                 size="30"
                 class="change-org-icon"
