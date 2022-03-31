@@ -10,6 +10,7 @@ component:
     totalViews: Saisei count
   channelSocials:
     addToFavorites: Feibaritto
+    removeFromFavorites: No Feibaritto
     unblock: No block this
   mainNav:
     home: Ho-mu
@@ -37,6 +38,7 @@ component:
   description:
     showMore: MOTTO
   watch:
+    streamingFor: Raibu for {0}
     nextUpInMugen: NEXT!!
     Comments:
       title: komments
@@ -61,6 +63,7 @@ component:
     clearPlaylist: cliar
     trendingForOrg: Torendingu fowa {0}
   channelMusic:
+    recentSongsHeader: New Songu
     trending: Torendingu
   songList:
     songTitle: Taitoru
@@ -94,6 +97,7 @@ component:
       rename-playlist: name change
       reset-unsaved: risett this
       delete-playlist: pleylisto sakuzyo
+      clear-playlist: Pleylisto clear
   placeholderVideo:
     streamPageBtn: Stream Pej
 views:
@@ -115,6 +119,7 @@ views:
       Favorites: feibarittu
       Blocked: brokku ok
     favoritesAreEmpty: NO FEIBARITTU!
+    blockedAreEmpty: No brokku.
   home:
     liveOrUpcomingHeading: Live / Future
     recentVideosHeading: saikin no video
@@ -140,6 +145,9 @@ views:
     type:
       official: Oficial
   settings:
+    title: Settei
+    darkModeLabel: Yami modo
+    darkModeMsg: Raito mode or Yami modo
     useEnglishNameLabel: Engish nemu use
     useEnglishNameMsg: VTuber chaneru use Engish nemu
     hideVideoThumbnailsLabel: Samune no show
