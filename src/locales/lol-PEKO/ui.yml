@@ -160,6 +160,7 @@ views:
       - Not big, not small
       - Small
     hideCollabStreamsLabel: Corabo stream no show
+    ignoredTopicsLabel: No see
     theme: Tema
   app:
     update_available: UPDATE OK
@@ -190,6 +191,7 @@ views:
   editor:
     changeTopic:
       title: topikku change
+      button: Se-bu (5-bun matte)
     channelMentions:
       title: channel mension
   login:
@@ -205,6 +207,8 @@ views:
     permalink: paamarink
     presets: purisettz
     addframe: waku add
+    muteAll: Urusai ne
+    unmuteAll: No Urusai
     preset:
       custom: my laiauto
       remove: Deret
@@ -213,7 +217,9 @@ views:
       autoLayout: AutoLeiauto
     presetEditor:
       title: Leiauto hozon
-      name: Name
+      name: Nemu
+    video:
+      selectLive: See raibu
     editAutoLayout: Oto reiouto ejito
     changeLayout: Reiouto change
     done: Ogey
@@ -222,6 +228,8 @@ views:
     mediaControlsHint2: ) peko
   playlist:
     playlist-is-modified: NO SAVE
+    new-playlist-btn-label: Motto new pleylisto
+    page-heading: 'Omae no pleylisto:'
   extension:
     title: Holodeksu Purasu Eksutenshon
     features: Ficha
