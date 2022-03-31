@@ -129,7 +129,12 @@
     </template>
     <!-- Channel icons -->
     <template v-else>
-      <div style="overflow-x:scroll;overflow-y:hidden;" class="flex d-flex flex-shrink-1">
+      <div
+        ref="videosBar"
+        style="overflow-x:scroll;overflow-y:hidden;"
+        class="flex d-flex flex-shrink-1"
+        @wheel="scrollHandler"
+      >
         <v-tooltip
           v-for="video in topFilteredLive"
           :key="video.id"
@@ -311,6 +316,9 @@ export default {
         }
     },
     methods: {
+        scrollHandler(e) {
+            this.$refs.videosBar.scrollLeft += Math.max(-53, Math.min(53, e.deltaY));
+        },
         setAutoRefresh() {
             if (this.refreshTimer) clearInterval(this.refreshTimer);
             this.refreshTimer = setInterval(() => {
