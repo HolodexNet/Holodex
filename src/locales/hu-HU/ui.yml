@@ -117,7 +117,7 @@ component:
   reportDialog:
     title: Bejelentés
     collabing: >-
-      Ez a csatorna kollaborálhat egy {org} taggal vagy a kedvenceiddel. Kikapcsolhatod ezt a funkciót a beállításokban
+      Ez a csatorna vendégszereplehet egy {org} tagnál vagy a kedvenceiddel. Kikapcsolhatod ezt a funkciót a beállításokban
     comments: Mit kéne a Holodexnek tennie?
     success: Visszajelzés elküldve. Köszönjük!
     reasons:
@@ -155,7 +155,7 @@ views:
     video: Videók
     clips: Klipek
     music: Zene
-    collabs: Collabok
+    collabs: Vendégként
     about: Leírás
   channels:
     sortOptions:
@@ -253,8 +253,8 @@ views:
       - Nagy
       - Közepes
       - Kicsi
-    hideCollabStreamsLabel: Collab streamek elrejtése
-    hideCollabStreamsMsg: Collab streamek elrejtése a kedvencek közül
+    hideCollabStreamsLabel: Vendégkénti streamek elrejtése
+    hideCollabStreamsMsg: Vendégkénti streamek elrejtése a kedvencek közül
     hidePlaceholderStreams: Tervezett streamek elrejtése
     ignoredTopicsLabel: Figyelmen kívül hagyott témák
     ignoredTopicsMsg: Elrejti a Kezdőlapból és a Kedvencekből a videókat ebben a témában
@@ -379,7 +379,7 @@ views:
     reorderLayoutDetail: Húzz ikonokat a kívánt pozícióba
     sync:
       nothingToSync: >-
-        Nincs mit szinkronba tenni, nyiss meg legalább 2 streamet (pl. collab streameket)
+        Nincs mit szinkronba tenni, nyiss meg legalább 2 streamet (pl. vendég streameket)
       syncSettings: Szinkronizálási beállítások
       syncSettingsDetail: >-
         A videók a stream indulása ideje szerint vannak szinkronizálva, viszont a közbeni technikai gondok és/vagy törölt részletek miatt elcsúszhatnak. Használj offset-eket, hogy manuálisan állítsd a videókat
