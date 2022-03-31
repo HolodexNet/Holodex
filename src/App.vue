@@ -6,6 +6,12 @@
 
     <v-main style="transition: none">
       <PullToRefresh />
+      <div id="bglogo">
+        <Logo />
+      </div>
+      <div id="bglogo2">
+        <Logo />
+      </div>
       <keep-alive
         max="4"
         exclude="Watch,MugenClips,EditVideo,MultiView,Channel,Playlists,About"
@@ -24,6 +30,7 @@ import MainNav from "@/components/nav/MainNav.vue";
 import ReportDialog from "@/components/common/ReportDialog.vue";
 import PullToRefresh from "@/components/common/PullToRefresh.vue";
 import PWAUpdate from "@/components/common/PWAUpdate.vue";
+import Logo from "@/components/common/Logo.vue";
 import InstallPrompt from "@/components/common/InstallPrompt.vue";
 import { loadLanguageAsync } from "./plugins/vuetify";
 import { axiosInstance } from "./utils/backend-api";
@@ -35,6 +42,7 @@ export default {
         title: "Holodex",
     },
     components: {
+        Logo,
         MainNav,
         ReportDialog,
         PullToRefresh,
@@ -198,5 +206,25 @@ body {
 }
 div.row {
   margin: 0px -12px;
+}
+
+#bglogo, #bglogo2 {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    width: min(400px,35vmin);
+    height: min(400px,35vmin);
+    opacity: 0.3;
+    filter: saturate(40%);
+}
+
+#bglogo2 {
+    left: 140px;
+    top:120px;
+    transform:scaleX(-100%) scale(130%);
+}
+#bglogo svg, #bglogo2 svg {
+    width: 100%;
+    height: 100%;
 }
 </style>
