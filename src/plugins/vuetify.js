@@ -168,7 +168,7 @@ export const i18n = new VueI18n({
         if (this.locale === "ja" || this.locale === "zh" || this.locale === "ko") {
             peko = PEKO_JP;
         }
-        return Math.random() > 0.9 ? str + peko : str;
+        return Math.random() > 0.83 ? str + peko : str;
     },
 });
 
