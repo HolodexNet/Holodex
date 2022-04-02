@@ -99,12 +99,15 @@
     </v-row>
   </v-card>
   <!-- Horizontal view for tool bar -->
-  <div v-else class="d-flex flex-row align-center" style="overflow-x:hidden">
+  <div
+    v-else
+    class="d-flex align-center overflow-hidden"
+  >
     <!-- Drop down -->
-    <org-panel-picker horizontal @changed="handlePicker" />
+    <org-panel-picker horizontal class="d-flex" @changed="handlePicker" />
     <v-icon
       v-if="!isUrl"
-      class="mr-2 ml-1"
+      class="d-flex mr-2 ml-1"
       :class="{ 'refresh-spin': isLoading }"
       @click="loadSelection(true)"
     >
@@ -120,7 +123,7 @@
     </template>
     <!-- Login prompt for favorites -->
     <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
-      <div class="flex d-flex flex-row align-center">
+      <div class="d-flex align-center">
         <span class="" v-html="$t('views.app.loginCallToAction')" />
         <v-btn text :to="isLoggedIn ? '/channel' : '/login'">
           {{ $t("component.mainNav.login") }}
@@ -129,12 +132,7 @@
     </template>
     <!-- Channel icons -->
     <template v-else>
-      <div
-        ref="videosBar"
-        style="overflow-x:scroll;overflow-y:hidden;"
-        class="flex d-flex flex-shrink-1"
-        @wheel="scrollHandler"
-      >
+      <div ref="videosBar" class="d-flex flex-shrink-1 overflow-x-auto" @wheel="scrollHandler">
         <v-tooltip
           v-for="video in topFilteredLive"
           :key="video.id"

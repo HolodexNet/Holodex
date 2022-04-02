@@ -9,7 +9,12 @@
       <template #left>
         <VideoSelector v-if="!$vuetify.breakpoint.xs" horizontal @videoClicked="handleToolbarClick" />
         <!-- Single Button video selector for xs displays -->
-        <v-btn icon large @click="handleToolbarShowSelector">
+        <v-btn
+          icon
+          large
+          class="d-flex"
+          @click="handleToolbarShowSelector"
+        >
           <v-icon style="border-radius: 0 position: relative; margin-right: 3px; cursor: pointer" large>
             {{ mdiCardPlus }}
           </v-icon>
