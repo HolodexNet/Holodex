@@ -1,1 +1,17 @@
 ---
+hello: thế giới
+music:
+  title: 'Các bài hát nguyên tác và cover của {{english_name}} - Holodex'
+  description: >-
+    Nghe những bài hát chính thức và karaoke stream được gắn thẻ bởi được cộng đồng của chúng tôi thông qua trình phát nhạc Holodex.
+channel:
+  normal:
+    title: '{{english_name}} Clips, Streams, Nhạc và Collabs - Holodex'
+    description: >-
+      Tìm kiếm hơn {{clip_count}} clip, {{video_count}} stream bởi {{english_name}}. Biết được khi nào họ bắt đầu trực tiếp bằng cách thêm họ vào mục Yêu thích của bạn trên Holodex.
+    descriptionWithTopic: >-
+      Tìm các stream về {{ topics }} của {{english_name}}. Cập nhật {{clip_count}} clip, {{video_count}} stream và hơn thế nữa tại Holodex.
+  clip:
+    title: 'Tổng quát về {{english_name}} - Holodex'
+    description: >-
+      Tìm hơn {{video_count}} clip của Vtuber bạn yêu thích bởi {{english_name}}.
