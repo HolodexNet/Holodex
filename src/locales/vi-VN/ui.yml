@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Sự kiện đã lên lịch
   videoDescription:
     description: Mô tả
+  video:
+    comment: { }
   description:
     showLess: Thu gọn
     showMore: Xem thêm
@@ -277,6 +279,7 @@ views:
       TLSettingsTitle: Cài đặt dịch trực tiếp
       showSubtitle: Hiển thị phụ đề
       expandTL: Mở rộng TLdex
+      tlStart: Khởi đầu tin nhắn
       StickBottomSettingLabel: Di chuyển xuống dưới
       StickBottomSettingsDesc: Đặt hộp thoại dịch trực tiếp bên dưới Youtube Chat
       showVerifiedMessages: Hiển thị tin nhắn từ các kênh Verified
