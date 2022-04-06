@@ -42,7 +42,7 @@
                 :rules="[channelURLRule]"
               />
               <v-text-field
-                v-if="type !== DELETE"
+                v-if="type !== DELETE && type !== ADD_CLIPPER"
                 v-model="english_name"
                 :label="$t('channelRequest.EnglishNameLabel')"
                 :hint="$t('channelRequest.EnglishNameHint')"
@@ -238,7 +238,7 @@ export default {
                     && !cid[0].includes("/c/")
                     && cid[1].length > 12
                     && cid[0].startsWith("ht"))
-                || "Must be https://www.youtube.com/channel/UC_____"
+                || this.$t("channelRequest.ChannelURLErrorFeedback")
             );
         },
         alertText(type) {
