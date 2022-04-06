@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 予定されたイベント
   videoDescription:
     description: 概要
+  video:
+    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -527,14 +529,23 @@ channelRequest:
     AddClipper: 切り抜き/翻訳チャンネルをHolodexに追加したい
     ModifyExistingInfo: 既存のチャンネル情報を修正したい
     DeleteChannel: 自分のチャンネルを削除したい
+  DirectContactDisclaimer: >-
+    フィードバックが必要な場合、Discord ID、メールアドレス、Twitterアカウントをご自由にご記入ください (この情報は非公開です)、ご連絡させていただきます。この情報は、Holodexの管理者のみ閲覧可能となります。
+  DirectContactLabel: 連絡方法 (任意入力)
+  TwitterHandle: チャンネルのTwitterアカウント (任意入力)
   VtuberGroupLabel: VTuberグループ (任意)
   VtuberGroupHint: このvtuberはどの組織/グループに所属していますか?
   ChannelLanguageLabel: チャンネルのメイン言語
+  EnglishNameHint: >-
+    チャンネル名が英語でない場合は英語名を入力してください。 VTuberの利用言語での名前順 (例: Natsuiro Matsuri)、または、推奨される英語名 (例; Elu the Elf, Emma★August) に従ってください。
   EnglishNameLabel: 英語でのチャンネル名
   Comments: コメント
   CommentsHint: 私たちにお伝えしたいその他のコメント。
   VtuberRequirementText: >-
     個人勢は2万人以上のチャンネル登録者が必要です。既存の組織の一員であるvtuberは受け付けます。<br /><br />新しい組織は平均登録者数次第で作成されます。
+  ClipperRequirementText: >-
+    切り抜きチャンネルの場合、少なくとも開設から2ヶ月以上経過していて定期的に投稿している、または1ヶ月に20以上の切り抜き動画を投稿している必要があります。短い切り抜きを毎日スパムのように投稿する、1分未満の短い切り抜きしか投稿しない、悪印象なサムネイルの使用などは、すべてチャンネルにとって不利になります。コンテンツの質も審査対象となる場合があります。<br /><br />切り抜きチャンネルについては、切り抜き元のソースについてチャンネルURLや@形式のチャンネルリンクを掲載することを推奨します。過剰なリンクの掲示 (例: にじさんじメンバーの全員にリンクする) はHolodexの編集者にとって負担となり、リンクが足りない場合には切り抜きが閲覧されづらくなります。<br /><br /> Holodexは過剰なリンクを検出し自動的に修正するアルゴリズムを備えていますが、常に正しく動作するとは限りません。こうした問題を防ぐため、過剰なリンクを行う切り抜き投稿者については登録を解消する場合があります。 
   DeletionRequirementText: >-
     削除は、あなたがチャンネルの所有者である場合にのみリクエストしてください。そのことを確認できるよう、連絡先をお知らせください。
   PageTitle: Holodexチャンネルリクエスト
+  ChannelURLErrorFeedback: https://www.youtube.com/channel/UC___ という形式である必要があります
