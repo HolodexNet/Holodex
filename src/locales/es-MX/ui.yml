@@ -278,6 +278,7 @@ views:
       showSubtitle: Mostrar subtítulo
       expandTL: Expandir TLdex
       tlStart: Inicio de Mensajes
+      StickBottomSettingLabel: Mantenerse en el fondo
       StickBottomSettingsDesc: TL box colocada debajo del chat de Youtube
       showVerifiedMessages: Mostrar mensajes verificados
       showModeratorMessages: Mostrar mensajes de moderador
@@ -518,3 +519,24 @@ about:
     title: Marcadores
     description: >-
       Arrastra estos marcadores a tu barra de marcadores para abrir la página de ver de YouTube en Holodex fácilmente:
+channelRequest:
+  RequestType: 'Tipo de petición:'
+  Types:
+    AddVtuber: Añade a una Vtuber ▶️ para que Holodex rastree el canal y clips.
+    AddClipper: Añadir un canal de clipping/subbing a Holodex
+    ModifyExistingInfo: Modificar la información existente del canal
+    DeleteChannel: Borrar mi canal
+  DirectContactDisclaimer: >-
+    Siéntete libre de dejar tu id de discord, email o twitter. En caso de que necesites ser contactado (esta información se mantendrá privada) para que podamos proveer retroalimentación. Solo los administradores de Holodex verán esta información.
+  DirectContactLabel: Método de contacto (opcional)
+  TwitterHandle: Manejo de Twitter de este canal (opcional)
+  VtuberGroupLabel: Grupo VTuber (opcional)
+  VtuberGroupHint: A qué organización / grupo pertenece esta vtuber?
+  ChannelLanguageLabel: Idioma principal del canal
+  EnglishNameHint: >-
+    Provee un nombre en Inglés si el nombre del canal no está en inglés. Sigue las convenciones del orden del nombre de la localidad nativa de esta vtuber (Natsuiro Matsuri), o un nombre de marca preferiblemente en Inglés (Elu the Elf, Emma★August).
+  EnglishNameLabel: Nombre del canal en Inglés
+  Comments: Comentarios
+  CommentsHint: Otros comentarios que te gustaría decirnos.
+  VtuberRequirementText: >-
+    Se requiere un mínimo de 20K de suscriptores para independientes. Vtubers que son parte de organizaciones existentes serán aceptadas. <br /><br />Organizaciones nuevas serán creadas dependiendo de el conteo promedio de suscriptores.
