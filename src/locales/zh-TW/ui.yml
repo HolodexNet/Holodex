@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
-  video:
-    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
