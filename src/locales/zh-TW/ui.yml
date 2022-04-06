@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 已排定活動
   videoDescription:
     description: 影片資訊
+  video:
+    comment: { }
   description:
     showLess: 顯示更少
     showMore: 顯示更多
@@ -541,7 +543,9 @@ channelRequest:
   Comments: 備註（選填）
   CommentsHint: 有什麼想要補充的嗎？
   VtuberRequirementText: >-
-    個人勢 Vtuber 的審核標準為至少要有２萬名訂閱者，若該 Vtuber 為團體成員之一將擁有較寬鬆之通過標準<br /><br />Holodex 內是否新增團體取決於該團體的平均訂閱數多寡。
+    個人勢 Vtuber 的審核標準為至少要有２萬名訂閱者，若該 Vtuber 為VT團體成員之一，其通過標準將較為寬鬆<br /><br />Holodex 內是否新增團體取決於該團體的平均訂閱數多寡。
+  ClipperRequirementText: >-
+    翻譯剪輯頻道的審核標準如下：該頻道至少需要有兩個月的影片上傳歷史並且定時更新頻道內容。此外管理員也會依照該頻道內容的品質來決定是否通過審核— Holodex 不接受每天洗版式的大量更新短影片，或是上傳的翻譯剪輯內容幾乎全數都低於一分鐘的頻道，使用釣魚/誤導式縮圖的翻譯剪輯片段也包含在不通過的標準之內。<br /><br />另外一點要注意的是，剪輯者應於影片描述欄位填寫「實況/影片出處」、「@YouTube頻道」或是「Vtuber頻道連結」來註明影片來源，過度標註（像是在描述欄位填寫一堆彩虹社成員連結）會增加 Holodex 編輯者群們的負擔，而沒有標註（未標明來源）將會導致 Holodex 後台無法判定其內容使否為精華剪輯，進而導致該影片不會出現於 Holodex 頁面上。<br /><br />Holodex 資料庫雖然有標註的自動錯誤修正機制，但此機制運作並不穩定，過度標註可能會導致管理員們被迫於 Holodex 上移除其頻道內容以避免相關問題重複出現。
   DeletionRequirementText: >-
     刪除頻道的申請僅限頻道擁有者提出，請您提供聯絡資料以供我們與您聯絡。
   PageTitle: Holodex 頻道追蹤申請表
