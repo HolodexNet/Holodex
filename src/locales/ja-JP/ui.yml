@@ -537,7 +537,7 @@ channelRequest:
   VtuberGroupHint: このvtuberはどの組織/グループに所属していますか?
   ChannelLanguageLabel: チャンネルのメイン言語
   EnglishNameHint: >-
-    チャンネル名が英語でない場合は英語名を入力してください。 VTuberの利用言語での名前順 (例: Natsuiro Matsuri)、または、推奨される英語名 (例; Elu the Elf, Emma★August) に従ってください。
+    チャンネル名が英語でない場合は英語名を入力してください。 Vtuberの利用言語における名前の順序 (例: Natsuiro Matsuri)、または、推奨される英語名 (例; Elu the Elf, Emma★August) に従ってください。
   EnglishNameLabel: 英語でのチャンネル名
   Comments: コメント
   CommentsHint: 私たちにお伝えしたいその他のコメント。
@@ -548,4 +548,4 @@ channelRequest:
   DeletionRequirementText: >-
     削除は、あなたがチャンネルの所有者である場合にのみリクエストしてください。そのことを確認できるよう、連絡先をお知らせください。
   PageTitle: Holodexチャンネルリクエスト
-  ChannelURLErrorFeedback: https://www.youtube.com/channel/UC___ という形式である必要があります
+  ChannelURLErrorFeedback: https://www.youtube.com/channel/UC___ という形式にしてください
