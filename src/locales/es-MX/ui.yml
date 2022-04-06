@@ -540,3 +540,9 @@ channelRequest:
   CommentsHint: Otros comentarios que te gustaría decirnos.
   VtuberRequirementText: >-
     Se requiere un mínimo de 20K de suscriptores para independientes. Vtubers que son parte de organizaciones existentes serán aceptadas. <br /><br />Organizaciones nuevas serán creadas dependiendo de el conteo promedio de suscriptores.
+  ClipperRequirementText: >-
+    Para los clippers, debe ser de al menos 2 meses de antigüedad y publicar regularmente, o publicar más de 20 clips en un mes. El spam de clips cortos diariamente, publicar solamente clips cortos de &lt;1min, o usar miniaturas poco favorecedoras contarán contra el canal. La calidad del contenido podría ser juzgada también. <br /><br />Es importante saber que los clippers deberían citar las fuentes vía enlaces de youtube, menciones de canales de @Youtube, y enlaces de videos. Citar de más (por ejemplo enlazar a todos en Nijisanji) crea trabajo para los editores de Holodex, y citar menos (sin enlaces) hará los clips ocultos. <br /><br /> Holodex contiene algoritmos para detectar las citas de más y corregirlas automáticamente, pero puede no funcionar perfectamente. Los clippers que citen podrían ser removidos de la plataforma para reducir el ruido.
+  DeletionRequirementText: >-
+    La eliminación solo debería ser solicitada si eres el dueño(s) del canal, por favor provee información de contacto para que podamos verificar esto.
+  PageTitle: Petición de canal de Holodex
+  ChannelURLErrorFeedback: "Debe ser\nhttps://www.youtube.com/channel/UC_____"
