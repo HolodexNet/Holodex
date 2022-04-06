@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Sự kiện đã lên lịch
   videoDescription:
     description: Mô tả
-  video:
-    comment: { }
   description:
     showLess: Thu gọn
     showMore: Xem thêm
