@@ -522,3 +522,30 @@ about:
     title: Bookmarklet
     description: >-
       Seret bookmarklet ini ke bilah penanda pada browser kamu untuk dapat menonton YouTube di Holodex secara mudah:
+channelRequest:
+  RequestType: 'Jenis Ajuan:'
+  Types:
+    AddVtuber: Tambah Vtuber ▶️ ke Holodex untuk memantau channel dan klip.
+    AddClipper: Tambah channel clipping/subbing ke Holodex
+    ModifyExistingInfo: Ubah informasi channel yang sudah ada
+    DeleteChannel: Hapus channel saya
+  DirectContactDisclaimer: >-
+    Silahkan isi id discord, email atau twitter kamu. Jika kamu perlu dihubungi (info ini akan tetap terjaga kerahasiaannya) agar kami dapat memberikan masukan. Hanya admin holodex yang dapat melihat informasi ini.
+  DirectContactLabel: Metode Kontak (opsional)
+  TwitterHandle: Nama Pengguna Twitter Channel Ini (opsional)
+  VtuberGroupLabel: Agensi / Grup Vtuber (opsional)
+  VtuberGroupHint: Agensi / Grup mana vtuber ini berasal?
+  ChannelLanguageLabel: Bahasa utama channel
+  EnglishNameHint: >-
+    Berikan nama dalam b.inggris jika nama saluran dalam bahasa lain. Gunakan konvensi nama Vtuber dari bahasa aslinya (cth. 夏色まつり = Natsuiro Matsuri), atau nama EN pilihan mereka (cth. Elu the Elf, Emma★August).
+  EnglishNameLabel: Nama Channel dalam B.Inggris
+  Comments: Komentar
+  CommentsHint: Komentar lain yang ingin kamu sampaikan pada kami.
+  VtuberRequirementText: >-
+    Diperlukan minimal 20 ribu subscriber untuk independen. Vtuber sebagai bagian dari agensi yang sudah ada akan diterima. <br /><br />Agensi baru akan dibuat tergantung dari jumlah rata-rata subscriber.
+  ClipperRequirementText: >-
+    Untuk clipper, usia channel minimal 2 bulan dan mengunggah secara konsisten, atau mengunggah lebih dari 20 klip dalam satu bulan. Spam klip pendek setiap hari, hanya mengunggah klip pendek &lt;1 menit, atau menggunakan thumbnail yang tidak menarik semuanya akan diperhitungkan. Kualitas konten mungkin juga akan dinilai. <br /><br />Penting untuk diperhatikan bahwa clipper harus mengutip sumbernya dalam deskripsi video dengan tautan channel, mention channel @Youtube, dan tautan video. overciting (cth. Menautkan semua orang di Nijisanji) membuat pekerjaan lebih untuk editor Holodex, dan underciting (tidak ada tautan / tidak mengutip sama sekali) akan membuat klip disembunyikan. <br /><br /> Holodex berisi algoritme untuk mendeteksi overciting dan mengoreksinya secara otomatis, tetapi mungkin tidak selalu bekerja dengan sempurna. Clipper yang sering overcite akan dihapus dari platform untuk mengurangi noise.
+  DeletionRequirementText: >-
+    Penghapusan channel hanya dapat diajukan jika kamu adalah (salah satu) pemilik channel tersebut, mohon isi informasi kontak sehingga kami dapat memverifikasi ini.
+  PageTitle: Holodex Pengajuan Channel
+  ChannelURLErrorFeedback: Harus format https://www.youtube.com/channel/UC_____
