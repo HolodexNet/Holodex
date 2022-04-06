@@ -532,13 +532,13 @@ channelRequest:
     DeleteChannel: 移除我的頻道
   DirectContactDisclaimer: >-
     請依您的方便留下Discord ID, 電子郵件地址或是Twitter帳號，以利在需要的時候我們能夠為您的問題提供協助與建議（本資料僅有 Holodex 管理員可供觀看, 不會公開）
-  DirectContactLabel: 聯絡方式（選填）
+  DirectContactLabel: 您的聯絡方式（選填）
   TwitterHandle: 本頻道的 Twitter 使用者名稱（選填）
   VtuberGroupLabel: Vtuber 團體（選填）
   VtuberGroupHint: 此 Vtuber 隸屬於哪個公司/團體呢？
   ChannelLanguageLabel: 頻道主要使用語言
   EnglishNameHint: >-
-    如果頻道名稱並非英文，請使用官方的英文譯名（夏色まつり→夏色祭→Natsuiro Matsuri）抑或是團體譯名（えま★おうがすと→艾瑪★奧加斯特→Emma★August）
+    頻道名稱非英文時才需要填寫，請填寫官方翻譯（夏色まつり→ Natsuiro Matsuri）或是常用之英文譯名（えま☆おうがすと→ Emma★August）
   EnglishNameLabel: 頻道英文名稱（選填）
   Comments: 備註（選填）
   CommentsHint: 有什麼想要補充的嗎？
@@ -549,3 +549,4 @@ channelRequest:
   DeletionRequirementText: >-
     刪除頻道的申請僅限頻道擁有者提出，請您提供聯絡資料以供我們與您聯絡。
   PageTitle: Holodex 頻道追蹤申請表
+  ChannelURLErrorFeedback: 連結格式須為 https://www.youtube.com/channel/UC_____
