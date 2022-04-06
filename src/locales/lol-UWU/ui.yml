@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
-  video:
-    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
