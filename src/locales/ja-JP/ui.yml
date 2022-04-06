@@ -527,12 +527,9 @@ channelRequest:
     AddClipper: 切り抜き/翻訳チャンネルをHolodexに追加したい
     ModifyExistingInfo: 既存のチャンネル情報を修正したい
     DeleteChannel: 自分のチャンネルを削除したい
-  TwitterHandle: Twitterのハンドル (任意)
   VtuberGroupLabel: VTuberグループ (任意)
   VtuberGroupHint: このvtuberはどの組織/グループに所属していますか?
   ChannelLanguageLabel: チャンネルのメイン言語
-  EnglishNameHint: >-
-    チャンネル名が他の言語である場合。Vtuberの母語での名前順の規則 (Natsuiro Matsuri)、または本人が希望する英語での表記 (Elu the Elf, Emma★August) を使用してください。
   EnglishNameLabel: 英語でのチャンネル名
   Comments: コメント
   CommentsHint: 私たちにお伝えしたいその他のコメント。
