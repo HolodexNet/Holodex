@@ -253,6 +253,7 @@ views:
       - 小
     hideCollabStreamsLabel: コラボ配信を表示しない
     hideCollabStreamsMsg: お気に入りページでコラボ配信を非表示にします
+    hidePlaceholderStreams: プレースホルダーの配信を隠す
     ignoredTopicsLabel: 除外するトピック
     ignoredTopicsMsg: これらのトピックの動画はホームとお気に入りに表示されなくなります
     theme: テーマ
@@ -519,3 +520,20 @@ about:
     title: ブックマークレット
     description: >-
       これらのブックマークレットをブックマークバーにドラッグすると、YouTube ウォッチページを Holodex で簡単に開くことができます:
+channelRequest:
+  RequestType: 'リクエストの種類:'
+  Types:
+    AddVtuber: Vtuberを追加 ▶️ して、Holodexでチャンネルと切り抜きを追跡したい
+    AddClipper: 切り抜き/翻訳チャンネルをHolodexに追加したい
+    ModifyExistingInfo: 既存のチャンネル情報を修正したい
+    DeleteChannel: 自分のチャンネルを削除したい
+  TwitterHandle: Twitterのハンドル (任意)
+  VtuberGroupLabel: VTuberグループ (任意)
+  VtuberGroupHint: このvtuberはどの組織/グループに所属していますか?
+  ChannelLanguageLabel: チャンネルのメイン言語
+  EnglishNameHint: >-
+    チャンネル名が他の言語である場合。Vtuberの母語での名前順の規則 (Natsuiro Matsuri)、または本人が希望する英語での表記 (Elu the Elf, Emma★August) を使用してください。
+  EnglishNameLabel: 英語でのチャンネル名
+  VtuberRequirementText: >-
+    個人勢は2万人以上のチャンネル登録者が必要です。既存の組織の一員であるVtuberは受け付けます。<br /><br />新しい組織は平均登録者数次第で作成されます。
+  PageTitle: Holodex チャンネルリクエスト
