@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -531,13 +529,9 @@ channelRequest:
     DeleteChannel: Saját csatorna törlése
   DirectContactDisclaimer: >-
     Nyugodtan hagyj nekünk discord ID-t vagy e-mail címet vagy Twitter ID-t, amennyiben szükséged van visszajelzésre. Kizárólag Holodex adminisztrátorok fogják látni az elérhetőséged.
-  DirectContactLabel: Közvetlen elérhetőség (nem kötelező)
-  TwitterHandle: Twitter (nem kötelező)
   VtuberGroupLabel: VTuber csoport (nem kötelező)
   VtuberGroupHint: Melyik szervezethez vagy csoporthoz tartozik ez a vtuber?
   ChannelLanguageLabel: A csatorna fő nyelve
-  EnglishNameHint: >-
-    Ha a csatorna neve más nyelven van írva, használd az "angolos" átírást (pl. 夏色まつり = Natsuiro Matsuri), vagy ha van neki, az általa preferált angol elnevezését. (pl. Elu the Elf, Emma★August)
   EnglishNameLabel: Angol csatornanév
   Comments: Hozzászólások
   CommentsHint: Egyéb megjegyzések, melyeket szeretnél nekünk elmondani.
