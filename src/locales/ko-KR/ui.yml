@@ -520,3 +520,23 @@ about:
     title: 북마클릿
     description: >-
       이 북마클릿을 북마크바에 드래그해서 YouTube 동영상 페이지에서 쉽게 Holodex를 여세요:
+channelRequest:
+  RequestType: '요청 유형:'
+  Types:
+    AddVtuber: Holodex에서 채널과 키리누키를 추적하기 위해서 버튜버를 추가 ▶️ 해주세요.
+    AddClipper: Holodex에 키리누키/자막 채널을 추가해주세요
+    ModifyExistingInfo: 현재 있는 채널의 정보를 수정하고 싶어요
+    DeleteChannel: 내 채널 삭제
+  DirectContactDisclaimer: >-
+    Discord 아이디, 이메일, Twitter 아이디를 자유롭게 남겨주세요. 연락이 필요한 경우 (이 정보는 비공개로 유지됨) 피드백을 제공할 수 있습니다. Holodex 관리자들만 이 정보를 볼 수 있습니다.
+  DirectContactLabel: 연락 수단 (선택)
+  TwitterHandle: 이 채널의 트위터 아이디 (선택)
+  VtuberGroupLabel: 버튜버 소속 (선택)
+  VtuberGroupHint: 이 버튜버는 어떤 곳에 소속되어 있나요?
+  ChannelLanguageLabel: 채널의 언어
+  EnglishNameHint: >-
+    채널 이름이 영어가 아닌 경우 영어 이름을 제공해주세요. 해당 버튜버가 사용하는 언어의 성-이름 순서 규칙을 따른 영문 이름 (Natsuiro Matsuri) 또는 선호하는 EN 브랜드명 (Elu the Elf, Emma★August)을 알려주세요.
+  EnglishNameLabel: 영문 채널명
+  Comments: 설명
+  VtuberRequirementText: >-
+    소속이 없는 경우 최소 2만명의 구독자가 필요합니다. 이미 존재하는 소속의 버튜버는 수락됩니다. <br /><br />새 소속은 평균 구독자 수에 따라서 생성됩니다.
