@@ -521,3 +521,6 @@ about:
     title: 書籤跳轉功能
     description: >-
       將以下書籤腳本拖拉至您的瀏覽器書籤欄，能更輕鬆的從 YouTube 頁面快速跳轉至 Holodex 頁面
+channelRequest:
+  RequestType: '申請類型：'
+  PageTitle: Holodex 頻道追蹤申請表
