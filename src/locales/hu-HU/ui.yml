@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Beütemezett esemény
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -520,3 +522,29 @@ about:
     title: Könyvjelzők
     description: >-
       Húzd ezeket a könyvjelzőket a könyvjelző sávodba, hogy megnyiss egy YouTube oldalt Holodexen könnyedén:
+channelRequest:
+  RequestType: 'Kérvény típusa:'
+  Types:
+    AddVtuber: Vtubert hozzáadása ▶️ a Holodexhez, hogy kövesse a csatornáját és klipjeit.
+    AddClipper: Klip/felirat készítő csatorna hozzáadása Holodexhez
+    ModifyExistingInfo: Létező csatorna információ frissítése
+    DeleteChannel: Saját csatorna törlése
+  DirectContactDisclaimer: >-
+    Nyugodtan hagyj nekünk discord ID-t vagy e-mail címet vagy Twitter ID-t, amennyiben szükséged van visszajelzésre. Kizárólag Holodex adminisztrátorok fogják látni az elérhetőséged.
+  DirectContactLabel: Közvetlen elérhetőség (nem kötelező)
+  TwitterHandle: Twitter (nem kötelező)
+  VtuberGroupLabel: VTuber csoport (nem kötelező)
+  VtuberGroupHint: Melyik szervezethez vagy csoporthoz tartozik ez a vtuber?
+  ChannelLanguageLabel: A csatorna fő nyelve
+  EnglishNameHint: >-
+    Ha a csatorna neve más nyelven van írva, használd az "angolos" átírást (pl. 夏色まつり = Natsuiro Matsuri), vagy ha van neki, az általa preferált angol elnevezését. (pl. Elu the Elf, Emma★August)
+  EnglishNameLabel: Angol csatornanév
+  Comments: Hozzászólások
+  CommentsHint: Egyéb megjegyzések, melyeket szeretnél nekünk elmondani.
+  VtuberRequirementText: >-
+    Legalább 20k feliratkozó szükséges önállóként. Azok a Vtuberek, akik egy létező szervezethez tartoznak, ez alól felmentésben részesülnek. <br /><br />Új szervezetek az átlag feliratkozószám alapján kerülnek hozzáadásra.
+  ClipperRequirementText: >-
+    Klip készítőktől legalább egy két hónapja feltöltött vtuber klip és rendszeres feltöltést vagy 20 klip egy hónap alatt, amit igényelünk. Rövid klippek spammelése naponta, csupán rövid &lt;1 perces klippek vagy félrevezető indexképek (click-bait) használata a csatorna ellen szólnak. A tartalom minősége szintén bírálásra kerülhet. <br /><br />Fontos megjegyezni, hogy a klippereknek meg kell jelölniük az eredeti forrásuk linkekkel, @Youtube csatorna említésekkel és videó linkekkel. Túljelölgetés (pl. MINDENKIT megjelölni a Nijisanjiból) rengeteg munkát csinál a Holodex szerkesztőknek, a megjelölések kihagyása (nincsenek linkek) pedig láthatatlanná teszi a klippeket. <br /><br /> A Holodex alkalmaz olyan algoritmust, ami észleli a túljelölgetést és automatikusan kijavítja, viszont nem működhet mindig tökéletesen. Klipperek akik rendszeresen túl linkelik a klipjeiket, törlésre kerülhetnek a platformról zajcsökkentés végett.
+  DeletionRequirementText: >-
+    Csatorna törlést akkor kérhetsz ha te(vagy ti) vagy(tok) a csatorna tulajdonosa(i), kérlek készülj(etek) kilétet igazoló információkkal.
+  PageTitle: Holodex Csatorna Kérés
