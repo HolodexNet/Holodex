@@ -534,6 +534,10 @@ channelRequest:
   EnglishNameHint: >-
     チャンネル名が他の言語である場合。Vtuberの母語での名前順の規則 (Natsuiro Matsuri)、または本人が希望する英語での表記 (Elu the Elf, Emma★August) を使用してください。
   EnglishNameLabel: 英語でのチャンネル名
+  Comments: コメント
+  CommentsHint: 私たちにお伝えしたいその他のコメント。
   VtuberRequirementText: >-
-    個人勢は2万人以上のチャンネル登録者が必要です。既存の組織の一員であるVtuberは受け付けます。<br /><br />新しい組織は平均登録者数次第で作成されます。
-  PageTitle: Holodex チャンネルリクエスト
+    個人勢は2万人以上のチャンネル登録者が必要です。既存の組織の一員であるvtuberは受け付けます。<br /><br />新しい組織は平均登録者数次第で作成されます。
+  DeletionRequirementText: >-
+    削除は、あなたがチャンネルの所有者である場合にのみリクエストしてください。そのことを確認できるよう、連絡先をお知らせください。
+  PageTitle: Holodexチャンネルリクエスト
