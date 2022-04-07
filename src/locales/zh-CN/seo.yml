@@ -1,3 +1,9 @@
 ---
+hello: 世界
 music:
   title: '{{english_name}} 原创和翻唱歌曲 - Holodex'
+channel:
+  normal:
+    title: '{{english_name}}的剪辑、直播、歌曲和联动 - Holodex'
+  clip:
+    title: '{{english_name}}概览 - Holodex'
