@@ -537,7 +537,7 @@ channelRequest:
   VtuberGroupHint: Agensi / Grup mana vtuber ini berasal?
   ChannelLanguageLabel: Bahasa utama channel
   EnglishNameHint: >-
-    Berikan nama dalam b.inggris jika nama saluran dalam bahasa lain. Gunakan konvensi nama Vtuber dari bahasa aslinya (cth. 夏色まつり = Natsuiro Matsuri), atau nama EN pilihan mereka (cth. Elu the Elf, Emma★August).
+    Berikan nama dalam b.inggris jika nama channel dalam bahasa lain. Gunakan konvensi nama Vtuber dari bahasa aslinya (cth. 夏色まつり = Natsuiro Matsuri), atau nama EN pilihan mereka (cth. Elu the Elf, Emma★August).
   EnglishNameLabel: Nama Channel dalam B.Inggris
   Comments: Komentar
   CommentsHint: Komentar lain yang ingin kamu sampaikan pada kami.
