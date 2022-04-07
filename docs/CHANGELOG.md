@@ -13,6 +13,7 @@
 - Better Multiview channel scrolling. 
 - Fixes TLDex subtitles not wrapping to multiple lines for long TLs.
 - Created a new UI for making requests about Channels (VTubers and Clippers).
+- Updated Pekora theme colors a little
 - Misc. bugfixes
 
 ### 2.27 Holodex & Musicdex [*March 30th, 2022*]
