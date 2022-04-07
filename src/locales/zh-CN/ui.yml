@@ -11,9 +11,12 @@ component:
     home: 首页
     favorites: 收藏夹
     channels: 频道
+    about: 关于我们
     library: 媒体库
+    settings: 设置
     login: 登录
     logout: 注销
+    accountSettings: 账号设置
     playlist: 播放队列
   videoCard:
     watching: '{0}人正在观看'
@@ -24,15 +27,82 @@ component:
   description:
     showLess: 收起
     showMore: 展开
+  watch:
+    Comments:
+      all: 全部
   search:
     searchLabel: 搜索
+    type:
+      channel: 频道
+      org: 团体
+      comments: 留言
+  relatedVideo:
+    clipsLabel: 剪辑
+    songsLabel: 歌曲
+    recommendationsLabel: 推荐
+  songList:
+    songTitle: 标题
+  reportDialog:
+    title: 举报
+  playlist:
+    menu:
+      delete-playlist: 删除播放列表
+      clear-playlist: 清除播放列表
 views:
+  channel:
+    video: 视频
+    clips: 剪辑
+    collabs: 联动
+  channels:
+    sortOptions:
+      group: 所属团体
+      recentUpload: 最新上传
+    tabs:
+      Vtuber: Vtuber
+      Favorites: 收藏夹
+      Blocked: 黑名单
+    favoritesAreEmpty: 您的收藏夹为空！
+    blockedAreEmpty: 您没有添加任何频道进黑名单
+  home:
+    recentVideoToggles:
+      all: 全部
+  notFound:
+    back: 返回首页
+  search:
+    type:
+      all: 全部
+      official: 官方
+    sortByLabel: 排序方式
+  settings:
+    languageSettings: 语言设置
+    gridSize:
+      - 大
+      - 中
+      - 小
+    theme: 主题
+  app:
+    update_btn: 更新
   login:
     with:
       - 使用 Google 登录
       - 使用 Discord 登录
       - 使用 Twitter 登录
+time:
+  soon: 即将开始
+  diff_future_date: 将在{0}开始直播({1})
 about:
+  faq:
+    title: 常见问题解答
+    ytchatHeader: YouTube聊天窗口提示我尚未登陆
+    favorite:
+      title: 什么是收藏夹？
+    MugenClips:
+      title: 什么是MugenClips？
+    feedback:
+      title: 我想提供建议或为这个项目做出贡献
+      contents:
+        - >-
+          我们欢迎所有的帮助和想法! 虽然目前只有UI界面是开源的，但包括UI界面在内和后端都欢迎大家来贡献。请在Discord上与我们联系，以便获得后台的源代码，或者简单地讨论你的想法。
   gdpr: GDPR与我的数据
   gdprContent: >-
     Google分析的cookie将用于跟踪页面浏览量，供我们分析之用。在您登录之后，我们会将您的社交媒体账户用户名和ID与您的收藏夹绑定。这些数据可能包括您的电子邮件（Google账号）、Discord ID或Twitter。
