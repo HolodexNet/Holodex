@@ -520,3 +520,9 @@ about:
     title: Bookmarklets
     description: >-
       Zieh diese Bookmarklets in deine Lesezeichenleiste, um YouTube-Videos leichter in Holodex zu öffnen:
+channelRequest:
+  RequestType: 'Art der Anfrage:'
+  Types:
+    ModifyExistingInfo: Vorhandene Kanalinformationen ändern
+    DeleteChannel: Löscht meinen Kanal
+  ChannelURLErrorFeedback: Muss https://www.youtube.com/channel/UC_____ sein
