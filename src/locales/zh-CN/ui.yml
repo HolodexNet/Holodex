@@ -1,0 +1,53 @@
+---
+component:
+  apiError:
+    title: 灰常抱歉！
+  channelInfo:
+    stats: 统计信息
+    subscriberCount: '{n}位订阅者'
+    subscriberNA: 订阅者人数不可用
+    totalViews: 次观看
+  mainNav:
+    home: 首页
+    favorites: 收藏夹
+    channels: 频道
+    library: 媒体库
+    login: 登录
+    logout: 注销
+    playlist: 播放队列
+  videoCard:
+    watching: '{0}人正在观看'
+    liveNow: 直播中
+    edit: 编辑
+    copiedToClipboard: 链接已复制到剪贴板
+    copyLink: 复制Holodex链接
+  description:
+    showLess: 收起
+    showMore: 展开
+  search:
+    searchLabel: 搜索
+views:
+  login:
+    with:
+      - 使用Google登录
+      - 使用Discord登录
+      - 使用Twitter登录
+about:
+  gdpr: GDPR与我的数据
+  gdprContent: >-
+    Google分析的cookie将用于跟踪页面浏览量，供我们分析之用。在您登录之后，我们会将您的社交媒体账户用户名和ID与您的收藏夹绑定。这些数据可能包括您的电子邮件（Google账号）、Discord ID或Twitter。
+  gdprDeletion: 如需删除您的用户数据，请在Discord上与我们联系!
+  feedback: 意见反馈/Bug提交
+  feedbackHtml: >-
+    您可以在<a href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a>中创建一个Issue，或者在Discord上联系Holodex团队 <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    contents:
+      - I would like to give big thanks to the
+      - team for their work on
+      - >-
+        Also to all the subbers for helping the overseas bros! Please check them out!
+      - >-
+        这是一个由粉丝制作的网站，出现于本站上的内容由Cover股份公司及其合作伙伴拥有。本站遵循Cover股份公司的指引以及其
+      - 二次创作管理条例
+  changelog:
+    title: 更新日志
