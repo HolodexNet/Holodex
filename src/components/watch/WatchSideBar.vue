@@ -192,7 +192,7 @@ export default {
             this.hidden[relation] = !this.hidden[relation];
         },
         addToMusicPlaylist() {
-            window.open(`${musicdexURL}video/${this.video.id}`, "_blank");
+            window.open(`${musicdexURL}/video/${this.video.id}`, "_blank");
         },
         addToPlaylist(videos) {
             const reversed = [...videos].filter((v) => this.filterVideos(v, { hideIgnoredTopics: false }));
