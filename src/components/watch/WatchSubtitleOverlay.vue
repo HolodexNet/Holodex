@@ -45,7 +45,7 @@ export default {
     word-wrap: break-word;
     box-shadow: 10px 0 0 rgba(0,0,0,0.75), -10px 0 0 rgba(0,0,0,0.75);
     background: rgba(0,0,0,0.75);
-    white-space: pre;
+    white-space: pre-wrap;
 }
 .subtitle-name {
   font-size: 16px;

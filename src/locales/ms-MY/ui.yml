@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Acara Terancang
   videoDescription:
     description: Perihalan
-  video:
-    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -117,7 +115,7 @@ component:
   reportDialog:
     title: Laporkan
     collabing: >-
-      Ada kemungkinan saluran ini bersiaran sama dengan ahli {org} atau mana-mana penggiat YouTube kegemaranmu. Saluran ini boleh disembunyikan di laman tetapan
+      Ada kemungkinan saluran ini bersiarsama dengan ahli {org} atau mana-mana penggiat YouTube kegemaranmu. Saluran ini boleh disembunyikan di laman tetapan
     comments: Apakah tindakan selanjutnya?
     success: Terima kasih! Laporan telah dikirim.
     reasons:
@@ -155,7 +153,7 @@ views:
     video: Video
     clips: Sedutan
     music: Muzik
-    collabs: Siaran sama
+    collabs: Siarsama
     about: Perihal
   channels:
     sortOptions:
@@ -253,8 +251,8 @@ views:
       - Besar
       - Sederhana
       - Kecil
-    hideCollabStreamsLabel: Sembunyikan Siaran Sama
-    hideCollabStreamsMsg: Sembunyikan siaran sama di laman Kegemaran
+    hideCollabStreamsLabel: Sembunyikan Siarsama
+    hideCollabStreamsMsg: Sembunyikan siarsama di laman Kegemaran
     hidePlaceholderStreams: Sembunyikan Siaran Sementara
     ignoredTopicsLabel: Topik Diketepikan
     ignoredTopicsMsg: Video yang bertopik berikut disembunyikan di laman Utama dan Kegemaran

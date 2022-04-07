@@ -604,3 +604,47 @@ about:
     description: >-
       Drag these bookmarklets to your bookmark bar to open YouTube watch page in
       Holodex easily:
+channelRequest:
+  RequestType: 'Request Type:'
+  Types:
+    AddVtuber: Add a Vtuber ▶️ for Holodex to track the channel and clips.
+    AddClipper: Add a clipping/subbing channel to Holodex
+    ModifyExistingInfo: Modify existing channel information
+    DeleteChannel: Delete my channel
+  DirectContactDisclaimer: >-
+    Feel free to leave your discord id, email or twitter. In case you need to be
+    contacted (this info will stay private) so we can provide feedback. Only
+    holodex administrators will see this information.
+  DirectContactLabel: Contact Method (optional)
+  TwitterHandle: This Channel's Twitter Handle (optional)
+  VtuberGroupLabel: VTuber Group (optional)
+  VtuberGroupHint: Which org / group does this vtuber belong to?
+  ChannelLanguageLabel: Channel's main language
+  EnglishNameHint: >-
+    Provide an English name if the channel name is not in English. Follow
+    name-order conventions from the native locale of this vtuber (Natsuiro
+    Matsuri), or a preferred EN brand name (Elu the Elf, Emma★August).
+  EnglishNameLabel: English Channel Name
+  Comments: Comments
+  CommentsHint: Other comments you'd like to tell us.
+  VtuberRequirementText: >-
+    A minimum of 20K subscribers is required for independents. Vtubers as part
+    of existing orgs will be accepted. <br /><br />New Orgs will be created
+    depending on the average subscriber count.
+  ClipperRequirementText: >-
+    For clippers, it must be at least 2 months old and post regularly, or post
+    more than 20 clips in one month. Spamming of short clips every day, posting
+    only short &lt;1min clips, or using unflattering thumbnails will all count
+    against the channel. Content quality might be judged as well. <br /><br
+    />It's important to note that clippers should cite their sources via channel
+    links, @Youtube channel mentions, and video links. Overciting (e.g. Linking
+    to everyone at Nijisanji) creates work for Holodex editors, and underciting
+    (no links) will make clips hidden. <br /><br /> Holodex contains algorithms
+    to detect overciting and correct them automatically, but it may not always
+    work perfectly. Clippers who overcite may be removed from platform to reduce
+    noise.
+  DeletionRequirementText: >-
+    Deletion should only be requested if you are the channel owner(s), please
+    provide contact information so we can verify this.
+  PageTitle: Holodex Channel Request
+  ChannelURLErrorFeedback: Must be https://www.youtube.com/channel/UC_____

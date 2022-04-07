@@ -47,8 +47,7 @@
               color="info white--text"
               block
               class="text-left mb-4"
-              target="_blank"
-              href="https://forms.gle/xkN4w8fyPr6YTGfx6"
+              to="/addChannel"
             >
               <v-icon left>
                 {{ mdiAccountPlus }}

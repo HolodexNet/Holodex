@@ -4,13 +4,13 @@
     <!-- Toolbar Live Video Selector -->
     <div
       class="justify-start d-flex mv-toolbar-btn align-center"
-      style="overflow-x: auto; overflow-y: hidden"
+      style="flex: 1; min-width: 0;"
     >
       <slot name="left" />
     </div>
     <!-- Right side buttons -->
     <div
-      class="flex-grow-1 justify-end d-flex mv-toolbar-btn align-center"
+      class="justify-end d-flex mv-toolbar-btn align-center"
       :class="{ 'no-btn-text': $store.state.isMobile || true }"
     >
       <!-- Show toolbar btns that are not collapsible or not in collapsed state -->
