@@ -29,9 +29,9 @@ component:
 views:
   login:
     with:
-      - 使用Google登录
-      - 使用Discord登录
-      - 使用Twitter登录
+      - 使用 Google 登录
+      - 使用 Discord 登录
+      - 使用 Twitter 登录
 about:
   gdpr: GDPR与我的数据
   gdprContent: >-
