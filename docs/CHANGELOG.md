@@ -1,7 +1,19 @@
 ### Changelog
 
+
+
 #### Unreleased
 - iCal Calendar API: offers subscribable calendars for upcoming streams & events (@uetchy)
+
+### 2.27.1 Holodex & Musicdex [*April 6, 2022*]
+
+> 💬: Hope everyone enjoyed April Fools peko.
+
+#### Bugfixes:
+- Better Multiview channel scrolling. 
+- Fixes TLDex subtitles not wrapping to multiple lines for long TLs.
+- Created a new UI for making requests about Channels (VTubers and Clippers).
+- Misc. bugfixes
 
 ### 2.27 Holodex & Musicdex [*March 30th, 2022*]
 
