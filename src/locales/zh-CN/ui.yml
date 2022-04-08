@@ -159,6 +159,8 @@ about:
     autoplayContent: 请在Google搜索如何在浏览器中启用自动播放功能。
     favorite:
       title: 什么是收藏夹？
+    mobile:
+      title: 请问Holodex是否有安卓/iOS的app？
     MugenClips:
       title: 什么是MugenClips？
     feedback:
