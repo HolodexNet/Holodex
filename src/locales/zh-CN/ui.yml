@@ -34,6 +34,8 @@ component:
     copiedToClipboard: 链接已复制到剪贴板
     copyLink: 复制Holodex链接
     googleCalendar: 添加到Google日历
+    typeScheduledYT: 直播预约
+    typeExternalStream: 外部直播
   videoDescription:
     description: 说明
   description:
@@ -55,6 +57,8 @@ component:
     clipsLabel: 剪辑
     songsLabel: 歌曲
     recommendationsLabel: 推荐
+  channelMusic:
+    trending: 热门
   songList:
     songTitle: 标题
   reportDialog:
@@ -69,6 +73,8 @@ component:
       rename-playlist: 重命名播放列表
       delete-playlist: 删除播放列表
       clear-playlist: 清除播放列表
+  placeholderVideo:
+    creditTitleText: '鸣谢：'
 views:
   channel:
     video: 视频
@@ -121,6 +127,7 @@ views:
     update_btn: 更新
     close_btn: 关闭
   watch:
+    theaterMode: 剧院模式（Alt + T）
     chat:
       loading: 加载聊天中……
       retryBtn: 重试
@@ -129,6 +136,9 @@ views:
   favorites:
     close: 关闭
     showall: 显示全部
+  editor:
+    sources:
+      title: 直播/剪辑来源（开发中）
   login:
     with:
       - 使用 Google 登录
@@ -138,6 +148,8 @@ views:
     confirmOverwriteYes: 确认
     muteAll: 全部静音
     unmuteAll: 取消全部静音
+    sync:
+      syncSettings: 同步设置
 time:
   soon: 即将开始
   diff_future_date: 将在{0}开始直播({1})
@@ -157,6 +169,7 @@ about:
     ytchatHeader: YouTube聊天窗口提示我尚未登陆
     autoplayHeader: 视频无法自动播放！
     autoplayContent: 请在Google搜索如何在浏览器中启用自动播放功能。
+    videoLinkage: 我该如何确保视频关联到相应的Vtuber？
     favorite:
       title: 什么是收藏夹？
     mobile:
@@ -168,6 +181,11 @@ about:
       contents:
         - >-
           我们欢迎所有的帮助和想法! 虽然目前只有UI界面是开源的，但包括UI界面在内和后端都欢迎大家来贡献。请在Discord上与我们联系，以便获得后台的源代码，或者简单地讨论你的想法。
+    support:
+      title: 我可以如何支持Holodex？
+      contents:
+        '0': >-
+          我们的网站架设在一台28核、60G内存的服务器上，每月的运行费用大约60美金。在不远的将来，我们希望能开发更多的功能，因此我们开启了<a href="https://ko-fi.com/holodex">Ko-fi</a>资助计划用于支付服务器的相关费用（我们也支持<a href="https://www.patreon.com/holodex">Patreon</a>，但更倾向于Ko-fi）。<br /><br />你还可以通过在Twitter上向我们提供反馈或鼓励的信息，亦或者通过<a href="https://crwd.in/holodex">Crowdin</a>帮助我们提供更多语言的翻译，还有在Holodex中对歌曲进行标签分类， 甚至是在直播的留言中标注有趣的片段。这些对我们来说都是莫大的帮助！
   gdpr: GDPR与我的数据
   gdprContent: >-
     Google分析的cookie将用于跟踪页面浏览量，供我们分析之用。在您登录之后，我们会将您的社交媒体账户用户名和ID与您的收藏夹绑定。这些数据可能包括您的电子邮件（Google账号）、Discord ID或Twitter。
@@ -186,3 +204,9 @@ about:
       - 二次创作管理条例
   changelog:
     title: 更新日志
+channelRequest:
+  Types:
+    DeleteChannel: 删除我的频道
+  VtuberGroupLabel: VTuber所属团体（选填）
+  ChannelLanguageLabel: 频道常用的语言
+  EnglishNameLabel: 频道的英文名称
