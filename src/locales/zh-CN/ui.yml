@@ -123,6 +123,7 @@ views:
       - 中
       - 小
     theme: 主题
+    moreSettings: 更多设置
   app:
     update_btn: 更新
     close_btn: 关闭
@@ -130,6 +131,7 @@ views:
     theaterMode: 剧院模式（Alt + T）
     chat:
       loading: 加载聊天中……
+      showLocalTime: 显示本地时间
       retryBtn: 重试
       status:
         connectedToChat: 已连接
@@ -148,6 +150,7 @@ views:
     confirmOverwriteYes: 确认
     muteAll: 全部静音
     unmuteAll: 取消全部静音
+    hints: 小贴士
     sync:
       syncSettings: 同步设置
 time:
@@ -206,7 +209,19 @@ about:
     title: 更新日志
 channelRequest:
   Types:
+    ModifyExistingInfo: 修改现有频道信息
     DeleteChannel: 删除我的频道
+  DirectContactDisclaimer: >-
+    请随时离开您的Discord id，电子邮件或Twitter。 如果您需要联系(此信息将保持隐私)我们可以提供反馈。 只有holodex 管理员才能看到此信息。
+    欢迎留下你的Discord ID、电子邮件或Twitter，以便于我们需要进一步联系你（这些信息都将会保密），相关信息只有Holodex管理员才能看到。
+  DirectContactLabel: 联系方式（可选）
+  TwitterHandle: 这个频道的Twitter（可选）
   VtuberGroupLabel: VTuber所属团体（选填）
+  VtuberGroupHint: 这个Vtuber隶属于哪个团体？
   ChannelLanguageLabel: 频道常用的语言
   EnglishNameLabel: 频道的英文名称
+  Comments: 备注
+  CommentsHint: 还有其他想告诉我们
+  DeletionRequirementText: >-
+    仅限频道的所有者提出删除请求，请提供您的联系信息以便我们核实。
+  ChannelURLErrorFeedback: 格式必须为https://www.youtube.com/channel/UC_____
