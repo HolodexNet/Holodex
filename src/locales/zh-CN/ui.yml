@@ -2,11 +2,18 @@
 component:
   apiError:
     title: 灰常抱歉！
+    textBeforeTwitter: '加载时出错，请通过Twitter获取最新情况'
+    textAfterTwitter: '或通过'
   channelInfo:
     stats: 统计信息
+    videoCount: '{0}个视频'
+    clipCount: '{n}部剪辑'
     subscriberCount: '{n}位订阅者'
     subscriberNA: 订阅者人数不可用
     totalViews: 次观看
+  channelSocials:
+    addToFavorites: 加入收藏夹
+    removeFromFavorites: 从收藏夹中移除
   mainNav:
     home: 首页
     favorites: 收藏夹
@@ -16,19 +23,26 @@ component:
     settings: 设置
     login: 登录
     logout: 注销
+    MugenClips: MugenClips<sup>beta</sup>
     accountSettings: 账号设置
     playlist: 播放队列
   videoCard:
+    clips: '{n}部剪辑'
     watching: '{0}人正在观看'
     liveNow: 直播中
     edit: 编辑
     copiedToClipboard: 链接已复制到剪贴板
     copyLink: 复制Holodex链接
+    googleCalendar: 添加到Google日历
+  videoDescription:
+    description: 说明
   description:
     showLess: 收起
     showMore: 展开
   watch:
+    streamingFor: 已直播{0}
     Comments:
+      title: 留言
       all: 全部
   search:
     searchLabel: 搜索
@@ -36,6 +50,7 @@ component:
       channel: 频道
       org: 团体
       comments: 留言
+      videourl: 视频链接
   relatedVideo:
     clipsLabel: 剪辑
     songsLabel: 歌曲
@@ -44,8 +59,14 @@ component:
     songTitle: 标题
   reportDialog:
     title: 举报
+    reasons:
+      - Video tagged incorrectly
+      - Dangerously Low Quality/Misleading Content
+      - Violates the org's derivative work guidelines or inappropriate
+      - 其他
   playlist:
     menu:
+      rename-playlist: 重命名播放列表
       delete-playlist: 删除播放列表
       clear-playlist: 清除播放列表
 views:
@@ -66,14 +87,30 @@ views:
   home:
     recentVideoToggles:
       all: 全部
+      official: 存档
+      subber: 剪辑
+  library:
+    deleteFromLibraryButton: 删除({0})
+    deleteConfirmationOK: 删除
+    deleteConfirmationCancel: 取消
+    selectionReset: 重置
+    selectionSelectAll: 选择全部
+    exportCsv: CSV文件
   notFound:
+    title: 未找到内容
     back: 返回首页
   search:
     type:
       all: 全部
       official: 官方
+      clip: 剪辑
     sortByLabel: 排序方式
+    typeDropdownLabel: 类型
   settings:
+    title: 设置
+    darkModeLabel: 深色模式
+    redirectModeLabel: 在Youtube上打开
+    defaultPage: 默认页面
     languageSettings: 语言设置
     gridSize:
       - 大
@@ -82,18 +119,44 @@ views:
     theme: 主题
   app:
     update_btn: 更新
+    close_btn: 关闭
+  watch:
+    chat:
+      loading: 加载聊天中……
+      retryBtn: 重试
+      status:
+        connectedToChat: 已连接
+  favorites:
+    close: 关闭
+    showall: 显示全部
   login:
     with:
       - 使用 Google 登录
       - 使用 Discord 登录
       - 使用 Twitter 登录
+  multiview:
+    confirmOverwriteYes: 确认
+    muteAll: 全部静音
+    unmuteAll: 取消全部静音
 time:
   soon: 即将开始
   diff_future_date: 将在{0}开始直播({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    titles:
+      help: 教程
+    itunesLookupPlaceholder: '（可选）在 iTunes 上查找'
+    setToCurrentTime: 设置为当前时间({0})
+  exitMode: 退出编辑模式
+  enterMode: 编辑视频
 about:
+  discordBtn: Holodex Discord
   faq:
     title: 常见问题解答
     ytchatHeader: YouTube聊天窗口提示我尚未登陆
+    autoplayHeader: 视频无法自动播放！
+    autoplayContent: 请在Google搜索如何在浏览器中启用自动播放功能。
     favorite:
       title: 什么是收藏夹？
     MugenClips:
