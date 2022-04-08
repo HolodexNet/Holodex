@@ -272,6 +272,9 @@ views:
     hints: 小贴士
     sync:
       syncSettings: 同步设置
+  mugen:
+    welcome: >-
+      欢迎来到MugenClips！在这里大家都能观看随机播放出来的同一段Hololive英文剪辑，还可以和来自世界各地的Hololive粉丝一起聊天。如果你改变了进度条，刷新页面即可恢复与别人一样的进度。
   playlist:
     playlist-is-modified: 未保存
     item-last-updated: '最后更新：'
