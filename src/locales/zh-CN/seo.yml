@@ -2,6 +2,8 @@
 hello: 世界
 music:
   title: '{{english_name}} 原创和翻唱歌曲 - Holodex'
+  description: >-
+    通过Holodex音乐播放器收听原唱/翻唱歌曲或由社区标记的歌回。
 channel:
   normal:
     title: '{{english_name}}的剪辑、直播、歌曲和联动 - Holodex'
