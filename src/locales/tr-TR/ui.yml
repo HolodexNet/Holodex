@@ -253,6 +253,7 @@ views:
       - Küçük
     hideCollabStreamsLabel: Collab yayınları sakla
     hideCollabStreamsMsg: Collab yayınları favoriler sayfanızdan saklar
+    hidePlaceholderStreams: Yer Tutucu Yayınları Gizle
     ignoredTopicsLabel: Yok Sayılan Konular
     ignoredTopicsMsg: Ana Sayfadan ve Favorilerden seçili konulara sahip videolar kaldırılır
     theme: Tema
@@ -519,3 +520,22 @@ about:
     title: Yer imcikleri
     description: >-
       Bir YouTube izleme sayfasını Holodex'te kolayca açabilmek için bu yer imciklerini yer imi çubuğunuza sürükleyin:
+channelRequest:
+  RequestType: 'Talep Türü:'
+  Types:
+    AddVtuber: Holodex'in kanalını ve kliplerini takip etmesi için bir Vtuber ▶️ ekle.
+    AddClipper: Holodex'e bir klip/altyazı kanalı ekle
+    ModifyExistingInfo: Var olan kanal bilgilerini düzenle
+    DeleteChannel: Kanalımı sil
+  DirectContactLabel: İletişim Bilgileri (isteğe bağlı)
+  TwitterHandle: Kanalın Twitter Tanıtıcısı (isteğe bağlı)
+  VtuberGroupLabel: VTuber Grubu (isteğe bağlı)
+  VtuberGroupHint: Bu vtuber hangi organizasyona / gruba bağlı?
+  ChannelLanguageLabel: Kanalın ana dili
+  EnglishNameLabel: İngilizce Kanal İsmi
+  Comments: Yorumlar
+  CommentsHint: Bize iletmek istediğin diğer yorumlar.
+  DeletionRequirementText: >-
+    Silme sadece kanal sahibi/sahipleri tarafından talep edilmeli, lütfen bunu doğrulamamız için iletişim bilgisi sağlayın.
+  PageTitle: Holodex Kanal Talebi
+  ChannelURLErrorFeedback: https://www.youtube.com/channel/UC_____ şeklinde olmalı
