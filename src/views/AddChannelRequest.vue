@@ -229,7 +229,7 @@ export default {
         linkRule: (v) => !!v.match(/^https?:\/\/[\w-]+(\.[\w-]+)+\.?(\/\S*)?/) || "Invalid url",
         twitterRule: (v) => (!v || !!v.match(/^@.*$/)) || "@ABC",
         channelURLRule(v) {
-            const REGEX = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel|c)\/([\w-_]*)$/i;
+            const REGEX = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel)\/([\w-_]*)$/i;
 
             const cid = v.match(REGEX);
             console.log(cid);
@@ -254,7 +254,24 @@ export default {
             }
         },
 
-        onSubmit() {
+        async onSubmit() {
+            if (this.type === ADD_VTUBER || this.type === ADD_CLIPPER) {
+                // validate it's not added already:
+                const regex = /(?:https?:\/\/)(?:www\.)?youtu(?:be\.com\/)(?:channel)\/([\w\-_]*)/gi;
+                const matches = [...this.link.matchAll(regex)];
+                const id = matches?.[0]?.[1];
+
+                try {
+                    const exists = id && await backendApi.channel(id);
+                    if (exists && exists.data && exists.data.id) {
+                        this.$router.push({ path: `/channel/${id}` });
+                        return;
+                    }
+                } catch (e) {
+                    console.error(e);
+                    // it's fine to not exist, since that's what the form is for.
+                }
+            }
             if (this.$refs.form.validate()) {
                 const ifValid = (bool: Boolean, val: any) => {
                     if (bool) return [val];
