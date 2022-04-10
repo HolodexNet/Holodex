@@ -2,37 +2,336 @@
 component:
   apiError:
     title: 灰常抱歉！
+    textBeforeTwitter: '加载时出错，请通过Twitter获取最新情况'
+    textAfterTwitter: '或通过'
+    aboutPage: 关于我们
+    afterAboutPageHyperlink: 报告错误。
+  channelList:
+    signInToFavorite: 登录后以启用收藏夹功能
   channelInfo:
     stats: 统计信息
+    videoCount: '{0}个视频'
+    clipCount: '{n}部剪辑'
     subscriberCount: '{n}位订阅者'
     subscriberNA: 订阅者人数不可用
     totalViews: 次观看
+  channelSocials:
+    addToFavorites: 加入收藏夹
+    removeFromFavorites: 从收藏夹中移除
+    unblock: 移除黑名单
+    block: 在Holodex上将这个频道加入黑名单
+    blocked: 黑名单
   mainNav:
     home: 首页
     favorites: 收藏夹
     channels: 频道
+    about: 关于我们
     library: 媒体库
+    settings: 设置
     login: 登录
     logout: 注销
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: 账号设置
+    music: 歌曲
+    points: 点
     playlist: 播放队列
   videoCard:
+    clips: '{n}部剪辑'
     watching: '{0}人正在观看'
     liveNow: 直播中
     edit: 编辑
     copiedToClipboard: 链接已复制到剪贴板
     copyLink: 复制Holodex链接
+    googleCalendar: 添加到Google日历
+    totalTLs: 聊天窗口中实时翻译数量
+    tlPresence: 过去30分钟内有实时翻译
+    typeScheduledYT: 直播预约
+    typeExternalStream: 外部直播
+    typeEventPlaceholder: 预定活动
+  videoDescription:
+    description: 说明
   description:
     showLess: 收起
     showMore: 展开
+  watch:
+    streamingFor: 已直播{0}
+    nextUpInMugen: 下一个
+    Comments:
+      title: 留言
+      all: 全部
   search:
     searchLabel: 搜索
+    type:
+      channel: 频道
+      org: 团体
+      comments: 留言
+      videourl: 视频链接
+  relatedVideo:
+    clipsLabel: 剪辑
+    sourcesLabel: 来源
+    songsLabel: 歌曲
+    recommendationsLabel: 推荐
+    sameSourceClips: 来自相同的直播
+  music:
+    clearPlaylist: 清空
+  channelMusic:
+    recentSongsHeader: 近期歌曲
+    weeklyTopPlaysHeader: 本周热门播放
+    trending: 热门
+  songList:
+    songTitle: 标题
+    songCoveredBy: 翻唱自
+    songDuration: 长度
+  orgMusic:
+    monthlyTopForOrg: '{0}本月最多播放'
+    weeklyTopForOrg: '{0}本周最多播放'
+  installPrompt:
+    title: 安装Holodex
+    notNowBtn: 暂时不要
+    installBtn: 安装
+    iOS:
+      popup: 在iOS设备上安装Holodex
+      beforeExportIcon: 点击
+  comment:
+    close: 关闭
+    readMore: 查看更多
+  reportDialog:
+    title: 举报
+    success: 举报已提交，谢谢！
+    reasons:
+      - 视频的标签不正确
+      - 视频品质过低/含有误导性内容
+      - 违反所属团体的二次创作管理条例或不当内容
+      - 其他
+  thirdpartycookie:
+    explanation: >-
+      由于各家浏览器采用不同的运作方式，个别对<b>第三方Cookie</b>有严格限制的浏览器，或者是那些阻止<kbd>YouTube.com</kbd>Cookie的浏览器，都有可能会导致无法登录/无法使用Youtube聊天功能。<br /><br />你可以尝试将<kbd>YouTube.com</kbd>加入第三方Cookie拦截器的白名单，亦或者是降低<kbd>Holodex.net</kbd>的Cookie安全/隐私限制来解决这个问题。<br /><br />以下是一部分网站的教程。
+    dialogTitle: 在Holodex上启用YouTube聊天功能
+    alertText: >-
+      你的浏览器隐私设置导致无法启用YouTube聊天功能。点击这里了解更多
+    neverShowAgain: 不再显示警告
+  playlist:
+    menu:
+      export-playlist: 导出播放列表
+      new-playlist: 新建播放列表
+      rename-playlist: 重命名播放列表
+      reset-unsaved: 撤销未保存的修改
+      delete-playlist: 删除播放列表
+      clear-playlist: 清除播放列表
+    save-error-not-logged-in: 您需要登录才能保存播放列表
+  placeholderVideo:
+    streamPageBtn: 直播页面
+    eventPageBtn: 活动页面
+    creditTitleText: '鸣谢：'
 views:
+  channel:
+    video: 视频
+    clips: 剪辑
+    collabs: 联动
+  channels:
+    sortOptions:
+      subscribers: 位订阅者
+      group: 所属团体
+      recentUpload: 最新上传
+      videoCount: 视频数量
+      clipCount: 剪辑数量
+      org: 团体
+    tabs:
+      Vtuber: Vtuber
+      Favorites: 收藏夹
+      Blocked: 黑名单
+    favoritesAreEmpty: 您的收藏夹为空！
+    blockedAreEmpty: 您没有添加任何频道进黑名单
+  home:
+    liveOrUpcomingHeading: 直播中 / 即将开始
+    recentVideosHeading: 最新视频
+    noStreams: 目前没有直播或直播预约
+    recentVideoToggles:
+      all: 全部
+      official: 存档
+      subber: 剪辑
+  library:
+    savedVideosTitle: 保存的视频
+    createYtPlaylistButton: 创建YouTube播放列表({0})
+    deleteFromLibraryButton: 删除({0})
+    deleteConfirmation: 确定要删除{0}个视频吗？
+    deleteConfirmationOK: 删除
+    deleteConfirmationCancel: 取消
+    selectionReset: 重置
+    selectionSelectAll: 选择全部
+    emptyLibrary: 你没有任何保存的视频 ！
+    exportSelected: 导出已选择项({0})
+    exportYtPlaylist: YouTube播放列表
+    exportCsv: CSV文件
+    selectionSelect50: 选择50个
+    exportYTHeading: YouTube保存播放列表教程
+    sort:
+      dateaddedEarliestFirst: 按加入日期排序（最早）
+      dateaddedLatestFirst: 按加入日期排序（最新）
+      dateuploadedLatestFirst: 按上传日期排序（最新）
+      dateuploadedEarliestFirst: 按上传日期排序（最早）
+  notFound:
+    title: 未找到内容
+    back: 返回首页
+  search:
+    sort:
+      newest: 最新的
+      oldest: 最早的
+    type:
+      all: 全部
+      official: 官方
+      clip: 剪辑
+    sortByLabel: 排序方式
+    typeDropdownLabel: 类型
+  settings:
+    title: 设置
+    darkModeLabel: 深色模式
+    redirectModeLabel: 在Youtube上打开
+    redirectModeMsg: >-
+      点击视频缩略图时在YouTube上打开，点击视频标题时在Holodex上打开。
+    useEnglishNameLabel: 使用英文名称
+    hideVideoThumbnailsLabel: 隐藏视频缩略图
+    pushNotificationLabel: 推送通知（即将到来）
+    autoplayVideoLabel: 自动播放视频
+    autoplayVideoMsg: 启用视频自动播放
+    scrollModeLabel: 滚动模式
+    resetAllSettings: 重置所有设置/资料
+    resetAllSettingsWarning: 所有数据将会丢失，是否继续？
+    clipLanguageSelection: '显示以下语言的剪辑视频：'
+    tlLanguageSelection: 在聊天窗口中显示以下语言的实时翻译
+    defaultPage: 默认页面
+    languageSettings: 语言设置
+    gridSize:
+      - 大
+      - 中
+      - 小
+    hideCollabStreamsLabel: 隐藏联动直播
+    theme: 主题
+    moreSettings: 更多设置
+  app:
+    update_available: 有可用更新
+    update_btn: 更新
+    close_btn: 关闭
+    check_about_page: 前往关于页面查看最新的更新日志
+    nowSupportsMultiOrg: Holodex现在可以显示更多的团体
+    loginCallToAction: 登入以读取你自己的收藏夹！
+  watch:
+    theaterMode: 剧院模式（Alt + T）
+    chat:
+      loading: 加载聊天中……
+      hideTLBtn: 隐藏翻译
+      showTLBtn: 显示翻译
+      TLSettingsTitle: 翻译设置
+      showSubtitle: 显示字幕
+      showVerifiedMessages: 显示已认证用户的信息
+      showModeratorMessages: 显示管理员的信息
+      showLocalTime: 显示本地时间
+      tlFontSize: 字体大小
+      retryBtn: 重试
+      status:
+        reconnecting: 正在重新连接……
+        reconnectFailed: 无法重新连接
+        connectedToChat: 已连接
+        disconnectedToChat: 已断开连接
+      archiveNeedExtension: >-
+        如果没有启用{0}或其他第三方扩展程序，视频存档中的聊天记录就无法加载。
+    removeFromPlaylist: 将视频从当前播放队列中删除
+    saveToPlaylist: 将视频保存到当前播放列表
+    likeOnYoutube: 在Youtube上给视频点赞
+  favorites:
+    manageFavorites: 管理收藏夹
+    close: 关闭
+    showall: 显示全部
+  editor:
+    needlogin: 需要登录Holodex后才能编辑视频和歌曲的相关资料。
+    changeTopic:
+      title: 修改直播标签
+      button: 保存（可能需要5分钟才会生效）
+    sources:
+      title: 直播/剪辑来源（开发中）
   login:
+    apikeyNew: 获取新的API密钥
+    linkAcc: 关联其他账号
+    apikeyResetConfirm1: 确定要重置API密钥吗？
+    apikeyResetConfirm2: 旧的API密钥将在0-24小时后过期，确定要重置吗？
+    apikeyResetNvm: 什么事都没有发生。
     with:
       - 使用 Google 登录
       - 使用 Discord 登录
       - 使用 Twitter 登录
+  multiview:
+    confirmOverwrite: 覆盖当前的布局？
+    confirmOverwriteYes: 确认
+    muteAll: 全部静音
+    unmuteAll: 取消全部静音
+    autoLayoutTip: 点击任意频道即可使用自动布局模式开始观看
+    preset:
+      custom: 我的布局
+    video:
+      selectLive: 选择直播
+    fullScreen: 全屏显示
+    changeLayout: 调整布局
+    hints: 小贴士
+    sync:
+      syncSettings: 同步设置
+  mugen:
+    welcome: >-
+      欢迎来到MugenClips！在这里大家都能观看随机播放出来的同一段Hololive英文剪辑，还可以和来自世界各地的Hololive粉丝一起聊天。如果你改变了进度条，刷新页面即可恢复与别人一样的进度。
+  playlist:
+    playlist-is-modified: 未保存
+    item-last-updated: '最后更新：'
+    new-playlist-btn-label: 创建新的播放列表
+    page-heading: '你的播放列表：'
+    change-loss-warning: 未保存的更改将会丢失，确定要继续吗？
+  extension:
+    title: Holodex Plus 扩展程序
+    featureset:
+      two: 在Holodex播放页面上启用视频点赞功能
+      three: 修复Youtube聊天窗口中内存泄漏的问题
+time:
+  soon: 即将开始
+  diff_future_date: 将在{0}开始直播({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    update: 更新
+    titles:
+      help: 教程
+    itunesLookupPlaceholder: '（可选）在 iTunes 上查找'
+    setToCurrentTime: 设置为当前时间({0})
+  exitMode: 退出编辑模式
+  enterMode: 编辑视频
 about:
+  discordBtn: Holodex Discord
+  faq:
+    title: 常见问题解答
+    ytchatHeader: YouTube聊天窗口提示我尚未登陆
+    autoplayHeader: 视频无法自动播放！
+    autoplayContent: 请在Google搜索如何在浏览器中启用自动播放功能。
+    musicPlayer: 音乐播放器在手机上不能正常运作！
+    musicPlayerContent: >-
+      对于大多数iOS设备，Holodex无法在关闭屏幕或Safari的情况下播放音乐，这个问题也有可能发生在个别安卓机上（取决于设备）。如果你有什么更好的想法来解决这个问题，请在Discord上联系我们。
+    videoLinkage: 我该如何确保视频关联到相应的Vtuber？
+    videoLinkageContent: >-
+      Holodex上的视频信息都由系统读取自视频说明。如果你正在制作剪辑，请务必记得在视频说明内附上直播的官方链接。如果剪辑是粉丝制作的二创内容（例如B站），请确保视频说明里附带相关Vtuber的官方YouTube频道。如果视频说明里没有附带任何Vtuber的频道，那么这个剪辑将不会出现在Holodex上，因为所有剪辑都必须关联到Holodex上已知的Vtuber。
+    favorite:
+      title: 什么是收藏夹？
+      disappear:
+        title: 我的收藏夹消失了/我无法添加进收藏夹
+    mobile:
+      title: 请问Holodex是否有安卓/iOS的app？
+    MugenClips:
+      title: 什么是MugenClips？
+    feedback:
+      title: 我想提供建议或为这个项目做出贡献
+      contents:
+        - >-
+          我们欢迎所有的帮助和想法! 虽然目前只有UI界面是开源的，但包括UI界面在内和后端都欢迎大家来贡献。请在Discord上与我们联系，以便获得后台的源代码，或者简单地讨论你的想法。
+    support:
+      title: 我可以如何支持Holodex？
+      contents:
+        '0': >-
+          我们的网站架设在一台28核、60G内存的服务器上，每月的运行费用大约60美金。在不远的将来，我们希望能开发更多的功能，因此我们开启了<a href="https://ko-fi.com/holodex">Ko-fi</a>资助计划用于支付服务器的相关费用（我们也支持<a href="https://www.patreon.com/holodex">Patreon</a>，但更倾向于Ko-fi）。<br /><br />你还可以通过在Twitter上向我们提供反馈或鼓励的信息，亦或者通过<a href="https://crwd.in/holodex">Crowdin</a>帮助我们提供更多语言的翻译，还有在Holodex中对歌曲进行标签分类， 甚至是在直播的留言中标注有趣的片段。这些对我们来说都是莫大的帮助！
   gdpr: GDPR与我的数据
   gdprContent: >-
     Google分析的cookie将用于跟踪页面浏览量，供我们分析之用。在您登录之后，我们会将您的社交媒体账户用户名和ID与您的收藏夹绑定。这些数据可能包括您的电子邮件（Google账号）、Discord ID或Twitter。
@@ -41,13 +340,37 @@ about:
   feedbackHtml: >-
     您可以在<a href="https://github.com/RiceCakess/Holodex/issues">Github Issue Tracker</a>中创建一个Issue，或者在Discord上联系Holodex团队 <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
   credits:
+    title: 鸣谢
     contents:
-      - I would like to give big thanks to the
-      - team for their work on
+      - 我衷心的感谢
+      - 团队所开发的
       - >-
-        Also to all the subbers for helping the overseas bros! Please check them out!
+        同时也感谢所有来自五湖四海的字幕组！
       - >-
         这是一个由粉丝制作的网站，出现于本站上的内容由Cover股份公司及其合作伙伴拥有。本站遵循Cover股份公司的指引以及其
       - 二次创作管理条例
   changelog:
     title: 更新日志
+channelRequest:
+  Types:
+    AddVtuber: 在Holodex上添加一位Vtuber▶️来跟踪TA的频道以及获取相关剪辑。
+    ModifyExistingInfo: 修改现有频道信息
+    DeleteChannel: 删除我的频道
+  DirectContactDisclaimer: >-
+    请随时离开您的Discord id，电子邮件或Twitter。 如果您需要联系(此信息将保持隐私)我们可以提供反馈。 只有holodex 管理员才能看到此信息。
+    欢迎留下你的Discord ID、电子邮件或Twitter，以便于我们需要进一步联系你（这些信息都将会保密），相关信息只有Holodex管理员才能看到。
+  DirectContactLabel: 联系方式（可选）
+  TwitterHandle: 这个频道的Twitter（可选）
+  VtuberGroupLabel: VTuber所属团体（选填）
+  VtuberGroupHint: 这个Vtuber隶属于哪个团体？
+  ChannelLanguageLabel: 频道常用的语言
+  EnglishNameHint: >-
+    如果频道名称不是英文的话，请提供相关的英文名称。名称应遵循该Vtuber的本地语呈现的原初顺序（如“夏色まつり”对应的是“Natsuiro Matsuri”），或其首选的EN名称（如Elu the Elf, Emma★August）。
+  EnglishNameLabel: 频道的英文名称
+  Comments: 备注
+  CommentsHint: 还有其他想告诉我们
+  VtuberRequirementText: >-
+    个人势Vtuber最低要求2万名订阅者以上，但如果这个Vtuber所属团队已在Holodex名单内，则不需要达到以上要求。<br /><br />至于是否添加新的团体进Holodex名单内，将取决于他们的平均订阅数量。
+  DeletionRequirementText: >-
+    仅限频道的所有者提出删除请求，请提供您的联系信息以便我们核实。
+  ChannelURLErrorFeedback: 格式必须为https://www.youtube.com/channel/UC_____

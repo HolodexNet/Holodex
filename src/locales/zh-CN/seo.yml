@@ -1,3 +1,13 @@
 ---
+hello: 世界
 music:
   title: '{{english_name}} 原创和翻唱歌曲 - Holodex'
+  description: >-
+    通过Holodex音乐播放器收听原唱/翻唱歌曲或由社区标记的歌回。
+channel:
+  normal:
+    title: '{{english_name}}的剪辑、直播、歌曲和联动 - Holodex'
+    description: >-
+      找到关于{{english_name}}的{{clip_count}}部剪辑以及{{video_count}}个直播视频，将其加入你的Holodex收藏夹就可以知道最新的直播动态。
+  clip:
+    title: '{{english_name}}概览 - Holodex'
