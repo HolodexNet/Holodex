@@ -47,6 +47,7 @@ component:
     tlPresence: 过去30分钟内有实时翻译
     typeScheduledYT: 直播预约
     typeExternalStream: 外部直播
+    typeEventPlaceholder: 预定活动
   videoDescription:
     description: 说明
   description:
@@ -70,6 +71,7 @@ component:
     sourcesLabel: 来源
     songsLabel: 歌曲
     recommendationsLabel: 推荐
+    sameSourceClips: 来自相同的直播
   music:
     clearPlaylist: 清空
   channelMusic:
@@ -351,6 +353,7 @@ about:
     title: 更新日志
 channelRequest:
   Types:
+    AddVtuber: 在Holodex上添加一位Vtuber▶️来跟踪TA的频道以及获取相关剪辑。
     ModifyExistingInfo: 修改现有频道信息
     DeleteChannel: 删除我的频道
   DirectContactDisclaimer: >-
@@ -361,9 +364,13 @@ channelRequest:
   VtuberGroupLabel: VTuber所属团体（选填）
   VtuberGroupHint: 这个Vtuber隶属于哪个团体？
   ChannelLanguageLabel: 频道常用的语言
+  EnglishNameHint: >-
+    如果频道名称不是英文的话，请提供相关的英文名称。名称应遵循该Vtuber的本地语呈现的原初顺序（如“夏色まつり”对应的是“Natsuiro Matsuri”），或其首选的EN名称（如Elu the Elf, Emma★August）。
   EnglishNameLabel: 频道的英文名称
   Comments: 备注
   CommentsHint: 还有其他想告诉我们
+  VtuberRequirementText: >-
+    个人势Vtuber最低要求2万名订阅者以上，但如果这个Vtuber所属团队已在Holodex名单内，则不需要达到以上要求。<br /><br />至于是否添加新的团体进Holodex名单内，将取决于他们的平均订阅数量。
   DeletionRequirementText: >-
     仅限频道的所有者提出删除请求，请提供您的联系信息以便我们核实。
   ChannelURLErrorFeedback: 格式必须为https://www.youtube.com/channel/UC_____
