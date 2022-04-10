@@ -525,4 +525,5 @@ channelRequest:
   Types:
     ModifyExistingInfo: Vorhandene Kanalinformationen ändern
     DeleteChannel: Löscht meinen Kanal
+  PageTitle: Holodex Kanalanfrage
   ChannelURLErrorFeedback: Muss https://www.youtube.com/channel/UC_____ sein
