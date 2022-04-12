@@ -306,6 +306,7 @@ views:
   playlist:
     playlist-is-modified: 未保存
     item-last-updated: '最后更新：'
+    login-prompt: 登录以保存更多的播放列表
     new-playlist-btn-label: 创建新的播放列表
     page-heading: '你的播放列表：'
     change-loss-warning: 未保存的更改将会丢失，确定要继续吗？
