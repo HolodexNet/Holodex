@@ -60,7 +60,7 @@ export const asyncLang = {
     },
     "zh-CN": async () => {
         await import("dayjs/locale/zh-cn");
-        return import("@/locales/zh-TW/ui.yml");
+        return import("@/locales/zh-CN/ui.yml");
     },
     async es() {
         await import("dayjs/locale/es");
