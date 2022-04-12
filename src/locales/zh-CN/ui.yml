@@ -141,7 +141,7 @@ views:
     clips: 剪辑
     music: 音乐
     collabs: 联动
-    about: 说明
+    about: 简介
   channels:
     sortOptions:
       subscribers: 位订阅者
@@ -216,12 +216,14 @@ views:
     clipLanguageSelection: '显示以下语言的剪辑视频：'
     tlLanguageSelection: 在聊天窗口中显示以下语言的实时翻译
     defaultPage: 默认页面
+    videoFeedSettings: 视频相关设置
     languageSettings: 语言设置
     gridSize:
       - 大
       - 中
       - 小
     hideCollabStreamsLabel: 隐藏联动直播
+    ignoredTopicsLabel: 忽略以下标签
     ignoredTopicsMsg: 在主页和收藏夹页面中隐藏以下标签的视频
     theme: 主题
     moreSettings: 更多设置
@@ -338,6 +340,7 @@ about:
       请关闭浏览器中有关屏蔽第三方Cookies的功能，或将本网站以及youtube.com加入允许使用第三方Cookie的白名单中。
 
       快进 10 秒
+    ytchatFirefox: Firefox关闭阻止的相关教程，其他浏览器也大同小异。
     autoplayHeader: 视频无法自动播放！
     autoplayContent: 请在Google搜索如何在浏览器中启用自动播放功能。
     musicPlayer: 音乐播放器在手机上不能正常运作！
@@ -350,6 +353,9 @@ about:
       title: 什么是收藏夹？
       disappear:
         title: 我的收藏夹消失了/我无法添加进收藏夹
+      contents:
+        - >-
+          请确保你已经登录，并尝试一下在收藏夹界面强制刷新。
     mobile:
       title: 请问Holodex是否有安卓/iOS的app？
       content:
