@@ -134,6 +134,7 @@ component:
   placeholderVideo:
     streamPageBtn: 直播页面
     eventPageBtn: 活动页面
+    scheduledEvent: 已预订
     creditTitleText: '鸣谢：'
 views:
   channel:
@@ -243,8 +244,10 @@ views:
       showTLBtn: 显示翻译
       TLSettingsTitle: 翻译设置
       showSubtitle: 显示字幕
+      StickBottomSettingsDesc: 将翻译窗口置于YouTube聊天栏下方
       showVerifiedMessages: 显示已认证用户的信息
       showModeratorMessages: 显示管理员的信息
+      showVtuberMessages: 显示Vtuber的留言
       showLocalTime: 显示本地时间
       tlFontSize: 字体大小
       tlWindowSize: 翻译窗口大小(%)，设置为0%时为自动
@@ -297,6 +300,7 @@ views:
       addCustomVideo: 添加自定义视频
     fullScreen: 全屏显示
     changeLayout: 调整布局
+    done: 完成
     hints: 小贴士
     sync:
       syncSettings: 同步设置
@@ -394,6 +398,7 @@ about:
   changelog:
     title: 更新日志
 channelRequest:
+  RequestType: '请求类型：'
   Types:
     AddVtuber: 在Holodex上添加一位Vtuber▶️来跟踪TA的频道以及获取相关剪辑。
     ModifyExistingInfo: 修改现有频道信息
