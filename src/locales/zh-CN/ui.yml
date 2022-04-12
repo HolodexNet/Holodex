@@ -8,6 +8,8 @@ component:
     afterAboutPageHyperlink: 报告错误。
   channelList:
     signInToFavorite: 登录后以启用收藏夹功能
+    unfavoriteAllInGroup: 全部移出收藏夹
+    favoriteAllInGroup: 全部加入收藏夹
   channelInfo:
     stats: 统计信息
     videoCount: '{0}个视频'
@@ -42,6 +44,7 @@ component:
     edit: 编辑
     copiedToClipboard: 链接已复制到剪贴板
     copyLink: 复制Holodex链接
+    premiere: 首映
     googleCalendar: 添加到Google日历
     totalTLs: 聊天窗口中实时翻译数量
     tlPresence: 过去30分钟内有实时翻译
@@ -72,6 +75,9 @@ component:
     songsLabel: 歌曲
     recommendationsLabel: 推荐
     sameSourceClips: 来自相同的直播
+  paginateLoad:
+    newer: 较新
+    older: 较旧
   music:
     clearPlaylist: 清空
   channelMusic:
@@ -87,16 +93,22 @@ component:
     weeklyTopForOrg: '{0}本周最多播放'
   installPrompt:
     title: 安装Holodex
+    callToAction: 将Holodex添加到主屏幕后，观看效果更佳
     notNowBtn: 暂时不要
     installBtn: 安装
     iOS:
       popup: 在iOS设备上安装Holodex
+      afterExportIcon: 然后点击“添加到主屏幕”
       beforeExportIcon: 点击
+  media:
+    remove: 移除
   comment:
     close: 关闭
     readMore: 查看更多
   reportDialog:
     title: 举报
+    collabing: >-
+      该频道可能正在与{org}或收藏夹中的成员联动。您可以通过设置禁用此功能
     success: 举报已提交，谢谢！
     reasons:
       - 视频的标签不正确
@@ -127,7 +139,9 @@ views:
   channel:
     video: 视频
     clips: 剪辑
+    music: 音乐
     collabs: 联动
+    about: 简介
   channels:
     sortOptions:
       subscribers: 位订阅者
@@ -190,8 +204,10 @@ views:
     redirectModeMsg: >-
       点击视频缩略图时在YouTube上打开，点击视频标题时在Holodex上打开。
     useEnglishNameLabel: 使用英文名称
+    useEnglishNameMsg: 以英文显示VTuber的频道名称
     hideVideoThumbnailsLabel: 隐藏视频缩略图
     pushNotificationLabel: 推送通知（即将到来）
+    pushNotificationMsg: 启收藏夹频道的推送通知
     autoplayVideoLabel: 自动播放视频
     autoplayVideoMsg: 启用视频自动播放
     scrollModeLabel: 滚动模式
@@ -200,12 +216,15 @@ views:
     clipLanguageSelection: '显示以下语言的剪辑视频：'
     tlLanguageSelection: 在聊天窗口中显示以下语言的实时翻译
     defaultPage: 默认页面
+    videoFeedSettings: 视频相关设置
     languageSettings: 语言设置
     gridSize:
       - 大
       - 中
       - 小
     hideCollabStreamsLabel: 隐藏联动直播
+    ignoredTopicsLabel: 忽略以下标签
+    ignoredTopicsMsg: 在主页和收藏夹页面中隐藏以下标签的视频
     theme: 主题
     moreSettings: 更多设置
   app:
@@ -217,6 +236,7 @@ views:
     loginCallToAction: 登入以读取你自己的收藏夹！
   watch:
     theaterMode: 剧院模式（Alt + T）
+    mentionIconLabel: 提及
     chat:
       loading: 加载聊天中……
       hideTLBtn: 隐藏翻译
@@ -227,6 +247,7 @@ views:
       showModeratorMessages: 显示管理员的信息
       showLocalTime: 显示本地时间
       tlFontSize: 字体大小
+      tlWindowSize: 翻译窗口大小(%)，设置为0%时为自动
       retryBtn: 重试
       status:
         reconnecting: 正在重新连接……
@@ -239,6 +260,8 @@ views:
     saveToPlaylist: 将视频保存到当前播放列表
     likeOnYoutube: 在Youtube上给视频点赞
   favorites:
+    promptForAction: >-
+      为您最喜欢的VTuber创建列表，并在此页面查看他们最新的剪辑和直播视频。
     manageFavorites: 管理收藏夹
     close: 关闭
     showall: 显示全部
@@ -247,6 +270,8 @@ views:
     changeTopic:
       title: 修改直播标签
       button: 保存（可能需要5分钟才会生效）
+    channelMentions:
+      title: 提及的频道
     sources:
       title: 直播/剪辑来源（开发中）
   login:
@@ -269,6 +294,7 @@ views:
       custom: 我的布局
     video:
       selectLive: 选择直播
+      addCustomVideo: 添加自定义视频
     fullScreen: 全屏显示
     changeLayout: 调整布局
     hints: 小贴士
@@ -280,6 +306,7 @@ views:
   playlist:
     playlist-is-modified: 未保存
     item-last-updated: '最后更新：'
+    login-prompt: 登录以保存更多的播放列表
     new-playlist-btn-label: 创建新的播放列表
     page-heading: '你的播放列表：'
     change-loss-warning: 未保存的更改将会丢失，确定要继续吗？
@@ -294,11 +321,15 @@ time:
   distance_past_date: '{0}'
 editor:
   music:
+    add: 添加
     update: 更新
     titles:
+      songList: '歌曲列表：{0}'
       help: 教程
     itunesLookupPlaceholder: '（可选）在 iTunes 上查找'
+    moveRight2s: 快进2秒
     setToCurrentTime: 设置为当前时间({0})
+    moveLeft2s: 快退2秒
   exitMode: 退出编辑模式
   enterMode: 编辑视频
 about:
@@ -306,6 +337,11 @@ about:
   faq:
     title: 常见问题解答
     ytchatHeader: YouTube聊天窗口提示我尚未登陆
+    ytchatContent: >-
+      请关闭浏览器中有关屏蔽第三方Cookies的功能，或将本网站以及youtube.com加入允许使用第三方Cookie的白名单中。
+
+      快进 10 秒
+    ytchatFirefox: Firefox关闭阻止的相关教程，其他浏览器也大同小异。
     autoplayHeader: 视频无法自动播放！
     autoplayContent: 请在Google搜索如何在浏览器中启用自动播放功能。
     musicPlayer: 音乐播放器在手机上不能正常运作！
@@ -318,8 +354,14 @@ about:
       title: 什么是收藏夹？
       disappear:
         title: 我的收藏夹消失了/我无法添加进收藏夹
+      contents:
+        - >-
+          请确保你已经登录，并尝试一下在收藏夹界面强制刷新。
     mobile:
       title: 请问Holodex是否有安卓/iOS的app？
+      content:
+        summary: >-
+          我们正在努力开发中！目前你可以先通过“添加到主屏幕”来使用，我们通过大量调整让其与APP的体验不相伯仲。
     MugenClips:
       title: 什么是MugenClips？
     feedback:
