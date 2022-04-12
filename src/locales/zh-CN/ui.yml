@@ -8,6 +8,8 @@ component:
     afterAboutPageHyperlink: 报告错误。
   channelList:
     signInToFavorite: 登录后以启用收藏夹功能
+    unfavoriteAllInGroup: 全部移出收藏夹
+    favoriteAllInGroup: 全部加入收藏夹
   channelInfo:
     stats: 统计信息
     videoCount: '{0}个视频'
@@ -42,6 +44,7 @@ component:
     edit: 编辑
     copiedToClipboard: 链接已复制到剪贴板
     copyLink: 复制Holodex链接
+    premiere: 首映
     googleCalendar: 添加到Google日历
     totalTLs: 聊天窗口中实时翻译数量
     tlPresence: 过去30分钟内有实时翻译
