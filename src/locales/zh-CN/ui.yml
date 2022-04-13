@@ -75,6 +75,7 @@ component:
   relatedVideo:
     clipsLabel: 剪辑
     simulcastsLabel: 同时联播
+    refersLabel: 引用
     sourcesLabel: 来源
     songsLabel: 歌曲
     recommendationsLabel: 推荐
@@ -92,6 +93,7 @@ component:
     songTitle: 标题
     songCoveredBy: 翻唱自
     songDuration: 长度
+    sangOnTime: 演唱
   orgMusic:
     monthlyTopForOrg: '{0}本月最多播放'
     weeklyTopForOrg: '{0}本周最多播放'
@@ -113,6 +115,7 @@ component:
     title: 举报
     collabing: >-
       该频道可能正在与{org}或收藏夹中的成员联动。您可以通过设置禁用此功能
+    comments: Holodex应该采取什么行动？
     success: 举报已提交，谢谢！
     reasons:
       - 视频的标签不正确
@@ -157,6 +160,7 @@ views:
       org: 团体
     tabs:
       Vtuber: Vtuber
+      Subber: 翻译剪辑
       Favorites: 收藏夹
       Blocked: 黑名单
     favoritesAreEmpty: 您的收藏夹为空！
@@ -183,7 +187,11 @@ views:
     exportYtPlaylist: YouTube播放列表
     exportCsv: CSV文件
     selectionSelect50: 选择50个
+    exportYTExplanation: >-
+      此功能创建的 youtube 播放列表是 <b>未列出的</b> ，可能被Youtube 删除。 <br /> 因为Youtube的功能不完整， 您需要以下操作才能保存 <b>未列出的</b> Youtube 播放列表到您的账户。
     exportYTHeading: YouTube保存播放列表教程
+    exportYTInstructions: >-
+      <b class="red--text">第一步</b>：播放youtube播放列表，并将播放器用户界面更改为迷你播放器。<br/><br/><b class="red--text">第2步</b>：选择任何视频并将其添加到队列中<br/><br/><b class="red--text">第3步</b>：播放列表现在可以保存。单击“保存”保存它。
     sort:
       dateaddedEarliestFirst: 按加入日期排序（最早）
       dateaddedLatestFirst: 按加入日期排序（最新）
