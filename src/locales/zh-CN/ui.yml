@@ -67,7 +67,7 @@ component:
     searchLabel: 搜索
     type:
       channel: 频道
-      topic: 话题
+      topic: 标签
       org: 团体
       titledesc: 标题/描述
       comments: 留言
@@ -208,34 +208,46 @@ views:
       all: 全部
       official: 官方
       clip: 剪辑
+    unsupportedQuery: >-
+      目前无法通过 <kbd>视频内容</kbd> 与 <kbd>所属团体</kbd> 搜索<b>剪辑</b>视频。
     sortByLabel: 排序方式
     typeDropdownLabel: 类型
   settings:
     title: 设置
     darkModeLabel: 深色模式
+    darkModeMsg: 设定本站要以浅色模式还是深色模式呈现
     redirectModeLabel: 在Youtube上打开
     redirectModeMsg: >-
       点击视频缩略图时在YouTube上打开，点击视频标题时在Holodex上打开。
     useEnglishNameLabel: 使用英文名称
     useEnglishNameMsg: 以英文显示VTuber的频道名称
     hideVideoThumbnailsLabel: 隐藏视频缩略图
+    hideVideoThumbnailsMsg: >-
+      隐藏视频缩略图可以加快读取速度并减少移动端的网页卷轴需求
     pushNotificationLabel: 推送通知（即将到来）
     pushNotificationMsg: 启收藏夹频道的推送通知
     autoplayVideoLabel: 自动播放视频
     autoplayVideoMsg: 启用视频自动播放
     scrollModeLabel: 滚动模式
+    scrollModeMsg: 选择列表要使用分页/无限卷轴模式
     resetAllSettings: 重置所有设置/资料
     resetAllSettingsWarning: 所有数据将会丢失，是否继续？
     clipLanguageSelection: '显示以下语言的剪辑视频：'
     tlLanguageSelection: 在聊天窗口中显示以下语言的实时翻译
     defaultPage: 默认页面
+    defaultPageMsg: >-
+      进入 holodex.net 或是点击左上角网站标志时预设开启此页面
     videoFeedSettings: 视频相关设置
+    siteNavigationSettings: 全局设定
     languageSettings: 语言设置
+    gridSizeLabel: 缩略图/网格大小
+    gridSizeMsg: 设定首页和我的收藏页面的视频缩略图大小
     gridSize:
       - 大
       - 中
       - 小
     hideCollabStreamsLabel: 隐藏联动直播
+    hideCollabStreamsMsg: 隐藏与目前团体成员相关的联动直播
     ignoredTopicsLabel: 忽略以下标签
     ignoredTopicsMsg: 在主页和收藏夹页面中隐藏以下标签的视频
     theme: 主题
@@ -247,6 +259,8 @@ views:
     check_about_page: 前往关于页面查看最新的更新日志
     nowSupportsMultiOrg: Holodex现在可以显示更多的团体
     loginCallToAction: 登入以读取你自己的收藏夹！
+  about:
+    add_my_channel: 将我的频道加入Holodex
   watch:
     theaterMode: 剧院模式（Alt + T）
     mentionIconLabel: 提及
@@ -267,6 +281,8 @@ views:
       status:
         reconnecting: 正在重新连接……
         reconnectFailed: 无法重新连接
+        notLive: >-
+          直播尚未开始，请于直播开始15分钟后再行尝试连接
         connectedToChat: 已连接
         disconnectedToChat: 已断开连接
       archiveNeedExtension: >-
@@ -284,24 +300,32 @@ views:
     needlogin: 需要登录Holodex后才能编辑视频和歌曲的相关资料。
     changeTopic:
       title: 修改直播标签
+      info: >-
+        所有使用者都能为视频设定内容标签，但只有拥有“编辑者”权限的用户能够更改/删除已存在的内容标签。
       button: 保存（可能需要5分钟才会生效）
     channelMentions:
       title: 提及的频道
     sources:
       title: 直播/剪辑来源（开发中）
   login:
+    apikeyMsg: >-
+      您可以通过API密钥的方式来存取Holodex API。一个账号最多只能获取一个密钥。获取新API密钥后，旧密钥将会于0~24小时内过期。
     apikeyNew: 获取新的API密钥
+    ownedYtChannel: 拥有的YouTube频道
+    futureYtcOwnerMessage: >-
+      我们未来预计将会提供频道拥有者在Holodex上编辑视频资料的功能。
     linkAcc: 关联其他账号
     apikeyResetConfirm1: 确定要重置API密钥吗？
     apikeyResetConfirm2: 旧的API密钥将在0-24小时后过期，确定要重置吗？
     apikeyResetNvm: 什么事都没有发生。
     with:
-      - 使用 Google 登录
-      - 使用 Discord 登录
-      - 使用 Twitter 登录
+      - 使用 Google 帐号登录
+      - 使用 Discord 账号登录
+      - 使用 Twitter 账号登录
   multiview:
     confirmOverwrite: 覆盖当前的布局？
     confirmOverwriteYes: 确认
+    permalink: 永久链接
     muteAll: 全部静音
     unmuteAll: 取消全部静音
     autoLayoutTip: 点击任意频道即可使用自动布局模式开始观看
