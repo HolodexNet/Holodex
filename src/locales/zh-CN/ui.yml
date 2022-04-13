@@ -35,6 +35,7 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: 账号设置
     music: 歌曲
+    multiview: 多视图
     points: 点
     playlist: 播放队列
   videoCard:
@@ -66,11 +67,14 @@ component:
     searchLabel: 搜索
     type:
       channel: 频道
+      topic: 话题
       org: 团体
+      titledesc: 标题/描述
       comments: 留言
       videourl: 视频链接
   relatedVideo:
     clipsLabel: 剪辑
+    simulcastsLabel: 同时联播
     sourcesLabel: 来源
     songsLabel: 歌曲
     recommendationsLabel: 推荐
