@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 预定活动
   videoDescription:
     description: 说明
+  video:
+    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -85,6 +87,7 @@ component:
     older: 较旧
   music:
     clearPlaylist: 清空
+    trendingForOrg: '{0} 的趋势'
   channelMusic:
     recentSongsHeader: 近期歌曲
     weeklyTopPlaysHeader: 本周热门播放
@@ -139,9 +142,13 @@ component:
       clear-playlist: 清除播放列表
     save-error-not-logged-in: 您需要登录才能保存播放列表
   placeholderVideo:
+    discordCredit: '{0} 提供的活动数据来自：{1}'
+    datasourceCredit: 从 {0} 数据源获取的活动数据。
+    botCredit: 活动数据通过 {0} 数据源提供，由 {1} 创建。
     streamPageBtn: 直播页面
     eventPageBtn: 活动页面
     scheduledEvent: 已预订
+    editorCredit: 本活动由 Holodex编辑者 {0} 创建。
     creditTitleText: '鸣谢：'
 views:
   channel:
@@ -236,7 +243,7 @@ views:
     tlLanguageSelection: 在聊天窗口中显示以下语言的实时翻译
     defaultPage: 默认页面
     defaultPageMsg: >-
-      进入 holodex.net 或是点击左上角网站标志时预设开启此页面
+      进入 holodex.net 或是点击左上角网站logo时默认开启此页面。
     videoFeedSettings: 视频相关设置
     siteNavigationSettings: 全局设定
     languageSettings: 语言设置
@@ -248,6 +255,7 @@ views:
       - 小
     hideCollabStreamsLabel: 隐藏联动直播
     hideCollabStreamsMsg: 隐藏与目前团体成员相关的联动直播
+    hidePlaceholderStreams: 隐藏直播活动资讯
     ignoredTopicsLabel: 忽略以下标签
     ignoredTopicsMsg: 在主页和收藏夹页面中隐藏以下标签的视频
     theme: 主题
@@ -270,6 +278,9 @@ views:
       showTLBtn: 显示翻译
       TLSettingsTitle: 翻译设置
       showSubtitle: 显示字幕
+      expandTL: 展开翻译聊天室
+      tlStart: 消息起始处
+      StickBottomSettingLabel: 翻译留言置底
       StickBottomSettingsDesc: 将翻译窗口置于YouTube聊天栏下方
       showVerifiedMessages: 显示已认证用户的信息
       showModeratorMessages: 显示管理员的信息
@@ -326,20 +337,52 @@ views:
     confirmOverwrite: 覆盖当前的布局？
     confirmOverwriteYes: 确认
     permalink: 永久链接
+    presets: 版面配置
+    addframe: 增加新分割
     muteAll: 全部静音
     unmuteAll: 取消全部静音
+    muteOthers: 静音其余视频
+    muteOthersDetail: 仅开启指定一个视频的声音输出
     autoLayoutTip: 点击任意频道即可使用自动布局模式开始观看
+    createLayoutTip: 增加新分割以创造专属布局，亦能使用预设布局
+    openToolbarTip: 开启控制栏以开始使用多窗工具
+    archiveSync: 存档同步
     preset:
+      shareOnDiscord: >-
+        想到了什么很棒的布局方式吗？将该分割布局的永久链接分享至我们的 <a href="https://discord.gg/jctkgHBt4b">Discord服务器</a> 吧！
       custom: 我的布局
+      toggleAutoLayout: 是否纳入自动调整模式
+      remove: 删除此布局
+      desktop: Pc布局
+      mobile: 手机布局
+      autoLayout: 自动排版模式
+    presetEditor:
+      title: 储存目前布局
+      name: 布局名称
+      autoLayout: 在自动排版模式中启用此布局
     video:
       selectLive: 选择直播
       addCustomVideo: 添加自定义视频
     fullScreen: 全屏显示
+    mediaControls: 媒体控制面板
+    mediaControlsEmpty: 加入任意视频后即会显示控制按钮
+    editAutoLayout: 自动排版设定
     changeLayout: 调整布局
     done: 完成
     hints: 小贴士
+    presetsHint: 开启版面配置来变更布局与自动排版模式的设定
+    mediaControlsHint1: 使用媒体控制面板来静音或是同步 (
+    mediaControlsHint2: ) 直播
+    dragDropHint: 从置顶栏拖曳直播至不同分割来自定义显示位置
+    reorderHint: 使用布局调整面板来快速更改视频/聊天室位置
+    reorderLayout: 布局调整面板
+    reorderLayoutDetail: 将图标拖放到所需位置
     sync:
+      nothingToSync: >-
+        没有视频可供同步，请开启两个以上且直播时间点重叠的视频存档(例如多视角的联动直播)
       syncSettings: 同步设置
+      syncSettingsDetail: >-
+        本功能基于直播的开始时间进行同步，有可能因直播途中经历的技术问题/移除片段的部分而失效，请使用手动调整功能来同步此类存档
   mugen:
     welcome: >-
       欢迎来到MugenClips！在这里大家都能观看随机播放出来的同一段Hololive英文剪辑，还可以和来自世界各地的Hololive粉丝一起聊天。如果你改变了进度条，刷新页面即可恢复与别人一样的进度。
@@ -349,12 +392,17 @@ views:
     login-prompt: 登录以保存更多的播放列表
     new-playlist-btn-label: 创建新的播放列表
     page-heading: '你的播放列表：'
+    page-instruction: 点击任一播放列表将其启用
     change-loss-warning: 未保存的更改将会丢失，确定要继续吗？
   extension:
     title: Holodex Plus 扩展程序
+    features: 特色功能
     featureset:
+      one: 于多窗工具与视频页面启用存档聊天室
       two: 在Holodex播放页面上启用视频点赞功能
       three: 修复Youtube聊天窗口中内存泄漏的问题
+      four: >-
+        修复 YouTube 播放器的实验性功能（例：禁用多窗直播 / 直播等待室未显示缩略图）
 time:
   soon: 即将开始
   diff_future_date: 将在{0}开始直播({1})
@@ -363,16 +411,27 @@ editor:
   music:
     add: 添加
     update: 更新
+    permission: >-
+      您需要拥有或获取高于“编辑者”身分组的权限才能更新/删除歌曲。请至 <a class='white--text' href='/about'>Discord服务器</a> 申请成为编辑者或是反馈任何问题。
     titles:
+      addSong: '歌曲资料：新增歌曲'
       songList: '歌曲列表：{0}'
       help: 教程
     itunesLookupPlaceholder: '（可选）在 iTunes 上查找'
     moveRight2s: 快进2秒
+    testEnd: 于结尾前三秒播放试听
     setToCurrentTime: 设置为当前时间({0})
     moveLeft2s: 快退2秒
+    trackNameInput: 歌曲名称
+    originalArtistInput: 原唱
+    testStart: 测试起始点
+    startInput: 起始时间
+    endInput: '总播放秒数：(结束于 @ {0})'
+    inheritItunesMusic: '使用 iTunes 上的资料设定音乐长度：{0}'
   exitMode: 退出编辑模式
   enterMode: 编辑视频
 about:
+  quicklinks: 相关链接
   discordBtn: Holodex Discord
   faq:
     title: 常见问题解答
@@ -390,8 +449,16 @@ about:
     videoLinkage: 我该如何确保视频关联到相应的Vtuber？
     videoLinkageContent: >-
       Holodex上的视频信息都由系统读取自视频说明。如果你正在制作剪辑，请务必记得在视频说明内附上直播的官方链接。如果剪辑是粉丝制作的二创内容（例如B站），请确保视频说明里附带相关Vtuber的官方YouTube频道。如果视频说明里没有附带任何Vtuber的频道，那么这个剪辑将不会出现在Holodex上，因为所有剪辑都必须关联到Holodex上已知的Vtuber。
+    quitHolodex: "我是翻译/剪辑者且我想要将自己的频道从Holodex资料库中移除\\r\n"
+    quitHolodexContent: >-
+      祝您一路顺风 :( 如果有任何需要协助的，请让我们知道。如果您依然想移除自己频道的相关资料，请至 Holodex 的 Discord服务器 发送消息给我们。
     favorite:
       title: 什么是收藏夹？
+      Contents:
+        - >-
+          “我的收藏”是个对于您所关注的Vtuber的最新动态整理功能，只要通过点击
+        - >-
+          的爱心图标，即可将特定Vtuber加入我的收藏！目前此功能尚不支持收藏剪辑频道，但您仍能通过订阅或是其他方法支持他们！
       disappear:
         title: 我的收藏夹消失了/我无法添加进收藏夹
       contents:
@@ -402,8 +469,26 @@ about:
       content:
         summary: >-
           我们正在努力开发中！目前你可以先通过“添加到主屏幕”来使用，我们通过大量调整让其与APP的体验不相伯仲。
+        android:
+          - 'Android Chrome：在浏览器打开本站，点击屏幕右上角的三点按钮'
+          - 然后选择“添加到主屏幕”。
+        ios:
+          - >-
+            iOS Safari：于浏览器打开本站后，点击Safari底部带有向上箭头的图标
+          - 然后选择“添加到主屏幕”。
     MugenClips:
       title: 什么是MugenClips？
+      contents:
+        - >-
+          MugenClips（InfiniteClips）是一个让各位用户在本站上一起随机观看由各烤肉MAN制作的翻译剪辑视频，同时可以一起聊天的功能（※仅支持英文视频）
+    subber:
+      title: 我是烤肉/剪辑MAN但我在 Holodex 上找不到自己的频道/剪辑
+      contents:
+        - >-
+          请至频道页面确认自己的频道是否有被列于剪辑频道上，如果没有的话请填写
+        - 此表单
+        - >-
+          ，我们将会手动将您的频道加入资料库。如果您的频道已经在资料库裡的话，请确认频道的视频描述包含正确的 Youtube 直播来源 / 频道链接。
     feedback:
       title: 我想提供建议或为这个项目做出贡献
       contents:
@@ -433,10 +518,17 @@ about:
       - 二次创作管理条例
   changelog:
     title: 更新日志
+  news:
+    title: 最新消息
+  bookmarklet:
+    title: 书签跳转功能
+    description: >-
+      将以下书签脚本拖拉至您的浏览器书签栏，能更轻松的从 YouTube 页面快速跳转至 Holodex 页面
 channelRequest:
   RequestType: '请求类型：'
   Types:
     AddVtuber: 在Holodex上添加一位Vtuber▶️来跟踪TA的频道以及获取相关剪辑。
+    AddClipper: 向Holodex添加剪辑/烤肉MAN频道
     ModifyExistingInfo: 修改现有频道信息
     DeleteChannel: 删除我的频道
   DirectContactDisclaimer: >-
@@ -454,6 +546,9 @@ channelRequest:
   CommentsHint: 还有其他想告诉我们
   VtuberRequirementText: >-
     个人势Vtuber最低要求2万名订阅者以上，但如果这个Vtuber所属团队已在Holodex名单内，则不需要达到以上要求。<br /><br />至于是否添加新的团体进Holodex名单内，将取决于他们的平均订阅数量。
+  ClipperRequirementText: >-
+    翻译剪辑频道的审核标准如下：该频道至少需要有两个月的视频上传历史并且定时更新频道内容或在一个月内发布20多个剪辑。此外管理员也会依照该频道内容的质量来决定是否通过审核—Holodex不接受每天洗版式的大量更新短视频，或是上传的翻译剪辑内容几乎全数都低于&lt;一分钟的频道，使用钓鱼/误导式缩图的翻译剪辑片段也包含在不通过的标准之内。<br /><br />另外一点要注意的是，剪辑者应于视频描述字段填写「实况/视频出处」、「@YouTube频道」或是「Vtuber频道连接」来注明视频来源，过度标注（例如在描述字段填写一堆彩虹社成员连接）会增加Holodex编辑者群们的负担，而没有标注（未标明来源）将会导致Holodex后台无法判定其内容使否为精华剪辑，进而导致该视频不会出现于Holodex页面上。<br /><br />Holodex数据库虽然有标注的自动错误修正机制，但此机制运作并不稳定，过度标注可能会导致管理员们被迫于Holodex上移除其频道内容以避免相关问题重复出现。
   DeletionRequirementText: >-
     仅限频道的所有者提出删除请求，请提供您的联系信息以便我们核实。
+  PageTitle: Holodex频道追踪申请表
   ChannelURLErrorFeedback: 格式必须为https://www.youtube.com/channel/UC_____
