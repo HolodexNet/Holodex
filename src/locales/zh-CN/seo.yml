@@ -9,5 +9,9 @@ channel:
     title: '{{english_name}}的剪辑、直播、歌曲和联动 - Holodex'
     description: >-
       找到关于{{english_name}}的{{clip_count}}部剪辑以及{{video_count}}个直播视频，将其加入你的Holodex收藏夹就可以知道最新的直播动态。
+    descriptionWithTopic: >-
+      在 Holodex 上寻找 {{english_name}} 关于 {{ topics }} 的实况。将 {{clip_count}} 部剪辑与 {{video_count}} 次直播一网打尽！
   clip:
     title: '{{english_name}}概览 - Holodex'
+    description: >-
+      查看由{{english_name}} 所制作的{{video_count}} 部翻译剪辑吧！
