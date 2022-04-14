@@ -226,7 +226,7 @@
                       class="d-flex flex-row align-center rounded-lg Timecard"
                       elevation="2"
                       outlined
-                      :style="{ fontsize: fontSize + 'px', width: entries[idx].Duration/1000*secToPx + 'px'}"
+                      :style="{ fontsize: fontSize + 'px', width: cardWidth(index) + 'px'}"
                     >
                       <div style="width: 3px; background-color: transparent; height: 100%; cursor: ew-resize;" @mousedown="rulerMouseDown($event, idx, 0);" />
                       <EnhancedEntry
@@ -520,6 +520,8 @@ export default {
             tableHeight: 0,
             selectedEntry: -1,
             fontSize: 15,
+            videoData: undefined,
+            transactionLog: [],
             // ------ COLOUR -------
             colourPick: 0,
             colourDialogue: false,
@@ -548,7 +550,7 @@ export default {
             // ---- TIMELINE ----
             timelineDur: 3600,
             secToPx: 100,
-            secPerBar: 120,
+            secPerBar: 60,
             barHeight: 25,
             jumpScroll: true,
             barCount: 0,
@@ -728,40 +730,27 @@ export default {
         },
         timerTime() {
             this.scrollCalculator();
-            if (this.entries.length === 0) {
+
+            if (this.timecardIdx.length === 0) {
                 this.displayEntry = -1;
                 return;
             }
 
-            if (this.displayEntry < 0) {
-                for (let i = 0; i < this.entries.length; i += 1) {
-                    if (this.entries[i].Time > this.timerTime) {
-                        this.displayEntry = i - 1;
-                        return;
-                    } if (i === this.entries.length - 1) {
-                        this.displayEntry = i;
-                        return;
-                    }
+            if (this.timerTime < this.entries[this.timecardIdx[0]].Time) {
+                this.displayEntry = -1;
+                return;
+            }
+
+            if (this.entries[this.displayEntry]) {
+                if ((this.timerTime > this.entries[this.displayEntry].Time) && (this.entries[this.displayEntry].Time + this.entries[this.displayEntry].Duration > this.timerTime)) {
+                    return;
                 }
-            } else if (this.entries[this.displayEntry].Time > this.timerTime) {
-                for (let i = this.displayEntry - 1; i > 0; i -= 1) {
-                    if (this.entries[i].Time + this.entries[i].Duration > this.timerTime) {
-                        this.displayEntry = i;
-                        return;
-                    } if (i >= this.entries.length) {
-                        this.displayEntry = 0;
-                        return;
-                    }
-                }
-            } else if (this.entries[this.displayEntry].Time + this.entries[this.displayEntry].Duration < this.timerTime) {
-                for (let i = this.displayEntry + 1; i < this.entries.length; i += 1) {
-                    if (this.entries[i].Time > this.timerTime) {
-                        this.displayEntry = i - 1;
-                        return;
-                    } if (i === this.entries.length - 1) {
-                        this.displayEntry = i;
-                        return;
-                    }
+            }
+
+            for (let i = this.timecardIdx.length - 1; i >= 0; i -= 1) {
+                if (this.timerTime > this.entries[this.timecardIdx[i]].Time) {
+                    this.displayEntry = this.timecardIdx[i];
+                    return;
                 }
             }
         },
@@ -801,6 +790,7 @@ export default {
         },
         addEntry() {
             const dt = {
+                id: Date.now(),
                 Time: this.timerTime,
                 Duration: 3000,
                 SText: this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
@@ -823,7 +813,6 @@ export default {
                     inserted = true;
                     this.inputString = "";
                     this.reloadDisplayCards();
-                    return;
                 }
             }
 
@@ -836,6 +825,30 @@ export default {
                 this.inputString = "";
                 this.reloadDisplayCards();
             }
+
+            backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, [{
+                type: "Add",
+                data: {
+                    lang: this.TLLang.value,
+                    tempid: dt.id,
+                    name: this.userdata.user.username,
+                    timestamp: Math.floor(this.videoData.start_actual + this.timerTime),
+                    message: dt.SText,
+                    duration: dt.Duration,
+                },
+            }]).then((e) => {
+                console.log(e);
+                e.data.forEach((e2) => {
+                    if (e2.type === "Add") {
+                        for (let idx = 0; idx < this.entries.length; idx += 1) {
+                            if (this.entries[idx].id === e2.tempid) {
+                                this.entries[idx].id = e2.res.id;
+                                break;
+                            }
+                        }
+                    }
+                });
+            });
         },
         // ----------------------- TIMER CONTROLLER -----------------------
         proceedTimer(lastTime: number) {
@@ -1521,6 +1534,14 @@ export default {
             }
             this.reloadDisplayCards();
             this.selectedEntry = -1;
+            backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, [{
+                type: "Delete",
+                data: {
+                    id: tempEntries.id,
+                },
+            }]).then((e) => {
+                console.log(e);
+            });
         },
         setStartEntry() {
             this.timecardIdx = [];
@@ -1535,6 +1556,20 @@ export default {
             this.reloadDisplayCards();
         },
         shiftToCurrentTime() {
+            backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, [{
+                type: "Change",
+                data: {
+                    lang: this.TLLang.value,
+                    id: this.entries[this.selectedEntry].id,
+                    name: this.userdata.user.username,
+                    timestamp: this.videoData.start_actual + this.entries[this.selectedEntry].Time,
+                    message: this.entries[this.selectedEntry].SText,
+                    duration: this.entries[this.selectedEntry].Duration,
+                },
+            }]).then((e) => {
+                console.log(e);
+            });
+            /*
             if (this.selectedEntry >= 0) {
                 const timeTarget = this.timerTime;
                 const timeshift = timeTarget - this.entries[this.selectedEntry].Time;
@@ -1553,107 +1588,28 @@ export default {
                 }
             }
             this.selectedEntry = -1;
+            */
         },
         //= ======================== ENTRY CONTROLLER ========================
 
         //= ------------------------ TIMELINE CONTROLLER ------------------------
-        rerenderTimeline() {
-            if (this.$refs.TimeCanvas1) {
-                let ctx: CanvasRenderingContext2D | null = null;
-                for (let i = 0; i < 3; i += 1) {
-                    switch (i) {
-                        case 0:
-                            ctx = this.$refs.TimeCanvas1.getContext("2d");
-                            this.$refs.TimeCanvas1.width = this.secToPx * this.secPerBar;
-                            this.$refs.TimeCanvas1.height = this.barHeight;
-                            break;
-
-                        case 1:
-                            ctx = this.$refs.TimeCanvas2.getContext("2d");
-                            this.$refs.TimeCanvas2.width = this.secToPx * this.secPerBar;
-                            this.$refs.TimeCanvas2.height = this.barHeight;
-                            break;
-
-                        case 2:
-                            ctx = this.$refs.TimeCanvas3.getContext("2d");
-                            this.$refs.TimeCanvas3.width = this.secToPx * this.secPerBar;
-                            this.$refs.TimeCanvas3.height = this.barHeight;
-                            break;
-
-                        default:
-                            ctx = null;
-                            break;
-                    }
-
-                    if (ctx) {
-                        ctx.save();
-                        ctx.strokeStyle = "white";
-                        ctx.fillStyle = "white";
-                        ctx.font = "14px Ubuntu";
-                        ctx.lineWidth = 0.35;
-
-                        if (this.secToPx <= 60) {
-                            for (let x = 0; x / 10 < this.secPerBar; x += 10) {
-                                ctx.beginPath();
-                                ctx.moveTo((x * this.secToPx) / 10, 0);
-                                ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
-                                ctx.stroke();
-
-                                ctx.fillText(this.secToTimeString(x / 10 + i * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
-                            }
-
-                            ctx.restore();
-                        } else if (this.secToPx <= 100) {
-                            for (let x = 0; x / 10 < this.secPerBar; x += 2) {
-                                if (x % 10 === 0) {
-                                    ctx.beginPath();
-                                    ctx.moveTo((x * this.secToPx) / 10, 0);
-                                    ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
-                                    ctx.stroke();
-
-                                    ctx.fillText(this.secToTimeString(x / 10 + i * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
-                                } else {
-                                    ctx.beginPath();
-                                    ctx.moveTo((x * this.secToPx) / 10, 0);
-                                    ctx.lineTo((x * this.secToPx) / 10, (this.barHeight * 2.0) / 3.0);
-                                    ctx.stroke();
-                                }
-                            }
-
-                            ctx.restore();
-                        } else {
-                            for (let x = 0; x / 10 < this.secPerBar; x += 1) {
-                                if (x % 10 === 0) {
-                                    ctx.beginPath();
-                                    ctx.moveTo((x * this.secToPx) / 10, 0);
-                                    ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
-                                    ctx.stroke();
-
-                                    ctx.fillText(this.secToTimeString(x / 10 + i * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
-                                } else if (x % 2 === 0) {
-                                    ctx.beginPath();
-                                    ctx.moveTo((x * this.secToPx) / 10, 0);
-                                    ctx.lineTo((x * this.secToPx) / 10, (this.barHeight * 2.0) / 3.0);
-                                    ctx.stroke();
-                                } else {
-                                    ctx.beginPath();
-                                    ctx.moveTo((x * this.secToPx) / 10, 0);
-                                    ctx.lineTo((x * this.secToPx) / 10, (this.barHeight * 2.0) / 3.0);
-                                    ctx.stroke();
-                                }
-                            }
-
-                            ctx.restore();
-                        }
-                    }
-                }
-            }
-        },
         cardFiller(index) {
             if (index === 0) {
+                if (this.entries[this.timecardIdx[index]].Time / 1000 < this.secPerBar * this.barCount) {
+                    return 0;
+                }
                 return ((this.entries[this.timecardIdx[index]].Time / 1000 - this.secPerBar * this.barCount) * this.secToPx);
             }
             return (((this.entries[this.timecardIdx[index]].Time - this.entries[this.timecardIdx[index - 1]].Time - this.entries[this.timecardIdx[index - 1]].Duration) / 1000) * this.secToPx);
+        },
+        cardWidth(index) {
+            if ((index === 0) && (this.entries[this.timecardIdx[index]].Time / 1000 < this.secPerBar * this.barCount)) {
+                return (((this.entries[this.timecardIdx[index]].Duration + this.entries[this.timecardIdx[index]].Time) / 1000 - this.secPerBar * this.barCount) * this.secToPx);
+            } if ((index === this.timecardIdx.length - 1)
+                && ((this.entries[this.timecardIdx[index]].Duration + this.entries[this.timecardIdx[index]].Time) / 1000 > this.secPerBar * (this.barCount + 3))) {
+                return ((this.secPerBar * (this.barCount + 3) - this.entries[this.timecardIdx[index]].Time / 1000) * this.secToPx);
+            }
+            return ((this.entries[this.timecardIdx[index]].Duration / 1000) * this.secToPx);
         },
         secToTimeString(secInput: number, msOutput: boolean = true, Full: boolean = false): string {
             let Sec = secInput;
@@ -1720,6 +1676,101 @@ export default {
 
             this.$refs.TimelineDiv.scrollLeft = (this.timerTime / 1000 - this.barCount * this.secPerBar) * this.secToPx;
         },
+        renderCtx(ctx: CanvasRenderingContext2D, idx:number) {
+            ctx.save();
+            ctx.strokeStyle = "white";
+            ctx.fillStyle = "white";
+            ctx.font = "14px Ubuntu";
+            ctx.lineWidth = 0.35;
+
+            if (this.secToPx <= 60) {
+                for (let x = 0; x / 10 < this.secPerBar; x += 10) {
+                    ctx.beginPath();
+                    ctx.moveTo((x * this.secToPx) / 10, 0);
+                    ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
+                    ctx.stroke();
+
+                    ctx.fillText(this.secToTimeString(x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                }
+
+                ctx.restore();
+            } else if (this.secToPx <= 100) {
+                for (let x = 0; x / 10 < this.secPerBar; x += 2) {
+                    if (x % 10 === 0) {
+                        ctx.beginPath();
+                        ctx.moveTo((x * this.secToPx) / 10, 0);
+                        ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
+                        ctx.stroke();
+
+                        ctx.fillText(this.secToTimeString(x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                    } else {
+                        ctx.beginPath();
+                        ctx.moveTo((x * this.secToPx) / 10, 0);
+                        ctx.lineTo((x * this.secToPx) / 10, (this.barHeight * 2.0) / 5.0);
+                        ctx.stroke();
+                    }
+                }
+
+                ctx.restore();
+            } else {
+                for (let x = 0; x / 10 < this.secPerBar; x += 1) {
+                    if (x % 10 === 0) {
+                        ctx.beginPath();
+                        ctx.moveTo((x * this.secToPx) / 10, 0);
+                        ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
+                        ctx.stroke();
+
+                        ctx.fillText(this.secToTimeString(x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                    } else if (x % 2 === 0) {
+                        ctx.beginPath();
+                        ctx.moveTo((x * this.secToPx) / 10, 0);
+                        ctx.lineTo((x * this.secToPx) / 10, (this.barHeight * 2.0) / 5.0);
+                        ctx.stroke();
+                    } else {
+                        ctx.beginPath();
+                        ctx.moveTo((x * this.secToPx) / 10, 0);
+                        ctx.lineTo((x * this.secToPx) / 10, (this.barHeight * 2.0) / 5.0);
+                        ctx.stroke();
+                    }
+                }
+
+                ctx.restore();
+            }
+        },
+        rerenderTimeline() {
+            if (this.$refs.TimeCanvas1) {
+                let ctx: CanvasRenderingContext2D | null = null;
+                for (let i = 0; i < 3; i += 1) {
+                    switch (i) {
+                        case 0:
+                            ctx = this.$refs.TimeCanvas1.getContext("2d");
+                            this.$refs.TimeCanvas1.width = this.secToPx * this.secPerBar;
+                            this.$refs.TimeCanvas1.height = this.barHeight;
+                            break;
+
+                        case 1:
+                            ctx = this.$refs.TimeCanvas2.getContext("2d");
+                            this.$refs.TimeCanvas2.width = this.secToPx * this.secPerBar;
+                            this.$refs.TimeCanvas2.height = this.barHeight;
+                            break;
+
+                        case 2:
+                            ctx = this.$refs.TimeCanvas3.getContext("2d");
+                            this.$refs.TimeCanvas3.width = this.secToPx * this.secPerBar;
+                            this.$refs.TimeCanvas3.height = this.barHeight;
+                            break;
+
+                        default:
+                            ctx = null;
+                            break;
+                    }
+
+                    if (ctx) {
+                        this.renderCtx(ctx, i);
+                    }
+                }
+            }
+        },
         renderForward(): void {
             let ctx = this.$refs.TimeCanvas1.getContext("2d");
             if (ctx) {
@@ -1740,34 +1791,7 @@ export default {
             this.$refs.TimeCanvas3.height = this.barHeight;
 
             if (ctx) {
-                ctx.save();
-                ctx.strokeStyle = "white";
-                ctx.fillStyle = "white";
-                ctx.font = "14px Ubuntu";
-                ctx.lineWidth = 0.35;
-
-                for (let x = 0; x / 10 < this.secPerBar; x += 1) {
-                    if (x % 10 === 0) {
-                        ctx.beginPath();
-                        ctx.moveTo((x * this.secToPx) / 10, 0);
-                        ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
-                        ctx.stroke();
-
-                        ctx.fillText(this.secToTimeString(x / 10 + 2 * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
-                    } else if (x % 2 === 0) {
-                        ctx.beginPath();
-                        ctx.moveTo((x * this.secToPx) / 10, 0);
-                        ctx.lineTo((x * this.secToPx) / 10, (this.barHeight * 2.0) / 3.0);
-                        ctx.stroke();
-                    } else {
-                        ctx.beginPath();
-                        ctx.moveTo((x * this.secToPx) / 10, 0);
-                        ctx.lineTo((x * this.secToPx) / 10, (this.barHeight * 1.0) / 3.0);
-                        ctx.stroke();
-                    }
-                }
-
-                ctx.restore();
+                this.renderCtx(ctx, 2);
             }
         },
         renderBackward(): void {
@@ -1790,34 +1814,7 @@ export default {
             this.$refs.TimeCanvas1.height = this.barHeight;
 
             if (ctx) {
-                ctx.save();
-                ctx.strokeStyle = "white";
-                ctx.fillStyle = "white";
-                ctx.font = "14px Ubuntu";
-                ctx.lineWidth = 0.35;
-
-                for (let x = 0; x / 10 < this.secPerBar; x += 1) {
-                    if (x % 10 === 0) {
-                        ctx.beginPath();
-                        ctx.moveTo((x * this.secToPx) / 10, 0);
-                        ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
-                        ctx.stroke();
-
-                        ctx.fillText(this.secToTimeString(x / 10 + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
-                    } else if (x % 2 === 0) {
-                        ctx.beginPath();
-                        ctx.moveTo((x * this.secToPx) / 10, 0);
-                        ctx.lineTo((x * this.secToPx) / 10, (this.barHeight * 2.0) / 3.0);
-                        ctx.stroke();
-                    } else {
-                        ctx.beginPath();
-                        ctx.moveTo((x * this.secToPx) / 10, 0);
-                        ctx.lineTo((x * this.secToPx) / 10, (this.barHeight * 1.0) / 3.0);
-                        ctx.stroke();
-                    }
-                }
-
-                ctx.restore();
+                this.renderCtx(ctx, 0);
             }
         },
         reloadDisplayCards():void {
@@ -2011,10 +2008,62 @@ export default {
         changeUsernameClick() {
             this.$router.push({ path: "/login" });
         },
-        settingOKClick() {
+        async settingOKClick() {
             this.activeURLInput = this.activeURLStream;
             const parseVideoID = getVideoIDFromUrl(this.activeURLStream);
             if (parseVideoID) {
+                const vidData = await (await backendApi.video(parseVideoID.id, this.TLLang.value)).data;
+                this.videoData = {
+                    id: parseVideoID.id,
+                    status: vidData.status,
+                    start_actual: Date.parse(vidData.start_actual),
+                };
+
+                this.timecardIdx = [];
+                this.entries = [];
+                const fetchChat = await (await backendApi.chatHistory(vidData.id, {
+                    lang: this.TLLang.value,
+                    verified: 0,
+                    moderator: 0,
+                    vtuber: 0,
+                    limit: 100000,
+                    mode: 1,
+                    creator_id: this.userdata.user.id,
+                })).data.filter((e) => (e.timestamp > this.videoData.start_actual)).map((e) => {
+                    e.timestamp -= this.videoData.start_actual;
+                    return e;
+                });
+
+                for (let i = 0; i < fetchChat.length; i += 1) {
+                    const dt = {
+                        id: fetchChat[i].id,
+                        Time: fetchChat[i].timestamp,
+                        SText: fetchChat[i].message,
+                        Profile: 0,
+                    };
+
+                    if (fetchChat[i].duration) {
+                        this.entries.push({
+                            ...dt,
+                            Duration: Number(fetchChat[i].duration),
+                        });
+                    } else if (i === fetchChat.length - 1) {
+                        this.entries.push({
+                            ...dt,
+                            Duration: 3000,
+                        });
+                    } else {
+                        this.entries.push({
+                            ...dt,
+                            Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
+                        });
+                    }
+
+                    if (i === fetchChat.length - 1) {
+                        this.reloadDisplayCards();
+                    }
+                }
+
                 if (this.vidPlayer) {
                     this.unloadVideo();
                     setTimeout(() => {
@@ -2024,7 +2073,6 @@ export default {
                     this.loadVideo();
                 }
             }
-
             this.modalNexus = false;
         },
     },

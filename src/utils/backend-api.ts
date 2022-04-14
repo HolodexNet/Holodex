@@ -9,7 +9,8 @@ export const API_BASE_URL = `${window.location.origin}/api`;
 export const SITE_BASE_URL = `${window.location.origin}`;
 
 export const axiosInstance = (() => {
-    const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
+    // const instance = axios.create({ baseURL: `${API_BASE_URL}/v2` });
+    const instance = axios.create({ baseURL: "https://staging.holodex.net/api/v2" });
     return instance;
 })();
 
@@ -342,7 +343,7 @@ export default {
     },
     postTL(videoID, apiKey, langCode, body) {
         return axiosInstance.post(
-            `https://holodex.net/api/v2/videos/${videoID}/chats?lang=${langCode}`,
+            `/videos/${videoID}/chats?lang=${langCode}`,
             body,
             {
                 headers: apiKey ? { "X-APIKEY": apiKey } : {},
@@ -351,7 +352,24 @@ export default {
     },
     postBulkTL(videoID, apiKey, langCode, body) {
         return axiosInstance.post(
-            `https://holodex.net/api/v2/videos/${videoID}/chatsBulk?lang=${langCode}`,
+            `/videos/${videoID}/chatsBulk?lang=${langCode}`,
+            body,
+            {
+                headers: apiKey ? { "X-APIKEY": apiKey } : {},
+            },
+        );
+    },
+    getTLStats(apiKey) {
+        return axiosInstance.get(
+            "/tlutil",
+            {
+                headers: apiKey ? { "X-APIKEY": apiKey } : {},
+            },
+        );
+    },
+    postTLLog(videoID, apiKey, body) {
+        return axiosInstance.post(
+            `/videos/${videoID}/scripteditor/log`,
             body,
             {
                 headers: apiKey ? { "X-APIKEY": apiKey } : {},
