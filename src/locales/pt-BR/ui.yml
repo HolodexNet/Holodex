@@ -2,7 +2,7 @@
 component:
   apiError:
     title: Gomenasorry!
-    textBeforeTwitter: 'Ocorreu um erro recuperando o conteúdo, verifique o twitter '
+    textBeforeTwitter: 'Houve um erro ao carregar conteúdo, verifique o twitter '
     textAfterTwitter: ' ou relate o erro por meio da '
     aboutPage: página de Informações
     afterAboutPageHyperlink: .

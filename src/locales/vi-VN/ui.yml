@@ -49,6 +49,9 @@ component:
     googleCalendar: Thêm vào Google Calendar
     totalTLs: Tổng số live chat đã dịch
     tlPresence: Những dịch giả hoạt động trong 30 phút gần nhất
+    typeScheduledYT: Stream đã lên lịch
+    typeExternalStream: Stream từ trang khác
+    typeEventPlaceholder: Sự kiện đã lên lịch
   videoDescription:
     description: Mô tả
   description:
@@ -74,16 +77,19 @@ component:
     simulcastsLabel: phát sóng cùng thời điểm
     refersLabel: đề cập đến
     sourcesLabel: nguồn
-    songsLabel: các bài hát
+    songsLabel: bài hát
     recommendationsLabel: đề xuất
+    sameSourceClips: Đến từ cùng stream
   paginateLoad:
     newer: Mới hơn
     older: Cũ hơn
   music:
     clearPlaylist: Xoá tất cả
+    trendingForOrg: Xu hướng cho {0}
   channelMusic:
     recentSongsHeader: Bài hát gần đây
     weeklyTopPlaysHeader: Top lượt nghe trong tuần
+    trending: Xu hướng
   songList:
     songTitle: Tiêu đề
     songCoveredBy: Cover bởi
@@ -133,6 +139,15 @@ component:
       delete-playlist: Xoá danh sách
       clear-playlist: Xoá
     save-error-not-logged-in: Bạn cần phải đăng nhập để lưu danh sách
+  placeholderVideo:
+    discordCredit: 'Dữ liệu sự kiện được cung cấp bởi {0} từ: {1}'
+    datasourceCredit: Dữ liệu sự kiện được nạp từ nguồn dữ liệu {0}.
+    botCredit: Dữ liệu sự kiện được cung cấp từ nguồn dữ liệu {0}, tạo bởi {1}.
+    streamPageBtn: Trang Stream
+    eventPageBtn: Trang Sự kiện
+    scheduledEvent: Được lên lịch
+    editorCredit: Sự kiện được cài đặt bởi Editor {0} của Holodex.
+    creditTitleText: 'Nguồn:'
 views:
   channel:
     video: Video
@@ -238,9 +253,11 @@ views:
       - Nhỏ
     hideCollabStreamsLabel: Ẩn Stream Collab
     hideCollabStreamsMsg: Ẩn những stream collab khỏi trang Yêu thích
+    hidePlaceholderStreams: Ẩn các stream đã lên lịch
     ignoredTopicsLabel: Topic đã bỏ qua
     ignoredTopicsMsg: Ẩn các video có các topic này khỏi Trang chủ và Trang ưa thích
     theme: Giao diện
+    moreSettings: Các cài đặt bổ sung
   app:
     update_available: Đã có bản cập nhật mới
     update_btn: Cập nhật
@@ -251,14 +268,22 @@ views:
   about:
     add_my_channel: Yêu cầu thêm kênh
   watch:
+    theaterMode: Chế độ Rạp chiếu phim (Alt + T)
     mentionIconLabel: ĐỀ CẬP
     chat:
       loading: Đang tải Chat...
       hideTLBtn: Ẩn dịch trực tiếp
       showTLBtn: Hiện dịch trực tiếp
       TLSettingsTitle: Cài đặt dịch trực tiếp
+      showSubtitle: Hiển thị phụ đề
+      expandTL: Mở rộng TLdex
+      tlStart: Khởi đầu tin nhắn
+      StickBottomSettingLabel: Di chuyển xuống dưới
+      StickBottomSettingsDesc: Đặt hộp thoại dịch trực tiếp bên dưới Youtube Chat
       showVerifiedMessages: Hiển thị tin nhắn từ các kênh Verified
       showModeratorMessages: Hiển thị tin nhắn từ Moderator
+      showVtuberMessages: Hiển thị tin nhắn từ Vtuber
+      showLocalTime: Hiển thị giờ tại địa phương
       tlFontSize: Cỡ chữ
       tlWindowSize: Kích thước khung dịch (%), đặt 0% để tự động điều chỉnh
       retryBtn: Thử lại
@@ -269,8 +294,11 @@ views:
           Luồng phát sóng chưa bắt đầu, hãy thử lại khi đã phát trực tiếp được khoảng 15 phút
         connectedToChat: Đã kết nối
         disconnectedToChat: Đã ngắt kết nối
+      archiveNeedExtension: >-
+        Chat từ các stream đã kết thúc sẽ không hoạt động mà không có tiện ích mở rộng {0} hoặc các tiện ích mở rộng từ nguồn thứ 3 khác.
     removeFromPlaylist: Xoá video khỏi playlist hiện tại
     saveToPlaylist: Lưu video vào playlist hiện tại
+    likeOnYoutube: Thích video này trên Youtube
   favorites:
     promptForAction: >-
       Tạo một danh sách các Vtuber yêu thích để xem các clip và livestream mới nhất của họ tại trang này.
@@ -311,9 +339,12 @@ views:
     addframe: Thêm ô
     muteAll: Tắt âm tất cả
     unmuteAll: Bật âm tất cả
+    muteOthers: Tắt tiếng các stream khác
+    muteOthersDetail: Tắt tiếng tất cả trừ một stream
     autoLayoutTip: Nhấn vào một kênh để bắt đầu xem bằng chế độ bố cục tự động
     createLayoutTip: Tự tạo bố cục của riêng mình bằng cách thêm các ô hoặc sử dụng mẫu có sẵn
     openToolbarTip: Mở thanh công cụ để bắt đầu sử dụng multiview
+    archiveSync: Đồng bộ hoá archive
     preset:
       shareOnDiscord: >-
         Muốn chia sẻ bố cục của mình? Hãy sử dụng nút chia sẻ và liên hệ với chúng tôi trên <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
@@ -333,6 +364,23 @@ views:
     fullScreen: Toàn màn hình
     mediaControls: Điều khiển
     mediaControlsEmpty: Các video đang được phát sẽ xuất hiện ở đây
+    editAutoLayout: Chỉnh sửa bố cục tự động
+    changeLayout: Thay đổi bố cục
+    done: Hoàn tất
+    hints: Gợi ý
+    presetsHint: Mở menu mẫu có sẵn để thay đổi bố cục và cài đặt bố cục tự động
+    mediaControlsHint1: Sử dụng Điều khiển để tắt tiếng và đồng bộ hoá (
+    mediaControlsHint2: ) các stream
+    dragDropHint: Kéo và thả các stream từ thanh công cụ đến các ô để sắp xếp
+    reorderHint: Sử dụng menu Điều chỉnh bố cục để thay đổi vị trí video và chat
+    reorderLayout: Điều chỉnh bố cục
+    reorderLayoutDetail: Kéo và thả biểu tượng đến vị trí thích hợp
+    sync:
+      nothingToSync: >-
+        Không có gì để đồng bộ hoá, xin hãy mở hai stream archive trùng lặp (ví dụ: collab streams)
+      syncSettings: Cài đặt đồng bộ hoá
+      syncSettingsDetail: >-
+        Video được đồng bộ hoá dựa trên thời điểm bắt đầu stream, và có thể bị lệch đồng bộ do các vấn đề kỹ thuật xảy ra giữa stream hoặc do bị xoá mất một số phần trong stream. Dùng hiệu số để tự căn chỉnh video
   mugen:
     welcome: >-
       Chào mừng bạn đã đến với MugenClips! Tất cả mọi người trên trang này đều đang xem cùng một clip Hololive tiếng Anh được lựa chọn ngẫu nhiên. Hãy cùng xem và trò chuyện với các fan Hololive khác trên toàn thế giới. Nếu bạn lỡ tua nhanh và muốn đồng bộ hoá lại với mọi người, xin hãy tải lại trang.
@@ -344,6 +392,15 @@ views:
     page-heading: 'Danh sách của bạn:'
     page-instruction: Nhấp vào một playlist để chuyển nó thành trạng thái đang hoạt động.
     change-loss-warning: Các thay đổi chưa được lưu sẽ bị mất. Tiếp tục?
+  extension:
+    title: Tiện ích mở rộng Holodex Plus
+    features: Các tính năng
+    featureset:
+      one: Bật tính năng chat từ stream đã kết thúc tại Watch và Multiview
+      two: Cho phép nhấn "Like" video trên Youtube từ Holodex
+      three: Sửa lỗi tràn bộ nhớ từ live chat của Youtube
+      four: >-
+        Sửa các lỗi của Youtube (ví dụ như không cho phép mở nhiều stream cùng một lúc, ảnh thu nhỏ không hiển thị) và nhiều hơn nữa!
 time:
   soon: sớm
   diff_future_date: Bắt đầu {0} ({1})
@@ -368,6 +425,7 @@ editor:
     testStart: Nghe thử đoạn đầu
     startInput: Bắt đầu
     endInput: 'Thời lượng tính bằng giây: (kết thúc tại @ {0})'
+    inheritItunesMusic: 'Cài đặt thời lượng qua iTunes: {0}'
   exitMode: Thoát khỏi Chế độ Chỉnh sửa
   enterMode: Chỉnh sửa Video
 about:
@@ -432,6 +490,11 @@ about:
       contents:
         - >-
           Tất cả sự trợ giúp và ý tưởng đều được chào đón! Cả UI và Backend đều sẵn sàng tiếp nhận đóng góp, mặc dù hiện tại chỉ có UI là mã nguồn mở. Vui lòng liên hệ với chúng tôi trên Discord để có quyền truy cập vào Backend source, hoặc chỉ đơn giản là nói về về ý tưởng của bạn.
+    support:
+      title: Tôi có thể hỗ trợ Holodex như thế nào?
+      contents:
+        '0': >-
+          Máy chủ của chúng tôi là một máy tính 28 lõi 60GB RAM với phí duy trì $60 USD/tháng, và chúng tôi vẫn đang tiếp tục tìm cách phát triển các tính năng của hệ thống nhiều hơn nữa, vì vậy chúng tôi đã mở <a href="https://ko-fi.com/holodex">Ko-fi</a>để trang trải chi phí này. (Chúng tôi cũng có <a href="https://www.patreon.com/holodex">Patreon</a>, nhưng chúng tôi thích Ko-fi hơn.)<br /><br />Bạn cũng có thể hỗ trợ Holodex bằng cách gửi cho chúng tôi phản hồi từ người dùng và các tin nhắn khích lệ trên twitter, cung cấp bản dịch tại <a href="https://crwd.in/holodex">Crowdin</a>, cũng như đóng góp vào kho dữ liệu bài hát của chúng ta. Thậm chí timestamp những khoảnh khắc hài hước và gửi bình luận đó trên stream gốc cũng đã là một sự trợ giúp tuyệt vời rồi!
   gdpr: GDPR và dữ liệu của tôi
   gdprContent: >-
     Google Analytics sẽ được sử dụng cho việc theo dõi lượng truy cập trang nhằm mục đích phân tích của chúng tôi. Danh sách mục Yêu thích của bạn sẽ được liên kết với tên người dùng hoặc ID tài khoản mạng xã hội mà bạn dùng để đăng nhập. Dữ liệu này có thể bao gồm email của bạn (nếu đăng nhập bằng Google), Discord ID, hoặc tên đăng nhập Twitter tuỳ thuộc vào cách thức đăng nhập của bạn.
@@ -453,3 +516,7 @@ about:
     title: Các thay đổi
   news:
     title: Tin tức
+  bookmarklet:
+    title: Bookmarklets
+    description: >-
+      Kéo các bookmarklet bên dưới lên thanh dấu trang của bạn để mở stream từ trang Youtube bằng Holodex một cách dễ dàng:

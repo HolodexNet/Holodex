@@ -30,8 +30,8 @@ component:
     about: Info
     library: Bibliothek
     settings: Einstellungen
-    login: Einloggen
-    logout: Ausloggen
+    login: Anmelden
+    logout: Abmelden
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Kontoeinstellungen
     music: Musik
@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: Geplantes Event
   videoDescription:
     description: Beschreibung
-  video:
-    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -79,7 +77,7 @@ component:
     simulcastsLabel: Simulcasts
     refersLabel: Verweise
     sourcesLabel: Quellen
-    songsLabel: Songs
+    songsLabel: Lieder
     recommendationsLabel: Empfehlungen
     sameSourceClips: Von den gleichen Streams
   paginateLoad:
@@ -89,17 +87,17 @@ component:
     clearPlaylist: Leeren
     trendingForOrg: Trends für {0}
   channelMusic:
-    recentSongsHeader: Aktuelle Songs
-    weeklyTopPlaysHeader: Top-Songs der Woche
+    recentSongsHeader: Aktuelle Lieder
+    weeklyTopPlaysHeader: Top-Lieder der Woche
     trending: Trends
   songList:
     songTitle: Titel
-    songCoveredBy: Coverversion von
+    songCoveredBy: Cover-Version von
     songDuration: Dauer
     sangOnTime: Gesungen am
   orgMusic:
-    monthlyTopForOrg: Top-Songs des Monats von {0}
-    weeklyTopForOrg: Top-Songs der Woche von {0}
+    monthlyTopForOrg: Top-Lieder des Monats von {0}
+    weeklyTopForOrg: Top-Lieder der Woche von {0}
   installPrompt:
     title: Holodex installieren
     callToAction: Das Anschauen von Videos auf Holodex funktioniert am besten, wenn du es zu deinem Startbildschirm hinzugefügst
@@ -127,7 +125,7 @@ component:
       - Sonstiges
   thirdpartycookie:
     explanation: >-
-      Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>youtube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Einloggen in / Verwenden des Youtube-Chats auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.
+      Aufgrund der Funktionsweise deines Internetbrowsers, einiger Browser mit strengen Richtlinien für <b>Cookies von Dritten</b>, oder weil du <kbd>youtube.com</kbd> Cookies blockierst, können Schwierigkeiten beim Anmelden in / Verwenden des Youtube-Chats auftreten. <br /><br /> Dies kannst du durch Whitelisting von <kbd>youtube.com</kbd> in Blockierern von Cookies von Dritten, oder durch das Senken deiner Sicherheits-/Privatsphäreeinstellungen für <kbd>holodex.net</kbd> beheben. <br /><br /> Die hier aufgeführten Webseiten können dir zeigen, wie man das macht.
     dialogTitle: Nutzung des Youtube-Chats auf Holodex
     alertText: >-
       Die Privatsphäre-Einstellungen deines Browsers machen es unmöglich, dich im Youtube-Chat anzumelden. Klicke hier für weitere Informationen
@@ -140,7 +138,7 @@ component:
       reset-unsaved: Ungespeicherte Änderungen verwerfen
       delete-playlist: Playlist löschen
       clear-playlist: Playlist leeren
-    save-error-not-logged-in: Du musst eingeloggt sein, um Playlisten zu speichern
+    save-error-not-logged-in: Du musst angemeldet sein, um Playlisten zu speichern
   placeholderVideo:
     discordCredit: 'Eventdaten zur Verfügung gestellt von {0} von: {1}'
     datasourceCredit: Eventdaten werden von {0} Datenquelle abgerufen.
@@ -300,7 +298,7 @@ views:
         Das Chatarchivieren funktioniert nicht ohne die {0} Erweiterung oder andere Erweiterungen Dritter.
     removeFromPlaylist: Video von aktueller Playlist entfernen
     saveToPlaylist: Video zu aktueller Playlist hinzufügen
-    likeOnYoutube: Video auf YouTube mit "Gefällt mir" markieren
+    likeOnYoutube: Video auf YouTube mit "Mag ich" markieren
   favorites:
     promptForAction: >-
       Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
@@ -308,7 +306,7 @@ views:
     close: Schließen
     showall: Alle anzeigen
   editor:
-    needlogin: Du musst dich einloggen, um Änderungen an Video-/Song-Metadaten in Holodex vorzunehmen.
+    needlogin: Du musst dich anmelden, um Änderungen an Video-/Lied-Metadaten in Holodex vorzunehmen.
     changeTopic:
       title: Stream-Thema ändern
       info: >-
@@ -330,9 +328,9 @@ views:
     apikeyResetConfirm2: Es dauert 0-24 Stunden bis der alte API-Schlüssel abläuft. Wirklich zurücksetzen?
     apikeyResetNvm: Es ist nichts Interessantes passiert.
     with:
-      - Mit Google einloggen
-      - Mit Discord einloggen
-      - Mit Twitter einloggen
+      - Mit Google anmelden
+      - Mit Discord anmelden
+      - Mit Twitter anmelden
   multiview:
     confirmOverwrite: Vorhandenes Layout überschreiben?
     confirmOverwriteYes: Bestätigen
@@ -412,10 +410,10 @@ editor:
     add: Hinzufügen
     update: Aktualisieren
     permission: >-
-      Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Songs zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
+      Dein Nutzerlevel muss 'Editor' oder besser sein, um bestehende Lieder zu aktualisieren oder zu löschen. Bitte kontaktiere uns auf <a class='white--text' href='/about'>Discord</a>, um Editoren auf Probleme / Missbrauch hinzuweisen oder bewirb dich um selbst ein Editor zu werden.
     titles:
-      addSong: 'Song-Metadaten: Neuen Song hinzufügen'
-      songList: 'Songliste : {0}'
+      addSong: 'Lied-Metadaten: Neues Lied hinzufügen'
+      songList: 'Liederliste : {0}'
       help: Anleitung
     itunesLookupPlaceholder: (Optional) Suche auf iTunes
     moveRight2s: Nach rechts 2s
@@ -423,7 +421,7 @@ editor:
     setToCurrentTime: Auf aktuelle Zeit setzen ({0})
     moveLeft2s: Nach links 2s
     trackNameInput: Titel
-    originalArtistInput: Originaler Künstler
+    originalArtistInput: Original-Interpret
     testStart: Teste den Start
     startInput: Start
     endInput: 'Dauer in Sekunden: (Ende @ {0})'
@@ -435,7 +433,7 @@ about:
   discordBtn: Holodex Discord
   faq:
     title: Häufig gestellte Fragen
-    ytchatHeader: Mein Youtube-Chat ist nicht eingeloggt!
+    ytchatHeader: Mein Youtube-Chat ist nicht angemeldet!
     ytchatContent: >-
       Bitte deaktiviere die Browser-Sicherheitsfunktion "Blockieren von Cookies von Drittanbietern" oder nimm diese Website und youtube.com mit in die Whitelist auf.
     ytchatFirefox: Firefox-Anleitung, andere Browser sollten ähnlich sein.
@@ -461,7 +459,7 @@ about:
         title: Meine Favoritenliste ist verschwunden / Ich kann keine Favoriten setzen
       contents:
         - >-
-          Bitte stelle sicher, dass du eingeloggt bist und besuche die Registerkarte "Favoriten", um eine Aktualisierung zu erzwingen.
+          Bitte stelle sicher, dass du angemeldet bist und besuche die Registerkarte "Favoriten", um eine Aktualisierung zu erzwingen.
     mobile:
       title: Gibt es eine Android/iOS App für Holodex?
       content:
@@ -496,10 +494,10 @@ about:
       title: Wie kann ich Holodex unterstützen?
       contents:
         '0': >-
-          Unser selbst-gehosteter Server ist eine 28-Kern Maschine mit 60GB RAM, für welche Instandhaltungskosten von circa $60 USD pro Monat anfallen. Da wir unsere Features immer weiter expandieren, haben wir ein <a href="https://ko-fi.com/holodex">Ko-fi</a> angelegt, um die Serverkosten zu decken. (<a href="https://www.patreon.com/holodex">Patreon</a> haben wir auch, aber Ko-fi gefällt uns besser.)<br /><br />Du kannst uns außerdem mit Feedback und Tweets unterstützen, uns mit der Übersetzung der Webseite via <a href="https://crwd.in/holodex">Crowdin</a> helfen, oder zu unserem Song-Datenspeicher beitragen. Selbst das Kommentieren von Zeitstempeln lustiger Momente in den Stream-Kommentaren ist schon sehr hilfreich!
+          Unser selbst-gehosteter Server ist eine 28-Kern Maschine mit 60GB RAM, für welche Instandhaltungskosten von circa $60 USD pro Monat anfallen. Da wir mehr und mehr Features hinzufügen, haben wir ein <a href="https://ko-fi.com/holodex">Ko-fi</a> angelegt, um die Serverkosten zu decken. (<a href="https://www.patreon.com/holodex">Patreon</a> haben wir auch, aber Ko-fi gefällt uns besser.)<br /><br />Du kannst uns außerdem mit Feedback und Tweets unterstützen, uns mit der Übersetzung der Webseite via <a href="https://crwd.in/holodex">Crowdin</a> helfen, oder zu unserem Lied-Datenspeicher beitragen. Selbst das Kommentieren von Zeitstempeln lustiger Momente in den Stream-Kommentaren ist schon sehr hilfreich!
   gdpr: DSGVO und meine Daten
   gdprContent: >-
-    Ein Google-Analytics-Cookie wird verwendet, um Seitenaufrufe für unsere analytischen Zwecke zu verfolgen. Nach dem Login verknüpfen wir deinen Benutzernamen und die ID deines Social Media Accounts mit deinen Favoriten. Diese Daten können deine E-Mail (für Google), deine Discord-ID oder dein Twitter-Handle beinhalten.
+    Ein Google-Analytics-Cookie wird verwendet, um Seitenaufrufe für unsere analytischen Zwecke zu verfolgen. Nach dem Anmelden verknüpfen wir deinen Benutzernamen und die ID deines Social Media Accounts mit deinen Favoriten. Diese Daten können deine E-Mail (für Google), deine Discord-ID oder dein Twitter-Handle beinhalten.
   gdprDeletion: Um deine Benutzerdaten löschen zu lassen, kontaktiere uns bitte auf Discord!
   feedback: Feedback / Fehlerberichte
   feedbackHtml: >-
@@ -522,3 +520,10 @@ about:
     title: Bookmarklets
     description: >-
       Zieh diese Bookmarklets in deine Lesezeichenleiste, um YouTube-Videos leichter in Holodex zu öffnen:
+channelRequest:
+  RequestType: 'Art der Anfrage:'
+  Types:
+    ModifyExistingInfo: Vorhandene Kanalinformationen ändern
+    DeleteChannel: Löscht meinen Kanal
+  PageTitle: Holodex Kanalanfrage
+  ChannelURLErrorFeedback: Muss https://www.youtube.com/channel/UC_____ sein

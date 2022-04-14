@@ -20,7 +20,7 @@
           :class="{ 'v-list-item--active': $route.fullPath === page.path }"
           @click="(e) => handlePageClick(page, e)"
         >
-          <v-list-item-icon v-if="page.name === 'Musicdex'">
+          <v-list-item-icon v-if="page.name === 'Musicdex'" style="max-width:24px">
             <musicdex-logo />
           </v-list-item-icon>
           <v-list-item-icon v-else>

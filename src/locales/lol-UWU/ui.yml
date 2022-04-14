@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: Scheduwed event
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -253,6 +255,7 @@ views:
       - Smaww
     hideCollabStreamsLabel: Hide cowwab stweams
     hideCollabStreamsMsg: Hide cowwab stweams fwom youw favowites feed
+    hidePlaceholderStreams: Hide pwacehowdew stweams
     ignoredTopicsLabel: Ignowed topics
     ignoredTopicsMsg: Hide bideos with these topics fwom da home and favowites pages
     theme: Theme
@@ -519,3 +522,30 @@ about:
     title: Bookmawkwets
     description: >-
       Dwag these bookmawkwets to youw bookmawk baw to open youtube watch page in howodex easiwy:
+channelRequest:
+  RequestType: 'Request type:'
+  Types:
+    AddVtuber: Add a vtubew ▶️ fow howodex to twack da channew and cwips.
+    AddClipper: Add a cwipping/subbing channew to howodex
+    ModifyExistingInfo: Modify existing channew infowmation
+    DeleteChannel: Dewete my channew
+  DirectContactDisclaimer: >-
+    Feew fwee to weave youw discowd id, emaiw ow twittew. In case u need to be contacted (this info wiww stay pwivate) so we can pwovide feedback. Onwy howodex administwatows wiww see dis infowmation.
+  DirectContactLabel: Contact method (optionaw)
+  TwitterHandle: Dis channew's twittew handwe (optionaw)
+  VtuberGroupLabel: Vtubew gwoup (optionaw)
+  VtuberGroupHint: Which owg / gwoup does dis vtubew bewong to?
+  ChannelLanguageLabel: Channew's main wanguage
+  EnglishNameHint: >-
+    Pwovide an engwish name if da channew name ish not in engwish. Fowwow name-owdew conventions fwom da native wocawe of dis vtubew (natsuiwo matsuwi), ow a pwefewwed en bwand name (ewu da ewf, emma★august).
+  EnglishNameLabel: Engwish channew name
+  Comments: Comments
+  CommentsHint: Othew comments u'd wike to teww us.
+  VtuberRequirementText: >-
+    A minimum of 20k subscwibews ish wequiwed fow independents. Vtubews as pawt of existing owgs wiww be accepted. <br /><br />new owgs wiww be cweated depending on da avewage subscwibew count.
+  ClipperRequirementText: >-
+    Fow cwippews, it must be at weast 2 months owd and post weguwawwy, ow post mowe than 20 cwips in one month. Spamming of showt cwips evewy day, posting onwy showt &lt;1min cwips, ow using unfwattewing thumbnaiws wiww aww count against da channew. Content quawity might be judged as weww. <br /><br />it's impowtant to note that cwippews shouwd cite theiw souwces via channew winks, @youtube channew mentions, and bideo winks. Ovewciting (e.g. Linking to evewyone at nijisanji) cweates wowk fow howodex editows, and undewciting (no winks) wiww make cwips hidden. <br /><br /> howodex contains awgowithms to detect ovewciting and cowwect them automaticawwy, but it may not awways wowk pewfectwy. Cwippews who ovewcite may be wemoved fwom pwatfowm to weduce noise.
+  DeletionRequirementText: >-
+    Dewetion shouwd onwy be wequested if u awe da channew ownew(s), pwease pwovide contact infowmation so we can vewify dis.
+  PageTitle: Howodex channew request
+  ChannelURLErrorFeedback: Must be https://www.youtube.com/channel/UC_____

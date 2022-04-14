@@ -21,6 +21,8 @@ const EditVideo = () => import("../views/EditVideo.vue");
 const MultiView = () => import("../views/MultiView.vue");
 const Playlists = () => import("../views/Playlists.vue");
 const AddPlaceholderStream = () => import("../views/AddPlaceholderStream.vue");
+const AddChannelRequest = () => import("../views/AddChannelRequest.vue");
+
 const Extension = () => import("../views/Extension.vue");
 
 const TLClient = () => import("../views/TLClient.vue");
@@ -168,6 +170,10 @@ const routes = [
     {
         path: "/404",
         component: NotFound,
+    },
+    {
+        path: "/addChannel",
+        component: AddChannelRequest,
     },
     {
         path: "*",

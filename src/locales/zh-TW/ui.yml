@@ -523,3 +523,30 @@ about:
     title: 書籤跳轉功能
     description: >-
       將以下書籤腳本拖拉至您的瀏覽器書籤欄，能更輕鬆的從 YouTube 頁面快速跳轉至 Holodex 頁面
+channelRequest:
+  RequestType: '申請類型：'
+  Types:
+    AddVtuber: Vtuber 頻道｜追蹤實況/存檔影片和相關翻譯剪輯
+    AddClipper: 翻譯剪輯頻道｜追蹤此翻譯/剪輯者所上傳的精華影片
+    ModifyExistingInfo: 資料修正｜變更已在資料庫內的頻道資訊
+    DeleteChannel: 移除我的頻道
+  DirectContactDisclaimer: >-
+    請依您的方便留下Discord ID, 電子郵件地址或是Twitter帳號，以利在需要的時候我們能夠為您的問題提供協助與建議（本資料僅有 Holodex 管理員可供觀看, 不會公開）
+  DirectContactLabel: 您的聯絡方式（選填）
+  TwitterHandle: 本頻道的 Twitter 使用者名稱（選填）
+  VtuberGroupLabel: Vtuber 團體（選填）
+  VtuberGroupHint: 此 Vtuber 隸屬於哪個公司/團體呢？
+  ChannelLanguageLabel: 頻道主要使用語言
+  EnglishNameHint: >-
+    頻道名稱非英文時才需要填寫，請填寫官方翻譯（夏色まつり→ Natsuiro Matsuri）或是常用之英文譯名（えま☆おうがすと→ Emma★August）
+  EnglishNameLabel: 頻道英文名稱（選填）
+  Comments: 備註（選填）
+  CommentsHint: 有什麼想要補充的嗎？
+  VtuberRequirementText: >-
+    個人勢 Vtuber 的審核標準為至少要有２萬名訂閱者，若該 Vtuber 為VT團體成員之一，其通過標準將較為寬鬆<br /><br />Holodex 內是否新增團體取決於該團體的平均訂閱數多寡。
+  ClipperRequirementText: >-
+    翻譯剪輯頻道的審核標準如下：該頻道至少需要有兩個月的影片上傳歷史並且定時更新頻道內容。此外管理員也會依照該頻道內容的品質來決定是否通過審核— Holodex 不接受每天洗版式的大量更新短影片，或是上傳的翻譯剪輯內容幾乎全數都低於一分鐘的頻道，使用釣魚/誤導式縮圖的翻譯剪輯片段也包含在不通過的標準之內。<br /><br />另外一點要注意的是，剪輯者應於影片描述欄位填寫「實況/影片出處」、「@YouTube頻道」或是「Vtuber頻道連結」來註明影片來源，過度標註（像是在描述欄位填寫一堆彩虹社成員連結）會增加 Holodex 編輯者群們的負擔，而沒有標註（未標明來源）將會導致 Holodex 後台無法判定其內容使否為精華剪輯，進而導致該影片不會出現於 Holodex 頁面上。<br /><br />Holodex 資料庫雖然有標註的自動錯誤修正機制，但此機制運作並不穩定，過度標註可能會導致管理員們被迫於 Holodex 上移除其頻道內容以避免相關問題重複出現。
+  DeletionRequirementText: >-
+    刪除頻道的申請僅限頻道擁有者提出，請您提供聯絡資料以供我們與您聯絡。
+  PageTitle: Holodex 頻道追蹤申請表
+  ChannelURLErrorFeedback: 連結格式須為 https://www.youtube.com/channel/UC_____

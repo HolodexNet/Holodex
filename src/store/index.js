@@ -5,7 +5,7 @@ import createPersistedState from "vuex-persistedstate";
 import createMutationsSharer from "vuex-shared-mutations";
 import createMigrate from "vuex-persistedstate-migrate";
 import jwtDecode from "jwt-decode";
-import { sendTokenToExtension } from "@/utils/messaging";
+import { sendTokenToExtension, setCookieJWT } from "@/utils/messaging";
 
 // import { dayjs } from "@/utils/time";
 
@@ -135,6 +135,8 @@ export default new Vuex.Store({
         setUser(state, { user, jwt }) {
             Vue.set(state.userdata, "user", user);
             state.userdata.jwt = jwt;
+            // Set cookie for all holodex sub domains
+            setCookieJWT(jwt);
         },
         setVisited(state) {
             state.firstVisit = false;
@@ -219,7 +221,7 @@ export default new Vuex.Store({
                 } else {
                     sendTokenToExtension(state.userdata.jwt);
                     // Set cookie for all holodex sub domains
-                    document.cookie = `HOLODEX_JWT=${state.userdata.jwt};expires=${(new Date(exp * 1000)).toUTCString()};domain=.holodex.net;path=/`;
+                    setCookieJWT(state.userdata.jwt);
                 }
             }
             // do nothing.

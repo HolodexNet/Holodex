@@ -187,8 +187,20 @@ export default {
             }
         },
     },
-    mounted() {
+    async mounted() {
         this.usernameInput = this.userdata.user.username;
+        const params = new URL(window.location.href).searchParams;
+        const service = params.get("service");
+        const jwt = params.get("jwt");
+        if (service === "twitter" && jwt) {
+            const twitterTempJWT = jwt;
+            const resp = await api.login(this.$store.state.userdata.jwt, twitterTempJWT, "twitter");
+            this.$store.commit("setUser", resp.data);
+            this.$gtag.event("login", {
+                event_label: "twitter",
+            });
+            this.$store.dispatch("favorites/resetFavorites");
+        }
     },
     methods: {
         async loginGoogle({ credential }) {
@@ -223,16 +235,7 @@ export default {
             );
         },
         async loginTwitter() {
-            open(`${apiURI}/v2/user/login/twitter`, async (err, out) => {
-                const twitterTempJWT = out.jwt;
-                const resp = await api.login(this.$store.state.userdata.jwt, twitterTempJWT, "twitter");
-                // console.log(resp);
-                this.$store.commit("setUser", resp.data);
-                this.$gtag.event("login", {
-                    event_label: "twitter",
-                });
-                this.$store.dispatch("favorites/resetFavorites");
-            });
+            window.location.href = `${apiURI}/v2/user/login/twitter`;
         },
         async forceUserUpdate() {
             const check = await api.loginIsValid(this.userdata.jwt);

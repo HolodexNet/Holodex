@@ -35,7 +35,7 @@ component:
     MugenClips: MugenClips<sup>beta</sup>
     accountSettings: Fiók beállításai
     music: Zene
-    multiview: Több képernyős
+    multiview: MultiView
     points: pont
     playlist: Lejátszási lista
   videoCard:
@@ -115,7 +115,7 @@ component:
   reportDialog:
     title: Bejelentés
     collabing: >-
-      Ez a csatorna kollaborálhat egy {org} taggal vagy a kedvenceiddel. Kikapcsolhatod ezt a funkciót a beállításokban
+      Ez a csatorna vendégszereplehet egy {org} tagnál vagy a kedvenceiddel. Kikapcsolhatod ezt a funkciót a beállításokban
     comments: Mit kéne a Holodexnek tennie?
     success: Visszajelzés elküldve. Köszönjük!
     reasons:
@@ -153,7 +153,7 @@ views:
     video: Videók
     clips: Klipek
     music: Zene
-    collabs: Collabok
+    collabs: Vendégként
     about: Leírás
   channels:
     sortOptions:
@@ -251,8 +251,9 @@ views:
       - Nagy
       - Közepes
       - Kicsi
-    hideCollabStreamsLabel: Collab streamek elrejtése
-    hideCollabStreamsMsg: Collab streamek elrejtése a kedvencek közül
+    hideCollabStreamsLabel: Vendégkénti streamek elrejtése
+    hideCollabStreamsMsg: Vendégkénti streamek elrejtése a kedvencek közül
+    hidePlaceholderStreams: Tervezett streamek elrejtése
     ignoredTopicsLabel: Figyelmen kívül hagyott témák
     ignoredTopicsMsg: Elrejti a Kezdőlapból és a Kedvencekből a videókat ebben a témában
     theme: Téma
@@ -342,7 +343,7 @@ views:
     muteOthersDetail: Minden streamet -kivéve egyet- némít
     autoLayoutTip: Kattints egy csatornára, hogy elkezdd nézni auto elrendezéssel
     createLayoutTip: Készítsd el a saját elrendezésed több cella hozzáadásával, vagy egy előrendezés használatával
-    openToolbarTip: Nyisd meg az eszköztárat a több képernyős nézet használatához
+    openToolbarTip: Nyisd meg az eszköztárat a MultiView használatához
     archiveSync: Archív szinkronizáció
     preset:
       shareOnDiscord: >-
@@ -376,7 +377,7 @@ views:
     reorderLayoutDetail: Húzz ikonokat a kívánt pozícióba
     sync:
       nothingToSync: >-
-        Nincs mit szinkronba tenni, nyiss meg legalább 2 streamet (pl. collab streameket)
+        Nincs mit szinkronba tenni, nyiss meg legalább 2 streamet (pl. vendég streameket)
       syncSettings: Szinkronizálási beállítások
       syncSettingsDetail: >-
         A videók a stream indulása ideje szerint vannak szinkronizálva, viszont a közbeni technikai gondok és/vagy törölt részletek miatt elcsúszhatnak. Használj offset-eket, hogy manuálisan állítsd a videókat
@@ -519,3 +520,25 @@ about:
     title: Könyvjelzők
     description: >-
       Húzd ezeket a könyvjelzőket a könyvjelző sávodba, hogy megnyiss egy YouTube oldalt Holodexen könnyedén:
+channelRequest:
+  RequestType: 'Kérvény típusa:'
+  Types:
+    AddVtuber: Vtubert hozzáadása ▶️ a Holodexhez, hogy kövesse a csatornáját és klipjeit.
+    AddClipper: Klip/felirat készítő csatorna hozzáadása Holodexhez
+    ModifyExistingInfo: Létező csatorna információ frissítése
+    DeleteChannel: Saját csatorna törlése
+  DirectContactDisclaimer: >-
+    Nyugodtan hagyj nekünk discord ID-t vagy e-mail címet vagy Twitter ID-t, amennyiben szükséged van visszajelzésre. Kizárólag Holodex adminisztrátorok fogják látni az elérhetőséged.
+  VtuberGroupLabel: VTuber csoport (nem kötelező)
+  VtuberGroupHint: Melyik szervezethez vagy csoporthoz tartozik ez a vtuber?
+  ChannelLanguageLabel: A csatorna fő nyelve
+  EnglishNameLabel: Angol csatornanév
+  Comments: Hozzászólások
+  CommentsHint: Egyéb megjegyzések, melyeket szeretnél nekünk elmondani.
+  VtuberRequirementText: >-
+    Legalább 20k feliratkozó szükséges önállóként. Azok a Vtuberek, akik egy létező szervezethez tartoznak, ez alól felmentésben részesülnek. <br /><br />Új szervezetek az átlag feliratkozószám alapján kerülnek hozzáadásra.
+  ClipperRequirementText: >-
+    Klip készítőktől legalább egy két hónapja feltöltött vtuber klip és rendszeres feltöltést vagy 20 klip egy hónap alatt, amit igényelünk. Rövid klippek spammelése naponta, csupán rövid &lt;1 perces klippek vagy félrevezető indexképek (click-bait) használata a csatorna ellen szólnak. A tartalom minősége szintén bírálásra kerülhet. <br /><br />Fontos megjegyezni, hogy a klippereknek meg kell jelölniük az eredeti forrásuk linkekkel, @Youtube csatorna említésekkel és videó linkekkel. Túljelölgetés (pl. MINDENKIT megjelölni a Nijisanjiból) rengeteg munkát csinál a Holodex szerkesztőknek, a megjelölések kihagyása (nincsenek linkek) pedig láthatatlanná teszi a klippeket. <br /><br /> A Holodex alkalmaz olyan algoritmust, ami észleli a túljelölgetést és automatikusan kijavítja, viszont nem működhet mindig tökéletesen. Klipperek akik rendszeresen túl linkelik a klipjeiket, törlésre kerülhetnek a platformról zajcsökkentés végett.
+  DeletionRequirementText: >-
+    Csatorna törlést akkor kérhetsz ha te(vagy ti) vagy(tok) a csatorna tulajdonosa(i), kérlek készülj(etek) kilétet igazoló információkkal.
+  PageTitle: Holodex Csatorna Kérés

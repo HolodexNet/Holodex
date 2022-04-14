@@ -376,4 +376,7 @@ export default {
             },
         );
     },
+    requestChannel(obj) {
+        return axiosInstance.post("/reports/channel", obj);
+    },
 };

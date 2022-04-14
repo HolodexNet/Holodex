@@ -54,6 +54,8 @@ component:
     typeEventPlaceholder: 予定されたイベント
   videoDescription:
     description: 概要
+  video:
+    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -253,6 +255,7 @@ views:
       - 小
     hideCollabStreamsLabel: コラボ配信を表示しない
     hideCollabStreamsMsg: お気に入りページでコラボ配信を非表示にします
+    hidePlaceholderStreams: プレースホルダーの配信を隠す
     ignoredTopicsLabel: 除外するトピック
     ignoredTopicsMsg: これらのトピックの動画はホームとお気に入りに表示されなくなります
     theme: テーマ
@@ -386,7 +389,7 @@ views:
   playlist:
     playlist-is-modified: 保存されていません
     item-last-updated: '最終更新日時'
-    login-prompt: プレイリストの保存、複数のプレイリストの保持にはログインが必要です。
+    login-prompt: プレイリストを保存したり、複数のプレイリストを作成するにはログインが必要です。
     new-playlist-btn-label: 新しいプレイリストを作成
     page-heading: 'プレイリスト:'
     page-instruction: プレイリストをクリックすると、アクティブに設定されます。
@@ -507,7 +510,7 @@ about:
       - 心より感謝しています。
       - チームの仕事に。
       - >-
-        また、海外ニキを助けてくれた全ての切り抜き投稿者たちにも！ぜひチェックしてみてください！
+        また、海外ニキを助けてくれた全ての切り抜き師にも感謝しています！ぜひチェックしてみて！
       - >-
         当サイトは有志によって開発されたファンサービスであり、サイト上のコンテンツはカバー株式会社とそのパートナーが所有しています。当サイトはカバー株式会社の「二次創作ガイドライン」に沿って開発・運営されています。
       - 二次創作ガイドライン
@@ -519,3 +522,30 @@ about:
     title: ブックマークレット
     description: >-
       これらのブックマークレットをブックマークバーにドラッグすると、YouTube ウォッチページを Holodex で簡単に開くことができます:
+channelRequest:
+  RequestType: 'リクエストの種類:'
+  Types:
+    AddVtuber: Vtuberを追加 ▶️ して、Holodexでチャンネルと切り抜きを追跡したい
+    AddClipper: 切り抜き/翻訳チャンネルをHolodexに追加したい
+    ModifyExistingInfo: 既存のチャンネル情報を修正したい
+    DeleteChannel: 自分のチャンネルを削除したい
+  DirectContactDisclaimer: >-
+    フィードバックが必要な場合、Discord ID、メールアドレス、Twitterアカウントをご自由にご記入ください (この情報は非公開です)、ご連絡させていただきます。この情報は、Holodexの管理者のみ閲覧可能となります。
+  DirectContactLabel: 連絡方法 (任意入力)
+  TwitterHandle: チャンネルのTwitterアカウント (任意入力)
+  VtuberGroupLabel: VTuberグループ (任意)
+  VtuberGroupHint: このvtuberはどの組織/グループに所属していますか?
+  ChannelLanguageLabel: チャンネルのメイン言語
+  EnglishNameHint: >-
+    チャンネル名が英語でない場合は英語名を入力してください。 Vtuberの利用言語における名前の順序 (例: Natsuiro Matsuri)、または、推奨される英語名 (例; Elu the Elf, Emma★August) に従ってください。
+  EnglishNameLabel: 英語でのチャンネル名
+  Comments: コメント
+  CommentsHint: 私たちにお伝えしたいその他のコメント。
+  VtuberRequirementText: >-
+    個人勢は2万人以上のチャンネル登録者が必要です。既存の組織の一員であるvtuberは受け付けます。<br /><br />新しい組織は平均登録者数次第で作成されます。
+  ClipperRequirementText: >-
+    切り抜きチャンネルの場合、少なくとも開設から2ヶ月以上経過していて定期的に投稿している、または1ヶ月に20以上の切り抜き動画を投稿している必要があります。短い切り抜きを毎日スパムのように投稿する、1分未満の短い切り抜きしか投稿しない、悪印象なサムネイルの使用などは、すべてチャンネルにとって不利になります。コンテンツの質も審査対象となる場合があります。<br /><br />切り抜きチャンネルについては、切り抜き元のソースについてチャンネルURLや@形式のチャンネルリンクを掲載することを推奨します。過剰なリンクの掲示 (例: にじさんじメンバーの全員にリンクする) はHolodexの編集者にとって負担となり、リンクが足りない場合には切り抜きが閲覧されづらくなります。<br /><br /> Holodexは過剰なリンクを検出し自動的に修正するアルゴリズムを備えていますが、常に正しく動作するとは限りません。こうした問題を防ぐため、過剰なリンクを行う切り抜き投稿者については登録を解消する場合があります。 
+  DeletionRequirementText: >-
+    削除は、あなたがチャンネルの所有者である場合にのみリクエストしてください。そのことを確認できるよう、連絡先をお知らせください。
+  PageTitle: Holodexチャンネルリクエスト
+  ChannelURLErrorFeedback: https://www.youtube.com/channel/UC___ という形式にしてください

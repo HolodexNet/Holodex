@@ -99,12 +99,15 @@
     </v-row>
   </v-card>
   <!-- Horizontal view for tool bar -->
-  <div v-else class="d-flex flex-row align-center">
+  <div
+    v-else
+    class="d-flex align-center overflow-hidden"
+  >
     <!-- Drop down -->
-    <org-panel-picker horizontal @changed="handlePicker" />
+    <org-panel-picker horizontal class="d-flex" @changed="handlePicker" />
     <v-icon
       v-if="!isUrl"
-      class="mr-2 ml-1"
+      class="d-flex mr-2 ml-1"
       :class="{ 'refresh-spin': isLoading }"
       @click="loadSelection(true)"
     >
@@ -120,7 +123,7 @@
     </template>
     <!-- Login prompt for favorites -->
     <template v-else-if="selectedOrg.name === 'Favorites' && !isLoggedIn">
-      <div class="flex d-flex flex-row align-center">
+      <div class="d-flex align-center">
         <span class="" v-html="$t('views.app.loginCallToAction')" />
         <v-btn text :to="isLoggedIn ? '/channel' : '/login'">
           {{ $t("component.mainNav.login") }}
@@ -129,45 +132,47 @@
     </template>
     <!-- Channel icons -->
     <template v-else>
-      <v-tooltip
-        v-for="video in topFilteredLive"
-        :key="video.id"
-        transition="v-fade-transition"
-        bottom
-      >
-        <template #activator="{ on, attrs }">
-          <div
-            v-bind="attrs"
-            style="position: relative; margin-right: 3px; cursor: pointer"
-            draggable="true"
-            v-on="on"
-            @dragstart="(ev) => dragVideo(ev, video)"
-          >
+      <div ref="videosBar" class="videos-bar d-flex flex-shrink-1 overflow-x-auto overflow-y-hidden" @wheel="scrollHandler">
+        <v-tooltip
+          v-for="video in topFilteredLive"
+          :key="video.id"
+          transition="v-fade-transition"
+          bottom
+        >
+          <template #activator="{ on, attrs }">
             <div
-              v-if="video && video.link"
-              class="live-badge purple"
-              style="left: 0; width: 20px"
+              v-bind="attrs"
+              style="position: relative; margin-right: 3px; cursor: pointer"
+              draggable="true"
+              v-on="on"
+              @dragstart="(ev) => dragVideo(ev, video)"
             >
-              <v-icon small>
-                {{ mdiTwitch }}
-              </v-icon>
-            </div>
+              <div
+                v-if="video && video.link"
+                class="live-badge purple"
+                style="left: 0; width: 20px"
+              >
+                <v-icon small>
+                  {{ mdiTwitch }}
+                </v-icon>
+              </div>
 
-            <div :key="'lvbg' + tick" class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
-              {{ formatDurationLive(video) }}
+              <div :key="'lvbg' + tick" class="live-badge" :class="video.status === 'live' ? 'red' : 'grey'">
+                {{ formatDurationLive(video) }}
+              </div>
+              <v-avatar size="50" @click="handleVideoClick(video)">
+                <ChannelImg :channel="video.channel" :size="50" no-link />
+              </v-avatar>
             </div>
-            <v-avatar size="50" @click="handleVideoClick(video)">
-              <ChannelImg :channel="video.channel" :size="50" no-link />
-            </v-avatar>
-          </div>
-        </template>
-        <VideoCard
-          :video="video"
-          disable-default-click
-          include-channel
-          style="width: 250px"
-        />
-      </v-tooltip>
+          </template>
+          <VideoCard
+            :video="video"
+            disable-default-click
+            include-channel
+            style="width: 250px"
+          />
+        </v-tooltip>
+      </div>
     </template>
   </div>
 </template>
@@ -309,6 +314,9 @@ export default {
         }
     },
     methods: {
+        scrollHandler(e) {
+            this.$refs.videosBar.scrollLeft += Math.max(-53, Math.min(53, e.deltaY));
+        },
         setAutoRefresh() {
             if (this.refreshTimer) clearInterval(this.refreshTimer);
             this.refreshTimer = setInterval(() => {
@@ -404,5 +412,13 @@ export default {
 
 .refresh-spin {
     animation: spin 1.1s infinite linear;
+}
+
+.videos-bar::-webkit-scrollbar-track {
+    background: rgba(99, 46, 46, 0.5);
+}
+
+.videos-bar::-webkit-scrollbar-thumb {
+    background: #f06291a2;
 }
 </style>
