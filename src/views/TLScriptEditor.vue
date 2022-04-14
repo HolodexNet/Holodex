@@ -106,10 +106,16 @@
                       item-text="name"
                       item-value="idx"
                       single-line
+                      @change="logChange(entries[selectedEntry].id)"
                     />
                   </td>
                   <td colspan="2">
-                    <v-text-field v-model="entry.SText" class="font-weight: bold;" :style="textStyle2" />
+                    <v-text-field
+                      v-model="entry.SText"
+                      class="font-weight: bold;"
+                      :style="textStyle2"
+                      @change="logChange(entries[selectedEntry].id)"
+                    />
                   </td>
                 </tr>
                 <tr
@@ -122,9 +128,6 @@
                     >
                       <v-btn @click="modalMode = 4; modalNexus = true">
                         {{ $t("views.scriptEditor.table.setAsStart") }}
-                      </v-btn>
-                      <v-btn @click="shiftToCurrentTime();">
-                        {{ $t("views.scriptEditor.table.shiftCurrentTime") }}
                       </v-btn>
                       <v-btn @click="deleteEntry();">
                         {{ $t("views.scriptEditor.table.deleteEntry") }}
@@ -522,6 +525,7 @@ export default {
             fontSize: 15,
             videoData: undefined,
             transactionLog: [],
+            loggerTimer: undefined,
             // ------ COLOUR -------
             colourPick: 0,
             colourDialogue: false,
@@ -757,6 +761,9 @@ export default {
     },
     mounted() {
         this.init();
+        this.loggerTimer = setInterval(() => {
+            this.processLog(false);
+        }, 15 * 1000);
     },
     created() {
         window.addEventListener("resize", this.onResize);
@@ -770,6 +777,10 @@ export default {
     beforeDestroy() {
         this.unloadVideo();
         window.removeEventListener("resize", this.onResize);
+        if (this.loggerTimer) {
+            clearInterval(this.loggerTimer);
+        }
+        this.processLog(true);
     },
     methods: {
         init() {
@@ -802,6 +813,7 @@ export default {
                 if (this.entries[i].Time > dt.Time) {
                     if (i > 0) {
                         this.entries[i - 1].Duration = dt.Time - this.entries[i - 1].Time;
+                        this.logChange(this.entries[i - 1].id);
                     }
 
                     if (i < this.entries.length) {
@@ -813,12 +825,14 @@ export default {
                     inserted = true;
                     this.inputString = "";
                     this.reloadDisplayCards();
+                    break;
                 }
             }
 
             if (!inserted) {
                 if (this.entries.length !== 0) {
                     this.entries[this.entries.length - 1].Duration = dt.Time - this.entries[this.entries.length - 1].Time;
+                    this.logChange(this.entries[this.entries.length - 1].id);
                 }
                 this.entries.push(dt);
                 this.displayEntry = this.entries.length - 1;
@@ -826,29 +840,102 @@ export default {
                 this.reloadDisplayCards();
             }
 
-            backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, [{
+            this.transactionLog.push({
                 type: "Add",
-                data: {
-                    lang: this.TLLang.value,
-                    tempid: dt.id,
-                    name: this.userdata.user.username,
-                    timestamp: Math.floor(this.videoData.start_actual + this.timerTime),
-                    message: dt.SText,
-                    duration: dt.Duration,
-                },
-            }]).then((e) => {
-                console.log(e);
-                e.data.forEach((e2) => {
-                    if (e2.type === "Add") {
-                        for (let idx = 0; idx < this.entries.length; idx += 1) {
-                            if (this.entries[idx].id === e2.tempid) {
-                                this.entries[idx].id = e2.res.id;
-                                break;
-                            }
+                id: dt.id,
+            });
+        },
+        logChange(ID) {
+            console.log("TEST");
+            if (this.transactionLog.filter((e) => e.id === ID).length === 0) {
+                this.transactionLog.push({
+                    type: "Change",
+                    id: ID,
+                });
+            }
+        },
+        getEntryByID(ID:string) {
+            const entry = this.entries.filter((e) => e.id === ID);
+            if (entry.length === 0) {
+                return undefined;
+            }
+            return entry[0];
+        },
+        processLog(forget:boolean) {
+            if (this.transactionLog.length > 0) {
+                console.log("Submit Log");
+                const logCopy = JSON.parse(JSON.stringify(this.transactionLog));
+                this.transactionLog = [];
+
+                const processedLog = [];
+                logCopy.forEach((e) => {
+                    if (e.type === "Delete") {
+                        processedLog.push({
+                            type: "Delete",
+                            data: {
+                                id: e.id,
+                            },
+                        });
+                    } else if (e.type === "Change") {
+                        const entry = this.getEntryByID(e.id);
+                        if (entry) {
+                            processedLog.push({
+                                type: "Change",
+                                data: {
+                                    lang: this.TLLang.value,
+                                    id: entry.id,
+                                    name: this.userdata.user.username,
+                                    timestamp: Math.floor(this.videoData.start_actual + entry.Time),
+                                    message: entry.SText,
+                                    duration: Math.floor(entry.Duration),
+                                },
+                            });
+                        }
+                    } else if (e.type === "Add") {
+                        const entry = this.getEntryByID(e.id);
+                        if (entry) {
+                            processedLog.push({
+                                type: "Add",
+                                data: {
+                                    lang: this.TLLang.value,
+                                    tempid: entry.id,
+                                    name: this.userdata.user.username,
+                                    timestamp: Math.floor(this.videoData.start_actual + entry.Time),
+                                    message: entry.SText,
+                                    duration: Math.floor(entry.Duration),
+                                },
+                            });
                         }
                     }
                 });
-            });
+
+                if (forget) {
+                    backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processedLog);
+                } else {
+                    backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processedLog).then(({ status, data }) => {
+                        if (status === 200) {
+                            console.log(data);
+                            data.forEach((e) => {
+                                if (e.type === "Add") {
+                                    for (let idx = 0; idx < this.entries.length; idx += 1) {
+                                        if (this.entries[idx].id === e.tempid) {
+                                            this.entries[idx].id = e.res.id;
+                                            break;
+                                        }
+                                    }
+                                    for (let idx = 0; idx < this.transactionLog.length; idx += 1) {
+                                        if (this.transactionLog[idx].id === e.tempid) {
+                                            this.transactionLog[idx].id = e.res.id;
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }).catch((err) => {
+                        console.log(`ERR : ${err}`);
+                    });
+                }
+            }
         },
         // ----------------------- TIMER CONTROLLER -----------------------
         proceedTimer(lastTime: number) {
@@ -1525,70 +1612,46 @@ export default {
             this.displayEntry = -1;
             this.timecardIdx = [];
             this.entries.splice(this.selectedEntry, 1);
-            if (this.selectedEntry === 0) {
-                if (this.entries.length > 0) {
-                    this.entries[0].Time = tempEntries.Time;
-                }
-            } else if (this.selectedEntry < this.entries.length) {
-                this.entries[this.selectedEntry - 1].Duration = tempEntries.Time + tempEntries.Duration - this.entries[this.selectedEntry - 1].Time;
-            }
             this.reloadDisplayCards();
             this.selectedEntry = -1;
-            backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, [{
-                type: "Delete",
-                data: {
+
+            let checkNew = this.transactionLog.filter((e) => e.id === tempEntries.id);
+            if (checkNew.length === 0) {
+                this.transactionLog.push({
+                    type: "Delete",
                     id: tempEntries.id,
-                },
-            }]).then((e) => {
-                console.log(e);
-            });
+                });
+            } else {
+                checkNew = checkNew.filter.filter((e) => e.type === "Change");
+                if (checkNew.length === 0) {
+                    this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                } else {
+                    this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                    this.transactionLog.push({
+                        type: "Delete",
+                        id: tempEntries.id,
+                    });
+                }
+            }
         },
         setStartEntry() {
             this.timecardIdx = [];
             this.displayEntry = -1;
+            for (let idx = 0; idx < this.selectedEntry; idx += 1) {
+                this.transactionLog.push({
+                    type: "Delete",
+                    id: idx,
+                });
+            }
             this.entries.splice(0, this.selectedEntry);
             this.selectedEntry = -1;
             const timeCut = this.entries[0].Time;
             this.entries = this.entries.map((e) => {
+                this.logChange(e.id);
                 e.Time -= timeCut;
                 return e;
             });
             this.reloadDisplayCards();
-        },
-        shiftToCurrentTime() {
-            backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, [{
-                type: "Change",
-                data: {
-                    lang: this.TLLang.value,
-                    id: this.entries[this.selectedEntry].id,
-                    name: this.userdata.user.username,
-                    timestamp: this.videoData.start_actual + this.entries[this.selectedEntry].Time,
-                    message: this.entries[this.selectedEntry].SText,
-                    duration: this.entries[this.selectedEntry].Duration,
-                },
-            }]).then((e) => {
-                console.log(e);
-            });
-            /*
-            if (this.selectedEntry >= 0) {
-                const timeTarget = this.timerTime;
-                const timeshift = timeTarget - this.entries[this.selectedEntry].Time;
-
-                for (let i = this.selectedEntry - 1; i >= 0; i -= 1) {
-                    this.entries[i].Duration = timeTarget - (this.selectedEntry - 1 - i) * 100 - this.entries[i].Time;
-                    if (this.entries[i].Time > timeTarget) {
-                        this.entries[i].Time = timeTarget - (this.selectedEntry - i) * 100;
-                    } else {
-                        break;
-                    }
-                }
-
-                for (let i = this.selectedEntry; i < this.entries.length; i += 1) {
-                    this.entries[i].Time += timeshift;
-                }
-            }
-            this.selectedEntry = -1;
-            */
         },
         //= ======================== ENTRY CONTROLLER ========================
 
@@ -1835,6 +1898,9 @@ export default {
             }
         },
         rulerMouseLeave() {
+            if (this.timelineActive) {
+                this.logChange(this.entries[this.selectedEntry].id);
+            }
             this.timelineActive = false;
         },
         rulerMouseDown(event: any, idx: number, resizeSwitch: number) {
@@ -1846,6 +1912,9 @@ export default {
             }
         },
         rulerMouseUp() {
+            if (this.timelineActive) {
+                this.logChange(this.entries[this.selectedEntry].id);
+            }
             this.timelineActive = false;
         },
         rulerMouseMove(event: any) {
@@ -1909,7 +1978,11 @@ export default {
                             }
                         }
 
-                        this.entries[this.selectedEntry].Time += xChange;
+                        if (this.entries[this.selectedEntry].Time + xChange > 0) {
+                            this.entries[this.selectedEntry].Time += xChange;
+                        } else {
+                            this.entries[this.selectedEntry].Time = 0;
+                        }
                         break;
                     }
 
@@ -1939,54 +2012,6 @@ export default {
                     default:
                         break;
                 }
-
-                /*
-                if (this.resizeMode) {
-                } else if (this.selectedEntry !== 0) {
-                    const a = this.entries[this.selectedEntry - 1].End + ((event.clientX - this.xPos) / this.secToPx) * 1000;
-                    if (a - this.entries[this.selectedEntry - 1].Time < 50) {
-                        this.timelineActive = false;
-                        return;
-                    }
-
-                    if (this.selectedEntry < this.entries.length - 1) {
-                        const b = this.entries[this.selectedEntry + 1].Time + ((event.clientX - this.xPos) / this.secToPx) * 1000;
-                        if (this.entries[this.selectedEntry + 1].End - b < 50) {
-                            this.timelineActive = false;
-                            return;
-                        }
-                        this.entries[this.selectedEntry + 1].Time = b;
-                    }
-
-                    this.entries[this.selectedEntry - 1].End = a;
-                    this.entries[this.selectedEntry].Time += ((event.clientX - this.xPos) / this.secToPx) * 1000;
-                    this.entries[this.selectedEntry].End += ((event.clientX - this.xPos) / this.secToPx) * 1000;
-                } else {
-                    const a = this.entries[this.selectedEntry].Time + ((event.clientX - this.xPos) / this.secToPx) * 1000;
-                    if (a < 0) {
-                        this.timelineActive = false;
-                        return;
-                    }
-
-                    if (this.selectedEntry < this.entries.length - 1) {
-                        const b = this.entries[this.selectedEntry + 1].Time + ((event.clientX - this.xPos) / this.secToPx) * 1000;
-                        if (this.entries[this.selectedEntry + 1].End - b < 50) {
-                            this.timelineActive = false;
-                            return;
-                        }
-                        this.entries[this.selectedEntry + 1].Time = b;
-                    }
-
-                    if (this.entries[this.selectedEntry].End - a < 50) {
-                        this.timelineActive = false;
-                        return;
-                    }
-
-                    this.entries[this.selectedEntry].Time = a;
-                    this.entries[this.selectedEntry].End += ((event.clientX - this.xPos) / this.secToPx) * 1000;
-                    this.reloadDisplayCards();
-                }
-                */
                 this.xPos = event.clientX;
             }
         },
@@ -2029,7 +2054,7 @@ export default {
                     limit: 100000,
                     mode: 1,
                     creator_id: this.userdata.user.id,
-                })).data.filter((e) => (e.timestamp > this.videoData.start_actual)).map((e) => {
+                })).data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
                     e.timestamp -= this.videoData.start_actual;
                     return e;
                 });
