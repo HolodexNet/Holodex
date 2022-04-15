@@ -1,33 +1,82 @@
 <template>
-  <v-container fill-height>
+  <v-container
+    fill-height
+    @keydown.ctrl.83.exact.prevent="processLog()"
+  >
     <v-card
       v-if="menuBool"
       class="TopMenu"
     >
-      <v-container class="d-flex align-baseline">
-        <v-btn
-          elevation="4"
-          color="secondary"
-          @click="modalMode = 5; modalNexus = true"
-        >
-          {{ $t("views.tlClient.menu.setting") }}
-        </v-btn>
-        <v-btn
-          elevation="4"
-          color="secondary"
-          style="margin-left:5px"
-          @click="modalMode = 3; modalNexus = true; activeURLInput = activeURLStream;"
-        >
-          {{ $t("views.tlClient.menu.loadVideo") }}
-        </v-btn>
-        <v-btn
-          elevation="4"
-          color="secondary"
-          style="margin-left:5px"
-          @click="unloadVideo()"
-        >
-          {{ $t("views.tlClient.menu.unloadVideo") }}
-        </v-btn>
+      <v-container class="d-flex">
+        <v-card-actions class="d-flex flex-column align-stretch justify-center">
+          <v-btn
+            elevation="4"
+            color="secondary"
+            @click="modalMode = 5; modalNexus = true"
+          >
+            {{ $t("views.tlClient.menu.setting") }}
+          </v-btn>
+          <v-btn
+            elevation="4"
+            color="secondary"
+            style="margin-top:5px; margin-left:0px"
+            @click="processLog()"
+          >
+            {{ $t("views.scriptEditor.menu.save") + " (Ctrl + s)" }}
+          </v-btn>
+        </v-card-actions>
+        <v-card-actions class="d-flex flex-column align-stretch justify-center">
+          <v-btn
+            elevation="4"
+            color="secondary"
+            @click="modalMode = 3; modalNexus = true; activeURLInput = activeURLStream;"
+          >
+            {{ $t("views.tlClient.menu.loadVideo") }}
+          </v-btn>
+          <v-btn
+            elevation="4"
+            color="secondary"
+            style="margin-top:5px; margin-left:0px"
+            @click="unloadVideo()"
+          >
+            {{ $t("views.tlClient.menu.unloadVideo") }}
+          </v-btn>
+        </v-card-actions>
+        <v-card-actions class="d-flex flex-column align-stretch justify-center">
+          <v-btn
+            elevation="4"
+            color="secondary"
+            @click="modalMode = 6; modalNexus = true"
+          >
+            {{ $t("views.scriptEditor.menu.exportFile") }}
+          </v-btn>
+          <v-btn
+            elevation="4"
+            color="secondary"
+            style="margin-top:5px; margin-left:0px"
+            @click="modalMode = 7; modalNexus = true"
+          >
+            {{ $t("views.scriptEditor.menu.importFile") }}
+          </v-btn>
+        </v-card-actions>
+        <v-card-actions class="d-flex flex-column align-stretch justify-center">
+          <v-btn
+            elevation="4"
+            color="secondary"
+            @click="continuousTime()"
+          >
+            {{ $t("views.scriptEditor.menu.continuousEnd") }}
+          </v-btn>
+        </v-card-actions>
+        <v-card-actions class="d-flex flex-column align-stretch justify-center" style="margin-left:auto">
+          <v-btn
+            elevation="4"
+            color="error"
+            @click="modalMode = 8; modalNexus = true"
+          >
+            {{ $t("views.scriptEditor.menu.clearAll") }}
+          </v-btn>
+        </v-card-actions>
       </v-container>
     </v-card>
     <div class="d-flex flex-column" style="height:100%; width:100%">
@@ -354,10 +403,11 @@
       3 Load Stream
       4 Set as Start
       5 Setting
+      6 Delete All
     -->
     <v-dialog
       v-model="modalNexus"
-      max-width="600px"
+      :max-width="modalMode === 8 ? '300px' : '600px'"
       persistent
       @click:outside="modalNexusOutsideClick();"
     >
@@ -468,6 +518,28 @@
           </v-card-actions>
         </v-container>
       </v-card>
+
+      <!---------    DELETE ALL     --------->
+      <v-card v-if="modalMode === 6">
+        <ExportFile :entries="entries" :profile="profile" :title="userdata.user.username + ' - ' + videoData.title" />
+      </v-card>
+
+      <!---------    DELETE ALL     --------->
+      <v-card v-if="modalMode === 8">
+        <v-container>
+          <v-card-title>
+            {{ $t("views.scriptEditor.menu.clearAll") }}
+          </v-card-title>
+          <v-card-actions>
+            <v-btn @click="modalNexus = false">
+              {{ $t("views.tlClient.cancelBtn") }}
+            </v-btn>
+            <v-btn style="margin-left:auto" color="warning" @click="clearAll(); modalNexus = false;">
+              {{ $t("views.tlClient.okBtn") }}
+            </v-btn>
+          </v-card-actions>
+        </v-container>
+      </v-card>
     </v-dialog>
     <!--========   NEXUS MODAL =======-->
   </v-container>
@@ -476,6 +548,7 @@
 <script lang="ts">
 import Entrytr from "@/components/tlscripteditor/Entrytr.vue";
 import EnhancedEntry from "@/components/tlscripteditor/EnhancedEntry.vue";
+import ExportFile from "@/components/tlscripteditor/ExportFile.vue";
 import { TL_LANGS } from "@/utils/consts";
 import { mdiPlay, mdiStop } from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
@@ -498,6 +571,7 @@ export default {
     components: {
         EnhancedEntry,
         Entrytr,
+        ExportFile,
     },
     data() {
         return {
@@ -845,8 +919,52 @@ export default {
                 id: dt.id,
             });
         },
+        clearAll() {
+            this.displayEntry = -1;
+            this.timecardIdx = [];
+            this.selectedEntry = -1;
+
+            for (; this.entries.length > 0;) {
+                const tempEntries = this.entries.splice(0, 1)[0];
+                let checkNew = this.transactionLog.filter((e) => e.id === tempEntries.id);
+                if (checkNew.length === 0) {
+                    this.transactionLog.push({
+                        type: "Delete",
+                        id: tempEntries.id,
+                    });
+                } else {
+                    checkNew = checkNew.filter((e) => e.type === "Change");
+                    if (checkNew.length === 0) {
+                        this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                    } else {
+                        this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                        this.transactionLog.push({
+                            type: "Delete",
+                            id: tempEntries.id,
+                        });
+                    }
+                }
+            }
+
+            this.processLog(false);
+            this.reloadDisplayCards();
+        },
+        continuousTime() {
+            this.displayEntry = -1;
+            this.timecardIdx = [];
+            this.selectedEntry = -1;
+
+            for (let idx = 0; idx < this.entries.length - 1; idx += 1) {
+                if (this.entries[idx].Time + this.entries[idx].Duration < this.entries[idx + 1].Time) {
+                    this.entries[idx].Duration = this.entries[idx + 1].Time - this.entries[idx].Time;
+                    this.logChange(this.entries[idx].id);
+                }
+            }
+
+            this.processLog(false);
+            this.reloadDisplayCards();
+        },
         logChange(ID) {
-            console.log("TEST");
             if (this.transactionLog.filter((e) => e.id === ID).length === 0) {
                 this.transactionLog.push({
                     type: "Change",
@@ -864,8 +982,10 @@ export default {
         processLog(forget:boolean) {
             if (this.transactionLog.length > 0) {
                 console.log("Submit Log");
-                const logCopy = JSON.parse(JSON.stringify(this.transactionLog));
-                this.transactionLog = [];
+                const logCopy = [];
+                for (; this.transactionLog.length > 0;) {
+                    logCopy.push(this.transactionLog.splice(0, 1)[0]);
+                }
 
                 const processedLog = [];
                 logCopy.forEach((e) => {
@@ -1622,7 +1742,7 @@ export default {
                     id: tempEntries.id,
                 });
             } else {
-                checkNew = checkNew.filter.filter((e) => e.type === "Change");
+                checkNew = checkNew.filter((e) => e.type === "Change");
                 if (checkNew.length === 0) {
                     this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
                 } else {
@@ -2042,6 +2162,7 @@ export default {
                     id: parseVideoID.id,
                     status: vidData.status,
                     start_actual: Date.parse(vidData.start_actual),
+                    title: vidData.title,
                 };
 
                 this.timecardIdx = [];

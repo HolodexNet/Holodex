@@ -493,6 +493,12 @@ views:
     cancelBtn: Cancel
     okBtn: Ok
   scriptEditor:
+    menu:
+      save: Save
+      continuousEnd: Make Time Continuous (change end)
+      clearAll: Delete Script
+      exportFile: Export File
+      importFile: Import File
     table:
       headerStart: Start
       headerEnd: End
