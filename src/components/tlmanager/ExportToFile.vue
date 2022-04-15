@@ -1,8 +1,17 @@
 <template>
   <v-container>
     <h2 style="width:100%; text-align: center;">
-      {{ $t("views.scriptEditor.menu.exportFile") }}
+      {{ $t("views.tlManager.download") }}
     </h2>
+    <v-select
+      v-model="TLLang"
+      :items="TL_LANGS"
+      :item-text="item => item.text + ' (' + item.value + ')'"
+      item-value="value"
+      :label="$t('views.tlManager.langPick')"
+      return-object
+      @change="reloadEntries();"
+    />
     <h4 style="width:100%; text-align: center; margin-top:10px">
       {{ entries.length + " entries, " + profile.length + " profile." }}
     </h4>
@@ -31,15 +40,91 @@
 </template>
 
 <script lang="ts">
+import backendApi from "@/utils/backend-api";
+import { TL_LANGS } from "@/utils/consts";
 
 export default {
-    name: "ExportFile",
+    name: "ExportToFile",
     props: {
-        entries: Array,
-        profile: Array,
-        title: String,
+        videoData: Object,
+    },
+    data() {
+        return {
+            TLLang: TL_LANGS[0],
+            TL_LANGS,
+            entries: [],
+            profile: [{
+                Name: "Default",
+                Prefix: "",
+                Suffix: "",
+                useCC: false,
+                CC: "#000000",
+                useOC: false,
+                OC: "#000000",
+            }],
+        };
+    },
+    computed: {
+        userdata() {
+            return this.$store.state.userdata;
+        },
+    },
+    watch: {
+        videoData() {
+            this.reloadEntries();
+        },
+    },
+    mounted() {
+        this.reloadEntries();
     },
     methods: {
+        reloadEntries() {
+            this.entries = [];
+            backendApi.chatHistory(this.videoData.id, {
+                lang: this.TLLang.value,
+                verified: 0,
+                moderator: 0,
+                vtuber: 0,
+                limit: 100000,
+                mode: 1,
+                creator_id: this.userdata.user.id,
+            }).then(({ status, data }) => {
+                if (status === 200) {
+                    const fetchChat = data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
+                        e.timestamp -= this.videoData.start_actual;
+                        return e;
+                    });
+
+                    for (let i = 0; i < fetchChat.length; i += 1) {
+                        const dt = {
+                            id: fetchChat[i].id,
+                            Time: fetchChat[i].timestamp,
+                            SText: fetchChat[i].message,
+                            Profile: 0,
+                        };
+
+                        if (fetchChat[i].duration) {
+                            this.entries.push({
+                                ...dt,
+                                Duration: Number(fetchChat[i].duration),
+                            });
+                        } else if (i === fetchChat.length - 1) {
+                            this.entries.push({
+                                ...dt,
+                                Duration: 3000,
+                            });
+                        } else {
+                            this.entries.push({
+                                ...dt,
+                                Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
+                            });
+                        }
+                    }
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+        },
         stringifyTime(time: number, mode: boolean): string {
             let timeStamp = time;
             let timeString = "";
@@ -129,7 +214,7 @@ export default {
             const blob = new Blob([writeStream], { type: "text/plain" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = `${this.title}.ass`;
+            link.download = `${this.userdata.user.username} - ${this.videoData.title}.ass`;
             link.click();
             link.remove();
         },
@@ -215,7 +300,7 @@ export default {
             const blob = new Blob([writeStream], { type: "text/plain" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = `${this.title}.ttml`;
+            link.download = `${this.userdata.user.username} - ${this.videoData.title}.ttml`;
             link.click();
             link.remove();
         },
@@ -236,7 +321,7 @@ export default {
             const blob = new Blob([writeStream], { type: "text/plain" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = `${this.title}.srt`;
+            link.download = `${this.userdata.user.username} - ${this.videoData.title}.srt`;
             link.click();
             link.remove();
         },

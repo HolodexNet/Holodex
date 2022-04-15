@@ -2,13 +2,9 @@
   <v-dialog v-model="show" max-width="80%" max-height="500px">
     <v-card elevation="5">
       <v-container>
-        <v-card-title>
-          {{ $t("views.watch.uploadPanel.title") }}
-        </v-card-title>
-        <v-card-subtitle>
-          {{ $t("views.watch.uploadPanel.usernameText") + ' : ' + userdata.user.username + ' ' }}
-          <a style="text-decoration: underline; font-size: 0.7em" @click="changeUsernameClick()">{{ $t("views.watch.uploadPanel.usernameChange") }}</a>
-        </v-card-subtitle>
+        <h2 style="width:100%; text-align: center; margin-bottom: 10px;">
+          {{ $t("views.scriptEditor.menu.importFile") }}
+        </h2>
         <v-file-input
           ref="fileInput"
           accept=".ass, .TTML, .srt"
@@ -18,14 +14,6 @@
           @change="fileChange"
         />
         <v-card-text>{{ notifText }}</v-card-text>
-        <v-select
-          v-model="TLLang"
-          :items="TL_LANGS"
-          :item-text="item => item.text + ' (' + item.value + ')'"
-          item-value="value"
-          :label="$t(&quot;views.watch.uploadPanel.tlLang&quot;)"
-          return-object
-        />
         <v-simple-table
           v-if="entries.length > 0"
           fixed-header
@@ -50,11 +38,11 @@
             <template v-for="(entry, index) in entries">
               <Entrytr
                 :key="index"
-                :time="entry.timestamp"
-                :duration="entry.duration"
-                :stext="entry.message"
-                :cc="entry.cc ? entry.cc : ''"
-                :oc="entry.oc ? entry.oc : ''"
+                :time="entry.Time"
+                :duration="entry.Duration"
+                :stext="entry.SText"
+                :cc="profile[entry.Profile].useCC ? profile[entry.Profile].CC : ''"
+                :oc="profile[entry.Profile].useOC ? profile[entry.Profile].OC : ''"
               />
             </template>
           </tbody>
@@ -62,11 +50,16 @@
 
         <v-card-actions>
           <v-btn @click="show=false">
-            {{ $t("views.watch.uploadPanel.cancelBtn") }}
+            {{ $t("views.tlClient.cancelBtn") }}
           </v-btn>
 
-          <v-btn style="margin-left:auto" :disabled="!parsed" @click="sendData()">
-            {{ $t("views.watch.uploadPanel.okBtn") }}
+          <v-btn
+            style="margin-left:auto"
+            :disabled="!parsed"
+            color="error"
+            @click="clickOk();"
+          >
+            {{ $t("views.scriptEditor.importFile.overwriteBtn") }}
           </v-btn>
         </v-card-actions>
       </v-container>
@@ -77,26 +70,22 @@
 <script>
 import { mdiFileDocument } from "@mdi/js";
 import Entrytr from "@/components/scriptupload/Entrytr.vue";
-import backendApi from "@/utils/backend-api";
-import { TL_LANGS } from "@/utils/consts";
 
 export default {
+    name: "ImportFile",
     components: {
         Entrytr,
     },
     props: {
         value: Boolean,
-        video: Object,
     },
     data() {
         return {
-            TL_LANGS,
             mdiFileDocument,
             parsed: false,
             entries: [],
-            profileContainer: [],
+            profile: [],
             notifText: "",
-            TLLang: TL_LANGS[0],
         };
     },
     computed: {
@@ -121,13 +110,10 @@ export default {
         }
     },
     methods: {
-        changeUsernameClick() {
-            this.$router.push({ path: "/login" });
-        },
         fileChange(e) {
             this.parsed = false;
             this.entries = [];
-            this.profileContainer = [];
+            this.profile = [];
             this.notifText = "";
             if (!e) {
                 return;
@@ -186,9 +172,11 @@ export default {
                                     lineSplit = res[index].split(":")[1].split(",").map((e) => (e.trim()));
                                     if (lineSplit.length === dataLength) {
                                         if ((lineSplit[locationIndex[1]].length === 10) && (lineSplit[locationIndex[2]].length === 10)) {
-                                            this.profileContainer.push({
+                                            this.profile.push({
                                                 Name: lineSplit[locationIndex[0]].trim(),
+                                                useCC: true,
                                                 CC: lineSplit[locationIndex[1]].trim().substr(8, 2) + lineSplit[locationIndex[1]].trim().substr(6, 2) + lineSplit[locationIndex[1]].trim().substr(4, 2),
+                                                useOC: true,
                                                 OC: lineSplit[locationIndex[2]].trim().substr(8, 2) + lineSplit[locationIndex[2]].trim().substr(6, 2) + lineSplit[locationIndex[2]].trim().substr(4, 2),
                                             });
                                         } else {
@@ -245,8 +233,8 @@ export default {
                                 if (res[index].search(/^Dialogue/gi) !== -1) {
                                     lineSplit = res[index].split("Dialogue:")[1].split(",");
                                     if (lineSplit.length >= dataLength) {
-                                        for (let index2 = 0; index2 < this.profileContainer.length; index2 += 1) {
-                                            if (lineSplit[locationIndex[2]].trim() === this.profileContainer[index2].Name) {
+                                        for (let index2 = 0; index2 < this.profile.length; index2 += 1) {
+                                            if (lineSplit[locationIndex[2]].trim() === this.profile[index2].Name) {
                                                 let textSend = lineSplit[locationIndex[3]];
                                                 for (let z = locationIndex[3] + 1; z < lineSplit.length; z += 1) {
                                                     textSend += `,${lineSplit[z]}`;
@@ -270,11 +258,17 @@ export default {
                                                 }
                                                 const endTime = Number.parseInt(timeSplit2[0], 10) * 60 * 60 * 1000 + Number.parseInt(timeSplit2[1], 10) * 60 * 1000 + Number.parseInt(timeSplit2[2].split(".")[0], 10) * 1000 + Number.parseInt(msShift2, 10);
 
-                                                this.entries.push({
-                                                    message: textSend,
-                                                    timestamp: startTime,
-                                                    duration: endTime - startTime,
-                                                });
+                                                for (let i = 0; i < this.profile.length; i += 1) {
+                                                    if (this.profile[i].Name === lineSplit[locationIndex[2]]) {
+                                                        this.entries.push({
+                                                            SText: textSend,
+                                                            Time: startTime,
+                                                            Duration: endTime - startTime,
+                                                            Profile: i,
+                                                        });
+                                                        break;
+                                                    }
+                                                }
                                                 break;
                                             }
                                         }
@@ -297,7 +291,7 @@ export default {
             if (fail) {
                 this.notifText = this.$t("views.watch.uploadPanel.notifTextErr");
             } else {
-                this.notifText = `Parsed ASS file, ${this.profileContainer.length} profiles, ${this.entries.length} Entries.`;
+                this.notifText = `Parsed ASS file, ${this.profile.length} profiles, ${this.entries.length} Entries.`;
                 this.parsed = true;
             }
         },
@@ -325,7 +319,9 @@ export default {
                     endTarget = -1;
                     const tempProfileContainer = {
                         Name: "",
+                        useCC: true,
                         CC: "",
+                        useOC: true,
                         OC: "",
                     };
 
@@ -370,7 +366,7 @@ export default {
                         tempProfileContainer.OC = dataFeed.substring(target + 5, endTarget);
                     }
 
-                    this.profileContainer.push(tempProfileContainer);
+                    this.profile.push(tempProfileContainer);
                     penStart = penEnd;
                 }
             }
@@ -385,11 +381,10 @@ export default {
                 startIndex = dataFeed.indexOf("<body>");
                 endIndex = dataFeed.indexOf("</body>");
                 const entryContainer = {
-                    message: "",
-                    timestamp: 0,
-                    duration: 0,
-                    CC: undefined,
-                    OC: undefined,
+                    SText: "",
+                    Time: 0,
+                    Duration: 0,
+                    Profile: 0,
                 };
 
                 fail = false;
@@ -446,9 +441,9 @@ export default {
                     if (Number.isNaN(Number.parseInt(dataFeed.substring(target + 3, endTarget), 10)) || Number.isNaN(Number.parseInt(dataFeed.substring(target2 + 3, endTarget2), 10))) {
                         fail = true;
                         break;
-                    } else if (entryContainer.timestamp !== Number.parseInt(dataFeed.substring(target + 3, endTarget), 10)) {
-                        entryContainer.timestamp = Number.parseInt(dataFeed.substring(target + 3, endTarget), 10);
-                        entryContainer.duration = Number.parseInt(dataFeed.substring(target2 + 3, endTarget2), 10) - entryContainer.timestamp;
+                    } else if (entryContainer.Time !== Number.parseInt(dataFeed.substring(target + 3, endTarget), 10)) {
+                        entryContainer.Time = Number.parseInt(dataFeed.substring(target + 3, endTarget), 10);
+                        entryContainer.Duration = Number.parseInt(dataFeed.substring(target2 + 3, endTarget2), 10) - entryContainer.Time;
 
                         // LOOK FOR NON EMPTY SPAN
                         startClosure = endClosure;
@@ -472,7 +467,7 @@ export default {
                             }
 
                             if (dataFeed.substring(endClosure + 1, spanEnd).trim().length > 1) {
-                                entryContainer.message = dataFeed.substring(endClosure + 1, spanEnd).trim();
+                                entryContainer.SText = dataFeed.substring(endClosure + 1, spanEnd).trim();
 
                                 target = dataFeed.indexOf("p=\"", startClosure);
                                 if ((target > endClosure) || (target === -1)) {
@@ -485,16 +480,13 @@ export default {
                                     break;
                                 }
 
-                                for (let i = 0; i < this.profileContainer.length; i += 1) {
-                                    if (this.profileContainer[i].Name === dataFeed.substring(target + 3, endTarget)) {
+                                for (let i = 0; i < this.profile.length; i += 1) {
+                                    if (this.profile[i].Name === dataFeed.substring(target + 3, endTarget)) {
                                         this.entries.push({
-                                            message: dataFeed.substring(endClosure + 1, spanEnd).trim(),
-                                            timestamp: entryContainer.timestamp,
-                                            duration: entryContainer.duration,
-                                            /*
-                        cc: this.profileContainer[i].CC,
-                        oc: this.profileContainer[i].OC
-                        */
+                                            SText: dataFeed.substring(endClosure + 1, spanEnd).trim(),
+                                            Time: entryContainer.Time,
+                                            Duration: entryContainer.Duration,
+                                            Profile: i,
                                         });
                                         endClosure = penEnd;
                                         break;
@@ -514,7 +506,7 @@ export default {
             if (fail) {
                 this.notifText = this.$t("views.watch.uploadPanel.notifTextErr");
             } else {
-                this.notifText = `Parsed TTML file, ${this.profileContainer.length} colour profiles, ${this.entries.length} Entries.`;
+                this.notifText = `Parsed TTML file, ${this.profile.length} colour profiles, ${this.entries.length} Entries.`;
                 this.parsed = true;
             }
         },
@@ -569,6 +561,16 @@ export default {
             const res = dataFeed.split("\n");
             let write = false;
 
+            this.profile.push({
+                Name: "Profile1",
+                Prefix: "",
+                Suffix: "",
+                useCC: false,
+                CC: "#000000",
+                useOC: false,
+                OC: "#000000",
+            });
+
             for (let index = 0; index < res.length; index += 1) {
                 if (this.srtTimeCheck(res[index])) {
                     const startTime = this.parseTimeString(res[index].split("-->")[0].trim());
@@ -581,17 +583,19 @@ export default {
                             index -= 1;
                             write = false;
                             this.entries.push({
-                                message: text,
-                                timestamp: startTime,
-                                duration: endTime - startTime,
+                                SText: text,
+                                Time: startTime,
+                                Duration: endTime - startTime,
+                                Profile: 0,
                             });
                             break;
                         } else if (res[index] === "") {
                             write = false;
                             this.entries.push({
-                                message: text,
-                                timestamp: startTime,
-                                duration: endTime - startTime,
+                                SText: text,
+                                Time: startTime,
+                                Duration: endTime - startTime,
+                                Profile: 0,
                             });
                             break;
                         } else if (index === res.length - 1) {
@@ -600,9 +604,10 @@ export default {
                             }
                             write = false;
                             this.entries.push({
-                                message: text,
-                                timestamp: startTime,
-                                duration: endTime - startTime,
+                                SText: text,
+                                Time: startTime,
+                                Duration: endTime - startTime,
+                                Profile: 0,
                             });
                             break;
                         } else if (res[index].trim() !== "") {
@@ -624,36 +629,12 @@ export default {
                 }
             }
         },
-        sendData() {
-            if (!this.video.start_actual) {
-                this.notifText = "ERR no video start_actual information";
-                return;
-            }
-            const videoActualStartMilis = Date.parse(this.video.start_actual);
-            backendApi.postBulkTL(
-                this.video.id,
-                this.userdata.user.api_key,
-                this.TLLang.value,
-                this.entries.map((e) => {
-                    e.message = e.message.trim();
-                    e.timestamp += videoActualStartMilis;
-                    return ({
-                        ...e,
-                        name: this.userdata.user.username,
-                        source: "user",
-                    });
-                }),
-            ).then(({ status, data }) => {
-                if (status === 200) {
-                    this.parsed = false;
-                    this.entries = [];
-                    this.show = false;
-                } else {
-                    console.log(`ERR : ${data}`);
-                }
-            }).catch((err) => {
-                console.log(`ERR : ${err}`);
+        clickOk() {
+            this.$emit("bounceDataBack", {
+                entriesData: this.entries,
+                profileData: this.profile,
             });
+            this.show = false;
         },
     },
 };

@@ -1,77 +1,74 @@
 <template>
-  <v-dialog v-model="show" max-width="80%" max-height="500px">
-    <v-card elevation="5">
-      <v-container>
-        <v-card-title>
-          {{ $t("views.watch.uploadPanel.title") }}
-        </v-card-title>
-        <v-card-subtitle>
-          {{ $t("views.watch.uploadPanel.usernameText") + ' : ' + userdata.user.username + ' ' }}
-          <a style="text-decoration: underline; font-size: 0.7em" @click="changeUsernameClick()">{{ $t("views.watch.uploadPanel.usernameChange") }}</a>
-        </v-card-subtitle>
-        <v-file-input
-          ref="fileInput"
-          accept=".ass, .TTML, .srt"
-          :prepend-icon="mdiFileDocument"
-          outlined
-          dense
-          @change="fileChange"
-        />
-        <v-card-text>{{ notifText }}</v-card-text>
-        <v-select
-          v-model="TLLang"
-          :items="TL_LANGS"
-          :item-text="item => item.text + ' (' + item.value + ')'"
-          item-value="value"
-          :label="$t(&quot;views.watch.uploadPanel.tlLang&quot;)"
-          return-object
-        />
-        <v-simple-table
-          v-if="entries.length > 0"
-          fixed-header
-          dense
-          height="40vh"
-          width="auto"
-        >
-          <thead>
-            <tr>
-              <th class="text-left">
-                {{ $t("views.watch.uploadPanel.headerStart") }}
-              </th>
-              <th class="text-left">
-                {{ $t("views.watch.uploadPanel.headerEnd") }}
-              </th>
-              <th class="text-left" style="width: 100%">
-                {{ $t("views.watch.uploadPanel.headerText") }}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <template v-for="(entry, index) in entries">
-              <Entrytr
-                :key="index"
-                :time="entry.timestamp"
-                :duration="entry.duration"
-                :stext="entry.message"
-                :cc="entry.cc ? entry.cc : ''"
-                :oc="entry.oc ? entry.oc : ''"
-              />
-            </template>
-          </tbody>
-        </v-simple-table>
+  <v-container>
+    <v-card-title>
+      {{ $t("views.watch.uploadPanel.title") }}
+    </v-card-title>
+    <v-file-input
+      ref="fileInput"
+      accept=".ass, .TTML, .srt"
+      :prepend-icon="mdiFileDocument"
+      outlined
+      dense
+      @change="fileChange"
+    />
+    <v-card-text>{{ notifText }}</v-card-text>
+    <v-select
+      v-model="TLLang"
+      :items="TL_LANGS"
+      :item-text="item => item.text + ' (' + item.value + ')'"
+      item-value="value"
+      :label="$t('views.tlManager.langPick')"
+      return-object
+    />
+    <v-simple-table
+      v-if="entries.length > 0"
+      fixed-header
+      dense
+      height="40vh"
+      width="auto"
+    >
+      <thead>
+        <tr>
+          <th class="text-left">
+            {{ $t("views.watch.uploadPanel.headerStart") }}
+          </th>
+          <th class="text-left">
+            {{ $t("views.watch.uploadPanel.headerEnd") }}
+          </th>
+          <th class="text-left" style="width: 100%">
+            {{ $t("views.watch.uploadPanel.headerText") }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <template v-for="(entry, index) in entries">
+          <Entrytr
+            :key="index"
+            :time="entry.timestamp"
+            :duration="entry.duration"
+            :stext="entry.message"
+            :cc="entry.cc ? entry.cc : ''"
+            :oc="entry.oc ? entry.oc : ''"
+          />
+        </template>
+      </tbody>
+    </v-simple-table>
 
-        <v-card-actions>
-          <v-btn @click="show=false">
-            {{ $t("views.watch.uploadPanel.cancelBtn") }}
-          </v-btn>
+    <v-card-actions>
+      <v-btn @click="$emit('close', {upload: false});">
+        {{ $t("views.watch.uploadPanel.cancelBtn") }}
+      </v-btn>
 
-          <v-btn style="margin-left:auto" :disabled="!parsed" @click="sendData()">
-            {{ $t("views.watch.uploadPanel.okBtn") }}
-          </v-btn>
-        </v-card-actions>
-      </v-container>
-    </v-card>
-  </v-dialog>
+      <v-btn
+        style="margin-left:auto"
+        :disabled="!parsed"
+        color="error"
+        @click="sendData()"
+      >
+        {{ $t("views.scriptEditor.importFile.overwriteBtn") }}
+      </v-btn>
+    </v-card-actions>
+  </v-container>
 </template>
 
 <script>
@@ -85,8 +82,7 @@ export default {
         Entrytr,
     },
     props: {
-        value: Boolean,
-        video: Object,
+        videoData: Object,
     },
     data() {
         return {
@@ -100,30 +96,19 @@ export default {
         };
     },
     computed: {
-        show: {
-            get() {
-                return this.value;
-            },
-            set(value) {
-                this.$emit("input", value);
-            },
-        },
         userdata() {
             return this.$store.state.userdata;
         },
     },
-    beforeUpdate() {
-        if (!this.show) {
+    watch: {
+        videoData() {
             this.$refs.fileInput.reset();
             this.parse = false;
             this.notifText = "";
             this.entries = [];
-        }
+        },
     },
     methods: {
-        changeUsernameClick() {
-            this.$router.push({ path: "/login" });
-        },
         fileChange(e) {
             this.parsed = false;
             this.entries = [];
@@ -491,10 +476,6 @@ export default {
                                             message: dataFeed.substring(endClosure + 1, spanEnd).trim(),
                                             timestamp: entryContainer.timestamp,
                                             duration: entryContainer.duration,
-                                            /*
-                        cc: this.profileContainer[i].CC,
-                        oc: this.profileContainer[i].OC
-                        */
                                         });
                                         endClosure = penEnd;
                                         break;
@@ -624,32 +605,39 @@ export default {
                 }
             }
         },
-        sendData() {
-            if (!this.video.start_actual) {
-                this.notifText = "ERR no video start_actual information";
-                return;
-            }
-            const videoActualStartMilis = Date.parse(this.video.start_actual);
-            backendApi.postBulkTL(
-                this.video.id,
-                this.userdata.user.api_key,
-                this.TLLang.value,
-                this.entries.map((e) => {
-                    e.message = e.message.trim();
-                    e.timestamp += videoActualStartMilis;
-                    return ({
-                        ...e,
+        async sendData() {
+            const processes = await (await backendApi.chatHistory(this.videoData.id, {
+                lang: this.TLLang.value,
+                verified: 0,
+                moderator: 0,
+                vtuber: 0,
+                limit: 100000,
+                mode: 1,
+                creator_id: this.userdata.user.id,
+            })).data.map((e) => ({
+                type: "Delete",
+                data: {
+                    id: e.id,
+                },
+            }));
+
+            for (let idx = 0; idx < this.entries.length; idx += 1) {
+                processes.push({
+                    type: "Add",
+                    data: {
+                        lang: this.TLLang.value,
+                        tempid: `I${idx}`,
                         name: this.userdata.user.username,
-                        source: "user",
-                    });
-                }),
-            ).then(({ status, data }) => {
+                        timestamp: Math.floor(this.videoData.start_actual + this.entries[idx].timestamp),
+                        message: this.entries[idx].message,
+                        duration: Math.floor(this.entries[idx].duration),
+                    },
+                });
+            }
+
+            backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processes).then(({ status }) => {
                 if (status === 200) {
-                    this.parsed = false;
-                    this.entries = [];
-                    this.show = false;
-                } else {
-                    console.log(`ERR : ${data}`);
+                    this.$emit("close", { upload: true });
                 }
             }).catch((err) => {
                 console.log(`ERR : ${err}`);

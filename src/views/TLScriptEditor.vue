@@ -54,7 +54,7 @@
             elevation="4"
             color="secondary"
             style="margin-top:5px; margin-left:0px"
-            @click="modalMode = 7; modalNexus = true"
+            @click="importPanelShow = true;"
           >
             {{ $t("views.scriptEditor.menu.importFile") }}
           </v-btn>
@@ -407,7 +407,7 @@
     -->
     <v-dialog
       v-model="modalNexus"
-      :max-width="modalMode === 8 ? '300px' : '600px'"
+      :max-width="modalMode === 7 ? '300px' : '600px'"
       persistent
       @click:outside="modalNexusOutsideClick();"
     >
@@ -519,13 +519,13 @@
         </v-container>
       </v-card>
 
-      <!---------    DELETE ALL     --------->
+      <!---------    EXPORT ALL     --------->
       <v-card v-if="modalMode === 6">
         <ExportFile :entries="entries" :profile="profile" :title="userdata.user.username + ' - ' + videoData.title" />
       </v-card>
 
       <!---------    DELETE ALL     --------->
-      <v-card v-if="modalMode === 8">
+      <v-card v-if="modalMode === 7">
         <v-container>
           <v-card-title>
             {{ $t("views.scriptEditor.menu.clearAll") }}
@@ -541,6 +541,7 @@
         </v-container>
       </v-card>
     </v-dialog>
+    <ImportFile v-model="importPanelShow" @bounceDataBack="processImportData" />
     <!--========   NEXUS MODAL =======-->
   </v-container>
 </template>
@@ -548,7 +549,8 @@
 <script lang="ts">
 import Entrytr from "@/components/tlscripteditor/Entrytr.vue";
 import EnhancedEntry from "@/components/tlscripteditor/EnhancedEntry.vue";
-import ExportFile from "@/components/tlscripteditor/ExportFile.vue";
+import ImportFile from "@/components/tlscripteditor/ImportFile.vue";
+import ExportFile from "@/components/tlscripteditor/ExportToFile.vue";
 import { TL_LANGS } from "@/utils/consts";
 import { mdiPlay, mdiStop } from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
@@ -572,6 +574,7 @@ export default {
         EnhancedEntry,
         Entrytr,
         ExportFile,
+        ImportFile,
     },
     data() {
         return {
@@ -608,6 +611,7 @@ export default {
             modalNexus: true,
             modalMode: 5,
             addProfileNameString: "",
+            importPanelShow: false,
             // ------ SETTING ------
             TLLang: TL_LANGS[0],
             // ---- ACTIVE VIDEO ----
@@ -981,7 +985,6 @@ export default {
         },
         processLog(forget:boolean) {
             if (this.transactionLog.length > 0) {
-                console.log("Submit Log");
                 const logCopy = [];
                 for (; this.transactionLog.length > 0;) {
                     logCopy.push(this.transactionLog.splice(0, 1)[0]);
@@ -1034,7 +1037,6 @@ export default {
                 } else {
                     backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processedLog).then(({ status, data }) => {
                         if (status === 200) {
-                            console.log(data);
                             data.forEach((e) => {
                                 if (e.type === "Add") {
                                     for (let idx = 0; idx < this.entries.length; idx += 1) {
@@ -2149,6 +2151,64 @@ export default {
             if (this.modalMode !== 5) {
                 this.modalNexus = false;
             }
+        },
+        processImportData(eventData) {
+            const data = eventData;
+            this.displayEntry = -1;
+            this.timecardIdx = [];
+            this.selectedEntry = -1;
+
+            for (; this.entries.length > 0;) {
+                const tempEntries = this.entries.splice(0, 1)[0];
+                let checkNew = this.transactionLog.filter((e) => e.id === tempEntries.id);
+                if (checkNew.length === 0) {
+                    this.transactionLog.push({
+                        type: "Delete",
+                        id: tempEntries.id,
+                    });
+                } else {
+                    checkNew = checkNew.filter((e) => e.type === "Change");
+                    if (checkNew.length === 0) {
+                        this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                    } else {
+                        this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                        this.transactionLog.push({
+                            type: "Delete",
+                            id: tempEntries.id,
+                        });
+                    }
+                }
+            }
+
+            this.profile = [{
+                Name: "Default",
+                Prefix: "",
+                Suffix: "",
+                useCC: false,
+                CC: "#000000",
+                useOC: false,
+                OC: "#000000",
+            }];
+
+            for (let i = 1; data.profileData.length > 0; i += 1) {
+                const dt = data.profileData.splice(0, 1)[0];
+                dt.Name = `Profile${i.toString()}`;
+                this.profile.push(dt);
+            }
+
+            for (let i = 0; data.entriesData.length > 0; i += 1) {
+                const dt = data.entriesData.splice(0, 1)[0];
+                dt.id = `I${i.toString()}`;
+                dt.Profile += 1;
+                this.entries.push(dt);
+                this.transactionLog.push({
+                    type: "Add",
+                    id: dt.id,
+                });
+            }
+
+            this.processLog(false);
+            this.reloadDisplayCards();
         },
         changeUsernameClick() {
             this.$router.push({ path: "/login" });

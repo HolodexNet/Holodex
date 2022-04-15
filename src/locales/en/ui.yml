@@ -511,6 +511,16 @@ views:
       title: Load Video
       inputLabel: Stream Link
     setStartTitle: Set selected entry as start, all the previous entries will be deleted.
+    importFile:
+      overwriteBtn: Overwrite
+  tlManager:
+    title: Script Manager
+    headerID: Video ID
+    headerEntries: Entries
+    download: Download
+    delete: Delete
+    deleteTitle: Delete Entries
+    langPick: Language
 time:
   soon: soon
   diff_future_date: Starts {0} ({1})

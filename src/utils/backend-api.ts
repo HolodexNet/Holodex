@@ -114,7 +114,7 @@ export default {
     changeUsername(jwt, newUsername): Promise<false | AxiosResponse<any>> {
         return axiosInstance
             .post(
-"/user",
+                "/user",
             { name: newUsername },
             {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
@@ -359,9 +359,10 @@ export default {
             },
         );
     },
-    getTLStats(apiKey) {
+    getTLStats(apiKey, query) {
+        const q = querystring.stringify(query);
         return axiosInstance.get(
-            "/tlutil",
+            `/tlutil?${q}`,
             {
                 headers: apiKey ? { "X-APIKEY": apiKey } : {},
             },
