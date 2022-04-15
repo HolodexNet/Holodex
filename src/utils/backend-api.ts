@@ -110,6 +110,17 @@ export default {
         // 301 Cache bust
         // fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
     },
+    changeUsername(jwt, newUsername): Promise<false | AxiosResponse<any>> {
+        return axiosInstance
+            .post(
+                "/user",
+            { name: newUsername },
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
+)
+            .catch(() => false);
+    },
     resetAPIKey(jwt) {
         return (
             axiosInstance
@@ -326,6 +337,42 @@ export default {
             `/video-playlist/${playlistId}/${videoId}`,
             {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+            },
+        );
+    },
+    postTL(videoID, apiKey, langCode, body) {
+        return axiosInstance.post(
+            `/videos/${videoID}/chats?lang=${langCode}`,
+            body,
+            {
+                headers: apiKey ? { "X-APIKEY": apiKey } : {},
+            },
+        );
+    },
+    postBulkTL(videoID, apiKey, langCode, body) {
+        return axiosInstance.post(
+            `/videos/${videoID}/chatsBulk?lang=${langCode}`,
+            body,
+            {
+                headers: apiKey ? { "X-APIKEY": apiKey } : {},
+            },
+        );
+    },
+    getTLStats(apiKey, query) {
+        const q = querystring.stringify(query);
+        return axiosInstance.get(
+            `/tlutil?${q}`,
+            {
+                headers: apiKey ? { "X-APIKEY": apiKey } : {},
+            },
+        );
+    },
+    postTLLog(videoID, apiKey, body, langCode) {
+        return axiosInstance.post(
+            `/videos/${videoID}/scripteditor/log?lang=${langCode}`,
+            body,
+            {
+                headers: apiKey ? { "X-APIKEY": apiKey } : {},
             },
         );
     },

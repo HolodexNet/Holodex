@@ -155,6 +155,16 @@
       @videoUpdate="handleVideoUpdate"
       @timeJump="seekTo"
     />
+    <v-dialog
+      v-model="showUpload"
+      max-width="80%"
+      max-height="500px"
+      @click:outside="$store.commit('setUploadPanel', false);"
+    >
+      <v-card elevation="5">
+        <UploadScript :video-data="video" @close="$store.commit('setUploadPanel', false);" />
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -167,6 +177,7 @@ import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import WatchHighlights from "@/components/watch/WatchHighlights.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
+import UploadScript from "@/components/tlscriptmanager/UploadScript.vue";
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
 import { mdiOpenInNew, mdiDockLeft, mdiThumbUp } from "@mdi/js";
@@ -187,6 +198,7 @@ export default {
         WatchHighlights,
         WatchToolBar,
         WatchComments,
+        UploadScript,
         WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
         WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
         KeyPress: () => import("vue-keypress"),
@@ -268,6 +280,9 @@ export default {
         },
         showHighlightsBar() {
             return (this.comments.length || this.video.songcount) && (!this.isMobile || !this.showTL);
+        },
+        showUpload() {
+            return this.$store.state.uploadPanel;
         },
     },
     watch: {

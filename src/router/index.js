@@ -25,6 +25,10 @@ const AddChannelRequest = () => import("../views/AddChannelRequest.vue");
 
 const Extension = () => import("../views/Extension.vue");
 
+const TLClient = () => import("../views/TLClient.vue");
+const TLScriptEditor = () => import("../views/TLScriptEditor.vue");
+const TLManager = () => import("../views/TLScriptManager.vue");
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -153,6 +157,21 @@ const routes = [
         name: "extension",
         path: "/extension",
         component: Extension,
+    },
+    {
+        name: "tlclient",
+        path: "/tlclient",
+        component: TLClient,
+    },
+    {
+        name: "scripteditor",
+        path: "/scripteditor",
+        component: TLScriptEditor,
+    },
+    {
+        name: "scriptmanager",
+        path: "/scriptmanager",
+        component: TLManager,
     },
     {
         path: "/404",

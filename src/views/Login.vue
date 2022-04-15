@@ -36,58 +36,80 @@
         </div>
       </v-card-text>
       <v-divider />
-      <v-card-text v-if="userdata.user">
-        <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.ownedYtChannel") }}</span>
-        <v-text-field
-          readonly
-          rounded
-          filled
-          dense
-          hide-details
-          :value="userdata.user.yt_channel_key || 'None on file'"
-        />
-        <span class="text-caption">
-          {{ $t("views.login.futureYtcOwnerMessage") }}
-        </span>
-        <br>
-        <br>
-        <span class="text-subtitle-2 mb-1 d-inline-block">API Key</span>
-        <v-text-field
-          readonly
-          rounded
-          outlined
-          dense
-          hide-details
-          :class="doneCopy ? 'green lighten-2' : ''"
-          :value="userdata.user.api_key || 'None on file'"
-          :append-icon="icons.mdiClipboardPlusOutline"
-          @click:append="copyToClipboard(userdata.user.api_key)"
-        />
-        <br>
-        <v-btn
-          small
-          block
-          color="warning"
-          @click="resetKey"
-        >
-          {{ $t("views.login.apikeyNew") }}
-        </v-btn>
-        <span class="text-caption">
-          {{ $t("views.login.apikeyMsg") }}
-        </span>
-        <v-btn
-          small
-          block
-          color="info"
-          href="https://holodex.stoplight.io/"
-          target="_blank"
-        >
-          API Documentation
-          <v-icon small right>
-            {{ icons.mdiOpenInNew }}
-          </v-icon>
-        </v-btn>
-      </v-card-text>
+
+      <template v-if="userdata.user">
+        <v-card-text>
+          <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.username") }}</span>
+          <v-card-text class="d-flex flex-row align-center">
+            <v-text-field
+              v-model="usernameInput"
+              :disabled="usernameInputMode === 1 ? false : true"
+              :filled="usernameInputMode === 1 ? false : true"
+              rounded
+              outlined
+              dense
+              hide-details
+            />
+            <v-btn :color="usernameInputBtnColour" style="margin-left:10px" @click="usernameInputBtn()">
+              {{ usernameInputBtnText }}
+            </v-btn>
+          </v-card-text>
+        </v-card-text>
+        <v-divider />
+
+        <v-card-text>
+          <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.ownedYtChannel") }}</span>
+          <v-text-field
+            readonly
+            rounded
+            filled
+            dense
+            hide-details
+            :value="userdata.user.yt_channel_key || 'None on file'"
+          />
+          <span class="text-caption">
+            {{ $t("views.login.futureYtcOwnerMessage") }}
+          </span>
+          <br>
+          <br>
+          <span class="text-subtitle-2 mb-1 d-inline-block">API Key</span>
+          <v-text-field
+            readonly
+            rounded
+            outlined
+            dense
+            hide-details
+            :class="doneCopy ? 'green lighten-2' : ''"
+            :value="userdata.user.api_key || 'None on file'"
+            :append-icon="icons.mdiClipboardPlusOutline"
+            @click:append="copyToClipboard(userdata.user.api_key)"
+          />
+          <br>
+          <v-btn
+            small
+            block
+            color="warning"
+            @click="resetKey"
+          >
+            {{ $t("views.login.apikeyNew") }}
+          </v-btn>
+          <span class="text-caption">
+            {{ $t("views.login.apikeyMsg") }}
+          </span>
+          <v-btn
+            small
+            block
+            color="info"
+            href="https://holodex.stoplight.io/"
+            target="_blank"
+          >
+            API Documentation
+            <v-icon small right>
+              {{ icons.mdiOpenInNew }}
+            </v-icon>
+          </v-btn>
+        </v-card-text>
+      </template>
     </v-card>
   </v-container>
 </template>
@@ -116,14 +138,57 @@ export default {
     components: { UserCard, GoogleSignInButton },
     mixins: [copyToClipboard],
     data() {
-        return {};
+        return {
+            usernameInput: "",
+            usernameInputMode: 0,
+        };
     },
     computed: {
         userdata() {
             return this.$store.state.userdata;
         },
+        usernameInputBtnColour() {
+            switch (this.usernameInputMode) {
+                case 0:
+                    return "primary";
+
+                case 1:
+                    return "warning";
+
+                case 2:
+                    return "success";
+
+                default:
+                    return "primary";
+            }
+        },
+        usernameInputBtnText() {
+            switch (this.usernameInputMode) {
+                case 0:
+                    return (this.$t("views.login.usernameBtn.0"));
+
+                case 1:
+                    return (this.$t("views.login.usernameBtn.1"));
+
+                case 2:
+                    return (this.$t("views.login.usernameBtn.2"));
+
+                default:
+                    return (this.$t("views.login.usernameBtn.0"));
+            }
+        },
+    },
+    watch: {
+        // eslint-disable-next-line func-names
+        $route(e) {
+            if (e.meta.prevPath && e.meta.prevPath === "/login") {
+                this.usernameInput = this.userdata.user.username;
+                this.usernameInputMode = 0;
+            }
+        },
     },
     async mounted() {
+        this.usernameInput = this.userdata.user.username;
         const params = new URL(window.location.href).searchParams;
         const service = params.get("service");
         const jwt = params.get("jwt");
@@ -197,6 +262,19 @@ export default {
             await api.resetAPIKey(this.userdata.jwt);
             this.forceUserUpdate();
             /* eslint-enable no-restricted-globals, no-alert */
+        },
+        async usernameInputBtn() {
+            if (this.usernameInputMode === 2) {
+                const res = await api.changeUsername(this.userdata.jwt, this.usernameInput);
+                if (res === false) {
+                    console.log(res);
+                } else if (res.data && res.data === 1) {
+                    this.forceUserUpdate();
+                    this.usernameInputMode = 0;
+                }
+            } else {
+                this.usernameInputMode += 1;
+            }
         },
     },
 };
