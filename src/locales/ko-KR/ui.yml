@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: 예정된 이벤트
   videoDescription:
     description: 설명
-  video:
-    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
