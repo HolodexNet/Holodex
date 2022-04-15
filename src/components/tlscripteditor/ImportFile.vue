@@ -69,7 +69,7 @@
 
 <script>
 import { mdiFileDocument } from "@mdi/js";
-import Entrytr from "@/components/scriptupload/Entrytr.vue";
+import Entrytr from "@/components/tlscriptmanager/Entrytr.vue";
 
 export default {
     name: "ImportFile",

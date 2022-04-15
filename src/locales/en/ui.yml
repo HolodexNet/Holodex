@@ -51,6 +51,9 @@ component:
     typeScheduledYT: Scheduled Stream
     typeExternalStream: External Stream
     typeEventPlaceholder: Scheduled Event
+    openClient: Open TL Client
+    openScriptEditor: Open Script Editor
+    uploadScript: Upload TL Script
   videoDescription:
     description: Description
   video:
@@ -321,9 +324,6 @@ views:
     removeFromPlaylist: Remove video from current playlist
     saveToPlaylist: Save video to current playlist
     likeOnYoutube: Like video on Youtube
-    openClient: Open TL Client
-    openScriptEditor: Open Script Editor
-    uploadScript: Upload TL Script
     uploadPanel:
       title: Upload Script
       usernameText: TL will be uploaded under username
@@ -477,6 +477,8 @@ views:
       removeProfile: Remove Profile
       shiftUp: Shift Up
       shiftDown: Shift Down
+      showSetting: Setting
+      hideSetting: Hide
     addProfilePanel:
       title: Add New Profile
       inputLabel: Profile Name

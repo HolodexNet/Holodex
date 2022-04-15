@@ -72,7 +72,7 @@
           <v-btn
             elevation="4"
             color="error"
-            @click="modalMode = 8; modalNexus = true"
+            @click="modalMode = 7; modalNexus = true"
           >
             {{ $t("views.scriptEditor.menu.clearAll") }}
           </v-btn>
@@ -305,8 +305,14 @@
           <v-btn style="margin-left:10px" @click="addEntry()">
             {{ $t("views.tlClient.tlControl.enterBtn") }}
           </v-btn>
+          <v-btn style="margin-left:10px" color="primary" @click="TLSetting = !TLSetting">
+            {{ TLSetting ? $t("views.tlClient.tlControl.hideSetting") : $t("views.tlClient.tlControl.showSetting") }}
+            <v-icon>
+              {{ TLSetting ? mdiCogOff : mdiCog }}
+            </v-icon>
+          </v-btn>
         </v-row>
-        <v-row class="align-stretch">
+        <v-row v-if="TLSetting" class="align-stretch">
           <v-col cols="2">
             <v-text-field
               v-model="profile[profileIdx].Prefix"
@@ -355,7 +361,7 @@
           </v-btn>
           -->
         </v-row>
-        <v-row>
+        <v-row v-if="TLSetting">
           <v-btn style="margin-right:5px" @click="modalMode = 1; modalNexus = true; addProfileNameString = 'Profile ' + profile.length;">
             {{ $t("views.tlClient.tlControl.addProfile") }}
           </v-btn>
@@ -552,7 +558,7 @@ import EnhancedEntry from "@/components/tlscripteditor/EnhancedEntry.vue";
 import ImportFile from "@/components/tlscripteditor/ImportFile.vue";
 import ExportFile from "@/components/tlscripteditor/ExportToFile.vue";
 import { TL_LANGS } from "@/utils/consts";
-import { mdiPlay, mdiStop } from "@mdi/js";
+import { mdiPlay, mdiStop, mdiCog, mdiCogOff } from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 
@@ -581,6 +587,9 @@ export default {
             TL_LANGS,
             mdiPlay,
             mdiStop,
+            mdiCog,
+            mdiCogOff,
+            TLSetting: true,
             menuBool: false,
             entries: [],
             profile: [{
@@ -1020,7 +1029,6 @@ export default {
                             processedLog.push({
                                 type: "Add",
                                 data: {
-                                    lang: this.TLLang.value,
                                     tempid: entry.id,
                                     name: this.userdata.user.username,
                                     timestamp: Math.floor(this.videoData.start_actual + entry.Time),
@@ -1033,9 +1041,9 @@ export default {
                 });
 
                 if (forget) {
-                    backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processedLog);
+                    backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processedLog, this.TLLang.value);
                 } else {
-                    backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processedLog).then(({ status, data }) => {
+                    backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processedLog, this.TLLang.value).then(({ status, data }) => {
                         if (status === 200) {
                             data.forEach((e) => {
                                 if (e.type === "Add") {

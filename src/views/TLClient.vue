@@ -60,10 +60,10 @@
         {{ $t("views.tlClient.menu.title") }}
       </v-btn>
       <div class="d-flex align-stretch flex-row" style="height:100%" @click="menuBool = false">
-        <v-card class="d-flex flex-column grow" height="100%;" :width="activeChat.length < 2 ? '50%' : '30%'">
+        <v-card class="d-flex flex-column grow" height="100%;" :width="activeChat.length < 2 ? '75%' : '40%'">
           <v-card
             v-if="vidPlayer"
-            height="50%"
+            :height=" (activeChat.length > 1) ? '50%' : '100%' "
             class="d-flex flex-column"
             outlined
           >
@@ -75,7 +75,7 @@
           </v-card>
           <v-divider />
           <TLChatPanel
-            v-if="!isLoading && !hasError"
+            v-if="!isLoading && !hasError && (activeChat.length > 1)"
             :video="video"
             :class="{
               'stick-bottom': $store.state.settings.liveTlStickBottom,
@@ -84,12 +84,11 @@
             style="height: 300px;"
             :use-local-subtitle-toggle="false"
           />
-          <v-card v-if="profileDisplay" class="ProfileListCard d-flex flex-column">
+          <v-card v-if="profileDisplay && (activeChat.length > 1)" class="ProfileListCard d-flex flex-column">
             <span v-for="(prf, index) in profile" :key="index"><span v-if="index === profileIdx">> </span>{{ (index + 1) + '. ' + prf.Name }}</span>
           </v-card>
         </v-card>
         <v-card
-          v-if="activeChat.length > 0"
           class="ChatPanelContainer"
           height="100%"
           :width="activeChat.length < 2 ? '50%' : '70%'"
@@ -114,6 +113,19 @@
               frameborder="0"
               @load="IFrameLoaded($event, ChatURL.text)"
             />
+          </v-card>
+          <TLChatPanel
+            v-if="!isLoading && !hasError && (activeChat.length < 2)"
+            :video="video"
+            :class="{
+              'stick-bottom': $store.state.settings.liveTlStickBottom,
+              'tl-full-height': true,
+            }"
+            style="height: 300px;"
+            :use-local-subtitle-toggle="false"
+          />
+          <v-card v-if="profileDisplay && (activeChat.length < 2)" class="ProfileListCard d-flex flex-column">
+            <span v-for="(prf, index) in profile" :key="index"><span v-if="index === profileIdx">> </span>{{ (index + 1) + '. ' + prf.Name }}</span>
           </v-card>
         </v-card>
       </div>
@@ -142,8 +154,15 @@
           <v-btn style="margin-left:10px" @click="addEntry()">
             {{ $t("views.tlClient.tlControl.enterBtn") }}
           </v-btn>
+          <v-btn style="margin-left:10px" color="primary" @click="TLSetting = !TLSetting">
+            {{ TLSetting ? $t("views.tlClient.tlControl.hideSetting") : $t("views.tlClient.tlControl.showSetting") }}
+            <v-icon>
+              {{ TLSetting ? mdiCogOff : mdiCog }}
+            </v-icon>
+          </v-btn>
         </v-row>
-        <v-row class="align-stretch">
+
+        <v-row v-if="TLSetting" class="align-stretch">
           <v-col cols="2">
             <v-text-field
               v-model="profile[profileIdx].Prefix"
@@ -201,7 +220,7 @@
             />
           </v-col>
         </v-row>
-        <v-row>
+        <v-row v-if="TLSetting">
           <v-btn style="margin-right:5px" @click="modalMode = 1; modalNexus = true; addProfileNameString = 'Profile ' + profile.length;">
             {{ $t("views.tlClient.tlControl.addProfile") }}
           </v-btn>
@@ -383,7 +402,7 @@
 <script lang="ts">
 import TLChatPanel from "@/components/tlclient/TLChatPanel.vue";
 import { TL_LANGS } from "@/utils/consts";
-import { mdiPlusCircle, mdiMinusCircle, mdiCloseCircle } from "@mdi/js";
+import { mdiPlusCircle, mdiMinusCircle, mdiCloseCircle, mdiCog, mdiCogOff } from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { mapState } from "vuex";
@@ -406,7 +425,10 @@ export default {
             mdiPlusCircle,
             mdiMinusCircle,
             mdiCloseCircle,
+            mdiCog,
+            mdiCogOff,
             menuBool: false,
+            TLSetting: true,
             firstLoad: true,
             profile: [{
                 Name: "Default",
@@ -457,9 +479,12 @@ export default {
             };
         },
         activeChatGridRow() {
-            return ({
-                "grid-template-rows": this.activeChat.length < 4 ? "1fr" : "1fr 1fr",
-            });
+            if (this.activeChat.length < 2) {
+                return ({ "grid-template-rows": "1fr 1fr" });
+            } if (this.activeChat.length < 4) {
+                return ({ "grid-template-rows": "1fr" });
+            }
+            return ({ "grid-template-rows": "1fr 1fr" });
         },
         userdata() {
             return this.$store.state.userdata;

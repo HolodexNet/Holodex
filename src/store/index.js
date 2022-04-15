@@ -74,6 +74,9 @@ function defaultState() {
 
         // Document.visiblityState (eg. backgrounded)
         visibilityState: null,
+
+        // Upload global bus
+        uploadPanel: false,
     };
 }
 
@@ -187,6 +190,9 @@ export default new Vuex.Store({
         },
         setVisiblityState(state, val) {
             state.visibilityState = val;
+        },
+        setUploadPanel(state, obj) {
+            state.uploadPanel = obj;
         },
     },
     actions: {

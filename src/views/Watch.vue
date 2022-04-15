@@ -56,38 +56,6 @@
         />
         <WatchToolBar :video="video" :no-back-button="!isMobile">
           <template #buttons>
-            <v-tooltip bottom>
-              <template #activator="{ on, attrs }">
-                <v-btn
-                  icon
-                  lg
-                  v-bind="attrs"
-                  v-on="on"
-                  @click="openTlClient()"
-                >
-                  <v-icon>
-                    {{ mdiTypewriter }}
-                  </v-icon>
-                </v-btn>
-              </template>
-              <span>{{ isLive ? $t("views.watch.openClient") : $t("views.watch.openScriptEditor") }}</span>
-            </v-tooltip>
-            <v-tooltip v-if="isPast" bottom>
-              <template #activator="{ on, attrs }">
-                <v-btn
-                  icon
-                  lg
-                  v-bind="attrs"
-                  v-on="on"
-                  @click="scriptUploadPanel()"
-                >
-                  <v-icon>
-                    {{ mdiClipboardArrowUpOutline }}
-                  </v-icon>
-                </v-btn>
-              </template>
-              <span>{{ $t("views.watch.uploadScript") }}</span>
-            </v-tooltip>
             <v-tooltip v-if="hasExtension" bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
@@ -187,7 +155,16 @@
       @videoUpdate="handleVideoUpdate"
       @timeJump="seekTo"
     />
-    <UploadScriptPanel v-model="showUpload" :video="video" />
+    <v-dialog
+      v-model="showUpload"
+      max-width="80%"
+      max-height="500px"
+      @click:outside="$store.commit('setUploadPanel', false);"
+    >
+      <v-card elevation="5">
+        <UploadScript :video-data="video" @close="$store.commit('setUploadPanel', false);" />
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -200,10 +177,10 @@ import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
 import WatchHighlights from "@/components/watch/WatchHighlights.vue";
 import WatchToolBar from "@/components/watch/WatchToolbar.vue";
 import WatchComments from "@/components/watch/WatchComments.vue";
-import UploadScriptPanel from "@/components/scriptupload/UploadScriptPanel.vue";
+import UploadScript from "@/components/tlscriptmanager/UploadScript.vue";
 import { decodeHTMLEntities, syncState } from "@/utils/functions";
 import { mapState } from "vuex";
-import { mdiOpenInNew, mdiDockLeft, mdiThumbUp, mdiTypewriter, mdiClipboardArrowUpOutline } from "@mdi/js";
+import { mdiOpenInNew, mdiDockLeft, mdiThumbUp } from "@mdi/js";
 
 export default {
     name: "Watch",
@@ -221,7 +198,7 @@ export default {
         WatchHighlights,
         WatchToolBar,
         WatchComments,
-        UploadScriptPanel,
+        UploadScript,
         WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
         WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
         KeyPress: () => import("vue-keypress"),
@@ -232,13 +209,10 @@ export default {
             mdiOpenInNew,
             mdiDockLeft,
             mdiThumbUp,
-            mdiTypewriter,
-            mdiClipboardArrowUpOutline,
             playlistIndex: -1,
             currentTime: 0,
             player: null,
             theaterMode: false,
-            showUpload: false,
             altTHotKey: [
                 {
                     keyCode: 84, // T
@@ -307,26 +281,8 @@ export default {
         showHighlightsBar() {
             return (this.comments.length || this.video.songcount) && (!this.isMobile || !this.showTL);
         },
-        isLive() {
-            if (!this.video) {
-                return false;
-            }
-            if (this.video.status === "past") {
-                return false;
-            }
-            if ((this.video.status === "live") || (Date.parse(this.video.start_scheduled) < Date.now())) {
-                return true;
-            }
-            return false;
-        },
-        isPast() {
-            if (!this.video) {
-                return false;
-            }
-            if (this.video.status === "past") {
-                return true;
-            }
-            return false;
+        showUpload() {
+            return this.$store.state.uploadPanel;
         },
     },
     watch: {
@@ -406,24 +362,6 @@ export default {
         },
         like() {
             this.$refs?.ytPlayer?.sendLikeEvent();
-        },
-        openTlClient() {
-            if (this.$store.state.userdata?.user) {
-                if (this.isLive) {
-                    this.$router.push({ path: "/tlclient", query: { video: `YT_${this.video.id}` } });
-                } else {
-                    this.$router.push({ path: "/scripteditor", query: { video: `YT_${this.video.id}` } });
-                }
-            } else {
-                this.$router.push({ path: "/login" });
-            }
-        },
-        scriptUploadPanel() {
-            if (this.$store.state.userdata?.user) {
-                this.showUpload = true;
-            } else {
-                this.$router.push({ path: "/login" });
-            }
         },
     },
 };

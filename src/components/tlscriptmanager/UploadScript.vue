@@ -3,6 +3,10 @@
     <v-card-title>
       {{ $t("views.watch.uploadPanel.title") }}
     </v-card-title>
+    <v-card-subtitle>
+      {{ $t("views.watch.uploadPanel.usernameText") + ' : ' + userdata.user.username + ' ' }}
+      <a style="text-decoration: underline; font-size: 0.7em" @click="changeUsernameClick()">{{ $t("views.watch.uploadPanel.usernameChange") }}</a>
+    </v-card-subtitle>
     <v-file-input
       ref="fileInput"
       accept=".ass, .TTML, .srt"
@@ -73,7 +77,7 @@
 
 <script>
 import { mdiFileDocument } from "@mdi/js";
-import Entrytr from "@/components/scriptupload/Entrytr.vue";
+import Entrytr from "@/components/tlscriptmanager/Entrytr.vue";
 import backendApi from "@/utils/backend-api";
 import { TL_LANGS } from "@/utils/consts";
 
@@ -109,6 +113,9 @@ export default {
         },
     },
     methods: {
+        changeUsernameClick() {
+            this.$router.push({ path: "/login" });
+        },
         fileChange(e) {
             this.parsed = false;
             this.entries = [];
@@ -621,21 +628,27 @@ export default {
                 },
             }));
 
+            let startTime = 0;
+            if (Number.isNaN(this.videoData.start_actual)) {
+                startTime = Date.parse(this.videoData.start_actual);
+            } else {
+                startTime = this.videoData.start_actual;
+            }
+
             for (let idx = 0; idx < this.entries.length; idx += 1) {
                 processes.push({
                     type: "Add",
                     data: {
-                        lang: this.TLLang.value,
                         tempid: `I${idx}`,
                         name: this.userdata.user.username,
-                        timestamp: Math.floor(this.videoData.start_actual + this.entries[idx].timestamp),
+                        timestamp: Math.floor(startTime + this.entries[idx].timestamp),
                         message: this.entries[idx].message,
                         duration: Math.floor(this.entries[idx].duration),
                     },
                 });
             }
 
-            backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processes).then(({ status }) => {
+            backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processes, this.TLLang.value).then(({ status }) => {
                 if (status === 200) {
                     this.$emit("close", { upload: true });
                 }

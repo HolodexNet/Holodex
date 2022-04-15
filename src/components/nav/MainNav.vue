@@ -240,6 +240,12 @@ export default {
                     collapsible: true,
                 },
                 {
+                    name: "Script Manager",
+                    path: "/scriptmanager",
+                    icon: this.icons.mdiFileDocumentMultiple,
+                    collapsible: true,
+                },
+                {
                     name: "Musicdex",
                     path: musicdexURL,
                     // icon: this.icons.mdiMusic,

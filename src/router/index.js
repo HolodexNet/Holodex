@@ -27,7 +27,7 @@ const Extension = () => import("../views/Extension.vue");
 
 const TLClient = () => import("../views/TLClient.vue");
 const TLScriptEditor = () => import("../views/TLScriptEditor.vue");
-const TLManager = () => import("../views/TLManager.vue");
+const TLManager = () => import("../views/TLScriptManager.vue");
 
 Vue.use(VueRouter);
 
@@ -169,8 +169,8 @@ const routes = [
         component: TLScriptEditor,
     },
     {
-        name: "tlmanager",
-        path: "/tlmanager",
+        name: "scriptmanager",
+        path: "/scriptmanager",
         component: TLManager,
     },
     {

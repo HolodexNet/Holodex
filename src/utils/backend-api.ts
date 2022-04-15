@@ -368,9 +368,9 @@ export default {
             },
         );
     },
-    postTLLog(videoID, apiKey, body) {
+    postTLLog(videoID, apiKey, body, langCode) {
         return axiosInstance.post(
-            `/videos/${videoID}/scripteditor/log`,
+            `/videos/${videoID}/scripteditor/log?lang=${langCode}`,
             body,
             {
                 headers: apiKey ? { "X-APIKEY": apiKey } : {},

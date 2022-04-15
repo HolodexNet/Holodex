@@ -165,8 +165,8 @@
 import backendApi from "@/utils/backend-api";
 import { mdiTypewriter, mdiClipboardArrowUpOutline, mdiTrashCan, mdiDownload, mdiArrowRightBold, mdiArrowLeftBold } from "@mdi/js";
 import { TL_LANGS } from "@/utils/consts";
-import ExportFile from "@/components/tlmanager/ExportToFile.vue";
-import UploadScript from "@/components/tlmanager/UploadScript.vue";
+import ExportFile from "@/components/tlscriptmanager/ExportToFile.vue";
+import UploadScript from "@/components/tlscriptmanager/UploadScript.vue";
 
 export default {
     name: "TLManager",
@@ -275,9 +275,11 @@ export default {
             this.modalNexus = false;
         },
         loadNext() {
-            this.tlData = [];
-            this.query.offset += 20;
-            this.reloadData();
+            if (this.tlData.length >= this.query.limit) {
+                this.tlData = [];
+                this.query.offset += 20;
+                this.reloadData();
+            }
         },
         loadPrev() {
             this.tlData = [];
@@ -314,7 +316,7 @@ export default {
                 },
             }));
 
-            backendApi.postTLLog(this.selectedID, this.userdata.user.api_key, processes).then(({ status }) => {
+            backendApi.postTLLog(this.selectedID, this.userdata.user.api_key, processes, this.TLLang.value).then(({ status }) => {
                 if (status === 200) {
                     this.reloadData();
                     this.modalNexus = false;
