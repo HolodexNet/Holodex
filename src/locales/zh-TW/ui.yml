@@ -306,7 +306,11 @@ views:
     uploadPanel:
       title: 上傳原始文本
       usernameText: 翻譯將以此使用者名稱發佈
+      usernameChange: 變更
       tlLang: 目標翻譯語言
+      cancelBtn: 取消
+      okBtn: 確定
+      notifTextErr: 檔案無法分析（檔案毀損？）
       notifTextParsing: 檔案分析中
       notifTextErrExt: 無法辨識的副檔名
   favorites:
@@ -418,14 +422,19 @@ views:
         修復 YouTube 撥放器的實驗性功能（例：禁用多窗實況 / 實況等待室未顯示縮圖）
   tlClient:
     menu:
+      title: 選單
       setting: 設定
       loadVideo: 載入影片
       unloadVideo: 移除影片
       loadChat: 載入聊天室
       unloadChat: 移除聊天室
     tlControl:
+      enterBtn: 輸入
+      prefix: 前綴
+      suffix: 後綴
       fontColour: 字體顏色
       outlineColour: 外框顏色
+      localPrefix: 本地前綴
       addProfile: 新增設定檔
       removeProfile: 移除設定檔
       showSetting: 設定
@@ -444,6 +453,7 @@ views:
     unloadChatTitle: 是否要移除全部已開啟的聊天室？
     pangram: 南去經三國，東來過五湖
     cancelBtn: 取消
+    okBtn: 確定
   scriptEditor:
     menu:
       save: 儲存
@@ -455,6 +465,7 @@ views:
       headerEnd: 結束
       headerProfile: 設定檔
       setAsStart: 設為起點
+      shiftCurrentTime: 位移至目前時間
     loadVideoPanel:
       title: 載入影片
       inputLabel: 實況連結
@@ -464,6 +475,7 @@ views:
     title: 文本管理器
     headerID: 影片ID
     download: 下載
+    delete: 刪除
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
