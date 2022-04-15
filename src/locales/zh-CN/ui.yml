@@ -54,8 +54,6 @@ component:
     typeEventPlaceholder: 预定活动
   videoDescription:
     description: 说明
-  video:
-    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -488,7 +486,7 @@ about:
           请至频道页面确认自己的频道是否有被列于剪辑频道上，如果没有的话请填写
         - 此表单
         - >-
-          ，我们将会手动将您的频道加入资料库。如果您的频道已经在资料库裡的话，请确认频道的视频描述包含正确的 Youtube 直播来源 / 频道链接。
+          ，我们将会手动将您的频道加入资料库。如果您的频道已经在资料库里的话，请确认频道的视频描述包含正确的 Youtube 直播来源 / 频道链接。
     feedback:
       title: 我想提供建议或为这个项目做出贡献
       contents:
