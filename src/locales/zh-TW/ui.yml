@@ -432,7 +432,7 @@ views:
       enterBtn: 輸入
       prefix: 前綴
       suffix: 後綴
-      fontColour: 字體顏色
+      fontColour: 字型色彩
       outlineColour: 外框顏色
       localPrefix: 本地前綴
       addProfile: 新增設定檔
