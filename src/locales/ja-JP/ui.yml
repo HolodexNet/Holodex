@@ -52,6 +52,7 @@ component:
     typeScheduledYT: 予定されている配信
     typeExternalStream: 外部配信
     typeEventPlaceholder: 予定されたイベント
+    openScriptEditor: スクリプトエディターを開く
   videoDescription:
     description: 概要
   description:
@@ -300,7 +301,12 @@ views:
     saveToPlaylist: 現在のプレイリストに動画を保存
     likeOnYoutube: YouTubeで動画に高評価を付ける
     uploadPanel:
+      title: スクリプトをアップロード
+      usernameText: 翻訳はこのユーザー名の下でアップロードされます
+      usernameChange: 変更
       tlLang: 翻訳言語
+      notifTextErr: ファイルの解析に失敗しました (ファイルが破損している?)
+      notifTextParsing: ファイルを解析中...
   favorites:
     promptForAction: >-
       お気に入りのVtuberリストを作るとそのページでお気に入りしたVtuberの最新動画を確認できます。
@@ -403,6 +409,14 @@ views:
       three: Youtube のライブチャットのメモリリークを修正
       four: >-
         Youtube プレイヤーの実験的フラグ (複数の配信を再生できない、待合室のサムネイルが表示されない) を修正、などなど!
+  tlClient:
+    settingPanel:
+      title: 設定
+      mainStreamLink: メインの配信のリンク
+  tlManager:
+    title: スクリプトマネージャー
+    headerID: 動画ID
+    langPick: 言語
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'
