@@ -47,7 +47,7 @@ component:
     copyLink: Holodex 링크 복사
     premiere: 최초 공개
     googleCalendar: Google Calendar에 추가
-    totalTLs: 전체 실시간 채팅 TL
+    totalTLs: 전체 실시간 채팅 번역
     tlPresence: 최근 30분간 활동 중인 번역가
     typeScheduledYT: 예정된 방송
     typeExternalStream: 외부 방송
@@ -57,6 +57,8 @@ component:
     uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -282,7 +284,7 @@ views:
       expandTL: TLdex 확장
       tlStart: 메시지 시작
       StickBottomSettingLabel: 하단 고정
-      StickBottomSettingsDesc: TL 상자는 YouTube 채팅 아래에 표시됩니다
+      StickBottomSettingsDesc: 번역 상자는 YouTube 채팅 아래에 표시됩니다
       showVerifiedMessages: 인증된 사용자의 메시지 표시
       showModeratorMessages: 운영자 메시지 표시
       showVtuberMessages: 버튜버의 메시지 표시
@@ -312,7 +314,9 @@ views:
       headerText: 텍스트
       cancelBtn: 취소
       okBtn: 확인
-      notifTextErr: 이 파일을 불러올 수 없습니다 (파일에 문제가 있을 수도 있어요)
+      notifTextErr: 이 파일을 분석할 수 없습니다 (파일에 문제가 있을 수도 있어요)
+      notifTextParsing: 분석 중...
+      notifTextErrExt: 파일의 확장자를 식별할 수 없습니다.
   favorites:
     promptForAction: >-
       이 페이지에서 좋아하는 버튜버 목록을 만들고 최신 클립과 삶을 확인해보세요.
@@ -345,6 +349,11 @@ views:
       - Google 계정으로 로그인
       - Discord 계정으로 로그인
       - Twitter 계정으로 로그인
+    username: 아이디
+    usernameBtn:
+      - 변경
+      - 확인
+      - 저장
   multiview:
     confirmOverwrite: 기존 레이아웃에 덮어쓸까요?
     confirmOverwriteYes: 확인
@@ -415,6 +424,71 @@ views:
       three: Youtube 라이브 채팅에서의 메모리 누수 방지
       four: >-
         YouTube 플레이어의 실험적인 플래그 (예: 다중 방송 차단, 방송 대기 썸네일이 미표시되는 문제)등을 수정했으며 몇 가지 추가적인 기능들도 있습니다!
+  tlClient:
+    menu:
+      title: 메뉴
+      setting: 설정
+      loadVideo: 동영상 불러오기
+      unloadVideo: 동영상 취소하기
+      loadChat: 채팅 불러오기
+      unloadChat: 채팅 닫기
+    tlControl:
+      enterBtn: 입력
+      prefix: 접두어
+      suffix: 접미어
+      fontColour: 글꼴 색상
+      outlineColour: 외곽선 색상
+      localPrefix: 로컬 접두어
+      addProfile: 프로필 추가
+      removeProfile: 프로필 삭제
+      shiftUp: 위로
+      shiftDown: 아래로
+      showSetting: 설정
+      hideSetting: 숨기기
+    addProfilePanel:
+      title: 새 프로필 추가
+      inputLabel: 프로필 이름
+    settingPanel:
+      title: 설정
+      mainStreamLink: 메인 방송 링크
+      collabLink: 콜라보 링크
+    removeProfileTitle: 프로필 삭제 확인
+    loadChatPanel:
+      title: 채팅 불러오기
+      inputLabel: 방송 링크
+    unloadChatTitle: 정말로 모든 아카이브 채팅을 닫으시겠어요?
+    pangram: 다람쥐 헌 쳇바퀴에 타고파
+    cancelBtn: 취소
+    okBtn: 확인
+  scriptEditor:
+    menu:
+      save: 저장
+      continuousEnd: 시간이 다시 흐르게 하기 (변경 종료)
+      clearAll: 스크립트 삭제
+      exportFile: 파일 내보내기
+      importFile: 파일 가져오기
+    table:
+      headerStart: 시작
+      headerEnd: 끝
+      headerProfile: 프로필
+      headerText: 텍스트
+      setAsStart: 시작으로 설정하기
+      shiftCurrentTime: 현재 시간으로 이동하기
+      deleteEntry: 항목 삭제
+    loadVideoPanel:
+      title: 동영상 불러오기
+      inputLabel: 방송 링크
+    setStartTitle: 선택한 부분을 시작점으로 설정하면 그 앞에 있는 항목들은 모두 삭제됩니다.
+    importFile:
+      overwriteBtn: 덮어쓰기
+  tlManager:
+    title: 스크립트 관리
+    headerID: 동영상 ID
+    headerEntries: 항목
+    download: 다운로드
+    delete: 삭제
+    deleteTitle: 항목 삭제
+    langPick: 언어
 time:
   soon: 예정
   diff_future_date: '{0} 시작 ({1})'
