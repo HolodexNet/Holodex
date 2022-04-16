@@ -538,7 +538,7 @@ export default {
                 window.open(this.data.link, "_blank", "noopener");
                 return;
             }
-            if (this.isPlaceholder || !this.redirectMode) {
+            if (this.isPlaceholder || !this.redirectMode || this.disableDefaultClick) {
                 e.preventDefault();
                 this.goToVideo();
             }
