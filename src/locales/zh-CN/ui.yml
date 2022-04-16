@@ -334,9 +334,10 @@ views:
       - 使用 Google 帐号登录
       - 使用 Discord 账号登录
       - 使用 Twitter 账号登录
+    username: 用户名
     usernameBtn:
       - 更改
-      - Confirm
+      - 确定
       - 保存
   multiview:
     confirmOverwrite: 覆盖当前的布局？
@@ -411,10 +412,46 @@ views:
   tlClient:
     menu:
       title: 菜单
+      setting: 设置
       loadVideo: 加载视频
+      unloadVideo: 移除视频
       loadChat: 加载聊天
+      unloadChat: 移除聊天
     tlControl:
       enterBtn: 输入
+      fontColour: 字体颜色
+      removeProfile: 删除配置文件
+      shiftUp: 上移
+      shiftDown: 下移
+      showSetting: 设置
+      hideSetting: 隐藏
+    settingPanel:
+      title: 设置
+    removeProfileTitle: 确认删除配置文件
+    loadChatPanel:
+      title: 加载聊天
+      inputLabel: 直播链接
+    pangram: 悟已往之不谏，知来者之可追
+    cancelBtn: 取消
+    okBtn: 确定
+  scriptEditor:
+    menu:
+      save: 保存
+      exportFile: 导出文件
+      importFile: 导入文件
+    table:
+      headerStart: 开始
+      headerEnd: 结束
+    loadVideoPanel:
+      title: 加载视频
+      inputLabel: 直播链接
+    importFile:
+      overwriteBtn: 覆盖
+  tlManager:
+    headerID: 视频ID
+    download: 下载
+    delete: 删除
+    langPick: 语言
 time:
   soon: 即将开始
   diff_future_date: 将在{0}开始直播({1})
