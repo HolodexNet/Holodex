@@ -52,6 +52,9 @@ component:
     typeScheduledYT: 예정된 방송
     typeExternalStream: 외부 방송
     typeEventPlaceholder: 예정된 이벤트
+    openClient: 번역 클라이언트 열기
+    openScriptEditor: 스크립트 편집기 열기
+    uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
   description:
@@ -299,6 +302,17 @@ views:
     removeFromPlaylist: 현재 재생목록에서 동영상 제거
     saveToPlaylist: 현재 재생목록에 동영상 저장
     likeOnYoutube: YouTube에서 동영상 좋아요하기
+    uploadPanel:
+      title: 스크립트 올리기
+      usernameText: 번역은 아이디로 업로드됩니다
+      usernameChange: 변경
+      tlLang: 번역 언어
+      headerStart: 시작
+      headerEnd: 끝
+      headerText: 텍스트
+      cancelBtn: 취소
+      okBtn: 확인
+      notifTextErr: 이 파일을 불러올 수 없습니다 (파일에 문제가 있을 수도 있어요)
   favorites:
     promptForAction: >-
       이 페이지에서 좋아하는 버튜버 목록을 만들고 최신 클립과 삶을 확인해보세요.
