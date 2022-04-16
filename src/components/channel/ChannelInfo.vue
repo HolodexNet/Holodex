@@ -3,12 +3,12 @@
     <v-list-item-title style="align-self: flex-start">
       <router-link :to="`/channel/${channel.id}`" class="no-decoration text-truncate">
         {{ channelName }}
-      </router-link>
-      <small v-show="channel.org" style="width:auto;">
+      </router-link> <br>
+      <span v-show="channel.org">
         <router-link :to="`/channel?org=${channel.org}`" class="no-decoration text--org">
-          {{ channel.org + ((!noGroup && channel.group) ? " / " + channel.group : '') }}
+          {{ channel.org + ((!noGroup && group) ? " / " + group : '') }}
         </router-link>
-      </small>
+      </span>
     </v-list-item-title>
     <v-list-item-subtitle>
       <template v-if="!noSubscriberCount">
@@ -90,6 +90,11 @@ export default {
             if (this.channel[prop]) return this.channel[prop];
             return this.channel.name;
         },
+        group() {
+            if (this.channel.group) return this.channel.group;
+            if (this.channel.suborg) return this.channel.suborg.slice(2);
+            return null;
+        },
     },
     methods: {
         formatCount,
@@ -137,7 +142,8 @@ export default {
 .text--org {
   font-size:12px;
   font-weight: 300;
-  display:block;
+  /* display:block; */
+  /* display: block; */
   opacity: 0.7;
 }
 .text--org:hover {
