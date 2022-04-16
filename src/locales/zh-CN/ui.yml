@@ -299,6 +299,9 @@ views:
     removeFromPlaylist: 将视频从当前播放队列中删除
     saveToPlaylist: 将视频保存到当前播放列表
     likeOnYoutube: 在Youtube上给视频点赞
+    uploadPanel:
+      cancelBtn: 取消
+      okBtn: 确定
   favorites:
     promptForAction: >-
       为您最喜欢的VTuber创建列表，并在此页面查看他们最新的剪辑和直播视频。
@@ -331,6 +334,10 @@ views:
       - 使用 Google 帐号登录
       - 使用 Discord 账号登录
       - 使用 Twitter 账号登录
+    usernameBtn:
+      - 更改
+      - Confirm
+      - 保存
   multiview:
     confirmOverwrite: 覆盖当前的布局？
     confirmOverwriteYes: 确认
@@ -401,6 +408,13 @@ views:
       three: 修复Youtube聊天窗口中内存泄漏的问题
       four: >-
         修复 YouTube 播放器的实验性功能（例：禁用多窗直播 / 直播等待室未显示缩略图）
+  tlClient:
+    menu:
+      title: 菜单
+      loadVideo: 加载视频
+      loadChat: 加载聊天
+    tlControl:
+      enterBtn: 输入
 time:
   soon: 即将开始
   diff_future_date: 将在{0}开始直播({1})
