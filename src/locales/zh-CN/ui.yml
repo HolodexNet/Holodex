@@ -52,7 +52,7 @@ component:
     typeScheduledYT: 直播预约
     typeExternalStream: 外部直播
     typeEventPlaceholder: 预定活动
-    openClient: 开启翻译端
+    openClient: 开启翻译客户端
     openScriptEditor: 开启脚本编辑器
     uploadScript: 上传翻译脚本
   videoDescription:
