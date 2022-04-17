@@ -52,8 +52,13 @@ component:
     typeScheduledYT: 直播预约
     typeExternalStream: 外部直播
     typeEventPlaceholder: 预定活动
+    openClient: 开启翻译端
+    openScriptEditor: 开启脚本编辑器
+    uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
+  video:
+    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -300,8 +305,18 @@ views:
     saveToPlaylist: 将视频保存到当前播放列表
     likeOnYoutube: 在Youtube上给视频点赞
     uploadPanel:
+      title: 上传脚本
+      usernameText: 翻译将以此使用者的名称发布
+      usernameChange: 更改
+      tlLang: 目标翻译语言
+      headerStart: 开始
+      headerEnd: 结束
+      headerText: 文本
       cancelBtn: 取消
       okBtn: 确定
+      notifTextErr: 文件无法解析(文件损坏？)
+      notifTextParsing: 文件分析中...
+      notifTextErrExt: 无法识别文件扩展名。
   favorites:
     promptForAction: >-
       为您最喜欢的VTuber创建列表，并在此页面查看他们最新的剪辑和直播视频。
@@ -419,38 +434,60 @@ views:
       unloadChat: 移除聊天
     tlControl:
       enterBtn: 输入
+      prefix: 前缀
+      suffix: 后缀
       fontColour: 字体颜色
+      outlineColour: 轮廓颜色
+      localPrefix: 本地前缀
+      addProfile: 添加配置文件
       removeProfile: 删除配置文件
       shiftUp: 上移
       shiftDown: 下移
       showSetting: 设置
       hideSetting: 隐藏
+    addProfilePanel:
+      title: 添加新的配置文件
+      inputLabel: 配置文件名
     settingPanel:
       title: 设置
+      mainStreamLink: 主要直播链接
+      collabLink: 联动直播链接
     removeProfileTitle: 确认删除配置文件
     loadChatPanel:
       title: 加载聊天
       inputLabel: 直播链接
+    unloadChatTitle: 是否要移除全部已开启的聊天室？
     pangram: 悟已往之不谏，知来者之可追
     cancelBtn: 取消
     okBtn: 确定
   scriptEditor:
     menu:
       save: 保存
+      continuousEnd: 让时间持续(改变结束)
+      clearAll: 删除脚本
       exportFile: 导出文件
       importFile: 导入文件
     table:
       headerStart: 开始
       headerEnd: 结束
+      headerProfile: 配置文件
+      headerText: 文本
+      setAsStart: 设为起点
+      shiftCurrentTime: 移至当前日期
+      deleteEntry: 删除条目
     loadVideoPanel:
       title: 加载视频
       inputLabel: 直播链接
+    setStartTitle: 将所选条目设置为初始，之前的所有条目都将被删除。
     importFile:
       overwriteBtn: 覆盖
   tlManager:
+    title: 脚本管理器
     headerID: 视频ID
+    headerEntries: 条目
     download: 下载
     delete: 删除
+    deleteTitle: 删除条目
     langPick: 语言
 time:
   soon: 即将开始
