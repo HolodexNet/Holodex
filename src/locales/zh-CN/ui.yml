@@ -359,18 +359,18 @@ views:
     confirmOverwriteYes: 确认
     permalink: 永久链接
     presets: 版面配置
-    addframe: 增加新分割
+    addframe: 添加单元格
     muteAll: 全部静音
     unmuteAll: 取消全部静音
     muteOthers: 静音其余视频
     muteOthersDetail: 仅开启指定一个视频的声音输出
     autoLayoutTip: 点击任意频道即可使用自动布局模式开始观看
-    createLayoutTip: 增加新分割以创造专属布局，亦能使用预设布局
+    createLayoutTip: 通过添加单元格或使用预设来创建你自己的布局
     openToolbarTip: 开启控制栏以开始使用多窗工具
     archiveSync: 存档同步
     preset:
       shareOnDiscord: >-
-        想到了什么很棒的布局方式吗？将该分割布局的永久链接分享至我们的 <a href="https://discord.gg/jctkgHBt4b">Discord服务器</a> 吧！
+        有一个很棒的布局要分享？将该布局的永久链接分享至我们的 <a href="https://discord.gg/jctkgHBt4b">Discord服务器</a> 吧！
       custom: 我的布局
       toggleAutoLayout: 是否纳入自动调整模式
       remove: 删除此布局
@@ -394,7 +394,7 @@ views:
     presetsHint: 开启版面配置来变更布局与自动排版模式的设定
     mediaControlsHint1: 使用媒体控制面板来静音或是同步 (
     mediaControlsHint2: ) 直播
-    dragDropHint: 从置顶栏拖曳直播至不同分割来自定义显示位置
+    dragDropHint: 从置顶栏拖曳直播至不同单元格来自定义显示位置
     reorderHint: 使用布局调整面板来快速更改视频/聊天室位置
     reorderLayout: 布局调整面板
     reorderLayoutDetail: 将图标拖放到所需位置
