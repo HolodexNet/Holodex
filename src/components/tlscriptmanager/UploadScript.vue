@@ -613,48 +613,52 @@ export default {
             }
         },
         async sendData() {
-            const processes = await (await backendApi.chatHistory(this.videoData.id, {
-                lang: this.TLLang.value,
-                verified: 0,
-                moderator: 0,
-                vtuber: 0,
-                limit: 100000,
-                mode: 1,
-                creator_id: this.userdata.user.id,
-            })).data.map((e) => ({
-                type: "Delete",
-                data: {
-                    id: e.id,
-                },
-            }));
-
-            let startTime = 0;
-            if (Number.isNaN(this.videoData.start_actual)) {
-                startTime = Date.parse(this.videoData.start_actual);
-            } else {
-                startTime = this.videoData.start_actual;
-            }
-
-            for (let idx = 0; idx < this.entries.length; idx += 1) {
-                processes.push({
-                    type: "Add",
+            if (this.userdata.user.api_key) {
+                const processes = await (await backendApi.chatHistory(this.videoData.id, {
+                    lang: this.TLLang.value,
+                    verified: 0,
+                    moderator: 0,
+                    vtuber: 0,
+                    limit: 100000,
+                    mode: 1,
+                    creator_id: this.userdata.user.id,
+                })).data.map((e) => ({
+                    type: "Delete",
                     data: {
-                        tempid: `I${idx}`,
-                        name: this.userdata.user.username,
-                        timestamp: Math.floor(startTime + this.entries[idx].timestamp),
-                        message: this.entries[idx].message,
-                        duration: Math.floor(this.entries[idx].duration),
+                        id: e.id,
                     },
-                });
-            }
+                }));
 
-            backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processes, this.TLLang.value).then(({ status }) => {
-                if (status === 200) {
-                    this.$emit("close", { upload: true });
+                let startTime = Number(this.videoData.start_actual);
+                if (Number.isNaN(startTime)) {
+                    startTime = Date.parse(this.videoData.start_actual);
+                } else {
+                    startTime = this.videoData.start_actual;
                 }
-            }).catch((err) => {
-                console.log(`ERR : ${err}`);
-            });
+
+                for (let idx = 0; idx < this.entries.length; idx += 1) {
+                    processes.push({
+                        type: "Add",
+                        data: {
+                            tempid: `I${idx}`,
+                            name: this.userdata.user.username,
+                            timestamp: Math.floor(startTime + this.entries[idx].timestamp),
+                            message: this.entries[idx].message,
+                            duration: Math.floor(this.entries[idx].duration),
+                        },
+                    });
+                }
+
+                backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processes, this.TLLang.value).then(({ status }) => {
+                    if (status === 200) {
+                        this.$emit("close", { upload: true });
+                    }
+                }).catch((err) => {
+                    console.log(`ERR : ${err}`);
+                });
+            } else {
+                this.notifText = "It seems that you still don't have API KEY, go to account setting (in the same login/logout menu) then click get new API key on the bottom";
+            }
         },
     },
 };
