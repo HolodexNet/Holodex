@@ -11,6 +11,13 @@
       <watch-info :video="videoWithMentions" no-sub-count>
         <div v-if="$store.state.userdata.user && $store.state.userdata.user.role !== 'user'" class="pl-6">
           <code class="text-h6">{{ video.id }}</code>
+          <v-btn
+            color="green"
+            class="ma-2"
+            :href="`/add_placeholder?id=${video.id}`"
+          >
+            Edit
+          </v-btn>
           <v-dialog
             v-model="showDeleteConfirm"
             max-width="290"
