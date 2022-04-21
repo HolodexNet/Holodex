@@ -52,10 +52,13 @@ component:
     typeScheduledYT: Stream Terjadwal
     typeExternalStream: Stream Eksternal
     typeEventPlaceholder: Acara Terjadwal
+    openClient: Buka TL Client
     openScriptEditor: Buka Editor Naskah
     uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -303,8 +306,12 @@ views:
     likeOnYoutube: Suka video ini di Youtube
     uploadPanel:
       title: Unggah Naskah
+      usernameText: TL akan diunggah di bawah nama pengguna
       usernameChange: Ubah
+      tlLang: Bahasa TL
       headerStart: Mulai
+      headerEnd: Akhir
+      headerText: Teks
       cancelBtn: Batal
       okBtn: Oke
       notifTextErr: GAGAL MEMUAT BERKAS (BERKAS RUSAK?)
@@ -342,9 +349,10 @@ views:
       - Masuk dengan Google
       - Masuk dengan Discord
       - Masuk dengan Twitter
+    username: Nama Pengguna
     usernameBtn:
-      - Change
-      - Confirm
+      - Ubah
+      - Konfirmasi
       - Simpan
   multiview:
     confirmOverwrite: Ubah tataletak yang sekarang?
@@ -420,17 +428,42 @@ views:
     menu:
       title: Menu
       setting: Pengaturan
+      loadVideo: Muat Video
+      unloadVideo: Sembunyikan Video
+      loadChat: Muat Chat
+      unloadChat: Sembunyikan Chat
     tlControl:
+      enterBtn: Masukkan
+      prefix: Awalan
+      suffix: Akhiran
+      fontColour: Warna Font
+      outlineColour: Warna Outline
+      localPrefix: Awalan Lokal
       addProfile: Tambah Profil
       removeProfile: Hapus Profil
+      shiftUp: Geser Ke Atas
+      shiftDown: Geser Ke Bawah
       showSetting: Pengaturan
+      hideSetting: Sembunyikan
+    addProfilePanel:
+      title: Tambah Profil Baru
+      inputLabel: Nama Profil
     settingPanel:
       title: Pengaturan
+      mainStreamLink: Tautan Utama Siaran
+      collabLink: Tautan Kolaborasi
+    removeProfileTitle: Konfirmasi hapus profil
+    loadChatPanel:
+      title: Muat Chat
+      inputLabel: Tautan Siaran
+    unloadChatTitle: Sembunyikan SEMUA chat aktif?
+    pangram: The quick brown fox jumps over the lazy dog
     cancelBtn: Batal
     okBtn: Oke
   scriptEditor:
     menu:
       save: Simpan
+      continuousEnd: Jadikan Waktu Berkelanjutan (ubah akhir)
       clearAll: Hapus Naskah
       exportFile: Ekspor Berkas
       importFile: Impor Berkas
@@ -440,6 +473,7 @@ views:
       headerProfile: Profil
       headerText: Teks
       setAsStart: Atur sebagai awal
+      shiftCurrentTime: Pindah ke waktu sekarang
       deleteEntry: Hapus entri
     loadVideoPanel:
       title: Muat Video
