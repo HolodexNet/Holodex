@@ -52,6 +52,8 @@ component:
     typeScheduledYT: Stream Terjadwal
     typeExternalStream: Stream Eksternal
     typeEventPlaceholder: Acara Terjadwal
+    openScriptEditor: Buka Editor Naskah
+    uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
   description:
@@ -279,7 +281,7 @@ views:
       expandTL: Menampilkan kolom TLdex
       tlStart: Pesan Awal
       StickBottomSettingLabel: Sematkan Dibawah
-      StickBottomSettingsDesc: Kolom TL akan diletakkan dibawah Chat Youtube
+      StickBottomSettingsDesc: Kolom TL akan diletakkan di bawah Chat Youtube
       showVerifiedMessages: Menampilkan Pesan Pengguna yang Terverifikasi
       showModeratorMessages: Menampilkan Pesan Moderator
       showVtuberMessages: Menampilkan Pesan Vtuber
@@ -299,6 +301,15 @@ views:
     removeFromPlaylist: Hapus video dari playlist ini
     saveToPlaylist: Simpan video ke playlist ini
     likeOnYoutube: Suka video ini di Youtube
+    uploadPanel:
+      title: Unggah Naskah
+      usernameChange: Ubah
+      headerStart: Mulai
+      cancelBtn: Batal
+      okBtn: Oke
+      notifTextErr: GAGAL MEMUAT BERKAS (BERKAS RUSAK?)
+      notifTextParsing: Memuat berkas...
+      notifTextErrExt: Ekstensi berkas tidak dikenali.
   favorites:
     promptForAction: >-
       Membuat daftar favorit vtuber dan melihat klip terbaru dan siarannya pada halaman ini.
@@ -331,6 +342,10 @@ views:
       - Masuk dengan Google
       - Masuk dengan Discord
       - Masuk dengan Twitter
+    usernameBtn:
+      - Change
+      - Confirm
+      - Simpan
   multiview:
     confirmOverwrite: Ubah tataletak yang sekarang?
     confirmOverwriteYes: Konfirmasi
@@ -401,6 +416,45 @@ views:
       three: Memperbaiki pembekakan memori dari kolom obrolan Youtube
       four: >-
         Memperbaiki flags eksperimental pada pemutar Youtube (Seperti menonaktifkan siaran multi, thumbnail ruang tunggu tidak tampil) dan masih banyak lagi!
+  tlClient:
+    menu:
+      title: Menu
+      setting: Pengaturan
+    tlControl:
+      addProfile: Tambah Profil
+      removeProfile: Hapus Profil
+      showSetting: Pengaturan
+    settingPanel:
+      title: Pengaturan
+    cancelBtn: Batal
+    okBtn: Oke
+  scriptEditor:
+    menu:
+      save: Simpan
+      clearAll: Hapus Naskah
+      exportFile: Ekspor Berkas
+      importFile: Impor Berkas
+    table:
+      headerStart: Awal
+      headerEnd: Akhir
+      headerProfile: Profil
+      headerText: Teks
+      setAsStart: Atur sebagai awal
+      deleteEntry: Hapus entri
+    loadVideoPanel:
+      title: Muat Video
+      inputLabel: Tautan Siaran
+    setStartTitle: Gunakan entri terpilih sebagai awal, semua entri sebelumnya akan dihapus.
+    importFile:
+      overwriteBtn: Timpa
+  tlManager:
+    title: Pengelola Naskah TL
+    headerID: ID Video
+    headerEntries: Entri
+    download: Unduh
+    delete: Hapus
+    deleteTitle: Hapus Entri
+    langPick: Bahasa
 time:
   soon: segera mulai
   diff_future_date: Mulai {0} ({1})
