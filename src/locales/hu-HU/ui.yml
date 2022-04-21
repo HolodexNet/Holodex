@@ -461,6 +461,10 @@ views:
   scriptEditor:
     menu:
       save: Mentés
+      continuousEnd: Folytonossá tétel (vége megváltoztatása)
+      clearAll: Script törlése
+      exportFile: Fájl exportálása
+      importFile: Fájl importálása
     table:
       headerStart: Kezdet
       headerEnd: Vége
@@ -615,6 +619,8 @@ channelRequest:
   VtuberGroupLabel: VTuber csoport (nem kötelező)
   VtuberGroupHint: Melyik szervezethez vagy csoporthoz tartozik ez a vtuber?
   ChannelLanguageLabel: A csatorna fő nyelve
+  EnglishNameHint: >-
+    Amennyiben a csatorna neve nem angol, add meg angolul is. Írd át angol formába (pl. Natsuiro Matsuri) vagy pedig a csatorna által preferált angol megfelelőbe (pl. Elu the Elf, Emma★August)
   EnglishNameLabel: Angol csatornanév
   Comments: Hozzászólások
   CommentsHint: Egyéb megjegyzések, melyeket szeretnél nekünk elmondani.
@@ -625,3 +631,4 @@ channelRequest:
   DeletionRequirementText: >-
     Csatorna törlést akkor kérhetsz ha te(vagy ti) vagy(tok) a csatorna tulajdonosa(i), kérlek készülj(etek) kilétet igazoló információkkal.
   PageTitle: Holodex Csatorna Kérés
+  ChannelURLErrorFeedback: 'Muszáj az alábbi formában lennie: https://www.youtube.com/channel/UC_____'
