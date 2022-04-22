@@ -103,6 +103,15 @@ export default {
         userdata() {
             return this.$store.state.userdata;
         },
+        startTime() {
+            if (!this.videoData.start_actual) {
+                return (Date.parse(this.videoData.available_at));
+            }
+            if (Number.isNaN(Number(this.videoData.start_actual))) {
+                return (Date.parse(this.videoData.start_actual));
+            }
+            return (this.videoData.start_actual);
+        },
     },
     watch: {
         videoData() {
@@ -629,20 +638,13 @@ export default {
                     },
                 }));
 
-                let startTime = Number(this.videoData.start_actual);
-                if (Number.isNaN(startTime)) {
-                    startTime = Date.parse(this.videoData.start_actual);
-                } else {
-                    startTime = this.videoData.start_actual;
-                }
-
                 for (let idx = 0; idx < this.entries.length; idx += 1) {
                     processes.push({
                         type: "Add",
                         data: {
                             tempid: `I${idx}`,
                             name: this.userdata.user.username,
-                            timestamp: Math.floor(startTime + this.entries[idx].timestamp),
+                            timestamp: Math.floor(this.startTime + this.entries[idx].timestamp),
                             message: this.entries[idx].message,
                             duration: Math.floor(this.entries[idx].duration),
                         },

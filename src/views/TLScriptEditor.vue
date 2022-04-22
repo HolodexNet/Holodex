@@ -2229,7 +2229,7 @@ export default {
                 this.videoData = {
                     id: parseVideoID.id,
                     status: vidData.status,
-                    start_actual: Date.parse(vidData.start_actual),
+                    start_actual: !vidData.start_actual ? Date.parse(vidData.available_at) : Date.parse(vidData.start_actual),
                     title: vidData.title,
                 };
 

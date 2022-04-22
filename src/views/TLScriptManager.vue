@@ -241,7 +241,7 @@ export default {
                 if (status === 200) {
                     this.videoData = {
                         id: ID,
-                        start_actual: Date.parse(data.start_actual),
+                        start_actual: !data.start_actual ? Date.parse(data.available_at) : Date.parse(data.start_actual),
                         title: data.title,
                     };
                     this.modalNexus = true;
@@ -257,7 +257,7 @@ export default {
                 if (status === 200) {
                     this.videoData = {
                         id: ID,
-                        start_actual: Date.parse(data.start_actual),
+                        start_actual: !data.start_actual ? Date.parse(data.available_at) : Date.parse(data.start_actual),
                         title: data.title,
                     };
                     this.modalNexus = true;
