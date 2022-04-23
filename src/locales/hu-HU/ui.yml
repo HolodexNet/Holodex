@@ -52,6 +52,9 @@ component:
     typeScheduledYT: Beütemezett stream
     typeExternalStream: Külső Stream
     typeEventPlaceholder: Beütemezett esemény
+    openClient: Fordító kliens megnyitása
+    openScriptEditor: Script szerkesztő megnyitása
+    uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
   description:
@@ -299,6 +302,19 @@ views:
     removeFromPlaylist: Videó eltávolítása a lejátszási listából
     saveToPlaylist: Videó mentése a lejátszási listába
     likeOnYoutube: Hüvelykujj Youtubeon
+    uploadPanel:
+      title: Script feltöltése
+      usernameText: A fordítás felhasználónév alatt lesz feltöltve
+      usernameChange: Megváltoztatás
+      tlLang: Fordítás nyelve
+      headerStart: Kezdet
+      headerEnd: Vége
+      headerText: Szöveg
+      cancelBtn: Mégsem
+      okBtn: OK
+      notifTextErr: NEM SIKERÜLT ELEMEZNI A FÁJLT (A FÁJL KORRUPT?)
+      notifTextParsing: Fájl elemzése...
+      notifTextErrExt: A fájlkiterjesztés nem felismerhető
   favorites:
     promptForAction: >-
       Készíts egy listát a kedvenc vtuberjeidről és láthatod az legújabb klipjeiket és adásaikat ezen az oldalon.
@@ -331,6 +347,11 @@ views:
       - Bejelentkezés Google fiókkal
       - Bejelentkezés Discorddal
       - Bejelentkezés Twitter fiókkal
+    username: Felhasználónév
+    usernameBtn:
+      - Megváltoztatás
+      - Megerősítés
+      - Mentés
   multiview:
     confirmOverwrite: Felülírod a meglévő elrendezést?
     confirmOverwriteYes: Megerősítés
@@ -401,6 +422,70 @@ views:
       three: Megjavítja a memória folyást a Youtube élő csevegésében
       four: >-
         Megjavítja a kísérleti zászlókat Youtube lejátszóban (Például több stream kikapcsolása, várószoba indexképe nem látszódik) és még több!
+  tlClient:
+    menu:
+      title: Menü
+      setting: Beállítások
+      loadVideo: Videó betöltése
+      unloadVideo: Videó lekapcsolása
+      loadChat: Chat betöltése
+      unloadChat: Chat lekapcsolása
+    tlControl:
+      enterBtn: Enter
+      prefix: Prefix
+      suffix: Utótag
+      fontColour: Betűszín
+      outlineColour: Körvonal színe
+      localPrefix: Helyi prefix
+      addProfile: Profil hozzáadása
+      removeProfile: Profil eltávolítása
+      shiftUp: Shift fel
+      shiftDown: Shift le
+      showSetting: Beállítások
+      hideSetting: Elrejtés
+    addProfilePanel:
+      title: Profil hozzáadása
+      inputLabel: Profil név
+    settingPanel:
+      title: Beállítások
+      mainStreamLink: Fő stream linkje
+      collabLink: Vendég stream linkek
+    removeProfileTitle: Fiók eltávolításának megerősítése
+    loadChatPanel:
+      title: Chat betöltése
+      inputLabel: Stream link
+    unloadChatTitle: MINDEN aktív chatet lekapcsolsz?
+    pangram: A gyors, barna róka átugrik a lusta kutya fölött
+    cancelBtn: Mégsem
+    okBtn: OK
+  scriptEditor:
+    menu:
+      save: Mentés
+      continuousEnd: Folytonossá tétel (vége megváltoztatása)
+      clearAll: Script törlése
+      exportFile: Fájl exportálása
+      importFile: Fájl importálása
+    table:
+      headerStart: Kezdet
+      headerEnd: Vége
+      headerProfile: Profil
+      headerText: Szöveg
+      setAsStart: Beállítása kezdetnek
+      shiftCurrentTime: Beállítás jelenlegi időre
+      deleteEntry: Beviteli adatok törlése
+    loadVideoPanel:
+      title: Videó betöltése
+      inputLabel: Stream link
+    importFile:
+      overwriteBtn: Felülírás
+  tlManager:
+    title: Script-kezelő
+    headerID: Videó ID
+    headerEntries: Bevitelek
+    download: Letöltés
+    delete: Törlés
+    deleteTitle: Beviteli adatok törlése
+    langPick: Nyelv
 time:
   soon: hamarosan
   diff_future_date: Indul {0} ({1})
@@ -529,9 +614,13 @@ channelRequest:
     DeleteChannel: Saját csatorna törlése
   DirectContactDisclaimer: >-
     Nyugodtan hagyj nekünk discord ID-t vagy e-mail címet vagy Twitter ID-t, amennyiben szükséged van visszajelzésre. Kizárólag Holodex adminisztrátorok fogják látni az elérhetőséged.
+  DirectContactLabel: Elérési adat (opcionális)
+  TwitterHandle: Ennek a csatornának a Twitter kezelője (opcionális)
   VtuberGroupLabel: VTuber csoport (nem kötelező)
   VtuberGroupHint: Melyik szervezethez vagy csoporthoz tartozik ez a vtuber?
   ChannelLanguageLabel: A csatorna fő nyelve
+  EnglishNameHint: >-
+    Amennyiben a csatorna neve nem angol, add meg angolul is. Írd át angol formába (pl. Natsuiro Matsuri) vagy pedig a csatorna által preferált angol megfelelőbe (pl. Elu the Elf, Emma★August)
   EnglishNameLabel: Angol csatornanév
   Comments: Hozzászólások
   CommentsHint: Egyéb megjegyzések, melyeket szeretnél nekünk elmondani.
@@ -542,3 +631,4 @@ channelRequest:
   DeletionRequirementText: >-
     Csatorna törlést akkor kérhetsz ha te(vagy ti) vagy(tok) a csatorna tulajdonosa(i), kérlek készülj(etek) kilétet igazoló információkkal.
   PageTitle: Holodex Csatorna Kérés
+  ChannelURLErrorFeedback: 'Muszáj az alábbi formában lennie: https://www.youtube.com/channel/UC_____'

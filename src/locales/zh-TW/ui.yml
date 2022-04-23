@@ -52,13 +52,14 @@ component:
     typeScheduledYT: 已排定實況
     typeExternalStream: 外部實況
     typeEventPlaceholder: 已排定活動
+    openClient: 開啟翻譯客戶端
+    openScriptEditor: 開啟文本編輯器
+    uploadScript: 上傳翻譯文本
   videoDescription:
-    description: 影片資訊
-  video:
-    comment: { }
+    description: 說明
   description:
-    showLess: 顯示更少
-    showMore: 顯示更多
+    showLess: 只顯示部分資訊
+    showMore: 顯示完整資訊
   watch:
     streamingFor: 已實況 {0}
     nextUpInMugen: 下一個剪輯
@@ -203,8 +204,8 @@ views:
     sort:
       dateaddedEarliestFirst: 依加入日期排序（最舊）
       dateaddedLatestFirst: 依加入日期排序（最新）
-      dateuploadedLatestFirst: 依上傳日期排序（最舊）
-      dateuploadedEarliestFirst: 依上傳日期排序（最新）
+      dateuploadedLatestFirst: 依上傳日期排序（最新）
+      dateuploadedEarliestFirst: 依上傳日期排序（最舊）
   notFound:
     title: 查無此內容
     back: 返回首頁
@@ -287,7 +288,7 @@ views:
       showModeratorMessages: 顯示管理員訊息
       showVtuberMessages: 顯示Vtuber的留言
       showLocalTime: 顯示本地時間
-      tlFontSize: 字體大小
+      tlFontSize: 字型大小
       tlWindowSize: 翻譯聊天室大小(%) ，設置0%時會自動調整尺寸
       retryBtn: 重試
       status:
@@ -302,6 +303,16 @@ views:
     removeFromPlaylist: 將影片自當前播放清單移除
     saveToPlaylist: 將影片儲存至當前播放清單
     likeOnYoutube: 於 YouTube 上對影片按讚
+    uploadPanel:
+      title: 上傳原始文本
+      usernameText: 翻譯將以此使用者名稱發佈
+      usernameChange: 變更
+      tlLang: 目標翻譯語言
+      cancelBtn: 取消
+      okBtn: 確定
+      notifTextErr: 檔案無法分析（檔案毀損？）
+      notifTextParsing: 檔案分析中
+      notifTextErrExt: 無法辨識的副檔名
   favorites:
     promptForAction: >-
       創建含有您喜愛Vtuber的播放列表<br/>以在本頁查看最新的相關剪輯與實況！
@@ -334,6 +345,11 @@ views:
       - 使用 Google 帳號登入
       - 使用 Discord 帳號登入
       - 使用 Twitter 帳號登入
+    username: 使用者名稱
+    usernameBtn:
+      - 變更
+      - 確認
+      - 儲存
   multiview:
     confirmOverwrite: 確定覆蓋設定？
     confirmOverwriteYes: 確認
@@ -404,6 +420,62 @@ views:
       three: 修復 YouTube 實況聊天室的記憶體洩漏問題
       four: >-
         修復 YouTube 撥放器的實驗性功能（例：禁用多窗實況 / 實況等待室未顯示縮圖）
+  tlClient:
+    menu:
+      title: 選單
+      setting: 設定
+      loadVideo: 載入影片
+      unloadVideo: 移除影片
+      loadChat: 載入聊天室
+      unloadChat: 移除聊天室
+    tlControl:
+      enterBtn: 輸入
+      prefix: 前綴
+      suffix: 後綴
+      fontColour: 字型色彩
+      outlineColour: 外框顏色
+      localPrefix: 本地前綴
+      addProfile: 新增設定檔
+      removeProfile: 移除設定檔
+      showSetting: 設定
+      hideSetting: 隱藏
+    addProfilePanel:
+      title: 新增新的設定檔
+      inputLabel: 設定檔名稱
+    settingPanel:
+      title: 設定
+      mainStreamLink: 主實況連結
+      collabLink: 連動實況連結
+    removeProfileTitle: 確認移除設定檔
+    loadChatPanel:
+      title: 載入聊天室
+      inputLabel: 實況連結
+    unloadChatTitle: 是否要移除全部已開啟的聊天室？
+    pangram: 南去經三國，東來過五湖
+    cancelBtn: 取消
+    okBtn: 確定
+  scriptEditor:
+    menu:
+      save: 儲存
+      clearAll: 刪除文本
+      exportFile: 匯出檔案
+      importFile: 匯入檔案
+    table:
+      headerStart: 開始
+      headerEnd: 結束
+      headerProfile: 設定檔
+      setAsStart: 設為起點
+      shiftCurrentTime: 位移至目前時間
+    loadVideoPanel:
+      title: 載入影片
+      inputLabel: 實況連結
+    importFile:
+      overwriteBtn: 覆蓋
+  tlManager:
+    title: 文本管理器
+    headerID: 影片ID
+    download: 下載
+    delete: 刪除
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})

@@ -52,10 +52,9 @@ component:
     typeScheduledYT: 予定されている配信
     typeExternalStream: 外部配信
     typeEventPlaceholder: 予定されたイベント
+    openScriptEditor: スクリプトエディターを開く
   videoDescription:
     description: 概要
-  video:
-    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -301,6 +300,14 @@ views:
     removeFromPlaylist: 現在のプレイリストから動画を削除
     saveToPlaylist: 現在のプレイリストに動画を保存
     likeOnYoutube: YouTubeで動画に高評価を付ける
+    uploadPanel:
+      title: スクリプトをアップロード
+      usernameText: 翻訳はこのユーザー名の下でアップロードされます
+      usernameChange: 変更
+      tlLang: 翻訳言語
+      cancelBtn: キャンセル
+      notifTextErr: ファイルの解析に失敗しました (ファイルが破損している?)
+      notifTextParsing: ファイルを解析中...
   favorites:
     promptForAction: >-
       お気に入りのVtuberリストを作るとそのページでお気に入りしたVtuberの最新動画を確認できます。
@@ -333,6 +340,11 @@ views:
       - Googleでログイン
       - Discordでログイン
       - Twitterでログイン
+    username: ユーザー名
+    usernameBtn:
+      - Change
+      - Confirm
+      - 保存
   multiview:
     confirmOverwrite: 既存のレイアウトを上書きしてもよろしいですか？
     confirmOverwriteYes: 確認
@@ -403,6 +415,27 @@ views:
       three: Youtube のライブチャットのメモリリークを修正
       four: >-
         Youtube プレイヤーの実験的フラグ (複数の配信を再生できない、待合室のサムネイルが表示されない) を修正、などなど!
+  tlClient:
+    menu:
+      title: メニュー
+      setting: 設定
+      loadVideo: 動画を読み込む
+      loadChat: チャットを読み込む
+    tlControl:
+      showSetting: 設定
+    settingPanel:
+      title: 設定
+      mainStreamLink: メインの配信のリンク
+    loadChatPanel:
+      title: チャットを読み込む
+    cancelBtn: キャンセル
+  scriptEditor:
+    menu:
+      save: 保存
+  tlManager:
+    title: スクリプトマネージャー
+    headerID: 動画ID
+    langPick: 言語
 time:
   soon: まもなく開始
   diff_future_date: '{0}に開始 ({1})'

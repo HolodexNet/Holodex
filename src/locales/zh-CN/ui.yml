@@ -52,6 +52,9 @@ component:
     typeScheduledYT: 直播预约
     typeExternalStream: 外部直播
     typeEventPlaceholder: 预定活动
+    openClient: 开启翻译客户端
+    openScriptEditor: 开启脚本编辑器
+    uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
   video:
@@ -301,6 +304,19 @@ views:
     removeFromPlaylist: 将视频从当前播放队列中删除
     saveToPlaylist: 将视频保存到当前播放列表
     likeOnYoutube: 在Youtube上给视频点赞
+    uploadPanel:
+      title: 上传脚本
+      usernameText: 翻译将以此使用者的名称发布
+      usernameChange: 更改
+      tlLang: 目标翻译语言
+      headerStart: 开始
+      headerEnd: 结束
+      headerText: 文本
+      cancelBtn: 取消
+      okBtn: 确定
+      notifTextErr: 文件无法解析(文件损坏？)
+      notifTextParsing: 文件分析中...
+      notifTextErrExt: 无法识别文件扩展名。
   favorites:
     promptForAction: >-
       为您最喜欢的VTuber创建列表，并在此页面查看他们最新的剪辑和直播视频。
@@ -333,23 +349,28 @@ views:
       - 使用 Google 帐号登录
       - 使用 Discord 账号登录
       - 使用 Twitter 账号登录
+    username: 用户名
+    usernameBtn:
+      - 更改
+      - 确定
+      - 保存
   multiview:
     confirmOverwrite: 覆盖当前的布局？
     confirmOverwriteYes: 确认
     permalink: 永久链接
     presets: 版面配置
-    addframe: 增加新分割
+    addframe: 添加单元格
     muteAll: 全部静音
     unmuteAll: 取消全部静音
     muteOthers: 静音其余视频
     muteOthersDetail: 仅开启指定一个视频的声音输出
     autoLayoutTip: 点击任意频道即可使用自动布局模式开始观看
-    createLayoutTip: 增加新分割以创造专属布局，亦能使用预设布局
+    createLayoutTip: 通过添加单元格或使用预设来创建你自己的布局
     openToolbarTip: 开启控制栏以开始使用多窗工具
     archiveSync: 存档同步
     preset:
       shareOnDiscord: >-
-        想到了什么很棒的布局方式吗？将该分割布局的永久链接分享至我们的 <a href="https://discord.gg/jctkgHBt4b">Discord服务器</a> 吧！
+        有一个很棒的布局要分享？将该布局的永久链接分享至我们的 <a href="https://discord.gg/jctkgHBt4b">Discord服务器</a> 吧！
       custom: 我的布局
       toggleAutoLayout: 是否纳入自动调整模式
       remove: 删除此布局
@@ -373,7 +394,7 @@ views:
     presetsHint: 开启版面配置来变更布局与自动排版模式的设定
     mediaControlsHint1: 使用媒体控制面板来静音或是同步 (
     mediaControlsHint2: ) 直播
-    dragDropHint: 从置顶栏拖曳直播至不同分割来自定义显示位置
+    dragDropHint: 从置顶栏拖曳直播至不同单元格来自定义显示位置
     reorderHint: 使用布局调整面板来快速更改视频/聊天室位置
     reorderLayout: 布局调整面板
     reorderLayoutDetail: 将图标拖放到所需位置
@@ -403,6 +424,71 @@ views:
       three: 修复Youtube聊天窗口中内存泄漏的问题
       four: >-
         修复 YouTube 播放器的实验性功能（例：禁用多窗直播 / 直播等待室未显示缩略图）
+  tlClient:
+    menu:
+      title: 菜单
+      setting: 设置
+      loadVideo: 加载视频
+      unloadVideo: 移除视频
+      loadChat: 加载聊天
+      unloadChat: 移除聊天
+    tlControl:
+      enterBtn: 输入
+      prefix: 前缀
+      suffix: 后缀
+      fontColour: 字体颜色
+      outlineColour: 轮廓颜色
+      localPrefix: 本地前缀
+      addProfile: 添加配置文件
+      removeProfile: 删除配置文件
+      shiftUp: 上移
+      shiftDown: 下移
+      showSetting: 设置
+      hideSetting: 隐藏
+    addProfilePanel:
+      title: 添加新的配置文件
+      inputLabel: 配置文件名
+    settingPanel:
+      title: 设置
+      mainStreamLink: 主要直播链接
+      collabLink: 联动直播链接
+    removeProfileTitle: 确认删除配置文件
+    loadChatPanel:
+      title: 加载聊天
+      inputLabel: 直播链接
+    unloadChatTitle: 是否要移除全部已开启的聊天室？
+    pangram: 悟已往之不谏，知来者之可追
+    cancelBtn: 取消
+    okBtn: 确定
+  scriptEditor:
+    menu:
+      save: 保存
+      continuousEnd: 让时间持续(改变结束)
+      clearAll: 删除脚本
+      exportFile: 导出文件
+      importFile: 导入文件
+    table:
+      headerStart: 开始
+      headerEnd: 结束
+      headerProfile: 配置文件
+      headerText: 文本
+      setAsStart: 设为起点
+      shiftCurrentTime: 移至当前日期
+      deleteEntry: 删除条目
+    loadVideoPanel:
+      title: 加载视频
+      inputLabel: 直播链接
+    setStartTitle: 将所选条目设置为初始，之前的所有条目都将被删除。
+    importFile:
+      overwriteBtn: 覆盖
+  tlManager:
+    title: 脚本管理器
+    headerID: 视频ID
+    headerEntries: 条目
+    download: 下载
+    delete: 删除
+    deleteTitle: 删除条目
+    langPick: 语言
 time:
   soon: 即将开始
   diff_future_date: 将在{0}开始直播({1})
@@ -488,7 +574,7 @@ about:
           请至频道页面确认自己的频道是否有被列于剪辑频道上，如果没有的话请填写
         - 此表单
         - >-
-          ，我们将会手动将您的频道加入资料库。如果您的频道已经在资料库裡的话，请确认频道的视频描述包含正确的 Youtube 直播来源 / 频道链接。
+          ，我们将会手动将您的频道加入资料库。如果您的频道已经在资料库里的话，请确认频道的视频描述包含正确的 Youtube 直播来源 / 频道链接。
     feedback:
       title: 我想提供建议或为这个项目做出贡献
       contents:
