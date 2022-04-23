@@ -364,11 +364,11 @@ export default {
         getLoadFn() {
             const query = {
                 status: this.tab === this.Tabs.ARCHIVE ? "past,missing" : "past",
-                ...{ type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip" },
-                include: "clips",
+                type: this.tab === this.Tabs.ARCHIVE ? "stream" : "clip",
+                include: this.tab === this.Tabs.ARCHIVE ? "clips" : "",
                 lang: this.$store.state.settings.clipLangs.join(","),
                 paginated: !this.scrollMode,
-                to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
+                ...(this.toDate && { to: nearestUTCDate(dayjs(this.toDate ?? undefined)) }),
             };
             if (this.isFavPage) {
                 return async (offset, limit) => {
