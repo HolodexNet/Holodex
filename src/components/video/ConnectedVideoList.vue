@@ -368,7 +368,7 @@ export default {
                 include: this.tab === this.Tabs.ARCHIVE ? "clips" : "",
                 lang: this.$store.state.settings.clipLangs.join(","),
                 paginated: !this.scrollMode,
-                ...(this.toDate && { to: nearestUTCDate(dayjs(this.toDate ?? undefined)) }),
+                to: nearestUTCDate(dayjs(this.toDate ?? Date.now())),
             };
             if (this.isFavPage) {
                 return async (offset, limit) => {
