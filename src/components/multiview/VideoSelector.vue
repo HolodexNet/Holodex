@@ -132,7 +132,7 @@
     </template>
     <!-- Channel icons -->
     <template v-else>
-      <div ref="videosBar" class="d-flex flex-shrink-1 overflow-x-auto" @wheel="scrollHandler">
+      <div ref="videosBar" class="videos-bar d-flex flex-shrink-1 overflow-x-auto overflow-y-hidden" @wheel="scrollHandler">
         <v-tooltip
           v-for="video in topFilteredLive"
           :key="video.id"
@@ -412,5 +412,13 @@ export default {
 
 .refresh-spin {
     animation: spin 1.1s infinite linear;
+}
+
+.videos-bar::-webkit-scrollbar-track {
+    background: rgba(99, 46, 46, 0.5);
+}
+
+.videos-bar::-webkit-scrollbar-thumb {
+    background: #f06291a2;
 }
 </style>

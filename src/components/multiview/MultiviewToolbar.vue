@@ -192,12 +192,6 @@ export default {
     width: 36px;
 }
 
-.mv-toolbar-btn::-webkit-scrollbar-track {
-    background: rgba(99, 46, 46, 0.5);
-}
-.mv-toolbar-btn::-webkit-scrollbar-thumb {
-    background: #f06291a2;
-}
 .mv-toolbar {
     z-index: 1;
 }

@@ -354,6 +354,12 @@ export default {
     },
     async mounted() {
         if (this.token?.link) { this.discordCredits = await backendApi.discordServerInfo(this.token.link); }
+        const { id } = this.$route.query;
+        if (id && this.isEditor) {
+            this.id = id;
+            this.loadExistingPlaceholder(id);
+            this.tab = 1;
+        }
     },
     methods: {
         onSubmit() {
