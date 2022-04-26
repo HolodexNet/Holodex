@@ -57,6 +57,8 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -476,6 +478,7 @@ views:
     loadVideoPanel:
       title: Videó betöltése
       inputLabel: Stream link
+    setStartTitle: Kezdet a kiválaszott egységtől, az összes korábbi egység törölve lesz.
     importFile:
       overwriteBtn: Felülírás
   tlManager:
