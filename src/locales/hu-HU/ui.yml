@@ -120,7 +120,7 @@ component:
   reportDialog:
     title: Bejelentés
     collabing: >-
-      Ez a csatorna vendégszereplehet egy {org} tagnál vagy a kedvenceiddel. Kikapcsolhatod ezt a funkciót a beállításokban
+      Ez a csatorna vendégszerepelhet egy {org} tagnál vagy a kedvenceiddel. Kikapcsolhatod ezt a funkciót a beállításokban
     comments: Mit kéne a Holodexnek tennie?
     success: Visszajelzés elküldve. Köszönjük!
     reasons:
