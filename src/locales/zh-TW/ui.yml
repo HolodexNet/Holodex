@@ -437,6 +437,8 @@ views:
       localPrefix: 本地前綴
       addProfile: 新增設定檔
       removeProfile: 移除設定檔
+      shiftUp: 向上移動
+      shiftDown: 向下移動
       showSetting: 設定
       hideSetting: 隱藏
     addProfilePanel:
@@ -476,6 +478,7 @@ views:
     headerID: 影片ID
     download: 下載
     delete: 刪除
+    langPick: 語言
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})
