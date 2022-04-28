@@ -52,8 +52,13 @@ component:
     typeScheduledYT: Scheduwed stweam
     typeExternalStream: Extewnaw stweam
     typeEventPlaceholder: Scheduwed event
+    openClient: Open tl cwient
+    openScriptEditor: Open scwipt editow
+    uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -299,6 +304,19 @@ views:
     removeFromPlaylist: Remove bideo fwom cuwwent pwaywist
     saveToPlaylist: Save bideo to cuwwent pwaywist
     likeOnYoutube: Like bideo on youtube
+    uploadPanel:
+      title: Upwoad scwipt
+      usernameText: Tl wiww be upwoaded undew usewname
+      usernameChange: Change
+      tlLang: Tl wanguage
+      headerStart: Stawt
+      headerEnd: End
+      headerText: Text
+      cancelBtn: Cancew
+      okBtn: Ok
+      notifTextErr: UNABWE TO PAWSE THE FIWE (FIWE COWWUPTED?)
+      notifTextParsing: Pawsing fiwe...
+      notifTextErrExt: Unwecognized fiwe extension.
   favorites:
     promptForAction: >-
       Cweate a wist of favowite vtubews and see theiw watest cwips and wives on dis page.
@@ -331,6 +349,11 @@ views:
       - Login with googwe
       - Login with discowd
       - Login with twittew
+    username: Usewname
+    usernameBtn:
+      - Change
+      - Confiwm
+      - Save
   multiview:
     confirmOverwrite: Ovewwwite cuwwent wayout?
     confirmOverwriteYes: Confiwm
@@ -401,6 +424,71 @@ views:
       three: Fixes memowy weak in youtube's wive chat
       four: >-
         Fixes expewimentaw fwags on youtube pwayew (like disabwing muwtipwe stweams, waiting woom thumbnaiw not showing) and mowe!
+  tlClient:
+    menu:
+      title: Menu
+      setting: Setting
+      loadVideo: Woad bideo
+      unloadVideo: Unwoad bideo
+      loadChat: Woad chat
+      unloadChat: Unwoad chat
+    tlControl:
+      enterBtn: Entew
+      prefix: Pwefix
+      suffix: Suffix
+      fontColour: Font cowow
+      outlineColour: Outwine cowor
+      localPrefix: Wocaw pwefix
+      addProfile: Add pwofiwe
+      removeProfile: Wemove pwofiwe
+      shiftUp: Shift up
+      shiftDown: Shift down
+      showSetting: Setting
+      hideSetting: Hide
+    addProfilePanel:
+      title: Add new pwofiwe
+      inputLabel: Pwofiwe name
+    settingPanel:
+      title: Setting
+      mainStreamLink: Main stweam wink
+      collabLink: Cowwab winks
+    removeProfileTitle: Confiwm wemove pwofiwe
+    loadChatPanel:
+      title: Woad chat
+      inputLabel: Stweam wink
+    unloadChatTitle: Unwoad ALL active chat?
+    pangram: Da quick bwown fox jumps ovew da wazy dog
+    cancelBtn: Cancew
+    okBtn: Ok
+  scriptEditor:
+    menu:
+      save: Save
+      continuousEnd: Make time continuous (change end)
+      clearAll: Dewete scwipt
+      exportFile: Expowt fiwe
+      importFile: Impowt fiwe
+    table:
+      headerStart: Stawt
+      headerEnd: End
+      headerProfile: Pwofiwe
+      headerText: Text
+      setAsStart: Set as stawt
+      shiftCurrentTime: Shift to cuwwent time
+      deleteEntry: Dewete entwy
+    loadVideoPanel:
+      title: Load bideo
+      inputLabel: Stweam link
+    setStartTitle: Set sewected entwy as stawt, aww da pwevious entwies wiww be deweted.
+    importFile:
+      overwriteBtn: Ovewwwite
+  tlManager:
+    title: Scwipt managew
+    headerID: Bideo id
+    headerEntries: Entwies
+    download: Downwoad
+    delete: Dewete
+    deleteTitle: Dewete entwies
+    langPick: Wanguage
 time:
   soon: soon
   diff_future_date: Stawts {0} ({1})
