@@ -149,7 +149,7 @@ component:
     streamPageBtn: 實況頁面
     eventPageBtn: 活動頁面
     scheduledEvent: 已排定
-    editorCredit: 本活動由 Holodex編輯者 {0} 建立
+    editorCredit: 本活動由 Holodex 編輯者 {0} 建立。
     creditTitleText: '感謝：'
 views:
   channel:
@@ -308,6 +308,9 @@ views:
       usernameText: 翻譯將以此使用者名稱發佈
       usernameChange: 變更
       tlLang: 目標翻譯語言
+      headerStart: 開始
+      headerEnd: 結束
+      headerText: 文字
       cancelBtn: 取消
       okBtn: 確定
       notifTextErr: 檔案無法分析（檔案毀損？）
@@ -466,6 +469,7 @@ views:
       headerStart: 開始
       headerEnd: 結束
       headerProfile: 設定檔
+      headerText: 文字
       setAsStart: 設為起點
       shiftCurrentTime: 位移至目前時間
     loadVideoPanel:
