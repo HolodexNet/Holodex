@@ -297,6 +297,7 @@ views:
         disconnectedToChat: 切断しました
       archiveNeedExtension: >-
         アーカイブチャットは {0} 拡張機能または他のサードパーティ拡張機能なしでは動作しません。
+      hideSpoiler: ネタバレを隠す
     removeFromPlaylist: 現在のプレイリストから動画を削除
     saveToPlaylist: 現在のプレイリストに動画を保存
     likeOnYoutube: YouTubeで動画に高評価を付ける
