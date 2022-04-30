@@ -59,11 +59,24 @@
       >
         {{ $t("views.tlClient.menu.title") }}
       </v-btn>
-      <div class="d-flex align-stretch flex-row" style="height:100%" @click="menuBool = false">
-        <v-card class="d-flex flex-column grow" height="100%;" :width="activeChat.length < 2 ? '75%' : '40%'">
+      <div
+        class="d-flex align-stretch flex-row"
+        style="height:100%"
+        @click="menuBool = false"
+        @mousemove="resizeMouseMove($event)"
+        @mouseleave="resizeMouseLeave(1)"
+        @mouseup="resizeMouseUp()"
+      >
+        <v-card
+          class="d-flex flex-column grow"
+          height="100%;"
+          :width="activeChat.length < 2 ? videoPanelWidth1 + '%' : videoPanelWidth2 + '%'"
+          @mouseleave="resizeMouseLeave(0)"
+        >
+          <div v-if="resizeActive" style="position: absolute; height: 100%; width: 100%; background-color: transparent; z-index: 1;" />
           <v-card
             v-if="vidPlayer"
-            :height=" (activeChat.length > 1) ? '50%' : '100%' "
+            style="height:100%"
             class="d-flex flex-column"
             outlined
           >
@@ -73,7 +86,7 @@
               width="100%"
             />
           </v-card>
-          <v-divider />
+          <div v-if="vidPlayer" style="cursor:s-resize; height:7px;" @mousedown="resizeMouseDown($event, 0)" />
           <LiveTranslations
             v-if="!isLoading && !hasError"
             :tl-lang="TLLang.value"
@@ -83,20 +96,23 @@
               'stick-bottom': $store.state.settings.liveTlStickBottom,
               'tl-full-height': false,
             }"
-            style="height: 300px;"
+            :style="{'height': vidPlayer ? tlChatHeight + 'px' : '100%'}"
             :use-local-subtitle-toggle="false"
           />
           <v-card v-if="profileDisplay && (activeChat.length > 1)" class="ProfileListCard d-flex flex-column">
             <span v-for="(prf, index) in profile" :key="index"><span v-if="index === profileIdx">> </span>{{ (index + 1) + '. ' + prf.Name }}</span>
           </v-card>
         </v-card>
+        <div v-if="activeChat.length > 0" style="cursor:e-resize; width:7px;" @mousedown="resizeMouseDown($event, 1)" />
         <v-card
+          v-if="activeChat.length > 0"
           class="ChatPanelContainer"
           height="100%"
-          :width="activeChat.length < 2 ? '50%' : '70%'"
+          :width="activeChat.length < 2 ? (100 - videoPanelWidth1) + '%' : (100 - videoPanelWidth2) + '%'"
           :style="activeChatGridRow"
           outlined
         >
+          <div v-if="resizeActive" style="position: absolute; height: 100%; width: 100%; background-color: transparent; z-index: 1;" />
           <v-card
             v-for="(ChatURL, index) in activeChat"
             :key="ChatURL.text"
@@ -459,6 +475,13 @@ export default {
             vidIframeEle: null,
             player: null,
             IFOrigin: "",
+            // ---- LAYOUT ----
+            tlChatHeight: 200,
+            videoPanelWidth1: 60,
+            videoPanelWidth2: 40,
+            resizeActive: false,
+            resizeMode: 0,
+            resizePos: 0,
         };
     },
     computed: {
@@ -496,9 +519,11 @@ export default {
     },
     mounted() {
         this.init();
-        const defaultSetting = localStorage.getItem("Holodex-TLClient");
-        if (defaultSetting) {
-            console.log("TEST");
+        if (localStorage.getItem("Holodex-TLClient")) {
+            const defaultSetting = JSON.parse(localStorage.getItem("Holodex-TLClient"));
+            if (defaultSetting.tlChatHeight) { this.tlChatHeight = defaultSetting.tlChatHeight; }
+            if (defaultSetting.videoPanelWidth1) { this.videoPanelWidth1 = defaultSetting.videoPanelWidth1; }
+            if (defaultSetting.videoPanelWidth2) { this.videoPanelWidth2 = defaultSetting.videoPanelWidth2; }
         }
     },
     methods: {
@@ -952,6 +977,64 @@ export default {
         },
         //= ================  TW  =================
         //= ====================== VIDEO CONTROLLER ======================
+
+        // --------------------------------- LAYOUT CONTROLLER ---------------------------------
+        resizeMouseLeave(mode: number) {
+            if (mode === this.resizeMode) {
+                this.resizeActive = false;
+                localStorage.setItem("Holodex-TLClient", JSON.stringify({
+                    tlChatHeight: this.tlChatHeight,
+                    videoPanelWidth1: this.videoPanelWidth1,
+                    videoPanelWidth2: this.videoPanelWidth2,
+                }));
+            }
+        },
+        resizeMouseDown(event: any, resizeSwitch: number) {
+            if (!this.resizeActive) {
+                this.resizeActive = true;
+                this.resizeMode = resizeSwitch;
+                if (this.resizeMode === 0) {
+                    this.resizePos = event.clientY;
+                } else {
+                    this.resizePos = event.clientX;
+                }
+            }
+        },
+        resizeMouseUp() {
+            this.resizeActive = false;
+            localStorage.setItem("Holodex-TLClient", JSON.stringify({
+                tlChatHeight: this.tlChatHeight,
+                videoPanelWidth1: this.videoPanelWidth1,
+                videoPanelWidth2: this.videoPanelWidth2,
+            }));
+        },
+        resizeMouseMove(event: any) {
+            if (this.resizeActive) {
+                if (this.resizeMode === 0) {
+                    const yChange = (event.clientY - this.resizePos);
+                    this.resizePos = event.clientY;
+                    if (this.tlChatHeight - yChange < 100) {
+                        return;
+                    }
+                    this.tlChatHeight -= yChange;
+                } else {
+                    const xChange = ((event.clientX - this.resizePos) * 100) / window.innerWidth;
+                    this.resizePos = event.clientX;
+                    if (this.activeChat.length < 2) {
+                        if ((this.videoPanelWidth1 + xChange > 75) || (this.videoPanelWidth1 + xChange < 33)) {
+                            return;
+                        }
+                        this.videoPanelWidth1 += xChange;
+                    } else {
+                        if ((this.videoPanelWidth2 + xChange > 75) || (this.videoPanelWidth2 + xChange < 33)) {
+                            return;
+                        }
+                        this.videoPanelWidth2 += xChange;
+                    }
+                }
+            }
+        },
+        // ================================= LAYOUT CONTROLLER =================================
 
         colourPickerClose() {
             if (this.colourPick === 1) {
