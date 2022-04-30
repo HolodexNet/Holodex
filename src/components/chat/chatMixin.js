@@ -52,6 +52,7 @@ export default {
             "liveTlWindowSize",
             "liveTlShowVtuber",
             "liveTlShowSubtitle",
+            "liveTlHideSpoiler",
         ]),
         showSubtitle: {
             get() {

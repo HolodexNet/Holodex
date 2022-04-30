@@ -80,7 +80,7 @@
         :data-key="getKey"
         :data-sources="dividedTLs"
         :item-height="20"
-        :item-class-add="activeClass"
+        :item-class-add="addClass"
         :keeps="50"
         @click.native="handleClick"
       />
@@ -164,15 +164,26 @@ export default {
             }
         },
         curIndex(idx) {
-            this.scrollToIndex(idx);
+            if (this.liveTlHideSpoiler) {
+                this.$nextTick(() => {
+                    this.$refs.tlBody.scrollToBottom();
+                });
+            } else {
+                this.scrollToIndex(idx);
+            }
         },
     },
     created() {
         this.loadMessages(true, true);
     },
     methods: {
-        activeClass(index) {
-            return index === this.curIndex ? "active-message" : "";
+        addClass(index) {
+            if (index === this.curIndex) {
+                return ("active-message");
+            } if (this.liveTlHideSpoiler && (index > this.curIndex)) {
+                return ("hide-spoiler");
+            }
+            return ("");
         },
         getKey(item) {
             return item.timestamp + item.message + item.name;
@@ -229,5 +240,8 @@ export default {
     top: -1px;
     left: 0;
     z-index: -1;
+}
+.hide-spoiler {
+    display: none;
 }
 </style>

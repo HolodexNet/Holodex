@@ -38,6 +38,7 @@ const initialState = {
     liveTlShowLocalTime: false, // show client local time
     liveTlWindowSize: 0, // Default size, otherwise percentage height
     liveTlShowSubtitle: true, // Show subtitles on videos
+    liveTlHideSpoiler: false, // Hide message past current video time
     liveTlBlocked: [],
 
     blockedChannels: [],
@@ -114,6 +115,7 @@ const mutations = {
         "ignoredTopics",
         "liveTlShowVtuber",
         "liveTlShowSubtitle",
+        "liveTlHideSpoiler",
         "hidePlaceholder",
         "homeViewMode",
     ]),
