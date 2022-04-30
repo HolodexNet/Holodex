@@ -57,8 +57,6 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
