@@ -57,8 +57,6 @@ component:
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
-  video:
-    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
