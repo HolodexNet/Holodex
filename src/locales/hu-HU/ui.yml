@@ -57,6 +57,8 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -299,6 +301,7 @@ views:
         disconnectedToChat: Lecsatlakozva
       archiveNeedExtension: >-
         Az archive chat nem működik a {0} bővítménnyel vagy más harmadik féltől származó bővítményekkel.
+      hideSpoiler: Spoiler elrejtése
     removeFromPlaylist: Videó eltávolítása a lejátszási listából
     saveToPlaylist: Videó mentése a lejátszási listába
     likeOnYoutube: Hüvelykujj Youtubeon
