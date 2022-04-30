@@ -25,6 +25,7 @@
       </div>
       <span>
         <v-btn
+          v-if="!tlClient"
           icon
           x-small
           class="mr-1"
@@ -35,7 +36,11 @@
             {{ mdiSubtitlesOutline }}
           </v-icon>
         </v-btn>
-        <v-dialog v-model="expanded" width="800">
+        <v-dialog
+          v-if="!tlClient"
+          v-model="expanded"
+          width="800"
+        >
           <template #activator="{ on, attrs }">
             <v-btn
               icon
@@ -131,6 +136,16 @@ export default {
         WatchSubtitleOverlay,
     },
     mixins: [chatMixin],
+    props: {
+        tlLang: {
+            type: String,
+            default: "",
+        },
+        tlClient: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
             overlayMessage: this.$t("views.watch.chat.loading"),
@@ -223,6 +238,9 @@ export default {
         },
     },
     watch: {
+        tlLang() {
+            this.liveTlLang = this.tlLang;
+        },
         liveTlLang(nw, old) {
             this.switchLanguage(nw, old);
         },
@@ -263,7 +281,13 @@ export default {
                 // ignore blocked channels, moderator and verified messages if disabled
                 if (this.blockedNames.has(msg.name)) return;
 
-                if (
+                if (this.tlClient) {
+                    if (msg.is_tl) {
+                        const parsedMessage = this.parseMessage(msg);
+                        parsedMessage.receivedAt = Date.now();
+                        this.tlHistory.push(parsedMessage);
+                    }
+                } else if (
                     msg.is_tl
                     || msg.is_vtuber
                     || msg.is_owner
@@ -297,7 +321,7 @@ export default {
             if (!this.initSocket()) return;
 
             // Grab first load chat history
-            this.loadMessages(true);
+            this.loadMessages(true, false, this.tlClient);
 
             // Another instance has already subscribed to this chat, just register listener
             if (this.$socket.client.listeners(`${this.video.id}/${this.liveTlLang}`).length > 0) {
