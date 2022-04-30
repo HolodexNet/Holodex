@@ -300,6 +300,7 @@ views:
         disconnectedToChat: 已失去連線
       archiveNeedExtension: >-
         若沒有安裝 {0} 或是第三方擴充功能，是無法啟用存檔實況聊天室功能的
+      hideSpoiler: 隱藏劇透內容
     removeFromPlaylist: 將影片自當前播放清單移除
     saveToPlaylist: 將影片儲存至當前播放清單
     likeOnYoutube: 於 YouTube 上對影片按讚
