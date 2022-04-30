@@ -74,8 +74,10 @@
             />
           </v-card>
           <v-divider />
-          <TLChatPanel
-            v-if="!isLoading && !hasError && (activeChat.length > 1)"
+          <LiveTranslations
+            v-if="!isLoading && !hasError"
+            :tl-lang="TLLang.value"
+            :tl-client="true"
             :video="video"
             :class="{
               'stick-bottom': $store.state.settings.liveTlStickBottom,
@@ -114,16 +116,6 @@
               @load="IFrameLoaded($event, ChatURL.text)"
             />
           </v-card>
-          <TLChatPanel
-            v-if="!isLoading && !hasError && (activeChat.length < 2)"
-            :video="video"
-            :class="{
-              'stick-bottom': $store.state.settings.liveTlStickBottom,
-              'tl-full-height': true,
-            }"
-            style="height: 300px;"
-            :use-local-subtitle-toggle="false"
-          />
           <v-card v-if="profileDisplay && (activeChat.length < 2)" class="ProfileListCard d-flex flex-column">
             <span v-for="(prf, index) in profile" :key="index"><span v-if="index === profileIdx">> </span>{{ (index + 1) + '. ' + prf.Name }}</span>
           </v-card>
@@ -400,7 +392,7 @@
 </template>
 
 <script lang="ts">
-import TLChatPanel from "@/components/tlclient/TLChatPanel.vue";
+import LiveTranslations from "@/components/chat/LiveTranslations.vue";
 import { TL_LANGS } from "@/utils/consts";
 import { mdiPlusCircle, mdiMinusCircle, mdiCloseCircle, mdiCog, mdiCogOff } from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
@@ -417,7 +409,7 @@ export default {
         };
     },
     components: {
-        TLChatPanel,
+        LiveTranslations,
     },
     data() {
         return {
@@ -479,9 +471,7 @@ export default {
             };
         },
         activeChatGridRow() {
-            if (this.activeChat.length < 2) {
-                return ({ "grid-template-rows": "1fr 1fr" });
-            } if (this.activeChat.length < 4) {
+            if (this.activeChat.length < 4) {
                 return ({ "grid-template-rows": "1fr" });
             }
             return ({ "grid-template-rows": "1fr 1fr" });
@@ -506,6 +496,10 @@ export default {
     },
     mounted() {
         this.init();
+        const defaultSetting = localStorage.getItem("Holodex-TLClient");
+        if (defaultSetting) {
+            console.log("TEST");
+        }
     },
     methods: {
         init() {

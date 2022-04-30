@@ -84,17 +84,32 @@ export default {
         this.showSubtitle = this.liveTlShowSubtitle;
     },
     methods: {
-        loadMessages(firstLoad = false, loadAll = false) {
+        loadMessages(firstLoad = false, loadAll = false, tlClient = false) {
             this.historyLoading = true;
             const lastTimestamp = !firstLoad && this.tlHistory[0]?.timestamp;
-            api.chatHistory(this.video.id, {
-                lang: this.liveTlLang,
-                verified: this.liveTlShowVerified,
-                moderator: this.liveTlShowModerator,
-                vtuber: this.liveTlShowVtuber,
-                limit: loadAll ? 100000 : this.limit,
-                ...(lastTimestamp && { before: lastTimestamp }),
-            })
+
+            let query = {};
+            if (tlClient) {
+                query = {
+                    lang: this.liveTlLang,
+                    verified: false,
+                    moderator: false,
+                    vtuber: false,
+                    limit: loadAll ? 100000 : this.limit,
+                    ...(lastTimestamp && { before: lastTimestamp }),
+                };
+            } else {
+                query = {
+                    lang: this.liveTlLang,
+                    verified: this.liveTlShowVerified,
+                    moderator: this.liveTlShowModerator,
+                    vtuber: this.liveTlShowVtuber,
+                    limit: loadAll ? 100000 : this.limit,
+                    ...(lastTimestamp && { before: lastTimestamp }),
+                };
+            }
+
+            api.chatHistory(this.video.id, query)
                 .then(({ data }) => {
                     this.completed = data.length !== this.limit || loadAll;
                     if (firstLoad) this.tlHistory = data.map(this.parseMessage);
