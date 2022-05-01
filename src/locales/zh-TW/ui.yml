@@ -466,6 +466,7 @@ views:
       clearAll: 刪除文本
       exportFile: 匯出檔案
       importFile: 匯入檔案
+      editorMode: 編輯者模式
     table:
       headerStart: 開始
       headerEnd: 結束
@@ -478,6 +479,11 @@ views:
       inputLabel: 實況連結
     importFile:
       overwriteBtn: 覆蓋
+    editorModePanel:
+      activateMode: 啟用編輯者模式
+      deactivateMode: 關閉編輯者模式
+      roleWarning: 您的權限不足
+      filterTranslator: 篩選翻譯者
   tlManager:
     title: 文本管理器
     headerID: 影片ID
