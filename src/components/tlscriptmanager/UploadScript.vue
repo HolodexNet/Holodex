@@ -622,45 +622,41 @@ export default {
             }
         },
         async sendData() {
-            if (this.userdata.user.api_key) {
-                const processes = await (await backendApi.chatHistory(this.videoData.id, {
-                    lang: this.TLLang.value,
-                    verified: 0,
-                    moderator: 0,
-                    vtuber: 0,
-                    limit: 100000,
-                    mode: 1,
-                    creator_id: this.userdata.user.id,
-                })).data.map((e) => ({
-                    type: "Delete",
+            const processes = await (await backendApi.chatHistory(this.videoData.id, {
+                lang: this.TLLang.value,
+                verified: 0,
+                moderator: 0,
+                vtuber: 0,
+                limit: 100000,
+                mode: 1,
+                creator_id: this.userdata.user.id,
+            })).data.map((e) => ({
+                type: "Delete",
+                data: {
+                    id: e.id,
+                },
+            }));
+
+            for (let idx = 0; idx < this.entries.length; idx += 1) {
+                processes.push({
+                    type: "Add",
                     data: {
-                        id: e.id,
+                        tempid: `I${idx}`,
+                        name: this.userdata.user.username,
+                        timestamp: Math.floor(this.startTime + this.entries[idx].timestamp),
+                        message: this.entries[idx].message,
+                        duration: Math.floor(this.entries[idx].duration),
                     },
-                }));
-
-                for (let idx = 0; idx < this.entries.length; idx += 1) {
-                    processes.push({
-                        type: "Add",
-                        data: {
-                            tempid: `I${idx}`,
-                            name: this.userdata.user.username,
-                            timestamp: Math.floor(this.startTime + this.entries[idx].timestamp),
-                            message: this.entries[idx].message,
-                            duration: Math.floor(this.entries[idx].duration),
-                        },
-                    });
-                }
-
-                backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processes, this.TLLang.value).then(({ status }) => {
-                    if (status === 200) {
-                        this.$emit("close", { upload: true });
-                    }
-                }).catch((err) => {
-                    console.log(`ERR : ${err}`);
                 });
-            } else {
-                this.notifText = "It seems that you still don't have API KEY, go to account setting (in the same login/logout menu) then click get new API key on the bottom";
             }
+
+            backendApi.postTLLog(this.videoData.id, this.userdata.jwt, processes, this.TLLang.value).then(({ status }) => {
+                if (status === 200) {
+                    this.$emit("close", { upload: true });
+                }
+            }).catch((err) => {
+                console.log(`ERR : ${err}`);
+            });
         },
     },
 };

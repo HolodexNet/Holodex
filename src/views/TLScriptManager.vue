@@ -214,7 +214,7 @@ export default {
     },
     methods: {
         reloadData() {
-            backendApi.getTLStats(this.userdata.user.api_key, this.query).then(({ status, data }) => {
+            backendApi.getTLStats(this.userdata.jwt, this.query).then(({ status, data }) => {
                 if (status === 200) {
                     this.tlData = data;
                     this.modalNexus = false;
@@ -316,7 +316,7 @@ export default {
                 },
             }));
 
-            backendApi.postTLLog(this.selectedID, this.userdata.user.api_key, processes, this.TLLang.value).then(({ status }) => {
+            backendApi.postTLLog(this.selectedID, this.userdata.jwt, processes, this.TLLang.value).then(({ status }) => {
                 if (status === 200) {
                     this.reloadData();
                     this.modalNexus = false;

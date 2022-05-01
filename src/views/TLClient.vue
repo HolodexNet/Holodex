@@ -594,7 +594,7 @@ export default {
             };
 
             // SEND TO API
-            backendApi.postTL(this.video.id, this.userdata.user.api_key, this.TLLang.value, bodydt).then(({ status, data }) => {
+            backendApi.postTL(this.video.id, this.userdata.jwt, this.TLLang.value, bodydt).then(({ status, data }) => {
                 if (status !== 200) {
                     console.log(`ERR : ${data}`);
                 }
@@ -604,7 +604,7 @@ export default {
 
             this.collabLinkIDs.forEach((e) => {
                 if (e && e.id) {
-                    backendApi.postTL(e.id, this.userdata.user.api_key, this.TLLang.value, bodydt).then(({ status, data }) => {
+                    backendApi.postTL(e.id, this.userdata.jwt, this.TLLang.value, bodydt).then(({ status, data }) => {
                         if (status !== 200) {
                             console.log(`ERR : ${data}`);
                         }
