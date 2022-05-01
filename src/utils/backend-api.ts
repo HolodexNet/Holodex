@@ -383,6 +383,15 @@ export default {
             },
         );
     },
+    fetchMChadData(room, pass) {
+        return axios.post(
+"https://repo.mchatx.org/HolodexDahcM/",
+            {
+                Room: room,
+                Pass: pass,
+            },
+        );
+    },
     requestChannel(obj) {
         return axiosInstance.post("/reports/channel", obj);
     },

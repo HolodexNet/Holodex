@@ -4,6 +4,12 @@
       {{ $t("views.tlManager.title") }}
     </v-card-title>
     <v-card-actions class="d-flex">
+      <v-btn @click="modalNexus = true; modalMode = 3;">
+        <v-icon>
+          {{ mdiFileMultiple }}
+        </v-icon>
+        Import From Mchad
+      </v-btn>
       <v-btn style="margin-left:auto" @click="loadPrev()">
         <v-icon>
           {{ mdiArrowLeftBold }}
@@ -53,7 +59,7 @@
                   </v-icon>
                 </v-btn>
               </template>
-              <span>{{ $t("views.watch.openScriptEditor") }}</span>
+              <span>{{ $t("component.videoCard.openScriptEditor") }}</span>
             </v-tooltip>
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
@@ -69,7 +75,7 @@
                   </v-icon>
                 </v-btn>
               </template>
-              <span>{{ $t("views.watch.uploadScript") }}</span>
+              <span>{{ $t("component.videoCard.uploadScript") }}</span>
             </v-tooltip>
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
@@ -112,10 +118,12 @@
       0 Upload
       1 Download
       2 Delete All
+      3 Import MChad
     -->
     <v-dialog
       v-model="modalNexus"
-      :max-width="modalMode === 2 ? '300px' : '600px'"
+      :max-width="dialogNexusWidth"
+      :persistent="modalMode === 3"
     >
       <!---------    EXPORT ALL     --------->
       <v-card v-if="modalMode === 0">
@@ -156,6 +164,11 @@
           </v-card-actions>
         </v-container>
       </v-card>
+
+      <!---------    IMPORT MCHAD     --------->
+      <v-card v-if="modalMode === 3">
+        <ImportMchad @close="closeUpload" />
+      </v-card>
     </v-dialog>
     <!--========   NEXUS MODAL =======-->
   </v-container>
@@ -163,10 +176,11 @@
 
 <script lang="ts">
 import backendApi from "@/utils/backend-api";
-import { mdiTypewriter, mdiClipboardArrowUpOutline, mdiTrashCan, mdiDownload, mdiArrowRightBold, mdiArrowLeftBold } from "@mdi/js";
+import { mdiTypewriter, mdiClipboardArrowUpOutline, mdiTrashCan, mdiDownload, mdiArrowRightBold, mdiArrowLeftBold, mdiFileMultiple } from "@mdi/js";
 import { TL_LANGS } from "@/utils/consts";
 import ExportFile from "@/components/tlscriptmanager/ExportToFile.vue";
 import UploadScript from "@/components/tlscriptmanager/UploadScript.vue";
+import ImportMchad from "@/components/tlscriptmanager/ImportMchad.vue";
 
 export default {
     name: "TLManager",
@@ -180,6 +194,7 @@ export default {
     components: {
         ExportFile,
         UploadScript,
+        ImportMchad,
     },
     data() {
         return {
@@ -189,6 +204,7 @@ export default {
             mdiTrashCan,
             mdiArrowRightBold,
             mdiArrowLeftBold,
+            mdiFileMultiple,
             tlData: [],
             modalNexus: false,
             modalMode: 0,
@@ -207,6 +223,13 @@ export default {
     computed: {
         userdata() {
             return this.$store.state.userdata;
+        },
+        dialogNexusWidth() {
+            switch (this.modalMode) {
+                case 2: return ("300px");
+                case 3: return ("95vw");
+                default: return ("600px");
+            }
         },
     },
     mounted() {
