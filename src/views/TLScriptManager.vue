@@ -232,6 +232,15 @@ export default {
             }
         },
     },
+    watch: {
+        // eslint-disable-next-line func-names
+        "$route.name": function () {
+            if (this.$route.name === "scriptmanager") {
+                this.tlData = [];
+                this.reloadData();
+            }
+        },
+    },
     mounted() {
         this.reloadData();
     },
