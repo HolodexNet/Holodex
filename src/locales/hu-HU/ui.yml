@@ -3,7 +3,7 @@ component:
   apiError:
     title: Gomenasorry!
     textBeforeTwitter: 'Hiba történt a tartalmak visszakeresése során, kérlek nézd a Twittert '
-    textAfterTwitter: ' vagy jelents a'
+    textAfterTwitter: ' vagy jelentsd itt:'
     aboutPage: Az oldalról
     afterAboutPageHyperlink: .
   channelList:
@@ -57,6 +57,8 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -466,6 +468,7 @@ views:
       clearAll: Script törlése
       exportFile: Fájl exportálása
       importFile: Fájl importálása
+      editorMode: Szerkesztő mód
     table:
       headerStart: Kezdet
       headerEnd: Vége
@@ -480,6 +483,11 @@ views:
     setStartTitle: Kezdet a kiválaszott egységtől, az összes korábbi egység törölve lesz.
     importFile:
       overwriteBtn: Felülírás
+    editorModePanel:
+      activateMode: Szerkesztő mód aktiválása
+      deactivateMode: Kilépés szerkesztő módból
+      roleWarning: Nincs elegendő felhatalmazásod
+      filterTranslator: Fordító szűrése
   tlManager:
     title: Script-kezelő
     headerID: Videó ID
