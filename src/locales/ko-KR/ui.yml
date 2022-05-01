@@ -57,6 +57,8 @@ component:
     uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -466,6 +468,7 @@ views:
       clearAll: 스크립트 삭제
       exportFile: 파일 내보내기
       importFile: 파일 가져오기
+      editorMode: 편집기 모드
     table:
       headerStart: 시작
       headerEnd: 끝
@@ -480,9 +483,14 @@ views:
     setStartTitle: 선택한 부분을 시작점으로 설정하면 그 앞에 있는 항목들은 모두 삭제됩니다.
     importFile:
       overwriteBtn: 덮어쓰기
+    editorModePanel:
+      activateMode: 편집기 모드 활성화
+      deactivateMode: 편집기 모드 비활성화
+      roleWarning: 권한이 없습니다
+      filterTranslator: 번역가 필터
   tlManager:
     title: 스크립트 관리
-    headerID: 동영상 ID
+    headerID: ID
     headerEntries: 항목
     download: 다운로드
     delete: 삭제
