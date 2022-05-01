@@ -340,39 +340,55 @@ export default {
             },
         );
     },
-    postTL(videoID, apiKey, langCode, body) {
+    postTL(videoID, jwt, langCode, body) {
         return axiosInstance.post(
             `/videos/${videoID}/chats?lang=${langCode}`,
             body,
             {
-                headers: apiKey ? { "X-APIKEY": apiKey } : {},
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             },
         );
     },
-    postBulkTL(videoID, apiKey, langCode, body) {
+    postBulkTL(videoID, jwt, langCode, body) {
         return axiosInstance.post(
             `/videos/${videoID}/chatsBulk?lang=${langCode}`,
             body,
             {
-                headers: apiKey ? { "X-APIKEY": apiKey } : {},
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             },
         );
     },
-    getTLStats(apiKey, query) {
+    getTLStats(jwt, query) {
         const q = querystring.stringify(query);
         return axiosInstance.get(
             `/tlutil?${q}`,
             {
-                headers: apiKey ? { "X-APIKEY": apiKey } : {},
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             },
         );
     },
-    postTLLog(videoID, apiKey, body, langCode) {
+    postTLLog(videoID, jwt, body, langCode, override = false) {
+        const head: any = {};
+        if (jwt) {
+            head.Authorization = `BEARER ${jwt}`;
+        }
+        if (override) {
+            head.Override = "true";
+        }
         return axiosInstance.post(
             `/videos/${videoID}/scripteditor/log?lang=${langCode}`,
             body,
             {
-                headers: apiKey ? { "X-APIKEY": apiKey } : {},
+                headers: head,
+            },
+        );
+    },
+    fetchMChadData(room, pass) {
+        return axios.post(
+"https://repo.mchatx.org/HolodexDahcM/",
+            {
+                Room: room,
+                Pass: pass,
             },
         );
     },

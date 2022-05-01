@@ -502,6 +502,7 @@ views:
       clearAll: Delete Script
       exportFile: Export File
       importFile: Import File
+      editorMode: Editor Mode
     table:
       headerStart: Start
       headerEnd: End
@@ -516,6 +517,11 @@ views:
     setStartTitle: Set selected entry as start, all the previous entries will be deleted.
     importFile:
       overwriteBtn: Overwrite
+    editorModePanel:
+      activateMode: Activate Editor Mode
+      deactivateMode: Deactivate Editor Mode
+      roleWarning: You don't have enough privilege
+      filterTranslator: Filter translator
   tlManager:
     title: Script Manager
     headerID: Video ID

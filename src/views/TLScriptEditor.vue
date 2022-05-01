@@ -71,6 +71,15 @@
         <v-card-actions class="d-flex flex-column align-stretch justify-center" style="margin-left:auto">
           <v-btn
             elevation="4"
+            color="warning"
+            @click="modalMode = 8; modalNexus = true"
+          >
+            {{ $t("views.scriptEditor.menu.editorMode") }}
+          </v-btn>
+        </v-card-actions>
+        <v-card-actions class="d-flex flex-column align-stretch justify-center">
+          <v-btn
+            elevation="4"
             color="error"
             @click="modalMode = 7; modalNexus = true"
           >
@@ -409,7 +418,9 @@
       3 Load Stream
       4 Set as Start
       5 Setting
-      6 Delete All
+      6 Export All
+      7 Delete All
+      8 Editor Mode
     -->
     <v-dialog
       v-model="modalNexus"
@@ -546,6 +557,33 @@
           </v-card-actions>
         </v-container>
       </v-card>
+
+      <!---------    EDITOR MODE    --------->
+      <v-card v-if="modalMode === 8">
+        <v-container>
+          <v-card-title>
+            {{ $t("views.scriptEditor.menu.editorMode") }}
+          </v-card-title>
+          <v-card-actions v-if="!editorMode">
+            <v-btn color="primary" :disabled="!elevatedUser" @click="activateEditorMode();">
+              {{ elevatedUser ? $t("views.scriptEditor.editorModePanel.activateMode") : $t("views.scriptEditor.editorModePanel.roleWarning") }}
+            </v-btn>
+          </v-card-actions>
+          <v-card v-if="editorMode">
+            <v-select
+              :items="tlList"
+              item-value="value"
+              :label="$t('views.scriptEditor.editorModePanel.filterTranslator')"
+              @change="filterTlChange"
+            />
+            <v-card-actions class="d-flex flex-row justify-center">
+              <v-btn color="primary" @click="deactivateEditorMode();">
+                {{ $t("views.scriptEditor.editorModePanel.deactivateMode") }}
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-container>
+      </v-card>
     </v-dialog>
     <ImportFile v-model="importPanelShow" @bounceDataBack="processImportData" />
     <!--========   NEXUS MODAL =======-->
@@ -647,9 +685,12 @@ export default {
             barCount: 0,
             displayEntry: 0,
             timecardIdx: [],
-            timelineActive: false,
+            resizeActive: false,
             resizeMode: false,
             xPos: 0,
+            // ---- EDITOR MODE ----
+            editorMode: false,
+            tlList: [],
         };
     },
     computed: {
@@ -811,6 +852,9 @@ export default {
         jumpScrollRender() {
             return (this.jumpScroll ? "unset" : "smooth");
         },
+        elevatedUser() {
+            return ((this.user.role === "admin") || (this.user.role === "editor"));
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -876,6 +920,7 @@ export default {
             this.activeURLStream = videoCodeParser(this.$route.query.video);
             this.modalNexus = true;
             this.modalMode = 5;
+            this.editorMode = false;
         },
         onResize() {
             this.tableHeight = 0;
@@ -1041,9 +1086,9 @@ export default {
                 });
 
                 if (forget) {
-                    backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processedLog, this.TLLang.value);
+                    backendApi.postTLLog(this.videoData.id, this.userdata.jwt, processedLog, this.TLLang.value, this.editorMode);
                 } else {
-                    backendApi.postTLLog(this.videoData.id, this.userdata.user.api_key, processedLog, this.TLLang.value).then(({ status, data }) => {
+                    backendApi.postTLLog(this.videoData.id, this.userdata.jwt, processedLog, this.TLLang.value, this.editorMode).then(({ status, data }) => {
                         if (status === 200) {
                             data.forEach((e) => {
                                 if (e.type === "Add") {
@@ -2146,6 +2191,159 @@ export default {
             }
         },
         //= ======================== TIMELINE CONTROLLER ========================
+
+        // -------------------------- EDITOR PANEL ------------------------
+        activateEditorMode() {
+            this.editorMode = true;
+            backendApi.chatHistory(this.videoData.id, {
+                lang: this.TLLang.value,
+                verified: 0,
+                moderator: 0,
+                vtuber: 0,
+                limit: 100000,
+                mode: 1,
+            }).then(({ data }) => {
+                this.tlList = Array.from(new Set(data.map((e) => (e.name))));
+                this.tlList.unshift("None");
+                const fetchChat = data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
+                    e.timestamp -= this.videoData.start_actual;
+                    return e;
+                });
+                this.timecardIdx = [];
+                this.entries = [];
+
+                for (let i = 0; i < fetchChat.length; i += 1) {
+                    const dt = {
+                        id: fetchChat[i].id,
+                        Time: fetchChat[i].timestamp,
+                        SText: fetchChat[i].message,
+                        Profile: 0,
+                    };
+
+                    if (fetchChat[i].duration) {
+                        this.entries.push({
+                            ...dt,
+                            Duration: Number(fetchChat[i].duration),
+                        });
+                    } else if (i === fetchChat.length - 1) {
+                        this.entries.push({
+                            ...dt,
+                            Duration: 3000,
+                        });
+                    } else {
+                        this.entries.push({
+                            ...dt,
+                            Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
+                        });
+                    }
+
+                    if (i === fetchChat.length - 1) {
+                        this.reloadDisplayCards();
+                    }
+                }
+            });
+        },
+        async filterTlChange(val) {
+            let fetchChat = await (await backendApi.chatHistory(this.videoData.id, {
+                lang: this.TLLang.value,
+                verified: 0,
+                moderator: 0,
+                vtuber: 0,
+                limit: 100000,
+                mode: 1,
+            })).data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
+                e.timestamp -= this.videoData.start_actual;
+                return e;
+            });
+
+            this.timecardIdx = [];
+            this.entries = [];
+
+            if (val !== "None") {
+                fetchChat = fetchChat.filter((e) => (e.name === val));
+            }
+
+            for (let i = 0; i < fetchChat.length; i += 1) {
+                const dt = {
+                    id: fetchChat[i].id,
+                    Time: fetchChat[i].timestamp,
+                    SText: fetchChat[i].message,
+                    Profile: 0,
+                };
+
+                if (fetchChat[i].duration) {
+                    this.entries.push({
+                        ...dt,
+                        Duration: Number(fetchChat[i].duration),
+                    });
+                } else if (i === fetchChat.length - 1) {
+                    this.entries.push({
+                        ...dt,
+                        Duration: 3000,
+                    });
+                } else {
+                    this.entries.push({
+                        ...dt,
+                        Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
+                    });
+                }
+
+                if (i === fetchChat.length - 1) {
+                    this.reloadDisplayCards();
+                }
+            }
+        },
+        async deactivateEditorMode() {
+            this.editorMode = false;
+
+            this.timecardIdx = [];
+            this.entries = [];
+
+            const fetchChat = await (await backendApi.chatHistory(this.videoData.id, {
+                lang: this.TLLang.value,
+                verified: 0,
+                moderator: 0,
+                vtuber: 0,
+                limit: 100000,
+                mode: 1,
+                creator_id: this.userdata.user.id,
+            })).data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
+                e.timestamp -= this.videoData.start_actual;
+                return e;
+            });
+
+            for (let i = 0; i < fetchChat.length; i += 1) {
+                const dt = {
+                    id: fetchChat[i].id,
+                    Time: fetchChat[i].timestamp,
+                    SText: fetchChat[i].message,
+                    Profile: 0,
+                };
+
+                if (fetchChat[i].duration) {
+                    this.entries.push({
+                        ...dt,
+                        Duration: Number(fetchChat[i].duration),
+                    });
+                } else if (i === fetchChat.length - 1) {
+                    this.entries.push({
+                        ...dt,
+                        Duration: 3000,
+                    });
+                } else {
+                    this.entries.push({
+                        ...dt,
+                        Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
+                    });
+                }
+
+                if (i === fetchChat.length - 1) {
+                    this.reloadDisplayCards();
+                }
+            }
+        },
+        //= ======================== EDITOR PANEL ========================
+
         async checkLoginValidity() {
             const check = await backendApi.loginIsValid(this.userdata.jwt);
             if (check === false) {
