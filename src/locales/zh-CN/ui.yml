@@ -57,6 +57,8 @@ component:
     uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
+  video:
+    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -466,6 +468,7 @@ views:
       clearAll: 删除脚本
       exportFile: 导出文件
       importFile: 导入文件
+      editorMode: 编辑模式
     table:
       headerStart: 开始
       headerEnd: 结束
@@ -480,6 +483,11 @@ views:
     setStartTitle: 将所选条目设置为初始，之前的所有条目都将被删除。
     importFile:
       overwriteBtn: 覆盖
+    editorModePanel:
+      activateMode: 开启编辑模式
+      deactivateMode: 关闭编辑模式
+      roleWarning: 你没有足够的权限
+      filterTranslator: 翻译筛选
   tlManager:
     title: 脚本管理器
     headerID: 视频ID
