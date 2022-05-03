@@ -57,6 +57,8 @@ component:
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -299,6 +301,7 @@ views:
         disconnectedToChat: Disconnected
       archiveNeedExtension: >-
         Awchive chat does not wowk without da {0} extension ow othew thiwd pawty extensions.
+      hideSpoiler: Hide spoiwew
     removeFromPlaylist: Remove bideo fwom cuwwent pwaywist
     saveToPlaylist: Save bideo to cuwwent pwaywist
     likeOnYoutube: Like bideo on youtube
@@ -465,6 +468,7 @@ views:
       clearAll: Dewete scwipt
       exportFile: Expowt fiwe
       importFile: Impowt fiwe
+      editorMode: Editow mode
     table:
       headerStart: Stawt
       headerEnd: End
@@ -479,6 +483,11 @@ views:
     setStartTitle: Set sewected entwy as stawt, aww da pwevious entwies wiww be deweted.
     importFile:
       overwriteBtn: Ovewwwite
+    editorModePanel:
+      activateMode: Activate editow mode
+      deactivateMode: Deactivate editow mode
+      roleWarning: U dun have enough pwiviwege
+      filterTranslator: Fiwtew twanswatow
   tlManager:
     title: Scwipt managew
     headerID: Bideo id
