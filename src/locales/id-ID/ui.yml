@@ -57,6 +57,8 @@ component:
     uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
+  video:
+    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -484,6 +486,8 @@ views:
     editorModePanel:
       activateMode: Aktifkan Mode Edit
       deactivateMode: Matikan Mode Edit
+      roleWarning: Anda tidak memiliki hak
+      filterTranslator: Saring penerjemah
   tlManager:
     title: Pengelola Naskah TL
     headerID: ID Video
