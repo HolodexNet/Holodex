@@ -299,6 +299,7 @@ views:
         disconnectedToChat: Terputus
       archiveNeedExtension: >-
         Arsip obrolan tidak dapat bekerja tanpa ekstensi {0} atau ekstensi pihak ketiga lainnya.
+      hideSpoiler: Sembunyikan Spoiler
     removeFromPlaylist: Hapus video dari playlist ini
     saveToPlaylist: Simpan video ke playlist ini
     likeOnYoutube: Suka video ini di Youtube
@@ -465,6 +466,7 @@ views:
       clearAll: Hapus Naskah
       exportFile: Ekspor Berkas
       importFile: Impor Berkas
+      editorMode: Mode Edit
     table:
       headerStart: Awal
       headerEnd: Akhir
@@ -479,6 +481,9 @@ views:
     setStartTitle: Gunakan entri terpilih sebagai awal, semua entri sebelumnya akan dihapus.
     importFile:
       overwriteBtn: Timpa
+    editorModePanel:
+      activateMode: Aktifkan Mode Edit
+      deactivateMode: Matikan Mode Edit
   tlManager:
     title: Pengelola Naskah TL
     headerID: ID Video
