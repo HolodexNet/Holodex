@@ -346,7 +346,11 @@
             return-object
             @change="localPrefix = '[' + TLLang.value + '] '"
           />
-          <v-text-field v-model="mainStreamLink" readonly :label="$t(&quot;views.tlClient.settingPanel.mainStreamLink&quot;)" />
+          <v-text-field
+            v-model="mainStreamLink"
+            :label="$t(&quot;views.tlClient.settingPanel.mainStreamLink&quot;)"
+            :readonly="$route.query.video ? true : false"
+          />
           <v-card-title>{{ $t("views.tlClient.settingPanel.collabLink") }}</v-card-title>
           <v-text-field
             v-for="(AuxLink, index) in collabLinks"
@@ -541,18 +545,23 @@ export default {
                 if (this.activeChat[i].text === target) {
                     this.activeChat[i].IFrameEle = event.target;
                     switch (target.slice(0, 3)) {
-                        case "YT_":
-                            event.target.contentWindow?.postMessage({
-                                n: "HolodexSync",
-                                d: "Initiate",
-                            }, "https://www.youtube.com");
+                        case "YT_": {
+                            setTimeout(() => {
+                                event.target.contentWindow?.postMessage({
+                                    n: "HolodexSync",
+                                    d: "Initiate",
+                                }, "https://www.youtube.com");
+                            }, 1000);
                             break;
+                        }
 
                         case "TW_":
-                            event.target.contentWindow?.postMessage({
-                                n: "HolodexSync",
-                                d: "Initiate",
-                            }, "https://www.twitch.tv");
+                            setTimeout(() => {
+                                event.target.contentWindow?.postMessage({
+                                    n: "HolodexSync",
+                                    d: "Initiate",
+                                }, "https://www.twitch.tv");
+                            }, 1000);
                             break;
 
                         default:
@@ -636,6 +645,7 @@ export default {
             this.$store.commit("tlclient/setId", parseVideoID.id);
             this.$store.dispatch("tlclient/fetchVideo");
 
+            this.localPrefix = `[${this.TLLang.value}] `;
             this.modalNexus = false;
             if (this.firstLoad) {
                 this.loadChat(this.mainStreamLink);
