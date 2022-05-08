@@ -398,28 +398,28 @@ export default {
 
     // ---------- RELAY BOT DISCORD LOGIN ----------
     relayBotLogin(code, mode) {
-        return axios.post("http://localhost:28282/user", {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/user", {
             code,
             mode,
         });
     },
     relayBotCheckBotPresence(guildAddressList) {
-        return axios.post("http://localhost:28282/guild", {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/guild", {
             ids: guildAddressList,
         });
     },
     relayBotGetChannels(guildAddress) {
-        return axios.post("http://localhost:28282/channel", {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/channel", {
             guild: guildAddress,
         });
     },
     relayBotGetSettingChannel(channelAddress) {
-        return axios.post("http://localhost:28282/data", {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/data", {
             channel: channelAddress,
         });
     },
     relayBotSubmitData(channelAddress, data) {
-        return axios.post("http://localhost:28282/submit", {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/submit", {
             Address: channelAddress,
             SubChannel: data,
         });
