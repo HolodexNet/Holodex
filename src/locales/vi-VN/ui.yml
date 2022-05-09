@@ -291,7 +291,7 @@ views:
         reconnecting: Tự động kết nối lại...
         reconnectFailed: Không thể kết nối lại
         notLive: >-
-          Luồng phát sóng chưa bắt đầu, hãy thử lại khi đã phát trực tiếp được khoảng 15 phút
+          Luồng phát sóng chưa bắt đầu, hãy thử lại vào khoảng 15 phút trước khi bắt đầu phát trực tiếp
         connectedToChat: Đã kết nối
         disconnectedToChat: Đã ngắt kết nối
       archiveNeedExtension: >-

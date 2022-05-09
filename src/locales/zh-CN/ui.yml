@@ -301,6 +301,7 @@ views:
         disconnectedToChat: 已断开连接
       archiveNeedExtension: >-
         如果没有启用{0}或其他第三方扩展程序，视频存档中的聊天记录就无法加载。
+      hideSpoiler: 隐藏剧透
     removeFromPlaylist: 将视频从当前播放队列中删除
     saveToPlaylist: 将视频保存到当前播放列表
     likeOnYoutube: 在Youtube上给视频点赞
@@ -467,6 +468,7 @@ views:
       clearAll: 删除脚本
       exportFile: 导出文件
       importFile: 导入文件
+      editorMode: 编辑模式
     table:
       headerStart: 开始
       headerEnd: 结束
@@ -481,6 +483,11 @@ views:
     setStartTitle: 将所选条目设置为初始，之前的所有条目都将被删除。
     importFile:
       overwriteBtn: 覆盖
+    editorModePanel:
+      activateMode: 开启编辑模式
+      deactivateMode: 关闭编辑模式
+      roleWarning: 你没有足够的权限
+      filterTranslator: 翻译筛选
   tlManager:
     title: 脚本管理器
     headerID: 视频ID
