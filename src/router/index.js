@@ -28,6 +28,7 @@ const Extension = () => import("../views/Extension.vue");
 const TLClient = () => import("../views/TLClient.vue");
 const TLScriptEditor = () => import("../views/TLScriptEditor.vue");
 const TLManager = () => import("../views/TLScriptManager.vue");
+const RelayBotSetting = () => import("../views/RelayBotSetting.vue");
 
 Vue.use(VueRouter);
 
@@ -172,6 +173,11 @@ const routes = [
         name: "scriptmanager",
         path: "/scriptmanager",
         component: TLManager,
+    },
+    {
+        name: "relaybotsetting",
+        path: "/relaybot",
+        component: RelayBotSetting,
     },
     {
         path: "/404",
