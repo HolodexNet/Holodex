@@ -546,23 +546,56 @@ export default {
                     this.activeChat[i].IFrameEle = event.target;
                     switch (target.slice(0, 3)) {
                         case "YT_": {
-                            setTimeout(() => {
-                                event.target.contentWindow?.postMessage({
+                            if (event.target.contentWindow) {
+                                event.target.contentWindow.postMessage({
                                     n: "HolodexSync",
                                     d: "Initiate",
                                 }, "https://www.youtube.com");
-                            }, 1000);
+                            } else {
+                                let trial = 0;
+                                const id = setInterval(() => {
+                                    if (event.target.contentWindow) {
+                                        event.target.contentWindow?.postMessage({
+                                            n: "HolodexSync",
+                                            d: "Initiate",
+                                        }, "https://www.youtube.com");
+                                        clearInterval(id);
+                                        return;
+                                    }
+                                    trial += 1;
+                                    if (trial === 10) {
+                                        clearInterval(id);
+                                    }
+                                }, 1000);
+                            }
                             break;
                         }
 
-                        case "TW_":
-                            setTimeout(() => {
-                                event.target.contentWindow?.postMessage({
+                        case "TW_": {
+                            if (event.target.contentWindow) {
+                                event.target.contentWindow.postMessage({
                                     n: "HolodexSync",
                                     d: "Initiate",
                                 }, "https://www.twitch.tv");
-                            }, 1000);
+                            } else {
+                                let trial = 0;
+                                const id = setInterval(() => {
+                                    if (event.target.contentWindow) {
+                                        event.target.contentWindow?.postMessage({
+                                            n: "HolodexSync",
+                                            d: "Initiate",
+                                        }, "https://www.twitch.tv");
+                                        clearInterval(id);
+                                        return;
+                                    }
+                                    trial += 1;
+                                    if (trial === 10) {
+                                        clearInterval(id);
+                                    }
+                                }, 1000);
+                            }
                             break;
+                        }
 
                         default:
                             break;
