@@ -57,6 +57,8 @@ component:
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -426,14 +428,22 @@ views:
   tlClient:
     menu:
       title: Menu
+      setting: Tldex room settings
+      loadVideo: Show bideo
+      unloadVideo: Hide bideo
+      loadChat: Add yt chat to bwoadcast tl
+      unloadChat: Detach fwom yt chat
     tlControl:
       enterBtn: Entew
       prefix: Pwefix
       suffix: Suffix
       fontColour: Font cowow
       outlineColour: Outwine cowor
+      localPrefix: Wanguage tag in chat
       addProfile: Add pwofiwe
       removeProfile: Wemove pwofiwe
+      shiftUp: Shift pwofiwe up
+      shiftDown: Shift pwofiwe down
       showSetting: Setting
       hideSetting: Hide
     addProfilePanel:
