@@ -57,8 +57,6 @@ component:
     uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
-  video:
-    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -428,22 +426,14 @@ views:
   tlClient:
     menu:
       title: 메뉴
-      setting: 설정
-      loadVideo: 동영상 불러오기
-      unloadVideo: 동영상 취소하기
-      loadChat: 채팅 불러오기
-      unloadChat: 채팅 닫기
     tlControl:
       enterBtn: 입력
       prefix: 접두어
       suffix: 접미어
       fontColour: 글꼴 색상
       outlineColour: 외곽선 색상
-      localPrefix: 로컬 접두어
       addProfile: 프로필 추가
       removeProfile: 프로필 삭제
-      shiftUp: 위로
-      shiftDown: 아래로
       showSetting: 설정
       hideSetting: 숨기기
     addProfilePanel:
