@@ -463,21 +463,21 @@ views:
     menu:
       title: Menu
       setting: Setting
-      loadVideo: Load Video
-      unloadVideo: Unload Video
-      loadChat: Load Chat
-      unloadChat: Unload Chat
+      loadVideo: Show Video
+      unloadVideo: Hide Video
+      loadChat: Add broadcast to Youtube Chat
+      unloadChat: Detach from YT Chat
     tlControl:
       enterBtn: Enter
       prefix: Prefix
       suffix: Suffix
       fontColour: Font Colour
       outlineColour: Outline Colour
-      localPrefix: Local Prefix
+      localPrefix: Language Tag (for broadcasting to Youtube)
       addProfile: Add Profile
       removeProfile: Remove Profile
-      shiftUp: Shift Up
-      shiftDown: Shift Down
+      shiftUp: Shift Profile Up
+      shiftDown: Shift Profile Down
       showSetting: Setting
       hideSetting: Hide
     addProfilePanel:
@@ -511,7 +511,7 @@ views:
       setAsStart: Set as start
       shiftCurrentTime: Shift to current time
       deleteEntry: Delete entry
-    loadVideoPanel: 
+    loadVideoPanel:
       title: Load Video
       inputLabel: Stream Link
     setStartTitle: Set selected entry as start, all the previous entries will be deleted.

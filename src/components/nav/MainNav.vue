@@ -16,13 +16,13 @@
     <!--* bottom bar --->
 
     <v-app-bar
-      v-show="!(isMobile && isWatchPage) && !isMultiView"
+      v-show="showTopBar"
       id="top-bar"
       :class="{
         'secondary darken-1': darkMode,
         'primary lighten-1': !darkMode,
       }"
-      :app="!(isMobile && isWatchPage) && !isMultiView"
+      :app="showTopBar"
       clipped-left
       clipped-right
       flat
@@ -190,6 +190,16 @@ export default {
         };
     },
     computed: {
+        showTopBar() {
+            if (this.isMultiView) return false;
+            if (this.isMobile && this.isWatchPage) {
+                return false;
+            }
+            if (this.$route.name === "tlclient" || this.$route.name === "scripteditor") {
+                return false;
+            }
+            return true;
+        },
         isMobile() {
             return this.$store.state.isMobile;
         },
@@ -197,6 +207,7 @@ export default {
             return this.$store.state.settings.darkMode;
         },
         isWatchPage() {
+            console.log(this.$route.name);
             return ["watch_id", "watch", "edit_video", "multiview", "tlclient", "scripteditor"].includes(this.$route.name);
         },
         isMultiView() {

@@ -1,64 +1,68 @@
 <template>
-  <v-container fill-height>
-    <v-card
-      v-if="menuBool"
-      class="TopMenu"
-    >
-      <v-container class="d-flex align-baseline">
-        <v-btn
-          elevation="4"
-          color="secondary"
-          @click="modalMode = 3; modalNexus = true"
-        >
-          {{ $t("views.tlClient.menu.setting") }}
-        </v-btn>
-        <v-divider
-          vertical
-          style="margin-left: 5px; margin-right:5px"
-        />
-        <v-btn
-          elevation="4"
-          color="secondary"
-          @click="loadVideo()"
-        >
-          {{ $t("views.tlClient.menu.loadVideo") }}
-        </v-btn>
-        <v-btn
-          elevation="4"
-          color="secondary"
-          style="margin-left: 5px; margin-right:5px"
-          @click="unloadVideo()"
-        >
-          {{ $t("views.tlClient.menu.unloadVideo") }}
-        </v-btn>
+  <v-container fill-height fluid style="max-height: 100vh; padding: 0px 12px">
+    <div class="d-flex flex-column" style="height: 100%; width:100%">
+      <v-menu>
+        <template #activator="{ on, attrs }">
+          <v-btn
+            block
+            elevation="4"
+            color="primary"
+            small
+            v-bind="attrs"
+            v-on="on"
+          >
+            {{ $t("views.tlClient.menu.title") }}
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            elevation="4"
+            color="secondary"
+            to="/"
+          >
+            <v-list-item-icon><v-icon>{{ icons.mdiHome }}</v-icon></v-list-item-icon>
+            {{ $t('component.mainNav.home') }}
+          </v-list-item>
+          <v-list-item
+            elevation="4"
+            color="secondary"
+            @click="modalMode = 3; modalNexus = true"
+          >
+            {{ $t("views.tlClient.menu.setting") }}
+          </v-list-item>
+          <v-divider />
+          <v-list-item
+            elevation="4"
+            color="secondary"
+            @click="loadVideo()"
+          >
+            {{ $t("views.tlClient.menu.loadVideo") }}
+          </v-list-item>
+          <v-list-item
+            elevation="4"
+            color="secondary"
+            @click="unloadVideo()"
+          >
+            {{ $t("views.tlClient.menu.unloadVideo") }}
+          </v-list-item>
+          <v-divider />
 
-        <v-btn
-          elevation="4"
-          color="secondary"
-          @click="modalMode = 4; modalNexus = true; activeURLStream = '';"
-        >
-          {{ $t("views.tlClient.menu.loadChat") }}
-        </v-btn>
-        <v-btn
-          elevation="4"
-          color="secondary"
-          style="margin-left:5px"
-          @click="modalMode = 5; modalNexus = true"
-        >
-          {{ $t("views.tlClient.menu.unloadChat") }}
-        </v-btn>
-      </v-container>
-    </v-card>
-    <div class="d-flex flex-column" style="height:100%; width:100%">
-      <v-btn
-        block
-        elevation="4"
-        color="primary"
-        small
-        @click="menuBool = !menuBool"
-      >
-        {{ $t("views.tlClient.menu.title") }}
-      </v-btn>
+          <v-list-item
+            elevation="4"
+            color="secondary"
+            @click="modalMode = 4; modalNexus = true; activeURLStream = '';"
+          >
+            {{ $t("views.tlClient.menu.loadChat") }}
+          </v-list-item>
+          <v-list-item
+            elevation="4"
+            color="secondary"
+            @click="modalMode = 5; modalNexus = true"
+          >
+            {{ $t("views.tlClient.menu.unloadChat") }}
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <div
         class="d-flex align-stretch flex-row"
         style="height:100%"
@@ -68,7 +72,7 @@
         @mouseup="resizeMouseUp()"
       >
         <v-card
-          class="d-flex flex-column grow"
+          class="d-flex flex-column flex-grow-1"
           height="100%;"
           :width="activeChat.length < 2 ? videoPanelWidth1 + '%' : videoPanelWidth2 + '%'"
           @mouseleave="resizeMouseLeave(0)"
@@ -86,7 +90,9 @@
               width="100%"
             />
           </v-card>
-          <div v-if="vidPlayer" style="cursor:s-resize; height:7px;" @mousedown="resizeMouseDown($event, 0)" />
+          <div v-if="vidPlayer" style="cursor:s-resize; height:8px;" @mousedown="resizeMouseDown($event, 0)">
+            <div style="width: 20%; margin-left: auto; margin-right:auto; background: #444; height: 4px; border-radius: 2px; margin-top: 1px;" />
+          </div>
           <LiveTranslations
             v-if="!isLoading && !hasError"
             :tl-lang="TLLang.value"
@@ -139,7 +145,6 @@
       </div>
 
       <v-container
-        @click="menuBool = false"
         @keydown.up.exact="profileUp()"
         @keydown.down.exact="profileDown()"
         @keydown.tab.exact.prevent="profileDown()"
@@ -233,7 +238,7 @@
             {{ $t("views.tlClient.tlControl.addProfile") }}
           </v-btn>
           <v-btn style="margin-right:5px" @click="modalMode = 2; modalNexus = true">
-            {{ $t("views.tlClient.tlControl.removeProfile") }}
+            {{ $t("views.tlClient.tlControl.removeProfile") }}  ({{ profile[profileIdx].Name }})
           </v-btn>
           <v-btn style="margin-right:5px" @click="shiftProfileUp()">
             {{ $t("views.tlClient.tlControl.shiftUp") }}
@@ -435,7 +440,6 @@ export default {
             mdiCloseCircle,
             mdiCog,
             mdiCogOff,
-            menuBool: false,
             TLSetting: true,
             firstLoad: true,
             profile: [{
