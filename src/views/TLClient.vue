@@ -187,6 +187,19 @@
           <v-card v-if="TLSetting" class="mt-2">
             <v-card-subtitle>
               Current Profile [{{ profile[profileIdx].Name }}] Settings
+              <v-icon class="float-right" @click="TLSetting = false">
+                {{ icons.mdiClose }}
+              </v-icon>
+              <v-tooltip left>
+                <template #activator="{ on, attrs }">
+                  <v-icon class="float-right" v-bind="attrs" v-on="on">
+                    {{ mdiKeyboard }}
+                  </v-icon>
+                </template>
+                <span>While typing in TL box</span><br>
+                <span><kbd>⇧</kbd><kbd>⇩</kbd> to change Profiles</span><br>
+                <span><kbd>Ctrl+[1~9]</kbd> to quick switch to Profile</span>
+              </v-tooltip>
             </v-card-subtitle>
             <v-card-text class="d-flex align-stretch">
               <v-text-field
@@ -431,7 +444,7 @@
 <script lang="ts">
 import LiveTranslations from "@/components/chat/LiveTranslations.vue";
 import { TL_LANGS } from "@/utils/consts";
-import { mdiPlusCircle, mdiMinusCircle, mdiCloseCircle, mdiCog, mdiCogOff } from "@mdi/js";
+import { mdiPlusCircle, mdiMinusCircle, mdiCloseCircle, mdiKeyboard, mdiCog, mdiCogOff } from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { mapState } from "vuex";
@@ -455,6 +468,7 @@ export default {
             mdiMinusCircle,
             mdiCloseCircle,
             mdiCog,
+            mdiKeyboard,
             mdiCogOff,
             TLSetting: true,
             firstLoad: true,
