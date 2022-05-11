@@ -285,7 +285,7 @@ views:
       showVtuberMessages: VTuber-Nachrichten anzeigen
       showLocalTime: Lokale Zeiten anzeigen
       tlFontSize: Schriftgröße
-      tlWindowSize: Box Größe (in %), bei 0% belassen für automatisch
+      tlWindowSize: TL-Box Größe (in %), bei 0% belassen für automatisch
       retryBtn: Erneut versuchen
       status:
         reconnecting: Automatisch neu verbinden...
@@ -401,6 +401,25 @@ views:
       three: Behebt das Speicherleck in YouTubes Live-Chat
       four: >-
         Behebt experimentelle Flaggen im YouTube-Player (wie das Deaktivieren mehrerer Streams oder dass das Wartezimmer-Vorschaubild nicht angezeigt wird) und mehr!
+  tlClient:
+    loadChatPanel:
+      title: Chat laden
+      inputLabel: Stream-Link
+    cancelBtn: Abbrechen
+    okBtn: Ok
+  scriptEditor:
+    loadVideoPanel:
+      title: Video laden
+      inputLabel: Stream-Link
+    setStartTitle: Ausgewählter Eintrag wird als Start festgeschrieben, alle vorherigen Einträge werden gelöscht.
+  tlManager:
+    title: Skript-Manager
+    headerID: Video ID
+    headerEntries: Einträge
+    download: Herunterladen
+    delete: Löschen
+    deleteTitle: Einträge löschen
+    langPick: Sprache
 time:
   soon: bald
   diff_future_date: Beginnt {0} ({1})
@@ -525,5 +544,6 @@ channelRequest:
   Types:
     ModifyExistingInfo: Vorhandene Kanalinformationen ändern
     DeleteChannel: Löscht meinen Kanal
+  DirectContactLabel: Kontaktmethode (optional)
   PageTitle: Holodex Kanalanfrage
   ChannelURLErrorFeedback: Muss https://www.youtube.com/channel/UC_____ sein
