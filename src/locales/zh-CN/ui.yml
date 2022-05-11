@@ -57,8 +57,6 @@ component:
     uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
-  video:
-    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -428,22 +426,14 @@ views:
   tlClient:
     menu:
       title: 菜单
-      setting: 设置
-      loadVideo: 加载视频
-      unloadVideo: 移除视频
-      loadChat: 加载聊天
-      unloadChat: 移除聊天
     tlControl:
       enterBtn: 输入
       prefix: 前缀
       suffix: 后缀
       fontColour: 字体颜色
       outlineColour: 轮廓颜色
-      localPrefix: 本地前缀
       addProfile: 添加配置文件
       removeProfile: 删除配置文件
-      shiftUp: 上移
-      shiftDown: 下移
       showSetting: 设置
       hideSetting: 隐藏
     addProfilePanel:
