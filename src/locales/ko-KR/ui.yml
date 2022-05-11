@@ -57,6 +57,8 @@ component:
     uploadScript: 번역 스크립트 열기
   videoDescription:
     description: 설명
+  video:
+    comment: { }
   description:
     showLess: 간략히
     showMore: 더보기
@@ -426,14 +428,22 @@ views:
   tlClient:
     menu:
       title: 메뉴
+      setting: TLDex 방 설정
+      loadVideo: 동영상 표시
+      unloadVideo: 동영상 숨기기
+      loadChat: 방송 번역에 YT 채팅 추가
+      unloadChat: YT 채팅에서 분리
     tlControl:
       enterBtn: 입력
       prefix: 접두어
       suffix: 접미어
       fontColour: 글꼴 색상
       outlineColour: 외곽선 색상
+      localPrefix: 채팅 내 언어 태그
       addProfile: 프로필 추가
       removeProfile: 프로필 삭제
+      shiftUp: 이전 프로필로
+      shiftDown: 다음 프로필로
       showSetting: 설정
       hideSetting: 숨기기
     addProfilePanel:
