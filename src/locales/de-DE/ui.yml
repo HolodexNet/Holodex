@@ -52,6 +52,9 @@ component:
     typeScheduledYT: Geplanter Stream
     typeExternalStream: Externer Stream
     typeEventPlaceholder: Geplantes Event
+    openClient: TL-Client öffnen
+    openScriptEditor: Skript-Editor öffnen
+    uploadScript: TL-Skript hochladen
   videoDescription:
     description: Beschreibung
   description:
@@ -296,9 +299,22 @@ views:
         disconnectedToChat: Verbindung getrennt
       archiveNeedExtension: >-
         Das Chatarchivieren funktioniert nicht ohne die {0} Erweiterung oder andere Erweiterungen Dritter.
+      hideSpoiler: Spoiler ausblenden
     removeFromPlaylist: Video von aktueller Playlist entfernen
     saveToPlaylist: Video zu aktueller Playlist hinzufügen
     likeOnYoutube: Video auf YouTube mit "Mag ich" markieren
+    uploadPanel:
+      title: Skript hochladen
+      usernameText: Übersetzung wird unter Benutzername hochgeladen
+      usernameChange: Ändern
+      tlLang: TL-Sprache
+      headerStart: Start
+      headerEnd: Ende
+      headerText: Text
+      cancelBtn: Abbrechen
+      okBtn: Ok
+      notifTextParsing: Datei wird analysiert...
+      notifTextErrExt: Unbekannte Dateiendung.
   favorites:
     promptForAction: >-
       Erstelle eine Liste deiner Lieblings-VTuber und sieh dir ihre neusten Clips und Livestreams auf dieser Seite an.
@@ -331,6 +347,11 @@ views:
       - Mit Google anmelden
       - Mit Discord anmelden
       - Mit Twitter anmelden
+    username: Benutzername
+    usernameBtn:
+      - Ändern
+      - Bestätigen
+      - Speichern
   multiview:
     confirmOverwrite: Vorhandenes Layout überschreiben?
     confirmOverwriteYes: Bestätigen
@@ -377,7 +398,7 @@ views:
     reorderLayoutDetail: Verschiebe die Symbole per Drag-and-Drop an die gewünschte Position
     sync:
       nothingToSync: >-
-        Nichts zu synchronisieren, bitte öffne zwei überlappende Archive (z.B. Kollaborations-Streams)
+        Nichts zu synchronisieren, bitte öffne zwei überlappende Archive (z.B. Collab-Streams)
       syncSettings: Synchronisierungseinstellungen
       syncSettingsDetail: >-
         Videos werden basierend auf der Startzeit der Streams synchronisiert und können aufgrund technischer Probleme oder gelöschter Abschnitte desynchronisiert werden. Verwende Offsets, um Videos manuell anzugleichen
@@ -402,9 +423,35 @@ views:
       four: >-
         Behebt experimentelle Flaggen im YouTube-Player (wie das Deaktivieren mehrerer Streams oder dass das Wartezimmer-Vorschaubild nicht angezeigt wird) und mehr!
   tlClient:
+    menu:
+      title: Menü
+      setting: TLDex Raumeinstellungen
+      loadVideo: Video Anzeigen
+      unloadVideo: Video ausblenden
+      unloadChat: Vom YT-Chat trennen
+    tlControl:
+      enterBtn: Eingabe
+      prefix: Präfix
+      suffix: Suffix
+      fontColour: Schriftfarbe
+      outlineColour: Umrissfarbe
+      localPrefix: Sprach-Tag im Chat
+      addProfile: Profil hinzufügen
+      removeProfile: Profil entfernen
+      showSetting: Einstellung
+      hideSetting: Ausblenden
+    addProfilePanel:
+      title: Neues Profil hinzufügen
+      inputLabel: Profilname
+    settingPanel:
+      title: Einstellung
+      mainStreamLink: Hauptstream-Link
+      collabLink: Collab-Links
+    removeProfileTitle: Profilentfernung bestätigen
     loadChatPanel:
       title: Chat laden
       inputLabel: Stream-Link
+    pangram: Die heiße Zypernsonne quälte Max und Victoria ja böse auf dem Weg bis zur Küste
     cancelBtn: Abbrechen
     okBtn: Ok
   scriptEditor:
