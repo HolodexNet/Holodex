@@ -57,8 +57,6 @@ component:
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
-  video:
-    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -428,22 +426,14 @@ views:
   tlClient:
     menu:
       title: Menu
-      setting: Setting
-      loadVideo: Woad bideo
-      unloadVideo: Unwoad bideo
-      loadChat: Woad chat
-      unloadChat: Unwoad chat
     tlControl:
       enterBtn: Entew
       prefix: Pwefix
       suffix: Suffix
       fontColour: Font cowow
       outlineColour: Outwine cowor
-      localPrefix: Wocaw pwefix
       addProfile: Add pwofiwe
       removeProfile: Wemove pwofiwe
-      shiftUp: Shift up
-      shiftDown: Shift down
       showSetting: Setting
       hideSetting: Hide
     addProfilePanel:
