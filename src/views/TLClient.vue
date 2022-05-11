@@ -438,6 +438,17 @@
       </v-card>
     </v-dialog>
     <!--========   NEXUS MODAL =======-->
+    <v-snackbar
+      v-if="errorMessage"
+      v-model="showErrorAlert"
+      color="error"
+      dismissible
+      absolute
+      timeout="4000"
+      bottom
+    >
+      {{ errorMessage }}
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -516,6 +527,9 @@ export default {
             resizeActive: false,
             resizeMode: 0,
             resizePos: 0,
+            // --- ERROR ---
+            showErrorAlert: false,
+            errorMessage: false,
         };
     },
     computed: {
@@ -679,9 +693,13 @@ export default {
                     backendApi.postTL(e.id, this.userdata.jwt, this.TLLang.value, bodydt).then(({ status, data }) => {
                         if (status !== 200) {
                             console.log(`ERR : ${data}`);
+                            this.errorMessage = data;
+                            this.showError = true;
                         }
                     }).catch((err) => {
                         console.log(`ERR : ${err}`);
+                        this.errorMessage = err;
+                        this.showError = true;
                     });
                 }
             });
