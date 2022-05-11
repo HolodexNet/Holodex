@@ -426,14 +426,20 @@ views:
   tlClient:
     menu:
       title: 菜单
+      loadVideo: 显示视频
+      unloadVideo: 隐藏视频
+      unloadChat: 与聊天室断开连接
     tlControl:
       enterBtn: 输入
       prefix: 前缀
       suffix: 后缀
       fontColour: 字体颜色
       outlineColour: 轮廓颜色
+      localPrefix: 聊天中的语言标签
       addProfile: 添加配置文件
       removeProfile: 删除配置文件
+      shiftUp: 配置文件上移
+      shiftDown: 配置文件下移
       showSetting: 设置
       hideSetting: 隐藏
     addProfilePanel:
