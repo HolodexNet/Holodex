@@ -462,10 +462,10 @@ views:
   tlClient:
     menu:
       title: Menu
-      setting: Setting
+      setting: TLDex Room Settings
       loadVideo: Show Video
       unloadVideo: Hide Video
-      loadChat: Add broadcast to Youtube Chat
+      loadChat: Add YT Chat to Broadcast TL
       unloadChat: Detach from YT Chat
     tlControl:
       enterBtn: Enter
@@ -473,7 +473,7 @@ views:
       suffix: Suffix
       fontColour: Font Colour
       outlineColour: Outline Colour
-      localPrefix: Language Tag (for broadcasting to Youtube)
+      localPrefix: Language Tag in Chat
       addProfile: Add Profile
       removeProfile: Remove Profile
       shiftUp: Shift Profile Up

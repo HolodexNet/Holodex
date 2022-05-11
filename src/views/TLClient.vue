@@ -1,71 +1,59 @@
 <template>
   <v-container fill-height fluid style="max-height: 100vh; padding: 0px 12px">
     <div class="d-flex flex-column" style="height: 100%; width:100%">
-      <v-menu>
-        <template #activator="{ on, attrs }">
-          <v-btn
-            block
-            elevation="4"
-            color="primary"
-            small
-            v-bind="attrs"
-            v-on="on"
-          >
-            {{ $t("views.tlClient.menu.title") }}
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item
-            elevation="4"
-            color="secondary"
-            to="/"
-          >
-            <v-list-item-icon><v-icon>{{ icons.mdiHome }}</v-icon></v-list-item-icon>
-            {{ $t('component.mainNav.home') }}
-          </v-list-item>
-          <v-list-item
-            elevation="4"
-            color="secondary"
-            @click="modalMode = 3; modalNexus = true"
-          >
-            {{ $t("views.tlClient.menu.setting") }}
-          </v-list-item>
-          <v-divider />
-          <v-list-item
-            elevation="4"
-            color="secondary"
-            @click="loadVideo()"
-          >
-            {{ $t("views.tlClient.menu.loadVideo") }}
-          </v-list-item>
-          <v-list-item
-            elevation="4"
-            color="secondary"
-            @click="unloadVideo()"
-          >
-            {{ $t("views.tlClient.menu.unloadVideo") }}
-          </v-list-item>
-          <v-divider />
+      <v-system-bar height="30" class="tl-topbar px-0" color="secondary">
+        <v-btn
+          small
+          outlined
+          to="/"
+        >
+          <v-icon>{{ icons.mdiHome }}</v-icon>
+          {{ $t('component.mainNav.home') }}
+        </v-btn>
+        <v-btn
+          small
+          outlined
+          @click="modalMode = 3; modalNexus = true"
+        >
+          {{ $t("views.tlClient.menu.setting") }}
+        </v-btn>
+        <v-spacer />
+        <v-btn
+          v-if="!vidPlayer"
+          small
+          outlined
+          @click="loadVideo()"
+        >
+          {{ $t("views.tlClient.menu.loadVideo") }}
+        </v-btn>
+        <v-btn
+          v-if="vidPlayer"
+          small
+          outlined
+          @click="unloadVideo()"
+        >
+          {{ $t("views.tlClient.menu.unloadVideo") }}
+        </v-btn>
+        <v-spacer />
 
-          <v-list-item
-            elevation="4"
-            color="secondary"
-            @click="modalMode = 4; modalNexus = true; activeURLStream = '';"
-          >
-            {{ $t("views.tlClient.menu.loadChat") }}
-          </v-list-item>
-          <v-list-item
-            elevation="4"
-            color="secondary"
-            @click="modalMode = 5; modalNexus = true"
-          >
-            {{ $t("views.tlClient.menu.unloadChat") }}
-          </v-list-item>
-        </v-list>
-      </v-menu>
+        <v-btn
+          small
+          outlined
+          @click="modalMode = 4; modalNexus = true; activeURLStream = '';"
+        >
+          {{ $t("views.tlClient.menu.loadChat") }}
+        </v-btn>
+        <v-btn
+          small
+          outlined
+          @click="modalMode = 5; modalNexus = true"
+        >
+          {{ $t("views.tlClient.menu.unloadChat") }}
+        </v-btn>
+      </v-system-bar>
       <div
         class="d-flex align-stretch flex-row"
-        style="height:100%"
+        style="height:100%;"
         @click="menuBool = false"
         @mousemove="resizeMouseMove($event)"
         @mouseleave="resizeMouseLeave(1)"
@@ -90,8 +78,12 @@
               width="100%"
             />
           </v-card>
-          <div v-if="vidPlayer" style="cursor:s-resize; height:8px;" @mousedown="resizeMouseDown($event, 0)">
-            <div style="width: 20%; margin-left: auto; margin-right:auto; background: #444; height: 4px; border-radius: 2px; margin-top: 1px;" />
+          <div
+            v-if="vidPlayer"
+            style="cursor:s-resize; height:8px; background:var(--v-background-base)"
+            @mousedown="resizeMouseDown($event, 0)"
+          >
+            <div style="width: 10%; min-width: 40px; margin-left: auto; margin-right:auto; background: #444; height: 3px; border-radius: 2px; margin-top: 1px;" />
           </div>
           <LiveTranslations
             v-if="!isLoading && !hasError"
@@ -109,7 +101,9 @@
             <span v-for="(prf, index) in profile" :key="index"><span v-if="index === profileIdx">> </span>{{ (index + 1) + '. ' + prf.Name }}</span>
           </v-card>
         </v-card>
-        <div v-if="activeChat.length > 0" style="cursor:e-resize; width:7px;" @mousedown="resizeMouseDown($event, 1)" />
+        <div v-if="activeChat.length > 0" style="cursor:e-resize; width:7px;" @mousedown="resizeMouseDown($event, 1)">
+          <div style="height: 10%; min-height: 40px; margin-top: 40vh; margin-bottom:auto; background: #444; width: 3px; border-radius: 2px; margin-left: 2px;" />
+        </div>
         <v-card
           v-if="activeChat.length > 0"
           class="ChatPanelContainer"
@@ -159,94 +153,112 @@
         @keydown.ctrl.56.exact.prevent="profileJump(7)"
         @keydown.ctrl.57.exact.prevent="profileJump(8)"
       >
-        <v-row class="align-baseline">
+        <v-row>
           <v-text-field
             v-model="inputString"
+            placeholder="Type TL Here <Enter key to send>"
+            outlined
+            hide-details
+            dense
             @keypress.enter="addEntry()"
-          />
-          <v-btn style="margin-left:10px" @click="addEntry()">
+          >
+            <template
+              #prepend
+            >
+              <span style="opacity: 0.8;" class="mt-1">{{ profile[profileIdx].Prefix }}</span>
+            </template>
+            <template
+              #append
+            >
+              <span style="opacity: 0.8;" class="mt-1">{{ profile[profileIdx].Suffix }}</span>
+            </template>
+          </v-text-field>
+          <v-btn large class="mx-2" @click="addEntry()">
             {{ $t("views.tlClient.tlControl.enterBtn") }}
           </v-btn>
-          <v-btn style="margin-left:10px" color="primary" @click="TLSetting = !TLSetting">
+          <v-btn large color="primary" @click="TLSetting = !TLSetting">
             {{ TLSetting ? $t("views.tlClient.tlControl.hideSetting") : $t("views.tlClient.tlControl.showSetting") }}
             <v-icon>
               {{ TLSetting ? mdiCogOff : mdiCog }}
             </v-icon>
           </v-btn>
         </v-row>
-
-        <v-row v-if="TLSetting" class="align-stretch">
-          <v-col cols="2">
-            <v-text-field
-              v-model="profile[profileIdx].Prefix"
-              :label="$t('views.tlClient.tlControl.prefix')"
-              dense
-              rounded
-              outlined
-            />
-          </v-col>
-          <v-col cols="2">
-            <v-text-field
-              v-model="profile[profileIdx].Suffix"
-              :label="$t('views.tlClient.tlControl.suffix')"
-              dense
-              rounded
-              outlined
-            />
-          </v-col>
-          <!--
-          <v-checkbox
-            v-model="profile[profileIdx].useCC"
-            class="shrink"
-            :label="$t('views.tlClient.tlControl.fontColour') + ' : '"
-            hide-details
-          />
-          <v-btn
-            class="ColourButton"
-            small
-            :style="{ background: profile[profileIdx].CC }"
-            @click.stop="colourTemp = profile[profileIdx].CC; colourPick = 1; colourDialogue = true;"
-          >
-            {{ profile[profileIdx].CC }}
-          </v-btn>
-          <v-checkbox
-            v-model="profile[profileIdx].useOC"
-            :label="$t('views.tlClient.tlControl.outlineColour') + ' : '"
-            hide-details
-          />
-          <v-btn
-            class="ColourButton"
-            small
-            :style="{ background: profile[profileIdx].OC }"
-            @click.stop="colourTemp = profile[profileIdx].OC; colourPick = 2; colourDialogue = true;"
-          >
-            {{ profile[profileIdx].OC }}
-          </v-btn>
-          -->
-          <v-col cols="2" style="margin-left:auto">
-            <v-text-field
-              v-model="localPrefix"
-              :label="$t('views.tlClient.tlControl.localPrefix')"
-              dense
-              rounded
-              outlined
-            />
-          </v-col>
-        </v-row>
-        <v-row v-if="TLSetting">
-          <v-btn style="margin-right:5px" @click="modalMode = 1; modalNexus = true; addProfileNameString = 'Profile ' + profile.length;">
-            {{ $t("views.tlClient.tlControl.addProfile") }}
-          </v-btn>
-          <v-btn style="margin-right:5px" @click="modalMode = 2; modalNexus = true">
-            {{ $t("views.tlClient.tlControl.removeProfile") }}  ({{ profile[profileIdx].Name }})
-          </v-btn>
-          <v-btn style="margin-right:5px" @click="shiftProfileUp()">
-            {{ $t("views.tlClient.tlControl.shiftUp") }}
-          </v-btn>
-          <v-btn @click="shiftProfileDown()">
-            {{ $t("views.tlClient.tlControl.shiftDown") }}
-          </v-btn>
-        </v-row>
+        <v-expand-transition>
+          <v-card v-if="TLSetting" class="mt-2">
+            <v-card-subtitle>
+              Current Profile [{{ profile[profileIdx].Name }}] Settings
+            </v-card-subtitle>
+            <v-card-text class="d-flex align-stretch">
+              <v-text-field
+                v-model="profile[profileIdx].Prefix"
+                :label="$t('views.tlClient.tlControl.prefix')"
+                dense
+                outlined
+                hide-details
+                class="mr-2"
+              />
+              <v-text-field
+                v-model="profile[profileIdx].Suffix"
+                :label="$t('views.tlClient.tlControl.suffix')"
+                dense
+                outlined
+                hide-details
+                class="mr-2"
+              />
+              <!--
+                  <v-checkbox
+                    v-model="profile[profileIdx].useCC"
+                    class="shrink"
+                    :label="$t('views.tlClient.tlControl.fontColour') + ' : '"
+                    hide-details
+                  />
+                  <v-btn
+                    class="ColourButton"
+                    small
+                    :style="{ background: profile[profileIdx].CC }"
+                    @click.stop="colourTemp = profile[profileIdx].CC; colourPick = 1; colourDialogue = true;"
+                  >
+                    {{ profile[profileIdx].CC }}
+                  </v-btn>
+                  <v-checkbox
+                    v-model="profile[profileIdx].useOC"
+                    :label="$t('views.tlClient.tlControl.outlineColour') + ' : '"
+                    hide-details
+                  />
+                  <v-btn
+                    class="ColourButton"
+                    small
+                    :style="{ background: profile[profileIdx].OC }"
+                    @click.stop="colourTemp = profile[profileIdx].OC; colourPick = 2; colourDialogue = true;"
+                  >
+                    {{ profile[profileIdx].OC }}
+                  </v-btn>
+                  -->
+              <v-spacer />
+              <v-text-field
+                v-model="localPrefix"
+                :label="$t('views.tlClient.tlControl.localPrefix')"
+                dense
+                outlined
+                hide-details
+              />
+            </v-card-text>
+            <v-card-text>
+              <v-btn style="margin-right:5px" @click="modalMode = 1; modalNexus = true; addProfileNameString = 'Profile ' + profile.length;">
+                {{ $t("views.tlClient.tlControl.addProfile") }}
+              </v-btn>
+              <v-btn style="margin-right:5px" @click="modalMode = 2; modalNexus = true">
+                {{ $t("views.tlClient.tlControl.removeProfile") }}  ({{ profile[profileIdx].Name }})
+              </v-btn>
+              <v-btn style="margin-right:5px" @click="shiftProfileUp()">
+                {{ $t("views.tlClient.tlControl.shiftUp") }}
+              </v-btn>
+              <v-btn @click="shiftProfileDown()">
+                {{ $t("views.tlClient.tlControl.shiftDown") }}
+              </v-btn>
+            </v-card-text>
+          </v-card>
+        </v-expand-transition>
       </v-container>
     </div>
 
@@ -1137,5 +1149,11 @@ export default {
 .activeChatIFrame{
   width: 100%;
   height: 100%;
+}
+.tl-topbar>*:not(:first-child):not(:last-child) {
+  margin: 0px 3px;
+}
+.tl-topbar>* {
+  border-radius: 0px;
 }
 </style>
