@@ -385,7 +385,7 @@ export default {
     },
     fetchMChadData(room, pass) {
         return axios.post(
-"https://repo.mchatx.org/HolodexDahcM/",
+            "https://repo.mchatx.org/HolodexDahcM/",
             {
                 Room: room,
                 Pass: pass,
@@ -395,4 +395,34 @@ export default {
     requestChannel(obj) {
         return axiosInstance.post("/reports/channel", obj);
     },
+
+    // ---------- RELAY BOT DISCORD LOGIN ----------
+    relayBotLogin(code, mode) {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/user", {
+            code,
+            mode,
+        });
+    },
+    relayBotCheckBotPresence(guildAddressList) {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/guild", {
+            ids: guildAddressList,
+        });
+    },
+    relayBotGetChannels(guildAddress) {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/channel", {
+            guild: guildAddress,
+        });
+    },
+    relayBotGetSettingChannel(channelAddress) {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/data", {
+            channel: channelAddress,
+        });
+    },
+    relayBotSubmitData(channelAddress, data) {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/submit", {
+            Address: channelAddress,
+            SubChannel: data,
+        });
+    },
+    //= ========= RELAY BOT DISCORD LOGIN ==========
 };

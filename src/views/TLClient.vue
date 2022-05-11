@@ -351,7 +351,11 @@
             return-object
             @change="localPrefix = '[' + TLLang.value + '] '"
           />
-          <v-text-field v-model="mainStreamLink" readonly :label="$t(&quot;views.tlClient.settingPanel.mainStreamLink&quot;)" />
+          <v-text-field
+            v-model="mainStreamLink"
+            :label="$t(&quot;views.tlClient.settingPanel.mainStreamLink&quot;)"
+            :readonly="$route.query.video ? true : false"
+          />
           <v-card-title>{{ $t("views.tlClient.settingPanel.collabLink") }}</v-card-title>
           <v-text-field
             v-for="(AuxLink, index) in collabLinks"
@@ -545,19 +549,57 @@ export default {
                 if (this.activeChat[i].text === target) {
                     this.activeChat[i].IFrameEle = event.target;
                     switch (target.slice(0, 3)) {
-                        case "YT_":
-                            event.target.contentWindow?.postMessage({
-                                n: "HolodexSync",
-                                d: "Initiate",
-                            }, "https://www.youtube.com");
+                        case "YT_": {
+                            if (event.target.contentWindow) {
+                                event.target.contentWindow.postMessage({
+                                    n: "HolodexSync",
+                                    d: "Initiate",
+                                }, "https://www.youtube.com");
+                            } else {
+                                let trial = 0;
+                                const id = setInterval(() => {
+                                    if (event.target.contentWindow) {
+                                        event.target.contentWindow?.postMessage({
+                                            n: "HolodexSync",
+                                            d: "Initiate",
+                                        }, "https://www.youtube.com");
+                                        clearInterval(id);
+                                        return;
+                                    }
+                                    trial += 1;
+                                    if (trial === 10) {
+                                        clearInterval(id);
+                                    }
+                                }, 1000);
+                            }
                             break;
+                        }
 
-                        case "TW_":
-                            event.target.contentWindow?.postMessage({
-                                n: "HolodexSync",
-                                d: "Initiate",
-                            }, "https://www.twitch.tv");
+                        case "TW_": {
+                            if (event.target.contentWindow) {
+                                event.target.contentWindow.postMessage({
+                                    n: "HolodexSync",
+                                    d: "Initiate",
+                                }, "https://www.twitch.tv");
+                            } else {
+                                let trial = 0;
+                                const id = setInterval(() => {
+                                    if (event.target.contentWindow) {
+                                        event.target.contentWindow?.postMessage({
+                                            n: "HolodexSync",
+                                            d: "Initiate",
+                                        }, "https://www.twitch.tv");
+                                        clearInterval(id);
+                                        return;
+                                    }
+                                    trial += 1;
+                                    if (trial === 10) {
+                                        clearInterval(id);
+                                    }
+                                }, 1000);
+                            }
                             break;
+                        }
 
                         default:
                             break;
@@ -640,6 +682,7 @@ export default {
             this.$store.commit("tlclient/setId", parseVideoID.id);
             this.$store.dispatch("tlclient/fetchVideo");
 
+            this.localPrefix = `[${this.TLLang.value}] `;
             this.modalNexus = false;
             if (this.firstLoad) {
                 this.loadChat(this.mainStreamLink);

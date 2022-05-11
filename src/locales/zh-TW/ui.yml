@@ -149,7 +149,7 @@ component:
     streamPageBtn: 實況頁面
     eventPageBtn: 活動頁面
     scheduledEvent: 已排定
-    editorCredit: 本活動由 Holodex編輯者 {0} 建立
+    editorCredit: 本活動由 Holodex 編輯者 {0} 建立。
     creditTitleText: '感謝：'
 views:
   channel:
@@ -300,6 +300,7 @@ views:
         disconnectedToChat: 已失去連線
       archiveNeedExtension: >-
         若沒有安裝 {0} 或是第三方擴充功能，是無法啟用存檔實況聊天室功能的
+      hideSpoiler: 隱藏劇透內容
     removeFromPlaylist: 將影片自當前播放清單移除
     saveToPlaylist: 將影片儲存至當前播放清單
     likeOnYoutube: 於 YouTube 上對影片按讚
@@ -308,6 +309,9 @@ views:
       usernameText: 翻譯將以此使用者名稱發佈
       usernameChange: 變更
       tlLang: 目標翻譯語言
+      headerStart: 開始
+      headerEnd: 結束
+      headerText: 文字
       cancelBtn: 取消
       okBtn: 確定
       notifTextErr: 檔案無法分析（檔案毀損？）
@@ -437,6 +441,8 @@ views:
       localPrefix: 本地前綴
       addProfile: 新增設定檔
       removeProfile: 移除設定檔
+      shiftUp: 向上移動
+      shiftDown: 向下移動
       showSetting: 設定
       hideSetting: 隱藏
     addProfilePanel:
@@ -460,10 +466,12 @@ views:
       clearAll: 刪除文本
       exportFile: 匯出檔案
       importFile: 匯入檔案
+      editorMode: 編輯者模式
     table:
       headerStart: 開始
       headerEnd: 結束
       headerProfile: 設定檔
+      headerText: 文字
       setAsStart: 設為起點
       shiftCurrentTime: 位移至目前時間
     loadVideoPanel:
@@ -471,11 +479,17 @@ views:
       inputLabel: 實況連結
     importFile:
       overwriteBtn: 覆蓋
+    editorModePanel:
+      activateMode: 啟用編輯者模式
+      deactivateMode: 關閉編輯者模式
+      roleWarning: 您的權限不足
+      filterTranslator: 篩選翻譯者
   tlManager:
     title: 文本管理器
     headerID: 影片ID
     download: 下載
     delete: 刪除
+    langPick: 語言
 time:
   soon: 即將開始
   diff_future_date: 將於 {0} 開始實況 ({1})

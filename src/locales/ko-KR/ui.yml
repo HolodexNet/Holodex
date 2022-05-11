@@ -301,6 +301,7 @@ views:
         disconnectedToChat: 연결 끊김
       archiveNeedExtension: >-
         아카이브 채팅은 {0} 확장 프로그램 또는 다른 서드파티 확장 프로그램 없이는 작동하지 않습니다.
+      hideSpoiler: 스포일러 숨기기
     removeFromPlaylist: 현재 재생목록에서 동영상 제거
     saveToPlaylist: 현재 재생목록에 동영상 저장
     likeOnYoutube: YouTube에서 동영상 좋아요하기
@@ -467,6 +468,7 @@ views:
       clearAll: 스크립트 삭제
       exportFile: 파일 내보내기
       importFile: 파일 가져오기
+      editorMode: 편집기 모드
     table:
       headerStart: 시작
       headerEnd: 끝
@@ -481,9 +483,14 @@ views:
     setStartTitle: 선택한 부분을 시작점으로 설정하면 그 앞에 있는 항목들은 모두 삭제됩니다.
     importFile:
       overwriteBtn: 덮어쓰기
+    editorModePanel:
+      activateMode: 편집기 모드 활성화
+      deactivateMode: 편집기 모드 비활성화
+      roleWarning: 권한이 없습니다
+      filterTranslator: 번역가 필터
   tlManager:
     title: 스크립트 관리
-    headerID: 동영상 ID
+    headerID: ID
     headerEntries: 항목
     download: 다운로드
     delete: 삭제

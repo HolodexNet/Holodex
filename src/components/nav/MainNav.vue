@@ -2,7 +2,13 @@
   <div>
     <!-- watch page nav drawer is temporary, but causes layout shifting from hiding/unhiding -->
     <!-- create two different instances as a work around -->
-    <NavDrawer v-model="navDrawer" :pages="pages" :temporary="isMobile || isWatchPage">
+    <NavDrawer
+      v-model="navDrawer"
+      :pages="pages"
+      :temporary="isMobile || isWatchPage"
+      :expand="navbarExpanded"
+      @expand="navbarExpanded = !navbarExpanded"
+    >
       <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
       <template v-if="isMobile">
         <!-- <InstallPrompt /> -->
@@ -34,7 +40,7 @@
       <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
         <!--================= Logo & Search Bar (Space permitting) ================-->
 
-        <v-app-bar-nav-icon @click.stop="navDrawer = !navDrawer">
+        <v-app-bar-nav-icon @click.stop="navDrawer = !navDrawer; navbarExpanded = false">
           <v-icon>{{ icons.mdiMenu }}</v-icon>
         </v-app-bar-nav-icon>
         <v-toolbar-title style="overflow: visible" :class="{ 'pa-0': isMobile }">
@@ -187,6 +193,7 @@ export default {
         return {
             favoritesExpanded: false,
             searchBarExpanded: false,
+            navbarExpanded: false,
         };
     },
     computed: {
@@ -251,12 +258,6 @@ export default {
                     collapsible: true,
                 },
                 {
-                    name: "Script Manager",
-                    path: "/scriptmanager",
-                    icon: this.icons.mdiFileDocumentMultiple,
-                    collapsible: true,
-                },
-                {
                     name: "Musicdex",
                     path: musicdexURL,
                     // icon: this.icons.mdiMusic,
@@ -274,6 +275,34 @@ export default {
                     path: "/settings",
                     icon: this.icons.mdiCog,
                     collapsible: true,
+                },
+                {
+                    name: "TL client",
+                    path: "/tlclient",
+                    icon: this.icons.mdiTypewriter,
+                    collapsible: true,
+                    extra: true,
+                },
+                {
+                    name: "Script Editor",
+                    path: "/scripteditor",
+                    icon: this.icons.mdiNoteEdit,
+                    collapsible: true,
+                    extra: true,
+                },
+                {
+                    name: "Script Manager",
+                    path: "/scriptmanager",
+                    icon: this.icons.mdiFileDocumentMultiple,
+                    collapsible: true,
+                    extra: true,
+                },
+                {
+                    name: "Relay Bot Setting",
+                    path: "/relaybot",
+                    icon: this.icons.mdiRobot,
+                    collapsible: true,
+                    extra: true,
                 },
             ];
         },
