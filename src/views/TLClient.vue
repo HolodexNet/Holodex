@@ -1187,5 +1187,6 @@ export default {
 }
 .tl-topbar>* {
   border-radius: 0px;
+    text-transform: unset !important;
 }
 </style>

@@ -1,103 +1,76 @@
 <template>
   <v-container
     fill-height
+    fluid
+    style="max-height: 100vh; padding: 0px 12px"
     @keydown.ctrl.83.exact.prevent="processLog()"
   >
-    <v-card
-      v-if="menuBool"
-      class="TopMenu"
-    >
-      <v-container class="d-flex">
-        <v-card-actions class="d-flex flex-column align-stretch justify-center">
-          <v-btn
-            elevation="4"
-            color="secondary"
-            @click="modalMode = 5; modalNexus = true"
-          >
-            {{ $t("views.tlClient.menu.setting") }}
-          </v-btn>
-          <v-btn
-            elevation="4"
-            color="secondary"
-            style="margin-top:5px; margin-left:0px"
-            @click="processLog()"
-          >
-            {{ $t("views.scriptEditor.menu.save") + " (Ctrl + s)" }}
-          </v-btn>
-        </v-card-actions>
-        <v-card-actions class="d-flex flex-column align-stretch justify-center">
-          <v-btn
-            elevation="4"
-            color="secondary"
-            @click="modalMode = 3; modalNexus = true; activeURLInput = activeURLStream;"
-          >
-            {{ $t("views.tlClient.menu.loadVideo") }}
-          </v-btn>
-          <v-btn
-            elevation="4"
-            color="secondary"
-            style="margin-top:5px; margin-left:0px"
-            @click="unloadVideo()"
-          >
-            {{ $t("views.tlClient.menu.unloadVideo") }}
-          </v-btn>
-        </v-card-actions>
-        <v-card-actions class="d-flex flex-column align-stretch justify-center">
-          <v-btn
-            elevation="4"
-            color="secondary"
-            @click="modalMode = 6; modalNexus = true"
-          >
-            {{ $t("views.scriptEditor.menu.exportFile") }}
-          </v-btn>
-          <v-btn
-            elevation="4"
-            color="secondary"
-            style="margin-top:5px; margin-left:0px"
-            @click="importPanelShow = true;"
-          >
-            {{ $t("views.scriptEditor.menu.importFile") }}
-          </v-btn>
-        </v-card-actions>
-        <v-card-actions class="d-flex flex-column align-stretch justify-center">
-          <v-btn
-            elevation="4"
-            color="secondary"
-            @click="continuousTime()"
-          >
-            {{ $t("views.scriptEditor.menu.continuousEnd") }}
-          </v-btn>
-        </v-card-actions>
-        <v-card-actions class="d-flex flex-column align-stretch justify-center" style="margin-left:auto">
-          <v-btn
-            elevation="4"
-            color="warning"
-            @click="modalMode = 8; modalNexus = true"
-          >
-            {{ $t("views.scriptEditor.menu.editorMode") }}
-          </v-btn>
-        </v-card-actions>
-        <v-card-actions class="d-flex flex-column align-stretch justify-center">
-          <v-btn
-            elevation="4"
-            color="error"
-            @click="modalMode = 7; modalNexus = true"
-          >
-            {{ $t("views.scriptEditor.menu.clearAll") }}
-          </v-btn>
-        </v-card-actions>
-      </v-container>
-    </v-card>
-    <div class="d-flex flex-column" style="height:100%; width:100%">
-      <v-btn
-        block
-        elevation="4"
-        color="primary"
-        small
-        @click="menuBool = !menuBool"
-      >
-        {{ $t("views.tlClient.menu.title") }}
-      </v-btn>
+    <div class="d-flex flex-column" style="height: 100%; width:100%">
+      <v-system-bar height="30" class="tl-topbar px-0" color="secondary">
+        <v-btn
+          small
+          outlined
+          @click="modalMode = 5; modalNexus = true"
+        >
+          {{ $t("views.tlClient.menu.setting") }}
+        </v-btn>
+        <v-btn
+          small
+          outlined
+          @click="processLog()"
+        >
+          {{ $t("views.scriptEditor.menu.save") }} <code>Ctrl-S</code>
+        </v-btn>
+        <!-- <v-btn
+          small
+          outlined
+          @click="modalMode = 3; modalNexus = true; activeURLInput = activeURLStream;"
+        >
+          {{ $t("views.tlClient.menu.loadVideo") }}
+        </v-btn>
+        <v-btn
+          small
+          outlined
+          @click="unloadVideo()"
+        >
+          {{ $t("views.tlClient.menu.unloadVideo") }}
+        </v-btn> -->
+        <v-btn
+          small
+          outlined
+          @click="modalMode = 6; modalNexus = true"
+        >
+          {{ $t("views.scriptEditor.menu.exportFile") }}
+        </v-btn>
+        <v-btn
+          small
+          outlined
+          @click="importPanelShow = true;"
+        >
+          {{ $t("views.scriptEditor.menu.importFile") }}
+        </v-btn>
+        <v-btn
+          small
+          outlined
+          @click="continuousTime()"
+        >
+          {{ $t("views.scriptEditor.menu.continuousEnd") }}
+        </v-btn>
+        <v-btn
+          small
+          color="warning"
+          @click="modalMode = 8; modalNexus = true"
+        >
+          {{ $t("views.scriptEditor.menu.editorMode") }}
+        </v-btn>
+        <v-btn
+          small
+          color="error"
+          @click="modalMode = 7; modalNexus = true"
+        >
+          {{ $t("views.scriptEditor.menu.clearAll") }}
+        </v-btn>
+      </v-system-bar>
       <div class="d-flex align-stretch flex-row" style="height:100%" @click="menuBool = false">
         <v-card
           ref="tableContainer"
@@ -260,7 +233,6 @@
         @keydown.ctrl.right="ctrlRight()"
       >
         <v-row class="align-baseline">
-          <v-divider />
           <v-card style="display: flex; flex-direction: column; padding-bottom: 7px; margin-bottom: 5px;">
             <v-card style="position: relative;">
               <div class="Marker" />
@@ -304,86 +276,119 @@
               </div>
             </v-card>
           </v-card>
-          <v-divider />
         </v-row>
-        <v-row class="align-baseline">
+        <v-row class="">
           <v-text-field
             v-model="inputString"
+            placeholder="Type TL Here <Enter key to send>"
+            outlined
+            hide-details
+            dense
             @keypress.enter="addEntry()"
-          />
-          <v-btn style="margin-left:10px" @click="addEntry()">
+          >
+            <template
+              #prepend
+            >
+              <span style="opacity: 0.8;" class="mt-1">{{ profile[profileIdx].Prefix }}</span>
+            </template>
+            <template
+              #append
+            >
+              <span style="opacity: 0.8;" class="mt-1">{{ profile[profileIdx].Suffix }}</span>
+            </template>
+          </v-text-field>
+
+          <v-btn large class="mx-2" @click="addEntry()">
             {{ $t("views.tlClient.tlControl.enterBtn") }}
           </v-btn>
-          <v-btn style="margin-left:10px" color="primary" @click="TLSetting = !TLSetting">
+          <v-btn large color="primary" @click="TLSetting = !TLSetting">
             {{ TLSetting ? $t("views.tlClient.tlControl.hideSetting") : $t("views.tlClient.tlControl.showSetting") }}
             <v-icon>
               {{ TLSetting ? mdiCogOff : mdiCog }}
             </v-icon>
           </v-btn>
         </v-row>
-        <v-row v-if="TLSetting" class="align-stretch">
-          <v-col cols="2">
-            <v-text-field
-              v-model="profile[profileIdx].Prefix"
-              :label="$t('views.tlClient.tlControl.prefix')"
-              dense
-              rounded
-              outlined
-            />
-          </v-col>
-          <v-col cols="2">
-            <v-text-field
-              v-model="profile[profileIdx].Suffix"
-              :label="$t('views.tlClient.tlControl.suffix')"
-              dense
-              rounded
-              outlined
-            />
-          </v-col>
-          <!--
-          <v-checkbox
-            v-model="profile[profileIdx].useCC"
-            class="shrink"
-            :label="$t('views.tlClient.tlControl.fontColour') + ' : '"
-            hide-details
-          />
-          <v-btn
-            class="ColourButton"
-            small
-            :style="{ background: profile[profileIdx].CC }"
-            @click.stop="colourTemp = profile[profileIdx].CC; colourPick = 1; colourDialogue = true;"
-          >
-            {{ profile[profileIdx].CC }}
-          </v-btn>
-          <v-checkbox
-            v-model="profile[profileIdx].useOC"
-            :label="$t('views.tlClient.tlControl.outlineColour') + ' : '"
-            hide-details
-          />
-          <v-btn
-            class="ColourButton"
-            small
-            :style="{ background: profile[profileIdx].OC }"
-            @click.stop="colourTemp = profile[profileIdx].OC; colourPick = 2; colourDialogue = true;"
-          >
-            {{ profile[profileIdx].OC }}
-          </v-btn>
-          -->
-        </v-row>
-        <v-row v-if="TLSetting">
-          <v-btn style="margin-right:5px" @click="modalMode = 1; modalNexus = true; addProfileNameString = 'Profile ' + profile.length;">
-            {{ $t("views.tlClient.tlControl.addProfile") }}
-          </v-btn>
-          <v-btn style="margin-right:5px" @click="modalMode = 2; modalNexus = true">
-            {{ $t("views.tlClient.tlControl.removeProfile") }}
-          </v-btn>
-          <v-btn style="margin-right:5px" @click="shiftProfileUp()">
-            {{ $t("views.tlClient.tlControl.shiftUp") }}
-          </v-btn>
-          <v-btn @click="shiftProfileDown()">
-            {{ $t("views.tlClient.tlControl.shiftDown") }}
-          </v-btn>
-        </v-row>
+        <v-expand-transition>
+          <v-card v-if="TLSetting" class="mt-2">
+            <v-card-subtitle>
+              Current Profile [{{ profile[profileIdx].Name }}] Settings
+              <v-icon class="float-right" @click="TLSetting = false">
+                {{ icons.mdiClose }}
+              </v-icon>
+              <v-tooltip left>
+                <template #activator="{ on, attrs }">
+                  <v-icon class="float-right" v-bind="attrs" v-on="on">
+                    {{ mdiKeyboard }}
+                  </v-icon>
+                </template>
+                <span>While typing in TL box</span><br>
+                <span><kbd>⇧</kbd><kbd>⇩</kbd> to change Profiles</span><br>
+                <span><kbd>Ctrl+[1~9]</kbd> to quick switch to Profile</span>
+              </v-tooltip>
+            </v-card-subtitle>
+            <v-card-text class="d-flex align-stretch">
+              <v-text-field
+                v-model="profile[profileIdx].Prefix"
+                :label="$t('views.tlClient.tlControl.prefix')"
+                dense
+                outlined
+                hide-details
+                class="mr-2"
+              />
+              <v-text-field
+                v-model="profile[profileIdx].Suffix"
+                :label="$t('views.tlClient.tlControl.suffix')"
+                dense
+                outlined
+                hide-details
+                class="mr-2"
+              />
+              <!--
+                <v-checkbox
+                    v-model="profile[profileIdx].useCC"
+                    class="shrink"
+                    :label="$t('views.tlClient.tlControl.fontColour') + ' : '"
+                    hide-details
+                />
+                <v-btn
+                    class="ColourButton"
+                    small
+                    :style="{ background: profile[profileIdx].CC }"
+                    @click.stop="colourTemp = profile[profileIdx].CC; colourPick = 1; colourDialogue = true;"
+                >
+                    {{ profile[profileIdx].CC }}
+                </v-btn>
+                <v-checkbox
+                    v-model="profile[profileIdx].useOC"
+                    :label="$t('views.tlClient.tlControl.outlineColour') + ' : '"
+                    hide-details
+                />
+                <v-btn
+                    class="ColourButton"
+                    small
+                    :style="{ background: profile[profileIdx].OC }"
+                    @click.stop="colourTemp = profile[profileIdx].OC; colourPick = 2; colourDialogue = true;"
+                >
+                    {{ profile[profileIdx].OC }}
+                </v-btn>
+                -->
+            </v-card-text>
+            <v-card-text>
+              <v-btn style="margin-right:5px" @click="modalMode = 1; modalNexus = true; addProfileNameString = 'Profile ' + profile.length;">
+                {{ $t("views.tlClient.tlControl.addProfile") }}
+              </v-btn>
+              <v-btn style="margin-right:5px" @click="modalMode = 2; modalNexus = true">
+                {{ $t("views.tlClient.tlControl.removeProfile") }}
+              </v-btn>
+              <v-btn style="margin-right:5px" @click="shiftProfileUp()">
+                {{ $t("views.tlClient.tlControl.shiftUp") }}
+              </v-btn>
+              <v-btn @click="shiftProfileDown()">
+                {{ $t("views.tlClient.tlControl.shiftDown") }}
+              </v-btn>
+            </v-card-text>
+          </v-card>
+        </v-expand-transition>
       </v-container>
     </div>
 
@@ -596,7 +601,7 @@ import EnhancedEntry from "@/components/tlscripteditor/EnhancedEntry.vue";
 import ImportFile from "@/components/tlscripteditor/ImportFile.vue";
 import ExportFile from "@/components/tlscripteditor/ExportToFile.vue";
 import { TL_LANGS } from "@/utils/consts";
-import { mdiPlay, mdiStop, mdiCog, mdiCogOff } from "@mdi/js";
+import { mdiPlay, mdiStop, mdiCog, mdiCogOff, mdiKeyboard } from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 
@@ -626,6 +631,7 @@ export default {
             mdiPlay,
             mdiStop,
             mdiCog,
+            mdiKeyboard,
             mdiCogOff,
             TLSetting: true,
             menuBool: false,
@@ -2492,6 +2498,13 @@ export default {
 </script>
 
 <style>
+.tl-topbar>*:not(:first-child):not(:last-child) {
+  margin: 0px 3px;
+}
+.tl-topbar>* {
+  border-radius: 0px;
+  text-transform: unset !important;
+}
 .TopMenu {
   width:100%;
   position:absolute;
