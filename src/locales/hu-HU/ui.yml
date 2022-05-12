@@ -57,6 +57,8 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
+  video:
+    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -426,14 +428,22 @@ views:
   tlClient:
     menu:
       title: Menü
+      setting: TLDex szoba beállítások
+      loadVideo: Videók mutatása
+      unloadVideo: Videó elrejtése
+      loadChat: YT chat és élő fordítás összevonása
+      unloadChat: Lecsatolása YT chatről
     tlControl:
       enterBtn: Enter
       prefix: Prefix
       suffix: Utótag
       fontColour: Betűszín
       outlineColour: Körvonal színe
+      localPrefix: Nyelv tag a chaten
       addProfile: Profil hozzáadása
       removeProfile: Profil eltávolítása
+      shiftUp: Profil felhúzása
+      shiftDown: Profil lehúzása
       showSetting: Beállítások
       hideSetting: Elrejtés
     addProfilePanel:
