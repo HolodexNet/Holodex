@@ -57,6 +57,8 @@ component:
     uploadScript: TL-Skript hochladen
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -620,7 +622,12 @@ channelRequest:
     AddClipper: Füge einen Clipping/Subbing-Kanal zu Holodex hinzu
     ModifyExistingInfo: Vorhandene Kanalinformationen ändern
     DeleteChannel: Löscht meinen Kanal
+  DirectContactDisclaimer: >-
+    Zögere nicht, deine Discord-ID, deine E-Mail-Adresse oder deinen Twitteraccount zu hinterlassen; für den Fall, dass wir dich kontaktieren müssen (diese Informationen bleiben privat), damit wir Feedback geben können. Nur Holodex-Administratoren werden diese Informationen sehen.
   DirectContactLabel: Kontaktmethode (optional)
+  TwitterHandle: Twitteraccount des Kanals (optional)
+  VtuberGroupLabel: VTuber-Gruppe (optional)
+  VtuberGroupHint: Zu welcher Org / Gruppe gehört dieser VTuber?
   ChannelLanguageLabel: Hauptsprache des Kanals
   EnglishNameHint: >-
     Gib einen englischen Namen an, falls der Kanalname nicht in Englisch ist. Folge den Namensordnungen des VTubers (Natsuiro Matsuri), oder einer bevorzugten EN Marke (Elu the Elf, Emma★August).
