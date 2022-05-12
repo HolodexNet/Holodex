@@ -57,8 +57,6 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -428,22 +426,14 @@ views:
   tlClient:
     menu:
       title: Menü
-      setting: Beállítások
-      loadVideo: Videó betöltése
-      unloadVideo: Videó lekapcsolása
-      loadChat: Chat betöltése
-      unloadChat: Chat lekapcsolása
     tlControl:
       enterBtn: Enter
       prefix: Prefix
       suffix: Utótag
       fontColour: Betűszín
       outlineColour: Körvonal színe
-      localPrefix: Helyi prefix
       addProfile: Profil hozzáadása
       removeProfile: Profil eltávolítása
-      shiftUp: Shift fel
-      shiftDown: Shift le
       showSetting: Beállítások
       hideSetting: Elrejtés
     addProfilePanel:

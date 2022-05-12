@@ -428,22 +428,22 @@ views:
   tlClient:
     menu:
       title: 메뉴
-      setting: 설정
-      loadVideo: 동영상 불러오기
-      unloadVideo: 동영상 취소하기
-      loadChat: 채팅 불러오기
-      unloadChat: 채팅 닫기
+      setting: TLDex 방 설정
+      loadVideo: 동영상 표시
+      unloadVideo: 동영상 숨기기
+      loadChat: 방송 번역에 YT 채팅 추가
+      unloadChat: YT 채팅에서 분리
     tlControl:
       enterBtn: 입력
       prefix: 접두어
       suffix: 접미어
       fontColour: 글꼴 색상
       outlineColour: 외곽선 색상
-      localPrefix: 로컬 접두어
+      localPrefix: 채팅 내 언어 태그
       addProfile: 프로필 추가
       removeProfile: 프로필 삭제
-      shiftUp: 위로
-      shiftDown: 아래로
+      shiftUp: 이전 프로필로
+      shiftDown: 다음 프로필로
       showSetting: 설정
       hideSetting: 숨기기
     addProfilePanel:

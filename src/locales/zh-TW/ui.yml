@@ -427,22 +427,17 @@ views:
   tlClient:
     menu:
       title: 選單
-      setting: 設定
-      loadVideo: 載入影片
-      unloadVideo: 移除影片
-      loadChat: 載入聊天室
-      unloadChat: 移除聊天室
+      setting: TLDex 房間設定
+      loadVideo: 顯示影片
+      unloadVideo: 隱藏影片
     tlControl:
       enterBtn: 輸入
       prefix: 前綴
       suffix: 後綴
       fontColour: 字型色彩
       outlineColour: 外框顏色
-      localPrefix: 本地前綴
       addProfile: 新增設定檔
       removeProfile: 移除設定檔
-      shiftUp: 向上移動
-      shiftDown: 向下移動
       showSetting: 設定
       hideSetting: 隱藏
     addProfilePanel:
