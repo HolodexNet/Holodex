@@ -10,6 +10,14 @@
         <v-btn
           small
           outlined
+          to="/"
+        >
+          <v-icon>{{ icons.mdiHome }}</v-icon>
+        </v-btn>
+
+        <v-btn
+          small
+          outlined
           @click="modalMode = 5; modalNexus = true"
         >
           {{ $t("views.tlClient.menu.setting") }}
