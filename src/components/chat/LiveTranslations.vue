@@ -282,14 +282,18 @@ export default {
                 if (this.blockedNames.has(msg.name)) return;
 
                 if (this.tlClient) {
-                    if (msg.is_tl) {
+                    if (msg.is_tl
+                        || msg.is_owner
+                        || (msg.is_vtuber && this.liveTlShowVtuber)
+                        || (msg.is_moderator && this.liveTlShowModerator)
+                        || (msg.is_verified && this.liveTlShowVerified)
+                    ) {
                         const parsedMessage = this.parseMessage(msg);
                         parsedMessage.receivedAt = Date.now();
                         this.tlHistory.push(parsedMessage);
                     }
                 } else if (
                     msg.is_tl
-                    || msg.is_vtuber
                     || msg.is_owner
                     || (msg.is_vtuber && this.liveTlShowVtuber)
                     || (msg.is_moderator && this.liveTlShowModerator)
