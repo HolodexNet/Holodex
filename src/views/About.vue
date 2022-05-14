@@ -11,7 +11,7 @@
         <stats />
       </v-col>
     </v-row>
-    <v-row class="f-row">
+    <v-row class="flex-row">
       <v-col
         cols="12"
         md="4"
@@ -145,7 +145,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row class="f-row center">
+    <v-row class="flex-row justify-center">
       <!-- FAQ -->
       <v-col
         cols="12"
@@ -291,7 +291,7 @@
           </v-card-title>
           <v-card-text>
             <p>{{ $t('about.bookmarklet.description') }}</p>
-            <div class="flex f-col" style="margin-left: 0px;">
+            <div class="d-flex flex-column" style="margin-left: 0px;">
               <v-btn
                 class="text-left mt-4 white--text grey"
                 href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://holodex.net/watch/'+v)})()"
@@ -349,20 +349,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .v-expansion-panel-content__wrap {
   padding-top: 12px;
-}
-.flex {
-  display: flex;
-}
-.f-col {
-  flex-direction: column;
-}
-.f-row {
-  flex-direction: row !important;
-}
-.center {
-  justify-content: center;
 }
 </style>
