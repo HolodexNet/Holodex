@@ -1,42 +1,48 @@
 <template>
-  <v-container
-    key="aboutpg"
-    class="pt-3"
-  >
+  <v-container key="aboutpg" class="pt-3">
     <v-row>
-      <v-col
-        v-if="!$store.state.isMobile"
-        cols="12"
-      >
+      <v-col v-if="!$store.state.isMobile" cols="12">
         <div class="text-h4">
           {{ $t("component.mainNav.about") }}
         </div>
       </v-col>
+      <!-- STATS -->
       <v-col cols="12">
         <stats />
       </v-col>
+    </v-row>
+    <v-row class="f-row">
       <v-col
         cols="12"
         md="4"
         lg="4"
-        xl="3"
+        xl="4"
         float-right
       >
-        <v-card class="pa-0">
-          <!-- <div class="text-h5 mb-2">
-                        {{ $t("about.news.title") }}
-                    </div> -->
-          <TwitterFeed :key="'twtrTimeline' + timelinekey" />
-        </v-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        md="4"
-        lg="4"
-        xl="3"
-      >
+        <!-- CREDITS -->
         <v-card>
+          <v-card-title>
+            <div class="text-h6">
+              {{ $t("about.credits.title") }}
+            </div>
+          </v-card-title>
+          <v-card-text>
+            <p class="text-body-2">
+              {{ $t("about.credits.contents[0]") }}
+              <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.credits.contents[1]") }}
+              <a href="https://github.com/holofans/holoapi">holoapi</a>.
+              <br>
+              {{ $t("about.credits.contents[2]") }}
+            </p>
+            <br>
+            <p class="text-body-2">
+              {{ $t("about.credits.contents[3]") }}
+              <a href="https://en.hololive.tv/terms"> {{ $t("about.credits.contents[4]") }} </a>
+            </p>
+          </v-card-text>
+        </v-card>
+        <!-- LINKS -->
+        <v-card style="margin-top: 36.5px;">
           <v-card-title>
             <div class="text-h6">
               {{ $t("about.quicklinks") }}
@@ -101,36 +107,46 @@
           </v-card-text>
         </v-card>
       </v-col>
-
+      <!-- TWITTER TIMELINE -->
       <v-col
         cols="12"
         md="4"
         lg="4"
         xl="4"
+        float-right
+      >
+        <v-card class="pa-0" style="height: 100%;">
+          <TwitterFeed :key="'twtrTimeline' + timelinekey" />
+        </v-card>
+      </v-col>
+      <!-- CHANGELOG -->
+      <v-col
+        cols="12"
+        md="4"
+        lg="4"
+        xl="4"
+        float-right
       >
         <v-card>
           <v-card-title>
-            <div class="text-h6">
-              {{ $t("about.credits.title") }}
-            </div>
+            <a
+              class="text-h6"
+              href="https://github.com/RiceCakess/Holodex/blob/dev/docs/CHANGELOG.md"
+            >
+              {{ $t("about.changelog.title") }}
+            </a>
           </v-card-title>
-          <v-card-text>
-            <p class="text-body-2">
-              {{ $t("about.credits.contents[0]") }}
-              <a href="https://hololive.jetri.co/">HoloTools</a> {{ $t("about.credits.contents[1]") }}
-              <a href="https://github.com/holofans/holoapi">holoapi</a>.
-              <br>
-              {{ $t("about.credits.contents[2]") }}
-            </p>
-            <br>
-            <p class="text-body-2">
-              {{ $t("about.credits.contents[3]") }}
-              <a href="https://en.hololive.tv/terms"> {{ $t("about.credits.contents[4]") }} </a>
-            </p>
-          </v-card-text>
+          <iframe
+            width="100%"
+            seamless
+            src="https://holodexnet.github.io/Holodex/CHANGELOG.html"
+            style="height: 606px; margin-bottom: -16.5px; border: none; background: #eee;"
+          />
         </v-card>
       </v-col>
-
+    </v-row>
+    <v-row class="f-row center">
+      <!-- FAQ -->
       <v-col
         cols="12"
         md="6"
@@ -260,28 +276,7 @@
           </v-expansion-panels>
         </v-card>
       </v-col>
-      <v-col>
-        <v-card>
-          <v-card-title>
-            <a
-              class="text-h6"
-              href="https://github.com/RiceCakess/Holodex/blob/dev/docs/CHANGELOG.md"
-            >{{
-              $t("about.changelog.title")
-            }}</a>
-          </v-card-title>
-          <div>
-            <iframe
-              width="100%"
-              seamless
-              src="https://holodexnet.github.io/Holodex/CHANGELOG.html"
-              style="height: 60vh; border: none; background: #eee"
-            />
-          </div>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row>
+      <!-- BOOKMARKLETS -->
       <v-col
         cols="12"
         md="4"
@@ -296,18 +291,20 @@
           </v-card-title>
           <v-card-text>
             <p>{{ $t('about.bookmarklet.description') }}</p>
-            <v-btn
-              class="text-left mt-4 white--text grey"
-              href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://holodex.net/watch/'+v)})()"
-            >
-              Open in Holodex
-            </v-btn>
-            <v-btn
-              class="text-left mt-4 white--text grey"
-              href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://staging.holodex.net/watch/'+v)})()"
-            >
-              Open in Holodex Beta
-            </v-btn>
+            <div class="flex f-col" style="margin-left: 0px;">
+              <v-btn
+                class="text-left mt-4 white--text grey"
+                href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://holodex.net/watch/'+v)})()"
+              >
+                Open in Holodex
+              </v-btn>
+              <v-btn
+                class="text-left mt-4 white--text grey"
+                href="javascript:(function(){var v=new%20URLSearchParams(window.location.search).get('v');v&&(window.location.href='https://staging.holodex.net/watch/'+v)})()"
+              >
+                Open in Holodex Beta
+              </v-btn>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -352,8 +349,20 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .v-expansion-panel-content__wrap {
   padding-top: 12px;
+}
+.flex {
+  display: flex;
+}
+.f-col {
+  flex-direction: column;
+}
+.f-row {
+  flex-direction: row !important;
+}
+.center {
+  justify-content: center;
 }
 </style>
