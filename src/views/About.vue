@@ -1,16 +1,12 @@
 <template>
-  <v-container key="aboutpg" class="pt-3">
-    <v-row>
-      <v-col v-if="!$store.state.isMobile" cols="12">
-        <div class="text-h4">
-          {{ $t("component.mainNav.about") }}
-        </div>
-      </v-col>
-      <!-- STATS -->
-      <v-col cols="12">
-        <stats />
-      </v-col>
-    </v-row>
+  <v-container key="aboutpg" class="d-flex flex-column align-center pt-3">
+    <v-col v-if="!$store.state.isMobile" cols="12">
+      <div class="text-h4">
+        {{ $t("component.mainNav.about") }}
+      </div>
+    </v-col>
+    <!-- STATS -->
+    <stats />
     <v-row class="flex-row">
       <v-col
         cols="12"
