@@ -110,6 +110,18 @@
         <v-divider />
         <v-card-actions>
           <v-text-field v-model="relayInput" dense label="Youtube Link (Channel/Video)" />
+        </v-card-actions>
+
+        <v-card-actions>
+          <v-select
+            v-model="langRelayInput"
+            :items="TL_LANGS"
+            :item-text="item => item.text + ' (' + item.value + ')'"
+            item-value="value"
+            label="Lang"
+            dense
+            return-object
+          />
           <v-btn
             style="margin-left: 10px"
             color="primary"
@@ -321,6 +333,7 @@ export default {
             blacklistInput: "",
             whitelistInput: "",
             relayInput: "",
+            langRelayInput: TL_LANGS[0],
         };
     },
     computed: {
@@ -446,10 +459,16 @@ export default {
             this.selectedChannel = index;
             this.channelInpt = "";
             this.selectedSetting = -1;
+
             this.langInpt = {
                 text: TL_LANGS[0].text,
                 value: TL_LANGS[0].value,
             };
+            this.langRelayInput = {
+                text: TL_LANGS[0].text,
+                value: TL_LANGS[0].value,
+            };
+
             this.saveNotif = "";
             this.setting = [];
             backendApi.relayBotGetSettingChannel(this.channels[this.selectedChannel].id).then(({ status, data }) => {
@@ -505,7 +524,7 @@ export default {
                 this.relayInput = "Sending trigger...";
                 mode = 1;
                 link = `YT_${getVideoIDFromUrl(link).id}`;
-                backendApi.relayBotTrigger(this.channels[this.selectedChannel].id, mode, link).then(({ status }) => {
+                backendApi.relayBotTrigger(this.channels[this.selectedChannel].id, mode, link, this.langRelayInput.value).then(({ status }) => {
                     if (status === 200) {
                         this.relayInput = "Ok!!";
                     }
@@ -516,7 +535,7 @@ export default {
                 this.relayInput = "Sending trigger...";
                 mode = 2;
                 link = `YT_${this.validateChannel(link)}`;
-                backendApi.relayBotTrigger(this.channels[this.selectedChannel].id, mode, link).then(({ status }) => {
+                backendApi.relayBotTrigger(this.channels[this.selectedChannel].id, mode, link, this.langRelayInput.value).then(({ status }) => {
                     if (status === 200) {
                         this.relayInput = "Ok!!";
                     }
