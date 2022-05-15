@@ -385,10 +385,20 @@ export default {
     },
     fetchMChadData(room, pass) {
         return axios.post(
-            "https://repo.mchatx.org/HolodexDahcM/",
+            "https://repo.mchatx.org/v2/HolodexDahcM/data",
             {
                 Room: room,
                 Pass: pass,
+            },
+        );
+    },
+    fetchMChadEntries(room, pass, link) {
+        return axios.post(
+            "https://repo.mchatx.org/v2/HolodexDahcM/entries",
+            {
+                Room: room,
+                Pass: pass,
+                Link: link,
             },
         );
     },
