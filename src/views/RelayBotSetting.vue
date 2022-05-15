@@ -14,6 +14,15 @@
       >
         login discord
       </v-btn>
+      <v-btn
+        color="secondary"
+        elevation="9"
+        large
+        style="margin-left:10px"
+        href="https://discord.com/api/oauth2/authorize?client_id=826055534318583858&permissions=274877910016&scope=bot%20applications.commands"
+      >
+        Invite bot
+      </v-btn>
     </v-card>
     <v-card
       v-if="loggedIn"
@@ -39,20 +48,13 @@
             </v-btn>
           </div>
         </v-card>
+        <v-card-subtitle style="margin-top:auto" class="justify-center">
+          Server not shown if you have insufficient privilege (admin or kick/ban people)
+        </v-card-subtitle>
       </v-card>
-      <v-card v-if="selectedGuild !== -1" style="height: 100%; border-left: 10px solid black" :width="guilds[selectedGuild].bot && guilds[selectedGuild].admin ? '25%' : '70%'">
+      <v-card v-if="selectedGuild !== -1" style="height: 100%; border-left: 10px solid black" :width="guilds[selectedGuild].bot ? '25%' : '70%'">
         <v-card
-          v-if="!guilds[selectedGuild].admin"
-          class="d-flex flex-column"
-          height="100%"
-          width="100%"
-        >
-          <v-card-title style="word-break: break-word" class="justify-center">
-            You don't have enough privilege to set up bot in this server.
-          </v-card-title>
-        </v-card>
-        <v-card
-          v-else-if="!guilds[selectedGuild].bot"
+          v-if="!guilds[selectedGuild].bot"
           class="d-flex flex-column"
           height="100%"
           width="100%"
@@ -65,7 +67,7 @@
               color="primary"
               elevation="9"
               large
-              href="https://discord.com/api/oauth2/authorize?client_id=826055534318583858&permissions=274877910016&scope=bot"
+              href="https://discord.com/api/oauth2/authorize?client_id=826055534318583858&permissions=274877910016&scope=bot%20applications.commands"
             >
               Invite Bot
             </v-btn>
@@ -127,9 +129,10 @@
             </v-icon>
           </v-btn>
         </v-card-actions>
+        <v-divider />
         <v-simple-table
           fixed-header
-          style="max-height:66vh"
+          style="max-height:33vh"
           width="auto"
         >
           <thead>
@@ -161,6 +164,7 @@
             </tr>
           </tbody>
         </v-simple-table>
+        <v-divider />
         <v-card class="d-flex justify-center">
           <v-card>
             <v-btn large color="primary" @click="saveSetting();">
@@ -258,10 +262,9 @@ export default {
                     this.selectedGuild = -1;
                     this.loggedIn = true;
                     this.accessToken = data.access_token;
-                    this.guilds = data.guilds.map((e) => ({
+                    this.guilds = data.guilds.filter((e) => e.admin).map((e) => ({
                         id: e.id,
                         name: e.name,
-                        admin: e.admin,
                         bot: false,
                     }));
                     this.checkGuild();
@@ -287,7 +290,7 @@ export default {
             this.selectedGuild = index;
             this.selectedChannel = -1;
 
-            if ((this.guilds[this.selectedGuild].bot) && (this.guilds[this.selectedGuild].admin)) {
+            if (this.guilds[this.selectedGuild].bot) {
                 backendApi.relayBotGetChannels(this.guilds[this.selectedGuild].id).then(({ status, data }) => {
                     if (status === 200) {
                         this.channels = data.map((e) => ({
@@ -311,10 +314,10 @@ export default {
             this.setting = [];
             backendApi.relayBotGetSettingChannel(this.channels[this.selectedChannel].id).then(({ status, data }) => {
                 if (status === 200) {
-                    this.setting = data.SubChannel.map((e) => {
+                    this.setting = data.SubChannel ? data.SubChannel.map((e) => {
                         if (!e.lang) { e.lang = "en"; }
                         return e;
-                    });
+                    }) : [];
                 }
             }).catch((err) => {
                 console.log(err);
