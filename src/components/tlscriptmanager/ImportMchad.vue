@@ -268,6 +268,7 @@ export default {
                 this.working = true;
 
                 for (let i = 0; i < this.archiveData.length; i += 1) {
+                    const startRealtime = Date.now();
                     if (i >= (this.currPage + 1) * 20) {
                         this.currPage += 1;
                     }
@@ -371,6 +372,9 @@ export default {
                             }
                         }
                     }
+                    if (Date.now() - startRealtime < 7500) {
+                        await this.wait(7500 - Date.now() + startRealtime);
+                    }
                 }
 
                 if (this.archiveData.filter((e) => (e.uploaded !== 1)).length !== 0) {
@@ -381,6 +385,10 @@ export default {
                     this.$emit("close", { upload: true });
                 }
             }
+        },
+        wait(time) {
+            // eslint-disable-next-line no-promise-executor-return
+            return new Promise((resolve) => setTimeout(resolve, time));
         },
     },
 };
