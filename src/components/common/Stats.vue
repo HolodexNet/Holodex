@@ -131,7 +131,7 @@ export default {
             return `${num.toString().length * 33.5}px`;
         },
     },
-};// k
+};
 </script>
 
 <style scoped>
