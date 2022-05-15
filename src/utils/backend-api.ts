@@ -434,5 +434,12 @@ export default {
             SubChannel: data,
         });
     },
+    relayBotTrigger(channelAddress, mode, link) {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/trigger", {
+            Address: channelAddress,
+            mode,
+            link,
+        });
+    },
     //= ========= RELAY BOT DISCORD LOGIN ==========
 };

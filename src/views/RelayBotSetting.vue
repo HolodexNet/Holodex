@@ -107,8 +107,23 @@
         <v-card-title class="justify-center" style="word-break: break-word">
           {{ 'Setting (' + channels[selectedChannel].name + ')' }}
         </v-card-title>
+        <v-divider />
         <v-card-actions>
-          <v-text-field v-model="channelInpt" label="Youtube Channel" />
+          <v-text-field v-model="relayInput" dense label="Youtube Link (Channel/Video)" />
+          <v-btn
+            style="margin-left: 10px"
+            color="primary"
+            @click="triggerRelay();"
+          >
+            Relay TL
+          </v-btn>
+        </v-card-actions>
+        <v-divider />
+        <v-card-title class="justify-center">
+          Relay Subscription
+        </v-card-title>
+        <v-card-actions>
+          <v-text-field v-model="channelInpt" dense label="Youtube Channel" />
         </v-card-actions>
         <v-card-actions>
           <v-select
@@ -117,22 +132,22 @@
             :item-text="item => item.text + ' (' + item.value + ')'"
             item-value="value"
             label="Lang"
+            dense
             return-object
           />
           <v-btn
-            icon
-            lg
+            style="margin-left: 10px"
+            color="primary"
             @click="addSetting();"
           >
             <v-icon>
               {{ mdiPlusCircle }}
             </v-icon>
+            Add Subscription
           </v-btn>
         </v-card-actions>
         <v-divider />
         <v-simple-table
-          fixed-header
-          style="max-height:33vh"
           width="auto"
         >
           <thead>
@@ -147,14 +162,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(set, index) in setting" :key="'s' +index">
+            <tr
+              v-for="(set, index) in setting"
+              :key="'s' +index"
+              style="cursor:pointer"
+              @click="selectSetting(index);"
+            >
               <td>{{ set.link }}</td>
               <td>{{ set.lang }}</td>
               <td>
                 <v-btn
                   icon
                   lg
-                  @click="setting.splice(index, 1);"
+                  @click="selectedSetting = -1; setting.splice(index, 1);"
                 >
                   <v-icon>
                     {{ mdiMinusCircle }}
@@ -165,7 +185,96 @@
           </tbody>
         </v-simple-table>
         <v-divider />
-        <v-card class="d-flex justify-center">
+        <v-card v-if="selectedSetting >= 0 && selectedSetting < setting.length" class="d-flex">
+          <v-card
+            class="d-flex flex-column"
+            width="50%"
+            style="border: 1px solid white; padding: 5px 10px 5px 10px;"
+          >
+            <v-card-title>Blacklist</v-card-title>
+            <v-simple-table
+              width="100%"
+              height="100%"
+            >
+              <thead>
+                <tr>
+                  <th class="text-left" style="width: 100%">
+                    Translator Name
+                  </th>
+                  <th class="text-left" />
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(dt, index) in setting[selectedSetting].blacklist" :key="'bl' +index">
+                  <td>{{ dt }}</td>
+                  <td>
+                    <v-btn
+                      icon
+                      lg
+                      @click="setting[selectedSetting].blacklist.splice(index, 1);"
+                    >
+                      <v-icon>
+                        {{ mdiMinusCircle }}
+                      </v-icon>
+                    </v-btn>
+                  </td>
+                </tr>
+              </tbody>
+            </v-simple-table>
+            <v-text-field
+              v-model="blacklistInput"
+              label="Translator Name"
+              :append-icon="mdiPlusCircle"
+              @click:append="addBlacklist()"
+              @keypress.enter="addBlacklist()"
+            />
+          </v-card>
+          <v-card
+            class="d-flex flex-column"
+            width="50%"
+            style="border: 1px solid white; padding: 5px 10px 5px 10px;"
+          >
+            <v-card-title>Whitelist</v-card-title>
+            <v-simple-table
+              width="100%"
+              height="100%"
+            >
+              <thead>
+                <tr>
+                  <th class="text-left" style="width: 100%">
+                    Translator Name
+                  </th>
+                  <th class="text-left" />
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(dt, index) in setting[selectedSetting].whitelist" :key="'wl' +index">
+                  <td>{{ dt }}</td>
+                  <td>
+                    <v-btn
+                      icon
+                      lg
+                      @click="setting[selectedSetting].whitelist.splice(index, 1);"
+                    >
+                      <v-icon>
+                        {{ mdiMinusCircle }}
+                      </v-icon>
+                    </v-btn>
+                  </td>
+                </tr>
+              </tbody>
+            </v-simple-table>
+            <v-text-field
+              v-model="whitelistInput"
+              label="Translator Name"
+              :append-icon="mdiPlusCircle"
+              @click:append="addWhitelist();"
+              @keypress.enter="addWhitelist();"
+            />
+          </v-card>
+        </v-card>
+        <v-divider />
+        <v-card class="d-flex justify-center" style="margin-top: 10px">
           <v-card>
             <v-btn large color="primary" @click="saveSetting();">
               Save
@@ -182,6 +291,7 @@
 import backendApi from "@/utils/backend-api";
 import { TL_LANGS } from "@/utils/consts";
 import { mdiPlusCircle, mdiMinusCircle } from "@mdi/js";
+import { getVideoIDFromUrl } from "@/utils/functions";
 
 export default {
     name: "RelayBotSetting",
@@ -207,6 +317,10 @@ export default {
             selectedGuild: -1,
             selectedChannel: -1,
             saveNotif: "",
+            selectedSetting: -1,
+            blacklistInput: "",
+            whitelistInput: "",
+            relayInput: "",
         };
     },
     computed: {
@@ -303,9 +417,35 @@ export default {
                 });
             }
         },
+        selectSetting(index) {
+            this.selectedSetting = index;
+            this.blacklistInput = "";
+            this.whitelistInput = "";
+        },
+        addBlacklist() {
+            if (this.blacklistInput.trim() !== "") {
+                if (!this.setting[this.selectedSetting].blacklist.includes(this.blacklistInput.trim())) {
+                    this.setting[this.selectedSetting].blacklist.push(this.blacklistInput.trim());
+                    this.setting[this.selectedSetting].whitelist = this.setting[this.selectedSetting].whitelist.filter((e) => e !== this.blacklistInput.trim());
+                } else {
+                    this.blacklistInput = "";
+                }
+            }
+        },
+        addWhitelist() {
+            if (this.whitelistInput.trim() !== "") {
+                if (!this.setting[this.selectedSetting].whitelist.includes(this.whitelistInput.trim())) {
+                    this.setting[this.selectedSetting].whitelist.push(this.whitelistInput.trim());
+                    this.setting[this.selectedSetting].blacklist = this.setting[this.selectedSetting].blacklist.filter((e) => e !== this.whitelistInput.trim());
+                } else {
+                    this.whitelistInput = "";
+                }
+            }
+        },
         loadSetting(index) {
             this.selectedChannel = index;
             this.channelInpt = "";
+            this.selectedSetting = -1;
             this.langInpt = {
                 text: TL_LANGS[0].text,
                 value: TL_LANGS[0].value,
@@ -316,6 +456,8 @@ export default {
                 if (status === 200) {
                     this.setting = data.SubChannel ? data.SubChannel.map((e) => {
                         if (!e.lang) { e.lang = "en"; }
+                        if (!e.whitelist) { e.whitelist = []; }
+                        if (!e.blacklist) { e.blacklist = []; }
                         return e;
                     }) : [];
                 }
@@ -354,6 +496,34 @@ export default {
             }).catch((err) => {
                 this.saveNotif = err;
             });
+        },
+        triggerRelay() {
+            let mode = 0;
+            let link = this.relayInput;
+
+            if (getVideoIDFromUrl(link)) {
+                this.relayInput = "Sending trigger...";
+                mode = 1;
+                link = `YT_${getVideoIDFromUrl(link).id}`;
+                backendApi.relayBotTrigger(this.channels[this.selectedChannel].id, mode, link).then(({ status }) => {
+                    if (status === 200) {
+                        this.relayInput = "Ok!!";
+                    }
+                }).catch(() => {
+                    this.relayInput = "Not Ok!!";
+                });
+            } else if (this.validateChannel(link)) {
+                this.relayInput = "Sending trigger...";
+                mode = 2;
+                link = `YT_${this.validateChannel(link)}`;
+                backendApi.relayBotTrigger(this.channels[this.selectedChannel].id, mode, link).then(({ status }) => {
+                    if (status === 200) {
+                        this.relayInput = "Ok!!";
+                    }
+                }).catch(() => {
+                    this.relayInput = "Not Ok!!";
+                });
+            }
         },
     },
 };
