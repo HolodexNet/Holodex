@@ -214,7 +214,6 @@ export default {
             return this.$store.state.settings.darkMode;
         },
         isWatchPage() {
-            console.log(this.$route.name);
             return ["watch_id", "watch", "edit_video", "multiview", "tlclient", "scripteditor"].includes(this.$route.name);
         },
         isMultiView() {
