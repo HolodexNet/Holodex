@@ -57,8 +57,6 @@ component:
     uploadScript: Unggah Naskah TL
   videoDescription:
     description: Deskripsi
-  video:
-    comment: { }
   description:
     showLess: Tampilkan lebih sedikit
     showMore: Tampilkan lebih banyak
@@ -428,22 +426,14 @@ views:
   tlClient:
     menu:
       title: Menu
-      setting: Pengaturan
-      loadVideo: Muat Video
-      unloadVideo: Sembunyikan Video
-      loadChat: Muat Chat
-      unloadChat: Sembunyikan Chat
     tlControl:
       enterBtn: Masukkan
       prefix: Awalan
       suffix: Akhiran
       fontColour: Warna Font
       outlineColour: Warna Outline
-      localPrefix: Awalan Lokal
       addProfile: Tambah Profil
       removeProfile: Hapus Profil
-      shiftUp: Geser Ke Atas
-      shiftDown: Geser Ke Bawah
       showSetting: Pengaturan
       hideSetting: Sembunyikan
     addProfilePanel:

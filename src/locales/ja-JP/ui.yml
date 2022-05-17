@@ -419,9 +419,6 @@ views:
   tlClient:
     menu:
       title: メニュー
-      setting: 設定
-      loadVideo: 動画を読み込む
-      loadChat: チャットを読み込む
     tlControl:
       showSetting: 設定
     settingPanel:

@@ -428,22 +428,22 @@ views:
   tlClient:
     menu:
       title: Menu
-      setting: Setting
-      loadVideo: Woad bideo
-      unloadVideo: Unwoad bideo
-      loadChat: Woad chat
-      unloadChat: Unwoad chat
+      setting: Tldex room settings
+      loadVideo: Show bideo
+      unloadVideo: Hide bideo
+      loadChat: Add yt chat to bwoadcast tl
+      unloadChat: Detach fwom yt chat
     tlControl:
       enterBtn: Entew
       prefix: Pwefix
       suffix: Suffix
       fontColour: Font cowow
       outlineColour: Outwine cowor
-      localPrefix: Wocaw pwefix
+      localPrefix: Wanguage tag in chat
       addProfile: Add pwofiwe
       removeProfile: Wemove pwofiwe
-      shiftUp: Shift up
-      shiftDown: Shift down
+      shiftUp: Shift pwofiwe up
+      shiftDown: Shift pwofiwe down
       showSetting: Setting
       hideSetting: Hide
     addProfilePanel:

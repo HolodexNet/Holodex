@@ -22,6 +22,21 @@
       <v-card-subtitle>
         {{ loginText }}
       </v-card-subtitle>
+      <v-card-actions class="d-flex">
+        <v-btn style="margin-left:auto" @click="loadPrev()">
+          <v-icon>
+            {{ mdiArrowLeftBold }}
+          </v-icon>
+        </v-btn>
+        <v-card-subtitle>
+          {{ (currPage*20 + 1) + " ... " + ( endEntries ) }}
+        </v-card-subtitle>
+        <v-btn @click="loadNext();">
+          <v-icon>
+            {{ mdiArrowRightBold }}
+          </v-icon>
+        </v-btn>
+      </v-card-actions>
     </v-card>
     <v-simple-table
       fixed-header
@@ -52,7 +67,7 @@
         </tr>
       </thead>
       <tbody>
-        <template v-for="(dt, index) in archiveData">
+        <template v-for="(dt, index) in archiveData.slice(currPage*20, (currPage + 1)*20)">
           <tr :key="index + 'dt'">
             <td>{{ dt.nick }}</td>
             <td>
@@ -72,7 +87,7 @@
                 return-object
               />
             </td>
-            <td>{{ dt.entries.length }}</td>
+            <td>{{ dt.entries }}</td>
             <td>
               <v-icon v-if="dt.uploaded === 1" color="success">
                 {{ mdiCheckCircle }}
@@ -88,7 +103,7 @@
               </v-icon>
             </td>
             <td>
-              <v-icon style="cursor:pointer;" color="error" @click="archiveData.splice(index, 1);">
+              <v-icon style="cursor:pointer;" color="error" @click="archiveData.splice(currPage*20 + index, 1);">
                 {{ mdiCloseBox }}
               </v-icon>
             </td>
@@ -122,7 +137,7 @@
 import backendApi from "@/utils/backend-api";
 import { TL_LANGS } from "@/utils/consts";
 import { getVideoIDFromUrl } from "@/utils/functions";
-import { mdiMinusCircle, mdiDotsCircle, mdiCloseCircle, mdiCheckCircle, mdiCloseBox } from "@mdi/js";
+import { mdiMinusCircle, mdiDotsCircle, mdiCloseCircle, mdiCheckCircle, mdiCloseBox, mdiArrowLeftBold, mdiArrowRightBold } from "@mdi/js";
 
 export default {
     data() {
@@ -132,6 +147,8 @@ export default {
             mdiCloseCircle,
             mdiCheckCircle,
             mdiCloseBox,
+            mdiArrowLeftBold,
+            mdiArrowRightBold,
             TL_LANGS,
             room: "",
             pass: "",
@@ -146,11 +163,17 @@ export default {
                 lang:
                 errorMsg:
             */
+            currPage: 0,
+            roomSave: "",
+            passSave: "",
         };
     },
     computed: {
         userdata() {
             return this.$store.state.userdata;
+        },
+        endEntries() {
+            return ((this.currPage + 1) * 20 < this.archiveData.length) ? ((this.currPage + 1) * 20 + 1) : this.archiveData.length;
         },
     },
     methods: {
@@ -160,9 +183,23 @@ export default {
             this.loginText = "";
             this.archiveData = [];
             this.working = false;
+            this.currPage = 0;
+        },
+        loadPrev() {
+            if (this.currPage > 0) {
+                this.currPage -= 1;
+            }
+        },
+        loadNext() {
+            if ((this.currPage + 1) * 20 < this.archiveData.length) {
+                this.currPage += 1;
+            }
         },
         tryFetchMChad() {
             this.loginText = "";
+            this.currPage = 0;
+            this.roomSave = "";
+            this.passSave = "";
             this.archiveData = [];
             backendApi.fetchMChadData(this.room, this.pass).then((data) => {
                 if (data.status !== 200) {
@@ -170,6 +207,8 @@ export default {
                     this.pass = "";
                     this.loginText = data.data;
                 } else {
+                    this.roomSave = this.room;
+                    this.passSave = this.pass;
                     this.room = "";
                     this.pass = "";
                     this.archiveData = data.data.map((e) => {
@@ -185,8 +224,9 @@ export default {
                         }
                         return {
                             streamLink: e.StreamLink ? e.StreamLink : "",
-                            entries: e.Entries.Entries ? this.preprocessEntries(e.Entries.Entries) : [],
+                            entries: e.Entries ? e.Entries : 0,
                             nick: e.Nick ? e.Nick : "",
+                            link: e.Link,
                             uploaded: -2,
                             lang: lang || TL_LANGS[0],
                             errorMsg: "",
@@ -228,13 +268,18 @@ export default {
                 this.working = true;
 
                 for (let i = 0; i < this.archiveData.length; i += 1) {
+                    const startRealtime = Date.now();
+                    if (i >= (this.currPage + 1) * 20) {
+                        this.currPage += 1;
+                    }
                     // I KNOW THIS IS WEIRD, BUT ESLINT WON'T ALLOW ME USE continue;
 
                     // CHECK IF UPLOADED
                     if (this.archiveData[i].uploaded !== 1) {
                         // CHECK ENTRIES
-                        if (!this.archiveData[i].entries.length === 0) {
-                            this.archiveData[i].uploaded = 1;
+                        if (this.archiveData[i].entries === 0) {
+                            this.archiveData[i].errorMsg = "MChad entries fetch error";
+                            this.archiveData[i].uploaded = 0;
                         } else {
                             // CHECK STREAM LINK
                             this.archiveData[i].uploaded = -1;
@@ -251,46 +296,84 @@ export default {
                                 } else {
                                     const startTime = !res.data.start_actual ? Date.parse(res.data.available_at) : Date.parse(res.data.start_actual);
 
-                                    // GET CURRENT TL AND LOG DELETE
-                                    const processes = await (await backendApi.chatHistory(parseVideoID.id, {
-                                        lang: this.archiveData[i].lang.value,
-                                        verified: 0,
-                                        moderator: 0,
-                                        vtuber: 0,
-                                        limit: 100000,
-                                        mode: 1,
-                                        creator_id: this.userdata.user.id,
-                                    })).data.map((e) => ({
-                                        type: "Delete",
-                                        data: {
-                                            id: e.id,
-                                        },
-                                    }));
-
-                                    // ADD NEW TL
-                                    for (let idx = 0; idx < this.archiveData[i].entries.length; idx += 1) {
-                                        processes.push({
-                                            type: "Add",
-                                            data: {
-                                                tempid: `I${idx}`,
-                                                name: this.userdata.user.username,
-                                                timestamp: Math.floor(startTime + this.archiveData[i].entries[idx].Stime),
-                                                message: this.archiveData[i].entries[idx].Stext,
-                                            },
-                                        });
-                                    }
-
-                                    res = await backendApi.postTLLog(parseVideoID.id, this.userdata.jwt, processes, this.archiveData[i].lang.value);
+                                    res = await backendApi.fetchMChadEntries(this.roomSave, this.passSave, this.archiveData[i].link);
                                     if (res.status !== 200) {
-                                        this.archiveData[i].errorMsg = "Fail uploading data";
+                                        this.archiveData[i].errorMsg = "Unable to fetch entries";
+                                        this.archiveData[i].uploaded = 0;
+                                    } else if (res.data.length === 0) {
+                                        this.archiveData[i].errorMsg = "Unable to fetch entries";
                                         this.archiveData[i].uploaded = 0;
                                     } else {
-                                        this.archiveData[i].uploaded = 1;
-                                        this.archiveData[i].errorMsg = "";
+                                        const entries = this.preprocessEntries(res.data);
+
+                                        // GET CURRENT TL
+                                        const currEntries = await (await backendApi.chatHistory(parseVideoID.id, {
+                                            lang: this.archiveData[i].lang.value,
+                                            verified: 0,
+                                            moderator: 0,
+                                            vtuber: 0,
+                                            limit: 100000,
+                                            mode: 1,
+                                            creator_id: this.userdata.user.id,
+                                        })).data;
+
+                                        const processes = [];
+
+                                        // ADD NEW TL
+                                        for (let idx = 0; idx < entries.length; idx += 1) {
+                                            processes.push({
+                                                type: "Add",
+                                                data: {
+                                                    tempid: `I${idx}`,
+                                                    name: this.userdata.user.username,
+                                                    timestamp: Math.floor(startTime + entries[idx].Stime),
+                                                    message: entries[idx].Stext,
+                                                },
+                                            });
+                                        }
+
+                                        // REMOVE DOUBLE
+                                        for (let idx = 0; idx < currEntries.length; idx += 1) {
+                                            for (let j = 0; j < processes.length; j += 1) {
+                                                if (
+                                                    (processes[j].data.name === this.userdata.user.username)
+                                                    && (processes[j].data.message === currEntries[idx].message)
+                                                    && (processes[j].data.timestamp === Number(currEntries[idx].timestamp))
+                                                ) {
+                                                    processes.splice(j, 1);
+                                                    break;
+                                                } else if (j === processes.length - 1) {
+                                                    processes.push({
+                                                        type: "Delete",
+                                                        data: {
+                                                            id: currEntries[idx].id,
+                                                        },
+                                                    });
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (processes.length === 0) {
+                                            this.archiveData[i].uploaded = 1;
+                                            this.archiveData[i].errorMsg = "";
+                                        } else {
+                                            res = await backendApi.postTLLog(parseVideoID.id, this.userdata.jwt, processes, this.archiveData[i].lang.value);
+                                            if (res.status !== 200) {
+                                                this.archiveData[i].errorMsg = "Fail uploading data";
+                                                this.archiveData[i].uploaded = 0;
+                                            } else {
+                                                this.archiveData[i].uploaded = 1;
+                                                this.archiveData[i].errorMsg = "";
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
+                    }
+                    if (Date.now() - startRealtime < 7500) {
+                        await this.wait(7500 - Date.now() + startRealtime);
                     }
                 }
 
@@ -302,6 +385,10 @@ export default {
                     this.$emit("close", { upload: true });
                 }
             }
+        },
+        wait(time) {
+            // eslint-disable-next-line no-promise-executor-return
+            return new Promise((resolve) => setTimeout(resolve, time));
         },
     },
 };

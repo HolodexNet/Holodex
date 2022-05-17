@@ -385,10 +385,20 @@ export default {
     },
     fetchMChadData(room, pass) {
         return axios.post(
-            "https://repo.mchatx.org/HolodexDahcM/",
+            "https://repo.mchatx.org/v2/HolodexDahcM/data",
             {
                 Room: room,
                 Pass: pass,
+            },
+        );
+    },
+    fetchMChadEntries(room, pass, link) {
+        return axios.post(
+            "https://repo.mchatx.org/v2/HolodexDahcM/entries",
+            {
+                Room: room,
+                Pass: pass,
+                Link: link,
             },
         );
     },
@@ -422,6 +432,14 @@ export default {
         return axios.post("https://repo.mchatx.org/holodexproxybot/submit", {
             Address: channelAddress,
             SubChannel: data,
+        });
+    },
+    relayBotTrigger(channelAddress, mode, link, lang) {
+        return axios.post("https://repo.mchatx.org/holodexproxybot/trigger", {
+            Address: channelAddress,
+            mode,
+            link,
+            lang,
         });
     },
     //= ========= RELAY BOT DISCORD LOGIN ==========
