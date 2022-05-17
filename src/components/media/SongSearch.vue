@@ -33,7 +33,7 @@
             🎵 {{ x.item.trackName }} [{{ formatDuration(x.item.trackTimeMillis) }}]
           </v-list-item-subtitle>
           <v-list-item-subtitle class="text--caption">
-            🎤 {{ x.item.artistName }} / {{ x.item.collectionName }} / {{ x.item.releaseDate.slice(0, 7) }}
+            🎤 {{ x.item.artistName }} / {{ x.item.collectionName }} {{ x.item.releaseDate ? ' / '+x.item.releaseDate.slice(0, 7) : '' }}
           </v-list-item-subtitle>
         </v-list-item-content>
       </div>
