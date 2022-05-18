@@ -16,7 +16,7 @@
               item-text="name"
               :label="$t('component.search.type.org')"
               :prepend-icon="mdiAccountMultiple"
-              @click="loadOrgs"
+              @focus="loadOrgs"
             />
           </v-col>
 
