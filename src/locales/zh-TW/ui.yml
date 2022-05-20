@@ -430,6 +430,7 @@ views:
       setting: TLDex 房間設定
       loadVideo: 顯示影片
       unloadVideo: 隱藏影片
+      unloadChat: 從YouTube聊天室中分離
     tlControl:
       enterBtn: 輸入
       prefix: 前綴
