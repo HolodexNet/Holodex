@@ -52,6 +52,9 @@ component:
     typeScheduledYT: Siaran Terancang
     typeExternalStream: Siaran Luar
     typeEventPlaceholder: Acara Terancang
+    openClient: Buka Pelanggan Terjemahan
+    openScriptEditor: Buka Penyunting Skrip
+    uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
   description:
