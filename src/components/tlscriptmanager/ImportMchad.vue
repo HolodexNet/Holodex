@@ -1,7 +1,9 @@
 <template>
   <v-container>
     <v-card-title>Import From Mchad</v-card-title>
-    <v-card class="d-flex flex-column">
+    <h3>Temporarily Disabled</h3>
+    <h3>Please check back when new import flow is ready</h3>
+    <!-- <v-card class="d-flex flex-column">
       <div class="d-flex flex-row">
         <v-text-field
           v-model="room"
@@ -129,7 +131,7 @@
       >
         {{ working ? "Processing" : "Upload" }}
       </v-btn>
-    </v-card-actions>
+    </v-card-actions> -->
   </v-container>
 </template>
 
