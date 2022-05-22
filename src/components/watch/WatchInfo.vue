@@ -59,14 +59,13 @@
         class="mx-1"
         style="text-transform: capitalize"
       >
-        • <a
-          href="/search"
+        • <router-link
+          :to="searchTopicUrl"
           style="text-decoration: none"
-          @click.prevent="goToSearchPage()"
         >
           <v-icon small>{{ icons.mdiAnimationPlay }}</v-icon>
           {{ video.topic_id }}
-        </a>
+        </router-link>
       </span>
       <!-- <v-icon>{{ icons.mdiRefresh }}</v-icon> -->
     </v-card-subtitle>
@@ -239,6 +238,16 @@ export default {
                 },
             );
         },
+        searchTopicUrl() {
+            const topic = this.video.topic_id;
+            const capitalizedTopic = topic[0].toUpperCase() + topic.slice(1);
+            const { org } = this.video.channel;
+            let path = `/search?q=type,value,text%0Atopic,${topic},${capitalizedTopic}`;
+            if (org) {
+                path += `%0Aorg,${org},${org}`;
+            }
+            return path;
+        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -278,16 +287,6 @@ export default {
                 this.$emit("timeJump", e.target.getAttribute("data-time"));
                 e.preventDefault();
             }
-        },
-        goToSearchPage() {
-            const topic = this.video.topic_id;
-            const capitalizedTopic = topic[0].toUpperCase() + topic.slice(1);
-            const { org } = this.video.channel;
-            let path = `/search?q=type,value,text%0Atopic,${topic},${capitalizedTopic}`;
-            if (org) {
-                path += `%0Aorg,${org},${org}`;
-            }
-            this.$router.push({ path });
         },
     },
 };
