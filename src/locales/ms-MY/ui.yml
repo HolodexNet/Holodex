@@ -299,9 +299,23 @@ views:
         disconnectedToChat: Terputus
       archiveNeedExtension: >-
         Ruangan sembang terarkib hanya berfungsi apabila pelanjutan/sambungan {0} atau mana-mana pelanjutan/sambungan pihak ketiga lain.
+      hideSpoiler: Sembunyikan Terjemahan Akan Datang
     removeFromPlaylist: Alih keluar video daripada senarai main semasa
     saveToPlaylist: Simpan video pada senarai main semasa
     likeOnYoutube: Berikan tanda suka di YouTube
+    uploadPanel:
+      title: Muat Naik Skrip
+      usernameText: Terjemahan dimuat naik dengan nama pengguna ini
+      usernameChange: Ubah
+      tlLang: Bahasa Terjemahan
+      headerStart: Mula
+      headerEnd: Tamat
+      headerText: Teks
+      cancelBtn: Batal
+      okBtn: Baik
+      notifTextErr: GAGAL MENGHURAIKAN FAIL (FAIL ROSAK?)
+      notifTextParsing: Sedang menghuraikan fail...
+      notifTextErrExt: Sambungan fail tidak dikenali.
   favorites:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
@@ -334,6 +348,11 @@ views:
       - Log masuk dengan Google
       - Log masuk dengan Discord
       - Log masuk dengan Twitter
+    username: Nama Pengguna
+    usernameBtn:
+      - Ubah
+      - Sahkan
+      - Simpan
   multiview:
     confirmOverwrite: Ubah tataletak semasa?
     confirmOverwriteYes: Sahkan
@@ -404,6 +423,48 @@ views:
       three: Memperbaiki bocoran ingatan ruangan sembang YouTube
       four: >-
         Memperbaiki bendera percubaan di pemain YouTube (Contoh: mematikan berbilang siaran, gambar kenit tidak dipaparkan ketika menunggu siaran) dan lain-lain lagi!
+  tlClient:
+    menu:
+      title: Menu
+      setting: Tetapan Bilik TLDex
+      loadVideo: Paparkan Video
+      unloadVideo: Sembunyikan Video
+      loadChat: Gabungkan sembang YouTube dengan terjemahan siaran
+      unloadChat: Pisahkan dengan sembang YouTube
+    tlControl:
+      enterBtn: Masukkan
+      prefix: Awalan
+      suffix: Akhiran
+      fontColour: Warna Pasuan
+      outlineColour: Warna Garis Bentuk
+      localPrefix: Tanda Bahasa di Ruangan Sembang
+      addProfile: Tambah Profil
+      removeProfile: Hapus Profil
+      shiftUp: Alih Profil ke Atas
+      shiftDown: Alih Profil ke Bawah
+      showSetting: Tetapan
+      hideSetting: Sembunyikan
+    addProfilePanel:
+      title: Tambah Profil Baru
+      inputLabel: Nama Profil
+    settingPanel:
+      title: Tetapan
+      mainStreamLink: Pautan Siaran Utama
+      collabLink: Pautan Siarsama
+    removeProfileTitle: Sahkan hapus profil
+    loadChatPanel:
+      title: Muat Sembang
+      inputLabel: Pautan Siaran
+    unloadChatTitle: Punggah SEMUA sembang yang masih berlangsung?
+    pangram: Melur seorang penghidap xenofobia universal yang takut pada warga jazirah, contohnya Qatar
+    cancelBtn: Batal
+    okBtn: Baik
+  scriptEditor:
+    menu:
+      save: Simpan
+      clearAll: Hapus Skrip
+      exportFile: Eksport Fail
+      importFile: Import Fail
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
