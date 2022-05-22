@@ -43,15 +43,15 @@
           <v-card-text class="d-flex flex-row align-center">
             <v-text-field
               v-model="usernameInput"
-              :disabled="usernameInputMode === 1 ? false : true"
-              :filled="usernameInputMode === 1 ? false : true"
+              :disabled="!editingUsername"
+              :filled="!editingUsername"
               rounded
               outlined
               dense
               hide-details
             />
-            <v-btn :color="usernameInputBtnColour" style="margin-left:10px" @click="usernameInputBtn()">
-              {{ usernameInputBtnText }}
+            <v-btn :color="editingUsername ? 'success' : 'primary'" style="margin-left:10px" @click="editUsername">
+              {{ editingUsername ? $t("views.login.usernameBtn.2") : $t("views.login.usernameBtn.0") }}
             </v-btn>
           </v-card-text>
         </v-card-text>
@@ -139,56 +139,24 @@ export default {
     mixins: [copyToClipboard],
     data() {
         return {
-            usernameInput: "",
-            usernameInputMode: 0,
+            editingUsername: false,
+            editUsernameInput: "",
         };
     },
     computed: {
         userdata() {
             return this.$store.state.userdata;
         },
-        usernameInputBtnColour() {
-            switch (this.usernameInputMode) {
-                case 0:
-                    return "primary";
-
-                case 1:
-                    return "warning";
-
-                case 2:
-                    return "success";
-
-                default:
-                    return "primary";
-            }
-        },
-        usernameInputBtnText() {
-            switch (this.usernameInputMode) {
-                case 0:
-                    return (this.$t("views.login.usernameBtn.0"));
-
-                case 1:
-                    return (this.$t("views.login.usernameBtn.1"));
-
-                case 2:
-                    return (this.$t("views.login.usernameBtn.2"));
-
-                default:
-                    return (this.$t("views.login.usernameBtn.0"));
-            }
-        },
-    },
-    watch: {
-        // eslint-disable-next-line func-names
-        $route(e) {
-            if (e.meta.prevPath && e.meta.prevPath === "/login") {
-                this.usernameInput = this.userdata.user.username;
-                this.usernameInputMode = 0;
-            }
+        usernameInput: {
+            get() {
+                return this.editingUsername ? this.editUsernameInput : this.userdata?.user?.username;
+            },
+            set(val) {
+                this.editUsernameInput = val;
+            },
         },
     },
     async mounted() {
-        this.usernameInput = this.userdata.user.username;
         const params = new URL(window.location.href).searchParams;
         const service = params.get("service");
         const jwt = params.get("jwt");
@@ -263,17 +231,19 @@ export default {
             this.forceUserUpdate();
             /* eslint-enable no-restricted-globals, no-alert */
         },
-        async usernameInputBtn() {
-            if (this.usernameInputMode === 2) {
-                const res = await api.changeUsername(this.userdata.jwt, this.usernameInput);
-                if (res === false) {
-                    console.log(res);
-                } else if (res.data && res.data === 1) {
-                    this.forceUserUpdate();
-                    this.usernameInputMode = 0;
+        async editUsername() {
+            if (this.editingUsername) {
+                this.editingUsername = false;
+                try {
+                    const res = await api.changeUsername(this.userdata.jwt, this.editUsernameInput);
+                    if (res && res.status === 200) { this.forceUserUpdate(); }
+                } catch (e) {
+                    console.error(e);
                 }
             } else {
-                this.usernameInputMode += 1;
+                if (!this.userdata?.user?.username) return;
+                this.editUsernameInput = this.userdata.user.username;
+                this.editingUsername = true;
             }
         },
     },
