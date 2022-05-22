@@ -7,6 +7,7 @@
         :channel="{ id: source.channel_id, name: source.name }"
         :size="28"
         rounded
+        no-link
       />
     </div>
     <div style="flex-basis: 100%;">
