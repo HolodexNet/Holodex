@@ -392,13 +392,24 @@ export default {
             },
         );
     },
-    fetchMChadEntries(room, pass, link) {
-        return axios.post(
-            "https://repo.mchatx.org/v2/HolodexDahcM/entries",
+    checkMchadMigrate(room, pass) {
+        return axiosInstance.post(
+            "/tlutil/migrate/check",
             {
                 Room: room,
                 Pass: pass,
-                Link: link,
+            },
+        );
+    },
+    claimMchadMigrate(jwt, room, pass) {
+        return axiosInstance.post(
+            "/tlutil/migrate/claim",
+            {
+                Room: room,
+                Pass: pass,
+            },
+            {
+                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
             },
         );
     },
