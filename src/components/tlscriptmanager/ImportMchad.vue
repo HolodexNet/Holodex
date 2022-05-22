@@ -150,8 +150,9 @@ export default {
             try {
                 this.working = true;
                 if (!(this.room && this.pass)) throw new Error("Missing room or pass");
-                const res = await backendApi.checkMchadMigrate(this.room, this.pass);
-                this.archiveData = res.data;
+                const { data } = await backendApi.checkMchadMigrate(this.room, this.pass);
+                this.archiveData = data.archives;
+                this.loginText = `Found Mchad Id: ${data.mchad_user_id}`;
             } catch (e) {
                 this.claimErrorMsg = e.message;
             }
