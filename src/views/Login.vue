@@ -40,7 +40,7 @@
       <template v-if="userdata.user">
         <v-card-text>
           <span class="text-subtitle-2 mb-1 d-inline-block">{{ $t("views.login.username") }}</span>
-          <v-card-text class="d-flex flex-row align-center">
+          <div class="d-flex flex-row align-center">
             <v-text-field
               v-model="usernameInput"
               :disabled="!editingUsername"
@@ -53,7 +53,7 @@
             <v-btn :color="editingUsername ? 'success' : 'primary'" style="margin-left:10px" @click="editUsername">
               {{ editingUsername ? $t("views.login.usernameBtn.2") : $t("views.login.usernameBtn.0") }}
             </v-btn>
-          </v-card-text>
+          </div>
         </v-card-text>
         <v-divider />
 
