@@ -27,7 +27,6 @@
     <v-simple-table
       fixed-header
       height="70vh"
-      width="auto"
     >
       <thead>
         <tr>
@@ -35,6 +34,9 @@
             {{ $t("views.tlManager.headerID") }}
           </th>
           <th class="text-left" style="width: 100%">
+            Video Title
+          </th>
+          <th class="text-left">
             {{ $t("views.tlManager.headerEntries") }}
           </th>
           <th class="text-left" />
@@ -42,8 +44,11 @@
       </thead>
       <tbody>
         <tr v-for="(dt, index) in tlData" :key="index">
-          <td>{{ dt.video_id }}</td>
-          <td>{{ dt.entry_count + " entries" }}</td>
+          <td><a :href="`watch/${dt.video_id}`">{{ dt.video_id }}</a></td>
+          <td class="text-truncate" style="max-width: 1px">
+            {{ dt.title || "No title" }}
+          </td>
+          <td>{{ (dt.entry_count || 0) + " entries" }}</td>
           <td>
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
