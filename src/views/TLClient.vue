@@ -17,6 +17,13 @@
         >
           {{ $t("views.tlClient.menu.setting") }}
         </v-btn>
+        <v-btn
+          small
+          outlined
+          :to="activeChat.length && `/scripteditor?video=${activeChat[0].text}`"
+        >
+          {{ $t("component.videoCard.openScriptEditor") }}
+        </v-btn>
         <v-spacer />
         <v-btn
           v-if="!vidPlayer"
