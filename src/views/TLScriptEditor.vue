@@ -613,11 +613,6 @@ import { mdiPlay, mdiStop, mdiCog, mdiCogOff, mdiKeyboard } from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 
-import Vue from "vue";
-import LoadScript from "vue-plugin-load-script";
-
-Vue.use(LoadScript);
-
 export default {
     name: "Tlscripteditor",
     metaInfo() {
