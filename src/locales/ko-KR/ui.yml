@@ -41,7 +41,7 @@ component:
   videoCard:
     clips: '클립 {n}개'
     watching: '{0}명 시청 중'
-    liveNow: 실시간 방송 중
+    liveNow: 실시간 스트리밍 중
     edit: 편집
     copiedToClipboard: 링크를 클립보드에 복사했습니다.
     copyLink: Holodex 링크 복사
@@ -198,7 +198,7 @@ views:
     exportCsv: CSV 파일
     selectionSelect50: 50개 선택
     exportYTExplanation: >-
-      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 떄문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
+      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 때문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
     exportYTHeading: YouTube 재생목록을 저장하는 방법
     exportYTInstructions: >-
       <b class="red--text">1단계</b>: YouTube 재생목록을 재생한 다음 미니 플레이어로 플레이어 UI를 변경하세요. <br /><br /> <b class="red--text">2단계</b>: 아무 동영상이나 고른 다음 대기열에 추가하세요. <br /><br /> <b class="red--text">3단계</b>: 이제 재생목록을 저장할 수 있습니다. 저장하려면 저장을 눌러주세요.
