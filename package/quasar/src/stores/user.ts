@@ -26,7 +26,7 @@ export const useAuthUserStore = defineStore("user", {
     //   this.updateUser(res);
     // },
     // mutations can now become actions, instead of `state` as first argument use `this`
-    updateUser(payload) {
+    updateUser(payload: State) {
       this.firstName = payload.firstName;
       this.lastName = payload.lastName;
       this.userId = payload.userId;
