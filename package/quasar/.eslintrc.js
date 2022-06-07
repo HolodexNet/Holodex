@@ -5,6 +5,15 @@ module.exports = {
   },
   extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "prettier"],
 
+  settings: {
+    "import/resolver": {
+      alias: {
+        map: [["@", "./src"]],
+        extensions: [".js", ".vue", ".ts"],
+      },
+    },
+  },
+
   rules: {
     // override/add rules settings here, such as:
     // 'vue/no-unused-vars': 'error'
