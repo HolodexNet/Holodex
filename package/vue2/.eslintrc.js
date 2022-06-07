@@ -71,7 +71,7 @@ module.exports = {
         "vue/multi-word-component-names": "off",
     },
 
-    ignorePatterns: ["src/external/**", "src/locales/**"],
+    ignorePatterns: ["src/external/**", "src/locales/**", "package/**"],
 
     settings: {
         "import/resolver": {
