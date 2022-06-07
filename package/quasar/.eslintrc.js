@@ -3,7 +3,15 @@ module.exports = {
     node: true,
     "vue/setup-compiler-macros": true,
   },
-  extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "prettier"],
+  extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "prettier", './.eslintrc-auto-import.json',],
+  "parser": "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 2021,
+    emcaFeatures: {
+      jsx: true,
+      modules: true,
+    }
+  },
 
   settings: {
     "import/resolver": {
@@ -14,8 +22,25 @@ module.exports = {
     },
   },
 
-  rules: {
-    // override/add rules settings here, such as:
-    // 'vue/no-unused-vars': 'error'
-  },
+  'rules': {
+    'brace-style': [2, 'stroustrup', { 'allowSingleLine': true }],
+
+    'vue/max-attributes-per-line': 0,
+    'vue/valid-v-for': 0,
+
+    // allow async-await
+    'generator-star-spacing': 'off',
+
+    // allow paren-less arrow functions
+    'arrow-parens': 0,
+    'one-var': 0,
+
+    'import/first': 0,
+    'import/extensions': 0,
+    'import/no-unresolved': 0,
+    'import/no-extraneous-dependencies': 0,
+
+    // allow debugger during development
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+  }
 };

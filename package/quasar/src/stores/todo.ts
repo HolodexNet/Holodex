@@ -30,8 +30,8 @@ export const useTodoStore = defineStore("todo", {
     //   this.updateUser(res);
     // },
     // mutations can now become actions, instead of `state` as first argument use `this`
-    addTodo(payload) {
-      this.firstName = payload.firstName;
-    },
+    // addTodo(payload: User) {
+    //   this.firstName = payload.firstName;
+    // },
   },
 });
