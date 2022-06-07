@@ -16,6 +16,7 @@
     "js-cookie": "^3.0.1",
     "pinia": "^2.0.14",
     "pinia-plugin-persistedstate-2": "^1.0.0",
+    "pinia-shared-state": "^0.2.3",
     "quasar": "^2.7.1",
     "vue": "^3.2.37",
     "vue-router": "^4.0.15"
