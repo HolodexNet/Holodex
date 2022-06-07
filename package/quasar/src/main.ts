@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import { Quasar } from "quasar";
 import { createPinia } from "pinia";
+import { createPersistedStatePlugin } from 'pinia-plugin-persistedstate-2'
 import router from "./router/index";
 
 // Import icon libraries
@@ -21,7 +22,15 @@ myApp.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
 
-myApp.use(createPinia());
+// config pinia:
+const pinia = createPinia();
+
+// persisted state:
+const pspinstall = createPersistedStatePlugin();
+pinia.use((context) => pspinstall(context))
+
+
+myApp.use(pinia);
 
 // Assumes you have a <div id="app"></div> in your index.html
 myApp.mount("#app");
