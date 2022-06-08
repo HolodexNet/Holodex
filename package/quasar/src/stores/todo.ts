@@ -25,6 +25,10 @@ export const useTodoStore = defineStore("todo", {
   actions: {
     addTodo(this: State, payload: Todo) {
       this.todos.push(payload);
+    },
+    deleteTodo(this: State, id: number) {
+      const index = this.todos.findIndex(x => x.id === id);
+      this.todos.splice(index, 1);
     }
     // no context as first argument, use `this` instead
     // async loadUser(id: number) {
