@@ -10,6 +10,7 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "jsx": "preserve",
     "paths": {
       "@/*": ["src/*"]
     },
@@ -18,7 +19,8 @@
       "dom",
       "dom.iterable",
       "scripthost"
-    ]
+    ],
+    "types": ["vite/client"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
   "exclude": ["node_modules", "dist"]

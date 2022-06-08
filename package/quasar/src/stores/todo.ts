@@ -23,6 +23,9 @@ export const useTodoStore = defineStore("todo", {
     firstTodoTitle: (state) => `${state.todos[0].title}`,
   },
   actions: {
+    addTodo(this: State, payload: Todo) {
+      this.todos.push(payload);
+    }
     // no context as first argument, use `this` instead
     // async loadUser(id: number) {
     //   if (this.userId !== null) throw new Error("Already logged in");
@@ -34,4 +37,11 @@ export const useTodoStore = defineStore("todo", {
     //   this.firstName = payload.firstName;
     // },
   },
+  share: {
+    enable: true,
+    initialize: true, // when initializing, fetch from another tab.
+  },
+  persistedState: {
+    persist: true,
+  }
 });
