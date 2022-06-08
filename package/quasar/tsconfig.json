@@ -7,10 +7,10 @@
     "baseUrl": ".",
     "useDefineForClassFields": true,
     "sourceMap": true,
-    "allowJs": true,
+    "allowJs": true, // because Holodex components are mostly in JS, so we'll allow JS loosely, despite the risks.
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "jsx": "preserve",
+    "jsx": "preserve", // necessary for VOLAR to be happy about vue3 JSX.
     "paths": {
       "@/*": ["src/*"]
     },
@@ -20,7 +20,7 @@
       "dom.iterable",
       "scripthost"
     ],
-    "types": ["vite/client"]
+    "types": ["vite/client"] // also added along with VOLAR support, but idk what this does.
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
   "exclude": ["node_modules", "dist"]
