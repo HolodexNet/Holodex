@@ -4,7 +4,7 @@ module.exports = {
     "vue/setup-compiler-macros": true,
   },
   extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "prettier", './.eslintrc-auto-import.json', 'eslint-plugin-vue',],
-  "parser": "@typescript-eslint/parser",
+  "parser": "vue-eslint-parser",
   parserOptions: {
     ecmaVersion: 2021,
     emcaFeatures: {

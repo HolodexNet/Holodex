@@ -6,6 +6,12 @@ interface Org {
   short?: String;
 }
 
+interface User { id: String, role: String, username: String, discord_id?: string, api_key?: String, yt_channel_key?: string, twitter_id?: string, google_id?: string }
+
+interface UserData {
+  user: User;
+  jwt: String;
+}
 /**
  * Persistent (and X-Tab Shared) Long Term Storage for Site-wide State
  */
@@ -14,17 +20,17 @@ interface SiteStatePersistentShared {
   currentOrg: Org;
   starredOrgs: Org[];
 
-  userdata: Any;
-
-  currentGridSize: number;
+  userdata?: UserData;
 
   firstVisit: boolean;
   shownUpdateDetails: boolean;
-  lastShownInstallPrompt: number;
 }
 
 interface SiteStateTransient {
-  activeSockets: number,
+  // Socket counter, if it is zero, then close the shared WebSocket
+  activeSockets: number;
+  // Open/Close main Nav drawer
+  navDrawer: boolean;
 }
 
 
@@ -32,6 +38,17 @@ export const useSitePersistentSharedStore = defineStore("site", {
   // convert to a function
   state: (): SiteStatePersistentShared => ({
     //TODO impl
+    key: 0,
+    currentOrg: { name: "Hololive", short: "Holo" },
+    starredOrgs: [
+      { name: "All Vtubers", short: "Vtuber" },
+      { name: "Hololive", short: "Holo" },
+      { name: "Nijisanji", short: "Niji" },
+      { name: "Independents", short: "Indie" },
+    ],
+
+    firstVisit: true,
+    shownUpdateDetails: false
   }),
   getters: {
     // fullName: (state) => `${state.firstName} ${state.lastName}`,
