@@ -18,6 +18,7 @@ export default defineConfig({
         'vue',
         'vue-router',
         'pinia',
+        'quasar',
       ],
       dts: 'src/auto-imports.d.ts',
       eslintrc: {
