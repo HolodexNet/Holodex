@@ -1,6 +1,7 @@
 import { createPinia } from "pinia";
 import { createPersistedStatePlugin } from 'pinia-plugin-persistedstate-2';
 import { PiniaSharedState } from 'pinia-shared-state';
+import { theming } from "./components/theme-changer/themeManager.vue";
 
 export function setupPinia() {
     const pinia = createPinia();
@@ -21,5 +22,6 @@ export function setupPinia() {
             initialize: false,
         })
     );
+
     return pinia;
 }
