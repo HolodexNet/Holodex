@@ -3,9 +3,6 @@
 </template>
 <script lang="ts">
 
-import { useLocalStorage } from '@vueuse/core'
-import { colors, Dialog } from 'quasar'
-
 import { useThemeStore } from './helpers'
 
 export default defineComponent({

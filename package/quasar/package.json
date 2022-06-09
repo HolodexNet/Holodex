@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
+    "@originjs/vite-plugin-content": "^1.0.1",
     "@quasar/vite-plugin": "^1.0.10",
     "@storybook/addon-actions": "^6.5.7",
     "@storybook/addon-essentials": "^6.5.7",

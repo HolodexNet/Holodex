@@ -1,0 +1,644 @@
+---
+component:
+  apiError:
+    title: 고멘나소리!
+    textBeforeTwitter: '콘텐츠를 불러오던 중 오류가 발생했습니다. 트위터 계정 '
+    textAfterTwitter: ' 을 확인하거나'
+    aboutPage: 정보 페이지
+    afterAboutPageHyperlink: 에 오류를 제보해주세요.
+  channelList:
+    signInToFavorite: 즐겨찾기하려면 로그인
+    unfavoriteAllInGroup: 소속된 모두를 즐겨찾기 해제
+    favoriteAllInGroup: 소속된 모두를 즐겨찾기
+  channelInfo:
+    stats: 통계
+    videoCount: '동영상 {0}개'
+    clipCount: '클립 {n}개'
+    subscriberCount: '구독자 {n}명'
+    subscriberNA: 구독자 수를 확인할 수 없음
+    totalViews: 총 조회수
+  channelSocials:
+    addToFavorites: 즐겨찾기에 추가
+    removeFromFavorites: 즐겨찾기에서 제거
+    unblock: 채널 차단 해제
+    block: 이 채널의 콘텐츠를 Holodex 전체에서 차단하기
+    blocked: 차단됨
+  mainNav:
+    home: 홈
+    favorites: 즐겨찾기
+    channels: 채널
+    about: 정보
+    library: 보관함
+    settings: 설정
+    login: 로그인
+    logout: 로그아웃
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: 계정 설정
+    music: 음악
+    multiview: 멀티뷰
+    points: 포인트
+    playlist: 재생목록
+  videoCard:
+    clips: '클립 {n}개'
+    watching: '{0}명 시청 중'
+    liveNow: 실시간 방송 중
+    edit: 편집
+    copiedToClipboard: 링크를 클립보드에 복사했습니다.
+    copyLink: Holodex 링크 복사
+    premiere: 최초 공개
+    googleCalendar: Google Calendar에 추가
+    totalTLs: 전체 실시간 채팅 번역
+    tlPresence: 최근 30분간 활동 중인 번역가
+    typeScheduledYT: 예정된 방송
+    typeExternalStream: 외부 방송
+    typeEventPlaceholder: 예정된 이벤트
+    openClient: 번역 클라이언트 열기
+    openScriptEditor: 스크립트 편집기 열기
+    uploadScript: 번역 스크립트 열기
+  videoDescription:
+    description: 설명
+  video:
+    comment: { }
+  description:
+    showLess: 간략히
+    showMore: 더보기
+  watch:
+    streamingFor: '{0} 방송 중'
+    nextUpInMugen: 다음
+    Comments:
+      title: 댓글
+      all: 모두
+  search:
+    searchLabel: 검색
+    type:
+      channel: 채널
+      topic: 주제
+      org: 소속
+      titledesc: 제목/설명
+      comments: 댓글
+      videourl: 동영상 URL
+  relatedVideo:
+    clipsLabel: 클립
+    simulcastsLabel: 동시 방송
+    refersLabel: 관련 영상
+    sourcesLabel: 출처
+    songsLabel: 노래
+    recommendationsLabel: 추천
+    sameSourceClips: 동일 방송
+  paginateLoad:
+    newer: 최신순
+    older: 오래된순
+  music:
+    clearPlaylist: 초기화
+    trendingForOrg: '{0} 인기 차트'
+  channelMusic:
+    recentSongsHeader: 최근 노래
+    weeklyTopPlaysHeader: 주간 최고 조회수
+    trending: 인기 차트
+  songList:
+    songTitle: 제목
+    songCoveredBy: 커버 가수
+    songDuration: 길이
+    sangOnTime: 날짜
+  orgMusic:
+    monthlyTopForOrg: '{0}의 월간 최고 조회수'
+    weeklyTopForOrg: '{0}의 주간 최고 조회수'
+  installPrompt:
+    title: Holodex 설치
+    callToAction: Holodex를 홈 화면에 추가하면 더 편하게 이용할 수 있습니다
+    notNowBtn: 나중에
+    installBtn: 설치
+    iOS:
+      popup: iOS에 Holodex 설치하기
+      afterExportIcon: 를 누르고 홈 화면에 추가를 선택하세요.
+      beforeExportIcon: 공유
+  media:
+    remove: 삭제
+  comment:
+    close: 닫기
+    readMore: 자세히 보기
+  reportDialog:
+    title: 신고
+    collabing: >-
+      이 채널은 즐겨찾기 중인 {org} 멤버와 콜라보 중일 수도 있습니다. 설정에서 이 기능을 끌 수 있어요
+    comments: Holodex가 취해야 할 행동은 무엇인가요?
+    success: 신고되었습니다. 감사합니다!
+    reasons:
+      - 잘못된 동영상 태그
+      - 매우 낮은 화질/오해의 소지가 있는 콘텐츠
+      - 소속의 2차 장작 가이드라인을 위반하거나 부적절함
+      - 기타
+  thirdpartycookie:
+    explanation: >-
+      인터넷 브라우저의 작동 방식으로 인해 엄격한 <b>타사 쿠키</b> 정책을 사용하는 일부 브라우저 또는 <kbd>YouTube.com</kbd> 쿠키를 차단하는 브라우저는 Youtube 채팅에 로그인하거나 사용하기 어려울 수 있습니다. <br /><br /> 타사 쿠키 차단에서 <kbd>Youtube.com</kbd>을 제외하거나 <kbd>Holodex.net</kbd>의 쿠키 보안 / 개인정보 수준을 낮추면 이 문제를 해결할 수 있습니다. <br /><br /> 이를 수행하는 방법에 대한 자세한 정보를 제공하는 일부 웹 사이트를 포함했습니다.
+    dialogTitle: Holodex에서 YouTube 채팅을 사용함
+    alertText: >-
+      브라우저 개인정보 설정으로 인해 Youtube 채팅에 로그인할 수 없습니다. 자세한 정보를 원하시면 여기를 클릭하세요
+    neverShowAgain: 다시 보지 않기
+  playlist:
+    menu:
+      export-playlist: 재생목록 내보내기
+      new-playlist: 새 재생목록
+      rename-playlist: 재생목록 제목 수정
+      reset-unsaved: 저장되지 않은 변경사항 초기화
+      delete-playlist: 재생목록 삭제
+      clear-playlist: 재생목록 지우기
+    save-error-not-logged-in: 재생목록을 저장하려면 로그인해야 합니다
+  placeholderVideo:
+    discordCredit: '다음 사용자가 {0}에서 가져온 이벤트 데이터: {1}'
+    datasourceCredit: '{0}에서 가져온 이벤트 데이터입니다.'
+    botCredit: '{1}님이 만들고 {0}에서 가져온 이벤트 데이터입니다.'
+    streamPageBtn: 실시간 페이지
+    eventPageBtn: 이벤트 페이지
+    scheduledEvent: 예정
+    editorCredit: Holodex 에디터 {0}님이 설정한 이벤트입니다.
+    creditTitleText: '크레딧:'
+views:
+  channel:
+    video: 동영상
+    clips: 클립
+    music: 음악
+    collabs: 콜라보
+    about: 정보
+  channels:
+    sortOptions:
+      subscribers: 구독자
+      group: 그룹
+      recentUpload: 최근 업로드
+      videoCount: 동영상 수
+      clipCount: 클립 수
+      org: 소속
+    tabs:
+      Vtuber: 버튜버
+      Subber: 키리누키
+      Favorites: 즐겨찾기
+      Blocked: 차단됨
+    favoritesAreEmpty: 즐겨찾기가 없습니다!
+    blockedAreEmpty: 차단한 채널이 없습니다.
+  home:
+    liveOrUpcomingHeading: 실시간 / 예정
+    recentVideosHeading: 최근 동영상
+    noStreams: 현재 실시간이거나 예정된 방송 없음
+    recentVideoToggles:
+      all: 모두
+      official: 아카이브
+      subber: 클립
+  library:
+    savedVideosTitle: 저장된 동영상
+    createYtPlaylistButton: YouTube 재생목록 생성 ({0})
+    deleteFromLibraryButton: 삭제 ({0})
+    deleteConfirmation: 정말로 {0}개의 동영상을 삭제하시겠어요?
+    deleteConfirmationOK: 삭제
+    deleteConfirmationCancel: 취소
+    selectionReset: 초기화
+    selectionSelectAll: 모두 선택
+    emptyLibrary: 저장된 동영상이 없습니다!
+    exportSelected: 선택 항목 내보내기 ({0})
+    exportYtPlaylist: YouTube 재생 목록
+    exportCsv: CSV 파일
+    selectionSelect50: 50개 선택
+    exportYTExplanation: >-
+      이 기능으로 만들어진 YouTube 재생목록은 <b>일부 공개</b>로 설정되며 YouTube에서 삭제할 수도 있습니다. <br /> YouTube의 기능이 불완전하기 떄문에 <b>일부 공개</b> YouTube 재생목록을 계정에 저장하려면 다음 지시를 따라주셔야 합니다.
+    exportYTHeading: YouTube 재생목록을 저장하는 방법
+    exportYTInstructions: >-
+      <b class="red--text">1단계</b>: YouTube 재생목록을 재생한 다음 미니 플레이어로 플레이어 UI를 변경하세요. <br /><br /> <b class="red--text">2단계</b>: 아무 동영상이나 고른 다음 대기열에 추가하세요. <br /><br /> <b class="red--text">3단계</b>: 이제 재생목록을 저장할 수 있습니다. 저장하려면 저장을 눌러주세요.
+    sort:
+      dateaddedEarliestFirst: 보관함에 추가된 날짜, 최신순
+      dateaddedLatestFirst: 보관함에 추가된 날짜, 오래된순
+      dateuploadedLatestFirst: 업로드 날짜, 최신순
+      dateuploadedEarliestFirst: 업로드 날짜, 오래된순
+  notFound:
+    title: 컨텐츠를 찾을 수 없음
+    back: 홈으로 돌아가기
+  search:
+    sort:
+      newest: 최신순
+      oldest: 오래된순
+    type:
+      all: 모두
+      official: 공식
+      clip: 클립
+    unsupportedQuery: >-
+      아직 <kbd>주제</kbd>와 <kbd>소속</kbd>으로 클립을 검색할 수 없습니다. <b>클립</b>이 표시되지 않습니다.
+    sortByLabel: 정렬 기준
+    typeDropdownLabel: 유형
+  settings:
+    title: 설정
+    darkModeLabel: 다크 모드
+    darkModeMsg: 라이트 모드와 다크 모드 간에 테마를 변경합니다
+    redirectModeLabel: YouTube에서 열기
+    redirectModeMsg: >-
+      동영상 미리보기 이미지를 누르면 YouTube에서 열리고 동영상 제목을 누르면 Holodex에서 열립니다
+    useEnglishNameLabel: 영어 이름으로 표시하기
+    useEnglishNameMsg: 채널명을 영어로 표시합니다
+    hideVideoThumbnailsLabel: 미리보기 이미지 숨기기
+    hideVideoThumbnailsMsg: >-
+      동영상 미리보기 이미지를 숨기며, 로딩 시간이 빨라지고 모바일에서 더욱 쉽게 스크롤할 수 있습니다
+    pushNotificationLabel: 푸시 알림 (지원 예정)
+    pushNotificationMsg: 즐겨찾기한 채널의 푸시 알림을 활성화합니다
+    autoplayVideoLabel: 동영상 자동 재생
+    autoplayVideoMsg: 동영상 자동 재생을 활성화합니다
+    scrollModeLabel: 스크롤 모드
+    scrollModeMsg: 스크롤/탭하여 페이지를 이동합니다
+    resetAllSettings: 모든 설정/데이터 초기화
+    resetAllSettingsWarning: 모든 데이터가 손실됩니다. 계속하시겠습니까?
+    clipLanguageSelection: '다음 언어로 된 클립 보기:'
+    tlLanguageSelection: 해당 언어로 실시간 채팅 번역 보기
+    defaultPage: 기본 페이지
+    defaultPageMsg: >-
+      holodex.net에 처음 접속할 때와 좌측 상단 로고를 클릭할 때 이 페이지를 엽니다.
+    videoFeedSettings: 동영상 피드 설정
+    siteNavigationSettings: 사이트/메뉴
+    languageSettings: 언어
+    gridSizeLabel: 미리보기/그리드 크기
+    gridSizeMsg: 홈/즐겨찾기 페이지에 있는 미리보기/동영상 그리드 크기를 변경합니다
+    gridSize:
+      - 크게
+      - 중간
+      - 작게
+    hideCollabStreamsLabel: 콜라보 방송 숨기기
+    hideCollabStreamsMsg: 즐겨찾기 피드에서 콜라보 방송을 숨깁니다
+    hidePlaceholderStreams: 예약된 YouTube 방송만 표시하기
+    ignoredTopicsLabel: 무시된 주제
+    ignoredTopicsMsg: 홈과 즐겨찾기 페이지에서 해당 주제의 동영상을 숨깁니다
+    theme: 테마
+    moreSettings: 추가 설정
+  app:
+    update_available: 업데이트 가능
+    update_btn: 업데이트
+    close_btn: 닫기
+    check_about_page: 변경 사항에 대해 알아보려면 정보 페이지를 확인하세요
+    nowSupportsMultiOrg: 이제 Holodex가 다수의 소속을 지원합니다.
+    loginCallToAction: 자신만의 즐겨찾기를 만들려면 로그인해주세요!
+  about:
+    add_my_channel: 채널 요청
+  watch:
+    theaterMode: 영화관 모드 (alt + t)
+    mentionIconLabel: 언급
+    chat:
+      loading: 채팅을 불러오는 중...
+      hideTLBtn: 번역 숨기기
+      showTLBtn: 번역 표시
+      TLSettingsTitle: 번역 설정
+      showSubtitle: 자막 표시
+      expandTL: TLdex 확장
+      tlStart: 메시지 시작
+      StickBottomSettingLabel: 하단 고정
+      StickBottomSettingsDesc: 번역 상자는 YouTube 채팅 아래에 표시됩니다
+      showVerifiedMessages: 인증된 사용자의 메시지 표시
+      showModeratorMessages: 운영자 메시지 표시
+      showVtuberMessages: 버튜버의 메시지 표시
+      showLocalTime: 로컬 시간 표시
+      tlFontSize: 글꼴 크기
+      tlWindowSize: 번역 상자 크기 (%), 0%로 하면 자동
+      retryBtn: 재시도
+      status:
+        reconnecting: 자동으로 다시 연결하는 중...
+        reconnectFailed: 다시 연결할 수 없음
+        notLive: >-
+          아직 방송이 시작되지 않았습니다. 방송이 시작된 후 15분 이내에 다시 시도해보세요
+        connectedToChat: 연결됨
+        disconnectedToChat: 연결 끊김
+      archiveNeedExtension: >-
+        아카이브 채팅은 {0} 확장 프로그램 또는 다른 서드파티 확장 프로그램 없이는 작동하지 않습니다.
+      hideSpoiler: 스포일러 숨기기
+    removeFromPlaylist: 현재 재생목록에서 동영상 제거
+    saveToPlaylist: 현재 재생목록에 동영상 저장
+    likeOnYoutube: YouTube에서 동영상 좋아요하기
+    uploadPanel:
+      title: 스크립트 올리기
+      usernameText: 번역은 아이디로 업로드됩니다
+      usernameChange: 변경
+      tlLang: 번역 언어
+      headerStart: 시작
+      headerEnd: 끝
+      headerText: 텍스트
+      cancelBtn: 취소
+      okBtn: 확인
+      notifTextErr: 이 파일을 분석할 수 없습니다 (파일에 문제가 있을 수도 있어요)
+      notifTextParsing: 분석 중...
+      notifTextErrExt: 파일의 확장자를 식별할 수 없습니다.
+  favorites:
+    promptForAction: >-
+      이 페이지에서 좋아하는 버튜버 목록을 만들고 최신 클립과 삶을 확인해보세요.
+    manageFavorites: 즐겨찾기 관리
+    close: 닫기
+    showall: 모두 표시
+  editor:
+    needlogin: Holodex 동영상 및 노래 메타데이터를 편집하려면 로그인해야 합니다.
+    changeTopic:
+      title: 방송 주제 변경
+      info: >-
+        모든 사용자가 동영상에 주제를 지정할 수 있지만 일단 지정되면 편집자와 관리자만 주제를 제거하고 변경할 수 있습니다.
+      button: 저장 (적용까지 5분 정도 소요될 수 있음)
+    channelMentions:
+      title: 채널 멘션
+    sources:
+      title: 출처/클립 (개발 중)
+  login:
+    apikeyMsg: >-
+      API 키를 사용해서 Holodex API를 프로그래머블하게 쿼리할 수 있습니다. 계정 하나 당 하나의 키만 허용됩니다. 새 키를 생성하면 이전 키는 24시간 이내에 만료됩니다.
+    apikeyNew: 새 API 키 얻기
+    ownedYtChannel: 소유하고 있는 YouTube 채널
+    futureYtcOwnerMessage: >-
+      앞으로는 채널 소유자에게 자신의 동영상에 대한 메타데이터를 편집하는 등의 더 많은 서비스를 제공할 계획입니다.
+    linkAcc: 다른 계정 연결
+    apikeyResetConfirm1: 정말로 API 키를 초기화하시겠어요?
+    apikeyResetConfirm2: 이전 API 키는 24시간 이내에 만료됩니다. 정말로 초기화하시겠어요?
+    apikeyResetNvm: 별 일 없네요.
+    with:
+      - Google 계정으로 로그인
+      - Discord 계정으로 로그인
+      - Twitter 계정으로 로그인
+    username: 아이디
+    usernameBtn:
+      - 변경
+      - 확인
+      - 저장
+  multiview:
+    confirmOverwrite: 기존 레이아웃에 덮어쓸까요?
+    confirmOverwriteYes: 확인
+    permalink: 고유 주소
+    presets: 프리셋
+    addframe: 셀 추가
+    muteAll: 모두 음소거
+    unmuteAll: 모두 음소거 해제
+    muteOthers: 다른 사람을 음소거
+    muteOthersDetail: 한 방송을 제외하고 모두 음소거
+    autoLayoutTip: 채널을 클릭해서 자동 레이아웃 모드로 감상하기
+    createLayoutTip: 셀 또는 프리셋을 활용해서 자신만의 레이아웃을 만들어보세요
+    openToolbarTip: 멀티뷰를 시작하려면 툴바를 여세요
+    archiveSync: 아카이브 싱크
+    preset:
+      shareOnDiscord: >-
+        공유할 만한 멋있는 레이아웃이 있나요? 공유 버튼을 누른 후 우리의 <a href="https://discord.gg/jctkgHBt4b">Discord 서버</a>에 공유해주세요!
+      custom: 내 레이아웃
+      toggleAutoLayout: 자동 모드로 레이아웃 사용하기 켜기/끄기
+      remove: 삭제
+      desktop: 데스크톱
+      mobile: 모바일
+      autoLayout: 자동 레이아웃
+    presetEditor:
+      title: 레이아웃 저장
+      name: 이름
+      autoLayout: 자동 모드로 레이아웃 사용하기
+    video:
+      selectLive: 방송 선택
+      addCustomVideo: 사용자 지정 동영상 추가
+    fullScreen: 전체 화면
+    mediaControls: 미디어 제어
+    mediaControlsEmpty: 재생되는 동영상이 여기에 표시됩니다
+    editAutoLayout: 자동 레이아웃 편집
+    changeLayout: 레이아웃 변경
+    done: 완료
+    hints: 도움말
+    presetsHint: 프리셋 메뉴를 열어서 레이아웃을 바꾸고 자동 레이아웃을 설정하세요
+    mediaControlsHint1: 미디어 컨트롤을 사용하여 음소거와 라이브를 싱크 (
+    mediaControlsHint2: ) 하세요
+    dragDropHint: 툴바에서 셀로 방송을 드래그 앤 드롭하여 방송을 정리하세요
+    reorderHint: 레이아웃 재정렬 기능을 사용하여 영상 및 채팅창의 위치를 바꿀 수 있습니다
+    reorderLayout: 레이아웃 재정렬
+    reorderLayoutDetail: 아이콘을 원하는 위치로 끌어다 놓아주세요
+    sync:
+      nothingToSync: >-
+        싱크할 대상이 없습니다. 방송 시간이 겹치는 두 개의 아카이브 영상을 열어주세요 (예: 콜라보 방송)
+      syncSettings: 싱크 설정
+      syncSettingsDetail: >-
+        영상의 싱크는 스트림 시작 시간을 기준으로 맞춰지며, 스트리밍 도중 기술적인 문제나 삭제된 부분이 있을 때는 싱크를 해제할 수 있습니다. 오프셋을 사용하여 싱크를 수동으로 조절해 주세요.
+  mugen:
+    welcome: >-
+      MugenClips에 오신 것을 환영합니다! 이 페이지의 모든 사람은 무작위로 선택된 English Hololive 클립을 보고 있습니다. 전세계의 Hololive 팬들과 함께 시청하고 채팅하세요. 건너뛰고 모든 사람과 다시 동기화하려면 페이지를 새로고침하세요.
+  playlist:
+    playlist-is-modified: 저장되지 않음
+    item-last-updated: '최종 업데이트:'
+    login-prompt: 재생목록을 저장하고 여러 재생목록을 만들려면 로그인해주세요
+    new-playlist-btn-label: 새 재생목록 만들기
+    page-heading: '내 재생목록:'
+    page-instruction: 재생목록을 활성화하려면 클릭해주세요.
+    change-loss-warning: 변경사항이 저장되지 않습니다. 계속하시겠습니까?
+  extension:
+    title: Holodex Plus 확장 프로그램
+    features: 기능
+    featureset:
+      one: 동영상 및 멀티뷰에서 아카이브 라이브 채팅 활성화
+      two: Holodex 동영상 페이지에서 동영상 연결 허용
+      three: Youtube 라이브 채팅에서의 메모리 누수 방지
+      four: >-
+        YouTube 플레이어의 실험적인 플래그 (예: 다중 방송 차단, 방송 대기 썸네일이 미표시되는 문제)등을 수정했으며 몇 가지 추가적인 기능들도 있습니다!
+  tlClient:
+    menu:
+      title: 메뉴
+      setting: TLDex 방 설정
+      loadVideo: 동영상 표시
+      unloadVideo: 동영상 숨기기
+      loadChat: 방송 번역에 YT 채팅 추가
+      unloadChat: YT 채팅에서 분리
+    tlControl:
+      enterBtn: 입력
+      prefix: 접두어
+      suffix: 접미어
+      fontColour: 글꼴 색상
+      outlineColour: 외곽선 색상
+      localPrefix: 채팅 내 언어 태그
+      addProfile: 프로필 추가
+      removeProfile: 프로필 삭제
+      shiftUp: 이전 프로필로
+      shiftDown: 다음 프로필로
+      showSetting: 설정
+      hideSetting: 숨기기
+    addProfilePanel:
+      title: 새 프로필 추가
+      inputLabel: 프로필 이름
+    settingPanel:
+      title: 설정
+      mainStreamLink: 메인 방송 링크
+      collabLink: 콜라보 링크
+    removeProfileTitle: 프로필 삭제 확인
+    loadChatPanel:
+      title: 채팅 불러오기
+      inputLabel: 방송 링크
+    unloadChatTitle: 정말로 모든 아카이브 채팅을 닫으시겠어요?
+    pangram: 다람쥐 헌 쳇바퀴에 타고파
+    cancelBtn: 취소
+    okBtn: 확인
+  scriptEditor:
+    menu:
+      save: 저장
+      continuousEnd: 시간이 다시 흐르게 하기 (변경 종료)
+      clearAll: 스크립트 삭제
+      exportFile: 파일 내보내기
+      importFile: 파일 가져오기
+      editorMode: 편집기 모드
+    table:
+      headerStart: 시작
+      headerEnd: 끝
+      headerProfile: 프로필
+      headerText: 텍스트
+      setAsStart: 시작으로 설정하기
+      shiftCurrentTime: 현재 시간으로 이동하기
+      deleteEntry: 항목 삭제
+    loadVideoPanel:
+      title: 동영상 불러오기
+      inputLabel: 방송 링크
+    setStartTitle: 선택한 부분을 시작점으로 설정하면 그 앞에 있는 항목들은 모두 삭제됩니다.
+    importFile:
+      overwriteBtn: 덮어쓰기
+    editorModePanel:
+      activateMode: 편집기 모드 활성화
+      deactivateMode: 편집기 모드 비활성화
+      roleWarning: 권한이 없습니다
+      filterTranslator: 번역가 필터
+  tlManager:
+    title: 스크립트 관리
+    headerID: ID
+    headerEntries: 항목
+    download: 다운로드
+    delete: 삭제
+    deleteTitle: 항목 삭제
+    langPick: 언어
+time:
+  soon: 예정
+  diff_future_date: '{0} 시작 ({1})'
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: 추가
+    update: 업데이트
+    permission: >-
+      이미 있는 노래를 수정하거나 삭제하려면 '편집자' 사용자 권한이 필요합니다. <a class='white--text' href='/about'>Discord</a>에서 이슈 / 악용 사항을 편집자에게 알리거나 편집자에 지원하세요.
+    titles:
+      addSong: '노래 메타데이터: 새 노래 추가'
+      songList: '노래 목록 : {0}'
+      help: 가이드
+    itunesLookupPlaceholder: (선택) iTunes에서 찾아보기
+    moveRight2s: 오른쪽으로 2초 이동
+    testEnd: 테스트 재생은 끝나기 3초 전에 시작됩니다.
+    setToCurrentTime: 현재 시간으로 설정 ({0})
+    moveLeft2s: 왼쪽으로 2초 이동
+    trackNameInput: 노래 이름
+    originalArtistInput: 원곡 가수
+    testStart: 시작 위치 확인
+    startInput: 시작
+    endInput: '총 재생시간: ({0}에 종료됨)'
+    inheritItunesMusic: 'iTunes로 길이 설정: {0}'
+  exitMode: 편집 모드 나가기
+  enterMode: 동영상 편집
+about:
+  quicklinks: 바로가기 링크
+  discordBtn: Holodex Discord
+  faq:
+    title: FAQ
+    ytchatHeader: YouTube 채팅에 로그인되지 않아요!
+    ytchatContent: >-
+      타사 쿠키 차단으로 알려진 보안 기능을 끄거나 이 웹사이트와 youtube.com을 타사 쿠키 차단에서 제외해주세요.
+    ytchatFirefox: Firefox 기준으로 설명드리지만 다른 브라우저들도 비슷합니다.
+    autoplayHeader: 자동 재생이 작동하지 않아요!
+    autoplayContent: 자신이 사용하고 있는 브라우저에서 자동 재생을 활성화하는 방법에 대해 검색해보세요.
+    musicPlayer: 뮤직 플레이어가 모바일 기기에서 제대로 작동하지 않아요!
+    musicPlayerContent: >-
+      대부분의 iOS 기기의 경우 Holodex 음악을 재생하는 동안 화면을 끄거나 Safari를 닫을 수 없습니다. 이 제한은 Android 기기에 적용되거나 적용되지 않을 수 있습니다(기기에 따라 다름). 더 나은 재생 시스템을 만드는 방법에 대한 아이디어가 있으면 Discord에 대한 피드백을 보내주세요.
+    videoLinkage: 동영상이 버튜버에 제대로 연결되었는지 어떻게 확인하나요?
+    videoLinkageContent: >-
+      모든 정보는 비디오 설명에서 불러와집니다. 스트림을 클립하는 경우 공식 방송을 연결해야 합니다. 팬이 만든 콘텐츠 (예: bilibili에서 가져온 콘텐츠) 를 클리핑하는 경우 관련 버튜버의 공식 YouTube 채널을 연결해야 합니다. 모든 클립은 Holodex에 알려진 버튜버에 연결되어야하므로 버튜버 채널을 연결하지 않으면 Holodex에 해당 클립이 표시되지 않습니다.
+    quitHolodex: "저는 키리누키 제작자이고 Holodex에서 제 채널을 제거하고 싶습니다\n"
+    quitHolodexContent: >-
+      떠나신다니 아쉽습니다 :( 문제가 있다면 도와드리겠습니다. 그래도 제거하고 싶으시다면 Discord를 통해서 메시지를 보내주세요.
+    favorite:
+      title: 즐겨찾기가 뭔가요?
+      Contents:
+        - >-
+          즐겨찾기는 좋아하는 버튜버를 상단에 고정하는 방법입니다.
+        - >-
+          페이지에 있는 하트 모양의 아이콘을 눌러서 좋아하는 채널을 즐겨찾기할 수 있습니다. 키리누키를 즐겨찾기하는 것은 현재 지원되지 않지만 다른 방법으로 구독하고 지원하는 것을 고려하실 수 있습니다!
+      disappear:
+        title: 즐겨찾기 목록이 사라졌습니다 / 즐겨찾기가 안됩니다
+      contents:
+        - >-
+          로그인했는지 확인하고 채널 즐겨찾기 탭을 방문하여 강제로 새로고침하세요.
+    mobile:
+      title: Android/iOS용 Holodex 앱이 있나요?
+      content:
+        summary: >-
+          아직 작업 중입니다! 그동안 브라우저의 "홈 화면에 추가" 기능을 사용해주세요. 우리는 사이트가 앱처럼 작동할 수 있도록 많은 부분을 변경했습니다
+        android:
+          - 'Android Chrome: 사이트로 이동하여 상단 우측에 있는 점 세 개'
+          - 를 누르고 "홈 화면에 추가"를 찾아보세요.
+        ios:
+          - >-
+            iOS Safari: 휴대전화에서 사이트로 이동하고 Safari 하단에 있는 화살표가 위를 가리키는 사각형
+          - 을 클릭하고 "홈 화면에 추가"를 클릭하세요.
+    MugenClips:
+      title: MugenClips가 뭔가요?
+      contents:
+        - >-
+          MugenClips 또는 무한 클립은 사이트의 사람들이 많은 커뮤니티 번역 채널에서 업로드되는 지속적으로 순환되는 다양한 클립을 볼 수 있는 함께 시청하기 파티입니다.
+    subber:
+      title: 저는 키리누키 제작자이고 제 채널 또는 클립을 Holodex에서 찾을 수 없습니다
+      contents:
+        - >-
+          채널 페이지에서 키리누키 목록에 있는지 확인하고, 포함되어 있지 않다면
+        - 이 양식
+        - >-
+          을 작성해주세요. 확인 후 추가됩니다. 이미 목록에 있다면 영상 설명이 올바른 YouTube 소스/채널 링크를 작성했는지 확인해주세요.
+    feedback:
+      title: 이 프로젝트에 대해서 피드백/기여하고 싶습니다
+      contents:
+        - >-
+          모든 도움과 아이디어를 환영합니다! UI와 백엔드 모두에 기여하실 수 있으며, UI는 현재 오픈 소스입니다. 백엔드 소스에 접근하려면 Discord를 통해서 권한을 얻으시거나 단순히 아이디어를 채팅으로 전달해주셔도 됩니다.
+    support:
+      title: Holodex를 어떻게 지원하나요?
+      contents:
+        '0': >-
+          저희의 자체 호스팅 서버는 운영비가 월 60달러인 28코어 60GB 램 서버로, 기능들을 점점 더 확장하려고 하여 서버 비용을 충당하기 위해 <a href="https://ko-fi.com/holodex">Ko-fi</a>를 시작했습니다. (<a href="https://www.patreon.com/holodex">Patreon</a>도 있지만, 저희는 Ko-fi를 더 선호합니다.)<br /><br />또한 트위터에 피드백과 응원의 메시지를 보내주시고, <a href="https://crwd.in/holodex">Crowdin</a>을 통해 번역을 도우실 뿐만 아니라, 음악 데이터 저장소에도 기여함으로써 Holodex를 지원할 수 있습니다. 심지어 방송에서 재미있는 부분의 시간을 지정하여, 지정한 시간을 원래 방송 댓글에 다는 것만으로도 큰 도움이 됩니다!
+  gdpr: GDPR과 내 데이터
+  gdprContent: >-
+    Google Analytics 쿠키는 페이지뷰 추적을 위해 분석 목적으로 사용됩니다. 로그인 이후에 우리는 소셜 미디어 계정 사용자명과 아이디를 즐겨찾기와 연결시킵니다. 이 데이터에는 (Google) 이메일, Discord ID, 또는 Twitter 아이디가 포함될 수 있습니다.
+  gdprDeletion: 자신의 사용자 데이터를 제거하려면 저희 Discord에 문의해주세요!
+  feedback: 피드백/버그 제보
+  feedbackHtml: >-
+    <a href="https://github.com/RiceCakess/Holodex/issues"> Github 이슈 트레커</a>에서 이슈를 생성하거나 Discord 내의 Holodex 팀을 찾을 수 있습니다 <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    title: 개발진
+    contents:
+      - 팀
+      - '에게 다음의 작업물에 대해서 감사의 말씀을 드립니다:'
+      - >-
+        또한 다른 나라에 있는 키리누키 여러분들에게도 감사의 말을 전합니다! 확인해보세요!
+      - >-
+        이 웹사이트는 팬이 제작한 웹사이트이며 이 웹사이트에 있는 콘텐츠는 Cover 주식회사 및 파트너사의 소유입니다. 이 사이트는 Cover 주식회사의 2차 창작 가이드라인을 준수합니다.
+      - 확인하기
+  changelog:
+    title: 변경 사항
+  news:
+    title: 소식
+  bookmarklet:
+    title: 북마클릿
+    description: >-
+      이 북마클릿을 북마크바에 드래그해서 YouTube 동영상 페이지에서 쉽게 Holodex를 여세요:
+channelRequest:
+  RequestType: '요청 유형:'
+  Types:
+    AddVtuber: Holodex에서 채널과 키리누키를 추적하기 위해서 버튜버를 추가 ▶️ 해주세요.
+    AddClipper: Holodex에 키리누키/자막 채널을 추가해주세요
+    ModifyExistingInfo: 현재 있는 채널의 정보를 수정하고 싶어요
+    DeleteChannel: 내 채널 삭제
+  DirectContactDisclaimer: >-
+    Discord 아이디, 이메일, Twitter 아이디를 자유롭게 남겨주세요. 연락이 필요한 경우 (이 정보는 비공개로 유지됨) 피드백을 제공할 수 있습니다. Holodex 관리자들만 이 정보를 볼 수 있습니다.
+  DirectContactLabel: 연락 수단 (선택)
+  TwitterHandle: 이 채널의 트위터 아이디 (선택)
+  VtuberGroupLabel: 버튜버 소속 (선택)
+  VtuberGroupHint: 이 버튜버는 어떤 곳에 소속되어 있나요?
+  ChannelLanguageLabel: 채널의 언어
+  EnglishNameHint: >-
+    채널 이름이 영어가 아닌 경우 영어 이름을 제공해주세요. 해당 버튜버가 사용하는 언어의 성-이름 순서 규칙을 따른 영문 이름 (Natsuiro Matsuri) 또는 선호하는 EN 브랜드명 (Elu the Elf, Emma★August)을 알려주세요.
+  EnglishNameLabel: 영문 채널명
+  Comments: 설명
+  CommentsHint: 저희에게 추가적으로 말하고 싶은 점이 있다면 알려주세요.
+  VtuberRequirementText: >-
+    소속이 없는 경우 최소 2만명의 구독자가 필요합니다. 이미 존재하는 소속의 버튜버는 수락됩니다. <br /><br />새 소속은 평균 구독자 수에 따라서 생성됩니다.
+  ClipperRequirementText: >-
+    키리누키의 경우 최소 2개월 이상이면서 정기적으로 올리거나, 한 달에 20개 이상의 클립을 게시해야 합니다. 짧은 클립을 매일 도배하거나, 1분 미만의 짧은 클립만 올리거나, 악의적인 썸네일을 사용하는 경우 채널 검토 시에 영향을 미칠 수 있습니다. 콘텐츠 품질도 평가될 수 있습니다. <br /><br />키리누키는 채널 링크, @YouTube 채널 멘션 및 원본 영상 링크를 통해 출처를 표시해야 합니다. 과잉 출처 (예: 모든 Nijisanji 멤버 링크 넣기) Holodex 편집자에게 작업이 생성되고, 출처가 없으면 (링크 없음) 클립이 숨겨집니다. <br /><br /> Holodex에는 과잉 출처를 감지하여 자동으로 수정하는 알고리즘이 포함되어 있지만, 항상 완벽하게 작동하는 것은 아닙니다. 너무 자주 과잉 출처를 다는 키리누키의 경우 혼란을 방지하기 위해서 플랫폼에서 제거될 수 있습니다.
+  DeletionRequirementText: >-
+    채널 소유자 측에서만 삭제를 요청할 수 있습니다. 이를 확인할 수 있도록 연락처 정보를 제공해 주세요.
+  PageTitle: Holodex 채널 요청
+  ChannelURLErrorFeedback: https://www.youtube.com/channel/UC_____ 형식이여야 합니다

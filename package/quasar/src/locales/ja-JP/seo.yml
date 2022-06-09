@@ -1,0 +1,17 @@
+---
+hello: 世界
+music:
+  title: '{{english_name}} オリジナルとカバー曲 - Holodex'
+  description: >-
+    Holodex 音楽プレーヤーで、コミュニティによってタグ付けされた公式の楽曲やカラオケ配信を聴く。
+channel:
+  normal:
+    title: '{{english_name}} 切り抜き、配信、楽曲、コラボ - Holodex'
+    description: >-
+      {{clip_count}} 個以上の切り抜き、 {{video_count}} 個の配信を {{english_name}} で検索します。Holodex のお気に入りへと追加して、ライブ配信のスケジュールを知りましょう。
+    descriptionWithTopic: >-
+      {{ topics }} の配信を {{english_name}} で見付けましょう。 Holodex で {{clip_count}} 個の切り抜き、 {{video_count}} 個の配信などにキャッチアップしましょう。
+  clip:
+    title: '{{english_name}} 概要 - Holodex'
+    description: >-
+      お気に入りのvtuberの {{video_count}} 個以上の切り抜きを {{english_name}} で見付けましょう。
