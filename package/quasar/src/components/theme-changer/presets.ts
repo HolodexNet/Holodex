@@ -1,7 +1,19 @@
 import { Theme } from "./helpers";
 
-export const themes: Theme[] = [
-    // Light themes
+export const presets: Theme[] = [
+    {
+        name: 'pastels',
+        dark: true,
+        colors: {
+            primary: 'pink-2',
+            secondary: 'indigo-3',
+            accent: 'lime-3',
+            info: 'cyan-3',
+            warning: 'orange-3',
+            positive: 'green-13',
+            negative: 'red-3'
+        }
+    },
     {
         name: 'quasarish',
         dark: false,
@@ -26,21 +38,6 @@ export const themes: Theme[] = [
             warning: 'yellow-9',
             positive: 'green-9',
             negative: 'red-10'
-        }
-    },
-
-    // Dark themes
-    {
-        name: 'pastels',
-        dark: true,
-        colors: {
-            primary: 'pink-2',
-            secondary: 'indigo-3',
-            accent: 'lime-3',
-            info: 'cyan-3',
-            warning: 'orange-3',
-            positive: 'green-13',
-            negative: 'red-3'
         }
     },
     {
