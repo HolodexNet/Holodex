@@ -1,0 +1,17 @@
+---
+hello: world
+music:
+  title: '{{english_name}}의 오리지널 노래와 커버 노래 - Holodex'
+  description: >-
+    Holodex 음악 플레이어를 통해 Holodex 커뮤니티가 태그한 공식 음악과 가라오케 방송을 감상해 보세요.
+channel:
+  normal:
+    title: '{{english_name}}의 클립, 실시간 방송, 음악, 콜라보 - Holodex'
+    description: >-
+      {{english_name}}의 {{clip_count}}개의 클립, {{video_count}}개의 실시간 방송을 확인해보세요. Holodex 즐겨찾기에 추가해서 방송이 언제 시작되는지 알 수 있습니다.
+    descriptionWithTopic: >-
+      {{english_name}}의 {{ topics }} 실시간 방송을 찾아보세요. {{clip_count}}개의 클립과 {{video_count}}개의 실시간 방송을 Holodex에서 만나보세요.
+  clip:
+    title: '{{english_name}} 요약 - Holodex'
+    description: >-
+      {{english_name}}에서 당신이 가장 좋아하는 버튜버들의 {{video_count}}개의 클립을 찾아보세요.

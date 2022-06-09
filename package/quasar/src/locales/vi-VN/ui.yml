@@ -1,0 +1,522 @@
+---
+component:
+  apiError:
+    title: Gomenasorry!
+    textBeforeTwitter: 'Đã xảy ra lỗi khi truy xuất nội dung, vui lòng kiểm tra thông báo tại Twitter '
+    textAfterTwitter: ' hoặc báo cáo lỗi qua'
+    aboutPage: trang Giới thiệu
+    afterAboutPageHyperlink: .
+  channelList:
+    signInToFavorite: Đăng nhập để thêm vào mục Yêu thích
+    unfavoriteAllInGroup: Xoá tất cả khỏi mục Yêu thích
+    favoriteAllInGroup: Thêm tất cả vào mục Yêu thích
+  channelInfo:
+    stats: Thống kê
+    videoCount: '{0} Video'
+    clipCount: '{n} Clip'
+    subscriberCount: '{n} người đăng kí'
+    subscriberNA: Số lượng người đăng kí không khả dụng
+    totalViews: Tổng lượt xem
+  channelSocials:
+    addToFavorites: Thêm vào mục Yêu thích
+    removeFromFavorites: Xoá khỏi mục Yêu thích
+    unblock: Bỏ chặn kênh này
+    block: Chặn hiển thị nội dung của kênh này trên Holodex
+    blocked: Đã chặn
+  mainNav:
+    home: Trang chủ
+    favorites: Yêu thích
+    channels: Kênh
+    about: Giới thiệu
+    library: Thư viện
+    settings: Cài đặt
+    login: Đăng nhập
+    logout: Đăng xuất
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: Cài đặt tài khoản
+    music: Nhạc
+    multiview: MultiView
+    points: điểm
+    playlist: Playlist
+  videoCard:
+    clips: '{n} Clip'
+    watching: '{0} người đang xem'
+    liveNow: Đang trực tiếp
+    edit: Chỉnh sửa
+    copiedToClipboard: Đã sao chép liên kết vào clipboard.
+    copyLink: Sao chép liên kết Holodex
+    premiere: Công chiếu
+    googleCalendar: Thêm vào Google Calendar
+    totalTLs: Tổng số live chat đã dịch
+    tlPresence: Những dịch giả hoạt động trong 30 phút gần nhất
+    typeScheduledYT: Stream đã lên lịch
+    typeExternalStream: Stream từ trang khác
+    typeEventPlaceholder: Sự kiện đã lên lịch
+  videoDescription:
+    description: Mô tả
+  description:
+    showLess: Thu gọn
+    showMore: Xem thêm
+  watch:
+    streamingFor: Đã stream trong vòng {0}
+    nextUpInMugen: Tiếp theo
+    Comments:
+      title: Bình luận
+      all: Tất cả
+  search:
+    searchLabel: Tìm kiếm
+    type:
+      channel: kênh
+      topic: chủ đề
+      org: tổ chức
+      titledesc: tiêu đề/mô tả
+      comments: bình luận
+      videourl: video url
+  relatedVideo:
+    clipsLabel: clip
+    simulcastsLabel: phát sóng cùng thời điểm
+    refersLabel: đề cập đến
+    sourcesLabel: nguồn
+    songsLabel: bài hát
+    recommendationsLabel: đề xuất
+    sameSourceClips: Đến từ cùng stream
+  paginateLoad:
+    newer: Mới hơn
+    older: Cũ hơn
+  music:
+    clearPlaylist: Xoá tất cả
+    trendingForOrg: Xu hướng cho {0}
+  channelMusic:
+    recentSongsHeader: Bài hát gần đây
+    weeklyTopPlaysHeader: Top lượt nghe trong tuần
+    trending: Xu hướng
+  songList:
+    songTitle: Tiêu đề
+    songCoveredBy: Cover bởi
+    songDuration: Thời lượng
+    sangOnTime: Ngày hát
+  orgMusic:
+    monthlyTopForOrg: Top lượt nghe trong tháng của {0}
+    weeklyTopForOrg: Top lượt nghe trong tuần của {0}
+  installPrompt:
+    title: Cài đặt Holodex
+    callToAction: Holodex đem lại trải nghiệm tốt nhất nếu bạn thêm trang vào màn hình chính
+    notNowBtn: Không phải lúc này
+    installBtn: Cài đặt
+    iOS:
+      popup: Cài đặt Holodex trên iOS
+      afterExportIcon: sau đó 'Thêm vào màn hình chính
+      beforeExportIcon: Nhấn
+  media:
+    remove: Xoá
+  comment:
+    close: Đóng
+    readMore: Xem thêm
+  reportDialog:
+    title: Báo cáo
+    collabing: >-
+      Kênh này có thể hợp tác với một thành viên {org} hoặc với những người yêu thích của bạn. Bạn có thể tắt tính năng này thông qua cài đặt
+    comments: Holodex nên thực hiện những hành động nào?
+    success: Đã gửi báo cáo, cảm ơn bạn!
+    reasons:
+      - Video bị gắn thẻ sai
+      - Chất lượng video quá kém/Nội dung dễ gây hiểu lầm
+      - Vi phạm các nguyên tắc thực hiện tác phẩm phái sinh (Derivative Work Guidelines) của tổ chức hoặc nội dung không phù hợp
+      - Khác
+  thirdpartycookie:
+    explanation: >-
+      Dựa trên cách trình duyệt hoạt động, một số trình duyệt với khả năng giới hạn/chặn <b>cookies của bên thứ ba</b>, hoặc chặn cookies của <kbd>YouTube</kbd> sẽ gặp một chút khó khăn khi đăng nhập / sử dụng YouTube Chat. <br /><br /> Vấn đề này có thể được giải quyết bằng cách cho phép cookies của <kbd>YouTube</kbd> hoạt động trong trình duyệt, hoặc giảm giới hạn cookies / quyền riêng tư cho <kbd>Holodex.net</kbd>. <br /><br /> Chúng tôi có một số trang web giúp bạn có thêm thông tin và hướng dẫn chi tiết cho vấn đề này.
+    dialogTitle: Sử dụng Youtube Chat trên Holodex
+    alertText: >-
+      Cài đặt quyền riêng tư của trình duyệt bạn đang sử dụng khiến bạn không thể đăng nhập vào Youtube Chat. Nhấn vào đây để tìm hiểu thêm
+    neverShowAgain: Ngừng hiển thị các cảnh báo này
+  playlist:
+    menu:
+      export-playlist: Xuất danh sách
+      new-playlist: Danh sách mới
+      rename-playlist: Đổi tên danh sách
+      reset-unsaved: Huỷ các thay đổi chưa được lưu
+      delete-playlist: Xoá danh sách
+      clear-playlist: Xoá
+    save-error-not-logged-in: Bạn cần phải đăng nhập để lưu danh sách
+  placeholderVideo:
+    discordCredit: 'Dữ liệu sự kiện được cung cấp bởi {0} từ: {1}'
+    datasourceCredit: Dữ liệu sự kiện được nạp từ nguồn dữ liệu {0}.
+    botCredit: Dữ liệu sự kiện được cung cấp từ nguồn dữ liệu {0}, tạo bởi {1}.
+    streamPageBtn: Trang Stream
+    eventPageBtn: Trang Sự kiện
+    scheduledEvent: Được lên lịch
+    editorCredit: Sự kiện được cài đặt bởi Editor {0} của Holodex.
+    creditTitleText: 'Nguồn:'
+views:
+  channel:
+    video: Video
+    clips: Clip
+    music: Âm nhạc
+    collabs: Collab
+    about: Giới thiệu
+  channels:
+    sortOptions:
+      subscribers: Người đăng kí
+      group: Nhóm
+      recentUpload: Tải lên gần đây
+      videoCount: Số lượng video
+      clipCount: Số lượng clip
+      org: Tổ chức
+    tabs:
+      Vtuber: Vtuber
+      Subber: Subber
+      Favorites: Yêu thích
+      Blocked: Đã chặn
+    favoritesAreEmpty: Bạn chưa yêu thích kênh nào cả!
+    blockedAreEmpty: Bạn không có kênh đã chặn nào.
+  home:
+    liveOrUpcomingHeading: Trực tiếp / Sắp tới
+    recentVideosHeading: Video gần đây
+    noStreams: Không có luồng phát sóng trực tiếp hoặc luồng phát sóng sắp tới vào lúc này
+    recentVideoToggles:
+      all: Tất cả
+      official: Lưu trữ
+      subber: Clip
+  library:
+    savedVideosTitle: Video đã lưu
+    createYtPlaylistButton: Tạo Youtube Playlist ({0})
+    deleteFromLibraryButton: Xoá ({0})
+    deleteConfirmation: Bạn có chắc chắn muốn xoá {0} video này không?
+    deleteConfirmationOK: Xóa
+    deleteConfirmationCancel: Hủy bỏ
+    selectionReset: Thiết lập lại
+    selectionSelectAll: Chọn tất cả
+    emptyLibrary: Bạn không có video đã lưu nào!
+    exportSelected: Xuất các mục được chọn ({0})
+    exportYtPlaylist: YouTube Playlist
+    exportCsv: CSV File
+    selectionSelect50: Chọn 50
+    exportYTExplanation: >-
+      Playlist Youtube được tạo bởi tính năng này sẽ <b>không công khai</b> (Unlisted) và có thể sẽ bị xoá bởi Youtube. <br /> Vì tính năng này của Youtube chưa được hoàn thiện, bạn cần phải làm những bước sau để lưu playlist Youtube <b>không công khai</b> này vào tài khoản.
+    exportYTHeading: Hướng dẫn lưu Youtube Playlist
+    exportYTInstructions: >-
+      <b class="red--text">Bước 1</b>: Mở playlist và chọn mini-player. <br /><br /> <b class="red--text">Bước 2</b>: Chọn một video bất kì và thêm vào Queue. <br /><br /> <b class="red--text">Bước 3</b>: Đã có thể lưu playlist. Nhấn lưu để lưu playlist.
+    sort:
+      dateaddedEarliestFirst: Ngày được thêm vào Thư viện, cũ nhất trên cùng
+      dateaddedLatestFirst: Ngày được thêm vào Thư viện, mới nhất trên cùng
+      dateuploadedLatestFirst: Ngày tải lên, mới nhất trên cùng
+      dateuploadedEarliestFirst: Ngày tải lên, cũ nhất trên cùng
+  notFound:
+    title: Không tìm thấy nội dung
+    back: Về trang chủ
+  search:
+    sort:
+      newest: Mới nhất
+      oldest: Cũ nhất
+    type:
+      all: Tất cả
+      official: Chính thức
+      clip: Clip
+    unsupportedQuery: >-
+      Tìm kiếm clip dựa trên <kbd>Chủ đề</kbd> và <kbd>Tổ chức</kbd> hiện không được hỗ trợ. Sẽ không có <b>clip</b> nào được hiển thị.
+    sortByLabel: Sắp xếp theo
+    typeDropdownLabel: Thể loại
+  settings:
+    title: Cài đặt
+    darkModeLabel: Chế độ Tối
+    darkModeMsg: Chuyển đổi giao diện sáng và tối
+    redirectModeLabel: Mở trên Youtube
+    redirectModeMsg: >-
+      Nhấn vào hình thu nhỏ của video sẽ mở video trên YouTube, nhấn vào tiêu đề sẽ mở video trên Holodex
+    useEnglishNameLabel: Sử dụng tên tiếng Anh
+    useEnglishNameMsg: Sử dụng tên tiếng Anh cho các kênh của VTuber
+    hideVideoThumbnailsLabel: Ẩn hình thu nhỏ của video
+    hideVideoThumbnailsMsg: >-
+      Ẩn hình thu nhỏ của video để tăng tốc độ tải trang và lướt nhanh hơn trên điện thoại
+    pushNotificationLabel: Thông báo (Sắp có)
+    pushNotificationMsg: Bật thông báo cho những kênh yêu thích của bạn
+    autoplayVideoLabel: Tự động phát video
+    autoplayVideoMsg: Bật tự động phát lại các video
+    scrollModeLabel: Chế độ Cuộn
+    scrollModeMsg: Sử dụng thanh cuộn/nhấn để sang trang
+    resetAllSettings: Đặt lại tất cả Cài đặt/Dữ liệu
+    resetAllSettingsWarning: Bạn sẽ mất toàn bộ dữ liệu. Tiếp tục?
+    clipLanguageSelection: 'Hiển thị những clip trong các ngôn ngữ sau:'
+    tlLanguageSelection: Hiển thị bản dịch trực tiếp trong các ngôn ngữ sau
+    defaultPage: Trang mặc định
+    defaultPageMsg: >-
+      Mặc định mở trang này khi truy cập holodex.net hoặc khi nhấn vào biểu tượng ở góc trái trên cùng.
+    videoFeedSettings: Cài đặt trang Video
+    siteNavigationSettings: Trang/Điều hướng
+    languageSettings: Ngôn ngữ
+    gridSizeLabel: Kích cỡ của Hình thu nhỏ/Phân bố video
+    gridSizeMsg: Thay đổi kích cỡ của hình thu nhỏ/phân bố video trên Trang chủ/Yêu thích
+    gridSize:
+      - Lớn
+      - Vừa
+      - Nhỏ
+    hideCollabStreamsLabel: Ẩn Stream Collab
+    hideCollabStreamsMsg: Ẩn những stream collab khỏi trang Yêu thích
+    hidePlaceholderStreams: Ẩn các stream đã lên lịch
+    ignoredTopicsLabel: Topic đã bỏ qua
+    ignoredTopicsMsg: Ẩn các video có các topic này khỏi Trang chủ và Trang ưa thích
+    theme: Giao diện
+    moreSettings: Các cài đặt bổ sung
+  app:
+    update_available: Đã có bản cập nhật mới
+    update_btn: Cập nhật
+    close_btn: Đóng
+    check_about_page: Truy cập trang Giới thiệu để đọc về các thay đổi mới
+    nowSupportsMultiOrg: Holodex giờ đã hỗ trợ nhiều tổ chức khác nhau.
+    loginCallToAction: Hãy đăng nhập để lưu các kênh bạn yêu thích!
+  about:
+    add_my_channel: Yêu cầu thêm kênh
+  watch:
+    theaterMode: Chế độ Rạp chiếu phim (Alt + T)
+    mentionIconLabel: ĐỀ CẬP
+    chat:
+      loading: Đang tải Chat...
+      hideTLBtn: Ẩn dịch trực tiếp
+      showTLBtn: Hiện dịch trực tiếp
+      TLSettingsTitle: Cài đặt dịch trực tiếp
+      showSubtitle: Hiển thị phụ đề
+      expandTL: Mở rộng TLdex
+      tlStart: Khởi đầu tin nhắn
+      StickBottomSettingLabel: Di chuyển xuống dưới
+      StickBottomSettingsDesc: Đặt hộp thoại dịch trực tiếp bên dưới Youtube Chat
+      showVerifiedMessages: Hiển thị tin nhắn từ các kênh Verified
+      showModeratorMessages: Hiển thị tin nhắn từ Moderator
+      showVtuberMessages: Hiển thị tin nhắn từ Vtuber
+      showLocalTime: Hiển thị giờ tại địa phương
+      tlFontSize: Cỡ chữ
+      tlWindowSize: Kích thước khung dịch (%), đặt 0% để tự động điều chỉnh
+      retryBtn: Thử lại
+      status:
+        reconnecting: Tự động kết nối lại...
+        reconnectFailed: Không thể kết nối lại
+        notLive: >-
+          Luồng phát sóng chưa bắt đầu, hãy thử lại vào khoảng 15 phút trước khi bắt đầu phát trực tiếp
+        connectedToChat: Đã kết nối
+        disconnectedToChat: Đã ngắt kết nối
+      archiveNeedExtension: >-
+        Chat từ các stream đã kết thúc sẽ không hoạt động mà không có tiện ích mở rộng {0} hoặc các tiện ích mở rộng từ nguồn thứ 3 khác.
+    removeFromPlaylist: Xoá video khỏi playlist hiện tại
+    saveToPlaylist: Lưu video vào playlist hiện tại
+    likeOnYoutube: Thích video này trên Youtube
+  favorites:
+    promptForAction: >-
+      Tạo một danh sách các Vtuber yêu thích để xem các clip và livestream mới nhất của họ tại trang này.
+    manageFavorites: Quản lý mục Yêu thích
+    close: Đóng
+    showall: Hiển thị tất cả
+  editor:
+    needlogin: Bạn cần phải đăng nhập để chỉnh sửa dữ liệu của các video và bài hát trên Holodex.
+    changeTopic:
+      title: Thay đổi chủ đề của stream
+      info: >-
+        Mọi người dùng đều có thể gắn topic cho video, nhưng chỉ có Editor và Admin mới có thể xoá và thay đổi topic có sẵn.
+      button: Lưu (có thể mất 5 phút mới có hiệu lực)
+    channelMentions:
+      title: Các kênh được nhắc đến
+    sources:
+      title: Nguồn/Clip (tính năng đang được phát triển)
+  login:
+    apikeyMsg: >-
+      Bạn có thể sử dụng khoá API để truy vấn đến API của Holodex một cách tự động. Một tài khoản chỉ được phép có một khoá. Sau khi lấy khoá mới, khoá cũ sẽ hết hạn sử dụng trong vòng 0 - 24 tiếng sau.
+    apikeyNew: Lấy khoá API mới
+    ownedYtChannel: Sở hữu các kênh Youtube
+    futureYtcOwnerMessage: >-
+      Trong tương lai, chúng tôi có kế hoạch cung cấp nhiều dịch vụ hơn cho chủ sở hữu kênh như chỉnh sửa dữ liệu cho video của riêng họ.
+    linkAcc: Liên kết với tài khoản khác
+    apikeyResetConfirm1: Bạn có chắc chắn muốn đặt lại khoá API của mình chứ?
+    apikeyResetConfirm2: Khoá API cũ sẽ hết hạn sau khoảng 0 - 24 giờ, bạn chắc chắn muốn đặt lại chứ?
+    apikeyResetNvm: Không có gì thú vị xảy ra.
+    with:
+      - Đăng nhập bằng Google
+      - Đăng nhập bằng Discord
+      - Đăng nhập bằng Twitter
+  multiview:
+    confirmOverwrite: Ghi đè bố cục hiện tại?
+    confirmOverwriteYes: Xác nhận
+    permalink: Liên kết tĩnh
+    presets: Mẫu có sẵn
+    addframe: Thêm ô
+    muteAll: Tắt âm tất cả
+    unmuteAll: Bật âm tất cả
+    muteOthers: Tắt tiếng các stream khác
+    muteOthersDetail: Tắt tiếng tất cả trừ một stream
+    autoLayoutTip: Nhấn vào một kênh để bắt đầu xem bằng chế độ bố cục tự động
+    createLayoutTip: Tự tạo bố cục của riêng mình bằng cách thêm các ô hoặc sử dụng mẫu có sẵn
+    openToolbarTip: Mở thanh công cụ để bắt đầu sử dụng multiview
+    archiveSync: Đồng bộ hoá archive
+    preset:
+      shareOnDiscord: >-
+        Muốn chia sẻ bố cục của mình? Hãy sử dụng nút chia sẻ và liên hệ với chúng tôi trên <a href="https://discord.gg/jctkgHBt4b">Discord</a>!
+      custom: Bố cục của tôi
+      toggleAutoLayout: Bật/tắt sử dụng bố cục này trong chế độ tự động
+      remove: Xoá
+      desktop: Desktop
+      mobile: Mobile
+      autoLayout: AutoLayout
+    presetEditor:
+      title: Lưu bố cục
+      name: Tên
+      autoLayout: Sử dụng bố cục này trong chế độ tự động
+    video:
+      selectLive: Chọn livestream
+      addCustomVideo: Thêm video tuỳ chọn
+    fullScreen: Toàn màn hình
+    mediaControls: Điều khiển
+    mediaControlsEmpty: Các video đang được phát sẽ xuất hiện ở đây
+    editAutoLayout: Chỉnh sửa bố cục tự động
+    changeLayout: Thay đổi bố cục
+    done: Hoàn tất
+    hints: Gợi ý
+    presetsHint: Mở menu mẫu có sẵn để thay đổi bố cục và cài đặt bố cục tự động
+    mediaControlsHint1: Sử dụng Điều khiển để tắt tiếng và đồng bộ hoá (
+    mediaControlsHint2: ) các stream
+    dragDropHint: Kéo và thả các stream từ thanh công cụ đến các ô để sắp xếp
+    reorderHint: Sử dụng menu Điều chỉnh bố cục để thay đổi vị trí video và chat
+    reorderLayout: Điều chỉnh bố cục
+    reorderLayoutDetail: Kéo và thả biểu tượng đến vị trí thích hợp
+    sync:
+      nothingToSync: >-
+        Không có gì để đồng bộ hoá, xin hãy mở hai stream archive trùng lặp (ví dụ: collab streams)
+      syncSettings: Cài đặt đồng bộ hoá
+      syncSettingsDetail: >-
+        Video được đồng bộ hoá dựa trên thời điểm bắt đầu stream, và có thể bị lệch đồng bộ do các vấn đề kỹ thuật xảy ra giữa stream hoặc do bị xoá mất một số phần trong stream. Dùng hiệu số để tự căn chỉnh video
+  mugen:
+    welcome: >-
+      Chào mừng bạn đã đến với MugenClips! Tất cả mọi người trên trang này đều đang xem cùng một clip Hololive tiếng Anh được lựa chọn ngẫu nhiên. Hãy cùng xem và trò chuyện với các fan Hololive khác trên toàn thế giới. Nếu bạn lỡ tua nhanh và muốn đồng bộ hoá lại với mọi người, xin hãy tải lại trang.
+  playlist:
+    playlist-is-modified: Chưa được lưu
+    item-last-updated: 'Cập nhật lần cuối:'
+    login-prompt: Đăng nhập để lưu playlist và sở hữu nhiều hơn một playlist
+    new-playlist-btn-label: Tạo một danh sách mới
+    page-heading: 'Danh sách của bạn:'
+    page-instruction: Nhấp vào một playlist để chuyển nó thành trạng thái đang hoạt động.
+    change-loss-warning: Các thay đổi chưa được lưu sẽ bị mất. Tiếp tục?
+  extension:
+    title: Tiện ích mở rộng Holodex Plus
+    features: Các tính năng
+    featureset:
+      one: Bật tính năng chat từ stream đã kết thúc tại Watch và Multiview
+      two: Cho phép nhấn "Like" video trên Youtube từ Holodex
+      three: Sửa lỗi tràn bộ nhớ từ live chat của Youtube
+      four: >-
+        Sửa các lỗi của Youtube (ví dụ như không cho phép mở nhiều stream cùng một lúc, ảnh thu nhỏ không hiển thị) và nhiều hơn nữa!
+time:
+  soon: sớm
+  diff_future_date: Bắt đầu {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: Thêm
+    update: Cập nhật
+    permission: >-
+      Bạn cần phải có quyền "Editor" hoặc cao hơn để cập nhật hoặc xoá những bài hát đã tồn tại. Xin hãy liên hệ với chúng tôi qua <a class='white--text' href='/about'>discord</a> để thông báo cho các Editor khác về vấn đề này, hoặc đăng kí để trở thành một Editor.
+    titles:
+      addSong: 'Song Metadata: Thêm bài hát mới'
+      songList: 'Danh sách bài hát : {0}'
+      help: Hướng dẫn
+    itunesLookupPlaceholder: (Tuỳ chọn) Tìm trên iTunes
+    moveRight2s: Qua phải 2 giây
+    testEnd: Nghe thử bắt đầu từ 3 giây trước khi nhạc kết thúc.
+    setToCurrentTime: Chọn thời gian hiện tại ({0})
+    moveLeft2s: Qua trái 2 giây
+    trackNameInput: Tên bài hát
+    originalArtistInput: Nghệ sĩ gốc
+    testStart: Nghe thử đoạn đầu
+    startInput: Bắt đầu
+    endInput: 'Thời lượng tính bằng giây: (kết thúc tại @ {0})'
+    inheritItunesMusic: 'Cài đặt thời lượng qua iTunes: {0}'
+  exitMode: Thoát khỏi Chế độ Chỉnh sửa
+  enterMode: Chỉnh sửa Video
+about:
+  quicklinks: Liên kết nhanh
+  discordBtn: Holodex Discord
+  faq:
+    title: FAQ
+    ytchatHeader: Tôi không đăng nhập được YouTube Chat!
+    ytchatContent: >-
+      Vui lòng tắt tính năng chặn cookies bên thứ 3 trong trình duyệt, hoặc cho phép cookies của Holodex.net và YouTube.com được hoạt động vào mục Cho phép / Whitelist.
+    ytchatFirefox: Đây là hướng dẫn cho trình duyệt Firefox, những trình duyệt khác có thể tương tự.
+    autoplayHeader: AutoPlay / Tự động phát không hoạt động!
+    autoplayContent: 'Vui lòng tra cứu cách bật AutoPlay / Tự động phát cho trình duyệt của bạn như: Chrome, Firefox, Edge, Opera.'
+    musicPlayer: Trình phát nhạc không hoạt động tốt trên thiết bị di động!
+    musicPlayerContent: >-
+      Đối với hầu hết các thiết bị iOS, bạn không thể tắt màn hình hoặc đóng Safari khi đang phát nhạc Holodex. Vấn đề này có thể tồn tại trên các thiết bị Android (tùy thuộc vào thiết bị). Vui lòng phản hồi cho chúng tôi trên Discord nếu bạn có bất kỳ ý tưởng nào về cách tạo ra một hệ thống phát lại tốt hơn.
+    videoLinkage: Làm cách nào để tôi có thể đảm bảo rằng các video được liên kết đúng cách với các Vtuber?
+    videoLinkageContent: >-
+      Tất cả mọi thông tin đều được trích từ mô tả của video. Nếu bạn clip từ một stream, xin hãy chắc chắn rằng bạn đã trích dẫn liên kết đến stream gốc. Nếu như bạn clip từ một video của fan (vd: từ bilibili), hãy chắc chắn rằng bạn có trích dẫn liên kết đến kênh Youtube chính thức của những Vtuber liên quan. Nếu như bạn không đặt bất cứ liên kết nào đến Vtuber trong phần mô tả video của mình, clip đó sẽ không được hiển thị trên Holodex, vì mọi clip đều được yêu cầu phải liên kết đến một Vtuber cụ thể trong hệ thống.
+    quitHolodex: "Tôi là một subber/clipper và tôi muốn gỡ bỏ kênh của mình khỏi Holodex\\r\n"
+    quitHolodexContent: >-
+      Buồn thật đấy :(, xin hãy cho tôi biết nếu bạn cần tôi giúp đỡ bất cứ thứ gì về vấn đề này. Nếu bạn vẫn muốn gỡ bỏ kênh của mình, xin hãy nhắn tin cho chúng tôi trên Discord.
+    favorite:
+      title: Mục Yêu thích là gì?
+      Contents:
+        - >-
+          Mục yêu thích là một cách để luôn cập nhật các Vtuber yêu thích của bạn, bạn có thể thêm các kênh yêu thích của mình bằng cách nhấp vào biểu tượng trái tim trên
+        - >-
+          trang. Xin lưu ý rằng việc yêu thích subbers hiện không được hỗ trợ, nhưng bạn vẫn nên cân nhắc đăng ký và ủng hộ họ theo những cách khác!
+      disappear:
+        title: Danh sách yêu thích của tôi biến mất rồi / Tôi không sử dụng được tính năng Yêu thích
+      contents:
+        - >-
+          Hãy đảm bảo rằng bạn đã đăng nhập và truy cập tab yêu thích kênh để bắt buộc refresh lại trang.
+    mobile:
+      title: Có ứng dụng Holodex trên hệ điều hành Android/iOS không?
+      content:
+        summary: >-
+          Chúng tôi vẫn đang phát triển nó! Trong thời gian này, xin hãy sử dụng tính năng "Thêm vào màn hình chính" trên trình duyệt của bạn. Chúng tôi đã điều chỉnh nó rất nhiều để khiến nó hoạt động như một ứng dụng
+        android:
+          - 'Chrome trên Android: Điều hướng đến trang web, nhấp vào dấu ba chấm'
+          - ở trên cùng bên phải và tìm "Thêm vào Màn hình chính".
+        ios:
+          - >-
+            Safari trên iOS: Điều hướng đến trang web trên điện thoại của bạn, nhấp vào hình vuông có mũi tên hướng lên
+          - ở cuối Safari và nhấp vào "Thêm vào Màn hình chính"
+    MugenClips:
+      title: MugenClips là gì?
+      contents:
+        - >-
+          MugenClips hay còn gọi là clip vô hạn, là một tính năng xem cùng nhóm nơi mọi người trên trang web có thể xem liên tục nhiều clip khác nhau được tải lên bởi các kênh dịch khác nhau
+    subber:
+      title: Tôi là subber/clipper nhưng lại không tìm thấy kênh hay clip của mình trên Holodex
+      contents:
+        - >-
+          Vui lòng kiểm tra trên trang Kênh (Channels) để xem bạn có được liệt kê là một subber hay không, nếu không, vui lòng điền vào
+        - mẫu này
+        - >-
+          , và chúng tôi sẽ thêm bạn theo cách thủ công. Nếu bạn đã có trong danh sách, vui lòng đảm bảo mô tả video của bạn có nguồn / liên kết kênh youtube chính xác.
+    feedback:
+      title: Tôi có ý kiến/muốn đóng góp cho dự án này
+      contents:
+        - >-
+          Tất cả sự trợ giúp và ý tưởng đều được chào đón! Cả UI và Backend đều sẵn sàng tiếp nhận đóng góp, mặc dù hiện tại chỉ có UI là mã nguồn mở. Vui lòng liên hệ với chúng tôi trên Discord để có quyền truy cập vào Backend source, hoặc chỉ đơn giản là nói về về ý tưởng của bạn.
+    support:
+      title: Tôi có thể hỗ trợ Holodex như thế nào?
+      contents:
+        '0': >-
+          Máy chủ của chúng tôi là một máy tính 28 lõi 60GB RAM với phí duy trì $60 USD/tháng, và chúng tôi vẫn đang tiếp tục tìm cách phát triển các tính năng của hệ thống nhiều hơn nữa, vì vậy chúng tôi đã mở <a href="https://ko-fi.com/holodex">Ko-fi</a>để trang trải chi phí này. (Chúng tôi cũng có <a href="https://www.patreon.com/holodex">Patreon</a>, nhưng chúng tôi thích Ko-fi hơn.)<br /><br />Bạn cũng có thể hỗ trợ Holodex bằng cách gửi cho chúng tôi phản hồi từ người dùng và các tin nhắn khích lệ trên twitter, cung cấp bản dịch tại <a href="https://crwd.in/holodex">Crowdin</a>, cũng như đóng góp vào kho dữ liệu bài hát của chúng ta. Thậm chí timestamp những khoảnh khắc hài hước và gửi bình luận đó trên stream gốc cũng đã là một sự trợ giúp tuyệt vời rồi!
+  gdpr: GDPR và dữ liệu của tôi
+  gdprContent: >-
+    Google Analytics sẽ được sử dụng cho việc theo dõi lượng truy cập trang nhằm mục đích phân tích của chúng tôi. Danh sách mục Yêu thích của bạn sẽ được liên kết với tên người dùng hoặc ID tài khoản mạng xã hội mà bạn dùng để đăng nhập. Dữ liệu này có thể bao gồm email của bạn (nếu đăng nhập bằng Google), Discord ID, hoặc tên đăng nhập Twitter tuỳ thuộc vào cách thức đăng nhập của bạn.
+  gdprDeletion: Để xoá mọi dữ liệu người dùng của bạn, xin hãy liên hệ với chúng tôi trên Discord!
+  feedback: Phản hồi / Báo cáo lỗi
+  feedbackHtml: >-
+    Bạn có thể tạo một issue mới tại <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker </a> hoặc liên hệ với Holodex trên Discord <br /> <br /> Reddit: <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    title: Lời cảm ơn
+    contents:
+      - Tôi muốn dành lời cảm ơn sâu sắc tới
+      - nhóm với thành quả của họ trên
+      - >-
+        Cũng xin gửi lời cảm ơn đến tất cả các subbers đã giúp đỡ mọi người ở nước ngoài! Hãy ghé qua và cảm ơn họ!
+      - >-
+        Đây là một trang web do người hâm mộ tạo ra và nội dung được tìm thấy trên trang web này thuộc sở hữu của Cover corp và các đối tác của nó. Trang web tuân theo các nguyên tắc do Cover corp đưa ra trong
+      - Thỏa thuận cấp phép trên các tác phẩm phái sinh
+  changelog:
+    title: Các thay đổi
+  news:
+    title: Tin tức
+  bookmarklet:
+    title: Bookmarklets
+    description: >-
+      Kéo các bookmarklet bên dưới lên thanh dấu trang của bạn để mở stream từ trang Youtube bằng Holodex một cách dễ dàng:

@@ -1,0 +1,467 @@
+---
+component:
+  apiError:
+    title: โกเมนาซอรี่!
+    textBeforeTwitter: 'เกิดข้อผิดพลาดในการดึงเนื้อหา โปรดตรวจสอบ twitter '
+    textAfterTwitter: ' หรือแจ้งข้อผิดพลาดผ่าน'
+    aboutPage: เกี่ยวกับเพจ
+    afterAboutPageHyperlink: .
+  channelList:
+    signInToFavorite: ลงชื่อเข้าใช้เพื่อเพิ่มรายการโปรด
+    unfavoriteAllInGroup: ยกเลิกรายการโปรดทั้งหมดในกลุ่ม
+    favoriteAllInGroup: เพิ่มรายการโปรดทั้งหมดในกลุ่ม
+  channelInfo:
+    stats: สถิติ
+    videoCount: '{0} วิดีโอ'
+    clipCount: '{n} คลิป'
+    subscriberCount: '{n} ผู้ติดตาม'
+    subscriberNA: ไม่มีจำนวนสมาชิก
+    totalViews: ยอดผู้ชมทั้งหมด
+  channelSocials:
+    addToFavorites: เพิ่มรายการโปรด
+    removeFromFavorites: ลบรายการโปรด
+    unblock: เลิกบล็อกช่องนี้
+    block: บล็อกเนื้อหาของช่องนี้ใน Holodex
+    blocked: บล็อก
+  mainNav:
+    home: หน้าแรก
+    favorites: การติดตาม
+    channels: ช่อง
+    about: เกี่ยวกับ
+    library: ของสะสม
+    settings: ตั้งค่า
+    login: เข้าสู่ระบบ
+    logout: ออกจากระบบ
+    MugenClips: MugenClips<sup>beta</sup>
+    accountSettings: ตั้งค่าบัญชี
+    music: เพลง
+    multiview: MultiView
+    points: แต้ม
+    playlist: เพลย์ลิสต์
+  videoCard:
+    clips: '{n} คลิป'
+    watching: '{0} กำลังดู'
+    liveNow: กำลังถ่ายทอดสด
+    edit: แก้ไข
+    copiedToClipboard: คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว
+    copyLink: คัดลอกลิงก์ Holodex 
+    premiere: พรีเมียร์
+    googleCalendar: เพิ่มใน Google ปฏิทิน
+    totalTLs: จำนวนการแปลแชท
+    tlPresence: นักแปลที่ใช้งานใน 30 นาทีที่ผ่านมา
+  videoDescription:
+    description: คำอธิบาย
+  video:
+    comment: {}
+  description:
+    showLess: แสดงน้อยลง
+    showMore: แสดงมากขึ้น
+  watch:
+    streamingFor: สตรีมมิ่งสำหรับ {0}
+    nextUpInMugen: ถัดไป
+    Comments:
+      title: ความคิดเห็น
+      all: ทั้งหมด
+  search:
+    searchLabel: ค้นหา
+    type:
+      channel: ช่อง
+      topic: หัวข้อ
+      org: ค่าย
+      titledesc: ชื่อวิดีโอ/รายละเอียด
+      comments: ความคิดเห็น
+      videourl: URL ของวิดีโอ
+  relatedVideo:
+    clipsLabel: คลิป
+    simulcastsLabel: ถ่ายทอดสดร่วม
+    refersLabel: refers
+    sourcesLabel: แหล่งที่มา
+    songsLabel: เพลง
+    recommendationsLabel: ที่แนะนำ
+  paginateLoad:
+    newer: ใหม่กว่า
+    older: เก่ากว่า
+  music:
+    clearPlaylist: ล้าง
+  channelMusic:
+    recentSongsHeader: เพลงล่าสุด
+    weeklyTopPlaysHeader: เพลงยอดนิยมประจำสัปดาห์
+  songList:
+    songTitle: ชื่อ
+    songCoveredBy: ขับร้องโดย
+    songDuration: ระยะเวลา
+    sangOnTime: ร้องบน
+  orgMusic:
+    monthlyTopForOrg: เพลงยอดนิยมรายเดือนจาก {0}
+    weeklyTopForOrg: เพลงยอดนิยมรายสัปดาห์จาก {0}
+  installPrompt:
+    title: ติดตั้ง Holodex
+    callToAction: การรับชมวิดีโอบน Holodex จะทำงานได้ดีที่สุดเมื่อเพิ่มลงในหน้าจอหลัก
+    notNowBtn: ไม่ใช่ตอนนี้
+    installBtn: ติดตั้ง
+    iOS:
+      popup: ติดตั้ง Holodex บน iOS
+      afterExportIcon: จากนั้น 'เพิ่มไปที่หน้าจอหลัก
+      beforeExportIcon: แตะ
+  media:
+    remove: ลบ
+  comment:
+    close: ปิด
+    readMore: อ่านเพิ่มเติม
+  reportDialog:
+    title: รายงาน
+    collabing: ช่องนี้กำลังโคแลปกับสมาชิก {org} หรือรายการโปรดของคุณ คุณสามารถปิดการใช้งานคุณสมบัตินี้ผ่านการตั้งค่า
+    comments: Holodex ควรทำอย่างไร?
+    success: ส่งรายงานแล้ว ขอบคุณ!
+    reasons:
+      - Video tagged incorrectly
+      - Dangerously Low Quality/Misleading Content
+      - Violates the org's derivative work guidelines or inappropriate
+      - Other
+      - แท็กวิดีโอไม่ถูกต้อง
+      - เนื้อหาคุณภาพต่ำ/ทำให้เข้าใจผิด
+      - ละเมิดแนวทางแนวปฏิบัติผการทำผลงานลอกเลียนแบบของทางค่ายหรือทำไม่เหมาะสม
+      - อื่นๆ
+  thirdpartycookie:
+    explanation: >-
+      เนื่องจากการทำงานของเว็บเน็ตเบราว์เซอร์ของคุณ เบราว์เซอร์บางตัวที่มีนโยบาย <b>คุกกี้ของบุคคลที่สาม</b> ที่เข้มงวดหรือมีการบล็อกคุกกี้จาก <kbd>YouTube.com</kbd> ทำให้การเข้า/ใช้งานแชทใน Youtube เป็นเรื่องยาก <br /><br /> คุณสามารถแก้ไขได้โดยอนุญาต(whitelist) <kbd>YouTube.com</kbd> ในการบล็อกคุกกี้ของบุคคลที่สาม หรือลดระดับความปลอดภัย/ความเป็นส่วนตัวของคุกกี้สำหรับ <kbd>Holodex.net</kbd> .<br /> เราจะแสดงรายการเว็บไซต์ต่างๆ ที่ให้ข้อมูลเพิ่มเติมเกี่ยวกับเรื่องนี้
+    dialogTitle: ใช้ Youtube Chat บน Holodex
+    alertText: >-
+      การตั้งค่าความเป็นส่วนตัวของเบราว์เซอร์ทำให้ไม่สามารถลงชื่อเข้าใช้ Youtube Chat ได้. คลิกที่นี่สำหรับข้อมูลเพิ่มเติม
+    neverShowAgain: Never Show Alert Again
+  playlist:
+    menu:
+      export-playlist: ส่งออกเพลย์ลิสต์
+      new-playlist: เพลย์ลิสต์ใหม่
+      rename-playlist: เปลี่ยนชื่อเพลย์ลิสต์
+      reset-unsaved: รีเซ็ตการเปลี่ยนแปลงที่ยังไม่ได้บันทึก
+      delete-playlist: ลบเพลย์ลิสต์
+      clear-playlist: ล้างเพลย์ลิสต์
+    save-error-not-logged-in: คุณต้องเข้าสู่ระบบเพื่อบันทึกเพลย์ลิสต์
+views:
+  channel:
+    video: วีดีโอ
+    clips: คลิป
+    music: เพลง
+    collabs: โคแลป
+    about: About
+  channels:
+    channelType: {}
+    sortOptions:
+      subscribers: ยอดผู้ติดตาม
+      group: ค่าย
+      recentUpload: อัพโหลดล่าสุด
+      videoCount: จำนวนวิดีโอ
+      clipCount: จำนวนคลิป
+      org: ค่าย
+    tabs:
+      Vtuber: Vtuber
+      Subber: Subber
+      Favorites: Favorites
+      Blocked: Blocked
+    favoritesAreEmpty: คุณไม่มีรายการโปรด!
+    blockedAreEmpty: คุณไม่มีช่องที่ถูกบล็อก
+  home:
+    liveOrUpcomingHeading: ถ่ายทอดสด / กำลังมา
+    recentVideosHeading: วิดีโอล่าสุด
+    noStreams: ไม่มีการถ่ายทอดสดหรือสตรีมที่กำลังจะมีขึ้นในขณะนี้
+    recentVideoToggles:
+      all: ทั้งหมด
+      official: การถ่ายทอดสดในอดีต
+      subber: คลิป
+  library:
+    savedVideosTitle: วิดีโอที่บันทึกไว้
+    createYtPlaylistButton: สร้างเพลย์ลิสต์ YouTube ({0})
+    deleteFromLibraryButton: ลบ ({0})
+    deleteConfirmation: คุณแน่ใจหรือไม่ว่าต้องการลบวิดีโอ {0} รายการ?
+    deleteConfirmationOK: ลบ
+    deleteConfirmationCancel: ยกเลิก
+    selectionReset: รีเซ็ต
+    selectionSelectAll: เลือกทั้งหมด
+    emptyLibrary: คุณไม่มีวิดีโอที่บันทึกไว้!
+    exportSelected: ส่งออกที่เลือก ({0})
+    exportYtPlaylist: เพลย์ลิสต์ YouTube
+    exportCsv: ไฟล์ CSV
+    selectionSelect50: เลือก 50
+    exportYTExplanation: >-
+      เพลย์ลิสต์ youtube ที่สร้างโดยคุณลักษณะนี้ <b>ไม่อยู่ในรายการ</b> และอาจถูกลบโดย Youtube  <br /> เนื่องจากคุณสมบัติไม่สมบูรณ์ของ Youtube คุณต้องทำสิ่งต่อไปนี้เพื่อบันทึกเพลย์ลิสต์ Youtube <b>ที่ไม่อยู่ในรายการ</b> ลงในบัญชีของคุณ
+    exportYTHeading: คำแนะนำในการบันทึกเพลย์ลิสต์ Youtube
+    exportYTInstructions: >-
+      <b class="red--text">ขั้นตอนที่ 1</b>: เล่นเพลย์ลิสต์ youtube และเปลี่ยน UI ของเครื่องเล่นเป็นมินิเพลเยอร์ <br /><br /> <b class="red--text">ขั้นตอนที่ 2</b>: เลือกวิดีโอและเพิ่มลงในคิว <br /><br /> <b class="red--text">ขั้นตอนที่ 3</b>: ขณะนี้สามารถบันทึกเพลย์ลิสต์ได้ กดบันทึกเพื่อบันทึก
+    sort:
+      dateaddedEarliestFirst: วันที่เพิ่ม จากใหม่ล่าสุด
+      dateaddedLatestFirst: วันที่เพิ่ม ล่าสุดก่อน
+      dateuploadedLatestFirst: วันที่อัพโหลด ล่าสุดก่อน
+      dateuploadedEarliestFirst: วันที่อัพโหลด เร็วที่สุดก่อน
+  notFound:
+    title: ไม่พบเนื้อหา
+    back: กลับหน้าหลัก
+  search:
+    sort:
+      newest: ใหม่ล่าสุด
+      oldest: เก่าที่สุด
+    type:
+      all: ทั้งหมด
+      official: ออฟฟิเชียล
+      clip: คลิป
+    unsupportedQuery: >-
+      ขณะนี้ไม่รองรับการค้นหาคลิปตาม <kbd>หัวข้อ</kbd> และ <kbd> ค่าย </kbd> ทำให้ไม่มี<b>คลิป</b>ปรากฏขึ้น
+    sortByLabel: เรียงตาม
+    typeDropdownLabel: ปนะเภท
+  settings:
+    title: การตั้งค่า
+    darkModeLabel: โหมดมืด
+    darkModeMsg: เปลี่ยนธีมระหว่างโหมดสว่างและโหมดมืด
+    redirectModeLabel: เปิดบน Youtube
+    redirectModeMsg: >-
+      การคลิกที่ภาพขนาดย่อของวิดีโอจะเปิดใน Youtube การคลิกที่ชื่อวิดีโอจะเปิดบน Holodex
+    useEnglishNameLabel: ใช้ชื่อภาษาอังกฤษ
+    useEnglishNameMsg: ใช้ชื่อที่แปลเป็นภาษาอังกฤษสำหรับช่อง VTuber
+    hideVideoThumbnailsLabel: ซ่อนภาพขนาดย่อของวิดีโอ
+    hideVideoThumbnailsMsg: >-
+      ซ่อนภาพขนาดย่อของวิดีโอ ช่วยให้โหลดเร็วขึ้นและใช้เวลาในการเลื่อนหาบนมือถือน้อยลง
+    pushNotificationLabel: การแจ้งเตือนแบบพุช (เร็วๆ นี้)
+    pushNotificationMsg: เปิดใช้งานการแจ้งเตือนแบบพุชสำหรับช่องโปรด
+    autoplayVideoLabel: เล่นวิดีโออัตโนมัติ
+    autoplayVideoMsg: เปิดใช้งานการเล่นวิดีโออัตโนมัติ
+    scrollModeLabel: โหมดเลื่อน
+    scrollModeMsg: ใช้การเลื่อน/แตะเพื่อเปลี่ยนหน้า
+    resetAllSettings: รีเซ็ตการตั้งค่า/ข้อมูลทั้งหมด
+    resetAllSettingsWarning: คุณจะสูญเสียข้อมูลทั้งหมด ดำเนินการต่อ?
+    clipLanguageSelection: 'ดูคลิปในภาษาเหล่านี้:'
+    tlLanguageSelection: ดู TL Live Chat ในภาษาเหล่านี้
+    defaultPage: หน้าเริ่มต้น
+    defaultPageMsg: >-
+      เปิดหน้านี้โดยอัตโนมัติเมื่อไปที่ holodex.net หรือคลิกที่โลโก้ด้านบนซ้าย
+    videoFeedSettings: การตั้งค่าฟีดวิดีโอ
+    siteNavigationSettings: ไซต์/การนำทาง
+    languageSettings: ภาษา
+    gridSizeLabel: ภาพขนาดย่อ/ขนาดกริด
+    gridSizeMsg: เปลี่ยนขนาดกริดภาพขนาดย่อ/ขนาดวิดีโอบนหน้าแรก/หน้ารายการโปรด
+    gridSize:
+      - ใหญ่
+      - กลาง
+      - เล็ก
+    hideCollabStreamsLabel: ซ่อน Collab Streams
+    hideCollabStreamsMsg: ซ่อนการโคแลปสตรีมจากฟีดรายการโปรดของคุณ
+    ignoredTopicsLabel: หัวข้อที่ถูกละเว้น
+    ignoredTopicsMsg: ซ่อนวิดีโอที่มีหัวข้อเหล่านี้จากหน้าแรกและหน้ารายการโปรด
+    theme: ธีม
+  app:
+    update_available: มีการอัพเดทใหม่
+    update_btn: อัปเดต
+    close_btn: ปิด
+    check_about_page: ไปที่หน้า"เกี่ยวกับ"เพื่อดูการเปลี่ยนแปลงใหม่
+    nowSupportsMultiOrg: Holodex รองรับหลายค่ายแล้ว
+    loginCallToAction: เข้าสู่ระบบเพื่อรวบรวมรายการโปรดของคุณเอง!
+  about:
+    add_my_channel: คำขอช่อง
+  watch:
+    theaterMode: Theater Mode
+    mentionIconLabel: กล่าวถึง
+    chat:
+      loading: กำลังโหลดแชท...
+      hideTLBtn: ซ่อน TLs
+      showTLBtn: แสดง TLs
+      TLSettingsTitle: การตั้งค่า TL
+      StickBottomSettingLabel: ติดด้านล่าง (มือถือ)
+      StickBottomSettingsDesc: กล่อง TL จะอยู่ที่ด้านล่างของแชท (ค่าเริ่มต้นติดด้านบนบนมือถือ)
+      showVerifiedMessages: แสดงข้อความบัญชีที่ได้รับการยืนยันแล้ว
+      showModeratorMessages: แสดงข้อความผู้ดูแล
+      showLocalTime: แสดงเวลาท้องถิ่น
+      tlFontSize: ขนาดตัวอักษร
+      tlWindowSize: ขนาดกล่อง TL (%) ปล่อยให้เป็น 0% สำหรับขนาดอัตโนมัติ
+      retryBtn: ลองอีกครั้ง
+      status:
+        reconnecting: กำลังเชื่อมต่อใหม่อัตโนมัติ...
+        reconnectFailed: ไม่สามารถเชื่อมต่อใหม่ได้
+        notLive: >-
+          สตรีมยังไม่ถ่ายทอดสด โปรดลองอีกครั้งเมื่อสตรีมอยู่ภายใน 15 นาทีหลังจากถ่ายทอดสด
+        connectedToChat: เชื่อมต่อแล้ว
+        disconnectedToChat: ตัดการเชื่อมต่อ
+    removeFromPlaylist: นำวิดีโอออกจากเพลย์ลิสต์ปัจจุบัน
+    saveToPlaylist: บันทึกวิดีโอลงในเพลย์ลิสต์ปัจจุบัน
+  favorites:
+    promptForAction: >-
+      สร้างรายชื่อ vtubers ที่ชื่นชอบ และดูคลิปและไลฟ์ล่าสุดของพวกเขาในหน้านี้
+    manageFavorites: จัดการรายการโปรด
+    close: ปิด
+    showall: แสดงทั้งหมด
+  editor:
+    needlogin: คุณจะต้องเข้าสู่ระบบเพื่อทำการแก้ไขข้อมูล metadata ของวิดีโอและเพลง Holodex
+    changeTopic:
+      title: เปลี่ยนหัวข้อสตรีม
+      info: >-
+        ผู้ใช้ทุกคนสามารถกำหนดหัวข้อให้กับวิดีโอได้ แต่มีเพียงผู้แก้ไขและผู้ดูแลระบบเท่านั้นที่สามารถลบและเปลี่ยนหัวข้อได้เมื่อตั้งค่าแล้ว
+      button: บันทึก (อาจใช้เวลา 5 นาทีจึงจะมีผล)
+    channelMentions:
+      title: การพูดถึงช่อง
+    sources:
+      title: ที่มา/คลิป (อยู่ระหว่างการพัฒนา)
+  login:
+    apikeyMsg: >-
+      คุณสามารถใช้คีย์ API เพื่อ query Holodex API หนึ่งรหัสต่อบัญชีเท่านั้น หลังจากได้รับคีย์ใหม่ คีย์เก่าจะหมดอายุภายใน 0-24 ชั่วโมง
+    apikeyNew: รับคีย์ API ใหม่
+    ownedYtChannel: Owned Youtube Channel
+    futureYtcOwnerMessage: >-
+      ในอนาคต เราวางแผนที่จะให้บริการเพิ่มเติมแก่เจ้าของช่อง เช่น แก้ไขข้อมูล metadata สำหรับวิดีโอของตนเอง
+    linkAcc: เชื่อมโยงบัญชีอื่น
+    apikeyResetConfirm1: คุณแน่ใจหรือไม่ว่าต้องการรีเซ็ตคีย์ API ของคุณ
+    apikeyResetConfirm2: คีย์ API เก่าจะมีเวลา 0-24 ชั่วโมงก่อนจะหมดอายุ รีเซ็ตจริงหรือ?
+    apikeyResetNvm: ไม่มีอะไรน่าสนใจเกิดขึ้น
+    with:
+      - ลงชื่อใช้งานด้วย Google
+      - ลงชื่อใช้งานด้วย Discord
+      - ลงชื่อใช้งานด้วย Twitter
+  multiview:
+    confirmOverwrite: เขียนทับเลย์เอาต์ปัจจุบันไหม?
+    confirmOverwriteYes: ยืนยัน
+    permalink: ลิงก์ถาวร
+    presets: ค่าที่ตั้งไว้
+    addframe: เพิ่มเซลล์
+    muteAll: ปิดเสียงทั้งหมด
+    unmuteAll: เปิดเสียงทั้งหมด
+    muteOthers: ปิดเสียงผู้อื่น
+    muteOthersDetail: ปิดเสียงทั้งหมดยกเว้นสตรีมเดียว
+    autoLayoutTip: คลิกที่ช่องเพื่อเริ่มรับชมโดยใช้โหมดการจัดวางอัตโนมัติ
+    createLayoutTip: สร้างเลย์เอาต์ของคุณเองด้วยการเพิ่มเซลล์หรือใช้ค่าที่ตั้งไว้
+    openToolbarTip: เปิดแถบเครื่องมือเพื่อเริ่มใช้ multiview
+    preset:
+      shareOnDiscord: >-
+        มีเลย์เอาต์เจ๋งๆ มาแชร์ไหม ใช้ปุ่มแชร์และแจ้งให้เราทราบใน
+        <a href="https://discord.gg/jctkgHBt4b">เซิร์ฟเวอร์ Discord</a> ของเรา!
+      custom: เลย์เอาต์ของฉัน
+      toggleAutoLayout: เปิด/ปิดการใช้เลย์เอาต์นี้โดยอัตโนมัติ
+      remove: ลบ
+      desktop: เดสก์ทอป
+      mobile: มือถือ
+      autoLayout: เลย์เอาต์โนมัติ
+    presetEditor:
+      title: บันทึกเลย์เอาต์
+      name: ชื่อ
+      autoLayout: ใช้เลย์เอาต์ในโหมดอัตโนมัติ
+    video:
+      selectLive: เลือกถ่ายทอดสด
+      addCustomVideo: เพิ่มวิดีโอที่กำหนดเอง
+    fullScreen: เต็มจอ
+    mediaControls: การควบคุมสื่อ
+    mediaControlsEmpty: วิดีโอที่กำลังเล่นจะปรากฏที่นี่
+  mugen:
+    welcome: >-
+      ยินดีต้อนรับสู่ MugenClips! ทุกคนในหน้านี้จะเห็นคลิป English Hololive ที่สุ่มเลือกแบบสุ่ม ดูพร้อมและสนทนากับแฟนๆ Hololive จากทั่วโลก หากวิดีโอคุณไม่พร้อมกับคนอื่นและต้องการซิงค์ใหม่ ให้รีเฟรชเพจใหม่
+  playlist:
+    playlist-is-modified: ไม่ได้บันทึก
+    item-last-updated: 'อัปเดตล่าสุด:'
+    login-prompt: เข้าสู่ระบบเพื่อบันทึกเพลย์ลิสต์และสามารถมีมากกว่าหนึ่งเพลย์ลิสต์
+    new-playlist-btn-label: สร้างเพลย์ลิสต์ใหม่
+    page-heading: 'เพลย์ลิสต์ของคุณ:'
+    page-instruction: คลิกเพลย์ลิสต์เพื่อตั้งเป็นใช้งานอยู่
+    change-loss-warning: คุณจะสูญเสียการเปลี่ยนแปลงที่ยังไม่ได้บันทึก ดำเนินการต่อหรือไม่?
+time:
+  soon: เร็ว ๆ นี้
+  diff_future_date: เริ่ม {0} ({1})
+  distance_past_date: '{0}'
+editor:
+  music:
+    add: เพิ่ม
+    update: อัปเดต
+    permission: >-
+      คุณต้องเป็นผู้ใช้ระดับ "Editor" ขึ้นไปเพื่ออัปเดตหรือลบเพลงที่มีอยู่ โปรดติดต่อเราที่ <a class='white--text' href='/about'>discord</a> เพื่อแจ้งให้ editors ทราบถึงปัญหา/การละเมิด หรือสมัครเป็น editors 
+    titles:
+      addSong: 'Song Metadata: เพิ่มเพลงใหม่'
+      songList: 'Song List : {0}'
+      help: แนะนำ
+    itunesLookupPlaceholder: (ไม่บังคับ) ค้นหาใน iTunes
+    moveRight2s: เลื่อนไปทางขวา 2s
+    testEnd: ทดสอบการฟังเริ่มต้นที่ 3 วินาทีก่อนสิ้นสุด
+    setToCurrentTime: ตั้งเวลาปัจจุบัน ({0})
+    moveLeft2s: เลื่อนไปทางซ้าย 2s
+    trackNameInput: ชื่อแทร็ก
+    originalArtistInput: ศิลปินต้นฉบับ
+    testStart: ทดสอบการเริ่มต้น
+    startInput: เริ่ม
+    endInput: 'ระยะเวลาเป็นวินาที: (end @ {0})'
+  exitMode: ออกจากโหมดแก้ไข
+  enterMode: แก้ไขวีดีโอ
+about:
+  quicklinks: Quick Links
+  discordBtn: Holodex Discord
+  faq:
+    title: คำถามที่พบบ่อย
+    ytchatHeader: Youtube Chat ของฉันไม่ได้ล็อกอิน!
+    ytchatContent: >-
+      โปรดปิดใช้งานคุณลักษณะความปลอดภัยของเบราว์เซอร์ที่เรียกว่าการบล็อกคุกกี้ของบุคคลที่สาม หรืออนุญาตเว็บไซต์นี้และ youtube.com เพื่ออนุญาตคุกกี้ของบุคคลที่สาม
+    ytchatFirefox: คำแนะนำ Firefox เบราว์เซอร์อื่นอาจคล้ายกัน
+    autoplayHeader: การเล่นอัตโนมัติไม่ทำงาน!
+    autoplayContent: โปรด google หาวิธีเปิดใช้งานการเล่นอัตโนมัติสำหรับเบราว์เซอร์ของคุณ
+    musicPlayer: เครื่องเล่นเพลงทำงานได้ไม่ดีบนอุปกรณ์มือถือ!
+    musicPlayerContent: >-
+      สำหรับอุปกรณ์ iOS ส่วนใหญ่ คุณไม่สามารถปิดหน้าจอหรือปิด Safari ขณะเล่นเพลง Holodex ข้อจำกัดนี้อาจใช้หรือไม่มีผลกับอุปกรณ์ Android (ขึ้นอยู่กับอุปกรณ์) โปรดให้ข้อเสนอแนะใน Discord หากคุณมีไอเดียที่จะสร้างระบบการเล่นที่ดีขึ้น
+    videoLinkage: ฉันจะแน่ใจได้อย่างไรว่าวิดีโอเชื่อมโยงกับ vtubers อย่างถูกต้อง?
+    videoLinkageContent: >-
+      ข้อมูลทั้งหมดจะถูกแยกวิเคราะห์จากคำอธิบายวิดีโอ หากคุณกำลังตัดคลิป โปรดอย่าลืมลิงก์ไปยังออฟฟิเชียล. หากคุณกำลังทำคลิปที่แฟนเมค (เช่น จาก bilibili) เพียงตรวจสอบให้แน่ใจว่าได้เชื่อมโยงช่อง YouTube อย่างเป็นทางการของ vtubers ที่เกี่ยวข้อง หากคุณไม่เชื่อมโยงช่อง vtuber ใด ๆ เราจะไม่แสดงคลิปนั้นบน holodex เนื่องจากคลิปทั้งหมดต้องการการเชื่อมโยงกับ vtuber ที่รู้จักในชื่อ holodex
+    quitHolodex: "ฉันเป็น subber(คนที่แปลคลิป) เเละต้องการลบช่องของฉันออกจาก Holodex\r\n"
+    quitHolodexContent: >-
+      พวกเราเสียใจที่เห็นคุณจากไป :( โปรดแจ้งให้เราทราบหากมีปัญหาใดๆ ที่เราสามารถช่วยเหลือคุณได้ หากคุณยังคงต้องการลบออก โปรดส่งข้อความถึงเราใน Discord
+    favorite:
+      title: รายการโปรดคืออะไร?
+      Contents:
+        - >-
+          รายการโปรดเป็นวิธีหนึ่งในการจับตามอง vtubers ที่คุณชื่นชอบ คุณสามารถเพิ่มช่องโปรดของคุณโดยคลิกที่ไอคอนรูปหัวใจบน
+        - >-
+          เพจ. โปรดทราบว่าขณะนี้ยังไม่รองรับ subber ที่ชื่นชอบ แต่คุณควรพิจารณาสมัครรับข้อมูลและสนับสนุนพวกเขาด้วยวิธีอื่น
+      disappear:
+        title: รายการโปรดของฉันหายไป / ฉันไม่สามารถทำรายการโปรดได้
+      contents:
+        - >-
+          โปรดตรวจสอบให้แน่ใจว่าคุณได้เข้าสู่ระบบและไปที่แท็บช่องโปรดเพื่อบังคับให้รีเฟรช
+    mobile:
+      title: มีแอพ Android/iOS สำหรับ Holodex หรือไม่
+      content:
+        summary: >-
+          เรากำลังดำเนินการแก้ไข! ในระหว่างนี้ โปรดใช้คุณลักษณะ "เพิ่มไปที่หน้าแรก" บนเบราว์เซอร์ของคุณ เราได้ปรับแต่งมันเพื่อให้ทำงานเสมือนเป็นแอพ
+        android:
+           - 'Android Chrome: ไปที่ไซต์ คลิกจุดสามจุด'
+           - ที่ด้านบนขวาและค้นหา "เพิ่มไปที่หน้าจอหลัก"
+        ios:
+          - >-
+            iOS Safari: ไปที่ site บนโทรศัพท์ของคุณ คลิกสี่เหลี่ยมที่มีลูกศรชี้ขึ้น
+          - ที่ด้านล่างของ Safari แล้วคลิก "Add to Home Screen"
+    MugenClips:
+      title: MugenClips คืออะไร?
+      contents:
+        - >-
+          MugenClips หรือคลิปแบบที่ไม่มีที่สิ้นสุด คือการรับชมแบบปาร์ตี้กับผู้คนในไซต์ซึ่งสามารถรับชมคลิปต่าง ๆ ที่หมุนเวียนอย่างต่อเนื่องซึ่งอัปโหลดโดยหลายคอมมูนิตี้แชแนลแปลภาษา
+    subber:
+      title: ฉันเป็น subber และไม่พบช่องหรือคลิปของฉันบน Holodex
+      contents:
+        - >-
+          โปรดตรวจสอบในหน้าช่องเพื่อดูว่าคุณอยู่ในรายการ subber หรือไม่ หากไม่ใช่ โปรดกรอกแบบฟอร์มนี้
+        - >-
+          และเราจะเพิ่มคุณด้วยตนเอง หากคุณอยู่ในรายการแล้ว โปรดตรวจสอบให้แน่ใจว่าคำอธิบายวิดีโอของคุณมีลิงก์แหล่งที่มา/ช่อง youtube ที่ถูกต้อง
+    feedback:
+      title: ฉันมีข้อเสนอแนะ/ต้องการมีส่วนร่วมในโปรเจคนี้
+      contents:
+        - >-
+          ยินดีต้อนรับความช่วยเหลือและแนวคิดทั้งหมด! UI และ Backend มีพื้นที่สำหรับการสนับสนุน แม้ว่าจะมีเพียง UI ที่เป็นโอเพ่นซอร์สในปัจจุบัน โปรดติดต่อเราที่ discord เพื่อเข้าถึงแหล่งที่มาของ Backend หรือเพียงแค่พูดคุยเกี่ยวกับความคิด/ไอเดียของคุณ
+  gdpr: GDPR และข้อมูลของฉัน
+  gdprContent: >-
+    คุกกี้ Google Analytics ใช้เพื่อติดตามการเปิดดูหน้าเว็บเพื่อวัตถุประสงค์ในการวิเคราะห์ของเรา หลังจากเข้าสู่ระบบ เราจะเชื่อมโยงชื่อผู้ใช้และรหัสบัญชีโซเชียลมีเดียของคุณกับรายการโปรดของคุณ ข้อมูลนี้อาจรวมถึงอีเมลของคุณ (สำหรับ Google), Discord ID หรือ Twitter ตามลำดับ
+  gdprDeletion: หากต้องการลบข้อมูลผู้ใช้ของคุณ โปรดติดต่อเราที่ discord!
+  feedback: ข้อเสนอแนะ/รายงานข้อผิดพลาด
+  feedbackHtml: >-
+    คุณสร้างประเด็นได้ใน <a href="https://github.com/RiceCakess/Holodex/issues"> Github Issue Tracker</a> หรือค้นหาทีม Holodex ใน Discord <br /> <br /> Reddit : <a href="https://www.reddit.com/user/Rice_Cakess/"> u/Rice_cakess </a>
+  credits:
+    title: เครดิต
+    contents:
+      - ฉันอยากจะขอบคุณมากกับ
+      - ทีมงานสำหรับการทำงานของพวกเขาใน
+      - >-
+        ถึง subbers ทุกคนที่ช่วยเหลือพี่น้องในต่างประเทศ! ลองหาข้อมูลของพวกเขาเพิ่มดู!
+      - >-
+        นี่คือเว็บไซต์ที่สร้างขึ้นโดยแฟน ๆ และเนื้อหาที่พบในเว็บไซต์นี้เป็นของ Cover corp และพันธมิตร เว็บไซต์ปฏิบัติตามหลักเกณฑ์ที่กำหนดโดย Cover corp ใน
+      - สัญญาอนุญาตทำงานดัดแปลง
+  changelog:
+    title: บันทึกการเปลี่ยนแปลง
+  news:
+    title: ข่าวสาร
