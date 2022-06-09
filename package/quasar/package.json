@@ -20,6 +20,7 @@
     "pinia-shared-state": "^0.2.3",
     "quasar": "^2.7.1",
     "vue": "^3.2.37",
+    "vue-i18n": "^9.1.10",
     "vue-router": "^4.0.15"
   },
   "devDependencies": {
