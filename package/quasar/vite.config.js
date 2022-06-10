@@ -12,6 +12,10 @@ import visualizer from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    '__VUE_I18N_LEGACY_API__': false,
+    '__VUE_I18N_FULL_INSTALL__': false,
+  },
   plugins: [
     // ViteYaml({
     //   // for converting yml into ES6 modules.
