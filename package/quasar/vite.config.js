@@ -4,11 +4,10 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import { ViteAliases } from "vite-aliases";
-import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import ViteYaml from '@modyfi/vite-plugin-yaml';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import yaml from "@rollup/plugin-yaml";
+import visualizer from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,29 +21,27 @@ export default defineConfig({
       // for importing yml dynamically.
       include: ["src/locales/**/*.yml", "node_modules/dayjs/**/*.js"],
     }),
-
     vue({
       template: { transformAssetUrls },
     }),
-    AutoImport({
-      imports: [
-        'vue',
-        'vue-router',
-        'pinia',
-        'quasar',
-      ],
-      dts: 'src/auto-imports.d.ts',
-      eslintrc: {
-        enabled: true,
-      },
-    }),
+    // AutoImport({ AutoImports is temperamental, might add non-treeshaking.
+    //   imports: [
+    //   ],
+    //   dts: 'src/auto-imports.d.ts',
+    //   eslintrc: {
+    //     enabled: true,
+    //   },
+    // }),
     Components({
-      dirs: ['src/components'],
+      dirs: ['src'],
       extensions: ['vue'],
+      include: ['src/**'],
+      types: [],
     }),
     quasar({
       sassVariables: "src/quasar-variables.sass",
     }),
     ViteAliases(),
+    visualizer({ gzipSize: true, brotliSize: true }),
   ],
 });
