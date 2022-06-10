@@ -62,7 +62,6 @@
 </template>
 
 <script setup lang="ts">
-import LocalizationManager from './core/i18n/LocalizationManager.vue';
 
 const menuList = [
   {
