@@ -1,9 +1,11 @@
 import type { QueryClientConfig, QueryObserverOptions } from "react-query/types/core";
 import type { VueQueryPluginOptions } from "vue-query";
 import { QueryClient } from "vue-query";
-import { broadcastQueryClient } from 'react-query/broadcastQueryClient-experimental'
+import { broadcastQueryClient } from './vue-query/broadcastQueryClient'
 import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
 import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
+
+import { VueQueryDevTools } from "vue-query/devtools";
 
 export const REGULAR_QUERY_OPTIONS: QueryObserverOptions = {
     refetchOnMount: true,
