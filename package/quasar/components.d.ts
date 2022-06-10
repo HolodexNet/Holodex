@@ -8,9 +8,10 @@ declare module '@vue/runtime-core' {
     AppFrame: typeof import('./src/components/AppFrame.vue')['default']
     Hello: typeof import('./src/components/Hello.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    LocalizationManager: typeof import('./src/components/core/i18n/LocalizationManager.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    ThemeManager: typeof import('./src/components/theme-changer/ThemeManager.vue')['default']
+    ThemeManager: typeof import('./src/components/core/theme-changer/ThemeManager.vue')['default']
     Todo: typeof import('./src/components/Todo.vue')['default']
   }
 }

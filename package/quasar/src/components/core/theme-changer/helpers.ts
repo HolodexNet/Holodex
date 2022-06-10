@@ -1,7 +1,7 @@
 import { colors, Dark, getCssVar, setCssVar } from "quasar";
 import { presets } from "./presets";
 
-type BRAND_COLORS =
+export type BRAND_COLORS =
     'primary' |
     'secondary' |
     'accent' |
@@ -35,49 +35,6 @@ const DEFAULT_THEME: Theme = {
     },
     dark: true
 }
-
-export const useThemeStore = defineStore("site-theme", {
-    // convert to a function
-    state: (): Theme => (presets[0]),
-    getters: {
-        // fullName: (state) => `${state.firstName} ${state.lastName}`,
-        // loggedIn: (state) => state.userId !== null,
-    },
-    actions: {
-        setTheme(this: Theme, name: string) {
-            const a = presets.find(x => x.name === name)
-            if (!a) return;
-            this.colors = a.colors;
-            this.dark = a.dark;
-            this.name = a.name;
-            this.override = a.override;
-
-            setCompiledTheme(compileTheme(this));
-            Dark.set(this.dark);
-        },
-        setCustomTheme(this: Theme, prop: BRAND_COLORS, color: `#${string}`) {
-            this.name = 'USER'
-            this.colors[prop] = color;
-
-            setCompiledTheme(compileTheme(this));
-        },
-        setCustomThemeDark(this: Theme, bool: boolean) {
-            this.dark = bool;
-            Dark.set(bool);
-        },
-        init(this: Theme) {
-            setCompiledTheme(compileTheme(this));
-            Dark.set(this.dark);
-        }
-    },
-    share: {
-        enable: true,
-        initialize: true, // when initializing, fetch from another tab.
-    },
-    persistedState: {
-        persist: true,
-    }
-});
 
 const expandColors = ['primary', 'secondary', 'accent']
 export function compileTheme(theme: Theme) {
