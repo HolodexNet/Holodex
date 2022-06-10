@@ -1,5 +1,5 @@
-import { Theme, setCompiledTheme, compileTheme, BRAND_COLORS } from "@/components/core/theme-changer/helpers";
-import { presets } from "@/components/core/theme-changer/presets";
+import { Theme, setCompiledTheme, compileTheme, BRAND_COLORS } from "@/hooks/theme-changer/helpers";
+import { presets } from "@/hooks/theme-changer/presets";
 import { Dark } from "quasar";
 
 export const useThemeStore = defineStore("site-theme", {
