@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import { Quasar, QuasarPluginOptions } from "quasar";
 import router from "./router/index";
+import { VueQueryPlugin } from "vue-query";
+import iconSet from 'quasar/icon-set/svg-ionicons-v6'
 
 // Import icon libraries
 import "@quasar/extras/material-icons/material-icons.css";
@@ -8,15 +10,13 @@ import "@quasar/extras/material-icons/material-icons.css";
 // Import Quasar css
 import "quasar/src/css/index.sass";
 
-// Assumes your root component is App.vue
-// and placed in same folder as main.js
 import App from "./App.vue";
-import { setupPinia, setupI18N } from "./setup";
+import { setupPinia, setupI18N, getVueQueryPluginOptions } from "./setup";
 import { useThemeStore } from "./stores/theme";
 
 const app = createApp(App);
 
-app.use(router);
+app.use(VueQueryPlugin, getVueQueryPluginOptions());
 
 // config pinia:
 const pinia = setupPinia();
@@ -30,6 +30,7 @@ app.use(Quasar, <Partial<QuasarPluginOptions>>{
   config: {
     dark: useThemeStore().dark
   },
+  iconSet: iconSet,
   /*
   config: {
     brand: {
@@ -43,6 +44,8 @@ app.use(Quasar, <Partial<QuasarPluginOptions>>{
   }
   */
 });
+
+app.use(router);
 
 // Assumes you have a <div id="app"></div> in your index.html
 app.mount("#app");

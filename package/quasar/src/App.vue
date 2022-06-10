@@ -3,11 +3,11 @@
 </template>
 
 <script setup lang="ts">
+
+import { useI18nInitialization } from './hooks/i18n/useI18nInitialization'
+import { useThemeInitialization } from './hooks/theme-changer/useThemeInitialization'
+
 // initializing setup for Holodex:
-
-import { useThemeInitialization } from './components/core/theme-changer/useThemeInitialization';
-import { useI18nInitialization } from './i18n/useI18nInitialization';
-
 // Steps:
 
 // [done] Restore Language settings
