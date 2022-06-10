@@ -24,6 +24,7 @@
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
       <q-scroll-area class="fit">
+        <!-- <localization-manager></localization-manager> -->
         <q-list>
           <template v-for="(menuItem, index) in menuList" :key="index">
             <q-item clickable :to="menuItem.link" :active="menuItem.label === 'Outbox'">
@@ -61,6 +62,7 @@
 </template>
 
 <script setup lang="ts">
+import LocalizationManager from './core/i18n/LocalizationManager.vue';
 
 const menuList = [
   {

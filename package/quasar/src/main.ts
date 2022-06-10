@@ -11,20 +11,23 @@ import "quasar/src/css/index.sass";
 // Assumes your root component is App.vue
 // and placed in same folder as main.js
 import App from "./App.vue";
-import { setupPinia } from "./setup/setupPinia";
+import { setupPinia, setupI18N } from "./setup";
 
-const myApp = createApp(App);
+const app = createApp(App);
 
-myApp.use(router);
+app.use(router);
 
-myApp.use(Quasar, {
+app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
 
 // config pinia:
 const pinia = setupPinia();
-myApp.use(pinia);
+app.use(pinia);
+
+const i18n = setupI18N();
+app.use(i18n);
 
 // Assumes you have a <div id="app"></div> in your index.html
-myApp.mount("#app");
+app.mount("#app");
 
