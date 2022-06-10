@@ -63,6 +63,7 @@
 
 <script setup lang="ts">
 
+import { useQuasar } from 'quasar';
 import { RouterView } from 'vue-router';
 
 const menuList = [
