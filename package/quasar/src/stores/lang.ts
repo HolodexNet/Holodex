@@ -1,5 +1,5 @@
-import { SupportedLangCodes } from "@/i18n/i18nConsts";
-import { guessUserLanguage } from "@/i18n/langUtils/langDetector";
+import { SupportedLangCodes } from "@/hooks/i18n/i18nConsts";
+import { guessUserLanguage } from "@/hooks/i18n/utils/langDetector";
 import { defineStore } from "pinia";
 
 interface State {

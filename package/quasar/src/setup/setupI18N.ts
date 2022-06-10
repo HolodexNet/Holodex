@@ -1,7 +1,7 @@
 import { createI18n } from "vue-i18n";
 import enTL from "../locales/en/ui.yml";
 import dayjs from "dayjs";
-import { asyncLang, STATIC_HOLODEX_LOCALE_MAP, SupportedLangCodes } from "../i18n/i18nConsts";
+import { asyncLang, STATIC_HOLODEX_LOCALE_MAP, SupportedLangCodes } from "../hooks/i18n/i18nConsts";
 
 export function setupI18N() {
 
