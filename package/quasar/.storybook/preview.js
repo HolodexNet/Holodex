@@ -1,8 +1,6 @@
 // Import icon libraries
-import "@quasar/extras/material-icons/material-icons.css";
 
 // Import Quasar css
-import "quasar/src/css/index.sass";
 import { app } from "@storybook/vue3";
 // import { Quasar } from "quasar";
 
