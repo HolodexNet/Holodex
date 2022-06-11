@@ -8,6 +8,7 @@ import App from "./App.vue";
 import { setupPinia, setupI18N, getVueQueryPluginOptions } from "./setup";
 import { useThemeStore } from "./stores/theme";
 
+import '@/setup/vuetify/main.sass'
 import { createVuetify } from "vuetify";
 import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 
