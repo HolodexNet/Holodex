@@ -8,7 +8,10 @@ import App from "./App.vue";
 import { setupPinia, setupI18N, getVueQueryPluginOptions } from "./setup";
 import { useThemeStore } from "./stores/theme";
 
-import '@/setup/vuetify/main.sass'
+import '@/setup/main.css' // tailwind configuration
+
+import '@/setup/vuetify/main.sass' // vuetify configuration
+
 import { createVuetify } from "vuetify";
 import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 
@@ -26,8 +29,10 @@ app.use(i18n);
 app.use(router);
 
 export const vuetify = createVuetify({
-  theme: false,
-  locale: createVueI18nAdapter({ i18n, useI18n })
+  locale: createVueI18nAdapter({ i18n, useI18n }),
+  theme: {
+    defaultTheme: 'dark',
+  }
 })
 app.use(vuetify);
 
