@@ -18,7 +18,7 @@ export const useThemeStore = defineStore("site-theme", {
             setCompiledTheme(compileTheme(this));
             // Dark.set(this.dark);
         },
-        setCustomTheme(this: Theme, prop: BRAND_COLORS, color: `#${string}`) {
+        setCustomTheme(this: Theme, prop: keyof BRAND_COLORS, color: `#${string}`) {
             this.name = 'USER'
             this.colors[prop] = color;
 

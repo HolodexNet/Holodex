@@ -1,36 +1,30 @@
+import { ThemeDefinition } from 'vuetify';
 import { presets } from "./presets";
 
-export type BRAND_COLORS =
-    'primary' |
-    'secondary' |
-    'accent' |
-    'dark' |
-    'info' |
-    'warning' |
-    'positive' |
-    'negative'
-
-
-export interface Theme {
-    name: string;
-    dark: boolean;
-    colors: Partial<Record<BRAND_COLORS, string>>;
-    override?: Record<string, string>;
+export type BRAND_COLORS = {
+    background: string;
+    surface: string;
+    primary: string;
+    secondary: string;
+    success: string;
+    warning: string;
+    error: string;
+    info: string;
 }
+
+export type Theme = { name: string } & ThemeDefinition
 
 const DEFAULT_THEME: Theme = {
     name: 'default',
     colors: {
-        primary: '#1976d2',
-        secondary: '#26A69A',
-        accent: '#9C27B0',
-
-        dark: '#1d1d1d',
-
-        positive: '#21BA45',
-        negative: '#C10015',
-        info: '#31CCEC',
-        warning: '#F2C037'
+        background: '#1f1f1f',
+        surface: '#3e2e2e',
+        primary: '#3b88d5',
+        secondary: '#F06292',
+        error: '#B00020',
+        info: '#64B5F6',
+        success: '#4CAF50',
+        warning: '#FB8C00',
     },
     dark: true
 }
