@@ -22,8 +22,8 @@ function genTheme(new_theme: object, prefix = '-'): string {
     return Object.keys(new_theme)
         .map((key: string) =>
             typeof get(key) === 'object'
-                ? genTheme(get(key), `${prefix}-${key}`)
-                : `${prefix}-${key}: ${get(key)};`
+                ? genTheme(get(key), `${key}`)
+                : `${key}: ${get(key)};`
         )
         .join('\n')
 }

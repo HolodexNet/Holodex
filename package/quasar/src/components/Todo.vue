@@ -15,9 +15,12 @@
     </li>
   </ul>
   <div>VueQuery test: LA Current Time: {{ out }}</div>
+
+  <div @click="huh">SetTheme</div>
 </template>
 
 <script lang="ts">
+import { useThemeInitialization } from "@/hooks/theme-changer/useThemeInitialization";
 import { useTodoStore } from "@/stores/todo";
 import { useQuery } from "vue-query";
 
@@ -37,7 +40,9 @@ export default defineComponent({
       { staleTime: 20000, cacheTime: 30000 }
     );
 
-    return { store: todos, isLoading, isError, out: data };
+    return { store: todos, isLoading, isError, out: data, theme };
   },
+  methods: {
+  }
 });
 </script>

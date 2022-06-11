@@ -17,7 +17,7 @@ import { VueQueryDevToolsPanel } from "vue-query/devtools";
 useI18nInitialization();
 
 // [done] theme setting (within theme-manager).
-useThemeInitialization();
+const theme = useThemeInitialization();
 
 // [ ] Login & validation
 // todo

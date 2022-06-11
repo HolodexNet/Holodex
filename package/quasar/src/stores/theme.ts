@@ -1,52 +1,71 @@
+import { convertToDaisyHSLAndColor } from './../hooks/theme-changer/daisy-utils/daisy-color-fns';
 import { Theme, setCompiledTheme, compileTheme, VuetifyBrandColors } from "@/hooks/theme-changer/helpers";
 import { presets } from "@/hooks/theme-changer/presets";
-import { convertToHsl, DaisyColorName, DaisyColorShorthand } from "daisyui/src/colors/functions.js";
+import { DaisyColorShorthand, DaisyColorName } from '@/hooks/theme-changer/daisy-utils/daisy-types';
 
 export const useThemeStore = defineStore("site-theme", {
     // convert to a function
-    state: (): Theme => (presets[0]),
-    getters: {
-        compiledColors: (state): [VuetifyBrandColors, Record<DaisyColorShorthand, string>] => {
-            const convert = convertToHsl(state.colors);
-            const hsl = (e: string) => `hsl(${e})`
+    state: (): Theme & { outputCache: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] } => {
+        const [convert, colormap] = convertToDaisyHSLAndColor(presets[0].colors);
 
-            return [{
-                background: hsl(convert['--b1']),
-                surface: hsl(convert['--b2']),
-                primary: hsl(convert['--n']),
-                secondary: hsl(convert['--n']),
-                accent: hsl(convert['--a']),
-                error: hsl(convert['--er']),
-                success: hsl(convert['--su']),
-                info: hsl(convert['--in']),
-                warning: hsl(convert['--wa']),
-            }, convert]
-        }
+        const out: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] = [{
+            background: colormap['--b1'].rgb().hex(),
+            surface: (colormap['--b2'] || colormap['--b1'].darken(0.1)).rgb().hex(),
+            primary: colormap['--p'].rgb().hex(),
+            secondary: colormap['--s'].rgb().hex(),
+            accent: colormap['--a'].rgb().hex(),
+            error: colormap['--er'].rgb().hex(),
+            success: colormap['--su'].rgb().hex(),
+            info: colormap['--in'].rgb().hex(),
+            warning: colormap['--wa'].rgb().hex(),
+        }, convert]
+
+        const outputCache = out;
+
+        return { outputCache, ...presets[0] }
+    },
+    getters: {
     },
     actions: {
-        setTheme(this: Theme, name: string) {
+        setTheme(name: string) {
             const a = presets.find(x => x.name === name)
             if (!a) return;
-            this.colors = a.colors;
+            const init = presets[0].colors;
+            this.colors = { ...init, ...a.colors };
             this.dark = a.dark;
             this.name = a.name;
 
-            setCompiledTheme(compileTheme(this));
+            this.saveAndCacheVuetify();
             // Dark.set(this.dark);
         },
-        setCustomTheme(this: Theme, prop: DaisyColorName, color: `#${string}`) {
+        setCustomTheme(prop: DaisyColorName, color: `#${string}`) {
             this.name = 'USER'
             this.colors[prop] = color;
 
-            setCompiledTheme(compileTheme(this));
+            this.saveAndCacheVuetify();
         },
-        setCustomThemeDark(this: Theme, bool: boolean) {
+        setCustomThemeDark(bool: boolean) {
             this.dark = bool;
-            // Dark.set(bool);
         },
-        init(this: Theme) {
-            setCompiledTheme(compileTheme(this));
-            // Dark.set(this.dark);
+        init() {
+            this.saveAndCacheVuetify();
+        },
+        saveAndCacheVuetify() {
+            const [convert, colormap] = convertToDaisyHSLAndColor(this.colors);
+
+            const out: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] = [{
+                background: colormap['--b1'].rgb().hex(),
+                surface: (colormap['--b2'] || colormap['--b1'].darken(0.1)).rgb().hex(),
+                primary: colormap['--p'].rgb().hex(),
+                secondary: colormap['--s'].rgb().hex(),
+                accent: colormap['--a'].rgb().hex(),
+                error: colormap['--er'].rgb().hex(),
+                success: colormap['--su'].rgb().hex(),
+                info: colormap['--in'].rgb().hex(),
+                warning: colormap['--wa'].rgb().hex(),
+            }, convert]
+
+            this.outputCache = out;
         }
     },
     share: {
@@ -57,3 +76,4 @@ export const useThemeStore = defineStore("site-theme", {
         persist: true,
     }
 });
+
