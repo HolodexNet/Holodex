@@ -2,8 +2,8 @@ import type { QueryClientConfig, QueryObserverOptions } from "react-query/types/
 import type { VueQueryPluginOptions } from "vue-query";
 import { QueryClient } from "vue-query";
 import { broadcastQueryClient } from './vue-query/broadcastQueryClient'
-import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
-import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
+import { createWebStoragePersister } from './vue-query/createWebStoragePersister'
+import { persistQueryClient } from './vue-query/persistQueryClient'
 
 import { VueQueryDevTools } from "vue-query/devtools";
 
@@ -32,8 +32,8 @@ broadcastQueryClient({ queryClient: queryClient, broadcastChannel: 'hQC' })
 
 if (typeof (Storage) !== "undefined") {
     // Code for localStorage
-    const lsPersistor = createWebStoragePersistor({ storage: window.localStorage, key: 'hQCdb' })
-    persistQueryClient({ queryClient: queryClient, persistor: lsPersistor, buster: 'v0', maxAge: 1000 * 60 * 60 * 2 })
+    const lsPersistor = createWebStoragePersister({ storage: window.localStorage, key: 'hQCdb' })
+    persistQueryClient({ queryClient: queryClient, persister: lsPersistor, buster: 'v0', maxAge: 1000 * 60 * 60 * 2 })
 }
 
 export function getVueQueryPluginOptions(): VueQueryPluginOptions {
