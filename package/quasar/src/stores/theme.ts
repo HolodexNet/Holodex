@@ -16,7 +16,7 @@ export const useThemeStore = defineStore("site-theme", {
             this.override = a.override;
 
             setCompiledTheme(compileTheme(this));
-            Dark.set(this.dark);
+            // Dark.set(this.dark);
         },
         setCustomTheme(this: Theme, prop: BRAND_COLORS, color: `#${string}`) {
             this.name = 'USER'
@@ -26,11 +26,11 @@ export const useThemeStore = defineStore("site-theme", {
         },
         setCustomThemeDark(this: Theme, bool: boolean) {
             this.dark = bool;
-            Dark.set(bool);
+            // Dark.set(bool);
         },
         init(this: Theme) {
             setCompiledTheme(compileTheme(this));
-            Dark.set(this.dark);
+            // Dark.set(this.dark);
         }
     },
     share: {
