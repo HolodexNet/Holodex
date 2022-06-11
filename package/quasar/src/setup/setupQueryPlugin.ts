@@ -33,7 +33,7 @@ broadcastQueryClient({ queryClient: queryClient, broadcastChannel: 'hQC' })
 if (typeof (Storage) !== "undefined") {
     // Code for localStorage
     const lsPersistor = createWebStoragePersistor({ storage: window.localStorage, key: 'hQCdb' })
-    persistQueryClient({ queryClient: queryClient, persistor: lsPersistor, buster: 'v0', maxAge: 1000 * 60 * 60 * 24 })
+    persistQueryClient({ queryClient: queryClient, persistor: lsPersistor, buster: 'v0', maxAge: 1000 * 60 * 60 * 2 })
 }
 
 export function getVueQueryPluginOptions(): VueQueryPluginOptions {
