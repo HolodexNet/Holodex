@@ -1,5 +1,5 @@
 <template>
-  <div>TODOs</div>
+  <div>TODOs (more like a vue reactivity testing system)</div>
   <div @click="
     () =>
       store.addTodo({
@@ -7,14 +7,14 @@
         title: `${new Date().toTimeString()} TODO`,
       })
   ">
-    Add
+    Add TODO to store.
   </div>
   <ul v-for="todo in store.todos">
     <li>
       {{ todo.id }}: {{ todo.title }} (<span @click="() => store.deleteTodo(todo.id)">click to delete</span>)
     </li>
   </ul>
-  <div>LA Current Time: {{ out }}</div>
+  <div>VueQuery test: LA Current Time: {{ out }}</div>
 </template>
 
 <script lang="ts">
