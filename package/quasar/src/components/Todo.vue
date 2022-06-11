@@ -40,7 +40,7 @@ export default defineComponent({
       { staleTime: 20000, cacheTime: 30000 }
     );
 
-    return { store: todos, isLoading, isError, out: data, theme };
+    return { store: todos, isLoading, isError, out: data };
   },
   methods: {
   }
