@@ -1,26 +1,31 @@
+import { convertToHsl, DaisyColorConfig, DaisyColorShorthand } from 'daisyui/src/colors/functions.js';
 import { ThemeDefinition } from 'vuetify';
 import { presets } from "./presets";
 
-export type BRAND_COLORS = {
-    background: string;
-    surface: string;
+export type VuetifyBrandColors = {
     primary: string;
     secondary: string;
-    success: string;
-    warning: string;
-    error: string;
-    info: string;
+    accent: string;
+
+    success?: string;
+    warning?: string;
+    error?: string;
+    info?: string;
+
+    background: string;
+    surface?: string;
 }
 
-export type Theme = { name: string } & ThemeDefinition
+export type Theme = { name: string, colors: DaisyColorConfig, dark: boolean }
 
 const DEFAULT_THEME: Theme = {
     name: 'default',
     colors: {
-        background: '#1f1f1f',
-        surface: '#3e2e2e',
+        'base-100': '#1f1f1f',
         primary: '#3b88d5',
+        neutral: '#758799',
         secondary: '#F06292',
+        accent: '#F03284',
         error: '#B00020',
         info: '#64B5F6',
         success: '#4CAF50',

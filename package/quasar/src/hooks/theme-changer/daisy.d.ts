@@ -38,7 +38,9 @@ declare module 'daisyui/src/colors/functions.js' {
     export type DaisyColorName = keyof x
     export type DaisyColorShorthand = x[DaisyColorName]
 
-    function convertToHsl(obj: PartialExcept<Record<DaisyColorName, string>, 'primary' | 'secondary' | 'accent' | 'neutral' | 'base-100'>):
+    export type DaisyColorConfig = PartialExcept<Record<DaisyColorName, string>, 'primary' | 'secondary' | 'accent' | 'neutral' | 'base-100'>
+
+    function convertToHsl(obj: DaisyColorConfig):
         Record<DaisyColorShorthand, string>;
 }
 
