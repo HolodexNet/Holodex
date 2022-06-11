@@ -24,6 +24,7 @@ export function broadcastQueryClient({
     const queryCache = queryClient.getQueryCache()
 
     queryClient.getQueryCache().subscribe(queryEvent => {
+        if (!queryEvent) return
         if (transaction) {
             return
         }
