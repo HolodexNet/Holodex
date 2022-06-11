@@ -11,7 +11,6 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@quasar/extras": "^1.14.0",
     "@vueuse/core": "^8.6.0",
     "axios": "^0.27.2",
     "dayjs": "^1.11.3",
@@ -20,7 +19,6 @@
     "pinia": "^2.0.14",
     "pinia-plugin-persistedstate-2": "^1.0.0",
     "pinia-shared-state": "^0.2.5",
-    "quasar": "^2.7.1",
     "vue": "^3.2.37",
     "vue-i18n": "^9.1.10",
     "vue-query": "^1.25.0",
@@ -28,7 +26,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
-    "@quasar/vite-plugin": "^1.0.10",
     "@rollup/plugin-dynamic-import-vars": "^1.4.3",
     "@storybook/addon-actions": "^6.5.7",
     "@storybook/addon-essentials": "^6.5.7",

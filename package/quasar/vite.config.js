@@ -2,7 +2,6 @@
 
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import { ViteAliases } from "vite-aliases";
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -27,7 +26,6 @@ export default defineConfig({
       include: ["src/locales/**/*.yml", "node_modules/dayjs/**/*.js"],
     }),
     vue({
-      template: { transformAssetUrls },
     }),
     AutoImport({ // AutoImports is temperamental, might add non-treeshaking.
       imports: [
@@ -44,9 +42,6 @@ export default defineConfig({
       extensions: ['vue'],
       include: ['src/**'],
       types: [],
-    }),
-    quasar({
-      sassVariables: "src/quasar-variables.sass",
     }),
     ViteAliases(),
     visualizer({ gzipSize: true, brotliSize: true }),
