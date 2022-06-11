@@ -8,6 +8,7 @@ import Components from 'unplugin-vue-components/vite'
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import yaml from "@rollup/plugin-yaml";
 import visualizer from "rollup-plugin-visualizer";
+import vuetify from 'vite-plugin-vuetify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,6 +27,10 @@ export default defineConfig({
       include: ["src/locales/**/*.yml", "node_modules/dayjs/**/*.js"],
     }),
     vue({
+    }),
+    vuetify({
+      autoImport: true,
+      styles: 'expose'
     }),
     AutoImport({ // AutoImports is temperamental, might add non-treeshaking.
       imports: [
