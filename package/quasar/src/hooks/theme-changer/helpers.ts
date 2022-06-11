@@ -1,4 +1,3 @@
-import { colors, Dark, getCssVar, setCssVar } from "quasar";
 import { presets } from "./presets";
 
 export type BRAND_COLORS =
@@ -42,7 +41,9 @@ export function compileTheme(theme: Theme) {
 
     const output = {}
 
+    throw new Error("not implemented");
     // convert to #hex
+    /*
     for (const brand in colorset) {
         if (!colorset[brand].startsWith('#')) {
             output[brand] = colors.getPaletteColor(brand);
@@ -61,10 +62,14 @@ export function compileTheme(theme: Theme) {
     }
 
     return output;
+    */
 }
 
 export function setCompiledTheme(compiledColors: Record<string, string>) {
+    throw new Error("not implemented");
+    /*
     for (const c in compiledColors) {
         setCssVar(c, compiledColors[c]);
     }
+    */
 }

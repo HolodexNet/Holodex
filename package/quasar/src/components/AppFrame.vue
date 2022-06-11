@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr fFf">
+  <!-- <q-layout view="hHh Lpr fFf">
 
     <q-header class="bg-primary text-white" height-hint="30">
       <q-toolbar>
@@ -24,27 +24,26 @@
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
       <q-scroll-area class="fit">
-        <!-- <localization-manager></localization-manager> -->
-        <q-list>
-          <template v-for="(menuItem, index) in menuList" :key="index">
-            <q-item clickable :to="menuItem.link" :active="menuItem.label === 'Outbox'">
-              <q-item-section avatar>
-                <q-icon :name="menuItem.icon" />
-              </q-item-section>
-              <q-item-section>
-                {{ menuItem.label }}
-              </q-item-section>
-            </q-item>
-            <q-separator v-if="menuItem.separator" :key="'sep' + index" />
-          </template>
-        </q-list>
-      </q-scroll-area>
-    </q-drawer>
+ <q-list>
+    <template v-for="(menuItem, index) in menuList" :key="index">
+      <q-item clickable :to="menuItem.link" :active="menuItem.label === 'Outbox'">
+        <q-item-section avatar>
+          <q-icon :name="menuItem.icon" />
+        </q-item-section>
+        <q-item-section>
+          {{ menuItem.label }}
+        </q-item-section>
+      </q-item>
+      <q-separator v-if="menuItem.separator" :key="'sep' + index" />
+    </template>
+  </q-list>
+  </q-scroll-area>
+  </q-drawer>
 
-    <q-page-container>
-      <q-page padding>
-        <router-view />
-      </q-page>
+  <q-page-container>
+    <q-page padding> -->
+  <router-view />
+  <!-- </q-page>
     </q-page-container>
 
     <q-footer reveal elevated class="bg-grey-8 text-white" v-model="$q.screen.lt.md">
@@ -58,12 +57,11 @@
       </q-toolbar>
     </q-footer>
 
-  </q-layout>
+  </q-layout> -->
 </template>
 
 <script setup lang="ts">
 
-import { useQuasar } from 'quasar';
 import { RouterView } from 'vue-router';
 
 const menuList = [
@@ -122,6 +120,5 @@ function toggleRightDrawer() {
   rightDrawerOpen.value = !rightDrawerOpen.value
 }
 
-const $q = useQuasar()
 </script>
 
