@@ -10,6 +10,8 @@
     "allowJs": true, // because Holodex components are mostly in JS, so we'll allow JS loosely, despite the risks.
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noImplicitThis": true,
+    "strict": true,
     "jsx": "preserve", // necessary for VOLAR to be happy about vue3 JSX.
     "paths": {
       "@/*": ["src/*"]

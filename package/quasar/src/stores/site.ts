@@ -2,15 +2,15 @@
 // responsible for site-level globals:
 
 interface Org {
-  name: String;
-  short?: String;
+  name: string;
+  short?: string;
 }
 
-interface User { id: String, role: String, username: String, discord_id?: string, api_key?: String, yt_channel_key?: string, twitter_id?: string, google_id?: string }
+interface User { id: string, role: string, username: string, discord_id?: string, api_key?: string, yt_channel_key?: string, twitter_id?: string, google_id?: string }
 
 interface UserData {
   user: User;
-  jwt: String;
+  jwt: string;
 }
 /**
  * Persistent (and X-Tab Shared) Long Term Storage for Site-wide State
