@@ -1,68 +1,26 @@
 <template>
-  <!-- <q-layout view="hHh Lpr fFf">
 
-    <q-header class="bg-primary text-white" height-hint="30">
-      <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+  <v-container class="page">
 
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-          Title
-        </q-toolbar-title>
-
-        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
-      </q-toolbar>
-
-      <q-tabs align="left">
-        <q-route-tab to="/page1" label="Page One" />
-        <q-route-tab to="/page2" label="Page Two" />
-        <q-route-tab to="/page3" label="Page Three" />
-      </q-tabs>
-    </q-header>
-
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
-      <q-scroll-area class="fit">
- <q-list>
     <template v-for="(menuItem, index) in menuList" :key="index">
-      <q-item clickable :to="menuItem.link" :active="menuItem.label === 'Outbox'">
-        <q-item-section avatar>
-          <q-icon :name="menuItem.icon" />
-        </q-item-section>
-        <q-item-section>
-          {{ menuItem.label }}
-        </q-item-section>
-      </q-item>
-      <q-separator v-if="menuItem.separator" :key="'sep' + index" />
+      <router-link :to="menuItem.link || '/'">
+        <v-btn>{{ menuItem.label }}</v-btn>
+      </router-link>
     </template>
-  </q-list>
-  </q-scroll-area>
-  </q-drawer>
 
-  <q-page-container>
-    <q-page padding> -->
-  <router-view />
-  <!-- </q-page>
-    </q-page-container>
 
-    <q-footer reveal elevated class="bg-grey-8 text-white" v-model="$q.screen.lt.md">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-          <div>Title</div>
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
+    <v-btn block flat color="info" class="mt-3" to="/about-us">
+      Go To About Us
+    </v-btn>
 
-  </q-layout> -->
+    <router-view />
+
+  </v-container>
 </template>
 
 <script setup lang="ts">
 
-import { RouterView } from 'vue-router';
+import { RouterView, RouterLink } from 'vue-router';
 
 const menuList = [
   {

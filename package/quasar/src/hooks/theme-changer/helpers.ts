@@ -40,8 +40,8 @@ export function compileTheme(theme: Theme) {
     const colorset = { ...DEFAULT_THEME.colors, ...theme.colors };
 
     const output = {}
-
-    throw new Error("not implemented");
+    return output
+    console.log("not impl")
     // convert to #hex
     /*
     for (const brand in colorset) {
@@ -66,7 +66,7 @@ export function compileTheme(theme: Theme) {
 }
 
 export function setCompiledTheme(compiledColors: Record<string, string>) {
-    throw new Error("not implemented");
+    console.log("not impl")
     /*
     for (const c in compiledColors) {
         setCssVar(c, compiledColors[c]);
