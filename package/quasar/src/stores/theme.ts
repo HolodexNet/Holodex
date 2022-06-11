@@ -1,6 +1,6 @@
 import { convertToDaisyHSLAndColor } from './../hooks/theme-changer/daisy-utils/daisy-color-fns';
 import { Theme, setCompiledTheme, compileTheme, VuetifyBrandColors } from "@/hooks/theme-changer/helpers";
-import { presets } from "@/hooks/theme-changer/presets";
+import { DaisyDefaults, presets } from "@/hooks/theme-changer/presets";
 import { DaisyColorShorthand, DaisyColorName } from '@/hooks/theme-changer/daisy-utils/daisy-types';
 
 export const useThemeStore = defineStore("site-theme", {
@@ -51,7 +51,7 @@ export const useThemeStore = defineStore("site-theme", {
             this.saveAndCacheVuetify();
         },
         saveAndCacheVuetify() {
-            const [convert, colormap] = convertToDaisyHSLAndColor(this.colors);
+            const [convert, colormap] = convertToDaisyHSLAndColor({ ... this.colors, ...DaisyDefaults });
 
             const out: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] = [{
                 background: colormap['--b1'].rgb().hex(),

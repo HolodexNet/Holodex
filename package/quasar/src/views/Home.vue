@@ -37,6 +37,17 @@
       <v-chip class="ma-2" color="green" text-color="white">
         Green Chip
       </v-chip>
+      <hr />
+      <div class="avatar online">
+        <div class="w-24 rounded-full">
+          <img src="https://api.lorem.space/image/face?hash=28212" />
+        </div>
+      </div>
+      <div class="avatar rounded-full ring ring-error ring-offset-base-100 ring-offset-2 ml-4">
+        <div class="w-24 rounded-full">
+          <img src="https://api.lorem.space/image/face?hash=40361" />
+        </div>
+      </div>
     </v-card-text>
     <v-card-actions>
       <div class="btn-group">

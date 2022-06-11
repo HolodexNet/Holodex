@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Note to self: gotta be a bit careful specifying the specificity of overrides when overriding Daisy Styles.
+
+e.g. just doing .online will NOT work
+*/
+.avatar.online::before {
+    @apply bg-red-500
+}
