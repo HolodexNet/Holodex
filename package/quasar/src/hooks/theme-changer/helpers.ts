@@ -1,19 +1,19 @@
-import { convertToHsl, DaisyColorConfig, DaisyColorShorthand } from 'daisyui/src/colors/functions.js';
 import { ThemeDefinition } from 'vuetify';
+import { DaisyColorConfig } from './daisy-utils/daisy-types';
 import { presets } from "./presets";
 
 export type VuetifyBrandColors = {
-    primary: string;
-    secondary: string;
-    accent: string;
+    primary: string | number;
+    secondary: string | number;
+    accent: string | number;
 
-    success?: string;
-    warning?: string;
-    error?: string;
-    info?: string;
+    success?: string | number;
+    warning?: string | number;
+    error?: string | number;
+    info?: string | number;
 
-    background: string;
-    surface?: string;
+    background: string | number;
+    surface?: string | number;
 }
 
 export type Theme = { name: string, colors: DaisyColorConfig, dark: boolean }
