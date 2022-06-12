@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     Page: typeof import('./src/stories/Page.vue')['default']
     Profile: typeof import('./src/views/Profile.vue')['default']
     Todo: typeof import('./src/components/Todo.vue')['default']
+    VideoCard: typeof import('./src/components/video/card/VideoCard.vue')['default']
   }
 }
 

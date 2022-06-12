@@ -21,28 +21,28 @@ export default {
     stats() {
         return axiosInstance({ url: "/statics/stats.json", baseURL: SITE_BASE_URL });
     },
-    channels(query) {
+    channels(query: Record<any, unknown> | undefined) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/channels?${q}`);
     },
-    videos(query) {
+    videos(query: Record<any, unknown> | undefined) {
         const q = querystring.stringify(query);
         // console.log(`/videos?${q}`);
         return axiosInstance.get(`/videos?${q}`);
     },
-    live(query) {
+    live(query: Record<any, unknown> | undefined) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/live?${q}`).then((res) => res.data
             // .concat(res.data.upcoming)
             // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
             .filter(
-                (live) => !(
+                (live: { start_actual: any; start_scheduled: string | number | Date | dayjs.Dayjs | null | undefined; }) => !(
                     !live.start_actual
                     && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))
                 ),
             ));
     },
-    channel(id) {
+    channel(id: any) {
         return axiosInstance.get(`/channels/${id}`);
     },
     /**
@@ -52,18 +52,18 @@ export default {
    * @param c whether to also provide comments, 1 to activate
    * @returns
    */
-    video(id: string, lang?: string, c?: Number) {
+    video(id: string, lang?: string, c?: number) {
         const q = querystring.stringify({ lang, c });
         return axiosInstance.get(`/videos/${id}?${q}`);
     },
-    comments(videoId) {
+    comments(videoId: any) {
         return axiosInstance.get(`/videos/${videoId}/comments`);
     },
-    clips(query) {
+    clips(query: Record<any, unknown> | undefined) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/clips?${q}`);
     },
-    searchAutocomplete(query) {
+    searchAutocomplete(query: string) {
         const channelId = query.match(CHANNEL_URL_REGEX);
         const videoId = query.match(VIDEO_URL_REGEX);
 
@@ -79,20 +79,20 @@ export default {
         const q = querystring.stringify({ q: query });
         return axiosInstance.get(`/search/autocomplete?${q}`);
     },
-    searchVideo(queryObject) {
+    searchVideo(queryObject: any) {
         return axiosInstance.post("/search/videoSearch", queryObject);
     },
-    searchComments(queryObject) {
+    searchComments(queryObject: any) {
         return axiosInstance.post("/search/commentSearch", queryObject);
     },
-    searchChannel(queryObject) {
+    searchChannel(queryObject: any) {
         return axiosInstance.post("/search/channelSearch", queryObject);
     },
-    channelVideos(channelId, { type = "videos", query }) {
+    channelVideos(channelId: any, { type = "videos", query }: any) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/channels/${channelId}/${type}?${q}`);
     },
-    login(jwt, authToken, service) {
+    login(jwt: any, authToken: any, service: any) {
         return axiosInstance.post(
             "/user/login",
             { token: authToken, service },
@@ -101,7 +101,7 @@ export default {
             },
         );
     },
-    loginIsValid(jwt): Promise<false | AxiosResponse<any>> {
+    loginIsValid(jwt: any): Promise<false | AxiosResponse<any>> {
         return axiosInstance
             .get("/user/check", {
                 headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
@@ -110,18 +110,18 @@ export default {
         // 301 Cache bust
         // fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
     },
-    changeUsername(jwt, newUsername): Promise<false | AxiosResponse<any>> {
+    changeUsername(jwt: any, newUsername: any): Promise<false | AxiosResponse<any>> {
         return axiosInstance
             .post(
                 "/user",
-            { name: newUsername },
-            {
-                headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-            },
-)
+                { name: newUsername },
+                {
+                    headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
+                },
+            )
             .catch(() => false);
     },
-    resetAPIKey(jwt) {
+    resetAPIKey(jwt: any) {
         return (
             axiosInstance
                 .get("/user/createKey", {
@@ -131,18 +131,18 @@ export default {
                 .catch(() => alert("something went wrong creating your key..."))
         );
     },
-    favorites(jwt) {
+    favorites(jwt: any) {
         return axiosInstance.get("/users/favorites", {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    favoritesVideos(jwt, query) {
+    favoritesVideos(jwt: any, query: Record<any, unknown> | undefined) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`/users/videos?${q}`, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    favoritesLive({ includePlaceholder = false }, jwt) {
+    favoritesLive({ includePlaceholder = false }: any, jwt: any) {
         // const q = querystring.stringify(query);
         return axiosInstance
             .get(`/users/live?includePlaceholder=${includePlaceholder}`, {
@@ -152,27 +152,27 @@ export default {
                 // .concat(res.data.upcoming)
                 // filter out streams that was goes unlisted if stream hasn't gone live 2 hours after scheduled
                 .filter(
-                    (live) => !(
+                    (live: { start_actual: any; start_scheduled: string | number | Date | dayjs.Dayjs | null | undefined; }) => !(
                         !live.start_actual
                         && dayjs().isAfter(dayjs(live.start_scheduled).add(2, "h"))
                     ),
                 )
                 // get currently live and upcoming lives within the next 3 weeks
-                .filter((live) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))));
+                .filter((live: { start_scheduled: string | number | Date | dayjs.Dayjs | null | undefined; }) => dayjs(live.start_scheduled).isBefore(dayjs().add(3, "w"))));
     },
-    patchFavorites(jwt, operations) {
+    patchFavorites(jwt: any, operations: any) {
         return axiosInstance.patch("/users/favorites", operations, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    getVideoTopic(videoId) {
+    getVideoTopic(videoId: any) {
         return axiosInstance.get(`/videos/${videoId}/topic`);
     },
     topics() {
         // gets topics from backend
         return axiosInstance.get("/topics");
     },
-    topicSet(topicId, videoId, jwt) {
+    topicSet(topicId: any, videoId: any, jwt: any) {
         return axiosInstance.post(
             "/topics/video",
             { videoId, topicId },
@@ -184,7 +184,7 @@ export default {
     rotation() {
         return axiosInstance.get("/rotation");
     },
-    songListByVideo(channelId, videoId, allowCache) {
+    songListByVideo(channelId: any, videoId: any, allowCache: any) {
         const dt = allowCache ? "_" : Math.floor(Math.random() * 100);
         return axiosInstance.post(`/songs/latest?c=${dt}`, {
             channel_id: channelId,
@@ -192,26 +192,26 @@ export default {
             limit: 100,
         });
     },
-    tryCreateSong(songObj, jwt) {
+    tryCreateSong(songObj: any, jwt: any) {
         return axiosInstance.put("/songs", songObj, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    deleteSong(songObj, jwt) {
+    deleteSong(songObj: any, jwt: any) {
         return axiosInstance.delete("/songs", {
             data: { ...songObj },
 
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    chatHistory(videoId, query) {
+    chatHistory(videoId: any, query: Record<any, unknown> | undefined) {
         const q = querystring.stringify(query);
         return axiosInstance.get(`videos/${videoId}/chats?${q}`);
     },
-    getMentions(videoId) {
+    getMentions(videoId: any) {
         return axiosInstance.get(`videos/${videoId}/mentions`);
     },
-    deleteMentions(videoId, channelIds, jwt) {
+    deleteMentions(videoId: any, channelIds: any, jwt: any) {
         return axiosInstance.delete(`videos/${videoId}/mentions`, {
             data: {
                 channel_ids: channelIds,
@@ -220,7 +220,7 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    addMention(videoId, channelId, jwt) {
+    addMention(videoId: any, channelId: any, jwt: any) {
         return axiosInstance.post(
             `videos/${videoId}/mentions`,
             {
@@ -275,7 +275,7 @@ export default {
         if (!id) throw new Error("Arg bad");
         return axiosInstance.get<Playlist>(`/playlist/${id}`);
     },
-    savePlaylist(obj: Playlist, jwt: string) {
+    savePlaylist(obj: object, jwt: string) {
         return axiosInstance.post("/playlist/", obj, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
@@ -286,19 +286,19 @@ export default {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    reportVideo(id: string, body: Array<Object>, jwt: string) {
+    reportVideo(id: string, body: Array<object>, jwt: string) {
         if (!id) throw new Error("Arg bad");
         return axiosInstance.post(`/reports/video/${id}`, body, {
             headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
         });
     },
-    trackMultiviewLink(link) {
+    trackMultiviewLink(link: any) {
         return axiosInstance.get(`/multiview/record/${link}`);
     },
-    discordServerInfo(inviteLink) {
+    discordServerInfo(inviteLink: any) {
         return axiosInstance.get(`https://discord.com/api/v8/invites/${inviteLink}`);
     },
-    addPlaceholderStream(body, jwt, token) {
+    addPlaceholderStream(body: any, jwt: any, token: any) {
         return axiosInstance.post(
             `videos/placeholder${token ? `?token=${token}` : ""}`,
             body,
@@ -307,7 +307,7 @@ export default {
             },
         );
     },
-    deletePlaceholderStream(videoId, jwt, token) {
+    deletePlaceholderStream(videoId: any, jwt: any) {
         return axiosInstance.delete(
             `videos/placeholder/${videoId}`,
             {
@@ -315,7 +315,7 @@ export default {
             },
         );
     },
-    getPlaylistState(videoId, jwt) {
+    getPlaylistState(videoId: any, jwt: any) {
         return axiosInstance.get<{ id: number; name: string; contains: boolean }[]>(
             `/video-playlist/${videoId}`,
             {
@@ -323,7 +323,7 @@ export default {
             },
         );
     },
-    addVideoToPlaylist(videoId, playlistId, jwt) {
+    addVideoToPlaylist(videoId: any, playlistId: any, jwt: any) {
         return axiosInstance.put(
             `/video-playlist/${playlistId}/${videoId}`,
             null,
@@ -332,7 +332,7 @@ export default {
             },
         );
     },
-    deleteVideoFromPlaylist(videoId, playlistId, jwt) {
+    deleteVideoFromPlaylist(videoId: any, playlistId: any, jwt: any) {
         return axiosInstance.delete(
             `/video-playlist/${playlistId}/${videoId}`,
             {
@@ -340,7 +340,7 @@ export default {
             },
         );
     },
-    postTL(videoID, jwt, langCode, body) {
+    postTL(videoID: any, jwt: any, langCode: any, body: any) {
         return axiosInstance.post(
             `/videos/${videoID}/chats?lang=${langCode}`,
             body,
@@ -349,7 +349,7 @@ export default {
             },
         );
     },
-    postBulkTL(videoID, jwt, langCode, body) {
+    postBulkTL(videoID: any, jwt: any, langCode: any, body: any) {
         return axiosInstance.post(
             `/videos/${videoID}/chatsBulk?lang=${langCode}`,
             body,
@@ -358,7 +358,7 @@ export default {
             },
         );
     },
-    getTLStats(jwt, query) {
+    getTLStats(jwt: any, query: Record<any, unknown> | undefined) {
         const q = querystring.stringify(query);
         return axiosInstance.get(
             `/tlutil?${q}`,
@@ -367,7 +367,7 @@ export default {
             },
         );
     },
-    postTLLog(videoID, jwt, body, langCode, override = false) {
+    postTLLog(videoID: any, jwt: any, body: any, langCode: any, override = false) {
         const head: any = {};
         if (jwt) {
             head.Authorization = `BEARER ${jwt}`;
@@ -383,7 +383,7 @@ export default {
             },
         );
     },
-    fetchMChadData(room, pass) {
+    fetchMChadData(room: any, pass: any) {
         return axios.post(
             "https://repo.mchatx.org/v2/HolodexDahcM/data",
             {
@@ -392,7 +392,7 @@ export default {
             },
         );
     },
-    checkMchadMigrate(room, pass) {
+    checkMchadMigrate(room: any, pass: any) {
         return axiosInstance.post(
             "/tlutil/migrate/check",
             {
@@ -401,7 +401,7 @@ export default {
             },
         );
     },
-    claimMchadMigrate(jwt, room, pass) {
+    claimMchadMigrate(jwt: any, room: any, pass: any) {
         return axiosInstance.post(
             "/tlutil/migrate/claim",
             {
@@ -413,39 +413,39 @@ export default {
             },
         );
     },
-    requestChannel(obj) {
+    requestChannel(obj: any) {
         return axiosInstance.post("/reports/channel", obj);
     },
 
     // ---------- RELAY BOT DISCORD LOGIN ----------
-    relayBotLogin(code, mode) {
+    relayBotLogin(code: any, mode: any) {
         return axios.post("https://repo.mchatx.org/holodexproxybot/user", {
             code,
             mode,
         });
     },
-    relayBotCheckBotPresence(guildAddressList) {
+    relayBotCheckBotPresence(guildAddressList: any) {
         return axios.post("https://repo.mchatx.org/holodexproxybot/guild", {
             ids: guildAddressList,
         });
     },
-    relayBotGetChannels(guildAddress) {
+    relayBotGetChannels(guildAddress: any) {
         return axios.post("https://repo.mchatx.org/holodexproxybot/channel", {
             guild: guildAddress,
         });
     },
-    relayBotGetSettingChannel(channelAddress) {
+    relayBotGetSettingChannel(channelAddress: any) {
         return axios.post("https://repo.mchatx.org/holodexproxybot/data", {
             channel: channelAddress,
         });
     },
-    relayBotSubmitData(channelAddress, data) {
+    relayBotSubmitData(channelAddress: any, data: any) {
         return axios.post("https://repo.mchatx.org/holodexproxybot/submit", {
             Address: channelAddress,
             SubChannel: data,
         });
     },
-    relayBotTrigger(channelAddress, mode, link, lang) {
+    relayBotTrigger(channelAddress: any, mode: any, link: any, lang: any) {
         return axios.post("https://repo.mchatx.org/holodexproxybot/trigger", {
             Address: channelAddress,
             mode,
