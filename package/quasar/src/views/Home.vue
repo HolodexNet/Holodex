@@ -51,10 +51,11 @@
     </v-card-text>
     <v-card-actions>
       <div class="btn-group">
-        <button class="btn btn-active">Button</button>
-        <button class="btn">Button</button>
-        <button class="btn">Button</button>
+        <button class="btn btn-active btn-sm">Button</button>
+        <button class="btn btn-sm">Button</button>
+        <button class="btn btn-sm">Button</button>
       </div>
+      <v-btn>Button</v-btn>
     </v-card-actions>
   </v-card>
 </template>
