@@ -17,13 +17,33 @@ interface UserData {
  */
 interface SiteStatePersistentShared {
     key: number;
+
     currentOrg: Org;
     starredOrgs: Org[];
 
     userdata?: UserData;
 
-    firstVisit: boolean;
-    shownUpdateDetails: boolean;
+    guide: {
+        firstVisit: boolean;
+        shownUpdateDetails: boolean;
+        lastShownInstallPrompt: number;
+    }
+
+    /**
+     * Settings are directly modified and read.
+     */
+    settings: {
+        redirectMode: boolean,
+        autoplayVideo: boolean,
+        scrollMode: boolean,
+        hideThumbnail: boolean,
+        hidePlaceholder: boolean,
+        hideCollabStreams: boolean,
+        ignoredTopics: string[],
+        blockedChannels: [],
+        homeViewMode: "grid" | "list" | "denseList",
+        gridDensity: 0 | 1 | 2,
+    }
 }
 
 interface SiteStateTransient {
@@ -47,30 +67,32 @@ export const useSiteStore = defineStore("site", {
             { name: "Independents", short: "Indie" },
         ],
 
-        firstVisit: true,
-        shownUpdateDetails: false
+        guide: {
+            firstVisit: true,
+            shownUpdateDetails: false,
+            lastShownInstallPrompt: 0,
+        },
+
+        settings: {
+            redirectMode: false,
+            autoplayVideo: false,
+            scrollMode: false,
+            hideThumbnail: false,
+            hidePlaceholder: false,
+            hideCollabStreams: false,
+            ignoredTopics: [],
+            blockedChannels: [],
+            homeViewMode: "grid",
+            gridDensity: 0,
+        }
     }),
     getters: {
-        // fullName: (state) => `${state.firstName} ${state.lastName}`,
-        // loggedIn: (state) => state.userId !== null,
+        isEditorOrUp: (state) => {
+            const role = state.userdata?.user?.role
+            return role === USER_ROLES.EDITOR || role === USER_ROLES.ADMIN
+        },
     },
     actions: {
-        // no context as first argument, use `this` instead
-        // async loadUser(id: number) {
-        //   if (this.userId !== null) throw new Error("Already logged in");
-        //   const res = await api.user.load(id);
-        //   this.updateUser(res);
-        // },
-        // mutations can now become actions, instead of `state` as first argument use `this`
-        // updateUser(payload: State) {
-        //   this.firstName = payload.firstName;
-        //   this.lastName = payload.lastName;
-        //   this.userId = payload.userId;
-        // },
-        // // easily reset state using `$reset`
-        // clearUser() {
-        //   this.$reset();
-        // },
     },
     share: {
         enable: true,
