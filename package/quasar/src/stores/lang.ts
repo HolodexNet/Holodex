@@ -11,7 +11,7 @@ const englishNamePrefs: Set<Partial<SupportedLangCodes>> = new Set(["en", "es", 
 
 export const useLangStore = defineStore("holodex-i18n", {
     // convert to a function
-    state(): State {
+    state: (): State => {
 
         const lang = guessUserLanguage(false, 'en');
 
@@ -21,6 +21,9 @@ export const useLangStore = defineStore("holodex-i18n", {
         }
     },
     getters: {
+        preferredLocaleFn: (state) => ((en?: string, jp?: string) => {
+            return state.useEnglishName ? (en || jp) : (jp || en)
+        })
     },
     actions: {
     },

@@ -5,18 +5,17 @@ import { broadcastQueryClient } from './vue-query/broadcastQueryClient'
 import { createWebStoragePersister } from './vue-query/createWebStoragePersister'
 import { persistQueryClient } from './vue-query/persistQueryClient'
 
-import { VueQueryDevTools } from "vue-query/devtools";
-
 export const REGULAR_QUERY_OPTIONS: QueryObserverOptions = {
     refetchOnMount: true,
     staleTime: 3 * 60 * 1000, // 3 mins
-    cacheTime: 10 * 60 * 1000, // 10 minutes
+    cacheTime: 10 * 60 * 1000, // 12 minutes
     refetchOnWindowFocus: false,
+    keepPreviousData: true,
 }
 
 export const STATIC_QUERY_OPTIONS: QueryObserverOptions = {
     refetchOnMount: true,
-    staleTime: 60 * 60 * 1000, // 1 hr
+    staleTime: 5 * 60 * 1000, // 5 mins
     cacheTime: 60 * 60 * 1000, // 1 hr
     refetchOnWindowFocus: false,
 }

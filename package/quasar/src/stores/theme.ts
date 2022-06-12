@@ -1,11 +1,11 @@
 import { convertToDaisyHSLAndColor } from './../hooks/theme-changer/daisy-utils/daisy-color-fns';
-import { Theme, setCompiledTheme, compileTheme, VuetifyBrandColors } from "@/hooks/theme-changer/helpers";
+import { Theme, VuetifyBrandColors } from "@/hooks/theme-changer/helpers";
 import { DaisyDefaults, presets } from "@/hooks/theme-changer/presets";
 import { DaisyColorShorthand, DaisyColorName } from '@/hooks/theme-changer/daisy-utils/daisy-types';
 
 export const useThemeStore = defineStore("site-theme", {
     // convert to a function
-    state: (): Theme & { outputCache: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] } => {
+    state: (): Theme & { outputCache: [VuetifyBrandColors, Record<DaisyColorShorthand, string>], outTs: number, lastModified: number } => {
         const [convert, colormap] = convertToDaisyHSLAndColor(presets[0].colors);
 
         const out: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] = [{
@@ -22,7 +22,8 @@ export const useThemeStore = defineStore("site-theme", {
 
         const outputCache = out;
 
-        return { outputCache, ...presets[0] }
+        const ts = Date.now();
+        return { outputCache, ...presets[0], outTs: ts, lastModified: ts }
     },
     getters: {
     },
@@ -35,6 +36,8 @@ export const useThemeStore = defineStore("site-theme", {
             this.dark = a.dark;
             this.name = a.name;
 
+            this.lastModified = Date.now();
+
             this.saveAndCacheVuetify();
             // Dark.set(this.dark);
         },
@@ -42,6 +45,7 @@ export const useThemeStore = defineStore("site-theme", {
             this.name = 'USER'
             this.colors[prop] = color;
 
+            this.lastModified = Date.now();
             this.saveAndCacheVuetify();
         },
         setCustomThemeDark(bool: boolean) {
@@ -51,6 +55,8 @@ export const useThemeStore = defineStore("site-theme", {
             this.saveAndCacheVuetify();
         },
         saveAndCacheVuetify() {
+            if (this.outTs === this.lastModified) return; // no changes needed.
+
             const [convert, colormap] = convertToDaisyHSLAndColor({ ... this.colors, ...DaisyDefaults });
 
             const out: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] = [{
@@ -66,6 +72,7 @@ export const useThemeStore = defineStore("site-theme", {
             }, convert]
 
             this.outputCache = out;
+            this.outTs = Number(this.lastModified);
         }
     },
     share: {
