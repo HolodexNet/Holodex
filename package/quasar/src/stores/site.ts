@@ -34,7 +34,7 @@ interface SiteStateTransient {
 }
 
 
-export const useSitePersistentSharedStore = defineStore("site", {
+export const useSiteStore = defineStore("site", {
   // convert to a function
   state: (): SiteStatePersistentShared => ({
     //TODO impl

@@ -1,16 +1,29 @@
 module.exports = {
+  root: true,
   env: {
     node: true,
     "vue/setup-compiler-macros": true,
   },
-  extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "prettier", './.eslintrc-auto-import.json', 'eslint-plugin-vue',],
-  "parser": "vue-eslint-parser",
+  extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "@vue/typescript/recommended", "prettier", './.eslintrc-auto-import.json'],
+  "parser": "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2021,
     emcaFeatures: {
       jsx: true,
       modules: true,
-    }
+    },
+    // "parser": {
+    //   // Script parser for `<script>`
+    //   "js": "espree",
+
+    //   // Script parser for `<script lang="ts">`
+    //   "ts": "@typescript-eslint/parser",
+
+    //   // Script parser for vue directives (e.g. `v-if=` or `:attribute=`)
+    //   // and vue interpolations (e.g. `{{variable}}`).
+    //   // If not specified, the parser determined by `<script lang ="...">` is used.
+    //   "<template>": "espree",
+    // }
   },
 
   settings: {
@@ -23,7 +36,7 @@ module.exports = {
   },
 
   'rules': {
-    'brace-style': [2, 'stroustrup', { 'allowSingleLine': true }],
+    'brace-style': [2, '1tbs', { 'allowSingleLine': true }],
 
     'vue/max-attributes-per-line': 0,
     'vue/valid-v-for': 0,
@@ -41,6 +54,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
 
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    "@typescript-eslint/no-explicit-any": 0,
   }
 };

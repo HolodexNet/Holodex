@@ -11,6 +11,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@kvs/indexeddb": "^2.1.1",
     "@vueuse/core": "^8.6.0",
     "axios": "^0.27.2",
     "color": "^4.2.3",

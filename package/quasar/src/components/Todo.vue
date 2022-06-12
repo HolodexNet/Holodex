@@ -9,18 +9,17 @@
   ">
     Add TODO to store.
   </div>
-  <ul v-for="todo in store.todos">
+  <ul v-for="todo in store.todos" :key="'todo' + todo.id">
     <li>
       {{ todo.id }}: {{ todo.title }} (<span @click="() => store.deleteTodo(todo.id)">click to delete</span>)
     </li>
   </ul>
   <div>VueQuery test: LA Current Time: {{ out }}</div>
 
-  <div @click="huh">SetTheme</div>
+  <div @click="() => { }">SetTheme</div>
 </template>
 
 <script lang="ts">
-import { useThemeInitialization } from "@/hooks/theme-changer/useThemeInitialization";
 import { useTodoStore } from "@/stores/todo";
 import { useQuery } from "vue-query";
 
@@ -35,7 +34,7 @@ export default defineComponent({
         const resp = await fetch("https://hacker-news.firebaseio.com/v0/topstories.json");
 
         // const resp = await fetch('http://worldtimeapi.org/api/timezone/America/Los_Angeles')
-        return resp.body as any;
+        return resp.json();
       },
       { staleTime: 20000, cacheTime: 30000 }
     );

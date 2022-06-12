@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 
-import { useI18nInitialization } from './hooks/i18n/useI18nInitialization'
+import { useI18nInitialization } from './hooks/i18n/languageHooks'
 import { useThemeInitialization } from './hooks/theme-changer/useThemeInitialization'
 import { VueQueryDevToolsPanel } from "vue-query/devtools";
 
