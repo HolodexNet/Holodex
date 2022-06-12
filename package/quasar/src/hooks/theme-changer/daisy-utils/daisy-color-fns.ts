@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 
 import Color from "color";
 import { DaisyColorConfig, DaisyColorShorthand } from "./daisy-types";
@@ -38,18 +39,18 @@ const colorNames: Record<string, string> = {
 };
 export const generateForegorundColorFrom = function (input: any, percentage = 0.8) {
     if (Color(input).isDark()) {
-        let arr = Color(input).mix(Color("white"), percentage).saturate(10).hsl().round().array()
+        const arr = Color(input).mix(Color("white"), percentage).saturate(10).hsl().round().array()
         return arr[0] + " " + arr[1] + "%" + " " + arr[2] + "%";
     } else {
-        let arr = Color(input).mix(Color("black"), percentage).saturate(10).hsl().round().array()
+        const arr = Color(input).mix(Color("black"), percentage).saturate(10).hsl().round().array()
         return arr[0] + " " + arr[1] + "%" + " " + arr[2] + "%";
     }
 }
 
 // https://github.com/saadeghi/daisyui/blob/66ee475b0297fe56c5cef5867e1c83ef9dc6d5cb/src/colors/functions.js#L19
 export const convertToDaisyHSLAndColor = (input: DaisyColorConfig): [Record<DaisyColorShorthand, string>, Record<DaisyColorShorthand, Color>] => {
-    let resultObj: Record<string, string> = {};
-    let colorObj: Record<string, Color> = {};
+    const resultObj: Record<string, string> = {};
+    const colorObj: Record<string, Color> = {};
     if (typeof input === "object" && input !== null) {
         Object.entries(input).forEach(([rule, value]) => {
             if (colorNames.hasOwnProperty(rule)) {
