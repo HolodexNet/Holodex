@@ -1,21 +1,34 @@
 <template>
 
-  <v-container class="page">
+  <v-app>
 
-    <template v-for="(menuItem, index) in menuList" :key="index">
-      <router-link :to="menuItem.link || '/'">
-        <v-btn>{{ menuItem.label }}</v-btn>
-      </router-link>
-    </template>
+    <main-nav></main-nav>
+    <!-- <v-navigation-drawer app>
+      <template v-for="(menuItem, index) in menuList" :key="index">
+        <router-link :to="menuItem.link || '/'">
+          <v-btn>{{ menuItem.label }}</v-btn>
+        </router-link>
+      </template>
+
+    </v-navigation-drawer> -->
 
 
-    <v-btn block flat color="info" class="mt-3" to="/about-us">
-      Go To About Us
-    </v-btn>
+    <!-- Sizes your content based upon application components -->
+    <v-main>
 
-    <router-view />
+      <!-- Provides the application the proper gutter -->
+      <v-container fluid>
 
-  </v-container>
+        <!-- If using vue-router -->
+        <router-view></router-view>
+
+      </v-container>
+    </v-main>
+
+    <v-footer app>
+      <!-- -->
+    </v-footer>
+  </v-app>
 </template>
 
 <script setup lang="ts">

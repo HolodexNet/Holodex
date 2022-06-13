@@ -9,6 +9,7 @@ export function setupI18N() {
         locale: "en", // Set locale
         fallbackLocale: "en",
         allowComposition: true,
+        globalInjection: true,
         // Set default locale messages,
         messages: {
             en: { ...enTL },

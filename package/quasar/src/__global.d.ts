@@ -61,6 +61,7 @@ declare global {
         EXTERNAL_STREAM = 'external-stream',
         EVENT = 'event',
     }
+
     interface PlaceholderCredit {
         //Removed Temporarily img?: string;
         link?: string; // for discord this is the invite code.
