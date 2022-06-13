@@ -4,15 +4,17 @@ module.exports = {
     node: true,
     "vue/setup-compiler-macros": true,
   },
-  extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "@vue/typescript/recommended", "prettier", './.eslintrc-auto-import.json'],
-  "parser": "@typescript-eslint/parser",
+  extends: [
+    'plugin:vue/essential',
+    'plugin:vue/vue3-recommended',
+    '@vue/typescript/recommended',
+    './.eslintrc-auto-import.json'
+  ],
   parserOptions: {
+    parser: '@typescript-eslint/parser',
+    sourceType: 'module',
     ecmaVersion: 2021,
-    emcaFeatures: {
-      jsx: true,
-      modules: true,
-    },
-    // "parser": {
+  },    // "parser": {
     //   // Script parser for `<script>`
     //   "js": "espree",
 
