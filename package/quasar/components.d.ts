@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     Hello: typeof import('./src/components/Hello.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Home: typeof import('./src/views/Home.vue')['default']
+    MainNav: typeof import('./src/components/nav/MainNav.vue')['default']
     Page: typeof import('./src/stories/Page.vue')['default']
     Profile: typeof import('./src/views/Profile.vue')['default']
     Todo: typeof import('./src/components/Todo.vue')['default']
