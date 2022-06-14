@@ -26,7 +26,7 @@ module.exports = {
     //   // If not specified, the parser determined by `<script lang ="...">` is used.
     //   "<template>": "espree",
     // }
-  },
+  // },
 
   settings: {
     "import/resolver": {
@@ -40,8 +40,11 @@ module.exports = {
   'rules': {
     'brace-style': [2, '1tbs', { 'allowSingleLine': true }],
 
+    "vue/script-indent": ["error", 4, { baseIndent: 0, switchCase: 1 }],
+
     'vue/max-attributes-per-line': 0,
     'vue/valid-v-for': 0,
+    "vue/no-multiple-template-root": 0,
 
     // allow async-await
     'generator-star-spacing': 'off',

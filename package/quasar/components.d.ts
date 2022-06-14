@@ -8,13 +8,14 @@ declare module '@vue/runtime-core' {
     App: typeof import('./src/App.vue')['default']
     AppFrame: typeof import('./src/components/AppFrame.vue')['default']
     Button: typeof import('./src/stories/Button.vue')['default']
+    ChannelImg: typeof import('./src/components/channel/common/ChannelImg.vue')['default']
     Hello: typeof import('./src/components/Hello.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Home: typeof import('./src/views/Home.vue')['default']
     MainNav: typeof import('./src/components/nav/MainNav.vue')['default']
     Page: typeof import('./src/stories/Page.vue')['default']
     Profile: typeof import('./src/views/Profile.vue')['default']
-    Todo: typeof import('./src/components/Todo.vue')['default']
+    TodoList: typeof import('./src/components/TodoList.vue')['default']
     VideoCard: typeof import('./src/components/video/card/VideoCard.vue')['default']
   }
 }

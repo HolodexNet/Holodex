@@ -1,43 +1,47 @@
 <template>
-    <div>
-        <!-- watch page nav drawer is temporary, but causes layout shifting from hiding/unhiding -->
-        <!-- create two different instances as a work around -->
-        <NavDrawer v-model="navDrawer" :pages="pages" :temporary="isMobile || isWatchPage" :expand="navbarExpanded"
-            @expand="navbarExpanded = !navbarExpanded">
-            <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
-            <template v-if="isMobile">
-                <!-- <InstallPrompt /> -->
-                <user-card no-setting in-nav-drawer style="background-color: inherit" />
-                <v-divider />
-            </template>
-        </NavDrawer>
+  <div>
+    <!-- watch page nav drawer is temporary, but causes layout shifting from hiding/unhiding -->
+    <!-- create two different instances as a work around -->
+    <NavDrawer
+      v-model="navDrawer" :pages="pages" :temporary="isMobile || isWatchPage" :expand="navbarExpanded"
+      @expand="navbarExpanded = !navbarExpanded"
+    >
+      <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
+      <template v-if="isMobile">
+        <!-- <InstallPrompt /> -->
+        <user-card no-setting in-nav-drawer style="background-color: inherit" />
+        <v-divider />
+      </template>
+    </NavDrawer>
 
-        <!--* nav drawer is for the left --->
-        <BottomNav v-if="isMobile" :pages="pages.filter((page) => !page.collapsible)" :active="!isWatchPage" />
-        <!--* bottom bar --->
+    <!--* nav drawer is for the left --->
+    <BottomNav v-if="isMobile" :pages="pages.filter((page) => !page.collapsible)" :active="!isWatchPage" />
+    <!--* bottom bar --->
 
-        <v-app-bar v-show="showTopBar" id="top-bar" :class="'secondary darken-1'" :app="showTopBar" clipped-left
-            clipped-right flat extension-height="36" height="56">
-            <!--=============================== Top Bar (Regular View) =============================-->
+    <v-app-bar
+      v-show="showTopBar" id="top-bar" :class="'secondary darken-1'" :app="showTopBar" clipped-left
+      clipped-right flat extension-height="36" height="56"
+    >
+      <!--=============================== Top Bar (Regular View) =============================-->
 
-            <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
-                <!--================= Logo & Search Bar (Space permitting) ================-->
+      <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
+        <!--================= Logo & Search Bar (Space permitting) ================-->
 
-                <v-app-bar-nav-icon @click.stop="navDrawer = !navDrawer; navbarExpanded = false">
-                    <v-icon>{{ icons.mdiMenu }}</v-icon>
-                </v-app-bar-nav-icon>
-                <v-toolbar-title style="overflow: visible" :class="{ 'pa-0': isMobile }">
-                    <router-link :to="{ name: site.settings.defaultOpen || 'Home' }">
-                        <Logo v-if="!isMobile" width="24" height="24" style="margin-bottom: -4px" />
-                    </router-link>
-                    <OrgSelector />
-                </v-toolbar-title>
-                <SearchBar v-if="!isMobile" key="main-search-bar" />
+        <v-app-bar-nav-icon @click.stop="navDrawer = !navDrawer; navbarExpanded = false">
+          <v-icon>{{ icons.mdiMenu }}</v-icon>
+        </v-app-bar-nav-icon>
+        <v-toolbar-title style="overflow: visible" :class="{ 'pa-0': isMobile }">
+          <router-link :to="{ name: site.settings.defaultOpen || 'Home' }">
+            <Logo v-if="!isMobile" width="24" height="24" style="margin-bottom: -4px" />
+          </router-link>
+          <OrgSelector />
+        </v-toolbar-title>
+        <SearchBar v-if="!isMobile" key="main-search-bar" />
 
-                <!--================= Account [👤] Button (Desktop Only) ================-->
+        <!--================= Account [👤] Button (Desktop Only) ================-->
 
-                <!-- Playlist Feature disabled for now -->
-                <!-- <ResponsiveMenu :close-on-content-click="false" offset-y
+        <!-- Playlist Feature disabled for now -->
+        <!-- <ResponsiveMenu :close-on-content-click="false" offset-y
                     :item-count="playlist.active.videos.length || 0" content-class="main-playlist-border">
                     <template #activator="{ on, attrs }">
                         <v-btn v-bind="attrs" icon :class="{ 'ml-auto': isMobile }" v-on="on">
@@ -53,44 +57,47 @@
                         </div>
                     </edit-playlist>
                 </ResponsiveMenu> -->
-                <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
-                    <template #activator="{ on, attrs }">
-                        <v-btn icon v-bind="attrs" class="ml-2" v-on="on">
-                            <v-icon v-if="!(site.userdata && site.userdata.user)">
-                                {{ icons.mdiAccountCircleOutline }}
-                            </v-icon>
-                            <v-avatar v-else size="40">
-                                <img :src="`https://avatars.dicebear.com/api/jdenticon/${site.userdata.user.id}.svg`"
-                                    alt="Avatar generated by your user ID">
-                            </v-avatar>
-                        </v-btn>
-                    </template>
+        <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
+          <template #activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" class="ml-2" v-on="on">
+              <v-icon v-if="!(site.userdata && site.userdata.user)">
+                {{ icons.mdiAccountCircleOutline }}
+              </v-icon>
+              <v-avatar v-else size="40">
+                <img
+                  :src="`https://avatars.dicebear.com/api/jdenticon/${site.userdata.user.id}.svg`"
+                  alt="Avatar generated by your user ID"
+                >
+              </v-avatar>
+            </v-btn>
+          </template>
 
-                    <!------- USER CARD ------->
-                    <user-card />
-                    <!------- END USER CARD ------->
-                </v-menu>
+          <!------- USER CARD ------->
+          <user-card />
+          <!------- END USER CARD ------->
+        </v-menu>
 
-                <!--================= Search [🔍] Button (Mobile Only) ================-->
+        <!--================= Search [🔍] Button (Mobile Only) ================-->
 
-                <v-btn v-if="isMobile" icon @click="searchBarExpanded = true">
-                    <v-icon>{{ icons.mdiMagnify }}</v-icon>
-                </v-btn>
-            </template>
+        <v-btn v-if="isMobile" icon @click="searchBarExpanded = true">
+          <v-icon>{{ icons.mdiMagnify }}</v-icon>
+        </v-btn>
+      </template>
 
-            <!--=========================== END OF Regular View ===========================-->
+      <!--=========================== END OF Regular View ===========================-->
 
-            <!--===================== Expanded Search Bar (Mobile Only) =======================-->
+      <!--===================== Expanded Search Bar (Mobile Only) =======================-->
 
-            <template v-else>
-                <v-app-bar-nav-icon class="backButton" @click="searchBarExpanded = false">
-                    <v-icon>{{ icons.mdiClose }}</v-icon>
-                </v-app-bar-nav-icon>
-                <SearchBar key="main-search-bar" :autofocus="isMobile" />
-            </template>
+      <template v-else>
+        <v-app-bar-nav-icon class="backButton" @click="searchBarExpanded = false">
+          <v-icon>{{ icons.mdiClose }}</v-icon>
+        </v-app-bar-nav-icon>
+        <SearchBar key="main-search-bar" :autofocus="isMobile" />
+      </template>
 
-            <!--=================== END OF Expanded Search (Mobile Only) =======================-->
-            <div :class="'primary'" style="
+      <!--=================== END OF Expanded Search (Mobile Only) =======================-->
+      <div
+        :class="'primary'" style="
                     position: absolute;
                     top: calc(-1 * env(safe-area-inset-top));
                     left: 0px;
@@ -98,21 +105,22 @@
                     width: 100%;
                     height: env(safe-area-inset-top);
                     z-index: 300;
-                ">
-                <!-- this is just the element that covers up the notch. don't worry about it. -->
-            </div>
+                "
+      >
+        <!-- this is just the element that covers up the notch. don't worry about it. -->
+      </div>
 
-            <!-- Extension Slot for mobile v-tabs -->
-            <!-- Disable onScroll when ext is disabled. onScroll hooks on to window, so it can live anywhere -->
-            <!-- <span v-if="!disableExt" v-scroll="onScroll" /> -->
-            <!-- <template v-if="!disableExt" #extension> -->
-            <!-- <v-slide-y-transition> -->
-            <!-- v-tabs are teleported here from their respective view -->
-            <!-- <portal-target v-if="showExt" name="mainNavExt" slim /> -->
-            <!-- </v-slide-y-transition> -->
-            <!-- </template> -->
-        </v-app-bar>
-    </div>
+      <!-- Extension Slot for mobile v-tabs -->
+      <!-- Disable onScroll when ext is disabled. onScroll hooks on to window, so it can live anywhere -->
+      <!-- <span v-if="!disableExt" v-scroll="onScroll" /> -->
+      <!-- <template v-if="!disableExt" #extension> -->
+      <!-- <v-slide-y-transition> -->
+      <!-- v-tabs are teleported here from their respective view -->
+      <!-- <portal-target v-if="showExt" name="mainNavExt" slim /> -->
+      <!-- </v-slide-y-transition> -->
+      <!-- </template> -->
+    </v-app-bar>
+  </div>
 </template>
 
 <script lang="ts">
@@ -133,6 +141,14 @@ import * as icons from '@/utils/icons'
 export default defineComponent({
     components: {
     },
+    setup() {
+        const site = useSiteStore();
+        const display = useDisplay();
+
+        const isMobile = display.mobile
+
+        return { site, display, isMobile }
+    },
     // mixins: [hideExtensionOnScroll],
     data() {
         return {
@@ -143,14 +159,6 @@ export default defineComponent({
             navDrawer: true,
             icons: icons
         };
-    },
-    setup() {
-        const site = useSiteStore();
-        const display = useDisplay();
-
-        const isMobile = display.mobile
-
-        return { site, display, isMobile }
     },
     computed: {
         showTopBar() {

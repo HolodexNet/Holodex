@@ -1,12 +1,14 @@
 <template>
   <div>TODOs (more like a vue reactivity testing system)</div>
-  <div @click="
-    () =>
-      store.addTodo({
-        id: (store.todos[store.todos.length - 1]?.id || 0) + 1,
-        title: `${new Date().toTimeString()} TODO`,
-      })
-  ">
+  <div
+    @click="
+      () => 
+        store.addTodo({
+          id: (store.todos[store.todos.length - 1]?.id || 0) + 1,
+          title: `${new Date().toTimeString()} TODO`,
+        })
+    "
+  >
     Add TODO to store.
   </div>
   <ul v-for="todo in store.todos" :key="'todo' + todo.id">
@@ -16,7 +18,9 @@
   </ul>
   <div>VueQuery test: LA Current Time: {{ out }}</div>
 
-  <div @click="() => { }">SetTheme</div>
+  <div @click="() => { }">
+    SetTheme
+  </div>
 </template>
 
 <script lang="ts">
@@ -41,7 +45,6 @@ export default defineComponent({
 
     return { store: todos, isLoading, isError, out: data };
   },
-  methods: {
-  }
+  methods: {},
 });
 </script>

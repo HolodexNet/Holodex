@@ -36,8 +36,8 @@ export function resizeChannelPhoto(photoUrl, size) {
     return `${split[0]}=s${adjSize}-c-k-c0x00ffffff-no-rj-mo`;
 }
 
-export function getChannelPhoto(channelId, size = 100) {
-    const nearest = Math.min(Math.max(Math.ceil(size / 50) * 50, 50), 150);
+export function getChannelPhoto(channelId, size: string|number = 100) {
+    const nearest = Math.min(Math.max(Math.ceil(+size / 50) * 50, 50), 150);
     return `/statics/channelImg/${channelId}/${nearest}.png`;
 }
 

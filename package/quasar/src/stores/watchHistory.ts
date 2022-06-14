@@ -21,10 +21,10 @@ export const useWatchHistoryStore = defineStore("watchHistory", {
         }
     },
     getters: {
-        hasWatched: (state) => state.time
-            && (async (videoId: string) => {
+        hasWatched: (state) => ([state.time
+            , (async (videoId: string) => {
                 return storage?.get(videoId)
-            }),
+            })]as const)[1],
     },
     actions: {
         async addWatchedVideo(videoId: string) {

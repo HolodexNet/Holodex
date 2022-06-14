@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <main-nav></main-nav>
+    <main-nav />
     <!-- <v-navigation-drawer app>
       <template v-for="(menuItem, index) in menuList" :key="index">
         <router-link :to="menuItem.link || '/'">
@@ -15,7 +15,7 @@
       <!-- Provides the application the proper gutter -->
       <v-container fluid>
         <!-- If using vue-router -->
-        <router-view></router-view>
+        <router-view />
       </v-container>
     </v-main>
 

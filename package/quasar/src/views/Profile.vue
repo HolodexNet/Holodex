@@ -1,4 +1,7 @@
-<template>Profiles
+<template>
+  <div>
+    Profiles
 
-<Todo></Todo>
+    <TodoList />
+  </div>
 </template>

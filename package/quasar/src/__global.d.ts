@@ -91,6 +91,8 @@ declare global {
         title: string;
         status: VIDEO_STATUSES;
         channel: ShortChannel;
+        available_at?: Date;
+        duration?: number;
     }
 
     interface ShortChannel {
@@ -99,6 +101,7 @@ declare global {
         type: CHANNEL_TYPES;
         english_name?: string;
         org?: string;
+        group? :string; //group is likely not existent.
         lang?: string; // lang is sometimes missing.
         photo?: string;
     }
@@ -116,8 +119,7 @@ declare global {
         // type: VIDEO_TYPES;
         // lang: string;
 
-        published_at: Date;
-        available_at: Date;
+        published_at?: Date;
         topic_id?: string;
         // if request DESCRIPTION
         description?: string;
