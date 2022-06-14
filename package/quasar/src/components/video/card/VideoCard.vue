@@ -24,7 +24,7 @@
         class="video-card-overlay flex justify-between flex-col " 
         style="height: 100%; position: absolute; width: 100%; z-index: 1"
       >
-        <div class="flex justify-space-between align-start">
+        <div class="flex justify-between align-start">
           <!-- Topic Id display -->
           <div
             class="video-topic rounded-tl-sm"
@@ -62,7 +62,7 @@
             {{ formattedDuration }}
           </div>
         </div>
-        <div v-else-if="data.placeholderType" class="d-flex flex-column align-end ">
+        <div v-else-if="data.placeholderType" class="d-flex flex-column content-end ">
           <!-- (👻✅) -->
           <div class="video-duration">
             <span v-if="data.placeholderType === 'scheduled-yt-stream'" class="hover-placeholder">{{
@@ -83,25 +83,25 @@
         </div>
       </div>
       <v-img
-        v-if="!horizontal && !shouldHideThumbnail" :src="imageSrc" :aspect-ratio="16 / 9" width="100%"
+        v-if="!horizontal && !shouldHideThumbnail" :src="imageSrc" :aspect-ratio="16 / 9" width="100%" cover
         :transition="false" class="rounded"
         :class="{ 'hover-opacity': data.placeholderType === 'scheduled-yt-stream' }"
       />
       <v-img v-else-if="!horizontal && shouldHideThumbnail" width="100%" :aspect-ratio="60 / 9" />
     </div>
     <a
-      class="d-flex flex-row flex-grow-1 no-decoration video-card-text" :href="watchLink" rel="noopener"
+      class="flex flex-row flex-grow-1 no-decoration video-card-text" :href="watchLink" rel="noopener"
       @click.exact.stop.prevent="goToVideo()"
     >
       <!-- Channel icon -->
       <div
         v-if="denseList || (includeChannel && includeAvatar && !horizontal && data.channel)"
-        class="d-flex align-self-center mx-2 flex-column d-flex"
+        class="flex align-self-center mx-2 flex-col"
       >
-        <ChannelImg :channel="data.channel" rounded class="align-self-center" />
+        <channel-img :channel="data.channel" rounded class="align-self-center" />
       </div>
       <!-- Three lines for title, channel, available time -->
-      <div class="d-flex video-card-lines flex-column">
+      <div class="flex video-card-lines flex-col">
         <!-- Video title -->
         <div
           :class="['video-card-title ', { 'video-watched': hasWatched }, { 'mt-2': !horizontal && !denseList }]"

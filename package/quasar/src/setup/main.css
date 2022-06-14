@@ -8,4 +8,4 @@ e.g. just doing .online will NOT work
 */
 .avatar.online::before {
     @apply bg-red-500
-}
+} 
