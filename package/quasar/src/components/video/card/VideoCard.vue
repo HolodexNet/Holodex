@@ -1,29 +1,30 @@
 <template>
   <a
-    class="video-card no-decoration d-flex" :class="{
+    class="video-card no-decoration flex" :class="{
       'video-card-fluid': fluid,
       'video-card-active': active,
       'video-card-horizontal': horizontal,
       'video-card-list': denseList,
-      'flex-column': !horizontal && !denseList,
+      'flex-col': !horizontal && !denseList,
     }" :target="redirectMode ? '_blank' : ''" :href="href" rel="noopener" draggable="true" style="position: relative"
     @click.exact="onThumbnailClicked" @dragstart="drag"
   >
     <!-- Video Image with Duration -->
     <div
       v-if="!denseList" style="position: relative; width: 100%"
-      class="video-thumbnail white--text rounded flex-shrink-0 d-flex" :style="
+      class="video-thumbnail white--text rounded flex-shrink-0 flex" :style="
         horizontal &&
           !shouldHideThumbnail &&
           `background: url(${imageSrc}) center/cover;`
       "
     >
       <!-- Image Overlay -->
+      <!-- d-flex justify-space-between flex-column (old) -->
       <div
-        class="video-card-overlay d-flex justify-space-between flex-column"
+        class="video-card-overlay flex justify-between flex-col " 
         style="height: 100%; position: absolute; width: 100%; z-index: 1"
       >
-        <div class="d-flex justify-space-between align-start">
+        <div class="flex justify-space-between align-start">
           <!-- Topic Id display -->
           <div
             class="video-topic rounded-tl-sm"
@@ -38,20 +39,20 @@
             class="video-card-action rounded-tr-sm" :class="{ 'hover-show': !hasSaved && !isMobile }"
             @click.prevent.stop="toggleSaved($event)"
           >
-            {{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}
+            {{ hasSaved ? 'mdi-check' : 'mdi-plus-box' }}
           </v-icon>
         </div>
 
         <!-- Video duration/music indicator (👻❌) -->
-        <div v-if="!isPlaceholder" class="d-flex flex-column align-end">
+        <div v-if="!isPlaceholder" class="flex flex-col align-bottom">
           <!-- Show music icon if songs exist -->
           <div v-if="data.songcount" class="video-duration">
-            <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
+            <v-icon small color="white">mdi-music</v-icon>
           </div>
           <!-- Show TL chat icon if recently active or has archive tl exist -->
           <div v-if="hasTLs" class="video-duration d-flex align-center" :title="tlIconTitle">
             {{ tlLangInChat }}
-            <v-icon small color="white">{{ icons.tlChat }}</v-icon>
+            <v-icon small color="white">chat</v-icon>
           </div>
           <!-- Duration/Current live stream time -->
           <div
@@ -162,7 +163,7 @@
             icon v-bind="props" :ripple="false" class="video-card-menu"
             :class="{ 'hover-show': !hasSaved && !isMobile }" @click.stop.prevent="() => { }"
           >
-            <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
+            <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
         <video-card-menu :video="data" @closeMenu="showMenu = false" />
@@ -305,9 +306,9 @@ export default defineComponent({
             forceJPG: true,
             mdiTwitch,
             placeholderIconMap: {
-                event: (this as any).icons.mdiCalendar,
-                "scheduled-yt-stream": (this as any).icons.mdiYoutube,
-                "external-stream": mdiBroadcast,
+                event: 'mdi-calendar',
+                "scheduled-yt-stream": 'mdi-youtube',
+                "external-stream": 'mdi-broadcast',
             },
             placeholderOpen: false,
             showMenu: false,

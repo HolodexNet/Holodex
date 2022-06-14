@@ -11,6 +11,12 @@ const routes = [
     name: "Profiles",
     component: () => import("@/views/Profile.vue"),
   },
+  {
+    path: "/kitchensink",
+    name: "Kitchen Sink",
+    component: () => import("@/views/KitchenSink.vue"),
+  },
+
 ];
 const router = createRouter({
   history: createWebHistory(),
