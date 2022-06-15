@@ -52,6 +52,7 @@ component:
     typeScheduledYT: Planlı Yayın
     typeExternalStream: Harici Yayın
     typeEventPlaceholder: Planlı Etkinlik
+    openClient: Çeviri İstrmcisini Aç
   videoDescription:
     description: Açıklama
   description:
