@@ -32,6 +32,9 @@ app.use(router);
 
 export const vuetify = createVuetify({
   locale: createVueI18nAdapter({ i18n, useI18n }),
+  icons: {
+    defaultSet: 'svg',
+  } as any,
   theme: {
     defaultTheme: 'dark',
   }
