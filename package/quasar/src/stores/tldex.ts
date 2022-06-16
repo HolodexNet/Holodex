@@ -29,8 +29,8 @@ interface State {
     liveTlBlocked: string[],
 }
 
-export const useStore = defineStore("pref-dexTL", {
-    state: () => {
+export const useTLStore = defineStore("pref-dexTL", {
+    state: (): State => {
         const langStore = useLangStore();
         const lang = getTLLangRecommendation(langStore.lang)
         return {
