@@ -51,4 +51,7 @@ export default defineConfig({
     ViteAliases(),
     visualizer({ gzipSize: true, brotliSize: true }),
   ],
+  optimizeDeps: {
+    exclude: ['oh-vue-icons/icons']
+  }
 });

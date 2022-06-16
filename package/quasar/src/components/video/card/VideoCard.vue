@@ -1,6 +1,6 @@
 <template>
   <a
-    class="video-card no-decoration flex" :class="{
+    class="flex video-card no-decoration" :class="{
       'video-card-fluid': fluid,
       'video-card-active': active,
       'video-card-horizontal': horizontal,
@@ -12,7 +12,7 @@
     <!-- Video Image with Duration -->
     <div
       v-if="!denseList" style="position: relative; width: 100%"
-      class="video-thumbnail white--text rounded flex-shrink-0 flex" :style="
+      class="flex flex-shrink-0 rounded video-thumbnail white--text" :style="
         horizontal &&
           !shouldHideThumbnail &&
           `background: url(${imageSrc}) center/cover;`
@@ -21,13 +21,13 @@
       <!-- Image Overlay -->
       <!-- d-flex justify-space-between flex-column (old) -->
       <div
-        class="video-card-overlay flex justify-between flex-col " 
+        class="flex flex-col justify-between video-card-overlay " 
         style="height: 100%; position: absolute; width: 100%; z-index: 1"
       >
         <div class="flex justify-between align-start">
           <!-- Topic Id display -->
           <div
-            class="video-topic rounded-tl-sm"
+            class="rounded-tl-sm video-topic"
             :style="{ visibility: data.topic_id ? 'visible' : 'hidden' }"
           >
             {{ data.topic_id }}
@@ -36,11 +36,10 @@
           <!-- Check box for saved video (👻❌) -->
           <v-icon
             v-if="!isPlaceholder" :color="hasSaved ? 'primary' : 'white'"
-            class="video-card-action rounded-tr-sm" :class="{ 'hover-show': !hasSaved && !isMobile }"
+            class="rounded-tr-sm video-card-action" :class="{ 'hover-show': !hasSaved && !isMobile }"
+            role="img"
             @click.prevent.stop="toggleSaved($event)"
-          >
-            {{ hasSaved ? 'mdi-check' : 'mdi-plus-box' }}
-          </v-icon>
+          >{{ hasSaved ? icons.mdiCheck : icons.mdiPlusBox }}</v-icon>
         </div>
 
         <!-- Video duration/music indicator (👻❌) -->
@@ -50,19 +49,19 @@
             <v-icon small color="white">mdi-music</v-icon>
           </div>
           <!-- Show TL chat icon if recently active or has archive tl exist -->
-          <div v-if="hasTLs" class="video-duration d-flex align-center" :title="tlIconTitle">
+          <div v-if="hasTLs" class="flex video-duration align-center" :title="tlIconTitle">
             {{ tlLangInChat }}
             <v-icon small color="white">chat</v-icon>
           </div>
           <!-- Duration/Current live stream time -->
           <div
-            v-if="(data.duration || 0) > 0 || data.start_actual" class="video-duration rounded-br-sm"
+            v-if="(data.duration || 0) > 0 || data.start_actual" class="rounded-br-sm video-duration"
             :class="data.status === 'live' && 'video-duration-live'"
           >
             {{ formattedDuration }}
           </div>
         </div>
-        <div v-else-if="data.placeholderType" class="d-flex flex-column content-end ">
+        <div v-else-if="data.placeholderType" class="flex content-end flex-column ">
           <!-- (👻✅) -->
           <div class="video-duration">
             <span v-if="data.placeholderType === 'scheduled-yt-stream'" class="hover-placeholder">{{
@@ -96,12 +95,12 @@
       <!-- Channel icon -->
       <div
         v-if="denseList || (includeChannel && includeAvatar && !horizontal && data.channel)"
-        class="flex align-self-center mx-2 flex-col"
+        class="flex flex-col mx-2 align-self-center"
       >
         <channel-img :channel="data.channel" rounded class="align-self-center" />
       </div>
       <!-- Three lines for title, channel, available time -->
-      <div class="flex video-card-lines flex-col">
+      <div class="flex flex-col video-card-lines">
         <!-- Video title -->
         <div
           :class="['video-card-title ', { 'video-watched': hasWatched }, { 'mt-2': !horizontal && !denseList }]"
