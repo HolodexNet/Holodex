@@ -14,6 +14,8 @@ import '@/setup/vuetify/main.sass' // vuetify configuration
 
 import { createVuetify } from "vuetify";
 import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
+// import { OhVueIcon } from "oh-vue-icons";
+import * as icons from "@/utils/icons"
 
 const app = createApp(App);
 
@@ -35,6 +37,9 @@ export const vuetify = createVuetify({
   }
 })
 app.use(vuetify);
+
+app.config.globalProperties.icons = icons
+// app.component("VIcon", OhVueIcon); // overwrite v-icon?
 
 // Assumes you have a <div id="app"></div> in your index.html
 app.mount("#app");
