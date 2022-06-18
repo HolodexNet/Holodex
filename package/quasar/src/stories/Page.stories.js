@@ -1,6 +1,6 @@
-import MyPage from './Page.vue';
+import MyPage from "./Page.vue";
 
 export default {
-  title: 'Example/Page',
+  title: "Example/Page",
   component: MyPage,
 };

@@ -1,48 +1,48 @@
-import { ThemeDefinition } from 'vuetify';
-import { DaisyColorConfig } from './daisy-utils/daisy-types';
+import { ThemeDefinition } from "vuetify";
+import { DaisyColorConfig } from "./daisy-utils/daisy-types";
 import { presets } from "./presets";
 
 export type VuetifyBrandColors = {
-    primary: string | number;
-    secondary: string | number;
-    accent: string | number;
+  primary: string | number;
+  secondary: string | number;
+  accent: string | number;
 
-    success?: string | number;
-    warning?: string | number;
-    error?: string | number;
-    info?: string | number;
+  success?: string | number;
+  warning?: string | number;
+  error?: string | number;
+  info?: string | number;
 
-    background: string | number;
-    surface?: string | number;
-}
+  background: string | number;
+  surface?: string | number;
+};
 
-export type Theme = { name: string, colors: DaisyColorConfig, dark: boolean }
+export type Theme = { name: string; colors: DaisyColorConfig; dark: boolean };
 
 const DEFAULT_THEME: Theme = {
-    name: 'default',
-    colors: {
-        'base-100': '#1f1f1f',
-        primary: '#3b88d5',
-        neutral: '#758799',
-        secondary: '#F06292',
-        accent: '#F03284',
-        error: '#B00020',
-        info: '#64B5F6',
-        success: '#4CAF50',
-        warning: '#FB8C00',
-    },
-    dark: true
-}
+  name: "default",
+  colors: {
+    "base-100": "#1f1f1f",
+    primary: "#3b88d5",
+    neutral: "#758799",
+    secondary: "#F06292",
+    accent: "#F03284",
+    error: "#B00020",
+    info: "#64B5F6",
+    success: "#4CAF50",
+    warning: "#FB8C00",
+  },
+  dark: true,
+};
 
-const expandColors = ['primary', 'secondary', 'accent']
+const expandColors = ["primary", "secondary", "accent"];
 export function compileTheme(theme: Theme) {
-    const colorset = { ...DEFAULT_THEME.colors, ...theme.colors };
+  const colorset = { ...DEFAULT_THEME.colors, ...theme.colors };
 
-    const output = {}
-    return output
-    console.log("not impl")
-    // convert to #hex
-    /*
+  const output = {};
+  return output;
+  console.log("not impl");
+  // convert to #hex
+  /*
     for (const brand in colorset) {
         if (!colorset[brand].startsWith('#')) {
             output[brand] = colors.getPaletteColor(brand);
@@ -65,8 +65,8 @@ export function compileTheme(theme: Theme) {
 }
 
 export function setCompiledTheme(compiledColors: Record<string, string>) {
-    console.log("not impl")
-    /*
+  console.log("not impl");
+  /*
     for (const c in compiledColors) {
         setCssVar(c, compiledColors[c]);
     }

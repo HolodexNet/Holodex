@@ -1,5 +1,5 @@
 <template>
-  <q-btn type="button" :class="classes" @click="onClick" :style="style">
+  <q-btn type="button" :class="classes" :style="style" @click="onClick">
     {{ label }}
   </q-btn>
 </template>
@@ -9,7 +9,7 @@ import "./button.css";
 import { reactive, computed } from "vue";
 
 export default {
-  name: "my-button",
+  name: "MyButton",
 
   props: {
     label: {

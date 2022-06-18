@@ -1,8 +1,7 @@
-
-
 Active Item Reordering behavior should be extracted
+
 ```html
-    <!-- <v-list-item-action v-if="!!$slots.action || activePlaylistItem" class="video-card-item-actions">
+<!-- <v-list-item-action v-if="!!$slots.action || activePlaylistItem" class="video-card-item-actions">
       <template v-if="activePlaylistItem">
         <button @click.stop.prevent="move(data.id, 'up')">
           <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
@@ -18,11 +17,10 @@ Active Item Reordering behavior should be extracted
       </template>
       <slot name="action" />
     </v-list-item-action>-->
-
 ```
 
 Placeholder behavior should be extracted.
-```html
-    <!-- <placeholder-card v-if="placeholderOpen" v-model="placeholderOpen" :video="data" /> -->
 
+```html
+<!-- <placeholder-card v-if="placeholderOpen" v-model="placeholderOpen" :video="data" /> -->
 ```

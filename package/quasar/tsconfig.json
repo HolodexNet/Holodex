@@ -16,17 +16,12 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "types": [
-      "vite/client",       // also added along with VOLAR support, but idk what this does.
+      "vite/client", // also added along with VOLAR support, but idk what this does.
       "@modyfi/vite-plugin-yaml/modules" // yaml support
-    ] 
+    ]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
-  "exclude": ["node_modules", "dist",  "**/*.stories.tsx"]
+  "exclude": ["node_modules", "dist", "**/*.stories.tsx"]
 }

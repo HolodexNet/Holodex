@@ -1,58 +1,57 @@
-
 import {
-    QueryClient,
-    dehydrate,
-    DehydratedState,
-    DehydrateOptions,
-    HydrateOptions,
-    hydrate,
-} from 'react-query/core'
+  QueryClient,
+  dehydrate,
+  DehydratedState,
+  DehydrateOptions,
+  HydrateOptions,
+  hydrate,
+} from "react-query/core";
 
-export type Promisable<T> = T | PromiseLike<T>
+export type Promisable<T> = T | PromiseLike<T>;
 
 export interface Persister {
-    persistClient(persistClient: PersistedClient): Promisable<void>
-    restoreClient(): Promisable<PersistedClient | undefined>
-    removeClient(): Promisable<void>
+  persistClient(persistClient: PersistedClient): Promisable<void>;
+  restoreClient(): Promisable<PersistedClient | undefined>;
+  removeClient(): Promisable<void>;
 }
 
 export interface PersistedClient {
-    timestamp: number
-    buster: string
-    clientState: DehydratedState
+  timestamp: number;
+  buster: string;
+  clientState: DehydratedState;
 }
 
 export interface PersistQueryClienRootOptions {
-    /** The QueryClient to persist */
-    queryClient: QueryClient
-    /** The Persister interface for storing and restoring the cache
-     * to/from a persisted location */
-    persister: Persister
-    /** A unique string that can be used to forcefully
-     * invalidate existing caches if they do not share the same buster string */
-    buster?: string
+  /** The QueryClient to persist */
+  queryClient: QueryClient;
+  /** The Persister interface for storing and restoring the cache
+   * to/from a persisted location */
+  persister: Persister;
+  /** A unique string that can be used to forcefully
+   * invalidate existing caches if they do not share the same buster string */
+  buster?: string;
 }
 
 export interface PersistedQueryClientRestoreOptions
-    extends PersistQueryClienRootOptions {
-    /** The max-allowed age of the cache in milliseconds.
-     * If a persisted cache is found that is older than this
-     * time, it will be discarded */
-    maxAge?: number
-    /** The options passed to the hydrate function */
-    hydrateOptions?: HydrateOptions
+  extends PersistQueryClienRootOptions {
+  /** The max-allowed age of the cache in milliseconds.
+   * If a persisted cache is found that is older than this
+   * time, it will be discarded */
+  maxAge?: number;
+  /** The options passed to the hydrate function */
+  hydrateOptions?: HydrateOptions;
 }
 
 export interface PersistedQueryClientSaveOptions
-    extends PersistQueryClienRootOptions {
-    /** The options passed to the dehydrate function */
-    dehydrateOptions?: DehydrateOptions
+  extends PersistQueryClienRootOptions {
+  /** The options passed to the dehydrate function */
+  dehydrateOptions?: DehydrateOptions;
 }
 
 export interface PersistQueryClientOptions
-    extends PersistedQueryClientRestoreOptions,
+  extends PersistedQueryClientRestoreOptions,
     PersistedQueryClientSaveOptions,
-    PersistQueryClienRootOptions { }
+    PersistQueryClienRootOptions {}
 
 /**
  * Restores persisted data to the QueryCache
@@ -61,40 +60,43 @@ export interface PersistQueryClientOptions
  * If data is expired, busted, empty, or throws, it runs persister.removeClient
  */
 export async function persistQueryClientRestore({
-    queryClient,
-    persister,
-    maxAge = 1000 * 60 * 60 * 24,
-    buster = '',
-    hydrateOptions,
+  queryClient,
+  persister,
+  maxAge = 1000 * 60 * 60 * 24,
+  buster = "",
+  hydrateOptions,
 }: PersistedQueryClientRestoreOptions) {
-    try {
-        const persistedClient = await persister.restoreClient()
+  try {
+    const persistedClient = await persister.restoreClient();
 
-        if (persistedClient) {
-            if (persistedClient.timestamp) {
-                const expired = Date.now() - persistedClient.timestamp > maxAge
-                const busted = persistedClient.buster !== buster
-                if (expired || busted) {
-                    persister.removeClient()
-                } else {
-                    hydrate(queryClient, persistedClient.clientState, hydrateOptions)
-                }
-            } else {
-                persister.removeClient()
-            }
+    if (persistedClient) {
+      if (persistedClient.timestamp) {
+        const expired = Date.now() - persistedClient.timestamp > maxAge;
+        const busted = persistedClient.buster !== buster;
+        if (expired || busted) {
+          persister.removeClient();
+        } else {
+          hydrate(queryClient, persistedClient.clientState, hydrateOptions);
         }
-    } catch (err) {
-        console.error("Encountered an error attempting to restore client cache from persisted location. As a precaution, the persisted cache will be discarded", err)
-        // if (process.env.NODE_ENV !== 'production') {
-        //     queryClient.getLogger().error(err)
-        //     queryClient
-        //         .getLogger()
-        //         .warn(
-        //             'Encountered an error attempting to restore client cache from persisted location. As a precaution, the persisted cache will be discarded.'
-        //         )
-        // }
-        persister.removeClient()
+      } else {
+        persister.removeClient();
+      }
     }
+  } catch (err) {
+    console.error(
+      "Encountered an error attempting to restore client cache from persisted location. As a precaution, the persisted cache will be discarded",
+      err
+    );
+    // if (process.env.NODE_ENV !== 'production') {
+    //     queryClient.getLogger().error(err)
+    //     queryClient
+    //         .getLogger()
+    //         .warn(
+    //             'Encountered an error attempting to restore client cache from persisted location. As a precaution, the persisted cache will be discarded.'
+    //         )
+    // }
+    persister.removeClient();
+  }
 }
 
 /**
@@ -103,18 +105,18 @@ export async function persistQueryClientRestore({
  *  - data is persisted using persister.persistClient
  */
 export async function persistQueryClientSave({
-    queryClient,
-    persister,
-    buster = '',
-    dehydrateOptions,
+  queryClient,
+  persister,
+  buster = "",
+  dehydrateOptions,
 }: PersistedQueryClientSaveOptions) {
-    const persistClient: PersistedClient = {
-        buster,
-        timestamp: Date.now(),
-        clientState: dehydrate(queryClient, dehydrateOptions),
-    }
+  const persistClient: PersistedClient = {
+    buster,
+    timestamp: Date.now(),
+    clientState: dehydrate(queryClient, dehydrateOptions),
+  };
 
-    await persister.persistClient(persistClient)
+  await persister.persistClient(persistClient);
 }
 
 /**
@@ -122,76 +124,75 @@ export async function persistQueryClientSave({
  * @returns an unsubscribe function (to discontinue monitoring)
  */
 export function persistQueryClientSubscribe(
-    props: PersistedQueryClientSaveOptions
+  props: PersistedQueryClientSaveOptions
 ) {
-    const unsubscribeQueryCache = props.queryClient
-        .getQueryCache()
-        .subscribe(() => {
-            persistQueryClientSave(props)
-        })
+  const unsubscribeQueryCache = props.queryClient
+    .getQueryCache()
+    .subscribe(() => {
+      persistQueryClientSave(props);
+    });
 
-    const unusbscribeMutationCache = props.queryClient
-        .getMutationCache()
-        .subscribe(() => {
-            persistQueryClientSave(props)
-        })
+  const unusbscribeMutationCache = props.queryClient
+    .getMutationCache()
+    .subscribe(() => {
+      persistQueryClientSave(props);
+    });
 
-    return () => {
-        unsubscribeQueryCache()
-        unusbscribeMutationCache()
-    }
+  return () => {
+    unsubscribeQueryCache();
+    unusbscribeMutationCache();
+  };
 }
 
 /**
  * Restores persisted data to QueryCache and persists further changes.
  */
 export function persistQueryClient(
-    props: PersistQueryClientOptions
+  props: PersistQueryClientOptions
 ): [() => void, Promise<void>] {
-    let hasUnsubscribed = false
-    let persistQueryClientUnsubscribe: (() => void) | undefined
-    const unsubscribe = () => {
-        hasUnsubscribed = true
-        persistQueryClientUnsubscribe?.()
+  let hasUnsubscribed = false;
+  let persistQueryClientUnsubscribe: (() => void) | undefined;
+  const unsubscribe = () => {
+    hasUnsubscribed = true;
+    persistQueryClientUnsubscribe?.();
+  };
+
+  // Attempt restore
+  const restorePromise = persistQueryClientRestore(props).then(() => {
+    if (!hasUnsubscribed) {
+      // Subscribe to changes in the query cache to trigger the save
+      persistQueryClientUnsubscribe = persistQueryClientSubscribe(props);
     }
+  });
 
-    // Attempt restore
-    const restorePromise = persistQueryClientRestore(props).then(() => {
-        if (!hasUnsubscribed) {
-            // Subscribe to changes in the query cache to trigger the save
-            persistQueryClientUnsubscribe = persistQueryClientSubscribe(props)
-        }
-    })
-
-    return [unsubscribe, restorePromise]
+  return [unsubscribe, restorePromise];
 }
-
 
 export type PersistRetryer = (props: {
-    persistedClient: PersistedClient
-    error: Error
-    errorCount: number
-}) => PersistedClient | undefined
+  persistedClient: PersistedClient;
+  error: Error;
+  errorCount: number;
+}) => PersistedClient | undefined;
 
 export const removeOldestQuery: PersistRetryer = ({ persistedClient }) => {
-    const mutations = [...persistedClient.clientState.mutations]
-    const queries = [...persistedClient.clientState.queries]
-    const client: PersistedClient = {
-        ...persistedClient,
-        clientState: { mutations, queries },
-    }
+  const mutations = [...persistedClient.clientState.mutations];
+  const queries = [...persistedClient.clientState.queries];
+  const client: PersistedClient = {
+    ...persistedClient,
+    clientState: { mutations, queries },
+  };
 
-    // sort queries by dataUpdatedAt (oldest first)
-    const sortedQueries = [...queries].sort(
-        (a, b) => a.state.dataUpdatedAt - b.state.dataUpdatedAt
-    )
+  // sort queries by dataUpdatedAt (oldest first)
+  const sortedQueries = [...queries].sort(
+    (a, b) => a.state.dataUpdatedAt - b.state.dataUpdatedAt
+  );
 
-    // clean oldest query
-    if (sortedQueries.length > 0) {
-        const oldestData = sortedQueries.shift()
-        client.clientState.queries = queries.filter(q => q !== oldestData)
-        return client
-    }
+  // clean oldest query
+  if (sortedQueries.length > 0) {
+    const oldestData = sortedQueries.shift();
+    client.clientState.queries = queries.filter((q) => q !== oldestData);
+    return client;
+  }
 
-    return undefined
-}
+  return undefined;
+};

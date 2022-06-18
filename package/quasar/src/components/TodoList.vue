@@ -2,7 +2,7 @@
   <div>TODOs (more like a vue reactivity testing system)</div>
   <div
     @click="
-      () => 
+      () =>
         store.addTodo({
           id: (store.todos[store.todos.length - 1]?.id || 0) + 1,
           title: `${new Date().toTimeString()} TODO`,
@@ -13,14 +13,15 @@
   </div>
   <ul v-for="todo in store.todos" :key="'todo' + todo.id">
     <li>
-      {{ todo.id }}: {{ todo.title }} (<span @click="() => store.deleteTodo(todo.id)">click to delete</span>)
+      {{ todo.id }}: {{ todo.title }} (<span
+        @click="() => store.deleteTodo(todo.id)"
+        >click to delete</span
+      >)
     </li>
   </ul>
   <div>VueQuery test: LA Current Time: {{ out }}</div>
 
-  <div @click="() => { }">
-    SetTheme
-  </div>
+  <div @click="() => {}">SetTheme</div>
 </template>
 
 <script lang="ts">
@@ -35,7 +36,9 @@ export default defineComponent({
     const { isLoading, isError, data, error } = useQuery(
       ["LA_Timezone"],
       async (e) => {
-        const resp = await fetch("https://hacker-news.firebaseio.com/v0/topstories.json");
+        const resp = await fetch(
+          "https://hacker-news.firebaseio.com/v0/topstories.json"
+        );
 
         // const resp = await fetch('http://worldtimeapi.org/api/timezone/America/Los_Angeles')
         return resp.json();

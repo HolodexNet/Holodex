@@ -1,4 +1,4 @@
-Shamelessly stolen from 
+Shamelessly stolen from
 
 https://github.com/gobeli/css-var-theme
 

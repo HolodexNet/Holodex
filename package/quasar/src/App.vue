@@ -1,12 +1,10 @@
 <template>
-    <app-frame />
-
+  <app-frame />
 </template>
 
 <script setup lang="ts">
-
-import { useI18nInitialization } from './hooks/i18n/languageHooks'
-import { useThemeInitialization } from './hooks/theme-changer/useThemeInitialization'
+import { useI18nInitialization } from "./hooks/i18n/languageHooks";
+import { useThemeInitialization } from "./hooks/theme-changer/useThemeInitialization";
 
 // initializing setup for Holodex:
 // Steps:
@@ -19,5 +17,4 @@ const theme = useThemeInitialization();
 
 // [ ] Login & validation
 // todo
-
 </script>
