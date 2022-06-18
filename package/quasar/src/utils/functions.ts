@@ -184,55 +184,6 @@ export function arrayChunk(arr, size) {
     return Array.from(new Array(Math.ceil(arr.length / size)), (_, i) => arr.slice(i * size, i * size + size));
 }
 
-// eslint-disable-next-line import/first
-import { mapMutations, mapState } from "vuex";
-
-/**
- * Returns an object map to be spread to computed variables in a component
- * @param {String} [namespace] - Module's namespace
- * @param {Object|Array} states # A list of state variables
- * @return {Object}
- */
-export function syncState(namespace, states) {
-    const statesObj = mapState(namespace, states);
-    const mutationName = (n) => `set${n.charAt(0).toUpperCase()}${n.slice(1)}`;
-    const mutationObj = mapMutations(
-        namespace,
-        states.map((n) => mutationName(n)),
-    );
-    const computedSyncs = {};
-
-    states.forEach((stateName) => {
-        if (
-            Object.prototype.hasOwnProperty.call(statesObj, stateName)
-            && Object.prototype.hasOwnProperty.call(mutationObj, mutationName(stateName))
-        ) {
-            computedSyncs[stateName] = {
-                get: statesObj[stateName],
-                set: mutationObj[mutationName(stateName)],
-            };
-        }
-    });
-    return computedSyncs;
-}
-
-/**
- * Returns a mutation object with for simple state.variable = val
- * @param {Array} states # A list of state variable names
- * @return {Object}
- */
-export function createSimpleMutation(variables) {
-    const newMutations = {};
-    variables.forEach((variable) => {
-        // function name in format exampleVar => setExampleVar()
-        const funcName = `set${variable.charAt(0).toUpperCase()}${variable.slice(1)}`;
-        newMutations[funcName] = (state, val) => {
-            state[variable] = val;
-        };
-    });
-    return newMutations;
-}
-
 export function videoTemporalComparator(a, b) {
     if (a.available_at === b.available_at) {
         return a.id.localeCompare(b.id);
