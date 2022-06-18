@@ -1,0 +1,287 @@
+<template>
+  <slot
+    name="menu"
+    :current-org="currentOrg"
+    :show-org-dialog="
+      () => {
+        showOrgDialog = true;
+      }
+    "
+  >
+    <v-menu bottom offset-y>
+      <template #activator="activator">
+        <slot name="visible" :current-org="currentOrg" :activator="activator">
+          <div
+            v-bind="activator.props"
+            class="inline-block nav-title"
+            style="position: relative"
+          >
+            <v-fade-transition hide-on-leave>
+              <span
+                :key="currentOrg.name + 'header'"
+                style="text-decoration: underline"
+                >{{ currentOrg.short || currentOrg.name }}</span
+              >
+            </v-fade-transition>
+            <span ref="dexBtn" class="primary--text">dex</span>
+            <v-icon
+              size="30"
+              class="change-org-icon"
+              :class="{
+                'rotate-180': activator.props['aria-expanded'] === 'true',
+              }"
+            >
+              {{ icons.mdiMenuDown }}
+            </v-icon>
+          </div>
+        </slot>
+      </template>
+
+      <v-list
+        style="max-height: 300px; overscroll-behavior: contain"
+        class="overflow-y-auto"
+      >
+        <slot name="prepend-dropdown" />
+        <v-list-item
+          v-for="org in orgFavorites"
+          :key="org.name + 'select'"
+          :input-value="org === (currentSelection || currentOrg)"
+          @click="currentOrg = org"
+        >
+          <v-list-item-title>{{ org.name }}</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="showOrgDialog = true">
+          <v-list-item-title class="primary--text">{{
+            $t("views.favorites.showall")
+          }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </slot>
+  <v-dialog v-model="showOrgDialog" max-width="1000px">
+    <v-card>
+      <v-card-title>{{ $t("views.channels.sortOptions.org") }}</v-card-title>
+
+      <v-card-text class="px-1">
+        <v-text-field
+          v-model="search"
+          :label="$t('component.search.searchLabel')"
+          class="px-4"
+        />
+        <v-list style="overflow-y: auto; height: calc(75vh - 176px)">
+          <v-list-item
+            v-for="org in sortedOrgs"
+            :key="org.name + 'list'"
+            dense
+            :ripple="false"
+            @click="
+              () => {
+                currentOrg = org;
+                showOrgDialog = false;
+              }
+            "
+          >
+            <v-list-item-action height="32px">
+              <v-btn
+                icon
+                :color="orgFavoritesNameSet.has(org.name) ? 'yellow' : 'grey'"
+                @click.stop="toggleFavoriteOrg(org)"
+              >
+                <v-icon>{{ icons.mdiStar }}</v-icon>
+              </v-btn>
+            </v-list-item-action>
+
+            <v-list-item-content>
+              {{ org.name }} {{ org.name_jp ? `(${org.name_jp})` : "" }}
+            </v-list-item-content>
+
+            <v-list-item-action
+              v-if="orgFavoritesNameSet.has(org.name)"
+              style="flex-direction: row !important"
+              @click.stop.prevent
+            >
+              <v-btn
+                icon
+                :ripple="false"
+                @click.stop="shiftOrgFavorites({ org, up: true })"
+              >
+                <v-icon>{{ icons.mdiChevronUp }}</v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                :ripple="false"
+                @click.stop="shiftOrgFavorites({ org, up: false })"
+              >
+                <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+      <v-divider />
+      <v-card-actions>
+        <v-spacer />
+        <v-btn text color="red" @click="showOrgDialog = false">{{
+          $t("views.app.close_btn")
+        }}</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script lang="ts">
+import { useSiteStore } from "@/stores";
+import { useDisplay } from "vuetify";
+
+/**----------------------------------------------
+ * *                   Org Selector
+ *   Picks an organization from the available org listing.
+ *
+ *   Contains slots to expand functionality by:
+ * adding additonal clickables to the menu via prepend-dropdown slot
+ * change the display logic entirely by using 'visible' slot (this control the 'Holodex' on front page)
+ * or supplement your own menu system by using 'menu' slot (this controls the whole menu dropdown,
+ * should not be used together with 'visible')
+ *
+ *   Regardless, setting showOrgDialog = true inside 'menu' slot binding will cause the Favorite Orgs management
+ * dialog to pop up.
+ *---------------------------------------------* */
+
+export default {
+  name: "OrgSelector",
+  props: {
+    currentSelection: {
+      type: Object,
+      optional: true,
+      default: () => ({
+        name: "Hololive",
+        short: "Holo",
+        name_jp: null,
+      }),
+    },
+    hideAllVTubers: {
+      type: Boolean,
+      optional: true,
+    },
+  },
+  emits: ["changed"],
+  setup() {
+    const site = useSiteStore();
+    const display = useDisplay();
+    // const orgs = useOrgList();
+
+    const isMobile = display.mobile;
+
+    return { site, display, isMobile };
+  },
+  data() {
+    return {
+      showOrgDialog: false,
+      search: "",
+      orgs: [] as any[],
+    };
+  },
+  computed: {
+    firstVisit: {
+      get() {
+        return (
+          this.site.guide.firstVisit &&
+          navigator.userAgent &&
+          !navigator.userAgent.includes("Googlebot")
+        );
+      },
+      set() {
+        this.site.guide.firstVisit = false;
+      },
+    },
+    sortedOrgs() {
+      let list = this.orgs.slice();
+      if (this.search) {
+        list = list.filter((x) =>
+          x.name.toLowerCase().includes(this.search.toLowerCase())
+        );
+      }
+      list.sort((a, b) => {
+        const index1 = this.orgFavorites.findIndex((x) => x.name === a.name);
+        const index2 = this.orgFavorites.findIndex((x) => x.name === b.name);
+        if (index1 < 0 && index2 < 0) return 0;
+        if (index1 < 0 && index2 >= 0) return 1;
+        if (index2 < 0 && index1 >= 0) return -1;
+
+        return index1 - index2;
+      });
+      return list;
+    },
+    currentOrg: {
+      get() {
+        return this.site.currentOrg;
+      },
+      set(val) {
+        this.$emit("changed", val);
+        if (this.$route.name === "favorites")
+          this.$router.push({ name: "home", query: { org: val.name } });
+        if (this.$route.query.org)
+          this.$router.replace({ query: { org: val.name } });
+
+        this.site.currentOrg = val;
+      },
+    },
+    orgFavorites() {
+      if (this.hideAllVTubers) {
+        return this.site.starredOrgs.filter((x) => x.name !== "All Vtubers");
+      }
+      return this.site.starredOrgs;
+    },
+    orgFavoritesNameSet() {
+      return new Set(this.orgFavorites.map(({ name }) => name));
+    },
+  },
+  watch: {
+    showOrgDialog(v) {
+      //   if (v) this.$store.dispatch("orgs/fetchOrgs");
+    },
+  },
+  methods: {
+    shiftUp(org) {
+      const favIndex = this.orgFavorites.indexOf(org);
+      const temp = this.orgFavorites[favIndex - 1];
+      this.orgFavorites.splice(favIndex - 1, 1, org);
+      this.orgFavorites.splice(favIndex, 1, temp);
+    },
+  },
+};
+</script>
+
+<style>
+.nav-title {
+  text-decoration: none;
+  font-size: 24px;
+  line-height: 1.2px;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.change-org-icon:focus::after {
+  opacity: 0 !important;
+}
+
+.first-visit-tooltip {
+  width: 80%;
+  max-width: 480px;
+  background: rgb(91, 157, 211);
+  font-weight: 500;
+  box-shadow: 2px 2px 4px black;
+}
+.first-visit-tooltip:before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 105px;
+  width: 0;
+  border-bottom: 10px solid rgb(91, 157, 211);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+</style>

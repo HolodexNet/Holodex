@@ -9,11 +9,13 @@ declare module "@vue/runtime-core" {
     AppFrame: typeof import("./src/components/AppFrame.vue")["default"];
     Button: typeof import("./src/stories/Button.vue")["default"];
     ChannelImg: typeof import("./src/components/channel/common/ChannelImg.vue")["default"];
-    Hello: typeof import("./src/components/Hello.vue")["default"];
-    HelloWorld: typeof import("./src/components/HelloWorld.vue")["default"];
+    HLogo: typeof import("./src/components/frame/HLogo.vue")["default"];
     Home: typeof import("./src/views/Home.vue")["default"];
     KitchenSink: typeof import("./src/views/KitchenSink.vue")["default"];
+    Logo: typeof import("./src/components/frame/Logo.vue")["default"];
     MainNav: typeof import("./src/components/nav/MainNav.vue")["default"];
+    NavDrawer: typeof import("./src/components/nav/NavDrawer.vue")["default"];
+    OrgSelector: typeof import("./src/components/frame/OrgSelector.vue")["default"];
     Page: typeof import("./src/stories/Page.vue")["default"];
     Profile: typeof import("./src/views/Profile.vue")["default"];
     TodoList: typeof import("./src/components/TodoList.vue")["default"];
@@ -21,10 +23,6 @@ declare module "@vue/runtime-core" {
     VideoCardLiveDuration: typeof import("./src/components/video/card/VideoCardLiveDuration.vue")["default"];
     VideoCardMenu: typeof import("./src/components/video/card/VideoCardMenu.vue")["default"];
     VideoCardStatus: typeof import("./src/components/video/card/VideoCardStatus.vue")["default"];
-    VideoDuration: typeof import("./src/components/video/card/VideoDuration.vue")["default"];
-    VideoLiveDuration: typeof import("./src/components/video/card/VideoLiveDuration.vue")["default"];
-    "VideoLiveDuration copy": typeof import("./src/components/video/card/VideoLiveDuration copy.vue")["default"];
-    VideoTimeUntil: typeof import("./src/components/video/card/VideoTimeUntil.vue")["default"];
   }
 }
 

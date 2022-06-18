@@ -28,7 +28,6 @@
     <v-app-bar
       v-show="showTopBar"
       id="top-bar"
-      :class="'secondary darken-1'"
       :app="showTopBar"
       clipped-left
       clipped-right
@@ -42,27 +41,17 @@
         <!--================= Logo & Search Bar (Space permitting) ================-->
 
         <v-app-bar-nav-icon
-          @click.stop="
-            navDrawer = !navDrawer;
-            navbarExpanded = false;
-          "
+          :icon="icons.mdiMenu"
+          @click.stop="navDrawer = !navDrawer"
         >
-          <v-icon>{{ icons.mdiMenu }}</v-icon>
         </v-app-bar-nav-icon>
-        <v-toolbar-title
-          style="overflow: visible"
-          :class="{ 'pa-0': isMobile }"
-        >
+        <div class="flex flex-row gap-2">
           <router-link :to="{ name: site.settings.defaultOpen || 'Home' }">
-            <Logo
-              v-if="!isMobile"
-              width="24"
-              height="24"
-              style="margin-bottom: -4px"
-            />
+            <logo v-if="!isMobile" width="32" height="32" />
           </router-link>
           <OrgSelector />
-        </v-toolbar-title>
+        </div>
+        <!-- </v-toolbar-title> -->
         <SearchBar v-if="!isMobile" key="main-search-bar" />
 
         <!--================= Account [👤] Button (Desktop Only) ================-->
@@ -85,8 +74,8 @@
                     </edit-playlist>
                 </ResponsiveMenu> -->
         <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
-          <template #activator="{ on, attrs }">
-            <v-btn icon v-bind="attrs" class="ml-2" v-on="on">
+          <template #activator="{ props }">
+            <v-btn icon v-bind="props" class="ml-2">
               <v-icon v-if="!(site.userdata && site.userdata.user)">
                 {{ icons.mdiAccountCircleOutline }}
               </v-icon>
@@ -327,7 +316,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @keyframes rotation {
   from {
     transform: rotate(0deg);

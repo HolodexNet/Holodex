@@ -6,13 +6,24 @@ import {
   DaisyColorName,
 } from "@/hooks/theme-changer/daisy-utils/daisy-types";
 
+interface CachedTheme {
+  /**
+   * Cached output of Vuetify Brand color map (primary => #c01023) and Daisy Color Shorthand mapping (--p => #c01023).
+   */
+  outputCache: [VuetifyBrandColors, Record<DaisyColorShorthand, string>];
+  /**
+   * Timestamp of last outputCache computation
+   */
+  outTs: number;
+  /**
+   * Timestamp of last modification to the Theme object (name, colors, dark).
+   */
+  lastModified: number;
+}
+
 export const useThemeStore = defineStore("site-theme", {
   // convert to a function
-  state: (): Theme & {
-    outputCache: [VuetifyBrandColors, Record<DaisyColorShorthand, string>];
-    outTs: number;
-    lastModified: number;
-  } => {
+  state: (): Theme & CachedTheme => {
     const [convert, colormap] = convertToDaisyHSLAndColor(presets[0].colors);
 
     const out: [VuetifyBrandColors, Record<DaisyColorShorthand, string>] = [
