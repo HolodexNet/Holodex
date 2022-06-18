@@ -54,12 +54,7 @@
             <v-icon small color="white">chat</v-icon>
           </div>
           <!-- Duration/Current live stream time -->
-          <div
-            v-if="(data.duration || 0) > 0 || data.start_actual" class="rounded-br-sm video-duration"
-            :class="data.status === 'live' && 'video-duration-live'"
-          >
-            {{ formattedDuration }}
-          </div>
+          <video-card-live-duration :video="data" />
         </div>
         <div v-else-if="data.placeholderType" class="flex content-end flex-column ">
           <!-- (👻✅) -->
@@ -126,9 +121,8 @@
         </div>
         <!-- Time/Viewer Info -->
         <div class="video-card-subtitle">
-          <span :class="'text-' + data.status" :title="absoluteTimeString">
-            {{ formattedTime }}
-          </span>
+          <!-- Status: 3 minutes ago, LIVE, etc. -->
+          <video-card-status :video="data" /> 
           <!-- (👻❌) -->
           <template v-if="data.clips && data.clips.length > 0 && !isPlaceholder">
             •
@@ -155,8 +149,9 @@
           </template>
         </div>
       </div>
+      <video-card-menu />
       <!-- Vertical dots menu -->
-      <v-menu v-model="showMenu" bottom :close-on-content-click="false" nudge-top="20px">
+      <!-- <v-menu v-model="showMenu" bottom :close-on-content-click="false" nudge-top="20px">
         <template #activator="{ props }">
           <v-btn
             icon v-bind="props" :ripple="false" class="video-card-menu"
@@ -166,27 +161,9 @@
           </v-btn>
         </template>
         <video-card-menu :video="data" @closeMenu="showMenu = false" />
-      </v-menu>
+      </v-menu> -->
     </a>
-    <!-- optional breaker object to row-break into a new row. -->
-    <!-- <v-list-item-action v-if="!!$slots.action || activePlaylistItem" class="video-card-item-actions">
-      <template v-if="activePlaylistItem">
-        <button @click.stop.prevent="move(data.id, 'up')">
-          <v-icon small> {{ icons.mdiChevronUp }} </v-icon>
-        </button>
-        <button
-          @click.stop.prevent="playlistStore.removeVideoByID(data.id) "
-        >
-          <v-icon small> {{ icons.mdiDelete }} </v-icon>
-        </button>
-        <button @click.stop.prevent="move(data.id, 'down')">
-          <v-icon small> {{ icons.mdiChevronDown }} </v-icon>
-        </button>
-      </template>
-      <slot name="action" />
-    </v-list-item-action>-->
-    <!-- 👻👻👻 Placeholder MODAL 👻👻👻 -->
-    <!-- <placeholder-card v-if="placeholderOpen" v-model="placeholderOpen" :video="data" /> -->
+
   </a>
 </template>
 
@@ -222,10 +199,6 @@ export default defineComponent({
     props: {
         video: {
             // required: true,
-            type: Object as PropType<Video>,
-            default: null,
-        },
-        source: {
             type: Object as PropType<Video>,
             default: null,
         },
@@ -269,10 +242,6 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
-        activePlaylistItem: {
-            type: Boolean,
-            default: false,
-        },
         parentPlaylistId: {
             type: [Number, String],
             default: null,
@@ -282,7 +251,8 @@ export default defineComponent({
             required: false,
         },
     },
-    emits: { 'videoClicked': null }, setup(props) {
+    emits: ['videoClicked'], 
+    setup(props) {
         const site = useSiteStore();
         const display = useDisplay();
 
@@ -296,9 +266,7 @@ export default defineComponent({
         const history = useWatchHistoryStore();
         const hasWatched = computedAsync(() => history.hasWatched((props.source || props.video).id), null);
 
-        const now = useNow({ interval: 1000 })
-
-        return { site, display, isMobile, langStore, hasSaved, playlistStore, hasWatched, now }
+        return { site, display, isMobile, langStore, hasSaved, playlistStore, hasWatched }
     },
     data() {
         return {
@@ -315,7 +283,7 @@ export default defineComponent({
     },
     computed: {
         data() {
-            return this.source || this.video;
+            return this.video;
         },
         isPlaceholder() {
             return this.data.type === "placeholder";
@@ -330,55 +298,8 @@ export default defineComponent({
         lang() {
             return this.langStore.lang;
         },
-        formattedTime() {
-            switch (this.data.status) {
-                case "upcoming":
-                    // print relative time in hours if less than 24 hours,
-                    // print full date if greater than 24 hours
-                    return formatDistance(
-                        this.data.start_scheduled || this.data.available_at,
-                        this.lang,
-                        this.$t.bind(this),
-                        false, // allowNegative = false
-                        dayjs(this.now),
-                    ); // upcoming videos don't get to be ("5 minutes ago")
-                case "live":
-                    return this.$t("component.videoCard.liveNow");
-                default:
-                    return formatDistance(
-                        this.data.available_at,
-                        this.lang,
-                        this.$t.bind(this),
-                    );
-            }
-        },
-        absoluteTimeString() {
-            const ts = localizedDayjs(this.data.available_at, this.lang);
-
-            const ts1 = ts.format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
-            const ts2 = ts
-                .tz("Asia/Tokyo")
-                .format(`${ts.isTomorrow() ? "ddd " : ""}LT zzz`);
-            if (ts1 === ts2) {
-                return ts1;
-            }
-            return `${ts1}\n${ts2}`;
-        },
         videoTitle() {
             return this.title;
-        },
-        formattedDuration() {
-            if (this.data.start_actual && this.data.status === "live") {
-                return this.formatDuration(
-                    dayjs(this.now).diff(dayjs(this.data.start_actual)),
-                );
-            }
-            if (this.data.status === "upcoming" && this.data.duration) {
-                return this.$t("component.videoCard.premiere");
-            }
-            return (
-                this.data.duration && this.formatDuration(this.data.duration * 1000)
-            );
         },
         imageSrc() {
             // load different images based on current column size, which correspond to breakpoints
@@ -544,10 +465,6 @@ export default defineComponent({
     width: 100%;
 }
 
-.text-live {
-    color: red;
-    font-weight: 500;
-}
 
 .video-card-text {
     min-height: 88px;
@@ -631,20 +548,6 @@ export default defineComponent({
 
 .video-card:hover .hover-opacity {
     opacity: 1.0;
-}
-
-.video-duration {
-    background-color: rgba(0, 0, 0, 0.8);
-    margin: 2px;
-    padding: 2px 5px;
-    text-align: center;
-    font-size: 0.8125rem;
-    letter-spacing: 0.025em;
-    line-height: 0.81rem;
-
-    &.video-duration-live {
-        background-color: rgba(148, 0, 0, 0.8);
-    }
 }
 
 .video-topic {
@@ -747,11 +650,4 @@ export default defineComponent({
     color: rgba(0, 0, 0, 0.6);
 }
 
-.video-card-menu {
-    position: absolute;
-    right: 0px;
-    display: inline-block;
-    top: 5px;
-    z-index: 1;
-}
 </style>
