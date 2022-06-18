@@ -18,6 +18,13 @@ declare module '@vue/runtime-core' {
     Profile: typeof import('./src/views/Profile.vue')['default']
     TodoList: typeof import('./src/components/TodoList.vue')['default']
     VideoCard: typeof import('./src/components/video/card/VideoCard.vue')['default']
+    VideoCardLiveDuration: typeof import('./src/components/video/card/VideoCardLiveDuration.vue')['default']
+    VideoCardMenu: typeof import('./src/components/video/card/VideoCardMenu.vue')['default']
+    VideoCardStatus: typeof import('./src/components/video/card/VideoCardStatus.vue')['default']
+    VideoDuration: typeof import('./src/components/video/card/VideoDuration.vue')['default']
+    VideoLiveDuration: typeof import('./src/components/video/card/VideoLiveDuration.vue')['default']
+    'VideoLiveDuration copy': typeof import('./src/components/video/card/VideoLiveDuration copy.vue')['default']
+    VideoTimeUntil: typeof import('./src/components/video/card/VideoTimeUntil.vue')['default']
   }
 }
 
