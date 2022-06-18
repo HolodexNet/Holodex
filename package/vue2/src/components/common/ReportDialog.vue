@@ -13,7 +13,7 @@
             type="error"
             dismissible
           >
-            Error Occured
+            Error Occurred
           </v-alert>
           <v-alert v-if="isCollab" type="info">
             {{ $t("component.reportDialog.collabing", {org: $store.state.currentOrg.name }) }}
