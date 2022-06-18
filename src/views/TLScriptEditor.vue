@@ -66,6 +66,13 @@
         </v-btn>
         <v-btn
           small
+          outlined
+          @click="modalMode = 9; modalNexus = true"
+        >
+          Time Shift
+        </v-btn>
+        <v-btn
+          small
           color="warning"
           @click="modalMode = 8; modalNexus = true"
         >
@@ -597,6 +604,34 @@
           </v-card>
         </v-container>
       </v-card>
+
+      <!---------    TIME SHIFT    --------->
+      <v-card v-if="modalMode === 9">
+        <v-container>
+          <v-card-title>
+            Time Shift
+          </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="offsetInput"
+              label="Offset"
+              outlined
+              dense
+              hide-details
+              type="number"
+              suffix="sec"
+            />
+          </v-card-text>
+          <v-card-actions>
+            <v-btn @click="modalNexus = false;">
+              {{ $t("views.tlClient.cancelBtn") }}
+            </v-btn>
+            <v-btn style="margin-left:auto" @click="modalNexus = false; shiftTime()">
+              {{ $t("views.tlClient.okBtn") }}
+            </v-btn>
+          </v-card-actions>
+        </v-container>
+      </v-card>
     </v-dialog>
     <ImportFile v-model="importPanelShow" @bounceDataBack="processImportData" />
     <!--========   NEXUS MODAL =======-->
@@ -668,6 +703,7 @@ export default {
             modalMode: 5,
             addProfileNameString: "",
             importPanelShow: false,
+            offsetInput: 0,
             // ------ SETTING ------
             TLLang: TL_LANGS[0],
             // ---- ACTIVE VIDEO ----
@@ -2495,6 +2531,19 @@ export default {
                 }
             }
             this.modalNexus = false;
+        },
+        shiftTime() {
+            const offset = Number.parseFloat(this.offsetInput);
+            if (Number.isNaN(offset)) {
+                alert("Invalid offset");
+                return;
+            }
+            this.entries = this.entries.map((e) => ({
+                ...e,
+                Time: Math.max(e.Time + offset * 1000, 0),
+            }));
+            this.entries.forEach((e) => this.logChange(e.id));
+            this.offsetInput = 0;
         },
     },
 };
