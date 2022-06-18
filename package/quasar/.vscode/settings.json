@@ -1,18 +1,12 @@
 {
-  "i18n-ally.localesPaths": [
-    "src/locales",
-  ],
+  "i18n-ally.localesPaths": ["src/locales"],
   "eslint.format.enable": true,
   "editor.formatOnPaste": false,
   "editor.formatOnType": false,
   "editor.formatOnSave": false,
-  "editor.codeActionsOnSave": [
-    "source.fixAll.eslint"
-  ],
+  "editor.codeActionsOnSave": ["source.fixAll.eslint"],
   "i18n-ally.dirStructure": "dir",
-  "i18n-ally.enabledParsers": [
-    "yaml"
-  ],
+  "i18n-ally.enabledParsers": ["yaml"],
   "i18n-ally.pathMatcher": "{locale}/ui.yml",
   "i18n-ally.keystyle": "nested"
 }
