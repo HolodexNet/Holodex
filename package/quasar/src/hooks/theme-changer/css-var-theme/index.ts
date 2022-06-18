@@ -58,7 +58,7 @@ export function useCSSVarTheme<T extends Theme>({
 
     const $style = createStyleElement(id)
     theme_store.subscribe((t) => {
-        $style.textContent = `${selector || '#app .v-theme--dark'} {
+        $style.textContent = `${selector || ':root'} {
   ${genTheme(t.theme)}
 }`
     })
