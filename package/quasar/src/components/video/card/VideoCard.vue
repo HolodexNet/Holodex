@@ -149,7 +149,7 @@
           </template>
         </div>
       </div>
-      <video-card-menu />
+      <video-card-menu :video="data" />
       <!-- Vertical dots menu -->
       <!-- <v-menu v-model="showMenu" bottom :close-on-content-click="false" nudge-top="20px">
         <template #activator="{ props }">

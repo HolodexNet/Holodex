@@ -35,7 +35,8 @@ export default defineConfig({
     AutoImport({ // AutoImports is temperamental, might add non-treeshaking.
       imports: [
         'vue',
-        'pinia'
+        'pinia',
+        'vue-router'
       ],
       dts: 'src/auto-imports.d.ts',
       eslintrc: {

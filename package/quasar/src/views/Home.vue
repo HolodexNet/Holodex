@@ -43,7 +43,7 @@
           <img src="https://api.lorem.space/image/face?hash=28212">
         </div>
       </div>
-      <div class="avatar rounded-full ring ring-error ring-offset-base-100 ring-offset-2 ml-4">
+      <div class="ml-4 rounded-full avatar ring ring-error ring-offset-base-100 ring-offset-2">
         <div class="w-24 rounded-full">
           <img src="https://api.lorem.space/image/face?hash=40361">
         </div>
@@ -89,4 +89,15 @@
       </v-menu>
     </v-card-actions>
   </v-card>
+
+  <v-card width="500">
+    <ul class="p-2 overflow-y-auto menu bg-base-300 text-base-content">
+      <li><a>Sidebar Item 1</a></li>
+      <li><a>Sidebar Item 2</a></li>
+    </ul>
+  </v-card>
 </template>
+
+<style>
+
+</style>

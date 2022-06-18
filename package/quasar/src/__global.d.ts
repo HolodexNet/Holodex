@@ -2,6 +2,13 @@
 
 export { };
 
+
+declare module '@vue/runtime-core' {
+    interface ComponentCustomProperties {
+      icons: typeof import('./utils/icons');
+    }
+  }
+
 declare global {
     interface Window {
         Twitch: any; // Twitch object for TLScriptEditor

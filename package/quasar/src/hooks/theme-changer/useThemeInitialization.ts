@@ -19,6 +19,8 @@ export function useThemeInitialization() {
     };
 
     if (window.currentTheme !== theme.name) {
+
+        console.log("Theme Init")
         theme.init();
         window.currentTheme = theme.name;
     }

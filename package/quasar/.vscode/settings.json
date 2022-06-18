@@ -13,5 +13,6 @@
   "i18n-ally.enabledParsers": [
     "yaml"
   ],
-  "i18n-ally.pathMatcher": "{locale}/ui.yml"
+  "i18n-ally.pathMatcher": "{locale}/ui.yml",
+  "i18n-ally.keystyle": "nested"
 }
