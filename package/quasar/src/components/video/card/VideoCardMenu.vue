@@ -244,8 +244,4 @@ export default defineComponent({
   top: 5px;
   z-index: 1;
 }
-
-.menu li a {
-  @apply p-2;
-}
 </style>

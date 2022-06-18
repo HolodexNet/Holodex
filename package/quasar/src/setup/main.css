@@ -9,3 +9,7 @@ e.g. just doing .online will NOT work
 .avatar.online::before {
   @apply bg-red-500;
 }
+
+.menu li a {
+  @apply p-2;
+}

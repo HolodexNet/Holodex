@@ -144,16 +144,7 @@
 </template>
 
 <script lang="ts">
-// import SearchBar from "@/components/common/SearchBar.vue";
-// import Logo from "@/components/common/Logo.vue";
-// import OrgSelector from "@/components/common/OrgSelector.vue";
-// import UserCard from "@/components/user/UserCard.vue";
-// // import hideExtensionOnScroll from "@/mixins/hideExtensionOnScroll";
-// import EditPlaylist from "@/components/playlist/EditPlaylist.vue";
-// import ResponsiveMenu from "@/components/common/ResponsiveMenu.vue";
 import { musicdexURL } from "@/utils/consts";
-// import NavDrawer from "./NavDrawer.vue";
-// import BottomNav from "./BottomNav.vue";
 import { useSiteStore } from "@/stores/site";
 import { useDisplay } from "vuetify";
 import * as icons from "@/utils/icons";
@@ -168,7 +159,6 @@ export default defineComponent({
 
     return { site, display, isMobile };
   },
-  // mixins: [hideExtensionOnScroll],
   data() {
     return {
       favoritesExpanded: false,
