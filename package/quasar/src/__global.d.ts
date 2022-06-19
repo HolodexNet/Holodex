@@ -15,6 +15,7 @@ declare global {
     YT: any; // YT object for TL Script Editor
 
     currentTheme: string;
+    google: any;
   }
 
   enum CHANNEL_TYPES {

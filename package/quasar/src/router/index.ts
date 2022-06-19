@@ -16,6 +16,11 @@ const routes = [
     name: "Kitchen Sink",
     component: () => import("@/views/KitchenSink.vue"),
   },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("@/views/Login.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),

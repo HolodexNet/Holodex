@@ -6,11 +6,13 @@ import { useI18n } from "vue-i18n";
 import App from "./App.vue";
 import { setupPinia, setupI18N, getVueQueryPluginOptions } from "./setup";
 import { useThemeStore } from "./stores/theme";
+import LoadScript from "vue-plugin-load-script";
+import VueToast from "vue-toast-notification";
 
 import "@/setup/main.css"; // tailwind configuration
 
 import "@/setup/vuetify/main.sass"; // vuetify configuration
-
+import "vue-toast-notification/dist/theme-default.css";
 import { createVuetify } from "vuetify";
 import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 // import { OhVueIcon } from "oh-vue-icons";
@@ -40,6 +42,9 @@ export const vuetify = createVuetify({
 });
 app.use(vuetify);
 
+// misc
+app.use(LoadScript);
+app.use(VueToast);
 app.config.globalProperties.icons = icons;
 // app.component("VIcon", OhVueIcon); // overwrite v-icon?
 

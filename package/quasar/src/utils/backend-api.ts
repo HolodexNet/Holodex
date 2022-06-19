@@ -125,30 +125,6 @@ export default {
     // 301 Cache bust
     // fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
   },
-  changeUsername(
-    jwt: any,
-    newUsername: any
-  ): Promise<false | AxiosResponse<any>> {
-    return axiosInstance
-      .post(
-        "/user",
-        { name: newUsername },
-        {
-          headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-        }
-      )
-      .catch(() => false);
-  },
-  resetAPIKey(jwt: any) {
-    return (
-      axiosInstance
-        .get("/user/createKey", {
-          headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
-        })
-        // eslint-disable-next-line no-alert
-        .catch(() => alert("something went wrong creating your key..."))
-    );
-  },
   favorites(jwt: any) {
     return axiosInstance.get("/users/favorites", {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},

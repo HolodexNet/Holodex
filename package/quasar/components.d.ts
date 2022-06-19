@@ -9,9 +9,10 @@ declare module "@vue/runtime-core" {
     AppFrame: typeof import("./src/components/AppFrame.vue")["default"];
     Button: typeof import("./src/stories/Button.vue")["default"];
     ChannelImg: typeof import("./src/components/channel/common/ChannelImg.vue")["default"];
-    HLogo: typeof import("./src/components/frame/HLogo.vue")["default"];
+    GoogleSignInButton: typeof import("./src/components/login/GoogleSignInButton.vue")["default"];
     Home: typeof import("./src/views/Home.vue")["default"];
     KitchenSink: typeof import("./src/views/KitchenSink.vue")["default"];
+    Login: typeof import("./src/views/Login.vue")["default"];
     Logo: typeof import("./src/components/frame/Logo.vue")["default"];
     MainNav: typeof import("./src/components/nav/MainNav.vue")["default"];
     NavDrawer: typeof import("./src/components/nav/NavDrawer.vue")["default"];

@@ -10,6 +10,9 @@ import yaml from "@rollup/plugin-yaml";
 import visualizer from "rollup-plugin-visualizer";
 import vuetify from "vite-plugin-vuetify";
 
+const API_BASE_URL = process.env.API_BASE_URL || "https://staging.holodex.net";
+const REWRITE_API_ROUTES = false;
+
 // https://vitejs.dev/config/
 export default defineConfig({
   define: {
@@ -50,5 +53,28 @@ export default defineConfig({
   ],
   optimizeDeps: {
     exclude: ["oh-vue-icons/icons"],
+  },
+  server: {
+    port: 8080,
+    proxy: {
+      "/api": {
+        target: API_BASE_URL,
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        rewrite: (url) =>
+          REWRITE_API_ROUTES ? url.replace(/^\/api/, "") : url,
+      },
+      "^/(stats|orgs).json$": {
+        target: API_BASE_URL,
+        changeOrigin: true,
+        secure: false,
+      },
+      "/statics": {
+        target: API_BASE_URL,
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
 });

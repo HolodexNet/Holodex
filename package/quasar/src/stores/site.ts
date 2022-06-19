@@ -1,24 +1,10 @@
 // responsible for site-level globals:
 
+import { User } from "@/hooks/auth/user";
+
 interface Org {
   name: string;
   short?: string;
-}
-
-interface User {
-  id: string;
-  role: string;
-  username: string;
-  discord_id?: string;
-  api_key?: string;
-  yt_channel_key?: string;
-  twitter_id?: string;
-  google_id?: string;
-}
-
-interface UserData {
-  user: User;
-  jwt: string;
 }
 /**
  * Persistent (and X-Tab Shared) Long Term Storage for Site-wide State
@@ -29,7 +15,8 @@ interface SiteStatePersistentShared {
   currentOrg: Org;
   starredOrgs: Org[];
 
-  userdata?: UserData;
+  user?: User;
+  jwtToken?: string;
 
   guide: {
     firstVisit: boolean;
@@ -53,7 +40,10 @@ interface SiteStatePersistentShared {
     gridDensity: 0 | 1 | 2;
   };
 }
-
+const USER_ROLES = {
+  ADMIN: "admin",
+  EDITOR: "editor",
+};
 interface SiteStateTransient {
   // Socket counter, if it is zero, then close the shared WebSocket
   activeSockets: number;
@@ -66,6 +56,8 @@ export const useSiteStore = defineStore("site", {
   state: (): SiteStatePersistentShared => ({
     //TODO impl
     key: 0,
+    user: undefined,
+    jwtToken: undefined,
     currentOrg: { name: "Hololive", short: "Holo" },
     starredOrgs: [
       { name: "All Vtubers", short: "Vtuber" },
@@ -95,7 +87,7 @@ export const useSiteStore = defineStore("site", {
   }),
   getters: {
     isEditorOrUp: (state) => {
-      const role = state.userdata?.user?.role;
+      const role = state?.user?.role;
       return role === USER_ROLES.EDITOR || role === USER_ROLES.ADMIN;
     },
   },

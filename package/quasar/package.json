@@ -19,13 +19,16 @@
     "dayjs": "^1.11.3",
     "i18next-browser-languagedetector": "^6.1.4",
     "js-cookie": "^3.0.1",
+    "oauth-open": "^1.0.4",
     "pinia": "^2.0.14",
     "pinia-plugin-persistedstate-2": "^1.0.0",
     "pinia-shared-state": "^0.2.5",
     "vue": "^3.2.37",
     "vue-i18n": "^9.1.10",
+    "vue-plugin-load-script": "^2.1.1",
     "vue-query": "^1.25.0",
     "vue-router": "^4.0.16",
+    "vue-toast-notification": "^3.0.4",
     "vuetify": "npm:@vuetify/nightly@3.0.0-next-20220618.0"
   },
   "devDependencies": {
