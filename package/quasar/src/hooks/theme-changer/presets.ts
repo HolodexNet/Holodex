@@ -1,4 +1,3 @@
-import { ThemeDefinition } from "vuetify";
 import { Theme } from "./helpers";
 
 export const presets: [Theme] = [
@@ -6,7 +5,7 @@ export const presets: [Theme] = [
     name: "aqua",
     dark: true,
     colors: {
-      "base-100": "#1f1f1f",
+      "base-100": "#222222",
       primary: "#3b88d5",
       neutral: "#758799",
       secondary: "#F06292",
