@@ -720,7 +720,7 @@ export default {
             defaultRefreshRate: 1000 / 30,
             timerTime: 0,
             refreshRate: 33,
-            trackerPause: true,
+            // trackerPause: true, --> originally, to keep VOD twitch timer and script editor timer synced, but twitch VOD is not supported atm.
             // ---- TIMELINE ----
             timelineDur: 3600,
             secToPx: 100,
@@ -1802,11 +1802,11 @@ export default {
             }
 
             this.player.addEventListener(window.Twitch.Player.PAUSE, () => {
-                this.trackerPause = true;
+                // this.trackerPause = true;
             });
 
             this.player.addEventListener(window.Twitch.Player.PLAY, () => {
-                this.trackerPause = false;
+                // this.trackerPause = false;
             });
 
             this.player.addEventListener(window.Twitch.Player.SEEK, (e: any) => {
