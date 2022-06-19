@@ -37,6 +37,7 @@ module.exports = {
       },
     },
   },
+  ignorePatterns: ["components.d.ts", "./src/auto-imports.d.ts"],
 
   rules: {
     "brace-style": [2, "1tbs", { allowSingleLine: true }],
