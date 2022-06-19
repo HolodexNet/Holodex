@@ -20,6 +20,7 @@ declare module "@vue/runtime-core" {
     Page: typeof import("./src/stories/Page.vue")["default"];
     Profile: typeof import("./src/views/Profile.vue")["default"];
     TodoList: typeof import("./src/components/TodoList.vue")["default"];
+    UserCard: typeof import("./src/components/login/UserCard.vue")["default"];
     VideoCard: typeof import("./src/components/video/card/VideoCard.vue")["default"];
     VideoCardLiveDuration: typeof import("./src/components/video/card/VideoCardLiveDuration.vue")["default"];
     VideoCardMenu: typeof import("./src/components/video/card/VideoCardMenu.vue")["default"];

@@ -13,8 +13,8 @@ export function useClientLogin() {
       message: "Error while logging in",
       type: "error",
     });
-    site.user = undefined;
-    site.jwtToken = undefined;
+    site.user = null;
+    site.jwtToken = null;
   };
 
   async function onGoogleSuccess({ credential }: { credential: string }) {

@@ -1,7 +1,7 @@
 <template>
   <v-container fluid style="height: 100%">
     <v-card class="m-auto mt-6" elevation="12" max-width="500px">
-      <!-- <user-card v-if="site.user" /> -->
+      <user-card v-if="site.user" />
       <v-divider />
       <v-card-subtitle class="justify-center">
         {{
@@ -93,12 +93,12 @@
           <br />
           <span class="text-subtitle-2 mb-1 inline-block">API Key</span>
           <v-text-field
+            v-model="site.user.api_key"
             readonly
             rounded
             variant="outlined"
             density="comfortable"
             hide-details="auto"
-            :value="site.user.api_key"
             placeholder="None on file"
             :append-icon="icons.mdiClipboardPlusOutline"
             @click:append="copyToClipboard(site.user?.api_key || '')"
@@ -146,6 +146,12 @@ const { onDiscordSuccess, onGoogleSuccess, onTwitterSuccess } =
 const copyToClipboard = useClipboardWithToast();
 const editingUsername = ref(false);
 const editUsernameInput = ref(site.user?.username);
+watch(
+  () => site.user,
+  () => {
+    editUsernameInput.value = site.user?.username;
+  }
+);
 const { t } = useI18n();
 
 onMounted(async () => {

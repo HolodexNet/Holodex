@@ -15,8 +15,8 @@ interface SiteStatePersistentShared {
   currentOrg: Org;
   starredOrgs: Org[];
 
-  user?: User;
-  jwtToken?: string;
+  user: User | null;
+  jwtToken: string | null;
 
   guide: {
     firstVisit: boolean;
@@ -56,8 +56,8 @@ export const useSiteStore = defineStore("site", {
   state: (): SiteStatePersistentShared => ({
     //TODO impl
     key: 0,
-    user: undefined,
-    jwtToken: undefined,
+    user: null,
+    jwtToken: null,
     currentOrg: { name: "Hololive", short: "Holo" },
     starredOrgs: [
       { name: "All Vtubers", short: "Vtuber" },

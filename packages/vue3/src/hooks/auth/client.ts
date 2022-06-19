@@ -29,8 +29,8 @@ export function useClient() {
   };
 
   const logout = () => {
-    site.jwtToken = undefined;
-    site.user = undefined;
+    site.jwtToken = null;
+    site.user = null;
   };
 
   const checkAndRefreshUser = async () => {
