@@ -91,7 +91,12 @@ export const useSiteStore = defineStore("site", {
       return role === USER_ROLES.EDITOR || role === USER_ROLES.ADMIN;
     },
   },
-  actions: {},
+  actions: {
+    logout() {
+      this.user = null;
+      this.jwtToken = null;
+    },
+  },
   share: {
     enable: true,
     initialize: true, // when initializing, fetch from another tab.
