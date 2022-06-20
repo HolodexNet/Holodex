@@ -1,14 +1,23 @@
 <template>
-  <v-container fluid style="height: 100%">
-    <v-card class="m-auto mt-6" elevation="12" max-width="500px">
-      <user-card v-if="site.user" />
-      <v-divider />
-      <v-card-subtitle class="justify-center">
-        {{
-          site.user ? $t("views.login.linkAcc") : $t("component.mainNav.login")
-        }}
-      </v-card-subtitle>
-      <v-card-text class="flex flex-col items-center">
+  <!-- <v-container fluid style="height: 100%"> -->
+  <div class="card m-auto mt-6 bg-base-300 shadow-lg" style="max-width: 500px">
+    <user-card v-if="site.user" class="p-2" />
+    <div class="card-body pt-0">
+      <div class="flex flex-col items-center">
+        <div
+          v-if="
+            !site.user?.google_id ||
+            !site.user?.twitter_id ||
+            !site.user?.twitter_id
+          "
+          class="flex justify-center py-2"
+        >
+          {{
+            site.user
+              ? $t("views.login.linkAcc")
+              : $t("component.mainNav.login")
+          }}
+        </div>
         <div class="flex flex-col" style="max-width: 400px; width: 100%">
           <google-sign-in-button
             v-if="!site.user || !site.user.google_id"
@@ -40,92 +49,90 @@
             <span>{{ $t("views.login.with.2") }}</span>
           </v-btn>
         </div>
-      </v-card-text>
-      <v-divider />
+      </div>
+      <!-- <v-divider /> -->
 
       <template v-if="site.user">
-        <v-card-text>
-          <span class="text-subtitle-2 mb-1 inline-block">{{
-            $t("views.login.username")
-          }}</span>
-          <div class="flex items-center">
-            <v-text-field
-              v-model="editUsernameInput"
-              :disabled="!editingUsername"
-              :filled="!editingUsername"
-              rounded
-              variant="outlined"
-              density="comfortable"
-              hide-details="auto"
-            />
-            <v-btn
-              :color="editingUsername ? 'success' : 'primary'"
-              style="margin-left: 10px"
-              @click="editUsername"
-            >
-              {{
-                editingUsername
-                  ? $t("views.login.usernameBtn.2")
-                  : $t("views.login.usernameBtn.0")
-              }}
-            </v-btn>
-          </div>
-        </v-card-text>
-        <v-divider />
-
-        <v-card-text>
-          <span class="text-subtitle-2 mb-1 inline-block">{{
-            $t("views.login.ownedYtChannel")
-          }}</span>
+        <!-- <div class="card-body"> -->
+        <span class="text-subtitle-2 mb-1 inline-block">{{
+          $t("views.login.username")
+        }}</span>
+        <div class="flex items-center">
           <v-text-field
-            readonly
+            v-model="editUsernameInput"
+            :disabled="!editingUsername"
+            :filled="!editingUsername"
             rounded
             variant="outlined"
             density="comfortable"
             hide-details="auto"
-            :value="site.user.yt_channel_key"
-            placeholder="None on file"
           />
-          <span class="text-caption">
-            {{ $t("views.login.futureYtcOwnerMessage") }}
-          </span>
-          <br />
-          <br />
-          <span class="text-subtitle-2 mb-1 inline-block">API Key</span>
-          <v-text-field
-            v-model="site.user.api_key"
-            readonly
-            rounded
-            variant="outlined"
-            density="comfortable"
-            hide-details="auto"
-            placeholder="None on file"
-            :append-icon="icons.mdiClipboardPlusOutline"
-            @click:append="copyToClipboard(site.user?.api_key || '')"
-          />
-          <br />
-          <v-btn small block color="warning" @click="resetKey">
-            {{ $t("views.login.apikeyNew") }}
-          </v-btn>
-          <span class="text-caption">
-            {{ $t("views.login.apikeyMsg") }}
-          </span>
           <v-btn
-            small
-            block
-            color="info"
-            href="https://holodex.stoplight.io/"
-            target="_blank"
+            :color="editingUsername ? 'success' : 'primary'"
+            style="margin-left: 10px"
+            @click="editUsername"
           >
-            API Documentation
-            <v-icon small right>
-              {{ icons.mdiOpenInNew }}
-            </v-icon>
+            {{
+              editingUsername
+                ? $t("views.login.usernameBtn.2")
+                : $t("views.login.usernameBtn.0")
+            }}
           </v-btn>
-        </v-card-text>
+        </div>
+        <!-- </div> -->
+
+        <!-- <div class="card-body"> -->
+        <!-- <v-divider /> -->
+        <span class="text-subtitle-2 mb-1 inline-block">{{
+          $t("views.login.ownedYtChannel")
+        }}</span>
+        <v-text-field
+          readonly
+          rounded
+          variant="outlined"
+          density="comfortable"
+          hide-details="auto"
+          :value="site.user.yt_channel_key"
+          placeholder="None on file"
+        />
+        <span class="text-caption">
+          {{ $t("views.login.futureYtcOwnerMessage") }}
+        </span>
+        <span class="text-subtitle-2 mb-1 inline-block">API Key</span>
+        <v-text-field
+          v-model="site.user.api_key"
+          readonly
+          rounded
+          variant="outlined"
+          density="comfortable"
+          hide-details="auto"
+          placeholder="None on file"
+          :append-inner-icon="icons.mdiClipboardPlusOutline"
+          @click:append-inner="copyToClipboard(site.user?.api_key || '')"
+        />
+        <v-btn small block color="warning" @click="resetKey">
+          {{ $t("views.login.apikeyNew") }}
+        </v-btn>
+        <span class="text-caption">
+          {{ $t("views.login.apikeyMsg") }}
+        </span>
+        <v-btn
+          small
+          block
+          color="info"
+          href="https://holodex.stoplight.io/"
+          target="_blank"
+        >
+          API Documentation
+          <v-icon small right>
+            {{ icons.mdiOpenInNew }}
+          </v-icon>
+        </v-btn>
+        <!-- </div> -->
       </template>
-    </v-card>
-  </v-container>
+    </div>
+  </div>
+  <!-- </v-container> -->
 </template>
 
 <script lang="ts" setup>

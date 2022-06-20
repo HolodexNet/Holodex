@@ -15,81 +15,83 @@
 *
 *
   -->
-  <v-sheet>
-    <div v-if="user" class="flex flex-row py-4">
-      <div class="flex justify-center items-center p-2 pr-4">
-        <img
-          class="w-10 h-10"
-          :src="`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`"
-        />
+  <div class="card bg-base-300" style="min-width: 200px">
+    <div class="card-body p-2 pt-4">
+      <div v-if="user" class="flex flex-row">
+        <div class="flex justify-center items-center p-2 pr-4">
+          <img
+            class="w-10 h-10"
+            :src="`https://avatars.dicebear.com/api/jdenticon/${user.id}.svg`"
+          />
+        </div>
+        <div class="flex flex-col">
+          <v-list-item-title>{{ user.username }}</v-list-item-title>
+          <v-list-item-subtitle>
+            <span v-if="user.role !== 'user'" class="capitalize">
+              {{ user.role }}
+            </span>
+            &nbsp;
+            <v-icon
+              size="small"
+              :color="user.discord_id ? 'green lighten-2' : 'grey'"
+            >
+              {{ icons.mdiDiscord }}
+            </v-icon>
+            &nbsp;
+            <v-icon
+              size="small"
+              :color="user.google_id ? 'green lighten-2' : 'grey'"
+            >
+              {{ icons.mdiGoogle }}
+            </v-icon>
+            &nbsp;
+            <v-icon
+              size="small"
+              :color="user.twitter_id ? 'green lighten-2' : 'grey'"
+            >
+              {{ icons.mdiTwitter }}
+            </v-icon>
+            &nbsp;
+          </v-list-item-subtitle>
+          <v-list-item-content class="primary--text">
+            <v-icon size="x-small">
+              {{ icons.mdiStarFourPointsOutline }}
+            </v-icon>
+            {{ user.contribution_count }} {{ $t("component.mainNav.points") }}
+          </v-list-item-content>
+        </div>
       </div>
-      <div class="flex flex-col">
-        <v-list-item-title>{{ user.username }}</v-list-item-title>
-        <v-list-item-subtitle>
-          <span v-if="user.role !== 'user'" class="capitalize">
-            {{ user.role }}
-          </span>
-          &nbsp;
-          <v-icon
-            size="small"
-            :color="user.discord_id ? 'green lighten-2' : 'grey'"
-          >
-            {{ icons.mdiDiscord }}
-          </v-icon>
-          &nbsp;
-          <v-icon
-            size="small"
-            :color="user.google_id ? 'green lighten-2' : 'grey'"
-          >
-            {{ icons.mdiGoogle }}
-          </v-icon>
-          &nbsp;
-          <v-icon
-            size="small"
-            :color="user.twitter_id ? 'green lighten-2' : 'grey'"
-          >
-            {{ icons.mdiTwitter }}
-          </v-icon>
-          &nbsp;
-        </v-list-item-subtitle>
-        <v-list-item-content class="primary--text">
-          <v-icon size="x-small">
-            {{ icons.mdiStarFourPointsOutline }}
-          </v-icon>
-          {{ user.contribution_count }} {{ $t("component.mainNav.points") }}
-        </v-list-item-content>
-      </div>
+
+      <ul class="gap-1 p-1 menu">
+        <li v-if="!user">
+          <router-link to="/login">
+            <v-icon :icon="icons.mdiLoginVariant"></v-icon>
+            {{ $t("component.mainNav.login") }}
+          </router-link>
+        </li>
+
+        <v-divider v-if="user && !inNavDrawer" />
+        <li v-if="user && !inNavDrawer">
+          <router-link to="/login">
+            <v-icon :icon="icons.mdiAccountCircleOutline"></v-icon>
+            {{ $t("component.mainNav.accountSettings") }}
+          </router-link>
+        </li>
+        <li v-if="!noSetting">
+          <router-link to="/settings">
+            <v-icon :icon="icons.mdiCog"></v-icon>
+            {{ $t("component.mainNav.settings") }}
+          </router-link>
+        </li>
+        <li v-if="user && !inNavDrawer">
+          <a @click.prevent="logout">
+            <v-icon :icon="icons.mdiLogoutVariant"></v-icon>
+            {{ $t("component.mainNav.logout") }}
+          </a>
+        </li>
+      </ul>
     </div>
-
-    <ul class="gap-1 p-2 menu">
-      <li v-if="!user">
-        <router-link to="/login">
-          <v-icon :icon="icons.mdiLoginVariant"></v-icon>
-          {{ $t("component.mainNav.login") }}
-        </router-link>
-      </li>
-
-      <v-divider v-if="user && !inNavDrawer" />
-      <li v-if="user && !inNavDrawer">
-        <router-link to="/login">
-          <v-icon :icon="icons.mdiAccountCircleOutline"></v-icon>
-          {{ $t("component.mainNav.accountSettings") }}
-        </router-link>
-      </li>
-      <li v-if="!noSetting">
-        <router-link to="/settings">
-          <v-icon :icon="icons.mdiCog"></v-icon>
-          {{ $t("component.mainNav.settings") }}
-        </router-link>
-      </li>
-      <li v-if="user && !inNavDrawer">
-        <a @click.prevent="logout">
-          <v-icon :icon="icons.mdiLogoutVariant"></v-icon>
-          {{ $t("component.mainNav.logout") }}
-        </a>
-      </li>
-    </ul>
-  </v-sheet>
+  </div>
 </template>
 
 <script lang="ts" setup>

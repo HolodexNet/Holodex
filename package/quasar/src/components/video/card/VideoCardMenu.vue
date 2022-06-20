@@ -12,18 +12,13 @@
         v-bind="props"
         @click.stop.prevent
       >
-        <v-icon v-if="!showMenu">
+        <v-icon>
           {{ icons.mdiDotsVertical }}
-        </v-icon>
-        <v-icon v-else>
-          {{ icons.mdiChevronUp }}
         </v-icon>
       </label>
     </template>
     <v-sheet>
-      <ul
-        class="p-2 overflow-y-auto menu bg-base-300 text-base-content menu-compact"
-      >
+      <ul class="p-2 overflow-y-auto menu bg-base-300 text-base-content">
         <!-- Real Videos -->
         <template v-if="video.type !== 'placeholder'">
           <li>
@@ -87,14 +82,14 @@
               <!-- <video-quick-playlist :key="video.id+Date.now()" :video-id="video.id" :video="video" /> -->
             </v-menu>
           </li>
-          <li>
+          <!-- <li>
             <a>
               <v-icon left>
                 {{ icons.mdiClipboardPlusOutline }}
               </v-icon>
               {{ $t("component.videoCard.copyLink") }}
             </a>
-          </li>
+          </li> -->
         </template>
         <template v-else>
           <v-list-item

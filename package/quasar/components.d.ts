@@ -10,6 +10,7 @@ declare module "@vue/runtime-core" {
     Button: typeof import("./src/stories/Button.vue")["default"];
     ChannelImg: typeof import("./src/components/channel/common/ChannelImg.vue")["default"];
     GoogleSignInButton: typeof import("./src/components/login/GoogleSignInButton.vue")["default"];
+    HMenu: typeof import("./src/components/core/HMenu.vue")["default"];
     Home: typeof import("./src/views/Home.vue")["default"];
     KitchenSink: typeof import("./src/views/KitchenSink.vue")["default"];
     Login: typeof import("./src/views/Login.vue")["default"];
