@@ -573,7 +573,6 @@
 </template>
 
 <script lang="ts">
-import LiveTranslations from "@/components/chat/LiveTranslations.vue";
 import { TL_LANGS } from "@/utils/consts";
 import {
   mdiPlusCircle,
@@ -597,14 +596,14 @@ export default defineComponent({
       },
     };
   },
-  components: {
-    LiveTranslations,
-  },
+  components: {},
   setup() {
     const site = useSiteStore();
 
-    if (!site.user || !site.jwtToken)
-      throw new Error("Can't open this page without User Login");
+    const router = useRouter();
+    if (!site.user || !site.jwtToken) {
+      router.push("/login");
+    }
 
     return { user: site.user, jwt: site.jwtToken, site };
   },

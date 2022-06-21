@@ -21,6 +21,16 @@ const routes = [
     name: "Login",
     component: () => import("@/views/Login.vue"),
   },
+  {
+    path: "/tlclient",
+    name: "Translation Client",
+    component: () => import("@/views/TranslationClient.vue"),
+  },
+  {
+    path: "/tlscripter",
+    name: "Translation Scripter",
+    component: () => import("@/views/TranslationScripter.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),
