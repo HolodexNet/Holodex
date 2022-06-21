@@ -32,7 +32,7 @@
     style="min-width: 0px"
   >
     <v-icon>
-      <!-- {{ icons.mdiAccountCircleOutline }} -->
+      {{ icons.mdiAccountCircleOutline }}
     </v-icon>
   </v-avatar>
 </template>

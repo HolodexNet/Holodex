@@ -14,6 +14,12 @@ export const VIDEO_TYPES = Object.freeze({
   STREAM: "stream",
 });
 
+export const PLACEHOLDER_TYPES = {
+  YT_STREAM: "scheduled-yt-stream",
+  EXTERNAL_STREAM: "external-stream",
+  EVENT: "event",
+} as const;
+
 // export const MUSIC_PLAYER_STATE = Object.freeze({
 //     PLAYING: 1,
 //     PAUSED: 0,

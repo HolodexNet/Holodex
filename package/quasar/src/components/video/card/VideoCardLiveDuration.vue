@@ -1,15 +1,10 @@
 <template>
   <div
     v-if="(video.duration || 0) > 0 || video.start_actual"
-    :class="
-      'rounded-br-sm video-duration ' + video.status === 'live'
-        ? 'video-duration-live'
-        : ''
-    "
+    :class="{ 'video-duration-live': video.status !== 'live' }"
   >
     {{ formatted }}
   </div>
-  <div />
 </template>
 <script lang="ts">
 import { dayjs, formatDuration } from "@/utils/time";
@@ -47,18 +42,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-.video-duration {
-  background-color: rgba(0, 0, 0, 0.8);
-  margin: 2px;
-  padding: 2px 5px;
-  text-align: center;
-  font-size: 0.8125rem;
-  letter-spacing: 0.025em;
-  line-height: 0.81rem;
-
-  &.video-duration-live {
-    background-color: rgba(148, 0, 0, 0.8);
-  }
+<style lang="postcss">
+.video-overlay-tag.video-duration-live {
+  @apply bg-red-700;
 }
 </style>
