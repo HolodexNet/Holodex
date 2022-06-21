@@ -1,7 +1,7 @@
 <template>
   <!-- Video Image with Duration -->
   <div
-    class="flex flex-shrink-0 relative w-full"
+    class="flex flex-shrink-0 relative w-full video-thumbnail"
     :class="{ 'placeholder-thumbnail': isPlaceholder }"
   >
     <!-- Image Overlay -->
@@ -82,27 +82,14 @@ import { useLangStore } from "@/stores/lang";
 import { usePlaylistStore } from "@/stores/playlist";
 import { useSiteStore } from "@/stores/site";
 import { useTLStore } from "@/stores/tldex";
-import { useWatchHistoryStore } from "@/stores/watchHistory";
-import {
-  formatCount,
-  getVideoThumbnails,
-  decodeHTMLEntities,
-} from "@/utils/functions";
-import {
-  formatDuration,
-  formatDistance,
-  dayjs,
-  localizedDayjs,
-} from "@/utils/time";
+import { getVideoThumbnails } from "@/utils/functions";
 import {
   mdiBroadcast,
   mdiCalendar,
-  mdiMessageText,
   mdiTwitch,
   mdiTwitter,
   mdiYoutube,
 } from "@mdi/js";
-import { computedAsync, useNow } from "@vueuse/core";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify/lib/framework.mjs";
@@ -117,15 +104,16 @@ export default defineComponent({
       required: true,
       type: Object as PropType<Video>,
     },
+    size: {
+      type: String as PropType<keyof ReturnType<typeof getVideoThumbnails>>,
+      default: "standard",
+    },
   },
   setup(props) {
     const site = useSiteStore();
     const display = useDisplay();
-
     const isMobile = display.mobile;
-
     const langStore = useLangStore();
-
     const playlistStore = usePlaylistStore();
     const hasSaved = computed(() => playlistStore.contains(props.video.id));
     const tldexStore = useTLStore();
@@ -139,20 +127,6 @@ export default defineComponent({
       hasSaved,
       liveTlLang,
       t,
-    };
-  },
-  data() {
-    return {
-      forceJPG: true,
-      mdiTwitch,
-      mdiMessageText,
-      placeholderIconMap: {
-        event: "mdi-calendar",
-        "scheduled-yt-stream": "mdi-youtube",
-        "external-stream": "mdi-broadcast",
-      },
-      placeholderOpen: false,
-      showMenu: false,
     };
   },
   computed: {
@@ -173,18 +147,9 @@ export default defineComponent({
         return `/statics/channelImg/${this.video.channel.id}.png`;
       }
       const srcs = getVideoThumbnails(this.video.id, false);
-      //   if (this.horizontal) return srcs.medium;
-      //   if (this.colSize > 2 && this.colSize <= 8) {
-      //     return window.devicePixelRatio > 1 ? srcs.standard : srcs.medium;
-      //   }
-      return srcs.standard;
+      return srcs[this.size];
     },
     placeholderTag() {
-      // const placeholderIconMap = {
-      //   event: "mdi-calendar",
-      //   "scheduled-yt-stream": "mdi-youtube",
-      //   "external-stream": "mdi-broadcast",
-      // };
       if (this.video.placeholderType === PLACEHOLDER_TYPES.EVENT) {
         return {
           text: this.t("component.videoCard.typeEventPlaceholder"),
@@ -202,7 +167,7 @@ export default defineComponent({
         let externalIcon = mdiBroadcast;
         if (this.video.link?.includes("twitch.tv")) {
           externalIcon = mdiTwitch;
-        } else if (this.video.link?.includes("twitter")) {
+        } else if (this.video.link?.includes("twitter.com/i/spaces")) {
           externalIcon = mdiTwitter;
         }
 
@@ -235,20 +200,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.video-card .placeholder-thumbnail {
-  opacity: 0.6;
-}
-.video-card:hover .placeholder-thumbnail {
-  opacity: 1;
-}
-.video-card .hover-show {
-  visibility: hidden;
-}
-
-.video-card:hover .hover-show {
-  visibility: visible;
-}
-
 .video-overlay-tag {
   background-color: rgba(0, 0, 0, 0.8);
   margin: 2px;
@@ -267,13 +218,38 @@ export default defineComponent({
     font-size: 1rem;
     span {
       font-size: 0.8125rem;
-      display: none;
     }
   }
-  &.placeholder-tag:hover {
-    span {
-      display: inline;
-    }
+}
+
+.video-thumbnail {
+  /* Show placeholder info text on hover */
+  .placeholder-tag span {
+    display: none;
+    transform: translateX(-50px);
+  }
+  &:hover .placeholder-tag span {
+    display: inline;
+    transform: translateX(0px);
+  }
+
+  /* Generic show/hide */
+  .hover-show {
+    visibility: hidden;
+  }
+
+  &:hover .hover-show {
+    visibility: visible;
+  }
+
+  /* Thumbnail opacity for placeholder */
+  &.placeholder-thumbnail {
+    opacity: 0.6;
+  }
+
+  &:hover.placeholder-thumbnail {
+    opacity: 1;
+    transition: ease-in 0.1s;
   }
 }
 
