@@ -50,19 +50,6 @@ declare global {
     MISSING = "missing",
   }
 
-  interface VideoCore {
-    id: string;
-    channel_id?: string;
-    title: string;
-    description: string;
-    duration?: number;
-    status: VIDEO_STATUSES;
-    type: VIDEO_TYPES;
-    lang: string;
-    published_at: Date;
-    available_at: Date;
-  }
-
   enum PLACEHOLDER_TYPES {
     YT_STREAM = "scheduled-yt-stream",
     EXTERNAL_STREAM = "external-stream",
@@ -134,7 +121,7 @@ declare global {
     // usually present:
     songcount?: number;
     // usually present
-    live_tl_count?: object;
+    live_tl_count?: { [langCode: string]: number };
 
     // views: number;
     // topic_approver_id?: number;
