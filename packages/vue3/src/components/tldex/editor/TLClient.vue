@@ -2,13 +2,13 @@
   <v-container fill-height fluid style="max-height: 100vh; padding: 0px 12px">
     <div class="d-flex flex-column" style="height: 100%; width: 100%">
       <v-system-bar height="30" class="tl-topbar px-0" color="secondary">
-        <v-btn small outlined to="/">
+        <v-btn size="small" variant="outlined" to="/">
           <v-icon>{{ icons.mdiHome }}</v-icon>
           {{ $t("component.mainNav.home") }}
         </v-btn>
         <v-btn
-          small
-          outlined
+          size="small"
+          variant="outlined"
           @click="
             modalMode = 3;
             modalNexus = true;
@@ -17,24 +17,34 @@
           {{ $t("views.tlClient.menu.setting") }}
         </v-btn>
         <v-btn
-          small
-          outlined
+          size="small"
+          variant="outlined"
           :to="activeChat.length && `/scripteditor?video=${activeChat[0].text}`"
         >
           {{ $t("component.videoCard.openScriptEditor") }}
         </v-btn>
         <v-spacer />
-        <v-btn v-if="!vidPlayer" small outlined @click="loadVideo()">
+        <v-btn
+          v-if="!vidPlayer"
+          size="small"
+          variant="outlined"
+          @click="loadVideo()"
+        >
           {{ $t("views.tlClient.menu.loadVideo") }}
         </v-btn>
-        <v-btn v-if="vidPlayer" small outlined @click="unloadVideo()">
+        <v-btn
+          v-if="vidPlayer"
+          size="small"
+          variant="outlined"
+          @click="unloadVideo()"
+        >
           {{ $t("views.tlClient.menu.unloadVideo") }}
         </v-btn>
         <v-spacer />
 
         <v-btn
-          small
-          outlined
+          size="small"
+          variant="outlined"
           @click="
             modalMode = 4;
             modalNexus = true;
@@ -44,8 +54,8 @@
           {{ $t("views.tlClient.menu.loadChat") }}
         </v-btn>
         <v-btn
-          small
-          outlined
+          size="small"
+          variant="outlined"
           @click="
             modalMode = 5;
             modalNexus = true;
@@ -160,7 +170,7 @@
               : 100 - videoPanelWidth2 + '%'
           "
           :style="activeChatGridRow"
-          outlined
+          variant="outlined"
         >
           <div
             v-if="resizeActive"
@@ -176,7 +186,7 @@
             v-for="(ChatURL, index) in activeChat"
             :key="ChatURL.text"
             class="d-flex flex-column"
-            outlined
+            variant="outlined"
           >
             <p class="text-center" style="margin-top: 5px">
               {{ ChatURL.text }}
@@ -275,7 +285,7 @@
                 v-model="profile[profileIdx].Prefix"
                 :label="$t('views.tlClient.tlControl.prefix')"
                 dense
-                outlined
+                variant="outlined"
                 hide-details
                 class="mr-2"
               />
@@ -283,7 +293,7 @@
                 v-model="profile[profileIdx].Suffix"
                 :label="$t('views.tlClient.tlControl.suffix')"
                 dense
-                outlined
+                variant="outlined"
                 hide-details
                 class="mr-2"
               />
@@ -321,7 +331,7 @@
                 v-model="localPrefix"
                 :label="$t('views.tlClient.tlControl.localPrefix')"
                 dense
-                outlined
+                variant="outlined"
                 hide-details
               />
             </v-card-text>
@@ -472,8 +482,8 @@
           </v-card-subtitle>
           <v-select
             v-model="TLLang"
-            :items="TL_LANGS"
-            :item-text="(item) => item.text + ' (' + item.value + ')'"
+            :items="[...TL_LANGS]"
+            item-text="text"
             item-value="value"
             :label="$t('views.watch.uploadPanel.tlLang')"
             return-object
@@ -644,7 +654,7 @@ export default defineComponent({
       modalMode: 3,
       addProfileNameString: "",
       // ------ SETTING ------
-      TLLang: TL_LANGS[0],
+      TLLang: { ...TL_LANGS[0] },
       mainID: "",
       mainStreamLink: "",
       collabLinks: [""],

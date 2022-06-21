@@ -213,6 +213,7 @@ export function getVideoIDFromUrl(url: string) {
     if (match && match[5] && match[5].length === 11) {
       return {
         id: match[5],
+        type: "yt",
         custom: true,
         channel: {
           name: match[5],
