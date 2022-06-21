@@ -19,6 +19,7 @@ declare module '@vue/runtime-core' {
     OrgSelector: typeof import('./src/components/frame/OrgSelector.vue')['default']
     Page: typeof import('./src/stories/Page.vue')['default']
     Profile: typeof import('./src/views/Profile.vue')['default']
+    TLClient: typeof import('./src/components/tldex/editor/TLClient.vue')['default']
     TLScriptEditor: typeof import('./src/components/tldex/editor/TLScriptEditor.vue')['default']
     TodoList: typeof import('./src/components/TodoList.vue')['default']
     UserCard: typeof import('./src/components/login/UserCard.vue')['default']
@@ -26,16 +27,6 @@ declare module '@vue/runtime-core' {
     VideoCardLiveDuration: typeof import('./src/components/video/card/VideoCardLiveDuration.vue')['default']
     VideoCardMenu: typeof import('./src/components/video/card/VideoCardMenu.vue')['default']
     VideoCardStatus: typeof import('./src/components/video/card/VideoCardStatus.vue')['default']
-    WatchComments: typeof import('./src/components/watch/WatchComments.vue')['default']
-    WatchFrame: typeof import('./src/components/watch/WatchFrame.vue')['default']
-    WatchHighlights: typeof import('./src/components/watch/WatchHighlights.vue')['default']
-    WatchInfo: typeof import('./src/components/watch/WatchInfo.vue')['default']
-    WatchMentions: typeof import('./src/components/watch/WatchMentions.vue')['default']
-    WatchPlaylist: typeof import('./src/components/watch/WatchPlaylist.vue')['default']
-    WatchQuickEditor: typeof import('./src/components/watch/WatchQuickEditor.vue')['default']
-    WatchSideBar: typeof import('./src/components/watch/WatchSideBar.vue')['default']
-    WatchSubtitleOverlay: typeof import('./src/components/watch/WatchSubtitleOverlay.vue')['default']
-    WatchToolbar: typeof import('./src/components/watch/WatchToolbar.vue')['default']
   }
 }
 

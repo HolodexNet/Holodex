@@ -415,8 +415,8 @@
                 {{ icons.mdiClose }}
               </v-icon>
               <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                  <v-icon class="float-right" v-bind="attrs" v-on="on">
+                <template #activator="{ props }">
+                  <v-icon class="float-right" v-bind="props">
                     {{ mdiKeyboard }}
                   </v-icon>
                 </template>
