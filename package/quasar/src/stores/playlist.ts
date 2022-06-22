@@ -93,8 +93,8 @@ export const usePlaylistStore = defineStore("playlist", {
 
     async saveActivePlaylist() {
       const site = useSiteStore();
-      const currentUserId = site.userdata?.user.id;
-      const currentUserJWT = site.userdata?.jwt;
+      const currentUserId = site.user?.id;
+      const currentUserJWT = site.jwtToken;
 
       if (!currentUserJWT) {
         // you cannot save.
@@ -152,8 +152,8 @@ export const usePlaylistStore = defineStore("playlist", {
     },
     async deleteActivePlaylist() {
       const site = useSiteStore();
-      const currentUserId = site.userdata?.user.id;
-      const currentUserJWT = site.userdata?.jwt;
+      const currentUserId = site.user?.id;
+      const currentUserJWT = site.jwtToken;
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       if (

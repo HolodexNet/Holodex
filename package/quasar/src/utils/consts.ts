@@ -12,6 +12,7 @@ export const CHANNEL_TYPES = Object.freeze({
 export const VIDEO_TYPES = Object.freeze({
   CLIP: "clip",
   STREAM: "stream",
+  PLACEHOLDER: "placeholder",
 });
 
 export const PLACEHOLDER_TYPES = {
