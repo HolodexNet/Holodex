@@ -1,11 +1,12 @@
 <template>
   <v-row>
     <v-col :cols="4">
-      <kbd>Video Card</kbd>
+      <kbd>VideoCard</kbd>
       <div><video-card :video="video" include-channel include-avatar /></div>
       <video-card :video="placeholderVideo" />
     </v-col>
     <v-col :cols="4">
+      <kbd>core/H-List</kbd>
       <h-list style="min-height: 88px">
         <template #avatar>
           <channel-img :channel="video.channel" :size="40" rounded />
@@ -17,7 +18,10 @@
           <video-card-menu :video="video" />
         </template>
       </h-list>
+      <kbd>VideoCardText</kbd>
       <video-card-text :video="video" />
+      <kbd>VideoCardThumbnail</kbd>
+      <video-thumbnail :video="video" />
     </v-col>
   </v-row>
 </template>
