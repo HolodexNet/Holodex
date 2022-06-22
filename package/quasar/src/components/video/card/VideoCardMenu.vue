@@ -8,11 +8,11 @@
     <template #activator="{ props }">
       <label
         tabindex="0"
-        class="m-1 border-none btn-outline btn-ghost btn btn-circle btn-sm"
+        :class="`my-2 border-none btn-outline btn-ghost btn btn-circle btn-sm ${btnClass}`"
         v-bind="props"
         @click.stop.prevent
       >
-        <v-icon>
+        <v-icon size="large">
           {{ icons.mdiDotsVertical }}
         </v-icon>
       </label>
@@ -150,6 +150,10 @@ export default defineComponent({
     video: {
       type: Object as PropType<Video>,
       required: true,
+    },
+    btnClass: {
+      type: String,
+      default: "",
     },
   },
   setup(props) {

@@ -3,15 +3,29 @@
     <v-col :cols="4">
       <kbd>Video Card</kbd>
       <div><video-card :video="video" include-channel include-avatar /></div>
-      <div class="video-card">
-        <video-thumbnail :video="placeholderVideo" />
-      </div>
+      <video-card :video="placeholderVideo" />
+    </v-col>
+    <v-col :cols="4">
+      <h-list style="min-height: 88px">
+        <template #avatar>
+          <channel-img :channel="video.channel" :size="40" rounded />
+        </template>
+        <div class="line-clamp-2">{{ placeholderVideo.title }}</div>
+        <div class="text-sm">{{ video.channel.name }}</div>
+        <div class="text-sm">{{ video.available_at }}</div>
+        <template #action>
+          <video-card-menu :video="video" />
+        </template>
+      </h-list>
+      <video-card-text :video="video" />
     </v-col>
   </v-row>
 </template>
 
 <script setup>
 import VideoThumbnail from "@/components/video/card/VideoThumbnail.vue";
+import HList from "@/components/core/HList.vue";
+import VideoCardMenu from "@/components/video/card/VideoCardMenu.vue";
 const video = {
   id: "rnVfwYuK8sw",
   title: "【ただいま!】復活の歌枠!!!おやすみありがとう!【大神ミオ/ホロライブ】",

@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     Button: typeof import('./src/stories/Button.vue')['default']
     ChannelImg: typeof import('./src/components/channel/common/ChannelImg.vue')['default']
     GoogleSignInButton: typeof import('./src/components/login/GoogleSignInButton.vue')['default']
+    HList: typeof import('./src/components/core/HList.vue')['default']
     Home: typeof import('./src/views/Home.vue')['default']
     KitchenSink: typeof import('./src/views/KitchenSink.vue')['default']
     Login: typeof import('./src/views/Login.vue')['default']
@@ -30,6 +31,7 @@ declare module '@vue/runtime-core' {
     VideoCardLiveDuration: typeof import('./src/components/video/card/VideoCardLiveDuration.vue')['default']
     VideoCardMenu: typeof import('./src/components/video/card/VideoCardMenu.vue')['default']
     VideoCardStatus: typeof import('./src/components/video/card/VideoCardStatus.vue')['default']
+    VideoCardText: typeof import('./src/components/video/card/VideoCardText.vue')['default']
     VideoThumbnail: typeof import('./src/components/video/card/VideoThumbnail.vue')['default']
   }
 }

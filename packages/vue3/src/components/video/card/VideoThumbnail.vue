@@ -17,7 +17,7 @@
       class="flex flex-col justify-between w-full h-full absolute"
       style="z-index: 1"
     >
-      <div class="flex items-start">
+      <div class="flex items-start justify-between">
         <!-- Topic Id display -->
         <div
           v-if="video.topic_id"
@@ -93,7 +93,7 @@ import {
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify/lib/framework.mjs";
-import { PLACEHOLDER_TYPES } from "@/utils/consts";
+import { PLACEHOLDER_TYPES, VIDEO_TYPES } from "@/utils/consts";
 /* eslint-disable no-unused-vars */
 
 export default defineComponent({
@@ -126,6 +126,7 @@ export default defineComponent({
       langStore,
       hasSaved,
       liveTlLang,
+      playlistStore,
       t,
     };
   },
@@ -194,6 +195,15 @@ export default defineComponent({
       return this.video.status === "past"
         ? this.$t("component.videoCard.totalTLs")
         : this.$t("component.videoCard.tlPresence");
+    },
+  },
+  methods: {
+    toggleSaved(event: { preventDefault: () => void }) {
+      event.preventDefault();
+      if (this.video.type === VIDEO_TYPES.PLACEHOLDER) return; // huh.
+      this.hasSaved
+        ? this.playlistStore.removeVideoByID(this.video.id)
+        : this.playlistStore.addVideo(this.video);
     },
   },
 });
