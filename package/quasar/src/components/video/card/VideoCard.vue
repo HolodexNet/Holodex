@@ -2,7 +2,6 @@
   <a
     class="flex video-card no-decoration"
     :class="{
-      // 'video-card-horizontal': horizontal,
       'flex-col': !horizontal,
     }"
     :target="redirectMode ? '_blank' : ''"
@@ -26,7 +25,6 @@ import { useSiteStore } from "@/stores/site";
 import { PropType } from "vue";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 import VideoThumbnail from "./VideoThumbnail.vue";
-/* eslint-disable no-unused-vars */
 
 export default defineComponent({
   name: "VideoCard",
