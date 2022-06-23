@@ -9,12 +9,25 @@
     rel="noopener"
     @click.exact="onThumbnailClicked"
   >
-    <video-thumbnail :video="video" />
-    <a :href="watchLink" rel="noopener" @click.exact.stop.prevent="goToVideo()">
+    <video-thumbnail
+      :video="video"
+      :style="{ width: horizontal ? '150px' : undefined }"
+    />
+    <a
+      :href="watchLink"
+      rel="noopener"
+      :class="{
+        'w-full': horizontal,
+      }"
+      @click.exact.stop.prevent="goToVideo()"
+    >
       <video-card-text
         :video="video"
         :hide-channel-image="hideChannelImage"
         :hide-channel-name="hideChannelName"
+        :class="{
+          'ml-2': horizontal,
+        }"
       />
     </a>
   </a>

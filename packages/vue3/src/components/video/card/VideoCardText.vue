@@ -1,12 +1,7 @@
 <template>
   <h-list style="min-height: 88px" class="relative">
-    <template #avatar>
-      <channel-img
-        v-if="!hideChannelImage"
-        :channel="video.channel"
-        :size="40"
-        rounded
-      />
+    <template v-if="!hideChannelImage" #avatar>
+      <channel-img :channel="video.channel" :size="40" rounded />
     </template>
     <div class="flex flex-col flex-1 justify-around box-content my-1">
       <div
@@ -18,7 +13,7 @@
       <div class="d-flex flex-shrink-1">
         <a
           v-if="!hideChannelName"
-          class="text-sm text-primary leading-4 hover:opacity-80"
+          class="text-sm text-primary leading-4 hover:opacity-80 line-clamp-1"
           :title="channelHoverTitle"
           :class="{
             'name-vtuber':
@@ -30,7 +25,7 @@
           {{ preferredChannelName }}
         </a>
       </div>
-      <div class="text-sm opacity-80">
+      <div class="text-sm opacity-80 leading-4">
         <video-card-status :video="video" />
         <template v-if="video.clips && video.clips.length > 0">
           •

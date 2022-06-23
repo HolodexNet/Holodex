@@ -2,9 +2,22 @@
   <v-row>
     <v-col :cols="4">
       <kbd>VideoCard</kbd>
-      <div><video-card :video="video" include-channel include-avatar /></div>
-      <video-card :video="placeholderVideo" />
+      <video-card :video="video" include-channel include-avatar />
+      <video-card :video="placeholderVideo" hide-channel-image />
     </v-col>
+    <v-col :cols="8">
+      <kbd>VideoCard Horizontal Variant</kbd>
+      <video-card
+        :video="video"
+        include-channel
+        include-avatar
+        horizontal
+        hide-channel-image
+        class="mb-2"
+      />
+      <video-card :video="placeholderVideo" horizontal hide-channel-image />
+    </v-col>
+
     <v-col :cols="4">
       <kbd>core/H-List</kbd>
       <h-list style="min-height: 88px">
