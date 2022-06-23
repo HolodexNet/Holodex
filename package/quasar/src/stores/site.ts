@@ -1,6 +1,7 @@
 // responsible for site-level globals:
 
 import { User } from "@/hooks/auth/user";
+import { useSettingsStore } from "./settings";
 
 interface Org {
   name: string;
@@ -27,18 +28,18 @@ interface SiteStatePersistentShared {
   /**
    * Settings are directly modified and read.
    */
-  settings: {
-    redirectMode: boolean;
-    autoplayVideo: boolean;
-    scrollMode: boolean;
-    hideThumbnail: boolean;
-    hidePlaceholder: boolean;
-    hideCollabStreams: boolean;
-    ignoredTopics: string[];
-    blockedChannels: [];
-    homeViewMode: "grid" | "list" | "denseList";
-    gridDensity: 0 | 1 | 2;
-  };
+  // settings: {
+  //   redirectMode: boolean;
+  //   autoplayVideo: boolean;
+  //   scrollMode: boolean;
+  //   hideThumbnail: boolean;
+  //   hidePlaceholder: boolean;
+  //   hideCollabStreams: boolean;
+  //   ignoredTopics: string[];
+  //   blockedChannels: [];
+  //   homeViewMode: "grid" | "list" | "denseList";
+  //   gridDensity: number;
+  // };
 }
 const USER_ROLES = {
   ADMIN: "admin",
@@ -72,18 +73,18 @@ export const useSiteStore = defineStore("site", {
       lastShownInstallPrompt: 0,
     },
 
-    settings: {
-      redirectMode: false,
-      autoplayVideo: false,
-      scrollMode: false,
-      hideThumbnail: false,
-      hidePlaceholder: false,
-      hideCollabStreams: false,
-      ignoredTopics: [],
-      blockedChannels: [],
-      homeViewMode: "grid",
-      gridDensity: 0,
-    },
+    // settings: {
+    //   redirectMode: false,
+    //   autoplayVideo: false,
+    //   scrollMode: false,
+    //   hideThumbnail: false,
+    //   hidePlaceholder: false,
+    //   hideCollabStreams: false,
+    //   ignoredTopics: [],
+    //   blockedChannels: [],
+    //   homeViewMode: "grid",
+    //   gridDensity: 0,
+    // },
   }),
   getters: {
     isEditorOrUp: (state) => {

@@ -7,7 +7,6 @@
 <script lang="ts">
 import { useLangStore } from "@/stores";
 import { dayjs, formatDistance, localizedDayjs } from "@/utils/time";
-import { useNow } from "@vueuse/core";
 import { PropType } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -19,7 +18,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const now = useNow({ interval: 1000 });
+    const now = ref(new Date());
     const { t } = useI18n();
     const langStore = useLangStore();
 

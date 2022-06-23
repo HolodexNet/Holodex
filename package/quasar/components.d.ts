@@ -28,6 +28,8 @@ declare module '@vue/runtime-core' {
     UserCard: typeof import('./src/components/login/UserCard.vue')['default']
     VideoCard: typeof import('./src/components/video/card/VideoCard.vue')['default']
     'VideoCard copy': typeof import('./src/components/video/card/VideoCard copy.vue')['default']
+    VideoCardGrid: typeof import('./src/components/video/card/VideoCardGrid.vue')['default']
+    VideoCardList: typeof import('./src/components/video/card/VideoCardList.vue')['default']
     VideoCardLiveDuration: typeof import('./src/components/video/card/VideoCardLiveDuration.vue')['default']
     VideoCardMenu: typeof import('./src/components/video/card/VideoCardMenu.vue')['default']
     VideoCardStatus: typeof import('./src/components/video/card/VideoCardStatus.vue')['default']

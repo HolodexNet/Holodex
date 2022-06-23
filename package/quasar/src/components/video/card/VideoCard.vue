@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { useSiteStore } from "@/stores/site";
+import { useSettingsStore } from "@/stores/settings";
 import { PropType } from "vue";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 import VideoThumbnail from "./VideoThumbnail.vue";
@@ -68,12 +68,12 @@ export default defineComponent({
   },
   emits: ["videoClicked"],
   setup() {
-    const site = useSiteStore();
+    const settings = useSettingsStore();
     const display = useDisplay();
 
     const isMobile = display.mobile;
     return {
-      site,
+      settings,
       isMobile,
     };
   },
@@ -90,7 +90,7 @@ export default defineComponent({
       return this.data.type === "placeholder";
     },
     redirectMode() {
-      return this.site.settings.redirectMode;
+      return this.settings.redirectMode;
     },
     watchLink() {
       const q = this.parentPlaylistId

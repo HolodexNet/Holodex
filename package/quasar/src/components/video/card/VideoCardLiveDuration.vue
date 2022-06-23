@@ -20,7 +20,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const now = useNow({ interval: 1000 });
+    const { now, pause } = useNow({ interval: 1000, controls: true });
+    if (props.video.status !== "live") pause();
     const { t } = useI18n();
 
     const formatted = computed(() => {

@@ -2,7 +2,7 @@
   <v-row>
     <v-col :cols="4">
       <kbd>VideoCard</kbd>
-      <video-card :video="video" include-channel include-avatar />
+      <video-card :video="video" hide-channel-image />
       <video-card :video="placeholderVideo" hide-channel-image />
     </v-col>
     <v-col :cols="8">
@@ -37,12 +37,18 @@
       <video-thumbnail :video="video" />
     </v-col>
   </v-row>
+  <video-card-grid>
+    <template v-for="n in 20" :key="n">
+      <video-card :video="video" />
+    </template>
+  </video-card-grid>
 </template>
 
 <script setup>
 import VideoThumbnail from "@/components/video/card/VideoThumbnail.vue";
 import HList from "@/components/core/HList.vue";
 import VideoCardMenu from "@/components/video/card/VideoCardMenu.vue";
+import VideoCard from "@/components/video/card/VideoCard.vue";
 const video = {
   id: "rnVfwYuK8sw",
   title: "【ただいま!】復活の歌枠!!!おやすみありがとう!【大神ミオ/ホロライブ】",
