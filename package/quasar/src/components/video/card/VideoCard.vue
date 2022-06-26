@@ -11,7 +11,7 @@
   >
     <video-thumbnail
       :video="video"
-      :style="{ width: horizontal ? '150px' : undefined }"
+      :style="{ width: horizontal ? '168px' : undefined }"
     />
     <a
       :href="watchLink"
@@ -157,11 +157,15 @@ export default defineComponent({
   },
 });
 </script>
-<style>
+<style lang="scss">
 .video-card .hover-show {
   visibility: hidden;
 }
 .video-card:hover .hover-show {
   visibility: visible;
+}
+a:visited .video-card-title {
+  /* This is hardcoded cuz @apply doesn't work and variables don't have lighten/darken version */
+  color: rgb(90, 138, 185);
 }
 </style>

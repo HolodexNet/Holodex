@@ -6,9 +6,9 @@ export const presets: [Theme] = [
     dark: true,
     colors: {
       "base-100": "#222222",
-      primary: "#3b88d5",
+      primary: "#F06292",
       neutral: "#758799",
-      secondary: "#F06292",
+      secondary: "#3b88d5",
       accent: "#F03284",
       error: "#B00020",
       info: "#64B5F6",

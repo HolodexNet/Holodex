@@ -40,7 +40,6 @@
         </v-icon>
       </div>
 
-      <!-- Video duration/music indicator (👻❌) -->
       <div class="flex justify-end">
         <!-- Show music icon if songs exist -->
         <div v-if="video.songcount" class="video-overlay-tag rounded-sm">
@@ -213,9 +212,12 @@ export default defineComponent({
 .video-overlay-tag {
   background-color: rgba(0, 0, 0, 0.8);
   margin: 2px;
-  padding: 1px 5px;
+  padding: 4px;
   text-align: center;
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
+  height: 0.75rem;
+  font-weight: 500;
+  box-sizing: content-box;
   letter-spacing: 0.025em;
   text-transform: capitalize;
   white-space: nowrap;
@@ -226,6 +228,8 @@ export default defineComponent({
 
   &.placeholder-tag {
     font-size: 1rem;
+    height: 1rem;
+    padding: 5px;
     span {
       font-size: 0.8125rem;
     }

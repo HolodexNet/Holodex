@@ -4,19 +4,16 @@
       <channel-img :channel="video.channel" :size="40" rounded />
     </template>
     <div class="flex flex-col flex-1 justify-around box-content my-1">
-      <div
-        class="line-clamp-2 leading-5 visited:text-purple pr-6"
-        :title="title"
-      >
+      <div class="line-clamp-2 leading-5 pr-6 video-card-title" :title="title">
         {{ title }}
       </div>
-      <div class="d-flex flex-shrink-1">
+      <div class="flex flex-shrink-1">
         <a
           v-if="!hideChannelName"
-          class="text-sm text-primary leading-4 hover:opacity-80 line-clamp-1"
+          class="text-sm leading-4 hover:opacity-80 line-clamp-1"
           :title="channelHoverTitle"
           :class="{
-            'name-vtuber':
+            'text-secondary':
               video.type === 'stream' || video.channel.type === 'vtuber',
           }"
           :href="channelLink"
@@ -29,7 +26,7 @@
         <video-card-status :video="video" />
         <template v-if="video.clips && video.clips.length > 0">
           •
-          <span class="text-secondary">
+          <span class="text-primary">
             {{
               t(
                 "component.videoCard.clips",
