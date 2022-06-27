@@ -1,7 +1,7 @@
 <template>
   <v-container fluid style="max-height: 100vh; padding: 0px 12px">
-    <div class="d-flex flex-col" style="height: 100%; width: 100%">
-      <v-system-bar height="30" class="tl-topbar px-0" color="secondary">
+    <div class="flex flex-col flex-grow" style="height: 98vh; width: 100%">
+      <div height="30" class="tl-topbar px-0 justify-start" color="secondary">
         <v-btn size="small" variant="outlined" to="/">
           <v-icon>{{ icons.mdiHome }}</v-icon>
           {{ $t("component.mainNav.home") }}
@@ -63,22 +63,22 @@
         >
           {{ $t("views.tlClient.menu.unloadChat") }}
         </v-btn>
-      </v-system-bar>
+      </div>
       <div
-        class="d-flex items-stretch flex-row"
+        class="flex items-stretch flex-row"
         style="height: 100%"
         @mousemove="resizeMouseMove($event)"
         @mouseleave="resizeMouseLeave(1)"
         @mouseup="resizeMouseUp()"
       >
-        <v-card
-          class="d-flex flex-col flex-grow-1"
-          height="100%;"
+        <v-sheet
+          class="flex flex-col flex-grow flex-shrink"
           :width="
             activeChat.length < 2
               ? videoPanelWidth1 + '%'
               : videoPanelWidth2 + '%'
           "
+          style="height: 100%; display: flex"
           @mouseleave="resizeMouseLeave(0)"
         >
           <div
@@ -93,9 +93,9 @@
           />
           <v-card
             v-if="vidPlayer"
-            style="height: 100%"
-            class="d-flex flex-col"
+            class="flex flex-col flex-grow flex-shrink"
             outlined
+            height="100%"
           >
             <v-card id="player" height="100%" width="100%" />
           </v-card>
@@ -104,7 +104,7 @@
             id="horizontal-resize-bar"
             style="
               cursor: s-resize;
-              height: 8px;
+              min-height: 9px;
               background: var(--v-background-base);
             "
             @mousedown="resizeMouseDown($event, 0)"
@@ -118,7 +118,7 @@
                 background: #444;
                 height: 3px;
                 border-radius: 2px;
-                margin-top: 1px;
+                margin-top: 3px;
               "
             />
           </div>
@@ -128,6 +128,7 @@
             :tl-client="true"
             :video="{ id: mainID }"
             :class="{
+              'flex-shrink': true,
               'tl-full-height': false,
             }"
             :style="{ height: vidPlayer ? tlChatHeight + 'px' : '100%' }"
@@ -135,18 +136,18 @@
           />
           <v-card
             v-if="profileDisplay && activeChat.length > 1"
-            class="ProfileListCard d-flex flex-col"
+            class="ProfileListCard flex flex-col"
           >
             <span v-for="(prf, index) in profile" :key="index"
               ><span v-if="index === profileIdx">> </span
               >{{ index + 1 + ". " + prf.Name }}</span
             >
           </v-card>
-        </v-card>
+        </v-sheet>
         <div
           v-if="activeChat.length > 0"
           id="vertical-resize-bar"
-          style="cursor: e-resize; width: 7px"
+          style="cursor: e-resize; width: 9px"
           @mousedown="resizeMouseDown($event, 1)"
         >
           <div
@@ -158,7 +159,7 @@
               background: #444;
               width: 3px;
               border-radius: 2px;
-              margin-left: 2px;
+              margin-left: 3px;
             "
           />
         </div>
@@ -186,7 +187,7 @@
           <v-card
             v-for="(ChatURL, index) in activeChat"
             :key="ChatURL.text"
-            class="d-flex flex-col"
+            class="flex flex-col"
             variant="outlined"
           >
             <p class="text-center" style="margin-top: 5px">
@@ -204,7 +205,7 @@
           </v-card>
           <v-card
             v-if="profileDisplay && activeChat.length < 2"
-            class="ProfileListCard d-flex flex-col"
+            class="ProfileListCard flex flex-col"
           >
             <span v-for="(prf, index) in profile" :key="index"
               ><span v-if="index === profileIdx">> </span
@@ -281,7 +282,7 @@
                 <span><kbd>Ctrl+[1~9]</kbd> to quick switch to Profile</span>
               </v-tooltip>
             </v-card-subtitle>
-            <v-card-text class="d-flex align-stretch">
+            <v-card-text class="flex align-stretch">
               <v-text-field
                 v-model="profile[profileIdx].Prefix"
                 :label="$t('views.tlClient.tlControl.prefix')"
@@ -483,8 +484,8 @@
           </v-card-subtitle>
           <v-select
             v-model="TLLang"
-            :items="[...TL_LANGS]"
-            item-text="text"
+            :items="TL_LANGS"
+            item-title="text"
             item-value="value"
             :label="$t('views.watch.uploadPanel.tlLang')"
             return-object
@@ -508,7 +509,7 @@
             @click:prepend="deleteAuxLink(index)"
             @click:append-outer="collabLinks.push('')"
           />
-          <v-card-actions class="d-flex flex-row justify-center">
+          <v-card-actions class="flex flex-row justify-center">
             <v-btn @click="settingOKClick()">
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
@@ -1375,6 +1376,34 @@ export default defineComponent({
 </script>
 
 <style>
+.tl-topbar {
+  top: 0px;
+  z-index: 1006;
+  transform: translateY(0%);
+  height: 32px;
+  width: calc(100% + 0px);
+  margin-bottom: 4px;
+  --v-theme-overlay-multiplier: var(--v-theme-secondary-overlay-multiplier);
+  background: rgb(var(--v-theme-secondary)) !important;
+  color: rgb(var(--v-theme-on-secondary)) !important;
+
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  max-width: 100%;
+  padding: 0 8px;
+  position: relative;
+  text-align: end;
+  width: 100%;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.0333333333em;
+  line-height: 1.25rem;
+  text-transform: none;
+}
+
 .TopMenu {
   width: 100%;
   position: absolute;

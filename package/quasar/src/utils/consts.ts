@@ -98,7 +98,7 @@ export const BILIBILI_UNLIVE_VIDEO_URL_REGEX =
 
 // Clip channel TL Langs;
 
-export const TL_LANGS = Object.freeze([
+export const TL_LANGS = [
   {
     text: "English",
     value: "en",
@@ -127,7 +127,7 @@ export const TL_LANGS = Object.freeze([
     text: "한국어",
     value: "ko",
   },
-] as const);
+] as const;
 
 export type TLLanguageCode = typeof TL_LANGS[number]["value"];
 

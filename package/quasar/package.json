@@ -31,7 +31,7 @@
     "vue-query": "^1.25.0",
     "vue-router": "^4.0.16",
     "vue-toast-notification": "^3.0.4",
-    "vuetify": "npm:@vuetify/nightly@3.0.0-next-20220618.0"
+    "vuetify": "npm:@vuetify/nightly@3.0.0-next-20220625.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
