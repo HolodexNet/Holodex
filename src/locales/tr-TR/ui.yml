@@ -541,14 +541,20 @@ channelRequest:
     AddClipper: Holodex'e bir klip/altyazı kanalı ekle
     ModifyExistingInfo: Var olan kanal bilgilerini düzenle
     DeleteChannel: Kanalımı sil
+  DirectContactDisclaimer: >-
+    Geri bildirim sağlamak için letişime geçmemiz gerekirse size ulaşabilmemiz için e-postanızı, discord idnizi veya twitter hesabınızı (bu bilgiler gizli kalacak) bırakmaktan çekinmeyin. Sadece holodex yöneticileri bu bilgileri görebilecek.
   DirectContactLabel: İletişim Bilgileri (isteğe bağlı)
   TwitterHandle: Kanalın Twitter Tanıtıcısı (isteğe bağlı)
   VtuberGroupLabel: VTuber Grubu (isteğe bağlı)
   VtuberGroupHint: Bu vtuber hangi organizasyona / gruba bağlı?
   ChannelLanguageLabel: Kanalın ana dili
+  EnglishNameHint: >-
+    Kanal ismi İngilizce değilse İngilizce bir kanal ismi ekleyin. Sözü geçen VTuber'ın yerel isim sırası kurallarını takip edin (Natsuiro Matsuri) veya tercih edilen İngilizce marka ismini kullanın (Elu the Elf, Emma★August).
   EnglishNameLabel: İngilizce Kanal İsmi
   Comments: Yorumlar
   CommentsHint: Bize iletmek istediğin diğer yorumlar.
+  VtuberRequirementText: >-
+    Bağımsızlar için en az 20K abone gereklidir. Var olan orgların parçası olan VTuberlar kabul edilecektir. <br /><br />Yeni Orglar ortalama abone sayısına göre oluşturulacaktır.
   DeletionRequirementText: >-
     Silme sadece kanal sahibi/sahipleri tarafından talep edilmeli, lütfen bunu doğrulamamız için iletişim bilgisi sağlayın.
   PageTitle: Holodex Kanal Talebi
