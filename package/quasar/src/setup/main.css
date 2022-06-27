@@ -13,3 +13,7 @@ e.g. just doing .online will NOT work
 .menu li a {
   @apply p-2;
 }
+
+.d-flex {
+  display: flex;
+}

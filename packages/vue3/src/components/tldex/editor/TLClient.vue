@@ -1,6 +1,6 @@
 <template>
-  <v-container fill-height fluid style="max-height: 100vh; padding: 0px 12px">
-    <div class="d-flex flex-column" style="height: 100%; width: 100%">
+  <v-container fluid style="max-height: 100vh; padding: 0px 12px">
+    <div class="d-flex flex-col" style="height: 100%; width: 100%">
       <v-system-bar height="30" class="tl-topbar px-0" color="secondary">
         <v-btn size="small" variant="outlined" to="/">
           <v-icon>{{ icons.mdiHome }}</v-icon>
@@ -65,14 +65,14 @@
         </v-btn>
       </v-system-bar>
       <div
-        class="d-flex align-stretch flex-row"
+        class="d-flex items-stretch flex-row"
         style="height: 100%"
         @mousemove="resizeMouseMove($event)"
         @mouseleave="resizeMouseLeave(1)"
         @mouseup="resizeMouseUp()"
       >
         <v-card
-          class="d-flex flex-column flex-grow-1"
+          class="d-flex flex-col flex-grow-1"
           height="100%;"
           :width="
             activeChat.length < 2
@@ -94,13 +94,14 @@
           <v-card
             v-if="vidPlayer"
             style="height: 100%"
-            class="d-flex flex-column"
+            class="d-flex flex-col"
             outlined
           >
             <v-card id="player" height="100%" width="100%" />
           </v-card>
           <div
             v-if="vidPlayer"
+            id="horizontal-resize-bar"
             style="
               cursor: s-resize;
               height: 8px;
@@ -134,7 +135,7 @@
           />
           <v-card
             v-if="profileDisplay && activeChat.length > 1"
-            class="ProfileListCard d-flex flex-column"
+            class="ProfileListCard d-flex flex-col"
           >
             <span v-for="(prf, index) in profile" :key="index"
               ><span v-if="index === profileIdx">> </span
@@ -144,6 +145,7 @@
         </v-card>
         <div
           v-if="activeChat.length > 0"
+          id="vertical-resize-bar"
           style="cursor: e-resize; width: 7px"
           @mousedown="resizeMouseDown($event, 1)"
         >
@@ -160,10 +162,9 @@
             "
           />
         </div>
-        <v-card
+        <v-sheet
           v-if="activeChat.length > 0"
           class="ChatPanelContainer"
-          height="100%"
           :width="
             activeChat.length < 2
               ? 100 - videoPanelWidth1 + '%'
@@ -185,7 +186,7 @@
           <v-card
             v-for="(ChatURL, index) in activeChat"
             :key="ChatURL.text"
-            class="d-flex flex-column"
+            class="d-flex flex-col"
             variant="outlined"
           >
             <p class="text-center" style="margin-top: 5px">
@@ -203,14 +204,14 @@
           </v-card>
           <v-card
             v-if="profileDisplay && activeChat.length < 2"
-            class="ProfileListCard d-flex flex-column"
+            class="ProfileListCard d-flex flex-col"
           >
             <span v-for="(prf, index) in profile" :key="index"
               ><span v-if="index === profileIdx">> </span
               >{{ index + 1 + ". " + prf.Name }}</span
             >
           </v-card>
-        </v-card>
+        </v-sheet>
       </div>
 
       <v-container
