@@ -43,6 +43,14 @@
         <video-card :video="video" />
       </template>
     </video-card-grid>
+    <div v-if="isLoading" class="flex">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        :size="64"
+        class="m-auto"
+      ></v-progress-circular>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -67,9 +75,9 @@ const liveUpcomingHeaderSplit = computed(() => {
   return [...t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/)];
 });
 const liveUpcomingCounts = computed(() => {
-  const liveCnt =
-    liveVideos.value?.filter((v) => v.status === "live").length || 0;
-  const upcomingCnt = (liveVideos.value?.length || 0) - liveCnt;
+  const live = liveQuery.data.value;
+  const liveCnt = live?.filter((v) => v.status === "live").length || 0;
+  const upcomingCnt = (live?.length || 0) - liveCnt;
   return { liveCnt, upcomingCnt };
 });
 
@@ -84,12 +92,11 @@ const liveQuery = useLive(
     status: "live,upcoming",
     org: site.currentOrg.name,
     max_upcoming_hours: 48,
-    sort: "available_at",
-    order: "asc",
     include: "live_info",
   })),
   {
     enabled: computed(() => currentTab.value === Tabs.LIVE),
+    refetchInterval: 2 * 60 * 1000,
   }
 );
 
@@ -103,6 +110,7 @@ const archiveQuery = useVideos(
   })),
   {
     enabled: computed(() => currentTab.value === Tabs.ARCHIVE),
+    refetchInterval: 5 * 60 * 1000,
   }
 );
 
@@ -118,22 +126,30 @@ const clipQuery = useVideos(
   })),
   {
     enabled: computed(() => currentTab.value === Tabs.CLIPS),
+    refetchInterval: 5 * 60 * 1000,
   }
 );
 
-const { data: archiveVideos } = toRefs(archiveQuery);
-const { data: liveVideos } = toRefs(liveQuery);
-const { data: clipVideos } = toRefs(clipQuery);
-const videos = computed(() => {
+// const { data: archiveVideos } = toRefs(archiveQuery);
+// const { data: liveVideos } = toRefs(liveQuery);
+// const { data: clipVideos } = toRefs(clipQuery);
+
+const activeQuery = computed(() => {
   switch (currentTab.value) {
     case 0:
-      return liveVideos.value;
+      return liveQuery;
     case 1:
-      return archiveVideos.value;
+      return archiveQuery;
     case 2:
-      return clipVideos.value;
+      return clipQuery;
   }
 });
+
+// Man this looks ugly
+const videos = computed(() => activeQuery.value.data.value);
+const error = computed(() => activeQuery.value.error.value);
+const isLoading = computed(() => activeQuery.value.isLoading.value);
+const isError = computed(() => activeQuery.value.isError.value);
 </script>
 <style>
 .v-slide-group__prev--disabled {
