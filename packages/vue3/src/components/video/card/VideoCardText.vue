@@ -40,10 +40,9 @@
         <template v-else-if="video.status === 'live' && video.live_viewers">
           •
           {{
-            t(
-              "component.videoCard.watching",
-              formatCount(video.live_viewers, lang)
-            )
+            t("component.videoCard.watching", [
+              formatCount(video.live_viewers, lang),
+            ])
           }}
         </template>
       </div>

@@ -1,6 +1,6 @@
 import { useLangStore } from "@/stores/lang";
 
-export function useVideo(video: Video) {
+export function useVideoFormat(video: Video) {
   const langPrefs = useLangStore();
 
   const preferredChannelName = computed(() => {

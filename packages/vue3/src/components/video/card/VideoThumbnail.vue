@@ -32,7 +32,7 @@
           v-if="!isPlaceholder"
           :color="hasSaved ? 'primary' : 'white'"
           class="rounded-sm video-overlay-action"
-          :class="{ 'hover-show': !hasSaved && !isMobile }"
+          :class="{ 'hover-show': !hasSaved }"
           role="img"
           @click.prevent.stop="toggleSaved($event)"
         >
@@ -245,15 +245,6 @@ export default defineComponent({
   &:hover .placeholder-tag span {
     display: inline;
     transform: translateX(0px);
-  }
-
-  /* Generic show/hide */
-  .hover-show {
-    visibility: hidden;
-  }
-
-  &:hover .hover-show {
-    visibility: visible;
   }
 
   /* Thumbnail opacity for placeholder */

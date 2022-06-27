@@ -47,7 +47,9 @@ module.exports = {
     "vue/max-attributes-per-line": 0,
     "vue/valid-v-for": 0,
     "vue/no-multiple-template-root": 0,
-
+    "vue/no-v-for-template-key": 0,
+    "vue/no-v-for-template-key-on-child": "error",
+    "vue/multi-word-component-names": 0,
     // allow async-await
     "generator-star-spacing": "off",
 

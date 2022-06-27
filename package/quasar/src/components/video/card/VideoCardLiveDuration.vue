@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="(video.duration || 0) > 0 || video.start_actual"
-    :class="{ 'video-duration-live': video.status !== 'live' }"
+    :class="{ '!bg-red-800': video.status === 'live' }"
   >
     {{ formatted }}
   </div>
