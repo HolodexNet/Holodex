@@ -13,7 +13,7 @@ export const REGULAR_QUERY_OPTIONS: QueryObserverOptions = {
   staleTime: 3 * 60 * 1000, // 3 mins
   cacheTime: 10 * 60 * 1000, // 12 minutes
   refetchOnWindowFocus: false,
-  keepPreviousData: true,
+  keepPreviousData: false,
 };
 
 export const STATIC_QUERY_OPTIONS: QueryObserverOptions = {

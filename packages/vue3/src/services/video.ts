@@ -1,11 +1,18 @@
 import { axiosInstance } from "@/utils/backend-api";
+import { MaybeRef } from "@vueuse/core";
 import dayjs from "dayjs";
 import { Ref } from "vue";
-import { useQuery } from "vue-query";
+import { useQuery, UseQueryOptions } from "vue-query";
 
+type QueryConfig<TReturn> = Omit<
+  UseQueryOptions<TReturn, unknown, TReturn, any>,
+  "queryKey" | "queryFn"
+> & {
+  enabled: MaybeRef<boolean>;
+};
 interface VideoApiQuery {
   status: string;
-  type: VIDEO_TYPES;
+  type: string;
   include: string;
   lang: string;
   paginated: boolean;
@@ -15,22 +22,36 @@ interface VideoApiQuery {
   sort: string;
   order: string;
 }
-export function useVideos(query: Ref<Partial<VideoApiQuery>>) {
-  return useQuery<Video[]>(["videos", query], async (e) => {
-    const { data } = await axiosInstance.get(
-      `/videos?${stringifyQuery(query.value)}`
-    );
-    return data.filter(filterDeadStreams);
-  });
+export function useVideos(
+  query: Ref<Partial<VideoApiQuery>>,
+  config: QueryConfig<Video[]>
+) {
+  return useQuery<Video[]>(
+    ["videos", query],
+    async (e) => {
+      const { data } = await axiosInstance.get(
+        `/videos?${stringifyQuery(query.value)}`
+      );
+      return data.filter(filterDeadStreams);
+    },
+    config
+  );
 }
 
-export function useLive(query: Ref<Partial<VideoApiQuery>>) {
-  return useQuery<Video[]>(["videos", query], async () => {
-    const { data } = await axiosInstance.get(
-      `/live?${stringifyQuery(query.value)}`
-    );
-    return data.filter(filterDeadStreams);
-  });
+export function useLive(
+  query: Ref<Partial<VideoApiQuery>>,
+  config: QueryConfig<Video[]>
+) {
+  return useQuery<Video[]>(
+    ["live", query],
+    async () => {
+      const { data } = await axiosInstance.get(
+        `/live?${stringifyQuery(query.value)}`
+      );
+      return data.filter(filterDeadStreams);
+    },
+    config
+  );
 }
 
 function stringifyQuery(query: Record<string, any>) {
