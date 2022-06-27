@@ -3,6 +3,7 @@
     class="flex video-card no-decoration"
     :class="{
       'flex-col': !horizontal,
+      'video-card-live': video.status === 'live',
     }"
     :target="redirectMode ? '_blank' : ''"
     :href="href"

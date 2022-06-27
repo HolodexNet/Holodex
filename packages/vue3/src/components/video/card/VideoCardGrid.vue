@@ -9,9 +9,7 @@ import { useSettingsStore } from "@/stores/settings";
 const settings = useSettingsStore();
 const maxWidth = ["310px", "270px", "230px"];
 const gridColumnGap = ["20px", "10px", "10px"];
-// const cycle = () => {
-//   settings.gridDensity = (settings.gridDensity + 1) % 3;
-// };
+
 const gridStyle = computed(() => {
   return {
     "grid-template-columns": `repeat(auto-fit, minmax(${
@@ -26,5 +24,10 @@ const gridStyle = computed(() => {
 .video-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+}
+
+/* Separate live from past videos */
+.video-card-live + .video-card:not(.video-card-live) {
+  grid-column-start: 1;
 }
 </style>
