@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/utils/backend-api";
 import dayjs from "dayjs";
+import { Ref } from "vue";
 import { useQuery } from "vue-query";
 
 interface VideoApiQuery {
@@ -14,18 +15,20 @@ interface VideoApiQuery {
   sort: string;
   order: string;
 }
-export function useVideos(query: Partial<VideoApiQuery>) {
+export function useVideos(query: Ref<Partial<VideoApiQuery>>) {
   return useQuery<Video[]>(["videos", query], async (e) => {
     const { data } = await axiosInstance.get(
-      `/videos?${stringifyQuery(query)}`
+      `/videos?${stringifyQuery(query.value)}`
     );
     return data.filter(filterDeadStreams);
   });
 }
 
-export function useLive(query: Partial<VideoApiQuery>) {
+export function useLive(query: Ref<Partial<VideoApiQuery>>) {
   return useQuery<Video[]>(["videos", query], async () => {
-    const { data } = await axiosInstance.get(`/live?${stringifyQuery(query)}`);
+    const { data } = await axiosInstance.get(
+      `/live?${stringifyQuery(query.value)}`
+    );
     return data.filter(filterDeadStreams);
   });
 }

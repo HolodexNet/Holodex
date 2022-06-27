@@ -7,15 +7,17 @@
 </template>
 <script setup lang="ts">
 import { useLive } from "@/services/video";
-
-const liveQuery = useLive({
+import { useSiteStore } from "@/stores";
+const site = useSiteStore();
+const query = computed(() => ({
   status: "live,upcoming",
-  org: "Hololive",
+  org: site.currentOrg.name,
   max_upcoming_hours: 48,
   sort: "available_at",
   order: "asc",
   include: "live_info",
-});
+}));
+const liveQuery = useLive(query);
 
 const { data: videos } = toRefs(liveQuery);
 </script>

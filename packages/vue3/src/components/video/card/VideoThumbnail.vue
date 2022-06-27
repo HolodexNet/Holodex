@@ -4,15 +4,7 @@
     class="flex flex-shrink-0 relative w-full video-thumbnail"
     :class="{ 'placeholder-thumbnail': isPlaceholder }"
   >
-    <!-- Image Overlay -->
-    <!-- Force 16/9 aspect ratio -->
-    <div class="relative w-full" style="padding-top: 56.25%">
-      <img
-        :src="imageSrc"
-        class="absolute w-full h-full top-0 object-cover rounded-md"
-        loading="lazy"
-      />
-    </div>
+    <v-img :aspect-ratio="16 / 9" :src="imageSrc" cover></v-img>
     <div
       class="flex flex-col justify-between w-full h-full absolute"
       style="z-index: 1"
