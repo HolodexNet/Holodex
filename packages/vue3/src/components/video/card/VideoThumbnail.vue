@@ -4,7 +4,12 @@
     class="flex flex-shrink-0 relative w-full video-thumbnail"
     :class="{ 'placeholder-thumbnail': isPlaceholder }"
   >
-    <v-img :aspect-ratio="16 / 9" :src="imageSrc" cover></v-img>
+    <v-img
+      :aspect-ratio="16 / 9"
+      :src="imageSrc"
+      cover
+      class="rounded-md"
+    ></v-img>
     <div
       class="flex flex-col justify-between w-full h-full absolute"
       style="z-index: 1"
