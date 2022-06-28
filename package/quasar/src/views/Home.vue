@@ -93,6 +93,7 @@ const liveQuery = useLive(
     org: site.currentOrg.name,
     max_upcoming_hours: 48,
     include: "live_info",
+    type: "stream,placeholder",
   })),
   {
     enabled: computed(() => currentTab.value === Tabs.LIVE),
@@ -146,6 +147,7 @@ const activeQuery = computed(() => {
 });
 
 // Man this looks ugly
+// damn you're right.
 const videos = computed(() => activeQuery.value.data.value);
 const error = computed(() => activeQuery.value.error.value);
 const isLoading = computed(() => activeQuery.value.isLoading.value);
