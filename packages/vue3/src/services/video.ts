@@ -28,7 +28,7 @@ export function useVideos(
 ) {
   return useQuery<Video[]>(
     ["videos", query],
-    async (e) => {
+    async () => {
       const { data } = await axiosInstance.get(
         `/videos?${stringifyQuery(query.value)}`
       );
@@ -58,6 +58,25 @@ export function useVideoById(
     config
   );
 }
+// export function useVideosInfinite(
+//   query: Ref<Partial<VideoApiQuery>>,
+//   config: QueryConfig<Video[]>
+// ) {
+//   return useInfiniteQuery<Video[]>(
+//     ["videos", query],
+//     async () => {
+//       const { data } = await axiosInstance.get(
+//         `/videos?${stringifyQuery(query.value)}`
+//       );
+//       return data.filter(filterDeadStreams);
+//     },
+//     {
+//       getNextPageParam: (lastPage, pages) =>
+//         pages.reduce((a, c) => a + c.length, 0),
+//       enabled: config.enabled,
+//     }
+//   );
+// }
 
 export function useLive(
   query: Ref<Partial<VideoApiQuery>>,

@@ -17,7 +17,6 @@
       <div class="flex items-start justify-between">
         <!-- Topic Id display -->
         <div
-          v-if="video.topic_id"
           class="rounded-sm video-overlay-tag"
           :style="{ visibility: video.topic_id ? 'visible' : 'hidden' }"
         >

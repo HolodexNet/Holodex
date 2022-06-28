@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<template><div></div></template>
-<script lang="ts"></script>
-<style lang="scss"></style>
-=======
 <template>
   <v-navigation-drawer
     :value="value"
@@ -274,4 +269,3 @@ export default defineComponent({
   box-sizing: content-box;
 }
 </style>
->>>>>>> b85d9d9... Nav looks better

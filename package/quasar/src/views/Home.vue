@@ -15,13 +15,13 @@
       <v-tab class="p-2">
         {{ liveUpcomingHeaderSplit[1] }}
         <span
-          class="stream-count-chip mx-1 rounded-md bg-primary white--text p-1"
+          class="p-1 mx-1 rounded-md stream-count-chip bg-primary white--text"
         >
           {{ liveUpcomingCounts.liveCnt }}
         </span>
         {{ liveUpcomingHeaderSplit[2] }}
         <span
-          class="stream-count-chip ml-1 rounded-md bg-primary white--text p-1"
+          class="p-1 ml-1 rounded-md stream-count-chip bg-primary white--text"
         >
           {{ liveUpcomingCounts.upcomingCnt }}
         </span>
@@ -35,21 +35,27 @@
       <!-- <portal-target
         v-if="!display.breakpoint.xs"
         :name="`date-selector${isFavPage}`"
-        class="v-tab ml-auto"
+        class="ml-auto v-tab"
       /> -->
     </v-tabs>
     <video-card-grid>
-      <template v-for="video in videos" :key="video.id">
+      <template
+        v-for="video in prevVideos?.length ? prevVideos : videos"
+        :key="video.id"
+      >
         <video-card :video="video" />
       </template>
     </video-card-grid>
-    <div v-if="isLoading" class="flex">
+    <div v-if="isLoading" class="flex h-20">
       <v-progress-circular
         indeterminate
         color="primary"
         :size="64"
         class="m-auto"
       ></v-progress-circular>
+    </div>
+    <div v-else class="flex items-center justify-center h-20">
+      <v-btn color="primary" @click="offset += 25">Load more</v-btn>
     </div>
   </div>
 </template>
@@ -81,6 +87,8 @@ const liveUpcomingCounts = computed(() => {
   return { liveCnt, upcomingCnt };
 });
 
+const offset = ref(0);
+
 // TODO:
 // paginated: !this.scrollMode,
 // ...(this.toDate && {
@@ -90,6 +98,7 @@ const liveUpcomingCounts = computed(() => {
 const liveQuery = useLive(
   computed(() => ({
     status: "live,upcoming",
+    type: "placeholder,stream",
     org: site.currentOrg.name,
     max_upcoming_hours: 48,
     include: "live_info",
@@ -108,6 +117,7 @@ const archiveQuery = useVideos(
     org: site.currentOrg.name,
     include: "clips",
     max_upcoming_hours: 1,
+    offset: offset.value,
   })),
   {
     enabled: computed(() => currentTab.value === Tabs.ARCHIVE),
@@ -124,12 +134,19 @@ const clipQuery = useVideos(
     // TODO
     // lang: settings.clipLangs.join(","),
     lang: "en",
+    offset: offset.value,
   })),
   {
     enabled: computed(() => currentTab.value === Tabs.CLIPS),
     refetchInterval: 5 * 60 * 1000,
   }
 );
+
+// function onIntersect() {
+//   console.log(archiveQuery.isFetching.value, "loading");
+//   if (!activeQuery.value?.isLoading.value && !archiveQuery.isFetching.value)
+//     fetchNextPage.value();
+// }
 
 // const { data: archiveVideos } = toRefs(archiveQuery);
 // const { data: liveVideos } = toRefs(liveQuery);
@@ -147,11 +164,33 @@ const activeQuery = computed(() => {
 });
 
 // Man this looks ugly
-// damn you're right.
-const videos = computed(() => activeQuery.value.data.value);
-const error = computed(() => activeQuery.value.error.value);
-const isLoading = computed(() => activeQuery.value.isLoading.value);
-const isError = computed(() => activeQuery.value.isError.value);
+// const videos = computed(() => {
+//   console.log(
+//     archiveQuery?.data.value?.pages.reduce((a, b) => a.concat(b), [])
+//   );
+//   return archiveQuery?.data.value?.pages.reduce((a, b) => a.concat(b), []);
+//   // return [];
+// });
+
+const videos = computed(() => activeQuery.value?.data.value);
+const error = computed(() => activeQuery.value?.error.value);
+const isLoading = computed(() => activeQuery.value?.isLoading.value);
+const isError = computed(() => activeQuery.value?.isError.value);
+
+const prevVideos: Ref<Video[]> = ref([]);
+watch(
+  () => videos.value,
+  () => {
+    if (videos.value && !settings.scrollMode)
+      prevVideos.value.push(...videos.value);
+  }
+);
+watch(
+  () => currentTab.value,
+  () => {
+    prevVideos.value = [];
+  }
+);
 </script>
 <style>
 .v-slide-group__prev--disabled {
