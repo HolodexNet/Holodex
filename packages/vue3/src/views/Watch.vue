@@ -6,7 +6,7 @@
   />
   <div
     v-else
-    class="d-flex flex-row watch-layout"
+    class="flex flex-row watch-layout"
     :class="{
       mobile: isMobile,
       'theater-mode': video.type === 'stream' || $vuetify.breakpoint.mdAndDown,
@@ -20,9 +20,9 @@
       :multiple-keys="altTHotKey"
       @success="toggleTheaterMode"
     /> -->
-    <KeyPress key-event="keyup" :key-code="27" @success="theaterMode = false" />
-    <div ref="watchLayout" class="d-flex flex-grow-1 left">
-      <div class="d-flex flex-column flex-grow-1">
+    <!-- <KeyPress key-event="keyup" :key-code="27" @success="theaterMode = false" /> -->
+    <div ref="watchLayout" class="flex flex-grow left">
+      <div class="flex flex-col flex-grow">
         <div style="position: relative">
           <youtube
             v-if="video.id"
@@ -56,8 +56,8 @@
         <WatchToolBar :video="video" :no-back-button="!isMobile">
           <template #buttons>
             <v-tooltip v-if="hasExtension" bottom>
-              <template #activator="{ on, attrs }">
-                <v-btn icon lg v-bind="attrs" @click="like()" v-on="on">
+              <template #activator="{ props }">
+                <v-btn icon lg v-bind="props" @click="like()">
                   <v-icon>
                     {{ mdiThumbUp }}
                   </v-icon>
@@ -66,14 +66,13 @@
               <span>{{ $t("views.watch.likeOnYoutube") }}</span>
             </v-tooltip>
             <v-tooltip v-if="!isMobile" bottom>
-              <template #activator="{ on, attrs }">
+              <template #activator="{ props }">
                 <v-btn
                   icon
                   lg
                   :color="theaterMode ? 'primary' : ''"
-                  v-bind="attrs"
+                  v-bind="props"
                   @click="toggleTheaterMode"
-                  v-on="on"
                 >
                   <v-icon>{{ mdiDockLeft }}</v-icon>
                 </v-btn>
@@ -81,14 +80,13 @@
               <span>{{ $t("views.watch.theaterMode") }}</span>
             </v-tooltip>
             <v-tooltip v-if="hasLiveTL" bottom>
-              <template #activator="{ on, attrs }">
+              <template #activator="{ props }">
                 <v-btn
                   icon
                   lg
                   :color="showTL ? 'primary' : ''"
-                  v-bind="attrs"
+                  v-bind="props"
                   @click="showTL = !showTL"
-                  v-on="on"
                 >
                   <v-icon>
                     {{ icons.tlChat }}
@@ -126,7 +124,7 @@
         </v-lazy>
       </div>
 
-      <div class="d-flex sidebar flex-column">
+      <div class="flex sidebar flex-col">
         <WatchQuickEditor
           v-if="role === 'admin' || role === 'editor'"
           :video="video"
@@ -194,7 +192,7 @@ export default {
     UploadScript,
     WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
     WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
-    KeyPress: () => import("vue-keypress"),
+    // KeyPress: () => import("vue-keypress"),
   },
   data() {
     return {
