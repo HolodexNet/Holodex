@@ -38,6 +38,27 @@ export function useVideos(
   );
 }
 
+interface VideoByIdApiQuery {
+  lang: string; // which langs to pull for clips, comma separated string.
+  c: string; // provide comments.
+}
+export function useVideoById(
+  id: string,
+  query: Ref<Partial<VideoByIdApiQuery>>,
+  config: QueryConfig<Video[]>
+) {
+  return useQuery<Video[]>(
+    ["video", id, query],
+    async (e) => {
+      const { data } = await axiosInstance.get(
+        `/videos/${id}?${stringifyQuery(query.value)}`
+      );
+      return data;
+    },
+    config
+  );
+}
+
 export function useLive(
   query: Ref<Partial<VideoApiQuery>>,
   config: QueryConfig<Video[]>
