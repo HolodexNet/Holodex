@@ -102,7 +102,6 @@ const liveQuery = useLive(
     org: site.currentOrg.name,
     max_upcoming_hours: 48,
     include: "live_info",
-    type: "stream,placeholder",
   })),
   {
     enabled: computed(() => currentTab.value === Tabs.LIVE),
