@@ -71,7 +71,7 @@
         @mouseleave="resizeMouseLeave(1)"
         @mouseup="resizeMouseUp()"
       >
-        <v-sheet
+        <div
           class="flex flex-col flex-grow flex-shrink"
           :width="
             activeChat.length < 2
@@ -143,7 +143,7 @@
               >{{ index + 1 + ". " + prf.Name }}</span
             >
           </v-card>
-        </v-sheet>
+        </div>
         <div
           v-if="activeChat.length > 0"
           id="vertical-resize-bar"
@@ -163,14 +163,9 @@
             "
           />
         </div>
-        <v-sheet
+        <div
           v-if="activeChat.length > 0"
           class="ChatPanelContainer"
-          :width="
-            activeChat.length < 2
-              ? 100 - videoPanelWidth1 + '%'
-              : 100 - videoPanelWidth2 + '%'
-          "
           :style="activeChatGridRow"
           variant="outlined"
         >
@@ -212,7 +207,7 @@
               >{{ index + 1 + ". " + prf.Name }}</span
             >
           </v-card>
-        </v-sheet>
+        </div>
       </div>
 
       <v-container
@@ -700,9 +695,21 @@ export default defineComponent({
     },
     activeChatGridRow() {
       if (this.activeChat.length < 4) {
-        return { "grid-template-rows": "1fr" };
+        return {
+          "grid-template-rows": "1fr",
+          width:
+            this.activeChat.length < 2
+              ? 100 - this.videoPanelWidth1 + "%"
+              : 100 - this.videoPanelWidth2 + "%",
+        };
       }
-      return { "grid-template-rows": "1fr 1fr" };
+      return {
+        "grid-template-rows": "1fr 1fr",
+        width:
+          this.activeChat.length < 2
+            ? 100 - this.videoPanelWidth1 + "%"
+            : 100 - this.videoPanelWidth2 + "%",
+      };
     },
     collabLinkIDs() {
       return this.collabLink.map((e) => getVideoIDFromUrl(e));

@@ -25,8 +25,8 @@
         {{ $t("views.app.close_btn") }}
       </v-btn>
     </v-overlay>
-    <v-card-subtitle class="py-1 d-flex justify-space-between">
-      <div :class="socket.connected ? 'green--text' : 'red--text'">
+    <v-card-subtitle class="py-1 flex justify-between">
+      <div :class="success ? 'text-success' : 'text-error'">
         TLdex [{{ tlLang }}]
       </div>
       <span>
@@ -130,6 +130,16 @@ import {
 import { useSocket } from "@/stores/socket";
 import { mdiArrowExpand, mdiSubtitlesOutline } from "@mdi/js";
 import { PropType } from "vue";
+
+const socketEvents = [
+  "reconnect_attempt",
+  "reconnect_failed",
+  "connect_error",
+  "connect",
+  "disconnect",
+  "subscribeSuccess",
+  "subscribeError",
+] as const;
 
 export default defineComponent({
   name: "LiveTranslations",
@@ -283,6 +293,10 @@ export default defineComponent({
     },
   },
   mounted() {
+    console.debug("Mounted");
+    socketEvents.forEach((e) => {
+      this.socket.socket.on(e, this[e]);
+    });
     if (this.socket.connected) {
       this.tlJoin();
     } else {
@@ -290,27 +304,12 @@ export default defineComponent({
     }
   },
   beforeUnmount() {
+    socketEvents.forEach((e) => {
+      this.socket.socket.off(e, this[e]);
+    });
     this.tlLeave();
   },
   methods: {
-    subscribeSuccess(obj: any) {
-      // make sure to not listen to duplicate events of the same id (i.e. same chat room open in mv)
-      if (obj.id === this.videoId && !this.success) {
-        console.log("Subbed to", this.tlLang, obj.id);
-        this.success = true;
-        this.registerListener();
-        this.socket.activeSockets += 1;
-      }
-      this.$emit("videoUpdate", obj);
-      this.showOverlay = false;
-    },
-    // Failed to join the chat room
-    subscribeError(obj: any) {
-      if (obj.id === this.videoId) {
-        this.overlayMessage = obj.message;
-        this.showOverlay = true;
-      }
-    },
     toggleBlockName(name: string) {
       this.tldex.blockUser(name);
     },
@@ -376,6 +375,7 @@ export default defineComponent({
     tlJoin() {
       if (!this.initSocket()) return;
 
+      console.log("TL JOIN()");
       // Grab first load chat history
       this.chatMixin.loadMessages(false, this.tlClient);
 
@@ -384,11 +384,13 @@ export default defineComponent({
         this.socket.socket.listeners(`${this.videoId}/${this.tlLang}`).length >
         0
       ) {
+        console.log("REGISTER TO LISTENER");
         this.registerListener();
         this.success = true;
         this.socket.activeSockets += 1;
       } else {
         // Try to join chat room with specified language
+        console.log("EMIT: SUBSCRIBE to video");
         this.socket.socket.emit("subscribe", {
           video_id: this.videoId,
           lang: this.tlLang,
@@ -399,7 +401,7 @@ export default defineComponent({
       const vm = this as any;
       // only disconnect and derement socket if it succeeded
       if (vm.success) {
-        vm.$store.commit("decrementActiveSockets");
+        this.socket.activeSockets -= 1;
         console.log("[TLdex] Decrement sockets...");
         // Check if there's another listener depending on this subscription, unsub if not
         if (
@@ -409,7 +411,7 @@ export default defineComponent({
           console.log(
             `[TLdex] Trying to unsubscribe from chat ${vm.video.id} ${vm.liveTlLang}...`
           );
-          vm.$socket.client.emit("unsubscribe", {
+          vm.socket.socket.emit("unsubscribe", {
             video_id: vm.video.id,
             lang: vm.liveTlLang,
           });
@@ -418,8 +420,12 @@ export default defineComponent({
         console.log(
           `[TLdex] Unregistered listeners for ${vm.video.id} ${vm.liveTlLang}...`
         );
-        vm.$store.dispatch("checkActiveSockets");
         // Reset for immediate reconnects
+        setTimeout(() => {
+          if (this.socket.activeSockets === 0) {
+            this.socket.socket.disconnect();
+          }
+        }, 5000);
         vm.success = false;
       }
     },
@@ -434,6 +440,7 @@ export default defineComponent({
       this.tlJoin();
     },
     initSocket() {
+      console.log("INIT SOCKET ENTER");
       // Disallow users from joining a chat room that doesn't exist yet
       // Backend will create a chatroom when it's 15 minutes before a stream
       if (
@@ -444,14 +451,62 @@ export default defineComponent({
       ) {
         this.overlayMessage = this.$t("views.watch.chat.status.notLive");
         this.showOverlay = true;
+        console.log("INIT SOCKET EXIT  - STREAM NOT LIVE YET");
+
         return false;
       }
 
       // Start the unified socket if it isn't already
       if (!this.socket.connected) {
+        console.log("INIT SOCKET ASK FOR CONNECT()");
         this.socket.socket.connect();
       }
       return true;
+    },
+    reconnect_attempt(attempt) {
+      console.log("[TLdex] Reconnecting...");
+      const vm = this as any;
+      vm.overlayMessage = `${this.$t(
+        "views.watch.chat.status.reconnecting"
+      )} ${attempt}/10`;
+    },
+    reconnect_failed() {
+      const vm = this as any;
+      vm.overlayMessage = this.$t("views.watch.chat.status.reconnectFailed");
+    },
+    connect_error(e: any) {
+      console.error(e);
+      console.error("[TLdex] Connect Errored...");
+      const vm = this as any;
+      vm.overlayMessage = this.$t("views.watch.chat.status.reconnectFailed");
+    },
+    connect() {
+      console.log("[TLdex] Connected...");
+      const vm = this as any;
+      vm.tlJoin();
+    },
+    disconnect() {
+      console.log("[TLdex] Disconnected...");
+      const vm = this as any;
+      vm.tlLeave();
+    },
+    subscribeSuccess(obj: any) {
+      // make sure to not listen to duplicate events of the same id (i.e. same chat room open in mv)
+      if (obj.id === this.videoId && !this.success) {
+        console.log("Subbed to", this.tlLang, obj?.id);
+        this.success = true;
+        this.registerListener();
+        this.socket.activeSockets += 1;
+      }
+      this.$emit("videoUpdate", obj);
+      this.showOverlay = false;
+    },
+    // Failed to join the chat room
+    subscribeError(obj: any) {
+      if (obj.id === this.videoId) {
+        this.overlayMessage = obj.message;
+        this.showOverlay = true;
+      }
     },
   },
 });

@@ -8,7 +8,7 @@ interface State {
   activeSockets: number;
 }
 
-const API_BASE_URL = `${window.location.origin}/api`;
+const API_BASE_URL = `${window.location.origin}`;
 
 // socket io events:
 
@@ -29,12 +29,13 @@ type SocketIOEvents = [
 ][number];
 export const useSocket = defineStore("socket-dexTL", {
   state: (): State => {
+    console.log("Constructing Socket: ", API_BASE_URL + "/api/socket.io/");
     const socket = io(API_BASE_URL, {
       reconnectionAttempts: 10,
       reconnectionDelay: 5000,
       reconnectionDelayMax: 20000,
       transports: ["websocket"],
-      upgrade: false,
+      upgrade: true,
       path: "/api/socket.io/",
       secure: true,
       autoConnect: false,
