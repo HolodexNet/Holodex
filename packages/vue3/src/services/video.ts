@@ -43,11 +43,11 @@ interface VideoByIdApiQuery {
   c: string; // provide comments.
 }
 export function useVideoById(
-  id: string,
+  id: MaybeRef<string>,
   query: Ref<Partial<VideoByIdApiQuery>>,
-  config: QueryConfig<Video[]>
+  config: QueryConfig<Video>
 ) {
-  return useQuery<Video[]>(
+  return useQuery<Video>(
     ["video", id, query],
     async (e) => {
       const { data } = await axiosInstance.get(

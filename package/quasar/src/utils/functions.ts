@@ -78,12 +78,13 @@ export function getVideoThumbnails(ytVideoKey, useWebP) {
  * @param weblang current UI language
  * @returns TL Lang preference.
  */
+const AvailableTLLangs = new Set(TL_LANGS.map((x) => x.value));
+
 export function getTLLangRecommendation(
   weblang: SupportedLangCodes
 ): TLLanguageCode {
-  const Langs = new Set(TL_LANGS.map((x) => x.value));
   const lang = String(weblang).split("-")[0].toLowerCase();
-  if (Langs.has(lang as any)) {
+  if (AvailableTLLangs.has(lang as any)) {
     return lang as TLLanguageCode;
   }
   return "en";

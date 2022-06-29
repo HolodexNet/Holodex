@@ -160,39 +160,36 @@
 </template>
 
 <script lang="ts">
-import Youtube from "@/components/player/YoutubePlayer.vue";
-import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
-import WatchInfo from "@/components/watch/WatchInfo.vue";
-import WatchSideBar from "@/components/watch/WatchSideBar.vue";
-import WatchLiveChat from "@/components/watch/WatchLiveChat.vue";
-import WatchHighlights from "@/components/watch/WatchHighlights.vue";
-import WatchToolBar from "@/components/watch/WatchToolbar.vue";
-import WatchComments from "@/components/watch/WatchComments.vue";
-import UploadScript from "@/components/tlscriptmanager/UploadScript.vue";
-import { decodeHTMLEntities, syncState } from "@/utils/functions";
-import { mapState } from "vuex";
+import { decodeHTMLEntities } from "@/utils/functions";
 import { mdiOpenInNew, mdiDockLeft, mdiThumbUp } from "@mdi/js";
+import { useLangStore, useSiteStore } from "@/stores";
+import { useLocalStorage } from "@vueuse/core";
+import { useVideoById } from "@/services/video";
 
 export default {
   name: "Watch",
-  metaInfo() {
-    return {
-      title: this.title,
-    };
-  },
   components: {
-    Youtube,
-    LoadingOverlay,
-    WatchInfo,
-    WatchLiveChat,
-    WatchSideBar,
-    WatchHighlights,
-    WatchToolBar,
-    WatchComments,
-    UploadScript,
     WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
     WatchPlaylist: () => import("@/components/watch/WatchPlaylist.vue"),
     // KeyPress: () => import("vue-keypress"),
+  },
+  setup() {
+    const site = useSiteStore();
+    const showTL = useLocalStorage("watch-showTL", false);
+    const showLiveChat = useLocalStorage("watch-showLiveChat", false);
+
+    const route = useRoute();
+    const id = computed(() => route.params.id as string);
+    const langStore = useLangStore();
+    const clipLangRef = computed(() => ({
+      lang: langStore.clipLangsCSV,
+      c: "1",
+    }));
+
+    const { data, isLoading } = useVideoById(id, clipLangRef, {
+      enabled: true,
+    });
+    return { site, showTL, showLiveChat, video: data, isLoading };
   },
   data() {
     return {
@@ -214,8 +211,6 @@ export default {
     };
   },
   computed: {
-    ...mapState("watch", ["video", "isLoading", "hasError"]),
-    ...syncState("watch", ["showTL", "showLiveChat"]),
     chatStatus: {
       get() {
         return {

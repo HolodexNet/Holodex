@@ -72,19 +72,6 @@ export const useSiteStore = defineStore("site", {
       shownUpdateDetails: false,
       lastShownInstallPrompt: 0,
     },
-
-    // settings: {
-    //   redirectMode: false,
-    //   autoplayVideo: false,
-    //   scrollMode: false,
-    //   hideThumbnail: false,
-    //   hidePlaceholder: false,
-    //   hideCollabStreams: false,
-    //   ignoredTopics: [],
-    //   blockedChannels: [],
-    //   homeViewMode: "grid",
-    //   gridDensity: 0,
-    // },
   }),
   getters: {
     isEditorOrUp: (state) => {
