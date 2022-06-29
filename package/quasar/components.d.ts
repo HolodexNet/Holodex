@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    About: typeof import('./src/views/About.vue')['default']
     App: typeof import('./src/App.vue')['default']
     AppFrame: typeof import('./src/components/AppFrame.vue')['default']
     Button: typeof import('./src/stories/Button.vue')['default']
@@ -26,6 +27,7 @@ declare module '@vue/runtime-core' {
     TodoList: typeof import('./src/components/TodoList.vue')['default']
     TranslationClient: typeof import('./src/views/TranslationClient.vue')['default']
     TranslationScripter: typeof import('./src/views/TranslationScripter.vue')['default']
+    TwitterFeed: typeof import('./src/components/about/TwitterFeed.vue')['default']
     UserCard: typeof import('./src/components/login/UserCard.vue')['default']
     VideoCard: typeof import('./src/components/video/card/VideoCard.vue')['default']
     VideoCardGrid: typeof import('./src/components/video/card/VideoCardGrid.vue')['default']

@@ -353,21 +353,21 @@ export function checkIOS() {
 // Wait for element is deprecated, use vue-use's `useMutationObserver` instead
 // https://vueuse.org/core/useMutationObserver/
 
-// export function waitForElement(selector) {
-//     return new Promise((resolve) => {
-//         if (document.querySelector(selector)) {
-//             resolve(document.querySelector(selector));
-//             return;
-//         }
-//         const observer = new MutationObserver(() => {
-//             if (document.querySelector(selector)) {
-//                 resolve(document.querySelector(selector));
-//                 observer.disconnect();
-//             }
-//         });
-//         observer.observe(document.body, {
-//             childList: true,
-//             subtree: true,
-//         });
-//     });
-// }
+export function waitForElement(selector: any) {
+  return new Promise((resolve) => {
+    if (document.querySelector(selector)) {
+      resolve(document.querySelector(selector));
+      return;
+    }
+    const observer = new MutationObserver(() => {
+      if (document.querySelector(selector)) {
+        resolve(document.querySelector(selector));
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  });
+}
