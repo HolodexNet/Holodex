@@ -13,6 +13,7 @@
   "dependencies": {
     "@kvs/indexeddb": "^2.1.1",
     "@tailwindcss/line-clamp": "^0.4.0",
+    "@tanstack/virtual-core": "^3.0.0-alpha.1",
     "@vueuse/core": "^8.6.0",
     "axios": "^0.27.2",
     "color": "^4.2.3",
