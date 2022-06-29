@@ -314,18 +314,21 @@ export default defineComponent({
       this.tldex.blockUser(name);
     },
     registerListener() {
+      console.log("[TLDex] Registered Message Handler");
       this.socket.socket.on(
         `${this.videoId}/${this.tlLang}`,
         this.handleMessage
       );
     },
     unregisterListener() {
+      console.log("[TLDex] De-registered Message Handler");
       this.socket.socket.off(
         `${this.videoId}/${this.tlLang}`,
         this.handleMessage
       );
     },
     handleMessage(msg: Message) {
+      console.log(msg);
       // if no type, process as regular message
       if (!msg.type) {
         // ignore blocked channels, moderator and verified messages if disabled

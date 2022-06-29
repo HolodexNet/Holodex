@@ -127,6 +127,7 @@
             :tl-lang="TLLang.value"
             :tl-client="true"
             :video="{ id: mainID }"
+            :video-id="mainID"
             :class="{
               'flex-shrink': true,
               'tl-full-height': false,
@@ -712,7 +713,7 @@ export default defineComponent({
       };
     },
     collabLinkIDs() {
-      return this.collabLink.map((e) => getVideoIDFromUrl(e));
+      return this.collabLinks.map((e) => getVideoIDFromUrl(e));
     },
   },
   watch: {
@@ -745,7 +746,6 @@ export default defineComponent({
       this.firstLoad = true;
       this.modalNexus = true;
       this.modalMode = 3;
-      this.collabLink = [];
       this.unloadVideo();
       this.unloadAll();
       this.checkLoginValidity();
