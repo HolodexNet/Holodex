@@ -251,15 +251,15 @@
         @keydown.down.exact="profileDown()"
         @keydown.tab.exact.prevent="profileDown()"
         @keydown.shift.tab.exact.prevent="profileJumpToDefault()"
-        @keydown.ctrl.49.exact.prevent="profileJump(0)"
-        @keydown.ctrl.50.exact.prevent="profileJump(1)"
-        @keydown.ctrl.51.exact.prevent="profileJump(2)"
-        @keydown.ctrl.52.exact.prevent="profileJump(3)"
-        @keydown.ctrl.53.exact.prevent="profileJump(4)"
-        @keydown.ctrl.54.exact.prevent="profileJump(5)"
-        @keydown.ctrl.55.exact.prevent="profileJump(6)"
-        @keydown.ctrl.56.exact.prevent="profileJump(7)"
-        @keydown.ctrl.57.exact.prevent="profileJump(8)"
+        @keydown.ctrl.0.exact.prevent="profileJump(0)"
+        @keydown.ctrl.1.exact.prevent="profileJump(1)"
+        @keydown.ctrl.2.exact.prevent="profileJump(2)"
+        @keydown.ctrl.3.exact.prevent="profileJump(3)"
+        @keydown.ctrl.4.exact.prevent="profileJump(4)"
+        @keydown.ctrl.5.exact.prevent="profileJump(5)"
+        @keydown.ctrl.6.exact.prevent="profileJump(6)"
+        @keydown.ctrl.7.exact.prevent="profileJump(7)"
+        @keydown.ctrl.8.exact.prevent="profileJump(8)"
         @keydown.ctrl.space="ctrlSpace()"
         @keydown.ctrl.left="ctrlLeft()"
         @keydown.ctrl.right="ctrlRight()"
@@ -806,6 +806,7 @@ import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { tlClientTimeFormat } from "./functions";
 import { useSiteStore } from "@/stores";
+import { Entry, Profile, TransactionLogItem } from "./types";
 
 export default defineComponent({
   metaInfo() {
@@ -859,7 +860,7 @@ export default defineComponent({
       tableHeight: 0,
       selectedEntry: -1,
       fontSize: 15,
-      videoData: undefined,
+      videoData: undefined as Video | undefined,
       transactionLog: [] as TransactionLogItem[],
       loggerTimer: undefined as number | undefined,
       // ------ COLOUR -------
