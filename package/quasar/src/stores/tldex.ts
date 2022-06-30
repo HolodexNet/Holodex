@@ -47,6 +47,11 @@ export const useTLStore = defineStore("pref-dexTL", {
       liveTlBlocked: [],
     };
   },
+  getters: {
+    blockset: (state): Set<string> => {
+      return new Set(state.liveTlBlocked);
+    },
+  },
   actions: {
     saveNewDefaults(newState: State) {
       this.$state = newState;
