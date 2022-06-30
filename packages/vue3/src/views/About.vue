@@ -1,14 +1,14 @@
 <template>
   <v-container key="aboutpg" class="flex flex-col align-middle pt-3">
     <v-col cols="12">
-      <div class="text-h4">
+      <div class="text-3xl">
         {{ $t("component.mainNav.about") }}
       </div>
     </v-col>
     <!-- STATS -->
-    <!-- <stats /> -->
+    <holodex-stats />
     <v-row>
-      <v-col cols="12" md="4" lg="4" xl="4">
+      <v-col cols="12" md="4" lg="4" xl="3">
         <!-- CREDITS -->
         <v-card>
           <v-card-title>
@@ -107,7 +107,7 @@
         </v-card>
       </v-col>
       <!-- CHANGELOG -->
-      <v-col cols="12" md="4" lg="4" xl="4">
+      <v-col cols="12" md="4" lg="4" xl="5">
         <v-card>
           <v-card-title>
             <a
@@ -243,6 +243,12 @@
               </v-expansion-panel-title>
               <v-expansion-panel-text>
                 <div v-html="$t('about.faq.support.contents.0')" />
+                <button
+                  class="btn btn-sm btn-primary btn-wide mt-2"
+                  href="https://ko-fi.com/holodex"
+                >
+                  Ko-fi: Support Holodex
+                </button>
               </v-expansion-panel-text>
             </v-expansion-panel>
             <v-expansion-panel>
