@@ -12,7 +12,7 @@
         v-for="(item, index) in tlHistory"
         :key="item.key"
         :source="item"
-        :hide-author="hideAuthor(item, index)"
+        :hide-author="hideAuthor(index)"
       />
     </transition-group>
     <!-- Slot for adding a Load More button on top of Messages -->
@@ -41,12 +41,12 @@ export default {
     return { isIOS: checkIOS() };
   },
   methods: {
-    hideAuthor(item, index) {
+    hideAuthor(index) {
       return !(
         index === 0 ||
         index === this.tlHistory.length - 1 ||
-        item.name !== this.tlHistory[index - 1].name ||
-        !!item.breakpoint
+        this.tlHistory[index].name !== this.tlHistory[index - 1].name ||
+        !!this.tlHistory[index].breakpoint
       );
     },
     scrollToBottom() {

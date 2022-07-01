@@ -201,57 +201,6 @@ export default defineComponent({
       mdiSubtitlesOutline,
     };
   },
-  //   sockets: {
-  //     reconnect_attempt(attempt) {
-  //       console.log("[TLdex] Reconnecting...");
-  //       const vm = this as any;
-  //       vm.overlayMessage = `${this.$t(
-  //         "views.watch.chat.status.reconnecting"
-  //       )} ${attempt}/10`;
-  //     },
-  //     reconnect_failed() {
-  //       const vm = this as any;
-  //       vm.overlayMessage = this.$t("views.watch.chat.status.reconnectFailed");
-  //     },
-  //     connect_error() {
-  //       console.error("[TLdex] Connect Errored...");
-  //       const vm = this as any;
-  //       vm.overlayMessage = this.$t("views.watch.chat.status.reconnectFailed");
-  //     },
-  //     connect() {
-  //       console.log("[TLdex] Connected...");
-  //       const vm = this as any;
-  //       vm.tlJoin();
-  //     },
-  //     disconnect() {
-  //       console.log("[TLdex] Disconnected...");
-  //       const vm = this as any;
-  //       vm.tlLeave();
-  //     },
-  //     // Sucessfully connected to live stream chat
-  //     subscribeSuccess(obj) {
-  //       const vm = this as any;
-  //       // make sure to not listen to duplicate events of the same id (i.e. same chat room open in mv)
-  //       if (obj.id === vm.video.id && !vm.success) {
-  //         console.log("Subbed to", vm.liveTlLang, obj.id);
-  //         vm.success = true;
-  //         vm.registerListener();
-  //         vm.$store.commit("incrementActiveSockets");
-  //       }
-  //       this.$emit("videoUpdate", obj);
-  //       vm.showOverlay = false;
-  //       vm.isLoading = false;
-  //     },
-  //     // Failed to join the chat room
-  //     subscribeError(obj) {
-  //       const vm = this as any;
-  //       if (obj.id === vm.video.id) {
-  //         vm.overlayMessage = obj.message;
-  //         vm.isLoading = false;
-  //         vm.showOverlay = true;
-  //       }
-  //     },
-  //   },
   computed: {
     toDisplay() {
       if (!this.filteredMessages.length || !this.chatMixin.showSubtitle)
@@ -273,12 +222,9 @@ export default defineComponent({
         );
       });
     },
-    blockedNames() {
-      return new Set(this.tldex.liveTlBlocked);
-    },
     filteredMessages() {
       return this.chatMixin.tlHistory.value.filter(
-        (m) => !this.blockedNames.has(m.name)
+        (m) => !this.tldex.blockset.has(m.name)
       );
     },
   },
@@ -332,7 +278,7 @@ export default defineComponent({
       // if no type, process as regular message
       if (!msg.type) {
         // ignore blocked channels, moderator and verified messages if disabled
-        if (this.blockedNames.has(msg.name)) return;
+        if (this.tldex.blockset.has(msg.name)) return;
 
         if (this.tlClient) {
           if (
