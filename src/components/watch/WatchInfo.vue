@@ -55,7 +55,7 @@
         </span>
       </template>
       <span
-        v-show="video.topic_id"
+        v-if="video.topic_id"
         class="mx-1"
         style="text-transform: capitalize"
       >
