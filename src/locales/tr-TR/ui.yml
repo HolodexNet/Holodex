@@ -305,6 +305,17 @@ views:
     likeOnYoutube: Videoyu Youtube'da beğen
     uploadPanel:
       title: Senaryo Yükle
+      usernameText: Çeviri şu kullanıcı adı altında yüklencek
+      usernameChange: Değiştir
+      tlLang: Çeviri Dili
+      headerStart: Başlangıç
+      headerEnd: Bitiş
+      headerText: Metin
+      cancelBtn: İptal
+      okBtn: Tamam
+      notifTextErr: DOSYA AYRIŞTIRILAMADI (BOZUK DOSYA?)
+      notifTextParsing: Dosya ayrıştırılıyor...
+      notifTextErrExt: Tanınamayan dosya uzantısı.
   favorites:
     promptForAction: >-
       Favori VTuberlarının bir listesini oluştur ve en son kliplerini ve yayınlarını bu sayfada görüntüle
@@ -337,6 +348,11 @@ views:
       - Google ile giriş yap
       - Discord ile giriş yap
       - Twitter ile giriş yap
+    username: Kullanıcı Adı
+    usernameBtn:
+      - Değiştir
+      - Onayla
+      - Kaydet
   multiview:
     confirmOverwrite: Geçerli düzen sıfırlansın mı?
     confirmOverwriteYes: Onayla
@@ -407,6 +423,13 @@ views:
       three: Youtube'un yayın sohbetindeki bellek sızıntısını düzeltir
       four: >-
         Youtube oynatıcısının deneysel özelliklerini düzeltir (Çoklu yayınları devre dışı kalması, bekleme odası küçük resminin görünmemesi) ve daha fazlası!
+  tlClient:
+    menu:
+      title: Menü
+      setting: TLDex Odası Ayarları
+      loadVideo: Videoyu Göster
+      unloadVideo: Videoyu gizle
+      loadChat: Yayın Çevirisine YT Chat'ini Ekle
   tlManager:
     title: Senaryo yöneticisi
     headerID: Video ID'si
