@@ -71,6 +71,7 @@ export default {
             return this.$store.getters["settings/liveTlBlockedNames"];
         },
         startTimeMillis() {
+            if (!this.video.available_at) return null;
             return Number(dayjs(this.video.available_at));
         },
     },
@@ -125,7 +126,7 @@ export default {
         },
         parseMessage(msg) {
             msg.timestamp = +msg.timestamp;
-            msg.relativeMs = msg.timestamp - this.startTimeMillis;
+            msg.relativeMs = this.startTimeMillis ? msg.timestamp - this.startTimeMillis : 0;
             msg.key = msg.name + msg.timestamp + msg.message;
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://") && !msg.parsed) {

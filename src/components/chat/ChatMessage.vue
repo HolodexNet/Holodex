@@ -29,7 +29,7 @@
       </div>
       <a class="tl-message" :data-time="source.relativeMs/1000">
         <span v-if="source.timestamp" class="tl-caption mr-1">
-          {{ liveTlShowLocalTime ? realTime : displayTime }}
+          {{ liveTlShowLocalTime || !displayTime ? realTime : displayTime }}
         </span>
         <span v-if="source.parsed" class="text--primary" v-html="source.parsed" />
         <span v-else class="text--primary">{{ source.message }}</span>
@@ -103,6 +103,7 @@ export default {
             return realTimestamp(this.source.timestamp);
         },
         displayTime() {
+            if (!this.source.relativeMs) return null;
             return (Math.sign(this.source.relativeMs) < 0 ? "-" : "") + formatDuration(Math.abs(this.source.relativeMs));
         },
         ...mapState("settings", [
