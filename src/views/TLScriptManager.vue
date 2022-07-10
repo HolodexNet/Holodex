@@ -58,12 +58,11 @@
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
-                  v-if="dt.video_id"
                   icon
                   lg
                   v-bind="attrs"
                   v-on="on"
-                  @click="openTlClient(dt.video_id)"
+                  @click="openTlClient(dt.video_id, dt.custom_video_id)"
                 >
                   <v-icon>
                     {{ mdiTypewriter }}
@@ -311,7 +310,7 @@ export default {
         },
         openTlClient(ID, custom_video_id) {
             if (this.$store.state.userdata?.user) {
-                this.$router.push({ path: "/scripteditor", query: { video: `YT_${ID}`, custom_video_id } });
+                this.$router.push({ path: "/scripteditor", query: { video: custom_video_id || `YT_${ID}` } });
             } else {
                 this.$router.push({ path: "/login" });
             }

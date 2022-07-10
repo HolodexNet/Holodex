@@ -1,7 +1,11 @@
 <template>
   <tr>
-    <td>{{ timeStampStart }}</td>
-    <td>{{ timeStampEnd }}</td>
+    <td style="white-space: nowrap">
+      {{ timeStampStart }}
+    </td>
+    <td style="white-space: nowrap">
+      {{ timeStampEnd }}
+    </td>
     <td>{{ profileName }}</td>
     <td class="EntryContainer" :style="textStyle" colspan="2">
       <span style="word-wrap:break-word">
@@ -12,6 +16,8 @@
 </template>
 
 <script lang="ts">
+import { dayjs } from "@/utils/time";
+
 export default {
     name: "Entrytr",
     props: {
@@ -39,9 +45,17 @@ export default {
             type: String,
             default: "",
         },
+        realTime: {
+            type: Number,
+            default: 0,
+        },
+        useRealTime: Boolean,
     },
     computed: {
         timeStampStart() {
+            if (this.useRealTime) {
+                return dayjs(Number.parseFloat(this.realTime)).format("h:mm:ss.SSS A");
+            }
             let timeRaw = this.time;
             let timeString = "";
 
@@ -83,9 +97,11 @@ export default {
             return timeString;
         },
         timeStampEnd() {
+            if (this.useRealTime) {
+                return dayjs(Number.parseFloat(this.realTime) + this.duration).format("h:mm:ss.SSS A");
+            }
             let timeRaw = this.time + this.duration;
             let timeString = "";
-
             let t = Math.floor(timeRaw / 60 / 60 / 1000);
             timeRaw -= t * 60 * 60 * 1000;
             if (t < 10) {

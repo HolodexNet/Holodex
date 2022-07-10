@@ -71,6 +71,14 @@
         >
           Time Shift
         </v-btn>
+        <v-btn
+          v-if="videoData && videoData.id === 'custom'"
+          small
+          outlined
+          @click="modalMode = 10; modalNexus = true; linkInput = activeURLStream"
+        >
+          Change Custom Link
+        </v-btn>
         <!-- <v-btn
           small
           color="warning"
@@ -140,6 +148,8 @@
                   :profile-name="profile[entry.Profile].Name"
                   :cc="profile[entry.Profile].useCC ? profile[entry.Profile].CC : ''"
                   :oc="profile[entry.Profile].useOC ? profile[entry.Profile].OC : ''"
+                  :use-real-time="videoData.id === 'custom'"
+                  :real-time="entry.realTime"
                   @click.native="selectedEntry = index;"
                 />
                 <tr v-if="selectedEntry === index" :key="index">
@@ -578,33 +588,6 @@
         </v-container>
       </v-card>
 
-      <!---------    EDITOR MODE    --------->
-      <v-card v-if="modalMode === 8">
-        <v-container>
-          <v-card-title>
-            {{ $t("views.scriptEditor.menu.editorMode") }}
-          </v-card-title>
-          <v-card-actions v-if="!editorMode">
-            <v-btn color="primary" :disabled="!elevatedUser" @click="activateEditorMode();">
-              {{ elevatedUser ? $t("views.scriptEditor.editorModePanel.activateMode") : $t("views.scriptEditor.editorModePanel.roleWarning") }}
-            </v-btn>
-          </v-card-actions>
-          <v-card v-if="editorMode">
-            <v-select
-              :items="tlList"
-              item-value="value"
-              :label="$t('views.scriptEditor.editorModePanel.filterTranslator')"
-              @change="filterTlChange"
-            />
-            <v-card-actions class="d-flex flex-row justify-center">
-              <v-btn color="primary" @click="deactivateEditorMode();">
-                {{ $t("views.scriptEditor.editorModePanel.deactivateMode") }}
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-container>
-      </v-card>
-
       <!---------    TIME SHIFT    --------->
       <v-card v-if="modalMode === 9">
         <v-container>
@@ -627,6 +610,31 @@
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
             <v-btn style="margin-left:auto" @click="modalNexus = false; shiftTime()">
+              {{ $t("views.tlClient.okBtn") }}
+            </v-btn>
+          </v-card-actions>
+        </v-container>
+      </v-card>
+
+      <v-card v-if="modalMode === 10">
+        <v-container>
+          <v-card-title>
+            Change stream link
+          </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="linkInput"
+              label="New link"
+              outlined
+              dense
+              hide-details
+            />
+          </v-card-text>
+          <v-card-actions>
+            <v-btn @click="modalNexus = false;">
+              {{ $t("views.tlClient.cancelBtn") }}
+            </v-btn>
+            <v-btn style="margin-left:auto" @click="modalNexus = false;">
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
@@ -704,6 +712,7 @@ export default {
             addProfileNameString: "",
             importPanelShow: false,
             offsetInput: 0,
+            linkInput: "",
             // ------ SETTING ------
             TLLang: TL_LANGS[0],
             // ---- ACTIVE VIDEO ----
@@ -1107,7 +1116,7 @@ export default {
                                     lang: this.TLLang.value,
                                     id: entry.id,
                                     name: this.userdata.user.username,
-                                    timestamp: Math.floor((this.videoData.start_actual || Date.now()) + entry.Time),
+                                    timestamp: Math.floor(this.videoData.start_actual ? (this.videoData.start_actual) + entry.Time : entry.realTime),
                                     message: entry.SText,
                                     duration: Math.floor(entry.Duration),
                                 },
@@ -1121,7 +1130,7 @@ export default {
                                 data: {
                                     tempid: entry.id,
                                     name: this.userdata.user.username,
-                                    timestamp: Math.floor((this.videoData.start_actual || Date.now()) + entry.Time),
+                                    timestamp: Math.floor(this.videoData.start_actual ? (this.videoData.start_actual) + entry.Time : entry.realTime),
                                     message: entry.SText,
                                     duration: Math.floor(entry.Duration),
                                 },
@@ -1158,13 +1167,11 @@ export default {
                                     }
                                 }
                             });
-                            // eslint-disable-next-line no-alert
-                            alert("Successfully saved");
                         }
                     }).catch((err) => {
                         console.log(`ERR : ${err}`);
                         // eslint-disable-next-line no-alert
-                        alert(`Failed: ${err}`);
+                        alert(`Failed to save: ${err}`);
                     });
                 }
             }
@@ -2251,158 +2258,6 @@ export default {
         },
         //= ======================== TIMELINE CONTROLLER ========================
 
-        // -------------------------- EDITOR PANEL ------------------------
-        activateEditorMode() {
-            this.editorMode = true;
-            backendApi.chatHistory(this.videoData.id, {
-                lang: this.TLLang.value,
-                verified: 0,
-                moderator: 0,
-                vtuber: 0,
-                limit: 100000,
-                mode: 1,
-            }).then(({ data }) => {
-                this.tlList = Array.from(new Set(data.map((e) => (e.name))));
-                this.tlList.unshift("None");
-                const fetchChat = data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
-                    e.timestamp -= this.videoData.start_actual;
-                    return e;
-                });
-                this.timecardIdx = [];
-                this.entries = [];
-
-                for (let i = 0; i < fetchChat.length; i += 1) {
-                    const dt = {
-                        id: fetchChat[i].id,
-                        Time: fetchChat[i].timestamp,
-                        SText: fetchChat[i].message,
-                        Profile: 0,
-                    };
-
-                    if (fetchChat[i].duration) {
-                        this.entries.push({
-                            ...dt,
-                            Duration: Number(fetchChat[i].duration),
-                        });
-                    } else if (i === fetchChat.length - 1) {
-                        this.entries.push({
-                            ...dt,
-                            Duration: 3000,
-                        });
-                    } else {
-                        this.entries.push({
-                            ...dt,
-                            Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
-                        });
-                    }
-
-                    if (i === fetchChat.length - 1) {
-                        this.reloadDisplayCards();
-                    }
-                }
-            });
-        },
-        async filterTlChange(val) {
-            let fetchChat = await (await backendApi.chatHistory(this.videoData.id, {
-                lang: this.TLLang.value,
-                verified: 0,
-                moderator: 0,
-                vtuber: 0,
-                limit: 100000,
-                mode: 1,
-            })).data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
-                e.timestamp -= this.videoData.start_actual;
-                return e;
-            });
-
-            this.timecardIdx = [];
-            this.entries = [];
-
-            if (val !== "None") {
-                fetchChat = fetchChat.filter((e) => (e.name === val));
-            }
-
-            for (let i = 0; i < fetchChat.length; i += 1) {
-                const dt = {
-                    id: fetchChat[i].id,
-                    Time: fetchChat[i].timestamp,
-                    SText: fetchChat[i].message,
-                    Profile: 0,
-                };
-
-                if (fetchChat[i].duration) {
-                    this.entries.push({
-                        ...dt,
-                        Duration: Number(fetchChat[i].duration),
-                    });
-                } else if (i === fetchChat.length - 1) {
-                    this.entries.push({
-                        ...dt,
-                        Duration: 3000,
-                    });
-                } else {
-                    this.entries.push({
-                        ...dt,
-                        Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
-                    });
-                }
-
-                if (i === fetchChat.length - 1) {
-                    this.reloadDisplayCards();
-                }
-            }
-        },
-        async deactivateEditorMode() {
-            this.editorMode = false;
-
-            this.timecardIdx = [];
-            this.entries = [];
-
-            const fetchChat = await (await backendApi.chatHistory(this.videoData.id, {
-                lang: this.TLLang.value,
-                verified: 0,
-                moderator: 0,
-                vtuber: 0,
-                limit: 100000,
-                mode: 1,
-                creator_id: this.userdata.user.id,
-            })).data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
-                e.timestamp -= this.videoData.start_actual;
-                return e;
-            });
-
-            for (let i = 0; i < fetchChat.length; i += 1) {
-                const dt = {
-                    id: fetchChat[i].id,
-                    Time: fetchChat[i].timestamp,
-                    SText: fetchChat[i].message,
-                    Profile: 0,
-                };
-
-                if (fetchChat[i].duration) {
-                    this.entries.push({
-                        ...dt,
-                        Duration: Number(fetchChat[i].duration),
-                    });
-                } else if (i === fetchChat.length - 1) {
-                    this.entries.push({
-                        ...dt,
-                        Duration: 3000,
-                    });
-                } else {
-                    this.entries.push({
-                        ...dt,
-                        Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
-                    });
-                }
-
-                if (i === fetchChat.length - 1) {
-                    this.reloadDisplayCards();
-                }
-            }
-        },
-        //= ======================== EDITOR PANEL ========================
-
         async checkLoginValidity() {
             const check = await backendApi.loginIsValid(this.userdata.jwt);
             if (check === false) {
@@ -2508,7 +2363,7 @@ export default {
 
             this.timecardIdx = [];
             this.entries = [];
-            let fetchChat = await (await backendApi.chatHistory(vidData.id, {
+            let fetchChat = (await backendApi.chatHistory(vidData.id, {
                 lang: this.TLLang.value,
                 verified: 0,
                 moderator: 0,
@@ -2520,15 +2375,15 @@ export default {
             })).data;
 
             fetchChat = fetchChat.filter((e) => (!this.videoData?.start_actual || e.timestamp >= this.videoData?.start_actual)).map((e) => {
-                const timestamp = e.timestamp - (this.videoData?.start_actual || fetchChat[0].timestamp || 0);
-                console.log(e.timestamp);
-                return { ...e, timestamp };
+                const timestampShifted = e.timestamp - (this.videoData?.start_actual || fetchChat[0].timestamp || 0);
+                return { ...e, timestampShifted };
             });
 
             for (let i = 0; i < fetchChat.length; i += 1) {
                 const dt = {
                     id: fetchChat[i].id,
-                    Time: fetchChat[i].timestamp,
+                    Time: fetchChat[i].timestampShifted,
+                    realTime: fetchChat[i].timestamp,
                     SText: fetchChat[i].message,
                     Profile: 0,
                 };
@@ -2575,6 +2430,7 @@ export default {
             this.entries = this.entries.map((e) => ({
                 ...e,
                 Time: Math.max(e.Time + offset * 1000, 0),
+                realTime: Math.max(Number.parseFloat(e.realTime) + offset * 1000, 0),
             }));
             this.entries.forEach((e) => this.logChange(e.id));
             this.offsetInput = 0;
