@@ -2479,6 +2479,7 @@ export default {
             this.$router.push({ path: "/login" });
         },
         async settingOKClick() {
+            if (!this.activeURLStream) return;
             this.activeURLInput = this.activeURLStream;
             let vidData: any = {
                 id: "custom",
@@ -2553,8 +2554,6 @@ export default {
                     this.reloadDisplayCards();
                 }
             }
-
-            console.log(this.entries);
 
             if (this.vidPlayer) {
                 this.unloadVideo();
