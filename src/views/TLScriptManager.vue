@@ -272,7 +272,6 @@ export default {
         deleteClick(ID, custom_video_id) {
             this.modalNexus = true;
             this.modalMode = 2;
-            console.log(custom_video_id || ID);
             this.selectedID = custom_video_id || ID;
             this.reloadDeleteEntries();
         },

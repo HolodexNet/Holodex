@@ -71,13 +71,13 @@
         >
           Time Shift
         </v-btn>
-        <v-btn
+        <!-- <v-btn
           small
           color="warning"
           @click="modalMode = 8; modalNexus = true"
         >
           {{ $t("views.scriptEditor.menu.editorMode") }}
-        </v-btn>
+        </v-btn> -->
         <v-btn
           small
           color="error"
@@ -643,9 +643,9 @@ import Entrytr from "@/components/tlscripteditor/Entrytr.vue";
 import EnhancedEntry from "@/components/tlscripteditor/EnhancedEntry.vue";
 import ImportFile from "@/components/tlscripteditor/ImportFile.vue";
 import ExportFile from "@/components/tlscripteditor/ExportToFile.vue";
-import { TL_LANGS } from "@/utils/consts";
+import { TL_LANGS, VIDEO_URL_REGEX } from "@/utils/consts";
 import { mdiPlay, mdiStop, mdiCog, mdiCogOff, mdiKeyboard } from "@mdi/js";
-import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
+import { videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 
 export default {
@@ -1107,7 +1107,7 @@ export default {
                                     lang: this.TLLang.value,
                                     id: entry.id,
                                     name: this.userdata.user.username,
-                                    timestamp: Math.floor(this.videoData.start_actual + entry.Time),
+                                    timestamp: Math.floor((this.videoData.start_actual || Date.now()) + entry.Time),
                                     message: entry.SText,
                                     duration: Math.floor(entry.Duration),
                                 },
@@ -1121,7 +1121,7 @@ export default {
                                 data: {
                                     tempid: entry.id,
                                     name: this.userdata.user.username,
-                                    timestamp: Math.floor(this.videoData.start_actual + entry.Time),
+                                    timestamp: Math.floor((this.videoData.start_actual || Date.now()) + entry.Time),
                                     message: entry.SText,
                                     duration: Math.floor(entry.Duration),
                                 },
@@ -1130,7 +1130,14 @@ export default {
                     }
                 });
 
-                const postTLOption = { videoId: this.videoData.id, jwt: this.userdata.jwt, body: processedLog, lang: this.TLLang.value, override: this.editorMode };
+                const postTLOption = {
+                    videoId: this.videoData.id,
+                    jwt: this.userdata.jwt,
+                    body: processedLog,
+                    lang: this.TLLang.value,
+                    override: this.editorMode,
+                    ...this.videoData.id === "custom" && { custom_video_id: this.videoData.custom_video_id },
+                };
                 if (forget) {
                     backendApi.postTLLog(postTLOption);
                 } else {
@@ -1151,9 +1158,13 @@ export default {
                                     }
                                 }
                             });
+                            // eslint-disable-next-line no-alert
+                            alert("Successfully saved");
                         }
                     }).catch((err) => {
                         console.log(`ERR : ${err}`);
+                        // eslint-disable-next-line no-alert
+                        alert(`Failed: ${err}`);
                     });
                 }
             }
@@ -1497,49 +1508,51 @@ export default {
                     if (this.timerActive) {
                         this.timerActive = false;
                     }
-                    const StreamURL = getVideoIDFromUrl(this.activeURLStream);
-                    if (StreamURL) {
-                        this.vidType = StreamURL.type;
-                        switch (StreamURL.type) {
-                            case "twitch":
-                                this.loadVideoTW(StreamURL.id, true);
-                                break;
+                    const isCustom = !VIDEO_URL_REGEX.test(this.activeURLStream);
+                    if (!isCustom) this.loadVideoYT(this.activeURLStream.match(VIDEO_URL_REGEX)[5]);
+                    // const StreamURL = getVideoIDFromUrl(this.activeURLStream);
+                    // if (StreamURL) {
+                    //     this.vidType = StreamURL.type;
+                    //     switch (StreamURL.type) {
+                    //         case "twitch":
+                    //             this.loadVideoTW(StreamURL.id, true);
+                    //             break;
 
-                            case "twitch_vod":
-                                this.loadVideoTW(StreamURL.id, false);
-                                break;
+                    //         case "twitch_vod":
+                    //             this.loadVideoTW(StreamURL.id, false);
+                    //             break;
 
-                            case "twitcast":
-                                this.setupIframeTC(StreamURL.id, StreamURL.id, true);
-                                break;
+                    //         case "twitcast":
+                    //             this.setupIframeTC(StreamURL.id, StreamURL.id, true);
+                    //             break;
 
-                            case "twitcast_vod":
-                                this.setupIframeTC(StreamURL.id, StreamURL.channel.name, false);
-                                break;
+                    //         case "twitcast_vod":
+                    //             this.setupIframeTC(StreamURL.id, StreamURL.channel.name, false);
+                    //             break;
 
-                            case "niconico":
-                                // niconico doesn't allow third party player hosting... at least for now...
-                                // this.setupIframeNC(StreamURL.id, true);
-                                break;
+                    //         case "niconico":
+                    //             // niconico doesn't allow third party player hosting... at least for now...
+                    //             // this.setupIframeNC(StreamURL.id, true);
+                    //             break;
 
-                            case "niconico_vod":
-                                this.setupIframeNC(StreamURL.id, false);
-                                break;
+                    //         case "niconico_vod":
+                    //             this.setupIframeNC(StreamURL.id, false);
+                    //             break;
 
-                            case "bilibili":
-                                // bilibili live player is flash -> the one in FLASH link in the share button
-                                // https://s1.hdslb.com/bfs/static/blive/live-assets/player/flash/pageplayer-latest.swf?room_id=0&cid=xxxxxx&state=LIVE
-                                break;
+                    //         case "bilibili":
+                    //             // bilibili live player is flash -> the one in FLASH link in the share button
+                    //             // https://s1.hdslb.com/bfs/static/blive/live-assets/player/flash/pageplayer-latest.swf?room_id=0&cid=xxxxxx&state=LIVE
+                    //             break;
 
-                            case "bilibili_vod":
-                                this.setupIframeBL(StreamURL.id);
-                                break;
+                    //         case "bilibili_vod":
+                    //             this.setupIframeBL(StreamURL.id);
+                    //             break;
 
-                            default:
-                                this.loadVideoYT(StreamURL.id);
-                                break;
-                        }
-                    }
+                    //         default:
+                    //             this.loadVideoYT(StreamURL.id);
+                    //             break;
+                    //     }
+                    // }
                 }
             }, 1000);
         },
@@ -2467,70 +2480,91 @@ export default {
         },
         async settingOKClick() {
             this.activeURLInput = this.activeURLStream;
-            const parseVideoID = getVideoIDFromUrl(this.activeURLStream);
-            if (parseVideoID) {
-                const vidData = await (await backendApi.video(parseVideoID.id, this.TLLang.value)).data;
-                this.videoData = {
-                    id: parseVideoID.id,
-                    status: vidData.status,
-                    start_actual: !vidData.start_actual ? Date.parse(vidData.available_at) : Date.parse(vidData.start_actual),
-                    title: vidData.title,
+            let vidData: any = {
+                id: "custom",
+                custom_video_id: this.activeURLStream,
+                start_actual: null,
+                status: null,
+                title: this.activeURLStream,
+            };
+            this.videoData = vidData;
+            try {
+                const parseVideoID = this.activeURLStream.match(VIDEO_URL_REGEX)?.[5];
+                if (parseVideoID) {
+                    vidData = await (await backendApi.video(parseVideoID.id, this.TLLang.value)).data;
+                    if (vidData) {
+                        this.videoData = {
+                            id: parseVideoID.id,
+                            status: vidData.status,
+                            start_actual: !vidData.start_actual ? Date.parse(vidData.available_at) : Date.parse(vidData.start_actual),
+                            title: vidData.title,
+                        };
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+
+            this.timecardIdx = [];
+            this.entries = [];
+            let fetchChat = await (await backendApi.chatHistory(vidData.id, {
+                lang: this.TLLang.value,
+                verified: 0,
+                moderator: 0,
+                vtuber: 0,
+                limit: 100000,
+                mode: 1,
+                creator_id: this.userdata.user.id,
+                ...vidData.id === "custom" && { custom_video_id: this.activeURLStream },
+            })).data;
+
+            fetchChat = fetchChat.filter((e) => (!this.videoData?.start_actual || e.timestamp >= this.videoData?.start_actual)).map((e) => {
+                const timestamp = e.timestamp - (this.videoData?.start_actual || fetchChat[0].timestamp || 0);
+                console.log(e.timestamp);
+                return { ...e, timestamp };
+            });
+
+            for (let i = 0; i < fetchChat.length; i += 1) {
+                const dt = {
+                    id: fetchChat[i].id,
+                    Time: fetchChat[i].timestamp,
+                    SText: fetchChat[i].message,
+                    Profile: 0,
                 };
 
-                this.timecardIdx = [];
-                this.entries = [];
-                const fetchChat = await (await backendApi.chatHistory(vidData.id, {
-                    lang: this.TLLang.value,
-                    verified: 0,
-                    moderator: 0,
-                    vtuber: 0,
-                    limit: 100000,
-                    mode: 1,
-                    creator_id: this.userdata.user.id,
-                })).data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
-                    e.timestamp -= this.videoData.start_actual;
-                    return e;
-                });
-
-                for (let i = 0; i < fetchChat.length; i += 1) {
-                    const dt = {
-                        id: fetchChat[i].id,
-                        Time: fetchChat[i].timestamp,
-                        SText: fetchChat[i].message,
-                        Profile: 0,
-                    };
-
-                    if (fetchChat[i].duration) {
-                        this.entries.push({
-                            ...dt,
-                            Duration: Number(fetchChat[i].duration),
-                        });
-                    } else if (i === fetchChat.length - 1) {
-                        this.entries.push({
-                            ...dt,
-                            Duration: 3000,
-                        });
-                    } else {
-                        this.entries.push({
-                            ...dt,
-                            Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
-                        });
-                    }
-
-                    if (i === fetchChat.length - 1) {
-                        this.reloadDisplayCards();
-                    }
+                if (fetchChat[i].duration) {
+                    this.entries.push({
+                        ...dt,
+                        Duration: Number(fetchChat[i].duration),
+                    });
+                } else if (i === fetchChat.length - 1) {
+                    this.entries.push({
+                        ...dt,
+                        Duration: 3000,
+                    });
+                } else {
+                    this.entries.push({
+                        ...dt,
+                        Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
+                    });
                 }
 
-                if (this.vidPlayer) {
-                    this.unloadVideo();
-                    setTimeout(() => {
-                        this.loadVideo();
-                    }, 1000);
-                } else {
-                    this.loadVideo();
+                if (i === fetchChat.length - 1) {
+                    this.reloadDisplayCards();
                 }
             }
+
+            console.log(this.entries);
+
+            if (this.vidPlayer) {
+                this.unloadVideo();
+                setTimeout(() => {
+                    this.loadVideo();
+                }, 1000);
+            } else {
+                this.loadVideo();
+            }
+
             this.modalNexus = false;
         },
         shiftTime() {

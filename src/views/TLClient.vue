@@ -20,7 +20,7 @@
         <v-btn
           small
           outlined
-          :to="activeChat.length && `/scripteditor?video=${activeChat[0].text}`"
+          :to="`/scripteditor?video=${video.id ? `YT_${video.id}` : mainStreamLink}`"
         >
           {{ $t("component.videoCard.openScriptEditor") }}
         </v-btn>
