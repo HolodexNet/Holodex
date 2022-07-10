@@ -408,6 +408,30 @@ export default {
       },
     );
   },
+  postChangeLink({
+    jwt,
+    body,
+  }: {
+    jwt: string;
+    body: {
+        oldId: string,
+        newId: string,
+        lang: string,
+    };
+    override?: boolean;
+  }) {
+    const head: any = {};
+    if (jwt) {
+      head.Authorization = `BEARER ${jwt}`;
+    }
+    return axiosInstance.post(
+      "/tlutil/updateCustomLink",
+      body,
+      {
+        headers: head,
+      },
+    );
+  },
   fetchMChadData(room, pass) {
     return axios.post("https://repo.mchatx.org/v2/HolodexDahcM/data", {
       Room: room,

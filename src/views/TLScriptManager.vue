@@ -37,8 +37,12 @@
             Video Title
           </th>
           <th class="text-left">
+            Lang
+          </th>
+          <th class="text-left">
             {{ $t("views.tlManager.headerEntries") }}
           </th>
+
           <th class="text-left" />
         </tr>
       </thead>
@@ -48,6 +52,7 @@
           <td class="text-truncate" style="max-width: 1px">
             {{ dt.title || dt.custom_video_id || "No title" }}
           </td>
+          <td>{{ dt.lang }}</td>
           <td>{{ (dt.entry_count || 0) + " entries" }}</td>
           <td>
             <v-tooltip bottom>
@@ -116,6 +121,23 @@
               </template>
               <span>{{ $t("views.tlManager.delete") }}</span>
             </v-tooltip>
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  v-if="dt.custom_video_id"
+                  icon
+                  lg
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="modalMode = 4; modalNexus = true; newLinkInput = dt.custom_video_id; selectedScript = dt"
+                >
+                  <v-icon>
+                    {{ icons.mdiNoteEdit }}
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>Change Custom Link</span>
+            </v-tooltip>
           </td>
         </tr>
       </tbody>
@@ -176,6 +198,29 @@
       <v-card v-if="modalMode === 3">
         <ImportMchad @close="closeUpload" />
       </v-card>
+
+      <v-card v-if="modalMode === 4">
+        <v-card-title>
+          Change stream link
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            v-model="newLinkInput"
+            label="New link"
+            outlined
+            dense
+            hide-details
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="modalNexus = false;">
+            {{ $t("views.tlClient.cancelBtn") }}
+          </v-btn>
+          <v-btn style="margin-left:auto" @click="modalNexus = false; changeLink()">
+            {{ $t("views.tlClient.okBtn") }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
     <!--========   NEXUS MODAL =======-->
   </v-container>
@@ -224,6 +269,8 @@ export default {
                 limit: 20,
                 offset: 0,
             },
+            newLinkInput: "",
+            selectedScript: undefined,
             videoData: undefined,
         };
     },
@@ -377,6 +424,22 @@ export default {
             }).catch((err) => {
                 console.log(`ERR : ${err}`);
             });
+        },
+        async changeLink() {
+            try {
+                await backendApi.postChangeLink({
+                    jwt: this.userdata.jwt,
+                    body: {
+                        oldId: this.selectedScript.custom_video_id,
+                        newId: this.newLinkInput,
+                        lang: this.selectedScript.lang,
+                    },
+                });
+            } catch (e) {
+                // eslint-disable-next-line no-alert
+                alert(`failed ${e}`);
+            }
+            await this.reloadData();
         },
     },
 };
