@@ -96,10 +96,10 @@
             <div style="width: 10%; min-width: 40px; margin-left: auto; margin-right:auto; background: #444; height: 3px; border-radius: 2px; margin-top: 1px;" />
           </div>
           <LiveTranslations
-            v-if="!isLoading && !hasError"
+            v-if="!isLoading"
             :tl-lang="TLLang.value"
             :tl-client="true"
-            :video="video"
+            :video="mainLinkIsCustom ? { id: mainStreamLink } : video"
             :class="{
               'stick-bottom': $store.state.settings.liveTlStickBottom,
               'tl-full-height': false,
@@ -571,6 +571,9 @@ export default {
     },
     computed: {
         ...mapState("tlclient", ["video", "isLoading", "hasError"]),
+        mainLinkIsCustom() {
+            return !this.video?.id;
+        },
         textStyle() {
             return {
                 "-webkit-text-fill-color": (this.profile[this.profileIdx].CC === "") ? "unset" : this.profile[this.profileIdx].CC,

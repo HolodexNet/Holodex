@@ -5,7 +5,11 @@
     flat
     style="width: 100%"
   >
-    <v-overlay absolute :value="showOverlay || (!forceCloseOverlay && $socket.disconnected)" opacity="0.8">
+    <v-overlay
+      absolute
+      :value="showOverlay || (!forceCloseOverlay && $socket.disconnected)"
+      opacity="0.8"
+    >
       <div v-if="isLoading">
         {{ $t("views.watch.chat.loading") }}
       </div>
@@ -15,7 +19,14 @@
       <v-btn v-if="$socket.disconnected" class="mr-2" @click="tlJoin()">
         {{ $t("views.watch.chat.retryBtn") }}
       </v-btn>
-      <v-btn @click="() => { forceCloseOverlay = true; showOverlay = false; }">
+      <v-btn
+        @click="
+          () => {
+            forceCloseOverlay = true;
+            showOverlay = false;
+          }
+        "
+      >
         {{ $t("views.app.close_btn") }}
       </v-btn>
     </v-overlay>
@@ -32,15 +43,11 @@
           :title="$t('views.watch.chat.showSubtitle')"
           @click="showSubtitle = !showSubtitle"
         >
-          <v-icon :color="showSubtitle ? 'primary' :''">
+          <v-icon :color="showSubtitle ? 'primary' : ''">
             {{ mdiSubtitlesOutline }}
           </v-icon>
         </v-btn>
-        <v-dialog
-          v-if="!tlClient"
-          v-model="expanded"
-          width="800"
-        >
+        <v-dialog v-if="!tlClient" v-model="expanded" width="800">
           <template #activator="{ on, attrs }">
             <v-btn
               icon
@@ -84,9 +91,16 @@
           :disabled="completed"
           @click="loadMessages()"
         >
-          {{ completed ? $t('views.watch.chat.tlStart') : $t('component.description.showMore') }}
+          {{
+            completed
+              ? $t("views.watch.chat.tlStart")
+              : $t("component.description.showMore")
+          }}
         </v-btn>
-        <div v-if="tlHistory.length - filteredMessages.length > 0" class="text-caption">
+        <div
+          v-if="tlHistory.length - filteredMessages.length > 0"
+          class="text-caption"
+        >
           {{ tlHistory.length - filteredMessages.length }} Blocked Messages
         </div>
         <v-btn
@@ -160,7 +174,9 @@ export default {
         reconnect_attempt(attempt) {
             console.log("[TLdex] Reconnecting...");
             const vm = this as any;
-            vm.overlayMessage = `${this.$t("views.watch.chat.status.reconnecting")} ${attempt}/10`;
+            vm.overlayMessage = `${this.$t(
+                "views.watch.chat.status.reconnecting",
+            )} ${attempt}/10`;
         },
         reconnect_failed() {
             const vm = this as any;
@@ -221,13 +237,19 @@ export default {
             if (!this.filteredMessages.length || !this.showSubtitle) return [];
             const buffer = this.filteredMessages.slice(-2);
             return buffer.filter((m) => {
-                const displayTime = +m.duration || (m.message.length * 65 + 1800);
+                const displayTime = +m.duration || m.message.length * 65 + 1800;
                 // Use receivedAt and Date.now for consistency, since live streams can have many forms of delay
                 // We just want to display messages for a certain period of time after they are received
-                const receivedRelativeSec = m.receivedAt ? (m.receivedAt - this.startTimeMillis) : m.relativeMs;
-                const curTime = (Date.now() - this.startTimeMillis);
+                const receivedRelativeSec = m.receivedAt
+                    ? m.receivedAt - this.startTimeMillis
+                    : m.relativeMs;
+                const curTime = Date.now() - this.startTimeMillis;
                 // Bind updates to currentTime (pausing video will pause overlay)
-                return this.currentTime && curTime >= receivedRelativeSec && curTime < receivedRelativeSec + displayTime;
+                return (
+                    this.currentTime
+                    && curTime >= receivedRelativeSec
+                    && curTime < receivedRelativeSec + displayTime
+                );
             });
         },
         blockedNames() {
@@ -270,10 +292,16 @@ export default {
             this.$store.commit("settings/toggleLiveTlBlocked", name);
         },
         registerListener() {
-            this.$socket.client.on(`${this.video.id}/${this.liveTlLang}`, this.handleMessage);
+            this.$socket.client.on(
+                `${this.video.id}/${this.liveTlLang}`,
+                this.handleMessage,
+            );
         },
         unregisterListener() {
-            this.$socket.client.off(`${this.video.id}/${this.liveTlLang}`, this.handleMessage);
+            this.$socket.client.off(
+                `${this.video.id}/${this.liveTlLang}`,
+                this.handleMessage,
+            );
         },
         handleMessage(msg) {
             // if no type, process as regular message
@@ -282,7 +310,8 @@ export default {
                 if (this.blockedNames.has(msg.name)) return;
 
                 if (this.tlClient) {
-                    if (msg.is_tl
+                    if (
+                        msg.is_tl
                         || msg.is_owner
                         || (msg.is_vtuber && this.liveTlShowVtuber)
                         || (msg.is_moderator && this.liveTlShowModerator)
@@ -328,13 +357,19 @@ export default {
             this.loadMessages(true, false, this.tlClient);
 
             // Another instance has already subscribed to this chat, just register listener
-            if (this.$socket.client.listeners(`${this.video.id}/${this.liveTlLang}`).length > 0) {
+            if (
+                this.$socket.client.listeners(`${this.video.id}/${this.liveTlLang}`)
+                    .length > 0
+            ) {
                 this.registerListener();
                 this.success = true;
                 this.$store.commit("incrementActiveSockets");
             } else {
                 // Try to join chat room with specified language
-                this.$socket.client.emit("subscribe", { video_id: this.video.id, lang: this.liveTlLang });
+                this.$socket.client.emit("subscribe", {
+                    video_id: this.video.id,
+                    lang: this.liveTlLang,
+                });
             }
         },
         tlLeave() {
@@ -344,12 +379,22 @@ export default {
                 vm.$store.commit("decrementActiveSockets");
                 console.log("[TLdex] Decrement sockets...");
                 // Check if there's another listener depending on this subscription, unsub if not
-                if (vm.$socket.client.listeners(`${this.video.id}/${this.liveTlLang}`).length <= 1) {
-                    console.log(`[TLdex] Trying to unsubscribe from chat ${vm.video.id} ${vm.liveTlLang}...`);
-                    vm.$socket.client.emit("unsubscribe", { video_id: vm.video.id, lang: vm.liveTlLang });
+                if (
+                    vm.$socket.client.listeners(`${this.video.id}/${this.liveTlLang}`)
+                        .length <= 1
+                ) {
+                    console.log(
+                        `[TLdex] Trying to unsubscribe from chat ${vm.video.id} ${vm.liveTlLang}...`,
+                    );
+                    vm.$socket.client.emit("unsubscribe", {
+                        video_id: vm.video.id,
+                        lang: vm.liveTlLang,
+                    });
                 }
                 vm.unregisterListener();
-                console.log(`[TLdex] Unregistered listeners for ${vm.video.id} ${vm.liveTlLang}...`);
+                console.log(
+                    `[TLdex] Unregistered listeners for ${vm.video.id} ${vm.liveTlLang}...`,
+                );
                 vm.$store.dispatch("checkActiveSockets");
                 // Reset for immediate reconnects
                 vm.success = false;
@@ -357,8 +402,14 @@ export default {
         },
         switchLanguage(newLang, oldLang) {
             // unsub from old langauge
-            this.$socket.client.emit("unsubscribe", { video_id: this.video.id, lang: oldLang });
-            this.$socket.client.off(`${this.video.id}/${oldLang}`, this.handleMessage);
+            this.$socket.client.emit("unsubscribe", {
+                video_id: this.video.id,
+                lang: oldLang,
+            });
+            this.$socket.client.off(
+                `${this.video.id}/${oldLang}`,
+                this.handleMessage,
+            );
             this.success = false;
             this.tlJoin();
         },
@@ -366,8 +417,11 @@ export default {
             // Disallow users from joining a chat room that doesn't exist yet
             // Backend will create a chatroom when it's 15 minutes before a stream
             if (
-                this.video.status !== "live"
-                && !dayjs().isAfter(dayjs(this.video.start_scheduled).subtract(15, "minutes"))
+                this.video.status
+                && this.video.status !== "live"
+                && !dayjs().isAfter(
+                    dayjs(this.video.start_scheduled).subtract(15, "minutes"),
+                )
             ) {
                 this.overlayMessage = this.$t("views.watch.chat.status.notLive");
                 this.isLoading = false;
@@ -388,34 +442,33 @@ export default {
 
 <style>
 .v-overlay__content {
-    text-align: center;
+  text-align: center;
 }
 
 .tl-body {
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    height: calc(100% - 32px);
-    display: flex;
-    flex-direction: column-reverse;
-    line-height: 1.35;
-    letter-spacing: 0.0178571429em !important;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  height: calc(100% - 32px);
+  display: flex;
+  flex-direction: column-reverse;
+  line-height: 1.35;
+  letter-spacing: 0.0178571429em !important;
 }
 
 .tl-expanded {
-    overscroll-behavior: auto !important;
-    height: 75vh;
+  overscroll-behavior: auto !important;
+  height: 75vh;
 }
 
 .tl-expanded > .tl-body {
-    height: 75vh;
-    width: 100%;
+  height: 75vh;
+  width: 100%;
 }
 
 .tl-overlay {
-    border: 1px solid rgba(65, 65, 65, 0.2) !important;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+  border: 1px solid rgba(65, 65, 65, 0.2) !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
-
 </style>
