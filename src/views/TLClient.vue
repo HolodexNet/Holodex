@@ -390,7 +390,6 @@
             <v-text-field
               v-model="mainStreamLink"
               :label="$t('views.tlClient.settingPanel.mainStreamLink')"
-              :readonly="$route.query.video ? true : false"
               placeholder="https://..."
             />
             <span class="mx-2">or</span>
@@ -601,6 +600,9 @@ export default {
                 this.init();
             }
         },
+        mainStreamLink() {
+            if (this.$route.query.video && this.mainStreamLink !== this.$route.query.video) { this.$router.replace({ path: "/tlclient", query: {} }); }
+        },
     },
     mounted() {
         this.init();
@@ -768,13 +770,14 @@ export default {
             }
         },
         settingOKClick() {
-            const parseVideoID = getVideoIDFromUrl(this.mainStreamLink);
-            if (!parseVideoID) {
-                return;
-            }
-
+            // const parseVideoID = getVideoIDFromUrl(this.mainStreamLink);
+            // if (!parseVideoID) {
+            //     return;
+            // }
+            const ytId = this.mainStreamLink.match(VIDEO_URL_REGEX);
+            const id = ytId?.[5] || this.mainStreamLink;
             this.$store.commit("tlclient/resetState");
-            this.$store.commit("tlclient/setId", parseVideoID.id);
+            this.$store.commit("tlclient/setId", id);
             this.$store.dispatch("tlclient/fetchVideo");
 
             this.localPrefix = `[${this.TLLang.value}] `;

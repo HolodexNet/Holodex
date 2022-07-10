@@ -62,7 +62,7 @@
         {{ icons.mdiTypewriter }}
       </v-icon>
       {{ isLive || video.status === 'upcoming' ? $t("component.videoCard.openClient") :
-          $t("component.videoCard.openScriptEditor")
+        $t("component.videoCard.openScriptEditor")
       }}
     </v-list-item>
     <v-list-item v-if="isPast" @click="scriptUploadPanel(); closeMenu()">
@@ -94,79 +94,79 @@ import copyToClipboard from "@/mixins/copyToClipboard";
 import VideoQuickPlaylist from "@/components/playlist/VideoQuickPlaylist.vue";
 
 export default {
-  components: {
-    WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
-    VideoQuickPlaylist,
-  },
-  mixins: [copyToClipboard],
-  props: {
-    video: {
-      type: Object,
-      required: true,
+    components: {
+        WatchQuickEditor: () => import("@/components/watch/WatchQuickEditor.vue"),
+        VideoQuickPlaylist,
     },
-  },
-  computed: {
-    isLive() {
-      if (!this.video) {
-        return false;
-      }
-      if (this.video.status === "past") {
-        return false;
-      }
-      if ((this.video.status === "live") || (Date.parse(this.video.start_scheduled) < Date.now())) {
-        return true;
-      }
-      return false;
+    mixins: [copyToClipboard],
+    props: {
+        video: {
+            type: Object,
+            required: true,
+        },
     },
-    isPast() {
-      if (!this.video) {
-        return false;
-      }
-      if (this.video.status === "past") {
-        return true;
-      }
-      return false;
+    computed: {
+        isLive() {
+            if (!this.video) {
+                return false;
+            }
+            if (this.video.status === "past") {
+                return false;
+            }
+            if ((this.video.status === "live") || (Date.parse(this.video.start_scheduled) < Date.now())) {
+                return true;
+            }
+            return false;
+        },
+        isPast() {
+            if (!this.video) {
+                return false;
+            }
+            if (this.video.status === "past") {
+                return true;
+            }
+            return false;
+        },
     },
-  },
-  methods: {
-    // Open google calendar to add the time specified in the element
-    // Uses UTC time since the calendar may be in a different time zone
-    openGoogleCalendar() {
-      const startdate = this.video.start_scheduled;
-      const baseurl = "https://www.google.com/calendar/render?action=TEMPLATE&text=";
-      const videoTitle = encodeURIComponent(this.video.title);
-      const googleCalendarFormat = "YYYYMMDD[T]HHmmss[Z]"; // "Z" suffix for UTC time
-      const eventStart = dayjs.utc(startdate).format(googleCalendarFormat);
-      const eventEnd = dayjs.utc(startdate).add(1, "hour").format(googleCalendarFormat);
-      const details = `<a href="${window.origin}/watch/${this.video.id}">Open Video</a>`;
-      window.open(baseurl.concat(videoTitle, "&dates=", eventStart, "/", eventEnd, "&details=", details), "_blank");
+    methods: {
+        // Open google calendar to add the time specified in the element
+        // Uses UTC time since the calendar may be in a different time zone
+        openGoogleCalendar() {
+            const startdate = this.video.start_scheduled;
+            const baseurl = "https://www.google.com/calendar/render?action=TEMPLATE&text=";
+            const videoTitle = encodeURIComponent(this.video.title);
+            const googleCalendarFormat = "YYYYMMDD[T]HHmmss[Z]"; // "Z" suffix for UTC time
+            const eventStart = dayjs.utc(startdate).format(googleCalendarFormat);
+            const eventEnd = dayjs.utc(startdate).add(1, "hour").format(googleCalendarFormat);
+            const details = `<a href="${window.origin}/watch/${this.video.id}">Open Video</a>`;
+            window.open(baseurl.concat(videoTitle, "&dates=", eventStart, "/", eventEnd, "&details=", details), "_blank");
+        },
+        copyLink() {
+            const link = `${window.origin}/watch/${this.video.id}`;
+            this.copyToClipboard(link);
+        },
+        closeMenu() {
+            this.$emit("closeMenu");
+        },
+        openTlClient() {
+            if (this.$store.state.userdata?.user) {
+                if (this.isLive || this.video.status === "upcoming") {
+                    this.$router.push({ path: "/tlclient", query: { video: this.video.type === "placeholder" ? this.video.link : `YT_${this.video.id}` } });
+                } else {
+                    this.$router.push({ path: "/scripteditor", query: { video: `YT_${this.video.id}` } });
+                }
+            } else {
+                this.$router.push({ path: "/login" });
+            }
+        },
+        scriptUploadPanel() {
+            if (this.$store.state.userdata?.user) {
+                this.$store.commit("setUploadPanel", true);
+            } else {
+                this.$router.push({ path: "/login" });
+            }
+        },
     },
-    copyLink() {
-      const link = `${window.origin}/watch/${this.video.id}`;
-      this.copyToClipboard(link);
-    },
-    closeMenu() {
-      this.$emit("closeMenu");
-    },
-    openTlClient() {
-      if (this.$store.state.userdata?.user) {
-        if (this.isLive || this.video.status === 'upcoming') {
-          this.$router.push({ path: "/tlclient", query: { video: `YT_${this.video.id}` } });
-        } else {
-          this.$router.push({ path: "/scripteditor", query: { video: `YT_${this.video.id}` } });
-        }
-      } else {
-        this.$router.push({ path: "/login" });
-      }
-    },
-    scriptUploadPanel() {
-      if (this.$store.state.userdata?.user) {
-        this.$store.commit("setUploadPanel", true);
-      } else {
-        this.$router.push({ path: "/login" });
-      }
-    },
-  },
 };
 </script>
 
