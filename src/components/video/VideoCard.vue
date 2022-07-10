@@ -520,10 +520,11 @@ export default {
         },
         goToVideo() {
             this.$emit("videoClicked", this.data);
+
+            if (this.disableDefaultClick) return;
             if (this.isPlaceholder) {
                 this.openPlaceholder(); return;
             }
-            if (this.disableDefaultClick) return;
             // On mobile, clicking on watch links should not increment browser history
             // Back button will always return to the originating video list in one click
             if (this.$route.path.match("^/watch") && this.isMobile) {
@@ -533,12 +534,12 @@ export default {
             }
         },
         onThumbnailClicked(e) {
-            if (this.isPlaceholder && this.data.placeholderType === "external-stream" && this.data.link) {
+            if (this.isPlaceholder && this.data.placeholderType === "external-stream" && this.data.link && !this.disableDefaultClick) {
                 e.preventDefault();
                 window.open(this.data.link, "_blank", "noopener");
                 return;
             }
-            if (this.isPlaceholder || !this.redirectMode || this.disableDefaultClick) {
+            if (this.isPlaceholder || !this.redirectMode) {
                 e.preventDefault();
                 this.goToVideo();
             }

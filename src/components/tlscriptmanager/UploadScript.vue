@@ -650,7 +650,12 @@ export default {
                 });
             }
 
-            backendApi.postTLLog(this.videoData.id, this.userdata.jwt, processes, this.TLLang.value).then(({ status }) => {
+            backendApi.postTLLog({
+                videoId: this.videoData.id,
+                jwt: this.userdata.jwt,
+                body: processes,
+                lang: this.TLLang.value,
+            }).then(({ status }) => {
                 if (status === 200) {
                     this.$emit("close", { upload: true });
                 }

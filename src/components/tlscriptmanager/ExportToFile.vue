@@ -81,6 +81,7 @@ export default {
         reloadEntries() {
             this.entries = [];
             backendApi.chatHistory(this.videoData.id, {
+                custom_video_id: this.videoData.custom_video_id,
                 lang: this.TLLang.value,
                 verified: 0,
                 moderator: 0,
@@ -90,8 +91,11 @@ export default {
                 creator_id: this.userdata.user.id,
             }).then(({ status, data }) => {
                 if (status === 200) {
-                    const fetchChat = data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
+                    const fetchChat = this.videoData.start_actual ? data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
                         e.timestamp -= this.videoData.start_actual;
+                        return e;
+                    }) : data.map((e) => {
+                        e.timestamp -= data?.[0]?.timestamp || 0;
                         return e;
                     });
 

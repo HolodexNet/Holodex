@@ -1130,10 +1130,11 @@ export default {
                     }
                 });
 
+                const postTLOption = { videoId: this.videoData.id, jwt: this.userdata.jwt, body: processedLog, lang: this.TLLang.value, override: this.editorMode };
                 if (forget) {
-                    backendApi.postTLLog(this.videoData.id, this.userdata.jwt, processedLog, this.TLLang.value, this.editorMode);
+                    backendApi.postTLLog(postTLOption);
                 } else {
-                    backendApi.postTLLog(this.videoData.id, this.userdata.jwt, processedLog, this.TLLang.value, this.editorMode).then(({ status, data }) => {
+                    backendApi.postTLLog(postTLOption).then(({ status, data }) => {
                         if (status === 200) {
                             data.forEach((e) => {
                                 if (e.type === "Add") {
