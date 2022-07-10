@@ -430,6 +430,7 @@ views:
       setting: TLDex 房間設定
       loadVideo: 顯示影片
       unloadVideo: 隱藏影片
+      loadChat: 將聊天室的訊息新增至翻譯室中
       unloadChat: 從YouTube聊天室中分離
     tlControl:
       enterBtn: 輸入
@@ -437,6 +438,7 @@ views:
       suffix: 後綴
       fontColour: 字型色彩
       outlineColour: 外框顏色
+      localPrefix: 聊天室中的語言標籤
       addProfile: 新增設定檔
       removeProfile: 移除設定檔
       showSetting: 設定
@@ -470,9 +472,11 @@ views:
       headerText: 文字
       setAsStart: 設為起點
       shiftCurrentTime: 位移至目前時間
+      deleteEntry: 刪除項目
     loadVideoPanel:
       title: 載入影片
       inputLabel: 實況連結
+    setStartTitle: 將目前選中項目設為開始，所有在其之前的條目將被刪除。
     importFile:
       overwriteBtn: 覆蓋
     editorModePanel:
@@ -483,8 +487,10 @@ views:
   tlManager:
     title: 文本管理器
     headerID: 影片ID
+    headerEntries: 項目
     download: 下載
     delete: 刪除
+    deleteTitle: 刪除項目
     langPick: 語言
 time:
   soon: 即將開始
