@@ -2347,10 +2347,10 @@ export default {
             try {
                 const parseVideoID = this.activeURLStream.match(VIDEO_URL_REGEX)?.[5];
                 if (parseVideoID) {
-                    vidData = await (await backendApi.video(parseVideoID.id, this.TLLang.value)).data;
+                    vidData = (await backendApi.video(parseVideoID, this.TLLang.value)).data;
                     if (vidData) {
                         this.videoData = {
-                            id: parseVideoID.id,
+                            id: parseVideoID,
                             status: vidData.status,
                             start_actual: !vidData.start_actual ? Date.parse(vidData.available_at) : Date.parse(vidData.start_actual),
                             title: vidData.title,
