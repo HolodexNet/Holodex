@@ -57,8 +57,6 @@ component:
     uploadScript: Fordítás script feltöltése
   videoDescription:
     description: Leírás
-  video:
-    comment: { }
   description:
     showLess: Kevesebb megjelenítése
     showMore: Továbbiak megjelenítése
@@ -170,7 +168,7 @@ views:
       org: Szervezet
     tabs:
       Vtuber: Vtuber
-      Subber: Felirat készítő
+      Subber: Fordítók
       Favorites: Kedvencek
       Blocked: Letiltva
     favoritesAreEmpty: Még nincsenek kedvenceid!
@@ -290,7 +288,7 @@ views:
       showVtuberMessages: Vtuber üzenetek megjelenítése
       showLocalTime: Helyi idők mutatása
       tlFontSize: Betű méret
-      tlWindowSize: Fordító mérete (%), hagyd 0%-on automatához
+      tlWindowSize: Fordító mérete (%), 0%-on automatikus
       retryBtn: Újra
       status:
         reconnecting: Újracsatlakozás...
@@ -414,7 +412,7 @@ views:
     login-prompt: Jelentkezz be, hogy egynél több lejátszási listád lehessen
     new-playlist-btn-label: Új lejátszási lista létrehozása
     page-heading: 'A lejátszási listád:'
-    page-instruction: Kattints egy lejátszási listára, hogy aktiváld
+    page-instruction: Kattints egy lejátszási listára, hogy aktuálissá tedd! Mielőtt másikra váltanál, elmenteni a jobb felső sarokban levő lejátszási lista ikonban tudod.
     change-loss-warning: A mentetlen változtatások el fognak veszni. Folytatod?
   extension:
     title: Holodex Plus Bővítmény
@@ -540,7 +538,6 @@ about:
     videoLinkage: Hogyan bizonyosodom meg róla, hogy a videók és klipek biztosan hozzá vannak kapcsolva a vtuberekhez?
     videoLinkageContent: >-
       Minden információt a leírásból szedünk. Ha klipelsz egy streamet, kérlek ne felejtsd el linkelni az eredeti streamet a leírásban. Ha egy rajongói tartalmat klipelsz, (pl. bilibili-ről), csak linkeld be az eredeti hivatalos youtube csatornát a hozzátartozó vtuberhez. Ha nem linkeled a vtuber csatornáját, akkor nem fog megjelenni a videód Holodexen, mivel minden kliphez szükséges egy link a vtuberhez aki ismert Holodexen is.
-    quitHolodex: "Felirat készítő vagyok és szeretném a tartalmaim eltávolítani Holodexről.\n"
     quitHolodexContent: >-
       Sajnáljuk, hogy elmész :(, kérlek jelezd ha van bármi probléma amivel segíthetnénk. Ha mindenképp szeretnéd eltávolíttatni, kérlek üzenj nekünk Discordon.
     favorite:
@@ -549,7 +546,7 @@ about:
         - >-
           A Kedvencek funkció segít, hogy a kedvenc vtuberjeidet lásd elsőként, beállíthatod a kedvenc csatornáid a szívecske ikonra kattintva
         - >-
-          Kérlek vedd figyelembe, hogy feliratkészítőket kedvencekhez adni jelenleg nem támogatott, viszont más módokon feliratkozhatsz rájuk, támogathatod őket.
+          Kérlek vedd figyelembe, hogy fordítók kedvencekhez adni jelenleg nem támogatott, viszont más módokon feliratkozhatsz rájuk, támogathatod őket.
       disappear:
         title: A Kedvencek listám eltűnt / Nem tudok kedvenceket hozzáadni
       contents:
@@ -573,10 +570,10 @@ about:
         - >-
           MugenClips, avagy végtelen klipek, közösen nézhetsz klipeket másokkal egy folyamatosan változó készletből, melyeket sok különböző fordító csatorna készített és készít
     subber:
-      title: Felirat készítő vagyok és nem találom a csatornám és klipjeim a Holodexen
+      title: Fordító vagyok és nem találom a csatornám és klipjeim a Holodexen
       contents:
         - >-
-          Kérlek nézd meg a Csatornák oldalon, hogy listázva vagy-e feliratkészítőként, amennyiben nem, kérlek töltsd ki
+          Kérlek nézd meg a Csatornák oldalon, hogy listázva vagy-e fordítóként, amennyiben nem, kérlek töltsd ki
         - ezt a lapot
         - >-
           , majd hozzáadunk manuálisan. Ha már a listán vagy, kérlek bizonyosodj meg róla, hogy a videóid leírása a helyes linkeket tartalmazza a youtube forráshoz/csatornához!
@@ -603,7 +600,7 @@ about:
       - Szeretnék nagy köszönetet mondani a
       - 'csapatnak a munkáikért itt:'
       - >-
-        A feliratkészítőknek szintén, akik segítik a tengerentúli nézőket! Kérlek nézd meg őket!
+        A fordítóknak szintén, akik segítik a tengerentúli nézőket! Kérlek nézd meg őket!
       - >-
         Ez egy rajongói készítésű weboldal, a rajta talált tartalmakat a Cover corp és a partnerei birtokolják. Az oldal követi a Cover corp irányelveit a
       - Származtatott Munkavállalói Licencszerződés szerint
@@ -619,7 +616,7 @@ channelRequest:
   RequestType: 'Kérvény típusa:'
   Types:
     AddVtuber: Vtubert hozzáadása ▶️ a Holodexhez, hogy kövesse a csatornáját és klipjeit.
-    AddClipper: Klip/felirat készítő csatorna hozzáadása Holodexhez
+    AddClipper: Klipper/fordító csatorna hozzáadása Holodexhez
     ModifyExistingInfo: Létező csatorna információ frissítése
     DeleteChannel: Saját csatorna törlése
   DirectContactDisclaimer: >-
