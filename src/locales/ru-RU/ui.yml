@@ -48,6 +48,7 @@ component:
     premiere: ПРЕМЬЕРА
     googleCalendar: Добавить в календарь Google
     tlPresence: Активный переводчик за последние полчаса
+    typeScheduledYT: Запланированный стрим
   videoDescription:
     description: Описание
   description:
