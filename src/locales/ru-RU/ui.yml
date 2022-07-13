@@ -49,6 +49,8 @@ component:
     googleCalendar: Добавить в календарь Google
     tlPresence: Активный переводчик за последние полчаса
     typeScheduledYT: Запланированный стрим
+    typeEventPlaceholder: Запланированный ивент
+    openClient: Открыть TL клиент
   videoDescription:
     description: Описание
   description:
@@ -76,6 +78,7 @@ component:
     sourcesLabel: источники
     songsLabel: Треки
     recommendationsLabel: рекомендации
+    sameSourceClips: Из того же стрима
   paginateLoad:
     newer: Новее
     older: Старее
@@ -135,6 +138,14 @@ component:
       delete-playlist: Удалить плейлист
       clear-playlist: Очистить плейлист
     save-error-not-logged-in: Вам нужно войти в систему, чтобы сохранять плейлисты
+  placeholderVideo:
+    discordCredit: 'Данные о событии предоставлены {0} из: {1}'
+    datasourceCredit: Данные о событии получены из {0} источников данных.
+    botCredit: Данные о событии предоставлены из {0} источников данных, создано {1}.
+    streamPageBtn: Страница стрима
+    eventPageBtn: Страница события
+    scheduledEvent: Запланировано
+    editorCredit: Мероприятие создано редактором Holodex {0}.
 views:
   channel:
     video: Видео
@@ -240,9 +251,11 @@ views:
       - Маленький
     hideCollabStreamsLabel: Скрыть коллабы
     hideCollabStreamsMsg: Скрыть стримы-коллабы из вашего избранного
+    hidePlaceholderStreams: Скрыть стримы без комнат ожидания
     ignoredTopicsLabel: Игнорируемые темы
     ignoredTopicsMsg: Скрыть видео по этим темам на главной странице и в Избранном
     theme: Тема
+    moreSettings: Дополнительные параметры
   app:
     update_available: Доступно обновление
     update_btn: Обновить
@@ -253,14 +266,19 @@ views:
   about:
     add_my_channel: Запрос на добавление канала
   watch:
+    theaterMode: Театральный режим (alt + t)
     mentionIconLabel: УПОМИНАНИЯ
     chat:
       loading: Загрузка чата...
       hideTLBtn: Скрыть переводы
       showTLBtn: Показывать перевод
       TLSettingsTitle: Настройки перевода
+      showSubtitle: Показать субтитры
+      StickBottomSettingLabel: Расположить снизу
+      StickBottomSettingsDesc: Расположить переводы под чатом Youtube
       showVerifiedMessages: Показать сообщ. от вериф. пользователей
       showModeratorMessages: Показывать сообщения от модераторов
+      showVtuberMessages: Показать сообщения от витуберов
       showLocalTime: Показывать местное время
       tlFontSize: Размер шрифта
       tlWindowSize: Размер окна с переводами (%), оставьте 0% для автонастройки
@@ -272,8 +290,21 @@ views:
           Стрим еще не начался, пожалуйста, попробуйте еще раз, когда с начала стрима пройдет 15 минут
         connectedToChat: Подключен
         disconnectedToChat: Нет подключения
+      archiveNeedExtension: >-
+        Архивный чат не работает без расширения {0} или других сторонних расширений.
     removeFromPlaylist: Удалить видео из текущего плейлиста
     saveToPlaylist: Сохранить видео в текущий плейлист
+    likeOnYoutube: Лайкнуть видео на Youtube
+    uploadPanel:
+      usernameText: Перевод будет загружен под именем пользователя
+      usernameChange: Изменить
+      tlLang: Язык перевода
+      headerText: Текст
+      cancelBtn: Отмена
+      okBtn: OK
+      notifTextErr: НЕ УДАЛОСЬ ПРОЧИТАТЬ ФАЙЛ (ФАЙЛ ПОВРЕЖДЕН?)
+      notifTextParsing: Чтение файла...
+      notifTextErrExt: Неизвестный тип файла.
   favorites:
     promptForAction: >-
       Создайте список любимых витуберов и вы увидите их новые стримы и клипы с ними на этой странице.
@@ -306,6 +337,11 @@ views:
       - Войти через Google
       - Войти через Discord
       - Войти через Twitter
+    username: Имя пользователя
+    usernameBtn:
+      - Изменить
+      - Подтвердить
+      - Сохранить
   multiview:
     confirmOverwrite: Перезаписать текущий макет?
     confirmOverwriteYes: Подтвердить
@@ -343,7 +379,12 @@ views:
     done: Готово
     hints: Советы
     presetsHint: Откройте меню пресетов для переключения макетов и настройки автоматической раскладки
+    mediaControlsHint1: Используйте меню "Управление медиа" для приглушения и синхронизации (
+    mediaControlsHint2: ) стримов
     dragDropHint: Перетаскивайте стримы из панели инструментов в ячейки для организации стримов
+    reorderHint: Используйте меню "Редактирование раскладки" для изменения позиций видео/чата
+    reorderLayout: Редактирование раскладки
+    reorderLayoutDetail: Перетащите иконки в нужное положение
   mugen:
     welcome: >-
       Добро пожаловать в MugenClips! Все на этой странице видят один и тот же случайно отобранный клип Hololive на английском языке. Смотрите и общайтесь с фанатами Hololive со всего мира. Если вы пропустите видео, а затем захотите быть повторно синхронизированы со всеми, пожалуйста, обновите страницу.
@@ -355,6 +396,25 @@ views:
     page-heading: 'Ваши плейлисты:'
     page-instruction: Нажмите на плейлист, чтобы установить его как активный.
     change-loss-warning: Вы потеряете несохраненные изменения. Продолжить?
+  tlClient:
+    okBtn: OK
+  scriptEditor:
+    menu:
+      save: Сохранить
+      exportFile: Экспортировать файл
+      importFile: Импортировать файл
+    table:
+      headerText: Текст
+    loadVideoPanel:
+      title: Загрузить видео
+      inputLabel: Ссылка на стрим
+    editorModePanel:
+      roleWarning: У вас недостаточно прав
+  tlManager:
+    headerID: ID видео
+    download: Скачать
+    delete: Удалить
+    langPick: Язык
 time:
   soon: Скоро
   diff_future_date: Начнется {0} ({1})
@@ -379,6 +439,7 @@ editor:
     testStart: Протестировать начало
     startInput: Начало
     endInput: 'Длительность в секундах: (конец @ {0})'
+    inheritItunesMusic: 'Установить длительность через iTunes: {0}'
   exitMode: Выйти из режима редактирования
   enterMode: Редактировать видео
 about:
@@ -443,6 +504,8 @@ about:
       contents:
         - >-
           Любая помощь и идеи приветствуются! Пользовательский интерфейс и бэкэнд доступны для улучшения, однако на данный момент лишь интерфейс является open source. Пожалуйста, свяжитесь с нами по discord, чтобы получить доступ к исходному коду бэкенда или просто поболтать о ваших идеях.
+    support:
+      title: Как я могу поддержать Holodex?
   gdpr: GDPR и мои данные
   gdprContent: >-
     Куки Google Analytics используются для отслеживания просмотров страниц в наших аналитических целях. После входа мы свяжем имя пользователя и ID с избранным. Эти данные могут включать ваш адрес электронной почты (для Google), Discord ID или имя пользователя в Twitter соответственно.
