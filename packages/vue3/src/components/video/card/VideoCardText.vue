@@ -8,8 +8,43 @@
         {{ title }}
       </div>
       <div class="flex flex-shrink-1">
+        <v-tooltip v-if="video.mentions?.length" location="bottom">
+          <template #activator="{ props }">
+            <a
+              v-if="!hideChannelName"
+              v-bind="props"
+              class="text-sm leading-4 hover:opacity-80 line-clamp-1"
+              :class="{
+                'text-secondary':
+                  video.type === 'stream' || video.channel.type === 'vtuber',
+              }"
+              :href="channelLink"
+              @click.stop.prevent="goToChannel"
+            >
+              {{ preferredChannelName }} {{ `(+${video.mentions?.length})` }}
+            </a>
+          </template>
+          <div class="rounded-lg p-3 bg-base-300 shadow-md flex flex-col gap-1">
+            <template v-for="mention in video.mentions" :key="mention.id">
+              <div class="flex items-center">
+                <channel-img
+                  :channel="mention"
+                  :size="32"
+                  rounded
+                  class="mr-2"
+                />
+                {{
+                  langStore.preferredLocaleFn(
+                    mention.english_name,
+                    mention.name
+                  )
+                }}
+              </div>
+            </template>
+          </div>
+        </v-tooltip>
         <a
-          v-if="!hideChannelName"
+          v-else
           class="text-sm leading-4 hover:opacity-80 line-clamp-1"
           :title="channelHoverTitle"
           :class="{

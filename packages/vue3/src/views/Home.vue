@@ -101,7 +101,7 @@ const liveQuery = useLive(
     type: "placeholder,stream",
     org: site.currentOrg.name,
     max_upcoming_hours: 48,
-    include: "live_info",
+    include: "live_info,mentions",
   })),
   {
     enabled: computed(() => currentTab.value === Tabs.LIVE),
@@ -114,7 +114,7 @@ const archiveQuery = useVideos(
     status: "past,missing",
     type: "stream",
     org: site.currentOrg.name,
-    include: "clips",
+    include: "clips,mentions",
     max_upcoming_hours: 1,
     offset: offset.value,
   })),
