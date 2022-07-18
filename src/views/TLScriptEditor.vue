@@ -5,28 +5,23 @@
     style="max-height: 100vh; padding: 0px 12px"
     @keydown.ctrl.83.exact.prevent="processLog()"
   >
-    <div class="d-flex flex-column" style="height: 100%; width:100%">
-      <v-system-bar height="30" class="tl-topbar px-0" color="secondary">
-        <v-btn
-          small
-          outlined
-          to="/"
-        >
+    <div class="d-flex flex-column" style="height: 100%; width: 100%">
+      <v-system-bar height="30" class="px-0 tl-topbar" color="secondary">
+        <v-btn small outlined to="/">
           <v-icon>{{ icons.mdiHome }}</v-icon>
         </v-btn>
 
         <v-btn
           small
           outlined
-          @click="modalMode = 5; modalNexus = true"
+          @click="
+            modalMode = 5;
+            modalNexus = true;
+          "
         >
           {{ $t("views.tlClient.menu.setting") }}
         </v-btn>
-        <v-btn
-          small
-          outlined
-          @click="processLog()"
-        >
+        <v-btn small outlined @click="processLog()">
           {{ $t("views.scriptEditor.menu.save") }} <code>Ctrl-S</code>
         </v-btn>
         <!-- <v-btn
@@ -46,47 +41,64 @@
         <v-btn
           small
           outlined
-          @click="modalMode = 6; modalNexus = true"
+          @click="
+            modalMode = 6;
+            modalNexus = true;
+          "
         >
           {{ $t("views.scriptEditor.menu.exportFile") }}
         </v-btn>
-        <v-btn
-          small
-          outlined
-          @click="importPanelShow = true;"
-        >
+        <v-btn small outlined @click="importPanelShow = true">
           {{ $t("views.scriptEditor.menu.importFile") }}
         </v-btn>
-        <v-btn
-          small
-          outlined
-          @click="continuousTime()"
-        >
+        <v-btn small outlined @click="continuousTime()">
           {{ $t("views.scriptEditor.menu.continuousEnd") }}
         </v-btn>
         <v-btn
           small
           outlined
-          @click="modalMode = 9; modalNexus = true"
+          @click="
+            modalMode = 9;
+            modalNexus = true;
+          "
         >
           Time Shift
         </v-btn>
         <v-btn
+          v-if="videoData && videoData.id === 'custom'"
+          small
+          outlined
+          @click="
+            modalMode = 10;
+            modalNexus = true;
+            linkInput = activeURLStream;
+          "
+        >
+          Change Custom Link
+        </v-btn>
+        <!-- <v-btn
           small
           color="warning"
           @click="modalMode = 8; modalNexus = true"
         >
           {{ $t("views.scriptEditor.menu.editorMode") }}
-        </v-btn>
+        </v-btn> -->
         <v-btn
           small
           color="error"
-          @click="modalMode = 7; modalNexus = true"
+          @click="
+            modalMode = 7;
+            modalNexus = true;
+          "
         >
           {{ $t("views.scriptEditor.menu.clearAll") }}
         </v-btn>
       </v-system-bar>
-      <div class="d-flex align-stretch flex-row" style="height:100%" @click="menuBool = false">
+      <div
+        class="flex-row d-flex align-stretch"
+        style="height: 100%"
+        @click="menuBool = false"
+      >
         <v-card
           ref="tableContainer"
           class="grow"
@@ -98,7 +110,7 @@
             :height="tableHeightCalculator"
             width="auto"
           >
-            <thead @click="selectedEntry = -1;">
+            <thead @click="selectedEntry = -1">
               <tr>
                 <th class="text-left">
                   {{ $t("views.scriptEditor.table.headerStart") }}
@@ -113,14 +125,17 @@
                   {{ $t("views.scriptEditor.table.headerText") }}
                 </th>
                 <th>
-                  <v-card-actions v-if="!vidPlayer" class="ControlBox d-flex flex-row">
-                    <v-btn small @click="timerTimeStop();">
+                  <v-card-actions
+                    v-if="!vidPlayer"
+                    class="flex-row ControlBox d-flex"
+                  >
+                    <v-btn small @click="timerTimeStop()">
                       <v-icon dark>
                         {{ mdiStop }}
                       </v-icon>
                     </v-btn>
                     <span>{{ timerPrint }}</span>
-                    <v-btn small @click="timerTimeStart();">
+                    <v-btn small @click="timerTimeStart()">
                       <v-icon dark>
                         {{ mdiPlay }}
                       </v-icon>
@@ -138,9 +153,19 @@
                   :duration="entry.Duration"
                   :stext="entry.SText"
                   :profile-name="profile[entry.Profile].Name"
-                  :cc="profile[entry.Profile].useCC ? profile[entry.Profile].CC : ''"
-                  :oc="profile[entry.Profile].useOC ? profile[entry.Profile].OC : ''"
-                  @click.native="selectedEntry = index;"
+                  :cc="
+                    profile[entry.Profile].useCC
+                      ? profile[entry.Profile].CC
+                      : ''
+                  "
+                  :oc="
+                    profile[entry.Profile].useOC
+                      ? profile[entry.Profile].OC
+                      : ''
+                  "
+                  :use-real-time="videoData.id === 'custom'"
+                  :real-time="entry.realTime"
+                  @click.native="selectedEntry = index"
                 />
                 <tr v-if="selectedEntry === index" :key="index">
                   <td>{{ timeStampStart }}</td>
@@ -164,18 +189,20 @@
                     />
                   </td>
                 </tr>
-                <tr
-                  v-if="selectedEntry === index"
-                  :key="index + 'control'"
-                >
+                <tr v-if="selectedEntry === index" :key="index + 'control'">
                   <td colspan="5">
                     <v-card-actions
-                      class="d-flex flex-row justify-space-around"
+                      class="flex-row d-flex justify-space-around"
                     >
-                      <v-btn @click="modalMode = 4; modalNexus = true">
+                      <v-btn
+                        @click="
+                          modalMode = 4;
+                          modalNexus = true;
+                        "
+                      >
                         {{ $t("views.scriptEditor.table.setAsStart") }}
                       </v-btn>
-                      <v-btn @click="deleteEntry();">
+                      <v-btn @click="deleteEntry()">
                         {{ $t("views.scriptEditor.table.deleteEntry") }}
                       </v-btn>
                     </v-card-actions>
@@ -184,8 +211,14 @@
               </template>
             </tbody>
           </v-simple-table>
-          <v-card v-if="profileDisplay" class="ProfileListCard d-flex flex-column">
-            <span v-for="(prf, index) in profile" :key="index"><span v-if="index === profileIdx">> </span>{{ (index + 1) + '. ' + prf.Name }}</span>
+          <v-card
+            v-if="profileDisplay"
+            class="ProfileListCard d-flex flex-column"
+          >
+            <span
+              v-for="(prf, index) in profile"
+              :key="index"
+            ><span v-if="index === profileIdx">> </span>{{ index + 1 + ". " + prf.Name }}</span>
           </v-card>
         </v-card>
         <v-card
@@ -195,31 +228,31 @@
           class="d-flex flex-column"
           outlined
         >
-          <v-card
-            id="player"
-            height="100%"
-            width="100%"
-          />
-          <v-card
-            class="d-flex flex-row justify-center"
-          >
+          <v-card id="player" height="100%" width="100%" />
+          <v-card class="flex-row justify-center d-flex">
             <EnhancedEntry
               v-if="displayEntry >= 0 && displayEntry < entries.length"
               :stext="entries[displayEntry].SText"
-              :cc="profile[entries[displayEntry].Profile].useCC ? profile[entries[displayEntry].Profile].CC : ''"
-              :oc="profile[entries[displayEntry].Profile].useOC ? profile[entries[displayEntry].Profile].OC : ''"
+              :cc="
+                profile[entries[displayEntry].Profile].useCC
+                  ? profile[entries[displayEntry].Profile].CC
+                  : ''
+              "
+              :oc="
+                profile[entries[displayEntry].Profile].useOC
+                  ? profile[entries[displayEntry].Profile].OC
+                  : ''
+              "
             />
           </v-card>
-          <v-card-actions
-            class="d-flex flex-row justify-center"
-          >
-            <v-btn small @click="timerTimeStop();">
+          <v-card-actions class="flex-row justify-center d-flex">
+            <v-btn small @click="timerTimeStop()">
               <v-icon dark>
                 {{ mdiStop }}
               </v-icon>
             </v-btn>
             <span>{{ timerPrint }}</span>
-            <v-btn small @click="timerTimeStart();">
+            <v-btn small @click="timerTimeStart()">
               <v-icon dark>
                 {{ mdiPlay }}
               </v-icon>
@@ -248,43 +281,106 @@
         @keydown.ctrl.right="ctrlRight()"
       >
         <v-row class="align-baseline">
-          <v-card style="display: flex; flex-direction: column; padding-bottom: 7px; margin-bottom: 5px;">
-            <v-card style="position: relative;">
+          <v-card
+            style="
+              display: flex;
+              flex-direction: column;
+              padding-bottom: 7px;
+              margin-bottom: 5px;
+            "
+          >
+            <v-card style="position: relative">
               <div class="Marker" />
 
-              <div ref="TimelineDiv" class="TimelineContainer" :style="{ scrollBehavior: jumpScrollRender }">
-                <v-card class="TimelineInnerContainer" :style="{ width: 3*secToPx*secPerBar + 'px' }">
-                  <canvas ref="TimeCanvas1" :style="{ height: barHeight + 'px', width: secToPx*secPerBar + 'px'}" />
-                  <canvas ref="TimeCanvas2" :style="{ height: barHeight + 'px', width: secToPx*secPerBar + 'px'}" />
-                  <canvas ref="TimeCanvas3" style="margin-right: auto;" :style="{ height: barHeight + 'px', width: secToPx*secPerBar + 'px'}" />
+              <div
+                ref="TimelineDiv"
+                class="TimelineContainer"
+                :style="{ scrollBehavior: jumpScrollRender }"
+              >
+                <v-card
+                  class="TimelineInnerContainer"
+                  :style="{ width: 3 * secToPx * secPerBar + 'px' }"
+                >
+                  <canvas
+                    ref="TimeCanvas1"
+                    :style="{
+                      height: barHeight + 'px',
+                      width: secToPx * secPerBar + 'px',
+                    }"
+                  />
+                  <canvas
+                    ref="TimeCanvas2"
+                    :style="{
+                      height: barHeight + 'px',
+                      width: secToPx * secPerBar + 'px',
+                    }"
+                  />
+                  <canvas
+                    ref="TimeCanvas3"
+                    style="margin-right: auto"
+                    :style="{
+                      height: barHeight + 'px',
+                      width: secToPx * secPerBar + 'px',
+                    }"
+                  />
                 </v-card>
 
                 <div
-                  class="d-flex flex-row"
+                  class="flex-row d-flex"
                   style="margin-left: 40%"
-                  :style="{ width: 3*secToPx*secPerBar + 'px'}"
+                  :style="{ width: 3 * secToPx * secPerBar + 'px' }"
                   @mouseleave="rulerMouseLeave()"
                   @mouseup="rulerMouseUp()"
                   @mousemove="rulerMouseMove($event)"
                 >
                   <template v-for="(idx, index) in timecardIdx">
-                    <div :key="idx + 'frontdiv'" :style="{width: cardFiller(index) + 'px'}" />
+                    <div
+                      :key="idx + 'frontdiv'"
+                      :style="{ width: cardFiller(index) + 'px' }"
+                    />
                     <v-card
                       :key="idx + 'card'"
-                      class="d-flex flex-row align-center rounded-lg Timecard"
+                      class="flex-row rounded-lg d-flex align-center Timecard"
                       elevation="2"
                       outlined
-                      :style="{ fontsize: fontSize + 'px', width: cardWidth(index) + 'px'}"
+                      :style="{
+                        fontsize: fontSize + 'px',
+                        width: cardWidth(index) + 'px',
+                      }"
                     >
-                      <div style="width: 3px; background-color: transparent; height: 100%; cursor: ew-resize;" @mousedown="rulerMouseDown($event, idx, 0);" />
+                      <div
+                        style="
+                          width: 3px;
+                          background-color: transparent;
+                          height: 100%;
+                          cursor: ew-resize;
+                        "
+                        @mousedown="rulerMouseDown($event, idx, 0)"
+                      />
                       <EnhancedEntry
                         :stext="entries[idx].SText"
-                        :cc="profile[entries[idx].Profile].useCC ? profile[entries[idx].Profile].CC : ''"
-                        :oc="profile[entries[idx].Profile].useOC ? profile[entries[idx].Profile].OC : ''"
+                        :cc="
+                          profile[entries[idx].Profile].useCC
+                            ? profile[entries[idx].Profile].CC
+                            : ''
+                        "
+                        :oc="
+                          profile[entries[idx].Profile].useOC
+                            ? profile[entries[idx].Profile].OC
+                            : ''
+                        "
                         class="TimecardText"
                         @mousedown.native="rulerMouseDown($event, idx, 1)"
                       />
-                      <div style="width: 3px; background-color: transparent; height: 100%; cursor: ew-resize;" @mousedown="rulerMouseDown($event, idx, 2);" />
+                      <div
+                        style="
+                          width: 3px;
+                          background-color: transparent;
+                          height: 100%;
+                          cursor: ew-resize;
+                        "
+                        @mousedown="rulerMouseDown($event, idx, 2)"
+                      />
                     </v-card>
                   </template>
                 </div>
@@ -301,15 +397,15 @@
             dense
             @keypress.enter="addEntry()"
           >
-            <template
-              #prepend
-            >
-              <span style="opacity: 0.8;" class="mt-1">{{ profile[profileIdx].Prefix }}</span>
+            <template #prepend>
+              <span style="opacity: 0.8" class="mt-1">{{
+                profile[profileIdx].Prefix
+              }}</span>
             </template>
-            <template
-              #append
-            >
-              <span style="opacity: 0.8;" class="mt-1">{{ profile[profileIdx].Suffix }}</span>
+            <template #append>
+              <span style="opacity: 0.8" class="mt-1">{{
+                profile[profileIdx].Suffix
+              }}</span>
             </template>
           </v-text-field>
 
@@ -317,7 +413,11 @@
             {{ $t("views.tlClient.tlControl.enterBtn") }}
           </v-btn>
           <v-btn large color="primary" @click="TLSetting = !TLSetting">
-            {{ TLSetting ? $t("views.tlClient.tlControl.hideSetting") : $t("views.tlClient.tlControl.showSetting") }}
+            {{
+              TLSetting
+                ? $t("views.tlClient.tlControl.hideSetting")
+                : $t("views.tlClient.tlControl.showSetting")
+            }}
             <v-icon>
               {{ TLSetting ? mdiCogOff : mdiCog }}
             </v-icon>
@@ -389,13 +489,26 @@
                 -->
             </v-card-text>
             <v-card-text>
-              <v-btn style="margin-right:5px" @click="modalMode = 1; modalNexus = true; addProfileNameString = 'Profile ' + profile.length;">
+              <v-btn
+                style="margin-right: 5px"
+                @click="
+                  modalMode = 1;
+                  modalNexus = true;
+                  addProfileNameString = 'Profile ' + profile.length;
+                "
+              >
                 {{ $t("views.tlClient.tlControl.addProfile") }}
               </v-btn>
-              <v-btn style="margin-right:5px" @click="modalMode = 2; modalNexus = true">
+              <v-btn
+                style="margin-right: 5px"
+                @click="
+                  modalMode = 2;
+                  modalNexus = true;
+                "
+              >
                 {{ $t("views.tlClient.tlControl.removeProfile") }}
               </v-btn>
-              <v-btn style="margin-right:5px" @click="shiftProfileUp()">
+              <v-btn style="margin-right: 5px" @click="shiftProfileUp()">
                 {{ $t("views.tlClient.tlControl.shiftUp") }}
               </v-btn>
               <v-btn @click="shiftProfileDown()">
@@ -411,20 +524,26 @@
     <v-dialog
       v-model="colourDialogue"
       max-width="300px"
-      @click:outside.prevent="colourPickerClose();"
+      @click:outside.prevent="colourPickerClose()"
     >
       <v-card>
-        <v-color-picker v-if="colourPick === 1" v-model="profile[profileIdx].CC" />
-        <v-color-picker v-else-if="colourPick === 2" v-model="profile[profileIdx].OC" />
-        <v-card-title :style="textStyle" style="font-weight:bold;">
+        <v-color-picker
+          v-if="colourPick === 1"
+          v-model="profile[profileIdx].CC"
+        />
+        <v-color-picker
+          v-else-if="colourPick === 2"
+          v-model="profile[profileIdx].OC"
+        />
+        <v-card-title :style="textStyle" style="font-weight: bold">
           {{ $t("views.tlClient.pangram") }}
         </v-card-title>
         <v-card-actions>
-          <v-btn @click="colourPickerClose();">
+          <v-btn @click="colourPickerClose()">
             {{ $t("views.tlClient.cancelBtn") }}
           </v-btn>
 
-          <v-btn style="margin-left:auto" @click="colourPickerOK()">
+          <v-btn style="margin-left: auto" @click="colourPickerOK()">
             {{ $t("views.tlClient.okBtn") }}
           </v-btn>
         </v-card-actions>
@@ -446,7 +565,7 @@
       v-model="modalNexus"
       :max-width="modalMode === 7 ? '300px' : '600px'"
       persistent
-      @click:outside="modalNexusOutsideClick();"
+      @click:outside="modalNexusOutsideClick()"
     >
       <!---------    ADD PROFILE     --------->
       <v-card v-if="modalMode === 1">
@@ -467,7 +586,7 @@
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
-            <v-btn style="margin-left:auto" @click="addProfile()">
+            <v-btn style="margin-left: auto" @click="addProfile()">
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
@@ -478,14 +597,18 @@
       <v-card v-if="modalMode === 2">
         <v-container>
           <v-card-title>
-            {{ $t("views.tlClient.removeProfileTitle") + ' ' + profile[profileIdx].Name }}.
+            {{
+              $t("views.tlClient.removeProfileTitle") +
+                " " +
+                profile[profileIdx].Name
+            }}.
           </v-card-title>
           <v-card-actions>
             <v-btn @click="modalNexus = false">
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
-            <v-btn style="margin-left:auto" @click="deleteProfile()">
+            <v-btn style="margin-left: auto" @click="deleteProfile()">
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
@@ -498,13 +621,22 @@
           <v-card-title>
             {{ $t("views.scriptEditor.loadVideoPanel.title") }}
           </v-card-title>
-          <v-text-field v-model="activeURLInput" :label="$t('views.scriptEditor.loadVideoPanel.inputLabel')" />
+          <v-text-field
+            v-model="activeURLInput"
+            :label="$t('views.scriptEditor.loadVideoPanel.inputLabel')"
+          />
           <v-card-actions>
             <v-btn @click="modalNexus = false">
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
 
-            <v-btn style="margin-left:auto" @click="loadVideo(); modalNexus = false;">
+            <v-btn
+              style="margin-left: auto"
+              @click="
+                loadVideo();
+                modalNexus = false;
+              "
+            >
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
@@ -514,14 +646,20 @@
       <!-------  SET START ENTRY  ------->
       <v-card v-if="modalMode === 4">
         <v-container>
-          <v-card-title style="word-break: normal;">
+          <v-card-title style="word-break: normal">
             {{ $t("views.scriptEditor.setStartTitle") }}
           </v-card-title>
           <v-card-actions>
             <v-btn @click="modalNexus = false">
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
-            <v-btn style="margin-left:auto" @click="setStartEntry(); modalNexus = false;">
+            <v-btn
+              style="margin-left: auto"
+              @click="
+                setStartEntry();
+                modalNexus = false;
+              "
+            >
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
@@ -535,20 +673,31 @@
             {{ $t("views.tlClient.settingPanel.title") }}
           </v-card-title>
           <v-card-subtitle>
-            {{ $t("views.watch.uploadPanel.usernameText") + ' : ' + userdata.user.username + ' ' }}
-            <a style="text-decoration: underline; font-size: 0.7em" @click="changeUsernameClick()">{{ $t("views.watch.uploadPanel.usernameChange") }}</a>
+            {{
+              $t("views.watch.uploadPanel.usernameText") +
+                " : " +
+                userdata.user.username +
+                " "
+            }}
+            <a
+              style="text-decoration: underline; font-size: 0.7em"
+              @click="changeUsernameClick()"
+            >{{ $t("views.watch.uploadPanel.usernameChange") }}</a>
           </v-card-subtitle>
           <v-select
             v-model="TLLang"
             :items="TL_LANGS"
-            :item-text="item => item.text + ' (' + item.value + ')'"
+            :item-text="(item) => item.text + ' (' + item.value + ')'"
             item-value="value"
-            :label="$t(&quot;views.watch.uploadPanel.tlLang&quot;)"
+            :label="$t('views.watch.uploadPanel.tlLang')"
             return-object
             @change="localPrefix = '[' + TLLang.value + '] '"
           />
-          <v-text-field v-model="activeURLStream" :label="$t(&quot;views.tlClient.settingPanel.mainStreamLink&quot;)" />
-          <v-card-actions class="d-flex flex-row justify-center">
+          <v-text-field
+            v-model="activeURLStream"
+            :label="$t('views.tlClient.settingPanel.mainStreamLink')"
+          />
+          <v-card-actions class="flex-row justify-center d-flex">
             <v-btn @click="settingOKClick()">
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
@@ -558,7 +707,11 @@
 
       <!---------    EXPORT ALL     --------->
       <v-card v-if="modalMode === 6">
-        <ExportFile :entries="entries" :profile="profile" :title="userdata.user.username + ' - ' + videoData.title" />
+        <ExportFile
+          :entries="entries"
+          :profile="profile"
+          :title="userdata.user.username + ' - ' + videoData.title"
+        />
       </v-card>
 
       <!---------    DELETE ALL     --------->
@@ -571,46 +724,24 @@
             <v-btn @click="modalNexus = false">
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
-            <v-btn style="margin-left:auto" color="warning" @click="clearAll(); modalNexus = false;">
+            <v-btn
+              style="margin-left: auto"
+              color="warning"
+              @click="
+                clearAll();
+                modalNexus = false;
+              "
+            >
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
         </v-container>
       </v-card>
 
-      <!---------    EDITOR MODE    --------->
-      <v-card v-if="modalMode === 8">
-        <v-container>
-          <v-card-title>
-            {{ $t("views.scriptEditor.menu.editorMode") }}
-          </v-card-title>
-          <v-card-actions v-if="!editorMode">
-            <v-btn color="primary" :disabled="!elevatedUser" @click="activateEditorMode();">
-              {{ elevatedUser ? $t("views.scriptEditor.editorModePanel.activateMode") : $t("views.scriptEditor.editorModePanel.roleWarning") }}
-            </v-btn>
-          </v-card-actions>
-          <v-card v-if="editorMode">
-            <v-select
-              :items="tlList"
-              item-value="value"
-              :label="$t('views.scriptEditor.editorModePanel.filterTranslator')"
-              @change="filterTlChange"
-            />
-            <v-card-actions class="d-flex flex-row justify-center">
-              <v-btn color="primary" @click="deactivateEditorMode();">
-                {{ $t("views.scriptEditor.editorModePanel.deactivateMode") }}
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-container>
-      </v-card>
-
       <!---------    TIME SHIFT    --------->
       <v-card v-if="modalMode === 9">
         <v-container>
-          <v-card-title>
-            Time Shift
-          </v-card-title>
+          <v-card-title> Time Shift </v-card-title>
           <v-card-text>
             <v-text-field
               v-model="offsetInput"
@@ -623,10 +754,71 @@
             />
           </v-card-text>
           <v-card-actions>
-            <v-btn @click="modalNexus = false;">
+            <v-btn @click="modalNexus = false">
               {{ $t("views.tlClient.cancelBtn") }}
             </v-btn>
-            <v-btn style="margin-left:auto" @click="modalNexus = false; shiftTime()">
+            <v-btn
+              style="margin-left: auto"
+              @click="
+                modalNexus = false;
+                shiftTime();
+              "
+            >
+              {{ $t("views.tlClient.okBtn") }}
+            </v-btn>
+          </v-card-actions>
+        </v-container>
+      </v-card>
+
+      <v-card v-if="modalMode === 10">
+        <v-container>
+          <v-card-title> Change stream link </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="linkInput"
+              label="New link"
+              outlined
+              dense
+              hide-details
+            />
+          </v-card-text>
+          <v-card-actions>
+            <v-btn @click="modalNexus = false">
+              {{ $t("views.tlClient.cancelBtn") }}
+            </v-btn>
+            <v-btn style="margin-left: auto" @click="modalNexus = false">
+              {{ $t("views.tlClient.okBtn") }}
+            </v-btn>
+          </v-card-actions>
+        </v-container>
+      </v-card>
+
+      <!---------    TIME SHIFT    --------->
+      <v-card v-if="modalMode === 9">
+        <v-container>
+          <v-card-title> Time Shift </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="offsetInput"
+              label="Offset"
+              outlined
+              dense
+              hide-details
+              type="number"
+              suffix="sec"
+            />
+          </v-card-text>
+          <v-card-actions>
+            <v-btn @click="modalNexus = false">
+              {{ $t("views.tlClient.cancelBtn") }}
+            </v-btn>
+            <v-btn
+              style="margin-left: auto"
+              @click="
+                modalNexus = false;
+                shiftTime();
+              "
+            >
               {{ $t("views.tlClient.okBtn") }}
             </v-btn>
           </v-card-actions>
@@ -643,9 +835,9 @@ import Entrytr from "@/components/tlscripteditor/Entrytr.vue";
 import EnhancedEntry from "@/components/tlscripteditor/EnhancedEntry.vue";
 import ImportFile from "@/components/tlscripteditor/ImportFile.vue";
 import ExportFile from "@/components/tlscripteditor/ExportToFile.vue";
-import { TL_LANGS } from "@/utils/consts";
+import { TL_LANGS, VIDEO_URL_REGEX } from "@/utils/consts";
 import { mdiPlay, mdiStop, mdiCog, mdiCogOff, mdiKeyboard } from "@mdi/js";
-import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
+import { videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 
 export default {
@@ -674,15 +866,17 @@ export default {
             TLSetting: true,
             menuBool: false,
             entries: [],
-            profile: [{
-                Name: "Default",
-                Prefix: "",
-                Suffix: "",
-                useCC: false,
-                CC: "#000000",
-                useOC: false,
-                OC: "#000000",
-            }],
+            profile: [
+                {
+                    Name: "Default",
+                    Prefix: "",
+                    Suffix: "",
+                    useCC: false,
+                    CC: "#000000",
+                    useOC: false,
+                    OC: "#000000",
+                },
+            ],
             profileContainer: {},
             profileIdx: 0,
             profileDisplay: false,
@@ -704,6 +898,7 @@ export default {
             addProfileNameString: "",
             importPanelShow: false,
             offsetInput: 0,
+            linkInput: "",
             // ------ SETTING ------
             TLLang: TL_LANGS[0],
             // ---- ACTIVE VIDEO ----
@@ -720,7 +915,7 @@ export default {
             defaultRefreshRate: 1000 / 30,
             timerTime: 0,
             refreshRate: 33,
-            trackerPause: true,
+            // trackerPause: true, --> originally, to keep VOD twitch timer and script editor timer synced, but twitch VOD is not supported atm.
             // ---- TIMELINE ----
             timelineDur: 3600,
             secToPx: 100,
@@ -740,13 +935,20 @@ export default {
     },
     computed: {
         tableHeightCalculator() {
-            return (`${this.tableHeight}px`);
+            return `${this.tableHeight}px`;
         },
         textStyle() {
             return {
-                "-webkit-text-fill-color": (this.profile[this.profileIdx].CC === "") ? "unset" : this.profile[this.profileIdx].CC,
-                "-webkit-text-stroke-color": (this.profile[this.profileIdx].OC === "") ? "unset" : this.profile[this.profileIdx].OC,
-                "-webkit-text-stroke-width": (this.profile[this.profileIdx].OC === "") ? "0px" : "1px",
+                "-webkit-text-fill-color":
+                    this.profile[this.profileIdx].CC === ""
+                        ? "unset"
+                        : this.profile[this.profileIdx].CC,
+                "-webkit-text-stroke-color":
+                    this.profile[this.profileIdx].OC === ""
+                        ? "unset"
+                        : this.profile[this.profileIdx].OC,
+                "-webkit-text-stroke-width":
+                    this.profile[this.profileIdx].OC === "" ? "0px" : "1px",
             };
         },
         userdata() {
@@ -838,7 +1040,8 @@ export default {
             return timeString;
         },
         timeStampEnd() {
-            let timeRaw = this.entries[this.selectedEntry].Time + this.entries[this.selectedEntry].Duration;
+            let timeRaw = this.entries[this.selectedEntry].Time
+                + this.entries[this.selectedEntry].Duration;
             let timeString = "";
 
             let t = Math.floor(timeRaw / 60 / 60 / 1000);
@@ -880,9 +1083,21 @@ export default {
         },
         textStyle2() {
             return {
-                "-webkit-text-fill-color": (!this.profile[this.entries[this.selectedEntry].Profile].useCC) ? "unset" : this.profile[this.entries[this.selectedEntry].Profile].CC,
-                "-webkit-text-stroke-color": (!this.profile[this.entries[this.selectedEntry].Profile].useOC) ? "unset" : this.profile[this.entries[this.selectedEntry].Profile].OC,
-                "-webkit-text-stroke-width": (!this.profile[this.entries[this.selectedEntry].Profile].useOC) ? "0px" : "1px",
+                "-webkit-text-fill-color": !this.profile[
+                    this.entries[this.selectedEntry].Profile
+                ].useCC
+                    ? "unset"
+                    : this.profile[this.entries[this.selectedEntry].Profile].CC,
+                "-webkit-text-stroke-color": !this.profile[
+                    this.entries[this.selectedEntry].Profile
+                ].useOC
+                    ? "unset"
+                    : this.profile[this.entries[this.selectedEntry].Profile].OC,
+                "-webkit-text-stroke-width": !this.profile[
+                    this.entries[this.selectedEntry].Profile
+                ].useOC
+                    ? "0px"
+                    : "1px",
             };
         },
         profileListPicker() {
@@ -892,19 +1107,20 @@ export default {
                     idx: i,
                     name: this.profile[i].Name,
                 });
-            } return profileList;
+            }
+            return profileList;
         },
         jumpScrollRender() {
-            return (this.jumpScroll ? "unset" : "smooth");
+            return this.jumpScroll ? "unset" : "smooth";
         },
         elevatedUser() {
-            return ((this.user.role === "admin") || (this.user.role === "editor"));
+            return this.user.role === "admin" || this.user.role === "editor";
         },
     },
     watch: {
         // eslint-disable-next-line func-names
         "$route.query.video": function () {
-            if ((this.$route.name === "scripteditor") && this.$route.query.video) {
+            if (this.$route.name === "scripteditor" && this.$route.query.video) {
                 this.init();
             }
         },
@@ -922,7 +1138,12 @@ export default {
             }
 
             if (this.entries[this.displayEntry]) {
-                if ((this.timerTime > this.entries[this.displayEntry].Time) && (this.entries[this.displayEntry].Time + this.entries[this.displayEntry].Duration > this.timerTime)) {
+                if (
+                    this.timerTime > this.entries[this.displayEntry].Time
+                    && this.entries[this.displayEntry].Time
+                        + this.entries[this.displayEntry].Duration
+                        > this.timerTime
+                ) {
                     return;
                 }
             }
@@ -981,11 +1202,14 @@ export default {
                 id: Date.now(),
                 Time: this.timerTime,
                 Duration: 3000,
-                SText: this.profile[this.profileIdx].Prefix + this.inputString + this.profile[this.profileIdx].Suffix,
+                SText:
+                    this.profile[this.profileIdx].Prefix
+                    + this.inputString
+                    + this.profile[this.profileIdx].Suffix,
                 Profile: this.profileIdx,
             };
 
-            let inserted:boolean = false;
+            let inserted: boolean = false;
             for (let i = 0; i < this.entries.length; i += 1) {
                 if (this.entries[i].Time > dt.Time) {
                     if (i > 0) {
@@ -1029,7 +1253,9 @@ export default {
 
             for (; this.entries.length > 0;) {
                 const tempEntries = this.entries.splice(0, 1)[0];
-                let checkNew = this.transactionLog.filter((e) => e.id === tempEntries.id);
+                let checkNew = this.transactionLog.filter(
+                    (e) => e.id === tempEntries.id,
+                );
                 if (checkNew.length === 0) {
                     this.transactionLog.push({
                         type: "Delete",
@@ -1038,9 +1264,13 @@ export default {
                 } else {
                     checkNew = checkNew.filter((e) => e.type === "Change");
                     if (checkNew.length === 0) {
-                        this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                        this.transactionLog = this.transactionLog.filter(
+                            (e) => e.id !== tempEntries.id,
+                        );
                     } else {
-                        this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                        this.transactionLog = this.transactionLog.filter(
+                            (e) => e.id !== tempEntries.id,
+                        );
                         this.transactionLog.push({
                             type: "Delete",
                             id: tempEntries.id,
@@ -1058,7 +1288,10 @@ export default {
             this.selectedEntry = -1;
 
             for (let idx = 0; idx < this.entries.length - 1; idx += 1) {
-                if (this.entries[idx].Time + this.entries[idx].Duration < this.entries[idx + 1].Time) {
+                if (
+                    this.entries[idx].Time + this.entries[idx].Duration
+                    < this.entries[idx + 1].Time
+                ) {
                     this.entries[idx].Duration = this.entries[idx + 1].Time - this.entries[idx].Time;
                     this.logChange(this.entries[idx].id);
                 }
@@ -1075,14 +1308,14 @@ export default {
                 });
             }
         },
-        getEntryByID(ID:string) {
+        getEntryByID(ID: string) {
             const entry = this.entries.filter((e) => e.id === ID);
             if (entry.length === 0) {
                 return undefined;
             }
             return entry[0];
         },
-        processLog(forget:boolean) {
+        processLog(forget: boolean) {
             if (this.transactionLog.length > 0) {
                 const logCopy = [];
                 for (; this.transactionLog.length > 0;) {
@@ -1107,7 +1340,11 @@ export default {
                                     lang: this.TLLang.value,
                                     id: entry.id,
                                     name: this.userdata.user.username,
-                                    timestamp: Math.floor(this.videoData.start_actual + entry.Time),
+                                    timestamp: Math.floor(
+                                        this.videoData.start_actual
+                                            ? this.videoData.start_actual + entry.Time
+                                            : entry.realTime,
+                                    ),
                                     message: entry.SText,
                                     duration: Math.floor(entry.Duration),
                                 },
@@ -1121,7 +1358,11 @@ export default {
                                 data: {
                                     tempid: entry.id,
                                     name: this.userdata.user.username,
-                                    timestamp: Math.floor(this.videoData.start_actual + entry.Time),
+                                    timestamp: Math.floor(
+                                        this.videoData.start_actual
+                                            ? this.videoData.start_actual + entry.Time
+                                            : entry.realTime,
+                                    ),
                                     message: entry.SText,
                                     duration: Math.floor(entry.Duration),
                                 },
@@ -1130,30 +1371,49 @@ export default {
                     }
                 });
 
+                const postTLOption = {
+                    videoId: this.videoData.id,
+                    jwt: this.userdata.jwt,
+                    body: processedLog,
+                    lang: this.TLLang.value,
+                    override: this.editorMode,
+                    ...(this.videoData.id === "custom" && {
+                        custom_video_id: this.videoData.custom_video_id,
+                    }),
+                };
                 if (forget) {
-                    backendApi.postTLLog(this.videoData.id, this.userdata.jwt, processedLog, this.TLLang.value, this.editorMode);
+                    backendApi.postTLLog(postTLOption);
                 } else {
-                    backendApi.postTLLog(this.videoData.id, this.userdata.jwt, processedLog, this.TLLang.value, this.editorMode).then(({ status, data }) => {
-                        if (status === 200) {
-                            data.forEach((e) => {
-                                if (e.type === "Add") {
-                                    for (let idx = 0; idx < this.entries.length; idx += 1) {
-                                        if (this.entries[idx].id === e.tempid) {
-                                            this.entries[idx].id = e.res.id;
-                                            break;
+                    backendApi
+                        .postTLLog(postTLOption)
+                        .then(({ status, data }) => {
+                            if (status === 200) {
+                                data.forEach((e) => {
+                                    if (e.type === "Add") {
+                                        for (let idx = 0; idx < this.entries.length; idx += 1) {
+                                            if (this.entries[idx].id === e.tempid) {
+                                                this.entries[idx].id = e.res.id;
+                                                break;
+                                            }
+                                        }
+                                        for (
+                                            let idx = 0;
+                                            idx < this.transactionLog.length;
+                                            idx += 1
+                                        ) {
+                                            if (this.transactionLog[idx].id === e.tempid) {
+                                                this.transactionLog[idx].id = e.res.id;
+                                            }
                                         }
                                     }
-                                    for (let idx = 0; idx < this.transactionLog.length; idx += 1) {
-                                        if (this.transactionLog[idx].id === e.tempid) {
-                                            this.transactionLog[idx].id = e.res.id;
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                    }).catch((err) => {
-                        console.log(`ERR : ${err}`);
-                    });
+                                });
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(`ERR : ${err}`);
+                            // eslint-disable-next-line no-alert
+                            alert(`Failed to save: ${err}`);
+                        });
                 }
             }
         },
@@ -1275,7 +1535,7 @@ export default {
                 this.timerActive = false;
             }
         },
-        seekVideo(time:number) {
+        seekVideo(time: number) {
             if (this.vidPlayer) {
                 switch (this.vidType) {
                     case "twitch":
@@ -1309,7 +1569,10 @@ export default {
                         break;
 
                     default:
-                        this.player.seekTo(this.player.getCurrentTime() + time / 1000, true);
+                        this.player.seekTo(
+                            this.player.getCurrentTime() + time / 1000,
+                            true,
+                        );
                         break;
                 }
             } else if (this.timerTime + time < 0) {
@@ -1384,7 +1647,9 @@ export default {
         // ------------------------ PROFILE CONTROLLER ------------------------
         shiftProfileUp() {
             if (this.profileIdx > 1) {
-                this.profileContainer = JSON.parse(JSON.stringify(this.profile[this.profileIdx - 1]));
+                this.profileContainer = JSON.parse(
+                    JSON.stringify(this.profile[this.profileIdx - 1]),
+                );
                 this.profile[this.profileIdx - 1] = this.profile[this.profileIdx];
                 this.profile[this.profileIdx] = this.profileContainer;
                 this.profileIdx -= 1;
@@ -1393,8 +1658,10 @@ export default {
             this.showProfileList();
         },
         shiftProfileDown() {
-            if ((this.profileIdx !== 0) && (this.profileIdx < this.profile.length - 1)) {
-                this.profileContainer = JSON.parse(JSON.stringify(this.profile[this.profileIdx + 1]));
+            if (this.profileIdx !== 0 && this.profileIdx < this.profile.length - 1) {
+                this.profileContainer = JSON.parse(
+                    JSON.stringify(this.profile[this.profileIdx + 1]),
+                );
                 this.profile[this.profileIdx + 1] = this.profile[this.profileIdx];
                 this.profile[this.profileIdx] = this.profileContainer;
                 this.profileIdx += 1;
@@ -1447,10 +1714,12 @@ export default {
         },
         deleteProfile() {
             if (this.profileIdx !== 0) {
-                this.entries.filter((e) => e.Profile === this.profileIdx).map((e) => {
-                    e.Profile = 0;
-                    return (e);
-                });
+                this.entries
+                    .filter((e) => e.Profile === this.profileIdx)
+                    .map((e) => {
+                        e.Profile = 0;
+                        return e;
+                    });
 
                 this.profileIdx -= 1;
                 this.profile.splice(this.profileIdx + 1, 1);
@@ -1496,49 +1765,51 @@ export default {
                     if (this.timerActive) {
                         this.timerActive = false;
                     }
-                    const StreamURL = getVideoIDFromUrl(this.activeURLStream);
-                    if (StreamURL) {
-                        this.vidType = StreamURL.type;
-                        switch (StreamURL.type) {
-                            case "twitch":
-                                this.loadVideoTW(StreamURL.id, true);
-                                break;
+                    const isCustom = !VIDEO_URL_REGEX.test(this.activeURLStream);
+                    if (!isCustom) { this.loadVideoYT(this.activeURLStream.match(VIDEO_URL_REGEX)[5]); }
+                    // const StreamURL = getVideoIDFromUrl(this.activeURLStream);
+                    // if (StreamURL) {
+                    //     this.vidType = StreamURL.type;
+                    //     switch (StreamURL.type) {
+                    //         case "twitch":
+                    //             this.loadVideoTW(StreamURL.id, true);
+                    //             break;
 
-                            case "twitch_vod":
-                                this.loadVideoTW(StreamURL.id, false);
-                                break;
+                    //         case "twitch_vod":
+                    //             this.loadVideoTW(StreamURL.id, false);
+                    //             break;
 
-                            case "twitcast":
-                                this.setupIframeTC(StreamURL.id, StreamURL.id, true);
-                                break;
+                    //         case "twitcast":
+                    //             this.setupIframeTC(StreamURL.id, StreamURL.id, true);
+                    //             break;
 
-                            case "twitcast_vod":
-                                this.setupIframeTC(StreamURL.id, StreamURL.channel.name, false);
-                                break;
+                    //         case "twitcast_vod":
+                    //             this.setupIframeTC(StreamURL.id, StreamURL.channel.name, false);
+                    //             break;
 
-                            case "niconico":
-                                // niconico doesn't allow third party player hosting... at least for now...
-                                // this.setupIframeNC(StreamURL.id, true);
-                                break;
+                    //         case "niconico":
+                    //             // niconico doesn't allow third party player hosting... at least for now...
+                    //             // this.setupIframeNC(StreamURL.id, true);
+                    //             break;
 
-                            case "niconico_vod":
-                                this.setupIframeNC(StreamURL.id, false);
-                                break;
+                    //         case "niconico_vod":
+                    //             this.setupIframeNC(StreamURL.id, false);
+                    //             break;
 
-                            case "bilibili":
-                                // bilibili live player is flash -> the one in FLASH link in the share button
-                                // https://s1.hdslb.com/bfs/static/blive/live-assets/player/flash/pageplayer-latest.swf?room_id=0&cid=xxxxxx&state=LIVE
-                                break;
+                    //         case "bilibili":
+                    //             // bilibili live player is flash -> the one in FLASH link in the share button
+                    //             // https://s1.hdslb.com/bfs/static/blive/live-assets/player/flash/pageplayer-latest.swf?room_id=0&cid=xxxxxx&state=LIVE
+                    //             break;
 
-                            case "bilibili_vod":
-                                this.setupIframeBL(StreamURL.id);
-                                break;
+                    //         case "bilibili_vod":
+                    //             this.setupIframeBL(StreamURL.id);
+                    //             break;
 
-                            default:
-                                this.loadVideoYT(StreamURL.id);
-                                break;
-                        }
-                    }
+                    //         default:
+                    //             this.loadVideoYT(StreamURL.id);
+                    //             break;
+                    //     }
+                    // }
                 }
             }, 1000);
         },
@@ -1549,12 +1820,15 @@ export default {
             }
 
             if (this.vidIframeEle) {
-                window.removeEventListener("message", (e:any) => {
+                window.removeEventListener("message", (e: any) => {
                     this.iframeVideoListener(e);
                 });
             }
 
-            if (((this.vidType === "twitch") || (this.vidType === "twitch_vod")) && (window.Twitch)) {
+            if (
+                (this.vidType === "twitch" || this.vidType === "twitch_vod")
+                && window.Twitch
+            ) {
                 this.player.removeEventListener(window.Twitch.Player.PAUSE, () => {
                     this.pauseTracker = true;
                 });
@@ -1636,10 +1910,13 @@ export default {
         // -----------------  IFRAME  -----------------
         timePing(timestamp: number): void {
             if (this.vidIframeEle?.contentWindow) {
-                this.vidIframeEle?.contentWindow.postMessage({
-                    n: "HolodexSync",
-                    d: timestamp,
-                }, this.IFOrigin);
+                this.vidIframeEle?.contentWindow.postMessage(
+                    {
+                        n: "HolodexSync",
+                        d: timestamp,
+                    },
+                    this.IFOrigin,
+                );
             }
         },
         modePing(Mode: string): void {
@@ -1662,34 +1939,46 @@ export default {
             }
 
             if (this.vidIframeEle?.contentWindow) {
-                this.vidIframeEle?.contentWindow.postMessage({
-                    n: "HolodexSync",
-                    d: Mode,
-                }, this.IFOrigin);
+                this.vidIframeEle?.contentWindow.postMessage(
+                    {
+                        n: "HolodexSync",
+                        d: Mode,
+                    },
+                    this.IFOrigin,
+                );
             }
         },
         startPing(): void {
             if (this.vidIframeEle?.contentWindow) {
-                this.vidIframeEle?.contentWindow.postMessage({
-                    n: "HolodexSync",
-                    d: "s",
-                }, this.IFOrigin);
+                this.vidIframeEle?.contentWindow.postMessage(
+                    {
+                        n: "HolodexSync",
+                        d: "s",
+                    },
+                    this.IFOrigin,
+                );
             }
         },
         pausePing(): void {
             if (this.vidIframeEle?.contentWindow) {
-                this.vidIframeEle?.contentWindow.postMessage({
-                    n: "HolodexSync",
-                    d: "p",
-                }, this.IFOrigin);
+                this.vidIframeEle?.contentWindow.postMessage(
+                    {
+                        n: "HolodexSync",
+                        d: "p",
+                    },
+                    this.IFOrigin,
+                );
             }
         },
         switchPing(): void {
             if (this.vidIframeEle?.contentWindow) {
-                this.vidIframeEle?.contentWindow.postMessage({
-                    n: "HolodexSync",
-                    d: "w",
-                }, this.IFOrigin);
+                this.vidIframeEle?.contentWindow.postMessage(
+                    {
+                        n: "HolodexSync",
+                        d: "w",
+                    },
+                    this.IFOrigin,
+                );
             }
         },
         loadIframe(Mode: string): void {
@@ -1702,13 +1991,13 @@ export default {
                         this.modePing(Mode);
                     };
 
-                    window.addEventListener("message", (e:any) => {
+                    window.addEventListener("message", (e: any) => {
                         this.iframeVideoListener(e);
                     });
                 }
             }
         },
-        iframeVideoListener(e: any):void {
+        iframeVideoListener(e: any): void {
             if (e.origin === this.IFOrigin) {
                 if (e.data.n === "SyncHolodex") {
                     if (typeof e.data.d === "number") {
@@ -1761,7 +2050,7 @@ export default {
         //= ================  YT  =================
 
         // -----------------  TW  -----------------
-        loadVideoTW(VID:string, Live: boolean) {
+        loadVideoTW(VID: string, Live: boolean) {
             this.startTWTracker();
             if (window.Twitch) {
                 this.startVideoTW(VID, Live);
@@ -1802,11 +2091,11 @@ export default {
             }
 
             this.player.addEventListener(window.Twitch.Player.PAUSE, () => {
-                this.trackerPause = true;
+                // this.trackerPause = true;
             });
 
             this.player.addEventListener(window.Twitch.Player.PLAY, () => {
-                this.trackerPause = false;
+                // this.trackerPause = false;
             });
 
             this.player.addEventListener(window.Twitch.Player.SEEK, (e: any) => {
@@ -1828,7 +2117,9 @@ export default {
 
         //= =----------------------- ENTRY CONTROLLER ------------------------
         deleteEntry() {
-            const tempEntries = JSON.parse(JSON.stringify(this.entries[this.selectedEntry]));
+            const tempEntries = JSON.parse(
+                JSON.stringify(this.entries[this.selectedEntry]),
+            );
             this.displayEntry = -1;
             this.timecardIdx = [];
             this.entries.splice(this.selectedEntry, 1);
@@ -1844,9 +2135,13 @@ export default {
             } else {
                 checkNew = checkNew.filter((e) => e.type === "Change");
                 if (checkNew.length === 0) {
-                    this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                    this.transactionLog = this.transactionLog.filter(
+                        (e) => e.id !== tempEntries.id,
+                    );
                 } else {
-                    this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                    this.transactionLog = this.transactionLog.filter(
+                        (e) => e.id !== tempEntries.id,
+                    );
                     this.transactionLog.push({
                         type: "Delete",
                         id: tempEntries.id,
@@ -1878,25 +2173,64 @@ export default {
         //= ------------------------ TIMELINE CONTROLLER ------------------------
         cardFiller(index) {
             if (index === 0) {
-                if (this.entries[this.timecardIdx[index]].Time / 1000 < this.secPerBar * this.barCount) {
+                if (
+                    this.entries[this.timecardIdx[index]].Time / 1000
+                    < this.secPerBar * this.barCount
+                ) {
                     return 0;
                 }
-                return ((this.entries[this.timecardIdx[index]].Time / 1000 - this.secPerBar * this.barCount) * this.secToPx);
+                return (
+                    (this.entries[this.timecardIdx[index]].Time / 1000
+                        - this.secPerBar * this.barCount)
+                    * this.secToPx
+                );
             }
-            return (((this.entries[this.timecardIdx[index]].Time - this.entries[this.timecardIdx[index - 1]].Time - this.entries[this.timecardIdx[index - 1]].Duration) / 1000) * this.secToPx);
+            return (
+                ((this.entries[this.timecardIdx[index]].Time
+                    - this.entries[this.timecardIdx[index - 1]].Time
+                    - this.entries[this.timecardIdx[index - 1]].Duration)
+                    / 1000)
+                * this.secToPx
+            );
         },
         cardWidth(index) {
-            if ((index === 0) && (this.entries[this.timecardIdx[index]].Time / 1000 < this.secPerBar * this.barCount)) {
-                return (((this.entries[this.timecardIdx[index]].Duration + this.entries[this.timecardIdx[index]].Time) / 1000 - this.secPerBar * this.barCount) * this.secToPx);
-            } if ((index === this.timecardIdx.length - 1)
-                && ((this.entries[this.timecardIdx[index]].Duration + this.entries[this.timecardIdx[index]].Time) / 1000 > this.secPerBar * (this.barCount + 3))) {
-                return ((this.secPerBar * (this.barCount + 3) - this.entries[this.timecardIdx[index]].Time / 1000) * this.secToPx);
+            if (
+                index === 0
+                && this.entries[this.timecardIdx[index]].Time / 1000
+                    < this.secPerBar * this.barCount
+            ) {
+                return (
+                    ((this.entries[this.timecardIdx[index]].Duration
+                        + this.entries[this.timecardIdx[index]].Time)
+                        / 1000
+                        - this.secPerBar * this.barCount)
+                    * this.secToPx
+                );
             }
-            return ((this.entries[this.timecardIdx[index]].Duration / 1000) * this.secToPx);
+            if (
+                index === this.timecardIdx.length - 1
+                && (this.entries[this.timecardIdx[index]].Duration
+                    + this.entries[this.timecardIdx[index]].Time)
+                    / 1000
+                    > this.secPerBar * (this.barCount + 3)
+            ) {
+                return (
+                    (this.secPerBar * (this.barCount + 3)
+                        - this.entries[this.timecardIdx[index]].Time / 1000)
+                    * this.secToPx
+                );
+            }
+            return (
+                (this.entries[this.timecardIdx[index]].Duration / 1000) * this.secToPx
+            );
         },
-        secToTimeString(secInput: number, msOutput: boolean = true, Full: boolean = false): string {
+        secToTimeString(
+            secInput: number,
+            msOutput: boolean = true,
+            Full: boolean = false,
+        ): string {
             let Sec = secInput;
-            let MS:string = Math.floor((Sec % 1) * 100).toString();
+            let MS: string = Math.floor((Sec % 1) * 100).toString();
             if (MS.length === 1) {
                 MS = `0${MS}`;
             }
@@ -1907,11 +2241,13 @@ export default {
             const M: number = Math.floor(Sec / 60);
             Sec -= M * 60;
 
-            let Stemp:string = H.toString();
+            let Stemp: string = H.toString();
             if (Stemp.length === 1) {
                 Stemp = `0${Stemp}`;
             }
-            Stemp = `${Stemp}:${(`0${M.toString()}`).slice(-2)}:${(`0${Sec.toString()}`).slice(-2)}.${MS}`;
+            Stemp = `${Stemp}:${`0${M.toString()}`.slice(
+                -2,
+            )}:${`0${Sec.toString()}`.slice(-2)}.${MS}`;
 
             if (Full) {
                 if (msOutput) {
@@ -1938,7 +2274,7 @@ export default {
         },
         scrollCalculator(): void {
             const deltaBar: number = this.timerTime / 1000 / this.secPerBar - this.barCount;
-            if ((deltaBar > 3) || (deltaBar < 0)) {
+            if (deltaBar > 3 || deltaBar < 0) {
                 const barCountNew = Math.floor(this.timerTime / 1000 / this.secPerBar);
                 if (barCountNew > 0) {
                     this.barCount = barCountNew - 1;
@@ -1951,7 +2287,7 @@ export default {
                 this.barCount += 1;
                 this.renderForward();
                 this.reloadDisplayCards();
-            } else if ((deltaBar < 1) && (this.barCount > 0)) {
+            } else if (deltaBar < 1 && this.barCount > 0) {
                 this.barCount -= 1;
                 this.renderBackward();
                 this.reloadDisplayCards();
@@ -1959,7 +2295,7 @@ export default {
 
             this.$refs.TimelineDiv.scrollLeft = (this.timerTime / 1000 - this.barCount * this.secPerBar) * this.secToPx;
         },
-        renderCtx(ctx: CanvasRenderingContext2D, idx:number) {
+        renderCtx(ctx: CanvasRenderingContext2D, idx: number) {
             ctx.save();
             ctx.strokeStyle = "white";
             ctx.fillStyle = "white";
@@ -1973,7 +2309,15 @@ export default {
                     ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
                     ctx.stroke();
 
-                    ctx.fillText(this.secToTimeString(x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                    ctx.fillText(
+                        this.secToTimeString(
+                            x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar,
+                            false,
+                            false,
+                        ),
+                        (x * this.secToPx) / 10 + 5,
+                        this.barHeight,
+                    );
                 }
 
                 ctx.restore();
@@ -1985,7 +2329,15 @@ export default {
                         ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
                         ctx.stroke();
 
-                        ctx.fillText(this.secToTimeString(x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                        ctx.fillText(
+                            this.secToTimeString(
+                                x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar,
+                                false,
+                                false,
+                            ),
+                            (x * this.secToPx) / 10 + 5,
+                            this.barHeight,
+                        );
                     } else {
                         ctx.beginPath();
                         ctx.moveTo((x * this.secToPx) / 10, 0);
@@ -2003,7 +2355,15 @@ export default {
                         ctx.lineTo((x * this.secToPx) / 10, this.barHeight);
                         ctx.stroke();
 
-                        ctx.fillText(this.secToTimeString(x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar, false, false), (x * this.secToPx) / 10 + 5, this.barHeight);
+                        ctx.fillText(
+                            this.secToTimeString(
+                                x / 10 + idx * this.secPerBar + this.barCount * this.secPerBar,
+                                false,
+                                false,
+                            ),
+                            (x * this.secToPx) / 10 + 5,
+                            this.barHeight,
+                        );
                     } else if (x % 2 === 0) {
                         ctx.beginPath();
                         ctx.moveTo((x * this.secToPx) / 10, 0);
@@ -2100,15 +2460,24 @@ export default {
                 this.renderCtx(ctx, 0);
             }
         },
-        reloadDisplayCards():void {
+        reloadDisplayCards(): void {
             this.timecardIdx = [];
             for (let i = 0; i < this.entries.length; i += 1) {
-                if (this.entries[i].Time + this.entries[i].Duration > (this.barCount + 3.0) * this.secPerBar * 1000) {
-                    if (this.entries[i].Time < (this.barCount + 3.0) * this.secPerBar * 1000) {
+                if (
+                    this.entries[i].Time + this.entries[i].Duration
+                    > (this.barCount + 3.0) * this.secPerBar * 1000
+                ) {
+                    if (
+                        this.entries[i].Time
+                        < (this.barCount + 3.0) * this.secPerBar * 1000
+                    ) {
                         this.timecardIdx.push(i);
                     }
                     break;
-                } else if (this.entries[i].Time + this.entries[i].Duration > this.barCount * this.secPerBar * 1000) {
+                } else if (
+                    this.entries[i].Time + this.entries[i].Duration
+                    > this.barCount * this.secPerBar * 1000
+                ) {
                     if (this.entries[i].Time >= this.barCount * this.secPerBar * 1000) {
                         this.timecardIdx.push(i);
                     } else {
@@ -2147,14 +2516,24 @@ export default {
                             return;
                         }
 
-                        if (this.entries[this.selectedEntry].Time + xChange < this.secPerBar * this.barCount * 1000) {
+                        if (
+                            this.entries[this.selectedEntry].Time + xChange
+                            < this.secPerBar * this.barCount * 1000
+                        ) {
                             this.timelineActive = false;
                             return;
                         }
 
                         if (this.selectedEntry > 0) {
-                            if (this.entries[this.selectedEntry].Time + xChange < this.entries[this.selectedEntry - 1].Time + this.entries[this.selectedEntry - 1].Duration) {
-                                if (this.entries[this.selectedEntry - 1].Duration + xChange > 300) {
+                            if (
+                                this.entries[this.selectedEntry].Time + xChange
+                                < this.entries[this.selectedEntry - 1].Time
+                                + this.entries[this.selectedEntry - 1].Duration
+                            ) {
+                                if (
+                                    this.entries[this.selectedEntry - 1].Duration + xChange
+                                    > 300
+                                ) {
                                     this.entries[this.selectedEntry - 1].Duration = this.entries[this.selectedEntry - 1].Duration + xChange;
                                 } else {
                                     this.timelineActive = false;
@@ -2176,8 +2555,15 @@ export default {
                         }
 
                         if (this.selectedEntry > 0) {
-                            if (this.entries[this.selectedEntry].Time + xChange < this.entries[this.selectedEntry - 1].Time + this.entries[this.selectedEntry - 1].Duration) {
-                                if (this.entries[this.selectedEntry - 1].Duration + xChange > 300) {
+                            if (
+                                this.entries[this.selectedEntry].Time + xChange
+                                < this.entries[this.selectedEntry - 1].Time
+                                + this.entries[this.selectedEntry - 1].Duration
+                            ) {
+                                if (
+                                    this.entries[this.selectedEntry - 1].Duration + xChange
+                                    > 300
+                                ) {
                                     this.entries[this.selectedEntry - 1].Duration = this.entries[this.selectedEntry - 1].Duration + xChange;
                                 } else {
                                     this.timelineActive = false;
@@ -2187,10 +2573,20 @@ export default {
                         }
 
                         if (this.selectedEntry < this.entries.length - 1) {
-                            if (this.entries[this.selectedEntry].Time + this.entries[this.selectedEntry].Duration + xChange > this.entries[this.selectedEntry + 1].Time) {
-                                if (this.entries[this.selectedEntry + 1].Duration - xChange > 300) {
+                            if (
+                                this.entries[this.selectedEntry].Time
+                                + this.entries[this.selectedEntry].Duration
+                                + xChange
+                                > this.entries[this.selectedEntry + 1].Time
+                            ) {
+                                if (
+                                    this.entries[this.selectedEntry + 1].Duration - xChange
+                                    > 300
+                                ) {
                                     this.entries[this.selectedEntry + 1].Duration = this.entries[this.selectedEntry + 1].Duration - xChange;
-                                    this.entries[this.selectedEntry + 1].Time = this.entries[this.selectedEntry].Time + this.entries[this.selectedEntry].Duration + xChange;
+                                    this.entries[this.selectedEntry + 1].Time = this.entries[this.selectedEntry].Time
+                                        + this.entries[this.selectedEntry].Duration
+                                        + xChange;
                                 } else {
                                     this.timelineActive = false;
                                     return;
@@ -2214,10 +2610,20 @@ export default {
                         }
 
                         if (this.selectedEntry < this.entries.length - 1) {
-                            if (this.entries[this.selectedEntry].Time + this.entries[this.selectedEntry].Duration + xChange > this.entries[this.selectedEntry + 1].Time) {
-                                if (this.entries[this.selectedEntry + 1].Duration - xChange > 300) {
+                            if (
+                                this.entries[this.selectedEntry].Time
+                                + this.entries[this.selectedEntry].Duration
+                                + xChange
+                                > this.entries[this.selectedEntry + 1].Time
+                            ) {
+                                if (
+                                    this.entries[this.selectedEntry + 1].Duration - xChange
+                                    > 300
+                                ) {
                                     this.entries[this.selectedEntry + 1].Duration = this.entries[this.selectedEntry + 1].Duration - xChange;
-                                    this.entries[this.selectedEntry + 1].Time = this.entries[this.selectedEntry].Time + this.entries[this.selectedEntry].Duration + xChange;
+                                    this.entries[this.selectedEntry + 1].Time = this.entries[this.selectedEntry].Time
+                                        + this.entries[this.selectedEntry].Duration
+                                        + xChange;
                                 } else {
                                     this.timelineActive = false;
                                     return;
@@ -2237,165 +2643,16 @@ export default {
         },
         //= ======================== TIMELINE CONTROLLER ========================
 
-        // -------------------------- EDITOR PANEL ------------------------
-        activateEditorMode() {
-            this.editorMode = true;
-            backendApi.chatHistory(this.videoData.id, {
-                lang: this.TLLang.value,
-                verified: 0,
-                moderator: 0,
-                vtuber: 0,
-                limit: 100000,
-                mode: 1,
-            }).then(({ data }) => {
-                this.tlList = Array.from(new Set(data.map((e) => (e.name))));
-                this.tlList.unshift("None");
-                const fetchChat = data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
-                    e.timestamp -= this.videoData.start_actual;
-                    return e;
-                });
-                this.timecardIdx = [];
-                this.entries = [];
-
-                for (let i = 0; i < fetchChat.length; i += 1) {
-                    const dt = {
-                        id: fetchChat[i].id,
-                        Time: fetchChat[i].timestamp,
-                        SText: fetchChat[i].message,
-                        Profile: 0,
-                    };
-
-                    if (fetchChat[i].duration) {
-                        this.entries.push({
-                            ...dt,
-                            Duration: Number(fetchChat[i].duration),
-                        });
-                    } else if (i === fetchChat.length - 1) {
-                        this.entries.push({
-                            ...dt,
-                            Duration: 3000,
-                        });
-                    } else {
-                        this.entries.push({
-                            ...dt,
-                            Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
-                        });
-                    }
-
-                    if (i === fetchChat.length - 1) {
-                        this.reloadDisplayCards();
-                    }
-                }
-            });
-        },
-        async filterTlChange(val) {
-            let fetchChat = await (await backendApi.chatHistory(this.videoData.id, {
-                lang: this.TLLang.value,
-                verified: 0,
-                moderator: 0,
-                vtuber: 0,
-                limit: 100000,
-                mode: 1,
-            })).data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
-                e.timestamp -= this.videoData.start_actual;
-                return e;
-            });
-
-            this.timecardIdx = [];
-            this.entries = [];
-
-            if (val !== "None") {
-                fetchChat = fetchChat.filter((e) => (e.name === val));
-            }
-
-            for (let i = 0; i < fetchChat.length; i += 1) {
-                const dt = {
-                    id: fetchChat[i].id,
-                    Time: fetchChat[i].timestamp,
-                    SText: fetchChat[i].message,
-                    Profile: 0,
-                };
-
-                if (fetchChat[i].duration) {
-                    this.entries.push({
-                        ...dt,
-                        Duration: Number(fetchChat[i].duration),
-                    });
-                } else if (i === fetchChat.length - 1) {
-                    this.entries.push({
-                        ...dt,
-                        Duration: 3000,
-                    });
-                } else {
-                    this.entries.push({
-                        ...dt,
-                        Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
-                    });
-                }
-
-                if (i === fetchChat.length - 1) {
-                    this.reloadDisplayCards();
-                }
-            }
-        },
-        async deactivateEditorMode() {
-            this.editorMode = false;
-
-            this.timecardIdx = [];
-            this.entries = [];
-
-            const fetchChat = await (await backendApi.chatHistory(this.videoData.id, {
-                lang: this.TLLang.value,
-                verified: 0,
-                moderator: 0,
-                vtuber: 0,
-                limit: 100000,
-                mode: 1,
-                creator_id: this.userdata.user.id,
-            })).data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
-                e.timestamp -= this.videoData.start_actual;
-                return e;
-            });
-
-            for (let i = 0; i < fetchChat.length; i += 1) {
-                const dt = {
-                    id: fetchChat[i].id,
-                    Time: fetchChat[i].timestamp,
-                    SText: fetchChat[i].message,
-                    Profile: 0,
-                };
-
-                if (fetchChat[i].duration) {
-                    this.entries.push({
-                        ...dt,
-                        Duration: Number(fetchChat[i].duration),
-                    });
-                } else if (i === fetchChat.length - 1) {
-                    this.entries.push({
-                        ...dt,
-                        Duration: 3000,
-                    });
-                } else {
-                    this.entries.push({
-                        ...dt,
-                        Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
-                    });
-                }
-
-                if (i === fetchChat.length - 1) {
-                    this.reloadDisplayCards();
-                }
-            }
-        },
-        //= ======================== EDITOR PANEL ========================
-
         async checkLoginValidity() {
             const check = await backendApi.loginIsValid(this.userdata.jwt);
             if (check === false) {
                 this.$store.dispatch("logout");
                 this.$router.push("/login");
             } else if (check.data && check.data.id) {
-                this.$store.commit("setUser", { user: check.data, jwt: this.userdata.jwt });
+                this.$store.commit("setUser", {
+                    user: check.data,
+                    jwt: this.userdata.jwt,
+                });
             }
         },
         modalNexusOutsideClick() {
@@ -2411,7 +2668,9 @@ export default {
 
             for (; this.entries.length > 0;) {
                 const tempEntries = this.entries.splice(0, 1)[0];
-                let checkNew = this.transactionLog.filter((e) => e.id === tempEntries.id);
+                let checkNew = this.transactionLog.filter(
+                    (e) => e.id === tempEntries.id,
+                );
                 if (checkNew.length === 0) {
                     this.transactionLog.push({
                         type: "Delete",
@@ -2420,9 +2679,13 @@ export default {
                 } else {
                     checkNew = checkNew.filter((e) => e.type === "Change");
                     if (checkNew.length === 0) {
-                        this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                        this.transactionLog = this.transactionLog.filter(
+                            (e) => e.id !== tempEntries.id,
+                        );
                     } else {
-                        this.transactionLog = this.transactionLog.filter((e) => e.id !== tempEntries.id);
+                        this.transactionLog = this.transactionLog.filter(
+                            (e) => e.id !== tempEntries.id,
+                        );
                         this.transactionLog.push({
                             type: "Delete",
                             id: tempEntries.id,
@@ -2431,15 +2694,17 @@ export default {
                 }
             }
 
-            this.profile = [{
-                Name: "Default",
-                Prefix: "",
-                Suffix: "",
-                useCC: false,
-                CC: "#000000",
-                useOC: false,
-                OC: "#000000",
-            }];
+            this.profile = [
+                {
+                    Name: "Default",
+                    Prefix: "",
+                    Suffix: "",
+                    useCC: false,
+                    CC: "#000000",
+                    useOC: false,
+                    OC: "#000000",
+                },
+            ];
 
             for (let i = 1; data.profileData.length > 0; i += 1) {
                 const dt = data.profileData.splice(0, 1)[0];
@@ -2465,20 +2730,40 @@ export default {
             this.$router.push({ path: "/login" });
         },
         async settingOKClick() {
+            if (!this.activeURLStream) return;
             this.activeURLInput = this.activeURLStream;
-            const parseVideoID = getVideoIDFromUrl(this.activeURLStream);
-            if (parseVideoID) {
-                const vidData = await (await backendApi.video(parseVideoID.id, this.TLLang.value)).data;
-                this.videoData = {
-                    id: parseVideoID.id,
-                    status: vidData.status,
-                    start_actual: !vidData.start_actual ? Date.parse(vidData.available_at) : Date.parse(vidData.start_actual),
-                    title: vidData.title,
-                };
+            let vidData: any = {
+                id: "custom",
+                custom_video_id: this.activeURLStream,
+                start_actual: null,
+                status: null,
+                title: this.activeURLStream,
+            };
+            this.videoData = vidData;
+            try {
+                const parseVideoID = this.activeURLStream.match(VIDEO_URL_REGEX)?.[5];
+                if (parseVideoID) {
+                    vidData = (await backendApi.video(parseVideoID, this.TLLang.value))
+                        .data;
+                    if (vidData) {
+                        this.videoData = {
+                            id: parseVideoID,
+                            status: vidData.status,
+                            start_actual: !vidData.start_actual
+                                ? Date.parse(vidData.available_at)
+                                : Date.parse(vidData.start_actual),
+                            title: vidData.title,
+                        };
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
 
-                this.timecardIdx = [];
-                this.entries = [];
-                const fetchChat = await (await backendApi.chatHistory(vidData.id, {
+            this.timecardIdx = [];
+            this.entries = [];
+            let fetchChat = (
+                await backendApi.chatHistory(vidData.id, {
                     lang: this.TLLang.value,
                     verified: 0,
                     moderator: 0,
@@ -2486,50 +2771,63 @@ export default {
                     limit: 100000,
                     mode: 1,
                     creator_id: this.userdata.user.id,
-                })).data.filter((e) => (e.timestamp >= this.videoData.start_actual)).map((e) => {
-                    e.timestamp -= this.videoData.start_actual;
-                    return e;
+                    ...(vidData.id === "custom" && {
+                        custom_video_id: this.activeURLStream,
+                    }),
+                })
+            ).data;
+
+            fetchChat = fetchChat
+                .filter(
+                    (e) => !this.videoData?.start_actual
+                        || e.timestamp >= this.videoData?.start_actual,
+                )
+                .map((e) => {
+                    const timestampShifted = e.timestamp
+                        - (this.videoData?.start_actual || fetchChat[0].timestamp || 0);
+                    return { ...e, timestampShifted };
                 });
 
-                for (let i = 0; i < fetchChat.length; i += 1) {
-                    const dt = {
-                        id: fetchChat[i].id,
-                        Time: fetchChat[i].timestamp,
-                        SText: fetchChat[i].message,
-                        Profile: 0,
-                    };
+            for (let i = 0; i < fetchChat.length; i += 1) {
+                const dt = {
+                    id: fetchChat[i].id,
+                    Time: fetchChat[i].timestampShifted,
+                    realTime: fetchChat[i].timestamp,
+                    SText: fetchChat[i].message,
+                    Profile: 0,
+                };
 
-                    if (fetchChat[i].duration) {
-                        this.entries.push({
-                            ...dt,
-                            Duration: Number(fetchChat[i].duration),
-                        });
-                    } else if (i === fetchChat.length - 1) {
-                        this.entries.push({
-                            ...dt,
-                            Duration: 3000,
-                        });
-                    } else {
-                        this.entries.push({
-                            ...dt,
-                            Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
-                        });
-                    }
-
-                    if (i === fetchChat.length - 1) {
-                        this.reloadDisplayCards();
-                    }
+                if (fetchChat[i].duration) {
+                    this.entries.push({
+                        ...dt,
+                        Duration: Number(fetchChat[i].duration),
+                    });
+                } else if (i === fetchChat.length - 1) {
+                    this.entries.push({
+                        ...dt,
+                        Duration: 3000,
+                    });
+                } else {
+                    this.entries.push({
+                        ...dt,
+                        Duration: fetchChat[i + 1].timestamp - fetchChat[i].timestamp,
+                    });
                 }
 
-                if (this.vidPlayer) {
-                    this.unloadVideo();
-                    setTimeout(() => {
-                        this.loadVideo();
-                    }, 1000);
-                } else {
-                    this.loadVideo();
+                if (i === fetchChat.length - 1) {
+                    this.reloadDisplayCards();
                 }
             }
+
+            if (this.vidPlayer) {
+                this.unloadVideo();
+                setTimeout(() => {
+                    this.loadVideo();
+                }, 1000);
+            } else {
+                this.loadVideo();
+            }
+
             this.modalNexus = false;
         },
         shiftTime() {
@@ -2541,6 +2839,7 @@ export default {
             this.entries = this.entries.map((e) => ({
                 ...e,
                 Time: Math.max(e.Time + offset * 1000, 0),
+                realTime: Math.max(Number.parseFloat(e.realTime) + offset * 1000, 0),
             }));
             this.entries.forEach((e) => this.logChange(e.id));
             this.offsetInput = 0;
@@ -2550,18 +2849,18 @@ export default {
 </script>
 
 <style>
-.tl-topbar>*:not(:first-child):not(:last-child) {
+.tl-topbar > *:not(:first-child):not(:last-child) {
   margin: 0px 3px;
 }
-.tl-topbar>* {
+.tl-topbar > * {
   border-radius: 0px;
   text-transform: unset !important;
 }
 .TopMenu {
-  width:100%;
-  position:absolute;
-  top:0px;
-  left:0px;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
   z-index: 1;
 }
 .ColourButton {
@@ -2573,11 +2872,11 @@ export default {
   bottom: 5px;
   right: 5px;
 }
-.ChatPanelContainer{
+.ChatPanelContainer {
   display: grid;
   grid-auto-flow: column;
 }
-.ControlBox{
+.ControlBox {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -2606,12 +2905,12 @@ export default {
   margin-left: 40%;
   margin-bottom: 10px;
 }
-.Timecard.v-sheet.v-card{
+.Timecard.v-sheet.v-card {
   border: 2px solid white;
 }
 .TimecardText {
-  width:100%;
-  cursor:grab;
+  width: 100%;
+  cursor: grab;
   max-height: 3em;
 }
 </style>

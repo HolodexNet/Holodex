@@ -20,7 +20,7 @@
         <v-btn
           small
           outlined
-          :to="activeChat.length && `/scripteditor?video=${activeChat[0].text}`"
+          :to="`/scripteditor?video=${video.id ? `YT_${video.id}` : mainStreamLink}`"
         >
           {{ $t("component.videoCard.openScriptEditor") }}
         </v-btn>
@@ -74,7 +74,7 @@
         >
           <div v-if="resizeActive" style="position: absolute; height: 100%; width: 100%; background-color: transparent; z-index: 1;" />
           <v-card
-            v-if="vidPlayer"
+            v-if="vidPlayer && getVideoIDFromUrl(mainStreamLink)"
             style="height:100%"
             class="d-flex flex-column"
             outlined
@@ -83,7 +83,10 @@
               id="player"
               height="100%"
               width="100%"
-            />
+            >
+              <youtube-player v-if="getVideoIDFromUrl(mainStreamLink).type !== 'twitch'" :video-id="getVideoIDFromUrl(mainStreamLink).id" />
+              <twitch-player v-else :channel="getVideoIDFromUrl(mainStreamLink).id" style="width: 100%; height: 100%" />
+            </v-card>
           </v-card>
           <div
             v-if="vidPlayer"
@@ -93,10 +96,10 @@
             <div style="width: 10%; min-width: 40px; margin-left: auto; margin-right:auto; background: #444; height: 3px; border-radius: 2px; margin-top: 1px;" />
           </div>
           <LiveTranslations
-            v-if="!isLoading && !hasError"
+            v-if="!isLoading"
             :tl-lang="TLLang.value"
             :tl-client="true"
-            :video="video"
+            :video="mainLinkIsCustom ? { id: mainStreamLink } : video"
             :class="{
               'stick-bottom': $store.state.settings.liveTlStickBottom,
               'tl-full-height': false,
@@ -379,15 +382,34 @@
             :items="TL_LANGS"
             :item-text="item => item.text + ' (' + item.value + ')'"
             item-value="value"
-            :label="$t(&quot;views.watch.uploadPanel.tlLang&quot;)"
+            :label="$t('views.watch.uploadPanel.tlLang')"
             return-object
             @change="localPrefix = '[' + TLLang.value + '] '"
           />
-          <v-text-field
-            v-model="mainStreamLink"
-            :label="$t(&quot;views.tlClient.settingPanel.mainStreamLink&quot;)"
-            :readonly="$route.query.video ? true : false"
-          />
+          <div class="d-flex align-center">
+            <v-text-field
+              v-model="mainStreamLink"
+              :label="$t('views.tlClient.settingPanel.mainStreamLink')"
+              placeholder="https://..."
+            />
+            <span class="mx-2">or</span>
+            <v-dialog v-model="videoSelectDialog">
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  color="primary"
+                  class="ml-2"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  Find Video
+                </v-btn>
+              </template>
+              <video-selector
+                @videoClicked="handleVideoClicked"
+              />
+            </v-dialog>
+          </div>
           <v-card-title>{{ $t("views.tlClient.settingPanel.collabLink") }}</v-card-title>
           <v-text-field
             v-for="(AuxLink, index) in collabLinks"
@@ -413,7 +435,7 @@
           <v-card-title>
             {{ $t("views.tlClient.loadChatPanel.title") }}
           </v-card-title>
-          <v-text-field v-model="activeURLStream" :label="$t(&quot;views.tlClient.loadChatPanel.inputLabel&quot;)" />
+          <v-text-field v-model="activeURLStream" :label="$t('views.tlClient.loadChatPanel.inputLabel')" />
           <v-card-actions>
             <v-btn @click="modalNexus = false">
               {{ $t("views.tlClient.cancelBtn") }}
@@ -461,11 +483,14 @@
 
 <script lang="ts">
 import LiveTranslations from "@/components/chat/LiveTranslations.vue";
-import { TL_LANGS } from "@/utils/consts";
+import VideoSelector from "@/components/multiview/VideoSelector.vue";
+import { TL_LANGS, VIDEO_URL_REGEX } from "@/utils/consts";
 import { mdiPlusCircle, mdiMinusCircle, mdiCloseCircle, mdiKeyboard, mdiCog, mdiCogOff } from "@mdi/js";
 import { getVideoIDFromUrl, videoCodeParser } from "@/utils/functions";
 import backendApi from "@/utils/backend-api";
 import { mapState } from "vuex";
+import YoutubePlayer from "@/components/player/YoutubePlayer.vue";
+import TwitchPlayer from "@/components/player/TwitchPlayer.vue";
 
 export default {
     name: "Tlclient",
@@ -478,6 +503,9 @@ export default {
     },
     components: {
         LiveTranslations,
+        VideoSelector,
+        YoutubePlayer,
+        TwitchPlayer,
     },
     data() {
         return {
@@ -517,6 +545,7 @@ export default {
             TLLang: TL_LANGS[0],
             mainStreamLink: "",
             collabLinks: [""],
+            videoSelectDialog: false,
             // ---- ACTIVE CHAT ----
             activeChat: [],
             activeURLStream: "",
@@ -541,6 +570,9 @@ export default {
     },
     computed: {
         ...mapState("tlclient", ["video", "isLoading", "hasError"]),
+        mainLinkIsCustom() {
+            return !this.video?.id;
+        },
         textStyle() {
             return {
                 "-webkit-text-fill-color": (this.profile[this.profileIdx].CC === "") ? "unset" : this.profile[this.profileIdx].CC,
@@ -560,9 +592,6 @@ export default {
         user() {
             return this.$store.state.userdata.user;
         },
-        collabLinkIDs() {
-            return (this.collabLink.map((e) => (getVideoIDFromUrl(e))));
-        },
     },
     watch: {
         // eslint-disable-next-line func-names
@@ -570,6 +599,9 @@ export default {
             if ((this.$route.name === "tlclient") && this.$route.query.video) {
                 this.init();
             }
+        },
+        mainStreamLink() {
+            if (this.$route.query.video && this.mainStreamLink !== this.$route.query.video) { this.$router.replace({ path: "/tlclient", query: {} }); }
         },
     },
     mounted() {
@@ -687,7 +719,13 @@ export default {
             };
 
             // SEND TO API
-            backendApi.postTL(this.video.id, this.userdata.jwt, this.TLLang.value, bodydt).then(({ status, data }) => {
+            backendApi.postTL({
+                videoId: this.video?.id || "custom",
+                jwt: this.userdata.jwt,
+                lang: this.TLLang.value,
+                ...!this.video?.id && { custom_video_id: this.mainStreamLink },
+                body: bodydt,
+            }).then(({ status, data }) => {
                 if (status !== 200) {
                     console.log(`ERR : ${data}`);
                 }
@@ -695,20 +733,28 @@ export default {
                 console.log(`ERR : ${err}`);
             });
 
-            this.collabLinkIDs.forEach((e) => {
-                if (e && e.id) {
-                    backendApi.postTL(e.id, this.userdata.jwt, this.TLLang.value, bodydt).then(({ status, data }) => {
-                        if (status !== 200) {
-                            console.log(`ERR : ${data}`);
-                            this.errorMessage = data;
-                            this.showError = true;
-                        }
-                    }).catch((err) => {
-                        console.log(`ERR : ${err}`);
-                        this.errorMessage = err;
+            this.collabLinks.forEach((link) => {
+                if (!link) return;
+                // TODO: this doesn't make complete sense
+                // Not all YT videos are able to be submitted normally
+                const ytMatch = link.match(VIDEO_URL_REGEX)?.[5];
+                backendApi.postTL({
+                    videoId: ytMatch || "custom",
+                    jwt: this.userdata.jwt,
+                    lang: this.TLLang.value,
+                    ...!ytMatch && { custom_video_id: link },
+                    body: bodydt,
+                }).then(({ status, data }) => {
+                    if (status !== 200) {
+                        console.log(`ERR : ${data}`);
+                        this.errorMessage = data;
                         this.showError = true;
-                    });
-                }
+                    }
+                }).catch((err) => {
+                    console.log(`ERR : ${err}`);
+                    this.errorMessage = err;
+                    this.showError = true;
+                });
             });
 
             this.inputString = "";
@@ -724,13 +770,14 @@ export default {
             }
         },
         settingOKClick() {
-            const parseVideoID = getVideoIDFromUrl(this.mainStreamLink);
-            if (!parseVideoID) {
-                return;
-            }
-
+            // const parseVideoID = getVideoIDFromUrl(this.mainStreamLink);
+            // if (!parseVideoID) {
+            //     return;
+            // }
+            const ytId = this.mainStreamLink.match(VIDEO_URL_REGEX);
+            const id = ytId?.[5] || this.mainStreamLink;
             this.$store.commit("tlclient/resetState");
-            this.$store.commit("tlclient/setId", parseVideoID.id);
+            this.$store.commit("tlclient/setId", id);
             this.$store.dispatch("tlclient/fetchVideo");
 
             this.localPrefix = `[${this.TLLang.value}] `;
@@ -873,60 +920,61 @@ export default {
                 }
             }
         },
+        getVideoIDFromUrl,
         //= ====================== ACTIVE CHAT CONTROLLER ======================
 
         // ---------------------- VIDEO CONTROLLER ----------------------
         loadVideo() {
             this.vidPlayer = true;
-            const checker = setInterval(() => {
-                const PlayerDiv = document.getElementById("player");
-                if (PlayerDiv) {
-                    clearInterval(checker);
-                    const StreamURL = getVideoIDFromUrl(this.mainStreamLink);
-                    if (StreamURL) {
-                        this.vidType = StreamURL.type;
-                        switch (StreamURL.type) {
-                            case "twitch":
-                                this.loadVideoTW(StreamURL.id, true);
-                                break;
+            // const checker = setInterval(() => {
+            //     const PlayerDiv = document.getElementById("player");
+            //     if (PlayerDiv) {
+            //         clearInterval(checker);
+            //         const StreamURL = getVideoIDFromUrl(this.mainStreamLink);
+            //         if (StreamURL) {
+            //             this.vidType = StreamURL.type;
+            //             switch (StreamURL.type) {
+            //                 case "twitch":
+            //                     this.loadVideoTW(StreamURL.id, true);
+            //                     break;
 
-                            case "twitch_vod":
-                                this.loadVideoTW(StreamURL.id, false);
-                                break;
+            //                 case "twitch_vod":
+            //                     this.loadVideoTW(StreamURL.id, false);
+            //                     break;
 
-                            case "twitcast":
-                                this.setupIframeTC(StreamURL.id, StreamURL.id, true);
-                                break;
+            //                 case "twitcast":
+            //                     this.setupIframeTC(StreamURL.id, StreamURL.id, true);
+            //                     break;
 
-                            case "twitcast_vod":
-                                this.setupIframeTC(StreamURL.id, StreamURL.channel.name, false);
-                                break;
+            //                 case "twitcast_vod":
+            //                     this.setupIframeTC(StreamURL.id, StreamURL.channel.name, false);
+            //                     break;
 
-                            case "niconico":
-                                // niconico doesn't allow third party player hosting... at least for now...
-                                // this.setupIframeNC(StreamURL.id, true);
-                                break;
+            //                 case "niconico":
+            //                     // niconico doesn't allow third party player hosting... at least for now...
+            //                     // this.setupIframeNC(StreamURL.id, true);
+            //                     break;
 
-                            case "niconico_vod":
-                                this.setupIframeNC(StreamURL.id, false);
-                                break;
+            //                 case "niconico_vod":
+            //                     this.setupIframeNC(StreamURL.id, false);
+            //                     break;
 
-                            case "bilibili":
-                                // bilibili live player is flash -> the one in FLASH link in the share button
-                                // https://s1.hdslb.com/bfs/static/blive/live-assets/player/flash/pageplayer-latest.swf?room_id=0&cid=xxxxxx&state=LIVE
-                                break;
+            //                 case "bilibili":
+            //                     // bilibili live player is flash -> the one in FLASH link in the share button
+            //                     // https://s1.hdslb.com/bfs/static/blive/live-assets/player/flash/pageplayer-latest.swf?room_id=0&cid=xxxxxx&state=LIVE
+            //                     break;
 
-                            case "bilibili_vod":
-                                this.setupIframeBL(StreamURL.id);
-                                break;
+            //                 case "bilibili_vod":
+            //                     this.setupIframeBL(StreamURL.id);
+            //                     break;
 
-                            default:
-                                this.loadVideoYT(StreamURL.id);
-                                break;
-                        }
-                    }
-                }
-            }, 1000);
+            //                 default:
+            //                     this.loadVideoYT(StreamURL.id);
+            //                     break;
+            //             }
+            //         }
+            //     }
+            // }, 1000);
         },
         unloadVideo() {
             this.vidPlayer = false;
@@ -1005,75 +1053,6 @@ export default {
             }
         },
         //= ================  IFRAME  =================
-
-        // -----------------  YT  -----------------
-        loadVideoYT(VID: string) {
-            if (window.YT) {
-                this.startVideoYT(VID);
-                return;
-            }
-
-            const tag = document.createElement("script");
-            tag.src = "https://www.youtube.com/iframe_api";
-            const firstScriptTag = document.getElementsByTagName("script")[0];
-            if (firstScriptTag.parentNode) {
-                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-            }
-
-            window.onYouTubeIframeAPIReady = () => this.startVideoYT(VID);
-        },
-        startVideoYT(VID: string) {
-            this.player = new window.YT.Player("player", {
-                videoId: VID,
-                playerVars: {
-                    playsinline: 1,
-                },
-            });
-        },
-        //= ================  YT  =================
-
-        // -----------------  TW  -----------------
-        loadVideoTW(VID:string, Live: boolean) {
-            this.startTWTracker();
-            if (window.Twitch) {
-                this.startVideoTW(VID, Live);
-                return;
-            }
-
-            const tag = document.createElement("script");
-            tag.src = "https://player.twitch.tv/js/embed/v1.js";
-            const firstScriptTag = document.getElementsByTagName("script")[0];
-            if (firstScriptTag.parentNode) {
-                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-            }
-
-            const Checker = setInterval(() => {
-                if (window.Twitch) {
-                    clearInterval(Checker);
-                    this.startVideoTW(VID, Live);
-                }
-            }, 1000);
-        },
-        startVideoTW(VID: string, Live: boolean) {
-            if (Live) {
-                this.player = new window.Twitch.Player("player", {
-                    width: "100%",
-                    height: "100%",
-                    channel: VID,
-                    autoplay: false,
-                    time: "0h0m0s",
-                });
-            } else {
-                this.player = new window.Twitch.Player("player", {
-                    width: "100%",
-                    height: "100%",
-                    video: VID,
-                    autoplay: false,
-                    time: "0h0m0s",
-                });
-            }
-        },
-        //= ================  TW  =================
         //= ====================== VIDEO CONTROLLER ======================
 
         // --------------------------------- LAYOUT CONTROLLER ---------------------------------
@@ -1160,6 +1139,10 @@ export default {
         changeUsernameClick() {
             this.$router.push({ path: "/login" });
         },
+        handleVideoClicked(video) {
+            this.videoSelectDialog = false;
+            this.mainStreamLink = video.type === "placeholder" ? video.link : `https://youtube.com/watch?v=${video.id}`;
+        },
     },
 };
 </script>
@@ -1195,5 +1178,10 @@ export default {
 .tl-topbar>* {
   border-radius: 0px;
     text-transform: unset !important;
+}
+
+#player > div, #player > div > iframe {
+  width: 100%;
+  height: 100%;
 }
 </style>

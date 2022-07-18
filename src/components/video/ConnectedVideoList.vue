@@ -8,6 +8,27 @@
     >
       <portal :to="portalName" :disabled="$vuetify.breakpoint.xs" class="justify-space-between d-flex flex-grow-1 mx-n2">
         <v-menu
+          :key="'vlx-' + tab + identifier + isFavPage"
+          :close-on-content-click="false"
+          offset-y
+          left
+          :min-width="isMobile ? '100%' : '600px'"
+          max-width="600px"
+        >
+          <template #activator="{ on, attrs }">
+            <v-btn
+              text
+              icon
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>{{ mdiCalendar }}</v-icon>
+            </v-btn>
+          </template>
+          <CalendarUsage :initial-query="initialQueryForCalendar" />
+        </v-menu>
+
+        <v-menu
           :close-on-content-click="false"
           offset-y
           left
@@ -66,6 +87,7 @@
             <video-list-filters />
           </v-sheet>
         </v-menu>
+
         <v-btn
           text
           icon
@@ -155,11 +177,11 @@ import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
-// import VideoCondensedList from "@/components/video/VideoCondensedList.vue";
-// import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
+import CalendarUsage from "@/components/calendar/CalendarUsage.vue";
 import { dayjs } from "@/utils/time";
-import { mdiCalendarEnd, mdiFilterVariant, mdiFormatListBulleted, mdiViewList } from "@mdi/js";
+import { mdiCalendarEnd, mdiFilterVariant, mdiFormatListBulleted, mdiViewList, mdiCalendar } from "@mdi/js";
 import { syncState } from "@/utils/functions";
+import { json2csvAsync } from "json-2-csv";
 import VideoListFilters from "../setting/VideoListFilters.vue";
 
 function nearestUTCDate(date) {
@@ -175,6 +197,7 @@ export default {
         GenericListLoader,
         SkeletonCardList,
         VideoListFilters,
+        CalendarUsage,
     },
     props: {
         liveContent: {
@@ -204,6 +227,7 @@ export default {
             mdiFilterVariant,
             mdiFormatListBulleted,
             mdiViewList,
+            mdiCalendar,
             identifier: Date.now(),
             pageLength: 24,
             Tabs: Object.freeze({
@@ -225,6 +249,7 @@ export default {
                     value: "viewers",
                 },
             ],
+            initialQueryForCalendar: "",
         };
     },
     computed: {
@@ -234,6 +259,9 @@ export default {
         ...mapGetters("favorites", ["favoriteChannelIDs"]),
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
+        },
+        isMobile() {
+            return this.$store.state.isMobile;
         },
         live() {
             let live = (this.liveContent?.length && this.liveContent) || (this.isFavPage ? this.f_live : this.h_live);
@@ -346,7 +374,7 @@ export default {
                 this.currentGridSize = 0;
             }
         },
-        init(updateFavorites) {
+        async init(updateFavorites) {
             if (this.isFavPage) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
                 if (this.favoriteChannelIDs.size > 0 && this.isLoggedIn) {
@@ -357,6 +385,16 @@ export default {
                 this.$store.dispatch("home/fetchLive", { force: true });
             }
             this.identifier = Date.now();
+
+            if (this.$store.state.currentOrg.name !== "All Vtubers") {
+                this.initialQueryForCalendar = await json2csvAsync([{
+                    type: "org",
+                    text: this.$store.state.currentOrg.name,
+                    value: this.$store.state.currentOrg.name,
+                }]);
+            } else {
+                this.initialQueryForCalendar = "";
+            }
         },
         reload() {
             this.init();

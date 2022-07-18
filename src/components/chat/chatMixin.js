@@ -3,6 +3,7 @@ import api from "@/utils/backend-api";
 import { dayjs } from "@/utils/time";
 import { syncState } from "@/utils/functions";
 import { mdiArrowExpand, mdiSubtitlesOutline } from "@mdi/js";
+import { VIDEO_URL_REGEX } from "@/utils/consts";
 
 export default {
     data() {
@@ -56,16 +57,21 @@ export default {
         ]),
         showSubtitle: {
             get() {
-                return this.useLocalSubtitleToggle ? this.subtitleToggle : this.liveTlShowSubtitle;
+                return this.useLocalSubtitleToggle
+                    ? this.subtitleToggle
+                    : this.liveTlShowSubtitle;
             },
             set(val) {
-                this.useLocalSubtitleToggle ? this.subtitleToggle = val : this.liveTlShowSubtitle = val;
+                this.useLocalSubtitleToggle
+                    ? (this.subtitleToggle = val)
+                    : (this.liveTlShowSubtitle = val);
             },
         },
         blockedNames() {
             return this.$store.getters["settings/liveTlBlockedNames"];
         },
         startTimeMillis() {
+            if (!this.video.available_at) return null;
             return Number(dayjs(this.video.available_at));
         },
     },
@@ -85,31 +91,23 @@ export default {
     },
     methods: {
         loadMessages(firstLoad = false, loadAll = false, tlClient = false) {
+            const isCustom = !this.video.id.match(VIDEO_URL_REGEX);
             this.historyLoading = true;
             const lastTimestamp = !firstLoad && this.tlHistory[0]?.timestamp;
 
             let query = {};
-            if (tlClient) {
-                query = {
-                    lang: this.liveTlLang,
-                    verified: false,
-                    moderator: false,
-                    vtuber: false,
-                    limit: loadAll ? 100000 : this.limit,
-                    ...(lastTimestamp && { before: lastTimestamp }),
-                };
-            } else {
-                query = {
-                    lang: this.liveTlLang,
-                    verified: this.liveTlShowVerified,
-                    moderator: this.liveTlShowModerator,
-                    vtuber: this.liveTlShowVtuber,
-                    limit: loadAll ? 100000 : this.limit,
-                    ...(lastTimestamp && { before: lastTimestamp }),
-                };
-            }
+            query = {
+                lang: this.liveTlLang,
+                verified: !tlClient && this.liveTlShowVerified,
+                moderator: !tlClient && this.liveTlShowModerator,
+                vtuber: !tlClient && this.liveTlShowVtuber,
+                limit: loadAll ? 100000 : this.limit,
+                ...(lastTimestamp && { before: lastTimestamp }),
+                ...(isCustom && { custom_video_id: this.video.id }),
+            };
 
-            api.chatHistory(this.video.id, query)
+            api
+                .chatHistory(isCustom ? "custom" : this.video.id, query)
                 .then(({ data }) => {
                     this.completed = data.length !== this.limit || loadAll;
                     if (firstLoad) this.tlHistory = data.map(this.parseMessage);
@@ -128,13 +126,15 @@ export default {
         },
         parseMessage(msg) {
             msg.timestamp = +msg.timestamp;
-            msg.relativeMs = (msg.timestamp - this.startTimeMillis);
+            msg.relativeMs = this.startTimeMillis ? msg.timestamp - this.startTimeMillis : 0;
             msg.key = msg.name + msg.timestamp + msg.message;
             // Check if there's any emojis represented as URLs formatted by backend
             if (msg.message.includes("https://") && !msg.parsed) {
                 // match a :HUMU:https://<url>
                 const regex = /(\S+)(https:\/\/(yt\d+\.ggpht\.com\/[a-zA-Z0-9_\-=/]+-c-k-nd|www\.youtube\.com\/[a-zA-Z0-9_\-=/]+\.svg))/gi;
-                msg.parsed = msg.message.replace(/<([^>]*)>/g, "($1)").replace(regex, '<img src="$2" />');
+                msg.parsed = msg.message
+                    .replace(/<([^>]*)>/g, "($1)")
+                    .replace(regex, '<img src="$2" />');
             }
             return msg;
         },

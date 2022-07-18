@@ -37,17 +37,22 @@
             Video Title
           </th>
           <th class="text-left">
+            Lang
+          </th>
+          <th class="text-left">
             {{ $t("views.tlManager.headerEntries") }}
           </th>
+
           <th class="text-left" />
         </tr>
       </thead>
       <tbody>
         <tr v-for="(dt, index) in tlData" :key="index">
-          <td><a :href="`watch/${dt.video_id}`">{{ dt.video_id }}</a></td>
+          <td><a :href="dt.video_id ? `watch/${dt.video_id}` : dt.custom_video_id">{{ dt.video_id || dt.custom_video_id }}</a></td>
           <td class="text-truncate" style="max-width: 1px">
-            {{ dt.title || "No title" }}
+            {{ dt.title || dt.custom_video_id || "No title" }}
           </td>
+          <td>{{ dt.lang }}</td>
           <td>{{ (dt.entry_count || 0) + " entries" }}</td>
           <td>
             <v-tooltip bottom>
@@ -57,7 +62,7 @@
                   lg
                   v-bind="attrs"
                   v-on="on"
-                  @click="openTlClient(dt.video_id)"
+                  @click="openTlClient(dt.video_id, dt.custom_video_id)"
                 >
                   <v-icon>
                     {{ mdiTypewriter }}
@@ -69,6 +74,7 @@
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
+                  v-if="dt.video_id"
                   icon
                   lg
                   v-bind="attrs"
@@ -89,7 +95,7 @@
                   lg
                   v-bind="attrs"
                   v-on="on"
-                  @click="downloadClick(dt.video_id);"
+                  @click="downloadClick(dt.video_id, dt.custom_video_id);"
                 >
                   <v-icon>
                     {{ mdiDownload }}
@@ -105,7 +111,7 @@
                   lg
                   v-bind="attrs"
                   v-on="on"
-                  @click="deleteClick(dt.video_id);"
+                  @click="deleteClick(dt.video_id, dt.custom_video_id);"
                 >
                   <v-icon>
                     {{ mdiTrashCan }}
@@ -113,6 +119,23 @@
                 </v-btn>
               </template>
               <span>{{ $t("views.tlManager.delete") }}</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  v-if="dt.custom_video_id"
+                  icon
+                  lg
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="modalMode = 4; modalNexus = true; newLinkInput = dt.custom_video_id; selectedScript = dt"
+                >
+                  <v-icon>
+                    {{ icons.mdiNoteEdit }}
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>Change Custom Link</span>
             </v-tooltip>
           </td>
         </tr>
@@ -174,6 +197,29 @@
       <v-card v-if="modalMode === 3">
         <ImportMchad @close="closeUpload" />
       </v-card>
+
+      <v-card v-if="modalMode === 4">
+        <v-card-title>
+          Change stream link
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            v-model="newLinkInput"
+            label="New link"
+            outlined
+            dense
+            hide-details
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="modalNexus = false;">
+            {{ $t("views.tlClient.cancelBtn") }}
+          </v-btn>
+          <v-btn style="margin-left:auto" @click="modalNexus = false; changeLink()">
+            {{ $t("views.tlClient.okBtn") }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
     <!--========   NEXUS MODAL =======-->
   </v-container>
@@ -222,6 +268,8 @@ export default {
                 limit: 20,
                 offset: 0,
             },
+            newLinkInput: "",
+            selectedScript: undefined,
             videoData: undefined,
         };
     },
@@ -260,34 +308,39 @@ export default {
                 console.log(err);
             });
         },
-        openTlClient(ID) {
+        openTlClient(ID, custom_video_id) {
             if (this.$store.state.userdata?.user) {
-                this.$router.push({ path: "/scripteditor", query: { video: `YT_${ID}` } });
+                this.$router.push({ path: "/scripteditor", query: { video: custom_video_id || `YT_${ID}` } });
             } else {
                 this.$router.push({ path: "/login" });
             }
         },
-        deleteClick(ID) {
+        deleteClick(ID, custom_video_id) {
             this.modalNexus = true;
             this.modalMode = 2;
-            this.selectedID = ID;
+            this.selectedID = custom_video_id || ID;
             this.reloadDeleteEntries();
         },
-        downloadClick(ID) {
-            backendApi.video(ID, this.TLLang.value).then(({ status, data }) => {
+        async downloadClick(ID, custom_video_id) {
+            if (custom_video_id) {
+                this.videoData = {
+                    id: "custom",
+                    custom_video_id,
+                    title: custom_video_id,
+                };
+            } else {
+                const { status, data } = await backendApi.video(ID, this.TLLang.value);
                 if (status === 200) {
                     this.videoData = {
                         id: ID,
                         start_actual: !data.start_actual ? Date.parse(data.available_at) : Date.parse(data.start_actual),
                         title: data.title,
                     };
-                    this.modalNexus = true;
-                    this.modalMode = 1;
-                    this.selectedID = ID;
                 }
-            }).catch((err) => {
-                console.log(err);
-            });
+            }
+            this.modalNexus = true;
+            this.modalMode = 1;
+            this.selectedID = ID;
         },
         uploadClick(ID) {
             backendApi.video(ID, this.TLLang.value).then(({ status, data }) => {
@@ -328,7 +381,9 @@ export default {
             this.reloadData();
         },
         reloadDeleteEntries() {
-            backendApi.chatHistory(this.selectedID, {
+            const isCustom = !!this.selectedID.match(/^https:\/\//i);
+            backendApi.chatHistory(isCustom ? "custom" : this.selectedID, {
+                ...isCustom && { custom_video_id: this.selectedID },
                 lang: this.TLLang.value,
                 verified: 0,
                 moderator: 0,
@@ -346,6 +401,7 @@ export default {
             });
         },
         clearAll() {
+            const isCustom = !!this.selectedID.match(/^https:\/\//i);
             const processes = this.entries.map((e) => ({
                 type: "Delete",
                 data: {
@@ -353,7 +409,13 @@ export default {
                 },
             }));
 
-            backendApi.postTLLog(this.selectedID, this.userdata.jwt, processes, this.TLLang.value).then(({ status }) => {
+            backendApi.postTLLog({
+                ...isCustom && { custom_video_id: this.selectedID },
+                videoId: isCustom ? "custom" : this.selectedID,
+                jwt: this.userdata.jwt,
+                body: processes,
+                lang: this.TLLang.value,
+            }).then(({ status }) => {
                 if (status === 200) {
                     this.reloadData();
                     this.modalNexus = false;
@@ -361,6 +423,22 @@ export default {
             }).catch((err) => {
                 console.log(`ERR : ${err}`);
             });
+        },
+        async changeLink() {
+            try {
+                await backendApi.postChangeLink({
+                    jwt: this.userdata.jwt,
+                    body: {
+                        oldId: this.selectedScript.custom_video_id,
+                        newId: this.newLinkInput,
+                        lang: this.selectedScript.lang,
+                    },
+                });
+            } catch (e) {
+                // eslint-disable-next-line no-alert
+                alert(`failed ${e}`);
+            }
+            await this.reloadData();
         },
     },
 };
