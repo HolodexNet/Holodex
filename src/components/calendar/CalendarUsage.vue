@@ -5,7 +5,7 @@
     border-color="primary"
   >
     <v-text-field
-      label="Live Calendar"
+      label="Live Calendar (iCal)"
       :value="liveCalendarURL"
       readonly
       hide-details
@@ -14,22 +14,13 @@
     />
 
     <v-text-field
-      v-if="isLoggedIn"
-      label="Favorites Calendar"
+      v-if="isLoggedIn && showFavoritesCalendar"
+      label="Favorites Calendar (iCal)"
       :value="favoritesCalendarURL"
       readonly
       hide-details
       regular
       @click.stop="copyToClipboard(favoritesCalendarURL, $event)"
-    />
-    <v-text-field
-      v-else
-      label="Favorites Calendar"
-      value="Login to Holodex to subscribe favorites calendar"
-      disabled
-      readonly
-      regular
-      hide-details
     />
 
     <v-snackbar
@@ -165,9 +156,19 @@ import {
     mdiCommentSearch,
     mdiClipboardPlusOutline,
 } from "@mdi/js";
+import { csv2jsonAsync } from "json-2-csv";
 
 export default {
     name: "CalendarUsage",
+    props: {
+        initialQuery: {
+            type: String,
+        },
+        showFavoritesCalendar: {
+            type: Boolean,
+            default: true,
+        },
+    },
     data() {
         return {
             query: [],
@@ -210,8 +211,8 @@ export default {
                 return b;
             }, {});
             const params = {
-                ...(this.preferEnglishName ? { preferEnglishName: 1 } : null),
                 ...bucket,
+                ...(this.preferEnglishName ? { preferEnglishName: 1 } : null),
             };
             return `https://holodex.net/live.ics?${new URLSearchParams(params).toString()}`;
         },
@@ -239,6 +240,12 @@ export default {
                 })
                 .catch((e) => console.log(e));
         }, 500),
+    },
+    async mounted() {
+        if (this.initialQuery) {
+            const parsedQuery = await csv2jsonAsync(this.initialQuery);
+            this.query = parsedQuery;
+        }
     },
     methods: {
         async copyToClipboard(url, ev) {

@@ -8,6 +8,7 @@
     >
       <portal :to="portalName" :disabled="$vuetify.breakpoint.xs" class="justify-space-between d-flex flex-grow-1 mx-n2">
         <v-menu
+          :key="'vlx-' + tab + identifier + isFavPage"
           :close-on-content-click="false"
           offset-y
           left
@@ -24,7 +25,7 @@
               <v-icon>{{ mdiCalendar }}</v-icon>
             </v-btn>
           </template>
-          <CalendarUsage />
+          <CalendarUsage :initial-query="initialQueryForCalendar" />
         </v-menu>
 
         <v-menu
@@ -180,6 +181,7 @@ import CalendarUsage from "@/components/calendar/CalendarUsage.vue";
 import { dayjs } from "@/utils/time";
 import { mdiCalendarEnd, mdiFilterVariant, mdiFormatListBulleted, mdiViewList, mdiCalendar } from "@mdi/js";
 import { syncState } from "@/utils/functions";
+import { json2csvAsync } from "json-2-csv";
 import VideoListFilters from "../setting/VideoListFilters.vue";
 
 function nearestUTCDate(date) {
@@ -247,6 +249,7 @@ export default {
                     value: "viewers",
                 },
             ],
+            initialQueryForCalendar: "",
         };
     },
     computed: {
@@ -371,7 +374,7 @@ export default {
                 this.currentGridSize = 0;
             }
         },
-        init(updateFavorites) {
+        async init(updateFavorites) {
             if (this.isFavPage) {
                 if (updateFavorites) this.$store.dispatch("favorites/fetchFavorites");
                 if (this.favoriteChannelIDs.size > 0 && this.isLoggedIn) {
@@ -382,6 +385,16 @@ export default {
                 this.$store.dispatch("home/fetchLive", { force: true });
             }
             this.identifier = Date.now();
+
+            if (this.$store.state.currentOrg.name !== "All Vtubers") {
+                this.initialQueryForCalendar = await json2csvAsync([{
+                    type: "org",
+                    text: this.$store.state.currentOrg.name,
+                    value: this.$store.state.currentOrg.name,
+                }]);
+            } else {
+                this.initialQueryForCalendar = "";
+            }
         },
         reload() {
             this.init();
