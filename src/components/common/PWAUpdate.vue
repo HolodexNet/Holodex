@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import * as SW from "../../sw";
+import * as SW from "@/entrypoints/sw";
 
 export default {
     name: "PWAUpdate",
@@ -81,6 +81,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

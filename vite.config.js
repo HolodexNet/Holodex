@@ -73,9 +73,7 @@ export default ({ mode }) => {
                     ],
                     runtimeCaching: [
                         {
-                            urlPattern: new RegExp(
-                                "https://fonts.(?:googleapis|gstatic).com/(.*)",
-                            ),
+                            urlPattern: /https:\/\/fonts.(?:googleapis|gstatic).com\/(.*)/,
                             handler: "CacheFirst",
                             options: {
                                 cacheName: "google-fonts",
@@ -88,7 +86,7 @@ export default ({ mode }) => {
                             },
                         },
                         {
-                            urlPattern: new RegExp("https://yt3.ggpht.com/ytc/(.*)"),
+                            urlPattern: /https:\/\/yt3.ggpht.com\/ytc\/(.*)/,
                             handler: "CacheFirst",
                             options: {
                                 cacheName: "channel-photo",
@@ -102,7 +100,7 @@ export default ({ mode }) => {
                             },
                         },
                         {
-                            urlPattern: new RegExp("https://www.youtube.com/player_api"),
+                            urlPattern: /https:\/\/www.youtube.com\/player_api/,
                             handler: "CacheFirst",
                             options: {
                                 cacheName: "youtube-player",
@@ -160,8 +158,8 @@ export default ({ mode }) => {
         build: {
             rollupOptions: {
                 input: {
-                    main: path.resolve(__dirname, "index.html"),
-                    seo: path.resolve(__dirname, "seo.html"),
+                    main: path.resolve(__dirname, "src/index.html"),
+                    seo: path.resolve(__dirname, "src/seo.html"),
                 },
                 output: {
                     compact: true,
@@ -181,6 +179,7 @@ export default ({ mode }) => {
 
                             return "vendor"; // all other package goes here
                         }
+                        return undefined;
                     },
 
                 },
