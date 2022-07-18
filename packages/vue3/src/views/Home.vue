@@ -11,7 +11,12 @@
           ? 'primary--text text--lighten-3'
           : 'primary--text text--darken-2'
       " -->
-    <v-tabs v-model="currentTab" class="mb-2" color="primary">
+    <v-tabs
+      :model-value="currentTab"
+      class="mb-2"
+      color="primary"
+      @update:model-value="(e) => updateTab(e as number)"
+    >
       <v-tab class="p-2">
         {{ liveUpcomingHeaderSplit[1] }}
         <span
@@ -79,6 +84,35 @@ const Tabs = {
   CLIPS: 2,
 } as const;
 const currentTab: Ref<typeof Tabs[keyof typeof Tabs]> = ref(Tabs.LIVE);
+const router = useRouter();
+const route = useRoute();
+function updateTab(tab: number, preservePage = true) {
+  // Change page before change tab, to avoid fetching wrong offset
+  currentPage.value = 1;
+
+  currentTab.value = tab as any;
+  // Sync the hash to current tab
+  const toHash: Record<number, string> = {
+    0: "",
+    1: "#archive",
+    2: "#clips",
+    3: "#list",
+  };
+  router
+    .replace({
+      hash: toHash[tab] || "",
+      // set page to 0 if on scroll mode
+      query: preservePage
+        ? {
+            ...route.query,
+            page: undefined,
+          }
+        : {},
+    })
+    .catch(() => {
+      // Navigation duplication error expected, catch it and move on
+    });
+}
 
 const site = useSiteStore();
 
@@ -170,14 +204,6 @@ const totalPages = computed(() => {
   return Math.ceil((activeQuery?.value?.data.value?.total || 0) / perPage);
 });
 
-// Reset current page
-watch(
-  () => currentTab.value,
-  () => {
-    currentPage.value = 1;
-    updateHash(currentTab.value, currentTab.value !== Tabs.LIVE);
-  }
-);
 // Scroll to top when page changes
 watch(
   () => currentPage.value,
@@ -189,31 +215,6 @@ watch(
 const isLoading = computed(() => activeQuery.value?.isLoading.value);
 const error = computed(() => activeQuery.value?.error.value);
 const isError = computed(() => activeQuery.value?.isError.value);
-
-const router = useRouter();
-const route = useRoute();
-function updateHash(tab: number, preservePage = true) {
-  // Sync the hash to current tab
-  const toHash: Record<number, string> = {
-    0: "",
-    1: "#archive",
-    2: "#clips",
-    3: "#list",
-  };
-  router
-    .replace({
-      hash: toHash[tab] || "",
-      // set page to 0 if on scroll mode
-      query: preservePage
-        ? {
-            ...route.query,
-          }
-        : {},
-    })
-    .catch(() => {
-      // Navigation duplication error expected, catch it and move on
-    });
-}
 </script>
 <style>
 .v-tabs.v-slide-group--is-overflowing:not(.v-slide-group--has-affixes)
