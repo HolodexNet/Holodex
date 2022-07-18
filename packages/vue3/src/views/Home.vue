@@ -40,7 +40,7 @@
     </v-tabs>
     <video-card-grid>
       <template
-        v-for="video in prevVideos?.length ? prevVideos : videos"
+        v-for="video in currentTab === Tabs.LIVE ? liveVideos : videos"
         :key="video.id"
       >
         <video-card :video="video" />
@@ -54,17 +54,24 @@
         class="m-auto"
       ></v-progress-circular>
     </div>
-    <div v-else class="flex items-center justify-center h-20">
-      <v-btn color="primary" @click="offset += 25">Load more</v-btn>
+    <div
+      v-else-if="currentTab !== Tabs.LIVE"
+      class="flex items-center justify-center h-20"
+    >
+      <h-pagination v-model="currentPage" :total-pages="totalPages" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { useLive, useVideos } from "@/services/video";
+import { useLive, usePaginatedVideos } from "@/services/video";
 import { useSiteStore } from "@/stores";
 import { useSettingsStore } from "@/stores/settings";
 import { Ref } from "vue";
 import { useI18n } from "vue-i18n";
+import HPagination from "@/components/core/HPagination.vue";
+import { useUrlSearchParams } from "@vueuse/core";
+
+const params = useUrlSearchParams("history");
 
 const Tabs = {
   LIVE: 0,
@@ -87,7 +94,8 @@ const liveUpcomingCounts = computed(() => {
   return { liveCnt, upcomingCnt };
 });
 
-const offset = ref(0);
+const currentPage = ref(+params.page || 1);
+const perPage = 24;
 
 // TODO:
 // paginated: !this.scrollMode,
@@ -108,53 +116,44 @@ const liveQuery = useLive(
     refetchInterval: 2 * 60 * 1000,
   }
 );
+const liveVideos = computed(() => liveQuery.data.value);
 
-const archiveQuery = useVideos(
+const archiveQuery = usePaginatedVideos(
   computed(() => ({
     status: "past,missing",
     type: "stream",
     org: site.currentOrg.name,
     include: "clips,mentions",
     max_upcoming_hours: 1,
-    offset: offset.value,
+    offset: (currentPage.value - 1) * perPage,
+    limit: 24,
+    paginated: true,
   })),
   {
     enabled: computed(() => currentTab.value === Tabs.ARCHIVE),
-    refetchInterval: 5 * 60 * 1000,
+    refetchInterval: false,
   }
 );
-
-const clipQuery = useVideos(
+const clipQuery = usePaginatedVideos(
   computed(() => ({
     status: "past",
     type: "clip",
     org: site.currentOrg.name,
-    max_upcoming_hours: 1,
     // TODO
     // lang: settings.clipLangs.join(","),
     lang: "en",
-    offset: offset.value,
+    offset: (currentPage.value - 1) * perPage,
+    limit: 24,
+    paginated: true,
   })),
   {
     enabled: computed(() => currentTab.value === Tabs.CLIPS),
-    refetchInterval: 5 * 60 * 1000,
+    refetchInterval: false,
   }
 );
 
-// function onIntersect() {
-//   console.log(archiveQuery.isFetching.value, "loading");
-//   if (!activeQuery.value?.isLoading.value && !archiveQuery.isFetching.value)
-//     fetchNextPage.value();
-// }
-
-// const { data: archiveVideos } = toRefs(archiveQuery);
-// const { data: liveVideos } = toRefs(liveQuery);
-// const { data: clipVideos } = toRefs(clipQuery);
-
 const activeQuery = computed(() => {
   switch (currentTab.value) {
-    case 0:
-      return liveQuery;
     case 1:
       return archiveQuery;
     case 2:
@@ -162,38 +161,64 @@ const activeQuery = computed(() => {
   }
 });
 
-// Man this looks ugly
-// const videos = computed(() => {
-//   console.log(
-//     archiveQuery?.data.value?.pages.reduce((a, b) => a.concat(b), [])
-//   );
-//   return archiveQuery?.data.value?.pages.reduce((a, b) => a.concat(b), []);
-//   // return [];
-// });
+const videos = computed(() => {
+  return activeQuery?.value?.data?.value?.items || [];
+  // return activeQuery?.value?.data?.value?.pages.reduce((prev, curr, index) => index <= currentPage.value ? prev.concat(curr) : prev, [])
+});
 
-const videos = computed(() => activeQuery.value?.data.value);
-const error = computed(() => activeQuery.value?.error.value);
-const isLoading = computed(() => activeQuery.value?.isLoading.value);
-const isError = computed(() => activeQuery.value?.isError.value);
+const totalPages = computed(() => {
+  return Math.ceil((activeQuery?.value?.data.value?.total || 0) / perPage);
+});
 
-const prevVideos: Ref<Video[]> = ref([]);
-watch(
-  () => videos.value,
-  () => {
-    if (videos.value && !settings.scrollMode)
-      prevVideos.value.push(...videos.value);
-  }
-);
+// Reset current page
 watch(
   () => currentTab.value,
   () => {
-    prevVideos.value = [];
+    currentPage.value = 1;
+    updateHash(currentTab.value, currentTab.value !== Tabs.LIVE);
   }
 );
+// Scroll to top when page changes
+watch(
+  () => currentPage.value,
+  () => {
+    window.scrollTo({ top: 0 });
+    params.page = `${currentPage.value}`;
+  }
+);
+const isLoading = computed(() => activeQuery.value?.isLoading.value);
+const error = computed(() => activeQuery.value?.error.value);
+const isError = computed(() => activeQuery.value?.isError.value);
+
+const router = useRouter();
+const route = useRoute();
+function updateHash(tab: number, preservePage = true) {
+  // Sync the hash to current tab
+  const toHash: Record<number, string> = {
+    0: "",
+    1: "#archive",
+    2: "#clips",
+    3: "#list",
+  };
+  router
+    .replace({
+      hash: toHash[tab] || "",
+      // set page to 0 if on scroll mode
+      query: preservePage
+        ? {
+            ...route.query,
+          }
+        : {},
+    })
+    .catch(() => {
+      // Navigation duplication error expected, catch it and move on
+    });
+}
 </script>
 <style>
-.v-slide-group__prev--disabled {
-  display: none !important;
+.v-tabs.v-slide-group--is-overflowing:not(.v-slide-group--has-affixes)
+  .v-tab:first-child {
+  margin-left: 0 !important;
 }
 /* shared with favorites.vue */
 .stream-count-chip {
