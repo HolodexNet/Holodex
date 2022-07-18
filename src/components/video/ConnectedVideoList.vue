@@ -11,6 +11,26 @@
           :close-on-content-click="false"
           offset-y
           left
+          :min-width="isMobile ? '100%' : '600px'"
+          max-width="600px"
+        >
+          <template #activator="{ on, attrs }">
+            <v-btn
+              text
+              icon
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>{{ mdiCalendar }}</v-icon>
+            </v-btn>
+          </template>
+          <CalendarUsage />
+        </v-menu>
+
+        <v-menu
+          :close-on-content-click="false"
+          offset-y
+          left
           min-width="300px"
           max-width="300px"
         >
@@ -66,6 +86,7 @@
             <video-list-filters />
           </v-sheet>
         </v-menu>
+
         <v-btn
           text
           icon
@@ -155,10 +176,9 @@ import backendApi from "@/utils/backend-api";
 import GenericListLoader from "@/components/video/GenericListLoader.vue";
 import SkeletonCardList from "@/components/video/SkeletonCardList.vue";
 import VideoCardList from "@/components/video/VideoCardList.vue";
-// import VideoCondensedList from "@/components/video/VideoCondensedList.vue";
-// import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
+import CalendarUsage from "@/components/calendar/CalendarUsage.vue";
 import { dayjs } from "@/utils/time";
-import { mdiCalendarEnd, mdiFilterVariant, mdiFormatListBulleted, mdiViewList } from "@mdi/js";
+import { mdiCalendarEnd, mdiFilterVariant, mdiFormatListBulleted, mdiViewList, mdiCalendar } from "@mdi/js";
 import { syncState } from "@/utils/functions";
 import VideoListFilters from "../setting/VideoListFilters.vue";
 
@@ -175,6 +195,7 @@ export default {
         GenericListLoader,
         SkeletonCardList,
         VideoListFilters,
+        CalendarUsage,
     },
     props: {
         liveContent: {
@@ -204,6 +225,7 @@ export default {
             mdiFilterVariant,
             mdiFormatListBulleted,
             mdiViewList,
+            mdiCalendar,
             identifier: Date.now(),
             pageLength: 24,
             Tabs: Object.freeze({
@@ -234,6 +256,9 @@ export default {
         ...mapGetters("favorites", ["favoriteChannelIDs"]),
         isLoggedIn() {
             return this.$store.getters.isLoggedIn;
+        },
+        isMobile() {
+            return this.$store.state.isMobile;
         },
         live() {
             let live = (this.liveContent?.length && this.liveContent) || (this.isFavPage ? this.f_live : this.h_live);
