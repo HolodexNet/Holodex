@@ -15,6 +15,8 @@ declare module '@vue/runtime-core' {
     ChannelImg: typeof import('./src/components/channel/common/ChannelImg.vue')['default']
     ChatMessage: typeof import('./src/components/tldex/client/ChatMessage.vue')['default']
     GoogleSignInButton: typeof import('./src/components/login/GoogleSignInButton.vue')['default']
+    Hello: typeof import('./src/components/Hello.vue')['default']
+    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     HList: typeof import('./src/components/core/HList.vue')['default']
     HolodexStats: typeof import('./src/components/about/HolodexStats.vue')['default']
     Home: typeof import('./src/views/Home.vue')['default']
