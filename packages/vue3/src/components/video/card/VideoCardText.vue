@@ -3,8 +3,8 @@
     <template v-if="!hideChannelImage" #avatar>
       <channel-img :channel="video.channel" :size="40" rounded />
     </template>
-    <div class="flex flex-col flex-1 justify-around box-content my-1">
-      <div class="line-clamp-2 leading-5 pr-6 video-card-title" :title="title">
+    <div class="box-content flex flex-col justify-around flex-1 my-1">
+      <div class="pr-6 leading-5 line-clamp-2 video-card-title" :title="title">
         {{ title }}
       </div>
       <div class="flex flex-shrink-1">
@@ -24,7 +24,7 @@
               {{ preferredChannelName }} {{ `(+${video.mentions?.length})` }}
             </a>
           </template>
-          <div class="rounded-lg p-3 bg-base-300 shadow-md flex flex-col gap-1">
+          <div class="flex flex-col gap-1 p-3 rounded-lg shadow-md bg-base-300">
             <template v-for="mention in video.mentions" :key="mention.id">
               <div class="flex items-center">
                 <channel-img
@@ -57,7 +57,7 @@
           {{ preferredChannelName }}
         </a>
       </div>
-      <div class="text-sm opacity-80 leading-4">
+      <div class="text-sm leading-4 opacity-80">
         <video-card-status :video="video" />
         <template v-if="video.clips && video.clips.length > 0">
           •
@@ -105,6 +105,7 @@ export default defineComponent({
     },
     hideChannelName: Boolean,
     hideChannelImage: Boolean,
+    disableDefaultClick: Boolean,
   },
   setup() {
     const site = useSiteStore();
@@ -172,6 +173,7 @@ export default defineComponent({
   methods: {
     formatCount,
     goToChannel() {
+      if (this.disableDefaultClick) return;
       //   TODO: is this behavior really needed? Only prevents users who misclick
       //   this.$emit("videoClicked", this.data);
       //   if (this.disableDefaultClick) return;

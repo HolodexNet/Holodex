@@ -26,10 +26,13 @@
         :video="video"
         :hide-channel-image="hideChannelImage"
         :hide-channel-name="hideChannelName"
+        :disable-default-click="disableDefaultClick"
         :class="{
           'ml-2': horizontal,
         }"
-      />
+      >
+        <template #action></template>
+      </video-card-text>
     </a>
   </a>
 </template>
@@ -52,16 +55,9 @@ export default defineComponent({
     },
     hideChannelName: Boolean,
     hideChannelImage: Boolean,
-    horizontal: {
-      required: false,
-      type: Boolean,
-      default: false,
-    },
-    disableDefaultClick: {
-      required: false,
-      type: Boolean,
-      default: false,
-    },
+    horizontal: Boolean,
+    // disables all default click behavior. Channel Clicks are also disabled.
+    disableDefaultClick: Boolean,
     parentPlaylistId: {
       type: [Number, String],
       default: null,
@@ -109,11 +105,12 @@ export default defineComponent({
   methods: {
     goToVideo() {
       this.$emit("videoClicked", this.data);
+      if (this.disableDefaultClick) return;
       if (this.isPlaceholder) {
         this.openPlaceholder();
         return;
       }
-      if (this.disableDefaultClick) return;
+
       // On mobile, clicking on watch links should not increment browser history
       // Back button will always return to the originating video list in one click
       if (this.$route.path.match("^/watch") && this.isMobile) {

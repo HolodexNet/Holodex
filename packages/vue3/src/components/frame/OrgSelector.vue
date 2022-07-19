@@ -147,7 +147,7 @@ import { useDisplay } from "vuetify";
  * dialog to pop up.
  *---------------------------------------------* */
 
-export default {
+export default defineComponent({
   name: "OrgSelector",
   props: {
     currentSelection: {
@@ -216,7 +216,7 @@ export default {
       get() {
         return this.site.currentOrg;
       },
-      set(val) {
+      set(val: { name: string; short?: string | undefined }) {
         this.$emit("changed", val);
         if (this.$route.name === "favorites")
           this.$router.push({ name: "home", query: { org: val.name } });
@@ -242,14 +242,14 @@ export default {
     },
   },
   methods: {
-    shiftUp(org) {
+    shiftUp(org: { name: string; short?: string | undefined }) {
       const favIndex = this.orgFavorites.indexOf(org);
       const temp = this.orgFavorites[favIndex - 1];
       this.orgFavorites.splice(favIndex - 1, 1, org);
       this.orgFavorites.splice(favIndex, 1, temp);
     },
   },
-};
+});
 </script>
 
 <style>
