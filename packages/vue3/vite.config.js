@@ -9,6 +9,10 @@ import dynamicImportVars from "@rollup/plugin-dynamic-import-vars";
 import yaml from "@rollup/plugin-yaml";
 import visualizer from "rollup-plugin-visualizer";
 import vuetify from "vite-plugin-vuetify";
+import Unocss from "unocss/vite";
+import presetIcons from "@unocss/preset-icons";
+
+const path = require('path')
 
 const API_BASE_URL = process.env.API_BASE_URL || "https://staging.holodex.net";
 const REWRITE_API_ROUTES = false;
@@ -18,6 +22,11 @@ export default defineConfig({
   define: {
     __VUE_I18N_LEGACY_API__: false,
     __VUE_I18N_FULL_INSTALL__: false,
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
   },
   plugins: [
     // ViteYaml({
@@ -30,6 +39,9 @@ export default defineConfig({
       include: ["src/locales/**/*.yml", "node_modules/dayjs/**/*.js"],
     }),
     vue({}),
+    Unocss({
+      presets: [presetIcons()],
+    }),
     vuetify({
       autoImport: true,
       styles: "expose",
