@@ -25,7 +25,7 @@
             <v-list-item-icon
               v-if="page.name === 'Musicdex'"
               style="max-width: 24px"
-              :icon="icons.musicdexLogo"
+              :icon="icons.mdiStarFourPointsOutline"
             >
             </v-list-item-icon>
             <v-list-item-icon v-else :icon="page.icon"></v-list-item-icon>
