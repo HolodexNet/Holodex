@@ -8,7 +8,11 @@
         {{ title }}
       </div>
       <div class="flex flex-shrink-1">
-        <v-tooltip v-if="video.mentions?.length" location="bottom">
+        <v-tooltip
+          v-if="video.mentions?.length"
+          location="bottom"
+          :transition="'slide-y-transition'"
+        >
           <template #activator="{ props }">
             <a
               v-if="!hideChannelName"
