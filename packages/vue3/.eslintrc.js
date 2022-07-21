@@ -5,7 +5,7 @@ module.exports = {
     "vue/setup-compiler-macros": true,
   },
   extends: [
-    "plugin:vue/essential",
+    "plugin:vue/vue3-essential", // vue3-essential is for vue 3, vue/essential is for vue2.
     "plugin:vue/vue3-recommended",
     "@vue/typescript/recommended",
     "./.eslintrc-auto-import.json",

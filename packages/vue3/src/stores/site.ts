@@ -84,6 +84,23 @@ export const useSiteStore = defineStore("site", {
       this.user = null;
       this.jwtToken = null;
     },
+    toggleFavoriteOrg(org: Org) {
+      const favIndex = this.starredOrgs.findIndex((x) => x.name === org.name);
+      if (favIndex >= 0) {
+        this.starredOrgs.splice(favIndex, 1);
+      } else {
+        this.starredOrgs.push(org);
+      }
+    },
+    shiftOrgFavorites({ org, up = true }: { org: Org; up: boolean }) {
+      const favIndex = this.starredOrgs.findIndex((x) => x.name === org.name);
+      if (up && favIndex === 0) return;
+      if (!up && favIndex === this.starredOrgs.length - 1) return;
+      const replaceIndex = up ? favIndex - 1 : favIndex + 1;
+      const temp = this.starredOrgs[replaceIndex];
+      this.starredOrgs.splice(replaceIndex, 1, org);
+      this.starredOrgs.splice(favIndex, 1, temp);
+    },
   },
   share: {
     enable: true,

@@ -32,6 +32,7 @@ declare module '@vue/runtime-core' {
     OrgSelector: typeof import('./src/components/frame/OrgSelector.vue')['default']
     Page: typeof import('./src/stories/Page.vue')['default']
     Profile: typeof import('./src/views/Profile.vue')['default']
+    SearchBar: typeof import('./src/components/nav/SearchBar.vue')['default']
     TLClient: typeof import('./src/components/tldex/editor/TLClient.vue')['default']
     TLScriptEditor: typeof import('./src/components/tldex/editor/TLScriptEditor.vue')['default']
     TranslationClient: typeof import('./src/views/TranslationClient.vue')['default']

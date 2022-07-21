@@ -17,3 +17,10 @@ e.g. just doing .online will NOT work
 .d-flex {
   display: flex;
 }
+
+.btn {
+  animation: none;
+}
+.btn:active:focus {
+  transform: none;  
+}

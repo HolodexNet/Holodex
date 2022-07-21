@@ -49,7 +49,9 @@
           <router-link :to="{ name: settings.defaultOpen || 'Home' }">
             <logo v-if="!isMobile" width="32" height="32" />
           </router-link>
-          <OrgSelector />
+          <OrgSelector
+            @changed="(org: Org, close?: Function) => {site.currentOrg = org; close && close();}"
+          />
         </div>
         <!-- </v-toolbar-title> -->
         <SearchBar v-if="!isMobile" key="main-search-bar" />

@@ -57,25 +57,24 @@
       <v-divider v-if="expanded" />
 
       <template v-if="expanded">
-        <v-list-item
-          v-for="page in pages.filter((e) => e.extra)"
-          :key="page.name"
-          link
-          :href="page.path"
-          :class="{ 'v-list-item--active': $route.fullPath === page.path }"
-          @click="(e) => handlePageClick(page, e)"
-        >
-          <v-list-item-icon :icon="page.icon"> </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ page.name }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <li v-for="page in pages.filter((e) => e.extra)" :key="page.name">
+          <router-link
+            :to="page.path"
+            :class="{ 'v-list-item--active': $route.fullPath === page.path }"
+            @click="(e) => handlePageClick(page, e)"
+          >
+            <v-list-item-icon :icon="page.icon"> </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{ page.name }}</v-list-item-title>
+            </v-list-item-content>
+          </router-link>
+        </li>
       </template>
       <!-- </v-list> -->
     </ul>
     <v-divider />
     <div class="justify-center d-flex">
-      <v-btn icon small @click="expanded = !expanded">
+      <v-btn small block elevation="0" @click="expanded = !expanded">
         <v-icon>{{ expand ? mdiChevronUp : mdiChevronDown }}</v-icon>
       </v-btn>
     </div>
@@ -257,15 +256,5 @@ export default defineComponent({
 .ch-upcoming {
   font-size: small;
   line-height: 24px;
-}
-.trapezoid {
-  width: 230px;
-  text-align: center;
-  height: 0;
-  position: relative;
-  border-right: 50px solid transparent;
-  border-top: 40px solid #2963bd;
-  border-left: 50px solid transparent;
-  box-sizing: content-box;
 }
 </style>

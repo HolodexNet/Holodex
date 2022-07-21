@@ -45,8 +45,8 @@
         <v-list-item
           v-for="org in orgFavorites"
           :key="org.name + 'select'"
-          :input-value="org === (currentSelection || currentOrg)"
-          @click="currentOrg = org"
+          :input-value="org.name === currentOrg.name"
+          @click="$emit('changed', org)"
         >
           <v-list-item-title>{{ org.name }}</v-list-item-title>
         </v-list-item>
@@ -58,65 +58,66 @@
       </v-list>
     </v-menu>
   </slot>
-  <v-dialog v-model="showOrgDialog" max-width="1000px">
+  <v-dialog v-model="showOrgDialog">
     <v-card>
       <v-card-title>{{ $t("views.channels.sortOptions.org") }}</v-card-title>
 
-      <v-card-text class="px-1">
+      <v-card-text
+        class="px-1 overflow-y-auto h-fit"
+        style="width: 30vw; min-width: 340px; max-width: 800px"
+      >
         <v-text-field
           v-model="search"
+          hide-details
+          variant="underlined"
           :label="$t('component.search.searchLabel')"
-          class="px-4"
+          class="px-1"
+          color="accent"
         />
-        <v-list style="overflow-y: auto; height: calc(75vh - 176px)">
-          <v-list-item
-            v-for="org in sortedOrgs"
-            :key="org.name + 'list'"
-            dense
-            :ripple="false"
-            @click="
-              () => {
-                currentOrg = org;
-                showOrgDialog = false;
-              }
-            "
-          >
-            <v-list-item-action height="32px">
-              <v-btn
-                icon
-                :color="orgFavoritesNameSet.has(org.name) ? 'yellow' : 'grey'"
-                @click.stop="toggleFavoriteOrg(org)"
+        <ul class="overflow-y-auto menu bg-base-100">
+          <li v-for="org in sortedOrgs" :key="org.name + '_list_item'">
+            <!--             :class="orgFavoritesNameSet.has(org.name) ? 'bordered' : ''"
+ -->
+            <a
+              class="flex flex-row gap-1"
+              @click="$emit('changed', org, closeDialog)"
+            >
+              <button
+                class="btn btn-sm btn-square"
+                :class="
+                  orgFavoritesNameSet.has(org.name)
+                    ? 'btn-primary btn-outline'
+                    : 'btn-ghost'
+                "
+                @click.stop="site.toggleFavoriteOrg(org)"
               >
                 <v-icon>{{ icons.mdiStar }}</v-icon>
-              </v-btn>
-            </v-list-item-action>
-
-            <v-list-item-content>
-              {{ org.name }} {{ org.name_jp ? `(${org.name_jp})` : "" }}
-            </v-list-item-content>
-
-            <v-list-item-action
-              v-if="orgFavoritesNameSet.has(org.name)"
-              style="flex-direction: row !important"
-              @click.stop.prevent
-            >
-              <v-btn
-                icon
-                :ripple="false"
-                @click.stop="shiftOrgFavorites({ org, up: true })"
+              </button>
+              <span class="flex flex-grow">{{ org.name }}</span>
+              <div
+                v-if="orgFavoritesNameSet.has(org.name)"
+                class="self-end btn-group"
               >
-                <v-icon>{{ icons.mdiChevronUp }}</v-icon>
-              </v-btn>
-              <v-btn
-                icon
-                :ripple="false"
-                @click.stop="shiftOrgFavorites({ org, up: false })"
-              >
-                <v-icon>{{ icons.mdiChevronDown }}</v-icon>
-              </v-btn>
-            </v-list-item-action>
-          </v-list-item>
-        </v-list>
+                <button
+                  class="btn btn-sm btn-square btn-ghost"
+                  @click.stop.prevent="
+                    site.shiftOrgFavorites({ org, up: true })
+                  "
+                >
+                  <v-icon>{{ icons.mdiChevronUp }}</v-icon>
+                </button>
+                <button
+                  class="btn btn-sm btn-square btn-ghost"
+                  @click.stop.prevent="
+                    site.shiftOrgFavorites({ org, up: false })
+                  "
+                >
+                  <v-icon>{{ icons.mdiChevronDown }}</v-icon>
+                </button>
+              </div>
+            </a>
+          </li>
+        </ul>
       </v-card-text>
       <v-divider />
       <v-card-actions>
@@ -130,7 +131,9 @@
 </template>
 
 <script lang="ts">
+import { useOrgList } from "@/services/static";
 import { useSiteStore } from "@/stores";
+import { PropType } from "vue";
 import { useDisplay } from "vuetify";
 
 /**----------------------------------------------
@@ -143,21 +146,27 @@ import { useDisplay } from "vuetify";
  * or supplement your own menu system by using 'menu' slot (this controls the whole menu dropdown,
  * should not be used together with 'visible')
  *
- *   Regardless, setting showOrgDialog = true inside 'menu' slot binding will cause the Favorite Orgs management
+ *   Regardless, calling showOrgDialog() inside 'menu' slot binding will cause the Favorite Orgs management/selector
  * dialog to pop up.
+ *
+ * #menu slot: { currentOrg, showOrgDialog () }
+ * - using menu slot, replace the menu entirely w/ a selector or something.>
+ *
+ * #visible slot: { currentOrg, activator = {props, isActive} }
+ * - using visible slot to change the menu toggle area - defaults to holodex dropdown>
+ *
+ * #prepend-dropdown slot: {}
+ * - add additional clickables to the dropdown list.
+ *
  *---------------------------------------------* */
 
 export default defineComponent({
   name: "OrgSelector",
   props: {
     currentSelection: {
-      type: Object,
-      optional: true,
-      default: () => ({
-        name: "Hololive",
-        short: "Holo",
-        name_jp: null,
-      }),
+      type: Object as PropType<Org | undefined>,
+      required: false,
+      default: undefined,
     },
     hideAllVTubers: {
       type: Boolean,
@@ -168,17 +177,16 @@ export default defineComponent({
   setup() {
     const site = useSiteStore();
     const display = useDisplay();
-    // const orgs = useOrgList();
+    const orgs = useOrgList({ enabled: true });
 
     const isMobile = display.mobile;
 
-    return { site, display, isMobile };
+    return { site, display, isMobile, orgs };
   },
   data() {
     return {
       showOrgDialog: false,
       search: "",
-      orgs: [] as any[],
     };
   },
   computed: {
@@ -195,7 +203,7 @@ export default defineComponent({
       },
     },
     sortedOrgs() {
-      let list = this.orgs.slice();
+      let list = (this.orgs.data.value || []).slice();
       if (this.search) {
         list = list.filter((x) =>
           x.name.toLowerCase().includes(this.search.toLowerCase())
@@ -212,19 +220,8 @@ export default defineComponent({
       });
       return list;
     },
-    currentOrg: {
-      get() {
-        return this.site.currentOrg;
-      },
-      set(val: { name: string; short?: string | undefined }) {
-        this.$emit("changed", val);
-        if (this.$route.name === "favorites")
-          this.$router.push({ name: "home", query: { org: val.name } });
-        if (this.$route.query.org)
-          this.$router.replace({ query: { org: val.name } });
-
-        this.site.currentOrg = val;
-      },
+    currentOrg() {
+      return this.currentSelection || this.site.currentOrg;
     },
     orgFavorites() {
       if (this.hideAllVTubers) {
@@ -242,11 +239,8 @@ export default defineComponent({
     },
   },
   methods: {
-    shiftUp(org: { name: string; short?: string | undefined }) {
-      const favIndex = this.orgFavorites.indexOf(org);
-      const temp = this.orgFavorites[favIndex - 1];
-      this.orgFavorites.splice(favIndex - 1, 1, org);
-      this.orgFavorites.splice(favIndex, 1, temp);
+    closeDialog() {
+      this.showOrgDialog = false;
     },
   },
 });
@@ -274,6 +268,7 @@ export default defineComponent({
   font-weight: 500;
   box-shadow: 2px 2px 4px black;
 }
+
 .first-visit-tooltip:before {
   content: "";
   position: absolute;

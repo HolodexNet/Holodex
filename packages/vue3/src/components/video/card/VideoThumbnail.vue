@@ -1,8 +1,10 @@
 <template>
   <!-- Video Image with Duration -->
   <div
-    class="flex flex-shrink-0 relative w-full video-thumbnail"
-    :class="{ 'placeholder-thumbnail': isPlaceholder }"
+    class="relative flex flex-shrink-0 w-full shadow-md video-thumbnail"
+    :class="{
+      'placeholder-thumbnail': isPlaceholder && video.status !== 'live',
+    }"
   >
     <v-img
       :aspect-ratio="16 / 9"
@@ -11,7 +13,7 @@
       class="rounded-md"
     ></v-img>
     <div
-      class="flex flex-col justify-between w-full h-full absolute"
+      class="absolute flex flex-col justify-between w-full h-full"
       style="z-index: 1"
     >
       <div class="flex items-start justify-between">
@@ -38,13 +40,13 @@
 
       <div class="flex justify-end">
         <!-- Show music icon if songs exist -->
-        <div v-if="video.songcount" class="video-overlay-tag rounded-sm">
+        <div v-if="video.songcount" class="rounded-sm video-overlay-tag">
           <v-icon small color="white">{{ icons.mdiMusic }}</v-icon>
         </div>
         <!-- Show TL chat icon if recently active or has archive tl exist -->
         <div
           v-if="hasTLs"
-          class="video-overlay-tag rounded-sm"
+          class="rounded-sm video-overlay-tag"
           :title="tlIconTitle"
         >
           {{ tlLangInChat }}

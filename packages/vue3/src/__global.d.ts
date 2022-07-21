@@ -208,4 +208,10 @@ declare global {
     top_topics?: string[];
     crawled_at?: Date;
   }
+
+  interface Org {
+    name: string;
+    short?: string;
+    name_jp?: string;
+  }
 }
