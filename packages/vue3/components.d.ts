@@ -40,7 +40,7 @@ declare module '@vue/runtime-core' {
     TwitterFeed: typeof import('./src/components/about/TwitterFeed.vue')['default']
     UserCard: typeof import('./src/components/login/UserCard.vue')['default']
     VideoCard: typeof import('./src/components/video/card/VideoCard.vue')['default']
-    VideoCardGrid: typeof import('./src/components/video/card/VideoCardGrid.vue')['default']
+    VideoCardGrid: typeof import('./src/components/video/aggregate/VideoCardGrid.vue')['default']
     VideoCardLiveDuration: typeof import('./src/components/video/card/VideoCardLiveDuration.vue')['default']
     VideoCardMenu: typeof import('./src/components/video/card/VideoCardMenu.vue')['default']
     VideoCardStatus: typeof import('./src/components/video/card/VideoCardStatus.vue')['default']
