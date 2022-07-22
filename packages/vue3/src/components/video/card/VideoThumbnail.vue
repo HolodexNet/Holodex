@@ -239,13 +239,14 @@ export default defineComponent({
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2);
   }
   .v-img::after {
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
     content: "";
     display: block;
     height: 100%;
     position: absolute;
     top: 0;
     width: 100%;
+    mix-blend-mode: lighten;
   }
 
   /* Show placeholder info text on hover */
