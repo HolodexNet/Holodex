@@ -22,8 +22,7 @@
         return true;
       }
     "
-    filter-keys="value"
-    filter-mode="union"
+    no-filter
     :append-icon="''"
     :label="$t('component.search.searchLabel')"
     return-object
@@ -31,40 +30,41 @@
     @input="onInput"
     @keydown.enter="onEnterKeyDown"
   >
-    <template #selection="selection">
+    <template #chip="{ item, props }">
       <v-card
+        v-bind="props"
         :color="'grey darken-3'"
-        :label="selection.item.type !== 'channel'"
+        :label="item.raw.type !== 'channel'"
         class="pa-0 selected-card"
       >
         <v-list-item class="py-0 pl-3 pr-1 ma-n1">
           <div
             class="px-1 py-0 rounded selected-card-type ma-0 text--disabled caption"
           >
-            <v-icon v-if="selection.item.type === 'channel'" x-small>
+            <v-icon v-if="item.raw.type === 'channel'" x-small>
               {{ icons.mdiYoutube }}
             </v-icon>
-            <v-icon v-if="selection.item.type === 'video url'" x-small>
+            <v-icon v-if="item.raw.type === 'video url'" x-small>
               {{ icons.mdiYoutube }}
             </v-icon>
-            <v-icon v-if="selection.item.type === 'topic'" x-small>
+            <v-icon v-if="item.raw.type === 'topic'" x-small>
               {{ icons.mdiAnimationPlay }}
             </v-icon>
-            <v-icon v-if="selection.item.type === 'org'" x-small>
+            <v-icon v-if="item.raw.type === 'org'" x-small>
               {{ mdiAccountMultiple }}
             </v-icon>
-            <v-icon v-if="selection.item.type === 'title & desc'" x-small>
+            <v-icon v-if="item.raw.type === 'title & desc'" x-small>
               {{ mdiTextSearch }}
             </v-icon>
-            <v-icon v-if="selection.item.type === 'comments'" x-small>
+            <v-icon v-if="item.raw.type === 'comments'" x-small>
               {{ mdiCommentSearch }}
             </v-icon>
-            {{ i18nItem(selection.item.type) }}
+            {{ i18nItem(item.raw.type) }}
           </div>
 
           <v-list-item-content class="py-1 pt-4">
             <v-list-item-subtitle class="text--primary search-item">{{
-              selection.item.text
+              item.raw.text
             }}</v-list-item-subtitle>
           </v-list-item-content>
 
@@ -72,7 +72,7 @@
             <v-icon
               small
               color="primary accent-2"
-              @click="deleteChip(selection.item)"
+              @click="deleteChip(item.raw)"
             >
               {{ icons.mdiClose }}
             </v-icon>
@@ -80,43 +80,35 @@
         </v-list-item>
       </v-card>
     </template>
-    <template #item="dropdownItem">
-      <v-list-item v-bind="dropdownItem.props" class="py-0 pl-3 pr-1 ma-n1">
+    <template #item="{ props, item }">
+      <v-list-item v-bind="props" class="py-0 pl-3 pr-1 ma-n1">
         <!-- @click="addItem(dropdownItem.item) -->
         <v-list-item-content class="py-1 pt-1">
           <v-list-item-subtitle class="text--primary">
-            {{ i18nItem(dropdownItem.item.type) }}
-            <v-icon v-if="dropdownItem.item.type === 'channel'" small>
+            {{ i18nItem(item.raw.type) }}
+            <v-icon v-if="item.raw.type === 'channel'" small>
               {{ icons.mdiYoutube }}
             </v-icon>
-            <v-icon v-if="dropdownItem.item.type === 'video url'" small>
+            <v-icon v-if="item.raw.type === 'video url'" small>
               {{ icons.mdiYoutube }}
             </v-icon>
-            <v-icon v-if="dropdownItem.item.type === 'topic'" small>
+            <v-icon v-if="item.raw.type === 'topic'" small>
               {{ icons.mdiAnimationPlay }}
             </v-icon>
-            <v-icon v-if="dropdownItem.item.type === 'org'" small>
+            <v-icon v-if="item.raw.type === 'org'" small>
               {{ mdiAccountMultiple }}
             </v-icon>
-            <v-icon v-if="dropdownItem.item.type === 'title & desc'" small>
+            <v-icon v-if="item.raw.type === 'title & desc'" small>
               {{ mdiTextSearch }}
             </v-icon>
-            <v-icon v-if="dropdownItem.item.type === 'comments'" small>
+            <v-icon v-if="item.raw.type === 'comments'" small>
               {{ mdiCommentSearch }}
             </v-icon>
 
-            {{ dropdownItem.item.text }}
+            {{ item.raw.text }}
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-    </template>
-    <template #append-outer>
-      <v-btn class="ml-1 append-btn" @click="commitSearch">
-        <v-icon key="searchbtn" color="secondary" :icon="icons.mdiMagnify" />
-      </v-btn>
-      <v-btn class="ml-1 append-btn" @click="goToOrToggleAdvanced">
-        <v-icon key="advanced" color="secondary" :icon="mdiFilter" />
-      </v-btn>
     </template>
   </v-autocomplete>
 </template>
@@ -208,25 +200,25 @@ export default defineComponent({
             let textQueries: Query[] = [];
             if (encodeURIComponent(val).length > 1) {
               textQueries = [
-                {
-                  type: "none",
-                  disabled: true,
-                  divider: true,
-                  value: "div",
-                  text: "div",
-                },
+                // {
+                //   type: "none",
+                //   disabled: true,
+                //   divider: true,
+                //   value: "div",
+                //   text: "div",
+                // },
                 {
                   type: "title & desc",
                   value: `${val}title & desc`,
                   text: val.trim(),
                 },
-                {
-                  type: "none",
-                  disabled: true,
-                  divider: true,
-                  value: "div",
-                  text: "div",
-                },
+                // {
+                //   type: "none",
+                //   disabled: true,
+                //   divider: true,
+                //   value: "div",
+                //   text: "div",
+                // },
                 { type: "comments", value: `${val}comments`, text: val.trim() },
               ];
             }

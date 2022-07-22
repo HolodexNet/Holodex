@@ -14,7 +14,7 @@ export {
   mdiCog,
   mdiDatabaseOff,
   mdiDelete,
-  mdiDiscord,
+  // mdiDiscord,
   mdiDotsVertical,
   mdiEarth, // for language
   mdiGoogle,
