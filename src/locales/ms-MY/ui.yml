@@ -52,8 +52,13 @@ component:
     typeScheduledYT: Siaran Terancang
     typeExternalStream: Siaran Luar
     typeEventPlaceholder: Acara Terancang
+    openClient: Buka Pelanggan Terjemahan
+    openScriptEditor: Buka Penyunting Skrip
+    uploadScript: Muat Naik Skrip Terjemahan
   videoDescription:
     description: Perihalan
+  video:
+    comment: { }
   description:
     showLess: Tunjukkan Kurang
     showMore: Tunjukkan Lagi
@@ -296,9 +301,23 @@ views:
         disconnectedToChat: Terputus
       archiveNeedExtension: >-
         Ruangan sembang terarkib hanya berfungsi apabila pelanjutan/sambungan {0} atau mana-mana pelanjutan/sambungan pihak ketiga lain.
+      hideSpoiler: Sembunyikan Terjemahan Akan Datang
     removeFromPlaylist: Alih keluar video daripada senarai main semasa
     saveToPlaylist: Simpan video pada senarai main semasa
     likeOnYoutube: Berikan tanda suka di YouTube
+    uploadPanel:
+      title: Muat Naik Skrip
+      usernameText: Terjemahan dimuat naik dengan nama pengguna ini
+      usernameChange: Ubah
+      tlLang: Bahasa Terjemahan
+      headerStart: Mula
+      headerEnd: Tamat
+      headerText: Teks
+      cancelBtn: Batal
+      okBtn: Baik
+      notifTextErr: GAGAL MENGHURAIKAN FAIL (FAIL ROSAK?)
+      notifTextParsing: Sedang menghuraikan fail...
+      notifTextErrExt: Sambungan fail tidak dikenali.
   favorites:
     promptForAction: >-
       Laman ini memaparkan senarai sedutan dan siaran langsung bagi penggiat YouTube maya yang digemari.
@@ -331,6 +350,11 @@ views:
       - Log masuk dengan Google
       - Log masuk dengan Discord
       - Log masuk dengan Twitter
+    username: Nama Pengguna
+    usernameBtn:
+      - Ubah
+      - Sahkan
+      - Simpan
   multiview:
     confirmOverwrite: Ubah tataletak semasa?
     confirmOverwriteYes: Sahkan
@@ -401,6 +425,77 @@ views:
       three: Memperbaiki bocoran ingatan ruangan sembang YouTube
       four: >-
         Memperbaiki bendera percubaan di pemain YouTube (Contoh: mematikan berbilang siaran, gambar kenit tidak dipaparkan ketika menunggu siaran) dan lain-lain lagi!
+  tlClient:
+    menu:
+      title: Menu
+      setting: Tetapan Bilik TLDex
+      loadVideo: Paparkan Video
+      unloadVideo: Sembunyikan Video
+      loadChat: Gabungkan sembang YouTube dengan terjemahan siaran
+      unloadChat: Pisahkan dengan sembang YouTube
+    tlControl:
+      enterBtn: Masukkan
+      prefix: Awalan
+      suffix: Akhiran
+      fontColour: Warna Pasuan
+      outlineColour: Warna Garis Bentuk
+      localPrefix: Tanda Bahasa di Ruangan Sembang
+      addProfile: Tambah Profil
+      removeProfile: Hapus Profil
+      shiftUp: Alih Profil ke Atas
+      shiftDown: Alih Profil ke Bawah
+      showSetting: Tetapan
+      hideSetting: Sembunyikan
+    addProfilePanel:
+      title: Tambah Profil Baru
+      inputLabel: Nama Profil
+    settingPanel:
+      title: Tetapan
+      mainStreamLink: Pautan Siaran Utama
+      collabLink: Pautan Siarsama
+    removeProfileTitle: Sahkan hapus profil
+    loadChatPanel:
+      title: Muat Sembang
+      inputLabel: Pautan Siaran
+    unloadChatTitle: Punggah SEMUA sembang yang masih berlangsung?
+    pangram: Melur seorang penghidap xenofobia universal yang takut pada warga jazirah, contohnya Qatar
+    cancelBtn: Batal
+    okBtn: Baik
+  scriptEditor:
+    menu:
+      save: Simpan
+      continuousEnd: Selanjarkan Masa (ubah tamat)
+      clearAll: Hapus Skrip
+      exportFile: Eksport Fail
+      importFile: Import Fail
+      editorMode: Ragam Suntingan
+    table:
+      headerStart: Mula
+      headerEnd: Tamat
+      headerProfile: Profil
+      headerText: Teks
+      setAsStart: Titik permulaan
+      shiftCurrentTime: Alihkan ke masa sekarang
+      deleteEntry: Hapus masukan
+    loadVideoPanel:
+      title: Muat Video
+      inputLabel: Pautan Siaran
+    setStartTitle: Masukan yang terpilih dijadikan pemula manakala semua masukan terdahulu terhapus.
+    importFile:
+      overwriteBtn: Tulis Ganti
+    editorModePanel:
+      activateMode: Hidupkan Ragam Suntingan
+      deactivateMode: Matikan Ragam Suntingan
+      roleWarning: Hak anda tidak memadai
+      filterTranslator: Saring penterjemah
+  tlManager:
+    title: Pengurus Skrip
+    headerID: ID Video
+    headerEntries: Masukan
+    download: Muat Turun
+    delete: Hapus
+    deleteTitle: Hapus Masukan
+    langPick: Bahasa
 time:
   soon: sebentar lagi
   diff_future_date: Berlangsung {0} ({1})
@@ -520,3 +615,30 @@ about:
     title: Penanda laman kecil
     description: >-
       Cipta penanda laman kecil dengan menarik mana-mana penanda di bawah ke bar penanda laman. Anda boleh membuka laman tontonan video di Holodex dengan menekannya ketika di laman YouTube:
+channelRequest:
+  RequestType: 'Jenis Permintaan:'
+  Types:
+    AddVtuber: Hendak menambah penggiyut maya ▶️ supaya Holodex boleh memantau saluran dan sedutan siarannya.
+    AddClipper: Hendak menambah saluran sedutan/terjemahan di Holodex
+    ModifyExistingInfo: Hendak mengubah suai maklumat saluran yang sedia ada
+    DeleteChannel: Hendak mengalih keluar saluran saya
+  DirectContactDisclaimer: >-
+    ID Discord, alamat e-mel mahupun Twitter anda boleh diberikan sekiranya anda mahu dihubungi (maklumat ini kekal rahsia) agar kami dapat memberikan maklum balas. Maklumat ini hanya boleh dilihat oleh pentadbir Holodex.
+  DirectContactLabel: Kaedah Perhubungan (pilihan)
+  TwitterHandle: Akaun Twitter Saluran Ini (pilihan)
+  VtuberGroupLabel: Kumpulan Penggiat YouTube Maya (pilihan)
+  VtuberGroupHint: Penggiyut maya ini berasal daripada pertubuhan/kumpulan mana?
+  ChannelLanguageLabel: Bahasa utama saluran
+  EnglishNameHint: >-
+    Sekiranya nama saluran tidak berbahasa Inggeris, tolong sediakan nama Inggerisnya. Patuhi urutan nama bahasa asalnya (cth. Natsuiro Matsuri) atau nama Inggeris pilihannya (cth. Elu the Elf, Emma★August).
+  EnglishNameLabel: Nama Inggeris Saluran
+  Comments: Ulasan
+  CommentsHint: Ulasan tambahan yang mahu disampaikan.
+  VtuberRequirementText: >-
+    Saluran bebas/persendirian memerlukan sekurang-kurangnya 20 ribu langganan. Penggiyut maya yang sebahagian kumpulan sedia ada boleh diterima. <br /><br />Kumpulan baharu dibuat mengikut bilangan langganan purata anggotanya.
+  ClipperRequirementText: >-
+    Syarat pembuat sedutan adalah sama ada membuka akaunnya melebihi dua bulan yang lalu ataupun memuat naik sekurang-kurangnya 20 buah sedutan dalam tempoh sebulan. Saluran ini berkemungkinan ditolak sekiranya kegiatannya merangkumi memuat naik sedutan pendek secara bertubi-tubi setiap hari, membuat sedutan bertempoh &lt;1minit sahaja atau menggunakan gambar kenit yang tidak senonoh. Mutu bahan kandungannya juga boleh diambil kira. <br /><br />Saluran sedutan juga seharusnya meletakkan sumber video melalui pautan saluran, sebutan @saluran YouTube dan pautan video. Pautan yang berlebihan (cth. memautkan keseluruhan anggota Nijisanji) hanya menambah beban para penyunting Holodex manakala pautan yang kurang (atau tiada langsung) hanya menyukarkan sedutan dipaparkan. <br /><br /> Holodex mempunyai sebuah algoritma yang secara sendiri mampu mengesan lalu membetulkan pemautan berlebihan, namun keberhasilannya masih terbatas. Saluran video sedutan yang membuat pautan secara berlebihan berkemungkinan dialih keluar daripada laman ini bagi mengurangkan masalah.
+  DeletionRequirementText: >-
+    Permintaan pengalihkeluaran saluran hanya boleh dilakukan oleh empunya saluran. Harap disediakan maklumat perhubungan agar kami dapat mengesahkan permintaan ini.
+  PageTitle: Permintaan Saluran Holodex
+  ChannelURLErrorFeedback: Berikan dalam bentuk https://www.youtube.com/channel/UC_____

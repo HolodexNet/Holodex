@@ -57,6 +57,8 @@ component:
     uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
+  video:
+    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -426,8 +428,10 @@ views:
   tlClient:
     menu:
       title: 菜单
+      setting: 翻译聊天室设置
       loadVideo: 显示视频
       unloadVideo: 隐藏视频
+      loadChat: 将聊天室的信息添加到翻译室中
       unloadChat: 与聊天室断开连接
     tlControl:
       enterBtn: 输入
