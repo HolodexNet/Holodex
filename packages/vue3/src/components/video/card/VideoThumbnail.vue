@@ -206,7 +206,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .video-overlay-tag {
   background-color: rgba(0, 0, 0, 0.8);
   margin: 2px;
@@ -235,6 +235,19 @@ export default defineComponent({
 }
 
 .video-thumbnail {
+  .v-img {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2);
+  }
+  .v-img::after {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
   /* Show placeholder info text on hover */
   .placeholder-tag span {
     display: none;
