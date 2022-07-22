@@ -228,6 +228,7 @@ views:
     sort:
       newest: Newest
       oldest: Oldest
+      longest: Longest
     type:
       all: All
       official: Official
