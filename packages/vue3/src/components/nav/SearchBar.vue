@@ -1,7 +1,7 @@
 <template>
   <!-- https://dev.vuetifyjs.com/en/api/v-autocomplete/#props -->
   <v-autocomplete
-    v-model:modelValue="query"
+    v-model:model-value="query"
     v-model:search="search"
     class="ma-auto search-bar"
     :class="{ 'search-bar-small': isMobile }"

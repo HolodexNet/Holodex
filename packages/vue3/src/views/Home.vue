@@ -11,38 +11,37 @@
           ? 'primary--text text--lighten-3'
           : 'primary--text text--darken-2'
       " -->
-    <v-tabs
-      :model-value="currentTab"
-      class="mb-2"
-      color="primary"
-      @update:model-value="(e) => updateTab(e as number)"
-    >
-      <v-tab class="p-2">
+    <div class="mb-4 tabs">
+      <a
+        class="gap-2 tab tab-lg tab-bordered"
+        :class="currentTab === 0 ? 'tab-active border-primary' : ''"
+        @click="currentTab = 0"
+      >
         {{ liveUpcomingHeaderSplit[1] }}
-        <span
-          class="p-1 mx-1 rounded-md stream-count-chip bg-primary white--text"
-        >
+        <span class="badge badge-secondary">
           {{ liveUpcomingCounts.liveCnt }}
         </span>
         {{ liveUpcomingHeaderSplit[2] }}
-        <span
-          class="p-1 ml-1 rounded-md stream-count-chip bg-primary white--text"
-        >
+        <span class="badge badge-outline">
           {{ liveUpcomingCounts.upcomingCnt }}
         </span>
-      </v-tab>
-      <v-tab class="p-2">
+      </a>
+      <a
+        class="tab tab-lg tab-bordered"
+        :class="currentTab === 1 ? 'tab-active' : ''"
+        @click="currentTab = 1"
+      >
         {{ $t("views.home.recentVideoToggles.official") }}
-      </v-tab>
-      <v-tab class="p-2">
+      </a>
+      <a
+        class="tab tab-lg tab-bordered"
+        :class="currentTab === 2 ? 'tab-active' : ''"
+        @click="currentTab = 2"
+      >
         {{ $t("views.home.recentVideoToggles.subber") }}
-      </v-tab>
-      <!-- <portal-target
-        v-if="!display.breakpoint.xs"
-        :name="`date-selector${isFavPage}`"
-        class="ml-auto v-tab"
-      /> -->
-    </v-tabs>
+      </a>
+    </div>
+
     <video-card-grid>
       <template
         v-for="video in currentTab === Tabs.LIVE ? liveVideos : videos"
