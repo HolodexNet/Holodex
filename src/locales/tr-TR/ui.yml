@@ -52,6 +52,9 @@ component:
     typeScheduledYT: Planlı Yayın
     typeExternalStream: Harici Yayın
     typeEventPlaceholder: Planlı Etkinlik
+    openClient: Çeviri İstrmcisini Aç
+    openScriptEditor: Senaryo Editörünü Aç
+    uploadScript: Çeviri Senaryosu Yükle
   videoDescription:
     description: Açıklama
   description:
@@ -296,9 +299,23 @@ views:
         disconnectedToChat: Bağlantı kesildi
       archiveNeedExtension: >-
         Arşiv sohbeti {0} eklentisi veya diğer üçüncü taraf eklentileri olmadan çalışmaz.
+      hideSpoiler: Spoiler'ı Gizle
     removeFromPlaylist: Videoyu mevcut oynatma listesinden çıkar
     saveToPlaylist: Videoyu mevcut oynatma listesine ekle
     likeOnYoutube: Videoyu Youtube'da beğen
+    uploadPanel:
+      title: Senaryo Yükle
+      usernameText: Çeviri şu kullanıcı adı altında yüklencek
+      usernameChange: Değiştir
+      tlLang: Çeviri Dili
+      headerStart: Başlangıç
+      headerEnd: Bitiş
+      headerText: Metin
+      cancelBtn: İptal
+      okBtn: Tamam
+      notifTextErr: DOSYA AYRIŞTIRILAMADI (BOZUK DOSYA?)
+      notifTextParsing: Dosya ayrıştırılıyor...
+      notifTextErrExt: Tanınamayan dosya uzantısı.
   favorites:
     promptForAction: >-
       Favori VTuberlarının bir listesini oluştur ve en son kliplerini ve yayınlarını bu sayfada görüntüle
@@ -331,6 +348,11 @@ views:
       - Google ile giriş yap
       - Discord ile giriş yap
       - Twitter ile giriş yap
+    username: Kullanıcı Adı
+    usernameBtn:
+      - Değiştir
+      - Onayla
+      - Kaydet
   multiview:
     confirmOverwrite: Geçerli düzen sıfırlansın mı?
     confirmOverwriteYes: Onayla
@@ -401,6 +423,21 @@ views:
       three: Youtube'un yayın sohbetindeki bellek sızıntısını düzeltir
       four: >-
         Youtube oynatıcısının deneysel özelliklerini düzeltir (Çoklu yayınları devre dışı kalması, bekleme odası küçük resminin görünmemesi) ve daha fazlası!
+  tlClient:
+    menu:
+      title: Menü
+      setting: TLDex Odası Ayarları
+      loadVideo: Videoyu Göster
+      unloadVideo: Videoyu gizle
+      loadChat: Yayın Çevirisine YT Chat'ini Ekle
+  tlManager:
+    title: Senaryo yöneticisi
+    headerID: Video ID'si
+    headerEntries: Girdiler
+    download: İndir
+    delete: Sil
+    deleteTitle: Girdileri sil
+    langPick: Dil
 time:
   soon: yakında
   diff_future_date: ' {0} ({1}) başlıyor'
@@ -527,14 +564,20 @@ channelRequest:
     AddClipper: Holodex'e bir klip/altyazı kanalı ekle
     ModifyExistingInfo: Var olan kanal bilgilerini düzenle
     DeleteChannel: Kanalımı sil
+  DirectContactDisclaimer: >-
+    Geri bildirim sağlamak için letişime geçmemiz gerekirse size ulaşabilmemiz için e-postanızı, discord idnizi veya twitter hesabınızı (bu bilgiler gizli kalacak) bırakmaktan çekinmeyin. Sadece holodex yöneticileri bu bilgileri görebilecek.
   DirectContactLabel: İletişim Bilgileri (isteğe bağlı)
   TwitterHandle: Kanalın Twitter Tanıtıcısı (isteğe bağlı)
   VtuberGroupLabel: VTuber Grubu (isteğe bağlı)
   VtuberGroupHint: Bu vtuber hangi organizasyona / gruba bağlı?
   ChannelLanguageLabel: Kanalın ana dili
+  EnglishNameHint: >-
+    Kanal ismi İngilizce değilse İngilizce bir kanal ismi ekleyin. Sözü geçen VTuber'ın yerel isim sırası kurallarını takip edin (Natsuiro Matsuri) veya tercih edilen İngilizce marka ismini kullanın (Elu the Elf, Emma★August).
   EnglishNameLabel: İngilizce Kanal İsmi
   Comments: Yorumlar
   CommentsHint: Bize iletmek istediğin diğer yorumlar.
+  VtuberRequirementText: >-
+    Bağımsızlar için en az 20K abone gereklidir. Var olan orgların parçası olan VTuberlar kabul edilecektir. <br /><br />Yeni Orglar ortalama abone sayısına göre oluşturulacaktır.
   DeletionRequirementText: >-
     Silme sadece kanal sahibi/sahipleri tarafından talep edilmeli, lütfen bunu doğrulamamız için iletişim bilgisi sağlayın.
   PageTitle: Holodex Kanal Talebi
