@@ -16,15 +16,14 @@
           max-width="600px"
         >
           <template #activator="{ on, attrs }">
-            <v-btn
-              v-bind="attrs"
-              plain
-              v-on="on"
-            >
+            <v-btn v-bind="attrs" plain v-on="on">
               <v-icon>{{ mdiCalendar }}</v-icon> Subscribe to Live Calendar
             </v-btn>
           </template>
-          <CalendarUsage :initial-query="executedQuery" :show-favorites-calendar="false" />
+          <CalendarUsage
+            :initial-query="executedQuery"
+            :show-favorites-calendar="false"
+          />
         </v-menu>
       </v-col>
       <v-col sm="4" md="2" class="py-1">
@@ -146,6 +145,14 @@ export default {
                             order: "asc",
                         },
                     },
+                    {
+                        text: this.$t("views.search.sort.longest"),
+                        value: "longest",
+                        query_value: {
+                            sort: "duration",
+                            order: "desc",
+                        },
+                    },
                 ],
                 type: [
                     {
@@ -208,7 +215,10 @@ export default {
                 const searchQuery = forwardTransformSearchToAPIQuery(parsedQuery, {
                     sort: self.filter_sort,
                     lang: self.$store.state.settings.clipLangs,
-                    target: self.filter_type === "all" ? ["stream", "clip"] : [self.filter_type],
+                    target:
+                        self.filter_type === "all"
+                            ? ["stream", "clip"]
+                            : [self.filter_type],
                     conditions: [],
                     topic: [],
                     vch: [],
@@ -281,8 +291,12 @@ export default {
     },
     methods: {
         syncFilters() {
-            this.filter_sort = this.query.sort ? this.query.sort.toLowerCase() : this.options.defaults.sort;
-            this.filter_type = this.query.type ? this.query.type.toLowerCase() : this.options.defaults.type;
+            this.filter_sort = this.query.sort
+                ? this.query.sort.toLowerCase()
+                : this.options.defaults.sort;
+            this.filter_type = this.query.type
+                ? this.query.type.toLowerCase()
+                : this.options.defaults.type;
         },
     },
 };
