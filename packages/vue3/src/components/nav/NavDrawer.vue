@@ -123,8 +123,8 @@ import {
   mdiChevronUp,
   mdiChevronDown,
 } from "@mdi/js";
-import { useLangStore, useSiteStore } from "@/stores";
-import { useDisplay } from "vuetify/lib/framework.mjs";
+import { useLangStore } from "@/stores";
+import { useDisplay } from "vuetify";
 import { langs } from "@/hooks/i18n/i18nConsts";
 
 export default defineComponent({
