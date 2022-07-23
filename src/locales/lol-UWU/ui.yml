@@ -57,6 +57,8 @@ component:
     uploadScript: Upwoad tl scwipt
   videoDescription:
     description: Descwiption
+  video:
+    comment: { }
   description:
     showLess: Show less
     showMore: Show mowe
@@ -212,6 +214,7 @@ views:
     sort:
       newest: Newest
       oldest: Owdest
+      longest: Wongest
     type:
       all: Aww
       official: Officiaw
