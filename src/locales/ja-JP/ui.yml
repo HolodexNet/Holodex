@@ -57,6 +57,8 @@ component:
     uploadScript: ライブラリスクリプトをアップロードする
   videoDescription:
     description: 概要
+  video:
+    comment: { }
   description:
     showLess: 一部を表示
     showMore: もっと見る
@@ -212,6 +214,7 @@ views:
     sort:
       newest: 新しい順
       oldest: 古い順
+      longest: 長い順
     type:
       all: すべて
       official: 公式
