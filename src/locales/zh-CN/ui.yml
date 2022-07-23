@@ -57,6 +57,8 @@ component:
     uploadScript: 上传翻译脚本
   videoDescription:
     description: 说明
+  video:
+    comment: { }
   description:
     showLess: 收起
     showMore: 展开
@@ -212,6 +214,7 @@ views:
     sort:
       newest: 最新的
       oldest: 最早的
+      longest: 最长
     type:
       all: 全部
       official: 官方
