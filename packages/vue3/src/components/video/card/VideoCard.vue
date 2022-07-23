@@ -5,7 +5,7 @@
       'flex-col': !horizontal,
       'video-card-live': video.status === 'live',
     }"
-    :target="redirectMode ? '_blank' : ''"
+    :target="redirectMode || hasPlaceholderLink ? '_blank' : ''"
     :href="href"
     rel="noopener"
     @click.exact="onThumbnailClicked"
@@ -90,13 +90,26 @@ export default defineComponent({
       return this.settings.redirectMode;
     },
     watchLink() {
+      if (this.isPlaceholder) return;
       const q = this.parentPlaylistId
         ? `?playlist=${this.parentPlaylistId}`
         : "";
       return `/watch/${this.data.id}${q}`;
     },
+    hasPlaceholderLink() {
+      return (
+        this.isPlaceholder &&
+        this.data.placeholderType === "external-stream" &&
+        this.data.link
+      );
+    },
     href() {
-      if (this.isPlaceholder) return undefined;
+      if (this.isPlaceholder) {
+        if (this.hasPlaceholderLink) {
+          return this.data.link;
+        }
+        return undefined;
+      }
       return this.redirectMode
         ? `https://youtu.be/${this.data.id}`
         : this.watchLink;
@@ -105,12 +118,11 @@ export default defineComponent({
   methods: {
     goToVideo() {
       this.$emit("videoClicked", this.data);
-      if (this.disableDefaultClick) return;
+      if (this.disableDefaultClick || !this.watchLink) return;
       if (this.isPlaceholder) {
         this.openPlaceholder();
         return;
       }
-
       // On mobile, clicking on watch links should not increment browser history
       // Back button will always return to the originating video list in one click
       if (this.$route.path.match("^/watch") && this.isMobile) {
@@ -120,15 +132,7 @@ export default defineComponent({
       }
     },
     onThumbnailClicked(e: { preventDefault: () => void }) {
-      if (
-        this.isPlaceholder &&
-        this.data.placeholderType === "external-stream" &&
-        this.data.link
-      ) {
-        e.preventDefault();
-        window.open(this.data.link, "_blank", "noopener");
-        return;
-      }
+      if (this.hasPlaceholderLink) return;
       if (
         this.isPlaceholder ||
         !this.redirectMode ||
