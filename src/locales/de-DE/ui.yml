@@ -57,6 +57,8 @@ component:
     uploadScript: TL-Skript hochladen
   videoDescription:
     description: Beschreibung
+  video:
+    comment: { }
   description:
     showLess: Weniger anzeigen
     showMore: Mehr anzeigen
@@ -212,6 +214,7 @@ views:
     sort:
       newest: Neuestes
       oldest: Ältestes
+      longest: Länge (fallend)
     type:
       all: Alle
       official: Offiziell
