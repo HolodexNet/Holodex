@@ -186,3 +186,8 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.video-card-title {
+  word-break: break-word;
+}
+</style>

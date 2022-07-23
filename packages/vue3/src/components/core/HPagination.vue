@@ -1,17 +1,17 @@
 <template>
   <div class="btn-group">
     <button
-      class="btn btn-md text-base-content bg-base-300"
+      class="btn btn-md text-base-content"
       :class="{
         'btn-disabled': modelValue === 1,
       }"
       @click="() => changePage(Math.max(modelValue - 1, 1))"
     >
-      «
+      <v-icon>{{ icons.mdiChevronLeft }}</v-icon>
     </button>
     <template v-for="pageNum in paginationPages" :key="pageNum">
       <button
-        class="btn btn-md text-base-content bg-base-300"
+        class="btn btn-md text-base-content"
         :class="{
           'btn-active': modelValue === pageNum,
           'btn-disabled': pageNum === '...',
@@ -22,13 +22,13 @@
       </button>
     </template>
     <button
-      class="btn btn-md text-base-content bg-base-300"
+      class="btn btn-md text-base-content"
       :class="{
         'btn-disabled': modelValue === totalPages,
       }"
       @click="() => changePage(Math.min(props.modelValue + 1, totalPages))"
     >
-      »
+      <v-icon>{{ icons.mdiChevronRight }}</v-icon>
     </button>
   </div>
 </template>

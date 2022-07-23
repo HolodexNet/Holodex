@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <page-container>
     <!-- :centered="$vuetify.breakpoint.xs"
       :class="
         $store.state.settings.darkMode
@@ -15,7 +15,7 @@
       <a
         class="gap-2 tab tab-lg tab-bordered"
         :class="currentTab === 0 ? 'tab-active border-primary' : ''"
-        @click="currentTab = 0"
+        @click="() => updateTab(0)"
       >
         {{ liveUpcomingHeaderSplit[1] }}
         <span class="badge badge-secondary">
@@ -29,42 +29,48 @@
       <a
         class="tab tab-lg tab-bordered"
         :class="currentTab === 1 ? 'tab-active' : ''"
-        @click="currentTab = 1"
+        @click="() => updateTab(1)"
       >
         {{ $t("views.home.recentVideoToggles.official") }}
       </a>
       <a
         class="tab tab-lg tab-bordered"
         :class="currentTab === 2 ? 'tab-active' : ''"
-        @click="currentTab = 2"
+        @click="() => updateTab(2)"
       >
         {{ $t("views.home.recentVideoToggles.subber") }}
       </a>
     </div>
-
-    <video-card-grid>
-      <template
-        v-for="video in currentTab === Tabs.LIVE ? liveVideos : videos"
-        :key="video.id"
+    <div class="px-4">
+      <video-card-grid>
+        <template
+          v-for="(video, index) in currentTab === Tabs.LIVE
+            ? liveVideos
+            : videos"
+          :key="video.id"
+        >
+          <video-card v-if="index < 20" :video="video" />
+          <v-lazy v-else class="v-lazy-video"
+            ><video-card :video="video"
+          /></v-lazy>
+        </template>
+      </video-card-grid>
+      <div v-if="isLoading" class="flex h-20">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          :size="64"
+          class="m-auto"
+        ></v-progress-circular>
+      </div>
+      <div
+        v-else-if="currentTab !== Tabs.LIVE"
+        class="flex items-center justify-center h-20"
       >
-        <video-card :video="video" />
-      </template>
-    </video-card-grid>
-    <div v-if="isLoading" class="flex h-20">
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        :size="64"
-        class="m-auto"
-      ></v-progress-circular>
+        <h-pagination v-model="currentPage" :total-pages="totalPages" />
+      </div>
     </div>
-    <div
-      v-else-if="currentTab !== Tabs.LIVE"
-      class="flex items-center justify-center h-20"
-    >
-      <h-pagination v-model="currentPage" :total-pages="totalPages" />
-    </div>
-  </div>
+  </page-container>
 </template>
 <script setup lang="ts">
 import { useLive, usePaginatedVideos } from "@/services/video";
@@ -165,6 +171,7 @@ const archiveQuery = usePaginatedVideos(
   {
     enabled: computed(() => currentTab.value === Tabs.ARCHIVE),
     refetchInterval: false,
+    staleTime: 3 * 60 * 100,
   }
 );
 const clipQuery = usePaginatedVideos(
@@ -182,6 +189,7 @@ const clipQuery = usePaginatedVideos(
   {
     enabled: computed(() => currentTab.value === Tabs.CLIPS),
     refetchInterval: false,
+    staleTime: 3 * 60 * 100,
   }
 );
 
@@ -211,7 +219,10 @@ watch(
     params.page = `${currentPage.value}`;
   }
 );
-const isLoading = computed(() => activeQuery.value?.isLoading.value);
+const isLoading = computed(
+  () =>
+    activeQuery.value?.isLoading.value || activeQuery.value?.isFetching.value
+);
 const error = computed(() => activeQuery.value?.error.value);
 const isError = computed(() => activeQuery.value?.isError.value);
 </script>
@@ -224,5 +235,11 @@ const isError = computed(() => activeQuery.value?.isError.value);
 .stream-count-chip {
   letter-spacing: normal;
   min-width: 24px;
+}
+
+.v-lazy-video:empty {
+  width: 1px;
+  height: 0;
+  padding-bottom: calc((100% / (16 / 9)) + 88px);
 }
 </style>
