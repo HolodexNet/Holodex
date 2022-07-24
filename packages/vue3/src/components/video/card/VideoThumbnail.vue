@@ -10,7 +10,7 @@
       :aspect-ratio="16 / 9"
       :src="imageSrc"
       cover
-      class="rounded-md"
+      class="rounded-md drop-shadow-md"
     ></v-img>
     <div
       class="absolute flex flex-col justify-between w-full h-full"
@@ -235,10 +235,6 @@ export default defineComponent({
 }
 
 .video-thumbnail {
-  .v-img {
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2);
-  }
-
   /* Show placeholder info text on hover */
   .placeholder-tag span {
     display: none;
