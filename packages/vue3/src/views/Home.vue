@@ -12,18 +12,18 @@
           ? 'primary--text text--lighten-3'
           : 'primary--text text--darken-2'
       " -->
-  <div class="px-4 mb-4 tabs sticky top-14 bg-base-200 z-10">
+  <div class="sticky z-10 px-4 mb-4 tabs top-14 bg-base-200">
     <a
       class="gap-2 tab tab-lg tab-bordered"
       :class="currentTab === 0 ? 'tab-active border-primary' : ''"
       @click="() => updateTab(0)"
     >
       {{ liveUpcomingHeaderSplit[1] }}
-      <span class="badge badge-secondary">
+      <span v-if="liveUpcomingCounts.liveCnt" class="badge badge-secondary">
         {{ liveUpcomingCounts.liveCnt }}
       </span>
       {{ liveUpcomingHeaderSplit[2] }}
-      <span class="badge badge-outline">
+      <span v-if="liveUpcomingCounts.upcomingCnt" class="badge badge-outline">
         {{ liveUpcomingCounts.upcomingCnt }}
       </span>
     </a>
@@ -45,7 +45,7 @@
   <div class="px-4">
     <video-card-grid>
       <template
-        v-for="(video, index) in currentTab === Tabs.LIVE ? liveVideos : videos"
+        v-for="(video, index) in videoQuery.data.value?.items"
         :key="video.id"
       >
         <video-card v-if="index < 20" :video="video" />
@@ -72,7 +72,11 @@
   <!-- </page-container> -->
 </template>
 <script setup lang="ts">
-import { useLive, usePaginatedVideos } from "@/services/video";
+import {
+  useLive,
+  usePaginatedVideos,
+  useVideoListDatasource,
+} from "@/services/video";
 import { useSiteStore } from "@/stores";
 import { useSettingsStore } from "@/stores/settings";
 import { Ref } from "vue";
@@ -80,6 +84,7 @@ import { useI18n } from "vue-i18n";
 import HPagination from "@/components/core/HPagination.vue";
 import { useUrlSearchParams } from "@vueuse/core";
 
+const props = defineProps({ favorites: Boolean });
 const params = useUrlSearchParams("history");
 
 const Tabs = {
@@ -90,6 +95,38 @@ const Tabs = {
 const currentTab: Ref<typeof Tabs[keyof typeof Tabs]> = ref(Tabs.LIVE);
 const router = useRouter();
 const route = useRoute();
+const site = useSiteStore();
+
+// TODO:
+// paginated: !this.scrollMode,
+// ...(this.toDate && {
+//   to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
+// }),
+const lookupState: Ref<
+  VideoListLookup<"stream_schedule" | "clip" | "archive">
+> = ref({
+  flavor: props.favorites
+    ? ({
+        favorites: props.favorites,
+      } as FavLookup)
+    : ({ org: site.currentOrg.name } as OrgLookup),
+  // type & status for tab selection.
+  // Usually selection has a tab between live and archives. Use this to control that aspect.
+  type: "stream_schedule" as const,
+  // optional if using a TabType, if custom type, then must provide custom statuses.
+  statuses: undefined,
+
+  // and regular pagination
+  pagination: undefined,
+});
+
+const settings = useSettingsStore();
+const currentPage = ref(+params.page || 1);
+const perPage = 24;
+
+const { t } = useI18n();
+const liveUpcomingCounts = ref({ liveCnt: 0, upcomingCnt: 0 });
+
 function updateTab(tab: number, preservePage = true) {
   // Change page before change tab, to avoid fetching wrong offset
   currentPage.value = 1;
@@ -102,6 +139,26 @@ function updateTab(tab: number, preservePage = true) {
     2: "#clips",
     3: "#list",
   };
+  if (tab === 0) {
+    //unset pagination:
+    lookupState.value.pagination = undefined;
+  } else {
+    lookupState.value.pagination = { offset: 0, pageSize: perPage };
+    liveUpcomingCounts.value = { liveCnt: 0, upcomingCnt: 0 };
+  }
+  switch (tab) {
+    case 0:
+      lookupState.value.type = "stream_schedule";
+      break;
+
+    case 1:
+      lookupState.value.type = "archive";
+      break;
+
+    case 2:
+      lookupState.value.type = "clip";
+      break;
+  }
   router
     .replace({
       hash: toHash[tab] || "",
@@ -118,96 +175,28 @@ function updateTab(tab: number, preservePage = true) {
     });
 }
 
-const site = useSiteStore();
-
-const settings = useSettingsStore();
-const { t } = useI18n();
 const liveUpcomingHeaderSplit = computed(() => {
-  return [...t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/)];
-});
-const liveUpcomingCounts = computed(() => {
-  const live = liveQuery.data.value;
-  const liveCnt = live?.filter((v) => v.status === "live").length || 0;
-  const upcomingCnt = (live?.length || 0) - liveCnt;
-  return { liveCnt, upcomingCnt };
+  return [
+    ...(t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/) || []),
+  ];
 });
 
-const currentPage = ref(+params.page || 1);
-const perPage = 24;
+const videoQuery = useVideoListDatasource(lookupState, ref({ enabled: true }));
 
-// TODO:
-// paginated: !this.scrollMode,
-// ...(this.toDate && {
-//   to: nearestUTCDate(dayjs(this.toDate ?? undefined)),
-// }),
-
-const liveQuery = useLive(
-  computed(() => ({
-    status: "live,upcoming",
-    type: "placeholder,stream",
-    org: site.currentOrg.name,
-    max_upcoming_hours: 48,
-    include: "live_info,mentions",
-  })),
-  {
-    enabled: computed(() => currentTab.value === Tabs.LIVE),
-    refetchInterval: 2 * 60 * 1000,
+watch([videoQuery.data, lookupState.value.type], () => {
+  if (lookupState.value.type === "stream_schedule") {
+    const live = videoQuery.data.value?.items;
+    const liveCnt = live?.filter((v) => v.status === "live").length || 0;
+    const upcomingCnt =
+      live?.filter((v) => v.status === "upcoming").length || 0;
+    liveUpcomingCounts.value = { liveCnt, upcomingCnt };
+  } else {
+    liveUpcomingCounts.value = { liveCnt: 0, upcomingCnt: 0 };
   }
-);
-const liveVideos = computed(() => liveQuery.data.value);
-
-const archiveQuery = usePaginatedVideos(
-  computed(() => ({
-    status: "past,missing",
-    type: "stream",
-    org: site.currentOrg.name,
-    include: "clips,mentions",
-    max_upcoming_hours: 1,
-    offset: (currentPage.value - 1) * perPage,
-    limit: 24,
-    paginated: true,
-  })),
-  {
-    enabled: computed(() => currentTab.value === Tabs.ARCHIVE),
-    refetchInterval: false,
-    staleTime: 3 * 60 * 100,
-  }
-);
-const clipQuery = usePaginatedVideos(
-  computed(() => ({
-    status: "past",
-    type: "clip",
-    org: site.currentOrg.name,
-    // TODO
-    // lang: settings.clipLangs.join(","),
-    lang: "en",
-    offset: (currentPage.value - 1) * perPage,
-    limit: 24,
-    paginated: true,
-  })),
-  {
-    enabled: computed(() => currentTab.value === Tabs.CLIPS),
-    refetchInterval: false,
-    staleTime: 3 * 60 * 100,
-  }
-);
-
-const activeQuery = computed(() => {
-  switch (currentTab.value) {
-    case 1:
-      return archiveQuery;
-    case 2:
-      return clipQuery;
-  }
-});
-
-const videos = computed(() => {
-  return activeQuery?.value?.data?.value?.items || [];
-  // return activeQuery?.value?.data?.value?.pages.reduce((prev, curr, index) => index <= currentPage.value ? prev.concat(curr) : prev, [])
 });
 
 const totalPages = computed(() => {
-  return Math.ceil((activeQuery?.value?.data.value?.total || 0) / perPage);
+  return Math.ceil((videoQuery?.data.value?.total || 0) / perPage);
 });
 
 // Scroll to top when page changes
@@ -216,14 +205,15 @@ watch(
   () => {
     window.scrollTo({ top: 0 });
     params.page = `${currentPage.value}`;
+    if (lookupState.value.pagination)
+      lookupState.value.pagination.offset = (currentPage.value - 1) * perPage;
   }
 );
 const isLoading = computed(
-  () =>
-    activeQuery.value?.isLoading.value || activeQuery.value?.isFetching.value
+  () => videoQuery?.isLoading.value || videoQuery?.isFetching.value
 );
-const error = computed(() => activeQuery.value?.error.value);
-const isError = computed(() => activeQuery.value?.isError.value);
+const error = computed(() => videoQuery?.error.value);
+const isError = computed(() => videoQuery?.isError.value);
 </script>
 <style>
 .v-tabs.v-slide-group--is-overflowing:not(.v-slide-group--has-affixes)

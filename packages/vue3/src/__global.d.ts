@@ -214,4 +214,50 @@ declare global {
     short?: string;
     name_jp?: string;
   }
+
+  /**
+   * Type of Tab: clip is 'clips only', stream_schedule is all upcoming and live, archive is what it is, and videos just gets all videos.
+   */
+  type TabType = "clip" | "stream_schedule" | "archive" | "videos";
+  interface OrgLookup {
+    favorites: never;
+    channelId: never;
+    org: string;
+  }
+  interface FavLookup {
+    favorites: true;
+    channelId: never;
+    org: never;
+  }
+  interface ChaLookup {
+    favorites: never;
+    channelId: string;
+    org: never;
+  }
+
+  interface VideoListLookup<M extends TabType | VIDEO_TYPES[]> {
+    flavor: OrgLookup | FavLookup | ChaLookup;
+    // type & status for tab selection.
+    // Usually selection has a tab between live and archives. Use this to control that aspect.
+    type: M;
+    // optional if using a TabType, if custom type, then must provide custom statuses.
+    statuses: M extends TabType
+      ? VIDEO_STATUSES[] | undefined
+      : VIDEO_STATUSES[];
+
+    // Overrides default behavior on showing placeholder or not.
+    showPlaceholderOverride?: boolean;
+
+    // and regular pagination
+    pagination?: {
+      offset: number;
+      pageSize: number;
+    };
+
+    // filtering options:
+    filter?: {
+      to?: number;
+      from?: number;
+    };
+  }
 }

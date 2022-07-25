@@ -169,53 +169,9 @@ function filterDeadStreams(video: Video) {
   );
 }
 
-/**
- * Type of Tab: clip is 'clips only', stream_schedule is all upcoming and live, archive is what it is, and videos just gets all videos.
- */
-type TabType = "clip" | "stream_schedule" | "archive" | "videos";
-interface OrgLookup {
-  favorites: never;
-  channelId: never;
-  org: string;
-}
-interface FavLookup {
-  favorites: boolean;
-  channelId: never;
-  org: never;
-}
-interface ChaLookup {
-  favorites: never;
-  channelId: string;
-  org: never;
-}
-
-interface VideoListLookup<M extends TabType | VIDEO_TYPES[]> {
-  flavor: OrgLookup | FavLookup | ChaLookup;
-  // type & status for tab selection.
-  // Usually selection has a tab between live and archives. Use this to control that aspect.
-  type: M;
-  // optional if using a TabType, if custom type, then must provide custom statuses.
-  statuses: M extends TabType ? VIDEO_STATUSES[] | undefined : VIDEO_STATUSES[];
-
-  // Overrides default behavior on showing placeholder or not.
-  showPlaceholderOverride: boolean | undefined;
-
-  // and regular pagination
-  pagination?: {
-    offset: number;
-    pageSize: number;
-  };
-
-  // filtering options:
-  filter?: {
-    to?: number;
-    from?: number;
-  };
-}
-
 export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
   q: Ref<VideoListLookup<T>>,
-  config: QueryConfig<{ items: Video[]; total?: number }>
+  config: Ref<QueryConfig<{ items: Video[]; total?: number }>>
 ) {
   const langs = useLangStore();
   const settings = useSettingsStore();
@@ -253,6 +209,7 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
 
     switch (q.value.type) {
       case "archive":
+        fq.include = "clips,mentions";
         fq.type = "stream";
         fq.status = overrideStatus ?? "past,missing";
         fq.paginated = true;
@@ -270,6 +227,7 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
         break;
 
       case "stream_schedule":
+        fq.include = "live_info,mentions";
         fq.type =
           q.value.showPlaceholderOverride ?? !settings.hidePlaceholder
             ? "stream,placeholder"
@@ -298,13 +256,28 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
         fq.status = overrideStatus;
         break;
     }
+    console.log(fq);
 
     return fq;
   });
 
-  return useQuery<{ items: Video[]; total?: number }>(
-    [urlTarget, query, computed(() => site.jwtToken)],
-    async (h) => {
+  const queryCfg = reactive({
+    refetchInterval: computed(() =>
+      q.value.type === "stream_schedule" ? 3 * 60 * 1000 : false
+    ),
+    refetchOnWindowFocus: computed(() =>
+      q.value.type === "stream_schedule" ? true : false
+    ),
+    staleTime: computed(
+      () =>
+        q.value.type === "stream_schedule" ? 2.5 * 60 * 1000 : 5 * 60 * 1000 // only Live needs 2.5 min invalidation.
+    ),
+    ...config,
+  });
+
+  return useQuery<{ items: Video[]; total?: number }>({
+    queryKey: [urlTarget, query, computed(() => site.jwtToken)],
+    queryFn: async (h) => {
       const path = h.queryKey[0] as string;
       const query = h.queryKey[1] as any;
       const jwt = h.queryKey[2] as string;
@@ -313,7 +286,7 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
         params: query,
         headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
       });
-      const out = { items: [], total: undefined };
+      const out = { items: [] as Video[], total: undefined };
       if ("items" in data && "total" in data) {
         out.items =
           q.value.type === "stream_schedule"
@@ -325,6 +298,7 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
       }
       return out;
     },
-    config
-  );
+    enabled: true,
+    ...toRefs(queryCfg),
+  });
 }
