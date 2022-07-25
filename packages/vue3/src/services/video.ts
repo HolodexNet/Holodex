@@ -215,6 +215,7 @@ export function useVideoListDatasource<T extends TabType | VIDEO_TYPES[]>(
         fq.paginated = true;
         fq.org = q.value.flavor.org;
         fq.channel_id = q.value.flavor.channelId;
+        fq.max_upcoming_hours = 1;
         break;
 
       case "clip":
