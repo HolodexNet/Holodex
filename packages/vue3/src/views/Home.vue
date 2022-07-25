@@ -1,6 +1,7 @@
 <template>
-  <page-container>
-    <!-- :centered="$vuetify.breakpoint.xs"
+  <!-- <page-container> -->
+
+  <!-- :centered="$vuetify.breakpoint.xs"
       :class="
         $store.state.settings.darkMode
           ? 'secondary darken-1'
@@ -11,66 +12,64 @@
           ? 'primary--text text--lighten-3'
           : 'primary--text text--darken-2'
       " -->
-    <div class="mb-4 tabs">
-      <a
-        class="gap-2 tab tab-lg tab-bordered"
-        :class="currentTab === 0 ? 'tab-active border-primary' : ''"
-        @click="() => updateTab(0)"
+  <div class="px-4 mb-4 tabs sticky top-14 bg-base-200 z-10">
+    <a
+      class="gap-2 tab tab-lg tab-bordered"
+      :class="currentTab === 0 ? 'tab-active border-primary' : ''"
+      @click="() => updateTab(0)"
+    >
+      {{ liveUpcomingHeaderSplit[1] }}
+      <span class="badge badge-secondary">
+        {{ liveUpcomingCounts.liveCnt }}
+      </span>
+      {{ liveUpcomingHeaderSplit[2] }}
+      <span class="badge badge-outline">
+        {{ liveUpcomingCounts.upcomingCnt }}
+      </span>
+    </a>
+    <a
+      class="tab tab-lg tab-bordered"
+      :class="currentTab === 1 ? 'tab-active' : ''"
+      @click="() => updateTab(1)"
+    >
+      {{ $t("views.home.recentVideoToggles.official") }}
+    </a>
+    <a
+      class="tab tab-lg tab-bordered"
+      :class="currentTab === 2 ? 'tab-active' : ''"
+      @click="() => updateTab(2)"
+    >
+      {{ $t("views.home.recentVideoToggles.subber") }}
+    </a>
+  </div>
+  <div class="px-4">
+    <video-card-grid>
+      <template
+        v-for="(video, index) in currentTab === Tabs.LIVE ? liveVideos : videos"
+        :key="video.id"
       >
-        {{ liveUpcomingHeaderSplit[1] }}
-        <span class="badge badge-secondary">
-          {{ liveUpcomingCounts.liveCnt }}
-        </span>
-        {{ liveUpcomingHeaderSplit[2] }}
-        <span class="badge badge-outline">
-          {{ liveUpcomingCounts.upcomingCnt }}
-        </span>
-      </a>
-      <a
-        class="tab tab-lg tab-bordered"
-        :class="currentTab === 1 ? 'tab-active' : ''"
-        @click="() => updateTab(1)"
-      >
-        {{ $t("views.home.recentVideoToggles.official") }}
-      </a>
-      <a
-        class="tab tab-lg tab-bordered"
-        :class="currentTab === 2 ? 'tab-active' : ''"
-        @click="() => updateTab(2)"
-      >
-        {{ $t("views.home.recentVideoToggles.subber") }}
-      </a>
+        <video-card v-if="index < 20" :video="video" />
+        <v-lazy v-else class="v-lazy-video"
+          ><video-card :video="video"
+        /></v-lazy>
+      </template>
+    </video-card-grid>
+    <div v-if="isLoading" class="flex h-20">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        :size="64"
+        class="m-auto"
+      ></v-progress-circular>
     </div>
-    <div class="px-4">
-      <video-card-grid>
-        <template
-          v-for="(video, index) in currentTab === Tabs.LIVE
-            ? liveVideos
-            : videos"
-          :key="video.id"
-        >
-          <video-card v-if="index < 20" :video="video" />
-          <v-lazy v-else class="v-lazy-video"
-            ><video-card :video="video"
-          /></v-lazy>
-        </template>
-      </video-card-grid>
-      <div v-if="isLoading" class="flex h-20">
-        <v-progress-circular
-          indeterminate
-          color="primary"
-          :size="64"
-          class="m-auto"
-        ></v-progress-circular>
-      </div>
-      <div
-        v-else-if="currentTab !== Tabs.LIVE"
-        class="flex items-center justify-center h-20"
-      >
-        <h-pagination v-model="currentPage" :total-pages="totalPages" />
-      </div>
+    <div
+      v-else-if="currentTab !== Tabs.LIVE"
+      class="flex items-center justify-center h-20"
+    >
+      <h-pagination v-model="currentPage" :total-pages="totalPages" />
     </div>
-  </page-container>
+  </div>
+  <!-- </page-container> -->
 </template>
 <script setup lang="ts">
 import { useLive, usePaginatedVideos } from "@/services/video";
