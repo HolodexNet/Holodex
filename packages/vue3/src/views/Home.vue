@@ -120,6 +120,17 @@ const lookupState: Ref<
   pagination: undefined,
 });
 
+watch(
+  () => props.favorites,
+  () => {
+    lookupState.value.flavor = props.favorites
+      ? ({
+          favorites: props.favorites,
+        } as FavLookup)
+      : ({ org: site.currentOrg.name } as OrgLookup);
+  }
+);
+
 const settings = useSettingsStore();
 const currentPage = ref(+params.page || 1);
 const perPage = 24;
