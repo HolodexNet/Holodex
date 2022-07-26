@@ -18,7 +18,9 @@ export default function useOrgRouteParamSync(): Ref<Org> {
     }
   );
   const orgs = useOrgList({
-    enabled: true,
+    enabled: computed(
+      () => !!route.params.org && route.params.org !== site.currentOrg.name
+    ),
     refetchInterval: false,
   });
 
@@ -29,10 +31,12 @@ export default function useOrgRouteParamSync(): Ref<Org> {
         if (!found) {
           console.error("Org not found - may have moved:", route.params.org);
           router.push({ name: "OrgNotFound" });
+          throw new Error("Org not found - may have moved.");
         }
-        return found || site.currentOrg;
+        return found;
       }
-      return site.currentOrg;
+      return { ...site.currentOrg, name: route.params.org as string };
+      // for a millisecond, return the WRONG Org object. (this will quickly be replaced with 'found')
     } else {
       return site.currentOrg;
     }
