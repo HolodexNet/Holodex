@@ -131,6 +131,7 @@
 </template>
 
 <script lang="ts">
+import useOrgRouteParamSync from "@/hooks/common/useOrgRouteParamSync";
 import { useOrgList } from "@/services/static";
 import { useSiteStore } from "@/stores";
 import { PropType } from "vue";
@@ -178,10 +179,11 @@ export default defineComponent({
     const site = useSiteStore();
     const display = useDisplay();
     const orgs = useOrgList({ enabled: true });
+    const pageOrg = useOrgRouteParamSync();
 
     const isMobile = display.mobile;
 
-    return { site, display, isMobile, orgs };
+    return { site, display, isMobile, orgs, pageOrg };
   },
   data() {
     return {
@@ -221,7 +223,7 @@ export default defineComponent({
       return list;
     },
     currentOrg() {
-      return this.currentSelection || this.site.currentOrg;
+      return this.currentSelection || this.pageOrg;
     },
     orgFavorites() {
       if (this.hideAllVTubers) {

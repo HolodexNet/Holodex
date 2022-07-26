@@ -83,6 +83,7 @@ import { Ref } from "vue";
 import { useI18n } from "vue-i18n";
 import HPagination from "@/components/core/HPagination.vue";
 import { useUrlSearchParams } from "@vueuse/core";
+import useOrgRouteParamSync from "@/hooks/common/useOrgRouteParamSync";
 
 const props = defineProps({ favorites: Boolean });
 const params = useUrlSearchParams("history");
@@ -97,6 +98,7 @@ const router = useRouter();
 const route = useRoute();
 const site = useSiteStore();
 
+const pageOrg = useOrgRouteParamSync();
 // TODO:
 // paginated: !this.scrollMode,
 // ...(this.toDate && {
@@ -109,7 +111,7 @@ const lookupState: Ref<
     ? ({
         favorites: props.favorites,
       } as FavLookup)
-    : ({ org: site.currentOrg.name } as OrgLookup),
+    : ({ org: pageOrg.value.name } as OrgLookup),
   // type & status for tab selection.
   // Usually selection has a tab between live and archives. Use this to control that aspect.
   type: "stream_schedule" as const,
@@ -121,13 +123,13 @@ const lookupState: Ref<
 });
 
 watch(
-  () => props.favorites,
+  () => [props.favorites, pageOrg.value],
   () => {
     lookupState.value.flavor = props.favorites
       ? ({
           favorites: props.favorites,
         } as FavLookup)
-      : ({ org: site.currentOrg.name } as OrgLookup);
+      : ({ org: pageOrg.value.name } as OrgLookup);
   }
 );
 

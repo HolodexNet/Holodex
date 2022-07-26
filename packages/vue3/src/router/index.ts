@@ -1,10 +1,18 @@
+import { useSiteStore } from "@/stores";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "Home",
-    component: () => import("@/views/Home.vue"),
+    redirect: (to) => {
+      const site = useSiteStore();
+      return {
+        name: "Home_Org",
+        params: { org: site.currentOrg.name },
+        replace: true,
+      };
+    },
   },
   {
     path: "/favorites",
@@ -16,7 +24,30 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/org/:org",
-    name: "Home - Org",
+    name: "Home_Org",
+    component: () => import("@/views/Home.vue"),
+  },
+  {
+    path: "/channels",
+    name: "Channels",
+    redirect: (to) => {
+      const site = useSiteStore();
+
+      return {
+        name: "Channels_Org",
+        params: { org: site.currentOrg.name },
+        replace: true,
+      };
+    },
+  },
+  {
+    path: "/org404",
+    name: "OrgNotFound",
+    component: () => import("@/views/errors/OrgNotFound.vue"),
+  },
+  {
+    path: "/org/:org/channels",
+    name: "Channels_Org",
     component: () => import("@/views/Home.vue"),
   },
   {
