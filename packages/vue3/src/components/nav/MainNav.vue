@@ -219,7 +219,7 @@ export default defineComponent({
         },
         {
           name: this.$t("component.mainNav.channels"),
-          path: `/channel?org=${this.site.currentOrg.name}`,
+          path: `/channels`,
           icon: this.icons.mdiAccountBoxMultiple,
         },
         {

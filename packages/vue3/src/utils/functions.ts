@@ -171,7 +171,13 @@ export function forwardTransformSearchToAPIQuery(obj, initialObject) {
   }, initialObject);
 }
 
-export function localSortChannels(channels, { sort, order = "asc" }) {
+export function localSortChannels(
+  channels: FullChannel[],
+  {
+    sort = "subscriber_count",
+    order = "asc",
+  }: { sort: keyof FullChannel; order: "asc" | "desc" }
+) {
   if (!sort) return channels;
   channels.sort((a, b) => {
     // if (sort === "latest_published_at") {
