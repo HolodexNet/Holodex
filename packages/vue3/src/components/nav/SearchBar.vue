@@ -5,8 +5,6 @@
     v-model:search="search"
     class="ma-auto search-bar"
     :class="{ 'search-bar-small': isMobile }"
-    solo
-    flat
     multiple
     deletable-chips
     chips
@@ -17,11 +15,7 @@
     :autofocus="autofocus"
     :loading="isLoading"
     :items="results"
-    :custom-filter="
-      (a, b, c) => {
-        return true;
-      }
-    "
+    :custom-filter="customFilter"
     no-filter
     :append-icon="''"
     :label="$t('component.search.searchLabel')"
@@ -222,7 +216,13 @@ export default defineComponent({
                 { type: "comments", value: `${val}comments`, text: val.trim() },
               ];
             }
-            this.fromApi = [...res.data, ...textQueries];
+            this.fromApi = [
+              ...res.data.map((x: Query) => {
+                if (!x.text) x.text = x.value;
+                return x;
+              }),
+              ...textQueries,
+            ];
           })
           .catch((e) => console.log(e));
       },
@@ -237,10 +237,6 @@ export default defineComponent({
     async getAutocomplete(query: string) {
       this.isLoading = true;
       const res = await api.searchAutocomplete(query);
-      res.data = res.data.map((x: Query) => {
-        if (!x.text) x.text = x.value;
-        return x;
-      });
       this.isLoading = false;
       return res;
     },
@@ -340,6 +336,10 @@ export default defineComponent({
       if (this.search === null || this.search.length === 0) {
         this.commitSearch();
       }
+    },
+    customFilter(a: any, b: any, c: any) {
+      console.log(a, b, c);
+      return true;
     },
   },
 });
