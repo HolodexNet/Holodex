@@ -12,7 +12,7 @@
           ? 'primary--text text--lighten-3'
           : 'primary--text text--darken-2'
       " -->
-  <div class="sticky z-10 px-4 mb-4 tabs top-14 bg-base-200">
+  <div class="sticky z-10 px-4 mb-4 tabs top-14 bg-base-100">
     <a
       class="gap-2 tab tab-lg tab-bordered"
       :class="currentTab === 0 ? 'tab-active border-primary' : ''"

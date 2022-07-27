@@ -2,20 +2,6 @@
   <div>
     <!-- watch page nav drawer is temporary, but causes layout shifting from hiding/unhiding -->
     <!-- create two different instances as a work around -->
-    <NavDrawer
-      v-model="navDrawer"
-      :pages="pages"
-      :temporary="isMobile || isWatchPage"
-      :expand="navbarExpanded"
-      @expand="navbarExpanded = !navbarExpanded"
-    >
-      <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
-      <template v-if="isMobile">
-        <!-- <InstallPrompt /> -->
-        <user-card no-setting in-nav-drawer style="background-color: inherit" />
-        <v-divider />
-      </template>
-    </NavDrawer>
 
     <!--* nav drawer is for the left --->
     <BottomNav
@@ -34,6 +20,7 @@
       flat
       extension-height="36"
       height="56"
+      style="border-bottom: 1px solid rgba(255, 255, 255, 0.12)"
     >
       <!--=============================== Top Bar (Regular View) =============================-->
 
@@ -54,7 +41,11 @@
           />
         </div>
         <!-- </v-toolbar-title> -->
-        <SearchBar v-if="!isMobile" key="main-search-bar" />
+        <SearchBar
+          v-if="!isMobile"
+          key="main-search-bar"
+          class="mx-auto height-40px"
+        />
 
         <!--================= Account [👤] Button (Desktop Only) ================-->
 
@@ -77,7 +68,7 @@
                 </ResponsiveMenu> -->
         <v-menu v-if="!isMobile" left offset-y transition="slide-y-transition">
           <template #activator="{ props }">
-            <v-btn icon v-bind="props" class="ml-2">
+            <v-btn icon v-bind="props" class="ml-auto">
               <v-icon v-if="!(site.user && site.user)">
                 {{ icons.mdiAccountCircleOutline }}
               </v-icon>
@@ -142,6 +133,20 @@
       <!-- </v-slide-y-transition> -->
       <!-- </template> -->
     </v-app-bar>
+    <NavDrawer
+      v-model="navDrawer"
+      :pages="pages"
+      :temporary="isMobile || isWatchPage"
+      :expand="navbarExpanded"
+      @expand="navbarExpanded = !navbarExpanded"
+    >
+      <!-- <NavDrawer :pages="pages" v-model="drawer2" v-if="isMobile || isWatchPage"  -->
+      <template v-if="isMobile">
+        <!-- <InstallPrompt /> -->
+        <user-card no-setting in-nav-drawer style="background-color: inherit" />
+        <v-divider />
+      </template>
+    </NavDrawer>
   </div>
 </template>
 

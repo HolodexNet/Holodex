@@ -13,7 +13,7 @@
         <slot name="visible" :current-org="currentOrg" :activator="activator">
           <div
             v-bind="activator.props"
-            class="inline-block nav-title"
+            class="inline-block nav-title cursor-pointer"
             style="position: relative"
           >
             <v-fade-transition hide-on-leave>
@@ -23,7 +23,7 @@
                 >{{ currentOrg.short || currentOrg.name }}</span
               >
             </v-fade-transition>
-            <span ref="dexBtn" class="primary--text">dex</span>
+            <span ref="dexBtn" class="text-primary">dex</span>
             <v-icon
               size="30"
               class="change-org-icon"
