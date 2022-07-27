@@ -48,7 +48,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/org/:org/channels",
     name: "Channels_Org",
-    component: () => import("@/views/Home.vue"),
+    component: () => import("@/views/Channels.vue"),
   },
   {
     path: "/profile",

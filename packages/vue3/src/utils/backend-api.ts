@@ -26,7 +26,7 @@ export default {
   },
   channels(query: Record<any, unknown> | undefined) {
     const q = querystring.stringify(query);
-    return axiosInstance.get(`/channels?${q}`);
+    return axiosInstance.get<FullChannel[]>(`/channels?${q}`);
   },
   videos(query: Record<any, unknown> | undefined) {
     const q = querystring.stringify(query);
@@ -126,7 +126,7 @@ export default {
     // fetch("https://holodex.net/api/v2/user/check", { method: "post" }).then(() => {});
   },
   favorites(jwt: any) {
-    return axiosInstance.get("/users/favorites", {
+    return axiosInstance.get<FullChannel[]>("/users/favorites", {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });
   },
@@ -176,7 +176,10 @@ export default {
           )
       );
   },
-  patchFavorites(jwt: any, operations: any) {
+  patchFavorites(
+    jwt: any,
+    operations: { op: "add" | "remove"; channel_id: string }[]
+  ) {
     return axiosInstance.patch("/users/favorites", operations, {
       headers: jwt ? { Authorization: `BEARER ${jwt}` } : {},
     });

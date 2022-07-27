@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     ArchivedTranslations: typeof import('./src/components/tldex/client/ArchivedTranslations.vue')['default']
     Button: typeof import('./src/stories/Button.vue')['default']
     ChannelImg: typeof import('./src/components/channel/common/ChannelImg.vue')['default']
+    ChannelList: typeof import('./src/components/channel/ChannelList.vue')['default']
     Channels: typeof import('./src/views/Channels.vue')['default']
     ChatMessage: typeof import('./src/components/tldex/client/ChatMessage.vue')['default']
     GoogleSignInButton: typeof import('./src/components/login/GoogleSignInButton.vue')['default']
