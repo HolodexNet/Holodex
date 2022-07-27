@@ -1,4 +1,4 @@
-import "uno.css";
+// import "uno.css";
 import { createApp } from "vue";
 import router from "./router/index";
 import { VueQueryPlugin } from "vue-query";

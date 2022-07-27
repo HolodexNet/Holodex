@@ -9,8 +9,8 @@ import dynamicImportVars from "@rollup/plugin-dynamic-import-vars";
 import yaml from "@rollup/plugin-yaml";
 import visualizer from "rollup-plugin-visualizer";
 import vuetify from "vite-plugin-vuetify";
-import Unocss from "unocss/vite";
-import presetIcons from "@unocss/preset-icons";
+// import Unocss from "unocss/vite";
+// import presetIcons from "@unocss/preset-icons";
 
 const path = require('path')
 
@@ -39,9 +39,9 @@ export default defineConfig({
       include: ["src/locales/**/*.yml", "node_modules/dayjs/**/*.js"],
     }),
     vue({}),
-    Unocss({
-      presets: [presetIcons()],
-    }),
+    // Unocss({
+    //   presets: [presetIcons()],
+    // }),
     vuetify({
       autoImport: true,
       styles: "expose",
