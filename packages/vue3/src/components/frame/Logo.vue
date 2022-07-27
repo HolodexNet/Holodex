@@ -1,25 +1,39 @@
 <template>
-  <svg
-    width="49.531mm"
-    height="46.719mm"
-    version="1.1"
-    viewBox="0 0 49.531 46.719"
-    xmlns="http://www.w3.org/2000/svg"
-    style="margin-right: 3px"
-    class="logo"
-  >
-    <g transform="translate(-71.24 -130.01)">
+  <svg viewBox="0 0 24 24">
+    <g>
       <path
-        d="m118.65 149.7a4.2333 4.2333 0 0 1 0 7.3324l-33.127 19.126a4.2333 4.2333
-                    0 0 1-6.35-3.6662v-38.252a4.2333 4.2333 0 0 1 6.35-3.6662"
-        style="fill: #f06292"
-      />
+        d="M4.5 2a2 2 0 0 1 3-1.7L23 9.6a2 2 0 0 1 0 3.5L7.6 22.4a2 2 0 0 1-3-1.7V2Z"
+        fill="url(#a-iid-3)"
+      ></path>
       <path
-        d="m110.72 149.68a4.2333 4.2333 0 0 1 0 7.3324l-33.127 19.126a4.2333 4.2333
-                    0 0 1-6.35-3.6662v-38.252a4.2333 4.2333 0 0 1 6.35-3.6662"
-        style="fill: #64b5f6"
-      />
+        d="M0 2A2 2 0 0 1 3 .3l15.5 9.3a2 2 0 0 1 0 3.5L3.1 22.4A2 2 0 0 1 0 20.7V2Z"
+        fill="url(#b-iid-3)"
+      ></path>
     </g>
+    <defs>
+      <linearGradient
+        id="a-iid-3"
+        x1=".2"
+        y1="2.8"
+        x2="19.3"
+        y2="18.5"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stop-color="#F06292"></stop>
+        <stop offset="1" stop-color="#FF3A81"></stop>
+      </linearGradient>
+      <linearGradient
+        id="b-iid-3"
+        x1="-4.4"
+        y1="2.8"
+        x2="19.5"
+        y2="11.3"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stop-color="#5DA2F2"></stop>
+        <stop offset="1" stop-color="#715BF7" stop-opacity=".8"></stop>
+      </linearGradient>
+    </defs>
   </svg>
 </template>
 
@@ -27,14 +41,10 @@
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Logo",
+  data() {
+    return { idx: Math.floor(Math.random() * 200) };
+  },
 };
 </script>
 
-<style scoped>
-.logo > g > path:first-child {
-  fill: var(--v-primary-base);
-}
-.logo > g > path:last-child {
-  fill: var(--v-secondary-lighten1);
-}
-</style>
+<style scoped></style>
