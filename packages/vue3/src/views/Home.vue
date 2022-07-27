@@ -12,9 +12,11 @@
           ? 'primary--text text--lighten-3'
           : 'primary--text text--darken-2'
       " -->
-  <div class="sticky z-10 px-4 mb-4 tabs top-14 bg-base-100">
+  <div
+    class="sticky z-10 px-4 mb-4 tabs top-14 bg-base-100 overflow-x-auto overflow-y-hidden flex-nowrap no-scrollbar"
+  >
     <a
-      class="gap-2 tab tab-lg tab-bordered"
+      class="gap-2 tab tab-lg tab-bordered whitespace-nowrap flex-nowrap"
       :class="currentTab === 0 ? 'tab-active border-primary' : ''"
       @click="() => updateTab(0)"
     >
@@ -138,7 +140,6 @@ const currentPage = ref(+params.page || 1);
 const perPage = 24;
 
 const { t } = useI18n();
-const liveUpcomingCounts = ref({ liveCnt: 0, upcomingCnt: 0 });
 
 function updateTab(tab: number, preservePage = true) {
   // Change page before change tab, to avoid fetching wrong offset
@@ -152,13 +153,10 @@ function updateTab(tab: number, preservePage = true) {
     2: "#clips",
     3: "#list",
   };
-  if (tab === 0) {
-    //unset pagination:
-    lookupState.value.pagination = undefined;
-  } else {
-    lookupState.value.pagination = { offset: 0, pageSize: perPage };
-    liveUpcomingCounts.value = { liveCnt: 0, upcomingCnt: 0 };
-  }
+
+  lookupState.value.pagination =
+    tab === 0 ? undefined : { offset: 0, pageSize: perPage };
+
   switch (tab) {
     case 0:
       lookupState.value.type = "stream_schedule";
@@ -188,28 +186,27 @@ function updateTab(tab: number, preservePage = true) {
     });
 }
 
-const liveUpcomingHeaderSplit = computed(() => {
-  return [
-    ...(t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/) || []),
-  ];
-});
-
 const videoQuery = useVideoListDatasource(lookupState, ref({ enabled: true }));
 
-watch([videoQuery.data, lookupState.value.type], () => {
+const totalPages = computed(() => {
+  return Math.ceil((videoQuery?.data.value?.total || 0) / perPage);
+});
+
+const liveUpcomingCounts = ref({ liveCnt: 0, upcomingCnt: 0 });
+watchEffect(() => {
   if (lookupState.value.type === "stream_schedule") {
     const live = videoQuery.data.value?.items;
     const liveCnt = live?.filter((v) => v.status === "live").length || 0;
     const upcomingCnt =
       live?.filter((v) => v.status === "upcoming").length || 0;
     liveUpcomingCounts.value = { liveCnt, upcomingCnt };
-  } else {
-    liveUpcomingCounts.value = { liveCnt: 0, upcomingCnt: 0 };
   }
 });
 
-const totalPages = computed(() => {
-  return Math.ceil((videoQuery?.data.value?.total || 0) / perPage);
+const liveUpcomingHeaderSplit = computed(() => {
+  return [
+    ...(t("views.home.liveOrUpcomingHeading").match(/(.+)([\\/／・].+)/) || []),
+  ];
 });
 
 // Scroll to top when page changes
@@ -243,5 +240,16 @@ const isError = computed(() => videoQuery?.isError.value);
   width: 1px;
   height: 0;
   padding-bottom: calc((100% / (16 / 9)) + 88px);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 </style>
