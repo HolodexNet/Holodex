@@ -1,6 +1,6 @@
 <template>
   <!-- <v-container fluid style="height: 100%"> -->
-  <div class="card m-auto mt-6 bg-base-300 shadow-lg" style="max-width: 500px">
+  <div class="card m-auto mt-6 bg-base-100 shadow-lg" style="max-width: 500px">
     <user-card v-if="site.user" class="p-2" />
     <div class="card-body pt-0">
       <div class="flex flex-col items-center">
