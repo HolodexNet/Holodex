@@ -12,7 +12,7 @@ const gridColumnGap = ["20px", "10px", "10px"];
 
 const gridStyle = computed(() => {
   return {
-    "grid-template-columns": `repeat(auto-fit, minmax(${
+    "grid-template-columns": `repeat(auto-fill, minmax(${
       maxWidth[settings.gridDensity]
     }, 1fr))`,
     "grid-column-gap": gridColumnGap[settings.gridDensity],
@@ -23,7 +23,7 @@ const gridStyle = computed(() => {
 <style lang="scss">
 .video-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
 }
 
 /* Separate live from past videos */
