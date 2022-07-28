@@ -75,7 +75,7 @@
     <v-divider />
     <div class="justify-center d-flex">
       <v-btn small block elevation="0" @click="expanded = !expanded">
-        <v-icon>{{ expand ? mdiChevronUp : mdiChevronDown }}</v-icon>
+        <v-icon>{{ expanded ? mdiChevronUp : mdiChevronDown }}</v-icon>
       </v-btn>
     </div>
 

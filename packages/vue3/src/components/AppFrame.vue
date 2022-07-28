@@ -11,7 +11,7 @@
     </v-navigation-drawer> -->
 
     <!-- Sizes your content based upon application components -->
-    <v-main>
+    <v-main class="bg-base-300">
       <!-- Provides the application the proper gutter -->
       <!-- If using vue-router -->
       <router-view />
@@ -22,53 +22,3 @@
     </v-footer>
   </v-app>
 </template>
-
-<script setup>
-import { RouterView, RouterLink } from "vue-router";
-
-const menuList = [
-  {
-    icon: "inbox",
-    label: "Users",
-    separator: true,
-    link: "/",
-  },
-  {
-    icon: "send",
-    label: "Projects",
-    link: "/projects",
-    separator: false,
-  },
-  {
-    icon: "delete",
-    label: "Profiles",
-    link: "/profiles",
-    separator: false,
-  },
-  {
-    icon: "error",
-    label: "Spam",
-    separator: true,
-  },
-  {
-    icon: "settings",
-    label: "Settings",
-    separator: false,
-  },
-  {
-    icon: "feedback",
-    label: "Send Feedback",
-    separator: false,
-  },
-  {
-    icon: "help",
-    iconColor: "primary",
-    label: "Help",
-    separator: false,
-  },
-];
-
-defineProps({
-  msg: String,
-});
-</script>

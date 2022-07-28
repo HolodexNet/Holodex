@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="nav-container">
     <!-- watch page nav drawer is temporary, but causes layout shifting from hiding/unhiding -->
     <!-- create two different instances as a work around -->
 
@@ -18,23 +18,21 @@
       clipped-left
       clipped-right
       flat
-      extension-height="36"
       height="56"
       style="border-bottom: 1px solid rgba(255, 255, 255, 0.12)"
+      class="bg-base-100"
     >
       <!--=============================== Top Bar (Regular View) =============================-->
 
       <template v-if="!isMobile || (isMobile && !searchBarExpanded)">
         <!--================= Logo & Search Bar (Space permitting) ================-->
-
         <v-app-bar-nav-icon
           :icon="icons.mdiMenu"
           @click.stop="navDrawer = !navDrawer"
-        >
-        </v-app-bar-nav-icon>
-        <div class="flex flex-row gap-2">
+        ></v-app-bar-nav-icon>
+        <div class="flex flex-row gap-2 items-center ml-md-2">
           <router-link :to="{ name: settings.defaultOpen || 'Home' }">
-            <logo v-if="!isMobile" width="32" height="32" />
+            <logo v-if="!isMobile" width="24" height="24" />
           </router-link>
           <OrgSelector
             @changed="(org: Org, close?: Function) => {site.currentOrg = org; close && close();}"
@@ -327,8 +325,9 @@ export default defineComponent({
 
 #top-bar {
   /* background-color: #2b79ad !important; */
-  padding-left: min(calc(env(safe-area-inset-left)), 30px);
-  padding-right: min(calc(env(safe-area-inset-right)), 30px);
+  // TODO: this thing
+  /* padding-left: min(calc(env(safe-area-inset-left)), 30px);
+  padding-right: min(calc(env(safe-area-inset-right)), 30px); */
   /* padding-top: min(calc(env(safe-area-inset-top) / 2), 30px); */
   /* height: calc(env(safe-area-inset-top,0px) + 30px); */
   padding-top: 0px;
